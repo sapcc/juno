@@ -1,4 +1,4 @@
-# juno
+# Juno
 Global Dashboard
 
 # Development
