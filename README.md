@@ -7,4 +7,9 @@ Global Dashboard
 yarn start
 ```
 
+In workspaces
+```
+wb yarn start
+```
+
 
