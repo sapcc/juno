@@ -1,4 +1,4 @@
-FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:11.12-alpine
+FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:12-alpine
 
 LABEL source_repository="https://github.com/sapcc/juno"
 
@@ -7,10 +7,13 @@ RUN npm install -g serve
 
 RUN mkdir -p /app
 
-ADD . /app
 WORKDIR /app
+ADD package.json yarn.lock /app
 
-RUN ls -la
-RUN yarn install && yarn build
+RUN yarn install
+
+ADD . /app
+
+RUN yarn build
 
 CMD serve -s build
