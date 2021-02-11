@@ -10,6 +10,7 @@ RUN mkdir -p /app
 ADD . /app
 WORKDIR /app
 
-RUN yarn build
+RUN ls -la
+RUN yarn install && yarn build
 
 CMD serve -s build
