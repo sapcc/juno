@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    dns-manager: "true"
+    dns-manager/zone-name: global.cloud.sap
+    kubernetes.io/tls-acme: "true"
+  labels:
+    app: juno
+  name: juno
+  namespace: juno
+spec:
+  rules:
+    - host: juno.global.cloud.sap
+      http:
+        paths:
+          - backend:
+              serviceName: juno
+              servicePort: 5000
+            path: /
+  tls:
+    - hosts:
+        - juno.global.cloud.sap
+      secretName: tls-juno-global-cloud-sap
