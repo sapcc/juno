@@ -12,6 +12,6 @@ metadata:
 
 spec:
   selector:
-    name: juno
+    app: juno
   ports:
     - port: 5000

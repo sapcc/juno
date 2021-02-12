@@ -6,6 +6,9 @@ metadata:
   namespace: juno
 
 spec:
+  selector:
+    matchLabels:
+      app: nginx
   revisionHistoryLimit: 3
   replicas: 2
   strategy:
@@ -16,7 +19,7 @@ spec:
   template:
     metadata:
       labels:
-        name: juno
+        app: juno
     spec:
       # The preStop hook below sleeps 30 seconds, extend the gracePeriod accordingly
       terminationGracePeriodSeconds: 60
