@@ -11,7 +11,7 @@ metadata:
   namespace: juno
 spec:
   rules:
-    - host: juno.global.cloud.sap
+    - host: "juno.{{ .Values.global.region }}.cloud.sap"
       http:
         paths:
           - backend:
@@ -20,5 +20,5 @@ spec:
             path: /
   tls:
     - hosts:
-        - juno.global.cloud.sap
+        - "juno.{{ .Values.global.region }}.cloud.sap"
       secretName: tls-juno-global-cloud-sap
