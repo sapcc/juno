@@ -11,15 +11,6 @@ metadata:
   namespace: juno
 spec:
   rules:
-{{- if eq .Values.global.region eu-nl-1 }}
-    - host: "juno.global.cloud.sap"
-      http:
-        paths:
-          - backend:
-              serviceName: juno
-              servicePort: 5000
-            path: /
-{{- end }}
     - host: "juno.{{ .Values.global.region }}.cloud.sap"
       http:
         paths:
@@ -27,6 +18,20 @@ spec:
               serviceName: juno
               servicePort: 5000
             path: /
+{{- if eq .Values.global.region eu-nl-1 }}
+      host: "juno.global.cloud.sap"
+      http:
+        paths:
+          - backend:
+              serviceName: juno
+              servicePort: 5000
+            path: /
+{{- end }}
+
   tls:
-    - hosts: ["juno.{{ .Values.global.region }}.cloud.sap", "juno.global.cloud.sap"]
+    - hosts: 
+      - "juno.{{ .Values.global.region }}.cloud.sap"
+{{- if eq .Values.global.region eu-nl-1 }}      
+        "juno.global.cloud.sap"
+{{- end }}        
       secretName: "tls-juno-{{ .Values.global.region }}-cloud-sap"
