@@ -139,42 +139,43 @@ jobs:
     ensure:
       put: qa-de-1.release
 
-  # - name: s-eu-nl-1
-  #   serial: true
-  #   plan:
-  #     - in_parallel:
-  #       - get: version
-  #         passed: ["s-qa-de-1"]
-  #       - get: juno.git
-  #       - get: secrets.git
-  #         params:
-  #           depth: 100
+  - name: s-eu-nl-1
+    serial: true
+    plan:
+      - in_parallel:
+        - get: version
+          passed: ["s-qa-de-1"]
+        - get: juno.git
+        - get: secrets.git
+          params:
+            depth: 100
 
-  #     - task: replicate image to target region
-  #       file: secrets.git/ci/shared/task-replicate-image.yaml
-  #       input_mapping:
-  #         app.version: version
-  #       params:
-  #         REGION: eu-nl-1
-  #         IMAGE:  juno
+      - task: replicate image to target region
+        file: secrets.git/ci/shared/task-replicate-image.yaml
+        input_mapping:
+          app.version: version
+        params:
+          REGION: eu-nl-1
+          IMAGE:  juno
 
-  #     - task: deploy
-  #       file: secrets.git/ci/shared/task-helm-upgrade.yaml
-  #       input_mapping:
-  #         helm-charts.git: juno.git
-  #         app.version: version
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          helm-charts.git: juno.git
+          app.version: version
 
-  #       params:
-  #         CHART_PATH:   ci/helm-charts
-  #         RELEASE:      juno
-  #         NAMESPACE:    juno
-  #         REGION:       eu-nl-1
-  #         CONTEXT:      s-eu-nl-1
-  #         TAG_VARIABLE: image.tag
-  #         KUBELOGON_USER:     {{unified-kubernetes-scaleout-username}}
-  #         KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
-  #   ensure:
-  #     put: eu-nl-1.release
+        params:
+          CHART_PATH:   ci/helm-charts
+          RELEASE:      juno
+          NAMESPACE:    juno
+          REGION:       eu-nl-1
+          CONTEXT:      s-eu-nl-1
+          TAG_VARIABLE: image.tag
+          VALUES:       local:globals
+          KUBELOGON_USER:     {{unified-kubernetes-scaleout-username}}
+          KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
+    ensure:
+      put: eu-nl-1.release
 
 resources:
   - name: qa-de-1.release
@@ -182,10 +183,10 @@ resources:
     check_every: 525600h # basically never (check is a no-op anyway)
     source: { region: "qa-de-1" }
 
-  # - name: eu-nl-1.release
-  #   type: release
-  #   check_every: 525600h # basically never (check is a no-op anyway)
-  #   source: { region: "eu-nl-1" }  
+  - name: eu-nl-1.release
+    type: release
+    check_every: 525600h # basically never (check is a no-op anyway)
+    source: { region: "eu-nl-1" }  
 
   - name: juno.git
     type: git
