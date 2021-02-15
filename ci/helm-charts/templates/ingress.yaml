@@ -17,21 +17,21 @@ spec:
           - backend:
               serviceName: juno
               servicePort: 5000
-            path: /
-{{- if eq .Values.global.region eu-nl-1 }}
-      host: "juno.global.cloud.sap"
+            path: /            
+{{- if eq .Values.global.region "eu-nl-1" }}
+    - host: "juno.global.cloud.sap"
       http:
         paths:
           - backend:
               serviceName: juno
               servicePort: 5000
             path: /
-{{- end }}
+{{- end }} 
 
   tls:
     - hosts: 
-      - "juno.{{ .Values.global.region }}.cloud.sap"
-{{- if eq .Values.global.region eu-nl-1 }}      
-        "juno.global.cloud.sap"
+        - "juno.{{ .Values.global.region }}.cloud.sap"
+{{- if eq .Values.global.region "eu-nl-1" }}      
+        - "juno.global.cloud.sap"
 {{- end }}        
       secretName: "tls-juno-{{ .Values.global.region }}-cloud-sap"
