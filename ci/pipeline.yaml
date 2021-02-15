@@ -1,12 +1,3 @@
-# <%
-#   TARGETS = [
-#     { region: "qa-de-1", cluster: "s-qa-de-1", type: "scaleout" },
-#     { region: "eu-nl-1", cluster: "s-eu-nl-1", type: "scaleout", job_name: "supernova.eu-nl-1.cloud.sap" },
-#     { region: "eu-de-2", cluster: "i-eu-de-2", type: "internet", job_name: "supernova.global.cloud.sap (i-eu-de-2)" },
-#   ]
-# %>
-# prettier-ignore
-
 jobs:
   - name: README
     serial: true
@@ -33,10 +24,10 @@ jobs:
         trigger: true
 
       - put: juno-unit-test.image
-        params: 
+        params:
           tag_as_latest: true
           cache: true
-          cache_tag: 'latest'   
+          cache_tag: "latest"
           build: juno.git
           dockerfile: juno.git/ci/Dockerfile.test
 
@@ -46,7 +37,7 @@ jobs:
       - get: juno.git
         passed: ["build unit-test-image"]
         trigger: true
-      - get: juno-unit-test.image 
+      - get: juno-unit-test.image
 
       - task: unit
         config:
@@ -73,32 +64,32 @@ jobs:
     serial: true
     plan:
       - in_parallel:
-        - get: juno.git
-          passed: [unit-test]
-          trigger: true
-        - put: version
+          - get: juno.git
+            passed: [unit-test]
+            trigger: true
+          - put: version
       - in_parallel:
-        - put: juno.image
-          params:
-            tag_as_latest: true
-            cache: true
-            cache_tag: 'latest'
-            build: juno.git
-            dockerfile: juno.git/ci/Dockerfile
-            tag: version/version
-          get_params:
-            skip_download: true
+          - put: juno.image
+            params:
+              tag_as_latest: true
+              cache: true
+              cache_tag: "latest"
+              build: juno.git
+              dockerfile: juno.git/ci/Dockerfile
+              tag: version/version
+            get_params:
+              skip_download: true
 
   - name: vscan
     serial: true
     plan:
       - in_parallel:
-        - get: secrets.git
-          params:
-            depth: 100
-        - get: version
-          passed: [build]
-          trigger: true
+          - get: secrets.git
+            params:
+              depth: 100
+          - get: version
+            passed: [build]
+            trigger: true
       - task: scan-image
         file: secrets.git/ci/shared/task-vscan.yaml
         input_mapping:
@@ -107,18 +98,18 @@ jobs:
           IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno
 
           #     { region: "qa-de-1", cluster: "s-qa-de-1", type: "scaleout" },
-          
+
   - name: s-qa-de-1
     serial: true
     plan:
       - in_parallel:
-        - get: version
-          trigger: true
-          passed: ["vscan"]
-        - get: juno.git
-        - get: secrets.git
-          params:
-            depth: 100
+          - get: version
+            trigger: true
+            passed: ["vscan"]
+          - get: juno.git
+          - get: secrets.git
+            params:
+              depth: 100
 
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
@@ -127,15 +118,15 @@ jobs:
           app.version: version
 
         params:
-          CHART_PATH:   ci/helm-charts
-          RELEASE:      juno
-          NAMESPACE:    juno
-          REGION:       qa-de-1
-          CONTEXT:      s-qa-de-1
+          CHART_PATH: ci/helm-charts
+          RELEASE: juno
+          NAMESPACE: juno
+          REGION: qa-de-1
+          CONTEXT: s-qa-de-1
           TAG_VARIABLE: image.tag
-          VALUES:       local:globals
-          KUBELOGON_USER:     {{unified-kubernetes-scaleout-username}}
-          KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
+          VALUES: local:globals
+          KUBELOGON_USER: { { unified-kubernetes-scaleout-username } }
+          KUBELOGON_PASSWORD: { { unified-kubernetes-scaleout-password } }
     ensure:
       put: qa-de-1.release
 
@@ -143,12 +134,12 @@ jobs:
     serial: true
     plan:
       - in_parallel:
-        - get: version
-          passed: ["s-qa-de-1"]
-        - get: juno.git
-        - get: secrets.git
-          params:
-            depth: 100
+          - get: version
+            passed: ["s-qa-de-1"]
+          - get: juno.git
+          - get: secrets.git
+            params:
+              depth: 100
 
       - task: replicate image to target region
         file: secrets.git/ci/shared/task-replicate-image.yaml
@@ -156,7 +147,7 @@ jobs:
           app.version: version
         params:
           REGION: eu-nl-1
-          IMAGE:  juno
+          IMAGE: juno
 
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
@@ -165,15 +156,15 @@ jobs:
           app.version: version
 
         params:
-          CHART_PATH:   ci/helm-charts
-          RELEASE:      juno
-          NAMESPACE:    juno
-          REGION:       eu-nl-1
-          CONTEXT:      s-eu-nl-1
+          CHART_PATH: ci/helm-charts
+          RELEASE: juno
+          NAMESPACE: juno
+          REGION: eu-nl-1
+          CONTEXT: s-eu-nl-1
           TAG_VARIABLE: image.tag
-          VALUES:       local:globals
-          KUBELOGON_USER:     {{unified-kubernetes-scaleout-username}}
-          KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
+          VALUES: local:globals
+          KUBELOGON_USER: { { unified-kubernetes-scaleout-username } }
+          KUBELOGON_PASSWORD: { { unified-kubernetes-scaleout-password } }
     ensure:
       put: eu-nl-1.release
 
@@ -186,7 +177,7 @@ resources:
   - name: eu-nl-1.release
     type: release
     check_every: 525600h # basically never (check is a no-op anyway)
-    source: { region: "eu-nl-1" }  
+    source: { region: "eu-nl-1" }
 
   - name: juno.git
     type: git
@@ -194,7 +185,7 @@ resources:
       uri: https://github.com/sapcc/juno.git
       branch: main
       username: sapcc-bot
-      password: {{real-github-access-token}}
+      password: { { real-github-access-token } }
 
   - name: secrets.git
     type: git-proxy
@@ -203,7 +194,7 @@ resources:
     source:
       uri: git@github.wdf.sap.corp:cc/secrets.git
       branch: master
-      private_key: {{secrets-ssh-key}}
+      private_key: { { secrets-ssh-key } }
 
   - name: version
     type: time-version-resource
@@ -213,16 +204,16 @@ resources:
     type: docker-image
     check_every: 24h
     source:
-      username: {{keppel-username}}
-      password: {{keppel-password}}
+      username: { { keppel-username } }
+      password: { { keppel-password } }
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno
 
   - name: juno-unit-test.image
     type: docker-image
     check_every: 24h
     source:
-      username: {{keppel-username}}
-      password: {{keppel-password}}
+      username: { { keppel-username } }
+      password: { { keppel-password } }
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-unit-test
 
 resource_types:
