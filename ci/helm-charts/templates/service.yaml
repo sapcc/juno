@@ -4,14 +4,11 @@ apiVersion: v1
 metadata:
   namespace: juno
   name: juno
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "80"
-    prometheus.io/path: "/system/metrics"
-    prometheus.io/targets: "openstack"
 
 spec:
   selector:
     app: juno
   ports:
-    - port: 5000
+    - name: juno
+      port: 5000
+      protocol: TCP
