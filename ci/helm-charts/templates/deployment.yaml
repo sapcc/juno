@@ -8,7 +8,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: nginx
+      app: juno
   revisionHistoryLimit: 3
   replicas: 2
   strategy:
