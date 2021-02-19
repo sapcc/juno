@@ -1,6 +1,10 @@
-{
+{ // this babelrc file is ignored because of create-react-app. I'm just leaving it here in case of problems in the future, so I know which settings need to be in there.'
   "plugins": [
     "babel-plugin-macros",
-    "@babel/plugin-transform-react-jsx"
+    "@babel/plugin-transform-react-jsx",
+    "react-html-attrs"
+  ],
+  "presets": [
+    ["@babel/preset-react", { "throwIfNamespace": false }]
   ]
 }

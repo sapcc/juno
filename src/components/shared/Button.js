@@ -1,7 +1,7 @@
 import tw from "twin.macro"
 
 const StandardButton = tw.button`
-  bg-sap-blue-500
+  bg-sap-blue
   py-3
   px-10
   text-xl

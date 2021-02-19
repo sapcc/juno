@@ -4,7 +4,11 @@ import PageHead from "./PageHead"
 import PageFooter from "./PageFooter"
 import Content from "../landingpage/Content"
 
-const LayoutWrapper = tw.div``
+const LayoutWrapper = tw.div`
+  bg-hero-background
+  bg-no-repeat
+  bg-top
+`
 
 
 const Layout = () => {
