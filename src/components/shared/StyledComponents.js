@@ -1,6 +1,6 @@
 import tw, { styled } from "twin.macro"
 
-import { getColorStyle } from "../../lib/styling/StyleMap"
+import { getTextColorStyle } from "../../lib/styling/StyleMap"
 
 
 // ------------------------------
@@ -13,7 +13,7 @@ const H4 = styled.h4(() => [
     uppercase
     mb-3
   `,
-  getColorStyle
+  getTextColorStyle
 ])
 
 
