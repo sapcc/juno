@@ -1,13 +1,22 @@
 import tw from "twin.macro"
 
-const colorStyleMap = {
+const textColorStyleMap = {
   blue: tw`text-sap-blue`,
   gold: tw`text-sap-gold`,
   default: tw`text-white`
 }
 
-const getColorStyle = ({color}) => colorStyleMap[color] || colorStyleMap.default
+const bgColorStyleMap = {
+  blue: tw`bg-sap-blue`,
+  darkBlueLight: tw`bg-sap-dark-blue-light`,
+  gold: tw`bg-sap-gold`,
+  default: tw`bg-white`
+}
+
+const getTextColorStyle = ({color}) => textColorStyleMap[color] || textColorStyleMap.default
+const getBgColorStyle = ({color}) => bgColorStyleMap[color] || bgColorStyleMap.default
 
 export {
-  getColorStyle
+  getTextColorStyle,
+  getBgColorStyle
 }
