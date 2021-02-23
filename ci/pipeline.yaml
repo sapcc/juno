@@ -17,7 +17,7 @@ jobs:
             args:
               - -e
               - '\tThis pipeline is defined at: https://github.com/sapcc/juno/ci/\n\n'
-              - '\tManage Juno images: https://keppel.eu-de-1.cloud.sap/ccloud/juno\n'
+              - '\tManage Juno images: https://keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard\n'
 
   - name: build unit-test-image
     public: true
@@ -33,7 +33,7 @@ jobs:
           build: test-image-source.git
           dockerfile: test-image-source.git/ci/Dockerfile.test
 
-  - name: dashboard unit-test
+  - name: unit-test dashboard
     public: true
     plan:
       - get: dashboard-source.git
@@ -63,71 +63,43 @@ jobs:
                 ls -la
                 yarn --dev && CI=true yarn test
 
-  # - name: unit-test
-  #   public: true
-  #   plan:
-  #     - get: juno.git
-  #       passed: ["build unit-test-image"]
-  #       trigger: true
-  #     - get: juno-unit-test.image
 
-  #     - task: unit
-  #       config:
-  #         platform: linux
-  #         image_resource:
-  #           type: docker-image
-  #           source:
-  #             repository: keppel.eu-de-1.cloud.sap/ccloud/juno-unit-test
-  #             tag: "latest"
-  #         inputs:
-  #           - name: juno.git
-  #             path: /app/juno
+  - name: build dashboard
+    serial: true
+    plan:
+      - in_parallel:
+          - get: dashboard-source.git
+            passed: [unit-test dashboard]
+            trigger: true
+          - put: version
+      - in_parallel:
+          - put: juno-dashboard.image
+            params:
+              tag_as_latest: true
+              cache: true
+              cache_tag: "latest"
+              build: dashboard-source.git
+              dockerfile: dashboard-source.git/ci/Dockerfile
+              tag: version/version
+            get_params:
+              skip_download: true
 
-  #         run:
-  #           path: /bin/sh
-  #           args:
-  #             - -c
-  #             - |
-  #               cd $PWD/app/juno 
-  #               ls -la
-  #               yarn --dev && CI=true yarn test
-
-  # - name: build
-  #   serial: true
-  #   plan:
-  #     - in_parallel:
-  #         - get: juno.git
-  #           passed: [unit-test]
-  #           trigger: true
-  #         - put: version
-  #     - in_parallel:
-  #         - put: juno.image
-  #           params:
-  #             tag_as_latest: true
-  #             cache: true
-  #             cache_tag: "latest"
-  #             build: juno.git
-  #             dockerfile: juno.git/ci/Dockerfile
-  #             tag: version/version
-  #           get_params:
-  #             skip_download: true
-
-  # - name: vscan
-  #   serial: true
-  #   plan:
-  #     - in_parallel:
-  #         - get: secrets.git
-  #           params:
-  #             depth: 100
-  #         - get: version
-  #           passed: [build]
-  #           trigger: true
-  #     - task: scan-image
-  #       file: secrets.git/ci/shared/task-vscan.yaml
-  #       input_mapping:
-  #         image.version: version
-  #       params:
-  #         IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno
+  - name: vscan dashboard
+    serial: true
+    plan:
+      - in_parallel:
+          - get: secrets.git
+            params:
+              depth: 100
+          - get: version
+            passed: [build]
+            trigger: true
+      - task: scan-image
+        file: secrets.git/ci/shared/task-vscan.yaml
+        input_mapping:
+          image.version: version
+        params:
+          IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard
 
   #         #     { region: "qa-de-1", cluster: "s-qa-de-1", type: "scaleout" },
 
@@ -250,13 +222,13 @@ resources:
   #   type: time-version-resource
   #   check_every: 525600h
 
-  # - name: juno.image
-  #   type: docker-image
-  #   check_every: 24h
-  #   source:
-  #     username: {{keppel-username}}
-  #     password: {{keppel-password}}
-  #     repository: keppel.eu-de-1.cloud.sap/ccloud/juno
+  - name: juno-dashboard.image
+    type: docker-image
+    check_every: 24h
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard
 
   - name: juno-unit-test.image
     type: docker-image
