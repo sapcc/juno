@@ -39,7 +39,7 @@ jobs:
       - get: juno-unit-test.image
         passed: ["build unit-test-image"]
         trigger: true
-      - get: dashboard-source.git
+      - get: app-dashboard.git
         trigger: true
 
       - task: unit
@@ -51,7 +51,7 @@ jobs:
               repository: keppel.eu-de-1.cloud.sap/ccloud/juno-unit-test
               tag: "latest"
           inputs:
-            - name: dashboard-source.git
+            - name: app-dashboard.git
               path: /app/juno
 
           run:
@@ -63,42 +63,11 @@ jobs:
                 ls -la
                 yarn --dev && CI=true yarn test
 
-  # - name: unit-test dashboard
-  #   public: true
-  #   plan:
-  #     - get: dashboard-source.git
-  #       trigger: true
-  #     - get: test-image-source.git
-  #       passed: ["build unit-test-image"]
-  #       trigger: true
-
-  #     - task: unit
-  #       config:
-  #         platform: linux
-  #         image_resource:
-  #           type: docker-image
-  #           source:
-  #             repository: keppel.eu-de-1.cloud.sap/ccloud/juno-unit-test
-  #             tag: "latest"
-  #         inputs:
-  #           - name: dashboard-source.git
-  #             path: /app/juno
-
-  #         run:
-  #           path: /bin/sh
-  #           args:
-  #             - -c
-  #             - |
-  #               cd $PWD/app/juno/apps/dashboard
-  #               ls -la
-  #               yarn --dev && CI=true yarn test
-
-
   - name: build dashboard
     serial: true
     plan:
       - in_parallel:
-          - get: dashboard-source.git
+          - get: app-dashboard.git
             passed: [unit-test dashboard]
             trigger: true
           - put: dashboard.version
@@ -108,8 +77,8 @@ jobs:
               tag_as_latest: true
               cache: true
               cache_tag: "latest"
-              build: dashboard-source.git
-              dockerfile: dashboard-source.git/ci/Dockerfile.dashboard
+              build: app-dashboard.git
+              dockerfile: app-dashboard.git/ci/Dockerfile.dashboard
               tag: dashboard.version/version
             get_params:
               skip_download: true
@@ -130,6 +99,37 @@ jobs:
           image.version: dashboard.version
         params:
           IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard
+
+
+  - name: unit-test auth
+    public: true
+    plan:
+      - get: juno-unit-test.image
+        passed: ["build unit-test-image"]
+        trigger: true
+      - get: app-auth.git
+        trigger: true
+
+      - task: unit
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-unit-test
+              tag: "latest"
+          inputs:
+            - name: app-auth.git
+              path: /app/juno
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd $PWD/app/juno/apps/auth
+                ls -la
+                yarn --dev && CI=true yarn test
 
   - name: deploy to s-qa-de-1
     serial: true
@@ -168,7 +168,7 @@ jobs:
       - in_parallel:
           - get: dashboard.version
             passed: ["deploy to s-qa-de-1"]
-          - get: dashboard-source.git
+          - get: app-dashboard.git
           - get: secrets.git
             params:
               depth: 100
@@ -184,7 +184,7 @@ jobs:
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
         input_mapping:
-          helm-charts.git: dashboard-source.git
+          helm-charts.git: app-dashboard.git
           app.version: version
 
         params:
@@ -221,7 +221,7 @@ resources:
       username: sapcc-bot
       password: {{real-github-access-token}}
 
-  - name: dashboard-source.git
+  - name: app-dashboard.git
     type: git
     source:
       uri: https://github.com/sapcc/juno.git
@@ -229,6 +229,15 @@ resources:
       paths: ["apps/dashboard","ci"]
       username: sapcc-bot
       password: {{real-github-access-token}}
+ 
+  - name: app-auth.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["apps/auth","ci"]
+      username: sapcc-bot
+      password: {{real-github-access-token}}      
 
   - name: ci.git
     type: git
