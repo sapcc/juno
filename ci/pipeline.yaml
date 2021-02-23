@@ -36,10 +36,10 @@ jobs:
   - name: unit-test dashboard
     public: true
     plan:
-      - get: dashboard-source.git
-        trigger: true
-      - get: test-image-source.git
+      - get: juno-unit-test.image
         passed: ["build unit-test-image"]
+        trigger: true
+      - get: dashboard-source.git
         trigger: true
 
       - task: unit
@@ -63,6 +63,36 @@ jobs:
                 ls -la
                 yarn --dev && CI=true yarn test
 
+  # - name: unit-test dashboard
+  #   public: true
+  #   plan:
+  #     - get: dashboard-source.git
+  #       trigger: true
+  #     - get: test-image-source.git
+  #       passed: ["build unit-test-image"]
+  #       trigger: true
+
+  #     - task: unit
+  #       config:
+  #         platform: linux
+  #         image_resource:
+  #           type: docker-image
+  #           source:
+  #             repository: keppel.eu-de-1.cloud.sap/ccloud/juno-unit-test
+  #             tag: "latest"
+  #         inputs:
+  #           - name: dashboard-source.git
+  #             path: /app/juno
+
+  #         run:
+  #           path: /bin/sh
+  #           args:
+  #             - -c
+  #             - |
+  #               cd $PWD/app/juno/apps/dashboard
+  #               ls -la
+  #               yarn --dev && CI=true yarn test
+
 
   - name: build dashboard
     serial: true
@@ -71,7 +101,7 @@ jobs:
           - get: dashboard-source.git
             passed: [unit-test dashboard]
             trigger: true
-          - put: version
+          - put: dashboard.version
       - in_parallel:
           - put: juno-dashboard.image
             params:
@@ -79,8 +109,8 @@ jobs:
               cache: true
               cache_tag: "latest"
               build: dashboard-source.git
-              dockerfile: dashboard-source.git/ci/Dockerfile
-              tag: version/version
+              dockerfile: dashboard-source.git/ci/Dockerfile.dashboard
+              tag: dashboard.version/version
             get_params:
               skip_download: true
 
@@ -91,105 +121,96 @@ jobs:
           - get: secrets.git
             params:
               depth: 100
-          - get: version
-            passed: [build]
+          - get: dashboard.version
+            passed: [build dashboard]
             trigger: true
       - task: scan-image
         file: secrets.git/ci/shared/task-vscan.yaml
         input_mapping:
-          image.version: version
+          image.version: dashboard.version
         params:
           IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard
 
-  #         #     { region: "qa-de-1", cluster: "s-qa-de-1", type: "scaleout" },
+  - name: deploy to s-qa-de-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: dashboard.version
+            trigger: true
+            passed: ["vscan dashboard"]
+          - get: ci.git
+          - get: secrets.git
+            params:
+              depth: 100
 
-  # - name: s-qa-de-1
-  #   serial: true
-  #   plan:
-  #     - in_parallel:
-  #         - get: version
-  #           trigger: true
-  #           passed: ["vscan"]
-  #         - get: juno.git
-  #         - get: secrets.git
-  #           params:
-  #             depth: 100
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          app.version: dashboard.version
+          helm-charts.git: ci.git
 
-  #     - task: deploy
-  #       file: secrets.git/ci/shared/task-helm-upgrade.yaml
-  #       input_mapping:
-  #         helm-charts.git: juno.git
-  #         app.version: version
+        params:
+          CHART_PATH: ci/helm-charts
+          RELEASE: juno
+          NAMESPACE: juno
+          REGION: qa-de-1
+          CONTEXT: s-qa-de-1
+          TAG_VARIABLE: image.tag
+          VALUES: local:globals
+          KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
+          KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
+    ensure:
+      put: qa-de-1.release
 
-  #       params:
-  #         CHART_PATH: ci/helm-charts
-  #         RELEASE: juno
-  #         NAMESPACE: juno
-  #         REGION: qa-de-1
-  #         CONTEXT: s-qa-de-1
-  #         TAG_VARIABLE: image.tag
-  #         VALUES: local:globals
-  #         KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
-  #         KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
-  #   ensure:
-  #     put: qa-de-1.release
+  - name: deploy to s-eu-nl-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: dashboard.version
+            passed: ["deploy to s-qa-de-1"]
+          - get: dashboard-source.git
+          - get: secrets.git
+            params:
+              depth: 100
 
-  # - name: s-eu-nl-1
-  #   serial: true
-  #   plan:
-  #     - in_parallel:
-  #         - get: version
-  #           passed: ["s-qa-de-1"]
-  #         - get: juno.git
-  #         - get: secrets.git
-  #           params:
-  #             depth: 100
+      - task: replicate image to target region
+        file: secrets.git/ci/shared/task-replicate-image.yaml
+        input_mapping:
+          app.version: dashboard.version
+        params:
+          REGION: eu-nl-1
+          IMAGE: juno-dashboard
 
-  #     - task: replicate image to target region
-  #       file: secrets.git/ci/shared/task-replicate-image.yaml
-  #       input_mapping:
-  #         app.version: version
-  #       params:
-  #         REGION: eu-nl-1
-  #         IMAGE: juno
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          helm-charts.git: dashboard-source.git
+          app.version: version
 
-  #     - task: deploy
-  #       file: secrets.git/ci/shared/task-helm-upgrade.yaml
-  #       input_mapping:
-  #         helm-charts.git: juno.git
-  #         app.version: version
-
-  #       params:
-  #         CHART_PATH: ci/helm-charts
-  #         RELEASE: juno
-  #         NAMESPACE: juno
-  #         REGION: eu-nl-1
-  #         CONTEXT: s-eu-nl-1
-  #         TAG_VARIABLE: image.tag
-  #         VALUES: local:globals
-  #         KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
-  #         KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
-  #   ensure:
-  #     put: eu-nl-1.release
+        params:
+          CHART_PATH: ci/helm-charts
+          RELEASE: juno
+          NAMESPACE: juno
+          REGION: eu-nl-1
+          CONTEXT: s-eu-nl-1
+          TAG_VARIABLE: image.tag
+          VALUES: local:globals
+          KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
+          KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
+    ensure:
+      put: eu-nl-1.release
 
 resources:
-  # - name: qa-de-1.release
-  #   type: release
-  #   check_every: 525600h # basically never (check is a no-op anyway)
-  #   source: { region: "qa-de-1" }
+  - name: qa-de-1.release
+    type: release
+    check_every: 525600h # basically never (check is a no-op anyway)
+    source: { region: "qa-de-1" }
 
-  # - name: eu-nl-1.release
-  #   type: release
-  #   check_every: 525600h # basically never (check is a no-op anyway)
-  #   source: { region: "eu-nl-1" }
+  - name: eu-nl-1.release
+    type: release
+    check_every: 525600h # basically never (check is a no-op anyway)
+    source: { region: "eu-nl-1" }
 
-  # - name: juno.git
-  #   type: git
-  #   source:
-  #     uri: https://github.com/sapcc/juno.git
-  #     branch: main
-  #     username: sapcc-bot
-  #     password: {{real-github-access-token}}
 
   - name: test-image-source.git
     type: git
@@ -205,22 +226,31 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/dashboard"]
+      paths: ["apps/dashboard","ci"]
       username: sapcc-bot
       password: {{real-github-access-token}}
 
-  # - name: secrets.git
-  #   type: git-proxy
-  #   webhook_token: lfkhslkfhs
-  #   check_every: 6h
-  #   source:
-  #     uri: git@github.wdf.sap.corp:cc/secrets.git
-  #     branch: master
-  #     private_key: {{secrets-ssh-key}}
+  - name: ci.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["ci"]
+      username: sapcc-bot
+      password: {{real-github-access-token}}     
 
-  # - name: version
-  #   type: time-version-resource
-  #   check_every: 525600h
+  - name: secrets.git
+    type: git-proxy
+    webhook_token: lfkhslkfhs
+    check_every: 6h
+    source:
+      uri: git@github.wdf.sap.corp:cc/secrets.git
+      branch: master
+      private_key: {{secrets-ssh-key}}
+
+  - name: dashboard.version
+    type: time-version-resource
+    check_every: 525600h
 
   - name: juno-dashboard.image
     type: docker-image
