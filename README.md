@@ -1,15 +1,24 @@
 # Juno
-Global Dashboard
+
+Is a collection of micro frontends
 
 # Development
 
+Start dashboard
+
 ```bash
-yarn start
+yarn dashboard
+```
+
+Start any app in apps folder with --cwd apps/APP_NAME
+
+```bash
+yarn --cwd apps/dashboard start
 ```
 
 In workspaces
-```
-wb yarn start
-```
 
-
+```
+wb yarn dashboard
+wb yarn --cwd apps/dashboard start
+```
