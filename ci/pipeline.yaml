@@ -182,22 +182,18 @@ jobs:
               tag: "latest"
           run:
             path: /bin/sh
-            # copy the previously created build of auth to output (named build)
             args:
               - -c
               - |
-                cp -r /app/build /build/auth
+                ls -la ./build; ls -la /app/build; cp -r /app/build ./build/auth-0.0.1
           outputs:
             - name: build
-              path: /app/build
 
       - put: juno-cdn.image
         params:
           tag_as_latest: true
           cache: true
           cache_tag: "latest"
-          # use the created build in the task "copy build" as docker base folder
-          # build contains a folder named as auth
           build: build
           dockerfile: ci.git/ci/Dockerfile.cdn
 
