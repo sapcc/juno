@@ -1,0 +1,8 @@
+FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/nginx:alpine
+
+LABEL source_repository="https://github.com/sapcc/juno/ci/Dockerfile.cdn"
+
+RUN apk --no-cache add git ca-certificates make
+
+WORKDIR /apps
+ADD . /apps/

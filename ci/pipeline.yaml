@@ -131,6 +131,56 @@ jobs:
                 ls -la
                 yarn --dev && CI=true yarn test
 
+  - name: build auth
+    public: true
+    plan:
+      - get: app-auth.git
+        passed: ["unit-test auth"]
+        trigger: true
+
+      - put: juno-auth.image
+        params:
+          tag_as_latest: true
+          cache: true
+          cache_tag: "latest"
+          build: app-auth.git/apps/auth
+          dockerfile: app-auth.git/ci/Dockerfile.app
+
+  - name: combine apps
+    public: true
+    plan:
+      - get: juno-auth.image
+        passed: ["build auth"]
+        trigger: true
+      - get: ci.git  
+
+      - task: unit
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth
+              tag: "latest"
+          outputs:
+            - name: /build
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cp -r /app /build
+
+      - put: juno-cdn.image
+        params:
+          tag_as_latest: true
+          cache: true
+          cache_tag: "latest"
+          build: /build
+          dockerfile: ci.git/ci/Dockerfile.cdn
+
+
   - name: deploy to s-qa-de-1
     serial: true
     plan:
@@ -268,6 +318,20 @@ resources:
       username: {{keppel-username}}
       password: {{keppel-password}}
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard
+
+  - name: juno-auth.image
+    type: docker-image
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth     
+
+  - name: juno-cdn.image
+    type: docker-image
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-cdn     
 
   - name: juno-unit-test.image
     type: docker-image
