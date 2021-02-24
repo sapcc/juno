@@ -8,7 +8,7 @@ RUN npm install -g serve
 RUN mkdir -p /app
 
 WORKDIR /app
-ADD .package.json .yarn.lock /app/
+ADD ./package.json ./yarn.lock /app/
 
 RUN yarn install
 
