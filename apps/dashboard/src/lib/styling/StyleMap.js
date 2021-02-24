@@ -3,6 +3,8 @@ import tw from "twin.macro"
 const textColorStyleMap = {
   blue: tw`text-sap-blue`,
   gold: tw`text-sap-gold`,
+  black: tw`text-black`,
+  white: tw`text-white`,
   default: tw`text-white`
 }
 

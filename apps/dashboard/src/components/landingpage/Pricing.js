@@ -5,7 +5,7 @@ import { ReactComponent as AzureLogo } from '../../assets/images/Microsoft_Azure
 import { ReactComponent as CCShortLogo } from '../../assets/images/CCplusOne_short_logo.svg';
 
 import { H4, FlexContainer } from "../shared/StyledComponents"
-import { getBgColorStyle } from "../../lib/styling/StyleMap"
+import { getBgColorStyle, getTextColorStyle } from "../../lib/styling/StyleMap"
 
 
 const Container = styled.div`
@@ -69,12 +69,15 @@ const IconContainer = tw.div`
 const ProgressContainer = tw.div`
   relative
   pt-20
+  pb-8
 `
 
 const Progress = tw.div`
   h-8
   rounded-full
   border-sap-dark-blue
+  border-opacity-70
+  bg-clip-padding
   border-4
   bg-white
   relative
@@ -106,11 +109,33 @@ const ProgressIndicator = styled.div(() => [
   getBgColorStyle
 ])
 
-const IndicatorLogo = tw.div`
-  absolute
-  top-0
-  -ml-12
+const ProgressFootnote = tw.div`
+  flex
+  justify-between
+  p-2
+  font-thin
 `
+
+const IndicatorLogo = styled.div`
+  ${tw`
+    absolute
+    top-0
+  `}
+
+  margin-left: -4.75rem;
+`
+
+const IndicatorText = styled.div(() => [
+  tw`
+    absolute
+    top-0
+    mr-8
+    text-sm
+    font-medium
+    leading-6
+  `,
+  getTextColorStyle
+])
 
 
 
@@ -146,13 +171,30 @@ const Pricing = () => {
   
       <CostComparison>
         <ProgressContainer>
-          <IndicatorLogo style={{"left": "60%"}}>
+          <IndicatorLogo style={{"left": "30%"}}>
             <CCShortLogo />
           </IndicatorLogo>
+          <IndicatorLogo style={{"left": "88%"}}>
+            <AzureLogo />
+          </IndicatorLogo>
+          <IndicatorLogo style={{"left": "100%"}}>
+            <AWSLogo />
+          </IndicatorLogo>
+
           <Progress>
-            <ProgressBar style={{"width": "60%"}} />
-            <ProgressIndicator color="gold" style={{"left": "60%" }}/>
+            <ProgressBar style={{"width": "30%"}} />
+            <IndicatorText style={{"right": "70%"}}>1,632 &euro;*</IndicatorText>
+            <IndicatorText style={{"right": "12%"}} color="black">4,497 &euro;*</IndicatorText>
+            <IndicatorText style={{"right": "0"}} color="black">4,960 &euro;*</IndicatorText>
+            <ProgressIndicator color="gold" style={{"left": "30%" }}/>
+            <ProgressIndicator color="darkBlueLight" style={{"left": "88%" }}/>
+            <ProgressIndicator color="darkBlueLight" style={{"left": "100%" }}/>
           </Progress>
+
+          <ProgressFootnote>
+            <div>Configuration: Big Data example, 2500GB internet data traffic</div>
+            <div>* approximate cost / month</div>
+          </ProgressFootnote>
         </ProgressContainer>  
       </CostComparison>
     </Container>
