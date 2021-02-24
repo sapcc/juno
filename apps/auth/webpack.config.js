@@ -10,7 +10,7 @@ module.exports = {
   entry: path.resolve(__dirname, "src/index.js"),
   //Where we put the production code
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "build"),
     filename: "bundle.[contenthash].js",
     publicPath: "/",
   },

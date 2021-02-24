@@ -146,6 +146,24 @@ jobs:
           build: app-auth.git/apps/auth
           dockerfile: app-auth.git/ci/Dockerfile.app
 
+  - name: vscan auth
+    serial: true
+    plan:
+      - in_parallel:
+          - get: app-auth.git
+            passed: ["build auth"]
+            trigger: true
+
+          - get: secrets.git
+            params:
+              depth: 100
+      - task: scan-image
+        file: secrets.git/ci/shared/task-vscan.yaml
+        input_mapping:
+          image.version: "latest"
+        params:
+          IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-auth
+
   - name: combine apps
     public: true
     plan:
@@ -154,30 +172,33 @@ jobs:
         trigger: true
       - get: ci.git  
 
-      - task: unit
+      - task: copy build
         config:
           platform: linux
           image_resource:
-            type: docker-image
-            source:
+            type: registry-image
+            source: 
               repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth
               tag: "latest"
-          outputs:
-            - name: /build
-
           run:
             path: /bin/sh
+            # copy the previously created build of auth to output (named build)
             args:
               - -c
               - |
-                cp -r /app /build
+                cp -r /app/build /build/auth
+          outputs:
+            - name: build
+              path: /app/build
 
       - put: juno-cdn.image
         params:
           tag_as_latest: true
           cache: true
           cache_tag: "latest"
-          build: /build
+          # use the created build in the task "copy build" as docker base folder
+          # build contains a folder named as auth
+          build: build
           dockerfile: ci.git/ci/Dockerfile.cdn
 
 
