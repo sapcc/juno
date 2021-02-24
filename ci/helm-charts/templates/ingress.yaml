@@ -15,26 +15,28 @@ spec:
       http:
         paths:
           - backend:
+              serviceName: juno-cdn
+              servicePort: 8888
+            path: /cdn   
+
+          - backend:
               serviceName: juno-dashboard
               servicePort: 5000
             path: / 
 
-          - backend:
-              serviceName: juno-cdn
-              servicePort: 8888
-            path: /cdn                       
+                    
 {{- if eq .Values.global.region "eu-nl-1" }}
     - host: "juno.global.cloud.sap"
       http:
         paths:
           - backend:
-              serviceName: juno-dashboard
-              servicePort: 5000
-            path: /
-          - backend:
               serviceName: juno-cdn
               servicePort: 5000
             path: /cdn  
+          - backend:
+              serviceName: juno-dashboard
+              servicePort: 5000
+            path: /
 {{- end }} 
 
   tls:
