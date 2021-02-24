@@ -1,7 +1,5 @@
 # prettier-ignore
 
-
-
 jobs:
   - name: README
     serial: true
@@ -102,7 +100,7 @@ jobs:
         params:
           IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard
 
-  
+
   - name: unit-test auth
     public: true
     plan:
@@ -183,26 +181,22 @@ jobs:
           image.version: version
         params:
           IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-auth
-  
 
   - name: combine apps
     public: true
     plan:
-      
       - get: app-auth.git
         passed: ["vscan auth"]
         trigger: true
-        
       - get: ci.git  
 
-      
-      - task: copy build of auth
+      - task: copy build
         config:
           platform: linux
           image_resource:
             type: registry-image
             source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-
+              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth
               tag: "latest"
           run:
             path: /bin/sh
@@ -210,34 +204,9 @@ jobs:
               - -c
               - |
                 VERSION=$(grep -oP '(?<="version": ")[^"]*' /app/package.json)
-                cp -r /app/build ./auth/$VERSION
-          outputs:
-            - name: auth
-          
-
-      - task: combine builds
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
-              tag: "latest"
-          inputs: 
-            
-            - name: auth 
-                
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                
-                cp -r ./auth  ./build/auth
-                
+                cp -r /app/build ./build/auth-$VERSION
           outputs:
             - name: build
-
 
       - put: juno-cdn.image
         params:
@@ -347,7 +316,6 @@ resources:
       username: sapcc-bot
       password: {{real-github-access-token}}
  
-  
   - name: app-auth.git
     type: git
     source:
@@ -356,14 +324,6 @@ resources:
       paths: ["apps/auth","ci"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
-
-  - name: juno-auth.image
-    type: docker-image
-    source:
-      username: {{keppel-username}}
-      password: {{keppel-password}}
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth    
-           
 
   - name: ci.git
     type: git
@@ -393,7 +353,14 @@ resources:
     source:
       username: {{keppel-username}}
       password: {{keppel-password}}
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard  
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard
+
+  - name: juno-auth.image
+    type: docker-image
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth     
 
   - name: juno-cdn.image
     type: docker-image

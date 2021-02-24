@@ -5,8 +5,8 @@ metadata:
     dns-manager: "true"
     dns-manager/zone-name: "{{ .Values.global.region }}.cloud.sap"
     kubernetes.io/tls-acme: "true"
-  labels:
-    app: juno
+  # labels:
+  #   app: juno
   name: juno
   namespace: juno
 spec:
@@ -15,17 +15,26 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: juno
+              serviceName: juno-dashboard
               servicePort: 5000
-            path: /            
+            path: / 
+
+          - backend:
+              serviceName: juno-cdn
+              servicePort: 8888
+            path: /cdn                       
 {{- if eq .Values.global.region "eu-nl-1" }}
     - host: "juno.global.cloud.sap"
       http:
         paths:
           - backend:
-              serviceName: juno
+              serviceName: juno-dashboard
               servicePort: 5000
             path: /
+          - backend:
+              serviceName: juno-cdn
+              servicePort: 5000
+            path: /cdn  
 {{- end }} 
 
   tls:

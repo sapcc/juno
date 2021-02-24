@@ -1,6 +1,8 @@
 # prettier-ignore
 
-
+<%
+  APPS = ["auth"]
+%>
 
 jobs:
   - name: README
@@ -102,14 +104,14 @@ jobs:
         params:
           IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard
 
-  
-  - name: unit-test auth
+  <% APPS.each do |app| %>
+  - name: unit-test <%= app %>
     public: true
     plan:
       - get: juno-unit-test.image
         passed: ["build unit-test-image"]
         trigger: true
-      - get: app-auth.git
+      - get: app-<%= app %>.git
         trigger: true
 
       - task: unit
@@ -121,7 +123,7 @@ jobs:
               repository: keppel.eu-de-1.cloud.sap/ccloud/juno-unit-test
               tag: "latest"
           inputs:
-            - name: app-auth.git
+            - name: app-<%= app %>.git
               path: /app/juno
 
           run:
@@ -129,31 +131,31 @@ jobs:
             args:
               - -c
               - |
-                cd $PWD/app/juno/apps/auth
+                cd $PWD/app/juno/apps/<%= app %>
                 ls -la
                 yarn --dev && CI=true yarn test
 
-  - name: build auth
+  - name: build <%= app %>
     public: true
     plan:
-      - get: app-auth.git
-        passed: ["unit-test auth"]
+      - get: app-<%= app %>.git
+        passed: ["unit-test <%= app %>"]
         trigger: true
 
-      - put: juno-auth.image
+      - put: juno-<%= app %>.image
         params:
           tag_as_latest: true
           cache: true
           cache_tag: "latest"
-          build: app-auth.git/apps/auth
-          dockerfile: app-auth.git/ci/Dockerfile.app
+          build: app-<%= app %>.git/apps/<%= app %>
+          dockerfile: app-<%= app %>.git/ci/Dockerfile.app
 
-  - name: vscan auth
+  - name: vscan <%= app %>
     serial: true
     plan:
       - in_parallel:
-          - get: app-auth.git
-            passed: ["build auth"]
+          - get: app-<%= app %>.git
+            passed: ["build <%= app %>"]
             trigger: true
 
           - get: secrets.git
@@ -182,27 +184,27 @@ jobs:
         input_mapping:
           image.version: version
         params:
-          IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-auth
-  
+          IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-<%= app %>
+  <% end %>
 
   - name: combine apps
     public: true
     plan:
-      
-      - get: app-auth.git
-        passed: ["vscan auth"]
+      <% APPS.each do |app| %>
+      - get: app-<%= app %>.git
+        passed: ["vscan <%= app %>"]
         trigger: true
-        
+      <% end %>  
       - get: ci.git  
 
-      
-      - task: copy build of auth
+      <% APPS.each do |app| %>
+      - task: copy build of <%= app %>
         config:
           platform: linux
           image_resource:
             type: registry-image
             source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-
+              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-<% app %>
               tag: "latest"
           run:
             path: /bin/sh
@@ -210,10 +212,10 @@ jobs:
               - -c
               - |
                 VERSION=$(grep -oP '(?<="version": ")[^"]*' /app/package.json)
-                cp -r /app/build ./auth/$VERSION
+                cp -r /app/build ./<%= app %>/$VERSION
           outputs:
-            - name: auth
-          
+            - name: <%= app %>
+      <% end %>    
 
       - task: combine builds
         config:
@@ -224,17 +226,17 @@ jobs:
               repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
               tag: "latest"
           inputs: 
-            
-            - name: auth 
-                
+            <% APPS.each do |app| %>
+            - name: <%= app %> 
+            <% end %>    
           run:
             path: /bin/sh
             args:
               - -c
               - |
-                
-                cp -r ./auth  ./build/auth
-                
+                <% APPS.each do |app| %>
+                cp -r ./<%= app %>  ./build/<%= app %>
+                <% end %>
           outputs:
             - name: build
 
@@ -347,23 +349,23 @@ resources:
       username: sapcc-bot
       password: {{real-github-access-token}}
  
-  
-  - name: app-auth.git
+  <% APPS.each do |app| %>
+  - name: app-<%= app %>.git
     type: git
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/auth","ci"]
+      paths: ["apps/<%= app %>","ci"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
-  - name: juno-auth.image
+  - name: juno-<%= app %>.image
     type: docker-image
     source:
       username: {{keppel-username}}
       password: {{keppel-password}}
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth    
-           
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-<%= app %>    
+  <% end %>         
 
   - name: ci.git
     type: git

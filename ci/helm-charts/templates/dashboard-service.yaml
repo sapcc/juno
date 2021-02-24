@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  namespace: juno
+  name: juno-dashboard
+
+spec:
+  selector:
+    app: juno-dashboard
+  ports:
+    - name: juno-dashboard
+      port: 5000
+      protocol: TCP
