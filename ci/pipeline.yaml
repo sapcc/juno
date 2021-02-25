@@ -194,6 +194,91 @@ jobs:
         params:
           IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-auth
   
+  - name: unit-test auth-2
+    public: true
+    plan:
+      - get: juno-unit-test.image
+        passed: ["build unit-test-image"]
+        trigger: true
+      - get: app-auth-2.git
+        trigger: true
+
+      - task: unit
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-unit-test
+              tag: "latest"
+          inputs:
+            - name: app-auth-2.git
+              path: /app/juno
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd $PWD/app/juno/apps/auth-2
+                ls -la
+                yarn --dev && CI=true yarn test
+
+  # build image for each app in /apps
+  # we tag this images as latest. App images only serve as a buffer 
+  # to be used in the next step. After that, they are no longer used. 
+  - name: build auth-2
+    public: true
+    plan:
+      - get: app-auth-2.git
+        passed: ["unit-test auth-2"]
+        trigger: true
+
+      - put: juno-auth-2.image
+        params:
+          tag_as_latest: true
+          cache: true
+          cache_tag: "latest"
+          build: app-auth-2.git/apps/auth-2
+          dockerfile: app-auth-2.git/ci/Dockerfile.app
+
+  # scan each app image for vulnerabilities
+  - name: vscan auth-2
+    serial: true
+    plan:
+      - in_parallel:
+          - get: app-auth-2.git
+            passed: ["build auth-2"]
+            trigger: true
+
+          - get: secrets.git
+            params:
+              depth: 100
+
+      - task: create version file
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: 
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+              tag: "latest"
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                echo "latest" > ./version/version
+          outputs:
+            - name: version
+
+      - task: scan-image
+        file: secrets.git/ci/shared/task-vscan.yaml
+        input_mapping:
+          image.version: version
+        params:
+          IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-auth-2
+  
 
   # this step combines all app images
   # for that we use nginx image and copy all builded apps (in the step before)
@@ -205,6 +290,10 @@ jobs:
       
       - get: app-auth.git
         passed: ["vscan auth"]
+        trigger: true
+      
+      - get: app-auth-2.git
+        passed: ["vscan auth-2"]
         trigger: true
         
       - get: ci.git  
@@ -227,6 +316,24 @@ jobs:
                 cp -r /app/build ./auth-output/$VERSION
           outputs:
             - name: auth-output
+      
+      - task: copy build of auth-2
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: 
+              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth-2
+              tag: "latest"
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
+                cp -r /app/build ./auth-2-output/$VERSION
+          outputs:
+            - name: auth-2-output
           
 
       - task: combine builds
@@ -240,6 +347,8 @@ jobs:
           inputs: 
             
             - name: auth-output 
+            
+            - name: auth-2-output 
                 
           run:
             path: /bin/sh
@@ -248,6 +357,8 @@ jobs:
               - |
                 
                 cp -r ./auth-output  ./build/auth;
+                
+                cp -r ./auth-2-output  ./build/auth-2;
                 
                 echo $(date) > ./build/updated_at
           outputs:
@@ -411,6 +522,22 @@ resources:
       username: {{keppel-username}}
       password: {{keppel-password}}
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth    
+  
+  - name: app-auth-2.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["apps/auth-2","ci"]
+      username: sapcc-bot
+      password: {{real-github-access-token}}      
+
+  - name: juno-auth-2.image
+    type: docker-image
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth-2    
            
 
   - name: ci.git
