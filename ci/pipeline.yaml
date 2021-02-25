@@ -290,7 +290,6 @@ jobs:
             args:
               - -c
               - |
-                echo "cdn-timestamp: $(date +%s)"
                 echo "cdn-timestamp: $(date +%s)" > ./cdn/timestamp.yaml
                 cat ./cdn/timestamp.yaml
           outputs:

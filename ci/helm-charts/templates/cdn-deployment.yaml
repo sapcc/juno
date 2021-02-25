@@ -5,7 +5,7 @@ metadata:
   name: juno-cdn
   namespace: juno
   annotations:
-    timestamp: "{{ .Values.cdn-timestamp }}"
+    timestamp: "{{ .Values.cdnTimestamp }}"
 
 spec:
   selector:
