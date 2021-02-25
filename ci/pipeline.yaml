@@ -261,7 +261,6 @@ jobs:
           build: build
           dockerfile: ci.git/ci/Dockerfile.cdn
 
-
   - name: deploy to s-qa-de-1
     serial: true
     plan:
@@ -277,24 +276,6 @@ jobs:
             params:
               depth: 100 
 
-      # - task: create cdn deployment timestamp
-      #   config:
-      #     platform: linux
-      #     image_resource:
-      #       type: registry-image
-      #       source: 
-      #         repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
-      #         tag: "latest"
-      #     run:
-      #       path: /bin/sh
-      #       args:
-      #         - -c
-      #         - |
-      #           echo "cdn-timestamp: \"$(date +%s)\"" > ./cdn/timestamp.yaml
-      #           cat ./cdn/timestamp.yaml
-      #     outputs:
-      #       - name: cdn
-
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
         input_mapping:
@@ -302,7 +283,6 @@ jobs:
           # cdn uses latest with ImagePullPolicy Always
           app.version: dashboard.version
           helm-charts.git: ci.git
-          # extra-values.git: cdn
 
         params:
           CHART_PATH: ci/helm-charts
@@ -311,7 +291,6 @@ jobs:
           REGION: qa-de-1
           CONTEXT: s-qa-de-1
           TAG_VARIABLE: dashboard.tag
-          # VALUES: local:globals extra:timestamp.yaml
           VALUES: local:globals
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
@@ -379,7 +358,7 @@ jobs:
           NAMESPACE: juno
           REGION: eu-nl-1
           CONTEXT: s-eu-nl-1
-          TAG_VARIABLE: image.tag
+          TAG_VARIABLE: dashboard.tag
           VALUES: local:globals
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
