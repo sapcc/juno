@@ -313,7 +313,6 @@ jobs:
           TAG_VARIABLE: dashboard.tag
           # VALUES: local:globals extra:timestamp.yaml
           VALUES: local:globals
-          ADDITIONAL_HELM_ARGS: "--set-string cdn-timestamp={{ now | date "20060102150405" }}"
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
     ensure:
