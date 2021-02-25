@@ -4,6 +4,8 @@ apiVersion: apps/v1
 metadata:
   name: juno-cdn
   namespace: juno
+  annotations:
+    timestamp: "{{ .Values.cdn-timestamp }}"
 
 spec:
   selector:

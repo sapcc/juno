@@ -293,7 +293,8 @@ jobs:
           NAMESPACE: juno
           REGION: qa-de-1
           CONTEXT: s-qa-de-1
-          TAG_VARIABLE: image.tag
+          TAG_VARIABLE: dashboard.tag
+          ADDITIONAL_HELM_ARGS: "--set-string cdn-timestamp=<%= Time.now.to_i %>"
           VALUES: local:globals
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
