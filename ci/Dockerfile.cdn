@@ -5,4 +5,8 @@ LABEL source_repository="https://github.com/sapcc/juno/ci/Dockerfile.cdn"
 RUN apk --no-cache add git ca-certificates make
 
 RUN mkdir -p /usr/share/nginx/html/cdn
-ADD . /usr/share/nginx/html/cdn/
+
+COPY . /usr/share/nginx/html/cdn/
+
+RUN ls -la /usr/share/nginx/html/cdn
+RUN ls -la /usr/share/nginx/html/cdn/auth

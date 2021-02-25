@@ -4,8 +4,6 @@ apiVersion: apps/v1
 metadata:
   name: juno-cdn
   namespace: juno
-  annotations:
-    timestamp: "{{ .Values.cdnTimestamp }}"
 
 spec:
   selector:
@@ -22,6 +20,10 @@ spec:
     metadata:
       labels:
         app: juno-cdn
+      annotations:
+        # we use timestamp to pull latest image without downtime
+        # https://github.com/helm/helm/issues/5218
+        timestamp: "{{ .Values.cdnTimestamp }}"
     spec:
       # The preStop hook below sleeps 30 seconds, extend the gracePeriod accordingly
       terminationGracePeriodSeconds: 60
