@@ -3,6 +3,7 @@
 
 
 jobs:
+  # for info only
   - name: README
     serial: true
     plan:
@@ -21,6 +22,7 @@ jobs:
               - '\tThis pipeline is defined at: https://github.com/sapcc/juno/ci/\n\n'
               - '\tManage Juno images: https://keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard\n'
 
+  # build the test image if Dockerfile.test changes
   - name: build unit-test-image
     public: true
     plan:
@@ -35,6 +37,7 @@ jobs:
           build: test-image-source.git
           dockerfile: test-image-source.git/ci/Dockerfile.test
 
+  # run unit tests for dashboard sources
   - name: unit-test dashboard
     public: true
     plan:
@@ -65,6 +68,7 @@ jobs:
                 ls -la
                 yarn --dev && CI=true yarn test
 
+  # build dashboard image and push it to keppel
   - name: build dashboard
     serial: true
     plan:
@@ -85,6 +89,7 @@ jobs:
             get_params:
               skip_download: true
 
+  # scan dashboard image for vulnerabilities
   - name: vscan dashboard
     serial: true
     plan:
@@ -102,6 +107,7 @@ jobs:
         params:
           IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard
 
+  # run unit tests for each app in /apps
   
   - name: unit-test auth
     public: true
@@ -133,6 +139,9 @@ jobs:
                 ls -la
                 yarn --dev && CI=true yarn test
 
+  # build image for each app in /apps
+  # we tag this images as latest. App images only serve as a buffer 
+  # to be used in the next step. After that, they are no longer used. 
   - name: build auth
     public: true
     plan:
@@ -148,6 +157,7 @@ jobs:
           build: app-auth.git/apps/auth
           dockerfile: app-auth.git/ci/Dockerfile.app
 
+  # scan each app image for vulnerabilities
   - name: vscan auth
     serial: true
     plan:
@@ -185,6 +195,10 @@ jobs:
           IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-auth
   
 
+  # this step combines all app images
+  # for that we use nginx image and copy all builded apps (in the step before)
+  # into /usr/share/nginx/html/
+  # this image will be deployed as CDN server
   - name: combine apps
     public: true
     plan:
@@ -209,7 +223,7 @@ jobs:
             args:
               - -c
               - |
-                VERSION=$(cat package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/') | sed 's/\./_/g'
+                VERSION=$(cat package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
                 cp -r /app/build ./auth-output/$VERSION
           outputs:
             - name: auth-output
@@ -266,6 +280,8 @@ jobs:
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
         input_mapping:
+          # we deploy dashboard image with the last created version tag (ImagePullPolicy IfNotPresent)
+          # cdn uses latest with ImagePullPolicy Always
           app.version: dashboard.version
           helm-charts.git: ci.git
 
@@ -315,8 +331,6 @@ jobs:
       - task: replicate dashboard image to target region
         file: secrets.git/ci/shared/task-replicate-image.yaml
         input_mapping:
-          # we update dashboard image based on the version (ImagePullPolicy IfNotPresent)
-          # for cdn we use latest with ImagePullPolicy Always
           app.version: dashboard.version
         params:
           REGION: eu-nl-1
