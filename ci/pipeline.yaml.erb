@@ -279,6 +279,25 @@ jobs:
             params:
               depth: 100 
 
+      - task: create cdn deployment timestamp
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: 
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+              tag: "latest"
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                echo "cdn-timestamp: $(date +%s)"
+                echo "cdn-timestamp: $(date +%s)" > ./cdn/timestamp.yaml
+                cat ./cdn/timestamp.yaml
+          outputs:
+            - name: cdn
+
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
         input_mapping:
@@ -286,6 +305,7 @@ jobs:
           # cdn uses latest with ImagePullPolicy Always
           app.version: dashboard.version
           helm-charts.git: ci.git
+          extra-values.git: cdn
 
         params:
           CHART_PATH: ci/helm-charts
@@ -294,8 +314,7 @@ jobs:
           REGION: qa-de-1
           CONTEXT: s-qa-de-1
           TAG_VARIABLE: dashboard.tag
-          ADDITIONAL_HELM_ARGS: "--set-string cdn-timestamp=<%= Time.now.to_i %>"
-          VALUES: local:globals
+          VALUES: local:globals extra:timestamp.yaml
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
     ensure:
