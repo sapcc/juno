@@ -14,7 +14,7 @@ jobs:
           image_resource:
             type: docker-image
             source:
-              repository: alpine
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/alpine
               tag: latest
           run:
             path: /bin/echo
@@ -196,7 +196,7 @@ jobs:
         trigger: true
       <% end %>  
       - get: ci.git  
-
+      - put: cdn.version
       <% APPS.each do |app| %>
       - task: copy build of <%= app %>
         config:
@@ -211,10 +211,10 @@ jobs:
             args:
               - -c
               - |
-                VERSION=$(grep -oP '(?<="version": ")[^"]*' /app/package.json)
-                cp -r /app/build ./<%= app %>/$VERSION
+                VERSION=$(cat package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/') | sed 's/\./_/g'
+                cp -r /app/build ./<%= app %>-output/$VERSION
           outputs:
-            - name: <%= app %>
+            - name: <%= app %>-output
       <% end %>    
 
       - task: combine builds
@@ -227,7 +227,7 @@ jobs:
               tag: "latest"
           inputs: 
             <% APPS.each do |app| %>
-            - name: <%= app %> 
+            - name: <%= app %>-output 
             <% end %>    
           run:
             path: /bin/sh
@@ -235,7 +235,7 @@ jobs:
               - -c
               - |
                 <% APPS.each do |app| %>
-                cp -r ./<%= app %>  ./build/<%= app %>
+                cp -r ./<%= app %>-output  ./build/<%= app %>;
                 <% end %>
           outputs:
             - name: build
@@ -256,18 +256,19 @@ jobs:
       - in_parallel:
           - get: dashboard.version
             trigger: true
-            passed: ["vscan dashboard"]
-          - get: ci.git
+            passed: ["vscan dashboard"]      
+          - get: cdn.version
             trigger: true
-            passed: [combine apps]
+            passed: ["combine apps"]
+          - get: ci.git
           - get: secrets.git
             params:
-              depth: 100
+              depth: 100 
 
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
         input_mapping:
-          # app.version: dashboard.version
+          app.version: dashboard.version
           helm-charts.git: ci.git
 
         params:
@@ -289,22 +290,45 @@ jobs:
       - in_parallel:
           - get: dashboard.version
             passed: ["deploy to s-qa-de-1"]
-          - get: ci.git
+          - get: cdn.version
             passed: ["deploy to s-qa-de-1"]
+          - get: ci.git
           - get: secrets.git
             params:
               depth: 100
 
+      - task: create latest version file
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: 
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+              tag: "latest"
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                echo "latest" > ./latest-version/version
+          outputs:
+            - name: latest-version
+
       - task: replicate dashboard image to target region
         file: secrets.git/ci/shared/task-replicate-image.yaml
         input_mapping:
+          # we update dashboard image based on the version (ImagePullPolicy IfNotPresent)
+          # for cdn we use latest with ImagePullPolicy Always
           app.version: dashboard.version
         params:
           REGION: eu-nl-1
           IMAGE: juno-dashboard
 
+
       - task: replicate cdn image to target region
         file: secrets.git/ci/shared/task-replicate-image.yaml
+        input_mapping:
+          app.version: latest-version
         params:
           REGION: eu-nl-1
           IMAGE: juno-cdn    
@@ -313,7 +337,9 @@ jobs:
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
         input_mapping:
           helm-charts.git: ci.git
-          app.version: version
+          # we update dashboard image based on the version (ImagePullPolicy IfNotPresent)
+          # for cdn we use latest with ImagePullPolicy Always
+          app.version: dashboard.version
 
         params:
           CHART_PATH: ci/helm-charts
@@ -397,6 +423,10 @@ resources:
   - name: dashboard.version
     type: time-version-resource
     check_every: 525600h
+
+  - name: cdn.version
+    type: time-version-resource
+    check_every: 525600h    
 
   - name: juno-dashboard.image
     type: docker-image
