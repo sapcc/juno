@@ -12,7 +12,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "bundle.[contenthash].js",
-    publicPath: "/",
+    // publicPath: process.env.PUBLIC_URL || "/",
   },
   // This says to webpack that we are in development mode and write the code in webpack file in different way
   mode: "development",
@@ -67,13 +67,14 @@ module.exports = {
       exposes: {
         // expose each component
         "./App": "./src/App",
+        "./widget": "./src/widget",
       },
       shared: ["react", "react-dom"],
     }),
   ],
   //Config for webpack-dev-server module
   devServer: {
-    contentBase: path.resolve(__dirname, "dist"),
+    contentBase: path.resolve(__dirname, "build"),
     port: process.env.PORT,
     host: "0.0.0.0",
 
@@ -90,6 +91,6 @@ module.exports = {
     // Use 'ws' instead of 'sockjs-node' on server since we're using native
     // websockets in `webpackHotDevClient`.
     transportMode: "ws",
-    publicPath: "/",
+    // publicPath: process.env.PUBLIC_URL || "/",
   },
 }
