@@ -7,6 +7,3 @@ RUN apk --no-cache add git ca-certificates make
 RUN mkdir -p /usr/share/nginx/html/cdn
 
 COPY . /usr/share/nginx/html/cdn/
-
-RUN ls -la /usr/share/nginx/html/cdn
-RUN ls -la /usr/share/nginx/html/cdn/auth

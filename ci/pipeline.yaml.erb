@@ -225,7 +225,7 @@ jobs:
             args:
               - -c
               - |
-                VERSION=$(cat package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
+                VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
                 cp -r /app/build ./<%= app %>-output/$VERSION
           outputs:
             - name: <%= app %>-output
@@ -251,6 +251,7 @@ jobs:
                 <% APPS.each do |app| %>
                 cp -r ./<%= app %>-output  ./build/<%= app %>;
                 <% end %>
+                echo $(date) > ./build/updated_at
           outputs:
             - name: build
 
@@ -278,23 +279,23 @@ jobs:
             params:
               depth: 100 
 
-      - task: create cdn deployment timestamp
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
-              tag: "latest"
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                echo "cdn-timestamp: $(date +%s)" > ./cdn/timestamp.yaml
-                cat ./cdn/timestamp.yaml
-          outputs:
-            - name: cdn
+      # - task: create cdn deployment timestamp
+      #   config:
+      #     platform: linux
+      #     image_resource:
+      #       type: registry-image
+      #       source: 
+      #         repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+      #         tag: "latest"
+      #     run:
+      #       path: /bin/sh
+      #       args:
+      #         - -c
+      #         - |
+      #           echo "cdn-timestamp: \"$(date +%s)\"" > ./cdn/timestamp.yaml
+      #           cat ./cdn/timestamp.yaml
+      #     outputs:
+      #       - name: cdn
 
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
@@ -303,7 +304,7 @@ jobs:
           # cdn uses latest with ImagePullPolicy Always
           app.version: dashboard.version
           helm-charts.git: ci.git
-          extra-values.git: cdn
+          # extra-values.git: cdn
 
         params:
           CHART_PATH: ci/helm-charts
@@ -312,7 +313,8 @@ jobs:
           REGION: qa-de-1
           CONTEXT: s-qa-de-1
           TAG_VARIABLE: dashboard.tag
-          VALUES: local:globals extra:timestamp.yaml
+          # VALUES: local:globals extra:timestamp.yaml
+          VALUES: local:globals
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
     ensure:
