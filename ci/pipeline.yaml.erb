@@ -287,6 +287,7 @@ jobs:
           helm-charts.git: ci.git
 
         params:
+          HELM_MAJOR_VERSION: '3'
           CHART_PATH: ci/helm-charts
           RELEASE: juno
           NAMESPACE: juno
@@ -355,6 +356,7 @@ jobs:
           app.version: dashboard.version
 
         params:
+          HELM_MAJOR_VERSION: '3'
           CHART_PATH: ci/helm-charts
           RELEASE: juno
           NAMESPACE: juno
