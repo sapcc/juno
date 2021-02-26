@@ -14,7 +14,7 @@
  * @param {string} s a string
  * @return {number} a hash code value for the given string.
  */
-export const hashCode = (s) => {
+const hashCode = (s) => {
   var h = 0,
     l = s.length,
     i = 0
@@ -27,7 +27,7 @@ export const hashCode = (s) => {
  * After the unmount, the script tag is automatically removed.
  * @param {string} url
  */
-export const loadDynamicScript = (url) => {
+const loadDynamicScript = (url) => {
   const elementId = hashCode(url)
 
   let element = document.getElementById(elementId)
@@ -87,7 +87,8 @@ function loadComponent(scope, module) {
 export const load = () => {
   let scripts = document.getElementsByTagName("script")
   let currentScript = scripts[scripts.length - 1]
-  if (!currentScript.dataset.url) return
+
+  if (!currentScript?.dataset?.url) return
   const wrapper = document.createElement("div")
   currentScript.replaceWith(wrapper)
 

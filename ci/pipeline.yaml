@@ -279,6 +279,91 @@ jobs:
         params:
           IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-auth-2
   
+  - name: unit-test widget-loader
+    public: true
+    plan:
+      - get: juno-unit-test.image
+        passed: ["build unit-test-image"]
+        trigger: true
+      - get: app-widget-loader.git
+        trigger: true
+
+      - task: unit
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-unit-test
+              tag: "latest"
+          inputs:
+            - name: app-widget-loader.git
+              path: /app/juno
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd $PWD/app/juno/apps/widget-loader
+                ls -la
+                yarn --dev && CI=true yarn test
+
+  # build image for each app in /apps
+  # we tag this images as latest. App images only serve as a buffer 
+  # to be used in the next step. After that, they are no longer used. 
+  - name: build widget-loader
+    public: true
+    plan:
+      - get: app-widget-loader.git
+        passed: ["unit-test widget-loader"]
+        trigger: true
+
+      - put: juno-widget-loader.image
+        params:
+          tag_as_latest: true
+          cache: true
+          cache_tag: "latest"
+          build: app-widget-loader.git/apps/widget-loader
+          dockerfile: app-widget-loader.git/ci/Dockerfile.app
+
+  # scan each app image for vulnerabilities
+  - name: vscan widget-loader
+    serial: true
+    plan:
+      - in_parallel:
+          - get: app-widget-loader.git
+            passed: ["build widget-loader"]
+            trigger: true
+
+          - get: secrets.git
+            params:
+              depth: 100
+
+      - task: create version file
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: 
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+              tag: "latest"
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                echo "latest" > ./version/version
+          outputs:
+            - name: version
+
+      - task: scan-image
+        file: secrets.git/ci/shared/task-vscan.yaml
+        input_mapping:
+          image.version: version
+        params:
+          IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-widget-loader
+  
 
   # this step combines all app images
   # for that we use nginx image and copy all builded apps (in the step before)
@@ -294,6 +379,10 @@ jobs:
       
       - get: app-auth-2.git
         passed: ["vscan auth-2"]
+        trigger: true
+      
+      - get: app-widget-loader.git
+        passed: ["vscan widget-loader"]
         trigger: true
         
       - get: ci.git  
@@ -334,6 +423,24 @@ jobs:
                 cp -r /app/build ./auth-2-output/$VERSION
           outputs:
             - name: auth-2-output
+      
+      - task: copy build of widget-loader
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: 
+              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-widget-loader
+              tag: "latest"
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
+                cp -r /app/build ./widget-loader-output/$VERSION
+          outputs:
+            - name: widget-loader-output
           
 
       - task: combine builds
@@ -349,6 +456,8 @@ jobs:
             - name: auth-output 
             
             - name: auth-2-output 
+            
+            - name: widget-loader-output 
                 
           run:
             path: /bin/sh
@@ -359,6 +468,8 @@ jobs:
                 cp -r ./auth-output  ./build/auth;
                 
                 cp -r ./auth-2-output  ./build/auth-2;
+                
+                cp -r ./widget-loader-output  ./build/widget-loader;
                 
                 echo $(date) > ./build/updated_at
           outputs:
@@ -538,6 +649,22 @@ resources:
       username: {{keppel-username}}
       password: {{keppel-password}}
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth-2    
+  
+  - name: app-widget-loader.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["apps/widget-loader","ci"]
+      username: sapcc-bot
+      password: {{real-github-access-token}}      
+
+  - name: juno-widget-loader.image
+    type: docker-image
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-widget-loader    
            
 
   - name: ci.git
