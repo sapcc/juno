@@ -78,7 +78,6 @@ function loadComponent(scope, module) {
     }
 
     const factory = await window[scope].get(module)
-    console.log(factory)
     const Module = factory()
     return Module
   }
