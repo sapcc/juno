@@ -12,7 +12,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "bundle.[contenthash].js",
-    publicPath: "/",
   },
   // This says to webpack that we are in development mode and write the code in webpack file in different way
   mode: "development",
@@ -91,6 +90,5 @@ module.exports = {
     // Use 'ws' instead of 'sockjs-node' on server since we're using native
     // websockets in `webpackHotDevClient`.
     transportMode: "ws",
-    publicPath: "/",
   },
 }

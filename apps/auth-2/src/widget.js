@@ -1,3 +1,3 @@
-export default (wrapper) => {
-  import("./bootstrap").then((app) => app.init(wrapper))
+export default (wrapper, props) => {
+  import("./bootstrap").then((app) => app.init(wrapper, props))
 }

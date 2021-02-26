@@ -23,9 +23,18 @@ const hashCode = (s) => {
 }
 
 /**
+ * Converts a string to var name
+ * @param {string} string
+ */
+function toVarName(str) {
+  return str.replace(/(-|\/)(\w)/g, (word) => word[1].toUpperCase())
+}
+
+/**
  * This hook creates and adds a script tag to the head.
  * After the unmount, the script tag is automatically removed.
  * @param {string} url
+ * @return {Promise}
  */
 const loadDynamicScript = (url) => {
   const elementId = hashCode(url)
@@ -83,45 +92,101 @@ function loadComponent(scope, module) {
   }
 }
 
-// export const load = () => {
-//   let scripts = document.getElementsByTagName("script")
-//   let currentScript = scripts[scripts.length - 1]
+/**
+ * Extract data from element
+ * data-url
+ * data-name
+ * data-version
+ * data-scope
+ * data-module
+ *
+ * Required data is data-url or data-name and data-version
+ * @param {documentElement} script
+ */
+const extractDataFromScript = (script) => {
+  const data = script?.dataset
+  // return if no script found or dataset is undefined
+  if (!data) return {}
 
-//   if (!currentScript?.dataset?.url) return
-//   const wrapper = document.createElement("div")
-//   currentScript.replaceWith(wrapper)
+  let { scope, name, version, module, url } = data
 
-//   loadDynamicScript(currentScript.dataset.url)
-//     .then(() => {
-//       const [scope, module] = currentScript.dataset.name.split("/")
-//       return loadComponent(scope, `./${module}`)()
-//     })
-//     .then((loadWidget) => {
-//       loadWidget.default(wrapper)
-//     })
-//     .catch((e) => console.log(e))
-// }
+  if (url) {
+    // widget url is provided -> try to match name and version
+    const found = url.match(/^.*\/cdn\/([^/]+)\/([^/]+)\/.*$/)
+    if (found) {
+      name = name || found[1]
+      version = version || found[2]
+    }
+  }
+
+  // scope is variable name where the remote entry (widget) is hosted
+  // we assume that the scope is name is the same as the app name.
+  scope = scope || toVarName(name)
+  // module is the name of exposed widget module
+  // we assume that the default module name is widget
+  module = module || "widget"
+
+  if (!url) {
+    // url is not provided -> build it from provided data
+    const host = script.src.match(/^(https?:\/\/[^/]+).*?$/)
+    if (host) url = `${host[1]}/cdn/${name}/${version}/app.js`
+  }
+
+  return { scope, name, version, module, url }
+}
+
+const extractPropsFromScript = (script) => {
+  if (!script?.dataset) return {}
+  let props = {}
+  for (let key in script?.dataset) {
+    if (key.indexOf("props") === 0)
+      props[key.replace("props", "").toLowerCase()] = script?.dataset[key]
+  }
+
+  return props
+}
 
 export const load = () => {
   let scripts = document.getElementsByTagName("script")
   let currentScript = scripts[scripts.length - 1]
-  console.log("============================", currentScript)
-  // if (!currentScript?.dataset?.url) return
-  //const wrapper = document.createElement("div")
-  // currentScript.replaceWith(wrapper)
-  // let url = currentScript?.dataset?.url
-  // console.log("...................", url, currentScript.dataset)
-  // if (url && url.indexOf("/cdn") === 0) {
-  //   concosle.log("====================cdn", currentScript.src)
-  // }
+  if (!currentScript) return
 
-  // loadDynamicScript(currentScript.dataset.url)
-  //   .then(() => {
-  //     const [scope, module] = currentScript.dataset.name.split("/")
-  //     return loadComponent(scope, `./${module}`)()
-  //   })
-  //   .then((loadWidget) => {
-  //     loadWidget.default(wrapper)
-  //   })
-  //   .catch((e) => console.log(e))
+  let { scope, name, version, module, url } = extractDataFromScript(
+    currentScript
+  )
+  // do not accept name widget-loader or missing required data
+  if (
+    name === "widget-loader" ||
+    !(scope && name && version && module && url)
+  ) {
+    console.log("Could not load widget", currentScript)
+    currentScript.remove()
+    return
+  }
+
+  console.info("Load widget!")
+  console.info(
+    "url:",
+    url,
+    "scope:",
+    scope,
+    "name:",
+    name,
+    "version:",
+    version,
+    "module:",
+    module
+  )
+  const props = extractPropsFromScript(currentScript)
+  const wrapper = document.createElement("div")
+  currentScript.replaceWith(wrapper)
+
+  loadDynamicScript(url)
+    .then(() => {
+      return loadComponent(scope, `./${module}`)()
+    })
+    .then((loadWidget) => {
+      loadWidget.default(wrapper, props)
+    })
+    .catch((e) => console.log(e))
 }
