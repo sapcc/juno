@@ -61,12 +61,13 @@ module.exports = {
       filename: "styles.[contentHash].css",
     }),
     new ModuleFederationPlugin({
-      name: "auth",
-      library: { type: "var", name: "auth" },
-      filename: "remoteEntry.js",
+      name: "auth2",
+      library: { type: "var", name: "auth2" },
+      filename: "app.js",
       exposes: {
         // expose each component
         "./App": "./src/App",
+        "./widget": "./src/widget",
       },
       shared: ["react", "react-dom"],
     }),

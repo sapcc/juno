@@ -63,7 +63,7 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "auth",
       library: { type: "var", name: "auth" },
-      filename: "remoteEntry.js",
+      filename: "app.js",
       exposes: {
         // expose each component
         "./App": "./src/App",

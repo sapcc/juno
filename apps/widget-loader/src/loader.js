@@ -83,21 +83,45 @@ function loadComponent(scope, module) {
   }
 }
 
+// export const load = () => {
+//   let scripts = document.getElementsByTagName("script")
+//   let currentScript = scripts[scripts.length - 1]
+
+//   if (!currentScript?.dataset?.url) return
+//   const wrapper = document.createElement("div")
+//   currentScript.replaceWith(wrapper)
+
+//   loadDynamicScript(currentScript.dataset.url)
+//     .then(() => {
+//       const [scope, module] = currentScript.dataset.name.split("/")
+//       return loadComponent(scope, `./${module}`)()
+//     })
+//     .then((loadWidget) => {
+//       loadWidget.default(wrapper)
+//     })
+//     .catch((e) => console.log(e))
+// }
+
 export const load = () => {
   let scripts = document.getElementsByTagName("script")
   let currentScript = scripts[scripts.length - 1]
+  console.log("============================", currentScript)
+  // if (!currentScript?.dataset?.url) return
+  //const wrapper = document.createElement("div")
+  // currentScript.replaceWith(wrapper)
+  // let url = currentScript?.dataset?.url
+  // console.log("...................", url, currentScript.dataset)
+  // if (url && url.indexOf("/cdn") === 0) {
+  //   concosle.log("====================cdn", currentScript.src)
+  // }
 
-  if (!currentScript?.dataset?.url) return
-  const wrapper = document.createElement("div")
-  currentScript.replaceWith(wrapper)
-
-  loadDynamicScript(currentScript.dataset.url)
-    .then(() => {
-      const [scope, module] = currentScript.dataset.name.split("/")
-      return loadComponent(scope, `./${module}`)()
-    })
-    .then((loadWidget) => {
-      loadWidget.default(wrapper)
-    })
-    .catch((e) => console.log(e))
+  // loadDynamicScript(currentScript.dataset.url)
+  //   .then(() => {
+  //     const [scope, module] = currentScript.dataset.name.split("/")
+  //     return loadComponent(scope, `./${module}`)()
+  //   })
+  //   .then((loadWidget) => {
+  //     loadWidget.default(wrapper)
+  //   })
+  //   .catch((e) => console.log(e))
 }

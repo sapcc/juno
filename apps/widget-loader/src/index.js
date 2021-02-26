@@ -1,2 +1,10 @@
 import regeneratorRuntime from "regenerator-runtime"
-import("./loader").then((widget) => widget.load())
+
+if (window._junoWidgetLoader) {
+  window._junoWidgetLoader.load()
+} else {
+  import("./loader").then((loader) => {
+    window._junoWidgetLoader = loader
+    window._junoWidgetLoader.load()
+  })
+}
