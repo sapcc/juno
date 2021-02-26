@@ -3,12 +3,12 @@
 
 import React from "react"
 
-export default ({ color }) => {
-  console.log("====render app1")
+export default ({ color, title }) => {
   React.useState()
   return (
     <div style={{ margin: "20px" }}>
       <h2 style={{ color: color || "red" }}>Hello this is Auth App 1</h2>
+      {title && <h3>{title}</h3>}
     </div>
   )
 }
