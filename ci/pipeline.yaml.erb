@@ -159,42 +159,6 @@ jobs:
           build: app-<%= app %>.git/apps/<%= app %>
           dockerfile: app-<%= app %>.git/ci/Dockerfile.app
 
-  # scan each app image for vulnerabilities
-  - name: vscan <%= app %>
-    serial: true
-    plan:
-      - in_parallel:
-          - get: app-<%= app %>.git
-            passed: ["build <%= app %>"]
-            trigger: true
-
-          - get: secrets.git
-            params:
-              depth: 100
-
-      - task: create version file
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
-              tag: "latest"
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                echo "latest" > ./version/version
-          outputs:
-            - name: version
-
-      - task: scan-image
-        file: secrets.git/ci/shared/task-vscan.yaml
-        input_mapping:
-          image.version: version
-        params:
-          IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-<%= app %>
   <% end %>
 
   # this step combines all app images
@@ -206,7 +170,7 @@ jobs:
     plan:
       <% APPS.each do |app| %>
       - get: app-<%= app %>.git
-        passed: ["vscan <%= app %>"]
+        passed: ["build <%= app %>"]
         trigger: true
       <% end %>  
       - get: ci.git  

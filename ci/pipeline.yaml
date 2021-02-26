@@ -157,42 +157,6 @@ jobs:
           build: app-auth.git/apps/auth
           dockerfile: app-auth.git/ci/Dockerfile.app
 
-  # scan each app image for vulnerabilities
-  - name: vscan auth
-    serial: true
-    plan:
-      - in_parallel:
-          - get: app-auth.git
-            passed: ["build auth"]
-            trigger: true
-
-          - get: secrets.git
-            params:
-              depth: 100
-
-      - task: create version file
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
-              tag: "latest"
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                echo "latest" > ./version/version
-          outputs:
-            - name: version
-
-      - task: scan-image
-        file: secrets.git/ci/shared/task-vscan.yaml
-        input_mapping:
-          image.version: version
-        params:
-          IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-auth
   
   - name: unit-test auth-2
     public: true
@@ -242,42 +206,6 @@ jobs:
           build: app-auth-2.git/apps/auth-2
           dockerfile: app-auth-2.git/ci/Dockerfile.app
 
-  # scan each app image for vulnerabilities
-  - name: vscan auth-2
-    serial: true
-    plan:
-      - in_parallel:
-          - get: app-auth-2.git
-            passed: ["build auth-2"]
-            trigger: true
-
-          - get: secrets.git
-            params:
-              depth: 100
-
-      - task: create version file
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
-              tag: "latest"
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                echo "latest" > ./version/version
-          outputs:
-            - name: version
-
-      - task: scan-image
-        file: secrets.git/ci/shared/task-vscan.yaml
-        input_mapping:
-          image.version: version
-        params:
-          IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-auth-2
   
   - name: unit-test widget-loader
     public: true
@@ -327,42 +255,6 @@ jobs:
           build: app-widget-loader.git/apps/widget-loader
           dockerfile: app-widget-loader.git/ci/Dockerfile.app
 
-  # scan each app image for vulnerabilities
-  - name: vscan widget-loader
-    serial: true
-    plan:
-      - in_parallel:
-          - get: app-widget-loader.git
-            passed: ["build widget-loader"]
-            trigger: true
-
-          - get: secrets.git
-            params:
-              depth: 100
-
-      - task: create version file
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
-              tag: "latest"
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                echo "latest" > ./version/version
-          outputs:
-            - name: version
-
-      - task: scan-image
-        file: secrets.git/ci/shared/task-vscan.yaml
-        input_mapping:
-          image.version: version
-        params:
-          IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-widget-loader
   
 
   # this step combines all app images
@@ -374,15 +266,15 @@ jobs:
     plan:
       
       - get: app-auth.git
-        passed: ["vscan auth"]
+        passed: ["build auth"]
         trigger: true
       
       - get: app-auth-2.git
-        passed: ["vscan auth-2"]
+        passed: ["build auth-2"]
         trigger: true
       
       - get: app-widget-loader.git
-        passed: ["vscan widget-loader"]
+        passed: ["build widget-loader"]
         trigger: true
         
       - get: ci.git  
@@ -507,6 +399,7 @@ jobs:
           helm-charts.git: ci.git
 
         params:
+          HELM_MAJOR_VERSION: '3'
           CHART_PATH: ci/helm-charts
           RELEASE: juno
           NAMESPACE: juno
@@ -575,6 +468,7 @@ jobs:
           app.version: dashboard.version
 
         params:
+          HELM_MAJOR_VERSION: '3'
           CHART_PATH: ci/helm-charts
           RELEASE: juno
           NAMESPACE: juno
