@@ -142,20 +142,66 @@ jobs:
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
   # to be used in the next step. After that, they are no longer used. 
+  # - name: build auth
+  #   public: true
+  #   plan:
+  #     - get: app-auth.git
+  #       passed: ["unit-test auth"]
+  #       trigger: true
+
+  #     - put: juno-auth.image
+  #       params:
+  #         tag_as_latest: true
+  #         cache: true
+  #         cache_tag: "latest"
+  #         build: app-auth.git/apps/auth
+  #         dockerfile: app-auth.git/ci/Dockerfile.app
+
   - name: build auth
     public: true
     plan:
       - get: app-auth.git
         passed: ["unit-test auth"]
         trigger: true
+      - get: ci.git
 
-      - put: juno-auth.image
+      - task: yarn build 
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node
+              tag: 14-alpine
+          inputs:
+            - name: app-auth.git 
+          run: 
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd ./app-auth.git/apps/auth/ 
+                ls -la
+                yarn install && yarn build
+                VERSION=$(cat ./package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
+                cd ../../../
+                mkdir -p ./build/auth/$VERSION
+                cp -r ./app-auth.git/apps/auth/build ./build/auth/$VERSION
+                # Modify the updated_at file, 
+                # otherwise docker won't add a new layer in the put step
+                echo $(date) > ./build/updated_at
+                ls -la ./build     
+          outputs: 
+            - name: build        
+
+      - put: cdn.version      
+      - put: juno-apps-builds.image
         params:
           tag_as_latest: true
-          cache: true
           cache_tag: "latest"
-          build: app-auth.git/apps/auth
-          dockerfile: app-auth.git/ci/Dockerfile.app
+          build: build
+          dockerfile: ci.git/ci/Dockerfile.apps
+          tag: cdn.version/version
 
   
   - name: unit-test auth-2
@@ -191,20 +237,66 @@ jobs:
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
   # to be used in the next step. After that, they are no longer used. 
+  # - name: build auth-2
+  #   public: true
+  #   plan:
+  #     - get: app-auth-2.git
+  #       passed: ["unit-test auth-2"]
+  #       trigger: true
+
+  #     - put: juno-auth-2.image
+  #       params:
+  #         tag_as_latest: true
+  #         cache: true
+  #         cache_tag: "latest"
+  #         build: app-auth-2.git/apps/auth-2
+  #         dockerfile: app-auth-2.git/ci/Dockerfile.app
+
   - name: build auth-2
     public: true
     plan:
       - get: app-auth-2.git
         passed: ["unit-test auth-2"]
         trigger: true
+      - get: ci.git
 
-      - put: juno-auth-2.image
+      - task: yarn build 
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node
+              tag: 14-alpine
+          inputs:
+            - name: app-auth-2.git 
+          run: 
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd ./app-auth-2.git/apps/auth-2/ 
+                ls -la
+                yarn install && yarn build
+                VERSION=$(cat ./package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
+                cd ../../../
+                mkdir -p ./build/auth-2/$VERSION
+                cp -r ./app-auth-2.git/apps/auth-2/build ./build/auth-2/$VERSION
+                # Modify the updated_at file, 
+                # otherwise docker won't add a new layer in the put step
+                echo $(date) > ./build/updated_at
+                ls -la ./build     
+          outputs: 
+            - name: build        
+
+      - put: cdn.version      
+      - put: juno-apps-builds.image
         params:
           tag_as_latest: true
-          cache: true
           cache_tag: "latest"
-          build: app-auth-2.git/apps/auth-2
-          dockerfile: app-auth-2.git/ci/Dockerfile.app
+          build: build
+          dockerfile: ci.git/ci/Dockerfile.apps
+          tag: cdn.version/version
 
   
   - name: unit-test widget-loader
@@ -240,140 +332,191 @@ jobs:
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
   # to be used in the next step. After that, they are no longer used. 
+  # - name: build widget-loader
+  #   public: true
+  #   plan:
+  #     - get: app-widget-loader.git
+  #       passed: ["unit-test widget-loader"]
+  #       trigger: true
+
+  #     - put: juno-widget-loader.image
+  #       params:
+  #         tag_as_latest: true
+  #         cache: true
+  #         cache_tag: "latest"
+  #         build: app-widget-loader.git/apps/widget-loader
+  #         dockerfile: app-widget-loader.git/ci/Dockerfile.app
+
   - name: build widget-loader
     public: true
     plan:
       - get: app-widget-loader.git
         passed: ["unit-test widget-loader"]
         trigger: true
+      - get: ci.git
 
-      - put: juno-widget-loader.image
+      - task: yarn build 
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node
+              tag: 14-alpine
+          inputs:
+            - name: app-widget-loader.git 
+          run: 
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd ./app-widget-loader.git/apps/widget-loader/ 
+                ls -la
+                yarn install && yarn build
+                VERSION=$(cat ./package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
+                cd ../../../
+                mkdir -p ./build/widget-loader/$VERSION
+                cp -r ./app-widget-loader.git/apps/widget-loader/build ./build/widget-loader/$VERSION
+                # Modify the updated_at file, 
+                # otherwise docker won't add a new layer in the put step
+                echo $(date) > ./build/updated_at
+                ls -la ./build     
+          outputs: 
+            - name: build        
+
+      - put: cdn.version      
+      - put: juno-apps-builds.image
         params:
           tag_as_latest: true
-          cache: true
           cache_tag: "latest"
-          build: app-widget-loader.git/apps/widget-loader
-          dockerfile: app-widget-loader.git/ci/Dockerfile.app
+          build: build
+          dockerfile: ci.git/ci/Dockerfile.apps
+          tag: cdn.version/version
 
   
 
-  # this step combines all app images
-  # for that we use nginx image and copy all builded apps (in the step before)
-  # into /usr/share/nginx/html/
-  # this image will be deployed as CDN server
-  - name: combine apps
-    public: true
-    plan:
-      
-      - get: app-auth.git
-        passed: ["build auth"]
-        trigger: true
-      
-      - get: app-auth-2.git
-        passed: ["build auth-2"]
-        trigger: true
-      
-      - get: app-widget-loader.git
-        passed: ["build widget-loader"]
-        trigger: true
-        
-      - get: ci.git  
-      - put: cdn.version
-      
-      - task: copy build of auth
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth
-              tag: "latest"
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
-                cp -r /app/build ./auth-output/$VERSION
-          outputs:
-            - name: auth-output
-      
-      - task: copy build of auth-2
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth-2
-              tag: "latest"
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
-                cp -r /app/build ./auth-2-output/$VERSION
-          outputs:
-            - name: auth-2-output
-      
-      - task: copy build of widget-loader
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-widget-loader
-              tag: "latest"
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
-                cp -r /app/build ./widget-loader-output/$VERSION
-          outputs:
-            - name: widget-loader-output
-          
+  # # this step combines all app images
+  # # for that we use nginx image and copy all builded apps (in the step before)
+  # # into /usr/share/nginx/html/
+  # # this image will be deployed as CDN server
+  # - name: combine apps
+  #   public: true
+  #   plan:
+  #     
+  #     - get: app-auth.git
+  #       passed: ["build auth"]
+  #       trigger: true
+  #     
+  #     - get: app-auth-2.git
+  #       passed: ["build auth-2"]
+  #       trigger: true
+  #     
+  #     - get: app-widget-loader.git
+  #       passed: ["build widget-loader"]
+  #       trigger: true
+  #       
+  #     - get: ci.git  
+  #     - put: cdn.version
+  #     
 
-      - task: combine builds
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
-              tag: "latest"
-          inputs: 
-            
-            - name: auth-output 
-            
-            - name: auth-2-output 
-            
-            - name: widget-loader-output 
-                
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                
-                cp -r ./auth-output  ./build/auth;
-                
-                cp -r ./auth-2-output  ./build/auth-2;
-                
-                cp -r ./widget-loader-output  ./build/widget-loader;
-                
-                echo $(date) > ./build/updated_at
-          outputs:
-            - name: build
+                   
+  #     - task: copy build of auth
+  #       config:
+  #         platform: linux
+  #         image_resource:
+  #           type: registry-image
+  #           source: 
+  #             repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth
+  #             tag: "latest"
+  #         run:
+  #           path: /bin/sh
+  #           args:
+  #             - -c
+  #             - |
+  #               VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
+  #               cp -r /app/build ./auth-output/$VERSION
+  #         outputs:
+  #           - name: auth-output
+  #     
 
-      - put: juno-cdn.image
-        params:
-          tag_as_latest: true
-          cache: true
-          cache_tag: "latest"
-          build: build
-          dockerfile: ci.git/ci/Dockerfile.cdn
+                   
+  #     - task: copy build of auth-2
+  #       config:
+  #         platform: linux
+  #         image_resource:
+  #           type: registry-image
+  #           source: 
+  #             repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth-2
+  #             tag: "latest"
+  #         run:
+  #           path: /bin/sh
+  #           args:
+  #             - -c
+  #             - |
+  #               VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
+  #               cp -r /app/build ./auth-2-output/$VERSION
+  #         outputs:
+  #           - name: auth-2-output
+  #     
+
+                   
+  #     - task: copy build of widget-loader
+  #       config:
+  #         platform: linux
+  #         image_resource:
+  #           type: registry-image
+  #           source: 
+  #             repository: keppel.eu-de-1.cloud.sap/ccloud/juno-widget-loader
+  #             tag: "latest"
+  #         run:
+  #           path: /bin/sh
+  #           args:
+  #             - -c
+  #             - |
+  #               VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
+  #               cp -r /app/build ./widget-loader-output/$VERSION
+  #         outputs:
+  #           - name: widget-loader-output
+  #         
+
+  #     - task: combine builds
+  #       config:
+  #         platform: linux
+  #         image_resource:
+  #           type: registry-image
+  #           source: 
+  #             repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+  #             tag: "latest"
+  #         inputs: 
+  #           
+  #           - name: auth-output 
+  #           
+  #           - name: auth-2-output 
+  #           
+  #           - name: widget-loader-output 
+  #               
+  #         run:
+  #           path: /bin/sh
+  #           args:
+  #             - -c
+  #             - |
+  #               
+  #               cp -r ./auth-output  ./build/auth;
+  #               
+  #               cp -r ./auth-2-output  ./build/auth-2;
+  #               
+  #               cp -r ./widget-loader-output  ./build/widget-loader;
+  #               
+  #               echo $(date) > ./build/updated_at
+  #         outputs:
+  #           - name: build
+
+  #     - put: juno-cdn.image
+  #       params:
+  #         tag_as_latest: true
+  #         cache_tag: "latest"
+  #         build: build
+  #         dockerfile: ci.git/ci/Dockerfile.cdn
 
   - name: deploy to s-qa-de-1
     serial: true
@@ -384,7 +527,7 @@ jobs:
             passed: ["vscan dashboard"]      
           - get: cdn.version
             trigger: true
-            passed: ["combine apps"]
+            # passed: ["generate cdn manifest"]
           - get: ci.git
           - get: secrets.git
             params:
@@ -425,59 +568,56 @@ jobs:
             params:
               depth: 100
 
-      - task: create latest version file
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
-              tag: "latest"
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                echo "latest" > ./latest-version/version
-          outputs:
-            - name: latest-version
+      # - task: remove obsolete images from keppel
+      #     config:
+      #     platform: linux
+      #     image_resource:
+      #       type: registry-image
+      #       source: 
+      #         repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+      #         tag: "latest"  
+      #     run:
+      #       path: /bin/sh
+      #       args:
+      #         - -c
+      #         - |
+      #           curl https://
 
-      - task: replicate dashboard image to target region
-        file: secrets.git/ci/shared/task-replicate-image.yaml
-        input_mapping:
-          app.version: dashboard.version
-        params:
-          REGION: eu-nl-1
-          IMAGE: juno-dashboard
+      # - task: replicate dashboard image to target region
+      #   file: secrets.git/ci/shared/task-replicate-image.yaml
+      #   input_mapping:
+      #     app.version: dashboard.version
+      #   params:
+      #     REGION: eu-nl-1
+      #     IMAGE: juno-dashboard
 
 
-      - task: replicate cdn image to target region
-        file: secrets.git/ci/shared/task-replicate-image.yaml
-        input_mapping:
-          app.version: latest-version
-        params:
-          REGION: eu-nl-1
-          IMAGE: juno-cdn    
+      # - task: replicate cdn image to target region
+      #   file: secrets.git/ci/shared/task-replicate-image.yaml
+      #   params:
+      #     REGION: eu-nl-1
+      #     IMAGE: juno-cdn    
+      #     TAG: latest
 
-      - task: deploy
-        file: secrets.git/ci/shared/task-helm-upgrade.yaml
-        input_mapping:
-          helm-charts.git: ci.git
-          # we update dashboard image based on the version (ImagePullPolicy IfNotPresent)
-          # for cdn we use latest with ImagePullPolicy Always
-          app.version: dashboard.version
+      # - task: deploy
+      #   file: secrets.git/ci/shared/task-helm-upgrade.yaml
+      #   input_mapping:
+      #     helm-charts.git: ci.git
+      #     # we update dashboard image based on the version (ImagePullPolicy IfNotPresent)
+      #     # for cdn we use latest with ImagePullPolicy Always
+      #     app.version: dashboard.version
 
-        params:
-          HELM_MAJOR_VERSION: '3'
-          CHART_PATH: ci/helm-charts
-          RELEASE: juno
-          NAMESPACE: juno
-          REGION: eu-nl-1
-          CONTEXT: s-eu-nl-1
-          TAG_VARIABLE: dashboard.tag
-          VALUES: local:globals
-          KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
-          KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
+      #   params:
+      #     HELM_MAJOR_VERSION: '3'
+      #     CHART_PATH: ci/helm-charts
+      #     RELEASE: juno
+      #     NAMESPACE: juno
+      #     REGION: eu-nl-1
+      #     CONTEXT: s-eu-nl-1
+      #     TAG_VARIABLE: dashboard.tag
+      #     VALUES: local:globals
+      #     KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
+      #     KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
     ensure:
       put: eu-nl-1.release
 
@@ -521,12 +661,12 @@ resources:
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
-  - name: juno-auth.image
-    type: docker-image
-    source:
-      username: {{keppel-username}}
-      password: {{keppel-password}}
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth    
+  # - name: juno-auth.image
+  #   type: docker-image
+  #   source:
+  #     username: {{keppel-username}}
+  #     password: {{keppel-password}}
+  #     repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth    
   
   - name: app-auth-2.git
     type: git
@@ -537,12 +677,12 @@ resources:
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
-  - name: juno-auth-2.image
-    type: docker-image
-    source:
-      username: {{keppel-username}}
-      password: {{keppel-password}}
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth-2    
+  # - name: juno-auth-2.image
+  #   type: docker-image
+  #   source:
+  #     username: {{keppel-username}}
+  #     password: {{keppel-password}}
+  #     repository: keppel.eu-de-1.cloud.sap/ccloud/juno-auth-2    
   
   - name: app-widget-loader.git
     type: git
@@ -553,13 +693,20 @@ resources:
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
-  - name: juno-widget-loader.image
+  # - name: juno-widget-loader.image
+  #   type: docker-image
+  #   source:
+  #     username: {{keppel-username}}
+  #     password: {{keppel-password}}
+  #     repository: keppel.eu-de-1.cloud.sap/ccloud/juno-widget-loader    
+           
+
+  - name: juno-apps-builds.image
     type: docker-image
     source:
       username: {{keppel-username}}
       password: {{keppel-password}}
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-widget-loader    
-           
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-apps-builds    
 
   - name: ci.git
     type: git
@@ -595,12 +742,12 @@ resources:
       password: {{keppel-password}}
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard  
 
-  - name: juno-cdn.image
-    type: docker-image
-    source:
-      username: {{keppel-username}}
-      password: {{keppel-password}}
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-cdn     
+  # - name: juno-cdn.image
+  #   type: docker-image
+  #   source:
+  #     username: {{keppel-username}}
+  #     password: {{keppel-password}}
+  #     repository: keppel.eu-de-1.cloud.sap/ccloud/juno-cdn     
 
   - name: juno-unit-test.image
     type: docker-image

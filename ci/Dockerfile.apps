@@ -1,0 +1,12 @@
+FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+
+LABEL source_repository="https://github.com/sapcc/juno/ci"
+
+RUN mkdir -p /builds
+
+RUN mkdir -p /tmp/builds
+COPY . /tmp/builds/
+
+RUN cp -rf /tmp/builds/* /builds && rm -rf /tmp/builds
+
+# RUN cd /builds ; OUTPUT='{'; for d in */ ; do OUTPUT="$OUTPUT\"$(basename $d)\":[";  for s in $d*/ ; do OUTPUT="$OUTPUT\"$(basename $s)\"," ;  done ; OUTPUT="${OUTPUT%,}],"  ; done ; OUTPUT="${OUTPUT%,}}"; echo $OUTPUT > manifest.json
