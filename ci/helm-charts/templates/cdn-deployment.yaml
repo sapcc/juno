@@ -25,13 +25,13 @@ spec:
       annotations:
         # we use timestamp to pull latest image without downtime
         # https://github.com/helm/helm/issues/5218
-        timestamp: "{{ now | date "20060102150405" }}"
+        # timestamp: "{{ now | date "20060102150405" }}"
     spec:
       # The preStop hook below sleeps 30 seconds, extend the gracePeriod accordingly
       terminationGracePeriodSeconds: 60
       containers:
         - name: dashboard
-          image: "{{ .Values.global.registry }}/juno-cdn:latest"
+          image: "{{ .Values.global.registry }}/juno-cdn:{{ .Values.cdn.tag}}"
           ports:
             - name: http
               containerPort: 80
