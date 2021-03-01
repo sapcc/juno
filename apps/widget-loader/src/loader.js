@@ -77,6 +77,7 @@ function loadComponent(scope, module) {
     await __webpack_init_sharing__("default")
 
     const container = window[scope] // or get the container somewhere else
+
     if (!container) return null
     try {
       // Initialize the container, it may provide shared modules
@@ -154,6 +155,7 @@ export const load = () => {
   let { scope, name, version, module, url } = extractDataFromScript(
     currentScript
   )
+
   // do not accept name widget-loader or missing required data
   if (
     name === "widget-loader" ||
@@ -179,14 +181,17 @@ export const load = () => {
   )
   const props = extractPropsFromScript(currentScript)
   const wrapper = document.createElement("div")
+  wrapper.setAttribute("data-name", name)
+  wrapper.setAttribute("data-version", version)
   currentScript.replaceWith(wrapper)
 
+  console.log("===", url, scope, module)
   loadDynamicScript(url)
     .then(() => {
       return loadComponent(scope, `./${module}`)()
     })
-    .then((loadWidget) => {
-      loadWidget.default(wrapper, props)
+    .then((Module) => {
+      console.log(Module.default(wrapper, props))
     })
     .catch((e) => console.log(e))
 }

@@ -32,6 +32,7 @@ spec:
       containers:
         - name: dashboard
           image: "{{ .Values.global.registry }}/juno-cdn:{{.Values.cdn_tag}}"
+          imagePullPolicy: IfNotPresent
           ports:
             - name: http
               containerPort: 80
