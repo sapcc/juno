@@ -4,6 +4,7 @@
 import React from "react"
 
 export default ({ color, title }) => {
+  console.log("====render app1")
   React.useState()
   return (
     <div style={{ margin: "20px" }}>

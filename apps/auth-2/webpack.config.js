@@ -62,7 +62,7 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "auth2",
       library: { type: "var", name: "auth2" },
-      filename: "app.js",
+      filename: "widget.js",
       exposes: {
         // expose each component
         "./App": "./src/App",

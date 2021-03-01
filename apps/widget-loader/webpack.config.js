@@ -30,6 +30,10 @@ module.exports = {
         target: "http://localhost:4000",
         pathRewrite: { "^/cdn/auth/0_0_1": "" },
       },
+      "/cdn/auth-2/0_0_1": {
+        target: "http://localhost:4002",
+        pathRewrite: { "^/cdn/auth-2/0_0_1": "" },
+      },
     },
   },
   output: {

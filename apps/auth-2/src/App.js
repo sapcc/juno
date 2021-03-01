@@ -1,7 +1,7 @@
 import React from "react"
 
 export default ({ color }) => {
-  console.log("====render app1")
+  console.log("====render app2")
   React.useState()
   return (
     <div style={{ margin: "20px" }}>
