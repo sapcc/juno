@@ -24,24 +24,6 @@ jobs:
               - '\tThis pipeline is defined at: https://github.com/sapcc/juno/ci/\n\n'
               - '\tManage Juno images: https://keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard\n'
 
-  - name: cleanup keppel 
-    serial: true
-    plan:
-      - task: delete untagged images
-        config:
-          platform: "linux"
-          image_resource:
-            type: docker-image
-            source:
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/alpine
-              tag: latest
-          run:
-            path: /bin/echo
-            args:
-              - -e
-              - '\tThis pipeline is defined at: https://github.com/sapcc/juno/ci/\n\n'
-              - '\tManage Juno images: https://keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard\n'
-
   # build the test image if Dockerfile.test changes
   - name: build unit-test-image
     public: true
@@ -307,6 +289,23 @@ jobs:
           VALUES: local:globals extra:values.yaml
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
+
+      # - task: cleanup obsolete images
+      #   file: secrets.git/ci/shared/task-keppel-cleanup.yaml
+
+      #   params:
+      #     APPLICATION_ID: {{keppel-username}}
+      #     APPLICATION_SECRET: {{keppel-password}}
+      #     REGION: "eu-de-1"
+      #     ACCOUNT: "ccloud"
+          
+      #     REPOSITORY: "<%= ["juno-dashboard:3","juno-cdn","juno-unit-test"].concat(APPS.map{|app| "juno-#{app}" }).join(",")%>"
+
+      #     REMOVE_UNTAGGED: "true" 
+      #     PRESERVE_COUNT: "1" 
+      #     DRY_RUN: "false" 
+      #     VERBOSE: "true"  
+
     ensure:
       put: qa-de-1.release
 
@@ -378,6 +377,23 @@ jobs:
           VALUES: local:globals extra:values.yaml
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
+
+
+      # - task: cleanup obsolete images
+      #   file: secrets.git/ci/shared/task-keppel-cleanup.yaml
+
+      #   params:
+      #     APPLICATION_ID: {{keppel-username}}
+      #     APPLICATION_SECRET: {{keppel-password}}
+      #     REGION: "eu-nl-1"
+      #     ACCOUNT: "ccloud"
+          
+      #     REPOSITORY: juno-dashboard:3,juno-cdn:1
+
+      #     REMOVE_UNTAGGED: "true" 
+      #     PRESERVE_COUNT: "3" 
+      #     DRY_RUN: "false" 
+      #     VERBOSE: "true"           
     ensure:
       put: eu-nl-1.release
 
@@ -407,7 +423,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/dashboard","ci"]
+      paths: ["apps/dashboard"]
       username: sapcc-bot
       password: {{real-github-access-token}}
  
@@ -417,7 +433,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/<%= app %>","ci"]
+      paths: ["apps/<%= app %>"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
@@ -444,7 +460,7 @@ resources:
     check_every: 6h
     source:
       uri: git@github.wdf.sap.corp:cc/secrets.git
-      branch: master
+      branch: "master"
       private_key: {{secrets-ssh-key}}
 
   - name: dashboard.version
