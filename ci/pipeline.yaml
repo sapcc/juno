@@ -459,7 +459,7 @@ jobs:
               - |
                 ci.git/ci/keppel-cleanup.sh --id={{keppel-username}} --secret={{keppel-password}} \
                 --region=eu-de-1 --account=ccloud --repository=juno-dashboard:3,juno-cdn,juno-unit-test,juno-auth,juno-auth-2,juno-widget-loader \
-                --remove-untagged=true --preserve-count=1 --verbose=true 
+                --remove-untagged=true --preserve-count=2 --verbose=true 
 
     ensure:
       put: qa-de-1.release
@@ -552,7 +552,7 @@ jobs:
               - -c
               - |
                 ci.git/ci/keppel-cleanup.sh --id={{keppel-username}} --secret={{keppel-password}} \
-                --region=eu-nl-1 --account=ccloud --repository=juno-dashboard:3,juno-cdn:1 \
+                --region=eu-nl-1 --account=ccloud --repository=juno-dashboard:3,juno-cdn:2 \
                 --remove-untagged=true --verbose=true           
     ensure:
       put: eu-nl-1.release

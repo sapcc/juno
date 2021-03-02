@@ -216,8 +216,8 @@ jobs:
                 <% APPS.each do |app| %>
                 cp -r ./<%= app %>-output  ./build/<%= app %>;
                 <% end %>
-                cd ./build ; OUTPUT='{'; for d in */ ; do OUTPUT="$OUTPUT\"$(basename $d)\":[";  for s in $d*/ ; do OUTPUT="$OUTPUT\"$(basename $s)\"," ;  done ; OUTPUT="${OUTPUT%,}],"  ; done ; OUTPUT="${OUTPUT%,}}"; echo $OUTPUT > manifest.json
-                cat manifest.json
+                # cd ./build ; OUTPUT='{'; for d in */ ; do OUTPUT="$OUTPUT\"$(basename $d)\":[";  for s in $d*/ ; do OUTPUT="$OUTPUT\"$(basename $s)\"," ;  done ; OUTPUT="${OUTPUT%,}],"  ; done ; OUTPUT="${OUTPUT%,}}"; echo $OUTPUT > manifest.json
+                # cat manifest.json
                 echo $(date) > ./updated_at
 
           outputs:
@@ -309,7 +309,7 @@ jobs:
               - |
                 ci.git/ci/keppel-cleanup.sh --id={{keppel-username}} --secret={{keppel-password}} \
                 --region=eu-de-1 --account=ccloud --repository=<%= ["juno-dashboard:3","juno-cdn","juno-unit-test"].concat(APPS.map{|app| "juno-#{app}" }).join(",")%> \
-                --remove-untagged=true --preserve-count=1 --verbose=true 
+                --remove-untagged=true --preserve-count=2 --verbose=true 
 
     ensure:
       put: qa-de-1.release
@@ -402,7 +402,7 @@ jobs:
               - -c
               - |
                 ci.git/ci/keppel-cleanup.sh --id={{keppel-username}} --secret={{keppel-password}} \
-                --region=eu-nl-1 --account=ccloud --repository=juno-dashboard:3,juno-cdn:1 \
+                --region=eu-nl-1 --account=ccloud --repository=juno-dashboard:3,juno-cdn:2 \
                 --remove-untagged=true --verbose=true           
     ensure:
       put: eu-nl-1.release
