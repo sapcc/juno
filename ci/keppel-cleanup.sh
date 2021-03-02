@@ -125,7 +125,7 @@ for repo in "${repositories[@]}"; do
 
   # get manifests from keppel API
   manifests=$(curl -H "X-Auth-Token:$TOKEN" https://keppel.$REGION.cloud.sap/keppel/v1/accounts/$ACCOUNT/repositories/$repo/_manifests 2>/dev/null)
-
+  echo "============$manifests"
   # continue if repo not found
   if [ "$manifests" == 'not found' ]; then
     echo "=== REPO NOT FOUND"

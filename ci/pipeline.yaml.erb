@@ -216,8 +216,6 @@ jobs:
                 <% APPS.each do |app| %>
                 cp -r ./<%= app %>-output  ./build/<%= app %>;
                 <% end %>
-                # cd ./build ; OUTPUT='{'; for d in */ ; do OUTPUT="$OUTPUT\"$(basename $d)\":[";  for s in $d*/ ; do OUTPUT="$OUTPUT\"$(basename $s)\"," ;  done ; OUTPUT="${OUTPUT%,}],"  ; done ; OUTPUT="${OUTPUT%,}}"; echo $OUTPUT > manifest.json
-                # cat manifest.json
                 echo $(date) > ./updated_at
 
           outputs:
@@ -382,28 +380,7 @@ jobs:
           VALUES: local:globals extra:values.yaml
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
-
-
-      # cleanup keppel images
-      # remove this task after keppel has been updated
-      - task: cleanup obsolete images
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/sapcc/unified-kubernetes-toolbox
-              tag: "20201223164256"
-          inputs: 
-            - name: ci.git 
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                ci.git/ci/keppel-cleanup.sh --id={{keppel-username}} --secret={{keppel-password}} \
-                --region=eu-nl-1 --account=ccloud --repository=juno-dashboard:3,juno-cdn:2 \
-                --remove-untagged=true --verbose=true           
+         
     ensure:
       put: eu-nl-1.release
 
