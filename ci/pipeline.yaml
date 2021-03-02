@@ -440,21 +440,26 @@ jobs:
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
 
-      # - task: cleanup obsolete images
-      #   file: secrets.git/ci/shared/task-keppel-cleanup.yaml
-
-      #   params:
-      #     APPLICATION_ID: {{keppel-username}}
-      #     APPLICATION_SECRET: {{keppel-password}}
-      #     REGION: "eu-de-1"
-      #     ACCOUNT: "ccloud"
-          
-      #     REPOSITORY: "juno-dashboard:3,juno-cdn,juno-unit-test,juno-auth,juno-auth-2,juno-widget-loader"
-
-      #     REMOVE_UNTAGGED: "true" 
-      #     PRESERVE_COUNT: "1" 
-      #     DRY_RUN: "false" 
-      #     VERBOSE: "true"  
+      # cleanup keppel images
+      # remove this task after keppel has been updated
+      - task: cleanup obsolete images
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: 
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/sapcc/unified-kubernetes-toolbox
+              tag: "20201223164256"
+          inputs: 
+            - name: ci.git 
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                ci.git/ci/keppel-cleanup.sh --id={{keppel-username}} --secret={{keppel-password}} \
+                --region=eu-de-1 --account=ccloud --repository=juno-dashboard:3,juno-cdn,juno-unit-test,juno-auth,juno-auth-2,juno-widget-loader \
+                --remove-untagged=true --preserve-count=1 --verbose=true 
 
     ensure:
       put: qa-de-1.release
@@ -529,21 +534,26 @@ jobs:
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
 
 
-      # - task: cleanup obsolete images
-      #   file: secrets.git/ci/shared/task-keppel-cleanup.yaml
-
-      #   params:
-      #     APPLICATION_ID: {{keppel-username}}
-      #     APPLICATION_SECRET: {{keppel-password}}
-      #     REGION: "eu-nl-1"
-      #     ACCOUNT: "ccloud"
-          
-      #     REPOSITORY: juno-dashboard:3,juno-cdn:1
-
-      #     REMOVE_UNTAGGED: "true" 
-      #     PRESERVE_COUNT: "3" 
-      #     DRY_RUN: "false" 
-      #     VERBOSE: "true"           
+      # cleanup keppel images
+      # remove this task after keppel has been updated
+      - task: cleanup obsolete images
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: 
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/sapcc/unified-kubernetes-toolbox
+              tag: "20201223164256"
+          inputs: 
+            - name: ci.git 
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                ci.git/ci/keppel-cleanup.sh --id={{keppel-username}} --secret={{keppel-password}} \
+                --region=eu-nl-1 --account=ccloud --repository=juno-dashboard:3,juno-cdn:1 \
+                --remove-untagged=true --verbose=true           
     ensure:
       put: eu-nl-1.release
 
