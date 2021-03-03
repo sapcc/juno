@@ -149,48 +149,52 @@ const extractPropsFromScript = (script) => {
 }
 
 export const load = (currentScript) => {
-  if (!currentScript) return
+  try {
+    if (!currentScript) return
 
-  let { scope, name, version, module, url } = extractDataFromScript(
-    currentScript
-  )
+    let { scope, name, version, module, url } = extractDataFromScript(
+      currentScript
+    )
 
-  // do not accept name widget-loader or missing required data
-  if (
-    name === "widget-loader" ||
-    !(scope && name && version && module && url)
-  ) {
-    console.log("Could not load widget", currentScript)
-    //currentScript.remove()
-    return
+    // do not accept name widget-loader or missing required data
+    if (
+      name === "widget-loader" ||
+      !(scope && name && version && module && url)
+    ) {
+      console.log("Could not load widget", currentScript)
+      //currentScript.remove()
+      return
+    }
+
+    console.info("Load widget!")
+    console.info(
+      "url:",
+      url,
+      "scope:",
+      scope,
+      "name:",
+      name,
+      "version:",
+      version,
+      "module:",
+      module
+    )
+    const props = extractPropsFromScript(currentScript)
+    const wrapper = document.createElement("div")
+    wrapper.setAttribute("data-name", name)
+    wrapper.setAttribute("data-version", version)
+    currentScript.replaceWith(wrapper)
+
+    console.log("===", url, scope, module)
+    loadDynamicScript(url)
+      .then(() => {
+        return loadComponent(scope, `./${module}`)()
+      })
+      .then((Module) => {
+        Module.default(wrapper, props)
+      })
+      .catch((e) => console.log(e))
+  } catch (e) {
+    console.log("ERROR", e)
   }
-
-  console.info("Load widget!")
-  console.info(
-    "url:",
-    url,
-    "scope:",
-    scope,
-    "name:",
-    name,
-    "version:",
-    version,
-    "module:",
-    module
-  )
-  const props = extractPropsFromScript(currentScript)
-  const wrapper = document.createElement("div")
-  wrapper.setAttribute("data-name", name)
-  wrapper.setAttribute("data-version", version)
-  currentScript.replaceWith(wrapper)
-
-  console.log("===", url, scope, module)
-  loadDynamicScript(url)
-    .then(() => {
-      return loadComponent(scope, `./${module}`)()
-    })
-    .then((Module) => {
-      Module.default(wrapper, props)
-    })
-    .catch((e) => console.log(e))
 }

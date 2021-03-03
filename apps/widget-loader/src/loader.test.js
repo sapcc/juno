@@ -9,66 +9,53 @@ describe("load", () => {
     expect(loader.load).toBeDefined()
   })
 
-  test("document.getElementsByTagName has been called", () => {
-    const spy = jest.spyOn(document, "getElementsByTagName")
-    loader.load()
-    expect(spy).toHaveBeenCalledWith("script")
-  })
-
   describe("add widget script tag", () => {
+    let currentScript
     beforeEach(() => {
       jest.clearAllMocks()
       document.getElementsByTagName("html")[0].innerHTML = ""
-      const script = document.createElement("script")
-      script.defer = true
-      script.src = "/app.js"
-      script.setAttribute("data-url", "/cdn/auth/0_0_1/remoteEntry.js")
-      script.setAttribute("data-name", "auth/widget")
-      document.body.appendChild(script)
-    })
-
-    test("document.getElementsByTagName has been called", () => {
-      const spy = jest.spyOn(document, "getElementsByTagName")
-      loader.load()
-      expect(spy).toHaveBeenCalledWith("script")
+      currentScript = document.createElement("script")
+      currentScript.defer = true
+      currentScript.src = "/app.js"
+      currentScript.setAttribute("data-url", "/cdn/auth/0_0_1/remoteEntry.js")
+      currentScript.setAttribute("data-name", "auth/widget")
+      document.body.appendChild(currentScript)
     })
 
     test("wrapper has been called", () => {
       const spy = jest.spyOn(document, "createElement")
-      loader.load()
+      loader.load(currentScript)
       expect(spy).toHaveBeenCalledWith("div")
     })
 
     test("document contains added widget script", () => {
       const scripts = document.getElementsByTagName("script")
-      let currentScript
+      let script
       for (let i = 0; i < scripts.length; i++) {
-        if (scripts[i].src === "http://localhost/app.js")
-          currentScript = scripts[i]
+        if (scripts[i].src === "http://localhost/app.js") script = scripts[i]
       }
-      expect(currentScript).toBeDefined()
+      expect(script).toBeDefined()
     })
 
     test("widget script was replaced with wrapper", () => {
-      loader.load()
+      loader.load(currentScript)
       const scripts = document.getElementsByTagName("script")
-      let currentScript
+      let script
       for (let i = 0; i < scripts.length; i++) {
-        if (scripts[i].src === "http://localhost/app.js")
-          currentScript = scripts[i]
+        if (scripts[i].src === "http://localhost/app.js") script = scripts[i]
       }
-      expect(currentScript).not.toBeDefined()
+      expect(script).not.toBeDefined()
     })
 
     test("app script was added", () => {
-      loader.load()
+      loader.load(currentScript)
       const scripts = document.getElementsByTagName("script")
-      let currentScript
+      let script
       for (let i = 0; i < scripts.length; i++) {
         if (scripts[i].src === "http://localhost/cdn/auth/0_0_1/remoteEntry.js")
-          currentScript = scripts[i]
+          script = scripts[i]
       }
-      expect(currentScript).toBeDefined()
+      expect(script).toBeDefined()
     })
   })
 })

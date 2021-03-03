@@ -10,6 +10,7 @@ export default () => {
 
   return (
     <div>
+      <h4>Hello this is Auth App</h4>
       <Calendar onChange={onChange} value={value} />
     </div>
   )
