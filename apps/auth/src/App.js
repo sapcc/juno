@@ -1,15 +1,16 @@
 // __webpack_public_path__ = window.location
 // console.log(window.location)
 
-import React from "react"
+import React, { useState } from "react"
+import Calendar from "react-calendar"
+import "react-calendar/dist/Calendar.css"
 
-export default ({ color, title }) => {
-  console.log("====render app1")
-  React.useState()
+export default () => {
+  const [value, onChange] = useState(new Date())
+
   return (
-    <div style={{ margin: "20px" }}>
-      <h2 style={{ color: color || "red" }}>Hello this is Auth App 1</h2>
-      {title && <h3>{title}</h3>}
+    <div>
+      <Calendar onChange={onChange} value={value} />
     </div>
   )
 }

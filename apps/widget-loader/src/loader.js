@@ -120,6 +120,7 @@ const extractDataFromScript = (script) => {
     }
   }
 
+  if (!name) return {}
   // scope is variable name where the remote entry (widget) is hosted
   // we assume that the scope is name is the same as the app name.
   scope = scope || toVarName(name)
@@ -147,9 +148,7 @@ const extractPropsFromScript = (script) => {
   return props
 }
 
-export const load = () => {
-  let scripts = document.getElementsByTagName("script")
-  let currentScript = scripts[scripts.length - 1]
+export const load = (currentScript) => {
   if (!currentScript) return
 
   let { scope, name, version, module, url } = extractDataFromScript(
@@ -162,7 +161,7 @@ export const load = () => {
     !(scope && name && version && module && url)
   ) {
     console.log("Could not load widget", currentScript)
-    currentScript.remove()
+    //currentScript.remove()
     return
   }
 
@@ -191,7 +190,7 @@ export const load = () => {
       return loadComponent(scope, `./${module}`)()
     })
     .then((Module) => {
-      console.log(Module.default(wrapper, props))
+      Module.default(wrapper, props)
     })
     .catch((e) => console.log(e))
 }
