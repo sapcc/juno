@@ -9,4 +9,4 @@ ci-clean:
 	if [ -e pipeline.yaml ]; then rm pipeline.yaml; fi
 
 ci-create:
-	docker run --rm -v "${CURDIR}":/usr/src/myapp -w /usr/src/myapp keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/ruby:3-alpine erb pipeline.yaml.erb > pipeline.yaml 
+	docker run --rm -v "${CURDIR}":/usr/src/myapp -w /usr/src/myapp ruby:3-alpine erb pipeline.yaml.erb > pipeline.yaml 

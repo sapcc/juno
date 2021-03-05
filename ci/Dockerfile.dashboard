@@ -1,4 +1,5 @@
-FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:14-alpine
+ARG KEPPEL_HOSTNAME
+FROM $KEPPEL_HOSTNAME/ccloud-dockerhub-mirror/library/node:14-alpine
 
 LABEL source_repository="https://github.com/sapcc/juno/apps/dashboard"
 

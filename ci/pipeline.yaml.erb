@@ -15,14 +15,14 @@ jobs:
           image_resource:
             type: docker-image
             source:
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/alpine
+              repository: ((keppel-hostname))/ccloud-dockerhub-mirror/library/alpine
               tag: latest
           run:
             path: /bin/echo
             args:
               - -e
               - '\tThis pipeline is defined at: https://github.com/sapcc/juno/ci/\n\n'
-              - '\tManage Juno images: https://keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard\n'
+              - '\tManage Juno images: https://((keppel-hostname))/ccloud/juno-dashboard\n'
 
   # build the test image if Dockerfile.test changes
   - name: build unit-test-image
@@ -37,6 +37,8 @@ jobs:
           cache: true
           cache_tag: "latest"
           build: test-image-source.git
+          build_args: 
+            KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: test-image-source.git/ci/Dockerfile.test
 
   # run unit tests for dashboard sources
@@ -55,7 +57,7 @@ jobs:
           image_resource:
             type: docker-image
             source:
-              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-unit-test
+              repository: ((keppel-hostname))/ccloud/juno-unit-test
               tag: "latest"
           inputs:
             - name: app-dashboard.git
@@ -86,6 +88,8 @@ jobs:
               cache: true
               cache_tag: "latest"
               build: app-dashboard.git
+              build_args: 
+                KEPPEL_HOSTNAME: {{keppel-hostname}}
               dockerfile: app-dashboard.git/ci/Dockerfile.dashboard
               tag: dashboard.version/version
             get_params:
@@ -107,7 +111,7 @@ jobs:
         input_mapping:
           image.version: dashboard.version
         params:
-          IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard
+          IMAGE_NAME: ((keppel-hostname))/ccloud/juno-dashboard
 
   # run unit tests for each app in /apps
   <% APPS.each do |app| %>
@@ -126,7 +130,7 @@ jobs:
           image_resource:
             type: docker-image
             source:
-              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-unit-test
+              repository: ((keppel-hostname))/ccloud/juno-unit-test
               tag: "latest"
           inputs:
             - name: app-<%= app %>.git
@@ -157,6 +161,8 @@ jobs:
           cache: true
           cache_tag: "latest"
           build: app-<%= app %>.git/apps/<%= app %>
+          build_args: 
+            KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-<%= app %>.git/ci/Dockerfile.app
 
   <% end %>
@@ -183,7 +189,7 @@ jobs:
             image_resource:
               type: registry-image
               source: 
-                repository: keppel.eu-de-1.cloud.sap/ccloud/juno-<%= app %>
+                repository: ((keppel-hostname))/ccloud/juno-<%= app %>
                 tag: "latest"
             run:
               path: /bin/sh
@@ -202,7 +208,7 @@ jobs:
           image_resource:
             type: registry-image
             source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+              repository: ((keppel-hostname))/ccloud-dockerhub-mirror/library/busybox
               tag: "latest"
           inputs: 
             <% APPS.each do |app| %>
@@ -253,7 +259,7 @@ jobs:
           image_resource:
             type: registry-image
             source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+              repository: ((keppel-hostname))/ccloud-dockerhub-mirror/library/busybox
               tag: "latest"
           inputs: 
             - name: cdn.version 
@@ -287,27 +293,6 @@ jobs:
           VALUES: local:globals extra:values.yaml
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
-
-      # cleanup keppel images
-      # remove this task after keppel has been updated
-      - task: cleanup obsolete images
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/sapcc/unified-kubernetes-toolbox
-              tag: "20201223164256"
-          inputs: 
-            - name: ci.git 
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                ci.git/ci/keppel-cleanup.sh --id={{keppel-username}} --secret={{keppel-password}} \
-                --region=eu-de-1 --account=ccloud --repository=<%= ["juno-dashboard:3","juno-cdn","juno-unit-test"].concat(APPS.map{|app| "juno-#{app}" }).join(",")%> \
-                --remove-untagged=true --preserve-count=2 --verbose=true 
 
     ensure:
       put: qa-de-1.release
@@ -348,7 +333,7 @@ jobs:
           image_resource:
             type: registry-image
             source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+              repository: ((keppel-hostname))/ccloud-dockerhub-mirror/library/busybox
               tag: "latest"
           inputs: 
             - name: cdn.version 
@@ -429,7 +414,7 @@ resources:
     source:
       username: {{keppel-username}}
       password: {{keppel-password}}
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-<%= app %>    
+      repository: ((keppel-hostname))/ccloud/juno-<%= app %>    
   <% end %>         
 
   - name: ci.git
@@ -464,14 +449,14 @@ resources:
     source:
       username: {{keppel-username}}
       password: {{keppel-password}}
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard  
+      repository: ((keppel-hostname))/ccloud/juno-dashboard  
 
   - name: juno-cdn.image
     type: docker-image
     source:
       username: {{keppel-username}}
       password: {{keppel-password}}
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-cdn     
+      repository: ((keppel-hostname))/ccloud/juno-cdn     
 
   - name: juno-unit-test.image
     type: docker-image
@@ -479,25 +464,25 @@ resources:
     source:
       username: {{keppel-username}}
       password: {{keppel-password}}
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-unit-test
+      repository: ((keppel-hostname))/ccloud/juno-unit-test
 
 resource_types:
   - name: git-proxy
     type: registry-image
     check_every: 24h
     source:
-      repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/sapcc/concourse-git-resource-proxy
+      repository: ((keppel-hostname))/ccloud-dockerhub-mirror/sapcc/concourse-git-resource-proxy
 
   - name: time-version-resource
     type: docker-image
     check_every: 24h
     source:
-      repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-time-version-resource
+      repository: ((keppel-hostname))/ccloud/concourse-time-version-resource
       tag: v2
 
   - name: release
     type: docker-image
     check_every: 24h
     source:
-      repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-release-resource
+      repository: ((keppel-hostname))/ccloud/concourse-release-resource
       tag: v1.1
