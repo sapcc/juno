@@ -1,0 +1,46 @@
+{
+  "name": "ui-components",
+  "version": "1.0.0",
+  "description": "React UI Components using tailwindcss",
+  "main": "dist/index.js",
+  "license": "Apache2",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sapcc/juno.git"
+  },
+  "homepage": "https://github.com/sapcc/juno",
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-styleguidist": "^11.1.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.10",
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-react": "^7.12.13",
+    "autoprefixer": "^10.2.5",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-macros": "^3.0.1",
+    "css-loader": "^5.1.1",
+    "postcss-loader": "^5.1.0",
+    "process": "^0.11.10",
+    "style-loader": "^2.0.0",
+    "styled-components": "^5.2.1",
+    "tailwindcss": "^2.0.3",
+    "twin.macro": "^2.3.0",
+    "webpack": "^5.24.4"
+  },
+  "babelMacros": {
+    "twin": {
+      "config": "tailwind.config.js",
+      "preset": "styled-components"
+    }
+  },
+  "scripts": {
+    "start": "styleguidist server --port $APP_PORT",
+    "styleguidist:build": "styleguidist build",
+    "build": "./scripts/build"
+  }
+}
