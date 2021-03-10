@@ -31,6 +31,7 @@
     "css-loader": "^5.1.1",
     "react": "^17.0.1",
     "react-calendar": "^3.3.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "ui-components": "file:../../libs/ui-components"
   }
 }

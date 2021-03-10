@@ -21,7 +21,7 @@ module.exports = {
       //Allows use javascript
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/, //don't test node_modules folder
+        // exclude: /node_modules/, //don't test node_modules folder
         loader: "babel-loader",
         options: {
           presets: [["@babel/preset-react", { runtime: "automatic" }]],
