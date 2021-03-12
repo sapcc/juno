@@ -15,12 +15,12 @@ const Container = styled.div`
     bg-opacity-5
     grid
     grid-cols-1
-    md:grid-cols-3
+    xl:grid-cols-3
     border
     border-white
     border-opacity-5
     divide-x-4
-    divide-sap-dark-blue-dark
+    divide-sap-dark-blue-900
     divide-opacity-50
   `}
 
@@ -45,13 +45,14 @@ const BoxHighlight = tw(Box)`
 `
 
 const CostComparison = tw(Box)`
-  md:col-span-3
+  xl:col-span-3
   border-none
 `
 
 const HeroNumber = tw.div`
   text-sap-gold
-  text-6xl
+  text-5xl
+  xl:text-6xl
   text-center
   font-medium
   pb-4
@@ -59,7 +60,8 @@ const HeroNumber = tw.div`
 
 const P = tw.p`
   font-thin
-  text-lg
+  text-base
+  xl:text-lg
 `
 
 const IconContainer = tw.div`

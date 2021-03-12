@@ -1,11 +1,11 @@
 import tw from "twin.macro"
 import { ReactComponent as CCPlusOneLogo } from "../../assets/images/CCplusOne_logo.svg"
+import { LayoutContainer, PLarge } from "../shared/StyledComponents"
 
 import Pricing from "./Pricing"
+import Features from "./Benefits"
 
-const Container = tw.div`
-  container
-  mx-auto
+const Container = tw(LayoutContainer)`
   pt-16
   px-16
 `
@@ -14,12 +14,10 @@ const PageLead = tw.div`
   mx-8
 `
 
-const LeadText = tw.p`
+const LeadText = tw(PLarge)`
   py-8
   ml-8
   w-3/5
-  font-thin
-  text-3xl
 `
 
 const Content = () => {
@@ -35,6 +33,7 @@ const Content = () => {
       </PageLead>
 
       <Pricing />
+      <Features />
     </Container>
   )
 }

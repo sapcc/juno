@@ -1,5 +1,6 @@
 import tw from 'twin.macro'
 import { ReactComponent as SAPLogo } from '../../assets/images/SAP_logo.svg';
+import { LayoutContainer } from "../shared/StyledComponents"
 
 import { Button } from "../shared/StyledComponents"
 // import logo from "../../assets/images/SAP_logo.svg"
@@ -9,9 +10,7 @@ const Head = tw.div`
   bg-opacity-60
 `
 
-const Container = tw.div`
-  container
-  mx-auto
+const Container = tw(LayoutContainer)`
   flex
   justify-between
   items-center
@@ -24,7 +23,7 @@ const PageHead = () => {
     <Head>
       <Container>
         <SAPLogo />
-        <Button>
+        <Button type="large">
           Login
         </Button>
       </Container>
