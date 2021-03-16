@@ -1,18 +1,15 @@
 import tw from "twin.macro"
 
-const Container = tw.div`
-  container
-  mx-auto
-`
+import { LayoutContainer } from "../shared/StyledComponents"
 
 const PageFooter = () => {
 
   return (
-    <Container>
+    <LayoutContainer>
       <div>
         Footer
       </div>
-    </Container>
+    </LayoutContainer>
 
   )
 
