@@ -4,6 +4,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const { HotModuleReplacementPlugin } = require("webpack")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const { ModuleFederationPlugin } = require("webpack").container
+const tailwindcss = require("tailwindcss")
+const autoprefixer = require("autoprefixer") // help tailwindcss to work
 
 module.exports = {
   //our index file
@@ -25,16 +27,25 @@ module.exports = {
         loader: "babel-loader",
         options: {
           presets: [["@babel/preset-react", { runtime: "automatic" }]],
+          plugins: ["babel-plugin-macros"],
         },
       },
       //Allows use of CSS
       {
-        test: /\.css$/i,
+        test: /\.(css|scss|sass)$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
+          MiniCssExtractPlugin.loader,
           "css-loader",
+          "sass-loader",
+          {
+            loader: "postcss-loader", // postcss loader needed for tailwindcss
+            options: {
+              postcssOptions: {
+                ident: "postcss",
+                plugins: [tailwindcss, autoprefixer],
+              },
+            },
+          },
         ],
       },
       //Allows use of images
