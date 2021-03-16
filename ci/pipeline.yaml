@@ -387,6 +387,8 @@ jobs:
           cache: true
           cache_tag: "latest"
           build: build
+          build_args: 
+            KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: ci.git/ci/Dockerfile.cdn
           tag: cdn.version/version
         get_params:
