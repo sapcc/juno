@@ -4,6 +4,8 @@ Is a collection of micro frontends
 
 # Development
 
+Use Webpack for apps, and Rollup for libraries
+
 Start dashboard
 
 ```bash

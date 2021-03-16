@@ -4,12 +4,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const { HotModuleReplacementPlugin } = require("webpack")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const { ModuleFederationPlugin } = require("webpack").container
-const tailwindcss = require("tailwindcss")
-const autoprefixer = require("autoprefixer") // help tailwindcss to work
 
 module.exports = {
   //our index file
-  entry: path.resolve(__dirname, "src/index.js"),
+  entry: ["babel-polyfill", path.resolve(__dirname, "src/index.js")],
   //Where we put the production code
   output: {
     path: path.resolve(__dirname, "build"),
@@ -25,28 +23,14 @@ module.exports = {
         test: /\.(js|jsx)$/,
         // exclude: /node_modules/, //don't test node_modules folder
         loader: "babel-loader",
+        type: "javascript/auto",
         options: {
-          presets: [["@babel/preset-react", { runtime: "automatic" }]],
+          presets: [
+            "@babel/preset-env",
+            ["@babel/preset-react", { runtime: "automatic" }],
+          ],
           plugins: ["babel-plugin-macros"],
         },
-      },
-      //Allows use of CSS
-      {
-        test: /\.(css|scss|sass)$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          "sass-loader",
-          {
-            loader: "postcss-loader", // postcss loader needed for tailwindcss
-            options: {
-              postcssOptions: {
-                ident: "postcss",
-                plugins: [tailwindcss, autoprefixer],
-              },
-            },
-          },
-        ],
       },
       //Allows use of images
       {
@@ -54,6 +38,16 @@ module.exports = {
         loader: "file-loader",
       },
     ],
+  },
+  resolve: {
+    fallback: {
+      path: require.resolve("path-browserify"),
+      os: require.resolve("os-browserify/browser"),
+      util: require.resolve("util/"),
+      assert: require.resolve("assert/"),
+      fs: false,
+      module: false,
+    },
   },
   optimization: {
     splitChunks: { chunks: "all" },
@@ -80,7 +74,7 @@ module.exports = {
         "./App": "./src/App",
         "./widget": "./src/widget",
       },
-      shared: ["react", "react-dom"],
+      shared: ["react", "react-dom", "juno-ui-components"],
     }),
   ],
   //Config for webpack-dev-server module
