@@ -197,8 +197,7 @@ jobs:
               path: /bin/sh
               args:
                 - -c
-                - |
-                  ls -la /app
+                - |         
                   VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
                   cp -r /app/build ./<%= app %>-output/$VERSION
             outputs:

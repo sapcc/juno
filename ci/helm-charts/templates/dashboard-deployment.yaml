@@ -33,14 +33,14 @@ spec:
 
           livenessProbe:
             httpGet:
-              path: /system/liveliness
+              path: /
               port: 5000
             timeoutSeconds: 10
             periodSeconds: 60
             initialDelaySeconds: 60
           readinessProbe:
             httpGet:
-              path: /system/readiness
+              path: /
               port: 5000
             timeoutSeconds: 5
             periodSeconds: 5
