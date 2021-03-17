@@ -6,15 +6,20 @@ LABEL source_repository="https://github.com/sapcc/juno/apps/dashboard"
 RUN apk --no-cache add git ca-certificates make
 RUN npm install -g serve
 
+# create tmp folder
+RUN mkdir -p /tmp/repo
+# copy the whole repo to /tmp/repo
+ADD . /tmp/repo
+
+# install node modules, build libs and app
+RUN cd /tmp/repo/ && yarn install; yarn build-libs; yarn workspace dashboard build 
+
+# create working dir
 RUN mkdir -p /app
-
 WORKDIR /app
-ADD ./apps/dashboard/package.json ./apps/dashboard/yarn.lock /app/
 
-RUN yarn install
+# copy app build to working dir
+RUN cp -r /tmp/repo/apps/dashboard /app; cd /app
 
-ADD ./apps/dashboard /app
-
-RUN yarn build
-
+# run app
 CMD serve -s build
