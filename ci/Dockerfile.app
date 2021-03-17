@@ -1,5 +1,6 @@
 ARG KEPPEL_HOSTNAME
 ARG APP_NAME
+
 FROM $KEPPEL_HOSTNAME/ccloud-dockerhub-mirror/library/node:14-alpine
 
 LABEL source_repository="https://github.com/sapcc/juno/apps"
@@ -20,4 +21,4 @@ RUN mkdir -p /app
 WORKDIR /app
 
 # copy app build to working dir
-RUN cp -r /tmp/repo/apps/%APP_NAME /app
+RUN cp -r /tmp/repo/apps/$APP_NAME /app
