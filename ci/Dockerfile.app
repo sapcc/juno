@@ -1,12 +1,11 @@
 ARG KEPPEL_HOSTNAME
-ARG APP_NAME
 
 FROM $KEPPEL_HOSTNAME/ccloud-dockerhub-mirror/library/node:14-alpine
+ARG APP_NAME
 
 LABEL source_repository="https://github.com/sapcc/juno/apps"
 
 RUN apk --no-cache add git ca-certificates make
-RUN npm install -g serve
 
 # create tmp folder
 RUN mkdir -p /tmp/repo

@@ -161,7 +161,7 @@ jobs:
           cache_tag: "latest"
           build: app-auth.git
           build_args: 
-            APP_NAME: auth 
+            APP_NAME: "auth" 
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-auth.git/ci/Dockerfile.app
 
@@ -214,7 +214,7 @@ jobs:
           cache_tag: "latest"
           build: app-auth2.git
           build_args: 
-            APP_NAME: auth2 
+            APP_NAME: "auth2" 
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-auth2.git/ci/Dockerfile.app
 
@@ -267,7 +267,7 @@ jobs:
           cache_tag: "latest"
           build: app-widget-loader.git
           build_args: 
-            APP_NAME: widget-loader 
+            APP_NAME: "widget-loader" 
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-widget-loader.git/ci/Dockerfile.app
 
