@@ -141,7 +141,7 @@ jobs:
               - |
                 cd $PWD/app/juno
                 yarn --dev install
-                yarn workspace juno-ui-components build
+                yarn build-libs
                 CI=true yarn workspace auth test
 
   # build image for each app in /apps
@@ -159,8 +159,9 @@ jobs:
           tag_as_latest: true
           cache: true
           cache_tag: "latest"
-          build: app-auth.git/apps/auth
+          build: app-auth.git
           build_args: 
+            APP_NAME: auth 
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-auth.git/ci/Dockerfile.app
 
@@ -193,7 +194,7 @@ jobs:
               - |
                 cd $PWD/app/juno
                 yarn --dev install
-                yarn workspace juno-ui-components build
+                yarn build-libs
                 CI=true yarn workspace auth-2 test
 
   # build image for each app in /apps
@@ -211,8 +212,9 @@ jobs:
           tag_as_latest: true
           cache: true
           cache_tag: "latest"
-          build: app-auth-2.git/apps/auth-2
+          build: app-auth-2.git
           build_args: 
+            APP_NAME: auth-2 
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-auth-2.git/ci/Dockerfile.app
 
@@ -245,7 +247,7 @@ jobs:
               - |
                 cd $PWD/app/juno
                 yarn --dev install
-                yarn workspace juno-ui-components build
+                yarn build-libs
                 CI=true yarn workspace widget-loader test
 
   # build image for each app in /apps
@@ -263,8 +265,9 @@ jobs:
           tag_as_latest: true
           cache: true
           cache_tag: "latest"
-          build: app-widget-loader.git/apps/widget-loader
+          build: app-widget-loader.git
           build_args: 
+            APP_NAME: widget-loader 
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-widget-loader.git/ci/Dockerfile.app
 

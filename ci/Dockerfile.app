@@ -13,7 +13,7 @@ RUN mkdir -p /tmp/repo
 ADD . /tmp/repo
 
 # install node modules, build libs and app
-RUN cd /tmp/repo/ && yarn install && yarn build-libs && yarn workspace $APP_NAME build 
+RUN cd /tmp/repo/ && yarn install; yarn build-libs; yarn workspace $APP_NAME build 
 
 # create working dir
 RUN mkdir -p /app
