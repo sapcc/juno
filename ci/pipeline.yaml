@@ -310,6 +310,7 @@ jobs:
               args:
                 - -c
                 - |
+                  ls -la /app
                   VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
                   cp -r /app/build ./auth-output/$VERSION
             outputs:
@@ -329,6 +330,7 @@ jobs:
               args:
                 - -c
                 - |
+                  ls -la /app
                   VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
                   cp -r /app/build ./auth2-output/$VERSION
             outputs:
@@ -348,6 +350,7 @@ jobs:
               args:
                 - -c
                 - |
+                  ls -la /app
                   VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
                   cp -r /app/build ./widget-loader-output/$VERSION
             outputs:

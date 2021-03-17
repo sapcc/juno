@@ -20,4 +20,4 @@ RUN mkdir -p /app
 WORKDIR /app
 
 # copy app build to working dir
-RUN cp -r /tmp/repo/apps/$APP_NAME /app
+RUN cp -r /tmp/repo/apps/$APP_NAME/* /app/
