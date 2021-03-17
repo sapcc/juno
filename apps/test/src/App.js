@@ -7,7 +7,7 @@ const App = () => {
   return (
     <>
       <GlobalStyles />
-      <Button danger onClick={() => setIsOpen(true)}>
+      <Button mode="success" onClick={() => setIsOpen(true)}>
         Test
       </Button>
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} />

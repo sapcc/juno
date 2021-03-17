@@ -12,15 +12,15 @@ Start dashboard
 yarn dashboard
 ```
 
-Start any app in apps folder with --cwd apps/APP_NAME
+Start any app in apps folder with workspace APP_NAME start
 
 ```bash
-yarn --cwd apps/dashboard start
+yarn workspace dashboard start
 ```
 
 In workspaces
 
 ```
 wb yarn dashboard
-wb yarn --cwd apps/dashboard start
+wb yarn workspace dashboard start
 ```

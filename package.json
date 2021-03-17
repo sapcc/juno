@@ -16,6 +16,7 @@
     "clear": "scripts/rm_node_modules.sh",
     "bootstrap": "yarn clear; yarn install && yarn workspace juno-ui-components build",
     "reinstall": "scripts/rm_node_modules.sh && yarn install",
-    "dashboard": "yarn workspace dashboard start"
+    "dashboard": "yarn workspace dashboard start",
+    "ui-components": "yarn workspace juno-ui-components storybook"
   }
 }
