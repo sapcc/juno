@@ -2,12 +2,29 @@
 // console.log(window.location)
 
 import React from "react"
+import tw from "twin.macro"
+import { Modal, Button } from "juno-ui-components"
+import { GlobalStyles } from "twin.macro"
 
+const Hi = tw.h2`
+text-purple-500
+`
 // import tw from "twin.macro"
 
 // console.log(":::::::::::::::::::::::::::.", tw)
-export default () => <h1>Hello this is Auth App</h1>
-// import { Modal } from "ui-components"
+export default () => {
+  const [isOpen, setIsOpen] = React.useState(true)
+  return (
+    <>
+      <GlobalStyles />
+      <Hi>Hello this is Auth App</Hi>
+      <Button danger onClick={() => setIsOpen(true)}>
+        Test
+      </Button>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+    </>
+  )
+}
 
 // export default () => {
 //   return (
