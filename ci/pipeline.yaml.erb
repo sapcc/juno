@@ -399,7 +399,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/dashboard","package.json"]
+      paths: ["apps/dashboard","package.json","lib"]
       username: sapcc-bot
       password: {{real-github-access-token}}
  
@@ -409,7 +409,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/<%= app %>","package.json"]
+      paths: ["apps/<%= app %>","package.json","lib"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
