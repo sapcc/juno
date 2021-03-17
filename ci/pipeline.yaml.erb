@@ -141,9 +141,10 @@ jobs:
             args:
               - -c
               - |
-                cd $PWD/app/juno/apps/<%= app %>
-                ls -la
-                yarn --dev && CI=true yarn test
+                cd $PWD/app/juno
+                yarn --dev install
+                yarn build-libs
+                CI=true yarn workspace <%= app %> test
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
@@ -160,8 +161,9 @@ jobs:
           tag_as_latest: true
           cache: true
           cache_tag: "latest"
-          build: app-<%= app %>.git/apps/<%= app %>
+          build: app-<%= app %>.git
           build_args: 
+            APP_NAME: <%= app %> 
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-<%= app %>.git/ci/Dockerfile.app
 

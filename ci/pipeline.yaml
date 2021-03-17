@@ -139,9 +139,10 @@ jobs:
             args:
               - -c
               - |
-                cd $PWD/app/juno/apps/auth
-                ls -la
-                yarn --dev && CI=true yarn test
+                cd $PWD/app/juno
+                yarn --dev install
+                yarn workspace juno-ui-components build
+                CI=true yarn workspace auth test
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
@@ -190,9 +191,10 @@ jobs:
             args:
               - -c
               - |
-                cd $PWD/app/juno/apps/auth-2
-                ls -la
-                yarn --dev && CI=true yarn test
+                cd $PWD/app/juno
+                yarn --dev install
+                yarn workspace juno-ui-components build
+                CI=true yarn workspace auth-2 test
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
@@ -241,9 +243,10 @@ jobs:
             args:
               - -c
               - |
-                cd $PWD/app/juno/apps/widget-loader
-                ls -la
-                yarn --dev && CI=true yarn test
+                cd $PWD/app/juno
+                yarn --dev install
+                yarn workspace juno-ui-components build
+                CI=true yarn workspace widget-loader test
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
