@@ -1,10 +1,6 @@
 # prettier-ignore
 
 
-
-
-
-
 jobs:
   # for info only
   - name: README
@@ -69,9 +65,10 @@ jobs:
             args:
               - -c
               - |
-                cd $PWD/app/juno/apps/dashboard
-                ls -la
-                yarn --dev && CI=true yarn test
+                cd $PWD/app/juno
+                yarn --dev install
+                yarn build-libs
+                CI=true yarn workspace dashboard test
 
   # build dashboard image and push it to keppel
   - name: build dashboard
@@ -560,7 +557,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/dashboard"]
+      paths: ["apps/dashboard","package.json","lib"]
       username: sapcc-bot
       password: {{real-github-access-token}}
  
@@ -570,7 +567,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/auth"]
+      paths: ["apps/auth","package.json","lib"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
@@ -586,7 +583,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/auth-2"]
+      paths: ["apps/auth-2","package.json","lib"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
@@ -602,7 +599,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/widget-loader"]
+      paths: ["apps/widget-loader","package.json","lib"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
@@ -619,7 +616,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["ci"]
+      paths: ["ci","package.json"]
       username: sapcc-bot
       password: {{real-github-access-token}}     
 

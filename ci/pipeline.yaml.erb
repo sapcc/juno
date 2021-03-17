@@ -1,6 +1,6 @@
 # prettier-ignore
 <%
-  APPS = ["auth","auth-2","widget-loader"]
+  APPS = ["auth","auth2","widget-loader"]
 %>
 
 jobs:
@@ -399,7 +399,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/dashboard","package.json","lib"]
+      paths: ["apps/dashboard","package.json","lib","ci/Dockerfile.dashboard"]
       username: sapcc-bot
       password: {{real-github-access-token}}
  
@@ -409,7 +409,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/<%= app %>","package.json","lib"]
+      paths: ["apps/<%= app %>","package.json","lib","ci/Dockerfile.app"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
