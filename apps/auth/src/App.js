@@ -6,7 +6,7 @@ import tw from "twin.macro"
 import { Modal, Button } from "juno-ui-components"
 import { GlobalStyles } from "twin.macro"
 
-const Hi = tw.h2`
+const Hi = tw.h1`
 text-purple-500
 `
 // import tw from "twin.macro"
