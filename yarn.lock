@@ -5134,7 +5134,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"autoprefixer@npm:^10.2.4":
+"autoprefixer@npm:^10.2.4, autoprefixer@npm:^10.2.5":
   version: 10.2.5
   resolution: "autoprefixer@npm:10.2.5"
   dependencies:
@@ -7230,7 +7230,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.0.1, core-js@npm:^3.0.4, core-js@npm:^3.6.5":
+"core-js@npm:^3.0.1, core-js@npm:^3.0.4, core-js@npm:^3.6.5, core-js@npm:^3.9.1":
   version: 3.9.1
   resolution: "core-js@npm:3.9.1"
   checksum: 3f360466246e816ff745f349bf0ea0c54bc3a05203638d84c5f0eae3583f07e7d848d6aa9b69c30467efb418e526bae034a6da50bcfda8b2cd413e5144cd1444
@@ -12874,19 +12874,30 @@ fsevents@^1.2.7:
     "@testing-library/jest-dom": ^5.11.4
     "@testing-library/react": ^11.1.0
     "@testing-library/user-event": ^12.1.10
+    autoprefixer: ^10.2.5
     babel-loader: ^8.2.2
+    babel-plugin-macros: ^2.8.0
+    core-js: ^3.9.1
     npm-run-all: ^4.1.5
     postcss: ^8.2.8
+    prop-types: ^15.7.2
+    react: ^17.0.1
+    react-dom: ^17.0.1
+    react-is: ^17.0.1
     rollup: ^2.41.1
     rollup-plugin-delete: ^2.0.0
     rollup-plugin-includepaths: ^0.2.4
     rollup-plugin-root-import: ^1.0.0
+    styled-components: ^5.2.1
+    tailwindcss: ^2.0.3
+    twin.macro: ^2.3.0
   peerDependencies:
     autoprefixer: ^10.2.5
     babel-plugin-macros: ^2.8.0
     prop-types: ^15.7.2
     react: ^17.0.1
     react-dom: ^17.0.1
+    react-is: ^17.0.1
     styled-components: ^5.2.1
     tailwindcss: ^2.0.3
     twin.macro: ^2.3.0
@@ -17684,6 +17695,9 @@ resolve@1.18.1:
 "root-workspace-0b6124@workspace:.":
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
+  dependenciesMeta:
+    open@7.4.2:
+      unplugged: true
   languageName: unknown
   linkType: soft
 

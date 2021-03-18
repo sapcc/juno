@@ -68,6 +68,7 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
+                yarn --dev workspace dashboard focus
                 yarn --dev install
                 yarn build-libs
                 CI=true yarn workspace dashboard test

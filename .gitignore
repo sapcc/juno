@@ -2,6 +2,8 @@
 
 # dependencies
 node_modules
+
+# YARN We're not using Zero-Installs
 .yarn/*
 !.yarn/patches
 !.yarn/releases

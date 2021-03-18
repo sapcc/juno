@@ -13,5 +13,10 @@
     "dashboard": "yarn workspace dashboard start",
     "ui-components": "yarn workspace juno-ui-components storybook",
     "build-libs": "yarn workspace juno-ui-components build"
+  },
+  "dependenciesMeta": {
+    "open@7.4.2": {
+      "unplugged": true
+    }
   }
 }
