@@ -2,6 +2,7 @@ ARG KEPPEL_HOSTNAME
 FROM $KEPPEL_HOSTNAME/ccloud-dockerhub-mirror/library/node:14-alpine
 
 LABEL source_repository="https://github.com/sapcc/juno/apps/dashboard"
+ARG LIBS
 
 RUN apk --no-cache add git ca-certificates make
 RUN npm install -g serve
@@ -13,8 +14,8 @@ ADD . /tmp/repo
 
 # install node modules, build libs and app
 RUN cd /tmp/repo/ && \
-  yarn workspaces focus juno-ui-components dashboard ; \
-  yarn workspace juno-ui-components build ;\
+  yarn workspaces focus $LIBS dashboard ; \
+  yarn workspace $LIBS build ;\
   yarn workspace dashboard build 
 
 # create working dir

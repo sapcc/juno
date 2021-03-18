@@ -90,6 +90,7 @@ jobs:
               build: app-dashboard.git
               build_args: 
                 KEPPEL_HOSTNAME: {{keppel-hostname}}
+                LIBS: "juno-ui-components"
               dockerfile: app-dashboard.git/ci/Dockerfile.dashboard
               tag: dashboard.version/version
             get_params:
@@ -164,6 +165,7 @@ jobs:
           build: app-<%= app %>.git
           build_args: 
             APP_NAME: "<%= app %>" 
+            LIBS: "juno-ui-components"
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-<%= app %>.git/ci/Dockerfile.app
 

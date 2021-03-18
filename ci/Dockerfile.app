@@ -2,6 +2,7 @@ ARG KEPPEL_HOSTNAME
 
 FROM $KEPPEL_HOSTNAME/ccloud-dockerhub-mirror/library/node:14-alpine
 ARG APP_NAME
+ARG LIBS
 
 LABEL source_repository="https://github.com/sapcc/juno/apps"
 
@@ -14,8 +15,8 @@ ADD . /tmp/repo
 
 # install node modules, build libs and app
 RUN cd /tmp/repo/ && \
-  yarn workspaces focus juno-ui-components $APP_NAME ; \
-  yarn workspace juno-ui-components build ;\
+  yarn workspaces focus $LIBS $APP_NAME ; \
+  yarn build-libs ;\
   yarn workspace $APP_NAME build 
 
 # create working dir
