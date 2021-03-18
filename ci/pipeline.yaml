@@ -66,8 +66,8 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn workspaces focus juno-ui-components dashboard
-                yarn workspace juno-ui-components build
+                yarn build-libs
+                yarn workspaces focus dashboard
                 CI=true yarn workspace dashboard test
 
   # build dashboard image and push it to keppel
@@ -140,9 +140,9 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn --dev install
                 yarn build-libs
-                CI=true yarn workspace auth test
+                yarn workspaces focus auth
+                CI=true yarn workspace auth test                
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
@@ -193,9 +193,9 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn --dev install
                 yarn build-libs
-                CI=true yarn workspace auth2 test
+                yarn workspaces focus auth2
+                CI=true yarn workspace auth2 test                
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
@@ -246,9 +246,9 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn --dev install
                 yarn build-libs
-                CI=true yarn workspace widget-loader test
+                yarn workspaces focus widget-loader
+                CI=true yarn workspace widget-loader test                
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
