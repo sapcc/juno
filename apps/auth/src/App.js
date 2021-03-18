@@ -9,9 +9,6 @@ import { GlobalStyles } from "twin.macro"
 const Hi = tw.h1`
 text-purple-500
 `
-// import tw from "twin.macro"
-
-// console.log(":::::::::::::::::::::::::::.", tw)
 export default () => {
   const [isOpen, setIsOpen] = React.useState(true)
   return (
