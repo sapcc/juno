@@ -1,4 +1,5 @@
 const path = require("path")
+const webpack = require("webpack")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const { HotModuleReplacementPlugin } = require("webpack")
@@ -6,8 +7,8 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const { ModuleFederationPlugin } = require("webpack").container
 
 module.exports = {
-  //our index file
-  entry: ["babel-polyfill", path.resolve(__dirname, "src/index.js")],
+  context: path.resolve(__dirname, "src"),
+  entry: "./index.js",
   //Where we put the production code
   output: {
     path: path.resolve(__dirname, "build"),
@@ -20,16 +21,11 @@ module.exports = {
     rules: [
       //Allows use javascript
       {
-        test: /\.(js|jsx)$/,
-        // exclude: /node_modules/, //don't test node_modules folder
-        loader: "babel-loader",
+        test: /\.(js|jsx|m?js)$/,
         type: "javascript/auto",
-        options: {
-          presets: [
-            "@babel/preset-env",
-            ["@babel/preset-react", { runtime: "automatic" }],
-          ],
-          plugins: ["babel-plugin-macros"],
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
         },
       },
       //Allows use of images
@@ -40,6 +36,7 @@ module.exports = {
     ],
   },
   resolve: {
+    extensions: [".js", ".json"],
     fallback: {
       path: require.resolve("path-browserify"),
       os: require.resolve("os-browserify/browser"),
@@ -53,6 +50,10 @@ module.exports = {
     splitChunks: { chunks: "all" },
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      process: require.resolve("process/browser"),
+      Buffer: require.resolve("buffer/"),
+    }),
     //Allows remove/clean the build folder
     new CleanWebpackPlugin(),
     //Allows update react components in real time
@@ -71,8 +72,8 @@ module.exports = {
       filename: "widget.js",
       exposes: {
         // expose each component
-        "./App": "./src/App",
-        "./widget": "./src/widget",
+        "./App": "./App",
+        "./widget": "./widget",
       },
       shared: ["react", "react-dom", "juno-ui-components"],
     }),

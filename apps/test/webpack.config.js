@@ -45,14 +45,14 @@ module.exports = {
     fallback: {
       path: require.resolve("path-browserify"),
       os: require.resolve("os-browserify/browser"),
-      fs: false,
       util: require.resolve("util/"),
+      fs: false,
       module: false,
     },
   },
   plugins: [
     new webpack.ProvidePlugin({
-      process: "process/browser.js",
+      process: require.resolve("process/browser"),
     }),
     new HtmlWebPackPlugin({
       template: path.resolve(__dirname, "public/index.html"),

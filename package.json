@@ -4,12 +4,6 @@
     "packages": [
       "apps/*",
       "lib/juno-ui-components"
-    ],
-    "nohoist": [
-      "**/webpack-dev-server",
-      "**/jest",
-      "**/react-scripts",
-      "**/react-scripts/**"
     ]
   },
   "scripts": {

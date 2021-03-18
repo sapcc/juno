@@ -5,7 +5,6 @@
   "main": "lib/index.js",
   "module": "lib/esm/index.js",
   "source": "src/index.js",
-  "dependencies": {},
   "files": [
     "lib"
   ],
@@ -42,12 +41,12 @@
   "peerDependencies": {
     "autoprefixer": "^10.2.5",
     "babel-plugin-macros": "^2.8.0",
+    "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "styled-components": "^5.2.1",
     "tailwindcss": "^2.0.3",
-    "twin.macro": "^2.3.0",
-    "prop-types": "^15.7.2"
+    "twin.macro": "^2.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
