@@ -68,9 +68,8 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn --dev workspace dashboard focus
-                yarn --dev install
                 yarn build-libs
+                yarn workspaces focus dashboard
                 CI=true yarn workspace dashboard test
 
   # build dashboard image and push it to keppel
@@ -143,9 +142,9 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn --dev install
                 yarn build-libs
-                CI=true yarn workspace <%= app %> test
+                yarn workspaces focus <%= app %>
+                CI=true yarn workspace <%= app %> test                
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 

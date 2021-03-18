@@ -12,7 +12,10 @@ RUN mkdir -p /tmp/repo
 ADD . /tmp/repo
 
 # install node modules, build libs and app
-RUN cd /tmp/repo/ && yarn install; yarn build-libs; yarn workspace dashboard build 
+RUN cd /tmp/repo/ && \
+  yarn build-libs; \
+  yarn workspaces focus dashboard ; \
+  yarn workspace dashboard build 
 
 # create working dir
 RUN mkdir -p /app
