@@ -14,8 +14,8 @@ ADD . /tmp/repo
 
 # install node modules, build libs and app
 RUN cd /tmp/repo/ && \
-  yarn build-libs; \
-  yarn workspaces focus $APP_NAME ; \
+  yarn workspaces focus juno-ui-components $APP_NAME ; \
+  yarn workspace juno-ui-components build ;\
   yarn workspace $APP_NAME build 
 
 # create working dir

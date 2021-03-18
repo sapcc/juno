@@ -68,8 +68,8 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn build-libs
-                yarn workspaces focus dashboard
+                yarn workspaces focus juno-ui-components dashboard
+                yarn workspace juno-ui-components build
                 CI=true yarn workspace dashboard test
 
   # build dashboard image and push it to keppel
@@ -142,8 +142,8 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn build-libs
-                yarn workspaces focus <%= app %>
+                yarn workspaces focus juno-ui-components <%= app %>
+                yarn workspace juno-ui-components build
                 CI=true yarn workspace <%= app %> test                
 
   # build image for each app in /apps

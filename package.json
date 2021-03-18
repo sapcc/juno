@@ -8,8 +8,7 @@
   },
   "scripts": {
     "dashboard": "yarn workspace dashboard start",
-    "ui-components": "yarn workspace juno-ui-components storybook",
-    "build-libs": "yarn workspaces focus juno-ui-components ; yarn workspace juno-ui-components build"
+    "ui-components": "yarn workspace juno-ui-components storybook"
   },
   "dependenciesMeta": {
     "open@7.4.2": {
