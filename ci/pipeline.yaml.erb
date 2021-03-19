@@ -1,6 +1,7 @@
 # prettier-ignore
 <%
   APPS = ["auth","auth2","widget-loader"]
+  LIBS = ["juno-ui-components"] 
 %>
 
 jobs:
@@ -90,7 +91,7 @@ jobs:
               build: app-dashboard.git
               build_args: 
                 KEPPEL_HOSTNAME: {{keppel-hostname}}
-                LIBS: "juno-ui-components"
+                LIBS: <%= LIBS.join(" ") %>
               dockerfile: app-dashboard.git/ci/Dockerfile.dashboard
               tag: dashboard.version/version
             get_params:
@@ -165,7 +166,7 @@ jobs:
           build: app-<%= app %>.git
           build_args: 
             APP_NAME: "<%= app %>" 
-            LIBS: "juno-ui-components"
+            LIBS: <%= LIBS.join(" ") %>
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-<%= app %>.git/ci/Dockerfile.app
 

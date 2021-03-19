@@ -88,6 +88,7 @@ jobs:
               build: app-dashboard.git
               build_args: 
                 KEPPEL_HOSTNAME: {{keppel-hostname}}
+                LIBS: juno-ui-components
               dockerfile: app-dashboard.git/ci/Dockerfile.dashboard
               tag: dashboard.version/version
             get_params:
@@ -162,6 +163,7 @@ jobs:
           build: app-auth.git
           build_args: 
             APP_NAME: "auth" 
+            LIBS: juno-ui-components
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-auth.git/ci/Dockerfile.app
 
@@ -215,6 +217,7 @@ jobs:
           build: app-auth2.git
           build_args: 
             APP_NAME: "auth2" 
+            LIBS: juno-ui-components
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-auth2.git/ci/Dockerfile.app
 
@@ -268,6 +271,7 @@ jobs:
           build: app-widget-loader.git
           build_args: 
             APP_NAME: "widget-loader" 
+            LIBS: juno-ui-components
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-widget-loader.git/ci/Dockerfile.app
 
