@@ -7,28 +7,25 @@ import { Modal, Button } from "juno-ui-components"
 import { GlobalStyles } from "twin.macro"
 
 const Hi = tw.h1`
-text-purple-500
+text-blue-500
 `
 export default () => {
-  const [isOpen, setIsOpen] = React.useState(true)
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  //identity-3.qa-de-1.cloud.sap
+
   return (
     <>
       <GlobalStyles />
       <Hi>Hello this is Auth App</Hi>
-      <Button danger onClick={() => setIsOpen(true)}>
-        Test
+      <Button mode="primary" onClick={() => setIsOpen(true)}>
+        Login
       </Button>
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Login"
+      ></Modal>
     </>
   )
 }
-
-// export default () => {
-//   return (
-//     <div>
-//       <Modal isOpen={true} />
-//       {/* <Button>test</Button> */}
-//       <h4>Hello this is Auth App</h4>
-//     </div>
-//   )
-// }
