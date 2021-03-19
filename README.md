@@ -1,6 +1,13 @@
 # Juno
 
-Is a collection of micro frontends
+Is a collection of Micro Frontends (MFE)
+
+- [Widget Loader](https://github.com/sapcc/juno/tree/main/apps/widget-loader)
+- [Auth](https://github.com/sapcc/juno/tree/main/apps/auth)
+
+## Libs
+
+- [UI Components](https://github.com/sapcc/juno/tree/main/lib/juno-ui-components)
 
 # Development
 
