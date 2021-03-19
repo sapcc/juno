@@ -2,6 +2,8 @@
 
 Is a collection of Micro Frontends (MFE)
 
+- [Dashboard](https://github.com/sapcc/juno/tree/main/apps/dashboard)
+
 - [Widget Loader](https://github.com/sapcc/juno/tree/main/apps/widget-loader)
 - [Auth](https://github.com/sapcc/juno/tree/main/apps/auth)
 
