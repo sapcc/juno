@@ -1,6 +1,6 @@
 {
   "name": "auth",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -48,6 +48,7 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
+    "custom-event-polyfill": "^1.0.7",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"

@@ -5130,6 +5130,7 @@ __metadata:
     bundle-loader: ^0.5.6
     clean-webpack-plugin: ^3.0.0
     css-loader: ^5.1.1
+    custom-event-polyfill: ^1.0.7
     html-webpack-plugin: ^5.1.0
     jest: ^26.6.3
     juno-ui-components: "workspace:*"
@@ -7808,6 +7809,13 @@ __metadata:
   version: 3.0.7
   resolution: "csstype@npm:3.0.7"
   checksum: 76d542d719cd6bca7c491e6425a28873f76b0f4cf602b626a9fee105806446be4fab2191c5d18a045aea412bb3d5dcb5cab9414328080c672671433b786746f5
+  languageName: node
+  linkType: hard
+
+"custom-event-polyfill@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "custom-event-polyfill@npm:1.0.7"
+  checksum: ea0355e332d8e4e03fe6c9b44a8ea8cce7986f83f23c17d21fa0b8b390c557a55285660aa142ab73dd6463a2fa49923a4ff9c06c3323a8b435ac86b8e93e5d3b
   languageName: node
   linkType: hard
 
