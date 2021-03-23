@@ -1,6 +1,6 @@
 {
   "name": "juno-ui-components",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "main": "lib/index.js",
   "module": "lib/esm/index.js",
