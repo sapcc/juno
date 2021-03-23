@@ -97,5 +97,6 @@ module.exports = (_, argv) => {
       client: { port: 443 },
       hot: true,
     },
+    devtool: "source-map",
   }
 }
