@@ -2,7 +2,6 @@
 // console.log(window.location)
 import "custom-event-polyfill"
 import React from "react"
-import tw from "twin.macro"
 import { Modal } from "juno-ui-components"
 import { GlobalStyles } from "twin.macro"
 import { LoginDialog } from "./LoginDialog"
