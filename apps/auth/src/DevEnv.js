@@ -31,7 +31,13 @@ const DevEnv = () => {
       <Hi>Hello, this is the Development Environment for Auth App</Hi>
       <br />
       {token ? (
-        <Button mode="danger" onClick={() => setToken(null)}>
+        <Button
+          mode="danger"
+          onClick={() => {
+            setToken(null)
+            setAuthToken(null)
+          }}
+        >
           Logout
         </Button>
       ) : (
@@ -50,14 +56,6 @@ const DevEnv = () => {
         </Button>
       )}
       <br />
-      {authToken && (
-        <>
-          <pre tw="block m-0 p-0 overflow-auto text-white text-sm bg-gray-800">
-            {authToken}
-          </pre>
-          <br />
-        </>
-      )}
       {token && (
         <pre tw="block m-0 p-0 overflow-auto text-white text-sm bg-gray-800">
           {JSON.stringify(token, null, 2)}
