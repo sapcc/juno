@@ -28,7 +28,7 @@ const DevEnv = () => {
   return (
     <>
       <GlobalStyles />
-      <Hi>Hello, this is the Development Environment for Auth App</Hi>
+      <Hi>Test environment for the auth app</Hi>
       <br />
       {token ? (
         <Button

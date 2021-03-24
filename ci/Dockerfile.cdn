@@ -1,4 +1,23 @@
+# ARG KEPPEL_HOSTNAME
+# FROM $KEPPEL_HOSTNAME/ccloud-dockerhub-mirror/library/nginx:alpine
+
+# LABEL source_repository="https://github.com/sapcc/juno/ci/Dockerfile.cdn"
+
+# RUN apk --no-cache add git ca-certificates make
+
+# RUN mkdir -p /usr/share/nginx/html/cdn
+
+# RUN mkdir -p /tmp/build
+# COPY . /tmp/build/
+
+# RUN cp -rf /tmp/build/* /usr/share/nginx/html/cdn/ && rm -rf /tmp/build
+# # generate manifest
+# RUN cd /usr/share/nginx/html/cdn/ ; OUTPUT='{'; for d in */ ; do OUTPUT="$OUTPUT\"$(basename $d)\":[";  for s in $d*/ ; do OUTPUT="$OUTPUT\"$(basename $s)\"," ;  done ; OUTPUT="${OUTPUT%,}],"  ; done ; OUTPUT="${OUTPUT%,}}"; echo $OUTPUT > manifest.json
+
+# use last build version to get builds and copy them to the new build
 ARG KEPPEL_HOSTNAME
+FROM $KEPPEL_HOSTNAME/ccloud/juno-cdn:latest AS lastbuild
+
 FROM $KEPPEL_HOSTNAME/ccloud-dockerhub-mirror/library/nginx:alpine
 
 LABEL source_repository="https://github.com/sapcc/juno/ci/Dockerfile.cdn"
@@ -8,8 +27,11 @@ RUN apk --no-cache add git ca-certificates make
 RUN mkdir -p /usr/share/nginx/html/cdn
 
 RUN mkdir -p /tmp/build
+
 COPY . /tmp/build/
 
+# copy "old" builds 
+COPY --from=lastbuild /usr/share/nginx/html/cdn /usr/share/nginx/html/cdn/
 RUN cp -rf /tmp/build/* /usr/share/nginx/html/cdn/ && rm -rf /tmp/build
 # generate manifest
 RUN cd /usr/share/nginx/html/cdn/ ; OUTPUT='{'; for d in */ ; do OUTPUT="$OUTPUT\"$(basename $d)\":[";  for s in $d*/ ; do OUTPUT="$OUTPUT\"$(basename $s)\"," ;  done ; OUTPUT="${OUTPUT%,}],"  ; done ; OUTPUT="${OUTPUT%,}}"; echo $OUTPUT > manifest.json
