@@ -1,5 +1,5 @@
 import React from "react"
-import useDynamicScript from "lib/hooks/useDynamicScript"
+import useDynamicScript from "./useDynamicScript"
 
 /**
  * This hook loads a remote MFE via script tag.

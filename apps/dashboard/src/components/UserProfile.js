@@ -1,5 +1,5 @@
 import React from "react"
-import { Button } from "components/shared/StyledComponents"
+import { Button } from "./shared/StyledComponents"
 
 const UserProfile = () => {
   const [token, setToken] = React.useState()

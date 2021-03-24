@@ -3,7 +3,7 @@ import { ReactComponent as SAPLogo } from "../../assets/images/SAP_logo.svg"
 import { LayoutContainer } from "../shared/StyledComponents"
 
 // import logo from "../../assets/images/SAP_logo.svg"
-import UserProfile from "components/UserProfile"
+import UserProfile from "../UserProfile"
 
 const Head = tw.div`
   bg-black

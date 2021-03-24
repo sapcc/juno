@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { hashCode } from "lib/utils"
+import { hashCode } from "../utils"
 
 /**
  * This hook creates and adds a script tag to the wrapper (default head).
