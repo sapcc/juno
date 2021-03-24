@@ -1,9 +1,9 @@
-import tw from 'twin.macro'
-import { ReactComponent as SAPLogo } from '../../assets/images/SAP_logo.svg';
+import tw from "twin.macro"
+import { ReactComponent as SAPLogo } from "../../assets/images/SAP_logo.svg"
 import { LayoutContainer } from "../shared/StyledComponents"
 
-import { Button } from "../shared/StyledComponents"
 // import logo from "../../assets/images/SAP_logo.svg"
+import UserProfile from "components/UserProfile"
 
 const Head = tw.div`
   bg-black
@@ -18,14 +18,11 @@ const Container = tw(LayoutContainer)`
 `
 
 const PageHead = () => {
-
   return (
     <Head>
       <Container>
         <SAPLogo />
-        <Button type="large">
-          Login
-        </Button>
+        <UserProfile />
       </Container>
     </Head>
   )

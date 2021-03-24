@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react"
-import { hashCode } from "../../lib/utils"
+import { hashCode } from "lib/utils"
 
 /**
- * This hook creates and adds a script tag to the head.
+ * This hook creates and adds a script tag to the wrapper (default head).
  * After the unmount, the script tag is automatically removed.
  * @param {map} props url
  */
-export const useDynamicScript = (url) => {
+const useDynamicScript = ({ url, wrapper, dataset }) => {
+  wrapper = wrapper || document.head
   const [ready, setReady] = useState(false)
   const [failed, setFailed] = useState(false)
 
@@ -43,6 +44,12 @@ export const useDynamicScript = (url) => {
       element.type = "text/javascript"
       element.async = true
 
+      if (dataset) {
+        for (let key in dataset) {
+          element.setAttribute(key, dataset[key])
+        }
+      }
+
       element.onload = () => {
         console.log(`Dynamic Script Loaded: ${url}`)
         setReady(true)
@@ -54,11 +61,10 @@ export const useDynamicScript = (url) => {
         setFailed(true)
       }
 
-      document.head.appendChild(element)
+      wrapper.appendChild(element)
 
       return () => {
         console.log(`Dynamic Script Removed: ${url}`)
-        //document.head.removeChild(element)
       }
     }
   }, [url])
@@ -68,3 +74,5 @@ export const useDynamicScript = (url) => {
     failed,
   }
 }
+
+export default useDynamicScript

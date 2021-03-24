@@ -1,6 +1,12 @@
 import React from "react"
-import ReactDOM from "react-dom"
-import { useDynamicScript } from "./useDynamicScript"
+import useDynamicScript from "./useDynamicScript"
+
+/**
+ * IMPORTANT!!!
+ * THIS HOOK DOES NOT WORK! The current version of CRA uses webpack 4.
+ * To get this hook to work we need to wait until CRA is switched to webpack 5.
+ * Workaround: use the "useMicroFrontendWidget" hook instead.
+ */
 
 /**
  * Connect dynamically a remote container.
@@ -30,7 +36,7 @@ function loadComponent(scope, module) {
 }
 
 const Widget = ({ url, name, componentName, ...props }) => {
-  const { ready, failed } = useDynamicScript(url)
+  const { ready, failed } = useDynamicScript({ url })
 
   if (!ready) {
     return <span>Loading dynamic script: {url}</span>
