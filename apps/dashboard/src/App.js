@@ -1,7 +1,6 @@
 import React from "react"
-
-import GlobalStyle from "./lib/styling/GlobalStyle"
 import Layout from "./components/layout/Layout"
+import GlobalStyles from "./lib/styling/GlobalStyles"
 import useMicroFrontendWidget from "./lib/hooks/useMicroFrontendWidget"
 
 function App() {
@@ -10,7 +9,7 @@ function App() {
   })
   return (
     <>
-      <GlobalStyle />
+      <GlobalStyles />
       <Layout />
     </>
   )
