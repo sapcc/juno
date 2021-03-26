@@ -1,13 +1,11 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import App from "./App"
-import GlobalStyles from "./lib/styling/GlobalStyles"
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration"
 import reportWebVitals from "./reportWebVitals"
 
 ReactDOM.render(
   <React.StrictMode>
-    <GlobalStyles />
     <App />
   </React.StrictMode>,
   document.getElementById("root")
