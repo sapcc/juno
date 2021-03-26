@@ -3,7 +3,7 @@
 import "custom-event-polyfill"
 import React from "react"
 import { Modal } from "juno-ui-components"
-import { GlobalStyles } from "twin.macro"
+// import { GlobalStyles } from "twin.macro"
 import { LoginDialog } from "./LoginDialog"
 
 /**
@@ -58,7 +58,7 @@ const App = (props) => {
 
   return (
     <>
-      <GlobalStyles />
+      {/* <GlobalStyles /> */}
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Login">
         {({ Body, Buttons }) => (

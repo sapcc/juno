@@ -1,5 +1,4 @@
 {
-  "presets": ["@babel/preset-env", "@babel/preset-react"],
   "plugins": [
     "macros",
     [
@@ -13,8 +12,7 @@
     [
       "@babel/plugin-transform-react-jsx",
       {
-        "pragma": "__cssprop",
-        "pragmaFrag": "React.Fragment"
+        "pragma": "__cssprop"
       }
     ]
   ]

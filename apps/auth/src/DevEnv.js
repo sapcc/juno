@@ -1,8 +1,11 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import tw from "twin.macro"
+import GlobalStyles from "./GlobalStyles"
 import { Button } from "juno-ui-components"
-import { GlobalStyles } from "twin.macro"
+
+import { CacheProvider } from "@emotion/react"
+import createCache from "@emotion/cache"
 
 const Hi = tw.h1`
   text-blue-500
@@ -27,7 +30,8 @@ const DevEnv = () => {
 
   return (
     <>
-      <GlobalStyles />
+      {/* <style>{base.toString()}</style> */}
+      {/* <GlobalStyles /> */}
       <Hi>Test environment for the auth app</Hi>
       <br />
       {token ? (
@@ -65,4 +69,15 @@ const DevEnv = () => {
   )
 }
 
-ReactDOM.render(<DevEnv />, document.getElementById("dev"))
+const wrapper = document.getElementById("dev").attachShadow({ mode: "closed" })
+const stylesCache = createCache({
+  key: "juno-auth-dev-styles",
+  container: wrapper,
+})
+ReactDOM.render(
+  <CacheProvider value={stylesCache}>
+    <GlobalStyles />
+    <DevEnv />
+  </CacheProvider>,
+  wrapper
+)
