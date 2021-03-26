@@ -7942,6 +7942,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "dashboard@workspace:apps/dashboard"
   dependencies:
+    "@emotion/cache": ^11.1.3
     "@emotion/react": ^11.1.5
     "@emotion/styled": ^11.1.5
     "@testing-library/jest-dom": ^5.11.4
@@ -7954,6 +7955,7 @@ __metadata:
     react-dom: ^17.0.1
     react-is: ^17.0.1
     react-scripts: 4.0.2
+    serve: ^11.3.2
     tailwindcss: ^2.0.3
     twin.macro: ^2.2.3
     web-vitals: ^0.2.4
@@ -13027,6 +13029,7 @@ fsevents@^1.2.7:
     tailwindcss: ^2.0.3
     twin.macro: ^2.3.0
   peerDependencies:
+    "@emotion/cache": ^11.1.3
     "@emotion/react": ^11.1.5
     "@emotion/styled": ^11.1.5
     autoprefixer: ^10.2.5
