@@ -71,6 +71,9 @@ const App = (props) => {
               setIsOpen(false)
             }}
             close={() => setIsOpen(false)}
+            region={props.region || "qa-de-1"}
+            domain={props.domain || "monsoon3"}
+            sso={props.sso}
           />
         )}
       </Modal>

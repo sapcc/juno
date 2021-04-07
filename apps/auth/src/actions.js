@@ -42,6 +42,29 @@ export const loginWithPassword = ({ region, domain, user, password }) =>
       return Promise.all([authToken, response.json()])
     })
 
+export const loginWithSSO = ({ region, domain }) =>
+  fetch(identityEndpoint(region), {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+      "X-User-Domain-Name": domain,
+    },
+    body: JSON.stringify({
+      auth: {
+        identity: {
+          methods: ["external"],
+          external: {},
+        },
+      },
+    }),
+  })
+    .then(checkStatus)
+    .then((response) => {
+      const authToken = response.headers.get("x-subject-token")
+      return Promise.all([authToken, response.json()])
+    })
+
 export const rescopeToken = ({ token, scope }) =>
   fetch(identityEndpoint(region), {
     method: "POST",
