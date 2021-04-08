@@ -21,7 +21,7 @@ const MFE = ({ name, version, ...props }) => {
 const App = () => (
   <CacheProvider value={createCache({ key: "juno-dashboard" })}>
     <GlobalStyles />
-    <MFE name="auth" version="0_1_2" region="qa-de-1" domain="monsoon3" sso />
+    <MFE name="auth" version="0_1_3" region="qa-de-1" domain="monsoon3" sso />
     <Layout />
   </CacheProvider>
 )

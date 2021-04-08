@@ -10,6 +10,7 @@ import {
   AUTH_UPDATE_TOKEN,
   AUTH_REVOKE_TOKEN,
 } from "./eventsInterface"
+
 import { send, on } from "communicator"
 
 /**
