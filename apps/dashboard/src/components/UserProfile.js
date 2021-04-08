@@ -1,20 +1,27 @@
 import React from "react"
 import { Button } from "./shared/StyledComponents"
+import { send, on } from "communicator"
 
 const UserProfile = () => {
   const [token, setToken] = React.useState()
 
   React.useEffect(() => {
-    const handleTokenUpdate = (e) => {
-      if (e.detail && e.detail.token) {
-        setToken(e.detail.token)
-      }
-    }
+    return on("AUTH_UPDATE_TOKEN", ({ token, authToken }) => {
+      setToken(token)
+    })
+  }, [])
 
-    window.addEventListener("AUTH_UPDATE_TOKEN", handleTokenUpdate)
-    return () =>
-      window.removeEventListener("AUTH_UPDATE_TOKEN", handleTokenUpdate)
-  })
+  const logout = React.useCallback(() => {
+    send("AUTH_REVOKE_TOKEN")
+  }, [])
+
+  const login = React.useCallback(() => {
+    send("AUTH_GET_TOKEN", {
+      receiveResponse: ({ authToken, token }) => {
+        setToken(token)
+      },
+    })
+  }, [])
 
   if (token)
     return (
@@ -24,7 +31,7 @@ const UserProfile = () => {
           href="#"
           onClick={(e) => {
             e.preventDefault()
-            setToken(null)
+            logout()
           }}
         >
           logout
@@ -35,15 +42,9 @@ const UserProfile = () => {
   return (
     <Button
       type="large"
-      onClick={() => {
-        var event = new CustomEvent("AUTH_GET_TOKEN", {
-          detail: {
-            receiveResponse: (authToken, token) => {
-              setToken(token)
-            },
-          },
-        })
-        window.dispatchEvent(event)
+      onClick={(e) => {
+        e.preventDefault()
+        login()
       }}
     >
       Login
