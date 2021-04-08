@@ -86,7 +86,7 @@ module.exports = (_, argv) => {
           "./App": "./App",
           "./widget": "./widget",
         },
-        shared: ["react", "react-dom", "juno-ui-components"],
+        shared: ["react", "react-dom", "juno-ui-components", "communicator"],
       }),
 
       //Allows update react components in real time

@@ -39,7 +39,6 @@ const UserProfile = () => {
         var event = new CustomEvent("AUTH_GET_TOKEN", {
           detail: {
             receiveResponse: (authToken, token) => {
-              console.log(token)
               setToken(token)
             },
           },

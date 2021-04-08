@@ -3,7 +3,8 @@
   "workspaces": {
     "packages": [
       "apps/*",
-      "lib/juno-ui-components"
+      "lib/juno-ui-components",
+      "lib/communicator"
     ]
   },
   "scripts": {

@@ -6,6 +6,12 @@ import { Button } from "juno-ui-components"
 
 import { CacheProvider } from "@emotion/react"
 import createCache from "@emotion/cache"
+import { on, send } from "communicator"
+import {
+  AUTH_GET_TOKEN,
+  AUTH_REVOKE_TOKEN,
+  AUTH_UPDATE_TOKEN,
+} from "./eventsInterface"
 
 const Hi = tw.h1`
   text-blue-500
@@ -16,17 +22,24 @@ const DevEnv = () => {
   const [authToken, setAuthToken] = React.useState()
 
   React.useEffect(() => {
-    const handleTokenUpdate = (e) => {
-      if (e.detail && e.detail.token) {
-        setToken(e.detail.token)
-        setAuthToken(e.detail.authToken)
-      }
-    }
+    return on(AUTH_UPDATE_TOKEN, ({ authToken, token }) => {
+      setToken(token)
+      setAuthToken(authToken)
+    })
+  }, [])
 
-    window.addEventListener("AUTH_UPDATE_TOKEN", handleTokenUpdate)
-    return () =>
-      window.removeEventListener("AUTH_UPDATE_TOKEN", handleTokenUpdate)
-  })
+  const logout = React.useCallback(() => {
+    send(AUTH_REVOKE_TOKEN)
+  }, [])
+
+  const login = React.useCallback(() => {
+    send(AUTH_GET_TOKEN, {
+      receiveResponse: ({ authToken, token }) => {
+        setToken(token)
+        setAuthToken(authToken)
+      },
+    })
+  }, [])
 
   return (
     <>
@@ -35,27 +48,11 @@ const DevEnv = () => {
       <Hi>Test environment for the auth app</Hi>
       <br />
       {token ? (
-        <Button
-          mode="danger"
-          onClick={() => {
-            setToken(null)
-            setAuthToken(null)
-          }}
-        >
+        <Button mode="danger" onClick={logout}>
           Logout
         </Button>
       ) : (
-        <Button
-          mode="primary"
-          onClick={() => {
-            var event = new CustomEvent("AUTH_GET_TOKEN", {
-              detail: {
-                receiveResponse: (token) => alert(token),
-              },
-            })
-            window.dispatchEvent(event)
-          }}
-        >
+        <Button mode="primary" onClick={login}>
           Login
         </Button>
       )}

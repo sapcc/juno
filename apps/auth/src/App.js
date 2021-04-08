@@ -5,6 +5,12 @@ import React from "react"
 import { Modal } from "juno-ui-components"
 // import { GlobalStyles } from "twin.macro"
 import { LoginDialog } from "./LoginDialog"
+import {
+  AUTH_GET_TOKEN,
+  AUTH_UPDATE_TOKEN,
+  AUTH_REVOKE_TOKEN,
+} from "./eventsInterface"
+import { send, on } from "communicator"
 
 /**
  * This Component implements the event interface and controls
@@ -12,37 +18,26 @@ import { LoginDialog } from "./LoginDialog"
  * @param {object} props
  */
 const App = (props) => {
-  const [authToken, setAuthToken] = React.useState(null)
-  const [token, setToken] = React.useState(null)
+  const [auth, setAuth] = React.useState(null)
   const [isOpen, setIsOpen] = React.useState(false)
 
-  // listen to get token events
   React.useEffect(() => {
-    const sendToken = (e) => {
-      if (!authToken) {
+    // send broadcast event AUTH_UPDATE_TOKEN everytime the auth object changes
+    send(AUTH_UPDATE_TOKEN, { ...auth })
+
+    // register AUTH_GET_TOKEN event
+    // Important: "on" returns a function that unregistered the event.
+    // We have to return it here so that the event is unregistered every
+    // time the component is unmounted.
+    return on(AUTH_GET_TOKEN, ({ receiveResponse }) => {
+      if (!auth) {
         setIsOpen(true)
         return
       }
-      if (e.detail && e.detail.receiveResponse) {
-        e.detail.receiveResponse(authToken, token)
-      }
-    }
-
-    window.addEventListener("AUTH_GET_TOKEN", sendToken)
-    return () => window.removeEventListener("AUTH_GET_TOKEN", sendToken)
-  }, [token])
-
-  // send update token event if token has changed
-  React.useEffect(() => {
-    if (!authToken || !token) return
-    var event = new CustomEvent("AUTH_UPDATE_TOKEN", {
-      detail: {
-        authToken,
-        token,
-      },
+      receiveResponse({ ...auth })
     })
-    window.dispatchEvent(event)
 
+    // TODO: renew token
     // const date = new Date(token.expires_at)
     // const milliseconds = date.getTime() - Date.now()
     // console.log(
@@ -54,7 +49,17 @@ const App = (props) => {
     // )
 
     // "expires_at": "2021-03-23T23:03:08.000000Z"
-  }, [token])
+  }, [auth])
+
+  // listen to get token events
+  React.useEffect(() => {
+    return on(AUTH_REVOKE_TOKEN, () => setAuth(null))
+  }, [])
+
+  const handleLogin = React.useCallback(({ authToken, token }) => {
+    setAuth({ authToken, token })
+    setIsOpen(false)
+  }, [])
 
   return (
     <>
@@ -65,11 +70,7 @@ const App = (props) => {
           <LoginDialog
             Buttons={Buttons}
             Body={Body}
-            onLogin={(authToken, token) => {
-              setAuthToken(authToken)
-              setToken(token)
-              setIsOpen(false)
-            }}
+            onLogin={handleLogin}
             close={() => setIsOpen(false)}
             region={props.region || "qa-de-1"}
             domain={props.domain || "monsoon3"}

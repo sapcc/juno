@@ -7,9 +7,13 @@ import createCache from "@emotion/cache"
 import { CacheProvider } from "@emotion/react"
 // use custom style cache to avoid conflicts with other apps
 
-const MFELoader = () => {
+const HOST =
+  process.env.NODE_ENV === "development" ? "https://juno.qa-de-1.cloud.sap" : ""
+
+const MFE = ({ name, version, ...props }) => {
   useMicroFrontendWidget({
-    url: "https://juno.qa-de-1.cloud.sap/cdn/auth/0_1_1/widget.js",
+    url: `${HOST}/cdn/${name}/${version}/widget.js`,
+    props,
   })
   return null
 }
@@ -17,7 +21,7 @@ const MFELoader = () => {
 const App = () => (
   <CacheProvider value={createCache({ key: "juno-dashboard" })}>
     <GlobalStyles />
-    <MFELoader />
+    <MFE name="auth" version="0_1_2" region="qa-de-1" domain="monsoon3" sso />
     <Layout />
   </CacheProvider>
 )

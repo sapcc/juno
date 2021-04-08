@@ -1,0 +1,6 @@
+{
+  "name": "communicator",
+  "version": "0.1.0",
+  "description": "Send and receive custom events",
+  "main": "index.js"
+}

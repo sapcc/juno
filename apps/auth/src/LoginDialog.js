@@ -43,7 +43,7 @@ export const LoginDialog = ({
     const { region, domain, user, password } = values
     loginWithPassword({ region, domain, user, password })
       .then(([authToken, payload]) => {
-        onLogin(authToken, payload.token)
+        onLogin({ authToken, token: payload.token })
       })
       .catch((error) => {
         setError(error.message)
@@ -62,7 +62,9 @@ export const LoginDialog = ({
       region: region,
       domain: domain,
     })
-      .then(([authToken, payload]) => onLogin(authToken, payload.token))
+      .then(([authToken, payload]) =>
+        onLogin({ authToken, token: payload.token })
+      )
       .catch((error) => {
         setError(error.message)
       })
