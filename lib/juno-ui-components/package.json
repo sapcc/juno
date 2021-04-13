@@ -80,7 +80,7 @@
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-includepaths": "^0.2.4",
     "rollup-plugin-root-import": "^1.0.0",
-    "tailwindcss": "^2.0.3",
-    "twin.macro": "^2.3.0"
+    "tailwindcss": "^2.1.1",
+    "twin.macro": "^2.3.2"
   }
 }
