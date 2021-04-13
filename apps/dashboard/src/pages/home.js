@@ -1,11 +1,11 @@
 import tw from "twin.macro"
-import { ReactComponent as CCPlusOneLogo } from "../../assets/images/CCplusOne_logo.svg"
-import { LayoutContainer, PLarge } from "../shared/StyledComponents"
+import { ReactComponent as CCPlusOneLogo } from "../assets/images/CCplusOne_logo.svg"
+import { LayoutContainer, PLarge } from "../components/shared/StyledComponents"
 
-import Pricing from "./Pricing"
-import Benefits from "./Benefits"
-import Worldmap from "./Worldmap"
-import Services from "./Services"
+import Pricing from "../components/landingpage/Pricing"
+import Benefits from "../components/landingpage/Benefits"
+import Worldmap from "../components/landingpage/Worldmap"
+import Services from "../components/landingpage/Services"
 
 const Container = tw(LayoutContainer)`
   pt-16
@@ -22,7 +22,7 @@ const LeadText = tw(PLarge)`
   w-3/5
 `
 
-const Content = () => {
+const Home = () => {
   return (
     <>
       <Container>
@@ -34,13 +34,13 @@ const Content = () => {
             amet.
           </LeadText>
         </PageLead>
-  
+
         <Pricing />
         <Benefits />
       </Container>
-      
+
       <Worldmap />
-      
+
       <LayoutContainer>
         <Services />
       </LayoutContainer>
@@ -48,4 +48,4 @@ const Content = () => {
   )
 }
 
-export default Content
+export default Home

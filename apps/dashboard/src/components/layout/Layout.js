@@ -2,7 +2,6 @@ import tw from "twin.macro"
 
 import PageHead from "./PageHead"
 import PageFooter from "./PageFooter"
-import Content from "../landingpage/Content"
 
 const LayoutWrapper = tw.div`
   bg-hero-background
@@ -10,12 +9,11 @@ const LayoutWrapper = tw.div`
   bg-top
 `
 
-
-const Layout = () => {
+const Layout = ({ children }) => {
   return (
     <LayoutWrapper>
       <PageHead />
-      <Content />
+      {children}
       <PageFooter />
     </LayoutWrapper>
   )

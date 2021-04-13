@@ -3,6 +3,10 @@ import Layout from "./components/layout/Layout"
 import GlobalStyles from "./lib/styling/GlobalStyles"
 import useMicroFrontendWidget from "./lib/hooks/useMicroFrontendWidget"
 
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import Home from "./pages/home"
+import About from "./pages/about"
+
 import createCache from "@emotion/cache"
 import { CacheProvider } from "@emotion/react"
 // use custom style cache to avoid conflicts with other apps
@@ -22,7 +26,18 @@ const App = () => (
   <CacheProvider value={createCache({ key: "juno-dashboard" })}>
     <GlobalStyles />
     <MFE name="auth" version="0_1_3" region="qa-de-1" domain="monsoon3" sso />
-    <Layout />
+    <Router>
+      <Layout>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+        </Switch>
+      </Layout>
+    </Router>
   </CacheProvider>
 )
 

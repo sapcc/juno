@@ -4,6 +4,7 @@ import { LayoutContainer } from "../shared/StyledComponents"
 
 // import logo from "../../assets/images/SAP_logo.svg"
 import UserProfile from "../UserProfile"
+import { Link } from "react-router-dom"
 
 const Head = tw.div`
   bg-black
@@ -22,6 +23,8 @@ const PageHead = () => {
     <Head>
       <Container>
         <SAPLogo />
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
         <UserProfile />
       </Container>
     </Head>

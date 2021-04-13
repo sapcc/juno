@@ -1,10 +1,11 @@
 import React from "react"
-import ReactDOM from "react-dom"
+// import ReactDOM from "react-dom"
+import { render } from "react-snapshot"
 import App from "./App"
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration"
 import reportWebVitals from "./reportWebVitals"
 
-ReactDOM.render(
+render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
