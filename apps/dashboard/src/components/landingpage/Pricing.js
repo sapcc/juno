@@ -1,4 +1,6 @@
 import tw, { styled } from "twin.macro"
+// import styled from "@emotion/styled/macro"
+
 import { ReactComponent as UmbrellaIcon } from '../../assets/images/icon_umbrella.svg';
 import { ReactComponent as AWSLogo } from '../../assets/images/AWS_logo.svg';
 import { ReactComponent as AzureLogo } from '../../assets/images/Microsoft_Azure_logo.svg';
@@ -10,6 +12,8 @@ import { getBgColorStyle, getTextColorStyle } from "../../lib/styling/StyleMap"
 
 const Container = styled.div`
   ${tw`
+    // backdrop-filter
+    // backdrop-blur-xl
     rounded-lg
     bg-white
     bg-opacity-5

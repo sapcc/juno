@@ -1,4 +1,6 @@
 import tw, { styled } from "twin.macro"
+// import styled from "@emotion/styled/macro"
+
 
 import BenefitIcon01 from "../../assets/images/icon_benefit01.svg"
 import BenefitIcon02 from "../../assets/images/icon_benefit02.svg"
@@ -18,6 +20,7 @@ const Container = tw.div`
   from-sap-dark-blue-800
   to-transparent
   pt-20
+  mb-20
 `
 
 const TwoColumns = tw.div`

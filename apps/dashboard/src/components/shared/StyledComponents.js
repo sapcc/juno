@@ -1,4 +1,5 @@
 import tw, { styled } from "twin.macro"
+// import styled from "@emotion/styled/macro"
 
 import { getButtonStyle, getTextColorStyle } from "../../lib/styling/StyleMap"
 
@@ -18,10 +19,33 @@ const H2 = styled.h2(() => [
 ])
 
 
+const H3 = styled.h3(() => [
+  tw`
+    text-xl
+    2xl:text-2xl
+    font-bold
+    uppercase
+    tracking-tight
+    mb-3
+  `,
+  getTextColorStyle
+])
+
 const H4 = styled.h4(() => [
   tw`
     text-xl
     2xl:text-2xl
+    font-medium
+    uppercase
+    mb-3
+  `,
+  getTextColorStyle
+])
+
+const H5 = styled.h5(() => [
+  tw`
+    text-lg
+    2xl:text-xl
     font-medium
     uppercase
     mb-3
@@ -48,6 +72,11 @@ const PMedium = styled.p(() => [
   `,
   getTextColorStyle
 ])
+
+const SectionHead = tw.div`
+  text-center
+  py-8
+`
 
 
 // ------------------------------
@@ -82,8 +111,11 @@ const FlexContainerCenter = tw(FlexContainer)`
 
 export {
   H2,
+  H3,
   H4,
+  H5,
   PLarge,
+  SectionHead,
   PMedium,
   Button,
   LayoutContainer,

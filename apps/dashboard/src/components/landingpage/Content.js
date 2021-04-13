@@ -3,7 +3,9 @@ import { ReactComponent as CCPlusOneLogo } from "../../assets/images/CCplusOne_l
 import { LayoutContainer, PLarge } from "../shared/StyledComponents"
 
 import Pricing from "./Pricing"
-import Features from "./Benefits"
+import Benefits from "./Benefits"
+import Worldmap from "./Worldmap"
+import Services from "./Services"
 
 const Container = tw(LayoutContainer)`
   pt-16
@@ -22,19 +24,27 @@ const LeadText = tw(PLarge)`
 
 const Content = () => {
   return (
-    <Container>
-      <PageLead>
-        <CCPlusOneLogo />
-        <LeadText>
-          At vero eos et accusam et justo duo dolores et ea rebum. Stet clita
-          kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-          amet.
-        </LeadText>
-      </PageLead>
-
-      <Pricing />
-      <Features />
-    </Container>
+    <>
+      <Container>
+        <PageLead>
+          <CCPlusOneLogo />
+          <LeadText>
+            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita
+            kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+            amet.
+          </LeadText>
+        </PageLead>
+  
+        <Pricing />
+        <Benefits />
+      </Container>
+      
+      <Worldmap />
+      
+      <LayoutContainer>
+        <Services />
+      </LayoutContainer>
+    </>
   )
 }
 
