@@ -22,9 +22,10 @@ const PageHead = () => {
   return (
     <Head>
       <Container>
-        <SAPLogo />
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
+        <Link to="/">
+          <SAPLogo />
+        </Link>
+
         <UserProfile />
       </Container>
     </Head>

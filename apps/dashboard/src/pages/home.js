@@ -6,7 +6,6 @@ import Pricing from "../components/landingpage/Pricing"
 import Benefits from "../components/landingpage/Benefits"
 import Worldmap from "../components/landingpage/Worldmap"
 import Services from "../components/landingpage/Services"
-
 const Container = tw(LayoutContainer)`
   pt-16
   px-16
