@@ -16,5 +16,8 @@
     "open@7.4.2": {
       "unplugged": true
     }
+  },
+  "dependencies": {
+    "react-static": "^7.5.3"
   }
 }
