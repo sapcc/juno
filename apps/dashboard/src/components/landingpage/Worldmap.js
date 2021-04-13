@@ -28,7 +28,7 @@ const Worldmap = () => {
           <H3 color="blue">Converged Cloud Regions</H3>
           <H2 color="black">Go to a regional dashboard</H2>
         </SectionHead>
-        <WorldmapImage />
+        <WorldmapImage width="100%" />
       </LayoutContainer>
     </Container>
   )
