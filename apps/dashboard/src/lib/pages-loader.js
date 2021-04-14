@@ -1,5 +1,5 @@
-export const getPages = (pagesFolderPath) => {
-  const r = require.context(pagesFolderPath, true, /^\.\/[^\.js]+$/)
+export const getPages = () => {
+  const r = require.context("../pages", false, /^\.\/[^\.js]+$/)
   return r.keys().map((key) => ({
     name: key.replace(/\.\//, ""),
     component: r(key).default,
