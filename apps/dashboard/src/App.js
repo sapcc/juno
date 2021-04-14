@@ -2,7 +2,6 @@ import React from "react"
 import GlobalStyles from "./lib/styling/GlobalStyles"
 import PagesRouter from "./components/PagesRouter"
 import MicroFrontend from "./components/MicroFrontend"
-
 import createCache from "@emotion/cache"
 import { CacheProvider } from "@emotion/react"
 
