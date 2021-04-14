@@ -1769,7 +1769,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/template@npm:^7.10.4, @babel/template@npm:^7.12.13, @babel/template@npm:^7.12.7, @babel/template@npm:^7.3.3":
+"@babel/template@npm:7, @babel/template@npm:^7.10.4, @babel/template@npm:^7.12.13, @babel/template@npm:^7.12.7, @babel/template@npm:^7.3.3":
   version: 7.12.13
   resolution: "@babel/template@npm:7.12.13"
   dependencies:
@@ -5969,6 +5969,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"babel-plugin-require-context-hook@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "babel-plugin-require-context-hook@npm:1.0.0"
+  checksum: 9b938cfa288bff0e05e816736fb9a605c5104b97fd4fa4a60d0cbd2cb5f94129295f720093b0ec9f716cff3df0fd32c96dca0934c4ab80d19fa6ff32a85ed84f
+  languageName: node
+  linkType: hard
+
 "babel-plugin-syntax-jsx@npm:^6.18.0":
   version: 6.18.0
   resolution: "babel-plugin-syntax-jsx@npm:6.18.0"
@@ -5997,6 +6004,15 @@ __metadata:
   version: 0.4.24
   resolution: "babel-plugin-transform-react-remove-prop-types@npm:0.4.24"
   checksum: 4004ce6c87bd49223f996a4d0b98312083e7bd40d7cfb04711936001b31fd01502b7eea0b94c9116fb384668cdbe114e1866d79c25b72ad0d6cd2f32819c1094
+  languageName: node
+  linkType: hard
+
+"babel-plugin-transform-require-context@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "babel-plugin-transform-require-context@npm:0.1.1"
+  dependencies:
+    "@babel/template": 7
+  checksum: f1ed961113561e5b38ee03381455fed485c07911d82aee3f50734562f9dfbca72f9719f2a81c43e9da027857eee93c2d3dc0e581b1dd6163a1bce603ef6d3804
   languageName: node
   linkType: hard
 
@@ -8363,6 +8379,8 @@ __metadata:
     "@testing-library/react": ^11.1.0
     "@testing-library/user-event": ^12.1.10
     autoprefixer: ^10.2.4
+    babel-plugin-require-context-hook: ^1.0.0
+    babel-plugin-transform-require-context: ^0.1.1
     communicator: "workspace:*"
     eslint-config-react-app: ^6.0.0
     postcss-cli: ^8.3.1

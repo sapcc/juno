@@ -1,17 +1,13 @@
 import React from "react"
 import Layout from "./layout/Layout"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { getPages } from "../lib/pages-loader"
 
-// Load all subfolder from pages
-// and map them to name: component array
-const r = require.context("../pages/", true, /^\.\/[^\.js]+$/)
-let pages = r
-  .keys()
-  .map((key) => ({ name: key.replace(/\.\//, ""), component: r(key).default }))
-// console.log(pages)
+const pages = getPages("../pages")
+console.log(":::::::::::::::::::::.", pages)
 
 // Render a Router and Routes based on found pages
-const Pages = () => {
+const PagesRouter = () => {
   return (
     <Router>
       <Layout>
@@ -30,4 +26,4 @@ const Pages = () => {
   )
 }
 
-export default Pages
+export default PagesRouter
