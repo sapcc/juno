@@ -7,17 +7,19 @@ import { CacheProvider } from "@emotion/react"
 
 const App = () => (
   // use custom style cache to avoid conflicts with other apps
-  <CacheProvider value={createCache({ key: "juno-dashboard" })}>
-    <GlobalStyles />
-    <PagesRouter />
-    <MicroFrontend
-      name="auth"
-      version="0_1_3"
-      region="qa-de-1"
-      domain="monsoon3"
-      sso
-    />
-  </CacheProvider>
+  <React.StrictMode>
+    <CacheProvider value={createCache({ key: "juno-dashboard" })}>
+      <GlobalStyles />
+      <PagesRouter />
+      <MicroFrontend
+        name="auth"
+        version="0_1_3"
+        region="qa-de-1"
+        domain="monsoon3"
+        sso
+      />
+    </CacheProvider>
+  </React.StrictMode>
 )
 
 export default App
