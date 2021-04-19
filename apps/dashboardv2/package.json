@@ -1,0 +1,63 @@
+{
+  "name": "dashboardv2",
+  "version": "1.0.0",
+  "private": true,
+  "description": "dashboardv2",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop -p $APP_PORT -H 0.0.0.0",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.3.0",
+    "@gatsbyjs/reach-router": "^1.3.6",
+    "@mikaelkristiansson/domready": "^1.0.11",
+    "anser": "^2.0.1",
+    "babel-preset-gatsby": "^1.3.0",
+    "communicator": "workspace:*",
+    "css.escape": "^1.5.1",
+    "event-source-polyfill": "^1.0.22",
+    "gatsby": "^3.2.1",
+    "gatsby-legacy-polyfills": "^1.3.0",
+    "gatsby-link": "^3.3.0",
+    "gatsby-plugin-emotion": "^6.3.0",
+    "gatsby-plugin-manifest": "^3.3.0",
+    "gatsby-plugin-react-helmet": "^4.3.0",
+    "gatsby-plugin-sitemap": "^3.3.0",
+    "gatsby-react-router-scroll": "^4.3.0",
+    "lodash": "^4.17.21",
+    "mitt": "^2.1.0",
+    "platform": "^1.3.6",
+    "prop-types": "^15.7.2",
+    "query-string": "^7.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
+    "shallow-compare": "^1.2.2",
+    "stack-trace": "^0.0.10",
+    "webpack": "^5.33.2"
+  },
+  "devDependencies": {
+    "@emotion/cache": "^11.1.3",
+    "gatsby-plugin-react-svg": "^3.0.1",
+    "svg-react-loader": "^0.4.6",
+    "tailwindcss": "^2.1.1",
+    "twin.macro": "^2.3.3"
+  },
+  "babelMacros": {
+    "twin": {
+      "config": "tailwind.config.js",
+      "preset": "emotion",
+      "styled": {
+        "import": "default",
+        "from": "@emotion/styled/macro"
+      }
+    }
+  }
+}
