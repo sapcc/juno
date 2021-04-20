@@ -36,6 +36,8 @@ Coming soon ...
 
 - region (string) preselected region
 - domain (string) preselected domain
+- project (string) scope project name
+- projectID (string) scope project ID
 - sso (boolean) if both region and domain are given and sso is true, an attempt is first made to login the user using his SSO certificate. The fallback is "login with password".
 
 ## Events

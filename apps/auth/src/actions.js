@@ -29,7 +29,32 @@ const identityEndpoint = (endpoint = "") => {
   return url
 }
 
-export const loginWithPassword = ({ endpoint, domain, user, password }) =>
+const buildScope = ({ domain, domainID, project, projectID }) => {
+  if (projectID) {
+    return { project: { id: projectID } }
+  }
+  if (project) {
+    if (domainID)
+      return { project: { name: project, domain: { id: domainID } } }
+    if (domain) return { project: { name: project, domain: { name: domain } } }
+  }
+  if (domainID) {
+    return { domain: { id: domainID } }
+  }
+  if (domain) {
+    return { domain: { name: domain } }
+  }
+  return "unscoped"
+}
+
+export const loginWithPassword = ({
+  endpoint,
+  domain,
+  user,
+  password,
+  project,
+  projectID,
+}) =>
   fetch(identityEndpoint(endpoint), {
     method: "POST",
     credentials: "same-origin",
@@ -50,6 +75,7 @@ export const loginWithPassword = ({ endpoint, domain, user, password }) =>
             },
           },
         },
+        scope: buildScope({ domain, project, projectID }),
       },
     }),
   })
@@ -59,7 +85,7 @@ export const loginWithPassword = ({ endpoint, domain, user, password }) =>
       return Promise.all([authToken, response.json()])
     })
 
-export const loginWithSSO = ({ endpoint, domain }) =>
+export const loginWithSSO = ({ endpoint, domain, project, projectID }) =>
   fetch(identityEndpoint(endpoint), {
     method: "POST",
     credentials: "same-origin",
@@ -73,6 +99,7 @@ export const loginWithSSO = ({ endpoint, domain }) =>
           methods: ["external"],
           external: {},
         },
+        scope: buildScope({ domain, project, projectID }),
       },
     }),
   })
@@ -82,7 +109,7 @@ export const loginWithSSO = ({ endpoint, domain }) =>
       return Promise.all([authToken, response.json()])
     })
 
-export const rescopeToken = ({ endpoint, token, scope }) =>
+export const rescopeToken = ({ endpoint, token, domain, project, projectID }) =>
   fetch(identityEndpoint(endpoint), {
     method: "POST",
     credentials: "same-origin",
@@ -97,7 +124,7 @@ export const rescopeToken = ({ endpoint, token, scope }) =>
             id: token,
           },
         },
-        scope,
+        scope: buildScope({ domain, project, projectID }),
       },
     }),
   })

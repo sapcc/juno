@@ -4,7 +4,7 @@ import "twin.macro"
 import {
   Button,
   FloatingLabelInput,
-  FloatingLabelSelect,
+  // FloatingLabelSelect,
   Spinner,
 } from "juno-ui-components"
 
@@ -17,6 +17,8 @@ export const LoginDialog = ({
   close,
   endpoint,
   domain,
+  project,
+  projectID,
   sso,
 }) => {
   const [error, setError] = React.useState(null)
@@ -35,7 +37,14 @@ export const LoginDialog = ({
     setSubmitting(true)
     setError(null)
     const { domain, user, password } = values
-    loginWithPassword({ endpoint, domain, user, password })
+    loginWithPassword({
+      endpoint,
+      domain,
+      user,
+      password,
+      projectID,
+      project,
+    })
       .then(([authToken, payload]) => {
         onLogin({ authToken, token: payload.token })
       })
@@ -45,9 +54,10 @@ export const LoginDialog = ({
             ? "user id or password invalid!"
             : error.message
         setError(`${error.statusCode}: ${message}`)
+        console.warn(error)
       })
       .finally(() => setSubmitting(false))
-  }, [endpoint, values])
+  }, [endpoint, project, projectID, values])
 
   const valid = React.useMemo(
     () => values.domain && values.user && values.password,
@@ -59,6 +69,8 @@ export const LoginDialog = ({
     loginWithSSO({
       endpoint,
       domain,
+      project,
+      projectID,
     })
       .then(([authToken, payload]) =>
         onLogin({ authToken, token: payload.token })
@@ -69,9 +81,10 @@ export const LoginDialog = ({
             ? "Could not authenticate using SSO certificate!"
             : error.message
         setError(`${error.statusCode}: ${message}`)
+        console.warn(error)
         setUseSSO(false)
       })
-  }, [useSSO, endpoint, domain])
+  }, [useSSO, endpoint, domain, project, projectID])
 
   if (useSSO)
     return (

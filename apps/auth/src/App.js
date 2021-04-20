@@ -63,17 +63,13 @@ const App = (props) => {
     return on(
       AUTH_RESCOPE_TOKEN,
       ({ projectId, projectName, domainName, domainId }) => {
-        const scope = { project: {} }
-        if (projectId) scope.project.id = projectId
-        else if (projectName) {
-          scope.project = { name: projectName, domain: {} }
-          if (domainName) scope.project.domain = { name: domainName }
-          else scope.project.domain.id = domainId
-        }
         rescopeToken({
           endpoint: props.endpoint,
           token: auth.authToken,
-          scope,
+          projectId,
+          projectName,
+          domainName,
+          domainId,
         })
           .then(([authToken, payload]) => {
             setAuth({ authToken, token: payload.token })
@@ -103,7 +99,9 @@ const App = (props) => {
             close={() => setIsOpen(false)}
             endpoint={props.endpoint}
             domain={props.domain || "monsoon3"}
-            sso={props.sso}
+            project={props.project}
+            projectID={props.projectID}
+            sso={props.sso && props.sso !== false && props.sso !== "false"}
           />
         )}
       </Modal>
