@@ -4,6 +4,6 @@ import App from "./App"
 
 test("renders learn react link", () => {
   render(<App />)
-  const greetings = screen.getByText(/Hello this is Auth App 2/i)
+  const greetings = screen.getByText(/Designate/i)
   expect(greetings).toBeInTheDocument()
 })

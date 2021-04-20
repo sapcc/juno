@@ -168,13 +168,13 @@ jobs:
           dockerfile: app-auth.git/ci/Dockerfile.app
 
   
-  - name: unit-test auth2
+  - name: unit-test designate
     public: true
     plan:
       - get: juno-unit-test.image
         passed: ["build unit-test-image"]
         trigger: true
-      - get: app-auth2.git
+      - get: app-designate.git
         trigger: true
 
       - task: unit
@@ -186,7 +186,7 @@ jobs:
               repository: ((keppel-hostname))/ccloud/juno-unit-test
               tag: "latest"
           inputs:
-            - name: app-auth2.git
+            - name: app-designate.git
               path: /app/juno
 
           run:
@@ -195,31 +195,31 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn workspaces focus juno-ui-components auth2
+                yarn workspaces focus juno-ui-components designate
                 yarn workspace juno-ui-components build
-                CI=true yarn workspace auth2 test                
+                CI=true yarn workspace designate test                
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
   # to be used in the next step. After that, they are no longer used. 
-  - name: build auth2
+  - name: build designate
     public: true
     plan:
-      - get: app-auth2.git
-        passed: ["unit-test auth2"]
+      - get: app-designate.git
+        passed: ["unit-test designate"]
         trigger: true
 
-      - put: juno-auth2.image
+      - put: juno-designate.image
         params:
           tag_as_latest: true
           cache: true
           cache_tag: "latest"
-          build: app-auth2.git
+          build: app-designate.git
           build_args: 
-            APP_NAME: "auth2" 
+            APP_NAME: "designate" 
             LIBS: juno-ui-components
             KEPPEL_HOSTNAME: {{keppel-hostname}}
-          dockerfile: app-auth2.git/ci/Dockerfile.app
+          dockerfile: app-designate.git/ci/Dockerfile.app
 
   
   - name: unit-test widget-loader
@@ -289,8 +289,8 @@ jobs:
         passed: ["build auth"]
         trigger: true
       
-      - get: app-auth2.git
-        passed: ["build auth2"]
+      - get: app-designate.git
+        passed: ["build designate"]
         trigger: true
       
       - get: app-widget-loader.git
@@ -320,13 +320,13 @@ jobs:
               - name: auth-output
       
       - in_parallel:
-        - task: copy build of auth2
+        - task: copy build of designate
           config:
             platform: linux
             image_resource:
               type: registry-image
               source: 
-                repository: ((keppel-hostname))/ccloud/juno-auth2
+                repository: ((keppel-hostname))/ccloud/juno-designate
                 tag: "latest"
             run:
               path: /bin/sh
@@ -334,9 +334,9 @@ jobs:
                 - -c
                 - |         
                   VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
-                  cp -r /app/build ./auth2-output/$VERSION
+                  cp -r /app/build ./designate-output/$VERSION
             outputs:
-              - name: auth2-output
+              - name: designate-output
       
       - in_parallel:
         - task: copy build of widget-loader
@@ -370,7 +370,7 @@ jobs:
             
             - name: auth-output 
             
-            - name: auth2-output 
+            - name: designate-output 
             
             - name: widget-loader-output 
                 
@@ -382,7 +382,7 @@ jobs:
                 
                 cp -r ./auth-output  ./build/auth;
                 
-                cp -r ./auth2-output  ./build/auth2;
+                cp -r ./designate-output  ./build/designate;
                 
                 cp -r ./widget-loader-output  ./build/widget-loader;
                 
@@ -582,21 +582,21 @@ resources:
       password: {{keppel-password}}
       repository: ((keppel-hostname))/ccloud/juno-auth    
   
-  - name: app-auth2.git
+  - name: app-designate.git
     type: git
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/auth2","package.json","lib","ci/Dockerfile.app"]
+      paths: ["apps/designate","package.json","lib","ci/Dockerfile.app"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
-  - name: juno-auth2.image
+  - name: juno-designate.image
     type: docker-image
     source:
       username: {{keppel-username}}
       password: {{keppel-password}}
-      repository: ((keppel-hostname))/ccloud/juno-auth2    
+      repository: ((keppel-hostname))/ccloud/juno-designate    
   
   - name: app-widget-loader.git
     type: git

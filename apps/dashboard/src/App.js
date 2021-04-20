@@ -14,11 +14,10 @@ const App = () => (
     </CacheProvider>
     <MicroFrontend
       name="auth"
-      version="0_1_4"
+      version="0_1_5"
       endpoint="identity-3.qa-de-1.cloud.sap"
-      domain="ccadmin"
-      project="cloud_admin"
-      ss0
+      domain="monsoon3"
+      sso
     />
   </React.StrictMode>
 )
