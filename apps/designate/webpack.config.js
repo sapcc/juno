@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const { HotModuleReplacementPlugin } = require("webpack")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const { ModuleFederationPlugin } = require("webpack").container
+const webpack = require("webpack")
 
 module.exports = {
   //our index file
@@ -43,10 +44,25 @@ module.exports = {
       },
     ],
   },
+  resolve: {
+    extensions: [".js", ".json"],
+    fallback: {
+      path: require.resolve("path-browserify"),
+      os: require.resolve("os-browserify/browser"),
+      util: require.resolve("util/"),
+      assert: require.resolve("assert/"),
+      fs: false,
+      module: false,
+    },
+  },
   optimization: {
     splitChunks: { chunks: "all" },
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      process: require.resolve("process/browser"),
+      Buffer: require.resolve("buffer/"),
+    }),
     //Allows remove/clean the build folder
     new CleanWebpackPlugin(),
     //Allows update react components in real time
@@ -60,8 +76,8 @@ module.exports = {
       filename: "styles.[contentHash].css",
     }),
     new ModuleFederationPlugin({
-      name: "auth2",
-      library: { type: "var", name: "auth2" },
+      name: "designate",
+      library: { type: "var", name: "designate" },
       filename: "widget.js",
       exposes: {
         // expose each component

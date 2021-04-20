@@ -25,7 +25,9 @@ const PageHead = () => {
         <Link to="/">
           <SAPLogo />
         </Link>
-
+        {/* <div>
+          <Link to="/">Home</Link> | <Link to="/designate">Designate</Link>
+        </div> */}
         <UserProfile />
       </Container>
     </Head>

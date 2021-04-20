@@ -26,7 +26,7 @@ const App = (props) => {
 
   React.useEffect(() => {
     // send broadcast event AUTH_UPDATE_TOKEN everytime the auth object changes
-    send(AUTH_UPDATE_TOKEN, { ...auth })
+    send(AUTH_UPDATE_TOKEN, auth)
 
     // register AUTH_GET_TOKEN event
     // Important: "on" returns a function that unregistered the event.

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import { getPages } from "../lib/pages-loader"
 
 const pages = getPages("../pages")
-
+console.log(pages)
 // Render a Router and Routes based on found pages
 const PagesRouter = () => {
   return (
