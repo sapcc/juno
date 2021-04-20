@@ -11,6 +11,7 @@ import {
   AUTH_GET_TOKEN,
   AUTH_REVOKE_TOKEN,
   AUTH_UPDATE_TOKEN,
+  AUTH_RESCOPE_TOKEN,
 } from "./eventsInterface"
 
 const Hi = tw.h1`
@@ -40,6 +41,12 @@ const DevEnv = () => {
       },
     })
   }, [])
+  const rescope = React.useCallback(() => {
+    send(AUTH_RESCOPE_TOKEN, {
+      domainName: "ccadmin",
+      projectName: "cloud_admin",
+    })
+  }, [])
 
   return (
     <>
@@ -48,9 +55,14 @@ const DevEnv = () => {
       <Hi>Test environment for the auth app</Hi>
       <br />
       {token ? (
-        <Button mode="danger" onClick={logout}>
-          Logout
-        </Button>
+        <>
+          <Button mode="danger" onClick={logout}>
+            Logout
+          </Button>
+          <Button mode="success" onClick={rescope}>
+            Rescope
+          </Button>
+        </>
       ) : (
         <Button mode="primary" onClick={login}>
           Login

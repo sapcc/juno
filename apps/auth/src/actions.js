@@ -3,17 +3,34 @@ const checkStatus = (response) => {
   if (response.status >= 200 && response.status < 300) {
     return response
   } else {
-    var error = new Error(response.statusText || response.status)
-    error.response = response
-    throw error
+    return response.text().then((message) => {
+      var error = new Error(message || response.statusText || response.status)
+      error.statusCode = response.status
+      // throw error
+      return Promise.reject(error)
+    })
   }
 }
 
-const identityEndpoint = (region) =>
-  `https://identity-3.${region}.cloud.sap/v3/auth/tokens`
+const identityEndpoint = (endpoint = "") => {
+  var pattern = new RegExp("^((.*)://)?([A-Za-z0-9-.]+)(:([0-9]+))?(.*)$") // port and path
+  const urlParts = endpoint.match(pattern)
+  if (!urlParts) return ""
+  const [_, protocol, __, domain, ___, port, path] = urlParts
 
-export const loginWithPassword = ({ region, domain, user, password }) =>
-  fetch(identityEndpoint(region), {
+  // console.log(protocol, domain, port, path)
+  let url = `${protocol || "https"}://${domain}`
+  if (port) url = `${url}:${port}`
+  let resourcePath = path || ""
+
+  url = `${url}${
+    resourcePath.indexOf("/v3") <= 0 ? "/v3/auth/tokens" : resourcePath
+  }`
+  return url
+}
+
+export const loginWithPassword = ({ endpoint, domain, user, password }) =>
+  fetch(identityEndpoint(endpoint), {
     method: "POST",
     credentials: "same-origin",
     headers: {
@@ -42,8 +59,8 @@ export const loginWithPassword = ({ region, domain, user, password }) =>
       return Promise.all([authToken, response.json()])
     })
 
-export const loginWithSSO = ({ region, domain }) =>
-  fetch(identityEndpoint(region), {
+export const loginWithSSO = ({ endpoint, domain }) =>
+  fetch(identityEndpoint(endpoint), {
     method: "POST",
     credentials: "same-origin",
     headers: {
@@ -65,8 +82,8 @@ export const loginWithSSO = ({ region, domain }) =>
       return Promise.all([authToken, response.json()])
     })
 
-export const rescopeToken = ({ token, scope }) =>
-  fetch(identityEndpoint(region), {
+export const rescopeToken = ({ endpoint, token, scope }) =>
+  fetch(identityEndpoint(endpoint), {
     method: "POST",
     credentials: "same-origin",
     headers: {

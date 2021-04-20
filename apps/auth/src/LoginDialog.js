@@ -10,26 +10,24 @@ import {
 
 import { loginWithSSO, loginWithPassword } from "./actions"
 
-const REGIONS = ["qa-de-1", "eu-nl-1", "eu-de-1"]
 export const LoginDialog = ({
   onLogin,
   Body,
   Buttons,
   close,
-  region,
+  endpoint,
   domain,
   sso,
 }) => {
-  const useSSO = React.useMemo(() => sso && domain && region && true, [
+  const useSSO = React.useMemo(() => sso && domain && endpoint && true, [
     sso,
     domain,
-    region,
+    endpoint,
   ])
   const [error, setError] = React.useState(null)
   const [submitting, setSubmitting] = React.useState(false)
 
   const [values, setValues] = React.useState({
-    region: REGIONS.indexOf(region) >= 0 ? region : REGIONS[0],
     domain: domain || "monsoon3",
   })
 
@@ -40,27 +38,31 @@ export const LoginDialog = ({
   const submit = React.useCallback(() => {
     setSubmitting(true)
     setError(null)
-    const { region, domain, user, password } = values
-    loginWithPassword({ region, domain, user, password })
+    const { domain, user, password } = values
+    loginWithPassword({ endpoint, domain, user, password })
       .then(([authToken, payload]) => {
         onLogin({ authToken, token: payload.token })
       })
       .catch((error) => {
-        setError(error.message)
+        const message =
+          error.statusCode === 401
+            ? "user id or password invalid!"
+            : error.message
+        setError(`${error.statusCode}: ${message}`)
       })
       .finally(() => setSubmitting(false))
-  }, [values])
+  }, [endpoint, values])
 
   const valid = React.useMemo(
-    () => values.region && values.domain && values.user && values.password,
+    () => values.domain && values.user && values.password,
     [values]
   )
 
   React.useEffect(() => {
     if (!useSSO) return
     loginWithSSO({
-      region: region,
-      domain: domain,
+      endpoint,
+      domain,
     })
       .then(([authToken, payload]) =>
         onLogin({ authToken, token: payload.token })
@@ -68,14 +70,14 @@ export const LoginDialog = ({
       .catch((error) => {
         setError(error.message)
       })
-  }, [useSSO])
+  }, [useSSO, endpoint, domain])
 
   if (useSSO)
     return (
       <>
         <Body>
           <Spinner />
-          Login using SSO certificate...
+          <span tw="text-gray-700">Login using SSO certificate...</span>
         </Body>
         <Buttons>
           <Button
@@ -105,18 +107,6 @@ export const LoginDialog = ({
             </div>
           )}
           <div tw="space-y-3">
-            <FloatingLabelSelect
-              label="Region"
-              onChange={(e) => onChange("region", e.target.value)}
-              value={values.region || ""}
-            >
-              {REGIONS.map((r, i) => (
-                <option key={i} value={r}>
-                  {r}
-                </option>
-              ))}
-            </FloatingLabelSelect>
-
             <FloatingLabelInput
               label="Domain"
               value={values.domain}

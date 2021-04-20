@@ -9,9 +9,11 @@ import {
   AUTH_GET_TOKEN,
   AUTH_UPDATE_TOKEN,
   AUTH_REVOKE_TOKEN,
+  AUTH_RESCOPE_TOKEN,
 } from "./eventsInterface"
 
 import { send, on } from "communicator"
+import { rescopeToken } from "./actions"
 
 /**
  * This Component implements the event interface and controls
@@ -57,6 +59,32 @@ const App = (props) => {
     return on(AUTH_REVOKE_TOKEN, () => setAuth(null))
   }, [])
 
+  React.useEffect(() => {
+    return on(
+      AUTH_RESCOPE_TOKEN,
+      ({ projectId, projectName, domainName, domainId }) => {
+        const scope = { project: {} }
+        if (projectId) scope.project.id = projectId
+        else if (projectName) {
+          scope.project = { name: projectName, domain: {} }
+          if (domainName) scope.project.domain = { name: domainName }
+          else scope.project.domain.id = domainId
+        }
+        rescopeToken({
+          endpoint: props.endpoint,
+          token: auth.authToken,
+          scope,
+        })
+          .then(([authToken, payload]) => {
+            setAuth({ authToken, token: payload.token })
+          })
+          .catch((error) => {
+            console.error(error)
+          })
+      }
+    )
+  }, [props.endpoint, auth])
+
   const handleLogin = React.useCallback(({ authToken, token }) => {
     setAuth({ authToken, token })
     setIsOpen(false)
@@ -73,7 +101,7 @@ const App = (props) => {
             Body={Body}
             onLogin={handleLogin}
             close={() => setIsOpen(false)}
-            region={props.region || "qa-de-1"}
+            endpoint={props.endpoint}
             domain={props.domain || "monsoon3"}
             sso={props.sso}
           />

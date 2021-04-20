@@ -11,14 +11,14 @@ const App = () => (
     <CacheProvider value={createCache({ key: "juno-dashboard" })}>
       <GlobalStyles />
       <PagesRouter />
-      <MicroFrontend
-        name="auth"
-        version="0_1_3"
-        region="qa-de-1"
-        domain="monsoon3"
-        sso
-      />
     </CacheProvider>
+    <MicroFrontend
+      name="auth"
+      version="0_1_3"
+      region="qa.global"
+      domain="ccadmin"
+      sso
+    />
   </React.StrictMode>
 )
 
