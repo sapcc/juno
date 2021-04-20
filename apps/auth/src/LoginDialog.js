@@ -19,13 +19,9 @@ export const LoginDialog = ({
   domain,
   sso,
 }) => {
-  const useSSO = React.useMemo(() => sso && domain && endpoint && true, [
-    sso,
-    domain,
-    endpoint,
-  ])
   const [error, setError] = React.useState(null)
   const [submitting, setSubmitting] = React.useState(false)
+  const [useSSO, setUseSSO] = React.useState(sso && domain && endpoint && true)
 
   const [values, setValues] = React.useState({
     domain: domain || "monsoon3",
@@ -68,7 +64,12 @@ export const LoginDialog = ({
         onLogin({ authToken, token: payload.token })
       )
       .catch((error) => {
-        setError(error.message)
+        const message =
+          error.statusCode === 401
+            ? "Could not authenticate using SSO certificate!"
+            : error.message
+        setError(`${error.statusCode}: ${message}`)
+        setUseSSO(false)
       })
   }, [useSSO, endpoint, domain])
 

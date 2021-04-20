@@ -18,8 +18,8 @@ const identityEndpoint = (endpoint = "") => {
   if (!urlParts) return ""
   const [_, protocol, __, domain, ___, port, path] = urlParts
 
-  // console.log(protocol, domain, port, path)
-  let url = `${protocol || "https"}://${domain}`
+  console.log(protocol, domain, port, path)
+  let url = `${protocol || "https://"}${domain}`
   if (port) url = `${url}:${port}`
   let resourcePath = path || ""
 
