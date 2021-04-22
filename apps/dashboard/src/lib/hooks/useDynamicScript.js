@@ -7,17 +7,16 @@ import { hashCode } from "../utils"
  * @param {map} props url
  */
 const useDynamicScript = ({ url, wrapper, dataset }) => {
-  wrapper = wrapper || document.head
   const [ready, setReady] = useState(false)
   const [failed, setFailed] = useState(false)
 
   useEffect(() => {
-    if (!url) return
+    if (!url || !wrapper) return
 
     setReady(false)
     setFailed(false)
 
-    const elementId = hashCode(url)
+    const elementId = hashCode(url + JSON.stringify(dataset))
     let element = document.getElementById(elementId)
 
     // prevent to load same script twice
@@ -64,10 +63,11 @@ const useDynamicScript = ({ url, wrapper, dataset }) => {
       wrapper.appendChild(element)
 
       return () => {
+        element.remove()
         console.log(`Dynamic Script Removed: ${url}`)
       }
     }
-  }, [url])
+  }, [url, wrapper])
 
   return {
     ready,

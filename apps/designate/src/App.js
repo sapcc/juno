@@ -6,7 +6,7 @@ import { useClient } from "./lib/hooks/useClient"
 export default ({ color }) => {
   const [auth, setAuth] = React.useState()
   const endpoint = React.useMemo(() => {
-    console.log("============auth", auth)
+    // console.log("============auth", auth)
     if (!auth || !auth.token || !auth.token.catalog) return
     const service = auth.token.catalog.find(
       (service) => service.name === "designate"
