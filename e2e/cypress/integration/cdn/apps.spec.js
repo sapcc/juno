@@ -17,23 +17,10 @@ describe("apps", () => {
     })
   })
 
-  it("contains latest version of auth", () => {
-    cy.request("cdn/manifest.json").then((response) => {
-      expect(response.body.auth.indexOf("0_1_5") >= 0).to.eq(true)
-    })
-  })
-
-  // designate
-  it("contains designate", () => {
-    cy.request("cdn/manifest.json").then((response) => {
-      expect(response.body).to.have.property("designate")
-    })
-  })
-
   // widget-loader
-  it("contains widget-loader", () => {
-    cy.request("cdn/manifest.json").then((response) => {
-      expect(response.body).to.have.property("widget-loader")
+  it("contains latest version of auth", () => {
+    cy.request("cdn/widget-loader/0_0_1/app.js").then((response) => {
+      expect(response.status).to.eq(200)
     })
   })
 })

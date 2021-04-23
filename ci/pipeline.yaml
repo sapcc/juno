@@ -316,6 +316,8 @@ jobs:
                 - |         
                   VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
                   cp -r /app/build ./auth-output/$VERSION
+                  cp -r /app/build ./auth-output/latest
+                   
             outputs:
               - name: auth-output
       
@@ -335,6 +337,8 @@ jobs:
                 - |         
                   VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
                   cp -r /app/build ./designate-output/$VERSION
+                  cp -r /app/build ./designate-output/latest
+                   
             outputs:
               - name: designate-output
       
@@ -354,6 +358,8 @@ jobs:
                 - |         
                   VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
                   cp -r /app/build ./widget-loader-output/$VERSION
+                  cp -r /app/build ./widget-loader-output/latest
+                   
             outputs:
               - name: widget-loader-output
           
@@ -489,7 +495,7 @@ jobs:
             args:
               - -c
               - |
-                cd $PWD/app/juno/apps/dashboard
+                cd $PWD/app/juno/e2e
                 CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress run
 
   - name: deploy to s-eu-nl-1
@@ -564,6 +570,37 @@ jobs:
     ensure:
       put: eu-nl-1.release
 
+
+  - name: e2e production
+    serial: true
+    plan:           
+      - get: dashboard.version
+        passed: ["deploy to s-eu-nl-1"]
+        trigger: true
+      - get: cdn.version
+        passed: ["deploy to s-eu-nl-1"]  
+      - get: app-dashboard.git
+
+      - task: cypress
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: ((keppel-hostname))/ccloud-dockerhub-mirror/cypress/included
+              tag: "7.1.0"
+          inputs:
+            - name: app-dashboard.git
+              path: /app/juno
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd $PWD/app/juno/e2e
+                CYPRESS_BASE_URL=https://juno.global.cloud.sap cypress run      
+
 resources:
   - name: qa-de-1.release
     type: release
@@ -590,7 +627,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/dashboard","package.json","libs","ci/Dockerfile.dashboard"]
+      paths: ["apps/dashboard","package.json","libs","ci/Dockerfile.dashboard","e2e"]
       username: sapcc-bot
       password: {{real-github-access-token}}
  
@@ -600,7 +637,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/auth","package.json","libs","ci/Dockerfile.app"]
+      paths: ["apps/auth","package.json","libs","ci/Dockerfile.app","e2e"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
@@ -616,7 +653,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/designate","package.json","libs","ci/Dockerfile.app"]
+      paths: ["apps/designate","package.json","libs","ci/Dockerfile.app","e2e"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
@@ -632,7 +669,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/widget-loader","package.json","libs","ci/Dockerfile.app"]
+      paths: ["apps/widget-loader","package.json","libs","ci/Dockerfile.app","e2e"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 

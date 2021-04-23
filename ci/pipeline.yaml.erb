@@ -464,7 +464,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/dashboard","package.json","libs","ci/Dockerfile.dashboard"]
+      paths: ["apps/dashboard","package.json","libs","ci/Dockerfile.dashboard","e2e"]
       username: sapcc-bot
       password: {{real-github-access-token}}
  
@@ -474,7 +474,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/<%= app %>","package.json","libs","ci/Dockerfile.app"]
+      paths: ["apps/<%= app %>","package.json","libs","ci/Dockerfile.app","e2e"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 

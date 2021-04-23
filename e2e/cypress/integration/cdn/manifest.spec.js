@@ -5,9 +5,6 @@ describe("manifest", () => {
   })
 
   it("manifest.json is reachable", () => {
-    // content is loaded if children of root element exists.
-    // children are built by React
-    // cy.get("@manifest").then((response) => {
     cy.get("@manifest").should((response) => {
       expect(response.status).to.eq(200)
     })
