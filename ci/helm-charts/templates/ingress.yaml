@@ -31,7 +31,7 @@ spec:
         paths:
           - backend:
               serviceName: juno-cdn
-              servicePort: 5000
+              servicePort: 8888
             path: /cdn  
           - backend:
               serviceName: juno-dashboard
