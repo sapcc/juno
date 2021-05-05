@@ -1,7 +1,11 @@
 const { MongoClient } = require("mongodb")
 
 // Connection URL
-const url = process.env.MONGO_ENDPOINT_URL
+let host = process.env.MONGO_HOST
+// add default port if not poresent
+if (host.indexOf(":") < 0) host = `${host}:27017`
+const url = `mongodb://${process.env.MONGO_HOST}`
+
 // Create the client
 const client = new MongoClient(url, {
   useUnifiedTopology: true,
@@ -11,19 +15,25 @@ const client = new MongoClient(url, {
 // Database Name
 const dbName = process.env.NODE_ENV === "test" ? "test" : "mercury"
 
-// cache reference to database
+// db reference
 let _db
 
-// Connect to the database and cache the pointer to database.
 const connect = async () => {
   if (!_db) {
-    await client.connect()
-    _db = client.db(dbName)
+    try {
+      if (!client.isConnected()) await client.connect()
+      _db = client.db(dbName)
+    } catch (e) {
+      console.log("--->error while connecting with graphql context (db)", e)
+    }
   }
-  return _db
 }
 
-// Try to close connection
-const close = () => client.close()
-
-module.exports = { connect, close }
+module.exports = {
+  connect,
+  close: () => client.close(),
+  db: () => ({
+    Requests: _db.collection("requests"),
+    // Users: _db.collection("users"),
+  }),
+}

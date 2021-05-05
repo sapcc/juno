@@ -2,8 +2,8 @@
   "name": "mercury",
   "dependencies": {
     "apollo-server": "^2.23.0",
-    "graphql": "^15.5.0",
     "dotenv": "^8.2.0",
+    "graphql": "^15.5.0",
     "mongodb": "^3.6.6"
   },
   "scripts": {

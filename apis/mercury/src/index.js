@@ -2,84 +2,46 @@ require("dotenv").config()
 const { ApolloServer } = require("apollo-server")
 const fs = require("fs")
 const path = require("path")
-const { connect, close } = require("./dataStore")
-
-// connect()
-//   .then((db) => db.collection("documents"))
-//   .then((collection) => {
-//     collection.insertMany([{ a: 1 }, { a: 2 }, { a: 3 }])
-//     return collection
-//   })
-//   .then((collection) => collection.find({}).toArray())
-//   .then((items) => {
-//     console.log("================ALL ITEMS", items)
-//   })
-//   .finally(close)
-
-let links = [
-  {
-    id: "link-0",
-    url: "www.howtographql.com",
-    description: "Fullstack tutorial for GraphQL",
-  },
-]
-
-// 1
-let idCount = links.length
-const resolvers = {
-  Query: {
-    info: () => `I am an info`,
-    // feed: () => links,
-    feed: async () => connect().then((db) => db.collection("links")),
-  },
-  Mutation: {
-    // 2
-    createLink: (parent, args) => {
-      const link = {
-        id: `link-${idCount++}`,
-        description: args.description,
-        url: args.url,
-      }
-      links.push(link)
-      throw new Error("sadasdsad")
-      return link
-    },
-    updateLink: (parent, args) => {
-      const link = links.find((l) => l.id === args.id)
-      if (link) {
-        link.description = args.description
-        link.url = args.url
-        return link
-      }
-    },
-    deleteLink: (parent, args) => {
-      const index = links.findIndex((l) => l.id === args.id)
-      if (index >= 0) {
-        return links.splice(index, 1)
-      }
-    },
-  },
-}
+const resolvers = require("./resolvers")
+const { connect, close, db } = require("./dataStore")
+const { validateToken } = require("./tokenHandler")
 
 const server = new ApolloServer({
   typeDefs: fs.readFileSync(path.join(__dirname, "schema.graphql"), "utf8"),
   resolvers,
-  context: async ({ req }) => {
-    await connect()
-    // Note: This example uses the `req` argument to access headers,
-    // but the arguments received by `context` vary by integration.
-    // This means they vary for Express, Koa, Lambda, etc.
-    //
-    // To find out the correct arguments for a specific integration,
-    // see https://www.apollographql.com/docs/apollo-server/api/apollo-server/#middleware-specific-context-fields
-
+  cors: {
+    origin: /.*\.cloud\.sap$/,
+  },
+  context: async ({ req, res }) => {
     // Get the user token from the headers.
-    const token = req.headers.authorization || ""
+    // TODO: validate token against keystone and cache the verification if possible.
+    const token = req.headers["x-auth-token"] || ""
+    if (!token) {
+      return res
+        .status(401)
+        .send("No token provided. Could not find x-auth-token header!")
+    }
+    console.log("Token is presented!")
 
-    console.log("======TOKEN", token)
+    const tokenPayload = await validateToken(token).catch((e) => {
+      console.log("ERROR:", e)
+      res.status(403).send("Could not validate token.")
+    })
+    if (!tokenPayload) return res.status(403).send("Could not validate token.")
+    console.log("Token is valid!")
+
+    return { db: db(), user: tokenPayload ? tokenPayload.user : null }
   },
 })
 
 server
   .listen({ port: process.env.PORT })
   .then(({ url }) => console.log(`Server is running on ${url}`))
+  .then(() => {
+    console.log("Connect to database...")
+    connect()
+  })
+  .then(() => console.log("connected!"))
+
+// close database connection on exit
+process.on("exit", close)
