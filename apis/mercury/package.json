@@ -1,13 +1,13 @@
 {
   "name": "mercury",
   "dependencies": {
-    "apollo-server": "^2.23.0",
+    "apollo-server": "^2.24.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.5.0",
     "mongodb": "^3.6.6"
   },
   "scripts": {
     "start": "PORT=$APP_PORT yarn node src/index.js",
-    "client": "yarn node src/script.js"
+    "production": "NODE_ENV=production yarn node src/index.js"
   }
 }

@@ -1,6 +1,6 @@
 const https = require("https")
 
-const validateToken = (token) =>
+const verifyAuthToken = (authToken) =>
   new Promise((resolve, reject) => {
     https
       .request(
@@ -11,8 +11,8 @@ const validateToken = (token) =>
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "X-Auth-Token": token,
-            "X-Subject-Token": token,
+            "X-Auth-Token": authToken,
+            "X-Subject-Token": authToken,
           },
         },
         (response) => {
@@ -32,6 +32,4 @@ const validateToken = (token) =>
       .end()
   })
 
-module.exports = {
-  validateToken,
-}
+module.exports = { verifyAuthToken }

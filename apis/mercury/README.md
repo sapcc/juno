@@ -10,28 +10,16 @@ Mercury makes it possible to create and edit requests regardless of the context.
 
 A running mongodb server is required to develop the app. The connection to the server is configured via .env.
 
-`MONGO_ENDPOINT_URL="mongodb://test: test@localhost:27017"`
+`MONGO_HOST="localhost:27017"`
+
+For token verification is also IDENTITY_HOST required.
+
+`IDENTITY_HOST="identity-3.qa-de-1.cloud.sap"`
 
 ### Workspaces
 
 If you develop with workspaces, you can simply start a new environment with "mongo" image and access it in the project via localhost.
 
-**APP_PORT** is set to 27017
-and the two environment variables accordingly
-**MONGO_INITDB_ROOT_USERNAME** **MONGO_INITDB_ROOT_PASSWORD**
-
-Example:
-
-the following settings:
-
-```
-APP_PORT=27017
-MONGO_INITDB_ROOT_USERNAME=test
-MONGO_INITDB_ROOT_PASSWORD=test
-```
-
-result in
-
-`"mongodb://test:test@localhost:27017"`
+**APP_PORT** must be set to 27017
 
 ![Screenshot](./doc/mongo_env.png)

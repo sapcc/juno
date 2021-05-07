@@ -18,22 +18,41 @@ const dbName = process.env.NODE_ENV === "test" ? "test" : "mercury"
 // db reference
 let _db
 
-const connect = async () => {
+/**
+ * This function connects to the mongo database.
+ * Once connected it stores the reference to database in _db.
+ */
+async function connect() {
   if (!_db) {
-    try {
-      if (!client.isConnected()) await client.connect()
-      _db = client.db(dbName)
-    } catch (e) {
-      console.log("--->error while connecting with graphql context (db)", e)
-    }
+    // if client was disconnected
+    if (!client.isConnected()) await client.connect()
+    // get the database by name
+    _db = client.db(dbName)
   }
+
+  return _db
 }
 
+let _dbCollections
+/**
+ * This function returns the database collections.
+ * The collections are cached for performance reasons!
+ */
+function getDB() {
+  if (!_db)
+    throw new Error("database is not connected! Please call connect() first.")
+  if (!_dbCollections) {
+    _dbCollections = {
+      Requests: _db.collection("requests"),
+      Users: _db.collection("users"),
+    }
+  }
+  return _dbCollections
+}
+
+// exports connect, getDB and close
 module.exports = {
   connect,
-  close: () => client.close(),
-  db: () => ({
-    Requests: _db.collection("requests"),
-    // Users: _db.collection("users"),
-  }),
+  getDB,
+  close: () => client.close,
 }

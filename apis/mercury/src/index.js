@@ -1,36 +1,43 @@
 require("dotenv").config()
-const { ApolloServer } = require("apollo-server")
-const fs = require("fs")
-const path = require("path")
-const resolvers = require("./resolvers")
-const { connect, close, db } = require("./dataStore")
-const { validateToken } = require("./tokenHandler")
 
+const {
+  ApolloServer,
+  AuthenticationError,
+  ForbiddenError,
+} = require("apollo-server")
+
+const typeDefs = require("./graphql/typeDefs")
+const resolvers = require("./graphql/resolvers")
+
+const { connect, getDB, close } = require("./dataStore")
+const { verifyAuthToken } = require("./identityProvider.js")
+
+// Create Apollo Server
 const server = new ApolloServer({
-  typeDefs: fs.readFileSync(path.join(__dirname, "schema.graphql"), "utf8"),
+  typeDefs,
   resolvers,
   cors: {
     origin: /.*\.cloud\.sap$/,
   },
-  context: async ({ req, res }) => {
-    // Get the user token from the headers.
-    // TODO: validate token against keystone and cache the verification if possible.
-    const token = req.headers["x-auth-token"] || ""
-    if (!token) {
-      return res
-        .status(401)
-        .send("No token provided. Could not find x-auth-token header!")
-    }
-    console.log("Token is presented!")
+  context: async ({ req }) => {
+    // The context function is executed before the Resolvers on each request!
 
-    const tokenPayload = await validateToken(token).catch((e) => {
-      console.log("ERROR:", e)
-      res.status(403).send("Could not validate token.")
+    // get authToken from headers
+    const authToken = req.headers["x-auth-token"] || ""
+    // ensure authToken is presented
+    if (!authToken)
+      throw new AuthenticationError(
+        "No auth token provided. Could not find x-auth-token header!"
+      )
+    // verify authToken from the Identity Provider (Keystone)
+    const tokenPayload = await verifyAuthToken(authToken).catch((e) => {
+      throw new ForbiddenError(e)
     })
-    if (!tokenPayload) return res.status(403).send("Could not validate token.")
-    console.log("Token is valid!")
 
-    return { db: db(), user: tokenPayload ? tokenPayload.user : null }
+    // get database
+    const db = getDB()
+    // enrich the context with authToken, token payload and database
+    return { authToken, tokenPayload, db }
   },
 })
 
@@ -38,10 +45,10 @@ server
   .listen({ port: process.env.PORT })
   .then(({ url }) => console.log(`Server is running on ${url}`))
   .then(() => {
-    console.log("Connect to database...")
-    connect()
+    console.log("Connect to the database...")
+    return connect()
   })
-  .then(() => console.log("connected!"))
+  .then(() => console.log("Connected!"))
 
 // close database connection on exit
 process.on("exit", close)

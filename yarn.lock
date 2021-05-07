@@ -2497,9 +2497,9 @@ __metadata:
   linkType: hard
 
 "@josephg/resolvable@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@josephg/resolvable@npm:1.0.0"
-  checksum: 84e52a954fe37a2664daf62df66d22c23fca9cc33bc87998c14ede2e8c76307b180091e1a836bbbd2e181edf63333313ece8d493b80595c592b9a5361804eaed
+  version: 1.0.1
+  resolution: "@josephg/resolvable@npm:1.0.1"
+  checksum: 818cd2243ea863c7565201c42945f6ddfe8be0a00be56bf0a359d36cf967a9502ea70a7dbd7ac9b8bd31a84bc7b05929e4c0a7518aed2566d67b4d97008b1eab
   languageName: node
   linkType: hard
 
@@ -5670,7 +5670,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"apollo-server@npm:^2.23.0":
+"apollo-server@npm:^2.24.0":
   version: 2.24.0
   resolution: "apollo-server@npm:2.24.0"
   dependencies:
@@ -14526,7 +14526,7 @@ fsevents@^1.2.7:
   version: 0.0.0-use.local
   resolution: "mercury@workspace:apis/mercury"
   dependencies:
-    apollo-server: ^2.23.0
+    apollo-server: ^2.24.0
     dotenv: ^8.2.0
     graphql: ^15.5.0
     mongodb: ^3.6.6
