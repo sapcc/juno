@@ -1,11 +1,16 @@
 const https = require("https")
 
-const verifyAuthToken = (authToken) =>
+/**
+ * This function verifies the auth token by calling the corresponding
+ * endpoint of the Keystone API.
+ * @param {String} authToken
+ */
+const verifyAuthToken = (host, authToken) =>
   new Promise((resolve, reject) => {
     https
       .request(
         {
-          host: process.env.IDENTITY_HOST,
+          host,
           path: "/v3/auth/tokens",
           port: 443,
           method: "GET",
@@ -32,4 +37,6 @@ const verifyAuthToken = (authToken) =>
       .end()
   })
 
-module.exports = { verifyAuthToken }
+module.exports = (host) => ({
+  verifyAuthToken: (authToken) => verifyAuthToken(host, authToken),
+})

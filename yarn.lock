@@ -5657,6 +5657,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"apollo-server-testing@npm:^2.24.0":
+  version: 2.24.0
+  resolution: "apollo-server-testing@npm:2.24.0"
+  dependencies:
+    apollo-server-core: ^2.24.0
+  peerDependencies:
+    graphql: ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+  checksum: 26eeb9aea8a27af284755002a8cfdf49c9dd131dafe72ec9ada2bbe7571e5c38656f95d645c58d436cab25228d761e21dcd9d9189b28f70866587ae720e34be8
+  languageName: node
+  linkType: hard
+
 "apollo-server-types@npm:^0.8.0":
   version: 0.8.0
   resolution: "apollo-server-types@npm:0.8.0"
@@ -6646,7 +6657,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bluebird@npm:^3.3.5, bluebird@npm:^3.5.5":
+"bluebird@npm:^3.3.5, bluebird@npm:^3.5.5, bluebird@npm:^3.7.2":
   version: 3.7.2
   resolution: "bluebird@npm:3.7.2"
   checksum: 4f2288662f3d4eadbb82d4daa4a7d7976a28fa3c7eb4102c9b4033b03e5be4574ba123ac52a7c103cde4cb7b2d2afc1dbe41817ca15a29ff21ecd258d0286047
@@ -7658,7 +7669,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^6.0.0, commander@npm:^6.2.1":
+"commander@npm:^6.0.0, commander@npm:^6.2.0, commander@npm:^6.2.1":
   version: 6.2.1
   resolution: "commander@npm:6.2.1"
   checksum: 47856aae6f194404122e359d8463e5e1a18f7cbab26722ce69f1379be8514bd49a160ef81a983d3d2091e3240022643354101d1276c797dcdd0b5bfc3c3f04a3
@@ -14527,9 +14538,12 @@ fsevents@^1.2.7:
   resolution: "mercury@workspace:apis/mercury"
   dependencies:
     apollo-server: ^2.24.0
+    apollo-server-testing: ^2.24.0
     dotenv: ^8.2.0
     graphql: ^15.5.0
+    jest: ^26.6.3
     mongodb: ^3.6.6
+    node-mongodb-fixtures: ^3.2.8
   languageName: unknown
   linkType: soft
 
@@ -14879,7 +14893,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"mongodb@npm:^3.6.6":
+"mongodb@npm:^3.6.3, mongodb@npm:^3.6.6":
   version: 3.6.6
   resolution: "mongodb@npm:3.6.6"
   dependencies:
@@ -15162,6 +15176,19 @@ fsevents@^1.2.7:
   version: 1.0.0
   resolution: "node-modules-regexp@npm:1.0.0"
   checksum: 90f928a1dbc3c98d39b3d133f8c910e6bd8e45416f8e15151a31c41550cffe4e3022a39c38c20ae4ceca56b6e63741def4f3a2018080d13f5be245f4b060a9b1
+  languageName: node
+  linkType: hard
+
+"node-mongodb-fixtures@npm:^3.2.8":
+  version: 3.2.8
+  resolution: "node-mongodb-fixtures@npm:3.2.8"
+  dependencies:
+    bluebird: ^3.7.2
+    commander: ^6.2.0
+    mongodb: ^3.6.3
+  bin:
+    mongodb-fixtures: bin/mongodb-fixtures.js
+  checksum: a86958637ae8d543effac6e6115344bb62c10f0d29b7d98479fea651f0374d420b29d32d4a42eecf5f6035abd9ac7bc91f18a1338f395908cb20764e85bf92e5
   languageName: node
   linkType: hard
 

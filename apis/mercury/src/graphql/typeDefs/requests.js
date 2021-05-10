@@ -1,12 +1,12 @@
 const { gql } = require("apollo-server")
 
 module.exports = gql`
-  type Query {
+  extend type Query {
     requests: [Request!]!
     request(id: ID!): Request
   }
 
-  type Mutation {
+  extend type Mutation {
     createRequest(name: String!, description: String!): Request!
     updateRequest(
       id: ID!

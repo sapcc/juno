@@ -2,12 +2,18 @@
   "name": "mercury",
   "dependencies": {
     "apollo-server": "^2.24.0",
+    "apollo-server-testing": "^2.24.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.5.0",
+    "jest": "^26.6.3",
     "mongodb": "^3.6.6"
   },
   "scripts": {
     "start": "PORT=$APP_PORT yarn node src/index.js",
-    "production": "NODE_ENV=production yarn node src/index.js"
+    "production": "NODE_ENV=production yarn node src/index.js",
+    "test": "NODE_ENV=test yarn jest"
+  },
+  "devDependencies": {
+    "node-mongodb-fixtures": "^3.2.8"
   }
 }
