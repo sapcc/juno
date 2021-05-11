@@ -4,8 +4,14 @@ module.exports = {
   Query: {
     requests: (parent, data, { db }) =>
       db.collection("requests").find({}).toArray(),
-    request: (parent, data, { db }) =>
-      db.collection("requests").find({ _id: ObjectId(data.id), x: 1 }),
+    request: (parent, data, { db }) => {
+      const request = db
+        .collection("requests")
+        .find({ _id: ObjectId(data.id), x: 1 })
+      if (!request) throw new Error("could not find request")
+      console.log("=============", request)
+      return request
+    },
   },
 
   Mutation: {

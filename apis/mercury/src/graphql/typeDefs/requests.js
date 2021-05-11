@@ -9,7 +9,7 @@ module.exports = gql`
   extend type Mutation {
     createRequest(name: String!, description: String!): Request!
     updateRequest(
-      id: ID!
+      id: ID
       name: String
       description: String
       status: String
@@ -22,5 +22,6 @@ module.exports = gql`
     name: String!
     description: String!
     status: String!
+    test: String
   }
 `
