@@ -1,7 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 import tw from "twin.macro"
-import { lighten } from "polished"
 
 const btn = tw`
   w-full 
@@ -22,12 +21,24 @@ const btn = tw`
   disabled:opacity-50
 `
 
+const btnDefault = tw`
+  text-button-defaultForeground
+  bg-button-defaultBg
+  border-gray-300 
+  focus:ring-button-defaultBgHover
+  hover:bg-button-defaultBgHover
+  disabled:hover:bg-button-defaultBg
+  disabled:cursor-default
+`
+
 const btnPrimary = tw`
   text-button-primaryForeground 
   bg-button-primaryBg
   border-transparent 
   focus:ring-button-primaryBgHover
   hover:bg-button-primaryBgHover
+  disabled:hover:bg-button-primaryBg
+  disabled:cursor-default
 `
 
 const btnDanger = tw`
@@ -35,15 +46,9 @@ const btnDanger = tw`
   bg-red-600 
   border-transparent 
   focus:ring-red-500 
-  hover:bg-red-700 
-`
-
-const btnDefault = tw`
-  text-button-defaultForeground
-  bg-button-defaultBg
-  border-gray-300 
-  focus:ring-button-defaultBgHover
-  hover:bg-button-defaultBgHover
+  hover:bg-red-700
+  disabled:hover:bg-red-600
+  disabled:cursor-default
 `
 
 const btnSmall = tw`
@@ -83,7 +88,7 @@ const sizeClass = (size) => {
 }
 
 /**
- * Primary UI component for user interaction
+ * Primary UI component for users to trigger actions with.
  */
 const Button = ({
   label,

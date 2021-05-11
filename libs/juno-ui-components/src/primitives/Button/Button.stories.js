@@ -40,6 +40,11 @@ Large.args = {
   label: "Large",
 }
 
+export const DefaultSize = Template.bind({})
+DefaultSize.args = {
+  label: "Default",
+}
+
 export const Small = Template.bind({})
 Small.args = {
   size: "small",
