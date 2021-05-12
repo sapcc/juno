@@ -1,3 +1,5 @@
+require("dotenv").config()
+
 // Import Server
 const createServer = require("./server.js")
 
@@ -5,7 +7,9 @@ const createServer = require("./server.js")
 createServer({
   logger: true,
   graphiql: true,
-  mongoURL: "mongodb://localhost:27017/mercury",
+  mongoURL: process.env.MONGO_URL,
+  identityHost: process.env.IDENTITY_HOST,
+  useAuthentication: true,
 }).then((server) => {
   server
     .listen(process.env.PORT, "0.0.0.0")

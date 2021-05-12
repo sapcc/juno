@@ -1,6 +1,8 @@
+require("dotenv").config()
+
 const Fixtures = require("node-mongodb-fixtures")
 const createServer = require("../server")
-const mongoURL = "mongodb://localhost:27017/mercury-test"
+const mongoURL = `${process.env.MONGO_URL}-test`
 const fixtures = new Fixtures({ dir: "src/tests/fixtures", mute: true })
 
 describe("requests", () => {
@@ -12,7 +14,11 @@ describe("requests", () => {
       .then(() => fixtures.load())
       .then(() => fixtures.disconnect())
 
-    server = await createServer({ mongoURL, logger: false })
+    server = await createServer({
+      mongoURL,
+      useAuthentication: false,
+      logger: false,
+    })
   })
 
   describe("all requests", () => {
@@ -32,8 +38,7 @@ describe("requests", () => {
       console.log("body: ", response.body)
     })
 
-    it("should return all requests", () => {
-      console.log("===============", response.body)
+    it("should return requests", () => {
       const body = JSON.parse(response.body)
       expect(body.data.requests.length).toEqual(4)
     })
