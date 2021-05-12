@@ -1,6 +1,6 @@
 const fastify = require("fastify")
 // Import external dependancies
-const gql = require("fastify-gql")
+const gql = require("mercurius")
 
 // Import GraphQL Schema
 const schema = require("./schema")
@@ -9,23 +9,20 @@ const schema = require("./schema")
 const mongoose = require("mongoose")
 
 module.exports = async (options) => {
-  const mongoURL = options.mongoURL
-  const graphiql = options.graphiql !== false
-  delete options.mongoURL
-  delete options.graphiql
-  const serverOptions = { logger: true, ...options }
+  let { mongoURL, graphiql, ...serverOptions } = options
+  graphiql = graphiql !== false
+  serverOptions = { logger: true, ...serverOptions }
+
   const server = fastify(serverOptions)
   server.register(gql, {
     schema,
     graphiql,
   })
 
-  console.log(":::::::::::::::")
   await mongoose
     .connect(mongoURL)
     .then(() => console.log("MongoDB connected..."))
     .catch((err) => console.log(err))
 
-  console.log("===================")
   return server
 }

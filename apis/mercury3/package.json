@@ -4,17 +4,18 @@
   "version": "0.1.0",
   "scripts": {
     "start": "PORT=$APP_PORT yarn nodemon ./src/index.js",
-    "test": "yarn jest"
+    "test": "yarn jest --watchAll"
   },
   "dependencies": {
     "fastify": "^3.15.1",
-    "fastify-gql": "^5.8.2",
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.5",
+    "mercurius": "^7.6.1",
     "mongoose": "^5.12.8",
     "nodemon": "^2.0.7"
   },
   "devDependencies": {
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "node-mongodb-fixtures": "^3.2.8"
   }
 }
