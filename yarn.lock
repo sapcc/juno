@@ -5609,8 +5609,8 @@ __metadata:
     react-refresh: ^0.9.0
     react-test-renderer: ^17.0.1
     regenerator-runtime: ^0.13.7
-    tailwindcss: ^2.1.1
-    twin.macro: ^2.3.2
+    tailwindcss: ^2.1.2
+    twin.macro: ^2.4.1
     util: ^0.12.3
     webpack: ^5.22.0
     webpack-cli: ^4.5.0
@@ -8320,8 +8320,8 @@ __metadata:
     react-router-dom: ^5.2.0
     react-scripts: 4.0.2
     serve: ^11.3.2
-    tailwindcss: ^2.1.1
-    twin.macro: ^2.3.2
+    tailwindcss: ^2.1.2
+    twin.macro: ^2.4.1
     web-vitals: ^0.2.4
     workbox-background-sync: ^5.1.3
     workbox-broadcast-update: ^5.1.3
@@ -8711,7 +8711,7 @@ __metadata:
     react: ^17.0.1
     react-dom: ^17.0.1
     serve: ^11.3.2
-    twin.macro: ^2.3.3
+    twin.macro: ^2.4.1
     util: ^0.12.3
     webpack: ^5.22.0
     webpack-cli: ^4.5.0
@@ -14062,8 +14062,8 @@ fsevents@^1.2.7:
     rollup-plugin-includepaths: ^0.2.4
     rollup-plugin-root-import: ^1.0.0
     storybook-dark-mode: ^1.0.7
-    tailwindcss: ^2.1.1
-    twin.macro: ^2.3.2
+    tailwindcss: ^2.1.2
+    twin.macro: ^2.4.1
   peerDependencies:
     "@emotion/cache": ^11.1.3
     "@emotion/react": ^11.1.5
@@ -21023,7 +21023,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^2.1.0, tailwindcss@npm:^2.1.1":
+"tailwindcss@npm:^2.1.0, tailwindcss@npm:^2.1.2":
   version: 2.1.2
   resolution: "tailwindcss@npm:2.1.2"
   dependencies:
@@ -21647,7 +21647,7 @@ resolve@^2.0.0-next.3:
   languageName: node
   linkType: hard
 
-"twin.macro@npm:^2.3.2, twin.macro@npm:^2.3.3":
+"twin.macro@npm:^2.4.1":
   version: 2.4.1
   resolution: "twin.macro@npm:2.4.1"
   dependencies:
