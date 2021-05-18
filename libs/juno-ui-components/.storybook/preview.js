@@ -6,6 +6,7 @@ import "../src/global.scss"
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   backgrounds: { disable: true },
+  viewMode: 'docs',
   darkMode: {
     stylePreview: true,
     darkClass: "theme-dark",
