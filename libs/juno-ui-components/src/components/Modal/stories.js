@@ -1,8 +1,7 @@
 import React from "react"
 
-import Modal from "./index.js"
-import Button from "../../primitives/Button/index.js"
-import { FloatingLabelInput } from "../Form/index.js"
+import { Modal } from "./index.js"
+import { Button } from "../Button/index.js"
 
 export default {
   title: "Design System/Components/Modal",
@@ -47,25 +46,6 @@ CustomContent.args = {
       <Body>TEST</Body>
       <Buttons>
         <Button>Close</Button>
-      </Buttons>
-    </>
-  ),
-}
-
-export const Login = Template.bind({})
-Login.args = {
-  title: "Login",
-  children: ({ Body, Buttons }) => (
-    <>
-      <Body>
-        <form>
-          <FloatingLabelInput label="User" />
-          <FloatingLabelInput label="Password" type="password" />
-        </form>
-      </Body>
-      <Buttons>
-        <Button mode="primary">Login</Button>
-        <Button>Cancel</Button>
       </Buttons>
     </>
   ),
