@@ -2888,6 +2888,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addon-postcss@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@storybook/addon-postcss@npm:2.0.0"
+  dependencies:
+    "@storybook/node-logger": ^6.1.14
+    css-loader: ^3.6.0
+    postcss: ^7.0.35
+    postcss-loader: ^4.2.0
+    style-loader: ^1.3.0
+  checksum: 0d6aa85e3edb4285d3a385b91d1e8a6359b984a17b03c5a85f94313f7cc1b4cec5001b9f0107bcd8062f31902afc36f3f4d5adad4410ba4155c8eabecaee9e0a
+  languageName: node
+  linkType: hard
+
 "@storybook/addon-toolbars@npm:6.2.9":
   version: 6.2.9
   resolution: "@storybook/addon-toolbars@npm:6.2.9"
@@ -3371,7 +3384,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/node-logger@npm:6.2.9":
+"@storybook/node-logger@npm:6.2.9, @storybook/node-logger@npm:^6.1.14":
   version: 6.2.9
   resolution: "@storybook/node-logger@npm:6.2.9"
   dependencies:
@@ -13167,6 +13180,7 @@ fsevents@^1.2.7:
     "@storybook/addon-docs": ^6.2.9
     "@storybook/addon-essentials": ^6.2.9
     "@storybook/addon-links": ^6.2.9
+    "@storybook/addon-postcss": ^2.0.0
     "@storybook/react": ^6.2.9
     "@tailwindcss/postcss7-compat": ^2.1.2
     autoprefixer: 9
