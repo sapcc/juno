@@ -1,2 +1,2 @@
-export { FloatingLabelInput } from "./FloatingLabelInput.component"
-export { FloatingLabelSelect } from "./FloatingLabelSelect.component"
+export { FloatingLabelInput } from "./FloatingLabelInput"
+export { FloatingLabelSelect } from "./FloatingLabelSelect"

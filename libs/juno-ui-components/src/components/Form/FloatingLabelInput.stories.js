@@ -1,33 +1,9 @@
-// import React from "react"
-
-// import { FloatingLabelInput } from "../components/Form/FloatingLabelInput.js"
-
-// export default {
-//   title: "Example/Form",
-//   component: FloatingLabelInput,
-//   argTypes: {
-//     label: { control: "text" },
-//     name: { control: "text" },
-//     value: { control: "text" },
-//     onChange: { control: "func" },
-//   },
-// }
-
-// const Template = (args) => <FloatingLabelInput {...args} />
-
-// export const TextInput = Template.bind({})
-// FloatingLabelInput.args = {
-//   label: "Label",
-//   name: "test",
-//   value: "Hello",
-// }
-
 import React from "react"
 
 import { FloatingLabelInput } from "./index.js"
 
 export default {
-  title: "Design System/Components/Form/FloatingLabelInput",
+  title: "Design System/Form/FloatingLabelInput",
   component: FloatingLabelInput,
   argTypes: {
     name: { control: "text" },

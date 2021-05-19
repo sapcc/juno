@@ -1,9 +1,9 @@
 import React from "react"
 
-import Button from "./index.js"
+import { Button } from "./index.js"
 
 export default {
-  title: "Design System/Primitives/Button",
+  title: "Design System/Button",
   component: Button,
   argTypes: {},
 }
@@ -50,4 +50,3 @@ Small.args = {
   size: "small",
   label: "Small",
 }
-

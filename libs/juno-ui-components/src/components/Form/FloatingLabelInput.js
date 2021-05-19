@@ -1,21 +1,25 @@
 import React from "react"
 import PropTypes from "prop-types"
-import tw, { styled } from "twin.macro"
+import styled from "@emotion/styled"
 
 const FloatingLabelContainer = styled.div`
-  ${tw`relative`}
-  &>input::placeholder {
+  position: relative;
+  color: rgba(75, 85, 99, 1);
+
+  & > input::placeholder {
     color: transparent;
   }
-
   & > input:focus,
   & > input:not(:placeholder-shown) {
-    ${tw`pt-8`}
+    padding-top: 2rem;
   }
-
   & > input:focus ~ label,
   & > input:not(:placeholder-shown) ~ label {
-    ${tw`opacity-75 scale-75 -translate-y-3 translate-x-1`};
+    opacity: 0.75;
+    --tw-scale-x: 0.75;
+    --tw-scale-y: 0.75;
+    --tw-translate-y: -0.75rem;
+    --tw-translate-x: 0.25rem;
   }
 `
 
@@ -26,7 +30,7 @@ export const FloatingLabelInput = ({ type, label, name, value, onChange }) => (
   <FloatingLabelContainer>
     <input
       type={type || "text"}
-      tw="border focus:ring-indigo-500 focus:border-indigo-500 rounded-md sm:text-sm border-gray-300 w-full p-3 h-16"
+      className="border focus:ring-indigo-500 focus:border-indigo-500 rounded-md sm:text-sm border-gray-300 w-full p-3 h-16"
       placeholder={label || "Label"}
       value={value || ""}
       name={name || label}
@@ -35,7 +39,7 @@ export const FloatingLabelInput = ({ type, label, name, value, onChange }) => (
     />
     <label
       htmlFor={name || label}
-      tw="absolute top-0 left-0 px-3 py-5 h-full pointer-events-none transform origin-left transition-all duration-100 ease-in-out "
+      className="absolute top-0 left-0 px-3 py-5 h-full pointer-events-none transform origin-left transition-all duration-100 ease-in-out "
     >
       {label}
     </label>

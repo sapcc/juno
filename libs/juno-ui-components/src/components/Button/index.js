@@ -1,8 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import tw from "twin.macro"
 
-const btn = tw`
+const btn = `
   w-full 
   text-sm 
   inline-flex 
@@ -21,7 +20,7 @@ const btn = tw`
   disabled:opacity-50
 `
 
-const btnDefault = tw`
+const btnDefault = `
   text-button-defaultForeground
   bg-button-defaultBg
   border-gray-300 
@@ -31,7 +30,7 @@ const btnDefault = tw`
   disabled:cursor-default
 `
 
-const btnPrimary = tw`
+const btnPrimary = `
   text-button-primaryForeground 
   bg-button-primaryBg
   border-transparent 
@@ -41,7 +40,7 @@ const btnPrimary = tw`
   disabled:cursor-default
 `
 
-const btnDanger = tw`
+const btnDanger = `
   text-white 
   bg-red-600 
   border-transparent 
@@ -51,14 +50,14 @@ const btnDanger = tw`
   disabled:cursor-default
 `
 
-const btnSmall = tw`
+const btnSmall = `
   text-sm
   sm:text-sm
   px-2
   py-1
 `
 
-const btnLarge = tw`
+const btnLarge = `
   text-xl
   sm:text-2xl
   px-6
@@ -90,7 +89,7 @@ const sizeClass = (size) => {
 /**
  * Primary UI component for users to trigger actions with.
  */
-const Button = ({
+export const Button = ({
   label,
   title,
   variant,
@@ -99,10 +98,15 @@ const Button = ({
   children,
   ...props
 }) => {
-  const css = [btn, variantClass(variant), sizeClass(size)]
   const titleValue = title || label
   return (
-    <button type="button" css={css} onClick={onClick} title={titleValue} {...props}>
+    <button
+      type="button"
+      className={`${btn} ${variantClass(variant)} ${sizeClass(size)}`}
+      onClick={onClick}
+      title={titleValue}
+      {...props}
+    >
       {label || children}
     </button>
   )
@@ -123,5 +127,3 @@ Button.defaultProps = {
   size: "default",
   onClick: undefined,
 }
-
-export default Button

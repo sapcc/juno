@@ -1,9 +1,9 @@
 import React from "react"
 
-import Spinner from "./index.js"
+import { Spinner } from "./index.js"
 
 export default {
-  title: "Design System/Primitives/Spinner",
+  title: "Design System/Spinner",
   component: Spinner,
   argTypes: {
     // backgroundColor: { control: "color" },
