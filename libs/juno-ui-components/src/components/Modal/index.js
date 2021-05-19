@@ -1,8 +1,25 @@
 import React from "react"
-import ReactDOM from "react-dom"
 import PropTypes from "prop-types"
 import { Button } from "../Button/index.js"
 import { isFunction, isString } from "../../utils.js"
+import styled from "@emotion/styled"
+
+/**
+ * The  modal content
+ */
+const ModalContent = styled.div`
+  & * {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+      sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  }
+  & input,
+  & optgroup,
+  & select,
+  & textarea,
+  label {
+    color: #666;
+  }
+`
 
 const AttentionIcon = () => (
   <svg
@@ -80,7 +97,7 @@ const ModalButtonsContent = ({ children }) => {
  * If children is a function so Body and Buttons are provided as parameters and
  * should be used inside the function.
  */
-const Modal = ({ isOpen, onClose, icon, title, children }) => {
+export const Modal = ({ isOpen, close, icon, title, children }) => {
   const [visible, setIsVisible] = React.useState(false)
 
   // handles the visibility of the modal view dependent of isOpen
@@ -95,14 +112,9 @@ const Modal = ({ isOpen, onClose, icon, title, children }) => {
   // prepare the modal body component
   const ModalBody = React.useCallback(
     ({ children }) => (
-      <ModalBodyContent
-        icon={icon}
-        title={title}
-        onClose={onClose}
-        children={children}
-      />
+      <ModalBodyContent icon={icon} title={title} children={children} />
     ),
-    [icon, title, onClose]
+    [icon, title, close]
   )
 
   // we use an extra variable to handle the visibility because of the opacity effect
@@ -110,8 +122,10 @@ const Modal = ({ isOpen, onClose, icon, title, children }) => {
   if (!visible) return null
 
   return (
-    <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0`">
+    <div className="fixed z-10 inset-0 overflow-y-auto">
+      {/* Modal container */}
       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        {/* background overlay*/}
         <div
           className={`fixed inset-0 transition-opacity ${
             isOpen ? "opacity-100" : "opacity-0"
@@ -128,14 +142,15 @@ const Modal = ({ isOpen, onClose, icon, title, children }) => {
           &#8203;
         </span>
 
-        <div
+        {/* Modal content */}
+        <ModalContent
           className="transition-opacity inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
         >
           {isFunction(children) ? (
-            children({ Body: ModalBody, Buttons: ModalButtonsContent })
+            children({ Body: ModalBody, Buttons: ModalButtonsContent, close })
           ) : (
             <>
               <ModalBody>
@@ -146,50 +161,21 @@ const Modal = ({ isOpen, onClose, icon, title, children }) => {
                 )}
               </ModalBody>
               <ModalButtonsContent>
-                <Button onClick={(e) => onClose()}>Close</Button>
+                <Button onClick={(e) => close()}>Close</Button>
               </ModalButtonsContent>
             </>
           )}
-        </div>
+        </ModalContent>
       </div>
     </div>
   )
 }
 
-const ModalHandler = ({ isolate, ...props }) => {
-  isolate = isolate !== false
-  const [wrapper, setWrapper] = React.useState()
-
-  React.useEffect(() => {
-    let element = document.getElementById("juno-ui-component-modal-holder")
-    if (!element) {
-      element = document.createElement("div")
-      element.setAttribute("id", "juno-ui-component-modal-holder")
-      if (isolate) element.attachShadow({ mode: "open" })
-      document.body.appendChild(element)
-    }
-    setWrapper(isolate ? element.shadowRoot : element)
-  }, [])
-
-  if (!wrapper) return null
-
-  return ReactDOM.createPortal(
-    <>
-      {isolate && require("../../global.scss")}
-      <Modal {...props} />
-    </>,
-
-    wrapper
-  )
-}
-
-export { ModalHandler as Modal }
-
 Modal.propTypes = {
   icon: PropTypes.oneOfType([PropTypes.oneOf(["attention"]), PropTypes.func]),
   title: PropTypes.string,
   isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
+  close: PropTypes.func,
 }
 
 Modal.defaultProps = {

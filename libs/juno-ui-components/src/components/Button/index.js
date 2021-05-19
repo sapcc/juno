@@ -1,54 +1,129 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+const btn = `
+  w-full 
+  text-sm 
+  inline-flex 
+  justify-center 
+  rounded-md 
+  border 
+  shadow-sm 
+  px-4 
+  py-2 
+  font-medium 
+  focus:outline-none 
+  focus:ring-2 
+  focus:ring-offset-2 
+  sm:text-base
+  sm:w-auto 
+  disabled:opacity-50
+`
+
+const btnDefault = `
+  text-button-defaultForeground
+  bg-button-defaultBg
+  border-gray-300 
+  focus:ring-button-defaultBgHover
+  hover:bg-button-defaultBgHover
+  disabled:hover:bg-button-defaultBg
+  disabled:cursor-default
+`
+
+const btnPrimary = `
+  text-button-primaryForeground 
+  bg-button-primaryBg
+  border-transparent 
+  focus:ring-button-primaryBgHover
+  hover:bg-button-primaryBgHover
+  disabled:hover:bg-button-primaryBg
+  disabled:cursor-default
+`
+
+const btnDanger = `
+  text-white 
+  bg-red-600 
+  border-transparent 
+  focus:ring-red-500 
+  hover:bg-red-700
+  disabled:hover:bg-red-600
+  disabled:cursor-default
+`
+
+const btnSmall = `
+  text-sm
+  sm:text-sm
+  px-2
+  py-1
+`
+
+const btnLarge = `
+  text-xl
+  sm:text-2xl
+  px-6
+  py-2
+`
+
+const variantClass = (variant) => {
+  switch (variant) {
+    case "primary":
+      return btnPrimary
+    case "danger":
+      return btnDanger
+    default:
+      return btnDefault
+  }
+}
+
+const sizeClass = (size) => {
+  switch (size) {
+    case "small":
+      return btnSmall
+    case "large":
+      return btnLarge
+    default:
+      return ""
+  }
+}
+
 /**
- * Primary UI component for user interaction
+ * Primary UI component for users to trigger actions with.
  */
-export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
-  const mode = primary
-    ? "storybook-button--primary"
-    : "storybook-button--secondary"
+export const Button = ({
+  label,
+  title,
+  variant,
+  size,
+  onClick,
+  children,
+  ...props
+}) => {
+  const titleValue = title || label
   return (
     <button
       type="button"
-      className={[
-        "btn-custom mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm",
-        mode,
-      ].join(" ")}
-      style={backgroundColor && { backgroundColor }}
+      className={`${btn} ${variantClass(variant)} ${sizeClass(size)}`}
+      onClick={onClick}
+      title={titleValue}
       {...props}
     >
-      {label}
+      {label || children}
     </button>
   )
 }
 
 Button.propTypes = {
-  /**
-   * Is this the principal call to action on the page?
-   */
-  primary: PropTypes.bool,
-  /**
-   * What background color to use
-   */
-  backgroundColor: PropTypes.string,
-  /**
-   * How large should the button be?
-   */
-  size: PropTypes.oneOf(["small", "medium", "large"]),
-  /**
-   * Button contents
-   */
-  label: PropTypes.string.isRequired,
-  /**
-   * Optional click handler
-   */
+  variant: PropTypes.oneOf(["primary", "danger", "default"]),
+  size: PropTypes.oneOf(["small", "default", "large"]),
+  label: PropTypes.string,
+  title: PropTypes.string,
+  // Optional click handler
   onClick: PropTypes.func,
 }
 
 Button.defaultProps = {
-  backgroundColor: null,
-  primary: false,
-  size: "medium",
+  variant: "default",
+  title: null,
+  size: "default",
   onClick: undefined,
 }

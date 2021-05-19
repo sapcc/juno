@@ -2,9 +2,10 @@ import React from "react"
 
 import { Modal } from "./index.js"
 import { Button } from "../Button/index.js"
+import { FloatingLabelInput } from "../Form/index.js"
 
 export default {
-  title: "Design System/Components/Modal",
+  title: "Design System/Modal",
   component: Modal,
   argTypes: {
     title: { control: "text" },
@@ -12,8 +13,8 @@ export default {
   },
 }
 
-const Template = (args) => {
-  const [isOpen, setIsOpen] = React.useState(true)
+const Template = ({ isOpen: initOpenStatus, ...props }) => {
+  const [isOpen, setIsOpen] = React.useState(initOpenStatus)
 
   return (
     <>
@@ -21,32 +22,54 @@ const Template = (args) => {
         Open Modal
       </Button>
       <Modal
-        isolate={false}
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        {...args}
+        close={() => {
+          setIsOpen(false)
+        }}
+        {...props}
       />
     </>
   )
 }
 
-export const Simple = Template.bind({})
-Simple.args = {
-  title: "Hello World",
-  icon: "attention",
-  children: "I am a simple modal view.",
-}
+export const Simple = () =>
+  Template({
+    title: "Hello World",
+    icon: "attention",
+    children: "I am a simple modal view.",
+    isOpen: true,
+  })
 
-export const CustomContent = Template.bind({})
-CustomContent.args = {
-  title: "Hello World",
-  icon: "attention",
-  children: ({ Body, Buttons }) => (
-    <>
-      <Body>TEST</Body>
-      <Buttons>
-        <Button>Close</Button>
-      </Buttons>
-    </>
-  ),
-}
+export const CustomContent = () => (
+  <Template title="Hello World" icon="attention">
+    {({ Body, Buttons, close }) => (
+      <>
+        <Body className="font-red-100">TEST</Body>
+        <Buttons>
+          <Button onClick={close}>Close</Button>
+        </Buttons>
+      </>
+    )}
+  </Template>
+)
+
+export const Login = () => (
+  <Template title="Hello World" icon="attention">
+    {({ Body, Buttons, close }) => (
+      <>
+        <Body>
+          <form className="space-y-3">
+            <FloatingLabelInput label="User" />
+            <FloatingLabelInput label="Password" type="password" />
+          </form>
+        </Body>
+        <Buttons>
+          <div className="space-x-3">
+            <Button mode="primary">Login</Button>
+            <Button onClick={close}>Cancel</Button>
+          </div>
+        </Buttons>
+      </>
+    )}
+  </Template>
+)

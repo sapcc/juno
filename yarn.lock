@@ -1980,7 +1980,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:^11.1.5":
+"@emotion/react@npm:^11.1.5, @emotion/react@npm:^11.4.0":
   version: 11.4.0
   resolution: "@emotion/react@npm:11.4.0"
   dependencies:
@@ -2071,7 +2071,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/styled@npm:^11.1.5":
+"@emotion/styled@npm:^11.1.5, @emotion/styled@npm:^11.3.0":
   version: 11.3.0
   resolution: "@emotion/styled@npm:11.3.0"
   dependencies:
@@ -13068,6 +13068,9 @@ fsevents@^1.2.7:
     "@babel/core": ^7.14.2
     "@babel/preset-env": ^7.14.2
     "@babel/preset-react": ^7.13.13
+    "@emotion/cache": ^11.4.0
+    "@emotion/react": ^11.4.0
+    "@emotion/styled": ^11.3.0
     "@mdx-js/react": ^1.6.22
     "@rollup/plugin-babel": ^5.3.0
     "@storybook/addon-actions": ^6.2.9
