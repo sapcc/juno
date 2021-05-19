@@ -18,7 +18,6 @@
     }
   },
   "dependencies": {
-    "@ibm/plex": "^5.1.3",
-    "react-static": "^7.5.3"
+    "@ibm/plex": "^5.1.3"
   }
 }

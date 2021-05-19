@@ -1,9 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import tw from "twin.macro"
-import { lighten } from "polished"
 
-const btn = tw`
+const btn = `
   w-full 
   text-sm 
   inline-flex 
@@ -22,38 +20,44 @@ const btn = tw`
   disabled:opacity-50
 `
 
-const btnPrimary = tw`
-  text-button-primaryForeground 
-  bg-button-primaryBg
-  border-transparent 
-  focus:ring-button-primaryBgHover
-  hover:bg-button-primaryBgHover
-`
-
-const btnDanger = tw`
-  text-white 
-  bg-red-600 
-  border-transparent 
-  focus:ring-red-500 
-  hover:bg-red-700 
-`
-
-const btnDefault = tw`
+const btnDefault = `
   text-button-defaultForeground
   bg-button-defaultBg
   border-gray-300 
   focus:ring-button-defaultBgHover
   hover:bg-button-defaultBgHover
+  disabled:hover:bg-button-defaultBg
+  disabled:cursor-default
 `
 
-const btnSmall = tw`
+const btnPrimary = `
+  text-button-primaryForeground 
+  bg-button-primaryBg
+  border-transparent 
+  focus:ring-button-primaryBgHover
+  hover:bg-button-primaryBgHover
+  disabled:hover:bg-button-primaryBg
+  disabled:cursor-default
+`
+
+const btnDanger = `
+  text-white 
+  bg-red-600 
+  border-transparent 
+  focus:ring-red-500 
+  hover:bg-red-700
+  disabled:hover:bg-red-600
+  disabled:cursor-default
+`
+
+const btnSmall = `
   text-sm
   sm:text-sm
   px-2
   py-1
 `
 
-const btnLarge = tw`
+const btnLarge = `
   text-xl
   sm:text-2xl
   px-6
@@ -83,9 +87,9 @@ const sizeClass = (size) => {
 }
 
 /**
- * Primary UI component for user interaction
+ * Primary UI component for users to trigger actions with.
  */
-const Button = ({
+export const Button = ({
   label,
   title,
   variant,
@@ -94,10 +98,15 @@ const Button = ({
   children,
   ...props
 }) => {
-  const css = [btn, variantClass(variant), sizeClass(size)]
   const titleValue = title || label
   return (
-    <button type="button" css={css} onClick={onClick} title={titleValue} {...props}>
+    <button
+      type="button"
+      className={`${btn} ${variantClass(variant)} ${sizeClass(size)}`}
+      onClick={onClick}
+      title={titleValue}
+      {...props}
+    >
       {label || children}
     </button>
   )
@@ -118,5 +127,3 @@ Button.defaultProps = {
   size: "default",
   onClick: undefined,
 }
-
-export default Button
