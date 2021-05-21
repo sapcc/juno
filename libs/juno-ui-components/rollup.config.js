@@ -3,6 +3,10 @@ import del from "rollup-plugin-delete"
 import postcss from "rollup-plugin-postcss"
 import pkg from "./package.json"
 const fs = require("fs")
+import minify from "rollup-plugin-babel-minify"
+import analyze from "rollup-plugin-analyzer"
+import { nodeResolve } from "@rollup/plugin-node-resolve"
+// import resolve from "rollup-plugin-node-resolve"
 
 const input = {
   index: pkg.source,
@@ -17,12 +21,18 @@ const config = [
     input,
     output: [
       // { dir: "lib", format: "cjs", preserveModules: false },
-      { dir: "lib/esm", format: "esm", preserveModules: false },
+      {
+        dir: "lib",
+        format: "esm",
+        preserveModules: false,
+        compact: true,
+      },
     ],
     plugins: [
       babel({ exclude: "node_modules/**", babelHelpers: "bundled" }),
       del({ targets: ["lib"] }),
-
+      nodeResolve(),
+      // resolve(),
       postcss({
         config: {
           path: "./postcss.config.js",
@@ -32,6 +42,8 @@ const config = [
         inject: false,
         extensions: [".scss"],
       }),
+      minify(),
+      analyze(),
     ],
     external: Object.keys(pkg.peerDependencies || {}),
   },

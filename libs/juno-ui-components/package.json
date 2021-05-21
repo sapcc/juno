@@ -2,8 +2,10 @@
   "name": "juno-ui-components",
   "private": true,
   "main": "lib/index.js",
-  "module": "lib/esm/index.js",
+  "module": "lib/index.js",
   "source": "src/index.js",
+  "style": "lib/esm/styles.css",
+  "version": "0.2.0",
   "files": [
     "lib"
   ],
@@ -17,6 +19,7 @@
     "@emotion/styled": "^11.3.0",
     "@mdx-js/react": "^1.6.22",
     "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-docs": "^6.2.9",
     "@storybook/addon-essentials": "^6.2.9",
@@ -29,10 +32,12 @@
     "postcss": "^8.2.15",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "rollup": "^2.41.1",
+    "rollup-plugin-analyzer": "^4.0.0",
+    "rollup-plugin-babel-minify": "^10.0.0",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-includepaths": "^0.2.4",
+    "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-postcss": "^4.0.0",
     "sass": "^1.32.13",
     "sass-loader": "^10",
@@ -41,9 +46,9 @@
     "tailwindcss": "^2.1.2"
   },
   "peerDependencies": {
+    "@emotion/styled": "^11.3.0",
     "prop-types": "^15.7.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^17.0.2"
   },
   "scripts": {
     "storybook": "start-storybook -p $APP_PORT",
