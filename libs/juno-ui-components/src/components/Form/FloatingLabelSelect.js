@@ -8,7 +8,7 @@ export const FloatingLabelSelect = ({
   value,
   onChange,
 }) => (
-  <div tw="relative">
+  <div className="floating-label-select">
     <select
       className="border focus:ring-indigo-500 focus:border-indigo-500 rounded-md sm:text-sm border-gray-300 w-full p-3 h-16 pt-8"
       name={name || label}

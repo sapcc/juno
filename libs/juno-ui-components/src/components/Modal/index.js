@@ -2,24 +2,6 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Button } from "../Button/index.js"
 import { isFunction, isString } from "../../utils.js"
-import styled from "@emotion/styled"
-
-/**
- * The  modal content
- */
-const ModalContent = styled.div`
-  & * {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
-      sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  }
-  & input,
-  & optgroup,
-  & select,
-  & textarea,
-  label {
-    color: #666;
-  }
-`
 
 const AttentionIcon = () => (
   <svg
@@ -143,7 +125,7 @@ export const Modal = ({ isOpen, close, icon, title, children }) => {
         </span>
 
         {/* Modal content */}
-        <ModalContent
+        <div
           className="transition-opacity inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
           role="dialog"
           aria-modal="true"
@@ -165,7 +147,7 @@ export const Modal = ({ isOpen, close, icon, title, children }) => {
               </ModalButtonsContent>
             </>
           )}
-        </ModalContent>
+        </div>
       </div>
     </div>
   )

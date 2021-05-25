@@ -2125,7 +2125,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/styled@npm:^11.1.5, @emotion/styled@npm:^11.3.0":
+"@emotion/styled@npm:^11.1.5":
   version: 11.3.0
   resolution: "@emotion/styled@npm:11.3.0"
   dependencies:
@@ -5611,9 +5611,6 @@ __metadata:
   dependencies:
     "@babel/preset-env": ^7.13.9
     "@babel/preset-react": ^7.12.13
-    "@emotion/cache": ^11.4.0
-    "@emotion/react": ^11.4.0
-    "@emotion/styled": ^11.3.0
     "@pmmmwh/react-refresh-webpack-plugin": ^0.4.3
     "@testing-library/dom": ^7.30.0
     "@testing-library/jest-dom": ^5.11.4
@@ -5646,7 +5643,6 @@ __metadata:
     react: ^17.0.1
     react-dom: ^17.0.1
     react-refresh: ^0.10.0
-    react-shadow-root: ^5.0.4
     react-test-renderer: ^17.0.1
     regenerator-runtime: ^0.13.7
     sass-loader: ^11.1.1
@@ -13638,7 +13634,6 @@ fsevents@^1.2.7:
     "@babel/preset-react": ^7.13.13
     "@emotion/cache": ^11.4.0
     "@emotion/react": ^11.4.0
-    "@emotion/styled": ^11.3.0
     "@mdx-js/react": ^1.6.22
     "@rollup/plugin-babel": ^5.3.0
     "@rollup/plugin-node-resolve": ^13.0.0
@@ -13654,6 +13649,7 @@ fsevents@^1.2.7:
     postcss: ^8.2.15
     prop-types: ^15.7.2
     react: ^17.0.2
+    react-dom: ^17.0.2
     rollup: ^2.41.1
     rollup-plugin-analyzer: ^4.0.0
     rollup-plugin-babel-minify: ^10.0.0
@@ -13667,7 +13663,6 @@ fsevents@^1.2.7:
     style-loader: ^2.0.0
     tailwindcss: ^2.1.2
   peerDependencies:
-    "@emotion/styled": ^11.3.0
     prop-types: ^15.7.2
     react: ^17.0.2
   languageName: unknown
@@ -17911,7 +17906,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^17.0.1":
+"react-dom@npm:^17.0.1, react-dom@npm:^17.0.2":
   version: 17.0.2
   resolution: "react-dom@npm:17.0.2"
   dependencies:
@@ -18164,17 +18159,6 @@ fsevents@^1.2.7:
   bin:
     react-scripts: ./bin/react-scripts.js
   checksum: acb9d21b4050c4e306ef3df09a7d0c26d19197cacbc3af783ac94e7d38aa68efa7ef43d661c70f8ab82830d4f45dfc21623d807dcdffaf7c6e571e3804f30178
-  languageName: node
-  linkType: hard
-
-"react-shadow-root@npm:^5.0.4":
-  version: 5.0.4
-  resolution: "react-shadow-root@npm:5.0.4"
-  peerDependencies:
-    prop-types: ^15.6.0
-    react: ^16.0.0
-    react-dom: ^16.0.0
-  checksum: cdbcff4d11970de1e149d23bbbf3f0d91b421c751c24f6a41c73926591e87727dc54503e51787806fac6a5b9128069b4528979a08341be5a15ceba743bbe0faa
   languageName: node
   linkType: hard
 

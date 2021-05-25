@@ -1,9 +1,9 @@
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const webpack = require("webpack")
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 
 module.exports = (_, argv) => {
   const mode = argv.mode
@@ -60,6 +60,8 @@ module.exports = (_, argv) => {
     },
     optimization: {
       splitChunks: { chunks: "all" },
+      minimize: true,
+      minimizer: [new CssMinimizerPlugin()],
     },
     plugins: [
       new webpack.ProvidePlugin({
@@ -73,10 +75,9 @@ module.exports = (_, argv) => {
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "public/index.html"), //we put the file that we created in public folder
       }),
-      //This get all our css and put in a unique file
-      new MiniCssExtractPlugin({
-        filename: "styles.[contentHash].css",
-      }),
+      // new PurgecssPlugin({
+      //   paths: glob.sync(path.join(__dirname, "src/*.js"), { nodir: true }),
+      // }),
       new webpack.container.ModuleFederationPlugin({
         name: "auth",
         library: { type: "var", name: "auth" },

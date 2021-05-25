@@ -11,24 +11,23 @@ const btn = `
   shadow-sm 
   px-4 
   py-2 
-  font-medium 
+  font-medium
   focus:outline-none 
   focus:ring-2 
   focus:ring-offset-2 
-  sm:text-base
-  sm:w-auto 
+  sm:text-basesm:w-auto 
   disabled:opacity-50
-`
+  sm:w-auto 
+  `
 
 const btnDefault = `
-  text-button-defaultForeground
-  bg-button-defaultBg
-  border-gray-300 
-  focus:ring-button-defaultBgHover
-  hover:bg-button-defaultBgHover
+  text-button-defaultForeground 
+  bg-button-defaultBg 
+  border-gray-300
+  focus:ring-button-defaultBgHover 
+  hover:bg-button-defaultBgHover 
   disabled:hover:bg-button-defaultBg
-  disabled:cursor-default
-`
+  disabled:cursor-default`
 
 const btnPrimary = `
   text-button-primaryForeground 
