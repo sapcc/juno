@@ -1,11 +1,9 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import tw from "twin.macro"
-import GlobalStyles from "./GlobalStyles"
-import { Button } from "juno-ui-components"
 
-import { CacheProvider } from "@emotion/react"
-import createCache from "@emotion/cache"
+import globalStyles from "juno-ui-components/lib/styles.css"
+
+import { Button } from "juno-ui-components"
 import { on, send } from "communicator"
 import {
   AUTH_GET_TOKEN,
@@ -13,10 +11,6 @@ import {
   AUTH_UPDATE_TOKEN,
   AUTH_RESCOPE_TOKEN,
 } from "./eventsInterface"
-
-const Hi = tw.h1`
-  text-blue-500
-`
 
 const DevEnv = () => {
   const [token, setToken] = React.useState()
@@ -50,9 +44,8 @@ const DevEnv = () => {
 
   return (
     <>
-      {/* <style>{base.toString()}</style> */}
-      {/* <GlobalStyles /> */}
-      <Hi>Test environment for the auth app</Hi>
+      <style>{globalStyles.toString()}</style>
+      <h1 className="text-blue-500">Test environment for the auth app</h1>
       <br />
       {token ? (
         <>
@@ -70,7 +63,7 @@ const DevEnv = () => {
       )}
       <br />
       {token && (
-        <pre tw="block m-0 p-0 overflow-auto text-white text-sm bg-gray-800">
+        <pre className="block m-0 p-0 overflow-auto text-white text-sm bg-gray-800">
           {JSON.stringify(token, null, 2)}
         </pre>
       )}
@@ -78,15 +71,6 @@ const DevEnv = () => {
   )
 }
 
-const wrapper = document.getElementById("dev").attachShadow({ mode: "closed" })
-const stylesCache = createCache({
-  key: "juno-auth-dev-styles",
-  container: wrapper,
-})
-ReactDOM.render(
-  <CacheProvider value={stylesCache}>
-    <GlobalStyles />
-    <DevEnv />
-  </CacheProvider>,
-  wrapper
-)
+const wrapper = document.getElementById("dev").attachShadow({ mode: "open" })
+
+ReactDOM.render(<DevEnv />, wrapper)
