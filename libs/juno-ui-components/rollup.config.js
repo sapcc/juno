@@ -50,7 +50,7 @@ const config = [
         stylesFileName: "styles",
         theme: require("./tailwind.config").theme,
       }),
-      minify(),
+      minify({ comments: false }),
       analyze(),
     ],
     external: Object.keys(pkg.peerDependencies || {}),

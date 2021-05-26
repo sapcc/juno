@@ -32,3 +32,9 @@ export const AddStylesToShadowRoot = Template.bind({})
 AddStylesToShadowRoot.args = {
   stylesWrapper: "shadowRoot",
 }
+
+export const WithTheme = Template.bind({})
+WithTheme.args = {
+  stylesWrapper: "shadowRoot",
+  theme: "dark",
+}
