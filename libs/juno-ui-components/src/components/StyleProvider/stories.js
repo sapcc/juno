@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleProvider, useStyles } from "."
+import { StyleProvider } from "."
 
 export default {
   title: "Design System/StyleProvider",
@@ -8,7 +8,7 @@ export default {
     stylesWrapper: {
       control: {
         type: "radio",
-        options: ["head", "body", "inline", "shadowRoot"],
+        options: ["head", "inline", "shadowRoot"],
       },
     },
   },
