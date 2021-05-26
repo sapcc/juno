@@ -26,7 +26,12 @@ export const useStyles = () => React.useContext(StylesContext)
  * @param {object} props
  * @returns
  */
-export const StyleProvider = ({ stylesWrapper, children }) => {
+export const StyleProvider = ({
+  stylesWrapper,
+  theme: themeClassName,
+  children,
+  shadowRootMode,
+}) => {
   React.useEffect(() => {
     // undefined or inline are handled by renderer
     if (
@@ -60,16 +65,16 @@ export const StyleProvider = ({ stylesWrapper, children }) => {
       {/* handle shadowRoot -> create shadow element and insert 
           styles and children into it */}
       {stylesWrapper === "shadowRoot" ? (
-        <ShadowRoot mode="open" styles={styles}>
-          {children}
+        <ShadowRoot mode={shadowRootMode || "closed"} styles={styles}>
+          <div className={themeClassName || ""}>{children}</div>
         </ShadowRoot>
       ) : (
-        <>
+        <div className={themeClassName || ""}>
           {stylesWrapper === "inline" && (
             <style data-style-provider="inline">{styles}</style>
           )}
           {children}
-        </>
+        </div>
       )}
     </StylesContext.Provider>
   )
@@ -79,9 +84,12 @@ StyleProvider.propTypes = {
   stylesWrapper: PropTypes.oneOfType([
     PropTypes.oneOf(["head", "inline", "shadowRoot"]),
   ]),
+  theme: PropTypes.string,
+  shadowRootMode: PropTypes.oneOf(["open", "closed"]),
 }
 
 // define default values
 StyleProvider.defaultProps = {
   stylesWrapper: undefined,
+  theme: undefined,
 }
