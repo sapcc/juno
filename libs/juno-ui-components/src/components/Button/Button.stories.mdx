@@ -1,13 +1,40 @@
-import Button from "./index.js"
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import { useDebugValue } from 'react';
 
-<Meta title="Design System/Primitives/Button" component={Button} />
+import * as Stories from './stories';
+
+<Meta title="Design System/Primitives/Button" />
+
+
 
 # Button
 
-With `MDX` we can define a story for `Checkbox` right in the middle of our Markdown documentation.
+These are our different buttons:
 
 <Canvas>
-  <Story name="Primary">
-    <Button variant="primary" label="Primary" />
-  </Story>
+  <Story story={Stories.Default} name="Default" />
+  <Story story={Stories.Primary} name="Primary" />
+  <Story story={Stories.Danger} name="Danger" />
+</Canvas>
+
+### Usage
+
+The Primary button is meant to be used only for the single primary action on a page or in a view. So for example the Submit action in a form. It is *not* the default button style to be used for all buttons.
+
+
+## Button Sizes
+
+<Canvas>
+  <Story story={Stories.Small} name="Small" />
+  <Story story={Stories.DefaultSize} name="Default Size" />
+  <Story story={Stories.Large} name="Large" />
+</Canvas>
+
+
+## Disabled Buttons
+
+All buttons can be disabled by adding the `disabled` flag.
+
+<Canvas>
+  <Story story={Stories.Disabled} name="Disabled" />
 </Canvas>
