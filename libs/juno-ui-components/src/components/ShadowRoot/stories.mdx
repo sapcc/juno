@@ -1,5 +1,5 @@
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs/blocks"
-import { ShadowRoot } from "."
+import { Meta, Story, Canvas } from "@storybook/addon-docs/blocks"
+import * as Stories from "./stories"
 
 export const Template = (args) => (
   <ShadowRoot {...args}>
@@ -45,12 +45,5 @@ The component accepts three parameters:
 - **styles**: css styles as a string,
 
 <Canvas>
-  <Story
-    name="EncapsulateStyles"
-    args={{ mode: "open", styles: "h1 {color: orange;} " }}
-  >
-    {Template.bind({})}
-  </Story>
+  <Story story={Stories.EncapsulateStyles} name="EncapsulateStyles" />
 </Canvas>
-
-<ArgsTable of={ShadowRoot} />
