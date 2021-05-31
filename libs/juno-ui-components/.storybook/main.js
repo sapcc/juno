@@ -1,12 +1,12 @@
 const path = require("path")
 
 module.exports = {
-  stories: [
-    "../src/**/*.stories.mdx",
-  ],
+  stories: ["../src/**/*.stories.mdx", "../src/**/stories.mdx"],
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
+    "@storybook/addon-controls",
+    "@storybook/addon-docs",
     "storybook-dark-mode",
     {
       name: "@storybook/addon-postcss",

@@ -14,6 +14,9 @@ export const parameters = {
   },
   docs: {
     container: DocsContainer,
+    // source: {
+    //   type: "code",
+    // },
   },
   controls: {
     matchers: {

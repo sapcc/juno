@@ -65,7 +65,7 @@ export const Login = () => (
         </Body>
         <Buttons>
           <div className="space-x-3">
-            <Button mode="primary">Login</Button>
+            <Button variant="primary">Login</Button>
             <Button onClick={close}>Cancel</Button>
           </div>
         </Buttons>

@@ -1,6 +1,4 @@
 import React from "react"
-import "twin.macro"
-
 import {
   Button,
   FloatingLabelInput,
@@ -91,7 +89,7 @@ export const LoginDialog = ({
       <>
         <Body>
           <Spinner />
-          <span tw="text-gray-700">Login using SSO certificate...</span>
+          <span className="text-gray-700">Login using SSO certificate...</span>
         </Body>
         <Buttons>
           <Button
@@ -116,11 +114,11 @@ export const LoginDialog = ({
       >
         <Body>
           {error && (
-            <div tw="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3">
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-3">
               {error}
             </div>
           )}
-          <div tw="space-y-3">
+          <div className="space-y-3">
             <FloatingLabelInput
               label="Domain"
               value={values.domain}
@@ -141,18 +139,20 @@ export const LoginDialog = ({
           </div>
         </Body>
         <Buttons>
-          <Button type="submit" disabled={!valid} mode="primary">
-            {submitting && <Spinner />}
-            Login
-          </Button>
-          <Button
-            onClick={(e) => {
-              e.preventDefault()
-              close()
-            }}
-          >
-            Cancel
-          </Button>
+          <div className="space-x-3">
+            <Button type="submit" disabled={!valid} variant="primary">
+              {submitting && <Spinner />}
+              Login
+            </Button>
+            <Button
+              onClick={(e) => {
+                e.preventDefault()
+                close()
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
         </Buttons>
       </form>
     </>

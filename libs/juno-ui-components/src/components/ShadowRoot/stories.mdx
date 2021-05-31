@@ -1,0 +1,56 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs/blocks"
+import { ShadowRoot } from "."
+
+export const Template = (args) => (
+  <ShadowRoot {...args}>
+    <h1>Wellcome</h1>
+  </ShadowRoot>
+)
+
+<Meta
+  title="Design System/Core/ShadowRoot"
+  component={ShadowRoot}
+  argTypes={{
+    mode: {
+      control: {
+        type: "radio",
+        options: ["open", "closed"],
+      },
+    },
+    styles: {
+      control: {
+        type: "text",
+      },
+      defaultValue: "h1 {color: yellow;}",
+    },
+    delegateFocus: {
+      control: {
+        type: "radio",
+        options: [true, false],
+      },
+    },
+  }}
+/>
+
+# ShadowRoot
+
+Creates a shadow dom element, adds it to the parent node, and inserts all children elements inside itself.
+ShadowRoot allows css styles to be isolated from the rest of the DOM. Choosing "closed" for **mode** prevents
+the styles from being inherited from the parent node.
+
+The component accepts three parameters:
+
+- **mode**: "open" (default) or "closed"
+- **delegatesFocus**: true or false (default),
+- **styles**: css styles as a string,
+
+<Canvas>
+  <Story
+    name="EncapsulateStyles"
+    args={{ mode: "open", styles: "h1 {color: orange;} " }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable of={ShadowRoot} />

@@ -6,7 +6,8 @@ const fs = require("fs")
 import minify from "rollup-plugin-babel-minify"
 import analyze from "rollup-plugin-analyzer"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
-// import resolve from "rollup-plugin-node-resolve"
+
+import parseStyleProvider from "./rollup-plugin-style-provider-parser"
 
 const input = {
   index: pkg.source,
@@ -29,10 +30,12 @@ const config = [
       },
     ],
     plugins: [
-      babel({ exclude: "node_modules/**", babelHelpers: "bundled" }),
+      babel({
+        exclude: "node_modules/**",
+        babelHelpers: "bundled",
+      }),
       del({ targets: ["lib"] }),
       nodeResolve(),
-      // resolve(),
       postcss({
         config: {
           path: "./postcss.config.js",
@@ -40,9 +43,14 @@ const config = [
         extract: "styles.css",
         minimize: true,
         inject: false,
-        extensions: [".scss"],
+        extensions: [".scss", ".css"],
       }),
-      minify(),
+      parseStyleProvider({
+        fileName: "StyleProvider",
+        stylesFileName: "styles",
+        theme: require("./tailwind.config").theme,
+      }),
+      minify({ comments: false }),
       analyze(),
     ],
     external: Object.keys(pkg.peerDependencies || {}),
