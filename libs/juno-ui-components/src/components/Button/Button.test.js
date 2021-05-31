@@ -7,9 +7,9 @@ describe("Button", () => {
   test("renders a default button with text", async () => {
     render(<Primary>Click me</Primary>)
     expect(screen.getByText("Click me")).toBeInTheDocument()
-    // expect(screen.getByText("Click me")).toHaveClass(
-    //   "text-theme-on-default",
-    //   "bg-theme-default"
-    // )
+    expect(screen.getByText("Click me")).toHaveClass(
+      "text-theme-on-default",
+      "bg-theme-default"
+    )
   })
 })
