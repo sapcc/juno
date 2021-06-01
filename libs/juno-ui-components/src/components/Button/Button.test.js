@@ -47,7 +47,7 @@ describe("Button", () => {
     render(<Button size="small">Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveClass(
-      "px-2"
+      "px-sm"
     )
   })
   
@@ -55,7 +55,7 @@ describe("Button", () => {
     render(<Button>Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveClass(
-      "px-4"
+      "px-md"
     )
   })
   
@@ -63,7 +63,7 @@ describe("Button", () => {
     render(<Button size="large">Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveClass(
-      "px-6"
+      "px-lg"
     )
   })
 
