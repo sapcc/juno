@@ -59,7 +59,6 @@
   "scripts": {
     "storybook": "start-storybook -p $APP_PORT",
     "build-storybook": "build-storybook",
-    "build:tailwind": "postcss src/tailwind.scss -o src/base.scss",
     "build": "NODE_ENV=production rollup -c",
     "test": "jest",
     "test:watch": "jest --watchAll"

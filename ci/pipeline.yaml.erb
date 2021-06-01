@@ -41,6 +41,60 @@ jobs:
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: test-image-source.git/ci/Dockerfile.test
 
+  # name: unit tests for juno-ui-components
+  - name: unit-test juno-ui-components
+    public: true
+    plan:
+      - get: juno-unit-test.image
+        passed: ["build unit-test-image"]
+        trigger: true
+      - get: lib-juno-ui-components.git
+        trigger: true
+
+      - task: unit
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: ((keppel-hostname))/ccloud/juno-unit-test
+              tag: "latest"
+          inputs:
+            - name: lib-juno-ui-components.git
+              path: /app/juno
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd $PWD/app/juno
+                yarn workspaces focus juno-ui-components
+                CI=true yarn workspace juno-ui-components test
+       
+  # build juno-ui-components image and push it to keppel
+  - name: build juno-ui-components
+    serial: true
+    plan:
+      - in_parallel:
+          - get: lib-juno-ui-components.git
+            passed: ["unit-test juno-ui-components"]
+            trigger: true
+          - put: juno-ui-components.version
+      - in_parallel:
+          - put: juno-ui-components.image
+            params:
+              tag_as_latest: true
+              cache: true
+              cache_tag: "latest"
+              build: lib-juno-ui-components.git
+              build_args: 
+                KEPPEL_HOSTNAME: {{keppel-hostname}}
+              dockerfile: lib-juno-ui-components.git/ci/Dockerfile.ui-components
+              tag: juno-ui-components.version/version
+            get_params:
+              skip_download: true
+
   # run unit tests for dashboard sources
   - name: unit-test dashboard
     public: true
@@ -79,7 +133,7 @@ jobs:
     plan:
       - in_parallel:
           - get: app-dashboard.git
-            passed: [unit-test dashboard]
+            passed: ["unit-test dashboard"]
             trigger: true
           - put: dashboard.version
       - in_parallel:
@@ -459,6 +513,15 @@ resources:
       username: sapcc-bot
       password: {{real-github-access-token}}
 
+  - name: lib-juno-ui-components.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.dashboard","e2e"]
+      username: sapcc-bot
+      password: {{real-github-access-token}}
+
   - name: app-dashboard.git
     type: git
     source:
@@ -508,6 +571,10 @@ resources:
     type: time-version-resource
     check_every: 525600h
 
+  - name: juno-ui-components.version
+    type: time-version-resource
+    check_every: 525600h    
+
   - name: cdn.version
     type: time-version-resource
     check_every: 525600h    
@@ -519,6 +586,14 @@ resources:
       username: {{keppel-username}}
       password: {{keppel-password}}
       repository: ((keppel-hostname))/ccloud/juno-dashboard  
+
+  - name: juno-ui-components.image
+    type: docker-image
+    check_every: 24h
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: ((keppel-hostname))/ccloud/juno-ui-components        
 
   - name: juno-cdn.image
     type: docker-image
