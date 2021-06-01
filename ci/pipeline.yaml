@@ -82,15 +82,15 @@ jobs:
           - put: juno-ui-components.image
             params:
               tag_as_latest: true
-              cache: true
+              # cache: true
               cache_tag: "latest"
               build: lib-juno-ui-components.git
               build_args: 
                 KEPPEL_HOSTNAME: {{keppel-hostname}}
               dockerfile: lib-juno-ui-components.git/ci/Dockerfile.ui-components
               tag: juno-ui-components.version/version
-            get_params:
-              skip_download: true
+            # get_params:
+            #   skip_download: true
 
   # run unit tests for dashboard sources
   - name: unit-test dashboard
@@ -131,6 +131,8 @@ jobs:
       - in_parallel:
           - get: app-dashboard.git
             passed: ["unit-test dashboard"]
+          - get: lib-juno-ui-components.git
+            passed: ["unit-test juno-ui-components"]  
             trigger: true
           - put: dashboard.version
       - in_parallel:
@@ -173,6 +175,8 @@ jobs:
     plan:
       - get: juno-unit-test.image
         passed: ["build unit-test-image"]
+      - get: lib-juno-ui-components.git
+        passed: ["unit-test juno-ui-components"]    
         trigger: true
       - get: app-auth.git
         trigger: true
@@ -227,6 +231,8 @@ jobs:
     plan:
       - get: juno-unit-test.image
         passed: ["build unit-test-image"]
+      - get: lib-juno-ui-components.git
+        passed: ["unit-test juno-ui-components"]    
         trigger: true
       - get: app-designate.git
         trigger: true
@@ -281,6 +287,8 @@ jobs:
     plan:
       - get: juno-unit-test.image
         passed: ["build unit-test-image"]
+      - get: lib-juno-ui-components.git
+        passed: ["unit-test juno-ui-components"]    
         trigger: true
       - get: app-widget-loader.git
         trigger: true
