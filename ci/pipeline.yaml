@@ -485,6 +485,7 @@ jobs:
             passed: ["combine apps"]
           - get: juno-ui-components.version
             trigger: true
+            passed: ["build juno-ui-components"]
           - get: ci.git
           - get: secrets.git
             params:
@@ -500,12 +501,13 @@ jobs:
               tag: "latest"
           inputs: 
             - name: cdn.version 
+            - name: juno-ui-components.version
           run:
             path: /bin/sh
             args:
               - -c
               - |
-                echo "cdn_tag: \"$(cat cdn.version/version)\"\njuno_ui_components_tag: \"$(cat juno-ui-components.version/version)\"" > ./cdn/values.yaml
+                printf "cdn_tag: \"$(cat cdn.version/version)\"\njuno_ui_components_tag: \"$(cat juno-ui-components.version/version)\"" > ./cdn/values.yaml
                 cat ./cdn/values.yaml
           outputs:
             - name: cdn

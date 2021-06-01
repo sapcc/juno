@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  namespace: juno
+  name: juno-ui-components
+
+spec:
+  selector:
+    app: juno-ui-components
+  ports:
+    - name: juno-ui-components
+      port: 5000
+      protocol: TCP

@@ -23,6 +23,14 @@ spec:
               serviceName: juno-dashboard
               servicePort: 5000
             path: / 
+        
+    - host: "ui.juno.{{ .Values.global.region }}.cloud.sap"
+      http:
+        paths: 
+          - backend:
+              serviceName: juno-ui-components
+              servicePort: 5000
+            path: /                 
 
                     
 {{- if eq .Values.global.region "eu-nl-1" }}
@@ -37,12 +45,22 @@ spec:
               serviceName: juno-dashboard
               servicePort: 5000
             path: /
+
+    - host: "ui.juno.global.cloud.sap"
+      http:
+        paths: 
+          - backend:
+              serviceName: juno-ui-components
+              servicePort: 5000
+            path: /          
 {{- end }} 
 
   tls:
     - hosts: 
         - "juno.{{ .Values.global.region }}.cloud.sap"
+        - "ui.juno.{{ .Values.global.region }}.cloud.sap"
 {{- if eq .Values.global.region "eu-nl-1" }}      
         - "juno.global.cloud.sap"
+        - "ui.juno.global.cloud.sap"
 {{- end }}        
       secretName: "tls-juno-{{ .Values.global.region }}-cloud-sap"
