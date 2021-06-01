@@ -7,7 +7,7 @@ import minify from "rollup-plugin-babel-minify"
 import analyze from "rollup-plugin-analyzer"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
 
-import parseStyleProvider from "./rollup-plugin-style-provider-parser"
+import parseStyles from "./rollup-plugin-styles-parser"
 
 const input = {
   index: pkg.source,
@@ -45,8 +45,7 @@ const config = [
         inject: false,
         extensions: [".scss", ".css"],
       }),
-      parseStyleProvider({
-        fileName: "StyleProvider",
+      parseStyles({
         stylesFileName: "styles",
         theme: require("./tailwind.config").theme,
       }),

@@ -9,9 +9,7 @@ function withOpacity(variableName) {
     }
     return `rgb(var(${variableName}))`
   }
-
 }
-
 
 module.exports = {
   purge: ["./src/components/**/*.{js,jsx,ts,tsx}"],
@@ -101,21 +99,21 @@ module.exports = {
           "primary-hover": withOpacity("--color-primary-bg-hover"),
           "danger-hover": withOpacity("--color-danger-bg-hover"),
           "default-hover": withOpacity("--color-default-bg-hover"),
-        }
+        },
       },
       textColor: {
         theme: {
           "on-primary": withOpacity("--color-primary-foreground"),
           "on-danger": withOpacity("--color-danger-foreground"),
           "on-default": withOpacity("--color-default-foreground"),
-        }
+        },
       },
       borderColor: {
         theme: {
           primary: withOpacity("--color-primary-border"),
           danger: withOpacity("--color-danger-border"),
           default: withOpacity("--color-default-border"),
-        }
+        },
       },
     },
     borderWidth: {

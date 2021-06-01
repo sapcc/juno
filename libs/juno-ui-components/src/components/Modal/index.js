@@ -5,7 +5,7 @@ import { isFunction, isString } from "../../utils.js"
 
 const AttentionIcon = () => (
   <svg
-    className="h-6 w-6 text-red-600"
+    className="h-6 w-6 text-white"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
@@ -29,11 +29,11 @@ const AttentionIcon = () => (
  */
 const ModalBodyContent = ({ icon, title, children }) => {
   return (
-    <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+    <div className="bg-theme-default px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
       <div className="sm:flex sm:items-start">
         {/* icon can be a string or a component */}
         {icon && (
-          <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+          <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-theme-danger sm:mx-0 sm:h-10 sm:w-10">
             {icon === "attention" ? <AttentionIcon /> : icon}
           </div>
         )}
@@ -42,7 +42,7 @@ const ModalBodyContent = ({ icon, title, children }) => {
         <div className="w-full mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
           {title && (
             <h3
-              className="text-lg leading-6 font-medium text-gray-900"
+              className="text-lg leading-6 font-medium text-theme-on-default"
               id="modal-headline"
             >
               {title}
@@ -63,7 +63,7 @@ const ModalBodyContent = ({ icon, title, children }) => {
  */
 const ModalButtonsContent = ({ children }) => {
   return (
-    <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+    <div className="bg-theme-default bg-opacity-75 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
       {children}
     </div>
   )
@@ -137,7 +137,7 @@ export const Modal = ({ isOpen, close, icon, title, children }) => {
             <>
               <ModalBody>
                 {isString(children) ? (
-                  <p className="text-sm text-gray-500">{children}</p>
+                  <p className="text-sm text-theme-on-default">{children}</p>
                 ) : (
                   children
                 )}
