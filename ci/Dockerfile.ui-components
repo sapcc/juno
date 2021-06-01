@@ -13,6 +13,7 @@ ADD . /tmp/repo
 
 # install node modules, build libs and app
 RUN cd /tmp/repo/ && \
+  yarn workspace juno-ui-components install && \
   yarn workspace juno-ui-components build && \
   yarn workspace juno-ui-components build-storybook
 

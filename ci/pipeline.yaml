@@ -483,12 +483,14 @@ jobs:
           - get: cdn.version
             trigger: true
             passed: ["combine apps"]
+          - get: juno-ui-components.version
+            trigger: true
           - get: ci.git
           - get: secrets.git
             params:
               depth: 100 
 
-      - task: generate cdn values.yaml
+      - task: generate cdn and ui-components values.yaml
         config:
           platform: linux
           image_resource:
@@ -503,7 +505,7 @@ jobs:
             args:
               - -c
               - |
-                echo "cdn_tag: \"$(cat cdn.version/version)\"" > ./cdn/values.yaml
+                echo "cdn_tag: \"$(cat cdn.version/version)\"\njuno_ui_components_tag: \"$(cat juno-ui-components.version/version)\"" > ./cdn/values.yaml
                 cat ./cdn/values.yaml
           outputs:
             - name: cdn
