@@ -133,7 +133,7 @@ jobs:
     plan:
       - in_parallel:
           - get: app-dashboard.git
-            passed: ["unit-test dashboard"]
+            passed: ["unit-test dashboard","unit-test juno-ui-components"]
             trigger: true
           - put: dashboard.version
       - in_parallel:
@@ -175,7 +175,7 @@ jobs:
     public: true
     plan:
       - get: juno-unit-test.image
-        passed: ["build unit-test-image"]
+        passed: ["build unit-test-image","unit-test juno-ui-components"]
         trigger: true
       - get: app-<%= app %>.git
         trigger: true
