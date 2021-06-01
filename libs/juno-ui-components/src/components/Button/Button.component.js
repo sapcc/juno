@@ -95,7 +95,7 @@ export const Button = ({
   children,
   ...props
 }) => {
-  const titleValue = title || label
+  const titleValue = title || label || "unspecified button"
   return (
     <button
       type="button"
