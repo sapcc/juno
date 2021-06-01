@@ -99,6 +99,8 @@ jobs:
       - get: juno-unit-test.image
         passed: ["build unit-test-image"]
         trigger: true
+      - get: lib-juno-ui-components.git
+        passed: ["unit-test juno-ui-components"]    
       - get: app-dashboard.git
         trigger: true
 
@@ -131,8 +133,7 @@ jobs:
       - in_parallel:
           - get: app-dashboard.git
             passed: ["unit-test dashboard"]
-          - get: lib-juno-ui-components.git
-            passed: ["unit-test juno-ui-components"]  
+
             trigger: true
           - put: dashboard.version
       - in_parallel:
@@ -175,9 +176,9 @@ jobs:
     plan:
       - get: juno-unit-test.image
         passed: ["build unit-test-image"]
+        trigger: true
       - get: lib-juno-ui-components.git
         passed: ["unit-test juno-ui-components"]    
-        trigger: true
       - get: app-auth.git
         trigger: true
 
@@ -231,9 +232,9 @@ jobs:
     plan:
       - get: juno-unit-test.image
         passed: ["build unit-test-image"]
+        trigger: true
       - get: lib-juno-ui-components.git
         passed: ["unit-test juno-ui-components"]    
-        trigger: true
       - get: app-designate.git
         trigger: true
 
@@ -287,9 +288,9 @@ jobs:
     plan:
       - get: juno-unit-test.image
         passed: ["build unit-test-image"]
+        trigger: true
       - get: lib-juno-ui-components.git
         passed: ["unit-test juno-ui-components"]    
-        trigger: true
       - get: app-widget-loader.git
         trigger: true
 
@@ -689,7 +690,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.dashboard","e2e"]
+      paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.ui-components","e2e"]
       username: sapcc-bot
       password: {{real-github-access-token}}
 

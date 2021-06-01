@@ -17,11 +17,11 @@ RUN cd /tmp/repo/ && \
   yarn workspace juno-ui-components build-storybook
 
 # create working dir
-RUN mkdir -p /lib
-WORKDIR /lib
+RUN mkdir -p /app
+WORKDIR /app
 
 # copy app build to working dir
-RUN cp -r /tmp/repo/apps/dashboard/* /lib/ ; cd /lib
+RUN cp -r /tmp/repo/libs/juno-ui-components/storybook-static/* /app/ ; cd /app
 
 # run app
-CMD serve -s storybook-static
+CMD serve -s . -l 5000
