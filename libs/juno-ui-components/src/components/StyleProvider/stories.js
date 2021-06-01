@@ -15,7 +15,9 @@ export default {
 }
 
 const Template = (args) => (
-  <StyleProvider {...args}>{args.stylesWrapper || "undefined"}</StyleProvider>
+  <StyleProvider {...args}>
+    {args.children || args.stylesWrapper || "undefined"}
+  </StyleProvider>
 )
 
 export const AddStylesToHead = Template.bind({})
@@ -37,4 +39,5 @@ export const WithTheme = Template.bind({})
 WithTheme.args = {
   stylesWrapper: "shadowRoot",
   theme: "theme-light",
+  children: "Light Theme",
 }
