@@ -13,6 +13,7 @@ const btn = `
   focus:outline-none 
   focus:ring
   disabled:opacity-50
+  disabled:cursor-default
 `
 
 const btnDefault = `
@@ -20,7 +21,6 @@ const btnDefault = `
   bg-theme-default
   border-theme-default
   hover:bg-theme-default-hover
-  disabled:cursor-default
   disabled:hover:bg-theme-default
 `
 
@@ -29,7 +29,6 @@ const btnPrimary = `
   bg-theme-primary
   border-theme-primary
   hover:bg-theme-primary-hover
-  disabled:cursor-primary
   disabled:hover:bg-theme-primary
 `
 
@@ -38,29 +37,28 @@ const btnDanger = `
   bg-theme-danger
   border-theme-danger
   hover:bg-theme-danger-hover
-  disabled:cursor-danger
   disabled:hover:bg-theme-danger
 `
 
 const btnSmall = `
   text-sm
   sm:text-sm
-  px-2
-  py-1
+  px-sm
+  py-xs
 `
 
 const btnDefaultSize = `
   text-sm 
   sm:text-base
-  px-4 
-  py-2
+  px-md 
+  py-sm
 `
 
 const btnLarge = `
   text-xl
   sm:text-2xl
-  px-6
-  py-2
+  px-lg
+  py-sm
 `
 
 const variantClass = (variant) => {
@@ -97,7 +95,7 @@ export const Button = ({
   children,
   ...props
 }) => {
-  const titleValue = title || label
+  const titleValue = title || label || "unspecified button"
   return (
     <button
       type="button"

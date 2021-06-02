@@ -15,6 +15,24 @@ describe("Button", () => {
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveTextContent("Click me")
   })
+
+  test("renders a title", async () => {
+    render(<Button title="Click me title">Click me</Button>)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute('title', "Click me title")
+  })
+
+  test("renders label as title if no title given", async () => {
+    render(<Button label="Click me label">Click me</Button>)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute('title', "Click me label")
+  })
+
+  test("renders 'unspecifed button' as title if no title and no label given", async () => {
+    render(<Button>Click me</Button>)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute('title', "unspecified button")
+  })
   
   test("renders a default button", async () => {
     render(<Button>Click me</Button>)
@@ -43,11 +61,17 @@ describe("Button", () => {
     )
   })
 
+  test("renders a disabled button", async () => {
+    render(<Button disabled>Click me</Button>)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute('disabled', true)
+  })
+
   test("renders a small button", async () => {
     render(<Button size="small">Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveClass(
-      "px-2"
+      "px-sm"
     )
   })
   
@@ -55,7 +79,7 @@ describe("Button", () => {
     render(<Button>Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveClass(
-      "px-4"
+      "px-md"
     )
   })
   
@@ -63,7 +87,7 @@ describe("Button", () => {
     render(<Button size="large">Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveClass(
-      "px-6"
+      "px-lg"
     )
   })
 
