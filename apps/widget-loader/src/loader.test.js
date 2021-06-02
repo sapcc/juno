@@ -17,7 +17,7 @@ describe("load", () => {
       currentScript = document.createElement("script")
       currentScript.defer = true
       currentScript.src = "/app.js"
-      currentScript.setAttribute("data-url", "/cdn/auth/0_0_1/remoteEntry.js")
+      currentScript.setAttribute("data-url", "/auth/0_0_1/remoteEntry.js")
       currentScript.setAttribute("data-name", "auth/widget")
       document.body.appendChild(currentScript)
     })
@@ -52,7 +52,7 @@ describe("load", () => {
       const scripts = document.getElementsByTagName("script")
       let script
       for (let i = 0; i < scripts.length; i++) {
-        if (scripts[i].src === "http://localhost/cdn/auth/0_0_1/remoteEntry.js")
+        if (scripts[i].src === "http://localhost/auth/0_0_1/remoteEntry.js")
           script = scripts[i]
       }
       expect(script).toBeDefined()

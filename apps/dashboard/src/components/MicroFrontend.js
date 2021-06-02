@@ -27,7 +27,7 @@ const MicroFrontend = ({ name, version, ...props }) => {
   // this hook does nothing if wrapper is unset!
   // In this case it waits until the wrapper is available (render at least 1 time)
   useDynamicScript({
-    url: "https://juno.eu-nl-1.cloud.sap/cdn/widget-loader/0_0_1/app.js",
+    url: "https://cdn.juno.eu-nl-1.cloud.sap/widget-loader/0_0_1/app.js",
     wrapper,
     dataset,
   })
