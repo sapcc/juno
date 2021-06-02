@@ -64,7 +64,7 @@ describe("Button", () => {
   test("renders a disabled button", async () => {
     render(<Button disabled>Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
-    expect(screen.getByRole("button")).toHaveAttribute('disabled', true)
+    expect(screen.getByRole("button")).toHaveAttribute('disabled')
   })
 
   test("renders a small button", async () => {
