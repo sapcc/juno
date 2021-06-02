@@ -24,4 +24,4 @@ WORKDIR /app
 RUN cp -r /tmp/repo/libs/juno-ui-components/* /app/ ; cd /app
 
 # run app
-CMD npx http-server --port 5000 storybook-static
+CMD npx http-server --port 3000 storybook-static
