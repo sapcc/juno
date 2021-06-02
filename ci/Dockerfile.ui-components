@@ -4,7 +4,6 @@ FROM $KEPPEL_HOSTNAME/ccloud-dockerhub-mirror/library/node:14-alpine
 LABEL source_repository="https://github.com/sapcc/juno/libs/juno-ui-components"
 
 RUN apk --no-cache add git ca-certificates make
-RUN npm install -g serve
 
 # create tmp folder
 RUN mkdir -p /tmp/repo
@@ -25,4 +24,4 @@ WORKDIR /app
 RUN cp -r /tmp/repo/libs/juno-ui-components/storybook-static/* /app/ ; cd /app
 
 # run app
-CMD serve -s . -l 5000
+CMD yarn dlx http-server --port 5000 .
