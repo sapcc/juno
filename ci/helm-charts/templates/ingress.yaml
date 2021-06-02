@@ -14,47 +14,62 @@ spec:
     - host: "juno.{{ .Values.global.region }}.cloud.sap"
       http:
         paths:
-          - backend:
-              serviceName: juno-cdn
-              servicePort: 8888
-            path: /cdn   
-        
-          - backend:
-              serviceName: juno-ui-components
-              servicePort: 6000
-            path: /ui                 
-
-          - backend:
+          - path: / 
+            backend:
               serviceName: juno-dashboard
               servicePort: 5000
-            path: / 
 
+    - host: "cdn.juno.{{ .Values.global.region }}.cloud.sap"
+      http:
+        paths:
+          - path: / 
+            backend:
+              serviceName: juno-cdn
+              servicePort: 8888
+
+    - host: "ui.juno.{{ .Values.global.region }}.cloud.sap"
+      http:
+        paths:
+          - path: /                 
+            backend:
+              serviceName: juno-ui-components
+              servicePort: 3000
                     
 {{- if eq .Values.global.region "eu-nl-1" }}
     - host: "juno.global.cloud.sap"
       http:
         paths:
-          - backend:
-              serviceName: juno-cdn
-              servicePort: 8888
-            path: /cdn  
-
-          - backend:
-              serviceName: juno-ui-components
-              servicePort: 6000
-            path: /ui
-
-          - backend:
+          - path: / 
+            backend:
               serviceName: juno-dashboard
               servicePort: 5000
-            path: /
+
+    - host: "cdn.juno.global.cloud.sap"
+      http:
+        paths:
+          - path: / 
+            backend:
+              serviceName: juno-cdn
+              servicePort: 8888
+
+    - host: "ui.juno.global.cloud.sap"
+      http:
+        paths:
+          - path: /                 
+            backend:
+              serviceName: juno-ui-components
+              servicePort: 3000
 
 {{- end }} 
 
   tls:
     - hosts: 
         - "juno.{{ .Values.global.region }}.cloud.sap"
+        - "ui.juno.{{ .Values.global.region }}.cloud.sap"
+        - "cdn.juno.{{ .Values.global.region }}.cloud.sap"
 {{- if eq .Values.global.region "eu-nl-1" }}      
         - "juno.global.cloud.sap"
+        - "ui.juno.global.cloud.sap"
+        - "cdn.juno.global.cloud.sap"
 {{- end }}        
       secretName: "tls-juno-{{ .Values.global.region }}-cloud-sap"
