@@ -21,7 +21,7 @@ RUN mkdir -p /app
 WORKDIR /app
 
 # copy app build to working dir
-RUN cp -r /tmp/repo/libs/juno-ui-components /app ; cd /app
+RUN cp -r /tmp/repo/libs/juno-ui-components/* /app/ ; cd /app
 
 # run app
 CMD yarn dlx http-server --port 5000 storybook-static
