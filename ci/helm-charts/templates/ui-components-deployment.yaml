@@ -10,7 +10,7 @@ spec:
     matchLabels:
       app: juno-ui-components
   revisionHistoryLimit: 3
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:

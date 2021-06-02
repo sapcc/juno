@@ -10,5 +10,6 @@ spec:
     app: juno-ui-components
   ports:
     - name: juno-ui-components
-      port: 5000
+      port: 6000
+      targetPort: 5000
       protocol: TCP

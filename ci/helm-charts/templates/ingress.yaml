@@ -41,7 +41,7 @@ spec:
 
           - backend:
               serviceName: juno-ui-components
-              servicePort: 5000
+              servicePort: 6000
             path: /ui
 
           - backend:
