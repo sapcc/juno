@@ -507,10 +507,10 @@ jobs:
             args:
               - -c
               - |
-                printf "cdn_tag: \"$(cat cdn.version/version)\"\njuno_ui_components_tag: \"$(cat juno-ui-components.version/version)\"" > ./cdn/values.yaml
-                cat ./cdn/values.yaml
+                printf "cdn_tag: \"$(cat cdn.version/version)\"\njuno_ui_components_tag: \"$(cat juno-ui-components.version/version)\"" > ./extra-values/values.yaml
+                cat ./extra-values/values.yaml
           outputs:
-            - name: cdn
+            - name: extra-values
 
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
@@ -519,7 +519,7 @@ jobs:
           # cdn uses latest with ImagePullPolicy Always
           app.version: dashboard.version
           helm-charts.git: ci.git
-          extra-values.git: cdn
+          extra-values.git: extra-values
 
         params:
           HELM_MAJOR_VERSION: '3'
@@ -543,6 +543,8 @@ jobs:
         passed: ["deploy to s-qa-de-1"]
       - get: cdn.version
         passed: ["deploy to s-qa-de-1"]  
+      - get: juno-ui-components.version
+        passed: ["deploy to s-qa-de-1"]          
       - get: app-dashboard.git
 
       - task: cypress
@@ -573,6 +575,8 @@ jobs:
             passed: ["e2e s-qa-de-1"]
           - get: cdn.version
             passed: ["e2e s-qa-de-1"]
+          - get: juno-ui-components.version
+            passed: ["e2e s-qa-de-1"]  
           - get: ci.git
           - get: secrets.git
             params:
@@ -593,9 +597,17 @@ jobs:
           app.version: cdn.version
         params:
           REGION: eu-nl-1
-          IMAGE: juno-cdn    
+          IMAGE: juno-cdn   
 
-      - task: generate cdn values.yaml
+      - task: replicate ui compoents image to target region
+        file: secrets.git/ci/shared/task-replicate-image.yaml
+        input_mapping:
+          app.version: juno-ui-components.version
+        params:
+          REGION: eu-nl-1
+          IMAGE: juno-ui-components        
+
+      - task: generate extra values.yaml
         config:
           platform: linux
           image_resource:
@@ -605,21 +617,22 @@ jobs:
               tag: "latest"
           inputs: 
             - name: cdn.version 
+            - name: juno-ci-components.version 
           run:
             path: /bin/sh
             args:
               - -c
               - |
-                echo "cdn_tag: \"$(cat cdn.version/version)\"" > ./cdn/values.yaml
-                cat ./cdn/values.yaml
+                printf "cdn_tag: \"$(cat cdn.version/version)\"\njuno_ui_components_tag: \"$(cat juno-ui-components.version/version)\"" > ./extra-values/values.yaml
+                cat ./extra-values/values.yaml
           outputs:
-            - name: cdn
+            - name: extra-values
 
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
         input_mapping:
           helm-charts.git: ci.git
-          extra-values.git: cdn 
+          extra-values.git: extra-values 
           app.version: dashboard.version
 
         params:
