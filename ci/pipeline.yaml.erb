@@ -381,7 +381,7 @@ jobs:
       - get: juno-ui-components.version
         trigger: true          
         passed: ["deploy to s-qa-de-1"]
-      - get: app-dashboard.git
+      - get: repo.git
 
       - task: cypress
         config:
@@ -392,7 +392,7 @@ jobs:
               repository: ((keppel-hostname))/ccloud-dockerhub-mirror/cypress/included
               tag: "7.1.0"
           inputs:
-            - name: app-dashboard.git
+            - name: repo.git
               path: /app/juno
 
           run:
@@ -577,6 +577,14 @@ resources:
       password: {{keppel-password}}
       repository: ((keppel-hostname))/ccloud/juno-<%= app %>    
   <% end %>         
+
+  - name: repo.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      username: sapcc-bot
+      password: {{real-github-access-token}}     
 
   - name: ci.git
     type: git
