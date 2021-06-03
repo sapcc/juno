@@ -36,8 +36,6 @@ describe("Checkbox", () => {
 		expect(screen.getByRole("checkbox")).toHaveAttribute('data-test', "23")
 	})
 	
-	
-	
 	test("fire handler on change as passed", async () => {
 		const handleChange = jest.fn()
 		const { container } = render(
@@ -49,13 +47,10 @@ describe("Checkbox", () => {
 		expect(checkbox.checked).toBe(true)
 	})
 	
-	// test("renders a multiple checked checkbox as passed", async () => {
+	// test("renders a multiple-checked checkbox as passed", async () => {
 		// 	render(<Checkbox checked="multiple" />)
 		// 	expect(screen.getByRole("checkbox")).toBeInTheDocument()
 		// 	expect(screen.getByRole("checkbox")).toHaveAttribute('checked', "multiple")
 		// })
-	
-	
-
 
 })
