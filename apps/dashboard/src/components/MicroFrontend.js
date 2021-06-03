@@ -3,7 +3,11 @@ import { useRef, useState, useEffect, useMemo } from "react"
 
 // Content Delivery Network (CDN) Host
 const HOST =
-  process.env.NODE_ENV === "development" ? "https://juno.qa-de-1.cloud.sap" : ""
+  process.env.NODE_ENV === "development"
+    ? "juno.qa-de-1.cloud.sap"
+    : window.location.host
+
+const CDN_HOST = `https://cdn.${HOST}`
 
 // load dynamically the requested micro frontend (mfe)
 const MicroFrontend = ({ name, version, ...props }) => {
@@ -16,7 +20,7 @@ const MicroFrontend = ({ name, version, ...props }) => {
 
   // data attributes on the script tag
   const dataset = useMemo(() => {
-    const data = { "data-url": `${HOST}/cdn/${name}/${version}/widget.js` }
+    const data = { "data-url": `${CDN_HOST}/${name}/${version}/widget.js` }
     for (let prop in props) {
       data[`data-props-${prop}`] = props[prop]
     }
@@ -27,7 +31,7 @@ const MicroFrontend = ({ name, version, ...props }) => {
   // this hook does nothing if wrapper is unset!
   // In this case it waits until the wrapper is available (render at least 1 time)
   useDynamicScript({
-    url: "https://cdn.juno.global.cloud.sap/widget-loader/0_0_1/app.js",
+    url: `${CDN_HOST}/widget-loader/0_0_1/app.js`,
     wrapper,
     dataset,
   })

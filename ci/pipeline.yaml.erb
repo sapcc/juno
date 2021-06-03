@@ -374,10 +374,13 @@ jobs:
     plan:           
       - get: dashboard.version
         passed: ["deploy to s-qa-de-1"]
+        trigger: true
       - get: cdn.version
-        passed: ["deploy to s-qa-de-1"]  
+        passed: ["deploy to s-qa-de-1"]
+        trgger: true  
       - get: juno-ui-components.version
-        passed: ["deploy to s-qa-de-1"]          
+        passed: ["deploy to s-qa-de-1"]
+        trigger: true          
       - get: app-dashboard.git
 
       - task: cypress
