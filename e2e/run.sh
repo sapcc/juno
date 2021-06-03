@@ -1,5 +1,12 @@
 #!/bin/bash
 
+printf "Usage: 
+./run.sh --host https://cdn.juno.qa-de-1.cloud.sap/ cdn
+./run.sh --host https://ui.juno.qa-de-1.cloud.sap/ ui-components
+./run.sh --host https://juno.qa-de-1.cloud.sap/ dashboard
+
+"
+
 APP_PORT=$(wb juno 'echo $APP_PORT | tr -d "\n\r"')
 HOST="http://localhost:$APP_PORT"
 

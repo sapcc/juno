@@ -113,7 +113,8 @@ const extractDataFromScript = (script) => {
 
   if (url) {
     // widget url is provided -> try to match name and version
-    const found = url.match(/^.*\/cdn\/([^/]+)\/([^/]+)\/.*$/)
+    const path = url.replace(/https?:\/\//, "").replace(/^[^\/]*(.*$)/, "$1")
+    const found = path.match(/^\/([^/]+)\/([^/]+)\/.*$/)
     if (found) {
       name = name || found[1]
       version = version || found[2]
@@ -152,9 +153,8 @@ export const load = (currentScript) => {
   try {
     if (!currentScript) return
 
-    let { scope, name, version, module, url } = extractDataFromScript(
-      currentScript
-    )
+    let { scope, name, version, module, url } =
+      extractDataFromScript(currentScript)
 
     // do not accept name widget-loader or missing required data
     if (

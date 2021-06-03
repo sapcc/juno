@@ -4,7 +4,7 @@ describe("ui-components", () => {
   })
 
   it("ui is reachable", () => {
-    cy.request("ui").should((response) => {
+    cy.request("/").should((response) => {
       expect(response.status).to.eq(200)
     })
   })
