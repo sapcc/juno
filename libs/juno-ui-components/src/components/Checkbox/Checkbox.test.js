@@ -35,8 +35,6 @@ describe("Checkbox", () => {
 		expect(screen.getByRole("checkbox")).not.toHaveAttribute('checked')
 	})
 	
-	
-	
 	test("renders all props as passed", async () => {
 		render(<Checkbox id="check-1" data-test="23" />)
 		expect(screen.getByRole("checkbox")).toBeInTheDocument()
