@@ -1,7 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-
 export const Checkbox = ({
 	name,
 	value,
@@ -21,7 +20,6 @@ export const Checkbox = ({
 	)
 }
 
-
 Checkbox.propTypes = { 
 	name: PropTypes.string,
 	value: PropTypes.string,
@@ -31,7 +29,6 @@ Checkbox.propTypes = {
 	]),
 	onChange: PropTypes.func,
 }
-
 
 Checkbox.defaultProps = {
 	checked: null,

@@ -52,11 +52,5 @@ describe("Checkbox", () => {
 		expect(handleChange).toHaveBeenCalledTimes(1)
 		expect(checkbox.checked).toBe(true)
 	})
-	
-	// test("renders a multiple-checked checkbox as passed", async () => {
-		// 	render(<Checkbox checked="multiple" />)
-		// 	expect(screen.getByRole("checkbox")).toBeInTheDocument()
-		// 	expect(screen.getByRole("checkbox")).toHaveAttribute('checked', "multiple")
-		// })
 
 })
