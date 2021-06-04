@@ -10,9 +10,9 @@ Is a collection of Micro Frontends (MFE)
 
 ## Libs
 
-- [UI Components](https://github.com/sapcc/juno/tree/main/lib/juno-ui-components)
-- [Communicator](https://github.com/sapcc/juno/tree/main/lib/communicator)
-- [Policy Engine](https://github.com/sapcc/juno/tree/main/lib/policy-engine)
+- [UI Components](https://github.com/sapcc/juno/tree/main/libs/juno-ui-components)
+- [Communicator](https://github.com/sapcc/juno/tree/main/libs/communicator)
+- [Policy Engine](https://github.com/sapcc/juno/tree/main/libs/policy-engine)
 
 # Development
 
