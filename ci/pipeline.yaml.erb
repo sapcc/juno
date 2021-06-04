@@ -523,7 +523,10 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno/e2e
-                CYPRESS_BASE_URL=https://juno.global.cloud.sap cypress run      
+                CYPRESS_BASE_URL=https://juno.global.cloud.sap cypress run --spec "cypress/integration/dashboard/*"
+                CYPRESS_BASE_URL=https://cdn.juno.global.cloud.sap cypress run --spec "cypress/integration/cdn/*"
+                CYPRESS_BASE_URL=https://ui.juno.global.cloud.sap cypress run --spec "cypress/integration/ui-components/*"
+    
 
 resources:
   - name: qa-de-1.release
