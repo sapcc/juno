@@ -6,10 +6,13 @@ Is a collection of Micro Frontends (MFE)
 
 - [Widget Loader](https://github.com/sapcc/juno/tree/main/apps/widget-loader)
 - [Auth](https://github.com/sapcc/juno/tree/main/apps/auth)
+- [Designate](https://github.com/sapcc/juno/tree/main/apps/designate)
 
 ## Libs
 
 - [UI Components](https://github.com/sapcc/juno/tree/main/lib/juno-ui-components)
+- [Communicator](https://github.com/sapcc/juno/tree/main/lib/communicator)
+- [Policy Engine](https://github.com/sapcc/juno/tree/main/lib/policy-engine)
 
 # Development
 

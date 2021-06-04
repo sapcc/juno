@@ -568,7 +568,9 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno/e2e
-                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress run
+                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/dashboard/*"
+                CYPRESS_BASE_URL=https://cdn.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/cdn/*"
+                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/ui-components/*"
 
   - name: deploy to s-eu-nl-1
     serial: true
@@ -620,7 +622,7 @@ jobs:
               tag: "latest"
           inputs: 
             - name: cdn.version 
-            - name: juno-ci-components.version 
+            - name: juno-ui-components.version
           run:
             path: /bin/sh
             args:
@@ -634,9 +636,11 @@ jobs:
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
         input_mapping:
-          helm-charts.git: ci.git
-          extra-values.git: extra-values 
+          # we deploy dashboard image with the last created version tag (ImagePullPolicy IfNotPresent)
+          # cdn uses latest with ImagePullPolicy Always
           app.version: dashboard.version
+          helm-charts.git: ci.git
+          extra-values.git: extra-values
 
         params:
           HELM_MAJOR_VERSION: '3'
@@ -648,7 +652,7 @@ jobs:
           TAG_VARIABLE: dashboard.tag
           VALUES: local:globals extra:values.yaml
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
-          KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
+          KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}          
          
     ensure:
       put: eu-nl-1.release
