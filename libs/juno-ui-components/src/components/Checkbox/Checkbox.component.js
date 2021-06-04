@@ -23,10 +23,7 @@ export const Checkbox = ({
 Checkbox.propTypes = { 
 	name: PropTypes.string,
 	value: PropTypes.string,
-	checked: PropTypes.oneOfType([
-		PropTypes.bool,
-		PropTypes.oneOf([ 'multiple' ])
-	]),
+	checked: PropTypes.bool,
 	onChange: PropTypes.func,
 }
 
