@@ -5,7 +5,6 @@ import { Button } from "./index.js"
 export default {
   title: "Design System/Button",
   component: Button,
-  argTypes: {},
 }
 
 const Template = (args) => <Button {...args} />

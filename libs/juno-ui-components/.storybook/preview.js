@@ -6,7 +6,6 @@ import "../src/global.scss"
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   backgrounds: { disable: true },
-  viewMode: "docs",
   darkMode: {
     stylePreview: true,
     darkClass: "theme-dark",
@@ -19,6 +18,7 @@ export const parameters = {
     // },
   },
   controls: {
+    expanded: true,
     matchers: {
       color: /(background|color)$/i,
       date: /Date$/,

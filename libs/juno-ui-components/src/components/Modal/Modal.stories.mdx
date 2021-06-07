@@ -1,19 +1,15 @@
 import { Meta, Story, Canvas } from "@storybook/addon-docs/blocks"
-import * as Stories from "./stories"
+import * as Stories from "./Modal.stories"
 
 <Meta
-  title="Design System/Core/StyleProvider"
+  title="Design System/Modal"
   argTypes={{
-    stylesWrapper: {
-      control: {
-        type: "radio",
-        options: ["head", "inline", "shadowRoot"],
-      },
-    },
+    title: { control: "text" },
+    icon: { control: "text" },
   }}
 />
 
-# StyleProvider
+# Modal
 
 This component embeds the styles of this design system in an element depending on the value
 of the property "stylesWrapper".
@@ -25,26 +21,20 @@ This property can contain the following values:
 - **shadowRoot** create a shadow root element and append it to the parent element of the StyleProvider.
   All styles are placed within this shadow root. The ShadowRoot component is used for this.
 
-## Styles in head tag
+## Simple
 
 <Canvas>
-  <Story story={Stories.AddStylesToHead} name="AddStylesToHead" />
+  <Story story={Stories.Simple} name="Simple" />
 </Canvas>
 
-## Inline Styles
+## Custom Content
 
 <Canvas>
-  <Story story={Stories.AddInlineStyles} name="AddInlineStyles" />
+  <Story story={Stories.CustomContent} name="CustomContent" />
 </Canvas>
 
-## Shadow Root
+## Login
 
 <Canvas>
-  <Story story={Stories.AddStylesToShadowRoot} name="AddStylesToShadowRoot" />
-</Canvas>
-
-## Switch Theme
-
-<Canvas>
-  <Story story={Stories.WithTheme} name="WithTheme" />
+  <Story story={Stories.Login} name="Login" />
 </Canvas>

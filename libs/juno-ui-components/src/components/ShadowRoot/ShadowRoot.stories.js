@@ -3,9 +3,14 @@ import { ShadowRoot } from "."
 
 const Template = (args) => (
   <ShadowRoot {...args}>
-    <h1>Wellcome</h1>
+    <h1>Welcome</h1>
   </ShadowRoot>
 )
+
+export default {
+  title: "Design System/ShadowRoot",
+  component: ShadowRoot,
+}
 
 export const EncapsulateStyles = Template.bind({})
 EncapsulateStyles.args = {

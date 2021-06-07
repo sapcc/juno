@@ -23,6 +23,11 @@ const Template = ({ isOpen: initOpenStatus, ...props }) => {
   )
 }
 
+export default {
+  title: "Design System/Modal",
+  component: Modal,
+}
+
 export const Simple = Template.bind({})
 Simple.args = {
   title: "Simple",
