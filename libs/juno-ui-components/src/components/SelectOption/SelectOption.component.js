@@ -5,10 +5,11 @@ export const SelectOption = ({
 	value,
 	label,
 	...props
-}) => {
+	}) => {
 	return (
 		<option 
 			value={value}
+			{...props}
 		>
 		{label}
 		</option>
