@@ -21,7 +21,7 @@ const btnDefault = `
   bg-theme-default
   border-theme-default
   hover:bg-theme-default-hover
-  disabled:hover:bg-theme-default
+  disabled:bg-theme-default
 `
 
 const btnPrimary = `
@@ -29,7 +29,7 @@ const btnPrimary = `
   bg-theme-primary
   border-theme-primary
   hover:bg-theme-primary-hover
-  disabled:hover:bg-theme-primary
+  disabled:bg-theme-primary
 `
 
 const btnDanger = `
@@ -37,7 +37,7 @@ const btnDanger = `
   bg-theme-danger
   border-theme-danger
   hover:bg-theme-danger-hover
-  disabled:hover:bg-theme-danger
+  disabled:bg-theme-danger
 `
 
 const btnSmall = `

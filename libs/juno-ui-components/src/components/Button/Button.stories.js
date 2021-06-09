@@ -5,16 +5,12 @@ import { Button } from "./index.js"
 export default {
   title: "Design System/Button",
   component: Button,
+  argTypes: {
+    disabled: {type: 'boolean'}
+  }
 }
 
 const Template = (args) => <Button {...args} />
-
-export const Disabled = Template.bind({})
-Disabled.args = {
-  variant: "primary",
-  label: "Primary Disabled",
-  disabled: true,
-}
 
 export const Primary = Template.bind({})
 Primary.args = {
@@ -48,4 +44,11 @@ export const Small = Template.bind({})
 Small.args = {
   size: "small",
   label: "Small",
+}
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+  variant: "primary",
+  label: "Primary Disabled",
+  disabled: true,
 }
