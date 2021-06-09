@@ -1,0 +1,20 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import { useDebugValue } from 'react';
+
+import * as Stories from './Textarea.stories';
+
+<Meta title="Design System/Primitives/Radio" />
+
+# Textarea
+
+A native html textarea.
+
+## Default
+<Canvas>
+	<Story story={Stories.Default} name="Default" />
+</Canvas>
+
+## Disabled
+<Canvas>
+	<Story story={Stories.Disabled} name="Disabled" />
+</Canvas>
