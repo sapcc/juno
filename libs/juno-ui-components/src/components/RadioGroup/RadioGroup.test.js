@@ -27,7 +27,7 @@ describe("RadioGroup", () => {
 		expect(screen.getAllByRole("radio")).toHaveLength(3)
 	})
 	
-	test("renders named checkboxes as passed", async () => {
+	test("renders individually named checkboxes as passed", async () => {
 		render(
 			<RadioGroup name="my-radiogroup"> 
 				<Radio />
