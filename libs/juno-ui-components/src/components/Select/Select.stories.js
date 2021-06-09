@@ -3,8 +3,8 @@ import { Select } from "./index.js"
 import { SelectOption } from "../SelectOption/index.js"
 import { SelectOptionGroup } from "../SelectOptionGroup/index.js"
 
-import { Default as DefaultSelectOption, Disabled as DisabledSelectOption} from "../SelectOption/SelectOption.stories" 
-import { Default as DefaultSelectOptionGroup, Disabled as DisabledSelectOptionGroup} from "../SelectOptionGroup/SelectOptionGroup.stories"
+import { Default as DefaultSelectOption, Disabled as DisabledSelectOption} from "../SelectOption/SelectOption.stories"
+import { Default as DefaultSelectOptionGroup, Disabled as DisabledSelectOptionGroup } from "../SelectOptionGroup/SelectOptionGroup.stories"
 
 export default {
   	title: "Design System/ Select / Select",
@@ -22,7 +22,11 @@ const SelectTemplate = ({ options, ...args }) =>
 const GroupedSelectTemplate = ({ groups, ...args}) =>
 	<Select {...args}>
 		{groups.map((group) => (
-			<SelectOptionGroup {...group} />
+			<SelectOptionGroup {...group}>
+				{group.options.map((option) => (
+					<SelectOption {...option} />
+				))}
+			</SelectOptionGroup>
 		))}
 	</Select>
 
@@ -42,5 +46,14 @@ DisabledSimpleSelect.args = {
 export const GroupedSelect = GroupedSelectTemplate.bind({})
 GroupedSelect.args = {
 	name: "Grouped-Select",
-	groups: [DefaultSelectOptionGroup.args]
+	groups: [
+		{
+			label: "My option group",
+			options: [DefaultSelectOption.args, DisabledSelectOption.args]
+		},
+		{
+			label: "My other option group",
+			options: [DefaultSelectOption.args]
+		}
+	]
 }
