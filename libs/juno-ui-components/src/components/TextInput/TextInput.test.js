@@ -6,7 +6,7 @@ import { render, screen, fireEvent } from "@testing-library/react"
 import { TextInput } from "./index"
 
 
-describe("TextInputo", () => {
+describe("TextInput", () => {
 	
 	test("renders a valid html default text input with no type attribute", async () => {
 		render(<TextInput />)
