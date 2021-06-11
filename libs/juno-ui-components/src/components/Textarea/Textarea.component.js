@@ -4,27 +4,16 @@ import PropTypes from "prop-types"
 export const Textarea = ({
 	name,
 	value,
-	rows,
-	cols,
-	placeholder,
-	autocomplete,
-	autofocus,
-	readonly,
-	minlength,
-	maxlength,
+	autoComplete,
+	autoFocus,
 	...props
 }) => {
 	return (
 		<textarea
 			name={name || "unnamed textarea"}
 			defaultValue={value}
-			rows={rows}
-			cols={cols}
-			placeholder={placeholder}
-			autoFocus={autofocus}
-			readOnly={readonly}
-			minLength={minlength}
-			maxLength={maxlength}
+			autoComplete={autoComplete}
+			autoFocus={autoFocus}
 			{...props}
 		>
 			
@@ -35,24 +24,13 @@ export const Textarea = ({
 Textarea.propTypes = { 
 	name: PropTypes.string,
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	placeholder: PropTypes.string,
-	cols: PropTypes.number,
-	rows: PropTypes.number,
-	autocomplete: PropTypes.oneOf(['on', 'off']),
-	autofocus: PropTypes.bool,
-	readonly: PropTypes.bool,
-	minlength: PropTypes.number,
-	maxlength: PropTypes.number,
+	autoComplete: PropTypes.oneOf(['on', 'off']),
+	autoFocus: PropTypes.bool,
 }
 
 Textarea.defaultProps = {
+	name: null,
 	value: null,
-	placeholder: null,
-	cols: null,
-	rows: null,
-	autocomplete: null,
-	autofocus: null,
-	readonly: null,
-	minlength: null,
-	maxlength: null,
+	autoComplete: null,
+	autoFocus: false,
 }

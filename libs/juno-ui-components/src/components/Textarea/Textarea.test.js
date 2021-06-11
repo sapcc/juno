@@ -29,5 +29,14 @@ describe("Textarea", () => {
 		render(<Textarea disabled />)
 		expect(screen.getByRole("textbox")).toHaveAttribute('disabled')
 	})
+	
+	test("renders other props as passed", async () => {
+		render(<Textarea autoComplete="on" cols="100" rows="25" minLength="0" maxLength="100"/>)
+		expect(screen.getByRole("textbox")).toHaveAttribute('autocomplete', "on")
+		expect(screen.getByRole("textbox")).toHaveAttribute('cols', "100")
+		expect(screen.getByRole("textbox")).toHaveAttribute('rows', "25")
+		expect(screen.getByRole("textbox")).toHaveAttribute('minlength', "0")
+		expect(screen.getByRole("textbox")).toHaveAttribute('maxlength', "100")
+	})
 
 })
