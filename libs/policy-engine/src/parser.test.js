@@ -446,4 +446,84 @@ describe("parse", () => {
       value: "!",
     })
   })
+
+  describe("PARSE ERROR", () => {
+    it("and", () => {
+      expect(() => {
+        parse([{ type: "operator", value: "and" }])
+      }).toThrowError("PARSE ERROR: tokens must not begin with 'and' or 'or'")
+    })
+
+    it("or A", () => {
+      expect(() => {
+        parse([
+          { type: "operator", value: "or" },
+          { type: "expression", value: "A" },
+        ])
+      }).toThrowError("PARSE ERROR: tokens must not begin with 'and' or 'or'")
+    })
+
+    it("A or B and", () => {
+      expect(() => {
+        parse([
+          { type: "expression", value: "A" },
+          { type: "operator", value: "or" },
+          { type: "expression", value: "B" },
+          { type: "operator", value: "and" },
+        ])
+      }).toThrowError(
+        "PARSE ERROR: tokens must not end with 'and' or 'or' or 'not'"
+      )
+    })
+
+    it("A or B not", () => {
+      expect(() => {
+        parse([
+          { type: "expression", value: "A" },
+          { type: "operator", value: "or" },
+          { type: "expression", value: "B" },
+          { type: "operator", value: "not" },
+        ])
+      }).toThrowError(
+        "PARSE ERROR: tokens must not end with 'and' or 'or' or 'not'"
+      )
+    })
+
+    it("A or B or", () => {
+      expect(() => {
+        parse([
+          { type: "expression", value: "A" },
+          { type: "operator", value: "or" },
+          { type: "expression", value: "B" },
+          { type: "operator", value: "or" },
+        ])
+      }).toThrowError(
+        "PARSE ERROR: tokens must not end with 'and' or 'or' or 'not'"
+      )
+    })
+
+    it("A or or B", () => {
+      expect(() => {
+        parse([
+          { type: "expression", value: "A" },
+          { type: "operator", value: "or" },
+          { type: "operator", value: "or" },
+          { type: "expression", value: "B" },
+        ])
+      }).toThrowError(
+        "PARSE ERROR: tokens must not contain two operators of the type 'and' or 'or' in a row"
+      )
+    })
+
+    it("A B", () => {
+      expect(() => {
+        parse([
+          { type: "expression", value: "A" },
+          { type: "expression", value: "B" },
+        ])
+      }).toThrowError(
+        "PARSE ERROR: tokens must not contain two expressions in a row"
+      )
+    })
+  })
 })

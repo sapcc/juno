@@ -21,6 +21,54 @@ function precedenceOf(operator) {
   return OPERATORS_PRECEDENCE[operator.value]
 }
 
+function validateTokens(tokens) {
+  if (!tokens)
+    throw new Error("PARSE ERROR: tokens must not be undefined or null")
+
+  if (tokens.length === 0) return tokens
+
+  const firstToken = tokens[0]
+  const lastToken = tokens[tokens.length - 1]
+
+  if (
+    firstToken.type === "operator" &&
+    ["and", "or"].includes(firstToken.value)
+  ) {
+    throw new Error("PARSE ERROR: tokens must not begin with 'and' or 'or'")
+  }
+  if (
+    lastToken.type === "operator" &&
+    ["and", "or", "not"].includes(lastToken.value)
+  ) {
+    throw new Error(
+      "PARSE ERROR: tokens must not end with 'and' or 'or' or 'not'"
+    )
+  }
+
+  for (let i = 0; i < tokens.length; i++) {
+    if (i < tokens.length - 1) {
+      if (
+        tokens[i].type === "operator" &&
+        ["or", "and"].includes(tokens[i].value) &&
+        tokens[i + 1].type === "operator" &&
+        ["or", "and"].includes(tokens[i + 1].value)
+      )
+        throw new Error(
+          "PARSE ERROR: tokens must not contain two operators of the type 'and' or 'or' in a row"
+        )
+
+      if (
+        tokens[i].type === "expression" &&
+        tokens[i + 1].type === "expression"
+      )
+        throw new Error(
+          "PARSE ERROR: tokens must not contain two expressions in a row"
+        )
+    }
+  }
+  return tokens
+}
+
 /**
  * Replaces brackets with arrays
  * @param {array} tokens
@@ -223,7 +271,8 @@ function parse(tokens, expressionNode, level = 0) {
 
 module.exports = {
   parse: (tokens) => {
-    tokens = bracketsToArrays(tokens.slice())
+    tokens = validateTokens(tokens.slice())
+    tokens = bracketsToArrays(tokens)
     tokens = notOperatorsToArrays(tokens)
     return parse(tokens)
   },

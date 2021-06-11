@@ -8,42 +8,58 @@ const TOKEN_PROPERTIES = [
   "user_id",
 ]
 
-// "A and (B or C) and not D"
+const evaluateExpression = (expression, rules, context) => {
+  let value = expression.value || expression
 
-const logicalExpression = {
-  type: "AND",
-  left: { type: "expression", value: "A" },
-  right: {
-    left: {
-      type: "OR",
-      left: { type: "expression", value: "B" },
-      right: { type: "expression", value: "C" },
-    },
-    type: "AND",
-    right: {
-      type: "NOT",
-      right: { type: "expression", value: "D" },
-    },
-  },
+  if (/^(true|@)$/i.test(value)) return true
+  if (!value || /^(false|!)$/i.test(value)) return false
+
+  const rule = value.match(/rule:(.+)/)
+
+  if (rule) return rules[rule[1]] ? rules[rule[1]]({ rules, context }) : false
+
+  const role = value.match(/role:(.+)/)
+
+  if (role)
+    return !context.roles
+      ? false
+      : !!context.roles.find((r) => r.name === role[1])
+
+  const contextValue = value.match(
+    /^(is_admin_project|is_admin|domain_id|domain_name|project_id|project_domain_id|user_id):(.+)$/
+  )
+
+  if (contextValue) {
+    return context[contextValue[1]].toString() === contextValue[2].toString()
+  }
+
+  throw new Error(`EVALUATOR ERROR: unknown context variable ${value}`)
 }
 
-const tree = {
-  left: { type: "expression", value: "A" },
-  type: "and",
-  right: {
-    left: {
-      left: { type: "expression", value: "B" },
-      type: "or",
-      right: { type: "expression", value: "C" },
-    },
-    type: "(",
-    right: {
-      left: { type: "expression", value: "B" },
-      type: "or",
-      right: {
-        left: { type: "expression", value: "C" },
-        type: ")",
-      },
-    },
-  },
+function evaluate(expressionNode, rules = {}, context = {}) {
+  if (!expressionNode) return false
+  if (expressionNode.type === "expression")
+    return evaluateExpression(expressionNode.value, rules, context)
+  if (expressionNode.operator === "or") {
+    return (
+      evaluate(expressionNode.left) ||
+      evaluate(expressionNode.right, rules, context)
+    )
+  }
+  if (expressionNode.operator === "and") {
+    return (
+      evaluate(expressionNode.left) &&
+      evaluate(expressionNode.right, rules, context)
+    )
+  }
+  if (expressionNode.operator === "not") {
+    return !evaluate(expressionNode.right, rules, context)
+  }
+}
+
+module.exports = {
+  evaluate:
+    (ruleTree) =>
+    ({ rules, context }) =>
+      evaluate(ruleTree, rules, context),
 }
