@@ -1,16 +1,21 @@
 require("dotenv").config()
 
-const { createServer } = require("./server")
+// Import Server
+const createServer = require("./server.js")
 
-const mongoHost = process.env.MONGO_HOST
-const port = process.env.PORT
-const identityHost = process.env.IDENTITY_HOST
-
+// Create and run the server!
 createServer({
-  mongoHost,
-  dbName: "mercury",
-  identityHost,
-  useAuthentication: process.env.NODE_ENV === "production",
+  logger: true,
+  graphiql: true,
+  mongoURL: process.env.MONGO_URL,
+  identityHost: process.env.IDENTITY_HOST,
+  useAuthentication: true,
+}).then((server) => {
+  server
+    .listen(process.env.PORT, "0.0.0.0")
+    .then((url) => server.log.info(`server listening on ${url}`))
+    .catch((error) => {
+      server.log.error(err)
+      process.exit(1)
+    })
 })
-  .then((server) => server.listen({ port }))
-  .then(({ url }) => console.log(`Server is running on ${url}`))

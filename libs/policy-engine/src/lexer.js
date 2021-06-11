@@ -1,0 +1,31 @@
+var isOperator = (s) => /^(and|or|not|\(|\))$/.test(s),
+  isExpression = (s) => /^.+:.+$/.test(s)
+
+function tokenize(rule) {
+  const tokens = []
+
+  // insert spaces betwenn "(" and ")" operators
+  // ignore "%(" and ")s"
+  // replace multiple spaces with one space
+  const normalizedRule = rule
+    .replace(/[^%]\(/g, " ( ")
+    .replace(/\)[^s]/g, " ) ")
+    .replace(/\s{2}/g, " ")
+
+  normalizedRule.split(" ").forEach((t) => {
+    if (isOperator(t)) tokens.push({ type: "operator", value: t })
+    else if (isExpression) tokens.push({ type: "expression", value: t })
+    else {
+      throw new Error(
+        `Bad rule syntax ${t}. Only expressions ans operators are allowed. 
+        Expression has the syntax key:value or "@" for valid expression (true) and "!" 
+        accordingly for wrong expression (false). 
+        Operator can be one of "and", "or", "not", "(", ")"`
+      )
+    }
+  })
+
+  return tokens
+}
+
+module.exports = { tokenize }
