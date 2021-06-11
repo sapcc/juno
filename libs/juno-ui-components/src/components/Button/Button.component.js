@@ -84,7 +84,7 @@ const sizeClass = (size) => {
 }
 
 /**
- * Primary UI component for users to trigger actions with.
+ * The basic button component. Use this for `onClick` interactions.
  */
 export const Button = ({
   label,
@@ -110,17 +110,23 @@ export const Button = ({
 }
 
 Button.propTypes = {
+  /** Choose a variant for your purpose. May leave empty to get default button. */
   variant: PropTypes.oneOf(["primary", "danger", "default"]),
+  /** Leave empty for default size */
   size: PropTypes.oneOf(["small", "default", "large"]),
+  /** Button label can be passed like this or as children */
   label: PropTypes.string,
+  /** Specify title for accesibility. Gets value of label if no title specified */
   title: PropTypes.string,
-  // Optional click handler
+  /** Click handler  */
   onClick: PropTypes.func,
+  /** Set to true to disable */
+  disabled: PropTypes.bool
 }
 
 Button.defaultProps = {
   variant: "default",
-  title: null,
   size: "default",
+  title: "unspecified button",
   onClick: undefined,
 }
