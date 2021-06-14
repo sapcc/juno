@@ -62,7 +62,9 @@ function validateTokens(tokens) {
         tokens[i + 1].type === "expression"
       )
         throw new Error(
-          "PARSE ERROR: tokens must not contain two expressions in a row"
+          `PARSE ERROR: tokens must not contain two expressions in a row: ${tokens
+            .map((t) => t.value)
+            .join(" ")} ${JSON.stringify(tokens)}`
         )
     }
   }

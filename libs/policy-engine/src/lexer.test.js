@@ -33,68 +33,70 @@ describe("lexer tokenize", () => {
     ])
   })
 
-  it("A and B", () => {
-    expect(tokenize("A and B")).toEqual([
-      { type: "expression", value: "A" },
+  it("a:true and b:true", () => {
+    expect(tokenize("a:true and b:true")).toEqual([
+      { type: "expression", value: "a:true" },
       { type: "operator", value: "and" },
-      { type: "expression", value: "B" },
+      { type: "expression", value: "b:true" },
     ])
   })
 
-  it("A or B or C", () => {
-    expect(tokenize("A or B or C")).toEqual([
-      { type: "expression", value: "A" },
+  it("a:true or b:true or c:true", () => {
+    expect(tokenize("a:true or b:true or c:true")).toEqual([
+      { type: "expression", value: "a:true" },
       { type: "operator", value: "or" },
-      { type: "expression", value: "B" },
+      { type: "expression", value: "b:true" },
       { type: "operator", value: "or" },
-      { type: "expression", value: "C" },
+      { type: "expression", value: "c:true" },
     ])
   })
 
-  it("A and B or C", () => {
-    expect(tokenize("A and B or C")).toEqual([
-      { type: "expression", value: "A" },
+  it("a:true and b:true or c:true", () => {
+    expect(tokenize("a:true and b:true or c:true")).toEqual([
+      { type: "expression", value: "a:true" },
       { type: "operator", value: "and" },
-      { type: "expression", value: "B" },
+      { type: "expression", value: "b:true" },
       { type: "operator", value: "or" },
-      { type: "expression", value: "C" },
+      { type: "expression", value: "c:true" },
     ])
   })
 
-  it("A and ( B or C )", () => {
-    expect(tokenize("A and ( B or C )")).toEqual([
-      { type: "expression", value: "A" },
+  it("a:true and ( b:true or c:true )", () => {
+    expect(tokenize("a:true and ( b:true or c:true )")).toEqual([
+      { type: "expression", value: "a:true" },
       { type: "operator", value: "and" },
       { type: "operator", value: "(" },
-      { type: "expression", value: "B" },
+      { type: "expression", value: "b:true" },
       { type: "operator", value: "or" },
-      { type: "expression", value: "C" },
+      { type: "expression", value: "c:true" },
       { type: "operator", value: ")" },
     ])
   })
 
-  it("A and not B", () => {
-    expect(tokenize("A and not B")).toEqual([
-      { type: "expression", value: "A" },
+  it("a:true and not b:true", () => {
+    expect(tokenize("a:true and not b:true")).toEqual([
+      { type: "expression", value: "a:true" },
       { type: "operator", value: "and" },
       { type: "operator", value: "not" },
-      { type: "expression", value: "B" },
+      { type: "expression", value: "b:true" },
     ])
   })
 
-  it("A and ( B or C  and ( D or E ) )", () => {
-    expect(tokenize("A and ( B or C  and ( D or E ) )")).toEqual([
-      { type: "expression", value: "A" },
+  it("a:true and ( b:true or c:true  and ( d:true or e:true ) )", () => {
+    expect(
+      tokenize("a:true and ( b:true or c:true  and ( d:true or e:true ) )")
+    ).toEqual([
+      { type: "expression", value: "a:true" },
       { type: "operator", value: "and" },
       { type: "operator", value: "(" },
-      { type: "expression", value: "B" },
+      { type: "expression", value: "b:true" },
       { type: "operator", value: "or" },
-      { type: "expression", value: "C" },
+      { type: "expression", value: "c:true" },
       { type: "operator", value: "and" },
       { type: "operator", value: "(" },
-      { type: "expression", value: "D" },
+      { type: "expression", value: "d:true" },
       { type: "operator", value: "or" },
-      { type: "expression", value: "E" },
+      { type: "expression", value: "e:true" },
       { type: "operator", value: ")" },
       { type: "operator", value: ")" },
     ])
