@@ -401,6 +401,16 @@ describe("parse", () => {
     })
   })
 
+  it("A)", () => {
+    const tree = parse([{ type: "expression", value: "A" }])
+    // console.log(">>>>>>>>>>>>>>>>>>>>")
+    // console.log(JSON.stringify(tree, null, 2))
+    expect(tree).toEqual({
+      type: "expression",
+      value: "A",
+    })
+  })
+
   it("@ and (! or B)", () => {
     const tree = parse([
       { type: "expression", value: "@" },

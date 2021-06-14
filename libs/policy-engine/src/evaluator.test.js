@@ -2,12 +2,12 @@ const { evaluate } = require("./evaluator")
 
 describe("evaluate", () => {
   it("returns a function", () => {
-    const func = evaluate({
-      left: { type: "expression", value: "A" },
+    const rule = evaluate({
+      left: { type: "expression", value: "domain_id:test" },
       operator: "and",
-      right: { type: "expression", value: "B" },
+      right: { type: "expression", value: "user_id:test" },
     })
-    expect(typeof func).toEqual("function")
+    expect(typeof rule).toEqual("function")
   })
 
   it("true and false", () => {
@@ -42,6 +42,7 @@ describe("evaluate", () => {
         right: { type: "expression", value: "true" },
       },
     })
+
     expect(rule({})).toEqual(true)
   })
 
@@ -280,19 +281,112 @@ describe("evaluate", () => {
     })
   })
 
-  describe("unsupported context value", () => {
-    it("rule:admin or unsupported:12345", () => {
+  describe("params", () => {
+    it("rule:admin or test:%(domain.name)s", () => {
       const rule = evaluate({
         left: { type: "expression", value: "rule:admin" },
         operator: "or",
-        right: { type: "expression", value: "unsupported:12345" },
+        right: { type: "expression", value: "test:%(domain.name)s" },
       })
       expect(() => {
         rule({
           rules: { admin: () => false },
-          context: { unsupported: "12345" },
+          context: { domain: { name: "test" } },
         })
       }).toThrow()
+    })
+
+    it("domain_id:%(domain_id)s, params: {domain_id:'12345'}", () => {
+      const rule = evaluate({
+        type: "expression",
+        value: "domain_id:%(domain_id)s",
+      })
+      expect(
+        rule({
+          context: { domain_id: "12345" },
+          params: { domain_id: "12345" },
+        })
+      ).toEqual(true)
+    })
+
+    it("domain_id:%(domain_id)s, params: {domain_id:'54321'}", () => {
+      const rule = evaluate({
+        type: "expression",
+        value: "domain_id:%(domain_id)s",
+      })
+
+      expect(
+        rule({
+          context: { domain_id: "12345" },
+          params: { domain_id: "54321" },
+        })
+      ).toEqual(false)
+    })
+
+    it("domain_id:%(domain_id)s and user_id:%(test)s, params: {domain_id:'12345', test: 'test_user'}", () => {
+      const rule = evaluate({
+        operator: "and",
+        left: { type: "expression", value: "domain_id:%(domain_id)s" },
+        right: { type: "expression", value: "user_id:%(test)s" },
+      })
+      expect(
+        rule({
+          context: { domain_id: "12345", user_id: "test_user" },
+          params: { domain_id: "12345", test: "test_user" },
+        })
+      ).toEqual(true)
+    })
+
+    it("parses params, domain_id:%(user.domain.id)s", () => {
+      const rule = evaluate({
+        type: "expression",
+        value: "domain_id:%(user.domain.id)s",
+      })
+      expect(
+        rule({
+          context: { domain_id: "12345" },
+          params: { user: { domain: { id: "12345" } } },
+        })
+      ).toEqual(true)
+    })
+
+    it("domain_id:null", () => {
+      const rule = evaluate({
+        type: "expression",
+        value: "domain_id:null",
+      })
+      expect(
+        rule({
+          context: {},
+        })
+      ).toEqual(true)
+    })
+
+    it("domain_id:null", () => {
+      const rule = evaluate({
+        type: "expression",
+        value: "domain_id:null",
+      })
+      expect(
+        rule({
+          context: { domain_id: "12345" },
+        })
+      ).toEqual(false)
+    })
+
+    describe("allow to check params for specific strings", () => {
+      it("test:%(domain_id)s", () => {
+        const rule = evaluate({
+          type: "expression",
+          value: "test:%(domain_id)s",
+        })
+        expect(
+          rule({
+            context: {},
+            params: { domain_id: "test" },
+          })
+        ).toEqual(true)
+      })
     })
   })
 })

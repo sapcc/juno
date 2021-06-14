@@ -1,5 +1,34 @@
 const PolicyEngine = require("./engine")
 
+const policyConfig = {
+  project_parent: "not %(target.project.parent_id)s==nil",
+  monsoon2_domain: "%(target.scoped_domain_name)s=='monsoon2'",
+
+  admin_required: " role:admin or is_admin:1",
+
+  cloud_admin:
+    "rule:admin_required and (token.is_admin_project:True or domain_id:'ccadmin')",
+  domain_admin: "rule:admin_required and not domain_id:nil",
+  project_admin: "rule:admin_required and not project_id:nil",
+  cloud_admin_or_support: "rule:cloud_admin or role:cloud_support_tools_viewer",
+  cloud_admin_or_support_or_dns_ops:
+    "rule:cloud_admin or role:cloud_support_tools_viewer or role:cloud_dns_ops",
+  cloud_support: "role:cloud_support_tools_viewer",
+
+  default: "rule:admin_required",
+
+  service_role: "role:service",
+  service_or_admin: "rule:admin_required or rule:service_role",
+  owner: "user_id:%(user_id)s",
+  admin_or_owner: "rule:admin_required or rule:owner",
+  token_subject: "user_id:%(target.token.user_id)s",
+  admin_or_token_subject: "rule:admin_required or rule:token_subject",
+  can_write: "(not domain_name:'monsoon2')",
+
+  can_see_cache_type:
+    "rule:cloud_admin_or_support_or_dns_ops or (role:domain_support_tools_viewer and (%(target.type)s=='floatingip' or %(target.type)s=='network' or %(target.type)s=='project' or %(target.type)s=='recordset' or %(target.type)s=='router' or %(target.type)s=='security_group' or %(target.type)s=='server' or %(target.type)s=='share' or %(target.type)s=='share_network' or %(target.type)s=='snapshot' or %(target.type)s=='subnet' or %(target.type)s=='volume' or %(target.type)s=='zone') or %(target.type)s=='kubernikus_cluster')",
+}
+
 describe("policy engine", () => {
   it("requires a paramater", () => {
     expect(() => {
@@ -12,4 +41,22 @@ describe("policy engine", () => {
       new PolicyEngine("NOT_A_JSON")
     }).toThrowError()
   })
+
+  describe("userPolicy", () => {
+    const engine = new PolicyEngine(policyConfig)
+    expect(typeof engine.userPolicy).isEqual("function")
+  })
+
+  // describe("check", () => {
+  //   let engine
+  //   beforeEach(() => {
+  //     engine = new PolicyEngine(policyConfig)
+  //   })
+
+  //   it("ensures the parameter is a json", () => {
+  //     expect(() => {
+  //       new PolicyEngine("NOT_A_JSON")
+  //     }).toThrowError()
+  //   })
+  // })
 })
