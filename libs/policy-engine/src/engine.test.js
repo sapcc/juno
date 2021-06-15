@@ -270,4 +270,19 @@ describe("policy engine", () => {
       })
     })
   })
+
+  describe("debug", () => {
+    console.log = jest.fn()
+    let policy
+    beforeEach(() => {
+      engine = new PolicyEngine(policyConfig)
+      policy = engine.policy(tokenPayload, { debug: true })
+    })
+
+    // project_parent: "not null:%(target.project.parent_id)s",
+    it("project_parent", () => {
+      policy.check("project_parent")
+      expect(console.log).toHaveBeenCalled()
+    })
+  })
 })

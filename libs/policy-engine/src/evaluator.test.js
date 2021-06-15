@@ -1,4 +1,6 @@
 const { evaluate } = require("./evaluator")
+const rules = { admin: () => true }
+const getRule = (n) => rules[n]
 
 describe("evaluate", () => {
   it("returns a function", () => {
@@ -53,11 +55,13 @@ describe("evaluate", () => {
         operator: "or",
         right: { type: "expression", value: "@" },
       })
-      expect(rule({ rules: { admin: () => true } })).toEqual(true)
+      expect(rule({ getRule })).toEqual(true)
     })
   })
   describe("roles", () => {
     it("rule:admin or role:superadmin", () => {
+      const rules = { admin: () => true }
+
       const rule = evaluate({
         left: { type: "expression", value: "rule:admin" },
         operator: "or",
@@ -65,7 +69,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule,
           context: { roles: [{ name: "superadmin" }] },
         })
       ).toEqual(true)
@@ -81,7 +85,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule,
           context: { is_admin_project: true },
         })
       ).toEqual(true)
@@ -95,7 +99,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule,
           context: { is_admin_project: false },
         })
       ).toEqual(true)
@@ -111,7 +115,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule,
           context: { is_admin: 1 },
         })
       ).toEqual(true)
@@ -125,7 +129,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule: () => () => false,
           context: { is_admin: 1 },
         })
       ).toEqual(false)
@@ -141,7 +145,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule,
           context: { domain_id: "12345" },
         })
       ).toEqual(true)
@@ -155,7 +159,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule: () => () => false,
           context: { domain_id: "12345" },
         })
       ).toEqual(false)
@@ -170,7 +174,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule,
           context: { domain_name: "test" },
         })
       ).toEqual(true)
@@ -184,7 +188,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule: () => () => false,
           context: { domain_name: "12345" },
         })
       ).toEqual(false)
@@ -200,7 +204,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule,
           context: { project_id: "12345" },
         })
       ).toEqual(true)
@@ -214,7 +218,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule: () => () => false,
           context: { project_id: "12345" },
         })
       ).toEqual(false)
@@ -230,7 +234,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule,
           context: { project_domain_id: "12345" },
         })
       ).toEqual(true)
@@ -244,7 +248,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule: () => () => false,
           context: { project_domain_id: "12345" },
         })
       ).toEqual(false)
@@ -260,7 +264,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule,
           context: { user_id: "12345" },
         })
       ).toEqual(true)
@@ -274,7 +278,7 @@ describe("evaluate", () => {
       })
       expect(
         rule({
-          rules: { admin: () => false },
+          getRule: () => () => false,
           context: { user_id: "12345" },
         })
       ).toEqual(false)
@@ -288,12 +292,11 @@ describe("evaluate", () => {
         operator: "or",
         right: { type: "expression", value: "test:%(domain.name)s" },
       })
-      expect(() => {
-        rule({
-          rules: { admin: () => false },
-          context: { domain: { name: "test" } },
-        })
-      }).toThrow()
+      const result = rule({
+        getRule,
+        params: { domain: { name: "test" } },
+      })
+      expect(result).toEqual(true)
     })
 
     it("domain_id:%(domain_id)s, params: {domain_id:'12345'}", () => {
