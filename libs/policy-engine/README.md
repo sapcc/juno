@@ -25,51 +25,51 @@ policy.check("admin")
 
 ## Syntax
 
-- rules (JSON file): RULE_NAME (string): RULE_BODY (expression),
+- rules (JSON file): `RULE_NAME (string): RULE_BODY (expression)`,
   example: `"admin": "false"`
 
-- TRUE expression: @, example: `"can_read": "@"`
-- FALSE expression: !, example: `"can_write": "!"`
-- RULE expression: rule:RULE_NAME,
+- TRUE expression: `@`, example: `"can_read": "@"`
+- FALSE expression: `!`, example: `"can_write": "!"`
+- RULE expression: `rule:RULE_NAME`,
   example: `"superadmin": "rule:admin"`
 
-- ROLE expression: role:ROLE_NAME, example: `"admin":"role:admin"`
+- ROLE expression: `role:ROLE_NAME`, example: `"admin":"role:admin"`
 
-- CONTEXT expression: CONTEXT_VARIABLE:VALUE, example: `"admin": "is_admin:1"`
+- CONTEXT expression: `CONTEXT_VARIABLE:VALUE`, example: `"admin": "is_admin:1"`
 
   available context variables:
 
-  - is_admin_project
-  - is_admin
-  - domain_id
-  - domain_name
-  - project_id
-  - project_domain_id
-  - user_id
+  - `is_admin_project`
+  - `is_admin`
+  - `domain_id`
+  - `domain_name`
+  - `project_id`
+  - `project_domain_id`
+  - `user_id`
 
-- PARAMS expression: CONTEXT_VARIABLE:%(PARAM_VALUE)s, example: `"admin": "domain_id:%(domain.id)s"`
+- PARAMS expression: `CONTEXT_VARIABLE:%(PARAM_VALUE)s`, example: `"admin": "domain_id:%(domain.id)s"`
 
   should be used as follows:
 
-  `policy.check("admin", { domain: { id: "ID" } } )``
+  `policy.check("admin", { domain: { id: "ID" } } )`
 
-- NULL Value expression: CONTEXT_VARIABLE:null, example: `"admin": "domain_id:null"`
+- NULL Value expression: `CONTEXT_VARIABLE:null`, example: `"admin": "domain_id:null"`
 
-- STATIC Value: STATIC_VALUE:%(PARAM_VALUE)s, example: `"admin": "cloud_admin:%(domain.name)s"`
+- STATIC Value: `STATIC_VALUE:%(PARAM_VALUE)s`, example: `"admin": "cloud_admin:%(domain.name)s"`
 
   should be used as follows:
 
   `policy.check("admin", { domain: { name: "SOME_NAME" } } )`
 
-- AND Operator: EXPRESSION and EXPRESSION, example: `"domain_admin": "rule:admin and project_id:null"`
+- AND Operator: `EXPRESSION and EXPRESSION`, example: `"domain_admin": "rule:admin and project_id:null"`
 
-- OR Operator: EXPRESSION or EXPRESSION, example: `"can_read": "role:admin or role:member"`
+- OR Operator: `EXPRESSION or EXPRESSION`, example: `"can_read": "role:admin or role:member"`
 
-- NOT Operator: not EXPRESSION, example: `"project_admin": "role:admin and not project_id:null"`
+- NOT Operator: `not EXPRESSION`, example: `"project_admin": "role:admin and not project_id:null"`
 
-- BRACKETS Operator: (EXPRESSION), example: `"can_edit_project": "role:admin or ( role:member and project_id:%(project.id)s )"`
+- BRACKETS Operator: `(EXPRESSION)`, example: `"can_edit_project": "role:admin or ( role:member and project_id:%(project.id)s )"`
 
-- DEFAULT rule: \_default:RULE_BODY, example: `"_default": "!"`,
+- DEFAULT rule: `_default:RULE_BODY`, example: `"_default": "!"`,
   is used if a rule was not found
 
 ## Example
