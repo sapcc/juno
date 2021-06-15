@@ -18,7 +18,7 @@ const { PolicyEngine } = require("policy-engine")
 
 const currentUserToken = "..."
 const engine = new PolicyEngine(rules)
-const policy = engine.policy(currentUserToken)
+const policy = engine.policy(currentUserToken, { debug: false })
 
 policy.check("admin")
 ```
