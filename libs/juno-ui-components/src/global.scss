@@ -165,6 +165,16 @@
   --color-danger-bg-hover: var(--color-rgb-red-40);
   --color-danger-foreground: var(--color-rgb-white);
   --color-danger-border: var(--color-rgb-red-60);
+  
+  --color-introbox-default-bg: var(--color-rgb-sap-blue-10);
+  --color-introbox-default-border: var(--color-rgb-sap-blue);
+  
+  --color-introbox-danger-bg: var(--color-rgb-red-40);
+  --color-introbox-danger-border: var(--color-rgb-red-60);
+  
+  --color-introbox-warning-bg: var(--color-rgb-yellow-10);
+  --color-introbox-warning-border: var(--color-rgb-yellow-30);
+  
 }
 
 .theme-dark {
@@ -185,6 +195,15 @@
   --color-danger-bg-hover: var(--color-rgb-red-40);
   --color-danger-foreground: var(--color-rgb-white);
   --color-danger-border: var(--color-rgb-red-60);
+  
+  --color-introbox-default-bg: var(--color-rgb-sap-blue-80);
+  --color-introbox-default-border: var(--color-rgb-sap-blue-30);
+  
+  --color-introbox-danger-bg: var(--color-rgb-red-70);
+  --color-introbox-danger-border: var(--color-rgb-red);
+  
+  --color-introbox-warning-bg: var(--color-rgb-yellow-50);
+  --color-introbox-warning-border: var(--color-rgb-yellow);
 }
 
 html,

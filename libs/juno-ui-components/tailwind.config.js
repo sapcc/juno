@@ -99,6 +99,9 @@ module.exports = {
           "primary-hover": withOpacity("--color-primary-bg-hover"),
           "danger-hover": withOpacity("--color-danger-bg-hover"),
           "default-hover": withOpacity("--color-default-bg-hover"),
+          "introbox-default": withOpacity("--color-introbox-default-bg"),
+          "introbox-danger": withOpacity("--color-introbox-danger-bg"),
+          "introbox-warning": withOpacity("--color-introbox-warning-bg")
         },
       },
       textColor: {
@@ -113,6 +116,9 @@ module.exports = {
           primary: withOpacity("--color-primary-border"),
           danger: withOpacity("--color-danger-border"),
           default: withOpacity("--color-default-border"),
+          "introbox-default": withOpacity("--color-introbox-default-border"),
+          "introbox-danger": withOpacity("--color-introbox-danger-border"),
+          "introbox-warning": withOpacity("--color-introbox-warning-border")
         },
       },
       padding: {

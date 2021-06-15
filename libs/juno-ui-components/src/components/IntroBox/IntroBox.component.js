@@ -1,16 +1,44 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+const introbox = `
+	py-1
+	px-2
+	sm:py-3
+	sm:px-4
+	border-l-4
+`
+
+const introboxDefault = `
+	bg-theme-introbox-default
+	border-theme-introbox-default
+`
+
+const introboxDanger = `
+	bg-theme-introbox-danger
+	border-theme-introbox-danger
+`
+
+const introboxWarning = `
+	bg-theme-introbox-warning
+	border-theme-introbox-warning
+`
+
+const introboxHeading = `
+	font-bold
+`
+
+
 const variantClass = (variant) => {
 	  switch (variant) {
 		case "danger":
-		  return "introbox-danger"
+		  return introboxDanger
 		case "warning":
-		  return "introbox-warning"
+		  return introboxWarning
 		case "default":
-		return "introbox-default"
+		return introboxDefault
 		default:
-		  return "introbox-default"
+		  return introboxDefault
 	  }
 	}
 
@@ -23,10 +51,10 @@ export const IntroBox = ({
 }) => {
 	return (
 		<div 
-			className={`introbox ${variantClass(variant)}`}
+			className={`${introbox} ${variantClass(variant)}`}
 			{...props}
 		>
-			{title ?  <h1>{title}</h1> : ""}
+			{title ?  <h1 className={`${introboxHeading}`}>{title}</h1> : ""}
 			<p>{ children ? children : text }</p>
 		</div>
 	)
