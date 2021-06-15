@@ -127,6 +127,6 @@ Button.propTypes = {
 Button.defaultProps = {
   variant: "default",
   size: "default",
-  title: "unspecified button",
+  title: null,
   onClick: undefined,
 }
