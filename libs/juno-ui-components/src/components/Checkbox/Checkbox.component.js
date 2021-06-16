@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+/** A very basic, for the time being uncontrolled Checkbox. */
 export const Checkbox = ({
 	name,
 	value,
@@ -21,9 +22,13 @@ export const Checkbox = ({
 }
 
 Checkbox.propTypes = { 
+	/** Name attribute */
 	name: PropTypes.string,
+	/** Pass a value the checkbox should represent.*/
 	value: PropTypes.string,
+	/**  Pass checked state for initial rendering. Will NOT be updated once user changes the state of the checkbox for now! */
 	checked: PropTypes.bool,
+	/** Pass a handler */
 	onChange: PropTypes.func,
 }
 
