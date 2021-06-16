@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+/** A basic, atomic, uncontrolled Input[type="search"] */
 export const SearchInput = ({
 	name,
 	value,
@@ -21,9 +22,13 @@ export const SearchInput = ({
 }
 
 SearchInput.propTypes = { 
+	/** Pass a name. Defaults to "search". */
 	name: PropTypes.string,
+	/** Pass a custom placeholder to replace "Search…" default.*/
 	placeholder: PropTypes.string,
+	/** Pass a value for initial rendering. Will NOT be updated once user changes for now */
 	value: PropTypes.string,
+	/** Pass a handler */
 	onChange: PropTypes.func,
 }
 
