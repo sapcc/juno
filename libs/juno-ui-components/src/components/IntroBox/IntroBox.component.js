@@ -42,6 +42,10 @@ const variantClass = (variant) => {
 	  }
 	}
 
+/**
+* An Introbox holds generally important information to help understand the contents, purpose, or state of a whole page or view, or individual sections on longer pages.
+Use sparingly, there should never be any two or more subsequent instances of Introbox as direct siblings/neighbors on an individual view.
+*/
 export const IntroBox = ({
 	title,
 	text,
@@ -61,9 +65,13 @@ export const IntroBox = ({
 }
 
 IntroBox.propTypes = { 
+	/** Pass an optional title */
 	title: PropTypes.string,
+	/** Pass a string of text to be rendered as contents. Alternatively, contents can be passed as children (see below) */
 	text: PropTypes.string,
+	/** Specify a semantic variant */
 	variant: PropTypes.oneOf(['default', 'warning', 'danger']),
+	/** Pass child nodes to be rendered as contents */
 	children: PropTypes.node,
 }
 
