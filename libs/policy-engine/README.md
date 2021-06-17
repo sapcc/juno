@@ -8,6 +8,10 @@ JSON File -> Policy Engine -> Policy
 
 Openstack Token -> Policy -> check function
 
+Lexer -> Parser -> Evaluator
+
+https://www.codeproject.com/Articles/345888/How-to-Write-a-Simple-Interpreter-in-JavaScript
+
 ## Usage
 
 ```js
