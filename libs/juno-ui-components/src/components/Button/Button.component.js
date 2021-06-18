@@ -8,7 +8,7 @@ const btn = `
   border
   shadow-sm 
   font-medium 
-  w:full
+  w-full
   sm:w-auto 
   focus:outline-none 
   focus:ring
