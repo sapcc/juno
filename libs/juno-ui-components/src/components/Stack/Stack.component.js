@@ -25,6 +25,7 @@ export const Stack = ({
   return (
     <div 
       className={`${baseStack(direction, gap)}`}
+      {...props}
     >
       {children}
     </div>
