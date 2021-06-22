@@ -3,7 +3,7 @@ import React from "react"
 import { FloatingLabelInput } from "./index.js"
 
 export default {
-  title: "Design System/Form/FloatingLabelInput",
+  title: "Design System/Forms/FloatingLabelInput",
   component: FloatingLabelInput,
   argTypes: {
     name: { control: "text" },

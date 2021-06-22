@@ -7,7 +7,7 @@ import { Default as DefaultSelectOption, Disabled as DisabledSelectOption} from 
 import { Default as DefaultSelectOptionGroup, Disabled as DisabledSelectOptionGroup } from "../SelectOptionGroup/SelectOptionGroup.stories"
 
 export default {
-  	title: "Design System/ Select / Select",
+  	title: "Design System/ Forms /Select / Select",
   	component: Select,
   	argTypes: {},
 }

@@ -2,7 +2,7 @@ import React from "react"
 import { SelectOption } from "./index.js"
 
 export default {
-  title: "Design System/Select/SelectOption",
+  title: "Design System/Forms/Select/SelectOption",
   component: SelectOption,
   argTypes: {},
 }

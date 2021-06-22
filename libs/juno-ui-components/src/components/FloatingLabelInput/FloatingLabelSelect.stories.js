@@ -3,7 +3,7 @@ import React from "react"
 import { FloatingLabelSelect } from "./index.js"
 
 export default {
-  title: "Design System/Form/FloatingLabelSelect",
+  title: "Design System/Forms/FloatingLabelSelect",
   component: FloatingLabelSelect,
   argTypes: {
     name: { control: "text" },

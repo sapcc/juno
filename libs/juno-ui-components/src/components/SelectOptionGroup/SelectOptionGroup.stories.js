@@ -5,7 +5,7 @@ import { SelectOption } from "../SelectOption/index.js"
 import { Default as DefaultSelectOption, Disabled as DisabledSelectOption} from "../SelectOption/SelectOption.stories" 
 
 export default {
-  title: "Design System/Select/SelectOptionGroup",
+  title: "Design System/Forms/Select/SelectOptionGroup",
   component: SelectOptionGroup,
   argTypes: {},
 }
