@@ -2,7 +2,7 @@ import React from "react"
 import { Radio } from "./index.js"
 
 export default {
-  title: "Design System/Radio",
+  title: "Design System/Forms/Radio",
   component: Radio,
   argTypes: {},
 }

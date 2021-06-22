@@ -4,7 +4,7 @@ import { RadioGroup } from "./index.js"
 import { Default as Radio } from "../Radio/Radio.stories"
 
 export default {
-  title: "Design System/RadioGroup",
+  title: "Design System/Forms/RadioGroup",
   component: RadioGroup,
   argTypes: {},
 }
