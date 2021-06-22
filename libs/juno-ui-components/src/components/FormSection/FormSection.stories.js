@@ -2,7 +2,7 @@ import React from "react"
 import { FormSection } from "./index.js"
 
 export default {
-  title: "Design System/FormSection",
+  title: "Design System/Forms/FormSection",
   component: FormSection,
   argTypes: {},
 }

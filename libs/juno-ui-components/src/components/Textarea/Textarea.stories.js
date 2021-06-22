@@ -2,7 +2,7 @@ import React from "react"
 import { Textarea } from "./index.js"
 
 export default {
-  title: "Design System/Textarea",
+  title: "Design System/Forms/Textarea",
   component: Textarea,
   argTypes: {},
 }

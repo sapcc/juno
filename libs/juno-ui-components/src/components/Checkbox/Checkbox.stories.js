@@ -2,7 +2,7 @@ import React from "react"
 import { Checkbox } from "./index.js"
 
 export default {
-  title: "Design System/Checkbox",
+  title: "Design System/Forms/Checkbox",
   component: Checkbox,
   argTypes: {},
 }

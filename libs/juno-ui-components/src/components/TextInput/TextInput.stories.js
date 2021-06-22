@@ -2,7 +2,7 @@ import React from "react"
 import { TextInput } from "./index.js"
 
 export default {
-  title: "Design System/TextInput",
+  title: "Design System/Forms/TextInput",
   component: TextInput,
   argTypes: {},
 }

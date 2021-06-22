@@ -2,7 +2,7 @@ import React from "react"
 import { TextInputGroup } from "./index.js"
 
 export default {
-  title: "Design System/TextInputGroup",
+  title: "Design System/Forms/TextInputGroup",
   component: TextInputGroup,
   argTypes: {},
 }
