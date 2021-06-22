@@ -8,13 +8,13 @@ createServer({
   logger: true,
   graphiql: true,
   identityHost: process.env.IDENTITY_HOST,
-  useAuthentication: false,
+  useAuthentication: true,
 }).then((server) => {
   server
     .listen(process.env.PORT, "0.0.0.0")
     .then((url) => server.log.info(`server listening on ${url}`))
     .catch((error) => {
-      server.log.error(err)
+      server.log.error(error)
       process.exit(1)
     })
 })

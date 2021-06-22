@@ -10,19 +10,33 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Comment, { as: "comments", foreignKey: "userID" })
+      User.hasMany(models.Request, {
+        foreignKey: "requesterID",
+        as: "openedRequests",
+      })
+      User.hasMany(models.Request, {
+        foreignKey: "processorsIDs",
+        as: "processedRequests",
+      })
     }
   }
+
   User.init(
     {
       name: DataTypes.STRING,
       email: DataTypes.STRING,
       fullName: DataTypes.STRING,
-      status: DataTypes.STRING,
+      email: DataTypes.STRING,
+      profileSettings: DataTypes.JSON,
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE,
     },
     {
       sequelize,
       modelName: "User",
     }
   )
+
   return User
 }

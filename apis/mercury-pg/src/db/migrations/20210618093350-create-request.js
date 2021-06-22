@@ -8,17 +8,53 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      title: {
+      kind: {
+        type: Sequelize.STRING,
+      },
+      priority: {
         type: Sequelize.STRING,
       },
       description: {
         type: Sequelize.TEXT,
       },
-      status: {
+      subject: {
         type: Sequelize.STRING,
       },
-      creator_id: {
+      region: {
         type: Sequelize.STRING,
+      },
+      isDomainScoped: {
+        type: Sequelize.BOOLEAN,
+      },
+      isProjectScoped: {
+        type: Sequelize.BOOLEAN,
+      },
+      domainID: {
+        type: Sequelize.STRING,
+      },
+      domainName: {
+        type: Sequelize.STRING,
+      },
+      projectID: {
+        type: Sequelize.STRING,
+      },
+      projectName: {
+        type: Sequelize.STRING,
+      },
+      requesterID: {
+        type: Sequelize.INTEGER,
+      },
+      processorsIDs: {
+        type: Sequelize.ARRAY(Sequelize.INTEGER),
+      },
+      tags: {
+        type: Sequelize.JSON,
+      },
+      state: {
+        type: Sequelize.STRING,
+      },
+      payload: {
+        type: Sequelize.JSON,
       },
       createdAt: {
         allowNull: false,

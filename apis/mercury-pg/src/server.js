@@ -49,6 +49,7 @@ module.exports = async (options) => {
         if (!data.authToken)
           throw new HTTPError(400, `X-Auth-Token header is undefined!`)
 
+        // TODO: init policy
         data.tokenPayload = await verifyAuthToken(
           identityHost,
           data.authToken
