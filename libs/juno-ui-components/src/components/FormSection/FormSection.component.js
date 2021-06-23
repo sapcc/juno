@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { FormLayoutProvider } from "../FormLayoutProvider"
 
 const formSection = `
 `
@@ -19,8 +20,10 @@ export const FormSection = ({
 			className={`${formSection}`}
 			{...props}
 		>
-			{title ?  <h1 className={`${formSectionHeading}`}>{title}</h1> : ""}
-			{children}
+			<FormLayoutProvider layout={layout}>
+				{title ?  <h1 className={`${formSectionHeading}`}>{title}</h1> : ""}
+				{children}
+			</FormLayoutProvider>
 		</section>
 		
 	)
