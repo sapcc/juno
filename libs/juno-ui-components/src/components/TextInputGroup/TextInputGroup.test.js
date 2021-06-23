@@ -14,6 +14,7 @@ describe("TextInputGroup", () => {
 		render(<TextInputGroup data-testid="text-input-group" label="my-text-input" id="text-input-group" />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByLabelText("my-text-input")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveAttribute("id", 'text-input-group')
 	})
 	
 	test("renders a horizontal text input group as passed", async () => {

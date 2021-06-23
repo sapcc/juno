@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { FormLayoutProvider } from "../FormLayoutProvider"
 
 const formHeading = `
   `
@@ -12,20 +13,22 @@ export const Form = ({
 	...props
 }) => {
 	return (
-		<form 
-			{...props}
-		>
-			{title ?  <h1 className={`${formHeading}`}>{title}</h1> : ""}
-			{children}
-		</form>
-		
+			<form 
+				className={`form-${layout}`}
+				{...props}
+			>
+				<FormLayoutProvider layout={layout}>
+					{title ?  <h1 className={`${formHeading}`}>{title}</h1> : ""}
+					{children}
+				</FormLayoutProvider>
+			</form>		
 	)
 }
 
 Form.propTypes = { 
-	/** Layout direction */
+	/** Layout direction of the form */
 	layout: PropTypes.oneOf(["horizontal", "vertical"]),
-	/** Title, will be rendering as an `<h1>`. */
+	/** Title to be rendered in the Form`. */
 	title: PropTypes.string,
 	/** Children to render in the form */
 	children: PropTypes.node,

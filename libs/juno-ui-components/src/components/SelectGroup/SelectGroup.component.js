@@ -1,42 +1,40 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { TextInput } from "../TextInput/index.js"
+import { Select } from "../Select/index.js"
 import { useFormLayoutContext, FormLayoutProvider } from "../FormLayoutProvider"
 
 
-const textinputgroup = `
+const selectgroup = `
 	flex
 `
 
-const textinputgroupHorizontal = `
+const selectgroupHorizontal = `
 	flex-row
 `
 
-const textinputgroupVertical = `
+const selectgroupVertical = `
 	flex-col
 `
 
 const layoutClass = (layoutDirection) => {
 	switch (layoutDirection) {
 		case "vertical":
-			return textinputgroupVertical
+			return selectgroupVertical
 		case "horizontal":
-			return textinputgroupHorizontal
+			return selectgroupHorizontal
 		default:
-			return textinputgroupHorizontal
+			return selectgroupHorizontal
 	}
 }
 
-/** A text input group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
-export const TextInputGroup = ({
-	type,
-	value,
+/** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
+export const SelectGroup = ({
 	layout,
 	name,
 	label,
 	id,
-	placeholder,
 	helptext,
+	children,
 	...props
 }) => {
 	/* 
@@ -53,10 +51,10 @@ export const TextInputGroup = ({
 	if (!layoutDirection) {
 		console.log("no layout prop passed directly")
 		try {
-		 	layoutDirection = useFormLayoutContext()
+			 layoutDirection = useFormLayoutContext()
 			console.log("getting layout from context, received: ", layoutDirection)
 		} catch (e) {
-		 	layoutDirection = defaultLayoutDirection
+			 layoutDirection = defaultLayoutDirection
 			console.log(e)
 			console.log("there was an error calling the context, defaulting to: ", layoutDirection)
 		} finally {
@@ -70,46 +68,41 @@ export const TextInputGroup = ({
 	
 	return (
 		<div 
-			className={`${textinputgroup} textinputgroup-${layoutDirection} ${layoutClass(layoutDirection)}`}
+			className={`${selectgroup} selectgroup-${layoutDirection} ${layoutClass(layoutDirection)}`}
 			{...props}
 		>
 			<div>
 				<label htmlFor={id}>{label}</label>
 			</div>
 			<div>
-				<TextInput type={type} name={name} id={id} placeholder={placeholder} />
+				<Select name={name} id={id}>
+					{children}
+				</Select>
 				{helptext ? <p>{helptext}</p> : ""}
 			</div>
 		</div>	
 	)
 }
 
-TextInputGroup.propTypes = { 
-	/** The type of the input element to render */
-	type: PropTypes.oneOf(["text", "password", "email", "tel", "url"]),
+SelectGroup.propTypes = { 
 	/** Layout direction */
 	layout: PropTypes.oneOf(["horizontal", "vertical"]),
-	/** Optional initial value */
-	value: PropTypes.string,
 	/** Name attribute of the input */
 	name: PropTypes.string,
 	/** Label text */
 	label: PropTypes.string,
 	/** Id */
 	id: PropTypes.string,
-	/** Placeholder for input */
-	placeholder: PropTypes.string,
 	/** Help text */
 	helptext: PropTypes.string,
+	/** Children to render */
+	children: PropTypes.node,
 }
 
-TextInputGroup.defaultProps = {
-	type: null,
+SelectGroup.defaultProps = {
 	layout: null,
-	value: null,
 	name: null,
 	label: null,
 	id: null,
-	placeholder: null,
 	helptext: null,
 }
