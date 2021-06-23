@@ -28,7 +28,6 @@ const layoutClass = (layoutDirection) => {
 }
 
 /** A text input group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
-/* TODO: Get layout prop from parent context */
 export const TextInputGroup = ({
 	type,
 	value,
