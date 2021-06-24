@@ -89,7 +89,7 @@ export const Switch = ({
 				<span className={`${track} ${checkedTrackClass(checkedState)}`}></span>
 				<span className={`${handle} ${checkedHandleClass(checkedState)}`}></span>
 			</span>
-			{`${checkedState}`}
+			{ checkedState ? "on" : "off"}
 		</button>
 	)
 }
