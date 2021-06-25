@@ -30,8 +30,7 @@ Vertical.parameters = {
   },
 }
 Vertical.args = {
-  direction: "vertical",
-  children: [<div>1</div>, <div>2</div>, <div>3</div>]
+  direction: "vertical"
 }
 
 export const GapHorizontal = Template.bind({})
@@ -41,8 +40,7 @@ GapHorizontal.parameters = {
   },
 }
 GapHorizontal.args = {
-  gap: 4,
-  children: [<div>1</div>, <div>2</div>, <div>3</div>, <div>4</div>, <div>5</div>]
+  gap: 4
 }
 
 export const GapVertical = Template.bind({})
@@ -53,6 +51,5 @@ GapVertical.parameters = {
 }
 GapVertical.args = {
   direction: "vertical",
-  gap: 3,
-  children: [<div>1</div>, <div>2</div>, <div>3</div>]
+  gap: 3
 }
