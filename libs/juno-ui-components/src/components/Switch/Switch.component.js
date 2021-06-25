@@ -1,103 +1,70 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 
-/* General */
-
-const swtch = `
-`
-
-const track = `
-`
-
-const handle = `
-`
-
-/* Size classes */
-
-const swtchSmall = `
-`
-
-const swtchDefaultSize = `
-`
-
-const swtchLarge = `
-`
-
-/* Checked classes */
-
-const checkedTrack = `
-`
-
-const uncheckedTrack = `
-`
-
-const checkedHandle = `
-`
-
-const uncheckedHandle = `
-`
-/* Disabled classes */
-const swtchDisabled = `
-	pointer-events-none
-	cursor-not-allowed
-`
-
-const disabledTrack = `
-`
-
-const disabledHandle = `
-`
-
-
-const sizeClass = (size) => {
-	switch (size) {
-		case "small":
-		  return swtchSmall
-		case "large":
-		  return swtchLarge
-		default:
-		  return swtchDefaultSize
-	}
+const swtchStyles = (size, checked, disabled) => {
+	return (
+		`
+			rounded-full
+			relative
+			p-0
+			leading-0
+			${ disabled ? 'pointer-events-none cursor-not-allowed opacity-50' : '' }
+			${ size === 'small' ? 'w-8 h-4' : '' }
+			${ size === 'large' ? 'w-12 h-6' : '' }
+			${ size === 'default' ? 'w-10 h-5' : '' }
+		`
+	)
 }
 
-const checkedTrackClass = (checked) => {
-	if (checked) {
-		return checkedTrack
-	} else {
-		return uncheckedTrack
-	}
+const swtchBodyStyles = (size, checked, disabled) => {
+	return (
+		`	
+			absolute
+			top-0
+			right-0
+			bottom-0
+			left-0
+			${ size === 'small' ? 'w-8 h-4' : '' }
+			${ size === 'large' ? 'w-12 h-6' : '' }
+			${ size === 'default' ? 'w-10 h-5' : '' }
+		`
+	)	
 }
 
-const checkedHandleClass = (checked) => {
-	if (checked) {
-		return checkedHandle
-	} else {
-		return uncheckedHandle
-	}
+const swtchTrackStyles = (size, checked, disabled) => {
+	return (
+		`
+			inline-block
+			absolute
+			top-0
+			right-0
+			bottom-0
+			left-0
+			rounded-full
+			${ size === 'small' ? 'w-8 h-4' : '' }
+			${ size === 'large' ? 'w-12 h-6' : '' }
+			${ size === 'default' ? 'w-10 h-5' : '' }
+			${ checked ? 'bg-theme-primary border-theme-primary' : 'bg-theme-default border-theme-default' }
+		`
+	)
+	
 }
 
-const disabledClass = (disabled) => {
-	if (disabled) {
-		return swtchDisabled
-	} else {
-		return false
-	}
-}
-
-const disabledTrackClass = (disabled) => {
-	if (disabled) {
-		return disabledTrack
-	} else {
-		return false
-	}
-}
-
-const disabledHandleClass = (disabled) => {
-	if (disabled) {
-		return disabledHandle
-	} else {
-		return false
-	}
+const swtchHandleStyles = (size, checked, disabled) => {
+	return (
+		`
+			inline-block
+			absolute
+			top-0
+			rounded-full
+			bg-white 
+			border-theme-default
+			${ size === 'small' ? 'w-4 h-4' : '' }
+			${ size === 'large' ? 'w-6 h-6' : '' }
+			${ size === 'default' ? 'w-5 h-5' : '' }
+			${checked ? 'right-0' : 'left-0'}
+		`
+	)
 }
 
 /** A Switch/Toggle component */
@@ -116,17 +83,15 @@ export const Switch = ({
 			type="button"
 			role="switch"
 			name={name}
-			className={`switch-${checkedState} ${swtch} ${sizeClass(size)} ${disabledClass(disabledState)}`}
+			className={`switch ${swtchStyles(size, checkedState, disabledState)}`}
 			onChange={onChange}
 			onClick={ () => toggleChecked(!checkedState) }
 			{...props}
 		>
-			<span>
-				<span className={`${track} ${checkedTrackClass(checkedState)} ${disabledTrackClass(disabledState)}`}></span>
-				<span className={`${handle} ${checkedHandleClass(checkedState)} ${disabledHandleClass(disabledState)}`}></span>
+			<span className={`switch-body ${swtchBodyStyles(size)}`}>
+				<span className={`switch-track ${swtchTrackStyles(size, checkedState, disabledState)}`}></span>
+				<span className={`switch-handle ${swtchHandleStyles(size, checkedState, disabledState)}`}></span>
 			</span>
-			{/* DELETE once styes are in place: */}
-			{ checkedState ? "on" : "off"}
 		</button>
 	)
 }
