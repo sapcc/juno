@@ -13392,6 +13392,17 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"graphql-scalars@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "graphql-scalars@npm:1.10.0"
+  dependencies:
+    tslib: ~2.2.0
+  peerDependencies:
+    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
+  checksum: 22656d1435a91b3953315f87ae35b96140f6bfc1e40bea39d7332e8e3c6192d4754945d6035e866ba2b594ec24f55e61b12511eb215c224484dc75db3d8d6dfb
+  languageName: node
+  linkType: hard
+
 "graphql-tag@npm:^2.12.0":
   version: 2.12.4
   resolution: "graphql-tag@npm:2.12.4"
@@ -17035,6 +17046,7 @@ fsevents@^1.2.7:
     fastify: ^3.18.0
     fastify-cors: ^6.0.1
     graphql: ^15.5.0
+    graphql-scalars: ^1.10.0
     graphql-tools: ^7.0.5
     mercurius: ^7.9.1
     nodemon: ^2.0.7

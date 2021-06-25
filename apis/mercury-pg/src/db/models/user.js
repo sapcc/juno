@@ -10,15 +10,30 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Comment, { as: "comments", foreignKey: "userID" })
+      User.hasMany(models.ProcessingStep, {
+        as: "processingSteps",
+        foreignKey: "processorID",
+      })
       User.hasMany(models.Request, {
         foreignKey: "requesterID",
-        as: "openedRequests",
+        as: "createdRequests",
       })
-      User.hasMany(models.Request, {
-        foreignKey: "processorsIDs",
-        as: "processedRequests",
+    }
+
+    // create or update user by name
+    static async createOrUpdate({ name, email, fullName }) {
+      const [user, created] = await User.findOrCreate({
+        where: { name },
+        defaults: {
+          createdAt: Date.now(),
+          name,
+        },
       })
+      if (!email && !fullName) return user
+      user.email = data.email
+      user.fullName = data.fullName
+      user.updatedAt = data.updatedAt
+      return await user.save()
     }
   }
 
@@ -27,8 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       email: DataTypes.STRING,
       fullName: DataTypes.STRING,
-      email: DataTypes.STRING,
-      profileSettings: DataTypes.JSON,
+      settings: DataTypes.JSON,
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },

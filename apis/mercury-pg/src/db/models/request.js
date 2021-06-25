@@ -11,38 +11,82 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Request.belongsTo(models.User, {
-        as: "requester",
+        as: "Requester",
         foreignKey: "requesterID",
       })
-      Request.belongsTo(models.User, {
-        as: "processors",
-        foreignKey: "processorsIDs",
-      })
-      Request.hasMany(models.Comment, {
-        as: "comments",
+      Request.hasMany(models.ProcessingStep, {
         foreignKey: "requestID",
       })
+    }
+
+    get requester() {
+      return this.getRequester()
+    }
+
+    get processors() {
+      return sequelize.models.User.findAll({
+        where: { id: this.processorsIDs },
+      })
+    }
+
+    get scope() {
+      const domainScope = this.domainID && {
+        id: this.domainID,
+        name: this.domainName,
+      }
+      if (this.projectID)
+        return {
+          project: {
+            id: this.projectID,
+            name: this.projectName,
+            domain: domainScope,
+          },
+        }
+      else if (domainScope) return { domain: domainScope }
+      return {}
+    }
+
+    async start(processorID) {
+      this.state = "processing"
+      this.stateDetails = "accept request"
+      this.processorsIDs = this.processorsIDs || []
+      this.processorsIDs.push(processorID)
+      this.save()
+    }
+    async reject(processorID) {
+      this.state = "rejected"
+      this.stateDetails = "cancel request"
+      this.processorsIDs = this.processorsIDs || []
+      this.processorsIDs.push(processorID)
+      this.save()
     }
   }
 
   Request.init(
     {
+      requesterID: DataTypes.INTEGER,
+      lastProcessorID: DataTypes.INTEGER,
       kind: DataTypes.STRING,
-      priority: DataTypes.STRING,
-      description: DataTypes.TEXT,
+      priority: DataTypes.INTEGER,
       subject: DataTypes.STRING,
+      description: DataTypes.TEXT,
+      payload: DataTypes.JSON,
       region: DataTypes.STRING,
-      isDomainScoped: DataTypes.BOOLEAN,
-      isProjectScoped: DataTypes.BOOLEAN,
       domainID: DataTypes.STRING,
       domainName: DataTypes.STRING,
       projectID: DataTypes.STRING,
       projectName: DataTypes.STRING,
-      requesterID: DataTypes.INTEGER,
-      processorsIDs: DataTypes.ARRAY(DataTypes.STRING),
       tags: DataTypes.JSON,
-      state: DataTypes.STRING,
-      payload: DataTypes.JSON,
+      state: DataTypes.ENUM(
+        "open",
+        "processing",
+        "waiting",
+        "rejected",
+        "approved",
+        "closed"
+      ),
+      stateDetails: DataTypes.STRING,
+      processingStepsIDs: DataTypes.ARRAY(DataTypes.INTEGER),
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },

@@ -9,6 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       email: {
@@ -17,10 +18,7 @@ module.exports = {
       fullName: {
         type: Sequelize.STRING,
       },
-      email: {
-        type: Sequelize.STRING,
-      },
-      profileSettings: {
+      settings: {
         type: Sequelize.JSON,
       },
       createdAt: {

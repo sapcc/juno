@@ -8,26 +8,30 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      requesterID: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      lastProcessorID: {
+        type: Sequelize.INTEGER,
+      },
       kind: {
         type: Sequelize.STRING,
       },
       priority: {
+        type: Sequelize.INTEGER,
+      },
+      subject: {
         type: Sequelize.STRING,
       },
       description: {
         type: Sequelize.TEXT,
       },
-      subject: {
-        type: Sequelize.STRING,
+      payload: {
+        type: Sequelize.JSON,
       },
       region: {
         type: Sequelize.STRING,
-      },
-      isDomainScoped: {
-        type: Sequelize.BOOLEAN,
-      },
-      isProjectScoped: {
-        type: Sequelize.BOOLEAN,
       },
       domainID: {
         type: Sequelize.STRING,
@@ -41,10 +45,7 @@ module.exports = {
       projectName: {
         type: Sequelize.STRING,
       },
-      requesterID: {
-        type: Sequelize.INTEGER,
-      },
-      processorsIDs: {
+      processingStepsIDs: {
         type: Sequelize.ARRAY(Sequelize.INTEGER),
       },
       tags: {
@@ -53,9 +54,10 @@ module.exports = {
       state: {
         type: Sequelize.STRING,
       },
-      payload: {
-        type: Sequelize.JSON,
+      stateDetails: {
+        type: Sequelize.STRING,
       },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -12,6 +12,7 @@
     "sequelize": "^6.6.2"
   },
   "devDependencies": {
+    "graphql-scalars": "^1.10.0",
     "sequelize-cli": "^6.2.0",
     "sqlite3": "^5.0.2"
   },

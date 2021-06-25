@@ -1,7 +1,7 @@
 "use strict"
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Comments", {
+    await queryInterface.createTable("ProcessingSteps", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,20 +11,35 @@ module.exports = {
       requestID: {
         type: Sequelize.INTEGER,
       },
-      kind: {
-        type: Sequelize.STRING,
+      processorID: {
+        type: Sequelize.INTEGER,
       },
       type: {
         type: Sequelize.STRING,
       },
-      userID: {
-        type: Sequelize.INTEGER,
-      },
       title: {
         type: Sequelize.STRING,
       },
-      text: {
+      comment: {
         type: Sequelize.TEXT,
+      },
+      referenceStepID: {
+        type: Sequelize.INTEGER,
+      },
+      fromState: {
+        type: Sequelize.STRING,
+      },
+      toState: {
+        type: Sequelize.STRING,
+      },
+      transition: {
+        type: Sequelize.STRING,
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,
@@ -37,6 +52,6 @@ module.exports = {
     })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Comments")
+    await queryInterface.dropTable("ProcessingSteps")
   },
 }
