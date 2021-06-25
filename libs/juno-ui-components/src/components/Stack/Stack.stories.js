@@ -4,7 +4,7 @@ import DummyComponentList from "../../../.storybook/components/DummyComponentLis
 import { Stack } from "./index.js"
 
 export default {
-  title: "Design System/Stack",
+  title: "Design System/Layout/Stack",
   component: Stack,
   argTypes: {
     gap: {
