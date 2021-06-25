@@ -1,5 +1,5 @@
 import React from "react"
-import DummyComponentList from "../../../.storybook/components/DummyComponentList"
+import DummyComponentList from "../../dummyComponents/DummyComponentList"
 
 import { Stack } from "./index.js"
 
