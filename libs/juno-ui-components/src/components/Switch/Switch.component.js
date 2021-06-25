@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 
-const swtchStyles = (size, checked, disabled) => {
+const swtchStyles = (size, disabled) => {
 	return (
 		`
 			rounded-full
@@ -16,7 +16,7 @@ const swtchStyles = (size, checked, disabled) => {
 	)
 }
 
-const swtchBodyStyles = (size, checked, disabled) => {
+const swtchBodyStyles = (size) => {
 	return (
 		`	
 			absolute
@@ -31,7 +31,7 @@ const swtchBodyStyles = (size, checked, disabled) => {
 	)	
 }
 
-const swtchTrackStyles = (size, checked, disabled) => {
+const swtchTrackStyles = (size, checked) => {
 	return (
 		`
 			inline-block
@@ -50,7 +50,7 @@ const swtchTrackStyles = (size, checked, disabled) => {
 	
 }
 
-const swtchHandleStyles = (size, checked, disabled) => {
+const swtchHandleStyles = (size, checked) => {
 	return (
 		`
 			inline-block
@@ -83,14 +83,14 @@ export const Switch = ({
 			type="button"
 			role="switch"
 			name={name}
-			className={`switch ${swtchStyles(size, checkedState, disabledState)}`}
+			className={`switch ${swtchStyles(size, disabledState)}`}
 			onChange={onChange}
 			onClick={ () => toggleChecked(!checkedState) }
 			{...props}
 		>
 			<span className={`switch-body ${swtchBodyStyles(size)}`}>
-				<span className={`switch-track ${swtchTrackStyles(size, checkedState, disabledState)}`}></span>
-				<span className={`switch-handle ${swtchHandleStyles(size, checkedState, disabledState)}`}></span>
+				<span className={`switch-track ${swtchTrackStyles(size, checkedState)}`}></span>
+				<span className={`switch-handle ${swtchHandleStyles(size, checkedState)}`}></span>
 			</span>
 		</button>
 	)
