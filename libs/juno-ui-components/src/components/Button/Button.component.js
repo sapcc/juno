@@ -18,7 +18,7 @@ const btn = `
 
 const btnDefault = `
   text-theme-on-default
-  bg-sap-blue
+  bg-theme-default
   border-theme-default
   hover:bg-theme-default-hover
   disabled:bg-theme-default
