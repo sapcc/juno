@@ -19,6 +19,7 @@ module.exports = {
 
     async requests(root, args, context) {
       const where = {}
+      if (args.id) where.id = args.id
       if (args.state) where.state = args.state
       if (args.priority) where.priority = args.priority
       if (args.kind) where.kind = args.kind
@@ -61,7 +62,8 @@ module.exports = {
     },
 
     async updateRequest(root, { id, ...args }) {
-      return {} //await Request.update({ _id: id }, args)
+      const request = await Request.findByPk(id)
+      return request.update(args)
     },
     async deleteRequests(root, { id }) {
       return {} //await Request.findOneAndRemove({ _id: id })

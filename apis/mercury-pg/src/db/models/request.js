@@ -46,6 +46,23 @@ module.exports = (sequelize, DataTypes) => {
       return {}
     }
 
+    async update(args) {
+      const keys = [
+        "kind",
+        "subject",
+        "description",
+        "priority",
+        "region",
+        "payload",
+        "tags",
+      ]
+      keys
+        .filter((key) => args[key] !== undefined)
+        .forEach((key) => (this[key] = args[key]))
+
+      return this.save()
+    }
+
     async start(processorID) {
       this.state = "processing"
       this.stateDetails = "accept request"

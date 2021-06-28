@@ -2,6 +2,7 @@ module.exports = `
   type Query {
     profile: User! 
     requests(
+      id: [ID!],
       state: [String!], 
       priority: [Int!],
       kind: [String!], 
@@ -27,6 +28,7 @@ module.exports = `
     ): Request!
 
     updateRequest(
+      id: ID!,
       kind: String,
       subject: String,
       description: String,
