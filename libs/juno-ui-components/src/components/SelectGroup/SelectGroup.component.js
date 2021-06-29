@@ -35,6 +35,7 @@ export const SelectGroup = ({
 	id,
 	helptext,
 	children,
+	onChange,
 	...props
 }) => {
 	/* 
@@ -75,7 +76,7 @@ export const SelectGroup = ({
 				<label htmlFor={id}>{label}</label>
 			</div>
 			<div>
-				<Select name={name} id={id}>
+				<Select name={name} id={id} onChange={onChange}>
 					{children}
 				</Select>
 				{helptext ? <p>{helptext}</p> : ""}
@@ -97,6 +98,8 @@ SelectGroup.propTypes = {
 	helptext: PropTypes.string,
 	/** Children to render */
 	children: PropTypes.node,
+	/** Pass a handler to the Select element */
+	onChange: PropTypes.func,
 }
 
 SelectGroup.defaultProps = {
@@ -105,4 +108,5 @@ SelectGroup.defaultProps = {
 	label: null,
 	id: null,
 	helptext: null,
+	onChange: undefined,
 }

@@ -32,4 +32,12 @@ describe("TextInputGroup", () => {
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
 	})
 	
+	test("fires onChange handler as passed", async () => {
+		const handleChange = jest.fn()
+		render(<SelectGroup onChange={handleChange} />)
+		const slct = screen.getByRole("combobox")
+		fireEvent.change(slct, { target: { value: 'a' } })
+		expect(handleChange).toHaveBeenCalledTimes(1)
+	})
+	
 })
