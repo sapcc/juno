@@ -1,2 +1,2 @@
-const { PloicyEngine } = require("./engine")
-module.exports = { PloicyEngine }
+const PolicyEngine = require("./engine")
+module.exports = PolicyEngine
