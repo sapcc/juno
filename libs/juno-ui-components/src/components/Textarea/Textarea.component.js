@@ -7,6 +7,7 @@ export const Textarea = ({
 	value,
 	autoComplete,
 	autoFocus,
+	onChange,
 	...props
 }) => {
 	return (
@@ -15,6 +16,7 @@ export const Textarea = ({
 			defaultValue={value}
 			autoComplete={autoComplete}
 			autoFocus={autoFocus}
+			onChange={onChange}
 			{...props}
 		>
 			
@@ -31,6 +33,8 @@ Textarea.propTypes = {
 	autoComplete: PropTypes.oneOf(['on', 'off']),
 	/** Specify whether textarea should autofocus on page load */
 	autoFocus: PropTypes.bool,
+	/** Pass a handler */
+	onChange: PropTypes.func,
 }
 
 Textarea.defaultProps = {
@@ -38,4 +42,5 @@ Textarea.defaultProps = {
 	value: null,
 	autoComplete: null,
 	autoFocus: false,
+	onChange: undefined,
 }
