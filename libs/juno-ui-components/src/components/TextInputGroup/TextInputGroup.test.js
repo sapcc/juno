@@ -27,6 +27,11 @@ describe("TextInputGroup", () => {
 		expect(screen.getByTestId("text-input-group")).toHaveClass("textinputgroup-vertical")
 	})
 	
+	test("renders a horizontal text input group per default", async () => {
+		render(<TextInputGroup data-testid="text-input-group" />)
+		expect(screen.getByTestId("text-input-group")).toHaveClass("textinputgroup-horizontal")
+	})
+	
 	test("renders a help text as passed", async () => {
 		render(<TextInputGroup helptext="Helptext goes here" />)
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
