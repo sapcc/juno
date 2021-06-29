@@ -31,4 +31,12 @@ describe("TextInputGroup", () => {
 		render(<TextInputGroup helptext="Helptext goes here" />)
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
 	})
+	
+	test("fires onChange handler as passed", async () => {
+		const handleChange = jest.fn()
+		render(<TextInputGroup onChange={handleChange} />)
+		const input = screen.getByRole("textbox")
+		fireEvent.change(input, { target: { value: 'a' } })
+		expect(handleChange).toHaveBeenCalledTimes(1)
+	})
 })
