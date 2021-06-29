@@ -17,7 +17,7 @@ module.exports = {
       type: {
         type: Sequelize.STRING,
       },
-      title: {
+      kind: {
         type: Sequelize.STRING,
       },
       comment: {

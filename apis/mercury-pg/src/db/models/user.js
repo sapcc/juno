@@ -43,8 +43,6 @@ module.exports = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       fullName: DataTypes.STRING,
       settings: DataTypes.JSON,
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE,
     },
     {
       sequelize,

@@ -45,9 +45,6 @@ module.exports = {
       projectName: {
         type: Sequelize.STRING,
       },
-      processingStepsIDs: {
-        type: Sequelize.ARRAY(Sequelize.INTEGER),
-      },
       tags: {
         type: Sequelize.JSON,
       },

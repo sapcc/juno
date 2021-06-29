@@ -1,3 +1,16 @@
 {
-  "can-create": ""
+  "processor": "role:resource_admin or role:cloud_resource_admin",
+  "requester": "not rule:processor",
+  "can-create": "@",
+  "can-delete": "rule:processor and closed:%(request.state)s",
+  "can-start-processing": "rule:processor and open:%(request.state)s",
+  "can-approve": "rule:processor and not rejected:%(request.state)s and not approved:%(request.state)s and not closed:%(request.state)s",
+  "can-update": "open:%(request.state)s",
+  "can-add-note": "open:%(request.state)s and rule:requester",
+  "can-process": "processing:%(request.state)s",
+  "can-ask": "rule:processor and processing:%(request.state)s",
+  "can-answer": "rule:requester and waiting:%(request.state)s",
+  "can-reject": "rule:processor and not rejected:%(request.state)s and not approved:%(request.state)s and not closed:%(request.state)s",
+  "can-close": "not approved:%(request.state)s and not closed:%(request.state)s",
+  "can-reopen": "rejected:%(request.state)s"
 }

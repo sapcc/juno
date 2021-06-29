@@ -14,22 +14,13 @@ const schema = require("./graphql/schema")
 // Identity provider
 const { verifyAuthToken } = require("./lib/identityProvider")
 
-const policy = require("../config/policy.json")
-const { PloicyEngine } = require("policy-engine")
-const policyEngine = new PolicyEngine(policy)
+// Policy engine
+const policyEngine = require("policy-engine")(require("../config/policy.json"))
 
-class HTTPError extends Error {
-  constructor(statusCode, message) {
-    super(message)
-    // Ensure the name of this error is the same as the class name
-    this.name = this.constructor.name
-    this.statusCode = statusCode
-    // This clips the constructor invocation from the stack trace.
-    // It's not absolutely essential, but it does make the stack trace a little nicer.
-    //  @see Node.js reference (bottom)
-    Error.captureStackTrace(this, this.constructor)
-  }
-}
+// User
+const { User } = require("./db/models")
+
+const { HTTPError } = require("./errors")
 
 // create server function
 module.exports = async (options) => {
@@ -53,13 +44,25 @@ module.exports = async (options) => {
         if (!data.authToken)
           throw new HTTPError(400, `X-Auth-Token header is undefined!`)
 
-        // TODO: init policy
+        // add token payload to context
         data.tokenPayload = await verifyAuthToken(
           identityHost,
           data.authToken
         ).catch(({ statusCode, message }) => {
           throw new HTTPError(statusCode, `Identity provider: ${message}`)
         })
+        // create or load current user from db and save it in context
+        data.currentUser = await User.createOrUpdate({
+          name: data.tokenPayload.user.name,
+        })
+        // create user policy based on token payload
+        data.policy = policyEngine.policy(data.tokenPayload, { debug: false })
+
+        console.log(
+          "==============CURRENT USER IS",
+          (data.policy.check("requester") && "REQUESTER") ||
+            (data.policy.check("processor") && "PROCESSOR")
+        )
       }
 
       // initialize permissions from token payload provided by data

@@ -1,5 +1,26 @@
 "use strict"
 
+const transitions = {
+  startProcessing: { from: "open", to: "processing" },
+  addNote: { from: "open", to: "open" },
+  process: { from: "processing", to: "processing" },
+  askRequester: { from: ["open", "processing"], to: "waiting" },
+  answer: { from: "waiting", to: "processing" },
+  approve: {
+    from: ["open", "processing", "waiting"],
+    to: "approved",
+  },
+  reject: {
+    from: ["open", "processing", "waiting"],
+    to: "rejected",
+  },
+  close: {
+    from: ["open", "processing", "waiting", "rejected"],
+    to: "closed",
+  },
+  reopen: { from: "rejected", to: "open" },
+}
+
 const { Model } = require("sequelize")
 module.exports = (sequelize, DataTypes) => {
   class Request extends Model {
@@ -14,19 +35,68 @@ module.exports = (sequelize, DataTypes) => {
         as: "Requester",
         foreignKey: "requesterID",
       })
+
+      Request.belongsTo(models.User, {
+        as: "LastProcessor",
+        foreignKey: "lastProcessorID",
+      })
+
       Request.hasMany(models.ProcessingStep, {
         foreignKey: "requestID",
       })
     }
 
+    toState(transition) {
+      const stateTransitions = transitions[transition]
+      if (!stateTransitions) throw new Error(`UNKNOWN TRANSITION ${transition}`)
+
+      // get available transitions
+      let { from, to } = stateTransitions
+      if (!Array.isArray(from)) from = [from]
+
+      if (from.indexOf(this.state) < 0)
+        throw new Error(`BAD FROM STATE ${this.state}`)
+
+      return to
+    }
+
+    performStateTransition(processor, { transition, kind, type, comment }) {
+      const toState = this.toState(transition)
+
+      const step = sequelize.models.ProcessingStep.create({
+        requestID: this.id,
+        processorID: processor.id,
+        type: type || "public",
+        kind: kind || "note",
+        comment,
+        fromState: this.state,
+        toState,
+        transition,
+      })
+
+      if (step) {
+        this.state = toState
+        this.stateDetails = transition
+        this.lastProcessorID = processor.id
+        this.save()
+      }
+      return this
+    }
+
+    // constructor(values, options) {
+    //   super(values, options)
+    // }
+
     get requester() {
       return this.getRequester()
     }
 
-    get processors() {
-      return sequelize.models.User.findAll({
-        where: { id: this.processorsIDs },
-      })
+    get lastProcessor() {
+      return this.getLastProcessor()
+    }
+
+    get processingSteps() {
+      return this.getProcessingSteps()
     }
 
     get scope() {
@@ -62,21 +132,6 @@ module.exports = (sequelize, DataTypes) => {
 
       return this.save()
     }
-
-    async start(processorID) {
-      this.state = "processing"
-      this.stateDetails = "accept request"
-      this.processorsIDs = this.processorsIDs || []
-      this.processorsIDs.push(processorID)
-      this.save()
-    }
-    async reject(processorID) {
-      this.state = "rejected"
-      this.stateDetails = "cancel request"
-      this.processorsIDs = this.processorsIDs || []
-      this.processorsIDs.push(processorID)
-      this.save()
-    }
   }
 
   Request.init(
@@ -103,15 +158,16 @@ module.exports = (sequelize, DataTypes) => {
         "closed"
       ),
       stateDetails: DataTypes.STRING,
-      processingStepsIDs: DataTypes.ARRAY(DataTypes.INTEGER),
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE,
     },
     {
       sequelize,
       modelName: "Request",
     }
   )
+
+  Request.addHook("beforeCreate", (request, options) => {
+    request.state = "open"
+  })
 
   return Request
 }

@@ -40,14 +40,17 @@ module.exports = `
 
     deleteRequests(id:[ID!],olderThan: String, state: String): Boolean
 
-    startProcessing(requestID:ID!, comment: String): ProcessingStep!
-    addComment(requestID: ID!, comment: String!, referenceStepID: ID, type:String): ProcessingStep!
-    askRequester(requestID: ID!, comment: String!, referenceStepID: ID): ProcessingStep!
-    answer(requestID: ID!, comment: String!, referenceStepID: ID!): ProcessingStep!
-    approve(requestID: ID!, comment: String, referenceStepID:ID, type:String): ProcessingStep!
-    reject(requestID: ID!, comment: String!, referenceStepID:ID): ProcessingStep!
-    close(requestID: ID!, comment: String, referenceStepID:ID, type:String): ProcessingStep!
-    reopen(requestID: ID!, comment: String!, referenceStepID:ID): ProcessingStep!
+    startProcessing(requestID:ID!, comment: String, type:String, kind:String): Request!
+    addNote(requestID: ID!, comment: String!, referenceStepID: ID): Request!
+    process(requestID: ID!, comment: String!, referenceStepID: ID, type:String, kind: String): Request!
+    askRequester(requestID: ID!, comment: String!, referenceStepID: ID): Request!
+    answer(requestID: ID!, comment: String!, referenceStepID: ID!): Request!
+    approve(requestID: ID!, comment: String, referenceStepID:ID, kind: String): Request!
+    reject(requestID: ID!, comment: String!, referenceStepID:ID, kind: String): Request!
+    close(requestID: ID!, comment: String, referenceStepID:ID, kind:String): Request!
+    reopen(requestID: ID!, comment: String!, referenceStepID:ID): Request!
+
+    updateProcessingStep(id:ID, comment: String, type: String, kind: String): ProcessingStep!
 
     updateProfile(fullName:String,email:String,settings:String): User!
   }
@@ -68,7 +71,7 @@ module.exports = `
     id: ID!
     requestID: Int
     processor: User!
-    title: String
+    kind: String
     comment: String
     referenceStep: ProcessingStep
     fromState: String
@@ -90,7 +93,6 @@ module.exports = `
     payload: JSON!,
     region: String!,
     scope: Scope,
-    processingSteps: [ProcessingStep!],
     tags: [Tag!],
     state: String!,
     stateDetails: String,

@@ -15,15 +15,13 @@ module.exports = (sequelize, DataTypes) => {
     {
       requestID: DataTypes.INTEGER,
       processorID: DataTypes.INTEGER,
-      type: DataTypes.STRING,
-      title: DataTypes.STRING,
+      type: DataTypes.ENUM("public", "internal"),
+      kind: DataTypes.ENUM("note", "answer", "question", "solution"),
       comment: DataTypes.TEXT,
       referenceStepID: DataTypes.INTEGER,
       fromState: DataTypes.STRING,
       toState: DataTypes.STRING,
       transition: DataTypes.STRING,
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE,
     },
     {
       sequelize,

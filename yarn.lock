@@ -15272,6 +15272,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"javascript-state-machine@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "javascript-state-machine@npm:3.1.0"
+  checksum: 511a34ca54dc1cfc8930325950682fff2caab2fa95ad0008977b5bd697baeb8e04bb0a1aaf3f6e571079a1193252ed2cc2b997d5e370fbdec9c99326b3ec49e2
+  languageName: node
+  linkType: hard
+
 "jest-changed-files@npm:^26.6.2":
   version: 26.6.2
   resolution: "jest-changed-files@npm:26.6.2"
@@ -17048,6 +17055,7 @@ fsevents@^1.2.7:
     graphql: ^15.5.0
     graphql-scalars: ^1.10.0
     graphql-tools: ^7.0.5
+    javascript-state-machine: ^3.1.0
     mercurius: ^7.9.1
     nodemon: ^2.0.7
     policy-engine: "workspace:*"
