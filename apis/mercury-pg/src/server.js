@@ -14,6 +14,10 @@ const schema = require("./graphql/schema")
 // Identity provider
 const { verifyAuthToken } = require("./lib/identityProvider")
 
+const policy = require("../config/policy.json")
+const { PloicyEngine } = require("policy-engine")
+const policyEngine = new PolicyEngine(policy)
+
 class HTTPError extends Error {
   constructor(statusCode, message) {
     super(message)

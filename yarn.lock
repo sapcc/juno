@@ -17050,6 +17050,7 @@ fsevents@^1.2.7:
     graphql-tools: ^7.0.5
     mercurius: ^7.9.1
     nodemon: ^2.0.7
+    policy-engine: "workspace:*"
     sequelize: ^6.6.2
     sequelize-cli: ^6.2.0
     sqlite3: ^5.0.2
@@ -19075,7 +19076,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"policy-engine@workspace:libs/policy-engine":
+"policy-engine@workspace:*, policy-engine@workspace:libs/policy-engine":
   version: 0.0.0-use.local
   resolution: "policy-engine@workspace:libs/policy-engine"
   dependencies:
