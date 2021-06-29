@@ -71,7 +71,7 @@ export const CheckboxGroup =({
 			{...props}
 		>
 			<div>
-				<Checkbox name={name} onChange={onChange} id={id} />
+				<Checkbox name={name} onChange={onChange} id={id} value={value} />
 				{helptext ? <p>{helptext}</p> : ""}
 			</div>
 			<div>
