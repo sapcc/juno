@@ -1,1 +1,2 @@
-export { PloicyEngine } from "./engine"
+const { PloicyEngine } = require("./engine")
+module.exports = { PloicyEngine }
