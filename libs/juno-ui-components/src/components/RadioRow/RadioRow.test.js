@@ -10,7 +10,7 @@ describe("RadioRow", () => {
 		expect(screen.getByTestId("radio-row")).toBeInTheDocument()
 	})
 	
-	test("renders a radio group with a cradio and an associated label with an id as passed", async () => {
+	test("renders a radio group with a radio and an associated label with an id as passed", async () => {
 		render(<RadioRow data-testid="my-radio-row" label="My Radio Row" id="radio-row" />)
 		expect(screen.getByRole("radio")).toBeInTheDocument()
 		expect(screen.getByLabelText("My Radio Row")).toBeInTheDocument()
