@@ -13,6 +13,7 @@ export const SwitchGroup =({
 	name,
 	label,
 	id,
+	disabled,
 	helptext,
 	onChange,
 	...props
@@ -24,7 +25,7 @@ export const SwitchGroup =({
 			{...props}
 		>
 			<div>
-				<Switch name={name} onChange={onChange} id={id} value={value || ""} />
+				<Switch name={name} onChange={onChange} id={id} value={value || ""} disabled={disabled} />
 			</div>
 			<div>
 				<label htmlFor={id}>{label}</label>
@@ -43,6 +44,8 @@ SwitchGroup.propTypes = {
 	label: PropTypes.string,
 	/** Id */
 	id: PropTypes.string,
+	/** Disabled */
+	disabled: PropTypes.bool,
 	/** Help text */
 	helptext: PropTypes.string,
 	/** Pass a handler to the checkbox element */
@@ -54,6 +57,7 @@ SwitchGroup.defaultProps = {
 	name: null,
 	label: null,
 	id: null,
+	disabled: null,
 	helptext: null,
 	onChange: undefined,
 }
