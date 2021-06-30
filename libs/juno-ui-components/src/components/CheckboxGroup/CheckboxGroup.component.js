@@ -1,7 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Checkbox } from "../Checkbox/index.js"
-import { useFormLayoutContext, FormLayoutProvider } from "../FormLayoutProvider"
 
 const checkboxgroup = `
 	flex
