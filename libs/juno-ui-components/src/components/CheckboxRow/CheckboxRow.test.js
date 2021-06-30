@@ -1,24 +1,24 @@
 import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
-import { CheckboxGroup } from "./index"
+import { CheckboxRow } from "./index"
 
-describe("CheckboxGroup", () => {
+describe("CheckboxRow", () => {
 	
 	
-	test("renders a checkbox group", async () => {
-		render(<CheckboxGroup data-testid="checkbox-group" />)
-		expect(screen.getByTestId("checkbox-group")).toBeInTheDocument()
+	test("renders a checkbox row", async () => {
+		render(<CheckboxRow data-testid="checkbox-row" />)
+		expect(screen.getByTestId("checkbox-row")).toBeInTheDocument()
 	})
 	
 	test("renders a checkbox group with a checkbox and an associated label with an id as passed", async () => {
-		render(<CheckboxGroup data-testid="my-checkbox-group" label="My Checkbox Group" id="checkbox-group" />)
+		render(<CheckboxRow data-testid="my-checkbox-row" label="My Checkbox Row" id="checkbox-row" />)
 		expect(screen.getByRole("checkbox")).toBeInTheDocument()
-		expect(screen.getByLabelText("My Checkbox Group")).toBeInTheDocument()
-		expect(screen.getByRole("checkbox")).toHaveAttribute("id", 'checkbox-group')
+		expect(screen.getByLabelText("My Checkbox Row")).toBeInTheDocument()
+		expect(screen.getByRole("checkbox")).toHaveAttribute("id", 'checkbox-row')
 	})
 	
 	test("renders a help text as passed", async () => {
-		render(<CheckboxGroup helptext="Helptext goes here" />)
+		render(<CheckboxRow helptext="Helptext goes here" />)
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
 	})
 	
