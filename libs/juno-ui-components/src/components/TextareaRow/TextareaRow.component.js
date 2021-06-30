@@ -3,32 +3,32 @@ import PropTypes from "prop-types"
 import { Textarea } from "../Textarea/index.js"
 import { useFormLayoutContext, FormLayoutProvider } from "../FormLayoutProvider"
 
-const textareagroup = `
+const textarearow = `
 	flex
 `
 
-const textareagroupHorizontal = `
+const textarearowHorizontal = `
 	flex-row
 `
 
-const textareagroupVertical = `
+const textarearowVertical = `
 	flex-col
 `
 
 const layoutClass = (layoutDirection) => {
 	switch (layoutDirection) {
 		case "vertical":
-			return textareagroupVertical
+			return textarearowVertical
 		case "horizontal":
-			return textareagroupHorizontal
+			return textarearowHorizontal
 		default:
-			return textareagroupHorizontal
+			return textarearowHorizontal
 	}
 }
 
 /** A textarea group containing a textarea, associated label, optional helptext, and structural markup */
 
-export const TextareaGroup = ({
+export const TextareaRow = ({
 	value,
 	layout,
 	name,
@@ -68,7 +68,7 @@ export const TextareaGroup = ({
 	}
 	return (
 		<div
-			className={`${textareagroup} textareagroup-${layoutDirection} ${layoutClass(layoutDirection)}`}
+			className={`${textarearow} textarearow-${layoutDirection} ${layoutClass(layoutDirection)}`}
 			{...props}
 		>
 			<div>
@@ -82,7 +82,7 @@ export const TextareaGroup = ({
 	)
 }
 
-TextareaGroup.propTypes = {
+TextareaRow.propTypes = {
 	/** Optional initial value */
 	value: PropTypes.string,
 	/** Layout direction */
@@ -101,7 +101,7 @@ TextareaGroup.propTypes = {
 	onChange: PropTypes.func,
 }
 
-TextareaGroup.defaultProps = {
+TextareaRow.defaultProps = {
 	value: null,
 	layout: null,
 	name: null,
