@@ -1,28 +1,28 @@
 import React from "react"
-import { SwitchGroup } from "./index.js"
+import { SwitchRow } from "./index.js"
 
 export default {
-  title: "Design System/Forms/SwitchGroup",
-  component: SwitchGroup,
+  title: "Design System/Forms/SwitchRow",
+  component: SwitchRow,
   argTypes: {},
 }
 
-const Template = (args) => <SwitchGroup {...args} />
+const Template = (args) => <SwitchRow {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-	label: "Default Switch Group",
+	label: "Default Switch Row",
 }
 
 export const Checked = Template.bind({})
 Checked.args = {
-  label: "Checked Switch Group",
+  label: "Checked Switch Row",
   checked: true,
 }
 
 export const Disabled = Template.bind({})
 Disabled.args = {
-  label: "Disabled Switch Group",
+  label: "Disabled Switch Row",
   checked: true,
 }
 

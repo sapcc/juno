@@ -2,13 +2,13 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Switch } from "../Switch/index.js"
 
-const switchgroup = `
+const switchrow = `
 	flex
 	flex-row
 `
 
 /** A checkbox input group containing a checkbox, associated label, and structural markup */
-export const SwitchGroup =({
+export const SwitchRow =({
 	value,
 	name,
 	label,
@@ -21,7 +21,7 @@ export const SwitchGroup =({
 
 	return (
 		<div
-			className={`${switchgroup}`}
+			className={`${switchrow}`}
 			{...props}
 		>
 			<div>
@@ -35,7 +35,7 @@ export const SwitchGroup =({
 	)
 }
 
-SwitchGroup.propTypes = {
+SwitchRow.propTypes = {
 	/** Optional initial value */
 	value: PropTypes.string,
 	/** Name attribute of the checkbox element */
@@ -52,7 +52,7 @@ SwitchGroup.propTypes = {
 	onChange: PropTypes.func,
 }
 
-SwitchGroup.defaultProps = {
+SwitchRow.defaultProps = {
 	value: null,
 	name: null,
 	label: null,
