@@ -26,10 +26,10 @@ export const CheckboxGroup =({
 		>
 			<div>
 				<Checkbox name={name} onChange={onChange} id={id} value={value || ""} />
-				{helptext ? <p>{helptext}</p> : ""}
 			</div>
 			<div>
 				<label htmlFor={id}>{label}</label>
+				{helptext ? <p>{helptext}</p> : ""}
 			</div>
 		</div>
 	)
