@@ -4,31 +4,31 @@ import { TextInput } from "../TextInput/index.js"
 import { useFormLayoutContext, FormLayoutProvider } from "../FormLayoutProvider"
 
 
-const textinputgroup = `
+const textinputrow = `
 	flex
 `
 
-const textinputgroupHorizontal = `
+const textinputrowHorizontal = `
 	flex-row
 `
 
-const textinputgroupVertical = `
+const textinputrowVertical = `
 	flex-col
 `
 
 const layoutClass = (layoutDirection) => {
 	switch (layoutDirection) {
 		case "vertical":
-			return textinputgroupVertical
+			return textinputrowVertical
 		case "horizontal":
-			return textinputgroupHorizontal
+			return textinputrowHorizontal
 		default:
-			return textinputgroupHorizontal
+			return textinputrowHorizontal
 	}
 }
 
 /** A text input group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
-export const TextInputGroup = ({
+export const TextInputRow = ({
 	type,
 	value,
 	layout,
@@ -71,7 +71,7 @@ export const TextInputGroup = ({
 	
 	return (
 		<div 
-			className={`${textinputgroup} textinputgroup-${layoutDirection} ${layoutClass(layoutDirection)}`}
+			className={`${textinputrow} textinputrow-${layoutDirection} ${layoutClass(layoutDirection)}`}
 			{...props}
 		>
 			<div>
@@ -85,7 +85,7 @@ export const TextInputGroup = ({
 	)
 }
 
-TextInputGroup.propTypes = { 
+TextInputRow.propTypes = { 
 	/** The type of the input element to render */
 	type: PropTypes.oneOf(["text", "password", "email", "tel", "url"]),
 	/** Layout direction */
@@ -106,7 +106,7 @@ TextInputGroup.propTypes = {
 	onChange: PropTypes.func
 }
 
-TextInputGroup.defaultProps = {
+TextInputRow.defaultProps = {
 	type: null,
 	layout: null,
 	value: null,
