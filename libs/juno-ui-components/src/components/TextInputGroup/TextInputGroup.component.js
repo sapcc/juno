@@ -37,6 +37,7 @@ export const TextInputGroup = ({
 	id,
 	placeholder,
 	helptext,
+	onChange,
 	...props
 }) => {
 	/* 
@@ -77,7 +78,7 @@ export const TextInputGroup = ({
 				<label htmlFor={id}>{label}</label>
 			</div>
 			<div>
-				<TextInput type={type} name={name} id={id} placeholder={placeholder} />
+				<TextInput type={type} name={name} id={id} placeholder={placeholder} onChange={onChange} />
 				{helptext ? <p>{helptext}</p> : ""}
 			</div>
 		</div>	
@@ -101,6 +102,8 @@ TextInputGroup.propTypes = {
 	placeholder: PropTypes.string,
 	/** Help text */
 	helptext: PropTypes.string,
+	/** Pass a handler to the input element */
+	onChange: PropTypes.func
 }
 
 TextInputGroup.defaultProps = {
@@ -112,4 +115,5 @@ TextInputGroup.defaultProps = {
 	id: null,
 	placeholder: null,
 	helptext: null,
+	onChange: undefined,
 }
