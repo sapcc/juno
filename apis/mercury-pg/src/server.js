@@ -24,8 +24,7 @@ const { HTTPError } = require("./errors")
 
 // create server function
 module.exports = async (options) => {
-  const { graphiql, identityHost, useAuthentication, ...serverOptions } =
-    options
+  const { graphiql, identityHost, ...serverOptions } = options
 
   const server = fastify(serverOptions)
 
@@ -39,33 +38,25 @@ module.exports = async (options) => {
       const data = {}
 
       // use authentication
-      if (useAuthentication !== false) {
-        data.authToken = request.headers["x-auth-token"]
-        if (!data.authToken)
-          throw new HTTPError(400, `X-Auth-Token header is undefined!`)
+      data.authToken = request.headers["x-auth-token"]
+      if (!data.authToken)
+        throw new HTTPError(400, `X-Auth-Token header is undefined!`)
 
-        // add token payload to context
-        data.tokenPayload = await verifyAuthToken(
-          identityHost,
-          data.authToken
-        ).catch(({ statusCode, message }) => {
-          throw new HTTPError(statusCode, `Identity provider: ${message}`)
-        })
-        // create or load current user from db and save it in context
-        data.currentUser = await User.createOrUpdate({
-          name: data.tokenPayload.user.name,
-        })
-        // create user policy based on token payload
-        data.policy = policyEngine.policy(data.tokenPayload, { debug: false })
-
-        console.log(
-          "==============CURRENT USER IS",
-          (data.policy.check("requester") && "REQUESTER") ||
-            (data.policy.check("processor") && "PROCESSOR")
-        )
-      }
-
-      // initialize permissions from token payload provided by data
+      // add token payload to context
+      data.tokenPayload = await verifyAuthToken(
+        identityHost,
+        data.authToken
+      ).catch(({ statusCode, message }) => {
+        throw new HTTPError(statusCode, `Identity provider: ${message}`)
+      })
+      // create or load current user from db and save it in context
+      data.currentUser = await User.createOrUpdate({
+        name: data.tokenPayload.user.name,
+      })
+      // create user policy based on token payload
+      data.policy = policyEngine.policy(data.tokenPayload, {
+        debug: process.env.NODE_ENV === "development",
+      })
 
       return data
     },

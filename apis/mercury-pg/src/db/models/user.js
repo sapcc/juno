@@ -22,18 +22,22 @@ module.exports = (sequelize, DataTypes) => {
 
     // create or update user by name
     static async createOrUpdate({ name, email, fullName }) {
-      const [user, created] = await User.findOrCreate({
-        where: { name },
-        defaults: {
-          createdAt: Date.now(),
-          name,
-        },
+      return User.findOne({ where: { name } }).then((user) => {
+        if (user) {
+          if (email) user.email = email
+          if (fullName) user.fullName = fullName
+          user.save()
+          return user
+        }
+        return User.create({ name, email, fullName })
       })
-      if (!email && !fullName) return user
-      user.email = data.email
-      user.fullName = data.fullName
-      user.updatedAt = data.updatedAt
-      return await user.save()
+    }
+
+    get processingSteps() {
+      return this.getProcessingSteps()
+    }
+    get createdRequests() {
+      return this.getCreatedRequests()
     }
   }
 

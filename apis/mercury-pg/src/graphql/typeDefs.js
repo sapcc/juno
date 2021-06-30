@@ -25,6 +25,7 @@ module.exports = `
       region: String!,
       payload: String!,
       tags: [TagInput!],
+      comment: String
     ): Request!
 
     updateRequest(
@@ -86,6 +87,7 @@ module.exports = `
     id: ID!
     requester: User!,
     lastProcessor: User,
+    processingSteps: [ProcessingStep!]
     kind: String!,
     priority: Int,
     subject: String!,

@@ -5,7 +5,7 @@ const { Op } = require("sequelize")
 const { AuthorizationError, HTTPError } = require("../errors")
 
 const loadRequest = async (id) => {
-  const request = await Request.findByPk(requestID)
+  const request = await Request.findByPk(id)
   if (!request) throw new HTTPError(404, `Request not found`)
   return request
 }
@@ -50,7 +50,7 @@ module.exports = {
         where.type = "public"
       }
 
-      return ProcessingStep.findAll({ where })
+      return await ProcessingStep.findAll({ where })
     },
   },
 
@@ -68,10 +68,18 @@ module.exports = {
         domainID: project?.domain?.id || domain?.id,
         domainName: project?.domain?.name || domain?.name,
         requesterID: context.currentUser.id,
-        state: "open",
       }
 
-      return await Request.create(requestData)
+      const request = await Request.create(requestData)
+      if (args.comment) {
+        await request.performStateTransition("addNote", {
+          processor: context.currentUser,
+          kind: "note",
+          type: "public",
+          comment: args.comment,
+        })
+      }
+      return request
     },
 
     async updateRequest(root, { id, ...args }, context) {
@@ -171,15 +179,17 @@ module.exports = {
       })
     },
 
-    async answer(root, { requestID, comment }, context) {
+    async answer(root, { requestID, comment, referenceStepID }, context) {
       const request = await loadRequest(requestID)
+      const requester = await request.requester
 
-      if (!context.policy.check("can-ask", { request })) {
+      if (!context.policy.check("can-answer", { request, requester })) {
         throw new AuthorizationError("User is not allowed to answer")
       }
 
       return request.performStateTransition("answer", {
         processor: context.currentUser,
+        referenceStepID,
         kind: "answer",
         type: "public",
         comment,
@@ -255,6 +265,15 @@ module.exports = {
       if (fullName) context.currentUser.fullName = fullName
       if (settings) context.currentUser.settings = settings
       return context.currentUser.save()
+    },
+
+    async updateProcessingStep(root, { id, comment, type, kind }, context) {
+      const step = await ProcessingStep.findByPk(id)
+      if (!step) throw new HTTPError(404, `Processing step not found`)
+      if (comment) step.comment = comment
+      if (type) step.type = type
+      if (kind) step.kind = kind
+      return step.save()
     },
   },
 }

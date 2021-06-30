@@ -6,6 +6,7 @@ const TOKEN_PROPERTIES = [
   "project_id",
   "project_domain_id",
   "user_id",
+  "user_name",
 ]
 
 const toString = (s) => (typeof s === "undefined" ? s : s.toString())

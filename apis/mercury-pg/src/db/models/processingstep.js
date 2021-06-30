@@ -9,6 +9,29 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      ProcessingStep.belongsTo(models.ProcessingStep, {
+        as: "ReferenceStep",
+        foreignKey: "referenceStepID",
+      })
+
+      ProcessingStep.belongsTo(models.Request, {
+        foreignKey: "requestID",
+      })
+
+      ProcessingStep.belongsTo(models.User, {
+        as: "Processor",
+        foreignKey: "processorID",
+      })
+    }
+
+    get referenceStep() {
+      return this.getReferenceStep()
+    }
+    get request() {
+      return this.getRequest()
+    }
+    get processor() {
+      return this.getProcessor()
     }
   }
   ProcessingStep.init(

@@ -60,7 +60,10 @@ module.exports = (sequelize, DataTypes) => {
       return to
     }
 
-    performStateTransition(processor, { transition, kind, type, comment }) {
+    performStateTransition(
+      transition,
+      { processor, kind, type, comment, referenceStepID }
+    ) {
       const toState = this.toState(transition)
 
       const step = sequelize.models.ProcessingStep.create({
@@ -68,6 +71,7 @@ module.exports = (sequelize, DataTypes) => {
         processorID: processor.id,
         type: type || "public",
         kind: kind || "note",
+        referenceStepID,
         comment,
         fromState: this.state,
         toState,

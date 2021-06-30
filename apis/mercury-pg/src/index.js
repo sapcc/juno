@@ -8,7 +8,6 @@ createServer({
   logger: true,
   graphiql: true,
   identityHost: process.env.IDENTITY_HOST,
-  useAuthentication: true,
 }).then((server) => {
   server
     .listen(process.env.PORT, "0.0.0.0")
