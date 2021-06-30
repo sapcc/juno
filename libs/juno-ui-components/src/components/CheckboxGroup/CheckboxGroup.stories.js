@@ -14,25 +14,9 @@ Default.args = {
 	label: "Default Checkbox Group",
 }
 
-export const HorizontalLayout = Template.bind({})
-HorizontalLayout.args = {
-	layout: "horizontal",
+export const WithHelpText = Template.bind({})
+WithHelpText.args = {
 	name: "my-input",
-	label: "Horizontal Checkbox Group",
-}
-
-
-export const VerticalLayout = Template.bind({})
-VerticalLayout.args = {
-	layout: "vertical",
-	name: "my-input",
-	label: "Vertical Checkbox Group",
-}
-
-export const VerticalWithHelpText = Template.bind({})
-VerticalWithHelpText.args = {
-	layout: "vertical",
-	name: "my-input",
-	label: "Vertical Checkbxo Group with Help text",
+	label: "Checkbox Group with Help text",
 	helptext: "Oh so helpful helptext"
 }
