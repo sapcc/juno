@@ -4,31 +4,31 @@ import { Select } from "../Select/index.js"
 import { useFormLayoutContext, FormLayoutProvider } from "../FormLayoutProvider"
 
 
-const selectgroup = `
+const selectrow = `
 	flex
 `
 
-const selectgroupHorizontal = `
+const selectrowHorizontal = `
 	flex-row
 `
 
-const selectgroupVertical = `
+const selectrowVertical = `
 	flex-col
 `
 
 const layoutClass = (layoutDirection) => {
 	switch (layoutDirection) {
 		case "vertical":
-			return selectgroupVertical
+			return selectrowVertical
 		case "horizontal":
-			return selectgroupHorizontal
+			return selectrowHorizontal
 		default:
-			return selectgroupHorizontal
+			return selectrowHorizontal
 	}
 }
 
 /** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
-export const SelectGroup = ({
+export const SelectRow = ({
 	layout,
 	name,
 	label,
@@ -69,7 +69,7 @@ export const SelectGroup = ({
 	
 	return (
 		<div 
-			className={`${selectgroup} selectgroup-${layoutDirection} ${layoutClass(layoutDirection)}`}
+			className={`${selectrow} selectrow-${layoutDirection} ${layoutClass(layoutDirection)}`}
 			{...props}
 		>
 			<div>
@@ -85,7 +85,7 @@ export const SelectGroup = ({
 	)
 }
 
-SelectGroup.propTypes = { 
+SelectRow.propTypes = { 
 	/** Layout direction */
 	layout: PropTypes.oneOf(["horizontal", "vertical"]),
 	/** Name attribute of the input */
@@ -102,7 +102,7 @@ SelectGroup.propTypes = {
 	onChange: PropTypes.func,
 }
 
-SelectGroup.defaultProps = {
+SelectRow.defaultProps = {
 	layout: null,
 	name: null,
 	label: null,

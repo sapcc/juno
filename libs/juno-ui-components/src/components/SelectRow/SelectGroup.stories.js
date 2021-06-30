@@ -1,19 +1,19 @@
 import React from "react"
-import { SelectGroup } from "./index.js"
+import { SelectRow } from "./index.js"
 import { Default as DefaultSelectOption } from "../SelectOption/SelectOption.stories"
 
 export default {
-  title: "Design System/Forms/SelectGroup",
-  component: SelectGroup,
+  title: "Design System/Forms/SelectRow",
+  component: SelectRow,
   argTypes: {},
 }
 
 const Template = (args) => (
-	<SelectGroup {...args}>
+	<SelectRow {...args}>
 		{args.children.map((child) => (
 			<DefaultSelectOption {...child} />
 		))}
-	</SelectGroup>
+	</SelectRow>
 )
 
 export const Default = Template.bind({})
