@@ -2,13 +2,13 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Checkbox } from "../Checkbox/index.js"
 
-const checkboxgroup = `
+const checkboxrow = `
 	flex
 	flex-row
 `
 
 /** A checkbox input group containing a checkbox, associated label, and structural markup */
-export const CheckboxGroup =({
+export const CheckboxRow =({
 	value,
 	name,
 	label,
@@ -20,7 +20,7 @@ export const CheckboxGroup =({
 
 	return (
 		<div
-			className={`${checkboxgroup}`}
+			className={`${checkboxrow}`}
 			{...props}
 		>
 			<div>
@@ -34,7 +34,7 @@ export const CheckboxGroup =({
 	)
 }
 
-CheckboxGroup.propTypes = {
+CheckboxRow.propTypes = {
 	/** Optional initial value */
 	value: PropTypes.string,
 	/** Name attribute of the checkbox element */
@@ -49,7 +49,7 @@ CheckboxGroup.propTypes = {
 	onChange: PropTypes.func,
 }
 
-CheckboxGroup.defaultProps = {
+CheckboxRow.defaultProps = {
 	value: null,
 	name: null,
 	label: null,

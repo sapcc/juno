@@ -1,41 +1,40 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Textarea } from "../Textarea/index.js"
+import { Select } from "../Select/index.js"
 import { useFormLayoutContext, FormLayoutProvider } from "../FormLayoutProvider"
 
-const textareagroup = `
+
+const selectrow = `
 	flex
 `
 
-const textareagroupHorizontal = `
+const selectrowHorizontal = `
 	flex-row
 `
 
-const textareagroupVertical = `
+const selectrowVertical = `
 	flex-col
 `
 
 const layoutClass = (layoutDirection) => {
 	switch (layoutDirection) {
 		case "vertical":
-			return textareagroupVertical
+			return selectrowVertical
 		case "horizontal":
-			return textareagroupHorizontal
+			return selectrowHorizontal
 		default:
-			return textareagroupHorizontal
+			return selectrowHorizontal
 	}
 }
 
-/** A textarea group containing a textarea, associated label, optional helptext, and structural markup */
-
-export const TextareaGroup = ({
-	value,
+/** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
+export const SelectRow = ({
 	layout,
 	name,
 	label,
 	id,
-	placeholder,
 	helptext,
+	children,
 	onChange,
 	...props
 }) => {
@@ -45,49 +44,51 @@ export const TextareaGroup = ({
 	2. if not, try to get from context and use if context exists
 	3. if no context exists, default.
 	*/
-	
-	/* Use from prop if passed: */
 	let layoutDirection = layout
-	/* Define default direction: */
 	const defaultLayoutDirection = "horizontal"
-	/* if no direction as been passed… */
+	if (layoutDirection) {
+		console.log("layout prop passed directly: ", layoutDirection)
+	}
 	if (!layoutDirection) {
-		/* … try to get direction from context */
+		console.log("no layout prop passed directly")
 		try {
 			 layoutDirection = useFormLayoutContext()
-		/* If trying to get direction from context errors out, use default: */
+			console.log("getting layout from context, received: ", layoutDirection)
 		} catch (e) {
 			 layoutDirection = defaultLayoutDirection
 			console.log(e)
-		/* If there is still no layout direction set, use default: */
+			console.log("there was an error calling the context, defaulting to: ", layoutDirection)
 		} finally {
 			if (!layoutDirection) {
 				layoutDirection = defaultLayoutDirection
+				console.log("no context found, defaulting to: ", layoutDirection)
 			}
 		}
 	}
+	console.log(layoutDirection)
+	
 	return (
-		<div
-			className={`${textareagroup} textareagroup-${layoutDirection} ${layoutClass(layoutDirection)}`}
+		<div 
+			className={`${selectrow} selectrow-${layoutDirection} ${layoutClass(layoutDirection)}`}
 			{...props}
 		>
 			<div>
 				<label htmlFor={id}>{label}</label>
 			</div>
 			<div>
-				<Textarea name={name} onChange={onChange} id={id} value={value} placeholder={placeholder} />
+				<Select name={name} id={id} onChange={onChange}>
+					{children}
+				</Select>
 				{helptext ? <p>{helptext}</p> : ""}
 			</div>
-		</div>
+		</div>	
 	)
 }
 
-TextareaGroup.propTypes = {
-	/** Optional initial value */
-	value: PropTypes.string,
+SelectRow.propTypes = { 
 	/** Layout direction */
 	layout: PropTypes.oneOf(["horizontal", "vertical"]),
-	/** Name attribute of the textarea element */
+	/** Name attribute of the input */
 	name: PropTypes.string,
 	/** Label text */
 	label: PropTypes.string,
@@ -95,19 +96,17 @@ TextareaGroup.propTypes = {
 	id: PropTypes.string,
 	/** Help text */
 	helptext: PropTypes.string,
-	/** Placeholder */
-	placeholder: PropTypes.string,
-	/** Pass a handler to the checkbox element */
+	/** Children to render */
+	children: PropTypes.node,
+	/** Pass a handler to the Select element */
 	onChange: PropTypes.func,
 }
 
-TextareaGroup.defaultProps = {
-	value: null,
+SelectRow.defaultProps = {
 	layout: null,
 	name: null,
 	label: null,
 	id: null,
-	placeholder: null,
 	helptext: null,
 	onChange: undefined,
 }

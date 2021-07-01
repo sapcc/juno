@@ -1,22 +1,22 @@
 import React from "react"
-import { CheckboxGroup } from "./index.js"
+import { RadioRow } from "./index.js"
 
 export default {
-  title: "Design System/Forms/CheckboxGroup",
-  component: CheckboxGroup,
+  title: "Design System/Forms/RadioRow",
+  component: RadioRow,
   argTypes: {},
 }
 
-const Template = (args) => <CheckboxGroup {...args} />
+const Template = (args) => <RadioRow {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-	label: "Default Checkbox Group",
+	label: "Default Radio Row",
 }
 
 export const WithHelpText = Template.bind({})
 WithHelpText.args = {
 	name: "my-input",
-	label: "Checkbox Group with Help text",
+	label: "Radio Row with help text",
 	helptext: "Oh so helpful helptext"
 }

@@ -1,6 +1,6 @@
 import React from "react"
 import { FormSection } from "./index.js"
-import { Default as DefaultTextInputGroup } from "../TextInputGroup/TextInputGroup.stories"
+import { Default as DefaultTextInputRow } from "../TextInputRow/TextInputRow.stories"
 
 export default {
   title: "Design System/Forms/FormSection",
@@ -10,26 +10,26 @@ export default {
 
 const Template = (args) => <FormSection {...args}>
   {args.children.map((child) => (
-    <DefaultTextInputGroup {...child} />
+    <DefaultTextInputRow {...child} />
   ))}
 </FormSection>
 
 export const Default = Template.bind({})
 Default.args = {
-  children: [DefaultTextInputGroup.args]
+  children: [DefaultTextInputRow.args]
 }
 
 
 export const WithTitle = Template.bind({})
 WithTitle.args = {
 	title: "Form Section With Title",
-  children: [DefaultTextInputGroup.args]
+  children: [DefaultTextInputRow.args]
 }
 
 export const VerticalWithTitle = Template.bind({})
 VerticalWithTitle.args = {
   title: "Vertical Form Section With Title",
-  children: [DefaultTextInputGroup.args],
+  children: [DefaultTextInputRow.args],
   layout: "vertical"
 }
 

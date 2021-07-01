@@ -1,19 +1,18 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Switch } from "../Switch/index.js"
+import { Radio } from "../Radio/index.js"
 
-const switchgroup = `
+const radiorow = `
 	flex
 	flex-row
 `
 
-/** A checkbox input group containing a checkbox, associated label, and structural markup */
-export const SwitchGroup =({
+/** A radio input row containing a radio, associated label, and structural markup */
+export const RadioRow =({
 	value,
 	name,
 	label,
 	id,
-	disabled,
 	helptext,
 	onChange,
 	...props
@@ -21,11 +20,11 @@ export const SwitchGroup =({
 
 	return (
 		<div
-			className={`${switchgroup}`}
+			className={`${radiorow}`}
 			{...props}
 		>
 			<div>
-				<Switch name={name} onChange={onChange} id={id} value={value || ""} disabled={disabled} />
+				<Radio name={name} onChange={onChange} id={id} value={value || ""} />
 			</div>
 			<div>
 				<label htmlFor={id}>{label}</label>
@@ -35,7 +34,7 @@ export const SwitchGroup =({
 	)
 }
 
-SwitchGroup.propTypes = {
+RadioRow.propTypes = {
 	/** Optional initial value */
 	value: PropTypes.string,
 	/** Name attribute of the checkbox element */
@@ -44,20 +43,17 @@ SwitchGroup.propTypes = {
 	label: PropTypes.string,
 	/** Id */
 	id: PropTypes.string,
-	/** Disabled */
-	disabled: PropTypes.bool,
 	/** Help text */
 	helptext: PropTypes.string,
 	/** Pass a handler to the checkbox element */
 	onChange: PropTypes.func,
 }
 
-SwitchGroup.defaultProps = {
+RadioRow.defaultProps = {
 	value: null,
 	name: null,
 	label: null,
 	id: null,
-	disabled: null,
 	helptext: null,
 	onChange: undefined,
 }
