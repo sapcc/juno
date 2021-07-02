@@ -6,6 +6,7 @@ const fs = require("fs")
 import minify from "rollup-plugin-babel-minify"
 import analyze from "rollup-plugin-analyzer"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
+const svgr = require('@svgr/rollup').default
 
 import parseStyles from "./rollup-plugin-styles-parser"
 
@@ -36,6 +37,7 @@ const config = [
       }),
       del({ targets: ["lib"] }),
       nodeResolve(),
+      svgr(),
       postcss({
         config: {
           path: "./postcss.config.js",
