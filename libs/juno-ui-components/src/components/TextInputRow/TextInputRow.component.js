@@ -1,40 +1,43 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Select } from "../Select/index.js"
+import { TextInput } from "../TextInput/index.js"
 import { useFormLayoutContext, FormLayoutProvider } from "../FormLayoutProvider"
 
 
-const selectgroup = `
+const textinputrow = `
 	flex
 `
 
-const selectgroupHorizontal = `
+const textinputrowHorizontal = `
 	flex-row
 `
 
-const selectgroupVertical = `
+const textinputrowVertical = `
 	flex-col
 `
 
 const layoutClass = (layoutDirection) => {
 	switch (layoutDirection) {
 		case "vertical":
-			return selectgroupVertical
+			return textinputrowVertical
 		case "horizontal":
-			return selectgroupHorizontal
+			return textinputrowHorizontal
 		default:
-			return selectgroupHorizontal
+			return textinputrowHorizontal
 	}
 }
 
-/** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
-export const SelectGroup = ({
+/** A text input group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
+export const TextInputRow = ({
+	type,
+	value,
 	layout,
 	name,
 	label,
 	id,
+	placeholder,
 	helptext,
-	children,
+	onChange,
 	...props
 }) => {
 	/* 
@@ -51,10 +54,10 @@ export const SelectGroup = ({
 	if (!layoutDirection) {
 		console.log("no layout prop passed directly")
 		try {
-			 layoutDirection = useFormLayoutContext()
+		 	layoutDirection = useFormLayoutContext()
 			console.log("getting layout from context, received: ", layoutDirection)
 		} catch (e) {
-			 layoutDirection = defaultLayoutDirection
+		 	layoutDirection = defaultLayoutDirection
 			console.log(e)
 			console.log("there was an error calling the context, defaulting to: ", layoutDirection)
 		} finally {
@@ -68,41 +71,49 @@ export const SelectGroup = ({
 	
 	return (
 		<div 
-			className={`${selectgroup} selectgroup-${layoutDirection} ${layoutClass(layoutDirection)}`}
+			className={`${textinputrow} textinputrow-${layoutDirection} ${layoutClass(layoutDirection)}`}
 			{...props}
 		>
 			<div>
 				<label htmlFor={id}>{label}</label>
 			</div>
 			<div>
-				<Select name={name} id={id}>
-					{children}
-				</Select>
+				<TextInput type={type} name={name} id={id} placeholder={placeholder} onChange={onChange} />
 				{helptext ? <p>{helptext}</p> : ""}
 			</div>
 		</div>	
 	)
 }
 
-SelectGroup.propTypes = { 
+TextInputRow.propTypes = { 
+	/** The type of the input element to render */
+	type: PropTypes.oneOf(["text", "password", "email", "tel", "url"]),
 	/** Layout direction */
 	layout: PropTypes.oneOf(["horizontal", "vertical"]),
+	/** Optional initial value */
+	value: PropTypes.string,
 	/** Name attribute of the input */
 	name: PropTypes.string,
 	/** Label text */
 	label: PropTypes.string,
 	/** Id */
 	id: PropTypes.string,
+	/** Placeholder for input */
+	placeholder: PropTypes.string,
 	/** Help text */
 	helptext: PropTypes.string,
-	/** Children to render */
-	children: PropTypes.node,
+	/** Pass a handler to the input element */
+	onChange: PropTypes.func
 }
 
-SelectGroup.defaultProps = {
+TextInputRow.defaultProps = {
+	type: null,
 	layout: null,
+	value: null,
 	name: null,
 	label: null,
 	id: null,
+	placeholder: null,
 	helptext: null,
+	onChange: undefined,
 }

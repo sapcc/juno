@@ -1,5 +1,5 @@
 import * as React from "react"
-import { render, screen} from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import { Select } from "./index"
 
 describe("Select", () => {
@@ -19,6 +19,16 @@ describe("Select", () => {
 		render(<Select disabled/>)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
 		expect(screen.getByRole("combobox")).toHaveAttribute('disabled')
+	})
+	
+	test("fires onChange handler as passed", async () => {
+		const handleChange = jest.fn()
+		const { container } = render(
+			<Select onChange={handleChange} />
+		)
+		const slct = container.firstChild
+		fireEvent.change(slct, { target: { value: 'a' } })
+		expect(handleChange).toHaveBeenCalledTimes(1)
 	})
 	
 	

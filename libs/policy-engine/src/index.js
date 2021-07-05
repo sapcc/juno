@@ -1,1 +1,2 @@
-export { PloicyEngine } from "./engine"
+const PolicyEngine = require("./engine")
+module.exports = PolicyEngine

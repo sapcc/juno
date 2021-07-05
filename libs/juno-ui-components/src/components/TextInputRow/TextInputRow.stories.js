@@ -1,13 +1,13 @@
 import React from "react"
-import { TextInputGroup } from "./index.js"
+import { TextInputRow } from "./index.js"
 
 export default {
-  title: "Design System/Forms/TextInputGroup",
-  component: TextInputGroup,
+  title: "Design System/Forms/TextInputRow",
+  component: TextInputRow,
   argTypes: {},
 }
 
-const Template = (args) => <TextInputGroup {...args} />
+const Template = (args) => <TextInputRow {...args} />
 
 export const Default = Template.bind({})
 Default.args = {

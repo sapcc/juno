@@ -1,7 +1,6 @@
 import React from "react"
 import { RadioGroup } from "./index.js"
-
-import { Default as Radio } from "../Radio/Radio.stories"
+import { Default as RadioRow } from "../RadioRow/RadioRow.stories"
 
 export default {
   title: "Design System/Forms/RadioGroup",
@@ -16,6 +15,5 @@ const Template = ({ ...args }) =>
 export const Default = Template.bind({})
 Default.args = {
 	name: 'my-radiogroup',
-	children: [<Radio {...Radio.args}/>, <Radio {...Radio.args}/>]
+	children: [<RadioRow {...RadioRow.args}/>, <RadioRow {...RadioRow.args}/>]
 }
-

@@ -20,7 +20,7 @@ const context = (tokenPayload) => {
   }
 }
 
-class PloicyEngine {
+class PolicyEngine {
   constructor(policyJson) {
     if (!policyJson || !isObject(policyJson)) {
       throw new Error("Policy config is missing or is not of type JSON!")
@@ -35,18 +35,17 @@ class PloicyEngine {
     }
   }
 
-  parsedRule(name){
+  parsedRule(name) {
     let rule = this.parsedRules[name]
     if (!rule) {
       console.info(`rule ${name} not found, looking for _default rule`)
       rule = this.parsedRules["_default"]
-      if (!rule)
-        throw new Error(`POLICY ERROR: could not find rule ${name}`)
+      if (!rule) throw new Error(`POLICY ERROR: could not find rule ${name}`)
     }
     return rule
   }
 
-  rule(name){
+  rule(name) {
     this.rules[name]
   }
 
@@ -60,19 +59,26 @@ class PloicyEngine {
       throw new Error("ENGINE ERROR: token payload is missing!")
 
     const policyContext = context(tokenPayload)
-    const {debug} = options
-    if(debug) {
-      createDebugTrace("POLICY ENGINE\ncontext: "+JSON.stringify(policyContext)).log()
+    const { debug } = options
+    if (debug) {
+      createDebugTrace(
+        "POLICY ENGINE\ncontext: " + JSON.stringify(policyContext)
+      ).log()
     }
-    
+
     return {
       check: (ruleName, params = {}) => {
         const rule = this.parsedRule(ruleName)
 
-        const debugTrace = debug && createDebugTrace(
-          "POLICY ENGINE\n"+
-          `${ruleName}: ${this.rule(ruleName)}`+"\nparams: "+JSON.stringify(params)+"\ntrace:"
-        )
+        const debugTrace =
+          debug &&
+          createDebugTrace(
+            "POLICY ENGINE\n" +
+              `${ruleName}: ${this.rule(ruleName)}` +
+              "\nparams: " +
+              JSON.stringify(params) +
+              "\ntrace:"
+          )
 
         const result = rule({
           getRule: (n) => this.parsedRule(n),
@@ -81,8 +87,8 @@ class PloicyEngine {
           debugTrace,
         })
 
-        if(debugTrace) {
-          debugTrace.add("result",result)
+        if (debugTrace) {
+          debugTrace.add("result", result)
           debugTrace.log(result)
         }
         return result
@@ -91,4 +97,4 @@ class PloicyEngine {
   }
 }
 
-module.exports = PloicyEngine
+module.exports = PolicyEngine

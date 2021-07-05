@@ -1,5 +1,5 @@
 import * as React from "react"
-import { render, screen } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import { Textarea } from "./index"
 
 
@@ -28,6 +28,16 @@ describe("Textarea", () => {
 	test("renders a disabled textarea as passed", async () => {
 		render(<Textarea disabled />)
 		expect(screen.getByRole("textbox")).toHaveAttribute('disabled')
+	})
+	
+	test("fires onChange handler as passed", async () => {
+		const handleChange = jest.fn()
+		const { container } = render(
+			<Textarea onChange={handleChange} />
+		)
+		const textarea = container.firstChild
+		fireEvent.change(textarea, { target: { value: 'a' } })
+		expect(handleChange).toHaveBeenCalledTimes(1)
 	})
 	
 	test("renders other props as passed", async () => {

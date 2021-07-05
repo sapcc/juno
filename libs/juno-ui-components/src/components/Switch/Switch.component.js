@@ -72,6 +72,7 @@ const swtchHandleStyles = (size, checked) => {
 /** A Switch/Toggle component */
 export const Switch = ({
 	name,
+	id,
 	checked,
 	onChange,
 	size,
@@ -85,7 +86,10 @@ export const Switch = ({
 			type="button"
 			role="switch"
 			name={name}
+			id={id}
 			className={`switch ${swtchStyles(size, disabledState)}`}
+			checked={checkedState}
+			aria-checked={checkedState}
 			onChange={onChange}
 			onClick={ () => toggleChecked(!checkedState) }
 			{...props}
@@ -101,6 +105,8 @@ export const Switch = ({
 Switch.propTypes = { 
 	/** Name attribute */
 	name: PropTypes.string,
+	/** Id */
+	id: PropTypes.string,
 	/** Leave empty for default size */
 	size: PropTypes.oneOf(["small", "default", "large"]),
 	/**  Pass checked state for initial rendering. */
@@ -113,6 +119,7 @@ Switch.propTypes = {
 
 Switch.defaultProps = {
 	name: "unnamed switch",
+	id: null,
 	checked: false,
 	disabled: false,
 	size: "default",

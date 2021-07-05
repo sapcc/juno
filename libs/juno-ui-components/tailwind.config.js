@@ -87,6 +87,7 @@ module.exports = {
         DEFAULT: withOpacity("--color-rgb-yellow"),
       },
       white: withOpacity("--color-rgb-white"),
+      black: withOpacity("--color-rgb-black"),
       danger: withOpacity("--color-rgb-red"),
       warning: withOpacity("--color-rgb-yellow"),
     },
