@@ -22,9 +22,14 @@ const { User } = require("./db/models")
 
 const { HTTPError } = require("./errors")
 
+const getIdentityHost = (region) => {
+  if (region === "qa.global") return "https://identity-3-qa.global.cloud.sap"
+  return process.env.IDENTITY_HOST.replace("%REGION%", region)
+}
+
 // create server function
 module.exports = async (options) => {
-  const { graphiql, identityHost, ...serverOptions } = options
+  const { graphiql, ...serverOptions } = options
 
   const server = fastify(serverOptions)
 
@@ -40,15 +45,24 @@ module.exports = async (options) => {
       // use authentication
       data.authToken = request.headers["x-auth-token"]
       if (!data.authToken)
-        throw new HTTPError(400, `X-Auth-Token header is undefined!`)
+        throw new HTTPError(400, `X-Auth-Token header is required!`)
+
+      if (!request.headers["x-auth-region"])
+        throw new HTTPError(400, `X-Auth-Region header is required!`)
+
+      data.region = request.headers["x-auth-region"]
 
       // add token payload to context
       data.tokenPayload = await verifyAuthToken(
-        identityHost,
+        getIdentityHost(data.region),
         data.authToken
       ).catch(({ statusCode, message }) => {
-        throw new HTTPError(statusCode, `Identity provider: ${message}`)
+        throw new HTTPError(
+          statusCode,
+          `Identity provider: ${message}. Make sure the token comes from the region: ${data.region}`
+        )
       })
+
       // create or load current user from db and save it in context
       data.currentUser = await User.createOrUpdate({
         name: data.tokenPayload.user.name,

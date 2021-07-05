@@ -13,10 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.ProcessingStep, {
         as: "processingSteps",
         foreignKey: "processorID",
+        constraints: false,
       })
       User.hasMany(models.Request, {
         foreignKey: "requesterID",
         as: "createdRequests",
+        constraints: false,
       })
     }
 

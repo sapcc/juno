@@ -1,4 +1,6 @@
 "use strict"
+const usePagination = require("../usePagination")
+
 const { Model } = require("sequelize")
 module.exports = (sequelize, DataTypes) => {
   class ProcessingStep extends Model {
@@ -12,15 +14,18 @@ module.exports = (sequelize, DataTypes) => {
       ProcessingStep.belongsTo(models.ProcessingStep, {
         as: "ReferenceStep",
         foreignKey: "referenceStepID",
+        constraints: false,
       })
 
       ProcessingStep.belongsTo(models.Request, {
         foreignKey: "requestID",
+        constraints: false,
       })
 
       ProcessingStep.belongsTo(models.User, {
         as: "Processor",
         foreignKey: "processorID",
+        constraints: false,
       })
     }
 
@@ -51,5 +56,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "ProcessingStep",
     }
   )
+
+  usePagination(ProcessingStep)
+
   return ProcessingStep
 }

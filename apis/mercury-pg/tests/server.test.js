@@ -22,7 +22,7 @@ describe("server", () => {
         headers: {
           "Content-Type": "application/json",
         },
-        payload: '{"query": "{ requests { id } }"}',
+        payload: '{"query": "{ requests { items { id } } }"}',
       })
 
       expect(response.statusCode).toEqual(400)
@@ -45,8 +45,9 @@ describe("server", () => {
           headers: {
             "Content-Type": "application/json",
             "X-Auth-Token": "TOKEN",
+            "X-Auth-Region": "qa-de-1",
           },
-          payload: '{"query": "{ requests { id } }"}',
+          payload: '{"query": "{ requests { items {id} } }"}',
         })
         expect(response.statusCode).toEqual(401)
       })
@@ -68,8 +69,9 @@ describe("server", () => {
         headers: {
           "Content-Type": "application/json",
           "X-Auth-Token": "TOKEN",
+          "X-Auth-Region": "qa-de-1",
         },
-        payload: '{"query": "{ requests { id } }"}',
+        payload: '{"query": "{ requests { items {id} } }"}',
       })
 
       expect(response.statusCode).toEqual(200)

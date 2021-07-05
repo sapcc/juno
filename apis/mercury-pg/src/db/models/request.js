@@ -1,4 +1,5 @@
 "use strict"
+const usePagination = require("../usePagination")
 
 const transitions = {
   startProcessing: { from: "open", to: "processing" },
@@ -34,15 +35,20 @@ module.exports = (sequelize, DataTypes) => {
       Request.belongsTo(models.User, {
         as: "Requester",
         foreignKey: "requesterID",
+        constraints: false,
       })
 
       Request.belongsTo(models.User, {
         as: "LastProcessor",
         foreignKey: "lastProcessorID",
+        constraints: false,
       })
 
       Request.hasMany(models.ProcessingStep, {
+        as: "lastProcessingSteps",
         foreignKey: "requestID",
+        onDelete: "cascade",
+        hooks: true,
       })
     }
 
@@ -64,43 +70,35 @@ module.exports = (sequelize, DataTypes) => {
       transition,
       { processor, kind, type, comment, referenceStepID }
     ) {
-      const toState = this.toState(transition)
-
-      const step = sequelize.models.ProcessingStep.create({
-        requestID: this.id,
+      return this.createLastProcessingStep({
         processorID: processor.id,
         type: type || "public",
         kind: kind || "note",
         referenceStepID,
         comment,
         fromState: this.state,
-        toState,
+        toState: this.toState(transition),
         transition,
+      }).then((step) => {
+        if (step) {
+          this.state = step.toState
+          this.stateDetails = transition
+          this.lastProcessorID = processor.id
+          this.save()
+          return this
+        }
       })
-
-      if (step) {
-        this.state = toState
-        this.stateDetails = transition
-        this.lastProcessorID = processor.id
-        this.save()
-      }
-      return this
     }
 
-    // constructor(values, options) {
-    //   super(values, options)
-    // }
-
     get requester() {
-      return this.getRequester()
+      return this.getRequester().then((user) => {
+        if (user) return user
+        return { name: this.requesterName }
+      })
     }
 
     get lastProcessor() {
       return this.getLastProcessor()
-    }
-
-    get processingSteps() {
-      return this.getProcessingSteps()
     }
 
     get scope() {
@@ -172,6 +170,8 @@ module.exports = (sequelize, DataTypes) => {
   Request.addHook("beforeCreate", (request, options) => {
     request.state = "open"
   })
+
+  usePagination(Request)
 
   return Request
 }

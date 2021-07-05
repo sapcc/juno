@@ -1,7 +1,5 @@
 const db = require("../../../src/db/models")
-const request = require("../../../src/db/models/request")
 const Request = db.Request
-// const prepareDB = require("../../fixtures")
 
 describe("src/db/models/request", () => {
   let request, requester, steps
@@ -59,12 +57,12 @@ describe("src/db/models/request", () => {
     })
 
     it("has processingSteps", async () => {
-      const processingSteps = await request.processingSteps
+      const processingSteps = await request.getLastProcessingSteps()
       expect(processingSteps).toBeDefined()
     })
 
     it("has 0 processingSteps", async () => {
-      const processingSteps = await request.processingSteps
+      const processingSteps = await request.getLastProcessingSteps()
       expect(processingSteps.length).toEqual(0)
     })
   })
@@ -207,36 +205,36 @@ describe("src/db/models/request", () => {
     })
 
     it("creates a step", async () => {
-      const steps = await newRequest.processingSteps
+      const steps = await newRequest.getLastProcessingSteps()
       expect(steps.length).toEqual(1)
     })
 
     it("created step kind is note", async () => {
-      const steps = await newRequest.processingSteps
+      const steps = await newRequest.getLastProcessingSteps()
       expect(steps[0].kind).toEqual("note")
     })
     it("created step type is public", async () => {
-      const steps = await newRequest.processingSteps
+      const steps = await newRequest.getLastProcessingSteps()
       expect(steps[0].type).toEqual("public")
     })
     it("created step comment is some notes", async () => {
-      const steps = await newRequest.processingSteps
+      const steps = await newRequest.getLastProcessingSteps()
       expect(steps[0].comment).toEqual("some notes")
     })
     it("created step fromState is open", async () => {
-      const steps = await newRequest.processingSteps
+      const steps = await newRequest.getLastProcessingSteps()
       expect(steps[0].fromState).toEqual("open")
     })
     it("created step toState is open", async () => {
-      const steps = await newRequest.processingSteps
+      const steps = await newRequest.getLastProcessingSteps()
       expect(steps[0].toState).toEqual("open")
     })
     it("created step transition is addNote", async () => {
-      const steps = await newRequest.processingSteps
+      const steps = await newRequest.getLastProcessingSteps()
       expect(steps[0].transition).toEqual("addNote")
     })
     it("created step processor is defined", async () => {
-      const steps = await newRequest.processingSteps
+      const steps = await newRequest.getLastProcessingSteps()
       expect(steps[0].processor).toBeDefined()
     })
     it("last processor is defined", async () => {

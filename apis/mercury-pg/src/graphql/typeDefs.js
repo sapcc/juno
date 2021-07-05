@@ -10,10 +10,19 @@ module.exports = `
       projectID:[String!],
       domainID: [String!],
       olderThan: String,
-      newerThan: String
-    ): [Request!]!
+      newerThan: String,
+      lastProcessingSteps: Int,
+      orderBy: RequestOrderByInput,
+      paginate: PaginateInput
+    ): Requests!
 
-    processingSteps(requestID:ID!): [ProcessingStep]
+    regions: [String]!
+
+    processingSteps(
+      requestID:ID!, 
+      prderBy: ProcessingStepOrderByInput
+      paginate: PaginateInput
+    ): ProcessingSteps
   }
 
   type Mutation {
@@ -22,7 +31,6 @@ module.exports = `
       subject: String!,
       description: String,
       priority: Int,
-      region: String!,
       payload: String!,
       tags: [TagInput!],
       comment: String
@@ -34,12 +42,11 @@ module.exports = `
       subject: String,
       description: String,
       priority: Int,
-      region: String,
       payload: String,
       tags: [TagInput!],
     ): Request!
 
-    deleteRequests(id:[ID!],olderThan: String, state: String): Boolean
+    deleteRequests(id:[ID!],olderThan: String, state: String): Int!
 
     startProcessing(requestID:ID!, comment: String, type:String, kind:String): Request!
     addNote(requestID: ID!, comment: String!, referenceStepID: ID): Request!
@@ -68,6 +75,11 @@ module.exports = `
     updatedAt: String!,
   }
 
+  type ProcessingSteps {
+    items: [ProcessingStep]
+    pageInfo: PageInfo
+  }
+
   type ProcessingStep {
     id: ID!
     requestID: Int
@@ -83,11 +95,16 @@ module.exports = `
     updatedAt: String!
   }
 
+  type Requests {
+    items: [Request]
+    pageInfo: PageInfo
+  }
+
   type Request {
     id: ID!
     requester: User!,
     lastProcessor: User,
-    processingSteps: [ProcessingStep!]
+    lastProcessingSteps: [ProcessingStep!]
     kind: String!,
     priority: Int,
     subject: String!,
@@ -126,5 +143,41 @@ module.exports = `
     name: String!
     id: String!
     domain: DomainScope
+  }
+
+  input RequestOrderByInput {
+    createdAt: Sort
+    kind: Sort,
+    priority: Int,
+    region: Sort,
+    state: Sort,
+  }
+
+  input ProcessingStepOrderByInput {
+    createdAt: Sort
+    updatedAt: Sort
+    kind: Sort,
+    type: Sort,
+    fromState: Sort,
+    toState: Sort,
+  }
+
+  input PaginateInput {
+    page: Int,
+    perPage: Int
+  }
+
+  enum Sort {
+    ASC
+    DESC
+  }
+
+  type PageInfo {
+    currentPage: Int
+    perPage: Int
+    itemCount: Int
+    pageCount: Int
+    hasPreviousPage: Boolean
+    hasNextPage: Boolean
   }
 `

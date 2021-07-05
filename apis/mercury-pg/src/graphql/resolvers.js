@@ -10,6 +10,18 @@ const loadRequest = async (id) => {
   return request
 }
 
+const requestFilterKeys = [
+  "id",
+  "state",
+  "priority",
+  "kind",
+  "region",
+  "domainID",
+  "projectID",
+]
+
+const PER_PAGE = 20
+
 module.exports = {
   JSON: GraphQLJSON,
 
@@ -17,32 +29,50 @@ module.exports = {
     async profile(root, args, context) {
       return context.currentUser
     },
-
+    // GET REQUESTS
     async requests(root, args, context) {
+      const isProcessor = context.policy.check("processor")
       const where = {}
+      let order, include
+      const page = args.paginate?.page || 1
+      const perPage = args.paginate?.perPage || PER_PAGE
 
       // load requests created by current user if current is is a requester
-      if (context.policy.check("requester")) {
+      if (!isProcessor) {
         where.requesterID = context.currentUser.id
       }
 
-      if (args.id) where.id = args.id
-      if (args.state) where.state = args.state
-      if (args.priority) where.priority = args.priority
-      if (args.kind) where.kind = args.kind
-      if (args.region) where.region = args.region
-      if (args.domainID) where.domainID = args.domainID
-      if (args.projectID) where.projectID = args.projectID
+      requestFilterKeys.forEach((key) => args[key] && (where[key] = args[key]))
       if (args.olderThan) where.createdAt = { [Op.lt]: args.olderThan }
       if (args.newerThan) where.createdAt = { [Op.gt]: args.newerThan }
 
-      return await Request.findAll({
-        where: Object.keys(where).length > 0 ? where : undefined,
+      if (args.orderBy) {
+        order = Object.keys(args.orderBy).map((key) => [key, args.orderBy[key]])
+      }
+
+      if (args.lastProcessingSteps) {
+        include = {
+          model: ProcessingStep,
+          as: "lastProcessingSteps",
+          limit: args.lastProcessingSteps > 10 ? 10 : args.lastProcessingSteps,
+          where: !isProcessor ? undefined : { type: "public" },
+          order: [["createdAt", "ASC"]],
+        }
+      }
+
+      return await Request.paginate({
+        where,
+        include,
+        order,
+        page,
+        perPage,
       })
     },
 
     async processingSteps(root, args, context) {
       const where = { requestID: args.requestID }
+      const page = args.page || 1
+      const perPage = args.perPage || PER_PAGE
 
       // load only public steps if current is is a requester
       // type is an enum of public, internal
@@ -50,7 +80,13 @@ module.exports = {
         where.type = "public"
       }
 
-      return await ProcessingStep.findAll({ where })
+      return await ProcessingStep.paginate({ where, page, perPage })
+    },
+
+    async regions(root, args, context) {
+      return await Request.aggregate("region", "DISTINCT", {
+        plain: false,
+      }).then((result) => result.map((r) => r.DISTINCT))
     },
   },
 
@@ -63,11 +99,13 @@ module.exports = {
       const { project, domain } = context.tokenPayload
       const requestData = {
         ...args,
+        region: context.region,
         projectID: project?.id,
         projectName: project?.name,
         domainID: project?.domain?.id || domain?.id,
         domainName: project?.domain?.name || domain?.name,
         requesterID: context.currentUser.id,
+        requesterName: context.currentUser.name,
       }
 
       const request = await Request.create(requestData)
@@ -87,8 +125,10 @@ module.exports = {
 
       if (
         !(
-          context.policy.check("can-update", { request }) &&
-          request.requesterID === context.currentUser.id
+          context.policy.check("can-update", {
+            request,
+            requester: context.currentUser,
+          }) && request.requesterID === context.currentUser.id
         )
       ) {
         throw new AuthorizationError(
@@ -104,13 +144,15 @@ module.exports = {
       for (let request of requests) {
         if (!context.policy.check("can-delete", { request })) {
           throw new AuthorizationError(
-            "User is not allowed to delete this request"
+            `User is not allowed to delete this request: ${request.id}`
           )
         }
-        if (!(await request.destroy())) return false
+        //if (!(await request.destroy())) return false
       }
-
-      return true
+      return await Request.destroy({
+        where: { id },
+        logging: console.log,
+      })
     },
 
     async startProcessing(root, { requestID, comment, type, kind }, context) {

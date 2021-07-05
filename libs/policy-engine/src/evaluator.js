@@ -21,7 +21,7 @@ const evaluateExpression = (expression) => {
     // return executable rule which returns true
     // (omit getRule, context and params because they are not used inside the executable rule)
     return ({ debugTrace }) => {
-      if (debugTrace) debugTrace.add(expression, result)
+      if (debugTrace) debugTrace.add(expression, true)
       return true
     }
   }
@@ -32,7 +32,7 @@ const evaluateExpression = (expression) => {
     // return executable rule which returns true
     // (omit getRule, context and params because they are not used inside the executable rule)
     return ({ debugTrace }) => {
-      if (debugTrace) debugTrace.add(expression, result)
+      if (debugTrace) debugTrace.add(expression, false)
       return false
     }
   }

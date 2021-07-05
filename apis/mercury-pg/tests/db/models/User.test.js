@@ -39,18 +39,20 @@ describe("src/db/models/user", () => {
     })
 
     it("updates an existing user entry", async () => {
+      const spy = jest.spyOn(User, "create")
+
       const user = await User.findOne()
-      const count = await User.count()
 
       await User.createOrUpdate({
         name: user.name,
         email: "u.t@test.com",
         fullName: "Test User",
       })
-      const newCount = await User.count()
+      expect(spy).not.toHaveBeenCalled()
       await user.reload()
-      expect(newCount).toEqual(count)
+
       expect(user.email).toEqual("u.t@test.com")
+      spy.mockRestore()
     })
   })
 
