@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Textarea } from "../Textarea/index.js"
-import { useFormLayoutContext, FormLayoutProvider } from "../FormLayoutProvider"
+import uselayoutDirection from "../../lib/hooks/useLayoutDirection"
 
 const textarearow = `
 	flex
@@ -39,33 +39,10 @@ export const TextareaRow = ({
 	onChange,
 	...props
 }) => {
-	/* 
-	Determine layout direction from prop or context:
-	1. Use as passed if passed as a prop to the component directly
-	2. if not, try to get from context and use if context exists
-	3. if no context exists, default.
-	*/
-	
-	/* Use from prop if passed: */
-	let layoutDirection = layout
-	/* Define default direction: */
-	const defaultLayoutDirection = "horizontal"
-	/* if no direction as been passed… */
-	if (!layoutDirection) {
-		/* … try to get direction from context */
-		try {
-			 layoutDirection = useFormLayoutContext()
-		/* If trying to get direction from context errors out, use default: */
-		} catch (e) {
-			 layoutDirection = defaultLayoutDirection
-			console.log(e)
-		/* If there is still no layout direction set, use default: */
-		} finally {
-			if (!layoutDirection) {
-				layoutDirection = defaultLayoutDirection
-			}
-		}
-	}
+		/* 
+	Determine layout direction using custom hook:
+	*/	
+	const layoutDirection = uselayoutDirection(layout)
 	return (
 		<div
 			className={`${textarearow} textarearow-${layoutDirection} ${layoutClass(layoutDirection)}`}
