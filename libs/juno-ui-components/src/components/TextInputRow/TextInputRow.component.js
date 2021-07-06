@@ -1,37 +1,16 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { TextInput } from "../TextInput/index.js"
-import { useFormLayoutContext, FormLayoutProvider } from "../FormLayoutProvider"
-
 
 const textinputrow = `
 	flex
-`
-
-const textinputrowHorizontal = `
-	flex-row
-`
-
-const textinputrowVertical = `
 	flex-col
 `
-
-const layoutClass = (layoutDirection) => {
-	switch (layoutDirection) {
-		case "vertical":
-			return textinputrowVertical
-		case "horizontal":
-			return textinputrowHorizontal
-		default:
-			return textinputrowHorizontal
-	}
-}
 
 /** A text input group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
 export const TextInputRow = ({
 	type,
 	value,
-	layout,
 	name,
 	label,
 	id,
@@ -40,38 +19,11 @@ export const TextInputRow = ({
 	onChange,
 	...props
 }) => {
-	/* 
-	Determine layout direction from prop or context:
-	1. Use as passed if passed as a prop to the component directly
-	2. if not, try to get from context and use if context exists
-	3. if no context exists, default.
-	*/
-	let layoutDirection = layout
-	const defaultLayoutDirection = "horizontal"
-	if (layoutDirection) {
-		console.log("layout prop passed directly: ", layoutDirection)
-	}
-	if (!layoutDirection) {
-		console.log("no layout prop passed directly")
-		try {
-		 	layoutDirection = useFormLayoutContext()
-			console.log("getting layout from context, received: ", layoutDirection)
-		} catch (e) {
-		 	layoutDirection = defaultLayoutDirection
-			console.log(e)
-			console.log("there was an error calling the context, defaulting to: ", layoutDirection)
-		} finally {
-			if (!layoutDirection) {
-				layoutDirection = defaultLayoutDirection
-				console.log("no context found, defaulting to: ", layoutDirection)
-			}
-		}
-	}
-	console.log(layoutDirection)
+	
 	
 	return (
 		<div 
-			className={`${textinputrow} textinputrow-${layoutDirection} ${layoutClass(layoutDirection)}`}
+			className={`${textinputrow}`}
 			{...props}
 		>
 			<div>
@@ -88,8 +40,6 @@ export const TextInputRow = ({
 TextInputRow.propTypes = { 
 	/** The type of the input element to render */
 	type: PropTypes.oneOf(["text", "password", "email", "tel", "url"]),
-	/** Layout direction */
-	layout: PropTypes.oneOf(["horizontal", "vertical"]),
 	/** Optional initial value */
 	value: PropTypes.string,
 	/** Name attribute of the input */
@@ -108,7 +58,6 @@ TextInputRow.propTypes = {
 
 TextInputRow.defaultProps = {
 	type: null,
-	layout: null,
 	value: null,
 	name: null,
 	label: null,

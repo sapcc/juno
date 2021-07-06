@@ -28,12 +28,5 @@ WithTitle.args = {
   children: [DefaultTextInputRow.args],
 }
 
-export const VerticalWithTitle = Template.bind({})
-VerticalWithTitle.args = {
-  title: "Vertical Form Title",
-  children: [DefaultTextInputRow.args],
-  layout: "vertical"
-}
-
 
 
