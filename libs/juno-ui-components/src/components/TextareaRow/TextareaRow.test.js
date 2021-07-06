@@ -27,9 +27,9 @@ describe("TextInputRow", () => {
 		expect(screen.getByTestId("textarea-row")).toHaveClass("textarearow-vertical")
 	})
 	
-	test("renders a horizontal textarea row per default", async () => {
+	test("renders a vertical textarea row per default", async () => {
 		render(<TextareaRow data-testid="textarea-row" />)
-		expect(screen.getByTestId("textarea-row")).toHaveClass("textarearow-horizontal")
+		expect(screen.getByTestId("textarea-row")).toHaveClass("textarearow-vertical")
 	})
 	
 	test("renders a help text as passed", async () => {

@@ -27,9 +27,9 @@ describe("TextInputGroup", () => {
 		expect(screen.getByTestId("text-input-row")).toHaveClass("textinputrow-vertical")
 	})
 	
-	test("renders a horizontal text input group per default", async () => {
+	test("renders a vertical text input group per default", async () => {
 		render(<TextInputRow data-testid="text-input-row" />)
-		expect(screen.getByTestId("text-input-row")).toHaveClass("textinputrow-horizontal")
+		expect(screen.getByTestId("text-input-row")).toHaveClass("textinputrow-vertical")
 	})
 	
 	test("renders a help text as passed", async () => {
