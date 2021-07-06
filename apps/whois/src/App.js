@@ -9,6 +9,8 @@ import cidrRegex from "cidr-regex"
 import ipRegex from "ip-regex"
 import testData from "./testData"
 
+import { PageHeader } from "juno-ui-components"
+
 /**
  * This Component implements the event interface and controls
  * the visibility state of the login form.
@@ -50,11 +52,11 @@ const App = (props) => {
   )
 
   return (
-    <div className="space-y-6">
-      <h4>Whois</h4>
+    <>
+      <PageHeader heading="Whois" />
       <Search onChange={(searchTerm) => search(searchTerm)} />
       <Results items={items} processing={processing} />
-    </div>
+    </>
   )
 }
 

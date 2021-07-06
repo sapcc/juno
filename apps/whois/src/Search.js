@@ -1,5 +1,5 @@
 import React from "react"
-import { FloatingLabelInput, Button } from "juno-ui-components"
+import { SearchInput } from "juno-ui-components"
 import cidrRegex from "cidr-regex"
 import ipRegex from "ip-regex"
 
@@ -19,7 +19,8 @@ const Search = ({ onChange }) => {
     <>
       <div className="flex space-x-1">
         <div className="w-6/12">
-          <FloatingLabelInput
+          <SearchInput
+            className="text-sap-blue-70 rounded-full"
             label="List of IPs or IP ranges (CIDR)"
             value={searchTerm}
             onKeyPress={(e) => {
@@ -28,9 +29,9 @@ const Search = ({ onChange }) => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Button variant="primary" onClick={(e) => onChange(searchTerm)}>
+        {/* <Button variant="primary" onClick={(e) => onChange(searchTerm)}>
           Go
-        </Button>
+        </Button> */}
       </div>
       <span className="text-sm text-gray-500">
         Example: 127.0.0.1 127.1.0.1/16.
