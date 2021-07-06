@@ -20,17 +20,6 @@ WithTitle.args = {
 	text: "IntroBox with title."
 }
 
-export const Warning = Template.bind({})
-Warning.args = {
-	variant: "warning",
-	text: "Warning IntroBox."
-}
-
-export const Danger = Template.bind({})
-Danger.args = {
-	variant: "danger",
-	text: "Danger IntroBox."
-}
 
 
 

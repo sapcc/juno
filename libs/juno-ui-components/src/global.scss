@@ -169,14 +169,16 @@
   --color-danger-foreground: var(--color-rgb-white);
   --color-danger-border: var(--color-rgb-red-60);
   
-  --color-introbox-default-bg: var(--color-rgb-sap-blue-10);
-  --color-introbox-default-border: var(--color-rgb-sap-blue);
+  --color-message-default-bg: var(--color-rgb-sap-blue-10);
+  --color-message-default-border: var(--color-rgb-sap-blue);
   
-  --color-introbox-danger-bg: var(--color-rgb-red-40);
-  --color-introbox-danger-border: var(--color-rgb-red-60);
+  --color-message-danger-bg: var(--color-rgb-red-40);
+  --color-message-danger-border: var(--color-rgb-red-60);
   
-  --color-introbox-warning-bg: var(--color-rgb-yellow-10);
-  --color-introbox-warning-border: var(--color-rgb-yellow-30);
+  --color-message-warning-bg: var(--color-rgb-yellow-10);
+  --color-message-warning-border: var(--color-rgb-yellow-30);
+
+  --color-introbox-border: var(--black);
   
 }
 
@@ -199,14 +201,16 @@
   --color-danger-foreground: var(--color-rgb-white);
   --color-danger-border: var(--color-rgb-red-60);
   
-  --color-introbox-default-bg: var(--color-rgb-sap-blue-80);
-  --color-introbox-default-border: var(--color-rgb-sap-blue-30);
+  --color-message-default-bg: var(--color-rgb-sap-blue-80);
+  --color-message-default-border: var(--color-rgb-sap-blue-30);
   
-  --color-introbox-danger-bg: var(--color-rgb-red-70);
-  --color-introbox-danger-border: var(--color-rgb-red);
+  --color-message-danger-bg: var(--color-rgb-red-70);
+  --color-message-danger-border: var(--color-rgb-red);
   
-  --color-introbox-warning-bg: var(--color-rgb-yellow-50);
-  --color-introbox-warning-border: var(--color-rgb-yellow);
+  --color-message-warning-bg: var(--color-rgb-yellow-50);
+  --color-message-warning-border: var(--color-rgb-yellow);
+
+  --color-introbox-border: var(--white);
 }
 
 html,

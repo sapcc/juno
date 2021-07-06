@@ -100,9 +100,9 @@ module.exports = {
           "primary-hover": withOpacity("--color-primary-bg-hover"),
           "danger-hover": withOpacity("--color-danger-bg-hover"),
           "default-hover": withOpacity("--color-default-bg-hover"),
-          "introbox-default": withOpacity("--color-introbox-default-bg"),
-          "introbox-danger": withOpacity("--color-introbox-danger-bg"),
-          "introbox-warning": withOpacity("--color-introbox-warning-bg")
+          "message-default": withOpacity("--color-message-default-bg"),
+          "message-danger": withOpacity("--color-message-danger-bg"),
+          "message-warning": withOpacity("--color-message-warning-bg")
         },
       },
       textColor: {
@@ -117,9 +117,9 @@ module.exports = {
           primary: withOpacity("--color-primary-border"),
           danger: withOpacity("--color-danger-border"),
           default: withOpacity("--color-default-border"),
-          "introbox-default": withOpacity("--color-introbox-default-border"),
-          "introbox-danger": withOpacity("--color-introbox-danger-border"),
-          "introbox-warning": withOpacity("--color-introbox-warning-border")
+          "message-default": withOpacity("--color-message-default-border"),
+          "message-danger": withOpacity("--color-message-danger-border"),
+          "message-warning": withOpacity("--color-message-warning-border")
         },
       },
       padding: {
