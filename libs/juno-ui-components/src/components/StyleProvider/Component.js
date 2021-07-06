@@ -58,6 +58,9 @@ export const StyleProvider = ({
       style.appendChild(document.createTextNode(styles))
     }
     wrapper.prepend(style)
+
+    // ensure html tag gets correct theme class (default to theme-dark)
+    document.documentElement.classList.add(themeClassName || "theme-dark")
   }, [])
 
   return (
@@ -69,7 +72,7 @@ export const StyleProvider = ({
           <div className={themeClassName || "theme-dark"}>{children}</div>
         </ShadowRoot>
       ) : (
-        <div className={themeClassName || ""}>
+        <div className={themeClassName || "theme-dark"}>
           {stylesWrapper === "inline" && (
             <style data-style-provider="inline">{styles}</style>
           )}
