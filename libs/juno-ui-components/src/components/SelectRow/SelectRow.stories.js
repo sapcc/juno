@@ -13,36 +13,19 @@ const Template = (args) => (
 		{args.children.map((child) => (
 			<DefaultSelectOption {...child} />
 		))}
-	</SelectGroup>
+	</SelectRow>
 )
 
 export const Default = Template.bind({})
 Default.args = {
-	label: "Default",
+	label: "Select Row",
 	children: [DefaultSelectOption.args]
 }
 
-export const HorizontalLayout = Template.bind({})
-HorizontalLayout.args = {
-	layout: "horizontal",
+export const WithHelpText = Template.bind({})
+WithHelpText.args = {
 	name: "my-select",
-	label: "Horizontal",
-	children: [DefaultSelectOption.args]
-}
-
-export const VerticalLayout = Template.bind({})
-VerticalLayout.args = {
-	layout: "vertical",
-	name: "my-select",
-	label: "Vertical",
-	children: [DefaultSelectOption.args]
-}
-
-export const VerticalWithHelpText = Template.bind({})
-VerticalWithHelpText.args = {
-	layout: "vertical",
-	name: "my-select",
-	label: "Vertical",
+	label: "Select Row with Helptext",
 	helptext: "Oh so helpful helptext",
 	children: [DefaultSelectOption.args]
 }

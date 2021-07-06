@@ -11,28 +11,13 @@ const Template = (args) => <TextInputRow {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-	label: "Default",
+	label: "Text Input Row",
 }
 
-export const HorizontalLayout = Template.bind({})
-HorizontalLayout.args = {
-	layout: "horizontal",
-	name: "my-input",
-	label: "Horizontal",
-}
-
-export const VerticalLayout = Template.bind({})
-VerticalLayout.args = {
-	layout: "vertical",
-	name: "my-input",
-	label: "Vertical",
-}
-
-export const VerticalWithHelpText = Template.bind({})
+export const WithHelpText = Template.bind({})
 VerticalWithHelpText.args = {
-	layout: "vertical",
 	name: "my-input",
-	label: "Vertical",
+	label: "Text Input Row with Help Text",
 	helptext: "Oh so helpful helptext"
 }
 

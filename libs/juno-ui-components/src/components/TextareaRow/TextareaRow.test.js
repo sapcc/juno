@@ -17,21 +17,6 @@ describe("TextInputRow", () => {
 		expect(screen.getByRole("textbox")).toHaveAttribute("id", 'text-area-row')
 	})
 	
-	test("renders a horizontal textarea row as passed", async () => {
-		render(<TextareaRow data-testid="textarea-row" layout="horizontal" />)
-		expect(screen.getByTestId("textarea-row")).toHaveClass("textarearow-horizontal")
-	})
-	
-	test("renders a vertical textarea row as passed", async () => {
-		render(<TextareaRow data-testid="textarea-row" layout="vertical" />)
-		expect(screen.getByTestId("textarea-row")).toHaveClass("textarearow-vertical")
-	})
-	
-	test("renders a horizontal textarea row per default", async () => {
-		render(<TextareaRow data-testid="textarea-row" />)
-		expect(screen.getByTestId("textarea-row")).toHaveClass("textarearow-horizontal")
-	})
-	
 	test("renders a help text as passed", async () => {
 		render(<TextareaRow helptext="Helptext goes here" />)
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
