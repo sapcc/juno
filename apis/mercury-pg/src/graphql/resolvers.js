@@ -3,6 +3,7 @@ const { Request, ProcessingStep } = require("../db/models")
 const { GraphQLJSON } = require("graphql-scalars")
 const { Op } = require("sequelize")
 const { AuthorizationError, HTTPError } = require("../errors")
+// const { withFilter } = require("mercurius")
 
 const loadRequest = async (id) => {
   const request = await Request.findByPk(id)
@@ -21,6 +22,45 @@ const requestFilterKeys = [
 ]
 
 const PER_PAGE = 20
+
+const capitalize = (string) =>
+  string
+    .trim()
+    .toLowerCase()
+    .replace(/^\w/, (c) => c.toUpperCase())
+
+const publishRequest = (pubsub, action, request) => {
+  if (action === "DELETED") {
+    return pubsub.publish({
+      topic: "REQUESTS_DELETED",
+      payload: { requestsDeleted: request },
+    })
+  }
+
+  let topic = `REQUEST_${action.toUpperCase()}`
+  let payload = { [`request${capitalize(action)}`]: request }
+
+  // publish realtime events for processors
+  pubsub.publish({ topic, payload })
+  // publish realtime events for creator
+  pubsub.publish({
+    topic: `${topic}_${request.requesterID}`,
+    payload,
+  })
+}
+
+const publishProcessingStep = (pubsub, action, requesterID, processingStep) => {
+  const topic = `PROCESSING_STEP_${action.toUpperCase()}_${
+    processingStep.requestID
+  }`
+  const payload = {
+    [`processingStep${capitalize(action)}`]: processingStep,
+  }
+
+  pubsub.publish({ topic, payload })
+  // publish realtime events for creator
+  pubsub.publish({ topic: `${topic}_${requesterID}`, payload })
+}
 
 module.exports = {
   JSON: GraphQLJSON,
@@ -91,51 +131,73 @@ module.exports = {
   },
 
   Mutation: {
-    async createRequest(root, args, context) {
-      if (!context.policy.check("can-create")) {
+    async createRequest(
+      root,
+      args,
+      { currentUser, region, pubsub, tokenPayload, policy }
+    ) {
+      if (!policy.check("can-create")) {
         throw new AuthorizationError("User is not allowed to create a request")
       }
 
-      const { project, domain } = context.tokenPayload
+      const { project, domain } = tokenPayload
       const requestData = {
         ...args,
-        region: context.region,
+        region: region,
         projectID: project?.id,
         projectName: project?.name,
         domainID: project?.domain?.id || domain?.id,
         domainName: project?.domain?.name || domain?.name,
-        requesterID: context.currentUser.id,
-        requesterName: context.currentUser.name,
+        requesterID: currentUser.id,
+        requesterName: currentUser.name,
       }
 
       const request = await Request.create(requestData)
       if (args.comment) {
-        await request.performStateTransition("addNote", {
-          processor: context.currentUser,
+        const step = await request.performStateTransition("addNote", {
+          processor: currentUser,
           kind: "note",
           type: "public",
           comment: args.comment,
         })
+        publishProcessingStep(
+          context.pubsub,
+          "ADDED",
+          request.requesterID,
+          step
+        )
       }
+
+      // publish realtime events
+      publishRequest(pubsub, "ADDED", request)
+
       return request
     },
 
-    async updateRequest(root, { id, ...args }, context) {
-      const request = await loadRequest(id)
+    async updateRequest(
+      root,
+      { id, ...args },
+      { currentUser, policy, pubsub }
+    ) {
+      let request = await loadRequest(id)
 
       if (
         !(
-          context.policy.check("can-update", {
+          policy.check("can-update", {
             request,
-            requester: context.currentUser,
-          }) && request.requesterID === context.currentUser.id
+            requester: currentUser,
+          }) && request.requesterID === currentUser.id
         )
       ) {
         throw new AuthorizationError(
           "User is not allowed to update this request"
         )
       }
-      return request.update(args)
+      request = request.update(args)
+
+      // publish realtime events
+      publishRequest(pubsub, "UPDATED", request)
+      return request
     },
 
     async deleteRequests(root, { id }, context) {
@@ -149,10 +211,16 @@ module.exports = {
         }
         //if (!(await request.destroy())) return false
       }
-      return await Request.destroy({
+
+      result = await Request.destroy({
         where: { id },
         logging: console.log,
       })
+      if (result) {
+        // publish realtime events
+        publishRequest(pubsub, "DELETED", result)
+      }
+      return result
     },
 
     async startProcessing(root, { requestID, comment, type, kind }, context) {
@@ -164,12 +232,14 @@ module.exports = {
         )
       }
 
-      return request.performStateTransition("startProcessing", {
+      const step = await request.performStateTransition("startProcessing", {
         processor: context.currentUser,
         kind: kind || "note",
         type,
         comment,
       })
+      publishProcessingStep(context.pubsub, "ADDED", request.requesterID, step)
+      return request
     },
 
     async addNote(root, { requestID, comment }, context) {
@@ -181,12 +251,14 @@ module.exports = {
         )
       }
 
-      return request.performStateTransition("addNote", {
+      const step = await request.performStateTransition("addNote", {
         processor: context.currentUser,
         kind: "note",
         type: "public",
         comment,
       })
+      publishProcessingStep(context.pubsub, "ADDED", request.requesterID, step)
+      return request
     },
 
     async process(root, { requestID, comment, kind, type }, context) {
@@ -198,12 +270,14 @@ module.exports = {
         )
       }
 
-      return request.performStateTransition("process", {
+      const step = await request.performStateTransition("process", {
         processor: context.currentUser,
         kind: kind || "note",
         type: type || "public",
         comment,
       })
+      publishProcessingStep(context.pubsub, "ADDED", request.requesterID, step)
+      return request
     },
 
     async askRequester(root, { requestID, comment }, context) {
@@ -213,12 +287,14 @@ module.exports = {
         throw new AuthorizationError("User is not allowed to ask requester")
       }
 
-      return request.performStateTransition("askRequester", {
+      const step = await request.performStateTransition("askRequester", {
         processor: context.currentUser,
         kind: "question",
         type: "public",
         comment,
       })
+      publishProcessingStep(context.pubsub, "ADDED", request.requesterID, step)
+      return request
     },
 
     async answer(root, { requestID, comment, referenceStepID }, context) {
@@ -229,13 +305,15 @@ module.exports = {
         throw new AuthorizationError("User is not allowed to answer")
       }
 
-      return request.performStateTransition("answer", {
+      const step = await request.performStateTransition("answer", {
         processor: context.currentUser,
         referenceStepID,
         kind: "answer",
         type: "public",
         comment,
       })
+      publishProcessingStep(context.pubsub, "ADDED", request.requesterID, step)
+      return request
     },
     async approve(root, { requestID, kind, comment }, context) {
       const request = await loadRequest(requestID)
@@ -246,12 +324,14 @@ module.exports = {
         )
       }
 
-      return request.performStateTransition("approve", {
+      const step = await request.performStateTransition("approve", {
         processor: context.currentUser,
         kind: kind || "note",
         type: "public",
         comment,
       })
+      publishProcessingStep(context.pubsub, "ADDED", request.requesterID, step)
+      return request
     },
     async reject(root, { requestID, kind, comment }, context) {
       const request = await loadRequest(requestID)
@@ -262,12 +342,14 @@ module.exports = {
         )
       }
 
-      return request.performStateTransition("reject", {
+      const step = await request.performStateTransition("reject", {
         processor: context.currentUser,
         kind: kind || "note",
         type: "public",
         comment,
       })
+      publishProcessingStep(context.pubsub, "ADDED", request.requesterID, step)
+      return request
     },
     async close(root, { requestID, kind, comment }, context) {
       const request = await loadRequest(requestID)
@@ -278,12 +360,14 @@ module.exports = {
         )
       }
 
-      return request.performStateTransition("close", {
+      const step = await request.performStateTransition("close", {
         processor: context.currentUser,
         kind: kind || "note",
         type: "public",
         comment,
       })
+      publishProcessingStep(context.pubsub, "ADDED", request.requesterID, step)
+      return request
     },
     async reopen(root, { requestID, ...args }) {
       const request = await loadRequest(requestID)
@@ -294,12 +378,14 @@ module.exports = {
         )
       }
 
-      return request.performStateTransition("reopen", {
+      const step = await request.performStateTransition("reopen", {
         processor: context.currentUser,
         kind: kind || "note",
         type: "public",
         comment,
       })
+      publishProcessingStep(context.pubsub, "ADDED", request.requesterID, step)
+      return request
     },
 
     async updateProfile(root, { email, fullName, settings }, context) {
@@ -316,6 +402,71 @@ module.exports = {
       if (type) step.type = type
       if (kind) step.kind = kind
       return step.save()
+    },
+  },
+
+  Subscription: {
+    requestAdded: {
+      // You can also subscribe to multiple topics at once using an array like this:
+      //  pubsub.subscribe(['TOPIC1', 'TOPIC2'])
+      subscribe: async (root, args, { pubsub, policy, currentUser }) => {
+        if (policy.check("processor")) {
+          return await pubsub.subscribe("REQUEST_ADDED")
+        } else {
+          return await pubsub.subscribe(`REQUEST_ADDED_${currentUser.id}`)
+        }
+      },
+    },
+
+    requestUpdated: {
+      // You can also subscribe to multiple topics at once using an array like this:
+      //  pubsub.subscribe(['TOPIC1', 'TOPIC2'])
+      subscribe: async (root, args, { pubsub, currentUser, policy }) => {
+        if (policy.check("processor")) {
+          return await pubsub.subscribe("REQUEST_UPDATED")
+        } else {
+          return await pubsub.subscribe(`REQUEST_UPDATED_${currentUser.id}`)
+        }
+      },
+    },
+
+    requestsDeleted: {
+      // You can also subscribe to multiple topics at once using an array like this:
+      //  pubsub.subscribe(['TOPIC1', 'TOPIC2'])
+      subscribe: async (root, args, { pubsub }) =>
+        await pubsub.subscribe("REQUESTS_DELETED"),
+    },
+
+    processingStepAdded: {
+      // You can also subscribe to multiple topics at once using an array like this:
+      //  pubsub.subscribe(['TOPIC1', 'TOPIC2'])
+      subscribe: async (root, args, { pubsub, policy, currentUser }) => {
+        if (policy.check("processor")) {
+          return await pubsub.subscribe(
+            `PROCESSING_STEP_ADDED_${args.requestID}`
+          )
+        } else {
+          return await pubsub.subscribe(
+            `PROCESSING_STEP_ADDED_${args.requestID}_${currentUser.id}`
+          )
+        }
+      },
+    },
+
+    processingStepUpdated: {
+      // You can also subscribe to multiple topics at once using an array like this:
+      //  pubsub.subscribe(['TOPIC1', 'TOPIC2'])
+      subscribe: async (root, args, { pubsub, currentUser, policy }) => {
+        if (policy.check("processor")) {
+          return await pubsub.subscribe(
+            `PROCESSING_STEP_UPDATED_${args.requestID}`
+          )
+        } else {
+          return await pubsub.subscribe(
+            `PROCESSING_STEP_UPDATED_${args.requestID}_${currentUser.id}`
+          )
+        }
+      },
     },
   },
 }

@@ -63,6 +63,15 @@ module.exports = `
     updateProfile(fullName:String,email:String,settings:String): User!
   }
 
+  type Subscription {
+    requestAdded: Request
+    requestUpdated: Request
+    requestsDeleted: [ID!]
+
+    processingStepAdded(requestID:ID!): ProcessingStep
+    processingStepUpdated(requestID:ID!): ProcessingStep
+  }
+
   scalar JSON
 
   type User {

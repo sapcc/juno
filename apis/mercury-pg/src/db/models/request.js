@@ -85,7 +85,7 @@ module.exports = (sequelize, DataTypes) => {
           this.stateDetails = transition
           this.lastProcessorID = processor.id
           this.save()
-          return this
+          return step
         }
       })
     }
