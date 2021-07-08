@@ -1,1 +1,1 @@
-# mercury3
+# mercury-prisma
