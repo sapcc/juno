@@ -28,6 +28,7 @@
     "db:drop": "yarn dlx sequelize-cli db:drop",
     "model:generate": "yarn dlx sequelize-cli model:generate",
     "start": "PORT=$APP_PORT yarn nodemon ./src/index.js",
-    "test": "NODE_ENV=test yarn jest --watchAll"
+    "test": "NODE_ENV=test yarn jest --watchAll",
+    "test-stats": "NODE_ENV=test yarn jest --coverage"
   }
 }
