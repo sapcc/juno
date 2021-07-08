@@ -50,7 +50,7 @@ export const Tooltip = ({
 }) => {
 	const [open, setOpen] = useState(false)
 	return (		
-		<span className={`tooltip ${tooltip}`} role="tooltip" {...props}>
+		<span className={`tooltip ${tooltip}`} {...props}>
 			<button 
 				className={`${iconbutton}`} 
 				onClick={() => setOpen(!open)}
