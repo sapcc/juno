@@ -14,8 +14,6 @@ const introboxHeading = `
 	font-bold
 `
 
-
-
 /**
 * An Introbox holds generally important information to help understand the contents, purpose, or state of a whole page or view, or individual sections on longer pages.
 Use sparingly, there should never be any two or more subsequent instances of Introbox as direct siblings/neighbors on an individual view.

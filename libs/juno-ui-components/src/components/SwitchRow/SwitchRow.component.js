@@ -18,7 +18,6 @@ export const SwitchRow =({
 	onChange,
 	...props
 }) => {
-
 	return (
 		<div
 			className={`${switchrow}`}

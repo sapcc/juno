@@ -19,8 +19,6 @@ export const TextInputRow = ({
 	onChange,
 	...props
 }) => {
-	
-	
 	return (
 		<div 
 			className={`${textinputrow}`}

@@ -11,12 +11,12 @@ export const Form = ({
 	...props
 }) => {
 	return (
-			<form 
-				{...props}
-			>
-				{title ?  <h1 className={`${formHeading}`}>{title}</h1> : ""}
-				{children}
-			</form>		
+		<form 
+			{...props}
+		>
+			{title ?  <h1 className={`${formHeading}`}>{title}</h1> : ""}
+			{children}
+		</form>		
 	)
 }
 

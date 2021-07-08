@@ -17,7 +17,6 @@ export const CheckboxRow =({
 	onChange,
 	...props
 }) => {
-
 	return (
 		<div
 			className={`${checkboxrow}`}
