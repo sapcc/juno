@@ -1,2 +1,4 @@
 const PolicyEngine = require("./engine")
-module.exports = PolicyEngine
+
+const engineModule = (module.exports = (config) => new PolicyEngine(config))
+engineModule.PolicyEngine = PolicyEngine
