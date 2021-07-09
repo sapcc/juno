@@ -1,28 +1,18 @@
 ARG KEPPEL_HOSTNAME
 FROM $KEPPEL_HOSTNAME/ccloud-dockerhub-mirror/library/node:14-alpine
 
-LABEL source_repository="https://github.com/sapcc/juno/apps/dashboard"
+LABEL source_repository="https://github.com/sapcc/juno/apis/mercury"
 ARG LIBS
 
 RUN apk --no-cache add git ca-certificates make
-RUN npm install -g serve
 
-# create tmp folder
-RUN mkdir -p /tmp/repo
-# copy the whole repo to /tmp/repo
-ADD . /tmp/repo
-
-# install node modules, build libs and app
-RUN cd /tmp/repo/ && \
-  yarn workspaces focus mercury ; \
-  yarn workspace mercury db:migrate
-
-# create working dir
 RUN mkdir -p /app
+ADD . /app
+
 WORKDIR /app
 
-# copy app build to working dir
-RUN cp -r /tmp/repo/apps/mercury/* /app/ ; cd /app
+RUN yarn workspaces focus mercury 
 
 # run app
-CMD yarn production
+CMD NODE_ENV=production yarn workspace mercury db:migrate && \
+    yarn workspace mercury production
