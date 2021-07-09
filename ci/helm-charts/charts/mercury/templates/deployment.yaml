@@ -33,7 +33,7 @@ spec:
               containerPort: 5000
           env:
             - name: PORT
-              value: 5000
+              value: "5000"
             - name: DB_USER
               value: {{ .Values.postgresql.user }}
             - name: DB_PASSWORD
