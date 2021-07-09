@@ -223,7 +223,7 @@ jobs:
               build_args: 
                 KEPPEL_HOSTNAME: {{keppel-hostname}}
                 LIBS: <%= LIBS.join(" ") %>
-              dockerfile: app-mercury.git/ci/Dockerfile.mercury
+              dockerfile: api-mercury.git/ci/Dockerfile.mercury
               tag: mercury.version/version
             get_params:
               skip_download: true
@@ -401,7 +401,7 @@ jobs:
             args:
               - -c
               - |
-                printf "cdn_tag: \"$(cat cdn.version/version)\"\njuno_ui_components_tag: \"$(cat juno-ui-components.version/version)\"\nmercury_tag: \"$(cat mercury.version/version)\"" > ./extra-values/values.yaml
+                printf "cdn: {image_tag: \"$(cat cdn.version/version)\"}\njuno_ui_components: {image_tag: \"$(cat juno-ui-components.version/version)\"}\nmercury: {image_tag: \"$(cat mercury.version/version)\"}" > ./extra-values/values.yaml
                 cat ./extra-values/values.yaml
           outputs:
             - name: extra-values
@@ -422,7 +422,7 @@ jobs:
           NAMESPACE: juno
           REGION: qa-de-1
           CONTEXT: s-qa-de-1
-          TAG_VARIABLE: dashboard.tag
+          TAG_VARIABLE: dashboard.image_tag
           VALUES: local:globals s-local:juno extra:values.yaml
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
@@ -536,7 +536,7 @@ jobs:
             args:
               - -c
               - |
-                printf "cdn_tag: \"$(cat cdn.version/version)\"\njuno_ui_components_tag: \"$(cat juno-ui-components.version/version)\"\nmercury_tag: \"$(cat mercury.version/version)\"" > ./extra-values/values.yaml
+                printf "cdn: {image_tag: \"$(cat cdn.version/version)\"}\njuno_ui_components: {image_tag: \"$(cat juno-ui-components.version/version)\"}\nmercury: {image_tag: \"$(cat mercury.version/version)\"}" > ./extra-values/values.yaml
                 cat ./extra-values/values.yaml
           outputs:
             - name: extra-values
@@ -557,7 +557,7 @@ jobs:
           NAMESPACE: juno
           REGION: eu-nl-1
           CONTEXT: s-eu-nl-1
-          TAG_VARIABLE: dashboard.tag
+          TAG_VARIABLE: dashboard.image_tag
           VALUES: local:globals s-local:foo extra:values.yaml
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}          

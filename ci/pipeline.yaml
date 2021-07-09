@@ -199,7 +199,7 @@ jobs:
               - |
                 cd $PWD/app/juno
                 yarn workspaces focus mercury
-                CI=true yarn workspace mercury test
+                CI=true yarn workspace mercury test-prod
 
   # build dashboard image and push it to keppel
   - name: build mercury
@@ -220,7 +220,7 @@ jobs:
               build_args: 
                 KEPPEL_HOSTNAME: {{keppel-hostname}}
                 LIBS: juno-ui-components
-              dockerfile: app-mercury.git/ci/Dockerfile.mercury
+              dockerfile: api-mercury.git/ci/Dockerfile.mercury
               tag: mercury.version/version
             get_params:
               skip_download: true

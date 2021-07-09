@@ -31,7 +31,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
         - name: dashboard
-          image: "{{ .Values.global.registry }}/juno-cdn:{{.Values.cdn_tag}}"
+          image: "{{ .Values.global.registry }}/juno-cdn:{{.Values.cdn.image_tag}}"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
