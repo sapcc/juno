@@ -172,6 +172,63 @@ jobs:
         params:
           IMAGE_NAME: ((keppel-hostname))/ccloud/juno-dashboard
 
+  # ******************* MERCURY ******************************
+  # run unit tests for dashboard sources
+  - name: unit-test mercury
+    public: true
+    plan:
+      - get: juno-unit-test.image
+        passed: ["build unit-test-image"]
+        trigger: true
+      - get: api-mercury.git
+        trigger: true
+
+      - task: unit
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: ((keppel-hostname))/ccloud/juno-unit-test
+              tag: "latest"
+          inputs:
+            - name: api-mercury.git
+              path: /app/juno
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd $PWD/app/juno
+                yarn workspaces focus mercury
+                CI=true yarn workspace mercury test
+
+  # build dashboard image and push it to keppel
+  - name: build mercury
+    serial: true
+    plan:
+      - in_parallel:
+          - get: api-mercury.git
+            passed: ["unit-test mercury"]
+            trigger: true
+          - put: mercury.version
+      - in_parallel:
+          - put: juno-mercury.image
+            params:
+              tag_as_latest: true
+              cache: true
+              cache_tag: "latest"
+              build: api-mercury.git
+              build_args: 
+                KEPPEL_HOSTNAME: {{keppel-hostname}}
+                LIBS: <%= LIBS.join(" ") %>
+              dockerfile: app-mercury.git/ci/Dockerfile.mercury
+              tag: mercury.version/version
+            get_params:
+              skip_download: true
+  #*********************** END MERCURY ******************************
+
   # run unit tests for each app in /apps
   <% APPS.each do |app| %>
   - name: unit-test <%= app %>
@@ -313,6 +370,9 @@ jobs:
           - get: dashboard.version
             trigger: true
             passed: ["vscan dashboard"]      
+          - get: mercury.version
+            trigger: true
+            passed: ["build mercury"]      
           - get: cdn.version
             trigger: true
             passed: ["combine apps"]
@@ -324,7 +384,7 @@ jobs:
             params:
               depth: 100 
 
-      - task: generate cdn and ui-components values.yaml
+      - task: generate additional tags values.yaml
         config:
           platform: linux
           image_resource:
@@ -335,12 +395,13 @@ jobs:
           inputs: 
             - name: cdn.version 
             - name: juno-ui-components.version
+            - name: mercury.version
           run:
             path: /bin/sh
             args:
               - -c
               - |
-                printf "cdn_tag: \"$(cat cdn.version/version)\"\njuno_ui_components_tag: \"$(cat juno-ui-components.version/version)\"" > ./extra-values/values.yaml
+                printf "cdn_tag: \"$(cat cdn.version/version)\"\njuno_ui_components_tag: \"$(cat juno-ui-components.version/version)\"\nmercury_tag: \"$(cat mercury.version/version)\"" > ./extra-values/values.yaml
                 cat ./extra-values/values.yaml
           outputs:
             - name: extra-values
@@ -362,7 +423,7 @@ jobs:
           REGION: qa-de-1
           CONTEXT: s-qa-de-1
           TAG_VARIABLE: dashboard.tag
-          VALUES: local:globals extra:values.yaml
+          VALUES: local:globals s-local:juno extra:values.yaml
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}
 
@@ -381,6 +442,9 @@ jobs:
       - get: juno-ui-components.version
         trigger: true          
         passed: ["deploy to s-qa-de-1"]
+      - get: mercury.version
+        trigger: true          
+        passed: ["deploy to s-qa-de-1"]        
       - get: repo.git
 
       - task: cypress
@@ -404,6 +468,7 @@ jobs:
                 CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/dashboard/*"
                 CYPRESS_BASE_URL=https://cdn.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/cdn/*"
                 CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/ui-components/*"
+                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/mercury/*"
 
   - name: deploy to s-eu-nl-1
     serial: true
@@ -415,6 +480,8 @@ jobs:
             passed: ["e2e s-qa-de-1"]
           - get: juno-ui-components.version
             passed: ["e2e s-qa-de-1"]  
+          - get: mercury.version
+            passed: ["e2e s-qa-de-1"]              
           - get: ci.git
           - get: secrets.git
             params:
@@ -428,6 +495,13 @@ jobs:
           REGION: eu-nl-1
           IMAGE: juno-dashboard
 
+      - task: replicate mercury image to target region
+        file: secrets.git/ci/shared/task-replicate-image.yaml
+        input_mapping:
+          app.version: mercury.version
+        params:
+          REGION: eu-nl-1
+          IMAGE: juno-mercury          
 
       - task: replicate cdn image to target region
         file: secrets.git/ci/shared/task-replicate-image.yaml
@@ -456,12 +530,13 @@ jobs:
           inputs: 
             - name: cdn.version 
             - name: juno-ui-components.version
+            - name: mercury.version
           run:
             path: /bin/sh
             args:
               - -c
               - |
-                printf "cdn_tag: \"$(cat cdn.version/version)\"\njuno_ui_components_tag: \"$(cat juno-ui-components.version/version)\"" > ./extra-values/values.yaml
+                printf "cdn_tag: \"$(cat cdn.version/version)\"\njuno_ui_components_tag: \"$(cat juno-ui-components.version/version)\"\nmercury_tag: \"$(cat mercury.version/version)\"" > ./extra-values/values.yaml
                 cat ./extra-values/values.yaml
           outputs:
             - name: extra-values
@@ -483,7 +558,7 @@ jobs:
           REGION: eu-nl-1
           CONTEXT: s-eu-nl-1
           TAG_VARIABLE: dashboard.tag
-          VALUES: local:globals extra:values.yaml
+          VALUES: local:globals s-local:foo extra:values.yaml
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}          
          
@@ -566,6 +641,15 @@ resources:
       paths: ["apps/dashboard","package.json","libs","ci/Dockerfile.dashboard","e2e"]
       username: sapcc-bot
       password: {{real-github-access-token}}
+
+  - name: api-mercury.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["apis/mercury","package.json","ci/Dockerfile.mercury","e2e"]
+      username: sapcc-bot
+      password: {{real-github-access-token}}      
  
   <% APPS.each do |app| %>
   - name: app-<%= app %>.git
@@ -615,6 +699,10 @@ resources:
     type: time-version-resource
     check_every: 525600h
 
+  - name: mercury.version
+    type: time-version-resource
+    check_every: 525600h   
+
   - name: juno-ui-components.version
     type: time-version-resource
     check_every: 525600h    
@@ -630,6 +718,14 @@ resources:
       username: {{keppel-username}}
       password: {{keppel-password}}
       repository: ((keppel-hostname))/ccloud/juno-dashboard  
+
+  - name: juno-mercury.image
+    type: docker-image
+    check_every: 24h
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: ((keppel-hostname))/ccloud/juno-mercury        
 
   - name: juno-ui-components.image
     type: docker-image

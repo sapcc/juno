@@ -14,6 +14,10 @@ Is a collection of Micro Frontends (MFE)
 - [Communicator](https://github.com/sapcc/juno/tree/main/libs/communicator)
 - [Policy Engine](https://github.com/sapcc/juno/tree/main/libs/policy-engine)
 
+## APIs
+
+- [Mercury](https://github.com/sapcc/juno/tree/main/apis/mercury)
+
 # Development
 
 Use Webpack for apps, and Rollup for libraries
