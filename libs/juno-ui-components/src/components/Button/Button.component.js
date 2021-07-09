@@ -100,7 +100,7 @@ export const Button = ({
     <button
       type="button"
       className={`${btn} ${variantClass(variant)} ${sizeClass(size)}`}
-      onClick={!props.disabled && onClick}
+      onClick={!props.disabled ? onClick : undefined}
       title={titleValue}
       {...props}
     >
@@ -121,7 +121,7 @@ Button.propTypes = {
   /** Click handler  */
   onClick: PropTypes.func,
   /** Set to true to disable */
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
 }
 
 Button.defaultProps = {

@@ -1,16 +1,5 @@
-const DB_HOST =
-  process.env.POSTGRES_PORT_5432_TCP_ADDR ||
-  process.env.JUNO_MERCURY_POSTGRESQL_SERVICE_HOST ||
-  process.env.POSTGRES_JUNO_MERCURY_SERVICE_HOST ||
-  process.env.POSTGRES_SERVICE_HOST ||
-  "localhost"
-
-const DB_PORT =
-  process.env.POSTGRES_PORT_5432_TCP_PORT ||
-  process.env.JUNO_MERCURY_POSTGRESQL_SERVICE_PORT ||
-  process.env.POSTGRES_JUNO_MERCURY_SERVICE_PORT ||
-  process.env.POSTGRES_SERVICE_PORT ||
-  5432
+const DB_HOST = process.env.JUNO_MERCURY_POSTGRESQL_SERVICE_HOST || "localhost"
+const DB_PORT = process.env.JUNO_MERCURY_POSTGRESQL_SERVICE_PORT || 5432
 
 module.exports = {
   development: {

@@ -43,25 +43,25 @@ The command removes all the Kubernetes components associated with the chart and 
 
 The following tables lists the configurable parameters of the PostgresSQL chart and their default values.
 
-| Parameter                   | Description                          | Default                                                 |
-| --------------------------- | ------------------------------------ | ------------------------------------------------------- |
-| `image`                     | `postgres` image repository          | `postgres`                                              |
-| `imageTag`                  | `postgres` image tag                 | `9.5.4`                                                 |
-| `imagePullPolicy`           | Image pull policy                    | `Always` if `imageTag` is `latest`, else `IfNotPresent` |
-| `postgresUser`              | Username of new user to create.      | `postgres`                                              |
-| `postgresPassword`          | Password for the new user.           | random 10 characters                                    |
-| `postgresDatabase`          | Name for new database to create.     | `postgres`                                              |
-| `persistence.enabled`       | Use a PVC to persist data            | `true`                                                  |
-| `persistence.storageClass`  | Storage class of backing PVC         | `generic`                                               |
-| `persistence.accessMode`    | Use volume as ReadOnly or ReadWrite  | `ReadWriteMany`                                         |
-| `persistence.size`          | Size of data volume                  | `10Gi`                                                  |
-| `persistence.existingClaim` | Re-Use existing PVC                  |                                                         |
-| `resources`                 | CPU/Memory resource requests/limits  | Memory: `256Mi`, CPU: `100m`                            |
-| `metrics.enabled`           | Start a side-car prometheus exporter | `false`                                                 |
-| `metrics.image`             | Exporter image                       | `wrouesnel/postgres_exporter`                           |
-| `metrics.imageTag`          | Exporter image                       | `v0.1.1`                                                |
-| `metrics.imagePullPolicy`   | Exporter image pull policy           | `IfNotPresent`                                          |
-| `metrics.resources`         | Exporter resource requests/limit     | Memory: `256Mi`, CPU: `100m`                            |
+| Parameter                  | Description                                | Default                                                    |
+| -----------------------    | ----------------------------------         | ---------------------------------------------------------- |
+| `image`                    | `postgres` image repository                | `postgres`                                                 |
+| `imageTag`                 | `postgres` image tag                       | `9.5.4`                                                    |
+| `imagePullPolicy`          | Image pull policy                          | `Always` if `imageTag` is `latest`, else `IfNotPresent`    |
+| `postgresUser`             | Username of new user to create.            | `postgres`                                                 |
+| `postgresPassword`         | Password for the new user.                 | random 10 characters                                       |
+| `postgresDatabase`         | Name for new database to create.           | `postgres`                                                 |
+| `persistence.enabled`      | Use a PVC to persist data                  | `true`                                                     |
+| `persistence.storageClass` | Storage class of backing PVC               | `generic`                                                  |
+| `persistence.accessMode`   | Use volume as ReadOnly or ReadWrite        | `ReadWriteMany`                                            |
+| `persistence.size`         | Size of data volume                        | `10Gi`                                                     |
+| `persistence.existingClaim`| Re-Use existing PVC                        |                                                            |
+| `resources`                | CPU/Memory resource requests/limits        | Memory: `256Mi`, CPU: `100m`                               |
+| `metrics.enabled`          | Start a side-car prometheus exporter       | `false`                                                    |
+| `metrics.image`            | Exporter image                             | `wrouesnel/postgres_exporter`                              |
+| `metrics.imageTag`         | Exporter image                             | `v0.1.1`                                                   |
+| `metrics.imagePullPolicy`  | Exporter image pull policy                 | `IfNotPresent`                                             |
+| `metrics.resources`        | Exporter resource requests/limit           | Memory: `256Mi`, CPU: `100m`                               |
 
 The above parameters map to the env variables defined in [postgres](http://github.com/docker-library/postgres). For more information please refer to the [postgres](http://github.com/docker-library/postgres) image documentation.
 
@@ -90,5 +90,4 @@ The [postgres](https://github.com/docker-library/postgres) image stores the Post
 The chart mounts a [Persistent Volume](http://kubernetes.io/docs/user-guide/persistent-volumes/) volume at this location. The volume is created using dynamic volume provisioning.
 
 ## Metrics
-
 The chart optionally can start a metrics exporter for [prometheus](https://prometheus.io). The metrics endpoint (port 9187) is not exposed and it is expected that the metrics are collected from inside the k8s cluster using something similar as the described in the [example Prometheus scrape configuration](https://github.com/prometheus/prometheus/blob/master/documentation/examples/prometheus-kubernetes.yml).

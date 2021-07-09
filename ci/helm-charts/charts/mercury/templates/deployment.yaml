@@ -26,7 +26,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
         - name: mercury
-          image: "{{ .Values.global.registry }}/juno-mercury:{{.Values.mercury.image_tag}}"
+          image: "{{ .Values.global.registry }}/juno-mercury:{{ .Values.image_tag }}"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -35,9 +35,12 @@ spec:
             - name: DB_USER
               value: {{ .Values.postgresql.user }}
             - name: DB_PASSWORD
-              valueFrom:{ secretKeyRef:    { name: {{ template "postgresql.fullname" . }}, key: postgres-password } }
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "postgresql.fullname" . }}
+                  key: postgres-password
             - name: DB_NAME
-              value: {{ .Values.postgresql.database}}
+              value: {{ .Values.postgresql.database }}
 
 
           livenessProbe:
