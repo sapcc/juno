@@ -202,7 +202,7 @@ jobs:
               - |
                 cd $PWD/app/juno
                 yarn workspaces focus mercury
-                CI=true yarn workspace mercury test
+                CI=true yarn workspace mercury test-prod
 
   # build dashboard image and push it to keppel
   - name: build mercury
