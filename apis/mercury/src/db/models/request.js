@@ -140,6 +140,7 @@ module.exports = (sequelize, DataTypes) => {
       requesterID: DataTypes.INTEGER,
       lastProcessorID: DataTypes.INTEGER,
       kind: DataTypes.STRING,
+      requesterName: DataTypes.STRING,
       priority: DataTypes.INTEGER,
       subject: DataTypes.STRING,
       description: DataTypes.TEXT,

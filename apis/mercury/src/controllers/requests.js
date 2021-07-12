@@ -79,13 +79,6 @@ async function create(args, { currentUser, region, tokenPayload, policy }) {
     throw new AuthorizationError("User is not allowed to create a request")
   }
 
-  console.log(
-    "================================CREATE REQUEST",
-    currentUser,
-    region,
-    tokenPayload
-  )
-
   const { project, domain } = tokenPayload
   const requestData = {
     ...args,
@@ -97,8 +90,6 @@ async function create(args, { currentUser, region, tokenPayload, policy }) {
     requesterID: currentUser.id,
     requesterName: currentUser.name,
   }
-
-  console.log("================================requestData", requestData)
 
   const request = await Request.create(requestData)
   if (args.comment) {
