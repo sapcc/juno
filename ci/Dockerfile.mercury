@@ -14,5 +14,4 @@ WORKDIR /app
 RUN yarn workspaces focus mercury 
 
 # run app
-CMD NODE_ENV=production yarn workspace mercury db:migrate && \
-    yarn workspace mercury production
+CMD NODE_ENV=production yarn workspace mercury db:migrate && yarn workspace mercury production

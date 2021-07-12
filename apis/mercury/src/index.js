@@ -10,7 +10,7 @@ createServer({
 }).then((server) => {
   server
     .listen(process.env.PORT, "0.0.0.0")
-    .then((url) => server.log.info(`server listening on ${url}`))
+    // .then((url) => server.log.info(`server listening on ${url}`))
     .catch((error) => {
       server.log.error(error)
       process.exit(1)

@@ -11,7 +11,7 @@ spec:
     matchLabels:
       app: juno-mercury
   revisionHistoryLimit: 3
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -32,7 +32,7 @@ spec:
             - name: http
               containerPort: 5000
           env:
-            - name: PORT
+            - name: APP_PORT
               value: "5000"
             - name: DB_USER
               value: {{ .Values.postgresql.user }}

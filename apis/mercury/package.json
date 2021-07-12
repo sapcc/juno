@@ -32,6 +32,6 @@
     "test": "NODE_ENV=test yarn jest --watchAll",
     "test-stats": "NODE_ENV=test yarn jest --coverage",
     "test-prod": "NODE_ENV=test yarn jest",
-    "production": "NODE_ENV=production PORT=5000 yarn node ./src/index.js"
+    "production": "NODE_ENV=production PORT=$APP_PORT yarn node ./src/index.js"
   }
 }
