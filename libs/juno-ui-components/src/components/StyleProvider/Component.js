@@ -32,7 +32,30 @@ export const StyleProvider = ({
   children,
   shadowRootMode,
 }) => {
+  // theme class default to theme-dark
+  const themeClass = React.useMemo(() => {
+    themeClassName || "theme-dark"
+  })
+
   React.useEffect(() => {
+    // Add font links to head (Plex font from google CDN)
+    const link1 = document.createElement("link")
+    link1.rel = "preconnect"
+    link1.href = "https://fonts.googleapis.com"
+
+    const link2 = document.createElement("link")
+    link2.rel = "preconnect"
+    link2.href = "https://fonts.gstatic.com"
+    link2.crossOrigin = "anonymous"
+
+    const link3= document.createElement("link")
+    link3.rel = "stylesheet"
+    link3.href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&family=IBM+Plex+Sans+Condensed:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&family=IBM+Plex+Serif:ital@0;1&display=swap"
+
+    document.head.appendChild(link1)
+    document.head.appendChild(link2)
+    document.head.appendChild(link3)
+
     // undefined or inline are handled by renderer
     if (
       !stylesWrapper ||
@@ -59,8 +82,8 @@ export const StyleProvider = ({
     }
     wrapper.prepend(style)
 
-    // ensure html tag gets correct theme class (default to theme-dark)
-    document.documentElement.classList.add(themeClassName || "theme-dark")
+    // ensure html tag gets correct theme class
+    document.documentElement.classList.add(themeClass)
   }, [])
 
   return (
@@ -69,10 +92,10 @@ export const StyleProvider = ({
           styles and children into it */}
       {stylesWrapper === "shadowRoot" ? (
         <ShadowRoot mode={shadowRootMode || "closed"} styles={styles}>
-          <div className={themeClassName || "theme-dark"}>{children}</div>
+          <div className={themeClass}>{children}</div>
         </ShadowRoot>
       ) : (
-        <div className={themeClassName || "theme-dark"}>
+        <div className={themeClass}>
           {stylesWrapper === "inline" && (
             <style data-style-provider="inline">{styles}</style>
           )}

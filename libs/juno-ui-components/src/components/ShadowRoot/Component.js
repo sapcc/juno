@@ -33,11 +33,16 @@ const toStyleSheet = (styles) => {
  * @param {Object} props
  * @returns {function} component
  */
-export const ShadowRoot = ({ mode, delegatesFocus, styles, children }) => {
+export const ShadowRoot = ({ mode, delegatesFocus, styles, className, children }) => {
   // reference element which is replaced by the shadow dom element
   const placeholder = React.useRef()
   // hold shadow element in the state
   const [shadowRoot, setShadowRoot] = React.useState()
+
+  const stylesWithFont = React.useMemo(() => {
+    // add import for font to styles
+    "@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&family=IBM+Plex+Sans+Condensed:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&family=IBM+Plex+Serif:ital@0;1&display=swap'); " + styles
+  }, [styles])
 
   React.useEffect(() => {
     // wait until the reference element is rendered!
@@ -47,22 +52,24 @@ export const ShadowRoot = ({ mode, delegatesFocus, styles, children }) => {
       delegatesFocus,
       mode,
     })
+
     // apply styles if given
-    if (styles && constructableStylesheetsSupported) {
-      shadowRootElement.adoptedStyleSheets = toStyleSheet(styles)
+    if (stylesWithFont && constructableStylesheetsSupported) {
+      shadowRootElement.adoptedStyleSheets = toStyleSheet(stylesWithFont)
     }
 
     // save shadow element in the state
     setShadowRoot(shadowRootElement)
-  }, [placeholder.current, styles])
+  }, [placeholder.current, stylesWithFont])
 
   // if shadow element is available place children and styles iside it and return.
   // otherwise render the reference element
   return shadowRoot ? (
     ReactDOM.createPortal(
       <>
-        {!constructableStylesheetsSupported && <style>{styles}</style>}
-        {children}
+        {!constructableStylesheetsSupported && <style>{stylesWithFont}</style>}
+        
+        <div className={`shadow-body ${className}`}>{children}</div>
       </>,
       shadowRoot
     )

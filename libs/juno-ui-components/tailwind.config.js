@@ -15,6 +15,12 @@ module.exports = {
   purge: ["./src/components/**/*.{js,jsx,ts,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    fontFamily: {
+      'sans': ['"IBM Plex Sans"', 'ui-sans-serif', 'Arial', 'system-ui', 'sans-serif'],
+      'condensed': ['"IBM Plex Sans Condensed"', 'ui-sans-serif', 'Arial', 'system-ui', 'sans-serif'],
+      'serif': ['"IBM Plex Serif"', 'ui-serif', 'serif'],
+      'mono': ['"IBM Plex Mono"', 'ui-monospace', 'monospace']
+    },
     colors: {
       "sap-blue": {
         0: withOpacity("--color-rgb-sap-blue-0"),

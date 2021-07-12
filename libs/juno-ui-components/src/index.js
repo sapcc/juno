@@ -5,6 +5,7 @@ export { Spinner } from "./components/Spinner/index.js"
 export { ShadowRoot } from "./components/ShadowRoot/index.js"
 export { PageHeader } from "./components/PageHeader/index.js"
 export { SearchInput } from "./components/SearchInput/index.js"
+export { Stack } from "./components/Stack/index.js"
 export * from "./components/Form/index.js"
 export * from "./components/FloatingLabelInput/index.js"
 

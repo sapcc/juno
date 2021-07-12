@@ -177,7 +177,6 @@
   
   --color-introbox-warning-bg: var(--color-rgb-yellow-10);
   --color-introbox-warning-border: var(--color-rgb-yellow-30);
-  
 }
 
 .theme-dark {
@@ -211,9 +210,10 @@
 
 html,
 body,
-:host {
+.shadow-body {
   background: var(--color-global-bg);
   color: var(--color-global-foreground);
+  font-family: 'IBM Plex Sans', 'ui-sans-serif', Arial, sans-serif;
 }
 
 @tailwind components;
