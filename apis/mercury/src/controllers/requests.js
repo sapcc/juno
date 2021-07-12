@@ -74,13 +74,17 @@ async function regions() {
   }).then((result) => result.map((r) => r.DISTINCT))
 }
 
-async function create(
-  args,
-  { currentUser, region, pubsub, tokenPayload, policy }
-) {
+async function create(args, { currentUser, region, tokenPayload, policy }) {
   if (!policy.check("can-create")) {
     throw new AuthorizationError("User is not allowed to create a request")
   }
+
+  console.log(
+    "================================CREATE REQUEST",
+    currentUser,
+    region,
+    tokenPayload
+  )
 
   const { project, domain } = tokenPayload
   const requestData = {
@@ -96,7 +100,7 @@ async function create(
 
   const request = await Request.create(requestData)
   if (args.comment) {
-    const step = await request.performStateTransition("addNote", {
+    await request.performStateTransition("addNote", {
       processor: currentUser,
       kind: "note",
       type: "public",
@@ -107,7 +111,7 @@ async function create(
   return request
 }
 
-async function update({ id, ...args }, { currentUser, policy, pubsub }) {
+async function update({ id, ...args }, { currentUser, policy }) {
   let request = await loadRequest(id)
   const requester = await request.requester
   if (
@@ -121,7 +125,7 @@ async function update({ id, ...args }, { currentUser, policy, pubsub }) {
   return await request.update(args)
 }
 
-async function destroy({ id }, { policy, pubsub }) {
+async function destroy({ id }, { policy }) {
   const requests = await Request.findAll({ where: { id } })
 
   for (let request of requests) {
