@@ -98,9 +98,11 @@ describe("server", () => {
           name: packageJson.name,
           description: packageJson.description,
           version: packageJson.version,
-          graphqlEndpoint: "/graphql",
-          playgroundEndpoint: "/playground",
-          policyEndpoint: "/policy",
+          endpoints: {
+            graphql: "/graphql",
+            playground: "/playground",
+            policy: "/policy",
+          },
         })
       )
     })
