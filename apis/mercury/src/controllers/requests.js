@@ -98,6 +98,8 @@ async function create(args, { currentUser, region, tokenPayload, policy }) {
     requesterName: currentUser.name,
   }
 
+  console.log("================================requestData", requestData)
+
   const request = await Request.create(requestData)
   if (args.comment) {
     await request.performStateTransition("addNote", {
