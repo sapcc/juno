@@ -28,7 +28,6 @@ const messageHeading = `
 	font-bold
 `
 
-
 const variantClass = (variant) => {
 	  switch (variant) {
 		case "danger":

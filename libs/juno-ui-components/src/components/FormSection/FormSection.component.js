@@ -22,8 +22,7 @@ export const FormSection = ({
 		>
 			{title ?  <h1 className={`${formSectionHeading}`}>{title}</h1> : ""}
 			{children}
-		</section>
-		
+		</section>		
 	)
 }
 
