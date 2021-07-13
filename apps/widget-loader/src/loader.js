@@ -132,7 +132,7 @@ const extractDataFromScript = (script) => {
   if (!url) {
     // url is not provided -> build it from provided data
     const host = script.src.match(/^(https?:\/\/[^/]+).*?$/)
-    if (host) url = `${host[1]}/cdn/${name}/${version}/widget.js`
+    if (host) url = `${host[1]}/${name}/${version}/widget.js`
   }
 
   return { scope, name, version, module, url }
