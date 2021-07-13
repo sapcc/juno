@@ -91,7 +91,7 @@ export const StyleProvider = ({
       {/* handle shadowRoot -> create shadow element and insert 
           styles and children into it */}
       {stylesWrapper === "shadowRoot" ? (
-        <ShadowRoot mode={shadowRootMode || "closed"} styles={styles}>
+        <ShadowRoot mode={shadowRootMode || "closed"} styles={styles} themeClass="theme-dark">
           <div className={themeClass}>{children}</div>
         </ShadowRoot>
       ) : (

@@ -57,10 +57,10 @@ export const parameters = {
 
 export const decorators = [
   (Story) => {
-    const mode = useDarkMode() ? "theme-dark" : "theme-light"
+    const themeClass = useDarkMode() ? "theme-dark" : "theme-light"
 
     return (
-      <StyleProvider stylesWrapper="head" theme={mode}>
+      <StyleProvider stylesWrapper="head" theme={themeClass}>
         <Story />
       </StyleProvider>
     )
