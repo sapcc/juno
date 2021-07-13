@@ -8,6 +8,7 @@ const message = `
 	sm:px-4
 	border-l-4
 	bg-theme-message
+	text-theme-default
 `
 
 const messageDefault = `

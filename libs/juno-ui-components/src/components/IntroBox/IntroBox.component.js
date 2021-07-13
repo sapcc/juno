@@ -8,6 +8,7 @@ const introbox = `
 	sm:px-4
 	border-2
 	border-theme-introbox
+	text-theme-default
 `
 
 const introboxHeading = `

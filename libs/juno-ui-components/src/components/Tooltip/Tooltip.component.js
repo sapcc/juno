@@ -15,6 +15,7 @@ const popover = `
 	p-2
 	inline-block
 	absolute
+	bg-theme-tooltip-popover
 `
 
 /* Create tooltip popover with content as passed */

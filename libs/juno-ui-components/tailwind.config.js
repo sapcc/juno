@@ -122,6 +122,7 @@ module.exports = {
           //"default-hover": withOpacity("--color-default-bg-hover"),
           // TODO: active button bg colors
           "message": withOpacity("--color-message-bg"),
+          "tooltip-popover": withOpacity("--color-tooltip-popover-bg"),
         },
       },
       textColor: {
