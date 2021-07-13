@@ -56,9 +56,9 @@
   .theme-dark {
     
     // RGB
-    --color-juno-text-high: 222, 223, 224;
-    --color-juno-text-medium: 187, 187, 187;
-    --color-juno-text-disabled: 150, 150, 150;
+    --color-juno-text-high: rgb(222, 223, 224);
+    --color-juno-text-medium: rgb(187, 187, 187);
+    --color-juno-text-disabled: rgb(150, 150, 150);
     
     // RAW
     --color-juno-text-high-raw: 222, 223, 224;
@@ -247,8 +247,8 @@
 
 .theme-dark {
   // Global
-  --color-global-bg: var(--color-juno-grey-blue-92-raw);
-  --color-global-text: var(--color-juno-text-high-raw);
+  --color-global-bg: var(--color-juno-grey-blue-92);
+  --color-global-text: var(--color-juno-text-high);
   // Message
   --color-button-primary-bg: var(--sap-blue-dark-raw);
   --color-button-primary-foreground: var(--sap-grey-blue-100-raw);
