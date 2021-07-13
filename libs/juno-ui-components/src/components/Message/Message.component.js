@@ -7,20 +7,19 @@ const message = `
 	sm:py-3
 	sm:px-4
 	border-l-4
+	bg-theme-message
+	text-theme-default
 `
 
 const messageDefault = `
-	bg-theme-message-default
 	border-theme-message-default
 `
 
 const messageDanger = `
-	bg-theme-message-danger
 	border-theme-message-danger
 `
 
 const messageWarning = `
-	bg-theme-message-warning
 	border-theme-message-warning
 `
 
