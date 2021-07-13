@@ -7,7 +7,7 @@ const introbox = `
 	sm:py-3
 	sm:px-4
 	border-2
-	border-theme-introbox-default
+	border-theme-introbox
 `
 
 const introboxHeading = `

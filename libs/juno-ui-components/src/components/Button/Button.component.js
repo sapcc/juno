@@ -5,7 +5,6 @@ const btn = `
   inline-flex 
   justify-center 
   rounded-md
-  border
   shadow-sm 
   font-medium 
   w-full
@@ -18,7 +17,8 @@ const btn = `
 
 const btnDefault = `
   text-theme-on-default
-  bg-theme-default
+  bg-theme-button-default
+  border
   border-theme-default
   hover:bg-theme-default-hover
   disabled:bg-theme-default
@@ -26,16 +26,14 @@ const btnDefault = `
 
 const btnPrimary = `
   text-theme-on-primary
-  bg-theme-primary
-  border-theme-primary
+  bg-theme-button-primary
   hover:bg-theme-primary-hover
   disabled:bg-theme-primary
 `
 
 const btnDanger = `
   text-theme-on-danger
-  bg-theme-danger
-  border-theme-danger
+  bg-theme-button-danger
   hover:bg-theme-danger-hover
   disabled:bg-theme-danger
 `
