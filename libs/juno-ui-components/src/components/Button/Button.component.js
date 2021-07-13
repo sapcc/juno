@@ -97,7 +97,7 @@ export const Button = ({
   return (
     <button
       type="button"
-      className={`${btn} ${variantClass(variant)} ${sizeClass(size)}`}
+      className={`button button-${variant} ${btn} ${variantClass(variant)} ${sizeClass(size)}`}
       onClick={!props.disabled ? onClick : undefined}
       title={titleValue}
       {...props}

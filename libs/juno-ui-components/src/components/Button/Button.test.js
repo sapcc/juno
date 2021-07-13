@@ -51,28 +51,19 @@ describe("Button", () => {
   test("renders a default button", async () => {
     render(<Button>Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
-    expect(screen.getByRole("button")).toHaveClass(
-      "text-theme-on-default",
-      "bg-theme-default"
-    )
+    expect(screen.getByRole("button")).toHaveClass("button-default")
   })
   
   test("renders a primary button", async () => {
     render(<Button variant="primary">Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
-    expect(screen.getByRole("button")).toHaveClass(
-      "text-theme-on-primary",
-      "bg-theme-primary"
-    )
+    expect(screen.getByRole("button")).toHaveClass("button-primary")
   })
 
   test("renders a danger button", async () => {
     render(<Button variant="danger">Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
-    expect(screen.getByRole("button")).toHaveClass(
-      "text-theme-on-danger",
-      "bg-theme-danger"
-    )
+    expect(screen.getByRole("button")).toHaveClass("button-danger")
   })
 
   test("renders a disabled button", async () => {
