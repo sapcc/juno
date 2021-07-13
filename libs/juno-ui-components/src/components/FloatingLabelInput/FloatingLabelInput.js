@@ -25,7 +25,14 @@ import PropTypes from "prop-types"
 /**
  * Form input field with floating label
  */
-export const FloatingLabelInput = ({ type, label, name, value, onChange }) => (
+export const FloatingLabelInput = ({
+  type,
+  label,
+  name,
+  value,
+  onChange,
+  onKeyPress,
+}) => (
   <div className="floating-label-container">
     <input
       type={type || "text"}
@@ -34,6 +41,7 @@ export const FloatingLabelInput = ({ type, label, name, value, onChange }) => (
       value={value || ""}
       name={name || label}
       onChange={onChange}
+      onKeyPress={onKeyPress}
       autoComplete="off"
     />
     <label

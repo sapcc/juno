@@ -11,8 +11,15 @@ describe("apps", () => {
   })
 
   // designate
-  it("auth is reachable", () => {
+  it("designate is reachable", () => {
     cy.request("designate/0_0_1/widget.js").should((response) => {
+      expect(response.status).to.eq(200)
+    })
+  })
+
+  // whois
+  it("whois is reachable", () => {
+    cy.request("whois/0_0_1/widget.js").should((response) => {
       expect(response.status).to.eq(200)
     })
   })

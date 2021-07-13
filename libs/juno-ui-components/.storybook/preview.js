@@ -11,6 +11,7 @@ import {
 } from '@storybook/addon-docs/blocks';
 import React from "react"
 import "../src/global.scss"
+import { StyleProvider } from "../src/components/StyleProvider"
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -56,12 +57,12 @@ export const parameters = {
 
 export const decorators = [
   (Story) => {
-    const mode = useDarkMode() ? "theme-dark" : "theme-light"
+    const themeClass = useDarkMode() ? "theme-dark" : "theme-light"
 
     return (
-      <div className={mode}>
+      <StyleProvider stylesWrapper="head" theme={themeClass}>
         <Story />
-      </div>
+      </StyleProvider>
     )
   },
 ]
