@@ -6,6 +6,7 @@ const TOKEN_PROPERTIES = [
   "project_id",
   "project_domain_id",
   "user_id",
+  "user_name",
 ]
 
 const toString = (s) => (typeof s === "undefined" ? s : s.toString())
@@ -20,7 +21,7 @@ const evaluateExpression = (expression) => {
     // return executable rule which returns true
     // (omit getRule, context and params because they are not used inside the executable rule)
     return ({ debugTrace }) => {
-      if (debugTrace) debugTrace.add(expression, result)
+      if (debugTrace) debugTrace.add(expression, true)
       return true
     }
   }
@@ -31,7 +32,7 @@ const evaluateExpression = (expression) => {
     // return executable rule which returns true
     // (omit getRule, context and params because they are not used inside the executable rule)
     return ({ debugTrace }) => {
-      if (debugTrace) debugTrace.add(expression, result)
+      if (debugTrace) debugTrace.add(expression, false)
       return false
     }
   }

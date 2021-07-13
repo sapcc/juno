@@ -16,6 +16,7 @@ const context = (tokenPayload) => {
     project_id: tokenPayload.project?.id,
     project_domain_id: tokenPayload.project?.domain?.id,
     user_id: tokenPayload.user?.id,
+    user_name: tokenPayload.user?.name,
     roles: tokenPayload.roles || [],
   }
 }
@@ -46,7 +47,7 @@ class PolicyEngine {
   }
 
   rule(name) {
-    this.rules[name]
+    return this.rules[name]
   }
 
   /**

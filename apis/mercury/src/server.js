@@ -1,5 +1,6 @@
 // load package.json
 const packageJson = require("../package.json")
+const policyJson = require("../config/policy.json")
 
 const fastify = require("fastify")
 // Import external dependancies
@@ -9,36 +10,60 @@ const gql = require("mercurius")
 const cors = require("fastify-cors")
 
 // Import GraphQL Schema
-const schema = require("./schema")
-
-// Require external modules
-const mongoose = require("mongoose")
+const schema = require("./graphql/schema")
 
 // Identity provider
 const { verifyAuthToken } = require("./lib/identityProvider")
 
-class HTTPError extends Error {
-  constructor(statusCode, message) {
-    super(message)
-    // Ensure the name of this error is the same as the class name
-    this.name = this.constructor.name
-    this.statusCode = statusCode
-    // This clips the constructor invocation from the stack trace.
-    // It's not absolutely essential, but it does make the stack trace a little nicer.
-    //  @see Node.js reference (bottom)
-    Error.captureStackTrace(this, this.constructor)
-  }
+// Policy engine
+const policyEngine = require("policy-engine")(require("../config/policy.json"))
+
+// User
+const { User } = require("./db/models")
+
+const { HTTPError } = require("./errors")
+
+const getIdentityHost = (region) => {
+  if (region === "qa.global") return "https://identity-3-qa.global.cloud.sap"
+  return process.env.IDENTITY_HOST.replace("%REGION%", region)
+}
+
+const buildContext = async ({ authToken, region }) => {
+  const data = { authToken, region }
+
+  // use authentication
+  if (!data.authToken)
+    throw new HTTPError(400, `X-Auth-Token header is required!`)
+
+  if (!data.region)
+    throw new HTTPError(400, `X-Auth-Region header is required!`)
+
+  // add token payload to context
+  data.tokenPayload = await verifyAuthToken(
+    getIdentityHost(data.region),
+    data.authToken
+  ).catch(({ statusCode, message }) => {
+    throw new HTTPError(
+      statusCode,
+      `Identity provider: ${message}. Make sure the token comes from the region: ${data.region}`
+    )
+  })
+
+  // create or load current user from db and save it in context
+  data.currentUser = await User.createOrUpdate({
+    name: data.tokenPayload.user.name,
+  })
+  // create user policy based on token payload
+  data.policy = policyEngine.policy(data.tokenPayload, {
+    debug: process.env.NODE_ENV === "development",
+  })
+
+  return data
 }
 
 // create server function
 module.exports = async (options) => {
-  const {
-    graphiql,
-    mongoURL,
-    identityHost,
-    useAuthentication,
-    ...serverOptions
-  } = options
+  const { graphiql, ...serverOptions } = options
 
   const server = fastify(serverOptions)
 
@@ -48,28 +73,24 @@ module.exports = async (options) => {
     playgroundSettings: {
       "editor.fontFamily": "'Operator Mono', 'Monaco', monospace",
     },
-    context: async (request, reply) => {
-      const data = {}
-
-      // use authentication
-      if (useAuthentication !== false) {
-        data.authToken = request.headers["x-auth-token"]
-        if (!data.authToken)
-          throw new HTTPError(400, `X-Auth-Token header is undefined!`)
-
-        data.tokenPayload = await verifyAuthToken(
-          identityHost,
-          data.authToken
-        ).catch(({ statusCode, message }) => {
-          throw new HTTPError(statusCode, `Identity provider: ${message}`)
+    subscription: {
+      onConnect: async (connectionParams) => {
+        const headers = {}
+        const payload = connectionParams.payload || {}
+        // keys to lower case
+        for (let key in payload) headers[key.toLowerCase()] = payload[key]
+        // build and return context variables
+        return await buildContext({
+          authToken: headers["x-auth-token"],
+          region: headers["x-auth-region"],
         })
-      }
-
-      console.log("===================", data)
-
-      // initialize permissions from token payload provided by data
-
-      return data
+      },
+    },
+    context: async (request, _reply) => {
+      return await buildContext({
+        authToken: request.headers["x-auth-token"],
+        region: request.headers["x-auth-region"],
+      })
     },
   })
 
@@ -84,15 +105,18 @@ module.exports = async (options) => {
         name: packageJson.name,
         description: packageJson.description,
         version: packageJson.version,
-        graphqlEndpoint: "/graphql",
+        endpoints: {
+          graphql: "/graphql",
+          playground: "/playground",
+          policy: "/policy",
+        },
       })
     )
   })
 
-  await mongoose
-    .connect(mongoURL, { useUnifiedTopology: true, useNewUrlParser: true })
-    .then(() => console.log("MongoDB connected..."))
-    .catch((err) => console.log(err))
+  server.get("/policy", (request, reply) => {
+    reply.send(JSON.stringify(policyJson))
+  })
 
   return server
 }

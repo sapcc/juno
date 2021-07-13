@@ -34,6 +34,14 @@ spec:
             backend:
               serviceName: juno-ui-components
               servicePort: 3000
+
+    - host: "mercury.juno.{{ .Values.global.region }}.cloud.sap"
+      http:
+        paths:
+          - path: /                 
+            backend:
+              serviceName: juno-mercury
+              servicePort: 5000              
                     
 {{- if eq .Values.global.region "eu-nl-1" }}
     - host: "juno.global.cloud.sap"
@@ -59,6 +67,14 @@ spec:
             backend:
               serviceName: juno-ui-components
               servicePort: 3000
+
+    - host: "mercury.juno.global.cloud.sap"
+      http:
+        paths:
+          - path: /                 
+            backend:
+              serviceName: juno-mercury
+              servicePort: 5000               
 
 {{- end }} 
 

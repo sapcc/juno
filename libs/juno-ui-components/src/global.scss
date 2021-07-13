@@ -3,218 +3,282 @@
 /* Colors */
 :root,
 :host {
-  // SAP-GOLD
-  // Base: #f0ab00  --> 30
-  --color-sap-gold-0: rgb(255, 252, 249);
-  --color-sap-gold-10: rgb(255, 221, 185);
-  --color-sap-gold-20: rgb(255, 191, 88);
-  --color-sap-gold-30: rgb(240, 171, 0);
-  --color-sap-gold: rgb(240, 171, 0);
-  --color-sap-gold-40: rgb(202, 144, 0);
-  --color-sap-gold-50: rgb(173, 122, 0);
-  --color-sap-gold-60: rgb(144, 101, 0);
-  --color-sap-gold-70: rgb(117, 81, 0);
-  --color-sap-gold-80: rgb(90, 62, 0);
-  --color-sap-gold-90: rgb(65, 44, 0);
-  --color-sap-gold-100: rgb(41, 26, 0);
-
-  --color-rgb-sap-gold-0: 255, 252, 249;
-  --color-rgb-sap-gold-10: 255, 221, 185;
-  --color-rgb-sap-gold-20: 255, 191, 88;
-  --color-rgb-sap-gold-30: 240, 171, 0;
-  --color-rgb-sap-gold: 240, 171, 0;
-  --color-rgb-sap-gold-40: 202, 144, 0;
-  --color-rgb-sap-gold-50: 173, 122, 0;
-  --color-rgb-sap-gold-60: 144, 101, 0;
-  --color-rgb-sap-gold-70: 117, 81, 0;
-  --color-rgb-sap-gold-80: 90, 62, 0;
-  --color-rgb-sap-gold-90: 65, 44, 0;
-  --color-rgb-sap-gold-100: 41, 26, 0;
-
-  // SAP_BLUE
-  // Base: #008fd3 --> 50
-  --color-sap-blue-0: rgb(250, 252, 255);
-  --color-sap-blue-10: rgb(208, 229, 255);
-  --color-sap-blue-20: rgb(159, 207, 255);
-  --color-sap-blue-30: rgb(95, 185, 255);
-  --color-sap-blue-40: rgb(0, 163, 240);
-  --color-sap-blue-50: rgb(0, 143, 211);
-  --color-sap-blue: rgb(0, 143, 211);
-  --color-sap-blue-60: rgb(0, 115, 172);
-  --color-sap-blue-70: rgb(0, 93, 139);
-  --color-sap-blue-80: rgb(0, 71, 108);
-  --color-sap-blue-90: rgb(0, 51, 79);
-  --color-sap-blue-100: rgb(0, 31, 51);
-
-  --color-rgb-sap-blue-0: 250, 252, 255;
-  --color-rgb-sap-blue-10: 208, 229, 255;
-  --color-rgb-sap-blue-20: 159, 207, 255;
-  --color-rgb-sap-blue-30: 95, 185, 255;
-  --color-rgb-sap-blue-40: 0, 163, 240;
-  --color-rgb-sap-blue-50: 0, 143, 211;
-  --color-rgb-sap-blue: 0, 143, 211;
-  --color-rgb-sap-blue-60: 0, 115, 172;
-  --color-rgb-sap-blue-70: 0, 93, 139;
-  --color-rgb-sap-blue-80: 0, 71, 108;
-  --color-rgb-sap-blue-90: 0, 51, 79;
-  --color-rgb-sap-blue-100: 0, 31, 51;
-
-  // BLUE-GRAY
-  // Base: #383f48 --> 80
-  --color-blue-gray-0: rgb(252, 252, 253);
-  --color-blue-gray-10: rgb(223, 227, 233);
-  --color-blue-gray-20: rgb(195, 203, 215);
-  --color-blue-gray-30: rgb(166, 179, 196);
-  --color-blue-gray-40: rgb(140, 156, 176);
-  --color-blue-gray-50: rgb(119, 133, 150);
-  --color-blue-gray-60: rgb(99, 110, 125);
-  --color-blue-gray-70: rgb(79, 89, 101);
-  --color-blue-gray-80: rgb(56, 63, 72);
-  --color-blue-gray: rgb(56, 63, 72);
-  --color-blue-gray-90: rgb(42, 48, 55);
-  --color-blue-gray-100: rgb(26, 29, 35);
-
-  --color-rgb-blue-gray-0: 252, 252, 253;
-  --color-rgb-blue-gray-10: 223, 227, 233;
-  --color-rgb-blue-gray-20: 195, 203, 215;
-  --color-rgb-blue-gray-30: 166, 179, 196;
-  --color-rgb-blue-gray-40: 140, 156, 176;
-  --color-rgb-blue-gray-50: 119, 133, 150;
-  --color-rgb-blue-gray-60: 99, 110, 125;
-  --color-rgb-blue-gray-70: 79, 89, 101;
-  --color-rgb-blue-gray-80: 56, 63, 72;
-  --color-rgb-blue-gray: 56, 63, 72;
-  --color-rgb-blue-gray-90: 42, 48, 55;
-  --color-rgb-blue-gray-100: 26, 29, 35;
-
-  // RED
-  // Base: #fd5200 --> 50
-  --color-red-0: rgb(255, 251, 251);
-  --color-red-10: rgb(255, 219, 215);
-  --color-red-20: rgb(255, 185, 177);
-  --color-red-30: rgb(255, 149, 133);
-  --color-red-40: rgb(255, 108, 75);
-  --color-red-50: rgb(253, 82, 0);
-  --color-red: rgb(253, 82, 0);
-  --color-red-60: rgb(197, 62, 0);
-  --color-red-70: rgb(160, 49, 0);
-  --color-red-80: rgb(125, 36, 0);
-  --color-red-90: rgb(91, 24, 0);
-  --color-red-100: rgb(60, 13, 0);
-
-  --color-rgb-red-0: 255, 251, 251;
-  --color-rgb-red-10: 255, 219, 215;
-  --color-rgb-red-20: 255, 185, 177;
-  --color-rgb-red-30: 255, 149, 133;
-  --color-rgb-red-40: 255, 108, 75;
-  --color-rgb-red-50: 253, 82, 0;
-  --color-rgb-red: 253, 82, 0;
-  --color-rgb-red-60: 197, 62, 0;
-  --color-rgb-red-70: 160, 49, 0;
-  --color-rgb-red-80: 125, 36, 0;
-  --color-rgb-red-90: 91, 24, 0;
-  --color-rgb-red-100: 60, 13, 0;
-
-  //YELLOW
-  // Base: #ffc107 --> 20
-  --color-yellow-0: rgb(255, 252, 248);
-  --color-yellow-10: rgb(255, 222, 175);
-  --color-yellow-20: rgb(255, 193, 7);
-  --color-yellow: rgb(255, 193, 7);
-  --color-yellow-30: rgb(225, 169, 0);
-  --color-yellow-40: rgb(195, 147, 0);
-  --color-yellow-50: rgb(167, 125, 0);
-  --color-yellow-60: rgb(139, 104, 0);
-  --color-yellow-70: rgb(112, 83, 0);
-  --color-yellow-80: rgb(87, 64, 0);
-  --color-yellow-90: rgb(62, 45, 0);
-  --color-yellow-100: rgb(40, 27, 0);
-
-  --color-rgb-yellow-0: 255, 252, 248;
-  --color-rgb-yellow-10: 255, 222, 175;
-  --color-rgb-yellow-20: 255, 193, 7;
-  --color-rgb-yellow: 255, 193, 7;
-  --color-rgb-yellow-30: 225, 169, 0;
-  --color-rgb-yellow-40: 195, 147, 0;
-  --color-rgb-yellow-50: 167, 125, 0;
-  --color-rgb-yellow-60: 139, 104, 0;
-  --color-rgb-yellow-70: 112, 83, 0;
-  --color-rgb-yellow-80: 87, 64, 0;
-  --color-rgb-yellow-90: 62, 45, 0;
-  --color-rgb-yellow-100: 40, 27, 0;
-
-  --color-white: rgb(255, 255, 255);
-  --color-rgb-white: 255, 255, 255;
   
+  // Juno Grey Blue 
+  // RGB
+  --color-juno-grey-blue-100: rgb(0, 8, 16);
+  --color-juno-grey-blue-95: rgb(13, 20, 28);
+  --color-juno-grey-blue-93: rgb(18, 25, 32);
+  --color-juno-grey-blue-92: rgb(20, 27, 34);
+  --color-juno-grey-blue-91: rgb(23, 30, 37);
+  --color-juno-grey-blue-89: rgb(28, 35, 42);
+  --color-juno-grey-blue-88: rgb(31, 38, 45);
+  --color-juno-grey-blue-86: rgb(36, 42, 49);
+  --color-juno-grey-blue-85: rgb(38, 44, 51);
+  --color-juno-grey-blue-84: rgb(41, 47, 54);
+  
+  // RAW
+  --color-juno-grey-blue-100-raw: 0, 8, 16;
+  --color-juno-grey-blue-95-raw: 13, 20, 28;
+  --color-juno-grey-blue-93-raw: 18, 25, 32;
+  --color-juno-grey-blue-92-raw: 20, 27, 34;
+  --color-juno-grey-blue-91-raw: 23, 30, 37;
+  --color-juno-grey-blue-89-raw: 28, 35, 42;
+  --color-juno-grey-blue-88-raw: 31, 38, 45;
+  --color-juno-grey-blue-86-raw: 36, 42, 49;
+  --color-juno-grey-blue-85-raw: 38, 44, 51;
+  --color-juno-grey-blue-84-raw: 41, 47, 54;
+  
+  // Juno Blue
+  // RGB
+  --color-juno-blue-darker: rgb(3, 33, 40);
+  --color-juno-blue-darker-1: rgb(8, 52, 63);
+  --color-juno-blue-darker-2: rgb(15, 74, 87);
+  --color-juno-blue-dark: rgb(22, 96, 113);
+  --color-juno-blue-dark-1: rgb(30, 119, 139);
+  --color-juno-blue: rgb(38, 143, 167);
+  --color-juno-blue-light-3: rgb(46, 168, 196);
+  --color-juno-blue-light-2: rgb(54, 193, 225);
+  --color-juno-blue-light-1: rgb(88, 218, 251);
+  --color-juno-blue-light: rgb(185, 235, 253);
+  
+  // RAW
+  --color-juno-blue-darker-1-raw: 8, 52, 63;
+  --color-juno-blue-darker-2-raw: 15, 74, 87;
+  --color-juno-blue-dark-raw: 22, 96, 113;
+  --color-juno-blue-dark-1-raw: 30, 119, 139;
+  --color-juno-blue-raw: 38, 143, 167;
+  --color-juno-blue-light-3-raw: 46, 168, 196;
+  --color-juno-blue-light-2-raw: 54, 193, 225;
+  --color-juno-blue-light-1-raw: 88, 218, 251;
+  --color-juno-blue-light-raw: 185, 235, 253;
+  
+  .theme-dark {
+    
+    // RGB
+    --color-juno-text-high: 222, 223, 224;
+    --color-juno-text-medium: 187, 187, 187;
+    --color-juno-text-disabled: 150, 150, 150;
+    
+    // RAW
+    --color-juno-text-high-raw: 222, 223, 224;
+    --color-juno-text-medium-raw: 187, 187, 187;
+    --color-juno-text-disabled-raw: 150, 150, 150;
+  }
+  
+  .theme-light {
+    
+  }
+  
+  // SAP Brand Non-Colors
+  // RGB
+  --color-sap-black: rgb(0, 0, 0);
+  --color-sap-grey-0: rgb(34, 34, 34);
+  --color-sap-grey-1: rgb(60, 60, 60);
+  --color-sap-grey-2: rgb(114, 114, 114);
+  --color-sap-grey-3: rgb(150, 150, 150);
+  --color-sap-grey-4: rgb(198, 198, 198);
+  --color-sap-grey-5: rgb(234, 234, 234);
+  --color-sap-white: rgb(255, 255, 255);
+  
+  // RAW
+  --color-sap-black-raw: 0, 0, 0;
+  --color-sap-grey-0-raw: 34, 34, 34;
+  --color-sap-grey-1-raw: 60, 60, 60;
+  --color-sap-grey-2-raw: 114, 114, 114;
+  --color-sap-grey-3-raw: 150, 150, 150;
+  --color-sap-grey-4-raw: 198, 198, 198;
+  --color-sap-grey-5-raw: 234, 234, 234;
+  --color-sap-white-raw: 255, 255, 255;
+  
+  // SAP Brand Blue
+  // RGB
+  --color-sap-blue-darker: rgb(3, 51, 78);
+  --color-sap-blue-darker-1: rgb(5, 71, 107);
+  --color-sap-blue-darker-2: rgb(8, 93, 138);
+  --sap-blue-dark: rgb(0, 103, 153);
+  --sap-blue-dark-1: rgb(30, 106, 146);
+  --sap-blue: rgb(0, 125, 184);
+  --sap-blue-light-3: rgb(67, 162, 208);
+  --sap-blue-light-2: rgb(137, 201, 232);
+  --sap-blue-light-1: rgb(165, 211, 234);
+  --sap-blue-light: rgb(203, 232, 247);
+  
+  //RAW
+  --color-sap-blue-darker-raw: 3, 51, 78;
+  --color-sap-blue-darker-1-raw: 5, 71, 107;
+  --color-sap-blue-darker-2-raw: 8, 93, 138;
+  --sap-blue-dark-raw: 0, 103, 153;
+  --sap-blue-dark-1-raw: 30, 106, 146;
+  --sap-blue-raw: 0, 125, 184;
+  --sap-blue-light-3-raw: 67, 162, 208;
+  --sap-blue-light-2-raw: 137, 201, 232;
+  --sap-blue-light-1-raw: 165, 211, 234;
+  --sap-blue-light-raw: 203, 232, 247;
+  
+  // SAP Brand Gold
+  // RGB 
+  --color-sap-gold-dark-1: rgb(150, 105, 0);
+  --color-sap-gold-dark: rgb(217, 151, 0);
+  --color-sap-gold: rgb(240, 171, 0);
+  --color-sap-gold-light-3: rgb(243, 188, 58);
+  --color-sap-gold-light-2: rgb(246, 204, 108);
+  --color-sap-gold-light-1: rgb(248, 219, 150);
+  --color-sap-gold-light: rgb(251, 232, 188);
+  
+  // RAW
+  --color-sap-gold-dark-1-raw: 150, 105, 0;
+  --color-sap-gold-dark-raw: 217, 151, 0;
+  --color-sap-gold-raw: 240, 171, 0;
+  --color-sap-gold-light-3-raw: 243, 188, 58;
+  --color-sap-gold-light-2-raw: 246, 204, 108;
+  --color-sap-gold-light-1-raw: 248, 219, 150;
+  --color-sap-gold-light-raw: 251, 232, 188;
+  
+  // SAP Brand Purple
+  // RGB
+  --color-sap-purple-dark-1: rgb(97, 6, 85);
+  --color-sap-purple-dark: rgb(118, 7, 103);
+  --color-sap-purple: rgb(151, 10, 130);
+  --color-sap-purple-light-3: rgb(190, 102, 178);
+  --color-sap-purple-light-2: rgb(209, 147, 201);
+  --color-sap-purple-light-1: rgb(223, 181, 218);
+  --color-sap-purple-light: rgb(235, 209, 232);
+  
+  // RAW
+  --color-sap-purple-dark-1-raw: 97, 6, 85;
+  --color-sap-purple-dark-raw: 118, 7, 103;
+  --color-sap-purple-raw: 151, 10, 130;
+  --color-sap-purple-light-3-raw: 190, 102, 178;
+  --color-sap-purple-light-2-raw: 209, 147, 201;
+  --color-sap-purple-light-1-raw: 223, 181, 218;
+  --color-sap-purple-light-raw: 235, 209, 232;
+  
+  // SAP Brand Green
+  // RGB
+  --color-sap-green-dark-1: rgb(18, 120, 35);
+  --color-sap-green-dark: rgb(22, 145, 42);
+  --color-sap-green: rgb(79, 184, 28);
+  --color-sap-green-light-3: rgb(87, 202, 106);
+  --color-sap-green-light-2: rgb(132, 216, 146);
+  --color-sap-green-light-1: rgb(169, 228, 179);
+  --color-sap-green-light: rgb(201, 238, 28); // !!! IN Sketch: 201, 238, 207
+  
+  // RAW
+  --color-sap-green-dark-1-raw: 18, 120, 35;
+  --color-sap-green-dark-raw: 22, 145, 42;
+  --color-sap-green-raw: 79, 184, 28;
+  --color-sap-green-light-3-raw: 87, 202, 106;
+  --color-sap-green-light-2-raw: 132, 216, 146;
+  --color-sap-green-light-1-raw: 169, 228, 179;
+  --color-sap-green-light-raw: 201, 238, 28; // !!! IN Sketch: 201, 238, 207
+  
+  // SAP Brand Red
+  // RGB
+  --color-sap-red-dark-1: rgb(164, 54, 13);
+  --color-sap-red-dark: rgb(187, 62, 15);
+  --color-sap-red: rgb(208, 69, 18);
+  --color-red-light-3: rgb(222, 126, 91);
+  --color-red-light-2: rgb(231, 163, 137);
+  --color-red-light-1: rgb(238, 191, 174);
+  --color-red-light: rgb(244, 215, 204);
+  
+  // RAW
+  --color-sap-red-dark-1-raw: 164, 54, 13;
+  --color-sap-red-dark-raw: 187, 62, 15;
+  --color-sap-red-raw: 208, 69, 18;
+  --color-sap-red-light-3-raw: 222, 126, 91;
+  --color-sap-red-light-2-raw: 231, 163, 137;
+  --color-sap-red-light-1-raw: 238, 191, 174;
+  --color-sap-red-light-raw: 244, 215, 204;
+  
+  
+  // WHITE
+  --color-white: rgb(255, 255, 255);
+  --color-white-raw: 255, 255, 255;
+  
+  
+  // BLACK
   --color-black: rgb(0, 0, 0);
-  --color-rgb-black: 0, 0, 0;
+  --color-black-raw: 0, 0, 0;
+  
+  // WARNING
+  --color-warning: rgb(254, 196, 58);
+  --color-warning-raw: 254, 196, 58;
+  
 }
 
+/* When assigning colors to uses, use "[color]-raw" variables: */
+
 .theme-light {
-  --color-global-bg: var(--color-blue-gray-10);
-  --color-global-foreground: var(--color-blue-gray-100);
-
-  --color-primary-bg: var(--color-rgb-sap-gold);
-  --color-primary-bg-hover: var(--color-rgb-sap-gold-20);
-  --color-primary-foreground: var(--color-rgb-white);
-  --color-primary-border: var(--color-rgb-sap-gold-40);
-
-  --color-default-bg: var(--color-rgb-blue-gray-10);
-  --color-default-bg-hover: var(--color-rgb-blue-gray-20);
-  --color-default-foreground: var(--color-rgb-blue-gray-90);
-  --color-default-border: var(--color-rgb-blue-gray-20);
-
-  --color-danger-bg: var(--color-rgb-red);
-  --color-danger-bg-hover: var(--color-rgb-red-40);
-  --color-danger-foreground: var(--color-rgb-white);
-  --color-danger-border: var(--color-rgb-red-60);
   
-  --color-introbox-default-bg: var(--color-rgb-sap-blue-10);
-  --color-introbox-default-border: var(--color-rgb-sap-blue);
+  // TODO
   
-  --color-introbox-danger-bg: var(--color-rgb-red-40);
-  --color-introbox-danger-border: var(--color-rgb-red-60);
+//   --color-global-bg: var(--color-blue-gray-10);
+//   --color-global-foreground: var(--color-blue-gray-100);
+// 
+//   --color-primary-bg: var(--color-rgb-sap-gold);
+//   --color-primary-bg-hover: var(--color-rgb-sap-gold-20);
+//   --color-primary-foreground: var(--color-rgb-white);
+//   --color-primary-border: var(--color-rgb-sap-gold-40);
+// 
+//   --color-default-bg: var(--color-rgb-blue-gray-10);
+//   --color-default-bg-hover: var(--color-rgb-blue-gray-20);
+//   --color-default-foreground: var(--color-rgb-blue-gray-90);
+//   --color-default-border: var(--color-rgb-blue-gray-20);
+// 
+//   --color-danger-bg: var(--color-rgb-red);
+//   --color-danger-bg-hover: var(--color-rgb-red-40);
+//   --color-danger-foreground: var(--color-rgb-white);
+//   --color-danger-border: var(--color-rgb-red-60);
+//   
+//   --color-message-default-bg: var(--color-rgb-sap-blue-10);
+//   --color-message-default-border: var(--color-rgb-sap-blue);
+//   
+//   --color-message-danger-bg: var(--color-rgb-red-40);
+//   --color-message-danger-border: var(--color-rgb-red-60);
+//   
+//   --color-message-warning-bg: var(--color-rgb-yellow-10);
+//   --color-message-warning-border: var(--color-rgb-yellow-30);
+// 
+//   --color-introbox-border: var(--color-black);
   
-  --color-introbox-warning-bg: var(--color-rgb-yellow-10);
-  --color-introbox-warning-border: var(--color-rgb-yellow-30);
 }
 
 .theme-dark {
-  --color-global-bg: var(--color-blue-gray-100);
-  --color-global-foreground: var(--color-blue-gray-10);
-
-  --color-primary-bg: var(--color-rgb-sap-blue);
-  --color-primary-bg-hover: var(--color-rgb-sap-blue-40);
-  --color-primary-foreground: var(--color-rgb-white);
-  --color-primary-border: var(--color-rgb-sap-blue-50);
-
-  --color-default-bg: var(--color-rgb-blue-gray-10);
-  --color-default-bg-hover: var(--color-rgb-blue-gray-0);
-  --color-default-foreground: var(--color-rgb-blue-gray-100);
-  --color-default-border: var(--color-rgb-blue-gray-30);
-
-  --color-danger-bg: var(--color-rgb-red);
-  --color-danger-bg-hover: var(--color-rgb-red-40);
-  --color-danger-foreground: var(--color-rgb-white);
-  --color-danger-border: var(--color-rgb-red-60);
-  
-  --color-introbox-default-bg: var(--color-rgb-sap-blue-80);
-  --color-introbox-default-border: var(--color-rgb-sap-blue-30);
-  
-  --color-introbox-danger-bg: var(--color-rgb-red-70);
-  --color-introbox-danger-border: var(--color-rgb-red);
-  
-  --color-introbox-warning-bg: var(--color-rgb-yellow-50);
-  --color-introbox-warning-border: var(--color-rgb-yellow);
+  // Global
+  --color-global-bg: var(--color-juno-grey-blue-92-raw);
+  --color-global-text: var(--color-juno-text-high-raw);
+  // Message
+  --color-button-primary-bg: var(--sap-blue-dark-raw);
+  --color-button-primary-foreground: var(--sap-grey-blue-100-raw);
+  --color-button-default-bg: var(--color-rgb-blue-gray-10-raw); // TODO: DISCUSS transparent BG?
+  --color-button-default-text: var(--color-juno-text-high-raw);
+  --color-button-danger-text: var(--color-white-raw);
+  --color-button-primary-text: var(--color-juno-grey-blue-100-raw);
+  --color-button-default-border: var(--color-juno-text-high-raw);
+  --color-button-danger-bg: var(--color-sap-red-raw);
+  --color-button-danger-bg-hover: var(--color-sap-red-dark-raw);
+  --color-button-danger-foreground: var(--color-white-raw);
+// Message
+  --color-message-bg: var(--color-juno-grey-blue-89-raw); // TODO: Discuss dependency on bg color
+  --color-message-default-border: var(--color-juno-blue-raw);
+  --color-message-danger-border: var(--color-sap-red-raw);
+  --color-message-warning-border: var(--color-warning-raw);
+  // Introbox
+  --color-introbox-border: var(--color-white-raw);
+  // Tooltip
+  --color-tooltip-popover-bg: var(--color-juno-blue-light-3-raw);
 }
 
 html,
 body,
 .shadow-body {
   background: var(--color-global-bg);
-  color: var(--color-global-foreground);
+  color: var(--color-global-text);
   font-family: 'IBM Plex Sans', 'ui-sans-serif', Arial, sans-serif;
 }
+
 
 @tailwind components;
 @tailwind utilities;

@@ -9,10 +9,10 @@ export const SelectOptionGroup = ({
 }) => {
 	return (
 		<optgroup 
-		label={label}
-		{...props}
+			label={label}
+			{...props}
 		>
-		{children}
+			{children}
 		</optgroup>
 	)
 }

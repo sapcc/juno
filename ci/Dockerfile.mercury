@@ -1,0 +1,17 @@
+ARG KEPPEL_HOSTNAME
+FROM $KEPPEL_HOSTNAME/ccloud-dockerhub-mirror/library/node:14-alpine
+
+LABEL source_repository="https://github.com/sapcc/juno/apis/mercury"
+ARG LIBS
+
+RUN apk --no-cache add git ca-certificates make
+
+RUN mkdir -p /app
+ADD . /app
+
+WORKDIR /app
+
+RUN yarn workspaces focus mercury 
+
+# run app
+CMD NODE_ENV=production yarn workspace mercury db:migrate && yarn workspace mercury production

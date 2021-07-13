@@ -8,21 +8,6 @@ describe("IntroBox", () => {
 		render(<IntroBox data-testid="my-introbox" />)
 		expect(screen.getByTestId("my-introbox")).toBeInTheDocument()
 	  })
-  
-	test("renders a default IntroBox if no variant passed", async () => {
-		render(<IntroBox data-testid="my-introbox" />)
-		expect(screen.getByTestId("my-introbox")).toHaveClass("introbox-default")
-	})
-	
-	test("renders a warning IntroBox as passed", async () => {
-	  render(<IntroBox data-testid="my-introbox" variant="warning" />)
-	  expect(screen.getByTestId("my-introbox")).toHaveClass("introbox-warning")
-	 })
-	
-	test("renders a danger IntroBox as passed", async () => {
-		  render(<IntroBox data-testid="my-introbox" variant="danger" />)
-		  expect(screen.getByTestId("my-introbox")).toHaveClass("introbox-danger")
-		})
 		
 	test("renders a title as passed", async () => {
 		  render(<IntroBox data-testid="my-introbox" title="My IntroBox Heading" />)

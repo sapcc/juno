@@ -119,7 +119,32 @@ export const LoginDialog = ({
             </div>
           )}
           <div className="space-y-3">
-            <FloatingLabelInput
+            <div>
+              <label>Domain</label>
+              <br />
+              <input
+                value={values.domain}
+                onChange={(e) => onChange("domain", e.target.value)}
+              />
+            </div>
+            <div>
+              <label>D/C/I Number</label>
+              <br />
+              <input
+                value={values.user}
+                onChange={(e) => onChange("user", e.target.value)}
+              />
+            </div>
+            <div>
+              <label>Password</label>
+              <br />
+              <input
+                type="password"
+                value={values.password}
+                onChange={(e) => onChange("password", e.target.value)}
+              />
+            </div>
+            {/* <FloatingLabelInput
               label="Domain"
               value={values.domain}
               onChange={(e) => onChange("domain", e.target.value)}
@@ -135,7 +160,7 @@ export const LoginDialog = ({
               label="Password"
               value={values.password}
               onChange={(e) => onChange("password", e.target.value)}
-            />
+            /> */}
           </div>
         </Body>
         <Buttons>

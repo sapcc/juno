@@ -17,16 +17,6 @@ describe("TextInputRow", () => {
 		expect(screen.getByRole("combobox")).toHaveAttribute("id", 'select-row')
 	})
 	
-	test("renders a horizontal select row as passed", async () => {
-		render(<SelectRow data-testid="select-row" layout="horizontal" />)
-		expect(screen.getByTestId("select-row")).toHaveClass("selectrow-horizontal")
-	})
-	
-	test("renders a vertical select row as passed", async () => {
-		render(<SelectRow data-testid="select-row" layout="vertical" />)
-		expect(screen.getByTestId("select-row")).toHaveClass("selectrow-vertical")
-	})
-	
 	test("renders a help text as passed", async () => {
 		render(<SelectRow helptext="Helptext goes here" />)
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()

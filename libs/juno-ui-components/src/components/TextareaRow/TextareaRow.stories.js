@@ -11,26 +11,13 @@ const Template = (args) => <TextareaRow {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-	label: "Default Textarea row",
+	label: "Textarea Row",
 }
 
-export const HorizontalLayout = Template.bind({})
-HorizontalLayout.args = {
-	layout: "horizontal",
-	label: "Horizontal  Textarea row",
-}
 
-export const VerticalLayout = Template.bind({})
-VerticalLayout.args = {
-	layout: "vertical",
+export const WithHelpText = Template.bind({})
+WithHelpText.args = {
 	name: "my-input",
-	label: "Vertical Textarea row",
-}
-
-export const VerticalWithHelpText = Template.bind({})
-VerticalWithHelpText.args = {
-	layout: "vertical",
-	name: "my-input",
-	label: "Vertical Textarea row with Helptext",
+	label: "Textarea Row with Helptext",
 	helptext: "Oh so helpful helptext"
 }
