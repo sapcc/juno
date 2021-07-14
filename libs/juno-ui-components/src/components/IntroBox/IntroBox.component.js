@@ -27,7 +27,7 @@ export const IntroBox = ({
 }) => {
 	return (
 		<div 
-			className={`${introbox}`}
+			className={`introbox ${introbox}`}
 			{...props}
 		>
 			{title ?  <h1 className={`${introboxHeading}`}>{title}</h1> : ""}

@@ -17,7 +17,7 @@ export const FormSection = ({
 }) => {
 	return (
 		<section 
-			className={`${formSection}`}
+			className={`form-section ${formSection}`}
 			{...props}
 		>
 			{title ?  <h1 className={`${formSectionHeading}`}>{title}</h1> : ""}

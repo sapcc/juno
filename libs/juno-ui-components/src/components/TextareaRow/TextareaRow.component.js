@@ -22,7 +22,7 @@ export const TextareaRow = ({
 }) => {
 	return (
 		<div
-			className={`${textarearow}`}
+			className={`textarea-row ${textarearow}`}
 			{...props}
 		>
 			<div>
