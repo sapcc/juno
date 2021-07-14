@@ -4,7 +4,7 @@
 import React from "react"
 import Search from "./Search"
 import Results from "./Results"
-import { searchByIPs, searchByCIDR } from "./actions"
+import { searchByIPs, searchByCIDR, search as searchByInput } from "./actions"
 import cidrRegex from "cidr-regex"
 import ipRegex from "ip-regex"
 import testData from "./testData"
@@ -21,40 +21,32 @@ const App = (props) => {
   const [items, setItems] = React.useState(null)
   const [error, setError] = React.useState(null)
 
-  const search = React.useCallback(
-    (term) => {
-      if (!term) return
-      let cidrs = term.match(cidrRegex()) || []
-      let rest = term
-      for (let cidr of cidrs) rest = rest.replace(cidr, "")
-      let ips = rest.match(ipRegex()) || []
-
-      const requests = []
-      if (cidrs && cidrs.length > 0)
-        cidrs.forEach((cidr) => requests.push(searchByCIDR(cidr)))
-      if (ips && ips.length > 0) requests.push(searchByIPs(ips))
-
-      setProcessing(true)
-      Promise.all(requests)
-        .then((data) => {
-          let flatData = []
-          for (let item of data) {
-            if (Array.isArray(item)) flatData = flatData.concat(item)
-            else flatData.push(item)
-          }
-          return flatData
-        })
-        .then((data) => setItems(data))
-        .catch((error) => setError(error))
-        .finally(() => setProcessing(false))
-    },
-    [setItems]
-  )
+  const search = React.useCallback((term) => {
+    if (!term) return
+    setError("")
+    setProcessing(true)
+    searchByInput(term)
+      .then((data) => {
+        console.log("DATA ITEMS", data)
+        setItems(data)
+      })
+      .catch((error) => {
+        let message = error.message || error
+        try {
+          message = JSON.parse(message)
+          message = message.error || message
+        } catch (e) {}
+        if (message === "not found") setError("Couldn't find anything")
+        else setError(message)
+      })
+      .finally(() => setProcessing(false))
+  }, [])
 
   return (
     <>
       <PageHeader heading="Whois" />
       <Search onChange={(searchTerm) => search(searchTerm)} />
+      {error}
       <Results items={items} processing={processing} />
     </>
   )

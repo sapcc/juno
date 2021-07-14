@@ -1,6 +1,7 @@
 import React from "react"
 import { send, on } from "communicator"
 import { useClient } from "./lib/hooks/useClient"
+import Requests from "./components/Requests"
 // import Zones from "./components/Zones"
 
 export default ({ color }) => {
@@ -40,6 +41,7 @@ export default ({ color }) => {
       ) : (
         <div>
           <span>Welcome</span>
+          {auth?.authToken && <Requests authToken={auth.authToken} />}
         </div>
       )}
     </div>

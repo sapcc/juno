@@ -11,7 +11,6 @@ const Search = ({ onChange }) => {
     let rest = searchTerm
     for (let cidr of cidrs) rest = rest.replace(cidr, "")
 
-    console.log(cidrs, rest)
     return cidrs.concat(rest.match(ipRegex()) || [])
   }, [searchTerm])
 

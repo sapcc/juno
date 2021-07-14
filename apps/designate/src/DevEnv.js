@@ -1,12 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import tw from "twin.macro"
-import GlobalStyles from "./GlobalStyles"
-import { Button } from "juno-ui-components"
-
-import { CacheProvider } from "@emotion/react"
-import createCache from "@emotion/cache"
+import StyleProvider, { Button } from "juno-ui-components"
 import { on, send } from "communicator"
+
 // import {
 //   AUTH_GET_TOKEN,
 //   AUTH_REVOKE_TOKEN,
@@ -49,7 +45,7 @@ const DevEnv = () => {
     }
     let element = document.createElement("script")
     element.src =
-      "https://juno.qa-de-1.cloud.sap/cdn/widget-loader/0_0_1/app.js"
+      "https://cdn.juno.qa-de-1.cloud.sap/widget-loader/0_0_2/app.js"
     element.type = "text/javascript"
     element.async = true
 
@@ -68,33 +64,30 @@ const DevEnv = () => {
   return (
     <>
       {token ? (
-        <Button mode="danger" onClick={logout}>
-          Logout
-        </Button>
+        <>
+          Wellcome {token.user.name}{" "}
+          <Button variant="danger" onClick={logout} size="small">
+            Logout
+          </Button>
+        </>
       ) : (
-        <Button mode="primary" onClick={login}>
+        <Button variant="primary" onClick={login} size="small">
           Login
         </Button>
       )}
       <br />
-      {token && (
+      {/*token && (
         <pre tw="block m-0 p-0 overflow-auto text-white text-sm bg-gray-800">
           {JSON.stringify(token, null, 2)}
         </pre>
-      )}
+      )*/}
     </>
   )
 }
 
-const wrapper = document.getElementById("dev").attachShadow({ mode: "closed" })
-const stylesCache = createCache({
-  key: "juno-auth-dev-styles",
-  container: wrapper,
-})
 ReactDOM.render(
-  <CacheProvider value={stylesCache}>
-    <GlobalStyles />
+  <StyleProvider stylesWrapper="shadowRoot">
     <DevEnv />
-  </CacheProvider>,
-  wrapper
+  </StyleProvider>,
+  document.getElementById("dev")
 )
