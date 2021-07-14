@@ -396,6 +396,62 @@ jobs:
           dockerfile: app-widget-loader.git/ci/Dockerfile.app
 
   
+  - name: unit-test whois
+    public: true
+    plan:
+      - get: juno-unit-test.image
+        passed: ["build unit-test-image"]
+        trigger: true
+      - get: lib-juno-ui-components.git
+        passed: ["unit-test juno-ui-components"]    
+      - get: app-whois.git
+        trigger: true
+
+      - task: unit
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: ((keppel-hostname))/ccloud/juno-unit-test
+              tag: "latest"
+          inputs:
+            - name: app-whois.git
+              path: /app/juno
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd $PWD/app/juno
+                yarn workspaces focus juno-ui-components whois
+                yarn workspace juno-ui-components build
+                CI=true yarn workspace whois test                
+
+  # build image for each app in /apps
+  # we tag this images as latest. App images only serve as a buffer 
+  # to be used in the next step. After that, they are no longer used. 
+  - name: build whois
+    public: true
+    plan:
+      - get: app-whois.git
+        passed: ["unit-test whois"]
+        trigger: true
+
+      - put: juno-whois.image
+        params:
+          tag_as_latest: true
+          cache: true
+          cache_tag: "latest"
+          build: app-whois.git
+          build_args: 
+            APP_NAME: "whois" 
+            LIBS: juno-ui-components
+            KEPPEL_HOSTNAME: {{keppel-hostname}}
+          dockerfile: app-whois.git/ci/Dockerfile.app
+
+  
 
   # this step combines all app images
   # for that we use nginx image and copy all builded apps (in the step before)
@@ -415,6 +471,10 @@ jobs:
       
       - get: app-widget-loader.git
         passed: ["build widget-loader"]
+        trigger: true
+      
+      - get: app-whois.git
+        passed: ["build whois"]
         trigger: true
         
       - get: ci.git  
@@ -482,6 +542,27 @@ jobs:
                    
             outputs:
               - name: widget-loader-output
+      
+      - in_parallel:
+        - task: copy build of whois
+          config:
+            platform: linux
+            image_resource:
+              type: registry-image
+              source: 
+                repository: ((keppel-hostname))/ccloud/juno-whois
+                tag: "latest"
+            run:
+              path: /bin/sh
+              args:
+                - -c
+                - |         
+                  VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
+                  cp -r /app/build ./whois-output/$VERSION
+                  cp -r /app/build ./whois-output/latest
+                   
+            outputs:
+              - name: whois-output
           
 
       - task: combine builds
@@ -499,6 +580,8 @@ jobs:
             - name: designate-output 
             
             - name: widget-loader-output 
+            
+            - name: whois-output 
                 
           run:
             path: /bin/sh
@@ -511,6 +594,8 @@ jobs:
                 cp -r ./designate-output  ./build/designate;
                 
                 cp -r ./widget-loader-output  ./build/widget-loader;
+                
+                cp -r ./whois-output  ./build/whois;
                 
                 echo $(date) > ./updated_at
 
@@ -866,6 +951,22 @@ resources:
       username: {{keppel-username}}
       password: {{keppel-password}}
       repository: ((keppel-hostname))/ccloud/juno-widget-loader    
+  
+  - name: app-whois.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["apps/whois","package.json","libs","ci/Dockerfile.app","e2e"]
+      username: sapcc-bot
+      password: {{real-github-access-token}}      
+
+  - name: juno-whois.image
+    type: docker-image
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: ((keppel-hostname))/ccloud/juno-whois    
            
 
   - name: repo.git

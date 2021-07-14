@@ -5,6 +5,6 @@ import App from "./App"
 test("renders auth app", () => {
   render(<App />)
 
-  const loginTitle = screen.getAllByText(/Login/i)
+  const loginTitle = screen.getAllByText(/Whois/i)
   expect(loginTitle.length > 0).toBe(true)
 })
