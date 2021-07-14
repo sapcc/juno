@@ -20,7 +20,7 @@ export const SwitchRow =({
 }) => {
 	return (
 		<div
-			className={`${switchrow}`}
+			className={`switch-row ${switchrow}`}
 			{...props}
 		>
 			<div>

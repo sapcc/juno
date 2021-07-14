@@ -19,7 +19,7 @@ export const RadioRow =({
 }) => {
 	return (
 		<div
-			className={`${radiorow}`}
+			className={`radio-row ${radiorow}`}
 			{...props}
 		>
 			<div>
