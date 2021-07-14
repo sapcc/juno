@@ -21,7 +21,7 @@ export const TextInputRow = ({
 }) => {
 	return (
 		<div 
-			className={`${textinputrow}`}
+			className={`textinput-row ${textinputrow}`}
 			{...props}
 		>
 			<div>

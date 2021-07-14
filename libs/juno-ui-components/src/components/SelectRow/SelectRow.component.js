@@ -19,7 +19,7 @@ export const SelectRow = ({
 }) => {
 	return (
 		<div 
-			className={`${selectrow}`}
+			className={`select-row ${selectrow}`}
 			{...props}
 		>
 			<div>
