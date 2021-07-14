@@ -137,6 +137,7 @@ module.exports = {
           "on-primary": withOpacity("--color-button-primary-text"),
           "on-danger": withOpacity("--color-button-danger-text"),
           "on-default": withOpacity("--color-button-default-text"),
+          "tooltip-popover": withOpacity("--color-tooltip-popover-text"),
         },
       },
       borderColor: {
