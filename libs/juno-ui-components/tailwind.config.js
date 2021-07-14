@@ -121,7 +121,7 @@ module.exports = {
         theme: {
           "button-primary": withOpacity("--color-button-primary-bg"),
           "button-danger": withOpacity("--color-button-danger-bg"),
-          "button-default": withOpacity("--colorbutton--default-bg"),
+          "button-default": withOpacity("--color-button--default-bg"),
           // TODO:
           //"primary-hover": withOpacity("--color-primary-bg-hover"),
           //"danger-hover": withOpacity("--color-danger-bg-hover"),
