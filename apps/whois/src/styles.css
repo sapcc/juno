@@ -1,0 +1,4 @@
+/* IMPORTANT: Don't import tailwind base in host app, it could overwrite ui component styles */
+/* @tailwind base; */
+@tailwind components;
+@tailwind utilities;

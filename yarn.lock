@@ -8174,6 +8174,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cidr-regex@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "cidr-regex@npm:3.1.1"
+  dependencies:
+    ip-regex: ^4.1.0
+  checksum: 780ebf0ff7caaec607e9b0e520d7d930812ffc99a68c7f80420e5e254ff24b945723e68b86306092432e9233850d6763b8735de8e7bc3b97f1f5366a964b595a
+  languageName: node
+  linkType: hard
+
 "cipher-base@npm:^1.0.0, cipher-base@npm:^1.0.1, cipher-base@npm:^1.0.3":
   version: 1.0.4
   resolution: "cipher-base@npm:1.0.4"
@@ -13738,6 +13747,13 @@ fsevents@^1.2.7:
   version: 2.1.0
   resolution: "ip-regex@npm:2.1.0"
   checksum: 2fd2190ada81b55a8a6f913bcb5a6fd6ff9da127905b4c01521f09a1d391e86d415dfe8c131ed2989d536949bb2f9654a71b9fa6f7ae2ac3ae6111b2026cc902
+  languageName: node
+  linkType: hard
+
+"ip-regex@npm:^4.1.0, ip-regex@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "ip-regex@npm:4.3.0"
+  checksum: 4f44f34dcfe5cfae3b79bac4b25bec81ea007c24a66a30a3a17d01eebde4fa98bb531f207590ee16e1e4721b4f8ad12f6a64ed9f49bcb4587ff13ebb7cc984a5
   languageName: node
   linkType: hard
 
@@ -25618,6 +25634,58 @@ resolve@^2.0.0-next.3:
   checksum: ea9b1db1266b08f7880717cf70dd9012dd523e5a317f10fbe4d5e8c1a761c5fd237f88642f2ba33b23f973ff4002c9b26648d63084ab208d8ecef36497315f6e
   languageName: node
   linkType: hard
+
+"whois@workspace:apps/whois":
+  version: 0.0.0-use.local
+  resolution: "whois@workspace:apps/whois"
+  dependencies:
+    "@babel/core": ^7.14.3
+    "@babel/preset-env": ^7.13.9
+    "@babel/preset-react": ^7.12.13
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.4.3
+    "@testing-library/dom": ^7.30.0
+    "@testing-library/jest-dom": ^5.11.4
+    "@testing-library/react": ^11.1.0
+    "@testing-library/user-event": ^12.1.10
+    assert: ^2.0.0
+    autoprefixer: ^10.2.5
+    babel-jest: ^26.6.3
+    babel-loader: 8.1.0
+    babel-plugin-macros: ^3.0.1
+    buffer: ^6.0.3
+    bundle-loader: ^0.5.6
+    cidr-regex: ^3.1.1
+    clean-webpack-plugin: ^3.0.0
+    communicator: "workspace:*"
+    css-loader: ^5.2.0
+    css-minimizer-webpack-plugin: ^3.0.0
+    custom-event-polyfill: ^1.0.7
+    glob: ^7.1.7
+    html-webpack-plugin: ^5.1.0
+    ip-regex: ^4.3.0
+    jest: ^26.6.3
+    juno-ui-components: "workspace:*"
+    mini-css-extract-plugin: ^1.3.8
+    os-browserify: ^0.3.0
+    path-browserify: ^1.0.1
+    postcss: ^8.2.15
+    postcss-loader: ^5.3.0
+    process: ^0.11.10
+    prop-types: ^15.7.2
+    purgecss-webpack-plugin: ^4.0.3
+    react: ^17.0.1
+    react-dom: ^17.0.1
+    react-refresh: ^0.10.0
+    react-test-renderer: ^17.0.1
+    regenerator-runtime: ^0.13.7
+    sass-loader: ^11.1.1
+    tailwindcss: ^2.1.2
+    util: ^0.12.3
+    webpack: ^5.22.0
+    webpack-cli: ^4.5.0
+    webpack-dev-server: ^3.11.2
+  languageName: unknown
+  linkType: soft
 
 "wide-align@npm:^1.1.0":
   version: 1.1.3
