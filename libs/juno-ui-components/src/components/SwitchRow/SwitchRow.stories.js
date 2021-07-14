@@ -26,3 +26,10 @@ Disabled.args = {
   checked: true,
 }
 
+export const WithHelptext = Template.bind({})
+WithHelptext.args = {
+  label: "Switch Row with Helptext",
+  checked: true,
+  helptext: "Oh so helpful helptext",
+}
+

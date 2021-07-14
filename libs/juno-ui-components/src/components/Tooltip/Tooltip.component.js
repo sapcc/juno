@@ -13,9 +13,11 @@ const iconbutton = `
 
 const popover = `
 	p-2
+	text-xs
 	inline-block
 	absolute
 	bg-theme-tooltip-popover
+	text-theme-tooltip-popover
 `
 
 /* Create tooltip popover with content as passed */

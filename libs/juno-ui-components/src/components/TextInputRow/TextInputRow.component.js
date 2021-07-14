@@ -7,6 +7,16 @@ const textinputrow = `
 	flex-col
 `
 
+const helptextstyles = `
+	text-xs
+	text-theme-disabled
+`
+
+const labelstyles = `
+	text-sm
+	text-theme-high
+`
+
 /** A text input group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
 export const TextInputRow = ({
 	type,
@@ -25,11 +35,11 @@ export const TextInputRow = ({
 			{...props}
 		>
 			<div>
-				<label htmlFor={id}>{label}</label>
+				<label className={`${labelstyles}`} htmlFor={id}>{label}</label>
 			</div>
 			<div>
 				<TextInput type={type} name={name} id={id} placeholder={placeholder} onChange={onChange} />
-				{helptext ? <p>{helptext}</p> : ""}
+				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>	
 	)

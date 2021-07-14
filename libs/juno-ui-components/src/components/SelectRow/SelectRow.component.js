@@ -7,6 +7,16 @@ const selectrow = `
 	flex-col
 `
 
+const helptextstyles = `
+	text-xs
+	text-theme-disabled
+`
+
+const labelstyles = `
+	text-sm
+	text-theme-high
+`
+
 /** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
 export const SelectRow = ({
 	name,
@@ -23,13 +33,13 @@ export const SelectRow = ({
 			{...props}
 		>
 			<div>
-				<label htmlFor={id}>{label}</label>
+				<label  className={`${labelstyles}`} htmlFor={id}>{label}</label>
 			</div>
 			<div>
 				<Select name={name} id={id} onChange={onChange}>
 					{children}
 				</Select>
-				{helptext ? <p>{helptext}</p> : ""}
+				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>	
 	)

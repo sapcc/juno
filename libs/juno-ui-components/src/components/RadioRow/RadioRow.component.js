@@ -7,6 +7,16 @@ const radiorow = `
 	flex-row
 `
 
+const helptextstyles = `
+	text-xs
+	text-theme-disabled
+`
+
+const labelstyles = `
+	text-sm
+	text-theme-high
+`
+
 /** A radio input row containing a radio, associated label, and structural markup */
 export const RadioRow =({
 	value,
@@ -26,8 +36,8 @@ export const RadioRow =({
 				<Radio name={name} onChange={onChange} id={id} value={value || ""} />
 			</div>
 			<div>
-				<label htmlFor={id}>{label}</label>
-				{helptext ? <p>{helptext}</p> : ""}
+				<label className={`${labelstyles}`} htmlFor={id}>{label}</label>
+				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>
 	)

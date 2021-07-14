@@ -7,6 +7,16 @@ const switchrow = `
 	flex-row
 `
 
+const helptextstyles = `
+	text-xs
+	text-theme-disabled
+`
+
+const labelstyles = `
+	text-sm
+	text-theme-high
+`
+
 /** A checkbox input group containing a checkbox, associated label, and structural markup */
 export const SwitchRow =({
 	value,
@@ -27,8 +37,8 @@ export const SwitchRow =({
 				<Switch name={name} onChange={onChange} id={id} value={value || ""} disabled={disabled} />
 			</div>
 			<div>
-				<label htmlFor={id}>{label}</label>
-				{helptext ? <p>{helptext}</p> : ""}
+				<label className={`${labelstyles}`} htmlFor={id}>{label}</label>
+				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>
 	)

@@ -15,7 +15,7 @@ Default.args = {
 }
 
 export const WithHelpText = Template.bind({})
-VerticalWithHelpText.args = {
+WithHelpText.args = {
 	name: "my-input",
 	label: "Text Input Row with Help Text",
 	helptext: "Oh so helpful helptext"

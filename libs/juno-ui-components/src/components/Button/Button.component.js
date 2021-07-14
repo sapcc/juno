@@ -114,7 +114,7 @@ Button.propTypes = {
   size: PropTypes.oneOf(["small", "default", "large"]),
   /** Button label can be passed like this or as children */
   label: PropTypes.string,
-  /** Specify title for accesibility. Gets value of label if no title specified */
+  /** Specify title for accessibility. Gets value of label if no title specified */
   title: PropTypes.string,
   /** Click handler  */
   onClick: PropTypes.func,
