@@ -8,6 +8,16 @@ const textarearow = `
 	flex-col
 `
 
+const helptextstyles = `
+	text-xs
+	text-theme-disabled
+`
+
+const labelstyles = `
+	text-sm
+	text-theme-high
+`
+
 /** A textarea group containing a textarea, associated label, optional helptext, and structural markup */
 
 export const TextareaRow = ({
@@ -26,11 +36,11 @@ export const TextareaRow = ({
 			{...props}
 		>
 			<div>
-				<label htmlFor={id}>{label}</label>
+				<label  className={`${labelstyles}`} htmlFor={id}>{label}</label>
 			</div>
 			<div>
 				<Textarea name={name} onChange={onChange} id={id} value={value} placeholder={placeholder} />
-				{helptext ? <p>{helptext}</p> : ""}
+				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>
 	)

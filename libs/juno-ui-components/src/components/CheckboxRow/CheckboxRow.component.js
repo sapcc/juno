@@ -7,6 +7,16 @@ const checkboxrow = `
 	flex-row
 `
 
+const helptextstyles = `
+	text-xs
+	text-theme-disabled
+`
+
+const labelstyles = `
+	text-sm
+	text-theme-high
+`
+
 /** A checkbox input group containing a checkbox, associated label, and structural markup */
 export const CheckboxRow =({
 	value,
@@ -26,8 +36,8 @@ export const CheckboxRow =({
 				<Checkbox name={name} onChange={onChange} id={id} value={value || ""} />
 			</div>
 			<div>
-				<label htmlFor={id}>{label}</label>
-				{helptext ? <p>{helptext}</p> : ""}
+				<label  className={`${labelstyles}`} htmlFor={id}>{label}</label>
+				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>
 	)

@@ -1,6 +1,20 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+const textinputstyles = `
+	bg-theme-textinput
+	text-theme-textinput
+	text-base
+	leading-4
+	p-3
+	h-textinput
+	border
+	border-transparent
+	rounded-3px
+	focus:outline-none
+	focus:border-theme-focus
+`
+
 /** A basic, uncontrolled Text Input. Also covers email, telephone, password, url derivates. */
 export const TextInput = ({
 	name,
@@ -15,6 +29,7 @@ export const TextInput = ({
 			name={name || "unnamed input"}
 			defaultValue={value}
 			onChange={onChange}
+			className={`${textinputstyles}`}
 			{...props}
 		/>
 	)

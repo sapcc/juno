@@ -129,20 +129,26 @@ module.exports = {
           // TODO: active button bg colors
           "message": withOpacity("--color-message-bg"),
           "tooltip-popover": withOpacity("--color-tooltip-popover-bg"),
+          "textinput": withOpacity("--color-textinput-bg"),
         },
       },
       textColor: {
         theme: {
           default: withOpacity("--color-global-text"),
+          "high": withOpacity("--color-text-high"),
+          "medium": withOpacity("--color-text-medium"),
+          "disabled": withOpacity("--color-text-disabled"),
           "on-primary": withOpacity("--color-button-primary-text"),
           "on-danger": withOpacity("--color-button-danger-text"),
           "on-default": withOpacity("--color-button-default-text"),
           "tooltip-popover": withOpacity("--color-tooltip-popover-text"),
+          "textinput": withOpacity("--color-textinput-text"),
         },
       },
       borderColor: {
         theme: {
           default: withOpacity("--color-default-border"),
+          "focus": withOpacity("--color-focus-border"),
           "message-default": withOpacity("--color-message-default-border"),
           "message-danger": withOpacity("--color-message-danger-border"),
           "message-warning": withOpacity("--color-message-warning-border"),
@@ -156,6 +162,15 @@ module.exports = {
         md: "1rem",
         lg: "1.5rem",
       },
+      height: {
+        "textinput": "2.75rem",
+      },
+      borderRadius: {
+        "3px": "3px",
+      },
+      borderColor: {
+        "transparent": "transparent",
+      }
     },
     borderWidth: {
       DEFAULT: "1px",

@@ -245,8 +245,12 @@
 
 .theme-dark {
   // Global
-  --color-global-bg: var(--color-juno-grey-blue-92);
-  --color-global-text: var(--color-juno-text-high);
+  --color-global-bg: var(--color-juno-grey-blue-92-raw);
+  --color-focus-border: var(--color-juno-blue-light-3-raw);
+  // Text
+  --color-text-high: var(--color-juno-text-high-raw);
+  --color-text-medium: var(--color-juno-text-medium-raw);
+  --color-text-disabled: var(--color-juno-text-disabled-raw);
   // Message
   --color-button-primary-bg: var(--sap-blue-dark-raw);
   --color-button-primary-foreground: var(--sap-grey-blue-100-raw);
@@ -269,6 +273,11 @@
   // Tooltip
   --color-tooltip-popover-bg: var(--color-juno-blue-light-3-raw);
   --color-tooltip-popover-text: var(--color-juno-grey-blue-100-raw);
+  // (Text-)Input
+  --color-textinput-bg: var(--color-juno-grey-blue-84-raw);
+  --color-textinput-text: var(--color-juno-text-high-raw);
+  --color-textinput-placeholder-text: var(--color-juno-text-high-raw);
+  --color-textinput-focus-border: var(--color-sap-blue-dark-raw);
 }
 
 html,

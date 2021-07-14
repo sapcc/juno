@@ -1,6 +1,14 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+const textareastyles = `
+	bg-theme-textinput
+	text-theme-textinput
+	text-base
+	leading-4
+	p-3
+`
+
 /** A basic, uncontrolled  Textarea */
 export const Textarea = ({
 	name,
@@ -17,6 +25,7 @@ export const Textarea = ({
 			autoComplete={autoComplete}
 			autoFocus={autoFocus}
 			onChange={onChange}
+			className={`${textareastyles}`}
 			{...props}
 		>
 			
