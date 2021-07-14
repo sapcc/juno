@@ -23,6 +23,10 @@ const messageWarning = `
 	border-theme-message-warning
 `
 
+const messageSuccess = `
+	border-theme-message-success
+`
+
 const messageHeading = `
 	font-bold
 `
@@ -33,6 +37,8 @@ const variantClass = (variant) => {
 		  return messageDanger
 		case "warning":
 		  return messageWarning
+		case "success":
+		  return messageSuccess
 		case "default":
 		return messageDefault
 		default:
@@ -68,7 +74,7 @@ Message.propTypes = {
 	/** Pass a string of text to be rendered as contents. Alternatively, contents can be passed as children (see below) */
 	text: PropTypes.string,
 	/** Specify a semantic variant */
-	variant: PropTypes.oneOf(['default', 'warning', 'danger']),
+	variant: PropTypes.oneOf(['default', 'warning', 'danger', 'success']),
 	/** Pass child nodes to be rendered as contents */
 	children: PropTypes.node,
 }

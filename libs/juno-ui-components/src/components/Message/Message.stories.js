@@ -32,5 +32,11 @@ Danger.args = {
 	text: "Danger Message."
 }
 
+export const Success = Template.bind({})
+Success.args = {
+	variant: "success",
+	text: "Success Message"
+}
+
 
 

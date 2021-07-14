@@ -162,7 +162,7 @@
   --color-sap-green-light-3: rgb(87, 202, 106);
   --color-sap-green-light-2: rgb(132, 216, 146);
   --color-sap-green-light-1: rgb(169, 228, 179);
-  --color-sap-green-light: rgb(201, 238, 28); // !!! IN Sketch: 201, 238, 207
+  --color-sap-green-light: rgb(201, 238, 207);
   
   // RAW
   --color-sap-green-dark-1-raw: 18, 120, 35;
@@ -171,7 +171,7 @@
   --color-sap-green-light-3-raw: 87, 202, 106;
   --color-sap-green-light-2-raw: 132, 216, 146;
   --color-sap-green-light-1-raw: 169, 228, 179;
-  --color-sap-green-light-raw: 201, 238, 28; // !!! IN Sketch: 201, 238, 207
+  --color-sap-green-light-raw: 201, 238, 207; 
   
   // SAP Brand Red
   // RGB
@@ -192,11 +192,9 @@
   --color-sap-red-light-1-raw: 238, 191, 174;
   --color-sap-red-light-raw: 244, 215, 204;
   
-  
   // WHITE
   --color-white: rgb(255, 255, 255);
   --color-white-raw: 255, 255, 255;
-  
   
   // BLACK
   --color-black: rgb(0, 0, 0);
@@ -205,7 +203,7 @@
   // WARNING
   --color-warning: rgb(254, 196, 58);
   --color-warning-raw: 254, 196, 58;
-  
+
 }
 
 /* When assigning colors to uses, use "[color]-raw" variables: */
@@ -252,7 +250,7 @@
   // Message
   --color-button-primary-bg: var(--sap-blue-dark-raw);
   --color-button-primary-foreground: var(--sap-grey-blue-100-raw);
-  --color-button-default-bg: var(--color-rgb-blue-gray-10-raw); // TODO: DISCUSS transparent BG?
+  --color-button-default-bg: var(--color-rgb-blue-gray-10-raw);
   --color-button-default-text: var(--color-juno-text-high-raw);
   --color-button-danger-text: var(--color-white-raw);
   --color-button-primary-text: var(--color-juno-grey-blue-100-raw);
@@ -260,11 +258,12 @@
   --color-button-danger-bg: var(--color-sap-red-raw);
   --color-button-danger-bg-hover: var(--color-sap-red-dark-raw);
   --color-button-danger-foreground: var(--color-white-raw);
-// Message
-  --color-message-bg: var(--color-juno-grey-blue-89-raw); // TODO: Discuss dependency on bg color
+  // Message
+  --color-message-bg: var(--color-juno-grey-blue-89-raw);
   --color-message-default-border: var(--color-juno-blue-raw);
   --color-message-danger-border: var(--color-sap-red-raw);
   --color-message-warning-border: var(--color-warning-raw);
+  --color-message-success-border: var(--color-sap-green-raw);
   // Introbox
   --color-introbox-border: var(--color-white-raw);
   // Tooltip

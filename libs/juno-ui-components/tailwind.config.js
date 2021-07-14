@@ -145,6 +145,7 @@ module.exports = {
           "message-default": withOpacity("--color-message-default-border"),
           "message-danger": withOpacity("--color-message-danger-border"),
           "message-warning": withOpacity("--color-message-warning-border"),
+          "message-success": withOpacity("--color-message-success-border"),
           "introbox": withOpacity("--color-introbox-border"),
         },
       },
