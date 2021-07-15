@@ -32,6 +32,9 @@ COPY . /tmp/build/
 
 # copy "old" builds 
 COPY --from=lastbuild /usr/share/nginx/html/* /usr/share/nginx/html/
+# RESET
+RUN rm -rf /usr/share/nginx/html/*
+
 RUN cp -rf /tmp/build/* /usr/share/nginx/html/ && rm -rf /tmp/build
 # generate manifest
 RUN cd /usr/share/nginx/html/ ; OUTPUT='{'; for d in */ ; do OUTPUT="$OUTPUT\"$(basename $d)\":[";  for s in $d*/ ; do OUTPUT="$OUTPUT\"$(basename $s)\"," ;  done ; OUTPUT="${OUTPUT%,}],"  ; done ; OUTPUT="${OUTPUT%,}}"; echo $OUTPUT > manifest.json
