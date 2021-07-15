@@ -31,7 +31,7 @@ RUN mkdir -p /tmp/build
 COPY . /tmp/build/
 
 # copy "old" builds 
-COPY --from=lastbuild /usr/share/nginx/html/* /usr/share/nginx/html/
+COPY --from=lastbuild /usr/share/nginx/html /usr/share/nginx/html
 # RESET
 # RUN rm -rf /usr/share/nginx/html/*
 
