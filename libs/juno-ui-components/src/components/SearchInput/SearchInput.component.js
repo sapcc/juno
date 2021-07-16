@@ -1,15 +1,30 @@
 import React from "react"
 import PropTypes from "prop-types"
+import {createUseStyles} from 'react-jss'
 
-const searchStyle = () => {
+const searchClasses = () => {
 	return (
 		`
 			rounded-full
+			focus:outline-none
+			focus:rounded-full
+			focus:ring-2
 			px-3
 			py-1
+			bg-theme-textinput
+			text-theme-medium
 		`
 	)
 }
+
+const useStyles = createUseStyles({
+  searchInput: {
+    '&::-webkit-search-cancel-button': {
+			'-webkit-appearance': 'none'
+		}
+	}
+})
+
 
 /** A basic, atomic, uncontrolled Input[type="search"] */
 export const SearchInput = ({
@@ -20,13 +35,14 @@ export const SearchInput = ({
 	onChange,
 	...props
 }) => {
+	const classes = useStyles()
 	return (
 		<input 
 			type="search"
 			name={name || "search"}
 			placeholder={placeholder}
 			defaultValue={value}
-			className = {`${searchStyle()} ${className}`}
+			className = {`${searchClasses()} ${className || ""} ${classes.searchInput}`}
 			onChange={onChange}
 			{...props}
 		/>

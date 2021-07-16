@@ -1,6 +1,6 @@
 {
   "name": "whois",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.14.3",
