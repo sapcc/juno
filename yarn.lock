@@ -16140,6 +16140,7 @@ fsevents@^1.2.7:
     storybook-dark-mode: ^1.0.8
     style-loader: ^2.0.0
     tailwindcss: ^2.1.2
+    url-loader: ^4.1.1
   peerDependencies:
     prop-types: ^15.7.2
     react: ^17.0.2
@@ -25893,6 +25894,7 @@ resolve@^2.0.0-next.3:
     "@babel/preset-env": ^7.13.9
     "@babel/preset-react": ^7.12.13
     "@pmmmwh/react-refresh-webpack-plugin": ^0.4.3
+    "@svgr/webpack": ^5.5.0
     "@testing-library/dom": ^7.30.0
     "@testing-library/jest-dom": ^5.11.4
     "@testing-library/react": ^11.1.0
@@ -25910,6 +25912,7 @@ resolve@^2.0.0-next.3:
     css-loader: ^5.2.0
     css-minimizer-webpack-plugin: ^3.0.0
     custom-event-polyfill: ^1.0.7
+    file-loader: ^6.2.0
     glob: ^7.1.7
     html-webpack-plugin: ^5.1.0
     ip-regex: ^4.3.0
@@ -25930,6 +25933,7 @@ resolve@^2.0.0-next.3:
     regenerator-runtime: ^0.13.7
     sass-loader: ^11.1.1
     tailwindcss: ^2.1.2
+    url-loader: ^4.1.1
     util: ^0.12.3
     webpack: ^5.22.0
     webpack-cli: ^4.5.0

@@ -2,3 +2,7 @@
 /* @tailwind base; */
 @tailwind components;
 @tailwind utilities;
+
+.whois {
+  background: url(img/IP-Background.svg) bottom right no-repeat !important;
+}

@@ -43,12 +43,12 @@ const App = (props) => {
   }, [])
 
   return (
-    <>
+    <div className="whois">
       <PageHeader heading="Whois" />
       <Search onChange={(searchTerm) => search(searchTerm)} />
       {error}
       <Results items={items} processing={processing} />
-    </>
+    </div>
   )
 }
 
