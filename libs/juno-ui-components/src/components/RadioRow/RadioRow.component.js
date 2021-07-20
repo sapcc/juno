@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Radio } from "../Radio/index.js"
+import { Label } from "../Label/index.js"
 
 const radiorow = `
 	flex
@@ -12,10 +13,6 @@ const helptextstyles = `
 	text-theme-disabled
 `
 
-const labelstyles = `
-	text-sm
-	text-theme-high
-`
 
 /** A radio input row containing a radio, associated label, and structural markup */
 export const RadioRow =({
@@ -36,7 +33,7 @@ export const RadioRow =({
 				<Radio name={name} onChange={onChange} id={id} value={value || ""} />
 			</div>
 			<div>
-				<label className={`${labelstyles}`} htmlFor={id}>{label}</label>
+				<Label text={label} htmlFor={id} />
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>

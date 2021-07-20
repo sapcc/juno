@@ -1,5 +1,5 @@
 import * as React from "react"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import { CheckboxRow } from "./index"
 
 describe("CheckboxRow", () => {
@@ -21,13 +21,5 @@ describe("CheckboxRow", () => {
 		render(<CheckboxRow helptext="Helptext goes here" />)
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
 	})
-	
-	// test("fires onChange handler as passed", async () => {
-	// 	const handleChange = jest.fn()
-	// 	render(<CheckboxGroup onChange={handleChange} />)
-	// 	const checkbox = screen.getByRole("checkbox")
-	// 	fireEvent.change(checkbox, { target: { value: 'a' } })
-	// 	expect(handleChange).toHaveBeenCalledTimes(1)
-	// })
 	
 })

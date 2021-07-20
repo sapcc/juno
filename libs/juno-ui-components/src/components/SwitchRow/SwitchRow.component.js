@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Switch } from "../Switch/index.js"
+import { Label } from "../Label/index.js"
 
 const switchrow = `
 	flex
@@ -10,11 +11,6 @@ const switchrow = `
 const helptextstyles = `
 	text-xs
 	text-theme-disabled
-`
-
-const labelstyles = `
-	text-sm
-	text-theme-high
 `
 
 /** A checkbox input group containing a checkbox, associated label, and structural markup */
@@ -37,7 +33,7 @@ export const SwitchRow =({
 				<Switch name={name} onChange={onChange} id={id} value={value || ""} disabled={disabled} />
 			</div>
 			<div>
-				<label className={`${labelstyles}`} htmlFor={id}>{label}</label>
+				<Label text={label} htmlFor={id} />
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>

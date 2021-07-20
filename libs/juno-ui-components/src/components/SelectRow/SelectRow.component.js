@@ -1,6 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Select } from "../Select/index.js"
+import { Label } from "../Label/index.js"
+
 
 const selectrow = `
 	flex
@@ -12,10 +14,6 @@ const helptextstyles = `
 	text-theme-disabled
 `
 
-const labelstyles = `
-	text-sm
-	text-theme-high
-`
 
 /** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
 export const SelectRow = ({
@@ -33,7 +31,7 @@ export const SelectRow = ({
 			{...props}
 		>
 			<div>
-				<label  className={`${labelstyles}`} htmlFor={id}>{label}</label>
+				<Label text={label} htmlFor={id} />
 			</div>
 			<div>
 				<Select name={name} id={id} onChange={onChange}>
