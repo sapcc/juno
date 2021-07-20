@@ -11,7 +11,7 @@ describe("SearchInput", () => {
 		expect(screen.getByTestId("search")).toHaveAttribute('type', "search")
 	})
 	
-	test("renders a dafault name 'search'", async () => {
+	test("renders a default name 'search'", async () => {
 		render(<SearchInput data-testid="search" />)
 		expect(screen.getByTestId("search")).toBeInTheDocument()
 		expect(screen.getByTestId("search")).toHaveAttribute('name', "search")
