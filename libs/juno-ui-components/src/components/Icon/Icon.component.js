@@ -1,9 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
+
+/* Import Icons here. The icon svgs in the icons folder correspond to the respective "xyz_24px.svg" from material-ui icons. */
 import Help from "./icons/help.svg"
 
 /**
-The icon svgs in the icons folder correspond to the respective "xyz_24px.svg" from material-ui icons.
+Generic Icon component.
 */
 
 const getColorizedIcon = (icon, color) => {
