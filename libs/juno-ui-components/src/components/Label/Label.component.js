@@ -22,7 +22,7 @@ export const Label = ({
 }) => {
 	return (
 		<>
-		<label className={`label ${labelstyles}`} htmlFor={htmlFor}>{text}</label>
+		<label className={`label ${labelstyles}`} htmlFor={htmlFor}>{ text ? text : "unlabeled" }</label>
 		{ required ? <span className={`required ${requiredstyles}`} ></span> : "" }
 		</>
 	)
@@ -30,7 +30,7 @@ export const Label = ({
 
 Label.propTypes = { 
 	/** Pass a string of text to be rendered as contents. Required.  */
-	text: PropTypes.string.isRequired,
+	text: PropTypes.string,
 	/** An Id of an inout element to connect the label with */
 	htmlFor: PropTypes.string,
 	/** Required */
