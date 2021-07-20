@@ -51,15 +51,16 @@ module.exports = (_, argv) => {
             },
           ],
         },
-        // svg config for svgs as components or as files (using url-loader)
+        // svg config for svgs as components in jsx files
         {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
           issuer: /\.jsx?$/,
-          use: ['babel-loader', '@svgr/webpack', 'url-loader']
+          use: ['@svgr/webpack']
         },
         // config for background svgs in css
         {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+          issuer: /\.s?css$/,
           loader: 'url-loader'
         },
         //Allows use of images
