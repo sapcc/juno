@@ -2,28 +2,18 @@ import React from "react"
 import PropTypes from "prop-types"
 import SAPLogo from "../../img/sap_logo.svg"
 
-const basePageHeader = (direction, gap) => {
-  return (
-    `
-      flex
-      bg-black
-      sticky
-      top-0
-      p-2
-      ${direction === "vertical" ? 'flex-col' : 'flex-row'}
-      gap-${gap ? gap : '0'}
-    `
-  )
-}
+const basePageHeader = `
+  flex
+  bg-black
+  sticky
+  top-0
+  p-4
+`
 
-const logoStyles = () => {
-  return (
-    `
-      h-6
-      mr-3
-    `
-  )
-}
+const logoStyles = `
+  h-6
+  mr-3
+`
 
 const headingStyles = `
   uppercase
@@ -41,11 +31,11 @@ export const PageHeader = ({
 
   return (
     <div 
-      className={basePageHeader()}
+      className={basePageHeader}
       role="banner"
       {...props}
     >
-      <SAPLogo className={logoStyles()} alt="SAP" />
+      <SAPLogo className={logoStyles} alt="SAP" />
       {heading && <div className={headingStyles}>{heading}</div>}
       {children}
     </div>
