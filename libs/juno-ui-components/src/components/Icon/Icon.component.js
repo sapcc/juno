@@ -22,7 +22,7 @@ export const Icon = ({
 	color,
 	...props
 }) => {
-	const clr = color || "white"
+	const clr = color || "var(--color-global-text)"
 	return ( getColorizedIcon(icon, clr) )
 }
 
