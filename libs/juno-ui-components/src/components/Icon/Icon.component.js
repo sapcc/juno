@@ -9,8 +9,7 @@ import Help from "-!@svgr/webpack?svgo=false!./icons/help.svg"
 Generic Icon component.
 */
 
-const getColoredSizedIcon = (icon, color, size) => {
-		// Set viewbox to original size to make scaling work 	
+const getColoredSizedIcon = (icon, color, size) => {	
 	  switch (icon) {
 		case "help":
 		  return <Help fill={color} width={size} height={size} />
