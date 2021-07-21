@@ -148,6 +148,8 @@ module.exports = {
       borderColor: {
         theme: {
           default: withOpacity("--color-default-border"),
+          "button-default": withOpacity("--color-button-default-border"),
+          "button-subdued": withOpacity("--color-button-subdued-border"),
           "focus": withOpacity("--color-focus-border"),
           "message-default": withOpacity("--color-message-default-border"),
           "message-danger": withOpacity("--color-message-danger-border"),

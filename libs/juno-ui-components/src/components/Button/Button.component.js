@@ -6,7 +6,7 @@ const btn = `
   justify-center 
   rounded-md
   shadow-sm 
-  font-medium 
+  font-bold 
   w-full
   sm:w-auto 
   focus:outline-none 
@@ -19,7 +19,7 @@ const btnDefault = `
   text-theme-on-default
   bg-theme-button-default
   border
-  border-theme-default
+  border-theme-button-default
   hover:bg-theme-default-hover
   disabled:bg-theme-default
 `
@@ -29,6 +29,15 @@ const btnPrimary = `
   bg-theme-button-primary
   hover:bg-theme-primary-hover
   disabled:bg-theme-primary
+`
+
+const btnSubdued = `
+  text-theme-on-default
+  bg-theme-button-default
+  border
+  border-theme-button-subdued
+  hover:bg-theme-default-hover
+  disabled:bg-theme-default
 `
 
 const btnDanger = `
@@ -65,6 +74,8 @@ const variantClass = (variant) => {
       return btnPrimary
     case "danger":
       return btnDanger
+    case "subdued":
+      return btnSubdued
     default:
       return btnDefault
   }
@@ -109,7 +120,7 @@ export const Button = ({
 
 Button.propTypes = {
   /** Choose a variant for your purpose. May leave empty to get default button. */
-  variant: PropTypes.oneOf(["primary", "danger", "default"]),
+  variant: PropTypes.oneOf(["primary", "danger", "default", "subdued"]),
   /** Leave empty for default size */
   size: PropTypes.oneOf(["small", "default", "large"]),
   /** Button label can be passed like this or as children */
