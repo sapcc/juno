@@ -32,3 +32,15 @@ Var.args = {
   icon: "help",
   color: "var(--color-sap-gold-light-3)",
 }
+
+export const Smaller = Template.bind({})
+Smaller.args = {
+  icon: "help",
+  size: "18",
+}
+
+export const Larger = Template.bind({})
+Larger.args = {
+  icon: "help",
+  size: "64",
+}
