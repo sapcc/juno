@@ -252,14 +252,19 @@
   --color-text-high: var(--color-juno-text-high-raw);
   --color-text-medium: var(--color-juno-text-medium-raw);
   --color-text-disabled: var(--color-juno-text-disabled-raw);
-  // Message
-  --color-button-primary-bg: var(--sap-blue-dark-raw);
+  // Button
+  // --> Primary Button
+  --color-button-primary-bg: var(--color-juno-blue-light-3-raw);
   --color-button-primary-foreground: var(--sap-grey-blue-100-raw);
+  --color-button-primary-text: var(--color-juno-grey-blue-100-raw);
+  // --> Default Button
   --color-button-default-bg: var(--color-rgb-blue-gray-10-raw);
   --color-button-default-text: var(--color-juno-text-high-raw);
+  --color-button-default-border: var(--color-juno-blue-light-3-raw);
+  // --> Subdued Button
+  --color-button-subdued-border: var(--color-juno-text-high-raw);
+  // --> Danger Button
   --color-button-danger-text: var(--color-white-raw);
-  --color-button-primary-text: var(--color-juno-grey-blue-100-raw);
-  --color-button-default-border: var(--color-juno-text-high-raw);
   --color-button-danger-bg: var(--color-sap-red-raw);
   --color-button-danger-bg-hover: var(--color-sap-red-dark-raw);
   --color-button-danger-foreground: var(--color-white-raw);
