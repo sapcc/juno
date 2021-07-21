@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 /* Import Icons here. The icon svgs in the icons folder correspond to the respective "xyz_24px.svg" from material-ui icons. 
 */
-import Help from "./icons/help.svg"
+import Help from "-!@svgr/webpack?svgo=false!./icons/help.svg"
 
 /**
 Generic Icon component.
@@ -13,9 +13,9 @@ const getColoredSizedIcon = (icon, color, size) => {
 		// Set viewbox to original size to make scaling work 	
 	  switch (icon) {
 		case "help":
-		  return <Help fill={color} width={size} height={size} viewBox={`0 0 24 24`} />
+		  return <Help fill={color} width={size} height={size} />
 		default:
-		  return <Help fill={color} width={size} height={size} viewBox={`0 0 24 24`} />
+		  return <Help fill={color} width={size} height={size} />
 	  }
 	}
 
