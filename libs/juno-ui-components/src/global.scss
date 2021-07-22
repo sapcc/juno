@@ -288,10 +288,12 @@
 
 html,
 body,
-.shadow-body {
+.shadow-body,
+:host {
   background: var(--color-global-bg);
   color: var(--color-global-text);
   font-family: 'IBM Plex Sans', 'ui-sans-serif', Arial, sans-serif;
+  font-size: 16px;
 }
 
 
