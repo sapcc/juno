@@ -4,8 +4,7 @@ import PropTypes from "prop-types"
 const baseStack = (direction, gap) => {
   return (
     `
-      flex
-      ${direction === "vertical" ? 'flex-col' : 'flex-row'}
+      ${direction === "vertical" ? 'flex flex-col' : 'md:flex md:flex-row'}
       gap-${gap ? gap : '0'}
     `
   )
