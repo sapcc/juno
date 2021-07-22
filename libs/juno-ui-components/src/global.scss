@@ -245,8 +245,8 @@
 
 .theme-dark {
   // Global
-  --color-global-bg: var(--color-juno-grey-blue-95);
-  --color-global-text: var(--color-juno-text-medium);
+  --color-global-bg: var(--color-juno-grey-blue-95-raw);
+  --color-global-text: var(--color-juno-text-medium-raw);
   --color-focus-border: var(--color-juno-blue-light-3-raw);
   // Text
   --color-text-high: var(--color-juno-text-high-raw);
@@ -286,14 +286,25 @@
   --color-textinput-focus-border: var(--color-sap-blue-dark-raw);
 }
 
-html,
-body,
-.shadow-body,
-:host {
-  background: var(--color-global-bg);
-  color: var(--color-global-text);
-  font-family: 'IBM Plex Sans', 'ui-sans-serif', Arial, sans-serif;
-  font-size: 16px;
+// default base styles using the tw base directive
+@layer base {
+
+  html,
+  body,
+  .shadow-body,
+  :host {
+    @apply bg-theme-global-bg;
+    @apply text-theme-default;
+    @apply font-sans;
+    @apply text-base;
+  }
+
+  // h1 {
+  //   @apply text-2xl;
+  // }
+  // h2 {
+  //   @apply text-xl;
+  // }
 }
 
 
