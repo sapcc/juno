@@ -54,10 +54,16 @@ export const ShadowRoot = ({ mode, delegatesFocus, styles, themeClass, children 
       mode,
     })
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // TODO: deactivating constructed stylesheets for now because of the decision of the authors to always include constructed stylesheets last
+    // which means for us that users of the ui component lib can't override styles in their own stylesheet because the constructed stylesheet always wins
+    // See discussion here: https://github.com/WICG/construct-stylesheets/issues/93
+    // One solution might be that we provide a capability to users of this lib to add their styles as a constructed stylesheet (one of the proposed solutions in the the above thread)
+
     // apply styles if given
-    if (stylesWithFont && constructableStylesheetsSupported) {
-      shadowRootElement.adoptedStyleSheets = toStyleSheet(stylesWithFont)
-    }
+    // if (stylesWithFont && constructableStylesheetsSupported) {
+    //   shadowRootElement.adoptedStyleSheets = toStyleSheet(stylesWithFont)
+    // }
 
     // save shadow element in the state
     setShadowRoot(shadowRootElement)
@@ -68,8 +74,10 @@ export const ShadowRoot = ({ mode, delegatesFocus, styles, themeClass, children 
   return shadowRoot ? (
     ReactDOM.createPortal(
       <>
-        {!constructableStylesheetsSupported && <style>{stylesWithFont}</style>}
-        
+        {/* Include styles in a style tag for now until we have found a solution to the constructed stylesheet problem. See above */}
+        {/* {!constructableStylesheetsSupported && <style>{stylesWithFont}</style>} */}
+        <style>{stylesWithFont}</style>
+
         <div className={`shadow-body ${themeClass}`}>
           {children}
         </div>
