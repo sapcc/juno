@@ -37,7 +37,7 @@ const config = [
       }),
       del({ targets: ["lib"] }),
       nodeResolve(),
-      svgr(),
+      svgr({svgo: false}),
       postcss({
         config: {
           path: "./postcss.config.js",
