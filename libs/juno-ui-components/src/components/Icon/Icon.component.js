@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 /* Import Icons here. The icon svgs in the icons folder correspond to the respective "xyz_24px.svg" from material-ui icons. 
 */
-import Help from "-!@svgr/webpack?svgo=false!./icons/help.svg"
+import Help from "./icons/help.svg"
 
 /**
 Generic Icon component.
@@ -24,7 +24,7 @@ export const Icon = ({
 	size,
 	...props
 }) => {
-	const clr = color || "var(--color-global-text)"
+	const clr = color || "rgb(var(--color-global-text))"
 	return ( getColoredSizedIcon(icon, clr, size) )
 }
 
