@@ -21,6 +21,7 @@ export const SwitchRow =({
 	id,
 	disabled,
 	helptext,
+	className,
 	onChange,
 	...props
 }) => {
@@ -30,7 +31,7 @@ export const SwitchRow =({
 			{...props}
 		>
 			<div>
-				<Switch name={name} onChange={onChange} id={id} value={value || ""} disabled={disabled} />
+				<Switch name={name} onChange={onChange} id={id} value={value || ""} disabled={disabled} className={className} />
 			</div>
 			<div>
 				<Label text={label} htmlFor={id} />
@@ -53,6 +54,8 @@ SwitchRow.propTypes = {
 	disabled: PropTypes.bool,
 	/** Help text */
 	helptext: PropTypes.string,
+	/** Pass a className */
+	className: PropTypes.string,
 	/** Pass a handler to the checkbox element */
 	onChange: PropTypes.func,
 }
@@ -64,6 +67,7 @@ SwitchRow.defaultProps = {
 	id: null,
 	disabled: null,
 	helptext: null,
+	className: "",
 	onChange: undefined,
 }
 
