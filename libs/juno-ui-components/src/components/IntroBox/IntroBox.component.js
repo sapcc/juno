@@ -22,12 +22,13 @@ Use sparingly, there should never be any two or more subsequent instances of Int
 export const IntroBox = ({
 	title,
 	text,
+	className,
 	children,
 	...props
 }) => {
 	return (
 		<div 
-			className={`introbox ${introbox}`}
+			className={`introbox ${introbox} ${className}`}
 			{...props}
 		>
 			{title ?  <h1 className={`${introboxHeading}`}>{title}</h1> : ""}
@@ -41,6 +42,8 @@ IntroBox.propTypes = {
 	title: PropTypes.string,
 	/** Pass a string of text to be rendered as contents. Alternatively, contents can be passed as children (see below) */
 	text: PropTypes.string,
+	/** Pass a custom class */
+	className: PropTypes.string,
 	/** Pass child nodes to be rendered as contents */
 	children: PropTypes.node,
 }
@@ -48,4 +51,5 @@ IntroBox.propTypes = {
 IntroBox.defaultProps = {
 	title: null,
 	text: null,
+	className: "",
 }
