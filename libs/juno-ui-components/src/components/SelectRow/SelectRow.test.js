@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react"
 import { SelectRow } from "./index"
 
 
-describe("TextInputRow", () => {
+describe("SelectRow", () => {
 	
 	test("renders a select row", async () => {
 		render(<SelectRow data-testid="select-row" />)
