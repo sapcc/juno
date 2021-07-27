@@ -7,7 +7,8 @@ const basePageHeader = `
   bg-black
   sticky
   top-0
-  p-4
+  px-6
+  py-5
 `
 
 const logoStyles = `
