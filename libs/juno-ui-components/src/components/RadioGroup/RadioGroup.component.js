@@ -5,12 +5,14 @@ import PropTypes from "prop-types"
 export const RadioGroup = ({
 	name,
 	children,
+	className,
 	...props
 }) => {
 	const namedChildren = () => {
 		return React.Children.map(children, (child) => {
 		  return React.cloneElement(child, {
-			name: name
+			name: name,
+			className: className
 		  });
 		});
 	 };
@@ -20,7 +22,13 @@ export const RadioGroup = ({
 RadioGroup.propTypes = {
 	/** Name attribute. Radios within the group using the same name will work together as mutually exclusive options. */
 	name: PropTypes.string.isRequired,
+	/** Pass a custom class to apply to the individual Radios of the group */
+	className: PropTypes.string,
 	/** Child radio components. These will receive the name attribute as passed to Radiogroup. */
 	children: PropTypes.node
+}
+
+RadioGroup.defaultProps = {
+	className: ""
 }
 
