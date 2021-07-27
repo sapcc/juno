@@ -18,11 +18,12 @@ export const Label = ({
 	text,
 	htmlFor,
 	required,
+	className,
 	...props
 }) => {
 	return (
 		<>
-		<label className={`label ${labelstyles}`} htmlFor={htmlFor}>{ text ? text : "unlabeled" }</label>
+		<label className={`label ${labelstyles} ${className}`} htmlFor={htmlFor}>{ text ? text : "unlabeled" }</label>
 		{ required ? <span className={`required ${requiredstyles}`} ></span> : "" }
 		</>
 	)
@@ -35,10 +36,13 @@ Label.propTypes = {
 	htmlFor: PropTypes.string,
 	/** Required */
 	required: PropTypes.bool,
+	/** Pass a className */
+	className: PropTypes.string,
 }
 
 Label.defaultProps = {
 	text: null,
 	htmlFor: null,
 	required: null,
+	className: "",
 }

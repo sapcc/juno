@@ -14,4 +14,10 @@ describe("Label", () => {
 		expect(screen.getByText("my-label")).toHaveAttribute('for', "my-input")
   })
   
+  test("renders a custom className as passed", async () => {
+     render(<Label text="my-label" className="my-custom-class" />)
+    expect(screen.getByText("my-label")).toBeInTheDocument()
+    expect(screen.getByText("my-label")).toHaveClass("my-custom-class")
+  })
+  
 })
