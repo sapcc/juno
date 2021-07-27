@@ -23,6 +23,7 @@ export const TextareaRow = ({
 	id,
 	placeholder,
 	helptext,
+	className,
 	onChange,
 	...props
 }) => {
@@ -35,7 +36,7 @@ export const TextareaRow = ({
 				<Label text={label} htmlFor={id} />
 			</div>
 			<div>
-				<Textarea name={name} onChange={onChange} id={id} value={value} placeholder={placeholder} />
+				<Textarea name={name} onChange={onChange} id={id} value={value} placeholder={placeholder} className={className} />
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>
@@ -55,6 +56,8 @@ TextareaRow.propTypes = {
 	helptext: PropTypes.string,
 	/** Placeholder */
 	placeholder: PropTypes.string,
+	/** Pass a classnName to the Textarea */
+	className: PropTypes.string,
 	/** Pass a handler to the checkbox element */
 	onChange: PropTypes.func,
 }
@@ -66,5 +69,6 @@ TextareaRow.defaultProps = {
 	id: null,
 	placeholder: null,
 	helptext: null,
+	className: "",
 	onChange: undefined,
 }
