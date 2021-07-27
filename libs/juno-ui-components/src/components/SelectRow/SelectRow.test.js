@@ -22,6 +22,12 @@ describe("TextInputRow", () => {
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
 	})
 	
+	test("renders a custom class to select as passed", async () => {
+		render(<SelectRow className="my-custom-class" />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.getByRole("combobox")).toHaveClass("my-custom-class")
+	})
+	
 	test("fires onChange handler as passed", async () => {
 		const handleChange = jest.fn()
 		render(<SelectRow onChange={handleChange} />)
