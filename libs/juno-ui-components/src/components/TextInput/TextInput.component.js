@@ -20,6 +20,7 @@ export const TextInput = ({
 	name,
 	value,
 	type,
+	className,
 	onChange,
 	...props
 }) => {
@@ -29,7 +30,7 @@ export const TextInput = ({
 			name={name || "unnamed input"}
 			defaultValue={value}
 			onChange={onChange}
-			className={`${textinputstyles}`}
+			className={`${textinputstyles} ${className}`}
 			{...props}
 		/>
 	)
@@ -40,6 +41,8 @@ TextInput.propTypes = {
 	name: PropTypes.string,
 	/** Pass a value for initial rendering. Will NOT be updated with user changes for now! */
 	value: PropTypes.string,
+	/** Pass a classname */
+	className: PropTypes.string,
 	/** Pass a handler */
 	onChange: PropTypes.func,
 	/** Specify the type attribute. Defaults to an input with no type attribute, which in turn will be treateas as type="text" by browsers. */
@@ -48,6 +51,7 @@ TextInput.propTypes = {
 
 TextInput.defaultProps = {
 	value: "",
+	className: "",
 	onChange: undefined,
 	type: null,
 }

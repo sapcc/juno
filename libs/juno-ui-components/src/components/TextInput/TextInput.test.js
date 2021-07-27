@@ -63,6 +63,12 @@ describe("TextInput", () => {
 		expect(screen.getByRole("textbox")).toHaveAttribute('readonly')
 	})
 	
+	test("renders a className as passed", async () => {
+		render(<TextInput className="my-custom-class" />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveClass("my-custom-class")
+	})
+	
 	test("renders other props as passed", async () => {
 		render(<TextInput placeholder="My placeholder" />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
