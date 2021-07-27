@@ -6,6 +6,7 @@ export const Checkbox = ({
 	name,
 	value,
 	checked,
+	className,
 	onChange,
 	...props
 }) => {
@@ -14,6 +15,7 @@ export const Checkbox = ({
 			type="checkbox"
 			name={name || "unnamed checkbox"}
 			value={value}
+			className={className}
 			defaultChecked={checked}
 			onChange={onChange}
 			{...props}
@@ -28,6 +30,8 @@ Checkbox.propTypes = {
 	value: PropTypes.string,
 	/**  Pass checked state for initial rendering. Will NOT be updated once user changes the state of the checkbox for now! */
 	checked: PropTypes.bool,
+	/** Pass a className */
+	className: PropTypes.string,
 	/** Pass a handler */
 	onChange: PropTypes.func,
 }
@@ -35,5 +39,6 @@ Checkbox.propTypes = {
 Checkbox.defaultProps = {
 	checked: null,
 	value: "",
+	className: "",
 	onChange: undefined,
 }
