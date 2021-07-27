@@ -100,6 +100,7 @@ export const Button = ({
   title,
   variant,
   size,
+  className,
   onClick,
   children,
   ...props
@@ -108,7 +109,7 @@ export const Button = ({
   return (
     <button
       type="button"
-      className={`button button-${variant} ${btn} ${variantClass(variant)} ${sizeClass(size)}`}
+      className={`button button-${variant} ${btn} ${variantClass(variant)} ${sizeClass(size)} ${className}`}
       onClick={!props.disabled ? onClick : undefined}
       title={titleValue}
       {...props}
@@ -127,6 +128,8 @@ Button.propTypes = {
   label: PropTypes.string,
   /** Specify title for accessibility. Gets value of label if no title specified */
   title: PropTypes.string,
+  /** Pass a className */
+  className: PropTypes.string,
   /** Click handler  */
   onClick: PropTypes.func,
   /** Set to true to disable */
@@ -136,6 +139,7 @@ Button.propTypes = {
 Button.defaultProps = {
   variant: "default",
   size: "default",
+  className: "",
   title: null,
   onClick: undefined,
 }
