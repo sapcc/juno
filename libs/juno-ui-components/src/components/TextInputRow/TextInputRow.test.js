@@ -22,6 +22,11 @@ describe("TextInputGroup", () => {
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
 	})
 	
+	test("renders a className to the TextInput as passed", async () => {
+		render(<TextInputRow className="my-custom-class" />)
+		expect(screen.getByRole("textbox")).toHaveClass("my-custom-class")
+	})
+	
 	test("fires onChange handler as passed", async () => {
 		const handleChange = jest.fn()
 		render(<TextInputRow onChange={handleChange} />)
