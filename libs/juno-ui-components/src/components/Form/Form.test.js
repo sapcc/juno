@@ -9,4 +9,10 @@ describe("Form", () => {
 		expect(screen.getByTestId("my-form")).toBeInTheDocument()
 	})
 	
+	test("renders a custom className", async () => {
+		render(<Form data-testid="my-form" className="my-custom-class" />)
+		expect(screen.getByTestId("my-form")).toBeInTheDocument()
+		expect(screen.getByTestId("my-form")).toHaveClass("my-custom-class")
+	})
+	
 })
