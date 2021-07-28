@@ -7,6 +7,7 @@ const textinputstyles = `
 	text-base
 	leading-4
 	p-3
+	pt-3.5
 	h-textinput
 	border
 	border-transparent
@@ -28,7 +29,8 @@ export const TextInput = ({
 		<input 
 			type={type}
 			name={name || "unnamed input"}
-			defaultValue={value}
+			autoComplete="off"
+			defaultValue={value} // TODO: use value in a controlled component
 			onChange={onChange}
 			className={`${textinputstyles} ${className}`}
 			{...props}
