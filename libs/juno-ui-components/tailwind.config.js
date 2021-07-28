@@ -173,6 +173,9 @@ module.exports = {
       },
       borderColor: {
         "transparent": "transparent",
+      },
+      placeholderColor: {
+        "transparent": "transparent",
       }
     },
     borderWidth: {
