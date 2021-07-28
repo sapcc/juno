@@ -43,12 +43,13 @@ TODO: Can render an icon or will be triggered by any children wrapped inside / p
 export const Tooltip = ({
 	position,
 	text,
+	className,
 	...props
 }) => {
 	const [open, setOpen] = useState(false)
 	return (		
 		<span className={`tooltip`} {...props}>
-			<ClickableIcon onClick={() => setOpen(!open)} />
+			<ClickableIcon onClick={() => setOpen(!open)} className={className} />
 			<InPortal>
 				<TooltipPopover text={text} isOpen={open} />
 			</InPortal>
@@ -61,9 +62,12 @@ Tooltip.propTypes = {
 	position: PropTypes.oneOf(["top", "right", "bottom", "left"]),
 	/** Text to display in the tooltip */
 	text: PropTypes.string.isRequired,
+	/** Pass a className to render to the icon button*/
+	className: PropTypes.string,
 }
 
 Tooltip.defaultProps = {
 	position: "top",
 	text: null,
+	className: "",
 }

@@ -5,12 +5,14 @@ import PropTypes from "prop-types"
 export const Select = ({
 	name,
 	children,
+	className,
 	onChange,
 	...props
 }) => {
 	return (
 		<select 
 			name={name || "unnamed select"}
+			className={className}
 			onChange={onChange}
 			{...props}
 		>
@@ -22,6 +24,8 @@ export const Select = ({
 Select.propTypes = {
 	/** Pass a name. */
 	name: PropTypes.string,
+	/** Pass a classname */
+	className: PropTypes.string,
 	/** Pass SelectOption and SelectOptionGroup as children. */
 	children: PropTypes.node,
 	/** Pass a handler */
@@ -30,5 +34,6 @@ Select.propTypes = {
 
 Select.defaultProps = {
 	name: null,
+	className: "",
 	onChange: undefined,
 }

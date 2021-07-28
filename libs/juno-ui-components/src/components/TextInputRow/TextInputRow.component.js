@@ -22,6 +22,7 @@ export const TextInputRow = ({
 	id,
 	placeholder,
 	helptext,
+	className,
 	onChange,
 	...props
 }) => {
@@ -34,7 +35,7 @@ export const TextInputRow = ({
 				<Label text={label} htmlFor={id} />
 			</div>
 			<div>
-				<TextInput type={type} name={name} id={id} placeholder={placeholder} onChange={onChange} />
+				<TextInput type={type} name={name} id={id} placeholder={placeholder} onChange={onChange} className={className} />
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>	
@@ -56,6 +57,8 @@ TextInputRow.propTypes = {
 	placeholder: PropTypes.string,
 	/** Help text */
 	helptext: PropTypes.string,
+	/** Pass a className */
+	className: PropTypes.string,
 	/** Pass a handler to the input element */
 	onChange: PropTypes.func
 }
@@ -68,5 +71,6 @@ TextInputRow.defaultProps = {
 	id: null,
 	placeholder: null,
 	helptext: null,
+	className: "",
 	onChange: undefined,
 }

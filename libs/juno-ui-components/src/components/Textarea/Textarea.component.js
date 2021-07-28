@@ -13,6 +13,7 @@ const textareastyles = `
 export const Textarea = ({
 	name,
 	value,
+	className,
 	autoComplete,
 	autoFocus,
 	onChange,
@@ -25,7 +26,7 @@ export const Textarea = ({
 			autoComplete={autoComplete}
 			autoFocus={autoFocus}
 			onChange={onChange}
-			className={`${textareastyles}`}
+			className={`${textareastyles} ${className}`}
 			{...props}
 		>
 			
@@ -38,6 +39,8 @@ Textarea.propTypes = {
 	name: PropTypes.string,
 	/** Pass a value for initial rendering. Will NOT be updated once user changes! */
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	/** Pass a className */
+	className: PropTypes.string,
 	/** Specify whether textarea shoudl autocomplete or not */
 	autoComplete: PropTypes.oneOf(['on', 'off']),
 	/** Specify whether textarea should autofocus on page load */
@@ -49,6 +52,7 @@ Textarea.propTypes = {
 Textarea.defaultProps = {
 	name: null,
 	value: null,
+	className: "",
 	autoComplete: null,
 	autoFocus: false,
 	onChange: undefined,

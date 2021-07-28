@@ -44,9 +44,15 @@ describe("Message", () => {
 		expect(screen.getByTestId("my-message")).toHaveTextContent("My Message children text goes here!")
 	})
 		
+	test("renders other classNames as passed", async () => {
+		render(<Message data-testid="my-message" className="my-custom-class" />)
+		expect(screen.getByTestId("my-message")).toHaveClass("my-custom-class")
+	})
+		
 	test("renders other props as passed", async () => {
 		render(<Message data-testid="my-message" name="My shiny little Message" />)
 		expect(screen.getByTestId("my-message")).toHaveAttribute('name', "My shiny little Message")
 	})
+
 
 })

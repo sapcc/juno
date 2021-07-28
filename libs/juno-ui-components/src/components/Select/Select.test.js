@@ -15,10 +15,15 @@ describe("Select", () => {
 		expect(screen.getByRole("combobox")).toHaveAttribute('name', "my-select")
 	})
 	
-	test("renders a disabled select", async () => {
-		render(<Select disabled/>)
+	test("renders a custom class", async () => {
+		render(<Select className="my-custom-class" />)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
-		expect(screen.getByRole("combobox")).toHaveAttribute('disabled')
+		expect(screen.getByRole("combobox")).toHaveClass('my-custom-class')
+	})
+	
+	test("renders a select element", async () => {
+		render(<Select />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
 	})
 	
 	test("fires onChange handler as passed", async () => {

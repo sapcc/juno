@@ -77,6 +77,7 @@ export const Switch = ({
 	onChange,
 	size,
 	disabled,
+	className,
 	...props
 }) => {
 	const [checkedState, toggleChecked] = useState(checked)
@@ -87,7 +88,7 @@ export const Switch = ({
 			role="switch"
 			name={name}
 			id={id}
-			className={`switch ${swtchStyles(size, disabledState)}`}
+			className={`switch ${swtchStyles(size, disabledState)} ${className}`}
 			checked={checkedState}
 			aria-checked={checkedState}
 			onChange={onChange}
@@ -113,6 +114,8 @@ Switch.propTypes = {
 	checked: PropTypes.bool,
 	/** Disabled switch */
 	disabled: PropTypes.bool,
+	/** Pass a className */
+	className: PropTypes.string,
 	/** Pass a handler */
 	onChange: PropTypes.func,
 }
@@ -123,5 +126,6 @@ Switch.defaultProps = {
 	checked: false,
 	disabled: false,
 	size: "default",
+	className: "",
 	onChange: undefined,
 }

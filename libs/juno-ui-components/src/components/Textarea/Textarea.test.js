@@ -30,6 +30,11 @@ describe("Textarea", () => {
 		expect(screen.getByRole("textbox")).toHaveAttribute('disabled')
 	})
 	
+	test("renders a className as passed", async () => {
+		render(<Textarea className="my-custom-class" />)
+		expect(screen.getByRole("textbox")).toHaveClass("my-custom-class")
+	})
+	
 	test("fires onChange handler as passed", async () => {
 		const handleChange = jest.fn()
 		const { container } = render(

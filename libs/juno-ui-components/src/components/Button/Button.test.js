@@ -95,5 +95,10 @@ describe("Button", () => {
       "px-lg"
     )
   })
+  
+  test("renders a custom className as passed", async () => {
+    render(<Button className="my-custom-classname">Click me</Button>)
+    expect(screen.getByRole("button")).toHaveClass("my-custom-classname")
+  })
 
 })

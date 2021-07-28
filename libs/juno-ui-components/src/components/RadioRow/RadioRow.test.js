@@ -22,4 +22,9 @@ describe("RadioRow", () => {
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
 	})
 	
+	test("renders a className to radio element as passed", async () => {
+		render(<RadioRow className="my-custom-class" />)
+		expect(screen.getByRole("radio")).toHaveClass("my-custom-class")
+	})
+	
 })

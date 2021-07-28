@@ -19,6 +19,11 @@ describe("IntroBox", () => {
 		  expect(screen.getByTestId("my-introbox")).toHaveTextContent("My IntroBox text goes here.")
 		})
 		
+	test("renders a custom class as passed", async () => {
+		  render(<IntroBox data-testid="my-introbox" className="my-custom-class" />)
+		  expect(screen.getByTestId("my-introbox")).toHaveClass("my-custom-class")
+		})
+		
 	test("renders text as passed as children", async () => {
 		  render(<IntroBox data-testid="my-introbox">{"My Introbox children text goes here!"}</IntroBox>)
 		  expect(screen.getByTestId("my-introbox")).toHaveTextContent("My Introbox children text goes here!")

@@ -9,6 +9,12 @@ describe("ClickableIcon", () => {
 		expect(screen.getByRole("button")).toBeInTheDocument()
 	})
 	
+	test("renders a custom classname", async () => {
+		render(<ClickableIcon className="my-custom-classname"/>)
+		expect(screen.getByRole("button")).toBeInTheDocument()
+		expect(screen.getByRole("button")).toHaveClass("my-custom-classname")
+	})
+	
 	test('an onclick handler is called as passed', () => {
 		const handleClick = jest.fn();
 		render(<ClickableIcon onClick={handleClick} />);

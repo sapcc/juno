@@ -21,6 +21,12 @@ describe("SwitchRow", () => {
 		render(<SwitchRow helptext="Helptext goes here" />)
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
 	})
+	
+	test("renders a custom className to the Switch as passed", async () => {
+		render(<SwitchRow className="my-custom-class" />)
+		expect(screen.getByRole("switch")).toBeInTheDocument()
+		expect(screen.getByRole("switch")).toHaveClass("my-custom-class")
+	})
 
 	
 })

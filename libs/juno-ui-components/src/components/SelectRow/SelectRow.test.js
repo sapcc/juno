@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react"
 import { SelectRow } from "./index"
 
 
-describe("TextInputRow", () => {
+describe("SelectRow", () => {
 	
 	test("renders a select row", async () => {
 		render(<SelectRow data-testid="select-row" />)
@@ -20,6 +20,12 @@ describe("TextInputRow", () => {
 	test("renders a help text as passed", async () => {
 		render(<SelectRow helptext="Helptext goes here" />)
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
+	})
+	
+	test("renders a custom class to select as passed", async () => {
+		render(<SelectRow className="my-custom-class" />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.getByRole("combobox")).toHaveClass("my-custom-class")
 	})
 	
 	test("fires onChange handler as passed", async () => {

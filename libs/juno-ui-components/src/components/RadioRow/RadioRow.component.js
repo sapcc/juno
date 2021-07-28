@@ -21,6 +21,7 @@ export const RadioRow =({
 	label,
 	id,
 	helptext,
+	className,
 	onChange,
 	...props
 }) => {
@@ -30,7 +31,7 @@ export const RadioRow =({
 			{...props}
 		>
 			<div>
-				<Radio name={name} onChange={onChange} id={id} value={value || ""} />
+				<Radio name={name} onChange={onChange} id={id} value={value || ""} className={className} />
 			</div>
 			<div>
 				<Label text={label} htmlFor={id} />
@@ -51,6 +52,8 @@ RadioRow.propTypes = {
 	id: PropTypes.string,
 	/** Help text */
 	helptext: PropTypes.string,
+	/** Pass a className */
+	className: PropTypes.string,
 	/** Pass a handler to the checkbox element */
 	onChange: PropTypes.func,
 }
@@ -61,6 +64,7 @@ RadioRow.defaultProps = {
 	label: null,
 	id: null,
 	helptext: null,
+	className: "",
 	onChange: undefined,
 }
 

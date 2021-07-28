@@ -35,6 +35,12 @@ describe("Switch", () => {
     expect(screen.getByRole("switch")).not.toHaveAttribute('checked')
   })
   
+  test("renders a custom className", async () => {
+    render(<Switch className="my-custom-class" />)
+    expect(screen.getByRole("switch")).toBeInTheDocument()
+    expect(screen.getByRole("switch")).toHaveClass('my-custom-class')
+  })
+  
   test("renders all props as passed", async () => {
     render(<Switch id="switch-1" data-test="23" />)
     expect(screen.getByRole("switch")).toBeInTheDocument()

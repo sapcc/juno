@@ -35,6 +35,12 @@ describe("Radio", () => {
 		expect(screen.getByRole("radio")).not.toHaveAttribute('checked')
 	})
 	
+	test("renders a custom className", async () => {
+		render(<Radio className="my-custom-class" />)
+		expect(screen.getByRole("radio")).toBeInTheDocument()
+		expect(screen.getByRole("radio")).toHaveClass('my-custom-class')
+	})
+	
 	test("renders all props as passed", async () => {
 		render(<Radio id="radio-1" data-test="47" />)
 		expect(screen.getByRole("radio")).toBeInTheDocument()
