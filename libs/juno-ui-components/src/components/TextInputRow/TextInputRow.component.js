@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { TextInput } from "../TextInput/index.js"
 import { Label } from "../Label/index.js"
@@ -16,29 +16,29 @@ const stackedlabelcontainerstyles = `
 `
 
 const floatinglabelcontainerstyles = `
-absolute
-top-0
-left-0
-px-3
-py-5
-pointer-events-none
-transform 
-origin-top-left 
-transition-all 
-duration-100 
-ease-in-out
+	absolute
+	top-0
+	left-0
+	p-2.5
+	pointer-events-none
+	transform 
+	origin-top-left 
+	transition-all 
+	duration-100 
+	ease-in-out
 `
 
 const focusedlabelcontainerstyles = `
-scale-75
--translate-x-3
-translate-x-1
+	scale-75
+	opacity-75
+	-translate-y-2.5
+	translate-x-1
 `
 
 const floatinginputstyles = `
-p-3 
-h-16
-placeholder-transparent
+	p-3 
+	h-16
+	placeholder-transparent
 `
 
 const helptextstyles = `
@@ -68,6 +68,8 @@ const variantStyle = (variant, element) => {
 	
 }
 
+
+
 /** A text input group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
 export const TextInputRow = ({
 	type,
@@ -82,26 +84,55 @@ export const TextInputRow = ({
 	onChange,
 	...props
 }) => {
+	// useEffect
 	
-	const [focus, setFocus] = useState(0)
+	const [val, setValue] = useState(null)
+	const [focus, setFocus] = useState(false)
+	
+	React.useEffect(() => {
+		setValue(value)
+	}, [value])
+	
+	const handleChange = (event) => {
+		setValue(event.target.value)
+		onChange()
+	}
+	
+	const retractedLabel = (variant, value, focus) => {
+		// console.log("value: ", value)
+		// console.log(value ? "ja" : "nein")
+		// console.log("focus: ", focus)
+		if (variant === "floating") { 
+			if (focus) {
+				return focusedlabelcontainerstyles
+			} else if (value && value.length > 0) {
+				return focusedlabelcontainerstyles
+			} else {
+				return ""
+			}
+		} else {
+			return ""
+		}
+	}
 	
 	return (
 		<div 
 			className={`textinput-row ${variantStyle(variant, "container")} `}
 			{...props}
 		>
-			<div className={`label-container ${variantStyle(variant, "labelcontainer")} ${variant == "floating" && focus ? focusedlabelcontainerstyles : ""}`}>
+			<div className={`label-container ${variantStyle(variant, "labelcontainer")} ${retractedLabel(variant, val, focus)}`}>
 				<Label text={label} htmlFor={id} />
 			</div>
-			<div>
+			<div className={`input-container`} >
 				<TextInput 
 					type={type} 
+					value={value}
 					name={name} 
 					id={id} 
 					placeholder={placeholder} 
-					onChange={onChange} 
-					onFocus={() => setFocus(1)}
-					onBlur={() => setFocus(0)}
+					onChange={handleChange} 
+					onFocus={() => setFocus(true)}
+					onBlur={() => setFocus(false)}
 					className={`${variantStyle(variant, "input")} ${className}`} 
 				/>
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
