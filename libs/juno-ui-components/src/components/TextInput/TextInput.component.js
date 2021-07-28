@@ -22,6 +22,7 @@ export const TextInput = ({
 	value,
 	type,
 	className,
+	autoComplete,
 	onChange,
 	...props
 }) => {
@@ -29,7 +30,7 @@ export const TextInput = ({
 		<input 
 			type={type}
 			name={name || "unnamed input"}
-			autoComplete="off"
+			autoComplete={autoComplete}
 			defaultValue={value} // TODO: use value in a controlled component
 			onChange={onChange}
 			className={`${textinputstyles} ${className}`}
@@ -45,6 +46,8 @@ TextInput.propTypes = {
 	value: PropTypes.string,
 	/** Pass a classname */
 	className: PropTypes.string,
+	/** Pass a valid autocomplete value. We do not police validity. */
+	autoComplete: PropTypes.string,
 	/** Pass a handler */
 	onChange: PropTypes.func,
 	/** Specify the type attribute. Defaults to an input with no type attribute, which in turn will be treateas as type="text" by browsers. */
@@ -54,6 +57,7 @@ TextInput.propTypes = {
 TextInput.defaultProps = {
 	value: "",
 	className: "",
+	autoComplete: "off",
 	onChange: undefined,
 	type: null,
 }
