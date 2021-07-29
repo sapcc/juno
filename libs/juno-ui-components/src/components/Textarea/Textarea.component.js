@@ -22,7 +22,7 @@ export const Textarea = ({
 	return (
 		<textarea
 			name={name || "unnamed textarea"}
-			defaultValue={value}
+			defaultValue={value} // TODO: use value in a controlled component
 			autoComplete={autoComplete}
 			autoFocus={autoFocus}
 			onChange={onChange}
