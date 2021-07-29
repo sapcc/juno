@@ -9,7 +9,7 @@ const stackedcontainerstyles = `
 `
 
 const floatingcontainerstyles = `
-relative
+	relative
 `
 
 const stackedlabelcontainerstyles = `
@@ -28,7 +28,7 @@ const floatinglabelcontainerstyles = `
 	ease-in-out
 `
 
-const focusedlabelcontainerstyles = `
+const minimizedlabelcontainerstyles = `
 	scale-75
 	opacity-75
 	-translate-y-2.5
@@ -53,16 +53,16 @@ const variantStyle = (variant, element) => {
 				case "container":
 					return floatingcontainerstyles
 				case "labelcontainer":
-				return floatinglabelcontainerstyles
+					return floatinglabelcontainerstyles
 				case "input":
-				return floatinginputstyles
+					return floatinginputstyles
 			}
 		case "stacked":
 			switch (element) {
 				case "container":
 					return stackedcontainerstyles
 				case "labelcontainer":
-				return stackedlabelcontainerstyles
+					return stackedlabelcontainerstyles
 			}
 	}
 	
@@ -98,15 +98,12 @@ export const TextInputRow = ({
 		onChange()
 	}
 	
-	const retractedLabel = (variant, value, focus) => {
-		// console.log("value: ", value)
-		// console.log(value ? "ja" : "nein")
-		// console.log("focus: ", focus)
+	const minimizedLabel = (variant, value, focus) => {
 		if (variant === "floating") { 
 			if (focus) {
-				return focusedlabelcontainerstyles
+				return minimizedlabelcontainerstyles
 			} else if (value && value.length > 0) {
-				return focusedlabelcontainerstyles
+				return minimizedlabelcontainerstyles
 			} else {
 				return ""
 			}
@@ -120,7 +117,7 @@ export const TextInputRow = ({
 			className={`textinput-row ${variantStyle(variant, "container")} `}
 			{...props}
 		>
-			<div className={`label-container ${variantStyle(variant, "labelcontainer")} ${retractedLabel(variant, val, focus)}`}>
+			<div className={`label-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
 				<Label text={label} htmlFor={id} />
 			</div>
 			<div className={`input-container`} >
