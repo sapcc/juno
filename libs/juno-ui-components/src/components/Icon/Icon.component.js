@@ -18,21 +18,21 @@ Generic Icon component.
 const getColoredSizedIcon = (icon, color, size) => {	
 	  switch (icon) {
 			case "error":
-				return <Error fill={color} width={size} height={size} />
+				return <Error width={size} height={size} className={`fill-current ${color}`}/>
 			case "expandLess":
-				return <ExpandLess fill={color} width={size} height={size} />
+				return <ExpandLess width={size} height={size} className={`fill-current ${color}`}/>
 			case "expandMore":
-				return <ExpandMore fill={color} width={size} height={size} />
+				return <ExpandMore width={size} height={size} className={`fill-current ${color}`}/>
 			case "help":
-				return <Help fill={color} width={size} height={size} />
+				return <Help width={size} height={size} className={`fill-current ${color}`}/>
 			case "info":
-				return <Info fill={color} width={size} height={size} />
+				return <Info width={size} height={size} className={`fill-current ${color}`}/>
 			case "success":
-				return <Success fill={color} width={size} height={size} />
+				return <Success width={size} height={size} className={`fill-current ${color}`}/>
 			case "warning":
-				return <Warning fill={color} width={size} height={size} />
+				return <Warning width={size} height={size} className={`fill-current ${color}`}/>
 		default:
-		  return <Help fill={color} width={size} height={size} />
+		  return <Help width={size} height={size} className={`fill-current ${color}`}/>
 	  }
 	}
 
@@ -42,7 +42,7 @@ export const Icon = ({
 	size,
 	...props
 }) => {
-	const clr = color || "rgb(var(--color-global-text))"
+	const clr = color || "text-theme-default"
 	return ( getColoredSizedIcon(icon, clr, size) )
 }
 

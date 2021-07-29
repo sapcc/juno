@@ -200,9 +200,21 @@
   --color-black: rgb(0, 0, 0);
   --color-black-raw: 0, 0, 0;
   
+  // DANGER
+  --color-danger: var(--color-sap-red);
+  --color-danger-raw: var(--color-sap-red-raw);
+  
   // WARNING
   --color-warning: rgb(254, 196, 58);
   --color-warning-raw: 254, 196, 58;
+
+  // INFO
+  --color-info: var(--color-juno-blue);
+  --color-info-raw: var(--color-juno-blue-raw);
+  
+  // SUCCESS
+  --color-success: var(--color-sap-green);
+  --color-success-raw: var(--color-sap-green-raw);
 
 }
 
@@ -268,6 +280,11 @@
   --color-button-danger-bg: var(--color-sap-red-raw);
   --color-button-danger-bg-hover: var(--color-sap-red-dark-raw);
   --color-button-danger-foreground: var(--color-white-raw);
+  // Icon
+  --color-icon-danger: var(--color-sap-red-raw);
+  --color-icon-info: var(--color-juno-blue-raw);
+  --color-icon-success: var(--color-sap-green-raw);
+  --color-icon-warning: var(--color-warning-raw);
   // Message
   --color-message-bg: var(--color-juno-grey-blue-89-raw);
   --color-message-default-border: var(--color-juno-blue-raw);
