@@ -10,7 +10,7 @@ import cidrRegex from "cidr-regex"
 import ipRegex from "ip-regex"
 import testData from "./testData"
 
-import { PageHeader, Stack } from "juno-ui-components"
+import { Message, PageHeader, Stack } from "juno-ui-components"
 
 const contentClasses = ({resultsShown}) => {
   return (`
@@ -41,6 +41,7 @@ const App = (props) => {
 
   const search = React.useCallback((term) => {
     if (!term) return
+    setItems([])
     setError("")
     setProcessing(true)
     searchByInput(term)
@@ -77,7 +78,9 @@ const App = (props) => {
             <span>Searching...</span>
           </Stack>
         }
-        {error}
+        {error && 
+          <Message variant="danger" text={error}/>
+        }
         <Results items={items} processing={processing} />
       </Stack>
     </div>
