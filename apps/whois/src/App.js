@@ -5,11 +5,27 @@ import React from "react"
 import Search from "./Search"
 import Results from "./Results"
 import { searchByIPs, searchByCIDR, search as searchByInput } from "./actions"
+import SearchingIndicator from "./img/Loading_Animation.svg"
 import cidrRegex from "cidr-regex"
 import ipRegex from "ip-regex"
 import testData from "./testData"
 
-import { PageHeader } from "juno-ui-components"
+import { PageHeader, Stack } from "juno-ui-components"
+
+const contentClasses = ({resultsShown}) => {
+  return (`
+    h-full
+    px-6
+    
+    ${!resultsShown ? `
+      pt-40
+      items-center 
+    `
+    : `
+      pt-6
+    `}
+  `)
+}
 
 /**
  * This Component implements the event interface and controls
@@ -20,6 +36,8 @@ const App = (props) => {
   const [processing, setProcessing] = React.useState(false)
   const [items, setItems] = React.useState(null)
   const [error, setError] = React.useState(null)
+
+  const resultsShown = items !== null
 
   const search = React.useCallback((term) => {
     if (!term) return
@@ -45,9 +63,23 @@ const App = (props) => {
   return (
     <div className="whois">
       <PageHeader heading="Whois" />
-      <Search onChange={(searchTerm) => search(searchTerm)} />
-      {error}
-      <Results items={items} processing={processing} />
+      <Stack direction="vertical" gap={8} className={`${contentClasses({resultsShown})}`}>
+        { !resultsShown &&
+          <Stack direction="vertical" gap={1} className="items-center">
+            <h1 className="text-2xl">WHOIS Search</h1>
+            <p className="text-theme-default text-opacity-70">Find detailed information for IP addresses</p>
+          </Stack>
+        }
+        <Search onChange={(searchTerm) => search(searchTerm)} resultsShown={resultsShown} />
+        {processing &&
+          <Stack direction="vertical" className="items-center">
+            <SearchingIndicator />
+            <span>Searching...</span>
+          </Stack>
+        }
+        {error}
+        <Results items={items} processing={processing} />
+      </Stack>
     </div>
   )
 }
