@@ -88,7 +88,7 @@ export const TextareaRow = ({
 		onChange()
 	}
 	
-	const minimizedLabel = (varint, value, focus) => {
+	const minimizedLabel = (variant, value, focus) => {
 		if (variant === "floating") {
 			if (focus) {
 				return minimizedlabelcontainerstyles
@@ -112,7 +112,7 @@ export const TextareaRow = ({
 			</div>
 			<div>
 				<Textarea 
-					value={value} 
+					value={val} 
 					name={name} 
 					id={id}
 					placeholder={placeholder}
