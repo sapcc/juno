@@ -76,7 +76,7 @@ export const TextareaRow = ({
 	...props
 }) => {
 	
-	const [val, setValue] = useState(null)
+	const [val, setValue] = useState("")
 	const [focus, setFocus] = useState(false)
 	
 	React.useEffect(() => {
@@ -149,7 +149,7 @@ TextareaRow.propTypes = {
 }
 
 TextareaRow.defaultProps = {
-	value: null,
+	value: "",
 	variant: "floating",
 	name: null,
 	label: null,

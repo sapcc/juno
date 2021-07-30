@@ -86,7 +86,7 @@ export const TextInputRow = ({
 }) => {
 	// useEffect
 	
-	const [val, setValue] = useState(null)
+	const [val, setValue] = useState("")
 	const [focus, setFocus] = useState(false)
 	
 	React.useEffect(() => {
@@ -164,7 +164,7 @@ TextInputRow.propTypes = {
 TextInputRow.defaultProps = {
 	type: null,
 	variant: "floating",
-	value: null,
+	value: "",
 	name: null,
 	label: null,
 	id: null,
