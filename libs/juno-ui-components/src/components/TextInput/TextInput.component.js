@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 
 const textinputstyles = `
@@ -16,7 +16,7 @@ const textinputstyles = `
 	focus:border-theme-focus
 `
 
-/** A basic, uncontrolled Text Input. Also covers email, telephone, password, url derivates. */
+/** A controlled Text Input. Also covers email, telephone, password, url derivates. */
 export const TextInput = ({
 	name,
 	value,
@@ -26,13 +26,25 @@ export const TextInput = ({
 	onChange,
 	...props
 }) => {
+	
+	const [val, setValue] = useState("")
+	
+	useEffect(() => {
+		setValue(value)
+	  }, [value])
+	  
+	const handleInputChange = (event) => {
+		setValue(event.target.value)
+		onChange(event)
+	 }
+	
 	return (
 		<input 
 			type={type}
 			name={name || "unnamed input"}
 			autoComplete={autoComplete}
-			defaultValue={value} // TODO: use value in a controlled component
-			onChange={onChange}
+			value={val} // TODO: use value in a controlled component
+			onChange={handleInputChange}
 			className={`${textinputstyles} ${className}`}
 			{...props}
 		/>
@@ -42,7 +54,7 @@ export const TextInput = ({
 TextInput.propTypes = { 
 	/** Pass a name attribute */
 	name: PropTypes.string,
-	/** Pass a value for initial rendering. Will NOT be updated with user changes for now! */
+	/** Pass a value */
 	value: PropTypes.string,
 	/** Pass a classname */
 	className: PropTypes.string,

@@ -123,7 +123,7 @@ export const TextInputRow = ({
 			<div className={`input-container`} >
 				<TextInput 
 					type={type} 
-					value={value}
+					value={val}
 					name={name} 
 					id={id} 
 					placeholder={placeholder} 
