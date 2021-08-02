@@ -301,6 +301,24 @@
   --color-textinput-text: var(--color-juno-text-high-raw);
   --color-textinput-placeholder-text: var(--color-juno-text-high-raw);
   --color-textinput-focus-border: var(--color-sap-blue-dark-raw);
+  // Syntax Highlighting
+  --color-syntax-highlight-base00: var(--color-juno-grey-blue-88); // bg
+  --color-syntax-highlight-base01: var(--color-juno-grey-blue-84); // ?
+  --color-syntax-highlight-base02: #bbb; // lines and boxes
+  --color-syntax-highlight-base03: var(--color-sap-grey-3);
+  --color-syntax-highlight-base04: var(--color-sap-grey-3);
+  --color-syntax-highlight-base05: #DEDFE0;
+  --color-syntax-highlight-base06: red;
+  --color-syntax-highlight-base07: #DEDFE0;
+  --color-syntax-highlight-base08: var(--color-juno-grey-blue-88); // NULL
+  --color-syntax-highlight-base09: var(--color-juno-blue); // String value
+  --color-syntax-highlight-base0A: var(--color-juno-grey-blue-88); // NaN
+  --color-syntax-highlight-base0B: var(--color-juno-blue); // float value
+  --color-syntax-highlight-base0C: var(--color-sap-gold-light-3); // array index
+  --color-syntax-highlight-base0D: var(--color-sap-gold-light-3); // expanded icon
+  --color-syntax-highlight-base0E: var(--color-juno-blue); // bool + collapsed icon
+  --color-syntax-highlight-base0F: var(--color-juno-blue); // integer value
+
 }
 
 // default base styles using the tw base directive

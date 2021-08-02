@@ -37,6 +37,7 @@ const ResultItem = ({ content, expand }) => {
   return (
     <Stack>
       <div className={leftColumn}>
+        {/* TODO: FALLBACK TO GET FIXED IP IF no floating IP present (example 10.47.2.250) */}
         {content.floatingIP && 
           <div className="font-bold">{content.floatingIP}</div>
         }
@@ -54,22 +55,22 @@ const ResultItem = ({ content, expand }) => {
             iconStyle="square"
             collapsed={3}
             theme={{
-              base00: "#1F262D", //bg
-              base01: "#292F36", //?
-              base02: "#bbb", //Striche und boxen
-              base03: "#969696",
-              base04: "#969696",
-              base05: "#DEDFE0",
-              base06: "red",
-              base07: "#DEDFE0",
-              base08: "#1F262D", //NULL
-              base09: "#268FA7",
-              base0A: "#1F262D", //NaN
-              base0B: "#268FA7", //float -2.757
-              base0C: "#F3BC3A", // 0-2
-              base0D: "#F3BC3A", //icon
-              base0E: "#268FA7", // true/false
-              base0F: "#268FA7" // value 0-2
+              base00: "var(--color-syntax-highlight-base00)", //bg
+              base01: "var(--color-syntax-highlight-base01)", //?
+              base02: "var(--color-syntax-highlight-base02)", //lines and boxes
+              base03: "var(--color-syntax-highlight-base03)",
+              base04: "var(--color-syntax-highlight-base04)",
+              base05: "var(--color-syntax-highlight-base05)",
+              base06: "var(--color-syntax-highlight-base06)",
+              base07: "var(--color-syntax-highlight-base07)",
+              base08: "var(--color-syntax-highlight-base08)", // NULL
+              base09: "var(--color-syntax-highlight-base09)", // String value
+              base0A: "var(--color-syntax-highlight-base0A)", // NaN
+              base0B: "var(--color-syntax-highlight-base0B)", // float value
+              base0C: "var(--color-syntax-highlight-base0C)", // index
+              base0D: "var(--color-syntax-highlight-base0D)", // expanded icon
+              base0E: "var(--color-syntax-highlight-base0E)", // bool + collapsed icon
+              base0F: "var(--color-syntax-highlight-base0F)" // integer value
             }}
           />
         </div>
