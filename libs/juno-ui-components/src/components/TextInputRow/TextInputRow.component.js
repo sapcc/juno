@@ -80,6 +80,7 @@ export const TextInputRow = ({
 	id,
 	placeholder,
 	helptext,
+	required,
 	className,
 	onChange,
 	...props
@@ -118,7 +119,7 @@ export const TextInputRow = ({
 			{...props}
 		>
 			<div className={`label-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
-				<Label text={label} htmlFor={id} />
+				<Label text={label} htmlFor={id} required={required} />
 			</div>
 			<div className={`input-container`} >
 				<TextInput 
@@ -155,6 +156,8 @@ TextInputRow.propTypes = {
 	placeholder: PropTypes.string,
 	/** Help text */
 	helptext: PropTypes.string,
+	/** Specify whether the input is required */
+	required: PropTypes.bool,
 	/** Pass a className */
 	className: PropTypes.string,
 	/** Pass a handler to the input element */
@@ -170,6 +173,7 @@ TextInputRow.defaultProps = {
 	id: null,
 	placeholder: null,
 	helptext: null,
+	required: null,
 	className: "",
 	onChange: undefined,
 }

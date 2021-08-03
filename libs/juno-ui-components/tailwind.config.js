@@ -148,6 +148,7 @@ module.exports = {
           "message": withOpacity("--color-message-bg"),
           "tooltip-popover": withOpacity("--color-tooltip-popover-bg"),
           "textinput": withOpacity("--color-textinput-bg"),
+          "required": withOpacity("--color-required-bg"),
         },
       },
       textColor: {

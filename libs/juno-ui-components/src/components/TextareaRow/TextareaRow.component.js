@@ -71,6 +71,7 @@ export const TextareaRow = ({
 	id,
 	placeholder,
 	helptext,
+	required,
 	className,
 	onChange,
 	...props
@@ -108,7 +109,7 @@ export const TextareaRow = ({
 			{...props}
 		>
 			<div className={`input-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
-				<Label text={label} htmlFor={id} />
+				<Label text={label} htmlFor={id} required={required}/ >
 			</div>
 			<div>
 				<Textarea 
@@ -140,6 +141,8 @@ TextareaRow.propTypes = {
 	helptext: PropTypes.string,
 	/** Placeholder for the text input. Will not be visible on floating label inputs. */
 	placeholder: PropTypes.string,
+	/** Specify whether the input is required */
+	required: PropTypes.bool,
 	/** Pass a classnName to the Textarea */
 	className: PropTypes.string,
 	/** Floating (default) or stacked layout variant */
@@ -155,6 +158,7 @@ TextareaRow.defaultProps = {
 	label: null,
 	id: null,
 	placeholder: null,
+	required: null,
 	helptext: null,
 	className: "",
 	onChange: undefined,

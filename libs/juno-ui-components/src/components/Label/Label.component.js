@@ -7,7 +7,14 @@ const labelstyles = `
 `
 
 const requiredstyles = `
-	rounded:full
+	inline-block
+	w-1
+	h-1
+	rounded-full
+	align-top
+	ml-1
+	mt-2
+	bg-theme-required
 `
 
 /**

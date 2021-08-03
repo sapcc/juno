@@ -21,6 +21,7 @@ export const SwitchRow =({
 	id,
 	disabled,
 	helptext,
+	required,
 	className,
 	onChange,
 	...props
@@ -34,7 +35,7 @@ export const SwitchRow =({
 				<Switch name={name} onChange={onChange} id={id} value={value || ""} disabled={disabled} className={className} />
 			</div>
 			<div>
-				<Label text={label} htmlFor={id} />
+				<Label text={label} htmlFor={id} required={required} />
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>
@@ -54,6 +55,8 @@ SwitchRow.propTypes = {
 	disabled: PropTypes.bool,
 	/** Help text */
 	helptext: PropTypes.string,
+	/** Specify whether the Switch is required */
+	required: PropTypes.bool,
 	/** Pass a className */
 	className: PropTypes.string,
 	/** Pass a handler to the checkbox element */
@@ -67,6 +70,7 @@ SwitchRow.defaultProps = {
 	id: null,
 	disabled: null,
 	helptext: null,
+	requirred: null,
 	className: "",
 	onChange: undefined,
 }
