@@ -4,11 +4,8 @@
 import React from "react"
 import Search from "./Search"
 import Results from "./Results"
-import { searchByIPs, searchByCIDR, search as searchByInput } from "./actions"
+import { search as searchByInput } from "./actions"
 import SearchingIndicator from "./img/Loading_Animation.svg"
-import cidrRegex from "cidr-regex"
-import ipRegex from "ip-regex"
-import testData from "./testData"
 
 import { Message, PageHeader, Stack } from "juno-ui-components"
 
@@ -41,7 +38,6 @@ const App = (props) => {
 
   const search = React.useCallback((term) => {
     if (!term) return
-    setItems([])
     setError("")
     setProcessing(true)
     searchByInput(term)
@@ -50,6 +46,7 @@ const App = (props) => {
         setItems(data)
       })
       .catch((error) => {
+        setItems([]) // if error set items to empty otherwise the previous' search items would be shown
         let message = error.message || error
         try {
           message = JSON.parse(message)
@@ -58,7 +55,9 @@ const App = (props) => {
         if (message === "not found") setError("Couldn't find anything")
         else setError(message)
       })
-      .finally(() => setProcessing(false))
+      .finally(() => {
+        setProcessing(false)
+      })
   }, [])
 
   return (
