@@ -22,6 +22,11 @@ describe("CheckboxRow", () => {
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
 	})
 	
+	test("renders a required label as passed", async () => {
+		render(<CheckboxRow label="Required Input" required />)
+		expect(document.querySelector('.required')).toBeInTheDocument()
+	})
+	
 	test("renders a custom className on the checkbox as passed", async () => {
 		render(<CheckboxRow className="my-custom-classname" />)
 		expect(screen.getByRole("checkbox")).toBeInTheDocument()
