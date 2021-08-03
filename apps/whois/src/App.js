@@ -62,7 +62,7 @@ const App = (props) => {
   }, [])
 
   return (
-    <div className="whois">
+    <div className="whois h-full">
       <PageHeader heading="Whois" />
       <Stack direction="vertical" gap={8} className={`${contentClasses({resultsShown})}`}>
         { !resultsShown &&
