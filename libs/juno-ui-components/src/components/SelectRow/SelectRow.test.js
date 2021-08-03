@@ -22,6 +22,11 @@ describe("SelectRow", () => {
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
 	})
 	
+	test("renders a required label as passed", async () => {
+		render(<SelectRow label="Required Input" required />)
+		expect(document.querySelector('.required')).toBeInTheDocument()
+	})
+	
 	test("renders a custom class to select as passed", async () => {
 		render(<SelectRow className="my-custom-class" />)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()

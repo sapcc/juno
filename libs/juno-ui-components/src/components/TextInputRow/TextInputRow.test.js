@@ -22,6 +22,11 @@ describe("TextInputRow", () => {
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
 	})
 	
+	test("renders a required label as passed", async () => {
+		render(<TextInputRow label="Required Input" required />)
+		expect(document.querySelector('.required')).toBeInTheDocument()
+	})
+	
 	test("renders a className to the TextInput as passed", async () => {
 		render(<TextInputRow className="my-custom-class" />)
 		expect(screen.getByRole("textbox")).toHaveClass("my-custom-class")

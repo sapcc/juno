@@ -20,3 +20,9 @@ WithHelpText.args = {
 	label: "Checkbox Row with Help text",
 	helptext: "Oh so helpful helptext"
 }
+
+export const Required = Template.bind({})
+Required.args = {
+	label: "Required Checkbox Row",
+	required: true
+}

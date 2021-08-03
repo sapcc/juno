@@ -14,6 +14,11 @@ describe("Label", () => {
 		expect(screen.getByText("my-label")).toHaveAttribute('for', "my-input")
   })
   
+test("renders a required symbol as passed", async () => {
+  render(<Label text="Required Input" required />)
+  expect(document.querySelector('.required')).toBeInTheDocument()
+})
+  
   test("renders a custom className as passed", async () => {
      render(<Label text="my-label" className="my-custom-class" />)
     expect(screen.getByText("my-label")).toBeInTheDocument()

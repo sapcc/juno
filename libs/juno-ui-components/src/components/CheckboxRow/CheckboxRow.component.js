@@ -21,6 +21,7 @@ export const CheckboxRow =({
 	label,
 	id,
 	helptext,
+	required,
 	className,
 	onChange,
 	...props
@@ -34,7 +35,7 @@ export const CheckboxRow =({
 				<Checkbox name={name} onChange={onChange} id={id} value={value || ""} className={className} />
 			</div>
 			<div>
-				<Label text={label} htmlFor={id} />
+				<Label text={label} htmlFor={id} required={required} />
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>
@@ -52,6 +53,8 @@ CheckboxRow.propTypes = {
 	id: PropTypes.string,
 	/** Help text */
 	helptext: PropTypes.string,
+	/** Specify whether the checkbox is required */
+	required: PropTypes.bool,
 	/** Pass a custom className */
 	className: PropTypes.string,
 	/** Pass a handler to the checkbox element */
@@ -64,6 +67,7 @@ CheckboxRow.defaultProps = {
 	label: null,
 	id: null,
 	helptext: null,
+	required: null,
 	onChange: undefined,
 	className: "",
 }
