@@ -45,4 +45,23 @@ describe("RadioGroup", () => {
 		expect(screen.getByRole("radio")).toHaveClass("my-custom-class")
 	})
 	
+	test("renders a label for the group as passed", async () => {
+		render(
+			<RadioGroup name="my-radiogroup" label="my-labeled-radiogroup" >
+				<RadioRow />
+			</RadioGroup>
+		)
+		expect(screen.getByText("my-labeled-radiogroup")).toBeInTheDocument()
+	})
+	
+	test("renders a required label as passed", async () => {
+		render(
+			<RadioGroup name="my-radiogroup" label="my-labeled-radiogroup" required >
+				<RadioRow />
+			</RadioGroup>
+		)
+		expect(screen.getByText("my-labeled-radiogroup")).toBeInTheDocument()
+		expect(document.querySelector('.required')).toBeInTheDocument()
+	})
+	
 })
