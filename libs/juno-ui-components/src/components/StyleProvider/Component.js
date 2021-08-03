@@ -33,9 +33,7 @@ export const StyleProvider = ({
   shadowRootMode,
 }) => {
   // theme class default to theme-dark
-  const themeClass = React.useMemo(() => {
-    themeClassName || "theme-dark"
-  })
+  const themeClass = themeClassName || "theme-dark"
 
   React.useEffect(() => {
     // Add font links to head (Plex font from google CDN)
@@ -91,8 +89,8 @@ export const StyleProvider = ({
       {/* handle shadowRoot -> create shadow element and insert 
           styles and children into it */}
       {stylesWrapper === "shadowRoot" ? (
-        <ShadowRoot mode={shadowRootMode || "closed"} styles={styles} themeClass="theme-dark">
-          <div className={themeClass}>{children}</div>
+        <ShadowRoot mode={shadowRootMode || "closed"} styles={styles} themeClass={themeClass}>
+          {children}
         </ShadowRoot>
       ) : (
         <div className={themeClass}>
