@@ -73,7 +73,7 @@ const App = (props) => {
         }
         <Search onChange={(searchTerm) => search(searchTerm)} resultsShown={resultsShown} />
         {processing &&
-          <Stack direction="vertical" className="items-center">
+          <Stack direction="vertical" className="items-center mt-20">
             <SearchingIndicator />
             <span>Searching...</span>
           </Stack>

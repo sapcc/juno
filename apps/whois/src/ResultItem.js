@@ -22,6 +22,7 @@ const resultStyles = (isExpanded) => {
       max-h-full
     ` : `
       max-h-96
+      fade
     `}
     `
   )
