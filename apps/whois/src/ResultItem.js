@@ -38,9 +38,11 @@ const ResultItem = ({ content, expand }) => {
   return (
     <Stack>
       <div className={leftColumn}>
-        {/* TODO: FALLBACK TO GET FIXED IP IF no floating IP present (example 10.47.2.250) */}
-        {content.floatingIP && 
+        {content.floatingIP ? 
           <div className="font-bold">{content.floatingIP}</div>
+        :
+          content.fixedIP &&
+            <div className="font-bold">{content.fixedIP}</div>
         }
         {(content.domainName || content.projectName) &&
           <div className="text-theme-disabled">{content.domainName} / {content.projectName}</div>
@@ -50,6 +52,13 @@ const ResultItem = ({ content, expand }) => {
         }
       </div>
       <div className={`${rightColumn} p-6 bg-juno-grey-blue-4`}>
+        { isExpanded &&
+          <Stack gap={3} className="cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
+            <div className="ml-auto">{isExpanded ? "Collapse" : "Expand"} result </div>
+            <Icon icon={isExpanded ? "expandLess" : "expandMore"} />
+          </Stack>
+        }
+
         <div className={resultStyles(isExpanded)}>
           <ReactJson 
             src={content}
