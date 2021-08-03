@@ -29,3 +29,11 @@ WithHelpText.args = {
 	helptext: "Oh so helpful helptext",
 	children: [DefaultSelectOption.args]
 }
+
+export const Required = Template.bind({})
+Required.args = {
+	name: "my-select",
+	label: "Required Select Row",
+	required: true,
+	children: [DefaultSelectOption.args]
+}

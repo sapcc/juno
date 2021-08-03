@@ -21,4 +21,10 @@ WithHelpText.args = {
 	helptext: "Oh so helpful helptext"
 }
 
+export const Required = Template.bind({})
+Required.args = {
+	label: "Required input",
+	required: true
+}
+
 

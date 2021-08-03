@@ -33,3 +33,9 @@ WithHelptext.args = {
   helptext: "Oh so helpful helptext",
 }
 
+export const Required = Template.bind({})
+Required.args = {
+  label: "Required Switch",
+  required: true
+}
+
