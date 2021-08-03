@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react"
 import { TextInputRow } from "./index"
 
 
-describe("TextInputGroup", () => {
+describe("TextInputRow", () => {
 	
 	test("renders a text input row", async () => {
 		render(<TextInputRow data-testid="text-input-row" />)

@@ -113,6 +113,7 @@ module.exports = {
       },
       white: withOpacity("--color-white-raw"),
       black: withOpacity("--color-black-raw"),
+      transparent: "transparent",
       danger: withOpacity("--color-danger-raw"),
       info: withOpacity("--color-info-raw"),
       success: withOpacity("--color-success-raw"),
@@ -170,12 +171,10 @@ module.exports = {
       },
       height: {
         "textinput": "2.75rem",
+        "floatinglabelinput": "3rem",
       },
       borderRadius: {
         "3px": "3px",
-      },
-      borderColor: {
-        "transparent": "transparent",
       }
     },
     borderWidth: {
