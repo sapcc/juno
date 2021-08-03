@@ -9,6 +9,7 @@ const basePageHeader = `
   top-0
   px-6
   py-5
+  z-50
 `
 
 const logoStyles = `

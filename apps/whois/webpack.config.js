@@ -55,13 +55,22 @@ module.exports = (_, argv) => {
         {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
           issuer: /\.jsx?$/,
-          use: ['@svgr/webpack']
+          use: [{
+            loader: '@svgr/webpack',
+            options: {
+              svgo: false
+            }
+          }],
+          
         },
         // config for background svgs in css
         {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
           issuer: /\.s?css$/,
-          loader: 'url-loader'
+          loader: 'url-loader',
+          options: {
+            svgo: false
+          }
         },
         //Allows use of images
         {

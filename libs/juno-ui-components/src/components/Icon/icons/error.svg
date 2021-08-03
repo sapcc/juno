@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+  <g id="Dark-Theme---Spec" fill="none" fill-rule="evenodd" stroke="none" stroke-width="1">
+    <g id="Msg" transform="translate(-51 -689)">
+      <g id="Warning-Msg-Copy-9" transform="translate(26 667)">
+        <g id="error_28" transform="translate(25 22)">
+          <polygon id="Path" points="0 0 28 0 28 28 0 28"/>
+          <path id="Shape" fill="#000000" fill-rule="nonzero" d="M17.8516667,3 L24,9.14833333 L24,17.8516667 L17.8516667,24 L9.14833333,24 L3,17.8516667 L3,9.14833333 L9.14833333,3 L17.8516667,3 Z M16.9176828,8.59906807 L13.5,12.017 L10.0823172,8.59906807 L8.4324014,10.2489839 L11.85,13.666 L8.4324014,17.0843494 L10.0823172,18.7342653 L13.5,15.316 L16.9176828,18.7342653 L18.5675986,17.0843494 L15.149,13.666 L18.5675986,10.2489839 L16.9176828,8.59906807 Z"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

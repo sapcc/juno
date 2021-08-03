@@ -21,16 +21,34 @@ Default.args = {
 	icon: "help"
 }
 
-export const Red = Template.bind({})
-Red.args = {
-  icon: "help",
-  color: "red",
+export const Info = Template.bind({})
+Info.args = {
+  icon: "info",
+  color: "text-info",
 }
 
-export const Var = Template.bind({})
-Var.args = {
+export const Danger = Template.bind({})
+Danger.args = {
+  icon: "error",
+  color: "text-danger",
+}
+
+export const Success = Template.bind({})
+Success.args = {
+  icon: "success",
+  color: "text-success",
+}
+
+export const Warning = Template.bind({})
+Warning.args = {
+  icon: "warning",
+  color: "text-warning",
+}
+
+export const ThemeColor = Template.bind({})
+ThemeColor.args = {
   icon: "help",
-  color: "var(--color-sap-gold-light-3)",
+  color: "text-sap-gold",
 }
 
 export const Smaller = Template.bind({})
