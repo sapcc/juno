@@ -113,14 +113,10 @@ module.exports = {
       },
       white: withOpacity("--color-white-raw"),
       black: withOpacity("--color-black-raw"),
-<<<<<<< HEAD
       transparent: "transparent",
-      danger: withOpacity("--color-sap-red-raw"), //!!!
-=======
       danger: withOpacity("--color-danger-raw"),
       info: withOpacity("--color-info-raw"),
       success: withOpacity("--color-success-raw"),
->>>>>>> main
       warning: withOpacity("--color-warning-raw"), 
     },
     borderColor: theme => ({
