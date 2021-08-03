@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import ReactJson from 'react-json-view'
+import { DateTime } from "luxon"
 import { Icon, Stack } from "juno-ui-components"
 
 const leftColumn = `
@@ -86,6 +87,7 @@ const ResultItem = ({ content, expand }) => {
         </div>
 
         <Stack gap={3} className="cursor-pointer mt-4" onClick={() => setIsExpanded(!isExpanded)}>
+          <div className="text-theme-medium text-opacity-30">Added to cache: {DateTime.fromISO(content.timestamp).toRelative()}</div>
           <div className="ml-auto">{isExpanded ? "Collapse" : "Expand"} result </div>
           <Icon icon={isExpanded ? "expandLess" : "expandMore"} />
         </Stack>
