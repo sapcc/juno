@@ -109,7 +109,7 @@ export const TextareaRow = ({
 			{...props}
 		>
 			<div className={`input-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
-				<Label text={label} htmlFor={id} required={required}/ >
+				<Label text={label} htmlFor={id} required={required} variant={variant} />
 			</div>
 			<div>
 				<Textarea 

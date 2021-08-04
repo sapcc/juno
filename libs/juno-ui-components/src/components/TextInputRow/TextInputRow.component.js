@@ -119,7 +119,7 @@ export const TextInputRow = ({
 			{...props}
 		>
 			<div className={`label-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
-				<Label text={label} htmlFor={id} required={required} />
+				<Label text={label} htmlFor={id} required={required} variant={variant} />
 			</div>
 			<div className={`input-container`} >
 				<TextInput 

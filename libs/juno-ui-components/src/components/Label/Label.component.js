@@ -2,7 +2,6 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const labelstyles = `
-	text-sm
 	text-theme-high
 `
 
@@ -17,6 +16,30 @@ const requiredstyles = `
 	bg-theme-required
 `
 
+const stackedlabelstyles = `
+	text-sm
+`
+
+const floatinglabelstyles = `
+	text-base
+`
+
+const defaultlabelstyles = `
+	text-sm
+`
+
+const variantStyle = (variant) => {
+	switch (variant) {
+		case "floating":
+			return floatinglabelstyles
+		case "stacked":
+			return stackedlabelstyles
+		default:
+			return defaultlabelstyles
+	}
+	
+}
+
 /**
 * A re-usable Label component
 */
@@ -25,12 +48,13 @@ export const Label = ({
 	text,
 	htmlFor,
 	required,
+	variant,
 	className,
 	...props
 }) => {
 	return (
 		<>
-		<label className={`label ${labelstyles} ${className}`} htmlFor={htmlFor}>{ text ? text : "unlabeled" }</label>
+		<label className={`label ${labelstyles} ${variantStyle(variant)} ${className}`} htmlFor={htmlFor}>{ text ? text : "unlabeled" }</label>
 		{ required ? <span className={`required ${requiredstyles}`} ></span> : "" }
 		</>
 	)
@@ -51,5 +75,6 @@ Label.defaultProps = {
 	text: null,
 	htmlFor: null,
 	required: null,
+	variant: null,
 	className: "",
 }
