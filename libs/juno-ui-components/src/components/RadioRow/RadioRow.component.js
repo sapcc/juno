@@ -11,6 +11,7 @@ const radiorow = `
 const helptextstyles = `
 	text-xs
 	text-theme-disabled
+	mt-1
 `
 
 

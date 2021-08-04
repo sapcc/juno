@@ -11,6 +11,7 @@ const switchrow = `
 const helptextstyles = `
 	text-xs
 	text-theme-disabled
+	mt-1
 `
 
 /** A checkbox input group containing a checkbox, associated label, and structural markup */
