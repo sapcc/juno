@@ -10,7 +10,8 @@ const btn = `
   w-full
   sm:w-auto 
   focus:outline-none 
-  focus:ring
+  focus:ring-2
+  focus:ring-focus
   disabled:opacity-50
   disabled:cursor-default
 `

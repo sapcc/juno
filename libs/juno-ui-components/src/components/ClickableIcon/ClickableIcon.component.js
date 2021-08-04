@@ -6,6 +6,9 @@ const clickableIconStyles = `
 	inline-block
 	w-4
 	h-4
+	focus:outline-none
+	focus:ring-2
+	focus:ring-focus
 `
 
 export const ClickableIcon = ({

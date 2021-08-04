@@ -1,6 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+const radiostyles = `
+	rounded-full
+	focus:outline-none
+	focus:ring-2
+	focus:ring-focus
+`
+
 /** A very basic, for the time being uncontrolled Radio. */
 export const Radio = ({
 	name,
@@ -16,7 +23,7 @@ export const Radio = ({
 			name={name || "unnamed radio"}
 			value={value}
 			defaultChecked={checked}
-			className={className}
+			className={`${radiostyles} ${className}`}
 			onChange={onChange}
 			{...props}
 		/>

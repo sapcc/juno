@@ -7,13 +7,13 @@ const textinputstyles = `
 	text-base
 	leading-4
 	p-3
-	pt-3.5
 	h-textinput
 	border
 	border-transparent
 	rounded-3px
 	focus:outline-none
-	focus:border-theme-focus
+	focus:ring-2
+	focus:ring-focus
 `
 
 /** A controlled Text Input. Also covers email, telephone, password, url derivates. */
@@ -43,7 +43,7 @@ export const TextInput = ({
 			type={type}
 			name={name || "unnamed input"}
 			autoComplete={autoComplete}
-			value={val} // TODO: use value in a controlled component
+			value={val} 
 			onChange={handleInputChange}
 			className={`${textinputstyles} ${className}`}
 			{...props}

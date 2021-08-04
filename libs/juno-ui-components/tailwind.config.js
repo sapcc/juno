@@ -118,6 +118,7 @@ module.exports = {
       info: withOpacity("--color-info-raw"),
       success: withOpacity("--color-success-raw"),
       warning: withOpacity("--color-warning-raw"), 
+      focus: withOpacity("--color-focus-raw"),
     },
     borderColor: theme => ({
       ...theme('colors'),
@@ -125,7 +126,6 @@ module.exports = {
         default: withOpacity("--color-default-border"),
         "button-default": withOpacity("--color-button-default-border"),
         "button-subdued": withOpacity("--color-button-subdued-border"),
-        "focus": withOpacity("--color-focus-border"),
         "message-default": withOpacity("--color-message-default-border"),
         "message-danger": withOpacity("--color-message-danger-border"),
         "message-warning": withOpacity("--color-message-warning-border"),
@@ -177,7 +177,7 @@ module.exports = {
       },
       borderRadius: {
         "3px": "3px",
-      }
+      },
     },
     borderWidth: {
       DEFAULT: "1px",
