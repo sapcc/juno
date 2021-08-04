@@ -11,6 +11,9 @@ const selectstyles = `
 	border
 	border-transparent
 	rounded-3px
+	bg-icon-arrow-down
+	bg-right
+	bg-no-repeat
 	focus:outline-none
 	focus:ring-2
 	focus:ring-focus
