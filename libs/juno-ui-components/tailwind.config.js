@@ -119,6 +119,7 @@ module.exports = {
       success: withOpacity("--color-success-raw"),
       warning: withOpacity("--color-warning-raw"), 
       focus: withOpacity("--color-focus-raw"),
+      primary: withOpacity("--color-primary-raw"),
     },
     borderColor: theme => ({
       ...theme('colors'),

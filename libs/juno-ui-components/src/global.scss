@@ -215,7 +215,15 @@
   // SUCCESS
   --color-success: var(--color-sap-green);
   --color-success-raw: var(--color-sap-green-raw);
-
+  
+  // FOCUS
+  --color-focus: var(--color-juno-blue-light-3);
+  --color-focus-raw: var(--color-juno-blue-light-3-raw);
+  
+  // PRIMARY
+  --color-primary: var(--color-juno-blue-light-3);
+  --color-primary-raw: var(--color-juno-blue-light-3-raw);
+  
 }
 
 /* When assigning colors to uses, use "[color]-raw" variables: */
@@ -305,6 +313,8 @@
   --color-select-bg: var(--color-juno-grey-blue-84-raw);
   // Required
   --color-required-bg: var(--color-juno-blue-light-3-raw);
+  // Spinner primary
+  --color-spinner-primary: var(--color-juno-blue-light-3-raw);
   // Syntax Highlighting
   --color-syntax-highlight-base00: var(--color-juno-grey-blue-88); // bg
   --color-syntax-highlight-base01: var(--color-juno-grey-blue-84); // ?
