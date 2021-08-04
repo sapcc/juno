@@ -5,16 +5,6 @@ const labelstyles = `
 	text-theme-high
 `
 
-const requiredstyles = `
-	inline-block
-	w-1
-	h-1
-	rounded-full
-	align-top
-	ml-1
-	mt-2
-	bg-theme-required
-`
 
 const stackedlabelstyles = `
 	text-sm
@@ -28,7 +18,18 @@ const defaultlabelstyles = `
 	text-sm
 `
 
-const variantStyle = (variant) => {
+const requiredstyles = `
+	inline-block
+	w-1
+	h-1
+	rounded-full
+	align-top
+	ml-1
+	mt-2
+	bg-theme-required
+`
+
+const variantStyles = (variant) => {
 	switch (variant) {
 		case "floating":
 			return floatinglabelstyles
@@ -37,7 +38,6 @@ const variantStyle = (variant) => {
 		default:
 			return defaultlabelstyles
 	}
-	
 }
 
 /**
@@ -54,7 +54,7 @@ export const Label = ({
 }) => {
 	return (
 		<>
-		<label className={`label ${labelstyles} ${variantStyle(variant)} ${className}`} htmlFor={htmlFor}>{ text ? text : "unlabeled" }</label>
+		<label className={`label ${labelstyles} ${variantStyles(variant)} ${className}`} htmlFor={htmlFor}>{ text ? text : "unlabeled" }</label>
 		{ required ? <span className={`required ${requiredstyles}`} ></span> : "" }
 		</>
 	)
@@ -69,12 +69,14 @@ Label.propTypes = {
 	required: PropTypes.bool,
 	/** Pass a className */
 	className: PropTypes.string,
+	/** Variant: stacked or floating */
+	variant: PropTypes.oneOf(["floating", "stacked"]),
 }
 
 Label.defaultProps = {
 	text: null,
 	htmlFor: null,
 	required: null,
-	variant: null,
 	className: "",
+	variant: null,
 }

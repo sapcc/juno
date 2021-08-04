@@ -12,8 +12,8 @@ const selectstyles = `
 	border-transparent
 	rounded-3px
 	focus:outline-none
-	focus:border-theme-focus
-	focus:border-theme-focus
+	focus:ring-2
+	focus:ring-focus
 `
 
 /*+ A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
@@ -27,7 +27,7 @@ export const Select = ({
 	return (
 		<select 
 			name={name || "unnamed select"}
-			className={`${selectstyles} ${className}`}
+			className={`select ${selectstyles} ${className}`}
 			onChange={onChange}
 			{...props}
 		>
