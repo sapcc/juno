@@ -1,8 +1,7 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import "./searchinput.css"
-import SearchIcon from "../../img/icon_search.svg"
-// import ClearIcon from "../../img/icon_close.svg"
+import { ClickableIcon, Stack } from "../../index"
 
 const wrapperClasses = (variant) => {
   return `
@@ -53,27 +52,11 @@ const searchClasses = (variant) => {
     .replace(/\s+/g, " ")
 }
 
-const absoluteIcon = (variant) => {
-  return `
-			absolute
-			${
-        variant === "hero"
-          ? `
-					top-3.5
-				`
-          : `
-					top-1
-				`
-      }
-		`
-}
-
 const searchIconClasses = (variant) => {
   return `
-			${
-        variant === "hero"
+			${variant === "hero"
           ? `
-					right-6
+					right-5
 				`
           : `
 					right-3
@@ -98,31 +81,61 @@ const searchIconClasses = (variant) => {
 // 	)
 // }
 
-/** A basic, atomic, uncontrolled Input[type="search"] */
+/** A basic, atomic, controlled Input[type="search"] */
 export const SearchInput = ({
   name,
   value,
   placeholder,
   className,
+  autoComplete,
+  onSearch,
   onChange,
+  onClick,
+  onKeyPress,
   variant,
   ...props
 }) => {
+  const [val, setValue] = useState("")
+	
+	useEffect(() => {
+		setValue(value)
+	}, [value])
+
+	const handleInputChange = (event) => {
+		setValue(event.target.value)
+		onChange && onChange(event)
+  }
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter" && onSearch) onSearch(val)
+    onKeyPress && onKeyPress(event)
+  }
+
+  const handleClick = (event) => {
+		onSearch && onSearch(val)
+		onClick && onClick(event)
+  }
+
   return (
     <div className={`search-input-wrapper ${wrapperClasses(variant)}`}>
-      <input
-        type="search"
-        name={name || "search"}
-        placeholder={placeholder}
-        defaultValue={value}
-        autoComplete="off"
-        className={`search-input ${searchClasses(variant)} ${className || ""}`}
-        onChange={onChange}
-        {...props}
-      />
-      <SearchIcon
-        className={`${absoluteIcon(variant)} ${searchIconClasses(variant)}`}
-      />
+      <Stack gap={2} className="items-center">
+        <input
+          type="search"
+          name={name || "search"}
+          placeholder={placeholder}
+          value={val}
+          autoComplete={autoComplete}
+          className={`search-input ${searchClasses(variant)} ${className || ""}`}
+          onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
+          {...props}
+        />
+        <ClickableIcon
+          icon="search"
+          className={`absolute ${searchIconClasses(variant)}`}
+          onClick={handleClick}
+        />
+      </Stack>
     </div>
   )
 }
@@ -136,15 +149,27 @@ SearchInput.propTypes = {
   placeholder: PropTypes.string,
   /** Pass a value for initial rendering. Will NOT be updated once user changes for now */
   value: PropTypes.string,
+  /** Pass a valid autocomplete value. We do not police validity. Default is "off" */
+	autoComplete: PropTypes.string,
   /** The class names passed here will be merged with the exisiting class names of the component */
   className: PropTypes.string,
-  /** Pass a handler */
+  /** Pass a search handler that will be called by the component when a search is triggered either via "Enter" keypress or via click on the magnifying glass icon */
+  onSearch: PropTypes.func,
+  /** Pass a click handler that will be called when the magnifying glass icon is clicked */
+  onClick: PropTypes.func,
+  /** Pass a change handler */
   onChange: PropTypes.func,
+  /** Pass a keyPress handler, by default the component will listen to the "Enter" key and call the passed onSearch function when it is pressed */
+  onKeyPress: PropTypes.func,
 }
 
 SearchInput.defaultProps = {
   value: "",
   variant: "default",
+  onSearch: undefined,
   onChange: undefined,
+  onClick: undefined,
+  onKeyPress: undefined,
+  autoComplete: "off",
   placeholder: "Search…",
 }
