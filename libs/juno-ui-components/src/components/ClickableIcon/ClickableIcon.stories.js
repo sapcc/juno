@@ -33,8 +33,8 @@ Larger.args = {
 	size: "48"
 }
 
-export const Green = Template.bind({})
-Green.args = {
-	icon: "help",
-	color: "green"
+export const Color = Template.bind({})
+Color.args = {
+	icon: "info",
+	color: "text-info"
 }

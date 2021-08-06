@@ -4,8 +4,6 @@ import { Icon } from "../Icon/index.js"
 
 const clickableIconStyles = `
 	inline-block
-	w-4
-	h-4
 	focus:outline-none
 	focus:ring-2
 	focus:ring-focus
@@ -21,7 +19,7 @@ export const ClickableIcon = ({
 }) => {
 	return (
 		<button className={`clickableicon ${clickableIconStyles} ${className}`} onClick={onClick} {...props}>
-			<Icon size={size} color={color} />
+			<Icon icon={icon} size={size} color={color} />
 		</button>
 	)
 }
@@ -41,7 +39,7 @@ ClickableIcon.propTypes = {
 
 ClickableIcon.defaultProps = {
 	icon: null,
-	size: null,
+	size: undefined,
 	color: null,
 	className: "",
 	onClick: undefined,

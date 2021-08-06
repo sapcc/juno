@@ -70,7 +70,7 @@ const App = (props) => {
             <p className="text-theme-default text-opacity-70">Find detailed information for IP addresses</p>
           </Stack>
         }
-        <Search onChange={(searchTerm) => search(searchTerm)} resultsShown={resultsShown} />
+        <Search onSearch={(searchTerm) => search(searchTerm)} resultsShown={resultsShown} />
         {processing &&
           <Stack direction="vertical" className="items-center mt-20">
             <SearchingIndicator />

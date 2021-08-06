@@ -166,9 +166,9 @@ module.exports = {
           "textinput": withOpacity("--color-textinput-text"),
         },
       },
-      backgroundImage: theme => ({
-        'icon-arrow-down': "url('./img/icon_arrow_down.svg')",
-      }),
+      // backgroundImage: theme => ({
+      //   'icon-arrow-down': "url('./img/icon_arrow_down.svg')",
+      // }),
       padding: {
         xs: "0.25rem",
         sm: "0.5rem",
