@@ -50,7 +50,7 @@ export const Icon = ({
 }) => {
 	console.log(`=========== size: ${size}`)
 	const clr = color || "text-theme-default"
-	return ( getColoredSizedIcon(icon, clr, size || "24") )
+	return ( getColoredSizedIcon(icon, clr, size) )
 }
 
 Icon.propTypes = { 

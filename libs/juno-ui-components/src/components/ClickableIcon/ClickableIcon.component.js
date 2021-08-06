@@ -38,7 +38,7 @@ ClickableIcon.propTypes = {
 
 ClickableIcon.defaultProps = {
 	icon: null,
-	size: null,
+	size: undefined,
 	color: null,
 	className: "",
 	onClick: undefined,
