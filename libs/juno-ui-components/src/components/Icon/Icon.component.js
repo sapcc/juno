@@ -17,28 +17,28 @@ import Warning from "./icons/warning.svg"
 Generic Icon component.
 */
 
-const getColoredSizedIcon = (icon, color, size) => {	
+const getColoredSizedIcon = ({icon, color, size, ...props}) => {	
 	  switch (icon) {
 			case "cancel":
-				return <Cancel width={size} height={size} className={`fill-current ${color}`}/>
+				return <Cancel width={size} height={size} className={`fill-current ${color}`} {...props}/>
 			case "error":
-				return <Error width={size} height={size} className={`fill-current ${color}`}/>
+				return <Error width={size} height={size} className={`fill-current ${color}`} {...props} />
 			case "expandLess":
-				return <ExpandLess width={size} height={size} className={`fill-current ${color}`}/>
+				return <ExpandLess width={size} height={size} className={`fill-current ${color}`} {...props} />
 			case "expandMore":
-				return <ExpandMore width={size} height={size} className={`fill-current ${color}`}/>
+				return <ExpandMore width={size} height={size} className={`fill-current ${color}`} {...props} />
 			case "help":
-				return <Help width={size} height={size} className={`fill-current ${color}`}/>
+				return <Help width={size} height={size} className={`fill-current ${color}`} {...props} />
 			case "info":
-				return <Info width={size} height={size} className={`fill-current ${color}`}/>
+				return <Info width={size} height={size} className={`fill-current ${color}`} {...props} />
 			case "search":
-				return <Search width={size} height={size} className={`fill-current ${color}`}/>
+				return <Search width={size} height={size} className={`fill-current ${color}`} {...props} />
 			case "success":
-				return <Success width={size} height={size} className={`fill-current ${color}`}/>
+				return <Success width={size} height={size} className={`fill-current ${color}`} {...props} />
 			case "warning":
-				return <Warning width={size} height={size} className={`fill-current ${color}`}/>
+				return <Warning width={size} height={size} className={`fill-current ${color}`} {...props} />
 		default:
-		  return <Help width={size} height={size} className={`fill-current ${color}`}/>
+		  return <Help width={size} height={size} className={`fill-current ${color}`} {...props} />
 	  }
 	}
 
@@ -48,9 +48,8 @@ export const Icon = ({
 	size,
 	...props
 }) => {
-	console.log(`=========== size: ${size}`)
 	const clr = color || "text-theme-default"
-	return ( getColoredSizedIcon(icon, clr, size) )
+	return ( getColoredSizedIcon({icon, clr, size, ...props}) )
 }
 
 Icon.propTypes = { 
