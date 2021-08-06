@@ -14,17 +14,16 @@ const searchClasses = (resultsShown) => {
   `)
 }
 
-const Search = ({ onChange, resultsShown }) => {
+const Search = ({ onSearch, resultsShown }) => {
   const [searchTerm, setSearchTerm] = React.useState("")
 
-  // const filteredSearchTerm = React.useMemo(() => {
-  //   let cidrs = searchTerm.match(cidrRegex()) || []
-  //   let rest = searchTerm
-  //   for (let cidr of cidrs) rest = rest.replace(cidr, "")
+  const handleChange = (e) =>{
+    setSearchTerm(e.target.value)
+  }
 
-  //   return cidrs.concat(rest.match(ipRegex()) || [])
-  // }, [searchTerm])
-
+  const handleSearch = (searchTerm) => {
+    onSearch && onSearch(searchTerm)
+  }
 
 
   return (
@@ -34,10 +33,8 @@ const Search = ({ onChange, resultsShown }) => {
           variant="hero"
           value={searchTerm}
           autoFocus={true}
-          onKeyPress={(e) => {
-            if (e.key === "Enter" && searchTerm !== "") onChange(searchTerm)
-          }}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onSearch={handleSearch}
+          onChange={handleChange}
         />
         { !resultsShown && searchTerm.match(cidrRegex()) &&
           <span className="text-theme-disabled pl-6">Searching for CIDR ranges may take a while, please be patient :)</span>
