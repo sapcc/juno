@@ -18,7 +18,7 @@ export const ClickableIcon = ({
 }) => {
 	return (
 		<button className={`clickableicon ${clickableIconStyles} ${className}`} onClick={onClick} {...props}>
-			<Icon size={size} color={color} />
+			<Icon icon={icon} size={size} color={color} />
 		</button>
 	)
 }
