@@ -8,8 +8,9 @@ const swtchStyles = (size, disabled) => {
 			relative
 			p-0
 			leading-0
-			focus:outline-none 
-			focus:ring
+			focus:outline-none
+			focus:ring-2
+			focus:ring-focus
 			${ disabled ? 'pointer-events-none cursor-not-allowed opacity-50' : '' }
 			${ size === 'small' ? 'w-8 h-4' : '' }
 			${ size === 'large' ? 'w-12 h-6' : '' }

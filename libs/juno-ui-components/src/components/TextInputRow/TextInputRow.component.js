@@ -31,12 +31,14 @@ const floatinglabelcontainerstyles = `
 const minimizedlabelcontainerstyles = `
 	scale-75
 	opacity-75
+	pt-3
 	-translate-y-2.5
 	translate-x-1
 `
 
 const floatinginputstyles = `
 	p-3 
+	pt-4
 	h-16
 	placeholder-transparent
 `
@@ -44,6 +46,7 @@ const floatinginputstyles = `
 const helptextstyles = `
 	text-xs
 	text-theme-disabled
+	mt-1
 `
 
 const variantStyle = (variant, element) => {
@@ -119,7 +122,7 @@ export const TextInputRow = ({
 			{...props}
 		>
 			<div className={`label-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
-				<Label text={label} htmlFor={id} required={required} />
+				<Label text={label} htmlFor={id} required={required} variant={variant} />
 			</div>
 			<div className={`input-container`} >
 				<TextInput 

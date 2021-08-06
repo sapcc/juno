@@ -7,6 +7,10 @@ const textareastyles = `
 	text-base
 	leading-4
 	p-3
+	rounded-3px
+	focus:outline-none
+	focus:ring-2
+	focus:ring-focus
 `
 
 /** A controlled  Textarea */

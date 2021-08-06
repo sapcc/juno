@@ -26,7 +26,8 @@ const searchClasses = (variant) => {
 			rounded-full
 			focus:outline-none
 			focus:rounded-full
-			focus:ring-2
+      focus:ring-2
+      focus:ring-focus
 			bg-theme-textinput
 			text-theme-high
 			shadow

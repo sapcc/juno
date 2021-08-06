@@ -29,17 +29,20 @@ const floatinglabelcontainerstyles = `
 const minimizedlabelcontainerstyles = `
 	scale-75
 	opacity-75
+	pt-3
 	-translate-y-2.5
 	translate-x-1
 `
 
 const floatinginputstyles = `
+	pt-4
 	placeholder-transparent
 `
 
 const helptextstyles = `
 	text-xs
 	text-theme-disabled
+	mt-1
 `
 
 const variantStyle = (variant, element) => {
@@ -109,7 +112,7 @@ export const TextareaRow = ({
 			{...props}
 		>
 			<div className={`input-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
-				<Label text={label} htmlFor={id} required={required}/ >
+				<Label text={label} htmlFor={id} required={required} variant={variant} />
 			</div>
 			<div>
 				<Textarea 

@@ -1,6 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+const checkboxstyles = `
+	rounded-full
+	focus:outline-none
+	focus:ring-2
+	focus:ring-focus
+`
+
 /** A very basic, for the time being uncontrolled Checkbox. */
 export const Checkbox = ({
 	name,
@@ -15,7 +22,7 @@ export const Checkbox = ({
 			type="checkbox"
 			name={name || "unnamed checkbox"}
 			value={value}
-			className={className}
+			className={`${checkboxstyles} ${className}`}
 			defaultChecked={checked}
 			onChange={onChange}
 			{...props}

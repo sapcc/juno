@@ -4,6 +4,9 @@ import { Icon } from "../Icon/index.js"
 
 const clickableIconStyles = `
 	inline-block
+	focus:outline-none
+	focus:ring-2
+	focus:ring-focus
 `
 
 export const ClickableIcon = ({
