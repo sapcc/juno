@@ -50,16 +50,9 @@ export const StyleProvider = ({
     link3.rel = "stylesheet"
     link3.href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&family=IBM+Plex+Sans+Condensed:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&family=IBM+Plex+Serif:ital@0;1&display=swap"
 
-    // Add favicon link
-    const faviconLink = document.createElement("link")
-    faviconLink.rel = "icon"
-    faviconLink.href = "/assets/favicon"
-    faviconLink.sizes = "any"
-
     document.head.appendChild(link1)
     document.head.appendChild(link2)
     document.head.appendChild(link3)
-    document.head.appendChild(faviconLink)
 
     // undefined or inline are handled by renderer
     if (
