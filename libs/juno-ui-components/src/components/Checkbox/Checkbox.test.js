@@ -25,14 +25,16 @@ describe("Checkbox", () => {
 	
 	test("renders a checked checkbox as passed", async () => {
 		render(<Checkbox checked={true} />)
-		expect(screen.getByRole("checkbox")).toBeInTheDocument()
-		expect(screen.getByRole("checkbox")).toHaveAttribute('checked')
+		const checkbox = screen.getByRole('checkbox')
+		expect(checkbox).toBeInTheDocument()
+		expect(checkbox).toBeChecked()
 	})
 	
 	test("renders no checked attribute if false", async () => {
 		render(<Checkbox checked={false} />)
-		expect(screen.getByRole("checkbox")).toBeInTheDocument()
-		expect(screen.getByRole("checkbox")).not.toHaveAttribute('checked')
+		const checkbox = screen.getByRole('checkbox')
+		expect(checkbox).toBeInTheDocument()
+		expect(checkbox).not.toBeChecked()
 	})
 	
 	// test("renders a custom className as passed", async () => {

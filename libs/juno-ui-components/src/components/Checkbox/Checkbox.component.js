@@ -5,8 +5,8 @@ import PropTypes from "prop-types"
 // TODO: discuss & clarify where custom classNames should go
 
 const inputstyles = `
-	w-px
-	h-px
+	w-4
+	h-4
 	opacity-0
 `
 
@@ -58,9 +58,9 @@ export const Checkbox = ({
 	onChange,
 	...props
 }) => {
-	const [isChecked, setChecked] = useState("")
+	const [isChecked, setChecked] = useState(false)
 	const [isIndeterminate, setIndeterminate] = useState("")
-	const [hasFocus, setFocus] = useState("")
+	const [hasFocus, setFocus] = useState(false)
 	
 	useEffect( () => {
 		setChecked(checked)
@@ -84,8 +84,17 @@ export const Checkbox = ({
 	return (
 		<div 
 			className={`${mockcheckboxstyles} ${ hasFocus ? mockfocusstyles : "" } ${ disabled ? mockdisabledstyles : "" } ${className}`}
-			onClick={handleChange}
 		>
+			{ isChecked ? 	<svg 
+				xmlns="http://www.w3.org/2000/svg" 
+				className={`${mockcheckmarkstyles}`} 
+				width="16" 
+				height="16" 
+				viewBox="0 0 16 16">
+					<polygon fill="#2EA8C4" points="5.75 11.15 2.6 8 1.55 9.05 5.75 13.25 14.75 4.25 13.7 3.2"/>
+				</svg>
+			: 
+				"" }
 			<input
 				type="checkbox"
 				name={name || "unnamed checkbox"}
@@ -98,16 +107,7 @@ export const Checkbox = ({
 				onFocus={handleFocus}
 				onBlur={handleBlur}
 			/>
-			{ isChecked ? 	<svg 
-							xmlns="http://www.w3.org/2000/svg" 
-							className={`${mockcheckmarkstyles}`} 
-							width="16" 
-							height="16" 
-							viewBox="0 0 16 16">
-			  			  	<polygon fill="#2EA8C4" points="5.75 11.15 2.6 8 1.55 9.05 5.75 13.25 14.75 4.25 13.7 3.2"/>
-							</svg>
-						: 
-							"" }
+			
 			{ isIndeterminate && !isChecked ? <div class={`${mockindeterminatestyles}`}></div>
 											: "" }
 		</div>
@@ -134,7 +134,7 @@ Checkbox.propTypes = {
 }
 
 Checkbox.defaultProps = {
-	checked: null,
+	checked: false,
 	value: "",
 	id: "",
 	className: "",
