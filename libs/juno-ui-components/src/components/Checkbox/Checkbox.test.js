@@ -37,27 +37,23 @@ describe("Checkbox", () => {
 		expect(checkbox).not.toBeChecked()
 	})
 	
-	// test("renders a custom className as passed", async () => {
-	// 	render(<Checkbox className="my-custom-classname" />)
-	// 	expect(screen.getByRole("checkbox")).toBeInTheDocument()
-	// 	expect(screen.getByRole("checkbox")).toHaveClass('my-custom-classname')
-	// })
+	test("renders a custom className as passed", async () => {
+		render(<Checkbox data-testid="23" className="my-custom-classname" />)
+		expect(screen.getByTestId("23")).toBeInTheDocument()
+		expect(screen.getByTestId("23")).toHaveClass('my-custom-classname')
+	})
 	
-	// test("renders all props as passed", async () => {
-	// 	render(<Checkbox id="check-1" data-test="23" />)
-	// 	expect(screen.getByRole("checkbox")).toBeInTheDocument()
-	// 	expect(screen.getByRole("checkbox")).toHaveAttribute('id', "check-1")
-	// 	expect(screen.getByRole("checkbox")).toHaveAttribute('data-test', "23")
-	// })
+	test("renders all props as passed", async () => {
+		render(<Checkbox id="check-1" data-testid="23" data-lolol={true}/>)
+		expect(screen.getByTestId("23")).toBeInTheDocument()
+		expect(screen.getByTestId("23")).toHaveAttribute('data-lolol')
+	})
 	
 	test("fires handler on change as passed", async () => {	
 		const onChangeSpy = jest.fn();
 		render(<Checkbox onChange={onChangeSpy} />);
 		screen.getByRole('checkbox').click();
-		expect(onChangeSpy).toHaveBeenCalled();
-		
+		expect(onChangeSpy).toHaveBeenCalled();	
 	})
-	
-	
 
 })

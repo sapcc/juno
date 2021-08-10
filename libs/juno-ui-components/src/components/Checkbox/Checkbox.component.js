@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 
 // TODO: disabled styles missing
-// TODO: discuss & clarify where custom classNames should go
 
 const inputstyles = `
 	w-4
@@ -84,6 +83,7 @@ export const Checkbox = ({
 	return (
 		<div 
 			className={`${mockcheckboxstyles} ${ hasFocus ? mockfocusstyles : "" } ${ disabled ? mockdisabledstyles : "" } ${className}`}
+			{...props}
 		>
 			{ isChecked ? 	<svg 
 				xmlns="http://www.w3.org/2000/svg" 
