@@ -58,18 +58,18 @@ export const Checkbox = ({
 	onChange,
 	...props
 }) => {
-	const [isChecked, setChecked] = useState(false)
+	const [isChecked, setIsChecked] = useState(false)
 	const [isIndeterminate, setIndeterminate] = useState("")
 	const [hasFocus, setFocus] = useState(false)
 	
 	useEffect( () => {
-		setChecked(checked)
+		setIsChecked(checked)
 		setIndeterminate(indeterminate)
 	}, [checked, indeterminate])
 	
 	
 	const handleChange = (event) => {
-		setChecked(!isChecked)
+		setIsChecked(!isChecked)
 		onChange(event)
 	}
 	
