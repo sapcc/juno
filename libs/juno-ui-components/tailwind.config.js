@@ -150,6 +150,7 @@ module.exports = {
           "tooltip-popover": withOpacity("--color-tooltip-popover-bg"),
           "textinput": withOpacity("--color-textinput-bg"),
           "select": withOpacity("--color-select-bg"),
+          "checkbox": withOpacity("--color-checkbox-bg"),
           "required": withOpacity("--color-required-bg"),
         },
       },

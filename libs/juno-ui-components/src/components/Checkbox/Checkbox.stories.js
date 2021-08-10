@@ -11,13 +11,16 @@ const Template = (args) => <Checkbox {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-	checked: true
+}
+
+export const Checked = Template.bind({})
+Checked.args = {
+  checked: true,
 }
 
 export const Disabled = Template.bind({})
 Disabled.args = {
-	checked: true,
-    disabled: true,
+  disabled: true,
 }
 
 
