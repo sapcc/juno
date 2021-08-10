@@ -810,7 +810,7 @@ jobs:
           REGION: eu-nl-1
           CONTEXT: s-eu-nl-1
           TAG_VARIABLE: dashboard.image_tag
-          VALUES: local:globals s-local:foo extra:values.yaml
+          VALUES: local:globals s-local:juno extra:values.yaml
           KUBELOGON_USER: {{unified-kubernetes-scaleout-username}}
           KUBELOGON_PASSWORD: {{unified-kubernetes-scaleout-password}}          
          

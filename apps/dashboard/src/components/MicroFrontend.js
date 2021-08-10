@@ -31,7 +31,7 @@ const MicroFrontend = ({ name, version, ...props }) => {
   // this hook does nothing if wrapper is unset!
   // In this case it waits until the wrapper is available (render at least 1 time)
   useDynamicScript({
-    url: `${CDN_HOST}/widget-loader/0_0_1/app.js`,
+    url: `${CDN_HOST}/widget-loader/0_0_2/app.js`,
     wrapper,
     dataset,
   })
