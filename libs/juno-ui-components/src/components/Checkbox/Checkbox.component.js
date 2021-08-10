@@ -7,6 +7,7 @@ const inputstyles = `
 	w-4
 	h-4
 	opacity-0
+	cursor-pointer
 `
 
 const mockcheckboxstyles = `
