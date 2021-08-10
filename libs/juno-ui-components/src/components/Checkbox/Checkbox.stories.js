@@ -23,5 +23,10 @@ Disabled.args = {
   disabled: true,
 }
 
+export const Indeterminate = Template.bind({})
+Indeterminate.args = {
+  indeterminate: true,
+}
+
 
 
