@@ -25,37 +25,34 @@ describe("Radio", () => {
 	
 	test("renders a checked radio as passed", async () => {
 		render(<Radio checked={true} />)
-		expect(screen.getByRole("radio")).toBeInTheDocument()
-		expect(screen.getByRole("radio")).toHaveAttribute('checked')
+		const radio = screen.getByRole('radio')
+		expect(radio).toBeInTheDocument()
+		expect(radio).toBeChecked()
 	})
 	
 	test("renders no checked attribute if false", async () => {
 		render(<Radio checked={false} />)
-		expect(screen.getByRole("radio")).toBeInTheDocument()
-		expect(screen.getByRole("radio")).not.toHaveAttribute('checked')
+		const radio = screen.getByRole('radio')
+		expect(radio).toBeInTheDocument()
+		expect(radio).not.toBeChecked()
 	})
 	
-	test("renders a custom className", async () => {
-		render(<Radio className="my-custom-class" />)
-		expect(screen.getByRole("radio")).toBeInTheDocument()
-		expect(screen.getByRole("radio")).toHaveClass('my-custom-class')
+	test("renders a custom className as passed", async () => {
+		render(<Radio data-testid="23" className="my-custom-class" />)
+		expect(screen.getByTestId("23")).toBeInTheDocument()
+		expect(screen.getByTestId("23")).toHaveClass('my-custom-class')
 	})
 	
 	test("renders all props as passed", async () => {
-		render(<Radio id="radio-1" data-test="47" />)
-		expect(screen.getByRole("radio")).toBeInTheDocument()
-		expect(screen.getByRole("radio")).toHaveAttribute('id', "radio-1")
-		expect(screen.getByRole("radio")).toHaveAttribute('data-test', "47")
+		render(<Radio id="check-1" data-testid="23" data-lolol={true}/>)
+		expect(screen.getByTestId("23")).toBeInTheDocument()
+		expect(screen.getByTestId("23")).toHaveAttribute('data-lolol')
 	})
 	
 	test("fire handler on change as passed", async () => {
-		const handleChange = jest.fn()
-		const { container } = render(
-			<Radio onChange={handleChange} />
-		)
-		const radio = container.firstChild
-		fireEvent.click(radio)
-		expect(handleChange).toHaveBeenCalledTimes(1)
-		expect(radio.checked).toBe(true)
+		const onChangeSpy = jest.fn();
+		render(<Radio onChange={onChangeSpy} />);
+		screen.getByRole('radio').click();
+		expect(onChangeSpy).toHaveBeenCalled();
 	})
 })

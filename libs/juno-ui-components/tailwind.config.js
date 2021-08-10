@@ -151,6 +151,8 @@ module.exports = {
           "textinput": withOpacity("--color-textinput-bg"),
           "select": withOpacity("--color-select-bg"),
           "checkbox": withOpacity("--color-checkbox-bg"),
+          "radio": withOpacity("--color-radio-bg"),
+          "radio-checked": withOpacity("--color-radio-checked-bg"),
           "required": withOpacity("--color-required-bg"),
         },
       },
