@@ -2,23 +2,23 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const primary = `
-  text-blue-500 
+  text-primary
 `
 
 const danger = `
-  text-red-500 
+  text-danger 
 `
 
 const success = `
-  text-green-500 
+  text-success
 `
 
 const warning = `
-  text-yellow-300  
+  text-warning  
 `
 
 const defaultColor = `
-  text-white
+  text-theme-on-default
 `
 
 export const Spinner = ({ color }) => {

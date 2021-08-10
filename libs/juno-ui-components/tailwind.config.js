@@ -113,12 +113,31 @@ module.exports = {
       },
       white: withOpacity("--color-white-raw"),
       black: withOpacity("--color-black-raw"),
-      danger: withOpacity("--color-sap-red-raw"), //!!!
+      transparent: "transparent",
+      danger: withOpacity("--color-danger-raw"),
+      info: withOpacity("--color-info-raw"),
+      success: withOpacity("--color-success-raw"),
       warning: withOpacity("--color-warning-raw"), 
+      focus: withOpacity("--color-focus-raw"),
+      primary: withOpacity("--color-primary-raw"),
     },
+    borderColor: theme => ({
+      ...theme('colors'),
+      theme: {
+        default: withOpacity("--color-default-border"),
+        "button-default": withOpacity("--color-button-default-border"),
+        "button-subdued": withOpacity("--color-button-subdued-border"),
+        "message-default": withOpacity("--color-message-default-border"),
+        "message-danger": withOpacity("--color-message-danger-border"),
+        "message-warning": withOpacity("--color-message-warning-border"),
+        "message-success": withOpacity("--color-message-success-border"),
+        "introbox": withOpacity("--color-introbox-border"),
+      },
+    }),
     extend: {
       backgroundColor: {
         theme: {
+          "global-bg": withOpacity("--color-global-bg"),
           "button-primary": withOpacity("--color-button-primary-bg"),
           "button-danger": withOpacity("--color-button-danger-bg"),
           "button-default": withOpacity("--color-button--default-bg"),
@@ -130,6 +149,8 @@ module.exports = {
           "message": withOpacity("--color-message-bg"),
           "tooltip-popover": withOpacity("--color-tooltip-popover-bg"),
           "textinput": withOpacity("--color-textinput-bg"),
+          "select": withOpacity("--color-select-bg"),
+          "required": withOpacity("--color-required-bg"),
         },
       },
       textColor: {
@@ -145,17 +166,9 @@ module.exports = {
           "textinput": withOpacity("--color-textinput-text"),
         },
       },
-      borderColor: {
-        theme: {
-          default: withOpacity("--color-default-border"),
-          "focus": withOpacity("--color-focus-border"),
-          "message-default": withOpacity("--color-message-default-border"),
-          "message-danger": withOpacity("--color-message-danger-border"),
-          "message-warning": withOpacity("--color-message-warning-border"),
-          "message-success": withOpacity("--color-message-success-border"),
-          "introbox": withOpacity("--color-introbox-border"),
-        },
-      },
+      // backgroundImage: theme => ({
+      //   'icon-arrow-down': "url('./img/icon_arrow_down.svg')",
+      // }),
       padding: {
         xs: "0.25rem",
         sm: "0.5rem",
@@ -164,13 +177,11 @@ module.exports = {
       },
       height: {
         "textinput": "2.75rem",
+        "floatinglabelinput": "3rem",
       },
       borderRadius: {
         "3px": "3px",
       },
-      borderColor: {
-        "transparent": "transparent",
-      }
     },
     borderWidth: {
       DEFAULT: "1px",

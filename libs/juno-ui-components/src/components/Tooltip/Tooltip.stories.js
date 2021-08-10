@@ -10,8 +10,7 @@ export default {
 
 const Template = (args) => <Tooltip {...args} />
 
-
 export const Default = Template.bind({})
 Default.args = {
-	text: "A default tooltip",
+	text: "A default tooltip"
 }

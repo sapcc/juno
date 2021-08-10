@@ -13,4 +13,10 @@ describe("Tooltip", () => {
 		expect(screen.getByRole("button")).toBeInTheDocument()		
 	})
 	
+	test("renders a tooltip with a className as passed", async () => {
+		render(<Default text="My simple Tooltip" className="my-custom-class" />)
+		expect(screen.getByRole("button")).toBeInTheDocument()
+		expect(screen.getByRole("button")).toHaveClass("my-custom-class")				
+	})
+	
 })

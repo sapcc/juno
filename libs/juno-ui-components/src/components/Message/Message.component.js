@@ -54,12 +54,13 @@ export const Message = ({
 	title,
 	text,
 	variant,
+	className,
 	children,
 	...props
 }) => {
 	return (
 		<div 
-			className={`${message} ${variantClass(variant)} message message-${variant}`}
+			className={`${message} ${variantClass(variant)} message message-${variant} ${className}`}
 			{...props}
 		>
 			{title ?  <h1 className={`${messageHeading}`}>{title}</h1> : ""}
@@ -73,6 +74,8 @@ Message.propTypes = {
 	title: PropTypes.string,
 	/** Pass a string of text to be rendered as contents. Alternatively, contents can be passed as children (see below) */
 	text: PropTypes.string,
+	/** Pass an optional className */
+	className: PropTypes.string,
 	/** Specify a semantic variant */
 	variant: PropTypes.oneOf(['default', 'warning', 'danger', 'success']),
 	/** Pass child nodes to be rendered as contents */
@@ -83,4 +86,5 @@ Message.defaultProps = {
 	title: null,
 	text: null,
 	variant: 'default',
+	className: "",
 }

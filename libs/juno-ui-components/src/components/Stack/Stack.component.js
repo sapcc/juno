@@ -4,8 +4,7 @@ import PropTypes from "prop-types"
 const baseStack = (direction, gap) => {
   return (
     `
-      flex
-      ${direction === "vertical" ? 'flex-col' : 'flex-row'}
+      ${direction === "vertical" ? 'flex flex-col' : 'md:flex md:flex-row'}
       gap-${gap ? gap : '0'}
     `
   )
@@ -18,13 +17,14 @@ const baseStack = (direction, gap) => {
 export const Stack = ({
   direction,
   gap,
+  className,
   children,
   ...props
 }) => {
 
   return (
     <div 
-      className={`${baseStack(direction, gap)}`}
+      className={`${baseStack(direction, gap)} ${className || ""}`}
       {...props}
     >
       {children}
@@ -41,5 +41,6 @@ Stack.propTypes = {
 
 Stack.defaultProps = {
   direction: "horizontal",
-  gap: 0
+  gap: 0,
+  className: ""
 }

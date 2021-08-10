@@ -1,11 +1,19 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+const radiostyles = `
+	rounded-full
+	focus:outline-none
+	focus:ring-2
+	focus:ring-focus
+`
+
 /** A very basic, for the time being uncontrolled Radio. */
 export const Radio = ({
 	name,
 	value,
 	checked,
+	className,
 	onChange,
 	...props
 }) => {
@@ -15,6 +23,7 @@ export const Radio = ({
 			name={name || "unnamed radio"}
 			value={value}
 			defaultChecked={checked}
+			className={`${radiostyles} ${className}`}
 			onChange={onChange}
 			{...props}
 		/>
@@ -28,6 +37,8 @@ Radio.propTypes = {
 	value: PropTypes.string,
 	/**  Pass checked state for initial rendering. Will NOT be updated once user changes the state of the radio for now! */
 	checked: PropTypes.bool,
+	/** Pass a custopm className */
+	className: PropTypes.string,
 	/** Pass a handler */
 	onChange: PropTypes.func,
 }
@@ -35,5 +46,6 @@ Radio.propTypes = {
 Radio.defaultProps = {
 	checked: null,
 	value: "",
+	className: "",
 	onChange: undefined,
 }

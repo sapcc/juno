@@ -1,6 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Select } from "../Select/index.js"
+import { Label } from "../Label/index.js"
+
 
 const selectrow = `
 	flex
@@ -10,12 +12,9 @@ const selectrow = `
 const helptextstyles = `
 	text-xs
 	text-theme-disabled
+	mt-1
 `
 
-const labelstyles = `
-	text-sm
-	text-theme-high
-`
 
 /** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
 export const SelectRow = ({
@@ -23,6 +22,8 @@ export const SelectRow = ({
 	label,
 	id,
 	helptext,
+	required,
+	className,
 	children,
 	onChange,
 	...props
@@ -33,10 +34,10 @@ export const SelectRow = ({
 			{...props}
 		>
 			<div>
-				<label  className={`${labelstyles}`} htmlFor={id}>{label}</label>
+				<Label text={label} htmlFor={id} required={required} />
 			</div>
 			<div>
-				<Select name={name} id={id} onChange={onChange}>
+				<Select name={name} id={id} onChange={onChange} className={className} >
 					{children}
 				</Select>
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
@@ -54,6 +55,10 @@ SelectRow.propTypes = {
 	id: PropTypes.string,
 	/** Help text */
 	helptext: PropTypes.string,
+	/** Specify whether the select is required */
+	required: PropTypes.bool,
+	/** Pass a classname */
+	className: PropTypes.string,
 	/** Children to render */
 	children: PropTypes.node,
 	/** Pass a handler to the Select element */
@@ -64,6 +69,8 @@ SelectRow.defaultProps = {
 	name: null,
 	label: null,
 	id: null,
+	required: null,
+	className: "",
 	helptext: null,
 	onChange: undefined,
 }

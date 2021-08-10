@@ -37,6 +37,19 @@ Default.args = {
   label: "Default",
 }
 
+export const Subdued = Template.bind({})
+Subdued.parameters = {
+  docs: {
+    description: {
+      story: 'A subdued button variant, mostly used to create contrast to an primary button concerning the same usage context, or when multiple default buttons would be too much.'
+    }
+  }
+}
+Subdued.args = {
+  variant: "subdued",
+  label: "Subdued",
+}
+
 export const Danger = Template.bind({})
 Danger.parameters = {
   docs: {

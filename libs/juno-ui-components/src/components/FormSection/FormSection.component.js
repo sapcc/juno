@@ -13,11 +13,12 @@ export const FormSection = ({
 
 	title,
 	children,
+	className,
 	...props
 }) => {
 	return (
 		<section 
-			className={`form-section ${formSection}`}
+			className={`form-section ${formSection} ${className}`}
 			{...props}
 		>
 			{title ?  <h1 className={`${formSectionHeading}`}>{title}</h1> : ""}
@@ -29,11 +30,14 @@ export const FormSection = ({
 FormSection.propTypes = { 
 	/** Title, will be rendering as an `<h1>`. */
 	title: PropTypes.string,
+	/** Pass a custpm className */
+	className: PropTypes.string,
 	/** Children to render in the form section */
 	children: PropTypes.node,
 }
 
 FormSection.defaultProps = {
 	title: null,
+	className: "",
 	children: null,
 }

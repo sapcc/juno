@@ -1,44 +1,141 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { TextInput } from "../TextInput/index.js"
+import { Label } from "../Label/index.js"
 
-const textinputrow = `
+const stackedcontainerstyles = `
 	flex
 	flex-col
+`
+
+const floatingcontainerstyles = `
+	relative
+`
+
+const stackedlabelcontainerstyles = `
+`
+
+const floatinglabelcontainerstyles = `
+	absolute
+	top-0
+	left-0
+	p-2.5
+	pointer-events-none
+	transform 
+	origin-top-left 
+	transition-all 
+	duration-100 
+	ease-in-out
+`
+
+const minimizedlabelcontainerstyles = `
+	scale-75
+	opacity-75
+	pt-3
+	-translate-y-2.5
+	translate-x-1
+`
+
+const floatinginputstyles = `
+	p-3 
+	pt-4
+	h-16
+	placeholder-transparent
 `
 
 const helptextstyles = `
 	text-xs
 	text-theme-disabled
+	mt-1
 `
 
-const labelstyles = `
-	text-sm
-	text-theme-high
-`
+const variantStyle = (variant, element) => {
+	switch (variant) {
+		case "floating":
+			switch (element) {
+				case "container":
+					return floatingcontainerstyles
+				case "labelcontainer":
+					return floatinglabelcontainerstyles
+				case "input":
+					return floatinginputstyles
+			}
+		case "stacked":
+			switch (element) {
+				case "container":
+					return stackedcontainerstyles
+				case "labelcontainer":
+					return stackedlabelcontainerstyles
+			}
+	}
+	
+}
+
+
 
 /** A text input group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
 export const TextInputRow = ({
 	type,
+	variant,
 	value,
 	name,
 	label,
 	id,
 	placeholder,
 	helptext,
+	required,
+	className,
 	onChange,
 	...props
 }) => {
+	// useEffect
+	
+	const [val, setValue] = useState("")
+	const [focus, setFocus] = useState(false)
+	
+	React.useEffect(() => {
+		setValue(value)
+	}, [value])
+	
+	const handleChange = (event) => {
+		setValue(event.target.value)
+		onChange()
+	}
+	
+	const minimizedLabel = (variant, value, focus) => {
+		if (variant === "floating") { 
+			if (focus) {
+				return minimizedlabelcontainerstyles
+			} else if (value && value.length > 0) {
+				return minimizedlabelcontainerstyles
+			} else {
+				return ""
+			}
+		} else {
+			return ""
+		}
+	}
+	
 	return (
 		<div 
-			className={`textinput-row ${textinputrow}`}
+			className={`textinput-row ${variantStyle(variant, "container")} `}
 			{...props}
 		>
-			<div>
-				<label className={`${labelstyles}`} htmlFor={id}>{label}</label>
+			<div className={`label-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
+				<Label text={label} htmlFor={id} required={required} variant={variant} />
 			</div>
-			<div>
-				<TextInput type={type} name={name} id={id} placeholder={placeholder} onChange={onChange} />
+			<div className={`input-container`} >
+				<TextInput 
+					type={type} 
+					value={val}
+					name={name} 
+					id={id} 
+					placeholder={placeholder} 
+					onChange={handleChange} 
+					onFocus={() => setFocus(true)}
+					onBlur={() => setFocus(false)}
+					className={`${variantStyle(variant, "input")} ${className}`} 
+				/>
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>	
@@ -48,6 +145,8 @@ export const TextInputRow = ({
 TextInputRow.propTypes = { 
 	/** The type of the input element to render */
 	type: PropTypes.oneOf(["text", "password", "email", "tel", "url"]),
+	/** Floating (default) or stacked layout variant */
+	variant: PropTypes.oneOf(["floating", "stacked"]),
 	/** Optional initial value */
 	value: PropTypes.string,
 	/** Name attribute of the input */
@@ -56,21 +155,28 @@ TextInputRow.propTypes = {
 	label: PropTypes.string,
 	/** Id */
 	id: PropTypes.string,
-	/** Placeholder for input */
+	/** Placeholder for the text input. Will not be visible on floating label inputs. */
 	placeholder: PropTypes.string,
 	/** Help text */
 	helptext: PropTypes.string,
+	/** Specify whether the input is required */
+	required: PropTypes.bool,
+	/** Pass a className */
+	className: PropTypes.string,
 	/** Pass a handler to the input element */
 	onChange: PropTypes.func
 }
 
 TextInputRow.defaultProps = {
 	type: null,
-	value: null,
+	variant: "floating",
+	value: "",
 	name: null,
 	label: null,
 	id: null,
 	placeholder: null,
 	helptext: null,
+	required: null,
+	className: "",
 	onChange: undefined,
 }

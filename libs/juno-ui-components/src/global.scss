@@ -96,25 +96,25 @@
   --color-sap-blue-darker: rgb(3, 51, 78);
   --color-sap-blue-darker-1: rgb(5, 71, 107);
   --color-sap-blue-darker-2: rgb(8, 93, 138);
-  --sap-blue-dark: rgb(0, 103, 153);
-  --sap-blue-dark-1: rgb(30, 106, 146);
-  --sap-blue: rgb(0, 125, 184);
-  --sap-blue-light-3: rgb(67, 162, 208);
-  --sap-blue-light-2: rgb(137, 201, 232);
-  --sap-blue-light-1: rgb(165, 211, 234);
-  --sap-blue-light: rgb(203, 232, 247);
+  --color-sap-blue-dark: rgb(0, 103, 153);
+  --color-sap-blue-dark-1: rgb(30, 106, 146);
+  --color-sap-blue: rgb(0, 125, 184);
+  --color-sap-blue-light-3: rgb(67, 162, 208);
+  --color-sap-blue-light-2: rgb(137, 201, 232);
+  --color-sap-blue-light-1: rgb(165, 211, 234);
+  --color-sap-blue-light: rgb(203, 232, 247);
   
   //RAW
   --color-sap-blue-darker-raw: 3, 51, 78;
   --color-sap-blue-darker-1-raw: 5, 71, 107;
   --color-sap-blue-darker-2-raw: 8, 93, 138;
-  --sap-blue-dark-raw: 0, 103, 153;
-  --sap-blue-dark-1-raw: 30, 106, 146;
-  --sap-blue-raw: 0, 125, 184;
-  --sap-blue-light-3-raw: 67, 162, 208;
-  --sap-blue-light-2-raw: 137, 201, 232;
-  --sap-blue-light-1-raw: 165, 211, 234;
-  --sap-blue-light-raw: 203, 232, 247;
+  --color-sap-blue-dark-raw: 0, 103, 153;
+  --color-sap-blue-dark-1-raw: 30, 106, 146;
+  --color-sap-blue-raw: 0, 125, 184;
+  --color-sap-blue-light-3-raw: 67, 162, 208;
+  --color-sap-blue-light-2-raw: 137, 201, 232;
+  --color-sap-blue-light-1-raw: 165, 211, 234;
+  --color-sap-blue-light-raw: 203, 232, 247;
   
   // SAP Brand Gold
   // RGB 
@@ -200,10 +200,30 @@
   --color-black: rgb(0, 0, 0);
   --color-black-raw: 0, 0, 0;
   
+  // DANGER
+  --color-danger: var(--color-sap-red);
+  --color-danger-raw: var(--color-sap-red-raw);
+  
   // WARNING
   --color-warning: rgb(254, 196, 58);
   --color-warning-raw: 254, 196, 58;
 
+  // INFO
+  --color-info: var(--color-juno-blue);
+  --color-info-raw: var(--color-juno-blue-raw);
+  
+  // SUCCESS
+  --color-success: var(--color-sap-green);
+  --color-success-raw: var(--color-sap-green-raw);
+  
+  // FOCUS
+  --color-focus: var(--color-juno-blue-light-3);
+  --color-focus-raw: var(--color-juno-blue-light-3-raw);
+  
+  // PRIMARY
+  --color-primary: var(--color-juno-blue-light-3);
+  --color-primary-raw: var(--color-juno-blue-light-3-raw);
+  
 }
 
 /* When assigning colors to uses, use "[color]-raw" variables: */
@@ -245,23 +265,34 @@
 
 .theme-dark {
   // Global
-  --color-global-bg: var(--color-juno-grey-blue-92-raw);
+  --color-global-bg: var(--color-juno-grey-blue-95-raw);
+  --color-global-text: var(--color-juno-text-medium-raw);
   --color-focus-border: var(--color-juno-blue-light-3-raw);
   // Text
   --color-text-high: var(--color-juno-text-high-raw);
   --color-text-medium: var(--color-juno-text-medium-raw);
   --color-text-disabled: var(--color-juno-text-disabled-raw);
-  // Message
-  --color-button-primary-bg: var(--sap-blue-dark-raw);
+  // Button
+  // --> Primary Button
+  --color-button-primary-bg: var(--color-juno-blue-light-3-raw);
   --color-button-primary-foreground: var(--sap-grey-blue-100-raw);
+  --color-button-primary-text: var(--color-juno-grey-blue-100-raw);
+  // --> Default Button
   --color-button-default-bg: var(--color-rgb-blue-gray-10-raw);
   --color-button-default-text: var(--color-juno-text-high-raw);
+  --color-button-default-border: var(--color-juno-blue-light-3-raw);
+  // --> Subdued Button
+  --color-button-subdued-border: var(--color-juno-text-high-raw);
+  // --> Danger Button
   --color-button-danger-text: var(--color-white-raw);
-  --color-button-primary-text: var(--color-juno-grey-blue-100-raw);
-  --color-button-default-border: var(--color-juno-text-high-raw);
   --color-button-danger-bg: var(--color-sap-red-raw);
   --color-button-danger-bg-hover: var(--color-sap-red-dark-raw);
   --color-button-danger-foreground: var(--color-white-raw);
+  // Icon
+  --color-icon-danger: var(--color-sap-red-raw);
+  --color-icon-info: var(--color-juno-blue-raw);
+  --color-icon-success: var(--color-sap-green-raw);
+  --color-icon-warning: var(--color-warning-raw);
   // Message
   --color-message-bg: var(--color-juno-grey-blue-89-raw);
   --color-message-default-border: var(--color-juno-blue-raw);
@@ -278,14 +309,52 @@
   --color-textinput-text: var(--color-juno-text-high-raw);
   --color-textinput-placeholder-text: var(--color-juno-text-high-raw);
   --color-textinput-focus-border: var(--color-sap-blue-dark-raw);
+  // Select
+  --color-select-bg: var(--color-juno-grey-blue-84-raw);
+  // Required
+  --color-required-bg: var(--color-juno-blue-light-3-raw);
+  // Spinner primary
+  --color-spinner-primary: var(--color-juno-blue-light-3-raw);
+  // Syntax Highlighting
+  --color-syntax-highlight-base00: var(--color-juno-grey-blue-88); // bg
+  --color-syntax-highlight-base01: var(--color-juno-grey-blue-84); // ?
+  --color-syntax-highlight-base02: #bbb; // lines and boxes
+  --color-syntax-highlight-base03: var(--color-sap-grey-3);
+  --color-syntax-highlight-base04: var(--color-sap-grey-3);
+  --color-syntax-highlight-base05: #DEDFE0;
+  --color-syntax-highlight-base06: red;
+  --color-syntax-highlight-base07: #DEDFE0;
+  --color-syntax-highlight-base08: var(--color-juno-grey-blue-88); // NULL
+  --color-syntax-highlight-base09: var(--color-juno-blue); // String value
+  --color-syntax-highlight-base0A: var(--color-juno-grey-blue-88); // NaN
+  --color-syntax-highlight-base0B: var(--color-juno-blue); // float value
+  --color-syntax-highlight-base0C: var(--color-sap-gold-light-3); // array index
+  --color-syntax-highlight-base0D: var(--color-sap-gold-light-3); // expanded icon
+  --color-syntax-highlight-base0E: var(--color-juno-blue); // bool + collapsed icon
+  --color-syntax-highlight-base0F: var(--color-juno-blue); // integer value
+
 }
 
-html,
-body,
-.shadow-body {
-  background: var(--color-global-bg);
-  color: var(--color-global-text);
-  font-family: 'IBM Plex Sans', 'ui-sans-serif', Arial, sans-serif;
+// default base styles using the tw base directive
+@layer base {
+
+  html,
+  body,
+  .shadow-body,
+  :host {
+    @apply bg-theme-global-bg;
+    @apply text-theme-default;
+    @apply font-sans;
+    @apply text-base;
+    @apply h-full;
+  }
+
+  // h1 {
+  //   @apply text-2xl;
+  // }
+  // h2 {
+  //   @apply text-xl;
+  // }
 }
 
 

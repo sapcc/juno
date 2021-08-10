@@ -21,3 +21,9 @@ WithHelpText.args = {
 	label: "Textarea Row with Helptext",
 	helptext: "Oh so helpful helptext"
 }
+
+export const Required = Template.bind({})
+Required.args = {
+	label: "Required Textarea",
+	required: true
+}

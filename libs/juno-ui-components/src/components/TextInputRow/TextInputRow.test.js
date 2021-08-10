@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react"
 import { TextInputRow } from "./index"
 
 
-describe("TextInputGroup", () => {
+describe("TextInputRow", () => {
 	
 	test("renders a text input row", async () => {
 		render(<TextInputRow data-testid="text-input-row" />)
@@ -20,6 +20,16 @@ describe("TextInputGroup", () => {
 	test("renders a help text as passed", async () => {
 		render(<TextInputRow helptext="Helptext goes here" />)
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
+	})
+	
+	test("renders a required label as passed", async () => {
+		render(<TextInputRow label="Required Input" required />)
+		expect(document.querySelector('.required')).toBeInTheDocument()
+	})
+	
+	test("renders a className to the TextInput as passed", async () => {
+		render(<TextInputRow className="my-custom-class" />)
+		expect(screen.getByRole("textbox")).toHaveClass("my-custom-class")
 	})
 	
 	test("fires onChange handler as passed", async () => {

@@ -6,11 +6,12 @@ const btn = `
   justify-center 
   rounded-md
   shadow-sm 
-  font-medium 
+  font-bold 
   w-full
   sm:w-auto 
   focus:outline-none 
-  focus:ring
+  focus:ring-2
+  focus:ring-focus
   disabled:opacity-50
   disabled:cursor-default
 `
@@ -19,7 +20,7 @@ const btnDefault = `
   text-theme-on-default
   bg-theme-button-default
   border
-  border-theme-default
+  border-theme-button-default
   hover:bg-theme-default-hover
   disabled:bg-theme-default
 `
@@ -29,6 +30,15 @@ const btnPrimary = `
   bg-theme-button-primary
   hover:bg-theme-primary-hover
   disabled:bg-theme-primary
+`
+
+const btnSubdued = `
+  text-theme-on-default
+  bg-theme-button-default
+  border
+  border-theme-button-subdued
+  hover:bg-theme-default-hover
+  disabled:bg-theme-default
 `
 
 const btnDanger = `
@@ -65,6 +75,8 @@ const variantClass = (variant) => {
       return btnPrimary
     case "danger":
       return btnDanger
+    case "subdued":
+      return btnSubdued
     default:
       return btnDefault
   }
@@ -89,6 +101,7 @@ export const Button = ({
   title,
   variant,
   size,
+  className,
   onClick,
   children,
   ...props
@@ -97,7 +110,7 @@ export const Button = ({
   return (
     <button
       type="button"
-      className={`button button-${variant} ${btn} ${variantClass(variant)} ${sizeClass(size)}`}
+      className={`button button-${variant} ${btn} ${variantClass(variant)} ${sizeClass(size)} ${className}`}
       onClick={!props.disabled ? onClick : undefined}
       title={titleValue}
       {...props}
@@ -109,13 +122,15 @@ export const Button = ({
 
 Button.propTypes = {
   /** Choose a variant for your purpose. May leave empty to get default button. */
-  variant: PropTypes.oneOf(["primary", "danger", "default"]),
+  variant: PropTypes.oneOf(["primary", "danger", "default", "subdued"]),
   /** Leave empty for default size */
   size: PropTypes.oneOf(["small", "default", "large"]),
   /** Button label can be passed like this or as children */
   label: PropTypes.string,
   /** Specify title for accessibility. Gets value of label if no title specified */
   title: PropTypes.string,
+  /** Pass a className */
+  className: PropTypes.string,
   /** Click handler  */
   onClick: PropTypes.func,
   /** Set to true to disable */
@@ -125,6 +140,7 @@ Button.propTypes = {
 Button.defaultProps = {
   variant: "default",
   size: "default",
+  className: "",
   title: null,
   onClick: undefined,
 }

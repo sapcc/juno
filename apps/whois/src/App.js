@@ -4,12 +4,25 @@
 import React from "react"
 import Search from "./Search"
 import Results from "./Results"
-import { searchByIPs, searchByCIDR, search as searchByInput } from "./actions"
-import cidrRegex from "cidr-regex"
-import ipRegex from "ip-regex"
-import testData from "./testData"
+import { search as searchByInput } from "./actions"
+import SearchingIndicator from "./img/Loading_Animation.svg"
 
-import { PageHeader } from "juno-ui-components"
+import { Message, PageHeader, Stack } from "juno-ui-components"
+
+const contentClasses = ({resultsShown}) => {
+  return (`
+    h-full
+    px-6
+    
+    ${!resultsShown ? `
+      pt-40
+      items-center 
+    `
+    : `
+      pt-6
+    `}
+  `)
+}
 
 /**
  * This Component implements the event interface and controls
@@ -21,6 +34,8 @@ const App = (props) => {
   const [items, setItems] = React.useState(null)
   const [error, setError] = React.useState(null)
 
+  const resultsShown = items !== null
+
   const search = React.useCallback((term) => {
     if (!term) return
     setError("")
@@ -31,6 +46,7 @@ const App = (props) => {
         setItems(data)
       })
       .catch((error) => {
+        setItems([]) // if error set items to empty otherwise the previous' search items would be shown
         let message = error.message || error
         try {
           message = JSON.parse(message)
@@ -39,16 +55,34 @@ const App = (props) => {
         if (message === "not found") setError("Couldn't find anything")
         else setError(message)
       })
-      .finally(() => setProcessing(false))
+      .finally(() => {
+        setProcessing(false)
+      })
   }, [])
 
   return (
-    <>
+    <div className="whois h-full">
       <PageHeader heading="Whois" />
-      <Search onChange={(searchTerm) => search(searchTerm)} />
-      {error}
-      <Results items={items} processing={processing} />
-    </>
+      <Stack direction="vertical" gap={8} className={`${contentClasses({resultsShown})}`}>
+        { !resultsShown &&
+          <Stack direction="vertical" gap={1} className="items-center">
+            <h1 className="text-2xl">WHOIS Search</h1>
+            <p className="text-theme-default text-opacity-70">Find detailed information for IP addresses</p>
+          </Stack>
+        }
+        <Search onSearch={(searchTerm) => search(searchTerm)} resultsShown={resultsShown} />
+        {processing &&
+          <Stack direction="vertical" className="items-center mt-20">
+            <SearchingIndicator />
+            <span>Searching...</span>
+          </Stack>
+        }
+        {error && 
+          <Message variant="danger" text={error}/>
+        }
+        <Results items={items} processing={processing} />
+      </Stack>
+    </div>
   )
 }
 

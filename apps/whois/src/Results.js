@@ -1,59 +1,46 @@
 import React from "react"
+import { Stack } from "juno-ui-components"
 
-const AccordianItem = ({ title, content }) => {
-  const [active, setActive] = React.useState(false)
-  const [height, setHeight] = React.useState("0px")
+import ResultItem from "./ResultItem"
 
-  const toggleAccordion = React.useCallback(() => {
-    setActive(!active)
-    setHeight(active ? "0px" : `${contentSpace.current.scrollHeight}px`)
-  }, [contentSpace, active])
+const leftColumn = `
+  w-1/6
+`
 
-  const contentSpace = React.useRef(null)
-  return (
-    <div className="flex flex-col border border-blue-600 bg-blue-200 pl-3">
-      <button
-        className="py-6 box-border appearance-none cursor-pointer focus:outline-none flex items-center justify-between"
-        onClick={toggleAccordion}
-      >
-        <p className="inline-block text-footnote light">{title}</p>
-      </button>
-      <div
-        ref={contentSpace}
-        style={{ maxHeight: `${height}` }}
-        className="overflow-auto transition-max-height duration-700 ease-in-out"
-      >
-        <div className="pb-10">
-          <pre>{JSON.stringify(content, null, 2)}</pre>
-        </div>
-      </div>
-    </div>
-  )
-}
+const rightColumn = `
+  w-5/6
+`
 
 const Results = ({ items, processing }) => {
   return (
-    <div>
-      {processing ? (
-        <span>Searching...</span>
-      ) : (
-        items &&
-        (items.length > 0 ? (
-          // <pre>{JSON.stringify(items, null, 2)}</pre>
-          <div className="space-y-1">
-            {items.map((item, index) => (
-              <AccordianItem
-                key={index}
-                title={item.floatingIP}
-                content={item}
-              />
-            ))}
-          </div>
-        ) : (
-          "Not found"
-        ))
-      )}
-    </div>
+    <>
+      { !processing && items &&
+        <div>
+          <h2 className="text-2xl mb-3">Search Results {items.length > 1 && `(${items.length} found)`}</h2>
+        
+          <Stack direction="vertical" gap={8} className="bg-juno-grey-blue-7 p-8">
+            { items.length > 0 ? (
+              <>
+                <Stack>
+                  <div className={leftColumn}>IP</div>
+                  <div className={rightColumn}>Details</div>
+                </Stack>
+                { items.map((item, index) => (
+                  <ResultItem
+                    key={index}
+                    content={item}
+                    expand={items.length === 1}
+                  />
+                ))}
+              </>
+              ) : (
+                "Not found"
+              )
+            }
+          </Stack>
+        </div>
+      }
+    </>
   )
 }
 

@@ -28,7 +28,21 @@ module.exports = {
     config.module.rules.push({
       test: /\.svg$/,
       enforce: 'pre',
+      issuer: /\.jsx?$/,
       loader: require.resolve('@svgr/webpack'),
+      options: {
+        svgo: false
+      }
+    })
+
+    // this is for background svgs in css
+    config.module.rules.push({
+      test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+      issuer: /\.s?css$/,
+      loader: 'url-loader',
+      options: {
+        svgo: false
+      }
     })
 
     config.module.rules.push({

@@ -1,15 +1,9 @@
 import React, { useState } from "react"
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types"
+import { ClickableIcon } from "../ClickableIcon/index.js"
 
 /* Styles */
-const tooltip = `
-	
-`
-
-const iconbutton = `
-	
-`
 
 const popover = `
 	p-2
@@ -49,17 +43,13 @@ TODO: Can render an icon or will be triggered by any children wrapped inside / p
 export const Tooltip = ({
 	position,
 	text,
+	className,
 	...props
 }) => {
 	const [open, setOpen] = useState(false)
 	return (		
-		<span className={`tooltip ${tooltip}`} {...props}>
-			<button 
-				className={`${iconbutton}`} 
-				onClick={() => setOpen(!open)}
-			>
-				(?)
-			</button>
+		<span className={`tooltip`} {...props}>
+			<ClickableIcon onClick={() => setOpen(!open)} className={className} />
 			<InPortal>
 				<TooltipPopover text={text} isOpen={open} />
 			</InPortal>
@@ -72,9 +62,12 @@ Tooltip.propTypes = {
 	position: PropTypes.oneOf(["top", "right", "bottom", "left"]),
 	/** Text to display in the tooltip */
 	text: PropTypes.string.isRequired,
+	/** Pass a className to render to the icon button*/
+	className: PropTypes.string,
 }
 
 Tooltip.defaultProps = {
 	position: "top",
 	text: null,
+	className: "",
 }
