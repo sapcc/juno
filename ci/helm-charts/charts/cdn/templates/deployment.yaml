@@ -30,7 +30,7 @@ spec:
       # The preStop hook below sleeps 30 seconds, extend the gracePeriod accordingly
       terminationGracePeriodSeconds: 60
       containers:
-        - name: dashboard
+        - name: server
           image: "{{ .Values.global.registry }}/juno-cdn:{{ .Values.image_tag }}"
           imagePullPolicy: IfNotPresent
           ports:
@@ -49,7 +49,14 @@ spec:
               path: /manifest.json
               port: 80
             timeoutSeconds: 5
-            periodSeconds: 5
+            periodSeconds: 
+          resources:
+            limits:
+              cpu: '5m'
+              memory: '50Mi'  
+            requests:
+              cpu: '5m'
+              memory: '50Mi'  
           lifecycle:
             preStop:
               exec:

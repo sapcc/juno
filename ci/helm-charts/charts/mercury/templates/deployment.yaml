@@ -58,6 +58,13 @@ spec:
               port: 5000
             timeoutSeconds: 5
             periodSeconds: 5
+          resources:
+            limits:
+              cpu: "5m"
+              memory: "50Mi"
+            requests:
+              cpu: "5m"
+              memory: "50Mi"            
           lifecycle:
             preStop:
               exec:
