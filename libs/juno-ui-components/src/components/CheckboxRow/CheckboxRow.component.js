@@ -78,7 +78,7 @@ CheckboxRow.propTypes = {
 
 CheckboxRow.defaultProps = {
 	value: null,
-	checked: null,
+	checked: false,
 	name: null,
 	label: null,
 	id: null,

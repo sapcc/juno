@@ -139,6 +139,6 @@ Checkbox.defaultProps = {
 	value: "",
 	id: "",
 	className: "",
-	disabled: null,
+	disabled: false,
 	onChange: undefined,
 }
