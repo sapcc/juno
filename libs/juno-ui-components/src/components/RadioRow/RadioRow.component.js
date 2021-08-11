@@ -15,7 +15,7 @@ const helptextstyles = `
 `
 
 
-/** A radio input row containing a radio, associated label, and structural markup */
+/** A controlled radio row containing a radio, associated label, and structural markup */
 export const RadioRow =({
 	value,
 	name,
