@@ -24,7 +24,6 @@ const mockradiostyles = `
 	h-4
 	rounded-full
 	bg-theme-radio
-	cursor-pointer
 	relative
 `
 
