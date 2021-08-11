@@ -1,6 +1,6 @@
 import React from "react"
 import { RadioGroup } from "./index.js"
-import { Default as RadioRow } from "../RadioRow/RadioRow.stories"
+import { Default as RadioRow, Checked as CheckedRadioRow } from "../RadioRow/RadioRow.stories"
 
 export default {
   title: "Design System/Forms/RadioGroup",
@@ -10,19 +10,26 @@ export default {
 
 const Template = ({ ...args }) => 
 	<RadioGroup {...args} />
-		
+	
+const row1args = { ...RadioRow.args, value: "v1" }
+	
+const row2args = { ...RadioRow.args, value: "v2", checked: true }
 
+const row3args = { ...RadioRow.args, value: "v3" }
+		
 export const Default = Template.bind({})
+
 Default.args = {
 	name: 'my-radiogroup',
-	children: [<RadioRow {...RadioRow.args}/>, <RadioRow {...RadioRow.args}/>]
+	selected: "v1",
+	children: [<RadioRow {...row1args}/>, <RadioRow {...row2args} />, <RadioRow {...row3args} />]
 }
 
 export const WithLabel = Template.bind({})
 WithLabel.args = {
 	name: 'my-radiogroup',
 	label: "My RadioGroup",
-	children: [<RadioRow {...RadioRow.args}/>, <RadioRow {...RadioRow.args}/>]
+	children: [<RadioRow {...row1args}/>, <RadioRow {...row2args} />, <RadioRow {...row3args} />]
 }
 
 export const Required = Template.bind({})
@@ -30,7 +37,8 @@ Required.args = {
 	name: 'my-required-radiogroup',
 	label: "My Radiogroup – pick one!",
 	required: true,
-	children: [<RadioRow {...RadioRow.args}/>, <RadioRow {...RadioRow.args}/>]
+	selected: "v3",
+	children: [<RadioRow {...row1args}/>, <RadioRow {...row2args} />, <RadioRow {...row3args} />]
 }
 
 
