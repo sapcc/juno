@@ -26,9 +26,12 @@ const mockradiostyles = `
 	bg-theme-radio
 	cursor-pointer
 	relative
-	focus:outline-none
-	focus:ring-2
-	focus:ring-focus
+`
+
+const mockfocusradiostyles = `
+	outline-none
+	ring-2
+	ring-focus
 `
 
 const mockdisabledradiostyles = `
@@ -68,7 +71,7 @@ export const Radio = ({
 	
 	return (
 		<div
-			className={`${mockradiostyles} ${ disabled ? mockdisabledradiostyles : "" } ${className}`}
+			className={`${mockradiostyles} ${ hasFocus ? mockfocusradiostyles : "" } ${ disabled ? mockdisabledradiostyles : "" } ${className}`}
 			{...props}
 		>
 			<input 
