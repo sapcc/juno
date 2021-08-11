@@ -5,7 +5,6 @@ const inputstyles = `
 	w-4
 	h-4
 	opacity-0
-	cursor-pointer
 	z-50
 `
 
@@ -16,8 +15,8 @@ const checkedstyles = `
 	rounded-full
 	w-3
 	h-3
-	top-1
-	left-1
+	top-0.5
+	left-0.5
 `
 
 const mockradiostyles = `
@@ -34,8 +33,9 @@ const mockradiostyles = `
 
 const mockdisabledradiostyles = `
 	opacity-50
+	cursor-not-allowed
 `
-
+/** A controlled Radio component, label not included. */
 export const Radio = ({
 	name,
 	id,
