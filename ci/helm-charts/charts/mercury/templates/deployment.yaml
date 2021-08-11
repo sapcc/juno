@@ -60,11 +60,11 @@ spec:
             periodSeconds: 5
           resources:
             limits:
-              cpu: "1000m"
-              memory: "100Mi"
+              cpu: '1000m'
+              memory: '100Mi'
             requests:
-              cpu: "1000m"
-              memory: "100Mi"            
+              cpu: '1000m'
+              memory: '100Mi'            
           lifecycle:
             preStop:
               exec:
