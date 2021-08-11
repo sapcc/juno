@@ -52,10 +52,10 @@ spec:
             periodSeconds: 
           resources:
             limits:
-              cpu: '5m'
+              cpu: '50m'
               memory: '50Mi'  
             requests:
-              cpu: '5m'
+              cpu: '50m'
               memory: '50Mi'  
           lifecycle:
             preStop:
