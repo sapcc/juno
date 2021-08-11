@@ -106,6 +106,7 @@ module.exports = (_, argv) => {
       //Allows to create an index.html in our build folder
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "public/index.html"), //we put the file that we created in public folder
+        favicon: path.resolve(__dirname, "public/favicon.ico")
       }),
       // new PurgecssPlugin({
       //   paths: glob.sync(path.join(__dirname, "src/*.js"), { nodir: true }),
