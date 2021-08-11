@@ -61,10 +61,10 @@ spec:
           resources:
             limits:
               cpu: "1000m"
-              memory: "50Mi"
+              memory: "100Mi"
             requests:
               cpu: "1000m"
-              memory: "50Mi"            
+              memory: "100Mi"            
           lifecycle:
             preStop:
               exec:
