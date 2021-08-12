@@ -75,8 +75,7 @@ spec:
             timeoutSeconds: 5
             periodSeconds: 5
           resources:
-        resources:
-{{ toYaml .Values.resources | indent 10 }}    
+{{ toYaml .Values.resources | indent 12 }}    
           lifecycle:
             preStop:
               exec:
