@@ -25,6 +25,13 @@ spec:
       # The preStop hook below sleeps 30 seconds, extend the gracePeriod accordingly
       terminationGracePeriodSeconds: 60
       initContainers:
+        # Wait for postgres pod
+        - name: check-db-ready
+          image: image: "{{ .Values.global.registry }}/postgres:9.5"
+          command: ['sh', '-c', 
+            'until pg_isready -h $JUNO_MERCURY_POSTGRESQL_SERVICE_HOST -p $JUNO_MERCURY_POSTGRESQL_SERVICE_PORT; 
+            do echo waiting for database; sleep 2; done;']
+        # migrate db          
         - name: migrate-db
           image: "{{ .Values.global.registry }}/juno-mercury:{{ .Values.image_tag }}"
           command: ['sh', '-c', "yarn workspace mercury db:migrate"]
@@ -40,6 +47,7 @@ spec:
                   key: postgres-password
             - name: DB_NAME
               value: {{ .Values.postgresql.database }}
+      # run app         
       containers:
         - name: mercury
           image: "{{ .Values.global.registry }}/juno-mercury:{{ .Values.image_tag }}"
