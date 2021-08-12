@@ -97,6 +97,8 @@ spec:
             value: {{.Values.backup.os_password | quote}}
           - name: BACKUP_PGSQL_FULL
             value: {{.Values.backup.interval_full | quote}}
+        resources:
+{{ toYaml .Values.resources | indent 10 }}            
 {{- end }}
 {{- if .Values.metrics.enabled }}
       - name: metrics
