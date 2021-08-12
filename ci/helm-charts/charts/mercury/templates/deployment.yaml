@@ -24,6 +24,11 @@ spec:
     spec:
       # The preStop hook below sleeps 30 seconds, extend the gracePeriod accordingly
       terminationGracePeriodSeconds: 60
+      initContainers:
+        - name: init-myservice
+          image: "{{ .Values.global.registry }}/juno-mercury:{{ .Values.image_tag }}"
+          command: ['sh', '-c', "yarn workspace mercury db:migrate"]
+
       containers:
         - name: mercury
           image: "{{ .Values.global.registry }}/juno-mercury:{{ .Values.image_tag }}"
@@ -60,11 +65,11 @@ spec:
             periodSeconds: 5
           resources:
             limits:
-              cpu: '1000m'
-              memory: '100Mi'
+              cpu: '50m'
+              memory: '512Mi'
             requests:
-              cpu: '1000m'
-              memory: '100Mi'            
+              cpu: '50m'
+              memory: '40Mi'            
           lifecycle:
             preStop:
               exec:
