@@ -27,7 +27,7 @@ spec:
       initContainers:
         # Wait for postgres pod
         - name: check-db-ready
-          image: image: "{{ .Values.global.registry }}/postgres:9.5"
+          image: "{{ .Values.global.registry }}/postgres:9.5"
           command: 
             - sh 
             - -c 
