@@ -28,9 +28,11 @@ spec:
         # Wait for postgres pod
         - name: check-db-ready
           image: image: "{{ .Values.global.registry }}/postgres:9.5"
-          command: ['sh', '-c', 
-            'until pg_isready -h $JUNO_MERCURY_POSTGRESQL_SERVICE_HOST -p $JUNO_MERCURY_POSTGRESQL_SERVICE_PORT; 
-            do echo waiting for database; sleep 2; done;']
+          command: 
+            - sh 
+            - -c 
+            - until pg_isready -h $JUNO_MERCURY_POSTGRESQL_SERVICE_HOST -p $JUNO_MERCURY_POSTGRESQL_SERVICE_PORT; 
+              do echo waiting for database; sleep 2; done;
         # migrate db          
         - name: migrate-db
           image: "{{ .Values.global.registry }}/juno-mercury:{{ .Values.image_tag }}"
