@@ -25,10 +25,21 @@ spec:
       # The preStop hook below sleeps 30 seconds, extend the gracePeriod accordingly
       terminationGracePeriodSeconds: 60
       initContainers:
-        - name: init-myservice
+        - name: migrate-db
           image: "{{ .Values.global.registry }}/juno-mercury:{{ .Values.image_tag }}"
           command: ['sh', '-c', "yarn workspace mercury db:migrate"]
-
+          env:
+            - name: APP_PORT
+              value: "5000"
+            - name: DB_USER
+              value: {{ .Values.postgresql.user }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "postgresql.fullname" . }}
+                  key: postgres-password
+            - name: DB_NAME
+              value: {{ .Values.postgresql.database }}
       containers:
         - name: mercury
           image: "{{ .Values.global.registry }}/juno-mercury:{{ .Values.image_tag }}"
@@ -64,12 +75,8 @@ spec:
             timeoutSeconds: 5
             periodSeconds: 5
           resources:
-            limits:
-              cpu: '50m'
-              memory: '512Mi'
-            requests:
-              cpu: '50m'
-              memory: '40Mi'            
+        resources:
+{{ toYaml .Values.resources | indent 10 }}    
           lifecycle:
             preStop:
               exec:
