@@ -1,5 +1,5 @@
 import * as React from "react"
-import { render, screen } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import { RadioGroup } from "./index"
 import {RadioRow} from "../RadioRow/index"
 
@@ -57,7 +57,7 @@ describe("RadioGroup", () => {
 	
 	test("renders a disabled radiogroup as passes", async () => {
 		render(
-			<RadioGroup name="my-radiogroup" disabled >
+			<RadioGroup name="my-radiogroup" disabled={true} >
 				<RadioRow />
 			</RadioGroup>
 		)
@@ -65,4 +65,28 @@ describe("RadioGroup", () => {
 		expect(screen.getByRole('radio')).toBeDisabled()
 	})
 	
+	test("renders a radiogroup with a selected option as passed to the parent", async () => {
+		render(
+			<RadioGroup name="my-radiogroup" selected="val2">
+				<RadioRow value="val1" />
+				<RadioRow value="val2" id="radio-2"/>
+				<RadioRow value="val3" />
+			</RadioGroup>
+		)
+		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
+		expect(document.querySelector("#radio-2")).toBeChecked()
+	})
+	
+	test("renders a radiogroup with a checked radio as passed to a child", async () => {
+		render(
+			<RadioGroup name="my-radiogroup">
+				<RadioRow value="v1" />
+				<RadioRow value="v2" />
+				<RadioRow value="v3" id="radio-3" checked />
+			</RadioGroup>
+		)
+		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
+		expect(document.querySelector("#radio-3")).toBeChecked()
+	})
+
 })
