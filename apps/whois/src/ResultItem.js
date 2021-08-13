@@ -5,6 +5,7 @@ import { Icon, Stack } from "juno-ui-components"
 
 const leftColumn = `
   w-1/6
+  overflow-hidden
 `
 
 const rightColumn = `
@@ -29,6 +30,11 @@ const resultStyles = (isExpanded) => {
   )
 }
 
+const capitalize = (string) => {
+  return string[0].toUpperCase() + string.slice(1);
+}
+
+
 const ResultItem = ({ content, expand }) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
@@ -37,7 +43,7 @@ const ResultItem = ({ content, expand }) => {
   }, [expand])
 
   return (
-    <Stack>
+    <Stack gap={4}>
       <div className={leftColumn}>
         {content.floatingIP ? 
           <div className="font-bold">{content.floatingIP}</div>
@@ -50,6 +56,27 @@ const ResultItem = ({ content, expand }) => {
         }
         {content.region && 
           <div className="text-theme-disabled">{content.region}</div>
+        }
+        { content.responsibles &&
+          <>
+            <h4 className="font-bold mt-3">Responsible Persons:</h4>
+            <Stack direction="vertical" gap={2}>
+              {Object.entries(content.responsibles).map(([contactType, contactInfo]) => (
+                <div key={contactType}>
+                  <h5>{capitalize(contactType)}:</h5>
+                  {contactInfo ?
+                    contactInfo.email ? 
+                      <a href={`mailto:${contactInfo.email}`} className="block truncate">{contactInfo.email}</a>
+                      :
+                      <span className="italic">{contactInfo.ID}</span>
+                    :
+                    <span className="text-theme-disabled">--</span>
+                  }
+                </div>
+              ))}
+            </Stack>
+          </>
+
         }
       </div>
       <div className={`${rightColumn} p-6 bg-juno-grey-blue-4`}>
