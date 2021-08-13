@@ -272,6 +272,7 @@
   --color-text-high: var(--color-juno-text-high-raw);
   --color-text-medium: var(--color-juno-text-medium-raw);
   --color-text-disabled: var(--color-juno-text-disabled-raw);
+  --color-text-link: var(--color-juno-blue-raw);
   // Button
   // --> Primary Button
   --color-button-primary-bg: var(--color-juno-blue-light-3-raw);
@@ -352,6 +353,10 @@
     @apply font-sans;
     @apply text-base;
     @apply h-full;
+  }
+
+  a {
+    @apply text-theme-link;
   }
 
   // h1 {

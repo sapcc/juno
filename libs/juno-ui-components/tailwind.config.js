@@ -162,6 +162,7 @@ module.exports = {
           "high": withOpacity("--color-text-high"),
           "medium": withOpacity("--color-text-medium"),
           "disabled": withOpacity("--color-text-disabled"),
+          "link": withOpacity("--color-text-link"),
           "on-primary": withOpacity("--color-button-primary-text"),
           "on-danger": withOpacity("--color-button-danger-text"),
           "on-default": withOpacity("--color-button-default-text"),
