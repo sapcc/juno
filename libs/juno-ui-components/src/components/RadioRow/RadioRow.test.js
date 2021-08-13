@@ -22,6 +22,11 @@ describe("RadioRow", () => {
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
 	})
 	
+	test("renders a disabled radio as passed", async () => {
+		render(<RadioRow disabled />)
+		expect(screen.getByRole("radio")).toBeDisabled()
+	})
+	
 	// test("renders a className to radio element as passed", async () => {
 	// 	render(<RadioRow className="my-custom-class" />)
 	// 	expect(screen.getByRole("radio")).toHaveClass("my-custom-class")

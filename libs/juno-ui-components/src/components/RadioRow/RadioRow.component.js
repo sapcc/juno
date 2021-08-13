@@ -14,7 +14,6 @@ const helptextstyles = `
 	mt-1
 `
 
-
 /** A controlled radio row containing a radio, associated label, and structural markup */
 export const RadioRow =({
 	value,
@@ -24,6 +23,7 @@ export const RadioRow =({
 	id,
 	helptext,
 	className,
+	disabled,
 	onChange,
 	...props
 }) => {
@@ -44,7 +44,7 @@ export const RadioRow =({
 			{...props}
 		>
 			<div>
-				<Radio name={name} checked={isChecked} onChange={onChange} id={id} value={value || ""} className={className} />
+				<Radio name={name} checked={isChecked} onChange={onChange} id={id} value={value || ""} disabled={disabled} className={className} />
 			</div>
 			<div>
 				<Label text={label} htmlFor={id} />
@@ -69,6 +69,8 @@ RadioRow.propTypes = {
 	helptext: PropTypes.string,
 	/** Pass a className */
 	className: PropTypes.string,
+	/** Pass to disable the checkbox */
+	disabled: PropTypes.bool,
 	/** Pass a handler to the checkbox element */
 	onChange: PropTypes.func,
 }
@@ -81,6 +83,7 @@ RadioRow.defaultProps = {
 	id: null,
 	helptext: null,
 	className: "",
+	disabled: false,
 	onChange: undefined,
 }
 
