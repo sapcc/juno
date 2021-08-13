@@ -21,7 +21,7 @@ const Results = ({ items, processing }) => {
           <Stack direction="vertical" gap={8} className="bg-juno-grey-blue-7 p-8">
             { items.length > 0 ? (
               <>
-                <Stack>
+                <Stack gap={4}>
                   <div className={leftColumn}>IP</div>
                   <div className={rightColumn}>Details</div>
                 </Stack>
