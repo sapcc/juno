@@ -55,7 +55,7 @@ describe("RadioGroup", () => {
 		expect(document.querySelector('.required')).toBeInTheDocument()
 	})
 	
-	test("renders a desiabled radiogroup as passes", async () => {
+	test("renders a disabled radiogroup as passes", async () => {
 		render(
 			<RadioGroup name="my-radiogroup" disabled >
 				<RadioRow />
