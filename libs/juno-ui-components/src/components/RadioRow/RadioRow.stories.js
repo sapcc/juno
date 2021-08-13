@@ -11,13 +11,15 @@ const Template = (args) => <RadioRow {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-	label: "Default Radio Row"
+	label: "Default Radio Row",
+	id: "radio-row-default",
 }
 
 export const Checked = Template.bind({})
 Checked.args = {
 	label: "Checked Radio Row",
 	checked: true,
+	id: "radio-row-checked",
 }
 
 export const WithHelpText = Template.bind({})
@@ -25,4 +27,5 @@ WithHelpText.args = {
 	name: "my-input",
 	label: "Radio Row with help text",
 	helptext: "Oh so helpful helptext",
+	id: "radio-row-withHelptext",
 }

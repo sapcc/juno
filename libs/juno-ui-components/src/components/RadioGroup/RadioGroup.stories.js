@@ -11,11 +11,11 @@ export default {
 const Template = ({ ...args }) => 
 	<RadioGroup {...args} />
 	
-const row1args = { ...RadioRow.args, value: "v1" }
+const row1args = { ...RadioRow.args, value: "v1", id: "radio1" }
 	
-const row2args = { ...RadioRow.args, value: "v2", checked: true }
+const row2args = { ...RadioRow.args, value: "v2", checked: true, id: "radio2" }
 
-const row3args = { ...RadioRow.args, value: "v3" }
+const row3args = { ...RadioRow.args, value: "v3", id: "radio3"}
 		
 export const Default = Template.bind({})
 
