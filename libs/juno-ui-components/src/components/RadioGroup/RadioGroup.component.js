@@ -7,6 +7,7 @@ export const RadioGroup = ({
 	label,
 	selected,
 	required,
+	disabled,
 	children,
 	className,
 	...props
@@ -40,7 +41,8 @@ export const RadioGroup = ({
 				name: name,
 				className: className,
 				onChange: handleRadioChange,
-				checked: checkedOption
+				checked: checkedOption,
+				disabled: disabled
 			});
 		});
 	 };
@@ -62,6 +64,8 @@ RadioGroup.propTypes = {
 	selected: PropTypes.string,
 	/** Specify whether a selection of one of the options is required */
 	required: PropTypes.bool,
+	/** Disable a RadioGroup */
+	disabled: PropTypes.bool,
 	/** Pass a custom class to apply to the individual Radios of the group */
 	className: PropTypes.string,
 	/** Child Radio components. These will receive the name attribute passed to Radiogroup. */
@@ -74,4 +78,5 @@ RadioGroup.defaultProps = {
 	required: null,
 	label: null,
 	selected: "",
+	disabled: false,
 }

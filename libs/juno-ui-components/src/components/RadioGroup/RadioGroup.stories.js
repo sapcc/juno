@@ -41,4 +41,13 @@ Required.args = {
 	children: [<RadioRow {...row1args}/>, <RadioRow {...row2args} />, <RadioRow {...row3args} />]
 }
 
+export const Disabled = Template.bind({})
+Disabled.args = {
+	name: "my-disabled-radiogroup",
+	label: "Disabled Radiogroup",
+	disabled: true,
+	selected: "v1",
+	children: [<RadioRow {...row1args}/>, <RadioRow {...row2args} />, <RadioRow {...row3args} />]
+}
+
 
