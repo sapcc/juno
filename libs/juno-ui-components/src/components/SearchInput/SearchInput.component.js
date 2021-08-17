@@ -7,6 +7,7 @@ const wrapperClasses = (variant) => {
   return `
 			relative
 			inline-block
+      min-w-max
 			${
         variant === "hero"
           ? `
