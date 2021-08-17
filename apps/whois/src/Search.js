@@ -5,7 +5,8 @@ import cidrRegex from "cidr-regex"
 
 const searchClasses = (resultsShown) => {
   return (`
-    w-1/4
+    w-1/2
+    xl:w-1/4
 
     ${resultsShown && `
       ml-auto
@@ -30,6 +31,7 @@ const Search = ({ onSearch, resultsShown }) => {
       <Stack direction="vertical" gap={2} className={`${searchClasses(resultsShown)}`}>
         <SearchInput
           placeholder="IPs, IP lists, or IP ranges (CIDR)"
+          className=""
           variant="hero"
           value={searchTerm}
           autoFocus={true}

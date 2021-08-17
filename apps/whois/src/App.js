@@ -7,7 +7,7 @@ import Results from "./Results"
 import { search as searchByInput } from "./actions"
 import SearchingIndicator from "./img/Loading_Animation.svg"
 
-import { Message, PageHeader, Stack } from "juno-ui-components"
+import { Button, Message, PageHeader, Stack } from "juno-ui-components"
 
 const contentClasses = ({resultsShown}) => {
   return (`
@@ -31,22 +31,36 @@ const contentClasses = ({resultsShown}) => {
  */
 const App = (props) => {
   const [processing, setProcessing] = React.useState(false)
+  const [currentSearchTerm, setCurrentSearchTerm] = React.useState(null)
   const [items, setItems] = React.useState(null)
   const [error, setError] = React.useState(null)
+  const [statusCode, setStatusCode] = React.useState(null)
 
   const resultsShown = items !== null
 
-  const search = React.useCallback((term) => {
+  const search = React.useCallback((term, options) => {
     if (!term) return
-    setError("")
+    // set/reset status before searching
+    setCurrentSearchTerm(term)
+    setError(null)
+    setStatusCode(200)
     setProcessing(true)
-    searchByInput(term)
+
+    // search
+    searchByInput(term, options)
+      .then(response => {
+        // get status code from response
+        setStatusCode(response.status)
+        // read input stream from response and return body as an object
+        return response.json()
+      })
       .then((data) => {
         console.log("DATA ITEMS", data)
         setItems(data)
       })
       .catch((error) => {
-        setItems([]) // if error set items to empty otherwise the previous' search items would be shown
+        setItems([]) // if error: set items to empty, otherwise the previous' search items would be shown
+        setStatusCode(error.statusCode)
         let message = error.message || error
         try {
           message = JSON.parse(message)
@@ -78,7 +92,23 @@ const App = (props) => {
           </Stack>
         }
         {error && 
-          <Message variant="danger" text={error}/>
+          <Message variant="danger">
+            {error}
+            { statusCode === 404 &&
+              <Stack gap={4} className="items-center">
+                <span> It might be that we haven't cached this search yet. A live search might find it (this might take a while) </span>
+                <Button size="small" onClick={() => search(currentSearchTerm, {realtime: true})} label="Trigger live search" className="whitespace-nowrap" />
+              </Stack>
+            }
+          </Message>
+        }
+        {!processing && statusCode === 206 && 
+          <Message>
+            <Stack gap={4} className="items-center">
+              <span> Only partial results could be retrieved from the search cache. A live search might find the rest (this might take a while) </span>
+              <Button size="small" onClick={() => search(currentSearchTerm, {realtime: true})} label="Trigger live search" className="whitespace-nowrap" />
+            </Stack>
+          </Message>
         }
         <Results items={items} processing={processing} />
       </Stack>
