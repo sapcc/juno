@@ -64,7 +64,7 @@ export const Message = ({
 			{...props}
 		>
 			{title ?  <h1 className={`${messageHeading}`}>{title}</h1> : ""}
-			<p>{ children ? children : text }</p>
+			<div>{ children ? children : text }</div>
 		</div>
 	)
 }
