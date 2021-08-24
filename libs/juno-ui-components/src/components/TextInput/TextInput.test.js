@@ -54,7 +54,7 @@ describe("TextInput", () => {
 	test("renders a disabled input as passed", async () => {
 		render(<TextInput disabled />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
-		expect(screen.getByRole("textbox")).toHaveAttribute('disabled')
+		expect(screen.getByRole("textbox")).toBeDisabled()
 	})
 	
 	test("renders a readonly input as passed", async () => {
