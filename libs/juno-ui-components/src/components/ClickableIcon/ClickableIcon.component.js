@@ -7,6 +7,8 @@ const clickableIconStyles = `
 	focus:outline-none
 	focus:ring-2
 	focus:ring-focus
+	disabled:opacity-50
+	disabled:cursor-not-allowed
 `
 
 export const ClickableIcon = ({
