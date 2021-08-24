@@ -32,7 +32,7 @@ WithHelpText.args = {
 
 export const Disabled = Template.bind({})
 Disabled.args = {
-	label: "Disbaled Radio",
+	label: "Disabled Radio",
 	id: "radio-row-disabled",
 	disabled: true,
 }
