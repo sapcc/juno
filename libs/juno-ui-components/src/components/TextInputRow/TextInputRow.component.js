@@ -85,11 +85,10 @@ export const TextInputRow = ({
 	helptext,
 	required,
 	className,
+	disabled,
 	onChange,
 	...props
-}) => {
-	// useEffect
-	
+}) => {	
 	const [val, setValue] = useState("")
 	const [focus, setFocus] = useState(false)
 	
@@ -131,6 +130,7 @@ export const TextInputRow = ({
 					name={name} 
 					id={id} 
 					placeholder={placeholder} 
+					disabled={disabled}
 					onChange={handleChange} 
 					onFocus={() => setFocus(true)}
 					onBlur={() => setFocus(false)}
@@ -163,6 +163,8 @@ TextInputRow.propTypes = {
 	required: PropTypes.bool,
 	/** Pass a className */
 	className: PropTypes.string,
+	/** Disable the input */
+	disabled: PropTypes.bool,
 	/** Pass a handler to the input element */
 	onChange: PropTypes.func
 }
@@ -178,5 +180,6 @@ TextInputRow.defaultProps = {
 	helptext: null,
 	required: null,
 	className: "",
+	disabled: null,
 	onChange: undefined,
 }

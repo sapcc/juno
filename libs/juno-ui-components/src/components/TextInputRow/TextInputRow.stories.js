@@ -14,6 +14,12 @@ Default.args = {
 	label: "Text Input Row",
 }
 
+export const Disabled = Template.bind({})
+Disabled.args = {
+	label: "Disabled Text Input Row",
+	disabled: true,
+}
+
 export const WithHelpText = Template.bind({})
 WithHelpText.args = {
 	name: "my-input",
