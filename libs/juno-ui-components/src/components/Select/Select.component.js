@@ -17,6 +17,7 @@ const selectstyles = `
 	focus:outline-none
 	focus:ring-2
 	focus:ring-focus
+	disabled:opacity-50
 `
 
 /*+ A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
