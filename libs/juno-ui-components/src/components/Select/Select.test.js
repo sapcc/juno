@@ -26,6 +26,12 @@ describe("Select", () => {
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
 	})
 	
+	test("renders a disabled select as passed", async () => {
+		render(<Select disabled />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.getByRole("combobox")).toBeDisabled()
+	})
+	
 	test("fires onChange handler as passed", async () => {
 		const handleChange = jest.fn()
 		const { container } = render(

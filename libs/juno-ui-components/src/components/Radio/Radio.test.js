@@ -49,6 +49,13 @@ describe("Radio", () => {
 		expect(screen.getByTestId("23")).toHaveAttribute('data-lolol')
 	})
 	
+	test("renders a disabled radio as passed", async () => {
+		render(<Radio disabled />)
+		const radio = screen.getByRole('radio')
+		expect(radio).toBeInTheDocument()
+		expect(radio).toBeDisabled()
+	})
+	
 	test("fire handler on change as passed", async () => {
 		const onChangeSpy = jest.fn();
 		render(<Radio onChange={onChangeSpy} />);

@@ -49,6 +49,13 @@ describe("Checkbox", () => {
 		expect(screen.getByTestId("23")).toHaveAttribute('data-lolol')
 	})
 	
+	test("renders a disabled checkbox as passed", async () => {
+		render(<Checkbox disabled />)
+		const checkbox = screen.getByRole('checkbox')
+		expect(checkbox).toBeInTheDocument()
+		expect(checkbox).toBeDisabled()
+	})
+	
 	test("fires handler on change as passed", async () => {	
 		const onChangeSpy = jest.fn();
 		render(<Checkbox onChange={onChangeSpy} />);
