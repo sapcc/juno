@@ -14,3 +14,9 @@ export const Default = Template.bind({})
 Default.args = {
 	text: "A default tooltip"
 }
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+  text: "A disabled tooltip",
+  disabled: true
+}

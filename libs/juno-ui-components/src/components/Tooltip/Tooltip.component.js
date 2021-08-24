@@ -36,20 +36,20 @@ const InPortal = ({
 
 /** 
 An all purpose Tooltip component. 
-TODO: Factor out portal into a separate, generic and re-usable component.
-TODO: Use a proper icon
+TODO: Use InPortal component.
 TODO: Can render an icon or will be triggered by any children wrapped inside / passed to it.
 */
 export const Tooltip = ({
 	position,
 	text,
 	className,
+	disabled,
 	...props
 }) => {
 	const [open, setOpen] = useState(false)
 	return (		
 		<span className={`tooltip`} {...props}>
-			<ClickableIcon onClick={() => setOpen(!open)} className={className} />
+			<ClickableIcon onClick={() => setOpen(!open)} className={className} disabled={disabled}/>
 			<InPortal>
 				<TooltipPopover text={text} isOpen={open} />
 			</InPortal>
@@ -64,10 +64,13 @@ Tooltip.propTypes = {
 	text: PropTypes.string.isRequired,
 	/** Pass a className to render to the icon button*/
 	className: PropTypes.string,
+	/** Disable the tooltip */
+	disabled: PropTypes.bool,
 }
 
 Tooltip.defaultProps = {
 	position: "top",
 	text: null,
 	className: "",
+	disabled: null,
 }
