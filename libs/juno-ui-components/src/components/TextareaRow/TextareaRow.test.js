@@ -23,8 +23,14 @@ describe("TextInputRow", () => {
 	})
 	
 	test("renders a required label as passed", async () => {
-		render(<TextareaRow label="Required Input" required />)
+		render(<TextareaRow label="Required Textarea" required />)
 		expect(document.querySelector('.required')).toBeInTheDocument()
+	})
+	
+	test("renders a disabled textarea row as passed", async () => {
+		render(<TextareaRow label="Disabled Textarea" disabled />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toBeDisabled()
 	})
 	
 	test("renders a className to the Textarea as passed", async () => {

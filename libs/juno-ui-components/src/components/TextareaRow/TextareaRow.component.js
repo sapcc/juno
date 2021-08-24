@@ -76,6 +76,7 @@ export const TextareaRow = ({
 	helptext,
 	required,
 	className,
+	disabled,
 	onChange,
 	...props
 }) => {
@@ -120,6 +121,7 @@ export const TextareaRow = ({
 					name={name} 
 					id={id}
 					placeholder={placeholder}
+					disabled={disabled}
 					onChange={handleChange} 
 					onFocus={() => setFocus(true)}
 					onBlur={() => setFocus(false)}
@@ -150,6 +152,8 @@ TextareaRow.propTypes = {
 	className: PropTypes.string,
 	/** Floating (default) or stacked layout variant */
 	variant: PropTypes.oneOf(["floating", "stacked"]),
+	/** Disable the textarea */
+	disabled: PropTypes.bool,
 	/** Pass a handler to the checkbox element */
 	onChange: PropTypes.func,
 }
@@ -164,5 +168,6 @@ TextareaRow.defaultProps = {
 	required: null,
 	helptext: null,
 	className: "",
+	disabled: null,
 	onChange: undefined,
 }
