@@ -92,6 +92,7 @@ export const Switch = ({
 			className={`switch ${swtchStyles(size, disabledState)} ${className}`}
 			checked={checkedState}
 			aria-checked={checkedState}
+			disabled={disabledState}
 			onChange={onChange}
 			onClick={ () => toggleChecked(!checkedState) }
 			{...props}
