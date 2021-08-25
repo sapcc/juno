@@ -121,7 +121,13 @@ export const TextInputRow = ({
 			{...props}
 		>
 			<div className={`label-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
-				<Label text={label} htmlFor={id} required={required} variant={variant} />
+				<Label 
+					text={label} 
+					htmlFor={id} 
+					required={required} 
+					variant={variant}
+					disabled={ variant === 'stacked' && disabled ? disabled : false }
+				/>
 			</div>
 			<div className={`input-container`} >
 				<TextInput 
