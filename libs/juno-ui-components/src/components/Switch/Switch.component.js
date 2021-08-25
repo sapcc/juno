@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 
-const swtchStyles = (size, disabled) => {
+const swtchStyles = (size) => {
 	return (
 		`
 			rounded-full
@@ -11,7 +11,8 @@ const swtchStyles = (size, disabled) => {
 			focus:outline-none
 			focus:ring-2
 			focus:ring-focus
-			${ disabled ? 'pointer-events-none cursor-not-allowed opacity-50' : '' }
+			disabled:opacity-50
+			disabled:cursor-not-allowed
 			${ size === 'small' ? 'w-8 h-4' : '' }
 			${ size === 'large' ? 'w-12 h-6' : '' }
 			${ size === 'default' ? 'w-10 h-5' : '' }
@@ -89,7 +90,7 @@ export const Switch = ({
 			role="switch"
 			name={name}
 			id={id}
-			className={`switch ${swtchStyles(size, disabledState)} ${className}`}
+			className={`switch ${swtchStyles(size)} ${className}`}
 			checked={checkedState}
 			aria-checked={checkedState}
 			disabled={disabledState}
@@ -126,7 +127,7 @@ Switch.defaultProps = {
 	name: "unnamed switch",
 	id: null,
 	checked: false,
-	disabled: false,
+	disabled: null,
 	size: "default",
 	className: "",
 	onChange: undefined,
