@@ -21,6 +21,12 @@ Default.args = {
 	icon: "help"
 }
 
+export const Disabled = Template.bind({})
+Disabled.args = {
+	icon: "help",
+	disabled: true
+}
+
 export const Smaller = Template.bind({})
 Smaller.args = {
 	icon: "help",

@@ -14,6 +14,11 @@ Default.args = {
 	label: "Textarea Row",
 }
 
+export const Disabled = Template.bind({})
+Disabled.args = {
+	label: "Disabled Textarea Row",
+	disabled: true,
+}
 
 export const WithHelpText = Template.bind({})
 WithHelpText.args = {

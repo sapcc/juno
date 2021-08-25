@@ -45,6 +45,7 @@ const mockindeterminatestyles = `
 
 const mockdisabledstyles = `
 	pointer-events-none
+	opacity-50
 `
 
 export const Checkbox = ({

@@ -47,7 +47,7 @@ export const RadioRow =({
 				<Radio name={name} checked={isChecked} onChange={onChange} id={id} value={value || ""} disabled={disabled} className={className} />
 			</div>
 			<div>
-				<Label text={label} htmlFor={id} />
+				<Label text={label} htmlFor={id} disabled={disabled} />
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>

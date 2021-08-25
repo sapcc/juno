@@ -6,7 +6,6 @@ export const InPortal = ({
 	children,
 	targetNode
 }) => {
-	console.log(targetNode)
 	return (
 		ReactDOM.createPortal( children, targetNode)
 	)

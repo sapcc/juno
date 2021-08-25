@@ -24,6 +24,7 @@ export const Disabled = Template.bind({})
 Disabled.args = {
   label: "Disabled Switch Row",
   checked: true,
+  disabled: true,
 }
 
 export const WithHelptext = Template.bind({})

@@ -27,7 +27,8 @@ describe("Textarea", () => {
 	
 	test("renders a disabled textarea as passed", async () => {
 		render(<Textarea disabled />)
-		expect(screen.getByRole("textbox")).toHaveAttribute('disabled')
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toBeDisabled()
 	})
 	
 	test("renders a className as passed", async () => {

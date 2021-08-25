@@ -17,6 +17,7 @@ const selectstyles = `
 	focus:outline-none
 	focus:ring-2
 	focus:ring-focus
+	disabled:opacity-50
 `
 
 /*+ A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
@@ -24,6 +25,7 @@ export const Select = ({
 	name,
 	children,
 	className,
+	disabled,
 	onChange,
 	...props
 }) => {
@@ -32,6 +34,7 @@ export const Select = ({
 			name={name || "unnamed select"}
 			className={`select ${selectstyles} ${className}`}
 			onChange={onChange}
+			disabled={disabled}
 			{...props}
 		>
 		{children}
@@ -46,6 +49,8 @@ Select.propTypes = {
 	className: PropTypes.string,
 	/** Pass SelectOption and SelectOptionGroup as children. */
 	children: PropTypes.node,
+	/** Disabled the select */
+	disabled: PropTypes.bool,
 	/** Pass a handler */
 	onChange: PropTypes.func,
 }
@@ -53,5 +58,6 @@ Select.propTypes = {
 Select.defaultProps = {
 	name: null,
 	className: "",
+	disabled: null,
 	onChange: undefined,
 }

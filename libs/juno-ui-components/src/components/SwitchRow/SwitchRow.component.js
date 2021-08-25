@@ -33,10 +33,17 @@ export const SwitchRow =({
 			{...props}
 		>
 			<div>
-				<Switch name={name} onChange={onChange} id={id} value={value || ""} disabled={disabled} className={className} />
+				<Switch 
+					name={name} 
+					onChange={onChange} 
+					id={id} 
+					value={value || ""} 
+					disabled={disabled} 
+					className={className}
+				/>
 			</div>
 			<div>
-				<Label text={label} htmlFor={id} required={required} />
+				<Label text={label} htmlFor={id} required={required} disabled={disabled} />
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
 		</div>

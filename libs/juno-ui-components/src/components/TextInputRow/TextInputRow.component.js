@@ -85,11 +85,10 @@ export const TextInputRow = ({
 	helptext,
 	required,
 	className,
+	disabled,
 	onChange,
 	...props
-}) => {
-	// useEffect
-	
+}) => {	
 	const [val, setValue] = useState("")
 	const [focus, setFocus] = useState(false)
 	
@@ -122,7 +121,13 @@ export const TextInputRow = ({
 			{...props}
 		>
 			<div className={`label-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
-				<Label text={label} htmlFor={id} required={required} variant={variant} />
+				<Label 
+					text={label} 
+					htmlFor={id} 
+					required={required} 
+					variant={variant}
+					disabled={ variant === 'stacked' && disabled ? disabled : false }
+				/>
 			</div>
 			<div className={`input-container`} >
 				<TextInput 
@@ -131,6 +136,7 @@ export const TextInputRow = ({
 					name={name} 
 					id={id} 
 					placeholder={placeholder} 
+					disabled={disabled}
 					onChange={handleChange} 
 					onFocus={() => setFocus(true)}
 					onBlur={() => setFocus(false)}
@@ -163,6 +169,8 @@ TextInputRow.propTypes = {
 	required: PropTypes.bool,
 	/** Pass a className */
 	className: PropTypes.string,
+	/** Disable the input */
+	disabled: PropTypes.bool,
 	/** Pass a handler to the input element */
 	onChange: PropTypes.func
 }
@@ -178,5 +186,6 @@ TextInputRow.defaultProps = {
 	helptext: null,
 	required: null,
 	className: "",
+	disabled: null,
 	onChange: undefined,
 }

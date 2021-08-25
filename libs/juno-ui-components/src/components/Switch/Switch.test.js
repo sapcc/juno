@@ -48,6 +48,12 @@ describe("Switch", () => {
     expect(screen.getByRole("switch")).toHaveAttribute('data-test', "23")
   })
   
+  test("renders a disabled switch as passed", async () => {
+    render(<Switch disabled />)
+    expect(screen.getByRole("switch")).toBeInTheDocument()
+    expect(screen.getByRole("switch")).toBeDisabled()
+  })
+  
   /* TODO: */
   // test("fires onChange handler as passed", async () => {
   //   const handleChange = jest.fn()
