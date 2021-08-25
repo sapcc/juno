@@ -29,3 +29,10 @@ Required.args = {
 	required: true,
 	id: "required"
 }
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+	label: "Disabled Checkbox Row",
+	id: "disabled-checkbox-row",
+	disabled: true
+}
