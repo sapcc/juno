@@ -24,6 +24,7 @@ export const SelectRow = ({
 	helptext,
 	required,
 	className,
+	disabled,
 	children,
 	onChange,
 	...props
@@ -34,10 +35,10 @@ export const SelectRow = ({
 			{...props}
 		>
 			<div>
-				<Label text={label} htmlFor={id} required={required} />
+				<Label text={label} htmlFor={id} required={required} disabled={disabled} />
 			</div>
 			<div>
-				<Select name={name} id={id} onChange={onChange} className={className} >
+				<Select name={name} id={id} onChange={onChange} className={className} disabled={disabled} >
 					{children}
 				</Select>
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
@@ -59,6 +60,8 @@ SelectRow.propTypes = {
 	required: PropTypes.bool,
 	/** Pass a classname */
 	className: PropTypes.string,
+	/** Disable the select */
+	disabled: PropTypes.bool,
 	/** Children to render */
 	children: PropTypes.node,
 	/** Pass a handler to the Select element */
@@ -72,5 +75,6 @@ SelectRow.defaultProps = {
 	required: null,
 	className: "",
 	helptext: null,
+	disabled: null,
 	onChange: undefined,
 }

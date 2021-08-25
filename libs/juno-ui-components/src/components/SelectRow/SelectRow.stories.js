@@ -37,3 +37,13 @@ Required.args = {
 	required: true,
 	children: [DefaultSelectOption.args]
 }
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+	name: "disabled-select",
+	label: "Disabled Select Row",
+	children: [DefaultSelectOption.args],
+	disabled: true,
+	required: true,
+	helptext: "Oh so helpful helptext"
+}
