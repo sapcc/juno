@@ -29,6 +29,10 @@ const requiredstyles = `
 	bg-theme-required
 `
 
+const disabledstyles = `
+	opacity-50
+`
+
 const variantStyles = (variant) => {
 	switch (variant) {
 		case "floating":
@@ -49,12 +53,13 @@ export const Label = ({
 	htmlFor,
 	required,
 	variant,
+	disabled,
 	className,
 	...props
 }) => {
 	return (
 		<>
-		<label className={`label ${labelstyles} ${variantStyles(variant)} ${className}`} htmlFor={htmlFor}>{ text ? text : "unlabeled" }</label>
+		<label className={`label ${labelstyles} ${variantStyles(variant)} ${ disabled ? disabledstyles : "" } ${className}`} htmlFor={htmlFor}>{ text ? text : "unlabeled" }</label>
 		{ required ? <span className={`required ${requiredstyles}`} ></span> : "" }
 		</>
 	)
@@ -69,6 +74,8 @@ Label.propTypes = {
 	required: PropTypes.bool,
 	/** Pass a className */
 	className: PropTypes.string,
+	/** Label for a disabled input */
+	disabled: PropTypes.bool,
 	/** Variant: stacked or floating */
 	variant: PropTypes.oneOf(["floating", "stacked"]),
 }
@@ -78,5 +85,6 @@ Label.defaultProps = {
 	htmlFor: null,
 	required: null,
 	className: "",
+	disabled: null,
 	variant: null,
 }
