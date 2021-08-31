@@ -156,6 +156,12 @@ module.exports = {
           "required": withOpacity("--color-required-bg"),
         },
       },
+      // Not working?
+      // backgroundImage: {
+      //   theme: {
+      //     "button-primary": "var(--gradient-button-primary-bg)"
+      //   }
+      // },
       textColor: {
         theme: {
           default: withOpacity("--color-global-text"),

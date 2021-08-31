@@ -280,6 +280,9 @@
   // Button
   // --> Primary Button
   --color-button-primary-bg: var(--color-juno-blue-light-3-raw);
+  --gradient-button-primary-bg: linear-gradient(225deg, rgba(47,234,242,0.75) 0%, rgba(21,208,224,0.36) 100%);
+  --color-button-primary-bg-start: rgba(47,234,242,0.75);
+  --color-button-primary-bg-end: rgba(21,208,224,0.36);
   --color-button-primary-foreground: var(--sap-grey-blue-100-raw);
   --color-button-primary-text: var(--color-juno-grey-blue-100-raw);
   // --> Default Button
