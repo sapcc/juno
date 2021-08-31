@@ -15,7 +15,7 @@ const swtchStyles = (size) => {
 			disabled:cursor-not-allowed
 			${ size === 'small' ? 'w-8 h-4' : '' }
 			${ size === 'large' ? 'w-12 h-6' : '' }
-			${ size === 'default' ? 'w-10 h-5' : '' }
+			${ size === 'default' ? 'w-switch-default h-switch-default' : '' }
 		`
 	)
 }
@@ -30,7 +30,7 @@ const swtchBodyStyles = (size) => {
 			left-0
 			${ size === 'small' ? 'w-8 h-4' : '' }
 			${ size === 'large' ? 'w-12 h-6' : '' }
-			${ size === 'default' ? 'w-10 h-5' : '' }
+			${ size === 'default' ? 'w-switch-default h-switch-default' : '' }
 		`
 	)	
 }
@@ -38,6 +38,7 @@ const swtchBodyStyles = (size) => {
 const swtchTrackStyles = (size, checked) => {
 	return (
 		`
+			border
 			inline-block
 			absolute
 			top-0
@@ -45,10 +46,12 @@ const swtchTrackStyles = (size, checked) => {
 			bottom-0
 			left-0
 			rounded-full
+			g-theme-default
+			border-theme-switch-default
+			hover:border-theme-switch-hover
 			${ size === 'small' ? 'w-8 h-4' : '' }
 			${ size === 'large' ? 'w-12 h-6' : '' }
-			${ size === 'default' ? 'w-10 h-5' : '' }
-			${ checked ? 'bg-theme-primary border-theme-primary' : 'bg-theme-default border-theme-default' }
+			${ size === 'default' ? 'w-switch-default h-switch-default' : '' }
 		`
 	)
 	
@@ -59,14 +62,14 @@ const swtchHandleStyles = (size, checked) => {
 		`
 			inline-block
 			absolute
-			top-0
+			top-0.5
 			rounded-full
 			bg-white 
 			border-theme-default
 			${ size === 'small' ? 'w-4 h-4' : '' }
 			${ size === 'large' ? 'w-6 h-6' : '' }
-			${ size === 'default' ? 'w-5 h-5' : '' }
-			${checked ? 'right-0' : 'left-0'}
+			${ size === 'default' ? 'w-switch-handle-default h-switch-handle-default' : '' }
+			${checked ? 'right-0.5 bg-theme-switch-handle-checked' : 'left-0.5'}
 		`
 	)
 }

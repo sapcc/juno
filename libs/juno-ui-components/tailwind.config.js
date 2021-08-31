@@ -132,6 +132,8 @@ module.exports = {
         "message-warning": withOpacity("--color-message-warning-border"),
         "message-success": withOpacity("--color-message-success-border"),
         "introbox": withOpacity("--color-introbox-border"),
+        "switch-default": withOpacity("--color-switch-default-border"),
+        "switch-hover": withOpacity("--color-switch-hover-border"),
       },
     }),
     extend: {
@@ -153,9 +155,16 @@ module.exports = {
           "checkbox": withOpacity("--color-checkbox-bg"),
           "radio": withOpacity("--color-radio-bg"),
           "radio-checked": withOpacity("--color-radio-checked-bg"),
+          "switch-handle-checked": withOpacity("--color-switch-handle-checked-bg"),
           "required": withOpacity("--color-required-bg"),
         },
       },
+      // Not working?
+      // backgroundImage: {
+      //   theme: {
+      //     "button-primary": "var(--gradient-button-primary-bg)"
+      //   }
+      // },
       textColor: {
         theme: {
           default: withOpacity("--color-global-text"),
@@ -182,6 +191,12 @@ module.exports = {
       height: {
         "textinput": "2.75rem",
         "floatinglabelinput": "3rem",
+        "switch-default": "1.4375rem",
+        "switch-handle-default": "1.1875rem",
+      },
+      width: {
+        "switch-default": "2.625rem",
+        "switch-handle-default": "1.1875rem",
       },
       borderRadius: {
         "3px": "3px",
