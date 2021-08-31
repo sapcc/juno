@@ -75,7 +75,15 @@
   }
   
   .theme-light {
+    // RGB
+    --color-juno-text-high: rgb(37, 37, 37);
+    --color-juno-text-high: rgb(76, 76, 76);
+    --color-juno-text-disabled: rgb(150, 150, 150);
     
+    // RAW
+    --color-juno-text-high-raw: 37, 37, 37;
+    --color-juno-text-high-raw: 76, 76, 76;
+    --color-juno-text-disabed-raw: 150, 150, 150;
   }
   
   // SAP Brand Non-Colors
@@ -238,36 +246,39 @@
 
 .theme-light {
   
-  // TODO
-  
-//   --color-global-bg: var(--color-blue-gray-10);
-//   --color-global-foreground: var(--color-blue-gray-100);
-// 
-//   --color-primary-bg: var(--color-rgb-sap-gold);
-//   --color-primary-bg-hover: var(--color-rgb-sap-gold-20);
-//   --color-primary-foreground: var(--color-rgb-white);
-//   --color-primary-border: var(--color-rgb-sap-gold-40);
-// 
-//   --color-default-bg: var(--color-rgb-blue-gray-10);
-//   --color-default-bg-hover: var(--color-rgb-blue-gray-20);
-//   --color-default-foreground: var(--color-rgb-blue-gray-90);
-//   --color-default-border: var(--color-rgb-blue-gray-20);
-// 
-//   --color-danger-bg: var(--color-rgb-red);
-//   --color-danger-bg-hover: var(--color-rgb-red-40);
-//   --color-danger-foreground: var(--color-rgb-white);
-//   --color-danger-border: var(--color-rgb-red-60);
-//   
-//   --color-message-default-bg: var(--color-rgb-sap-blue-10);
-//   --color-message-default-border: var(--color-rgb-sap-blue);
-//   
-//   --color-message-danger-bg: var(--color-rgb-red-40);
-//   --color-message-danger-border: var(--color-rgb-red-60);
-//   
-//   --color-message-warning-bg: var(--color-rgb-yellow-10);
-//   --color-message-warning-border: var(--color-rgb-yellow-30);
-// 
-//   --color-introbox-border: var(--color-black);
+// Global
+
+// Text
+--color-text-high: var(--color-juno-text-high-raw);
+--color-text-medium: var(--color-juno-text-medium-raw);
+--color-text-disabled: var(--color-juno-text-disabled-raw);
+--color-text-link: var(--color-juno-blue-raw);
+
+// Button
+
+// Icon
+
+// Message
+
+// Introbox
+
+// Tooltip
+
+// (Text-) Input
+
+// Select
+
+// Checkbox
+
+// Radio
+
+// Switch
+
+// Required
+
+// Spinner
+
+// Syntax highlighting
   
 }
 
@@ -334,7 +345,7 @@
   --color-switch-hover-border: var(--color-juno-turquoise-raw);
   // Required
   --color-required-bg: var(--color-juno-blue-light-3-raw);
-  // Spinner primary
+  // Spinner 
   --color-spinner-primary: var(--color-juno-blue-light-3-raw);
   // Syntax Highlighting
   --color-syntax-highlight-base00: var(--color-juno-grey-blue-88); // bg
