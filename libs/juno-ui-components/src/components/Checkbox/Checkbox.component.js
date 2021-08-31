@@ -93,7 +93,7 @@ export const Checkbox = ({
 				width="16" 
 				height="16" 
 				viewBox="0 0 16 16">
-					<polygon fill="#2EA8C4" points="5.75 11.15 2.6 8 1.55 9.05 5.75 13.25 14.75 4.25 13.7 3.2"/>
+					<polygon fill="#15D0E0" points="5.75 11.15 2.6 8 1.55 9.05 5.75 13.25 14.75 4.25 13.7 3.2"/>
 				</svg>
 			: 
 				"" }
