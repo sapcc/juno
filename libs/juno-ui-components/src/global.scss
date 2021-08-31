@@ -57,6 +57,10 @@
   --color-juno-blue-light-1-raw: 88, 218, 251;
   --color-juno-blue-light-raw: 185, 235, 253;
   
+  // Juno Turquoise
+  --color-juno-turquoise: rgb(21, 208, 224);
+  --color-juno-turquoise-raw: 21, 208, 224;
+  
   .theme-dark {
     
     // RGB
@@ -324,6 +328,10 @@
   // Radio
   --color-radio-bg: var(--color-juno-grey-blue-81-raw);
   --color-radio-checked-bg: var(--color-juno-blue-light-3-raw);
+  // Switch
+  --color-switch-default-border: var(--color-juno-text-high-raw);
+  --color-switch-handle-checked-bg: var(--color-juno-turquoise-raw);
+  --color-switch-hover-border: var(--color-juno-turquoise-raw);
   // Required
   --color-required-bg: var(--color-juno-blue-light-3-raw);
   // Spinner primary

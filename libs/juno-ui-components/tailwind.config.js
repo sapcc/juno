@@ -132,6 +132,8 @@ module.exports = {
         "message-warning": withOpacity("--color-message-warning-border"),
         "message-success": withOpacity("--color-message-success-border"),
         "introbox": withOpacity("--color-introbox-border"),
+        "switch-default": withOpacity("--color-switch-default-border"),
+        "switch-hover": withOpacity("--color-switch-hover-border"),
       },
     }),
     extend: {
@@ -153,6 +155,7 @@ module.exports = {
           "checkbox": withOpacity("--color-checkbox-bg"),
           "radio": withOpacity("--color-radio-bg"),
           "radio-checked": withOpacity("--color-radio-checked-bg"),
+          "switch-handle-checked": withOpacity("--color-switch-handle-checked-bg"),
           "required": withOpacity("--color-required-bg"),
         },
       },

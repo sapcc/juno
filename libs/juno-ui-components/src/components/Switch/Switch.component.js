@@ -38,6 +38,7 @@ const swtchBodyStyles = (size) => {
 const swtchTrackStyles = (size, checked) => {
 	return (
 		`
+			border
 			inline-block
 			absolute
 			top-0
@@ -45,10 +46,12 @@ const swtchTrackStyles = (size, checked) => {
 			bottom-0
 			left-0
 			rounded-full
+			g-theme-default
+			border-theme-switch-default
+			hover:border-theme-switch-hover
 			${ size === 'small' ? 'w-8 h-4' : '' }
 			${ size === 'large' ? 'w-12 h-6' : '' }
 			${ size === 'default' ? 'w-10 h-5' : '' }
-			${ checked ? 'bg-theme-primary border-theme-primary' : 'bg-theme-default border-theme-default' }
 		`
 	)
 	
@@ -66,7 +69,7 @@ const swtchHandleStyles = (size, checked) => {
 			${ size === 'small' ? 'w-4 h-4' : '' }
 			${ size === 'large' ? 'w-6 h-6' : '' }
 			${ size === 'default' ? 'w-5 h-5' : '' }
-			${checked ? 'right-0' : 'left-0'}
+			${checked ? 'right-0 bg-theme-switch-handle-checked' : 'left-0'}
 		`
 	)
 }
