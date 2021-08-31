@@ -61,6 +61,10 @@
   --color-juno-turquoise: rgb(21, 208, 224);
   --color-juno-turquoise-raw: 21, 208, 224;
   
+  // Juno Grey
+  --color-juno-grey-light-11: rgb(244, 244, 244);
+  --color-juno-grey-light-11-raw: 244, 244, 244;
+  
   .theme-dark {
     
     // RGB
@@ -77,12 +81,12 @@
   .theme-light {
     // RGB
     --color-juno-text-high: rgb(37, 37, 37);
-    --color-juno-text-high: rgb(76, 76, 76);
+    --color-juno-text-medium: rgb(76, 76, 76);
     --color-juno-text-disabled: rgb(150, 150, 150);
     
     // RAW
     --color-juno-text-high-raw: 37, 37, 37;
-    --color-juno-text-high-raw: 76, 76, 76;
+    --color-juno-text-medium-raw: 76, 76, 76;
     --color-juno-text-disabed-raw: 150, 150, 150;
   }
   
@@ -249,13 +253,31 @@
 // Global
 
 // Text
---color-text-high: var(--color-juno-text-high-raw);
---color-text-medium: var(--color-juno-text-medium-raw);
---color-text-disabled: var(--color-juno-text-disabled-raw);
---color-text-link: var(--color-juno-blue-raw);
-
+  --color-text-high: var(--color-juno-text-high-raw);
+  --color-text-medium: var(--color-juno-text-medium-raw);
+  --color-text-disabled: var(--color-juno-text-disabled-raw);
+  --color-text-link: var(--color-juno-blue-light-3-raw);
 // Button
-
+// --> Primary Button
+--color-button-primary-bg: var(--color-juno-blue-light-3-raw);
+--color-button-primary-hover-bg: var( --color-juno-grey-light-11-raw);
+--color-button-primary-text: var(--color-white-raw);
+--color-button-primary-hover-text: var(--color-juno-blue-light-3-raw);
+--color-button-primary-hover-bg: var(--color-juno-blue-light-3-raw);
+// --> Default Button
+--color-button-default-bg: var(--color-white-raw);
+--color-button-default-hover-bg: var( --color-juno-grey-light-11-raw);
+--color-button-default-text: var(--color-juno-text-medium-raw);
+--color-button-default-hover-text: var();
+--color-button-default-border: var(--color-juno-blue-light-3-raw);
+--color-button-default-hover-border: var();
+// --> Subdued Button
+--color-button-subdued-bg: var(--color-white-raw);
+--color-button-subdued-hover-bg: var( --color-juno-grey-light-11-raw);
+--color-button-subdued-hover-text: var(--color-juno-text-medium-raw);
+--color-button-subdued-border: var(--color-juno-text-medium-raw);
+--color-button-subdued-hover-border: var(--color-juno-text-medium-raw);
+// --> Danger Button
 // Icon
 
 // Message
@@ -298,8 +320,8 @@
   --gradient-button-primary-bg: linear-gradient(225deg, rgba(47,234,242,0.75) 0%, rgba(21,208,224,0.36) 100%);
   --color-button-primary-bg-start: rgba(47,234,242,0.75);
   --color-button-primary-bg-end: rgba(21,208,224,0.36);
+  --color-button-primary-text: var(--color-white-raw);
   --color-button-primary-foreground: var(--sap-grey-blue-100-raw);
-  --color-button-primary-text: var(--color-juno-grey-blue-100-raw);
   // --> Default Button
   --color-button-default-bg: var(--color-rgb-blue-gray-10-raw);
   --color-button-default-text: var(--color-juno-text-high-raw);
