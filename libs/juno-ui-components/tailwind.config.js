@@ -191,6 +191,12 @@ module.exports = {
       height: {
         "textinput": "2.75rem",
         "floatinglabelinput": "3rem",
+        "switch-default": "1.4375rem",
+        "switch-handle-default": "1.1875rem",
+      },
+      width: {
+        "switch-default": "2.625rem",
+        "switch-handle-default": "1.1875rem",
       },
       borderRadius: {
         "3px": "3px",
