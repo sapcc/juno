@@ -319,7 +319,8 @@
 // Select
 --color-select-bg: var(--color-juno-grey-light-20-raw);
 // Checkbox
-
+--color-checkbox-bg: var(--color-juno-grey-light-37-raw);
+--color-checkbox-checked-color: var(--color-juno-blue-light-3-raw);
 // Radio
 --color-radio-bg: var(--color-juno-grey-light-37-raw);
 --color-radio-checked-bg: var(--color-juno-blue-light-3-raw);
@@ -392,6 +393,7 @@
   --color-select-bg: var(--color-juno-grey-blue-81-raw);
   // Checkbox
   --color-checkbox-bg: var(--color-juno-grey-blue-81-raw);
+  --color-checkbox-checked-color: var(--color-juno-turquoise-raw);
   // Radio
   --color-radio-bg: var(--color-juno-grey-blue-81-raw);
   --color-radio-checked-bg: var(--color-juno-turquoise-raw);

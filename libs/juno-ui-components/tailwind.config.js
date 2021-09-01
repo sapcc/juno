@@ -179,6 +179,7 @@ module.exports = {
           "on-default": withOpacity("--color-button-default-text"),
           "tooltip-popover": withOpacity("--color-tooltip-popover-text"),
           "textinput": withOpacity("--color-textinput-text"),
+          "checkbox-checked": withOpacity("--color-checkbox-checked-color"),
         },
       },
       // backgroundImage: theme => ({
