@@ -259,10 +259,6 @@
   --color-success: var(--color-sap-green);
   --color-success-raw: var(--color-sap-green-raw);
   
-  // FOCUS
-  --color-focus: var(--color-juno-turquoise);
-  --color-focus-raw: var(--color-juno-turquoise-raw);
-  
   // PRIMARY
   --color-primary: var(--color-juno-blue-light-3);
   --color-primary-raw: var(--color-juno-blue-light-3-raw);
@@ -274,7 +270,9 @@
 .theme-light {
   
 // Global
-
+// FOCUS
+--color-focus: var(--color-juno-blue-light-3-raw);
+--color-focus-raw: var(--color-juno-blue-light-3-raw);
 // Text
   --color-text-high: var(--color-juno-text-high-raw);
   --color-text-medium: var(--color-juno-text-medium-raw);
@@ -289,7 +287,7 @@
 --color-button-primary-hover-border: var(--color-juno-blue-light-3-raw);
 // --> Default Button
 --color-button-default-bg: var(--color-white-raw);
---color-button-default-hover-bg: var( --color-juno-grey-light-11-raw);
+--color-button-default-hover-bg: var(--color-juno-grey-light-11-raw);
 --color-button-default-text: var(--color-juno-text-medium-raw);
 --color-button-default-hover-text: var();
 --color-button-default-border: var(--color-juno-blue-light-3-raw);
@@ -314,9 +312,12 @@
 // Tooltip
 
 // (Text-) Input
-
+--color-textinput-bg: var(--color-juno-grey-light-20-raw);
+--color-textinput-text: var(--color-juno-text-high-raw);
+--color-textinput-placeholder-text: var(--color-juno-text-high-raw);
+--color-textinput-focus-border: var(--color-juno-blue-light-3-raw);
 // Select
-
+--color-select-bg: var(--color-juno-grey-light-20-raw);
 // Checkbox
 
 // Radio
@@ -336,6 +337,9 @@
 
 .theme-dark {
   // Global
+  // FOCUS
+  --color-focus: var(--color-juno-turquoise);
+  --color-focus-raw: var(--color-juno-turquoise-raw);
   --color-global-bg: var(--color-juno-grey-blue-95-raw);
   --color-global-text: var(--color-juno-text-medium-raw);
   --color-focus-border: var(--color-juno-turquoise-raw);
