@@ -327,9 +327,9 @@
 --color-switch-handle-bg: var(--color-juno-text-medium-raw);
 --color-switch-handle-checked-bg: var(--color-juno-blue-light-3-raw);
 // Required
-
+--color-required-bg: var(--color-juno-turquoise-raw);
 // Spinner
-
+--color-spinner-primary: var(--color-juno-blue-light-3-raw);
 // Syntax highlighting
   
 }
@@ -397,9 +397,9 @@
   --color-switch-handle-checked-bg: var(--color-juno-turquoise-raw);
   --color-switch-hover-border: var(--color-juno-turquoise-raw);
   // Required
-  --color-required-bg: var(--color-juno-blue-light-3-raw);
+  --color-required-bg: var(--color-juno-turquoise-raw);
   // Spinner 
-  --color-spinner-primary: var(--color-juno-blue-light-3-raw);
+  --color-spinner-primary: var(--color-juno-turquoise-raw);
   // Syntax Highlighting
   --color-syntax-highlight-base00: var(--color-juno-grey-blue-88); // bg
   --color-syntax-highlight-base01: var(--color-juno-grey-blue-84); // ?
