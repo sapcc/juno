@@ -21,14 +21,17 @@ const btnDefault = `
   bg-theme-button-default
   border
   border-theme-button-default
-  hover:bg-theme-default-hover
+  hover:bg-theme-button-default-hover
   disabled:bg-theme-default
 `
-
+// hover:border apparently not working?
 const btnPrimary = `
   text-theme-on-primary
   bg-theme-button-primary
-  hover:bg-theme-primary-hover
+  hover:bg-theme-button-primary-hover
+  hover:text-theme-button-primary-hover
+  hover:border
+  hover:border-theme-button-primary-hover
   disabled:bg-theme-primary
 `
 
@@ -37,7 +40,8 @@ const btnSubdued = `
   bg-theme-button-default
   border
   border-theme-button-subdued
-  hover:bg-theme-default-hover
+  hover:bg-theme-button-default-hover
+  hover:text-theme-button-default-hover
   disabled:bg-theme-default
 `
 
