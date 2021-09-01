@@ -155,6 +155,7 @@ module.exports = {
           "checkbox": withOpacity("--color-checkbox-bg"),
           "radio": withOpacity("--color-radio-bg"),
           "radio-checked": withOpacity("--color-radio-checked-bg"),
+          "switch-handle": withOpacity("--color-switch-handle-bg"),
           "switch-handle-checked": withOpacity("--color-switch-handle-checked-bg"),
           "required": withOpacity("--color-required-bg"),
         },

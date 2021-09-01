@@ -64,7 +64,7 @@ const swtchHandleStyles = (size, checked) => {
 			absolute
 			top-0.5
 			rounded-full
-			bg-white 
+			bg-theme-switch-handle
 			border-theme-default
 			${ size === 'small' ? 'w-4 h-4' : '' }
 			${ size === 'large' ? 'w-6 h-6' : '' }

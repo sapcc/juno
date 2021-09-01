@@ -260,7 +260,7 @@
   --color-success-raw: var(--color-sap-green-raw);
   
   // FOCUS
-  --color-focus: var(  --color-juno-turquoise);
+  --color-focus: var(--color-juno-turquoise);
   --color-focus-raw: var(--color-juno-turquoise-raw);
   
   // PRIMARY
@@ -322,7 +322,9 @@
 // Radio
 
 // Switch
-
+--color-switch-default-border: var(--color-juno-text-medium-raw);
+--color-switch-handle-bg: var(--color-juno-text-medium-raw);
+--color-switch-handle-checked-bg: var(--color-juno-blue-light-3-raw);
 // Required
 
 // Spinner
@@ -390,6 +392,7 @@
   --color-radio-checked-bg: var(--color-juno-turquoise-raw);
   // Switch
   --color-switch-default-border: var(--color-juno-text-high-raw);
+  --color-switch-handle-bg: var(--color-juno-text-high-raw);
   --color-switch-handle-checked-bg: var(--color-juno-turquoise-raw);
   --color-switch-hover-border: var(--color-juno-turquoise-raw);
   // Required
