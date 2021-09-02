@@ -7,6 +7,7 @@ import { ClickableIcon } from "../ClickableIcon/index.js"
 
 const popover = `
 	p-2
+	rounded
 	text-xs
 	inline-block
 	absolute
