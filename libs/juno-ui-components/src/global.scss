@@ -270,6 +270,7 @@
 .theme-light {
   
 // Global
+--color-global-text: var(--color-juno-text-medium-raw);
 // FOCUS
 --color-focus: var(--color-juno-blue-light-3-raw);
 --color-focus-raw: var(--color-juno-blue-light-3-raw);
@@ -342,11 +343,11 @@
 
 .theme-dark {
   // Global
+  --color-global-bg: var(--color-juno-grey-blue-95-raw);
+  --color-global-text: var(--color-juno-text-medium-raw);
   // FOCUS
   --color-focus: var(--color-juno-turquoise);
   --color-focus-raw: var(--color-juno-turquoise-raw);
-  --color-global-bg: var(--color-juno-grey-blue-95-raw);
-  --color-global-text: var(--color-juno-text-medium-raw);
   --color-focus-border: var(--color-juno-turquoise-raw);
   // Text
   --color-text-high: var(--color-juno-text-high-raw);
