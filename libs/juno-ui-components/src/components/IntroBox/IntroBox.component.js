@@ -6,8 +6,7 @@ const introbox = `
 	px-2
 	sm:py-3
 	sm:px-4
-	border-2
-	border-theme-introbox
+	bg-theme-introbox
 	text-theme-default
 `
 

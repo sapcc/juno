@@ -61,6 +61,33 @@
   --color-juno-turquoise: rgb(21, 208, 224);
   --color-juno-turquoise-raw: 21, 208, 224;
   
+  // Juno Grey
+  // RGB
+  --color-juno-grey-light-05: rgb(250, 250, 250);
+  --color-juno-grey-light-11: rgb(244, 244, 244);
+  --color-juno-grey-light-20: rgb(235, 235, 235);
+  --color-juno-grey-light-37: rgb(218, 218, 218);
+  --color-juno-grey-light-54: rgb(201, 201, 201);
+  --color-juno-grey-light-71: rgb(184, 184, 184);
+  --color-juno-grey-light-87: rgb(168, 168, 168);
+  --color-juno-grey-light-104: rgb(151, 151, 151);
+  --color-juno-grey-light-179: rgb(76, 76, 76);
+  --color-juno-grey-light-206: rgb(49, 49, 49);
+  --color-juno-grey-light-231: rgb(24, 24, 24);
+ 
+  // RAW
+  --color-juno-grey-light-05-raw: 250, 250, 250;
+  --color-juno-grey-light-11-raw: 244, 244, 244;
+  --color-juno-grey-light-20-raw: 235, 235, 235;
+  --color-juno-grey-light-37-raw: 218, 218, 218;
+  --color-juno-grey-light-54-raw: 201, 201, 201;
+  --color-juno-grey-light-71-raw: 184, 184, 184;
+  --color-juno-grey-light-87-raw: 168, 168, 168;
+  --color-juno-grey-light-104-raw: 151, 151, 151;
+  --color-juno-grey-light-179-raw: 76, 76, 76;
+  --color-juno-grey-light-206-raw: 49, 49, 49;
+  --color-juno-grey-light-231-raw: 24, 24, 24;
+  
   .theme-dark {
     
     // RGB
@@ -75,7 +102,15 @@
   }
   
   .theme-light {
+    // RGB
+    --color-juno-text-high: rgb(37, 37, 37);
+    --color-juno-text-medium: rgb(76, 76, 76);
+    --color-juno-text-disabled: rgb(150, 150, 150);
     
+    // RAW
+    --color-juno-text-high-raw: 37, 37, 37;
+    --color-juno-text-medium-raw: 76, 76, 76;
+    --color-juno-text-disabed-raw: 150, 150, 150;
   }
   
   // SAP Brand Non-Colors
@@ -224,10 +259,6 @@
   --color-success: var(--color-sap-green);
   --color-success-raw: var(--color-sap-green-raw);
   
-  // FOCUS
-  --color-focus: var(  --color-juno-turquoise);
-  --color-focus-raw: var(--color-juno-turquoise-raw);
-  
   // PRIMARY
   --color-primary: var(--color-juno-blue-light-3);
   --color-primary-raw: var(--color-juno-blue-light-3-raw);
@@ -238,36 +269,75 @@
 
 .theme-light {
   
-  // TODO
-  
-//   --color-global-bg: var(--color-blue-gray-10);
-//   --color-global-foreground: var(--color-blue-gray-100);
-// 
-//   --color-primary-bg: var(--color-rgb-sap-gold);
-//   --color-primary-bg-hover: var(--color-rgb-sap-gold-20);
-//   --color-primary-foreground: var(--color-rgb-white);
-//   --color-primary-border: var(--color-rgb-sap-gold-40);
-// 
-//   --color-default-bg: var(--color-rgb-blue-gray-10);
-//   --color-default-bg-hover: var(--color-rgb-blue-gray-20);
-//   --color-default-foreground: var(--color-rgb-blue-gray-90);
-//   --color-default-border: var(--color-rgb-blue-gray-20);
-// 
-//   --color-danger-bg: var(--color-rgb-red);
-//   --color-danger-bg-hover: var(--color-rgb-red-40);
-//   --color-danger-foreground: var(--color-rgb-white);
-//   --color-danger-border: var(--color-rgb-red-60);
-//   
-//   --color-message-default-bg: var(--color-rgb-sap-blue-10);
-//   --color-message-default-border: var(--color-rgb-sap-blue);
-//   
-//   --color-message-danger-bg: var(--color-rgb-red-40);
-//   --color-message-danger-border: var(--color-rgb-red-60);
-//   
-//   --color-message-warning-bg: var(--color-rgb-yellow-10);
-//   --color-message-warning-border: var(--color-rgb-yellow-30);
-// 
-//   --color-introbox-border: var(--color-black);
+// Global
+--color-global-text: var(--color-juno-text-medium-raw);
+// FOCUS
+--color-focus: var(--color-juno-blue-light-3-raw);
+--color-focus-raw: var(--color-juno-blue-light-3-raw);
+// Text
+--color-text-high: var(--color-juno-text-high-raw);
+--color-text-medium: var(--color-juno-text-medium-raw);
+--color-text-disabled: var(--color-juno-text-disabled-raw);
+--color-text-link: var(--color-juno-blue-light-3-raw);
+// Button
+// --> Primary Button
+--color-button-primary-bg: var(--color-juno-blue-light-3-raw);
+--color-button-primary-hover-bg: var(--color-juno-grey-light-11-raw);
+--color-button-primary-text: var(--color-white-raw);
+--color-button-primary-hover-text: var(--color-juno-blue-light-3-raw);
+--color-button-primary-hover-border: var(--color-juno-blue-light-3-raw);
+// --> Default Button
+--color-button-default-bg: var(--color-white-raw);
+--color-button-default-hover-bg: var(--color-juno-grey-light-11-raw);
+--color-button-default-text: var(--color-juno-text-medium-raw);
+--color-button-default-hover-text: var();
+--color-button-default-border: var(--color-juno-blue-light-3-raw);
+--color-button-default-hover-border: var(--color-juno-text-medium-raw);
+// --> Subdued Button
+--color-button-subdued-bg: var(--color-white-raw);
+--color-button-subdued-hover-bg: var( --color-juno-grey-light-11-raw);
+--color-button-subdued-hover-text: var(--color-juno-text-medium-raw);
+--color-button-subdued-border: var(--color-juno-text-medium-raw);
+--color-button-subdued-hover-border: var(--color-juno-text-medium-raw);
+// --> Danger Button
+--color-button-danger-text: var(--color-white-raw);
+--color-button-danger-bg: var(--color-sap-red-raw);
+--color-button-danger-hover-bg: var(--color-sap-red-dark-raw);
+--color-button-danger-foreground: var(--color-white-raw);
+// Icon
+--color-icon-danger: var(--color-sap-red-raw);
+--color-icon-info: var(--color-juno-blue-raw);
+--color-icon-success: var(--color-sap-green-raw);
+--color-icon-warning: var(--color-warning-raw);
+// Message
+
+// Introbox
+--color-introbox-bg: var(--color-juno-grey-light-11-raw);
+// Tooltip
+--color-tooltip-popover-bg: var(--color-juno-blue-light-3-raw);
+--color-tooltip-popover-text: var(--color-white-raw);
+// (Text-) Input
+--color-textinput-bg: var(--color-juno-grey-light-20-raw);
+--color-textinput-text: var(--color-juno-text-high-raw);
+--color-textinput-placeholder-text: var(--color-juno-text-high-raw);
+--color-textinput-focus-border: var(--color-juno-blue-light-3-raw);
+// Select
+--color-select-bg: var(--color-juno-grey-light-20-raw);
+// Checkbox
+--color-checkbox-bg: var(--color-juno-grey-light-37-raw);
+--color-checkbox-checked-color: var(--color-juno-blue-light-3-raw);
+// Radio
+--color-radio-bg: var(--color-juno-grey-light-37-raw);
+--color-radio-checked-bg: var(--color-juno-blue-light-3-raw);
+// Switch
+--color-switch-default-border: var(--color-juno-text-medium-raw);
+--color-switch-handle-bg: var(--color-juno-text-medium-raw);
+--color-switch-handle-checked-bg: var(--color-juno-blue-light-3-raw);
+// Required
+--color-required-bg: var(--color-juno-turquoise-raw);
+// Spinner
+--color-spinner-primary: var(--color-juno-blue-light-3-raw);
+// Syntax highlighting
   
 }
 
@@ -275,6 +345,9 @@
   // Global
   --color-global-bg: var(--color-juno-grey-blue-95-raw);
   --color-global-text: var(--color-juno-text-medium-raw);
+  // FOCUS
+  --color-focus: var(--color-juno-turquoise);
+  --color-focus-raw: var(--color-juno-turquoise-raw);
   --color-focus-border: var(--color-juno-turquoise-raw);
   // Text
   --color-text-high: var(--color-juno-text-high-raw);
@@ -287,8 +360,8 @@
   --gradient-button-primary-bg: linear-gradient(225deg, rgba(47,234,242,0.75) 0%, rgba(21,208,224,0.36) 100%);
   --color-button-primary-bg-start: rgba(47,234,242,0.75);
   --color-button-primary-bg-end: rgba(21,208,224,0.36);
+  --color-button-primary-text: var(--color-white-raw);
   --color-button-primary-foreground: var(--sap-grey-blue-100-raw);
-  --color-button-primary-text: var(--color-juno-grey-blue-100-raw);
   // --> Default Button
   --color-button-default-bg: var(--color-rgb-blue-gray-10-raw);
   --color-button-default-text: var(--color-juno-text-high-raw);
@@ -312,7 +385,7 @@
   --color-message-warning-border: var(--color-warning-raw);
   --color-message-success-border: var(--color-sap-green-raw);
   // Introbox
-  --color-introbox-border: var(--color-white-raw);
+
   // Tooltip
   --color-tooltip-popover-bg: var(--color-juno-blue-light-3-raw);
   --color-tooltip-popover-text: var(--color-juno-grey-blue-100-raw);
@@ -325,17 +398,19 @@
   --color-select-bg: var(--color-juno-grey-blue-81-raw);
   // Checkbox
   --color-checkbox-bg: var(--color-juno-grey-blue-81-raw);
+  --color-checkbox-checked-color: var(--color-juno-turquoise-raw);
   // Radio
   --color-radio-bg: var(--color-juno-grey-blue-81-raw);
   --color-radio-checked-bg: var(--color-juno-turquoise-raw);
   // Switch
   --color-switch-default-border: var(--color-juno-text-high-raw);
+  --color-switch-handle-bg: var(--color-juno-text-high-raw);
   --color-switch-handle-checked-bg: var(--color-juno-turquoise-raw);
   --color-switch-hover-border: var(--color-juno-turquoise-raw);
   // Required
-  --color-required-bg: var(--color-juno-blue-light-3-raw);
-  // Spinner primary
-  --color-spinner-primary: var(--color-juno-blue-light-3-raw);
+  --color-required-bg: var(--color-juno-turquoise-raw);
+  // Spinner 
+  --color-spinner-primary: var(--color-juno-turquoise-raw);
   // Syntax Highlighting
   --color-syntax-highlight-base00: var(--color-juno-grey-blue-88); // bg
   --color-syntax-highlight-base01: var(--color-juno-grey-blue-84); // ?
