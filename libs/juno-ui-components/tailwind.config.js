@@ -160,11 +160,8 @@ module.exports = {
           "introbox": withOpacity("--color-introbox-bg"),
         },
       },
-      // Not working?
       backgroundImage: {
-        theme: {
-          "button-primary": "var(--gradient-button-primary-bg)"
-        }
+        "theme-button-primary": "var(--gradient-button-primary-bg)"
       },
       textColor: {
         theme: {
