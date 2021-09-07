@@ -141,7 +141,7 @@ module.exports = {
       backgroundColor: {
         theme: {
           "global-bg": withOpacity("--color-global-bg"),
-          "button-primary": withOpacity("--color-button-primary-bg"),
+          //"button-primary": withOpacity("--color-button-primary-bg"),
           "button-danger": withOpacity("--color-button-danger-bg"),
           "button-default": withOpacity("--color-button--default-bg"),
           "button-primary-hover": withOpacity("--color-button-primary-hover-bg"),
@@ -161,11 +161,11 @@ module.exports = {
         },
       },
       // Not working?
-      // backgroundImage: {
-      //   theme: {
-      //     "button-primary": "var(--gradient-button-primary-bg)"
-      //   }
-      // },
+      backgroundImage: {
+        theme: {
+          "button-primary": "var(--gradient-button-primary-bg)"
+        }
+      },
       textColor: {
         theme: {
           default: withOpacity("--color-global-text"),
