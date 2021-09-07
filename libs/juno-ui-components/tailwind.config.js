@@ -133,7 +133,6 @@ module.exports = {
         "message-danger": withOpacity("--color-message-danger-border"),
         "message-warning": withOpacity("--color-message-warning-border"),
         "message-success": withOpacity("--color-message-success-border"),
-        "introbox": withOpacity("--color-introbox-border"),
         "switch-default": withOpacity("--color-switch-default-border"),
         "switch-hover": withOpacity("--color-switch-hover-border"),
       },
@@ -158,6 +157,7 @@ module.exports = {
           "switch-handle": withOpacity("--color-switch-handle-bg"),
           "switch-handle-checked": withOpacity("--color-switch-handle-checked-bg"),
           "required": withOpacity("--color-required-bg"),
+          "introbox": withOpacity("--color-introbox-bg"),
         },
       },
       // Not working?
