@@ -8,6 +8,11 @@ const radiorow = `
 	flex-row
 `
 
+const radiocontainerstyles = `
+	mt-1
+	mr-2
+`
+
 const helptextstyles = `
 	text-xs
 	text-theme-disabled
@@ -43,7 +48,7 @@ export const RadioRow =({
 			className={`radio-row ${radiorow}`}
 			{...props}
 		>
-			<div>
+			<div className={`radio-container ${radiocontainerstyles}`}>
 				<Radio name={name} checked={isChecked} onChange={onChange} id={id} value={value || ""} disabled={disabled} className={className} />
 			</div>
 			<div>
