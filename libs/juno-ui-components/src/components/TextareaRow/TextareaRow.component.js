@@ -11,6 +11,7 @@ const stackedcontainerstyles = `
 
 const floatingcontainerstyles = `
 	relative
+	mb-5
 `
 
 const floatinglabelcontainerstyles = `
