@@ -282,8 +282,9 @@
 // Button
 // --> Primary Button
 --color-button-primary-bg: var(--color-juno-blue-light-3-raw);
---color-button-primary-hover-bg: var(--color-juno-grey-light-11-raw);
 --color-button-primary-text: var(--color-white-raw);
+--color-button-primary-border: var(--color-juno-blue-light-3-raw);
+--color-button-primary-hover-bg: var(--color-juno-grey-light-11-raw);
 --color-button-primary-hover-text: var(--color-juno-blue-light-3-raw);
 --color-button-primary-hover-border: var(--color-juno-blue-light-3-raw);
 // --> Default Button
@@ -356,12 +357,12 @@
   --color-text-link: var(--color-juno-blue-raw);
   // Button
   // --> Primary Button
-  --color-button-primary-bg: var(--color-juno-blue-light-3-raw);
   --gradient-button-primary-bg: linear-gradient(225deg, rgba(47,234,242,0.75) 0%, rgba(21,208,224,0.36) 100%);
-  --color-button-primary-bg-start: rgba(47,234,242,0.75);
-  --color-button-primary-bg-end: rgba(21,208,224,0.36);
+  --color-button-primary-border: var(--color-juno-turquoise-raw);
   --color-button-primary-text: var(--color-white-raw);
-  --color-button-primary-foreground: var(--sap-grey-blue-100-raw);
+  --color-button-primary-hover-text: var(--color-white-raw);
+  --color-button-primary-hover-border: var(--color-juno-turquoise-raw);
+  --gradient-button-primary-hover-bg: linear-gradient(225deg, rgba(47,234,242,0.00) 0%, rgba(21,208,224,0.36) 100%);
   // --> Default Button
   --color-button-default-bg: var(--color-rgb-blue-gray-10-raw);
   --color-button-default-text: var(--color-juno-text-high-raw);

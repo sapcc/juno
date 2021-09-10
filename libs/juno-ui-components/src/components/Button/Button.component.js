@@ -6,7 +6,6 @@ const btn = `
   justify-center 
   rounded-md
   shadow-sm 
-  font-bold 
   w-full
   sm:w-auto 
   focus:outline-none 
@@ -24,13 +23,13 @@ const btnDefault = `
   hover:bg-theme-button-default-hover
   disabled:bg-theme-default
 `
-// hover:border apparently not working?
 const btnPrimary = `
-  text-theme-on-primary
+  text-theme-button-primary
+  border
+  border-theme-button-primary
   bg-theme-button-primary
-  hover:bg-theme-button-primary-hover
   hover:text-theme-button-primary-hover
-  hover:border
+  hover:bg-theme-button-primary-hover
   hover:border-theme-button-primary-hover
   disabled:bg-theme-primary
 `

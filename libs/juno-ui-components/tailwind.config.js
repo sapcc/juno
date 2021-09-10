@@ -125,10 +125,11 @@ module.exports = {
       ...theme('colors'),
       theme: {
         default: withOpacity("--color-default-border"),
-        "button-default": withOpacity("--color-button-default-border"),
-        "button-subdued": withOpacity("--color-button-subdued-border"),
+        "button-primary": withOpacity("--color-button-primary-border"),
         "button-primary-hover": withOpacity("--color-button-primary-hover-border"),
+        "button-default": withOpacity("--color-button-default-border"),
         "button-default-hover": withOpacity("--color-button-default-hover-border"),
+        "button-subdued": withOpacity("--color-button-subdued-border"),
         "message-default": withOpacity("--color-message-default-border"),
         "message-danger": withOpacity("--color-message-danger-border"),
         "message-warning": withOpacity("--color-message-warning-border"),
@@ -142,11 +143,11 @@ module.exports = {
         theme: {
           "global-bg": withOpacity("--color-global-bg"),
           "button-primary": withOpacity("--color-button-primary-bg"),
-          "button-danger": withOpacity("--color-button-danger-bg"),
-          "button-default": withOpacity("--color-button--default-bg"),
           "button-primary-hover": withOpacity("--color-button-primary-hover-bg"),
-          "button-danger-hover": withOpacity("--color-button-danger-hover-bg"),
+          "button-default": withOpacity("--color-button--default-bg"),
           "button-default-hover": withOpacity("--color-button-default-hover-bg"),
+          "button-danger": withOpacity("--color-button-danger-bg"),
+          "button-danger-hover": withOpacity("--color-button-danger-hover-bg"),
           "message": withOpacity("--color-message-bg"),
           "tooltip-popover": withOpacity("--color-tooltip-popover-bg"),
           "textinput": withOpacity("--color-textinput-bg"),
@@ -160,20 +161,18 @@ module.exports = {
           "introbox": withOpacity("--color-introbox-bg"),
         },
       },
-      // Not working?
-      // backgroundImage: {
-      //   theme: {
-      //     "button-primary": "var(--gradient-button-primary-bg)"
-      //   }
-      // },
+      backgroundImage: {
+        "theme-button-primary": "var(--gradient-button-primary-bg)",
+        "theme-button-primary-hover": "var(--gradient-button-primary-hover-bg)",
+      },
       textColor: {
         theme: {
           default: withOpacity("--color-global-text"),
           "high": withOpacity("--color-text-high"),
           "medium": withOpacity("--color-text-medium"),
           "disabled": withOpacity("--color-text-disabled"),
-          "link": withOpacity("--color-text-link"),
-          "on-primary": withOpacity("--color-button-primary-text"),
+          "link": withOpacity("--color-text-link"), 
+          "button-primary": withOpacity("--color-button-primary-text"),
           "button-primary-hover": withOpacity("--color-button-primary-hover-text"),
           "on-danger": withOpacity("--color-button-danger-text"),
           "on-default": withOpacity("--color-button-default-text"),
@@ -218,7 +217,8 @@ module.exports = {
     extend: {
       opacity: ['disabled'],
       backgroundColor: ['disabled'],
-      cursor: ['disabled']
+      cursor: ['disabled'],
+      backgroundImage: ['hover']
     }
   },
   plugins: [],
