@@ -2,6 +2,10 @@ import React, { useState, useEffect, useRef } from "react"
 import PropTypes from "prop-types"
 import { Label } from "../Label/index.js"
 
+const radiogroupstyles = `
+	mb-5
+`
+
 export const RadioGroup = ({
 	name,
 	label,
@@ -48,7 +52,7 @@ export const RadioGroup = ({
 	 };
 	
 	return (
-		<div role="radiogroup" className={`${className}`} onChange={namedChildren} {...props} >
+		<div role="radiogroup" className={`${radiogroupstyles} ${className}`} onChange={namedChildren} {...props} >
 			{ label ? <Label text={label} htmlFor={name} required={required} /> : "" }
 			{ namedChildren() }
 		</div>

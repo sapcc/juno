@@ -8,6 +8,11 @@ const checkboxrow = `
 	flex-row
 `
 
+const checkboxcontainerstyles = `
+	mt-1
+	mr-2
+`
+
 const helptextstyles = `
 	text-xs
 	text-theme-disabled
@@ -45,7 +50,7 @@ export const CheckboxRow =({
 			className={`${checkboxrow}`}
 			{...props}
 		>
-			<div>
+			<div className={`checkbox-container ${checkboxcontainerstyles}`}>
 				<Checkbox name={name} checked={isChecked} disabled={disabled} onChange={handleChange} id={id} value={value || ""} className={className} />
 			</div>
 			<div>
