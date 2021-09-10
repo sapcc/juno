@@ -63,4 +63,13 @@ describe("CheckboxGroup", () => {
 		expect(screen.getByRole("checkbox")).toHaveAttribute("name", "my-checkboxgroup")
 	})
 	
+	test("renders checked CheckboxRows as passed", async () => {
+		render(
+			<CheckboxGroup selected={["test-checkbox"]}>
+				<CheckboxRow value="test-checkbox"/>
+			</CheckboxGroup>
+		)
+		expect(screen.getByRole("checkbox")).toBeChecked()
+	})
+	
 })
