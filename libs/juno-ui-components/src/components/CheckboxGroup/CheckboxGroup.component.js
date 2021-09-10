@@ -24,12 +24,25 @@ export const CheckboxGroup = ({
 	}, [selected])
 	
 	const handleCheckboxChange = (event) => {
-		
+		console.log("selectedOptions: ", selectedOptions)
+		const changedValue = event.target.value
+		const index = selectedOptions.indexOf(changedValue)
+		let newSelectedOptions = selectedOptions
+		if ( index > -1) {
+			// remove element if already in selectedOptions:
+			newSelectedOptions.splice(index, 1)
+		} else {
+			// otherwise add element:
+			newSelectedOptions.push(changedValue)
+		}
+		setSelectedOptions(newSelectedOptions)
+		console.log("changedOption: ", event.target.value)
+		console.log("new selectedOptions: ", selectedOptions)
 	}
 	
 	const namedChildren = () => {
-		console.log(selectedOptions)
 		return React.Children.map(children, (child) => {
+			console.log("selectedOptions from namedChildren: ", selectedOptions)
 			const isSelected = selectedOptions.includes(child.props.value)
 			return React.cloneElement(child, {
 				name: name,
