@@ -35,5 +35,6 @@ Required.args = {
 	name: 'my-checkboxgroup',
 	label: "My Required Group of Checkboxes",
 	required: true,
+	selected: ["v1", "v3"],
 	children: [<CheckboxRow {...row1args}/>, <CheckboxRow {...row2args} />, <CheckboxRow {...row3args} />]
 }

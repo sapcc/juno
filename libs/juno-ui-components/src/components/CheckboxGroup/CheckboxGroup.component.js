@@ -9,19 +9,34 @@ const checkboxgroupstyles = `
 export const CheckboxGroup = ({
 	name,
 	label,
+	selected,
 	required,
 	disabled,
 	children,
 	className,
 	...props
 }) => {
-
+	
+	const [selectedOptions, setSelectedOptions] = useState([])
+	
+	useEffect( () => {
+		setSelectedOptions(selected)
+	}, [selected])
+	
+	const handleCheckboxChange = (event) => {
+		
+	}
+	
 	const namedChildren = () => {
+		console.log(selectedOptions)
 		return React.Children.map(children, (child) => {
+			const isSelected = selectedOptions.includes(child.props.value)
 			return React.cloneElement(child, {
 				name: name,
 				className: className,
-				disabled: disabled
+				disabled: disabled,
+				checked: isSelected,
+				onChange: handleCheckboxChange
 			});
 		});
 	 };
@@ -40,6 +55,8 @@ CheckboxGroup.propTypes = {
 	name: PropTypes.string,
 	/** Label for the groupd as a whole */
 	label: PropTypes.string,
+	/** Array of values of individual selected options in the group */
+	selected: PropTypes.array,
 	/** Whether a selection in the group is required */
 	required: PropTypes.bool,
 	/** Disable the whole group */
@@ -56,6 +73,7 @@ CheckboxGroup.defaultProps = {
 	className: "",
 	label: null,
 	required: null,
+	selected: [],
 	disabled: null,
 	children: null,
 }
