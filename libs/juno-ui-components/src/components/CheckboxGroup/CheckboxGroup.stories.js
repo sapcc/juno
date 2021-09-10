@@ -18,9 +18,22 @@ const row2args = { ...CheckboxRow.args, value: "v2", checked: true, id: "checkbo
 const row3args = { ...CheckboxRow.args, value: "v3", id: "checkbox3"}
 		
 export const Default = Template.bind({})
-
 Default.args = {
 	name: 'my-checkboxgroup',
-	selected: "v1",
+	children: [<CheckboxRow {...row1args}/>, <CheckboxRow {...row2args} />, <CheckboxRow {...row3args} />]
+}
+
+export const WithLabel = Template.bind({})
+WithLabel.args = {
+	name: 'my-checkboxgroup',
+	label: "My Group of Checkboxes",
+	children: [<CheckboxRow {...row1args}/>, <CheckboxRow {...row2args} />, <CheckboxRow {...row3args} />]
+}
+
+export const Required = Template.bind({})
+Required.args = {
+	name: 'my-checkboxgroup',
+	label: "My Required Group of Checkboxes",
+	required: true,
 	children: [<CheckboxRow {...row1args}/>, <CheckboxRow {...row2args} />, <CheckboxRow {...row3args} />]
 }
