@@ -24,7 +24,6 @@ export const CheckboxGroup = ({
 	}, [selected])
 	
 	const handleCheckboxChange = (event) => {
-		console.log("selectedOptions: ", selectedOptions)
 		const changedValue = event.target.value
 		const index = selectedOptions.indexOf(changedValue)
 		let newSelectedOptions = selectedOptions
@@ -36,13 +35,10 @@ export const CheckboxGroup = ({
 			newSelectedOptions.push(changedValue)
 		}
 		setSelectedOptions(newSelectedOptions)
-		console.log("changedOption: ", event.target.value)
-		console.log("new selectedOptions: ", selectedOptions)
 	}
 	
 	const namedChildren = () => {
 		return React.Children.map(children, (child) => {
-			console.log("selectedOptions from namedChildren: ", selectedOptions)
 			const isSelected = selectedOptions.includes(child.props.value)
 			return React.cloneElement(child, {
 				name: name,
