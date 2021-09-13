@@ -65,10 +65,14 @@ const ResultItem = ({ content, expand }) => {
                 <div key={contactType}>
                   <h5>{capitalize(contactType)}:</h5>
                   {contactInfo ?
-                    contactInfo.email ? 
-                      <a href={`mailto:${contactInfo.email}`} className="block truncate">{contactInfo.email}</a>
-                      :
-                      <span className="italic">{contactInfo.ID}</span>
+                    <div className="truncate">
+                      <span className="italic pr-1">{contactInfo.ID}</span>
+                      { contactInfo.email &&
+                        <>
+                          <span className="text-theme-disabled">|</span> <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
+                        </>
+                      }
+                    </div>
                     :
                     <span className="text-theme-disabled">--</span>
                   }
