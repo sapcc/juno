@@ -48,8 +48,8 @@ const ResultItem = ({ content, expand }) => {
         {content.floatingIP ? 
           <div className="font-bold">{content.floatingIP}</div>
         :
-          content.fixedIP &&
-            <div className="font-bold">{content.fixedIP}</div>
+          content.fixedIPs &&
+            <div className="font-bold">{content.fixedIPs[0]}</div>
         }
         {(content.domainName || content.projectName) &&
           <div className="text-theme-disabled">{content.domainName} / {content.projectName}</div>
