@@ -25,16 +25,15 @@ export const CheckboxGroup = ({
 	
 	const handleCheckboxChange = (event) => {
 		const changedValue = event.target.value
-		const index = selectedOptions.indexOf(changedValue)
-		let newSelectedOptions = selectedOptions
-		if ( index > -1) {
-			// remove element if already in selectedOptions:
-			newSelectedOptions.splice(index, 1)
+		const exists = selectedOptions.includes(changedValue)
+		if (exists) { 
+		  // remove element if it was the previously selected element…
+		  setSelectedOptions(selectedOptions.filter((value) => { return value !== changedValue }))
 		} else {
-			// otherwise add element:
-			newSelectedOptions.push(changedValue)
+		  // …otherwise add element
+		 setSelectedOptions(selectedOptions => [...selectedOptions, changedValue])
 		}
-		setSelectedOptions(newSelectedOptions)
+		
 	}
 	
 	const namedChildren = () => {
