@@ -42,7 +42,7 @@ export const CheckboxRow =({
 	
 	const handleChange = (event) => {
 		setChecked(!isChecked)
-		onChange()
+		onChange(event)
 	}
 	
 	return (

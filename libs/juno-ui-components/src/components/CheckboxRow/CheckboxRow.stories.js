@@ -15,6 +15,12 @@ Default.args = {
 	id: "default"
 }
 
+export const Checked = Template.bind({})
+Checked.args = {
+	label: "Checked CheckboxRow",
+	id: "checked"
+}
+
 export const WithHelpText = Template.bind({})
 WithHelpText.args = {
 	name: "my-input",
