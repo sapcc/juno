@@ -183,6 +183,7 @@ export const load = (currentScript) => {
     const wrapper = document.createElement("div")
     wrapper.setAttribute("data-name", name)
     wrapper.setAttribute("data-version", version)
+    wrapper.style.height = "100%"
     currentScript.replaceWith(wrapper)
 
     console.log("===", url, scope, module)
