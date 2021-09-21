@@ -106,11 +106,12 @@ const colstyles = (col) => {
 export const GridColumn = ({
 	width,
 	col,
+	className,
 	children,
 	...props
 }) => {
 	return (
-		<div className={`grid-column ${basecolstyles(col)} ${colstyles(col)}`}>
+		<div className={`grid-column ${basecolstyles(col)} ${colstyles(col)} ${className}`}>
 			{children}
 		</div>
 	)
@@ -122,9 +123,12 @@ GridColumn.propTypes = {
 	width: PropTypes.number,
 	/** The number of columns in a fixed grid to span */
 	col: PropTypes.number,
+	/** Add a class to a grid column */
+	className: PropTypes.string,
 }
 
 GridColumn.defaultProps = {
 	width: null,
 	col: null,
+	className: "",
 }
