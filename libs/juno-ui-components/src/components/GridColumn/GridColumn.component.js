@@ -1,10 +1,18 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const gridcolumnstyles = `
+// apply if no col given:
+const autogridcolumnstyles = `
 	flex-grow
 	flex-shrink-0
 	flex-basis-0
+`
+
+// apply if col given:
+const colgridcolumnstyles = `
+	flex-grow-0
+	flex-shrink-0
+	flex-basis-auto
 `
 
 const col1 = `
@@ -55,6 +63,15 @@ const col12 = `
 	w-grid-col-12
 	
 `
+
+const basecolstyles = (col) => {
+	if (col) {
+		return colgridcolumnstyles
+	} else {
+		return autogridcolumnstyles
+	}
+}
+
 const colstyles = (col) => {
 	switch (col) {
 		case 1:
@@ -93,7 +110,7 @@ export const GridColumn = ({
 	...props
 }) => {
 	return (
-		<div className={`grid-column ${gridcolumnstyles} ${colstyles(col)}`}>
+		<div className={`grid-column ${basecolstyles(col)} ${colstyles(col)}`}>
 			{children}
 		</div>
 	)

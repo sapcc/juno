@@ -473,9 +473,12 @@
 @tailwind components;
 @tailwind utilities;
 
-// Add flex-basis utility since tw doesn't support flex-basis: https://github.com/tailwindlabs/tailwindcss/issues/603
+// Add flex-basis utilities since tw doesn't support flex-basis: https://github.com/tailwindlabs/tailwindcss/issues/603
 @layer utilities {
   .flex-basis-0 {
     flex-basis: 0%;
+  }
+  .flex-basis-auto {
+    flex-basis: auto;
   }
 }
