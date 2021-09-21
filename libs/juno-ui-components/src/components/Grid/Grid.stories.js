@@ -69,3 +69,135 @@ GridAuto_5.args = {
     }
   ]
 }
+
+export const GridAllCols = Template.bind({})
+GridAllCols.args = {
+  rows: [
+    {
+      columns: [
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args
+      ]
+    },
+    {
+      columns: [
+        GridCol2.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args
+      ]
+    },
+    {
+      columns: [
+        GridCol3.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args
+      ]
+    },
+    {
+      columns: [
+        GridCol4.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args
+      ]
+    },
+    {
+      columns: [
+        GridCol5.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args
+      ]
+    },
+    {
+      columns: [
+        GridCol6.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args
+      ]
+    },
+    {
+      columns: [
+        GridCol7.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args
+      ]
+    },
+    {
+      columns: [
+        GridCol8.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args
+      ]
+    },
+    {
+      columns: [
+        GridCol9.args,
+        GridCol1.args,
+        GridCol1.args,
+        GridCol1.args
+      ]
+    },
+    {
+      columns: [
+        GridCol10.args,
+        GridCol1.args,
+        GridCol1.args
+      ]
+    },
+    {
+      columns: [
+        GridCol11.args,
+        GridCol1.args
+      ]
+    },
+    {
+      columns: [
+        GridCol12.args
+      ]
+    }
+  ]
+}
