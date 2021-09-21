@@ -10,13 +10,25 @@ export default {
   argTypes: {},
 }
 
-const Template = (args) => (
-  <Grid>
-
-  </Grid>
-)
+const Template = ({ rows, ...args}) =>
+<Grid {...args}>
+  {rows.map((row) => (
+    <GridRow {...row}>
+      {row.columns.map((column) => (
+        <GridColumn {...column} />
+      ))}
+    </GridRow>
+  ))}
+</Grid>
 
 export const Default = Template.bind({})
 Default.args = {
-  
+  rows: [
+    {
+      columns: [GridColumn.args, GridColumn.args]
+    },
+    {
+      columns: [GridColumn.args, GridColumn.args]
+    }
+  ]
 }
