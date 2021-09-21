@@ -23,11 +23,11 @@ export default {
 }
 
 const Template = ({ rows, ...args}) =>
-<Grid {...args}>
+<Grid {...args} className="bg-juno-blue-1">
   {rows.map((row) => (
-    <GridRow {...row}>
+    <GridRow {...row} className="bg-juno-blue-2">
       {row.columns.map((column) => (
-        <GridColumn {...column} />
+        <GridColumn {...column} className="bg-juno-blue-3"/>
       ))}
     </GridRow>
   ))}

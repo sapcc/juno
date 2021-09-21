@@ -23,9 +23,9 @@ export default {
 }
 
 const Template = ({columns, ...args}) => (
-  <GridRow {...args} >
+  <GridRow {...args} className="bg-juno-blue-2">
     {columns.map((column) => 
-      <GridColumn {...column} />
+      <GridColumn {...column} className="bg-juno-blue-3" />
     )}
   </GridRow>
 )
