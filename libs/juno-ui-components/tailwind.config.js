@@ -203,6 +203,9 @@ module.exports = {
       borderRadius: {
         "3px": "3px",
       },
+      gap: {
+        "grid": "var(--grid-gutters)",
+      },
     },
     borderWidth: {
       DEFAULT: "1px",

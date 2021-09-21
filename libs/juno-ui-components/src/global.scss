@@ -432,6 +432,17 @@
 
 }
 
+// Grid configuration
+:root,
+:host {
+  --grid-columns: 12;
+  --grid-gutter-column: 1rem;
+  --grid-gutter-row: 1rem;
+  --grid-gutters: var(--grid-gutter-column) var(--grid-gutter-row);
+}
+
+
+
 // default base styles using the tw base directive
 @layer base {
 
@@ -461,3 +472,10 @@
 
 @tailwind components;
 @tailwind utilities;
+
+// Add flex-basis utility since tw doesn't support flex-basis:
+@layer utilities {
+  .flex-basis-0 {
+    flex-basis: 0%;
+  }
+}
