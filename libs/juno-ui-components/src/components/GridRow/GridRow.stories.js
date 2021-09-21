@@ -48,11 +48,39 @@ Default.args = {
   ]
 }
 
+export const GridRow_3_3_3 = Template.bind({})
+GridRow_3_3_3.args = {
+  columns: [
+    GridCol3.args,
+    GridCol3.args,
+    GridCol3.args,
+    GridCol3.args
+  ]  
+}
+
+export const GridRow_5_4_3 = Template.bind({})
+GridRow_5_4_3.args = {
+  columns: [
+    GridCol5.args,
+    GridCol4.args,
+    GridCol3.args
+  ]
+}
+
 export const GridRow_8_2_2 = Template.bind({})
 GridRow_8_2_2.args = {
   columns: [
     GridCol8.args,
     GridCol2.args,
     GridCol2.args
+  ]
+}
+
+export const GridRow_8_auto_auto = Template.bind({})
+GridRow_8_auto_auto.args = {
+  columns: [
+    GridCol8.args,
+    DefaultGridCol.args,
+    DefaultGridCol.args
   ]
 }
