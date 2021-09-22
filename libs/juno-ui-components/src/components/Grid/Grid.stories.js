@@ -201,3 +201,17 @@ GridAllCols.args = {
     }
   ]
 }
+
+export const GridPerWidth = Template.bind({})
+GridPerWidth.args = {
+  rows: [
+    {
+      columns: [
+        {width: 25, children: "Column 25%"},
+        {width: 15, children: "Column 15%"},
+        {width: 20, children: "Column 20%"},
+        {width: 40, children: "Column 40%"}
+      ]
+    }
+  ]
+}
