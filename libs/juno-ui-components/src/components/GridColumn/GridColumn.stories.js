@@ -88,3 +88,9 @@ Col12.args = {
   col: 12,
   children: "Column-12"
 }
+
+export const ColWidth50 = Template.bind({})
+ColWidth50.args = {
+  width: 50,
+  children: "Column 50%"
+}

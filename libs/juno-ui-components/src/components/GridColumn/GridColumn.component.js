@@ -111,7 +111,7 @@ export const GridColumn = ({
 	...props
 }) => {
 	return (
-		<div className={`grid-column ${basecolstyles(col)} ${colstyles(col)} ${className}`}>
+		<div className={`grid-column ${basecolstyles(col)} ${colstyles(col)} ${className}`} style={ width ? { width: width + "%"} : {} } >
 			{children}
 		</div>
 	)
@@ -119,12 +119,14 @@ export const GridColumn = ({
 
 
 GridColumn.propTypes = {
-	/** The width in percentages for auto-layout grids. If a width is given, it will override the "col" prop. */
+	/** The width in percent as a number without "%" for auto-layout grids. If a width is given, it will override the "col" prop. */
 	width: PropTypes.number,
 	/** The number of columns in a fixed grid to span */
 	col: PropTypes.number,
 	/** Add a class to a grid column */
 	className: PropTypes.string,
+	/** Children to be rendered in the column element */
+	children: PropTypes.node
 }
 
 GridColumn.defaultProps = {
