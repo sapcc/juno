@@ -443,7 +443,8 @@
     @apply text-theme-default;
     @apply font-sans;
     @apply text-base;
-    @apply h-full;
+    
+    height: inherit;
   }
 
   a {
