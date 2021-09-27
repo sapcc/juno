@@ -1,4 +1,4 @@
-const ENDPOINT = "https://whois-dev.global.cloud.sap/v1"
+const ENDPOINT = "https://whois.global.cloud.sap/v1"
 
 class HTTPError extends Error {
   constructor(code, message) {
