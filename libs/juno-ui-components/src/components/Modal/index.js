@@ -79,7 +79,11 @@ const ModalButtonsContent = ({ children }) => {
  * If children is a function so Body and Buttons are provided as parameters and
  * should be used inside the function.
  */
-export const Modal = ({ isOpen, close, icon, title, children }) => {
+export const Modal = ({ isOpen, close, icon, title, children, size }) => {
+  size = React.useMemo(() => {
+    const sizes = ["lg", "xl", "2xl", "3xl", "4xl", "5xl"]
+    return sizes.find((s) => s === size) || "xl"
+  }, [size])
   const [visible, setIsVisible] = React.useState(false)
 
   // handles the visibility of the modal view dependent of isOpen
@@ -126,7 +130,7 @@ export const Modal = ({ isOpen, close, icon, title, children }) => {
 
         {/* Modal content */}
         <div
-          className="transition-opacity inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+          className={`transition-opacity inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-${size} sm:w-full`}
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
