@@ -2,6 +2,7 @@ import React from "react"
 import { send, on } from "communicator"
 import Requests from "./components/Requests"
 import { ClientProvider } from "./lib/clientProvider"
+import StateProvider from "./lib/stateProvider"
 
 export default ({}) => {
   const [auth, setAuth] = React.useState()
@@ -16,16 +17,21 @@ export default ({}) => {
 
   console.log(auth, endpoint)
   return (
-    <ClientProvider
-      authToken={auth?.authToken}
-      endpoint={endpoint}
-      region={region}
-    >
-      {!auth ? (
-        <p>Authentication required</p>
-      ) : (
-        <div>{auth?.authToken && <Requests authToken={auth.authToken} />}</div>
-      )}
-    </ClientProvider>
+    <StateProvider>
+      <ClientProvider
+        authToken={auth?.authToken}
+        endpoint={endpoint}
+        region={region}
+      >
+        {!auth ? (
+          <p>Authentication required</p>
+        ) : (
+          <div>
+            {auth?.authToken && <Requests authToken={auth.authToken} />}
+          </div>
+        )}
+        {/* {auth?.authToken} */}
+      </ClientProvider>
+    </StateProvider>
   )
 }

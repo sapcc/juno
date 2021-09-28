@@ -1,31 +1,51 @@
 import React from "react"
+import { useClient } from "../lib/clientProvider"
 import { Button } from "juno-ui-components"
+import { useGlobalState, useDispatch } from "../lib/stateProvider"
 
 const New = ({ close, Buttons, Body }) => {
-  const [kind, setKind] = React.useState("project")
-  const [priority, setPriority] = React.useState(2)
-  const [subject, setSubject] = React.useState("")
-  const [description, setDescription] = React.useState("")
-  const [comment, setComment] = React.useState("")
-  const [payload, setPayload] = React.useState("")
+  const client = useClient()
+  const [values, updateValues] = React.useState({
+    kind: "project",
+    priority: 2,
+    subject: "",
+    description: "",
+    comment: "",
+    payload: "",
+  })
+
+  const [isCreating, setIsCreating] = React.useState(false)
+  const dispatch = useDispatch()
+
+  const setValue = React.useCallback((name, value) => {
+    updateValues((oldValues) => ({ ...oldValues, [name]: value }))
+  }, [])
+
+  const submit = React.useCallback(() => {
+    console.log(values)
+    setIsCreating(true)
+    client
+      .createRequest(values, {
+        fields:
+          "id kind subject createdAt requester {name} lastProcessor { name }",
+      })
+      .then((response) => {
+        console.log("===============RESPONSE", response)
+        dispatch({ type: "ADD_REQUEST", item: response.data.createRequest })
+      })
+      .finally(() => setIsCreating(false))
+  }, [values])
+
+  const valid = React.useMemo(
+    () =>
+      values.kind && values.priority >= 0 && values.subject && values.payload,
+    [values]
+  )
 
   return (
     <>
       <Body>
         <form>
-          {kind}
-          <br />
-          {priority}
-          <br />
-          {subject}
-          <br />
-          {description}
-          <br />
-          {comment}
-          <br />
-          {payload}
-          <br />
-          {console.log("===================BUTTONS", Buttons)}
           <div className="flex">
             <div className="flex-1 pr-2">
               <label
@@ -37,9 +57,9 @@ const New = ({ close, Buttons, Body }) => {
               <div className="mt-1 relative rounded-md shadow-sm">
                 <select
                   name="kind"
-                  value={kind}
+                  value={values.kind}
                   className="focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2 border-2 sm:text-sm border-gray-300 border rounded-md"
-                  onChange={(e) => setKind(e.target.value)}
+                  onChange={(e) => setValue("kind", e.target.value)}
                 >
                   <option>Please select</option>
                   <option value="project">Project</option>
@@ -59,9 +79,9 @@ const New = ({ close, Buttons, Body }) => {
               <div className="mt-1 relative rounded-md shadow-sm">
                 <select
                   name="priority"
-                  value={priority}
+                  value={values.priority}
                   className="focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2 border-2 sm:text-sm border-gray-300 border rounded-md"
-                  onChange={(e) => setPriority(e.target.value)}
+                  onChange={(e) => setValue("priority", e.target.value)}
                 >
                   <option value={2}>Low</option>
                   <option value={1}>High</option>
@@ -81,9 +101,9 @@ const New = ({ close, Buttons, Body }) => {
             <div className="mt-1 relative rounded-md shadow-sm">
               <input
                 name="subject"
-                value={subject}
+                value={values.subject}
                 className="focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2 border-2 sm:text-sm border-gray-300 border rounded-md"
-                onChange={(e) => setSubject(e.target.value)}
+                onChange={(e) => setValue("subject", e.target.value)}
               />
             </div>
           </div>
@@ -98,9 +118,9 @@ const New = ({ close, Buttons, Body }) => {
             <div className="mt-1 relative rounded-md shadow-sm">
               <textarea
                 name="description"
-                value={description}
+                value={values.description}
                 className="focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2 border-2 sm:text-sm border-gray-300 border rounded-md"
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => setValue("description", e.target.value)}
               />
             </div>
           </div>
@@ -115,9 +135,9 @@ const New = ({ close, Buttons, Body }) => {
             <div className="mt-1 relative rounded-md shadow-sm">
               <textarea
                 name="comment"
-                value={comment}
+                value={values.comment}
                 className="focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2 border-2 sm:text-sm border-gray-300 border rounded-md"
-                onChange={(e) => setComment(e.target.value)}
+                onChange={(e) => setValue("comment", e.target.value)}
               />
             </div>
           </div>
@@ -132,9 +152,9 @@ const New = ({ close, Buttons, Body }) => {
             <div className="mt-1 relative rounded-md shadow-sm">
               <textarea
                 name="payload"
-                value={payload}
+                value={values.payload}
                 className="focus:ring-indigo-500 h-80 focus:border-indigo-500 block w-full p-2 border-2 sm:text-sm border-gray-300 border rounded-md"
-                onChange={(e) => setPayload(e.target.value)}
+                onChange={(e) => setValue("payload", e.target.value)}
               />
             </div>
           </div>
@@ -143,7 +163,13 @@ const New = ({ close, Buttons, Body }) => {
       <Buttons>
         {" "}
         <div className="space-x-3">
-          <Button variant="primary">Create</Button>
+          <Button
+            variant="primary"
+            onClick={submit}
+            disabled={isCreating || !valid}
+          >
+            {isCreating ? "Creating..." : "Create"}
+          </Button>
           <Button onClick={close}>Close</Button>
         </div>
       </Buttons>

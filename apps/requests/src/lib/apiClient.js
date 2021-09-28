@@ -1,19 +1,3 @@
-import React from "react"
-
-const parseFields = (fields) => {
-  if (!fields) return result
-
-  if (Array.isArray(fields)) return ` { ${fields.join(" ")} } `
-
-  if (typeof fields === "object") {
-    let result = ""
-    Object.keys(fields).forEach((key) => {
-      result += ` { ${key} ${parseFields(fields[key])} } `
-    })
-    return result
-  }
-}
-
 class Client {
   constructor(endpoint, authToken, region) {
     this.endpoint = endpoint
@@ -61,13 +45,27 @@ class Client {
 
   listRequests(options) {
     options = options || {}
-    options.fields = options.fields || { items: ["id"] }
-    let fields = parseFields(options.fields)
-    console.log("===================FIELDS", fields)
+    let fields = options.fields || "items {id} "
+
     return this.request({
       operationName: "listRequests",
       // variables: {},
-      query: `query listRequests { requests ${fields} }`,
+      query: `query listRequests { requests { ${fields} } }`,
+    })
+  }
+
+  createRequest(params, options) {
+    options = options || {}
+    params = params || {}
+    params = Object.keys(params)
+      .map((key) => `${key}: ${JSON.stringify(params[key])}`)
+      .join(", ")
+    let fields = options.fields || "id"
+
+    return this.request({
+      operationName: "createRequest",
+      // variables: {},
+      query: `mutation createRequest { createRequest(${params}) { ${fields} } }`,
     })
   }
 }
