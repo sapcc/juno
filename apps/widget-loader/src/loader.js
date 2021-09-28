@@ -199,7 +199,7 @@ export const load = (currentScript) => {
     // preserve widget name and version as data attribute on the wrapper
     wrapper.setAttribute("data-name", name)
     wrapper.setAttribute("data-version", version)
-    // let the wrapper take the full width
+    // let the wrapper take the full height
     wrapper.style.height = "100%"
     currentScript.replaceWith(wrapper)
 

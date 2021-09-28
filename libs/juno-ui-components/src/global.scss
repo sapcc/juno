@@ -437,14 +437,12 @@
 
   html,
   body,
-  .shadow-body,
-  :host {
+  .shadow-body {
     @apply bg-theme-global-bg;
     @apply text-theme-default;
     @apply font-sans;
     @apply text-base;
-    
-    height: inherit;
+    @apply h-full;
   }
 
   a {
