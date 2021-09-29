@@ -199,18 +199,6 @@ module.exports = {
       width: {
         "switch-default": "2.625rem",
         "switch-handle-default": "1.1875rem",
-        "grid-col-1": "calc(8.33333333% - 11 * var(--grid-gutter-column) / 12)",
-        "grid-col-2": "calc(16.666667% - 10 * var(--grid-gutter-column) / 12)",
-        "grid-col-3": "calc(25% - 9 * var(--grid-gutter-column) / 12)",
-        "grid-col-4": "calc(33.33333333% - 8 * var(--grid-gutter-column) / 12)",
-        "grid-col-5": "calc(41.666667% - 7 * var(--grid-gutter-column) / 12)",
-        "grid-col-6": "calc(50% - 6 * var(--grid-gutter-column) / 12)",
-        "grid-col-7": "calc(58.333333% - 5 * var(--grid-gutter-column) / 12)",
-        "grid-col-8": "calc(66.666667% -  4 * var(--grid-gutter-column) / 12)",
-        "grid-col-9": "calc(75% - 3 * var(--grid-gutter-column) / 12)",
-        "grid-col-10": "calc(83.33333333% - 2 * var(--grid-gutter-column) / 12)",
-        "grid-col-11": "calc(91.666667% - var(--grid-gutter-column) / 12)",
-        "grid-col-12": "100%",
       },
       borderRadius: {
         "3px": "3px",

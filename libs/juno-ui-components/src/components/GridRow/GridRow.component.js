@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { useGrid } from "../Grid/Grid.component.js"
 
 const gridrowstyles = `
 	flex
@@ -12,6 +13,7 @@ export const GridRow = ({
 	className,
 	...props
 }) => {
+	const grid = useGrid()
 	return (
 		<div className={`grid-row ${gridrowstyles} ${className}`}>
 			{children}
@@ -25,4 +27,9 @@ GridRow.propTypes = {
 	children: PropTypes.node,
 	/** Add a class to the grid row */
 	className: PropTypes.string,
+}
+
+GridRow.defaultProps = {
+	children: null,
+	className: ""
 }
