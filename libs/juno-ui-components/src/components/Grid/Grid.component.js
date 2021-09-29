@@ -43,8 +43,8 @@ Grid.propTypes = {
 
 Grid.defaultProps = {
 	columns: null,
-	gutter_x: null,
-	gutter_y: null,
+	gutter_x: "1rem",
+	gutter_y: "1rem",
 	className: "",
 	children: null,
 }
