@@ -41,7 +41,7 @@ export const GridColumn = ({
 
 
 GridColumn.propTypes = {
-	/** The number of reference columns in a fixed grid to span the column over. Requires to have columns=[n] set to the parent Grid.*/
+	/** The number of columns to span the column over. */
 	cols: PropTypes.number,
 	/** The width in percent as a number without "%" for auto-layout grids TODO: or "auto". If a width is given, it will override the "cols" prop. */
 	width: PropTypes.number,
