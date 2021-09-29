@@ -1,6 +1,6 @@
 import React from "react"
 import { GridRow } from "./index.js"
-import { GridColumn } from "../GridColumn/index.js"
+import { Default as GridColumn } from "../GridColumn/GridColumn.stories.js"
 
 
 export default {
@@ -11,9 +11,18 @@ export default {
 
 const Template = ({columns, ...args}) => (
   <GridRow {...args}>
-    {args.children}
   </GridRow>
 )
 
 export const Default = Template.bind({})
-Default.args = {}
+Default.args = {
+  children:
+      [
+        <GridColumn {...GridColumn.args}/>,
+        <GridColumn {...GridColumn.args}/>,
+        <GridColumn {...GridColumn.args}/>,
+        <GridColumn {...GridColumn.args}/>,
+        <GridColumn {...GridColumn.args}/>,
+        <GridColumn {...GridColumn.args}/>
+      ]
+}

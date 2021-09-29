@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { useGrid } from "../Grid/Grid.component.js"
 
 const autoColumnStyles = `
-	flex-grow-1
+	flex-grow
 	flex-shrink-0
 	flex-basis-0
 `
@@ -12,10 +12,6 @@ const widthColumnStyles = `
 	flex-shrink-1
 	flex-basis-auto
 `
-
-const getBaseClass = (width) => {
-	width ? widthColumnStyles :  autoColumnStyles
-}
 
 export const GridColumn = ({
 	width,
@@ -32,8 +28,10 @@ export const GridColumn = ({
 	// Set flex-basis to the value passed as width if any:
 	const columnFlexBasis = columnWidth
 	const columnStyle = { width: columnWidth, flexBasis: columnFlexBasis }
+	// Determine base class to use:
+	const baseClass = width ? widthColumnStyles : autoColumnStyles
 	return (
-		<div className={`grid-column ${getBaseClass(width)} ${className}`} style={columnStyle} >
+		<div className={`grid-column ${baseClass} ${className}`} style={columnStyle} >
 			{children}
 		</div>
 	)
