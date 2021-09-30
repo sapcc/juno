@@ -18,7 +18,7 @@ const Results = ({ items, processing }) => {
         <div>
           <h2 className="text-2xl mb-3">Search Results {items.length > 1 && `(${items.length} found)`}</h2>
         
-          <Stack direction="vertical" gap={8} className="bg-juno-grey-blue-7 p-8">
+          <Stack direction="vertical" gap={8} className="bg-theme-results bg-opacity-95 p-8">
             { items.length > 0 ? (
               <>
                 <Stack gap={4}>
