@@ -1,7 +1,6 @@
 import React from "react"
 import { SearchInput, Stack } from "juno-ui-components"
 import cidrRegex from "cidr-regex"
-// import ipRegex from "ip-regex"
 
 const searchClasses = (resultsShown) => {
   return (`
@@ -28,7 +27,7 @@ const Search = ({ onSearch, resultsShown }) => {
 
 
   return (
-      <Stack direction="vertical" gap={2} className={`${searchClasses(resultsShown)}`}>
+      <Stack direction="vertical" gap={2} className={`search ${searchClasses(resultsShown)}`}>
         <SearchInput
           placeholder="IPs, IP lists, or IP ranges (CIDR)"
           className=""

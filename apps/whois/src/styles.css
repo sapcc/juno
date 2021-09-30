@@ -17,6 +17,10 @@
   background: url(img/IP-Background.svg) bottom right no-repeat;
 }
 
+.search {
+  min-width: 30rem;
+}
+
 /* bottom fade out */
 .fade {
   mask-image: linear-gradient(180deg, #000 80%, transparent);
