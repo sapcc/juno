@@ -11,7 +11,6 @@ import { Button, Message, PageHeader, Stack } from "juno-ui-components"
 
 const contentClasses = ({resultsShown}) => {
   return (`
-    h-full
     px-6
     
     ${!resultsShown ? `

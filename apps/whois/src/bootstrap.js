@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import App from "./App"
-import styles from "./styles.css"
+import styles from "./styles.scss"
 import StyleProvider from "juno-ui-components"
 
 export const init = (wrapper, props) => {

@@ -51,6 +51,21 @@ module.exports = (_, argv) => {
             },
           ],
         },
+        {
+          test: /\.scss$/,
+          use: [
+            "css-loader",
+            {
+              loader: "postcss-loader",
+              options: {
+                postcssOptions: {
+                  plugins: [require("tailwindcss"), require("autoprefixer")],
+                },
+              },
+            },
+            "sass-loader",
+          ],
+        },
         // svg config for svgs as components in jsx files
         {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
