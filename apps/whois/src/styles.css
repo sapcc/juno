@@ -15,10 +15,11 @@
 
 .whois {
   background: url(img/IP-Background.svg) bottom right no-repeat;
+  min-height: 40rem;
 }
 
 .search {
-  min-width: 42rem;
+  min-width: 36rem;
 }
 
 /* bottom fade out */
