@@ -18,6 +18,10 @@
   min-height: 40rem;
 }
 
+.theme-light .whois {
+  background: url(img/IP-Background_light.svg) bottom right no-repeat;
+}
+
 .search {
   min-width: 36rem;
 }
