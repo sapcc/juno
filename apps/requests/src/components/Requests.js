@@ -2,18 +2,18 @@ import React from "react"
 import { useClient } from "../lib/clientProvider"
 import { Button, Modal } from "juno-ui-components"
 import { useGlobalState, useDispatch } from "../lib/stateProvider"
+import { usePolicy } from "../lib/policyProvider"
+import { Link } from "react-router-dom"
 
-import Show from "./Show"
 import New from "./New"
 
 const Requests = () => {
   const requests = useGlobalState("requests")
   const dispatch = useDispatch()
-
-  const [currentItem, setCurrentItem] = React.useState()
   const [showNew, setShowNew] = React.useState(false)
 
   const client = useClient()
+  const policy = usePolicy()
 
   React.useEffect(() => {
     if (!client) return
@@ -31,7 +31,7 @@ const Requests = () => {
       })
       .catch((response) => {
         const data = JSON.parse(response.message)
-        dispatch({ type: "RECEIVE_REQUESTS_ERROR", error: data.errors })
+        dispatch({ type: "RECEIVE_REQUESTS_ERRORS", errors: data.errors })
       })
   }, [client])
 
@@ -52,42 +52,35 @@ const Requests = () => {
           )}
         />
 
-        {currentItem && (
-          <Modal
-            isOpen={!!currentItem}
-            close={() => setCurrentItem(null)}
-            title={`Details für ${currentItem.subject}`}
-            size="4xl"
-          >
-            <Show item={currentItem} />
-          </Modal>
-        )}
         <div className="flex items-center mb-3 whitespace-nowrap p-2">
           <h2 className="font-medium text-gray-900 truncate">
             {requests.isFetching && <span>Loading </span>}Requests
           </h2>
           <div className="flex-none flex items-center ml-auto pl-4 sm:pl-6">
             <div className="group p-0.5 rounded-lg flex bg-gray-100 hover:bg-gray-200">
-              <Button
-                size="small"
-                variant="primary"
-                onClick={() => setShowNew(true)}
-              >
-                New Request
-              </Button>
+              {policy.check("can-create") && (
+                <Button
+                  size="small"
+                  variant="primary"
+                  onClick={() => setShowNew(true)}
+                >
+                  New Request
+                </Button>
+              )}
             </div>
           </div>
         </div>
-        {requests.error && (
+        {requests.errors && (
           <div
             className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
             role="alert"
           >
-            {requests.error.map((error) => (
+            {requests.errors.map((error) => (
               <div>{error.message}</div>
             ))}
           </div>
         )}
+
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -135,9 +128,7 @@ const Requests = () => {
               <tr key={index}>
                 <td className="px-6 py-4 whitespace-nowrap">{request.id}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <a href="#" onClick={() => setCurrentItem(request)}>
-                    {request.subject}
-                  </a>
+                  <Link to={`/requests/${request.id}`}>{request.subject}</Link>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">{request.kind}</td>
 

@@ -72,14 +72,23 @@ const ModalButtonsContent = ({ children }) => {
 /**
  * Modal component
  * @param {boolean} isOpen if true the modal component is rendered
- * @param {function} onClose a callback to request a change of isOpen
+ * @param {function} close a callback to request a change of isOpen
+ * @param {function} onClosed a callback triggered after closed
  * @param {string|function} icon string or component
  * @param {string} title
  * @param {object} children  string, component or function.
  * If children is a function so Body and Buttons are provided as parameters and
  * should be used inside the function.
  */
-export const Modal = ({ isOpen, close, icon, title, children, size }) => {
+export const Modal = ({
+  isOpen,
+  close,
+  onClosed,
+  icon,
+  title,
+  children,
+  size,
+}) => {
   size = React.useMemo(() => {
     const sizes = ["lg", "xl", "2xl", "3xl", "4xl", "5xl"]
     return sizes.find((s) => s === size) || "xl"
@@ -91,7 +100,10 @@ export const Modal = ({ isOpen, close, icon, title, children, size }) => {
     if (isOpen) {
       setIsVisible(true)
     } else {
-      setTimeout(() => setIsVisible(false), 150)
+      setTimeout(() => {
+        setIsVisible(false)
+        if (onClosed) onClosed()
+      }, 150)
     }
   }, [isOpen])
 

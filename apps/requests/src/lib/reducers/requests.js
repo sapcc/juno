@@ -16,11 +16,11 @@ export default (state = initialState, action = {}) => {
         isFetching: false,
         updatedAt: Date.now(),
       }
-    case "RECEIVE_REQUESTS_ERROR":
+    case "RECEIVE_REQUESTS_ERRORS":
       return {
         ...state,
         isFetching: false,
-        error: action.error,
+        errors: action.errors,
       }
     case "ADD_REQUEST": {
       const items = state.items.slice()

@@ -1,3 +1,24 @@
+const parseParams = (params) => {
+  if (!params) return ""
+  const paramsString = Object.keys(params)
+    .map((key) => `${key}: ${JSON.stringify(params[key])}`)
+    .join(", ")
+
+  return `( ${paramsString} )`
+}
+
+const catchErrors = (response) => {
+  if (response.status < 400) {
+    return response
+  } else {
+    return response.text().then((message) => {
+      var error = new Error(message || response.statusText || response.status)
+      error.statusCode = response.status
+      // throw error
+      throw error
+    })
+  }
+}
 class Client {
   constructor(endpoint, authToken, region) {
     this.endpoint = endpoint
@@ -15,58 +36,65 @@ class Client {
     }
   }
 
-  request(body, options) {
+  graphqlRequest(body, options) {
     body = body || {}
     options = options || {}
     const requestOptions = Object.assign({}, this.defaultOptions, options)
     body = JSON.stringify(body)
 
-    return fetch(this.endpoint, {
+    return fetch(`${this.endpoint}/graphql`, {
       ...requestOptions,
       method: "POST",
       body, //: JSON.stringify(body),
     })
-      .then((response) => {
-        if (response.status < 400) {
-          return response
-        } else {
-          return response.text().then((message) => {
-            var error = new Error(
-              message || response.statusText || response.status
-            )
-            error.statusCode = response.status
-            // throw error
-            throw error
-          })
-        }
-      })
+      .then(catchErrors)
       .then((response) => response.json())
   }
 
   listRequests(options) {
     options = options || {}
     let fields = options.fields || "items {id} "
+    let filter = parseParams(options.filter)
 
-    return this.request({
+    return this.graphqlRequest({
       operationName: "listRequests",
       // variables: {},
-      query: `query listRequests { requests { ${fields} } }`,
+      query: `query listRequests { requests${filter} { ${fields} } }`,
     })
   }
 
   createRequest(params, options) {
     options = options || {}
-    params = params || {}
-    params = Object.keys(params)
-      .map((key) => `${key}: ${JSON.stringify(params[key])}`)
-      .join(", ")
+    params = parseParams(params)
     let fields = options.fields || "id"
 
-    return this.request({
+    return this.graphqlRequest({
       operationName: "createRequest",
       // variables: {},
-      query: `mutation createRequest { createRequest(${params}) { ${fields} } }`,
+      query: `mutation createRequest { createRequest${params} { ${fields} } }`,
     })
+  }
+
+  listProcessingSteps(requestID, options) {
+    options = options || {}
+    let fields = options.fields || "items {id} "
+    let filter = parseParams({ requestID, ...options.filter })
+
+    return this.graphqlRequest({
+      operationName: "listProcessingSteps",
+      // variables: {},
+      query: `query listProcessingSteps { processingSteps${filter} { ${fields} } }`,
+    })
+  }
+
+  getPolicyRules() {
+    return fetch(`${this.endpoint}/policy`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(catchErrors)
+      .then((response) => response.json())
   }
 }
 

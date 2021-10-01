@@ -106,6 +106,7 @@ function loadComponent(scope, module) {
  */
 const extractDataFromScript = (script) => {
   const data = script?.dataset
+  console.log(":::", script, data)
   // return if no script found or dataset is undefined
   if (!data) return {}
 
@@ -121,7 +122,7 @@ const extractDataFromScript = (script) => {
     }
   }
 
-  if (!name) return {}
+  if (!name) return { scope, name, version, module, url }
   // scope is variable name where the remote entry (widget) is hosted
   // we assume that the scope is name is the same as the app name.
   scope = scope || toVarName(name)
@@ -166,6 +167,20 @@ export const load = (currentScript) => {
     // get widget infos from data attributes
     let { scope, name, version, module, url } =
       extractDataFromScript(currentScript)
+
+    console.info(
+      "===1",
+      "url:",
+      url,
+      "scope:",
+      scope,
+      "name:",
+      name,
+      "version:",
+      version,
+      "module:",
+      module
+    )
 
     // do not accept name widget-loader or missing required data
     if (name === "widget-loader" || !(scope && name && module && url)) {
