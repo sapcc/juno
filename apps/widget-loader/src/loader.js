@@ -106,7 +106,6 @@ function loadComponent(scope, module) {
  */
 const extractDataFromScript = (script) => {
   const data = script?.dataset
-  console.log(":::", script, data)
   // return if no script found or dataset is undefined
   if (!data) return {}
 
@@ -167,20 +166,6 @@ export const load = (currentScript) => {
     // get widget infos from data attributes
     let { scope, name, version, module, url } =
       extractDataFromScript(currentScript)
-
-    console.info(
-      "===1",
-      "url:",
-      url,
-      "scope:",
-      scope,
-      "name:",
-      name,
-      "version:",
-      version,
-      "module:",
-      module
-    )
 
     // do not accept name widget-loader or missing required data
     if (name === "widget-loader" || !(scope && name && module && url)) {
