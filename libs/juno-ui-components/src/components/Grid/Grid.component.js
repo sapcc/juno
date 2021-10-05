@@ -20,7 +20,7 @@ export const Grid = ({
 	}
 	return (
 		<GridContext.Provider value={gridconf}>
-			<div className={`grid-container ${className}`} >
+			<div className={`grid-container ${className}`} {...props} >
 				{children}
 			</div>
 		</GridContext.Provider>

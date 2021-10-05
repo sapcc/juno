@@ -19,7 +19,7 @@ export const GridRow = ({
 	const margin_y = grid ? ( grid.gutter_y ? grid.gutter_y : null ) : null
 	const rowStyle = grid ? {marginLeft: margin_x, marginRight: margin_x, marginBottom: margin_y} : null
 	return (
-		<div className={`grid-row ${gridrowstyles} ${className}`} style={rowStyle}>
+		<div className={`grid-row ${gridrowstyles} ${className}`} style={rowStyle} {...props} >
 			{children}
 		</div>
 	)

@@ -13,6 +13,8 @@ const widthColumnStyles = `
 	flex-basis-auto
 `
 
+// TODO: handle padding incl. defaults
+
 export const GridColumn = ({
 	width,
 	cols,
@@ -31,7 +33,7 @@ export const GridColumn = ({
 	// Determine base class to use:
 	const baseClass = width ? widthColumnStyles : autoColumnStyles
 	return (
-		<div className={`grid-column ${baseClass} ${className}`} style={columnStyle} >
+		<div className={`grid-column ${baseClass} ${className}`} style={columnStyle} {...props} >
 			{children}
 		</div>
 	)
