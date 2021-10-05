@@ -338,7 +338,23 @@
 --color-required-bg: var(--color-juno-turquoise-raw);
 // Spinner
 --color-spinner-primary: var(--color-juno-blue-light-3-raw);
-// Syntax highlighting
+// Syntax Highlighting
+--color-syntax-highlight-base00: var(--color-juno-grey-light-20); // bg
+--color-syntax-highlight-base01: var(--color-juno-grey-light-20); // ?
+--color-syntax-highlight-base02: var(--color-sap-grey-3); // lines and boxes
+--color-syntax-highlight-base03: var(--color-sap-grey-3);
+--color-syntax-highlight-base04: var(--color-sap-grey-3);
+--color-syntax-highlight-base05: var(--color-juno-text-high);
+--color-syntax-highlight-base06: red;
+--color-syntax-highlight-base07: var(--color-juno-text-high);
+--color-syntax-highlight-base08: var(--color-juno-grey-blue-88); // NULL
+--color-syntax-highlight-base09: var(--color-juno-blue); // String value
+--color-syntax-highlight-base0A: var(--color-juno-grey-blue-88); // NaN
+--color-syntax-highlight-base0B: var(--color-juno-blue); // float value
+--color-syntax-highlight-base0C: var(--color-sap-gold); // array index
+--color-syntax-highlight-base0D: var(--color-sap-gold); // expanded icon
+--color-syntax-highlight-base0E: var(--color-juno-blue); // bool + collapsed icon
+--color-syntax-highlight-base0F: var(--color-juno-blue); // integer value
   
 }
 

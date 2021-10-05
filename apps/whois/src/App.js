@@ -11,7 +11,6 @@ import { Button, Message, PageHeader, Stack } from "juno-ui-components"
 
 const contentClasses = ({resultsShown}) => {
   return (`
-    h-full
     px-6
     
     ${!resultsShown ? `
@@ -35,6 +34,8 @@ const App = (props) => {
   const [items, setItems] = React.useState(null)
   const [error, setError] = React.useState(null)
   const [statusCode, setStatusCode] = React.useState(null)
+
+  const {embedded} = props
 
   const resultsShown = items !== null
 
@@ -76,7 +77,9 @@ const App = (props) => {
 
   return (
     <div className="whois h-full">
-      <PageHeader heading="Whois" />
+      { !embedded && 
+        <PageHeader heading="Whois" />
+      }
       <Stack direction="vertical" gap={8} className={`${contentClasses({resultsShown})}`}>
         { !resultsShown &&
           <Stack direction="vertical" gap={1} className="items-center">

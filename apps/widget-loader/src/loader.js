@@ -168,10 +168,7 @@ export const load = (currentScript) => {
       extractDataFromScript(currentScript)
 
     // do not accept name widget-loader or missing required data
-    if (
-      name === "widget-loader" ||
-      !(scope && name && version && module && url)
-    ) {
+    if (name === "widget-loader" || !(scope && name && module && url)) {
       console.log("Could not load widget", currentScript)
       //currentScript.remove()
       return
