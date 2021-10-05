@@ -1,3 +1,8 @@
+# WHOIS UI
+
+This is the micro frontend app for the whois service.
+
+
 ## Usage
 
 ### load via script tag
