@@ -14,4 +14,12 @@ describe("Grid", () => {
 		expect(screen.getByTestId("my-grid")).toHaveClass("my-grid-class")
 	})
 	
+	test("has modified CSS variables in a style tag for auto grids", async () => {
+		render(<Grid data-testid="my-auto-grid" auto />)
+		expect(screen.getByTestId("my-auto-grid")).toHaveAttribute("style")
+		expect(document.querySelector('.grid-container').style.getPropertyValue('--grid-column-flex-grow')).toBe('1')
+		expect(document.querySelector('.grid-container').style.getPropertyValue('--grid-column-flex-shrink')).toBe('0')
+		expect(document.querySelector('.grid-container').style.getPropertyValue('--grid-column-flex-basis')).toBe('0')
+	})
+	
 })

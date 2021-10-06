@@ -14,4 +14,20 @@ describe("GridColumn", () => {
 		expect(screen.getByTestId("my-grid-column")).toHaveClass("my-grid-column-class")
 	})
 	
+	test("renders modified 'auto' styles when passed", async () => {
+		render(<GridColumn data-testid="my-auto-column" auto />)
+		expect(screen.getByTestId("my-auto-column")).toHaveAttribute("style")
+		expect(document.querySelector('.grid-column').style.getPropertyValue('flex-grow')).toBe('1')
+		expect(document.querySelector('.grid-column').style.getPropertyValue('flex-shrink')).toBe('0')
+		expect(document.querySelector('.grid-column').style.getPropertyValue('flex-basis')).toBe('0px')
+	})
+	
+	test("renders width-related styles in a style tag when passed", async () => {
+		render(<GridColumn data-testid="my-width-column" width={73} />)
+		expect(screen.getByTestId("my-width-column")).toHaveAttribute("style")
+		expect(document.querySelector('.grid-column').style.getPropertyValue('width')).toBe('73%')
+		expect(document.querySelector('.grid-column').style.getPropertyValue('flex-shrink')).toBe('0')
+		expect(document.querySelector('.grid-column').style.getPropertyValue('flex-basis')).toBe('73%')
+	})
+	
 })

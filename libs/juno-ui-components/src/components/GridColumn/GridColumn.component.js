@@ -105,8 +105,6 @@ export const GridColumn = ({
 	children,
 	...props
 }) => {
-	// Determine base class to use based on whether a 'width' was passed or not:
-	const baseClass = width ? widthColumnStyles : autoColumnStyles
 	// auto column:
 	const autoStyles = {
 		flexGrow: "1",
@@ -114,7 +112,7 @@ export const GridColumn = ({
 		flexBasis: "0"
 	}
 	// width column:
-	const widthStyles = width ? { width: width, flexGrow: "0", flexShrink: "0", flexBasis: width } : {}
+	const widthStyles = width ? { width: width + '%', flexGrow: "0", flexShrink: "0", flexBasis: width + '%' } : {}
 	// width overrides auto:
 	const columnStyles = width ? widthStyles : ( auto ? autoStyles : {} )
 	return (
