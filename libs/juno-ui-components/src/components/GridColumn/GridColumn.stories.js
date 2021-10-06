@@ -17,5 +17,17 @@ Default.args = {
   children: "Column"
 }
 
+export const AutoColumn = Template.bind({})
+AutoColumn.args = {
+  auto: true,
+  children: "Auto Column"
+}
+
+export const WidthColumn = Template.bind({})
+WidthColumn.args = {
+  width: "50%",
+  children: "Column 50%"
+}
+
 
 

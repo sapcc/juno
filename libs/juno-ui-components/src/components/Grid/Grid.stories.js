@@ -20,5 +20,11 @@ Default.args = {
   <GridRow {...GridRow.args} /> 
 }
 
+export const Auto = Template.bind({})
+Auto.args = {
+  auto: true,
+  children: <GridRow {...GridRow.args} /> 
+}
+
 
 

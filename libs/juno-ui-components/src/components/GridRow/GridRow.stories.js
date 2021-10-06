@@ -23,6 +23,13 @@ Default.args = {
         <GridColumn {...GridColumn.args}/>,
         <GridColumn {...GridColumn.args}/>,
         <GridColumn {...GridColumn.args}/>,
+        <GridColumn {...GridColumn.args}/>,
+        <GridColumn {...GridColumn.args}/>,
+        <GridColumn {...GridColumn.args}/>,
+        <GridColumn {...GridColumn.args}/>,
+        <GridColumn {...GridColumn.args}/>,
+        <GridColumn {...GridColumn.args}/>,
         <GridColumn {...GridColumn.args}/>
       ]
 }
+

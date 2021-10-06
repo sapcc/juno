@@ -1,40 +1,33 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const GridContext = React.createContext()
-
-export const useGrid = () => React.useContext(GridContext)
 
 export const Grid = ({
-	columns,
-	gutter_x,
-	gutter_y,
+	auto,
 	children,
 	className,
 	...props
 }) => {
-	const gridconf = {
-		columns: columns,
-		gutter_x: gutter_x,
-		gutter_y: gutter_y
+	// auto grid overrides for columns:
+	const autoStyles = {
+		"--grid-column-flex-grow": "1",
+		"--grid-column-flex-shrink": "0",
+		"--grid-column-flex-basis": "0",
+		"--grid-column-default-width": "auto",
 	}
+	// Override column vars in case 'auto' was passed:
+	const gridStyles = auto ? autoStyles : {}
 	return (
-		<GridContext.Provider value={gridconf}>
-			<div className={`grid-container ${className}`} {...props} >
-				{children}
-			</div>
-		</GridContext.Provider>
+		<div className={`grid-container ${className}`}  style={gridStyles} {...props} >
+			{children}
+		</div>
 	)
 }
 
 
 Grid.propTypes = {
-	/** Optional: The number of columns in the grid. */
-	columns: PropTypes.number,
-	/** Optional: The horizontal gutter between columns in the grid. Any valid CSS length will work. Default is 1rem. */
-	gutter_x: PropTypes.string,
-	/** Optional: The vertical gutter between rows in the grid. Any valid CSS length will work. Default is 1rem. */
-	gutter_y: PropTypes.string,
+	/** Whether columns should auto-size or not, default is false. This effectively overrides the 12-columns default grid */
+	auto: PropTypes.bool,
 	/** The children to render in the grid */
 	children: PropTypes.node,
 	/** Add a class to the grid container */
@@ -42,9 +35,7 @@ Grid.propTypes = {
 }
 
 Grid.defaultProps = {
-	columns: null,
-	gutter_x: null,
-	gutter_y: null,
+	auto: false,
 	className: "",
 	children: null,
 }
