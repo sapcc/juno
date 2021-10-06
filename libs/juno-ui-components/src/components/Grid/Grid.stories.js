@@ -27,5 +27,27 @@ Auto.args = {
   children: <GridRow6 {...GridRow6.args} /> 
 }
 
+export const TestGrid = Template.bind({})
+TestGrid.args = {
+  children: 
+    <GridRow>
+      <GridColumn>Column</GridColumn>
+      <GridColumn auto>Auto Column</GridColumn>
+      <GridColumn width={10}>Column 10%</GridColumn>
+      <GridColumn cols={3}>Auto Column</GridColumn>
+    </GridRow>
+}
 
+export const TestGridAuto = Template.bind({})
+TestGridAuto.args = {
+  auto: true,
+  children:
+    <GridRow>
+    <GridColumn>Column</GridColumn>
+    <GridColumn auto>Auto Column</GridColumn>
+    <GridColumn width={10}>Column 10%</GridColumn>
+    <GridColumn cols={3}>Auto Column</GridColumn>
+  </GridRow>
+    
+}
 
