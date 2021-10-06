@@ -79,10 +79,8 @@ export const StyleProvider = ({
       style.appendChild(document.createTextNode(styles))
     }
     wrapper.prepend(style)
-
-    // ensure html tag gets correct theme class
-    document.documentElement.classList.add(themeClass)
   }, [])
+
 
   return (
     <StylesContext.Provider value={(styles, theme)}>
