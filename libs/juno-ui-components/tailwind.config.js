@@ -203,6 +203,7 @@ module.exports = {
         sm: "0.5rem",
         md: "1rem",
         lg: "1.5rem",
+        "grid-column": "0 .5rem"
       },
       height: {
         "textinput": "2.75rem",

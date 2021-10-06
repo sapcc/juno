@@ -16,6 +16,7 @@ const widthColumnStyles = `
 const columnBaseStyles = `
 	flex-grid-column
 	w-grid-column-default
+	p-grid-column
 `
 
 const cols_1 = `
