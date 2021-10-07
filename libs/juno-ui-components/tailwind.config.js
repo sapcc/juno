@@ -203,6 +203,7 @@ module.exports = {
         sm: "0.5rem",
         md: "1rem",
         lg: "1.5rem",
+        "grid-column": "0 .5rem"
       },
       height: {
         "textinput": "2.75rem",
@@ -213,10 +214,29 @@ module.exports = {
       width: {
         "switch-default": "2.625rem",
         "switch-handle-default": "1.1875rem",
+        "grid-column-default": "var(--grid-column-default-width)",
+        "grid-col-1": "8.333333%",
+        "grid-col-2": "16.666667%",
+        "grid-col-3": "25%",
+        "grid-col-4": "33.333333%",
+        "grid-col-5": "41.666667%",
+        "grid-col-6": "50%",
+        "grid-col-7": "58.333333%",
+        "grid-col-8": "66.666667%",
+        "grid-col-9": "75%",
+        "grid-col-10": "83.333333%",
+        "grid-col-11": "91.666667%",
+        "grid-col-12": "100%",
       },
       borderRadius: {
         "3px": "3px",
       },
+      margin: {
+        "grid-row": "0 var(--grid-row-margin-x)",
+      },
+      flex: {
+        "grid-column": "var(--grid-column-flex-grow) var(--grid-column-flex-shrink) var(--grid-column-flex-basis)"
+      }
     },
     borderWidth: {
       DEFAULT: "1px",

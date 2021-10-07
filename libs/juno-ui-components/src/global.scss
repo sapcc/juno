@@ -448,6 +448,19 @@
 
 }
 
+// Grid configuration
+:root,
+:host {
+  --grid-columns: 12;
+  --grid-row-margin-x: -.5rem;
+  --grid-column-flex-grow: 0;
+  --grid-column-flex-shrink: 1;
+  --grid-column-flex-basis: auto;
+  --grid-column-default-width: 8.333333%;
+}
+
+
+
 // default base styles using the tw base directive
 @layer base {
 
@@ -476,3 +489,13 @@
 
 @tailwind components;
 @tailwind utilities;
+
+// Add flex-basis utilities since tw doesn't support flex-basis: https://github.com/tailwindlabs/tailwindcss/issues/603
+@layer utilities {
+  .flex-basis-0 {
+    flex-basis: 0%;
+  }
+  .flex-basis-auto {
+    flex-basis: auto;
+  }
+}
