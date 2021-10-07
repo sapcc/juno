@@ -15,32 +15,5 @@ const Template = ({columns, ...args}) => (
 )
 
 export const Default = Template.bind({})
-Default.args = {
-  children:
-      [
-        <GridColumn {...GridColumn.args}/>,
-        <GridColumn {...GridColumn.args}/>,
-        <GridColumn {...GridColumn.args}/>,
-        <GridColumn {...GridColumn.args}/>,
-        <GridColumn {...GridColumn.args}/>,
-        <GridColumn {...GridColumn.args}/>,
-        <GridColumn {...GridColumn.args}/>,
-        <GridColumn {...GridColumn.args}/>,
-        <GridColumn {...GridColumn.args}/>,
-        <GridColumn {...GridColumn.args}/>,
-        <GridColumn {...GridColumn.args}/>,
-        <GridColumn {...GridColumn.args}/>
-      ]
-}
+Default.args = {}
 
-export const Row6 = Template.bind({})
-Row6.args = {
-  children: [
-    <GridColumn {...GridColumn.args}/>,
-    <GridColumn {...GridColumn.args}/>,
-    <GridColumn {...GridColumn.args}/>,
-    <GridColumn {...GridColumn.args}/>,
-    <GridColumn {...GridColumn.args}/>,
-    <GridColumn {...GridColumn.args}/>
-  ]
-}

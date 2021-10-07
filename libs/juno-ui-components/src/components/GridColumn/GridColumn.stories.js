@@ -8,7 +8,7 @@ export default {
 }
 
 const Template = (args) => (
-  <GridColumn {...args} className="bg-juno-blue-3">
+  <GridColumn {...args} className={ args.className || "bg-juno-blue-3" }>
   </GridColumn>
 )
 

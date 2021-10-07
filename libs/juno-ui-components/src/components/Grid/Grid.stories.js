@@ -1,7 +1,6 @@
 import React from "react"
 import { Grid } from "./index.js"
 import { Default as GridRow } from "../GridRow/GridRow.stories.js"
-import { Row6 as GridRow6 } from "../GridRow/GridRow.stories.js"
 import { Default as GridColumn } from "../GridColumn/GridColumn.stories.js"
 
 export default {
@@ -25,7 +24,20 @@ Default.parameters = {
 }
 Default.args = {
   children: [
-  <GridRow {...GridRow.args} />,
+  <GridRow>
+    <GridColumn>Column</GridColumn>
+    <GridColumn>Column</GridColumn>
+    <GridColumn>Column</GridColumn>
+    <GridColumn>Column</GridColumn>
+    <GridColumn>Column</GridColumn>
+    <GridColumn>Column</GridColumn>
+    <GridColumn>Column</GridColumn>
+    <GridColumn>Column</GridColumn>
+    <GridColumn>Column</GridColumn>
+    <GridColumn>Column</GridColumn>
+    <GridColumn>Column</GridColumn>
+    <GridColumn>Column</GridColumn>
+  </GridRow>,
   <GridRow>
     <GridColumn>Column</GridColumn>
     <GridColumn cols={3}>Column cols-3</GridColumn>
@@ -46,14 +58,31 @@ Auto.parameters = {
 }
 Auto.args = {
   auto: true,
-  children:  
+  children:  [
     <GridRow>
       <GridColumn>Column</GridColumn>
       <GridColumn>Column</GridColumn>
       <GridColumn>Column</GridColumn>
       <GridColumn>Column</GridColumn>
       <GridColumn>Column</GridColumn>
+    </GridRow>,
+    <GridRow>
+      <GridColumn>Column</GridColumn>
+      <GridColumn>Column</GridColumn>
+      <GridColumn>Column</GridColumn>
+    </GridRow>,
+    <GridRow>
+      <GridColumn>Column</GridColumn>
+      <GridColumn>Column</GridColumn>
+      <GridColumn>Column</GridColumn>
+      <GridColumn>Column</GridColumn>
+      <GridColumn>Column</GridColumn>
+      <GridColumn>Column</GridColumn>
+      <GridColumn>Column</GridColumn>
+      <GridColumn>Column</GridColumn>
+      <GridColumn>Column</GridColumn>
     </GridRow>
+  ]
 }
 
 export const TestGrid = Template.bind({})
@@ -76,7 +105,22 @@ TestGridAuto.args = {
       <GridColumn auto>Auto Column</GridColumn>
       <GridColumn width={10}>Column 10%</GridColumn>
       <GridColumn cols={3}>Auto Column</GridColumn>
-      </GridRow>
-    
+      </GridRow> 
+}
+
+export const Nested = Template.bind({})
+Nested.args = {
+  children:
+    <GridRow>
+      <GridColumn cols={3}>Column cols-3</GridColumn>
+      <GridColumn cols={9}>
+        <Grid>
+          <GridRow>
+            <GridColumn width={33.333333} className="bg-juno-blue-2">Nested Column 33.333333%</GridColumn>
+            <GridColumn width={66.666666} className="bg-juno-blue-2">Nested Column 66.666666%</GridColumn>
+          </GridRow>
+        </Grid>
+      </GridColumn>
+    </GridRow>
 }
 
