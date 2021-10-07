@@ -15,5 +15,20 @@ const Template = ({columns, ...args}) => (
 )
 
 export const Default = Template.bind({})
-Default.args = {}
+Default.args = {
+  children: [
+    <GridColumn>Column</GridColumn>,
+    <GridColumn>Column</GridColumn>,
+    <GridColumn>Column</GridColumn>,
+    <GridColumn>Column</GridColumn>,
+    <GridColumn>Column</GridColumn>,
+    <GridColumn>Column</GridColumn>,
+    <GridColumn>Column</GridColumn>,
+    <GridColumn>Column</GridColumn>,
+    <GridColumn>Column</GridColumn>,
+    <GridColumn>Column</GridColumn>,
+    <GridColumn>Column</GridColumn>,
+    <GridColumn>Column</GridColumn>
+  ]
+}
 

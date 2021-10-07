@@ -85,8 +85,8 @@ Auto.args = {
   ]
 }
 
-export const TestGrid = Template.bind({})
-TestGrid.args = {
+export const MixedGrid = Template.bind({})
+MixedGrid.args = {
   children: 
     <GridRow>
       <GridColumn>Column</GridColumn>
@@ -96,8 +96,8 @@ TestGrid.args = {
     </GridRow>
 }
 
-export const TestGridAuto = Template.bind({})
-TestGridAuto.args = {
+export const MixedAutoGrid = Template.bind({})
+MixedAutoGrid.args = {
   auto: true,
   children:
     <GridRow>
@@ -108,8 +108,8 @@ TestGridAuto.args = {
       </GridRow> 
 }
 
-export const Nested = Template.bind({})
-Nested.args = {
+export const NestedGrid = Template.bind({})
+NestedGrid.args = {
   children:
     <GridRow>
       <GridColumn cols={3}>Column cols-3</GridColumn>
