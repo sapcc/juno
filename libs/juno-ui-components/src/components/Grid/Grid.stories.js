@@ -16,15 +16,44 @@ const Template = (args) =>
 
 
 export const Default = Template.bind({})
+Default.parameters = {
+  docs: {
+    description: { 
+      story: "Per default, Juno uses a 12-column fluid grid. Columns can be made to span multiple columns by passing `cols={n}`."
+    }
+  },
+}
 Default.args = {
-  children: 
-  <GridRow {...GridRow.args} /> 
+  children: [
+  <GridRow {...GridRow.args} />,
+  <GridRow>
+    <GridColumn>Column</GridColumn>
+    <GridColumn cols={3}>Column cols-3</GridColumn>
+    <GridColumn cols={5}>Column cols-5</GridColumn>
+    <GridColumn cols={2}>Column cols-2</GridColumn>
+  </GridRow>
+  ]
 }
 
+
 export const Auto = Template.bind({})
+Auto.parameters = {
+  docs: {
+    description: { 
+      story: "By passing `auto` to the grid, all of its contained columns will automatically size to share available space equally. Columns with `cols={n}` will switch their behaviour to auto-size."
+    }
+  },
+}
 Auto.args = {
   auto: true,
-  children: <GridRow6 {...GridRow6.args} /> 
+  children:  
+    <GridRow>
+      <GridColumn>Column</GridColumn>
+      <GridColumn>Column</GridColumn>
+      <GridColumn>Column</GridColumn>
+      <GridColumn>Column</GridColumn>
+      <GridColumn>Column</GridColumn>
+    </GridRow>
 }
 
 export const TestGrid = Template.bind({})
@@ -43,11 +72,11 @@ TestGridAuto.args = {
   auto: true,
   children:
     <GridRow>
-    <GridColumn>Column</GridColumn>
-    <GridColumn auto>Auto Column</GridColumn>
-    <GridColumn width={10}>Column 10%</GridColumn>
-    <GridColumn cols={3}>Auto Column</GridColumn>
-  </GridRow>
+      <GridColumn>Column</GridColumn>
+      <GridColumn auto>Auto Column</GridColumn>
+      <GridColumn width={10}>Column 10%</GridColumn>
+      <GridColumn cols={3}>Auto Column</GridColumn>
+      </GridRow>
     
 }
 
