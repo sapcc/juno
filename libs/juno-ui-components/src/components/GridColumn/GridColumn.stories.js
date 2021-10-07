@@ -25,7 +25,7 @@ AutoColumn.args = {
 
 export const WidthColumn = Template.bind({})
 WidthColumn.args = {
-  width: "50",
+  width: 50,
   children: "Column 50%"
 }
 
