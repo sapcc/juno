@@ -3102,6 +3102,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jest/types@npm:^27.2.4":
+  version: 27.2.4
+  resolution: "@jest/types@npm:27.2.4"
+  dependencies:
+    "@types/istanbul-lib-coverage": ^2.0.0
+    "@types/istanbul-reports": ^3.0.0
+    "@types/node": "*"
+    "@types/yargs": ^16.0.0
+    chalk: ^4.0.0
+  checksum: 1e753c4fef7fed4bb9f3a9c2c2cd7d97317851a065c95aa8461dacdf7bdb5c6fa7a319d011869086dc5a45226280a844a4a6696dbe4a14b2e2449250db10fd46
+  languageName: node
+  linkType: hard
+
 "@mdx-js/loader@npm:^1.6.22":
   version: 1.6.22
   resolution: "@mdx-js/loader@npm:1.6.22"
@@ -4757,9 +4770,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:^7.28.1, @testing-library/dom@npm:^7.30.0":
-  version: 7.31.2
-  resolution: "@testing-library/dom@npm:7.31.2"
+"@testing-library/dom@npm:^8.0.0, @testing-library/dom@npm:^8.7.2":
+  version: 8.7.2
+  resolution: "@testing-library/dom@npm:8.7.2"
   dependencies:
     "@babel/code-frame": ^7.10.4
     "@babel/runtime": ^7.12.5
@@ -4768,12 +4781,12 @@ __metadata:
     chalk: ^4.1.0
     dom-accessibility-api: ^0.5.6
     lz-string: ^1.4.4
-    pretty-format: ^26.6.2
-  checksum: f930b4797fd41e515e645427027574fb82a46d90edde20523c2269916be88aeb302f2a4eb982d7c41afbe2de4ed3129e6b269424db2a90974ea76bdb9f26e3ed
+    pretty-format: ^27.0.2
+  checksum: 3d03545dae0764dc1f2fe29aa0fed2a2d9618aef56cbc0df7412c46c8f9652afd2c2dc3c2db5c2775246ea61f6c0155032e0d69ea4a36969e11ce2091cc1f92b
   languageName: node
   linkType: hard
 
-"@testing-library/jest-dom@npm:^5.11.4, @testing-library/jest-dom@npm:^5.12.0":
+"@testing-library/jest-dom@npm:^5.14.1":
   version: 5.14.1
   resolution: "@testing-library/jest-dom@npm:5.14.1"
   dependencies:
@@ -4790,27 +4803,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^11.1.0, @testing-library/react@npm:^11.2.7":
-  version: 11.2.7
-  resolution: "@testing-library/react@npm:11.2.7"
+"@testing-library/react@npm:^12.1.2":
+  version: 12.1.2
+  resolution: "@testing-library/react@npm:12.1.2"
   dependencies:
     "@babel/runtime": ^7.12.5
-    "@testing-library/dom": ^7.28.1
+    "@testing-library/dom": ^8.0.0
   peerDependencies:
     react: "*"
     react-dom: "*"
-  checksum: 389c9f3e83f59677f5283783788d18f8cd499342a0e5c1f67821c292860afe5f282ff8b5ced795b9c2f7d78132005d8b6b33e1b3e3a9004e240e3569f8e168ef
+  checksum: d48b14b34d1c24987b44c00ce040e24d5cd0ea37866f24f8fbc000e09b3965de6d754c9f92d56f93dc281d4af199a7dd6a4897d7cd940742ad5c619684eaaff6
   languageName: node
   linkType: hard
 
-"@testing-library/user-event@npm:^12.1.10":
-  version: 12.8.3
-  resolution: "@testing-library/user-event@npm:12.8.3"
+"@testing-library/user-event@npm:^13.2.1":
+  version: 13.2.1
+  resolution: "@testing-library/user-event@npm:13.2.1"
   dependencies:
     "@babel/runtime": ^7.12.5
   peerDependencies:
     "@testing-library/dom": ">=7.21.4"
-  checksum: de7ec0222bc30f5b967c03298563c9c1fe2dc94e3d1ad94607df90f660f68d9c9686c25f59be4f049ab3cccc80080d6056b32d6851666afe3fbc35d9c384fb20
+  checksum: fea514ffc89688632f3d29f9a4d93005ac9f2259010d064a1c9bd2bef5bb8a0a606086fe55b09cc45186e1de200dc3dc9ca86475f9ddc00b0a307288159798a9
   languageName: node
   linkType: hard
 
@@ -6243,6 +6256,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ansi-regex@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "ansi-regex@npm:5.0.1"
+  checksum: c944e1229f022a2071f7477ea425964328c577d2c752083fe564ea0513b6d733c9ec65102f6d4d2b54cba0cb2dc969648b60d567abeff13dc95ecc0b9b97737d
+  languageName: node
+  linkType: hard
+
 "ansi-styles@npm:^3.2.0, ansi-styles@npm:^3.2.1":
   version: 3.2.1
   resolution: "ansi-styles@npm:3.2.1"
@@ -6666,10 +6686,10 @@ __metadata:
     "@babel/preset-env": ^7.13.9
     "@babel/preset-react": ^7.12.13
     "@pmmmwh/react-refresh-webpack-plugin": ^0.4.3
-    "@testing-library/dom": ^7.30.0
-    "@testing-library/jest-dom": ^5.11.4
-    "@testing-library/react": ^11.1.0
-    "@testing-library/user-event": ^12.1.10
+    "@testing-library/dom": ^8.7.2
+    "@testing-library/jest-dom": ^5.14.1
+    "@testing-library/react": ^12.1.2
+    "@testing-library/user-event": ^13.2.1
     assert: ^2.0.0
     autoprefixer: ^10.2.5
     babel-jest: ^26.6.3
@@ -9773,9 +9793,9 @@ __metadata:
     "@emotion/cache": ^11.1.3
     "@emotion/react": ^11.1.5
     "@emotion/styled": ^11.1.5
-    "@testing-library/jest-dom": ^5.11.4
-    "@testing-library/react": ^11.1.0
-    "@testing-library/user-event": ^12.1.10
+    "@testing-library/jest-dom": ^5.14.1
+    "@testing-library/react": ^12.1.2
+    "@testing-library/user-event": ^13.2.1
     autoprefixer: ^10.2.4
     communicator: "workspace:*"
     eslint-config-react-app: ^6.0.0
@@ -10079,9 +10099,9 @@ __metadata:
     "@babel/plugin-transform-react-jsx": ^7.13.12
     "@babel/preset-env": ^7.13.5
     "@babel/preset-react": ^7.12.13
-    "@testing-library/jest-dom": ^5.11.4
-    "@testing-library/react": ^11.1.0
-    "@testing-library/user-event": ^12.1.10
+    "@testing-library/jest-dom": ^5.14.1
+    "@testing-library/react": ^12.1.2
+    "@testing-library/user-event": ^13.2.1
     assert: ^2.0.0
     babel-jest: ^26.6.3
     babel-loader: 8.1.0
@@ -16322,8 +16342,10 @@ fsevents@^1.2.7:
     "@storybook/testing-react": ^0.0.22
     "@svgr/rollup": ^5.5.0
     "@svgr/webpack": ^5.5.0
-    "@testing-library/jest-dom": ^5.12.0
-    "@testing-library/react": ^11.2.7
+    "@testing-library/dom": ^8.7.2
+    "@testing-library/jest-dom": ^5.14.1
+    "@testing-library/react": ^12.1.2
+    "@testing-library/user-event": ^13.2.1
     add: ^2.0.6
     autoprefixer: ^10.2.5
     babel-jest: ^27.0.6
@@ -20568,6 +20590,18 @@ fsevents@^1.2.7:
     ansi-styles: ^4.0.0
     react-is: ^17.0.1
   checksum: 5ad34fc128218485732cf0271d396158a00584708fc97bf063c1c3c000fe14da572e9a1d3d7b92d95c5e24965434656c56ed0e45804dea2435ca59a1f86f1b07
+  languageName: node
+  linkType: hard
+
+"pretty-format@npm:^27.0.2":
+  version: 27.2.4
+  resolution: "pretty-format@npm:27.2.4"
+  dependencies:
+    "@jest/types": ^27.2.4
+    ansi-regex: ^5.0.1
+    ansi-styles: ^5.0.0
+    react-is: ^17.0.1
+  checksum: 8893b30d3bde8faad2a9052b1646a3b10b9a56ad1e3591ba77fa6938baed85f0511404580fe6a0d749743b1797e40d361b9d620316e8a19a53333e3eabca7482
   languageName: node
   linkType: hard
 
@@ -26159,10 +26193,10 @@ resolve@^2.0.0-next.3:
     "@babel/preset-react": ^7.12.13
     "@pmmmwh/react-refresh-webpack-plugin": ^0.4.3
     "@svgr/webpack": ^5.5.0
-    "@testing-library/dom": ^7.30.0
-    "@testing-library/jest-dom": ^5.11.4
-    "@testing-library/react": ^11.1.0
-    "@testing-library/user-event": ^12.1.10
+    "@testing-library/dom": ^8.7.2
+    "@testing-library/jest-dom": ^5.14.1
+    "@testing-library/react": ^12.1.2
+    "@testing-library/user-event": ^13.2.1
     assert: ^2.0.0
     autoprefixer: ^10.2.5
     babel-jest: ^26.6.3
