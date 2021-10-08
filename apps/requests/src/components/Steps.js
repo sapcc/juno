@@ -1,7 +1,7 @@
-import { useEffect, useReducer, Fragment } from "react"
+import { useEffect, useReducer, useCallback } from "react"
 import { useClient } from "../lib/clientProvider"
 import { formatDate } from "../lib/utils"
-import { usePolicy } from "../lib/policyProvider"
+import StepActions from "./StepActions"
 
 function reducer(state, action) {
   switch (action.type) {
@@ -28,10 +28,9 @@ function reducer(state, action) {
   }
 }
 
-const Steps = ({ request }) => {
+const Steps = ({ request, onRefresh }) => {
   const client = useClient()
   const [steps, dispatch] = useReducer(reducer, { items: [] })
-  const policy = usePolicy()
 
   useEffect(() => {
     if (!client || !request) return
@@ -68,6 +67,7 @@ const Steps = ({ request }) => {
   return (
     <>
       <h4>Steps</h4>
+      <StepActions request={request} onNewStep={onRefresh} />
 
       {steps.isFetching && <span>Loading...</span>}
       {steps.errors && (
@@ -85,7 +85,19 @@ const Steps = ({ request }) => {
       {steps.items.map((step, index) => (
         <div
           key={index}
-          className="rounded-xl overflow-hidden bg-gradient-to-r from-indigo-50 to-indigo-100 p-4"
+          className={`rounded-xl overflow-hidden bg-gradient-to-r from-${
+            step.toState === "rejected"
+              ? "red"
+              : step.toState === "approved"
+              ? "green"
+              : "indigo"
+          }-50 to-${
+            step.toState === "rejected"
+              ? "red"
+              : step.toState === "approved"
+              ? "green"
+              : "indigo"
+          }-100 p-4 mb-2`}
         >
           <div className="grid grid-cols-5">
             {/* ID | Kind | Priority */}

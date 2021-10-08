@@ -32,85 +32,6 @@ const priorityText = (priority) => {
   }
 }
 
-const Actions = ({
-  policy,
-  request,
-  onStart,
-  onApprove,
-  onAddNote,
-  onClose,
-  onReopen,
-  onAsk,
-  onReject,
-  onProcess,
-  onUpdate,
-  onDelete,
-}) => {
-  return (
-    <div className="py-4 space-x-2">
-      {policy.check("can-start-processing", { request }) && (
-        <Button variant="primary" size="small">
-          Start
-        </Button>
-      )}
-      {policy.check("can-approve", { request }) && (
-        <Button variant="primary" size="small">
-          Approve
-        </Button>
-      )}
-      {policy.check("can-add-note", {
-        request,
-        requester: request.requester,
-      }) && (
-        <Button variant="default" size="small">
-          Note
-        </Button>
-      )}
-      {policy.check("can-close", { request, requester: request.requester }) && (
-        <Button variant="default" size="small">
-          Close
-        </Button>
-      )}
-      {policy.check("can-reopen", {
-        request,
-        requester: request.requester,
-      }) && (
-        <Button variant="default" size="small">
-          Reopen
-        </Button>
-      )}
-      {policy.check("can-ask", { request }) && (
-        <Button variant="default" size="small">
-          Ask Requester
-        </Button>
-      )}
-      {policy.check("can-reject", { request }) && (
-        <Button variant="default" size="small">
-          Reject
-        </Button>
-      )}
-      {policy.check("can-process", { request }) && (
-        <Button variant="default" size="small">
-          Process
-        </Button>
-      )}
-      {policy.check("can-update", {
-        request,
-        requester: request.requester,
-      }) && (
-        <Button variant="primary" size="small">
-          Update
-        </Button>
-      )}
-      {policy.check("can-delete", { request }) && (
-        <Button variant="danger" size="small">
-          Delete
-        </Button>
-      )}
-    </div>
-  )
-}
-
 const Show = () => {
   const { id } = useParams()
   const history = useHistory()
@@ -120,7 +41,7 @@ const Show = () => {
   const client = useClient()
   const policy = usePolicy()
 
-  useEffect(() => {
+  const refresh = useCallback(() => {
     if (!id || !client) return
     dispatch({ type: "request" })
     client
@@ -153,6 +74,11 @@ const Show = () => {
         dispatch({ type: "errors", errors: data.errors })
       })
   }, [id, client])
+
+  useEffect(() => {
+    if (!refresh) return
+    refresh()
+  }, [refresh])
 
   const close = useCallback((e) => {
     setIsOpen(false)
@@ -237,7 +163,6 @@ const Show = () => {
               {state.item.state}
             </div>
           </div>
-
           <div className="text-gray-700 px-4 py-2 m-2">
             <span className="text-gray-500 text-sm">Subject</span>
             <br />
@@ -253,9 +178,26 @@ const Show = () => {
             <br />
             <textarea className="w-full" defaultValue={state.item.payload} />
           </div>
+          <div className="flex">
+            <div className="flex-1"></div>
+            <div className="flex-initial">
+              {policy.check("can-update", {
+                request: state.item,
+                requester: state.item.requester,
+              }) && (
+                <Button variant="primary" size="small">
+                  Update
+                </Button>
+              )}
+              {policy.check("can-delete", { request: state.item }) && (
+                <Button variant="danger" size="small">
+                  Delete
+                </Button>
+              )}
+            </div>
+          </div>
 
-          <Actions policy={policy} request={state.item} />
-          <Steps request={state.item} />
+          <Steps request={state.item} onRefresh={refresh} />
         </>
       )}
     </Modal>

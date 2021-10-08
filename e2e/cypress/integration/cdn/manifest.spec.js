@@ -17,7 +17,14 @@ describe("manifest", () => {
     })
   })
 
-  it("contains latest version of auth", () => {
+  // whois
+  it("contains whois", () => {
+    cy.request("manifest.json").then((response) => {
+      expect(response.body).to.have.property("whois")
+    })
+  })
+
+  it("contains 0_1_5 version of auth", () => {
     cy.request("manifest.json").then((response) => {
       expect(response.body.auth.indexOf("0_1_5") >= 0).to.eq(true)
     })

@@ -96,6 +96,63 @@ class Client {
       .then(catchErrors)
       .then((response) => response.json())
   }
+
+  /************* STEP ACTIONS ********************/
+  listProcessingSteps(requestID, options) {
+    options = options || {}
+    let fields = options.fields || "items {id} "
+    let filter = parseParams({ requestID, ...options.filter })
+
+    return this.graphqlRequest({
+      operationName: "listProcessingSteps",
+      // variables: {},
+      query: `query listProcessingSteps { processingSteps${filter} { ${fields} } }`,
+    })
+  }
+
+  createRequestStep(actionName, requestID, params, options) {
+    options = options || {}
+    let fields = options.fields || "id"
+    params = parseParams({ requestID, ...params })
+
+    return this.graphqlRequest({
+      operationName: "createStep",
+      // variables: {},
+      query: `mutation createStep { ${actionName}${params} { ${fields} } }`,
+    })
+  }
+
+  startProcessing(requestID, params, options) {
+    return this.createRequestStep("startProcessing", requestID, params, options)
+  }
+
+  addNote(requestID, params, options) {
+    return this.createRequestStep("addNote", requestID, params, options)
+  }
+
+  process(requestID, params, options) {
+    return this.createRequestStep("process", requestID, params, options)
+  }
+
+  askRequester(requestID, params, options) {
+    return this.createRequestStep("askRequester", requestID, params, options)
+  }
+
+  answer(requestID, params, options) {
+    return this.createRequestStep("answer", requestID, params, options)
+  }
+  approve(requestID, params, options) {
+    return this.createRequestStep("approve", requestID, params, options)
+  }
+  reject(requestID, params, options) {
+    return this.createRequestStep("reject", requestID, params, options)
+  }
+  close(requestID, params, options) {
+    return this.createRequestStep("close", requestID, params, options)
+  }
+  reopen(requestID, params, options) {
+    return this.createRequestStep("reopen", requestID, params, options)
+  }
 }
 
 export default Client
