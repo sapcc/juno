@@ -109,7 +109,7 @@ export const SearchInput = ({
   }
 
   const handleKeyPress = (event) => {
-    if (event.key === "Enter" && onSearch) onSearch(val)
+    if (event.key === "Enter" && onSearch) { onSearch(val) }
     onKeyPress && onKeyPress(event)
   }
 
@@ -119,7 +119,7 @@ export const SearchInput = ({
   }
 
   return (
-    <div className={`search-input-wrapper ${wrapperClasses(variant)}`}>
+    <div className={`search-input-wrapper ${wrapperClasses(variant)}`} role="search">
       <Stack gap={2} className="items-center">
         <input
           type="search"
@@ -135,6 +135,7 @@ export const SearchInput = ({
         <ClickableIcon
           icon="search"
           className={`absolute ${searchIconClasses(variant)}`}
+          title="Search"
           onClick={handleClick}
         />
       </Stack>
