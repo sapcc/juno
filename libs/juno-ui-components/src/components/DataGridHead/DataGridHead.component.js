@@ -13,7 +13,7 @@ export const DataGridHead = ({
 	)
 }
 
-const DataGridHead.propTypes = {
+DataGridHead.propTypes = {
 	/** Children to render in the DataGridHead */
 	children: PropTypes.node,
 }
