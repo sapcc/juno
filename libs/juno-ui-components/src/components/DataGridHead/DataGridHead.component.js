@@ -7,7 +7,7 @@ export const DataGridHead = ({
 	props
 }) => {
 	return (
-		<thead classname={className} {...props}>
+		<thead className={className} {...props}>
 			{children}
 		</thead>
 	)
@@ -16,6 +16,8 @@ export const DataGridHead = ({
 DataGridHead.propTypes = {
 	/** Children to render in the DataGridHead */
 	children: PropTypes.node,
+	/** Add a classname */
+	className: PropTypes.string,
 }
 
 DataGridHead.defaultProps = {

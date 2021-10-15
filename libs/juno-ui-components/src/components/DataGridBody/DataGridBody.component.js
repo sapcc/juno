@@ -7,7 +7,7 @@ export const DataGridBody = ({
 	props
 }) => {
 	return (
-		<tbody classname={className} {...props}>
+		<tbody className={className} {...props}>
 			{children}
 		</tbody>
 	)
@@ -16,6 +16,8 @@ export const DataGridBody = ({
 DataGridBody.propTypes = {
 	/** Children to render in the DataGridBody */
 	children: PropTypes.node,
+	/** Add a classname */
+	className: PropTypes.string,
 }
 
 DataGridBody.defaultProps = {

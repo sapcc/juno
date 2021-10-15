@@ -7,7 +7,7 @@ export const DataGridFoot = ({
 	props
 }) => {
 	return (
-		<tfoot classname={className} {...props}>
+		<tfoot className={className} {...props}>
 			{children}
 		</tfoot>
 	)
@@ -16,6 +16,8 @@ export const DataGridFoot = ({
 DataGridFoot.propTypes = {
 	/** Children to render in the DataGridFoot */
 	children: PropTypes.node,
+	/** Add a classname */
+	className: PropTypes.string,
 }
 
 DataGridFoot.defaultProps = {

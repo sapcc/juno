@@ -7,7 +7,7 @@ export const DataGridCell = ({
 	props
 }) => {
 	return (
-		<td classname={className} {...props}>
+		<td className={className} {...props}>
 			{children}
 		</td>
 	)
@@ -16,6 +16,8 @@ export const DataGridCell = ({
 DataGridCell.propTypes = {
 	/** Children to render in the DataGridCell */
 	children: PropTypes.node,
+	/** Add a classname */
+	className: PropTypes.string,
 }
 
 DataGridCell.defaultProps = {

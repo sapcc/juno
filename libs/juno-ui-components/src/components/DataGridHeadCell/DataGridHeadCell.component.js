@@ -7,7 +7,7 @@ export const DataGridHeadCell = ({
 	props
 }) => {
 	return (
-		<th classname={className} {...props}>
+		<th className={className} {...props}>
 			{children}
 		</th>
 	)
@@ -16,6 +16,8 @@ export const DataGridHeadCell = ({
 DataGridHeadCell.propTypes = {
 	/** Children to render in the DataGridHeadCell */
 	children: PropTypes.node,
+	/** Add a classname */
+	className: PropTypes.string,
 }
 
 DataGridHeadCell.defaultProps = {

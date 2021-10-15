@@ -7,7 +7,7 @@ export const DataGrid = ({
 	props
 }) => {
 	return (
-		<table classname={className} {...props}>
+		<table className={className} {...props}>
 			{children}
 		</table>
 	)
@@ -16,6 +16,8 @@ export const DataGrid = ({
 DataGrid.propTypes = {
 	/** Children to render in the DataGrid */
 	children: PropTypes.node,
+	/** Add a classname */
+	className: PropTypes.string,
 }
 
 DataGrid.defaultProps = {
