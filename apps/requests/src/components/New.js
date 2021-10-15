@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useState, useCallback } from "react"
+import { Button, Modal } from "juno-ui-components"
 import { useClient } from "../lib/clientProvider"
-import { Button } from "juno-ui-components"
 import { useGlobalState, useDispatch } from "../lib/stateProvider"
+import { useRouter } from "url-state-router"
 
-const New = ({ close, Buttons, Body }) => {
+const Form = ({ Body, Buttons, close }) => {
   const client = useClient()
   const [values, updateValues] = React.useState({
     kind: "project",
@@ -32,9 +33,10 @@ const New = ({ close, Buttons, Body }) => {
       .then((response) => {
         console.log("===============RESPONSE", response)
         dispatch({ type: "ADD_REQUEST", item: response.data.createRequest })
+        close()
       })
       .finally(() => setIsCreating(false))
-  }, [values])
+  }, [values, close])
 
   const valid = React.useMemo(
     () =>
@@ -174,6 +176,33 @@ const New = ({ close, Buttons, Body }) => {
         </div>
       </Buttons>
     </>
+  )
+}
+
+const New = () => {
+  const { navigateTo } = useRouter()
+  const [isOpen, setIsOpen] = useState(true)
+
+  const close = useCallback((e) => {
+    console.log("=========================close")
+    setIsOpen(false)
+  }, [])
+
+  const back = useCallback((e) => {
+    navigateTo("/requests")
+  }, [])
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      close={close}
+      onClosed={back}
+      title="Create Request"
+      size="4xl"
+      children={({ Buttons, Body }) => (
+        <Form close={close} Buttons={Buttons} Body={Body} />
+      )}
+    />
   )
 }
 

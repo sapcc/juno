@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useReducer } from "react"
-import { useParams, useHistory } from "react-router-dom"
+import { useRouter } from "url-state-router"
 import { Button, Modal } from "juno-ui-components"
 import { useClient } from "../lib/clientProvider"
 import { usePolicy } from "../lib/policyProvider"
@@ -33,8 +33,8 @@ const priorityText = (priority) => {
 }
 
 const Show = () => {
-  const { id } = useParams()
-  const history = useHistory()
+  const { routeParams, navigateTo } = useRouter()
+  const id = routeParams?.id
   const [isOpen, setIsOpen] = useState(!!id)
   const [state, dispatch] = useReducer(reducer, {})
 
@@ -85,7 +85,7 @@ const Show = () => {
   }, [])
 
   const back = useCallback((e) => {
-    history.replace("/requests")
+    navigateTo("/requests")
   }, [])
 
   return (

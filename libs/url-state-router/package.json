@@ -1,0 +1,16 @@
+{
+  "name": "url-state-router",
+  "version": "0.1.0",
+  "description": "Router",
+  "main": "index.js",
+  "module": "src/index.js",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "url-state-provider": "workspace:*"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}

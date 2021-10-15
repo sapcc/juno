@@ -1,0 +1,17 @@
+{
+  "name": "url-state-provider",
+  "version": "0.1.0",
+  "description": "Save several paths in the url. This makes it possible to manage the status of several apps such as micro frontends with the help of URL.",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "lz-string": "^1.4.4"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test yarn jest --watchAll"
+  },
+  "devDependencies": {
+    "jest": "^27.2.5",
+    "jsdom": "^18.0.0"
+  }
+}

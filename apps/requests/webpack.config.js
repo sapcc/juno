@@ -89,7 +89,7 @@ module.exports = {
         "./App": "./src/App",
         "./widget": "./src/widget",
       },
-      shared: ["react", "react-dom"],
+      shared: ["react", "react-dom", "lz-string"],
     }),
   ],
   //Config for webpack-dev-server module

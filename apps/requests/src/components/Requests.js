@@ -3,17 +3,15 @@ import { useClient } from "../lib/clientProvider"
 import { Button, Modal } from "juno-ui-components"
 import { useGlobalState, useDispatch } from "../lib/stateProvider"
 import { usePolicy } from "../lib/policyProvider"
-import { Link } from "react-router-dom"
-
-import New from "./New"
+import { Link, useRouter } from "url-state-router"
 
 const Requests = () => {
   const requests = useGlobalState("requests")
   const dispatch = useDispatch()
-  const [showNew, setShowNew] = React.useState(false)
 
   const client = useClient()
   const policy = usePolicy()
+  const { navigateTo } = useRouter()
 
   React.useEffect(() => {
     if (!client) return
@@ -38,20 +36,6 @@ const Requests = () => {
   return (
     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
       <React.Fragment>
-        <Modal
-          isOpen={showNew}
-          close={() => setShowNew(false)}
-          title="Create Request"
-          size="4xl"
-          children={({ Buttons, Body }) => (
-            <New
-              close={() => setShowNew(false)}
-              Buttons={Buttons}
-              Body={Body}
-            />
-          )}
-        />
-
         <div className="flex items-center mb-3 whitespace-nowrap p-2">
           <h2 className="font-medium text-gray-900 truncate">
             {requests.isFetching && <span>Loading </span>}Requests
@@ -62,7 +46,7 @@ const Requests = () => {
                 <Button
                   size="small"
                   variant="primary"
-                  onClick={() => setShowNew(true)}
+                  onClick={() => navigateTo("/requests/new")}
                 >
                   New Request
                 </Button>
@@ -70,6 +54,7 @@ const Requests = () => {
             </div>
           </div>
         </div>
+
         {requests.errors && (
           <div
             className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
@@ -80,7 +65,6 @@ const Requests = () => {
             ))}
           </div>
         )}
-
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
