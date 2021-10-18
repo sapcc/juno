@@ -2,6 +2,10 @@ import React from "react"
 import { DataGrid } from "./index.js"
 import { Default as DataGridRow } from "../DataGridRow/DataGridRow.stories.js"
 import { Default as DataGridCell } from "../DataGridCell/DataGridCell.stories.js"
+import { Default as DataGridHead } from "../DataGridHead/DataGridHead.stories.js"
+import { Default as DataGridHeadCell } from "../DataGridHeadCell/DataGridHeadCell.stories.js"
+import { Default as DataGridBody } from "../DataGridBody/DataGridBody.stories.js"
+import { Default as DataGridFoot } from "../DataGridFoot/DataGridFoot.stories.js"
 
 
 export default {
@@ -25,9 +29,34 @@ Default.parameters = {
 }
 Default.args = {
   children: [
-  	<DataGridRow>
-	  <DataGridCell>DataGridCell</DataGridCell>
-	</DataGridRow>
+	<DataGridHead>
+		<DataGridRow>
+			<DataGridHeadCell>Head Cell</DataGridHeadCell>
+			<DataGridHeadCell>Head Cell</DataGridHeadCell>
+			<DataGridHeadCell>Head Cell</DataGridHeadCell>
+			<DataGridHeadCell>Head Cell</DataGridHeadCell>
+			<DataGridHeadCell>Head Cell</DataGridHeadCell>
+		</DataGridRow>
+	</DataGridHead>,
+	<DataGridBody>
+	  	<DataGridRow>
+		  <DataGridHeadCell>DataGridCell</DataGridHeadCell>
+		  <DataGridCell>DataGridCell</DataGridCell>
+		  <DataGridCell>DataGridCell</DataGridCell>
+		  <DataGridCell>DataGridCell</DataGridCell>
+		  <DataGridCell>DataGridCell</DataGridCell>
+		</DataGridRow>
+	</DataGridBody>,
+	<DataGridFoot>
+		<DataGridRow>
+		  <DataGridHeadCell>DataGridCell</DataGridHeadCell>
+		  <DataGridCell>DataGridCell</DataGridCell>
+		  <DataGridCell>DataGridCell</DataGridCell>
+		  <DataGridCell>DataGridCell</DataGridCell>
+		  <DataGridCell>DataGridCell</DataGridCell>
+		</DataGridRow>
+	</DataGridFoot>
   ]
 }
+
 

@@ -1,13 +1,17 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+const datagridcellbasestyles = `
+	text-left
+`
+
 export const DataGridHeadCell = ({
 	className,
 	children,
 	props
 }) => {
 	return (
-		<th className={className} {...props}>
+		<th className={`${datagridcellbasestyles} ${className}`} {...props}>
 			{children}
 		</th>
 	)
