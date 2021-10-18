@@ -2,7 +2,7 @@ var LZString = require("lz-string")
 
 var SEARCH_KEY = "__s"
 var STATE_KEY = "__url_state_provider"
-var URL_REGEX = new RegExp(`${SEARCH_KEY}=[^&]*`, "g")
+var URL_REGEX = new RegExp("[?&]" + SEARCH_KEY + "=([^&#]*)")
 
 /**
  * Encode json data using lz-string
@@ -38,14 +38,9 @@ function decode(string) {
  * @returns json
  */
 function URLToState() {
-  // get current search string from location
-  var queryString = window.location.search
-  // convert query string toURLSearchParam
-  var params = queryString && new URLSearchParams(queryString)
-  // find the state param
-  var urlStateString = params && params.get(SEARCH_KEY)
-  // decode the param or return an empty state
-  return (urlStateString && decode(urlStateString)) || {}
+  var match = window.location.href.match(URL_REGEX)
+  if (!match) return {}
+  return decode(match[1])
 }
 
 /**
@@ -54,30 +49,26 @@ function URLToState() {
  * @returns new url string with encoded data
  */
 function stateToURL(state) {
-  var stateParam = `${SEARCH_KEY}=${encode(state)}`
+  var encodedState = encode(state)
+  var href = window.location.href
+  var match = href.match(URL_REGEX)
 
-  var location = window.location.toString()
-  var [url, searchParams] = location.split("?")
-  if (!searchParams) searchParams = ""
+  if (match) return href.replace(match[1], encodedState)
 
-  // remove last &
-  searchParams.replace(/(.*)&+$/, "$1")
-
-  if (searchParams.match(URL_REGEX)) {
-    searchParams = searchParams.replace(URL_REGEX, stateParam)
-  } else if (searchParams.match(/^.+=.*/)) {
-    searchParams = searchParams + `&${stateParam}`
-  } else {
-    searchParams = stateParam
-  }
-  return url + "?" + searchParams
+  return (
+    href +
+    (href.indexOf("?") >= 0 ? "&" : "?") +
+    SEARCH_KEY +
+    "=" +
+    encodedState
+  )
 }
 
 /**
  * Variable where to host the global state
  */
 window[STATE_KEY] = window[STATE_KEY] || URLToState()
-console.log("===========INITIAL STATE", window[STATE_KEY])
+// console.log("===========INITIAL STATE", window[STATE_KEY])
 
 /**
  *
