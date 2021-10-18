@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 
+const datagridbasestyles = `
+	w-full
+`
+
 export const DataGrid = ({
 	className,
 	children,
 	props
 }) => {
 	return (
-		<table className={className} {...props}>
+		<table className={`${datagridbasestyles} ${className}`} {...props}>
 			{children}
 		</table>
 	)
