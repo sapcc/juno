@@ -23,6 +23,6 @@ Default.parameters = {
 }
 Default.args = {
   children: [
-  "DataGridFoot goes here"
+  	"DataGridFoot goes here"
   ]
 }
