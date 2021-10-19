@@ -32,8 +32,8 @@ Default.args = {
 	<DataGridHead>
 		<DataGridRow>
 			<DataGridHeadCell>Head Cell</DataGridHeadCell>
-			<DataGridHeadCell>Head Cell</DataGridHeadCell>
-			<DataGridHeadCell>Head Cell</DataGridHeadCell>
+			<DataGridHeadCell sortable>Head Cell</DataGridHeadCell>
+			<DataGridHeadCell sortable>Head Cell</DataGridHeadCell>
 			<DataGridHeadCell>Head Cell</DataGridHeadCell>
 			<DataGridHeadCell>Head Cell</DataGridHeadCell>
 		</DataGridRow>

@@ -1,5 +1,7 @@
 import React from "react"
 import { DataGridHead } from "./index.js"
+import { Default as DataGridRow } from "../DataGridRow/DataGridRow.stories.js"
+import { Default as DataGridHeadCell } from "../DataGridHeadCell/DataGridHeadCell.stories.js"
 
 
 export default {
@@ -23,6 +25,10 @@ Default.parameters = {
 }
 Default.args = {
   children: [
-  "DataGridHead goes here"
+    <DataGridRow>
+      <DataGridHeadCell>Column 1</DataGridHeadCell>
+      <DataGridHeadCell>Column 2</DataGridHeadCell>
+      <DataGridHeadCell sortable>Column 3</DataGridHeadCell>
+    </DataGridRow>
   ]
 }
