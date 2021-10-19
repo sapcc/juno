@@ -26,3 +26,18 @@ Default.args = {
   "DataGridHeadCell goes here"
   ]
 }
+
+export const Sortable = Template.bind({})
+Sortable.parameters = {
+  docs: {
+    description: {
+      story: "DatagridHeadCell for a sortable column"
+    }
+  }
+}
+Sortable.args = {
+  sortable: true,
+  children: [
+    "Sort me"
+  ]
+}
