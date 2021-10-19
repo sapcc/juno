@@ -34,6 +34,12 @@ const App = () => {
 }
 ```
 
+## Install
+
+```bash
+yarn add url-state-router
+```
+
 ## Router
 
 Router is the main component in which all other components live.
@@ -44,12 +50,143 @@ In principle it is a context provider. Immediately after mounting, this componen
 - navigateTo, function, which receives the path and options as parameters
 - redirectTo, similar to navigateTo with the difference that the window history does not get a new entry, but the last URL is replaced.
 
+```js
+import { Router } from "url-state-router"
+
+const App = () => <Router stateID="app1">...</Router>
+```
+
 ## Route
+
+Route component compares the current path with the given path and if a match is made, the content of the route is rendered.
+
+```js
+import { Router, Route, Link } from "url-state-router"
+
+const App = () => (
+  <Router stateID="app">
+    <Link to="/items">Show Items</Link>
+    <Route path="/items">Items Overview</Route>
+  </Router>
+)
+```
+
+The content of the Route can either be given as a component prop or as children.
+
+```js
+import { Router, Route, Link } from "url-state-router"
+
+const Overview = () => <div>Items Overview</div>
+
+const App = () => (
+  <Router stateID="app">
+    <Link to="/items">Show Items</Link>
+    <Route path="/items" component={Overview} />
+  </Router>
+)
+```
+
+The comparison of the paths goes from left to the right. If the current path is longer than the Route `path`, but is identical at the beginning, then this is evaluated as a match. This is useful if, for example, you are using modal windows and you want both the modal window and the view in the background to be displayed. However, in certain cases this behavior is undesirable. Then the prop `exact` should be used.
+
+```js
+import { Router, Route } from "url-state-router"
+
+const Overview = () => <div>Items Overview</div>
+
+const App = () => (
+  <Router stateID="app">
+    {/* is displayed if the current path is "/items" or "/items/new" */}
+    <Route path="/items">...</Route>
+    {/* only rendered if the current path is "/items" */}
+    <Route exact path="/items">
+      ...
+    </Route>
+  </Router>
+)
+```
 
 ## Redirect
 
+Redirect is used to force an initial redirection.
+
+```js
+import { Router, Route, Redirect } from "url-state-router"
+
+const Overview = () => <div>Items Overview</div>
+
+const App = () => (
+  <Router stateID="app">
+    <Route path="/">
+      <Redirect to="/items" />
+    </Route>
+
+    <Route path="/items">Items</Route>
+  </Router>
+)
+```
+
 ## Switch
+
+Switch is used when multiple routes with similar paths match the current path. For example, the path `/items/:id` and `/items/new` would both match `/items/new`. If we only want to render one of the two routes, we need a Switch.
+
+```js
+import { Router, Route, Switch } from "url-state-router"
+
+const Overview = () => <div>Items Overview</div>
+
+const App = () => (
+  <Router stateID="app">
+    <Switch>
+      <Route path="/items/new"> ... </Route>
+      <Route path="/items/:id"> ... </Route>
+    </Switch>
+  </Router>
+)
+```
+
+The order is important, the first path from top to bottom that matches is used!
 
 ## Link
 
+Link renders an anchor using in onClick the `navigateTo` function from the `RouterContext`.
+
+```js
+import { Router, Route, Link } from "url-state-router"
+
+const Overview = () => <div>Items Overview</div>
+
+const App = () => (
+  <Router stateID="app">
+    <Link to="/items">Show Items</Link>
+    <Route path="/items"> Items </Route>
+  </Router>
+)
+```
+
 ## useRouter
+
+This hook accesses the RouterContext and returns navigation-relevant data and functions:
+
+- `insideRouter`: boolean, indicates whether this hook is called within a router
+- `currentPath`: string, current path of the router
+- `options`: object, path options like { tab: 2 }
+- `navigateTo`: function(path, options), pushes a new state to the window.history
+- `redirectTo`: function(path, options), replaces the last state in the window.history
+
+```js
+import { Router, Route, useRouter } from "url-state-router"
+
+const Items = () => {
+  const { currentPath, options, navigateTo, redirectTo } = useRouter()
+
+  return (
+    <>
+      Breadcrumb: {currentPath}
+      <br />
+      Items
+      <br />
+      <button onClick={() => navigateTo("/")}>Back</button>
+    </>
+  )
+}
+```
