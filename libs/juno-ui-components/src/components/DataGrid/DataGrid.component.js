@@ -7,6 +7,7 @@ const datagridfullwidthstyles = `
 
 export const DataGrid = ({
 	auto,
+	selectable,
 	className,
 	children,
 	props
@@ -21,6 +22,8 @@ export const DataGrid = ({
 DataGrid.propTypes = {
 	/** Whether the DataGrid should auto-size its width. By default a Datagrid will take up 100% of the available width. */
 	auto: PropTypes.bool,
+	/** Whether the Rows in a DataGrid should be selectable */
+	selectable: PropTypes.bool,
 	/** Children to render in the DataGrid */
 	children: PropTypes.node,
 	/** Add a classname */
@@ -28,6 +31,8 @@ DataGrid.propTypes = {
 }
 
 DataGrid.defaultProps = {
+	auto: false,
+	selectable: false,
 	className: "",
 	children: null,
 }
