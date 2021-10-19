@@ -59,4 +59,30 @@ Default.args = {
   ]
 }
 
+export const Auto = Template.bind({})
+Auto.parameters = {
+	  docs: {
+		description: { 
+		  story: "Juno DataGrid set to auto-size."
+		}
+	  },
+	}
+Auto.args = {
+	auto: true,
+	children: [
+		<DataGridHead>
+			<DataGridRow>
+				<DataGridCell>Auto DataGrid Cell</DataGridCell>
+				<DataGridCell>Auto DataGrid Cell</DataGridCell>
+			</DataGridRow>
+		</DataGridHead>,
+		<DataGridBody>
+			<DataGridRow>
+				<DataGridCell>Auto DataGrid Cell</DataGridCell>
+				<DataGridCell>Auto DataGrid Cell</DataGridCell>
+			</DataGridRow>
+		</DataGridBody>
+	]
+}
+
 
