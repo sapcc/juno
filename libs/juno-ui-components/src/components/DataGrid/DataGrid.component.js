@@ -5,6 +5,10 @@ const datagridfullwidthstyles = `
 	w-full
 `
 
+const DataGridContext = React.createContext()
+
+export const useDataGrid = () => React.useContext(DataGridContext)
+
 export const DataGrid = ({
 	auto,
 	selectable,
@@ -12,10 +16,15 @@ export const DataGrid = ({
 	children,
 	props
 }) => {
+	const dataGridConf = {
+		selectable: selectable
+	}
 	return (
-		<table className={`${ auto ? '' : datagridfullwidthstyles } ${className}`} {...props}>
-			{children}
-		</table>
+		<DataGridContext.Provider value={dataGridConf}>
+			<table className={`${ auto ? '' : datagridfullwidthstyles } ${className}`} {...props}>
+				{children}
+			</table>
+		</DataGridContext.Provider>
 	)
 }
 
