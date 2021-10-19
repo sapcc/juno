@@ -11,7 +11,7 @@ import useURLStateProvider from "./useURLStateProvider"
  * * currentPath, intial it is the state from the URL or "/"
  * * options, optional
  * * navigateTo, function, which receives the path and options as parameters
- * * redirectTo, similar to redirectTo with the difference that the window history
+ * * redirectTo, similar to navigateTo with the difference that the window history
  *   does not get a new entry, but the last URL is replaced.
  * @param {object} props, stateID and children
  * @returns
