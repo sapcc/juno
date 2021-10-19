@@ -3,7 +3,14 @@ import routeMatcher from "./routeMatcher"
 import { useRouter } from "."
 
 /**
- *
+ * Switch is used when multiple routes with similar paths match the current path.
+ * For example, the path "/items/:id" and "/items/new" would both match "/items/new".
+ * If we only want to render one of the two routes, we need a Switch
+ * <Switch>
+ *   <Route path = "/items/new"> ... </Route>
+ *   <Route path = "/items/:id"> ... </Route>
+ * </Switch>
+ * The order is important, the first path from top to bottom that matches is used!
  * @param {object} props
  * @returns component
  */

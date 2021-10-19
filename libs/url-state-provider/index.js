@@ -13,7 +13,7 @@ function encode(json) {
   try {
     return LZString.compressToEncodedURIComponent(JSON.stringify(json))
   } catch (e) {
-    console.info("URL State Router: Could not encode data", data)
+    console.warn("URL State Router: Could not encode data", data)
     return ""
   }
 }
@@ -27,7 +27,7 @@ function decode(string) {
   try {
     return JSON.parse(LZString.decompressFromEncodedURIComponent(string))
   } catch (e) {
-    console.info("URL State Router: Could not decode string", string, e)
+    console.warn("URL State Router: Could not decode string", string, e)
     return {}
   }
 }
@@ -169,7 +169,7 @@ function informListener(stateID, newState, oldState) {
     if (JSON.stringify(oldState) === JSON.stringify(newState)) return
   }
 
-  console.log("INFORM_LISTENER", stateID, newState)
+  //console.log("INFORM_LISTENER", stateID, newState)
   // inform listener
   listener(newState)
 }
@@ -211,11 +211,11 @@ function registerConsumer(stateID) {
       }
     },
     push: function (state, historyOptions) {
-      console.log("PUSH", stateID, state)
+      //console.log("PUSH", stateID, state)
       push(stateID, state, historyOptions)
     },
     replace: function (state, historyOptions) {
-      console.log("REPLACE", stateID, state)
+      //console.log("REPLACE", stateID, state)
       replace(stateID, state, historyOptions)
     },
   }

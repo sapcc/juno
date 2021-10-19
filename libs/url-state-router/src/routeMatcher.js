@@ -9,31 +9,22 @@
  * @returns routeParams
  */
 const routeMatcher = (currentPath, routePath, options) => {
-  let log = ["currentPath:", currentPath, "routePath:", routePath]
-
-  if (!routePath || !currentPath) {
-    console.info("%c" + log.join(" "), "color: #A52A2A")
-    return [false]
-  }
+  if (!routePath || !currentPath) return [false]
 
   options = options || {}
   // remove spaces at the beginning and end of routePath and currentPath
   routePath = routePath.trim()
   currentPath = currentPath.trim()
 
-  // build regex from path by replacing all ":var" with "(.+)"
-  let regexString = "^" + routePath.replace(/:[^\/]+/g, "(.+)")
+  // build regex from path by replacing all ":var" with "([^\/]+)"
+  let regexString = "^" + routePath.replace(/:[^\/]+/g, "([^\\/]+)")
   // add "$" at the end of regex if exact is set
   if (options.exact) regexString += "$"
 
   const regex = new RegExp(regexString)
   const match = currentPath.match(regex)
 
-  log = log.concat(["regexString:", regexString])
-  if (!match) {
-    console.info("%c" + log.join(" "), "color: #D2691E")
-    return [false]
-  }
+  if (!match) return [false]
 
   // Find all parts of the route path that begin with ":"
   const paramKeys = routePath
@@ -48,8 +39,6 @@ const routeMatcher = (currentPath, routePath, options) => {
     routeParams[key] = match[i]
   }
 
-  log = log.concat(["routeParams", JSON.stringify(routeParams)])
-  console.info("%c" + log.join(" "), "color: #7FFF00")
   return [true, routeParams]
 }
 

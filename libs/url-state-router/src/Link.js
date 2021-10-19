@@ -1,5 +1,13 @@
+import React from "react"
+import PropTypes from "prop-types"
 import { useRouter } from "."
 
+/**
+ * This component renders a link in which the onClick function uses
+ * the navigateTo from the router context.
+ * @param {object} props, "to" is the path string
+ * @returns component
+ */
 const Link = ({ to, children, ...props }) => {
   const { navigateTo } = useRouter()
 
@@ -15,6 +23,10 @@ const Link = ({ to, children, ...props }) => {
       {children}
     </a>
   )
+}
+
+Link.propTypes = {
+  to: PropTypes.string.isRequired,
 }
 
 export default Link
