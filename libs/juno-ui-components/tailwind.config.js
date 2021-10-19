@@ -173,6 +173,7 @@ module.exports = {
           "switch-handle-checked": withOpacity("--color-switch-handle-checked-bg"),
           "required": withOpacity("--color-required-bg"),
           "introbox": withOpacity("--color-introbox-bg"),
+          "datagridrow-selected": withOpacity("--color-datagridrow-selected"),
         },
       },
       backgroundImage: {

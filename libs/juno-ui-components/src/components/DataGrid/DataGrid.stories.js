@@ -103,14 +103,14 @@ Selectable.args = {
 				<DataGridCell>Item Data 2</DataGridCell>
 				<DataGridCell>Item Options</DataGridCell>
 			</DataGridRow>
-			<DataGridRow>
-				<DataGridCell>Item Title</DataGridCell>
+			<DataGridRow selected >
+				<DataGridCell>Selected Item Title</DataGridCell>
 				<DataGridCell>Item Data 1</DataGridCell>
 				<DataGridCell>Item Data 2</DataGridCell>
 				<DataGridCell>Item Options</DataGridCell>
 			</DataGridRow>
-			<DataGridRow>
-				<DataGridCell>Item Title</DataGridCell>
+			<DataGridRow disabled >
+				<DataGridCell>Disabled Item Title</DataGridCell>
 				<DataGridCell>Item Data 1</DataGridCell>
 				<DataGridCell>Item Data 2</DataGridCell>
 				<DataGridCell>Item Options</DataGridCell>
