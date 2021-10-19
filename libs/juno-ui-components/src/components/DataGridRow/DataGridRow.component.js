@@ -8,7 +8,7 @@ export const DataGridRow = ({
 	children,
 	props
 }) => {
-	const dataGridContext = useDataGridContext()
+	const dataGridContext = useDataGridContext() || {}
 	const selectable = dataGridContext.selectable
 	return (
 		<tr className={className} {...props}>
