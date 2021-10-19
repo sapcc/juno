@@ -85,4 +85,38 @@ Auto.args = {
 	]
 }
 
+export const Selectable = Template.bind({})
+Selectable.parameters = {
+	docs: {
+		description: {
+			story: "Juno DataGrid with selectable items/rows"
+		}
+	}
+}
+Selectable.args = {
+	selectable: true,
+	children: [
+		<DataGridBody>
+			<DataGridRow>
+				<DataGridCell>Item Title</DataGridCell>
+				<DataGridCell>Item Data 1</DataGridCell>
+				<DataGridCell>Item Data 2</DataGridCell>
+				<DataGridCell>Item Options</DataGridCell>
+			</DataGridRow>
+			<DataGridRow>
+				<DataGridCell>Item Title</DataGridCell>
+				<DataGridCell>Item Data 1</DataGridCell>
+				<DataGridCell>Item Data 2</DataGridCell>
+				<DataGridCell>Item Options</DataGridCell>
+			</DataGridRow>
+			<DataGridRow>
+				<DataGridCell>Item Title</DataGridCell>
+				<DataGridCell>Item Data 1</DataGridCell>
+				<DataGridCell>Item Data 2</DataGridCell>
+				<DataGridCell>Item Options</DataGridCell>
+			</DataGridRow>
+		</DataGridBody>
+	]
+}
+
 

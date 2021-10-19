@@ -7,7 +7,7 @@ const datagridfullwidthstyles = `
 
 const DataGridContext = React.createContext()
 
-export const useDataGrid = () => React.useContext(DataGridContext)
+export const useDataGridContext = () => React.useContext(DataGridContext)
 
 export const DataGrid = ({
 	auto,
