@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
+import { DataGridToolbar } from "../DataGridToolbar/DataGridToolbar.component.js"
 
 const datagridfullwidthstyles = `
 	w-full
@@ -9,9 +10,11 @@ const DataGridContext = React.createContext()
 
 export const useDataGridContext = () => React.useContext(DataGridContext)
 
+// TODO: allow for passing in props addItems, addItemsLabel, search, etc.:
 export const DataGrid = ({
 	auto,
 	selectable,
+	showToolbar,
 	className,
 	children,
 	props
@@ -21,9 +24,12 @@ export const DataGrid = ({
 	}
 	return (
 		<DataGridContext.Provider value={dataGridConf}>
-			<table className={`${ auto ? '' : datagridfullwidthstyles } ${className}`} {...props}>
-				{children}
-			</table>
+			<div className={`datagrid-container ${className}`}>
+				{ showToolbar ? <DataGridToolbar /> : null }
+				<table className={`${ auto ? '' : datagridfullwidthstyles }`} {...props}>
+					{children}
+				</table>
+			</div>
 		</DataGridContext.Provider>
 	)
 }
@@ -33,6 +39,8 @@ DataGrid.propTypes = {
 	auto: PropTypes.bool,
 	/** Whether the Rows in a DataGrid should be selectable */
 	selectable: PropTypes.bool,
+	/** Whether to display a toolbar */
+	showToolbar: PropTypes.bool,
 	/** Children to render in the DataGrid */
 	children: PropTypes.node,
 	/** Add a classname */
@@ -42,6 +50,7 @@ DataGrid.propTypes = {
 DataGrid.defaultProps = {
 	auto: false,
 	selectable: false,
+	showToolbar: false,
 	className: "",
 	children: null,
 }
