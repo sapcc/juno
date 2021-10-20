@@ -3,6 +3,7 @@ import { DataGrid } from "./index.js"
 import { Default as DataGridRow } from "../DataGridRow/DataGridRow.stories.js"
 import { Default as DataGridCell } from "../DataGridCell/DataGridCell.stories.js"
 import { Default as DataGridHead } from "../DataGridHead/DataGridHead.stories.js"
+import { Default as DataGridHeadRow } from "../DataGridHeadRow/DataGridHeadRow.stories.js"
 import { Default as DataGridHeadCell } from "../DataGridHeadCell/DataGridHeadCell.stories.js"
 import { Default as DataGridBody } from "../DataGridBody/DataGridBody.stories.js"
 import { Default as DataGridFoot } from "../DataGridFoot/DataGridFoot.stories.js"
@@ -31,13 +32,13 @@ Default.parameters = {
 Default.args = {
   children: [
 	<DataGridHead>
-		<DataGridRow>
+		<DataGridHeadRow>
 			<DataGridHeadCell>Head Cell</DataGridHeadCell>
 			<DataGridHeadCell sortable>Head Cell</DataGridHeadCell>
 			<DataGridHeadCell sortable>Head Cell</DataGridHeadCell>
 			<DataGridHeadCell>Head Cell</DataGridHeadCell>
 			<DataGridHeadCell>Head Cell</DataGridHeadCell>
-		</DataGridRow>
+		</DataGridHeadRow>
 	</DataGridHead>,
 	<DataGridBody>
 	  	<DataGridRow>
@@ -72,10 +73,10 @@ Auto.args = {
 	auto: true,
 	children: [
 		<DataGridHead>
-			<DataGridRow>
+			<DataGridHeadRow>
 				<DataGridCell>Auto DataGrid Cell</DataGridCell>
 				<DataGridCell>Auto DataGrid Cell</DataGridCell>
-			</DataGridRow>
+			</DataGridHeadRow>
 		</DataGridHead>,
 		<DataGridBody>
 			<DataGridRow>
@@ -97,6 +98,14 @@ Selectable.parameters = {
 Selectable.args = {
 	selectable: true,
 	children: [
+		<DataGridHead>
+			<DataGridHeadRow>
+				<DataGridHeadCell>Item Title</DataGridHeadCell>
+				<DataGridHeadCell>Item Data 1</DataGridHeadCell>
+				<DataGridHeadCell>Item Data 2</DataGridHeadCell>
+				<DataGridHeadCell>Item Options</DataGridHeadCell>
+			</DataGridHeadRow>
+		</DataGridHead>,
 		<DataGridBody>
 			<DataGridRow>
 				<DataGridCell>Item Title</DataGridCell>
@@ -132,12 +141,12 @@ WithToolbar.args = {
 	showToolbar: true,
 	children: [
 		<DataGridHead>
-			<DataGridRow>
+			<DataGridHeadRow>
 				<DataGridHeadCell sortable>Column Title</DataGridHeadCell>
 				<DataGridHeadCell>Column Title</DataGridHeadCell>
 				<DataGridHeadCell>Column Title</DataGridHeadCell>
 				<DataGridHeadCell>Column Title</DataGridHeadCell>
-			</DataGridRow>
+			</DataGridHeadRow>
 		</DataGridHead>,
 		<DataGridBody>
 			<DataGridRow>

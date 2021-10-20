@@ -25,9 +25,9 @@ Default.parameters = {
 Default.args = {
   children: [
   	<DataGridCell>Data Grid Cell 1</DataGridCell>,
-	<DataGridCell>Data Grid Cell 2</DataGridCell>,
-	<DataGridCell>Data Grid Cell 3</DataGridCell>,
-	<DataGridCell>Data Grid Cell 4</DataGridCell>,
-	<DataGridCell>Data Grid Cell 5</DataGridCell>
+	  <DataGridCell>Data Grid Cell 2</DataGridCell>,
+	  <DataGridCell>Data Grid Cell 3</DataGridCell>,
+	  <DataGridCell>Data Grid Cell 4</DataGridCell>,
+	  <DataGridCell>Data Grid Cell 5</DataGridCell>
   ]
 }
