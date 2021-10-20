@@ -1,0 +1,1 @@
+export { DataGridFootRow } from "./DataGridFootRow.component"

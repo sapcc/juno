@@ -7,6 +7,7 @@ import { Default as DataGridHeadRow } from "../DataGridHeadRow/DataGridHeadRow.s
 import { Default as DataGridHeadCell } from "../DataGridHeadCell/DataGridHeadCell.stories.js"
 import { Default as DataGridBody } from "../DataGridBody/DataGridBody.stories.js"
 import { Default as DataGridFoot } from "../DataGridFoot/DataGridFoot.stories.js"
+import { Default as DataGridFootRow } from "../DataGridFootRow/DataGridFootRow.stories.js"
 import { Default as DataGridToolbar } from "../DataGridToolbar/DataGridToolbar.stories.js"
 
 
@@ -50,13 +51,13 @@ Default.args = {
 		</DataGridRow>
 	</DataGridBody>,
 	<DataGridFoot>
-		<DataGridRow>
+		<DataGridFootRow>
 		  <DataGridHeadCell>DataGridCell</DataGridHeadCell>
 		  <DataGridCell>DataGridCell</DataGridCell>
 		  <DataGridCell>DataGridCell</DataGridCell>
 		  <DataGridCell>DataGridCell</DataGridCell>
 		  <DataGridCell>DataGridCell</DataGridCell>
-		</DataGridRow>
+		</DataGridFootRow>
 	</DataGridFoot>
   ]
 }
@@ -198,11 +199,11 @@ FullyFeatured.args = {
 			</DataGridRow>
 		</DataGridBody>,
 		<DataGridFoot>
-			<DataGridRow>
+			<DataGridFootRow>
 				<DataGridCell>Item 1 data</DataGridCell>
 				<DataGridCell>Item 1 data</DataGridCell>
 				<DataGridCell>Item 1 data</DataGridCell>
-			</DataGridRow>
+			</DataGridFootRow>
 		</DataGridFoot>
 	]
 }
