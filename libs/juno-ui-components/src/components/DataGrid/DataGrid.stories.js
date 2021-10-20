@@ -197,12 +197,17 @@ FullyFeatured.args = {
 				<DataGridCell>Item 1</DataGridCell>
 				<DataGridCell>Item 1</DataGridCell>
 			</DataGridRow>
+			<DataGridRow>
+				<DataGridCell>Item 2</DataGridCell>
+				<DataGridCell>Item 2</DataGridCell>
+				<DataGridCell>Item 2</DataGridCell>
+			</DataGridRow>
 		</DataGridBody>,
 		<DataGridFoot>
 			<DataGridFootRow>
-				<DataGridCell>Item 1 data</DataGridCell>
-				<DataGridCell>Item 1 data</DataGridCell>
-				<DataGridCell>Item 1 data</DataGridCell>
+				<DataGridCell>Foot Cell</DataGridCell>
+				<DataGridCell>Foot Cell</DataGridCell>
+				<DataGridCell>Foot Cell</DataGridCell>
 			</DataGridFootRow>
 		</DataGridFoot>
 	]
