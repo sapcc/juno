@@ -171,4 +171,40 @@ WithToolbar.args = {
 	]
 }
 
+export const FullyFeatured = Template.bind({})
+FullyFeatured.parameters = {
+	docs: {
+		description: {
+			story: "Fully Featured DataGrid"
+		}
+	}
+}
+FullyFeatured.args = {
+	selectable: true,
+	showToolbar: true,
+	children: [
+		<DataGridHead>
+			<DataGridHeadRow>
+				<DataGridHeadCell>Column 1</DataGridHeadCell>
+				<DataGridHeadCell>Column 2</DataGridHeadCell>
+				<DataGridHeadCell>Column 3</DataGridHeadCell>
+			</DataGridHeadRow>
+		</DataGridHead>,
+		<DataGridBody>
+			<DataGridRow>
+				<DataGridCell>Item 1</DataGridCell>
+				<DataGridCell>Item 1</DataGridCell>
+				<DataGridCell>Item 1</DataGridCell>
+			</DataGridRow>
+		</DataGridBody>,
+		<DataGridFoot>
+			<DataGridRow>
+				<DataGridCell>Item 1 data</DataGridCell>
+				<DataGridCell>Item 1 data</DataGridCell>
+				<DataGridCell>Item 1 data</DataGridCell>
+			</DataGridRow>
+		</DataGridFoot>
+	]
+}
+
 
