@@ -17,16 +17,16 @@ export const DataGrid = ({
 	showToolbar,
 	className,
 	children,
-	props
+	...props
 }) => {
 	const dataGridConf = {
 		selectable: selectable
 	}
 	return (
 		<DataGridContext.Provider value={dataGridConf}>
-			<div className={`datagrid-container ${className}`}>
+			<div className={`datagrid-container ${className}`} {...props} >
 				{ showToolbar ? <DataGridToolbar /> : null }
-				<table className={`${ auto ? '' : datagridfullwidthstyles }`} {...props}>
+				<table className={`${ auto ? '' : datagridfullwidthstyles }`}>
 					{children}
 				</table>
 			</div>

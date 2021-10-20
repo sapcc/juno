@@ -14,7 +14,7 @@ export const DataGridHeadCell = ({
 	sortable,
 	className,
 	children,
-	props
+	...props
 }) => {
 	return (
 		<th className={`${datagridcellbasestyles} ${className}`} {...props}>

@@ -14,7 +14,7 @@ export const DataGridToolbar= ({
 	addItemsLabel,
 	className,
 	children,
-	props
+	...props
 }) => {
 	const dataGridContext = useDataGridContext() || {}
 	const selectable = dataGridContext.selectable

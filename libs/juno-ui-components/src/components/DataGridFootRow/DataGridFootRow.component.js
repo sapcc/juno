@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 export const DataGridFootRow = ({
 	className,
 	children,
-	props
+	...props
 }) => {
 
 	

@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 export const DataGridFoot = ({
 	className,
 	children,
-	props
+	...props
 }) => {
 	return (
 		<tfoot className={className} {...props}>

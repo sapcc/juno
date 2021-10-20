@@ -8,7 +8,7 @@ const datagridcellbasestyles = `
 export const DataGridCell = ({
 	className,
 	children,
-	props
+	...props
 }) => {
 	return (
 		<td className={`${datagridcellbasestyles} ${className}`} {...props}>

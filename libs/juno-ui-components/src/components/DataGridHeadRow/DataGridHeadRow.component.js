@@ -8,7 +8,7 @@ export const DataGridHeadRow = ({
 	selected,
 	className,
 	children,
-	props
+	...props
 }) => {
 	const dataGridContext = useDataGridContext() || {}
 	const selectable = dataGridContext.selectable

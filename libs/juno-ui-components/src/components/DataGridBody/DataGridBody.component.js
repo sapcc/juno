@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 export const DataGridBody = ({
 	className,
 	children,
-	props
+	...props
 }) => {
 	return (
 		<tbody className={className} {...props}>

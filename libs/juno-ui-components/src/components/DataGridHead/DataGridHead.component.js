@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 export const DataGridHead = ({
 	className,
 	children,
-	props
+	...props
 }) => {
 	return (
 		<thead className={className} {...props}>

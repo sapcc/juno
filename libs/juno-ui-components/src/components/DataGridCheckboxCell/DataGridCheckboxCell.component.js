@@ -8,7 +8,7 @@ export const DataGridCheckboxCell = ({
 	disabled,
 	className,
 	onChange,
-	props
+	...props
 }) => {
 	return (
 		<DataGridCell className={className}>
