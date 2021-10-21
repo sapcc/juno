@@ -20,14 +20,14 @@ export const DataGridToolbar= ({
 	const selectable = dataGridContext.selectable
 	
 	return (
-		<div className={`datagrid-toolbar ${datagridtoolbarstyles}`} {...props} >
+		<div className={`datagrid-toolbar ${datagridtoolbarstyles} ${className}`} {...props} >
 			{ search ?
 				<SearchInput />
 				:
 				null
 			}
 			{ addItems ?
-				<Button label={addItemsLabel} size={"small"} ></Button>
+				<Button label={addItemsLabel} size={"small"}></Button>
 				:
 				null
 			}

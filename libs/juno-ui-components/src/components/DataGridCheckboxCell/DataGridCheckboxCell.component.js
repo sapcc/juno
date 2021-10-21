@@ -11,7 +11,7 @@ export const DataGridCheckboxCell = ({
 	...props
 }) => {
 	return (
-		<DataGridCell className={className}>
+		<DataGridCell className={className} {...props}>
 			<Checkbox disabled={disabled} checked={selected} onChange={onChange} />
 		</DataGridCell>
 	)
