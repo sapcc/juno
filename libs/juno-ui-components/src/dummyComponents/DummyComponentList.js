@@ -10,13 +10,13 @@ const DummyComponentList = ({count}) => {
           return (
             <div 
               className="
-                bg-sap-blue
+                bg-juno-blue
                 rounded
                 text-white
                 px-4
                 py-3
                 border
-                border-sap-blue-70
+                border-juno-blue-7
                 text-center"
               key={i}  
             >
