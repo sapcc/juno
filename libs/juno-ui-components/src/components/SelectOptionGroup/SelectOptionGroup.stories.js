@@ -12,8 +12,8 @@ export default {
 
 const Template = ({ options, ...args }) => 
 	<SelectOptionGroup {...args}>
-		{options.map((option) => (
-			<SelectOption {...option} />
+		{options.map((option,i) => (
+			<SelectOption {...option} key={`option-${i}`} />
 		))}
 	</SelectOptionGroup>
 
