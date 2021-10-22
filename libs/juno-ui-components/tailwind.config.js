@@ -12,7 +12,11 @@ function withOpacity(variableName) {
 }
 
 module.exports = {
-  purge: ["./src/components/**/*.{js,jsx,ts,tsx}"],
+  mode: "jit",
+  purge: [
+    "./src/components/**/*.{js,jsx,ts,tsx}",
+    "./src/dummyComponents/*.{js,jsx,ts,tsx}"
+  ],
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
