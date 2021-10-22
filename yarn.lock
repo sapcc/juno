@@ -3408,6 +3408,45 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pmmmwh/react-refresh-webpack-plugin@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.1"
+  dependencies:
+    ansi-html-community: ^0.0.8
+    common-path-prefix: ^3.0.0
+    core-js-pure: ^3.8.1
+    error-stack-parser: ^2.0.6
+    find-up: ^5.0.0
+    html-entities: ^2.1.0
+    loader-utils: ^2.0.0
+    schema-utils: ^3.0.0
+    source-map: ^0.7.3
+  peerDependencies:
+    "@types/webpack": 4.x || 5.x
+    react-refresh: ^0.10.0
+    sockjs-client: ^1.4.0
+    type-fest: ">=0.17.0 <3.0.0"
+    webpack: ">=4.43.0 <6.0.0"
+    webpack-dev-server: 3.x || 4.x
+    webpack-hot-middleware: 2.x
+    webpack-plugin-serve: 0.x || 1.x
+  peerDependenciesMeta:
+    "@types/webpack":
+      optional: true
+    sockjs-client:
+      optional: true
+    type-fest:
+      optional: true
+    webpack-dev-server:
+      optional: true
+    webpack-hot-middleware:
+      optional: true
+    webpack-plugin-serve:
+      optional: true
+  checksum: b31cc2b9e1087e95eaee43cc905556b47f7fa303b6b18cd86627fbf50665f0464cadfe538fd6064b81435a18bc9fa10c24efe4c38cbe812fe222a4e0734529c4
+  languageName: node
+  linkType: hard
+
 "@popperjs/core@npm:^2.5.4, @popperjs/core@npm:^2.6.0":
   version: 2.9.2
   resolution: "@popperjs/core@npm:2.9.2"
@@ -6146,6 +6185,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ansi-html-community@npm:^0.0.8":
+  version: 0.0.8
+  resolution: "ansi-html-community@npm:0.0.8"
+  bin:
+    ansi-html: bin/ansi-html
+  checksum: d9ddac04b812c63c3e0187dd2c2055c7d5479e012fdb88c64d59268f7b4cef32991c90a542ea368b135cb1231bc87d28fd25eab70c6de5776f843acc651e41db
+  languageName: node
+  linkType: hard
+
 "ansi-html@npm:0.0.7, ansi-html@npm:^0.0.7":
   version: 0.0.7
   resolution: "ansi-html@npm:0.0.7"
@@ -6591,7 +6639,7 @@ __metadata:
     "@babel/core": ^7.15.8
     "@babel/preset-env": ^7.15.8
     "@babel/preset-react": ^7.14.5
-    "@pmmmwh/react-refresh-webpack-plugin": ^0.4.3
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.1
     "@testing-library/dom": ^8.7.2
     "@testing-library/jest-dom": ^5.14.1
     "@testing-library/react": ^12.1.2
@@ -8577,6 +8625,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"common-path-prefix@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "common-path-prefix@npm:3.0.0"
+  checksum: 6cb2ad7b49015576ff9d382750dbe668db8bcbe311c64e1953c135a5e285def3b82e5fe5850026b7706068a4c03627eb23ef73a45e94ad62d668246c0c571a44
+  languageName: node
+  linkType: hard
+
 "commondir@npm:^1.0.1":
   version: 1.0.1
   resolution: "commondir@npm:1.0.1"
@@ -8830,6 +8885,13 @@ __metadata:
   version: 3.15.2
   resolution: "core-js-pure@npm:3.15.2"
   checksum: 098de70a85d245422046c8859d699f8d1a5e971d12074f26e108a3db539430e641af4bb311888efbb944cfdc747d4b56ec8a1970458a2ce444cc834cabdf1772
+  languageName: node
+  linkType: hard
+
+"core-js-pure@npm:^3.8.1":
+  version: 3.18.3
+  resolution: "core-js-pure@npm:3.18.3"
+  checksum: 07ac3e103eaedec50ef8ce776ace608f802521f9a162108c628bd763f0e3f27c6605a8d8ef488925be3b5d638822d5b37d60ff0c105fe5338ba66ac7eeb4e41d
   languageName: node
   linkType: hard
 
@@ -9504,7 +9566,7 @@ __metadata:
     "@babel/core": ^7.15.8
     "@babel/preset-env": ^7.15.8
     "@babel/preset-react": ^7.14.5
-    "@pmmmwh/react-refresh-webpack-plugin": ^0.4.3
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.1
     "@svgr/webpack": ^5.5.0
     "@testing-library/dom": ^8.7.2
     "@testing-library/jest-dom": ^5.14.1
@@ -12723,6 +12785,13 @@ fsevents@^1.2.7:
   version: 1.4.0
   resolution: "html-entities@npm:1.4.0"
   checksum: 639b7722433e5f78856f92431a302d2f113a9c2947d684975926801e507dfcf1269fdbf1f719931f478749b5a53a642b0f2c90959cd41af21a633722e9c64422
+  languageName: node
+  linkType: hard
+
+"html-entities@npm:^2.1.0":
+  version: 2.3.2
+  resolution: "html-entities@npm:2.3.2"
+  checksum: a0bcdfdb2326d8943d43d4f5f794769f666d335f7795e82ac5140154970d82a8a1be082725bd53e18c8727821713e7d124982ed9a3463db9b0159b58bc6eff42
   languageName: node
   linkType: hard
 
@@ -23961,7 +24030,7 @@ fsevents@^1.2.7:
     "@babel/core": ^7.15.8
     "@babel/preset-env": ^7.15.8
     "@babel/preset-react": ^7.14.5
-    "@pmmmwh/react-refresh-webpack-plugin": ^0.4.3
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.1
     "@svgr/webpack": ^5.5.0
     "@testing-library/dom": ^8.7.2
     "@testing-library/jest-dom": ^5.14.1
