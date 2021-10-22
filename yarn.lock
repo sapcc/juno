@@ -6668,7 +6668,7 @@ __metadata:
     "@testing-library/react": ^12.1.2
     "@testing-library/user-event": ^13.5.0
     assert: ^2.0.0
-    autoprefixer: ^10.2.5
+    autoprefixer: ^10.3.7
     babel-jest: ^26.6.3
     babel-loader: 8.1.0
     babel-plugin-macros: ^3.0.1
@@ -6705,21 +6705,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"autoprefixer@npm:^10.2.5":
-  version: 10.2.6
-  resolution: "autoprefixer@npm:10.2.6"
+"autoprefixer@npm:^10.3.7":
+  version: 10.3.7
+  resolution: "autoprefixer@npm:10.3.7"
   dependencies:
-    browserslist: ^4.16.6
-    caniuse-lite: ^1.0.30001230
-    colorette: ^1.2.2
+    browserslist: ^4.17.3
+    caniuse-lite: ^1.0.30001264
     fraction.js: ^4.1.1
     normalize-range: ^0.1.2
+    picocolors: ^0.2.1
     postcss-value-parser: ^4.1.0
   peerDependencies:
     postcss: ^8.1.0
   bin:
     autoprefixer: bin/autoprefixer
-  checksum: 805414d4efe4f25c6162edc65ad999235ea28cf11b6a1ed838b055ef1f777368dd16c978b44d0b48bb96a3420948d26da27066d5caa4f81bcee1946e9a269532
+  checksum: bbd835343f14de4aaa9246d2196374eaafa59f2f9de3070ac4f9d7c5a92901b8fd6d03b5b0b33ed2b33c971946a010a69dc3703005456774ced5d98bb0e275e0
   languageName: node
   linkType: hard
 
@@ -8076,14 +8076,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001109, caniuse-lite@npm:^1.0.30001125, caniuse-lite@npm:^1.0.30001219, caniuse-lite@npm:^1.0.30001230":
+"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001109, caniuse-lite@npm:^1.0.30001125, caniuse-lite@npm:^1.0.30001219":
   version: 1.0.30001243
   resolution: "caniuse-lite@npm:1.0.30001243"
   checksum: 0d6330d2279c9ec2b58cf5154ec80eeea6bca861825a791f037c644e36cf28a19db32a35a66ac989ee026b7d19ffc0eb3ad78fbc8512f7433b0caa1964de4999
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001265":
+"caniuse-lite@npm:^1.0.30001264, caniuse-lite@npm:^1.0.30001265":
   version: 1.0.30001271
   resolution: "caniuse-lite@npm:1.0.30001271"
   checksum: 0d05504a96aea55246d3166a83d63f216aa04d0c9c726423c75e76b724f4d08fe29635a3aedfcf8f9ddb2aee756d5ad4f1683173936e5c6376850b6ab8b16c29
@@ -9596,7 +9596,7 @@ __metadata:
     "@testing-library/react": ^12.1.2
     "@testing-library/user-event": ^13.5.0
     assert: ^2.0.0
-    autoprefixer: ^10.2.5
+    autoprefixer: ^10.3.7
     babel-jest: ^26.6.3
     babel-loader: 8.1.0
     babel-plugin-macros: ^3.0.1
@@ -15577,7 +15577,7 @@ fsevents@^1.2.7:
     "@testing-library/react": ^12.1.2
     "@testing-library/user-event": ^13.5.0
     add: ^2.0.6
-    autoprefixer: ^10.2.5
+    autoprefixer: ^10.3.7
     babel-jest: ^27.0.6
     babel-loader: ^8.2.2
     css-loader: ^5.2.4
@@ -18001,6 +18001,13 @@ fsevents@^1.2.7:
   dependencies:
     split2: ^3.1.1
   checksum: 39234fabf08140e5f56a7320a77ffe155e6340379713b19a48c7387eaa3f4b4e39b9dba1aa3e7b8fd1ad1f3f70192f688d01bd09d64353cc74416caf645dda1f
+  languageName: node
+  linkType: hard
+
+"picocolors@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "picocolors@npm:0.2.1"
+  checksum: 84da675558ed004c61a7fa7b0bcce6338c8e3ef1eadb43b5263059d1d745f4567464aa6aa603c506a82942a5a7dfda5bb023605a5f4c9888d7adc154845d579e
   languageName: node
   linkType: hard
 
@@ -24067,7 +24074,7 @@ fsevents@^1.2.7:
     "@testing-library/react": ^12.1.2
     "@testing-library/user-event": ^13.5.0
     assert: ^2.0.0
-    autoprefixer: ^10.2.5
+    autoprefixer: ^10.3.7
     babel-jest: ^26.6.3
     babel-loader: 8.1.0
     babel-plugin-macros: ^3.0.1
