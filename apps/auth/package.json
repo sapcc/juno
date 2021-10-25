@@ -14,7 +14,7 @@
     "assert": "^2.0.0",
     "autoprefixer": "^10.3.7",
     "babel-jest": "^26.6.3",
-    "babel-loader": "8.1.0",
+    "babel-loader": "^8.2.3",
     "babel-plugin-macros": "^3.0.1",
     "buffer": "^6.0.3",
     "bundle-loader": "^0.5.6",
