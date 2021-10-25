@@ -5213,6 +5213,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/json-schema@npm:^7.0.8":
+  version: 7.0.9
+  resolution: "@types/json-schema@npm:7.0.9"
+  checksum: 3252f0faa7aada7ad27c59bb64ff7bee0c9ad0fb7c21a3b7d255f56c732b94fe94a876f5a5f6fee27a41feac09efac082fad54314c3ce542db02445d7a6059f8
+  languageName: node
+  linkType: hard
+
 "@types/keyv@npm:^3.1.1":
   version: 3.1.2
   resolution: "@types/keyv@npm:3.1.2"
@@ -5477,7 +5484,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/webpack@npm:^4.4.31, @types/webpack@npm:^4.41.26, @types/webpack@npm:^4.41.8":
+"@types/webpack@npm:^4.41.26, @types/webpack@npm:^4.41.8":
   version: 4.41.30
   resolution: "@types/webpack@npm:4.41.30"
   dependencies:
@@ -6671,15 +6678,15 @@ __metadata:
     autoprefixer: ^10.3.7
     babel-jest: ^26.6.3
     babel-loader: ^8.2.3
-    babel-plugin-macros: ^3.0.1
+    babel-plugin-macros: ^3.1.0
     buffer: ^6.0.3
     bundle-loader: ^0.5.6
-    clean-webpack-plugin: ^3.0.0
+    clean-webpack-plugin: ^4.0.0
     communicator: "workspace:*"
-    css-loader: ^5.2.0
-    css-minimizer-webpack-plugin: ^3.0.0
+    css-loader: 5.2.7
+    css-minimizer-webpack-plugin: ^3.1.1
     custom-event-polyfill: ^1.0.7
-    glob: ^7.1.7
+    glob: ^7.2.0
     html-webpack-plugin: ^5.1.0
     jest: ^26.6.3
     juno-ui-components: "workspace:*"
@@ -6991,7 +6998,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-plugin-macros@npm:^3.0.1":
+"babel-plugin-macros@npm:^3.0.1, babel-plugin-macros@npm:^3.1.0":
   version: 3.1.0
   resolution: "babel-plugin-macros@npm:3.1.0"
   dependencies:
@@ -8344,15 +8351,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clean-webpack-plugin@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "clean-webpack-plugin@npm:3.0.0"
+"clean-webpack-plugin@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "clean-webpack-plugin@npm:4.0.0"
   dependencies:
-    "@types/webpack": ^4.4.31
     del: ^4.1.1
   peerDependencies:
-    webpack: "*"
-  checksum: fc0fbd1c8e163b784209d51a5df4336ad359737f8b324697d33d1c484ee5c7efee9a1f9f18786860216019764f4a6e02e329e0410e3ab4d52e5e5b52a1038dfe
+    webpack: ">=4.0.0 <6.0.0"
+  checksum: 2538618ae1a846deef7f52d50711911d8a43205f1dc2ea1719383098edd332a096dcfd69298ea31a65159c72825c5d7865547c2ac14f064dd872405a4ae52013
   languageName: node
   linkType: hard
 
@@ -9195,6 +9201,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"css-loader@npm:5.2.7, css-loader@npm:^5.2.7":
+  version: 5.2.7
+  resolution: "css-loader@npm:5.2.7"
+  dependencies:
+    icss-utils: ^5.1.0
+    loader-utils: ^2.0.0
+    postcss: ^8.2.15
+    postcss-modules-extract-imports: ^3.0.0
+    postcss-modules-local-by-default: ^4.0.0
+    postcss-modules-scope: ^3.0.0
+    postcss-modules-values: ^4.0.0
+    postcss-value-parser: ^4.1.0
+    schema-utils: ^3.0.0
+    semver: ^7.3.5
+  peerDependencies:
+    webpack: ^4.27.0 || ^5.0.0
+  checksum: e121c9310e3597003126844c3bb9e0635273e14065730ae62102fea5f594da948479c56503299ceee6bc942da1b125e24fec27b3b0d9ea64a83f27a88f10bba4
+  languageName: node
+  linkType: hard
+
 "css-loader@npm:^3.6.0":
   version: 3.6.0
   resolution: "css-loader@npm:3.6.0"
@@ -9218,35 +9244,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:^5.2.0, css-loader@npm:^5.2.4":
-  version: 5.2.6
-  resolution: "css-loader@npm:5.2.6"
-  dependencies:
-    icss-utils: ^5.1.0
-    loader-utils: ^2.0.0
-    postcss: ^8.2.15
-    postcss-modules-extract-imports: ^3.0.0
-    postcss-modules-local-by-default: ^4.0.0
-    postcss-modules-scope: ^3.0.0
-    postcss-modules-values: ^4.0.0
-    postcss-value-parser: ^4.1.0
-    schema-utils: ^3.0.0
-    semver: ^7.3.5
-  peerDependencies:
-    webpack: ^4.27.0 || ^5.0.0
-  checksum: b9e5a32246d025803e1d4c71c6e19a4ab41b21d9c450ce9e03ffdeba4d60295b1c1d06aa89a54cf65b8527e47ad807e66ac15815a0dd5a2c70c8009ef7883cbd
-  languageName: node
-  linkType: hard
-
-"css-minimizer-webpack-plugin@npm:^3.0.0":
-  version: 3.0.2
-  resolution: "css-minimizer-webpack-plugin@npm:3.0.2"
+"css-minimizer-webpack-plugin@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "css-minimizer-webpack-plugin@npm:3.1.1"
   dependencies:
     cssnano: ^5.0.6
     jest-worker: ^27.0.2
     p-limit: ^3.0.2
     postcss: ^8.3.5
-    schema-utils: ^3.0.0
+    schema-utils: ^3.1.0
     serialize-javascript: ^6.0.0
     source-map: ^0.6.1
   peerDependencies:
@@ -9256,7 +9262,9 @@ __metadata:
       optional: true
     csso:
       optional: true
-  checksum: 179debffae069fe5ec44be5a0bb8bda0df48f0adae7fde1cbc266f2b28a9d5c5a13d843c22c8682279ac3bd0371bbfe78146cbf5e92538fccb6b662316f6cf2d
+    esbuild:
+      optional: true
+  checksum: 037827f89ba4fb9bf04295840591eb893f4d1ac0c7d5d5c86d7b412ccf80adfafe78beb2bbc26db04a2c1b7435cdd178b421fbadb8bfb4348344907847d44385
   languageName: node
   linkType: hard
 
@@ -9598,16 +9606,16 @@ __metadata:
     autoprefixer: ^10.3.7
     babel-jest: ^26.6.3
     babel-loader: ^8.2.3
-    babel-plugin-macros: ^3.0.1
+    babel-plugin-macros: ^3.1.0
     buffer: ^6.0.3
     bundle-loader: ^0.5.6
-    clean-webpack-plugin: ^3.0.0
+    clean-webpack-plugin: ^4.0.0
     communicator: "workspace:*"
-    css-loader: ^5.2.0
-    css-minimizer-webpack-plugin: ^3.0.0
+    css-loader: ^5.2.7
+    css-minimizer-webpack-plugin: ^3.1.1
     custom-event-polyfill: ^1.0.7
     file-loader: ^6.2.0
-    glob: ^7.1.7
+    glob: ^7.2.0
     html-webpack-plugin: ^5.1.0
     jest: ^26.6.3
     juno-ui-components: "workspace:*"
@@ -9910,10 +9918,10 @@ __metadata:
     assert: ^2.0.0
     babel-jest: ^26.6.3
     babel-loader: ^8.2.3
-    babel-plugin-macros: ^3.0.1
+    babel-plugin-macros: ^3.1.0
     buffer: ^6.0.3
     bundle-loader: ^0.5.6
-    clean-webpack-plugin: ^3.0.0
+    clean-webpack-plugin: ^4.0.0
     communicator: "workspace:*"
     dotenv: ^8.2.0
     graphql: ^15.5.1
@@ -12188,7 +12196,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"glob@npm:^7.0.0, glob@npm:^7.0.3, glob@npm:^7.1.1, glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6, glob@npm:^7.1.7":
+"glob@npm:^7.0.0, glob@npm:^7.0.3, glob@npm:^7.1.1, glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6":
   version: 7.1.7
   resolution: "glob@npm:7.1.7"
   dependencies:
@@ -12199,6 +12207,20 @@ fsevents@^1.2.7:
     once: ^1.3.0
     path-is-absolute: ^1.0.0
   checksum: 352f74f08247db5420161a2f68f2bd84b53228b5fcfc9dcc37cd54d3f19ec0232495d84aeff1286d0727059e9fdc1031400e00b971bdc59e30f8f82b199c9d02
+  languageName: node
+  linkType: hard
+
+"glob@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "glob@npm:7.2.0"
+  dependencies:
+    fs.realpath: ^1.0.0
+    inflight: ^1.0.4
+    inherits: 2
+    minimatch: ^3.0.4
+    once: ^1.3.0
+    path-is-absolute: ^1.0.0
+  checksum: 1171c3d7b1f5a367499e498826cddafc642aa55ef21e810031a287d3199612a889059d7d2c276a04c636c3ac2fd5943896bfc309110b21fafaeb8a1e0a199d6e
   languageName: node
   linkType: hard
 
@@ -15579,7 +15601,7 @@ fsevents@^1.2.7:
     autoprefixer: ^10.3.7
     babel-jest: ^27.0.6
     babel-loader: ^8.2.3
-    css-loader: ^5.2.4
+    css-loader: 5.2.7
     jest: ^26.6.3
     jest-svg-transformer: ^1.0.0
     postcss: ^8.2.15
@@ -20931,6 +20953,17 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"schema-utils@npm:^3.1.0":
+  version: 3.1.1
+  resolution: "schema-utils@npm:3.1.1"
+  dependencies:
+    "@types/json-schema": ^7.0.8
+    ajv: ^6.12.5
+    ajv-keywords: ^3.5.2
+  checksum: c4f4c4c511a07ac7a0be5bf1da60b1756753effc3ff9c1f5153b0238f7e293aa4494466fb436b0a778d63e70e8e6b2cd6ac1d7a1cce176dde6e3f3e3a31d2962
+  languageName: node
+  linkType: hard
+
 "secure-json-parse@npm:^2.0.0, secure-json-parse@npm:^2.2.0":
   version: 2.4.0
   resolution: "secure-json-parse@npm:2.4.0"
@@ -24076,17 +24109,17 @@ fsevents@^1.2.7:
     autoprefixer: ^10.3.7
     babel-jest: ^26.6.3
     babel-loader: ^8.2.3
-    babel-plugin-macros: ^3.0.1
+    babel-plugin-macros: ^3.1.0
     buffer: ^6.0.3
     bundle-loader: ^0.5.6
     cidr-regex: ^3.1.1
-    clean-webpack-plugin: ^3.0.0
+    clean-webpack-plugin: ^4.0.0
     communicator: "workspace:*"
-    css-loader: ^5.2.0
-    css-minimizer-webpack-plugin: ^3.0.0
+    css-loader: 5.2.7
+    css-minimizer-webpack-plugin: ^3.1.1
     custom-event-polyfill: ^1.0.7
     file-loader: ^6.2.0
-    glob: ^7.1.7
+    glob: ^7.2.0
     html-webpack-plugin: ^5.1.0
     ip-regex: ^4.3.0
     jest: ^26.6.3
@@ -24151,7 +24184,7 @@ fsevents@^1.2.7:
     "@babel/preset-env": ^7.15.8
     babel-loader: ^8.2.3
     bundle-loader: ^0.5.6
-    clean-webpack-plugin: ^3.0.0
+    clean-webpack-plugin: ^4.0.0
     html-webpack-plugin: ^5.1.0
     jest: ^26.6.3
     regenerator-runtime: ^0.13.7
