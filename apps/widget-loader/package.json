@@ -12,9 +12,9 @@
     "jest": "^26.6.3",
     "regenerator-runtime": "^0.13.9",
     "serve": "^11.3.2",
-    "webpack": "^5.22.0",
-    "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack": "^5.59.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.3.1"
   },
   "scripts": {
     "start": "PORT=$APP_PORT webpack serve --mode development",
