@@ -6834,7 +6834,7 @@ __metadata:
     bundle-loader: ^0.5.6
     clean-webpack-plugin: ^4.0.0
     communicator: "workspace:*"
-    css-loader: 5.2.7
+    css-loader: ^6.4.0
     css-minimizer-webpack-plugin: ^3.1.1
     custom-event-polyfill: ^1.0.7
     glob: ^7.2.0
@@ -9375,26 +9375,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:5.2.7, css-loader@npm:^5.0.1, css-loader@npm:^5.2.7":
-  version: 5.2.7
-  resolution: "css-loader@npm:5.2.7"
-  dependencies:
-    icss-utils: ^5.1.0
-    loader-utils: ^2.0.0
-    postcss: ^8.2.15
-    postcss-modules-extract-imports: ^3.0.0
-    postcss-modules-local-by-default: ^4.0.0
-    postcss-modules-scope: ^3.0.0
-    postcss-modules-values: ^4.0.0
-    postcss-value-parser: ^4.1.0
-    schema-utils: ^3.0.0
-    semver: ^7.3.5
-  peerDependencies:
-    webpack: ^4.27.0 || ^5.0.0
-  checksum: e121c9310e3597003126844c3bb9e0635273e14065730ae62102fea5f594da948479c56503299ceee6bc942da1b125e24fec27b3b0d9ea64a83f27a88f10bba4
-  languageName: node
-  linkType: hard
-
 "css-loader@npm:^3.6.0":
   version: 3.6.0
   resolution: "css-loader@npm:3.6.0"
@@ -9415,6 +9395,44 @@ __metadata:
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
   checksum: f916e1dc6914e9fda52e81e603e5afd8cf68c866d9d1cb84edf245fa3ce6bec4252be841edc694c8f6aeb855c94dbde1baccb44678f0b652bbb8fb7ca68a1a0a
+  languageName: node
+  linkType: hard
+
+"css-loader@npm:^5.0.1":
+  version: 5.2.7
+  resolution: "css-loader@npm:5.2.7"
+  dependencies:
+    icss-utils: ^5.1.0
+    loader-utils: ^2.0.0
+    postcss: ^8.2.15
+    postcss-modules-extract-imports: ^3.0.0
+    postcss-modules-local-by-default: ^4.0.0
+    postcss-modules-scope: ^3.0.0
+    postcss-modules-values: ^4.0.0
+    postcss-value-parser: ^4.1.0
+    schema-utils: ^3.0.0
+    semver: ^7.3.5
+  peerDependencies:
+    webpack: ^4.27.0 || ^5.0.0
+  checksum: e121c9310e3597003126844c3bb9e0635273e14065730ae62102fea5f594da948479c56503299ceee6bc942da1b125e24fec27b3b0d9ea64a83f27a88f10bba4
+  languageName: node
+  linkType: hard
+
+"css-loader@npm:^6.4.0":
+  version: 6.4.0
+  resolution: "css-loader@npm:6.4.0"
+  dependencies:
+    icss-utils: ^5.1.0
+    postcss: ^8.2.15
+    postcss-modules-extract-imports: ^3.0.0
+    postcss-modules-local-by-default: ^4.0.0
+    postcss-modules-scope: ^3.0.0
+    postcss-modules-values: ^4.0.0
+    postcss-value-parser: ^4.1.0
+    semver: ^7.3.5
+  peerDependencies:
+    webpack: ^5.0.0
+  checksum: 3d7d84823aec500733a5521700da3d749c590f001f15c69f141dc7dae1563601fdaaefdbbf019933b3fc1d1689e2a7a98ed5615d5866c490d88c4a5d145b8235
   languageName: node
   linkType: hard
 
@@ -9785,7 +9803,7 @@ __metadata:
     bundle-loader: ^0.5.6
     clean-webpack-plugin: ^4.0.0
     communicator: "workspace:*"
-    css-loader: ^5.2.7
+    css-loader: ^6.4.0
     css-minimizer-webpack-plugin: ^3.1.1
     custom-event-polyfill: ^1.0.7
     file-loader: ^6.2.0
@@ -15859,7 +15877,7 @@ fsevents@^1.2.7:
     autoprefixer: ^10.3.7
     babel-jest: ^27.0.6
     babel-loader: ^8.2.3
-    css-loader: 5.2.7
+    css-loader: ^6.4.0
     jest: ^26.6.3
     jest-svg-transformer: ^1.0.0
     postcss: ^8.3.11
@@ -24559,7 +24577,7 @@ fsevents@^1.2.7:
     cidr-regex: ^3.1.1
     clean-webpack-plugin: ^4.0.0
     communicator: "workspace:*"
-    css-loader: 5.2.7
+    css-loader: ^6.4.0
     css-minimizer-webpack-plugin: ^3.1.1
     custom-event-polyfill: ^1.0.7
     file-loader: ^6.2.0
