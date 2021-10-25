@@ -5155,6 +5155,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/html-minifier-terser@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "@types/html-minifier-terser@npm:6.0.0"
+  checksum: 253e2aa27d9410c00a9153350e45cda94638299e8434d2164ba1f9024e0795f039b8a062081e1040325ac336b637e07cf0f34186b337a8f1a092603152820c47
+  languageName: node
+  linkType: hard
+
 "@types/is-function@npm:^1.0.0":
   version: 1.0.0
   resolution: "@types/is-function@npm:1.0.0"
@@ -6687,10 +6694,10 @@ __metadata:
     css-minimizer-webpack-plugin: ^3.1.1
     custom-event-polyfill: ^1.0.7
     glob: ^7.2.0
-    html-webpack-plugin: ^5.1.0
+    html-webpack-plugin: ^5.4.0
     jest: ^26.6.3
     juno-ui-components: "workspace:*"
-    mini-css-extract-plugin: ^1.3.8
+    mini-css-extract-plugin: ^1.6.2
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.2.15
@@ -8032,7 +8039,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"camel-case@npm:4.1.2, camel-case@npm:^4.1.1":
+"camel-case@npm:4.1.2, camel-case@npm:^4.1.1, camel-case@npm:^4.1.2":
   version: 4.1.2
   resolution: "camel-case@npm:4.1.2"
   dependencies:
@@ -8344,6 +8351,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clean-css@npm:^5.1.5":
+  version: 5.2.2
+  resolution: "clean-css@npm:5.2.2"
+  dependencies:
+    source-map: ~0.6.0
+  checksum: 262c1aebbc911faad71c6ca2701e42582e82854720229d2496064d150633c9a59214a3da3485d05e4dd437ab406e93f7e1dcbdd931ccf9b28302b50508d771a1
+  languageName: node
+  linkType: hard
+
 "clean-stack@npm:^2.0.0":
   version: 2.2.0
   resolution: "clean-stack@npm:2.2.0"
@@ -8650,6 +8666,13 @@ __metadata:
   version: 7.2.0
   resolution: "commander@npm:7.2.0"
   checksum: bdc0eca5e25cd24af8440163d3c9a996785bbac4b49a590365699cdc1ed08cefbac8f268153208ab2bc5dc3cb1d3fb573fd1590c681e36e371342186bd331a4c
+  languageName: node
+  linkType: hard
+
+"commander@npm:^8.1.0":
+  version: 8.3.0
+  resolution: "commander@npm:8.3.0"
+  checksum: 0b818d97ca9c8ad461ff05f873082af0c1895e49984a2abf1090e4a85c3537c3c0f9921e38314a9de7e71941f00f710c204d3560e3a7bc0b1023eef92d6bbfc0
   languageName: node
   linkType: hard
 
@@ -9616,11 +9639,11 @@ __metadata:
     custom-event-polyfill: ^1.0.7
     file-loader: ^6.2.0
     glob: ^7.2.0
-    html-webpack-plugin: ^5.1.0
+    html-webpack-plugin: ^5.4.0
     jest: ^26.6.3
     juno-ui-components: "workspace:*"
     luxon: ^2.0.1
-    mini-css-extract-plugin: ^1.3.8
+    mini-css-extract-plugin: ^1.6.2
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.2.15
@@ -9925,10 +9948,10 @@ __metadata:
     communicator: "workspace:*"
     dotenv: ^8.2.0
     graphql: ^15.5.1
-    html-webpack-plugin: ^5.1.0
+    html-webpack-plugin: ^5.4.0
     jest: ^26.6.3
     juno-ui-components: "workspace:*"
-    mini-css-extract-plugin: ^1.3.8
+    mini-css-extract-plugin: ^1.6.2
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     process: ^0.11.10
@@ -12870,6 +12893,23 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"html-minifier-terser@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "html-minifier-terser@npm:6.0.2"
+  dependencies:
+    camel-case: ^4.1.2
+    clean-css: ^5.1.5
+    commander: ^8.1.0
+    he: ^1.2.0
+    param-case: ^3.0.4
+    relateurl: ^0.2.7
+    terser: ^5.7.2
+  bin:
+    html-minifier-terser: cli.js
+  checksum: 1decfcbd28970b83aff6467a8053459b2a9ee0ae595fc2ab93e2bca00e3f3fe4169bb9a59b0d2ad18def45b946dea7e8c2ac856ddaf3520565e07a1945d358da
+  languageName: node
+  linkType: hard
+
 "html-tags@npm:^3.1.0":
   version: 3.1.0
   resolution: "html-tags@npm:3.1.0"
@@ -12903,18 +12943,18 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"html-webpack-plugin@npm:^5.1.0":
-  version: 5.3.2
-  resolution: "html-webpack-plugin@npm:5.3.2"
+"html-webpack-plugin@npm:^5.4.0":
+  version: 5.4.0
+  resolution: "html-webpack-plugin@npm:5.4.0"
   dependencies:
-    "@types/html-minifier-terser": ^5.0.0
-    html-minifier-terser: ^5.0.1
+    "@types/html-minifier-terser": ^6.0.0
+    html-minifier-terser: ^6.0.2
     lodash: ^4.17.21
     pretty-error: ^3.0.4
     tapable: ^2.0.0
   peerDependencies:
     webpack: ^5.20.0
-  checksum: 3e8f6e4df87702e794522ae53ffd7e24c62ecc88d914e9e86626bb5977d62afe40e7be9032f72f3dde8696b53590b8d79466bfd38b3b5079148cf913c2c7a4c0
+  checksum: c63c2d532c9bcc864d5f52af8b2b1baab864691fe6d3bd621c021b887d9e3c03f92ba5e22f48746b13e3c6ebdebb5e7c978b60409328e3949e14ab4f320e701a
   languageName: node
   linkType: hard
 
@@ -16474,7 +16514,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"mini-css-extract-plugin@npm:^1.3.8":
+"mini-css-extract-plugin@npm:^1.6.2":
   version: 1.6.2
   resolution: "mini-css-extract-plugin@npm:1.6.2"
   dependencies:
@@ -17725,7 +17765,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"param-case@npm:^3.0.3":
+"param-case@npm:^3.0.3, param-case@npm:^3.0.4":
   version: 3.0.4
   resolution: "param-case@npm:3.0.4"
   dependencies:
@@ -21577,6 +21617,16 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"source-map-support@npm:~0.5.20":
+  version: 0.5.20
+  resolution: "source-map-support@npm:0.5.20"
+  dependencies:
+    buffer-from: ^1.0.0
+    source-map: ^0.6.0
+  checksum: 2c5821ee94732b2ddbb1e1d9e61ed76ef00f72415fa686ab96d5f5c711789d55424866fa7d6c493beea380e44418053d86ec490b82c101008eac311463da84a9
+  languageName: node
+  linkType: hard
+
 "source-map-url@npm:^0.4.0":
   version: 0.4.1
   resolution: "source-map-url@npm:0.4.1"
@@ -22545,6 +22595,19 @@ fsevents@^1.2.7:
   bin:
     terser: bin/terser
   checksum: 0a1ad5f9be4a2a815f14e85d16437dd73116f5d1b5c0623a292c5bcbdf7dc73c93a966063344678a04891d9433dfda055c1e2ad542e1295ad58837526e9fe848
+  languageName: node
+  linkType: hard
+
+"terser@npm:^5.7.2":
+  version: 5.9.0
+  resolution: "terser@npm:5.9.0"
+  dependencies:
+    commander: ^2.20.0
+    source-map: ~0.7.2
+    source-map-support: ~0.5.20
+  bin:
+    terser: bin/terser
+  checksum: 7603e5a3dc0317cc4b3251e855aa90ef397b03780a1d0d747b20b832d857b50d4c017b1342007f562e20e3e538044daa71e5addd5ab6aad64ee926c5d4b0c88f
   languageName: node
   linkType: hard
 
@@ -24120,12 +24183,12 @@ fsevents@^1.2.7:
     custom-event-polyfill: ^1.0.7
     file-loader: ^6.2.0
     glob: ^7.2.0
-    html-webpack-plugin: ^5.1.0
+    html-webpack-plugin: ^5.4.0
     ip-regex: ^4.3.0
     jest: ^26.6.3
     juno-ui-components: "workspace:*"
     luxon: ^2.0.1
-    mini-css-extract-plugin: ^1.3.8
+    mini-css-extract-plugin: ^1.6.2
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.2.15
@@ -24185,7 +24248,7 @@ fsevents@^1.2.7:
     babel-loader: ^8.2.3
     bundle-loader: ^0.5.6
     clean-webpack-plugin: ^4.0.0
-    html-webpack-plugin: ^5.1.0
+    html-webpack-plugin: ^5.4.0
     jest: ^26.6.3
     regenerator-runtime: ^0.13.7
     serve: ^11.3.2
