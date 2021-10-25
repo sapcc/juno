@@ -6700,8 +6700,8 @@ __metadata:
     mini-css-extract-plugin: ^1.6.2
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
-    postcss: ^8.2.15
-    postcss-loader: ^5.3.0
+    postcss: ^8.3.11
+    postcss-loader: ^6.2.0
     process: ^0.11.10
     prop-types: ^15.7.2
     purgecss-webpack-plugin: ^4.0.3
@@ -9646,8 +9646,8 @@ __metadata:
     mini-css-extract-plugin: ^1.6.2
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
-    postcss: ^8.2.15
-    postcss-loader: ^5.3.0
+    postcss: ^8.3.11
+    postcss-loader: ^6.2.0
     process: ^0.11.10
     prop-types: ^15.7.2
     purgecss-webpack-plugin: ^4.0.3
@@ -15644,7 +15644,7 @@ fsevents@^1.2.7:
     css-loader: 5.2.7
     jest: ^26.6.3
     jest-svg-transformer: ^1.0.0
-    postcss: ^8.2.15
+    postcss: ^8.3.11
     prop-types: ^15.7.2
     react: ^17.0.2
     react-dom: ^17.0.2
@@ -16803,6 +16803,15 @@ fsevents@^1.2.7:
   bin:
     nanoid: bin/nanoid.cjs
   checksum: e6dea1da5a593ffdc8cf2676d1d02f0626f07a54a5947a7a1f5ff1fd07901b2f53044c285e98b87eb367f016fde285fd8785d54a2dceeab9c3721f4e618f8326
+  languageName: node
+  linkType: hard
+
+"nanoid@npm:^3.1.30":
+  version: 3.1.30
+  resolution: "nanoid@npm:3.1.30"
+  bin:
+    nanoid: bin/nanoid.cjs
+  checksum: 440f685e9890bd96433cf6c01535165b1e9677ba4a5c4179e1a61612f0b4c428cc628425fe232038b93304d15b191892d7ced9503fa558d1296e4e95fe80a627
   languageName: node
   linkType: hard
 
@@ -18436,17 +18445,17 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"postcss-loader@npm:^5.3.0":
-  version: 5.3.0
-  resolution: "postcss-loader@npm:5.3.0"
+"postcss-loader@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "postcss-loader@npm:6.2.0"
   dependencies:
     cosmiconfig: ^7.0.0
     klona: ^2.0.4
-    semver: ^7.3.4
+    semver: ^7.3.5
   peerDependencies:
     postcss: ^7.0.0 || ^8.0.1
     webpack: ^5.0.0
-  checksum: fd7a1a673b0e8f238392b3d449f2727767522febb2f60bfc9bb5cd4e373b07ba8df621f4e2fad92bf085765dcdea0f049497ae799ce1c9f1a592820275cc7e65
+  checksum: 2583b1d33c7ec964431adc768adfed1e339f59803bf6fbf6cc76226159cf01e67d7f83773e4926f183e44c9ce38ef82e52b2a1ef9d9e4288f789622fa97b6af8
   languageName: node
   linkType: hard
 
@@ -19091,6 +19100,17 @@ fsevents@^1.2.7:
     nanoid: ^3.1.23
     source-map-js: ^0.6.2
   checksum: 87dc16efcf40286fad4ded0a433497ddbc55dfad3d7ddb200ba9c0761ec376280fa2c06a522628583c9284def85894c52bc361cffedf0679f4936370c084a145
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.3.11":
+  version: 8.3.11
+  resolution: "postcss@npm:8.3.11"
+  dependencies:
+    nanoid: ^3.1.30
+    picocolors: ^1.0.0
+    source-map-js: ^0.6.2
+  checksum: fa1530f7e1817bcaf40b34db246d0c49e42daf12719abd4a3a1b5886491cca125af6b21ccdfc24a074ea9b6b73a6677e1478906adb732b2bd5208077a64473a6
   languageName: node
   linkType: hard
 
@@ -24191,8 +24211,8 @@ fsevents@^1.2.7:
     mini-css-extract-plugin: ^1.6.2
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
-    postcss: ^8.2.15
-    postcss-loader: ^5.3.0
+    postcss: ^8.3.11
+    postcss-loader: ^6.2.0
     process: ^0.11.10
     prop-types: ^15.7.2
     purgecss-webpack-plugin: ^4.0.3
