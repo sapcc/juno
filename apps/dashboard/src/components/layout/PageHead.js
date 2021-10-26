@@ -1,36 +1,18 @@
-import tw from "twin.macro"
-import { ReactComponent as SAPLogo } from "../../assets/images/SAP_logo.svg"
-import { LayoutContainer } from "../shared/StyledComponents"
+import React from "react"
+// import { ReactComponent as SAPLogo } from "../../assets/images/SAP_logo.svg"
 
-// import logo from "../../assets/images/SAP_logo.svg"
-import UserProfile from "../UserProfile"
 import { Link } from "react-router-dom"
 
-const Head = tw.div`
-  bg-black
-  bg-opacity-60
-`
-
-const Container = tw(LayoutContainer)`
-  flex
-  justify-between
-  items-center
-  py-6
-`
 
 const PageHead = () => {
   return (
-    <Head>
-      <Container>
+    <div>
+      <div>
         <Link to="/">
-          <SAPLogo />
+          {/* <SAPLogo /> */}
         </Link>
-        {/* <div>
-          <Link to="/">Home</Link> | <Link to="/designate">Designate</Link>
-        </div> */}
-        <UserProfile />
-      </Container>
-    </Head>
+      </div>
+    </div>
   )
 }
 

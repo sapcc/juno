@@ -10,8 +10,8 @@ export default {
 
 const Template = (args) => (
 	<SelectRow {...args}>
-		{args.children.map((child) => (
-			<DefaultSelectOption {...child} />
+		{args.children.map((child, i) => (
+			<DefaultSelectOption {...child} key={`option-${i}`} />
 		))}
 	</SelectRow>
 )

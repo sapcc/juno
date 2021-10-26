@@ -18,13 +18,13 @@ export const Default = Template.bind({})
 Default.parameters = {
   docs: {
     description: { 
-      story: "Per default, Juno uses a 12-column fluid grid. Columns can be made to span multiple columns by passing `cols={n}`."
+      story: "By default, Juno uses a 12-column fluid grid. Columns can be made to span multiple columns by passing `cols={n}`."
     }
   },
 }
 Default.args = {
   children: [
-  <GridRow>
+  <GridRow key="1">
     <GridColumn>Column</GridColumn>
     <GridColumn>Column</GridColumn>
     <GridColumn>Column</GridColumn>
@@ -38,7 +38,7 @@ Default.args = {
     <GridColumn>Column</GridColumn>
     <GridColumn>Column</GridColumn>
   </GridRow>,
-  <GridRow>
+  <GridRow key="2">
     <GridColumn>Column</GridColumn>
     <GridColumn cols={3}>Column cols-3</GridColumn>
     <GridColumn cols={5}>Column cols-5</GridColumn>
@@ -59,19 +59,19 @@ Auto.parameters = {
 Auto.args = {
   auto: true,
   children:  [
-    <GridRow>
+    <GridRow key="1">
       <GridColumn>Column</GridColumn>
       <GridColumn>Column</GridColumn>
       <GridColumn>Column</GridColumn>
       <GridColumn>Column</GridColumn>
       <GridColumn>Column</GridColumn>
     </GridRow>,
-    <GridRow>
+    <GridRow key="2">
       <GridColumn>Column</GridColumn>
       <GridColumn>Column</GridColumn>
       <GridColumn>Column</GridColumn>
     </GridRow>,
-    <GridRow>
+    <GridRow key="3">
       <GridColumn>Column</GridColumn>
       <GridColumn>Column</GridColumn>
       <GridColumn>Column</GridColumn>
@@ -105,7 +105,7 @@ MixedAutoGrid.args = {
       <GridColumn auto>Auto Column</GridColumn>
       <GridColumn width={10}>Column 10%</GridColumn>
       <GridColumn cols={3}>Auto Column</GridColumn>
-      </GridRow> 
+    </GridRow> 
 }
 
 export const NestedGrid = Template.bind({})

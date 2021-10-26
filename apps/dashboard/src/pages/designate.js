@@ -1,12 +1,10 @@
 import React from "react"
-import MicroFrontend from "../components/MicroFrontend"
-import { LayoutContainer } from "../components/shared/StyledComponents"
 
 const Designate = () => (
-  <LayoutContainer>
+  <div>
     <span>Designate</span>
-    <MicroFrontend name="designate" version="0_0_1" />
-  </LayoutContainer>
+    Add microfrontend here
+  </div>
 )
 
 export default Designate

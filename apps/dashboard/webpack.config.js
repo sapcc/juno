@@ -142,7 +142,7 @@ module.exports = (_, argv) => {
       isDevelopment && new ReactRefreshWebpackPlugin(),
     ].filter(Boolean),
 
-    // OLD dev server config for webpack-dev-server version 3.x
+    // //Config for webpack-dev-server module, version 3.x
     // devServer: {
     //   contentBase: path.resolve(__dirname, "dist"),
     //   port: process.env.PORT,
@@ -162,6 +162,7 @@ module.exports = (_, argv) => {
     //   // websockets in `webpackHotDevClient`.
     //   transportMode: "ws",
     // },
+    
     //Config for webpack-dev-server module version 4.x
     devServer: {
       static: {

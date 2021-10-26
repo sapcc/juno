@@ -113,7 +113,7 @@ export const Checkbox = ({
 				onBlur={handleBlur}
 			/>
 			
-			{ isIndeterminate && !isChecked ? <div class={`${mockindeterminatestyles}`}></div>
+			{ isIndeterminate && !isChecked ? <div className={`${mockindeterminatestyles}`}></div>
 											: "" }
 		</div>
 	)
