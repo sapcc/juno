@@ -14,17 +14,17 @@ export default {
 
 const SelectTemplate = ({ options, ...args }) => 
 	<Select {...args}> 
-		{options.map((option) => (
-			<SelectOption {...option} />
+		{options.map((option, i) => (
+			<SelectOption {...option} key={`option-${i}`} />
 		))}
 	</Select>
 	
 const GroupedSelectTemplate = ({ groups, ...args}) =>
 	<Select {...args}>
-		{groups.map((group) => (
-			<SelectOptionGroup {...group}>
-				{group.options.map((option) => (
-					<SelectOption {...option} />
+		{groups.map((group, i) => (
+			<SelectOptionGroup {...group} key={`group-${i}`} >
+				{group.options.map((option, i) => (
+					<SelectOption {...option} key={`option-${i}`} />
 				))}
 			</SelectOptionGroup>
 		))}

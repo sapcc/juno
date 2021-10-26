@@ -1,0 +1,1 @@
+export { DataGridHeadCell } from "./DataGridHeadCell.component"

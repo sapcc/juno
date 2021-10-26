@@ -10,8 +10,8 @@ export default {
 
 const Template = (args) => (
   <Form {...args}> 
-    {args.children.map((child) => (
-      <DefaultTextInputRow {...child} />
+    {args.children.map((child,i) => (
+      <DefaultTextInputRow {...child} key={`input-${i}`} />
     ))}
   </Form>
 )
