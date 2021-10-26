@@ -4558,7 +4558,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/manager-webpack5@npm:^6.3.12":
+"@storybook/manager-webpack5@npm:*, @storybook/manager-webpack5@npm:^6.3.12":
   version: 6.3.12
   resolution: "@storybook/manager-webpack5@npm:6.3.12"
   dependencies:
@@ -6841,7 +6841,7 @@ __metadata:
     html-webpack-plugin: ^5.4.0
     jest: ^26.6.3
     juno-ui-components: "workspace:*"
-    mini-css-extract-plugin: ^1.6.2
+    mini-css-extract-plugin: ^2.4.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.3.11
@@ -9812,7 +9812,7 @@ __metadata:
     jest: ^26.6.3
     juno-ui-components: "workspace:*"
     luxon: ^2.0.1
-    mini-css-extract-plugin: ^1.6.2
+    mini-css-extract-plugin: ^2.4.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.3.11
@@ -10142,7 +10142,7 @@ __metadata:
     html-webpack-plugin: ^5.4.0
     jest: ^26.6.3
     juno-ui-components: "workspace:*"
-    mini-css-extract-plugin: ^1.6.2
+    mini-css-extract-plugin: ^2.4.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     process: ^0.11.10
@@ -16788,16 +16788,14 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"mini-css-extract-plugin@npm:^1.6.2":
-  version: 1.6.2
-  resolution: "mini-css-extract-plugin@npm:1.6.2"
+"mini-css-extract-plugin@npm:^2.4.3":
+  version: 2.4.3
+  resolution: "mini-css-extract-plugin@npm:2.4.3"
   dependencies:
-    loader-utils: ^2.0.0
-    schema-utils: ^3.0.0
-    webpack-sources: ^1.1.0
+    schema-utils: ^3.1.0
   peerDependencies:
-    webpack: ^4.4.0 || ^5.0.0
-  checksum: 53c162db80f2b58dcc1e85a2e1b52ffed73d3184ed5b8a037786d8562fbecf1b936397ea3873f3375356f8a6def27ec97867f9938356358d369d2a9e20a30718
+    webpack: ^5.0.0
+  checksum: fe932221ed141fae4757ab8db189eb387b071338618a0d4c460519469f0610f078ff51900a8e466c9a93e4397c00fd6952734e2e8f01b1794bbfd68b640758bd
   languageName: node
   linkType: hard
 
@@ -21181,31 +21179,6 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"sass-loader@npm:^10":
-  version: 10.2.0
-  resolution: "sass-loader@npm:10.2.0"
-  dependencies:
-    klona: ^2.0.4
-    loader-utils: ^2.0.0
-    neo-async: ^2.6.2
-    schema-utils: ^3.0.0
-    semver: ^7.3.2
-  peerDependencies:
-    fibers: ">= 3.1.0"
-    node-sass: ^4.0.0 || ^5.0.0 || ^6.0.0
-    sass: ^1.3.0
-    webpack: ^4.36.0 || ^5.0.0
-  peerDependenciesMeta:
-    fibers:
-      optional: true
-    node-sass:
-      optional: true
-    sass:
-      optional: true
-  checksum: 1c8914920749f2e2e404e4663c9cce6ef4d38dc7fb30117c722c25b76257ebee444c90d20e174adf621036e1afefaadc8f89b69fd912347f4618b7401afae53c
-  languageName: node
-  linkType: hard
-
 "sass-loader@npm:^12.2.0":
   version: 12.2.0
   resolution: "sass-loader@npm:12.2.0"
@@ -24298,7 +24271,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"webpack-sources@npm:^1.1.0, webpack-sources@npm:^1.4.0, webpack-sources@npm:^1.4.1, webpack-sources@npm:^1.4.3":
+"webpack-sources@npm:^1.4.0, webpack-sources@npm:^1.4.1, webpack-sources@npm:^1.4.3":
   version: 1.4.3
   resolution: "webpack-sources@npm:1.4.3"
   dependencies:
@@ -24587,7 +24560,7 @@ fsevents@^1.2.7:
     jest: ^26.6.3
     juno-ui-components: "workspace:*"
     luxon: ^2.0.1
-    mini-css-extract-plugin: ^1.6.2
+    mini-css-extract-plugin: ^2.4.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.3.11
