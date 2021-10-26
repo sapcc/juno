@@ -15897,7 +15897,7 @@ fsevents@^1.2.7:
     sass: ^1.32.13
     sass-loader: ^12.2.0
     storybook-dark-mode: ^1.0.8
-    style-loader: ^2.0.0
+    style-loader: ^3.3.1
     tailwindcss: ^2.2.17
     url-loader: ^4.1.1
   peerDependencies:
@@ -22476,6 +22476,15 @@ fsevents@^1.2.7:
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
   checksum: ffc305488244ab499f91b05a1c94dd199b8b106d69e260ce38bd599819bbb352357e107bef3c319b775b9fb0eaed571cb68f8c7940e457553f85a980f4b630d8
+  languageName: node
+  linkType: hard
+
+"style-loader@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "style-loader@npm:3.3.1"
+  peerDependencies:
+    webpack: ^5.0.0
+  checksum: 98fa3139c0eebeec26f39da774a6f6c3bd69fef9331bc52a94fc792be4265771d3c041d2e26a1c1c7bd61d927ec6419600a1471a0cbb54b20d8ae9b36a93a7da
   languageName: node
   linkType: hard
 
