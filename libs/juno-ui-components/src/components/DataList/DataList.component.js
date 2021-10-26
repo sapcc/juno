@@ -14,7 +14,7 @@ export const DataList = ({
 }
 
 DataList.propTypes = {
-	/** Custom classnamne */
+	/** Custom classname */
 	className: PropTypes.string,
 	/** Children to render in the DataList */
 	children: PropTypes.node,

@@ -18,9 +18,9 @@ export const DataListRow = ({
 }
 
 DataListRow.propTypes = {
-	/** Custom classnamne */
+	/** Custom classname */
 	className: PropTypes.string,
-	/** Children to render in the DataList */
+	/** Children to render in the DataListRow */
 	children: PropTypes.node,
 }
 
