@@ -100,31 +100,31 @@ Selectable.args = {
 	selectable: true,
 	children: [
 		<DataGridHead key="1">
-			<DataGridHeadRow>
-				<DataGridHeadCell>Item Title</DataGridHeadCell>
-				<DataGridHeadCell>Item Data 1</DataGridHeadCell>
-				<DataGridHeadCell>Item Data 2</DataGridHeadCell>
-				<DataGridHeadCell>Item Options</DataGridHeadCell>
+			<DataGridHeadRow key="1_1">
+				<DataGridHeadCell key="1_1_1">Item Title</DataGridHeadCell>
+				<DataGridHeadCell key="1_1_2">Item Data 1</DataGridHeadCell>
+				<DataGridHeadCell key="1_1_3">Item Data 2</DataGridHeadCell>
+				<DataGridHeadCell key="1_1_4">Item Options</DataGridHeadCell>
 			</DataGridHeadRow>
 		</DataGridHead>,
 		<DataGridBody key="2">
-			<DataGridRow>
-				<DataGridCell>Item Title</DataGridCell>
-				<DataGridCell>Item Data 1</DataGridCell>
-				<DataGridCell>Item Data 2</DataGridCell>
-				<DataGridCell>Item Options</DataGridCell>
+			<DataGridRow key="2_1">
+				<DataGridCell key="2_1_1">Item Title</DataGridCell>
+				<DataGridCell key="2_1_2">Item Data 1</DataGridCell>
+				<DataGridCell key="2_1_3">Item Data 2</DataGridCell>
+				<DataGridCell key="2_1_4">Item Options</DataGridCell>
 			</DataGridRow>
-			<DataGridRow selected >
-				<DataGridCell>Selected Item Title</DataGridCell>
-				<DataGridCell>Item Data 1</DataGridCell>
-				<DataGridCell>Item Data 2</DataGridCell>
-				<DataGridCell>Item Options</DataGridCell>
+			<DataGridRow key="2_2" selected >
+				<DataGridCell key="2_2_1">Selected Item Title</DataGridCell>
+				<DataGridCell key="2_2_2">Item Data 1</DataGridCell>
+				<DataGridCell key="2_2_3">Item Data 2</DataGridCell>
+				<DataGridCell key="2_2_4">Item Options</DataGridCell>
 			</DataGridRow>
-			<DataGridRow disabled >
-				<DataGridCell>Disabled Item Title</DataGridCell>
-				<DataGridCell>Item Data 1</DataGridCell>
-				<DataGridCell>Item Data 2</DataGridCell>
-				<DataGridCell>Item Options</DataGridCell>
+			<DataGridRow key="2_3" disabled >
+				<DataGridCell key="2_3_1">Disabled Item Title</DataGridCell>
+				<DataGridCell key="2_3_2">Item Data 1</DataGridCell>
+				<DataGridCell key="2_3_3">Item Data 2</DataGridCell>
+				<DataGridCell key="2_3_4">Item Options</DataGridCell>
 			</DataGridRow>
 		</DataGridBody>
 	]
@@ -142,31 +142,31 @@ WithToolbar.args = {
 	showToolbar: true,
 	children: [
 		<DataGridHead key="1">
-			<DataGridHeadRow>
-				<DataGridHeadCell sortable>Column Title</DataGridHeadCell>
-				<DataGridHeadCell>Column Title</DataGridHeadCell>
-				<DataGridHeadCell>Column Title</DataGridHeadCell>
-				<DataGridHeadCell>Column Title</DataGridHeadCell>
+			<DataGridHeadRow key="1_1">
+				<DataGridHeadCell key="1_1_1" sortable>Column Title</DataGridHeadCell>
+				<DataGridHeadCell key="1_1_2">Column Title</DataGridHeadCell>
+				<DataGridHeadCell key="1_1_3">Column Title</DataGridHeadCell>
+				<DataGridHeadCell key="1_1_4">Column Title</DataGridHeadCell>
 			</DataGridHeadRow>
 		</DataGridHead>,
 		<DataGridBody key="2">
-			<DataGridRow>
-				<DataGridCell>Item Title</DataGridCell>
-				<DataGridCell>Item Data 1</DataGridCell>
-				<DataGridCell>Item Data 2</DataGridCell>
-				<DataGridCell>Item Options</DataGridCell>
+			<DataGridRow key="2_1">
+				<DataGridCell key="2_1_1">Item Title</DataGridCell>
+				<DataGridCell key="2_1_2">Item Data 1</DataGridCell>
+				<DataGridCell key="2_1_3">Item Data 2</DataGridCell>
+				<DataGridCell key="2_1_4">Item Options</DataGridCell>
 			</DataGridRow>
-			<DataGridRow selected >
-				<DataGridCell>Selected Item Title</DataGridCell>
-				<DataGridCell>Item Data 1</DataGridCell>
-				<DataGridCell>Item Data 2</DataGridCell>
-				<DataGridCell>Item Options</DataGridCell>
+			<DataGridRow key="2_2" selected >
+				<DataGridCell key="2_2_1">Selected Item Title</DataGridCell>
+				<DataGridCell key="2_2_2">Item Data 1</DataGridCell>
+				<DataGridCell key="2_2_3">Item Data 2</DataGridCell>
+				<DataGridCell key="2_2_4">Item Options</DataGridCell>
 			</DataGridRow>
-			<DataGridRow disabled >
-				<DataGridCell>Disabled Item Title</DataGridCell>
-				<DataGridCell>Item Data 1</DataGridCell>
-				<DataGridCell>Item Data 2</DataGridCell>
-				<DataGridCell>Item Options</DataGridCell>
+			<DataGridRow key="2_3" disabled >
+				<DataGridCell key="2_3_1">Disabled Item Title</DataGridCell>
+				<DataGridCell key="2_3_2">Item Data 1</DataGridCell>
+				<DataGridCell key="2_3_3">Item Data 2</DataGridCell>
+				<DataGridCell key="2_3_4">Item Options</DataGridCell>
 			</DataGridRow>
 		</DataGridBody>
 	]
@@ -185,29 +185,29 @@ FullyFeatured.args = {
 	showToolbar: true,
 	children: [
 		<DataGridHead key="1">
-			<DataGridHeadRow>
-				<DataGridHeadCell>Column 1</DataGridHeadCell>
-				<DataGridHeadCell>Column 2</DataGridHeadCell>
-				<DataGridHeadCell>Column 3</DataGridHeadCell>
+			<DataGridHeadRow key="1_1">
+				<DataGridHeadCell key="1_1_1">Column 1</DataGridHeadCell>
+				<DataGridHeadCell key="1_1_2">Column 2</DataGridHeadCell>
+				<DataGridHeadCell key="1_1_3">Column 3</DataGridHeadCell>
 			</DataGridHeadRow>
 		</DataGridHead>,
 		<DataGridBody key="2">
-			<DataGridRow>
-				<DataGridCell>Item 1</DataGridCell>
-				<DataGridCell>Item 1</DataGridCell>
-				<DataGridCell>Item 1</DataGridCell>
+			<DataGridRow key="2_1">
+				<DataGridCell key="2_1_1">Item 1</DataGridCell>
+				<DataGridCell key="2_1_2">Item 1</DataGridCell>
+				<DataGridCell key="2_1_3">Item 1</DataGridCell>
 			</DataGridRow>
-			<DataGridRow>
-				<DataGridCell>Item 2</DataGridCell>
-				<DataGridCell>Item 2</DataGridCell>
-				<DataGridCell>Item 2</DataGridCell>
+			<DataGridRow key="2_2">
+				<DataGridCell key="2_2_1">Item 2</DataGridCell>
+				<DataGridCell key="2_2_2">Item 2</DataGridCell>
+				<DataGridCell key="2_2_3">Item 2</DataGridCell>
 			</DataGridRow>
 		</DataGridBody>,
 		<DataGridFoot key="3">
-			<DataGridFootRow>
-				<DataGridCell>Foot Cell</DataGridCell>
-				<DataGridCell>Foot Cell</DataGridCell>
-				<DataGridCell>Foot Cell</DataGridCell>
+			<DataGridFootRow key="3_1">
+				<DataGridCell key="3_1_1">Foot Cell</DataGridCell>
+				<DataGridCell key="3_1_2">Foot Cell</DataGridCell>
+				<DataGridCell key="3_1_3">Foot Cell</DataGridCell>
 			</DataGridFootRow>
 		</DataGridFoot>
 	]

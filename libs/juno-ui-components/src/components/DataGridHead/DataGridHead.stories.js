@@ -25,10 +25,10 @@ Default.parameters = {
 }
 Default.args = {
   children: [
-    <DataGridHeadRow>
-      <DataGridHeadCell>Column 1</DataGridHeadCell>
-      <DataGridHeadCell>Column 2</DataGridHeadCell>
-      <DataGridHeadCell sortable>Column 3</DataGridHeadCell>
+    <DataGridHeadRow key="1">
+      <DataGridHeadCell key="2">Column 1</DataGridHeadCell>
+      <DataGridHeadCell key="3">Column 2</DataGridHeadCell>
+      <DataGridHeadCell key="4" sortable>Column 3</DataGridHeadCell>
     </DataGridHeadRow>
   ]
 }

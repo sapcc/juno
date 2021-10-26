@@ -24,10 +24,10 @@ Default.parameters = {
 }
 Default.args = {
   children: [
-  	<DataGridHeadCell>Data Grid Head Cell 1</DataGridHeadCell>,
-	<DataGridHeadCell>Data Grid Head Cell 2</DataGridHeadCell>,
-	<DataGridHeadCell>Data Grid Head Cell 3</DataGridHeadCell>,
-	<DataGridHeadCell>Data Grid Head Cell 4</DataGridHeadCell>,
-	<DataGridHeadCell>Data Grid Head Cell 5</DataGridHeadCell>
+  	<DataGridHeadCell key="1">Data Grid Head Cell 1</DataGridHeadCell>,
+	  <DataGridHeadCell key="2">Data Grid Head Cell 2</DataGridHeadCell>,
+	  <DataGridHeadCell key="3">Data Grid Head Cell 3</DataGridHeadCell>,
+	  <DataGridHeadCell key="4">Data Grid Head Cell 4</DataGridHeadCell>,
+	  <DataGridHeadCell key="5">Data Grid Head Cell 5</DataGridHeadCell>
   ]
 }

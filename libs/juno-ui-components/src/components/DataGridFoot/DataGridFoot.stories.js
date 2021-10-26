@@ -25,10 +25,10 @@ Default.parameters = {
 }
 Default.args = {
   children: [
-  	<DataGridFootRow>
-      <DataGridCell>Cell</DataGridCell>
-      <DataGridCell>Cell</DataGridCell>
-      <DataGridCell>Cell</DataGridCell>
+  	<DataGridFootRow key="1">
+      <DataGridCell key="2">Cell</DataGridCell>
+      <DataGridCell key="3">Cell</DataGridCell>
+      <DataGridCell key="4">Cell</DataGridCell>
     </DataGridFootRow>
   ]
 }

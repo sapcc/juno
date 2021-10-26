@@ -27,25 +27,25 @@ Default.parameters = {
 Default.args = {
   children: [
 	  <DataGridRow key="1">
-	  <DataGridCell>Data Grid Cell 1</DataGridCell>
-	  <DataGridCell>Data Grid Cell 2</DataGridCell>
-	  <DataGridCell>Data Grid Cell 3</DataGridCell>
-	  <DataGridCell>Data Grid Cell 4</DataGridCell>
-	  <DataGridCell>Data Grid Cell 5</DataGridCell>
+	  <DataGridCell key="1_1">Data Grid Cell 1</DataGridCell>
+	  <DataGridCell key="1_2">Data Grid Cell 2</DataGridCell>
+	  <DataGridCell key="1_3">Data Grid Cell 3</DataGridCell>
+	  <DataGridCell key="1_4">Data Grid Cell 4</DataGridCell>
+	  <DataGridCell key="1_5">Data Grid Cell 5</DataGridCell>
 	</DataGridRow>,
 	<DataGridRow key="2">
-		<DataGridCell>Data Grid Cell 1</DataGridCell>
-		<DataGridCell>Data Grid Cell 2</DataGridCell>
-		<DataGridCell>Data Grid Cell 3</DataGridCell>
-		<DataGridCell>Data Grid Cell 4</DataGridCell>
-		<DataGridCell>Data Grid Cell 5</DataGridCell>
+		<DataGridCell key="2_1">Data Grid Cell 1</DataGridCell>
+		<DataGridCell key="2_2">Data Grid Cell 2</DataGridCell>
+		<DataGridCell key="2_3">Data Grid Cell 3</DataGridCell>
+		<DataGridCell key="2_4">Data Grid Cell 4</DataGridCell>
+		<DataGridCell key="2_5">Data Grid Cell 5</DataGridCell>
 	</DataGridRow>,
 	<DataGridRow key="3">
-		<DataGridCell>Data Grid Cell 1</DataGridCell>
-		<DataGridCell>Data Grid Cell 2</DataGridCell>
-		<DataGridCell>Data Grid Cell 3</DataGridCell>
-		<DataGridCell>Data Grid Cell 4</DataGridCell>
-		<DataGridCell>Data Grid Cell 5</DataGridCell>
+		<DataGridCell key="3_1">Data Grid Cell 1</DataGridCell>
+		<DataGridCell key="3_2">Data Grid Cell 2</DataGridCell>
+		<DataGridCell key="3_3">Data Grid Cell 3</DataGridCell>
+		<DataGridCell key="3_4">Data Grid Cell 4</DataGridCell>
+		<DataGridCell key="3_5">Data Grid Cell 5</DataGridCell>
 	</DataGridRow>
   ]
 }
