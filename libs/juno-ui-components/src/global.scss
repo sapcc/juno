@@ -355,6 +355,8 @@
 --color-syntax-highlight-base0D: var(--color-sap-gold); // expanded icon
 --color-syntax-highlight-base0E: var(--color-juno-blue); // bool + collapsed icon
 --color-syntax-highlight-base0F: var(--color-juno-blue); // integer value
+// DataGrid
+--color-datagridrow-selected: var(--color-juno-blue-light-3-raw);
   
 }
 
@@ -445,7 +447,8 @@
   --color-syntax-highlight-base0D: var(--color-sap-gold-light-3); // expanded icon
   --color-syntax-highlight-base0E: var(--color-juno-blue); // bool + collapsed icon
   --color-syntax-highlight-base0F: var(--color-juno-blue); // integer value
-
+  // DataGrid
+  --color-datagridrow-selected: var(--color-juno-blue-light-3-raw);
 }
 
 // Grid configuration
