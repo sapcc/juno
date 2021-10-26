@@ -14,8 +14,7 @@ jest.mock("./lib/pages-loader", () => ({
   },
 }))
 
-test("renders login button", () => {
+test("renders Converged Cloud heading", () => {
   render(<App />)
-  // const greetings = screen.getByText(/Login/i)
-  // expect(greetings).toBeInTheDocument()
+  expect(screen.getByText(/Converged Cloud/i)).toBeInTheDocument()
 })
