@@ -11,10 +11,9 @@ export default {
 }
 
 const Template = (args) =>
-<table>
 	<DataGridBody {...args}>
 	</DataGridBody>
-</table>
+
 
 
 export const Default = Template.bind({})
