@@ -32,7 +32,7 @@ Default.parameters = {
 }
 Default.args = {
   children: [
-	<DataGridHead>
+	<DataGridHead key="1">
 		<DataGridHeadRow>
 			<DataGridHeadCell>Head Cell</DataGridHeadCell>
 			<DataGridHeadCell sortable>Head Cell</DataGridHeadCell>
@@ -41,7 +41,7 @@ Default.args = {
 			<DataGridHeadCell>Head Cell</DataGridHeadCell>
 		</DataGridHeadRow>
 	</DataGridHead>,
-	<DataGridBody>
+	<DataGridBody key="2">
 	  	<DataGridRow>
 		  <DataGridHeadCell>DataGridCell</DataGridHeadCell>
 		  <DataGridCell>DataGridCell</DataGridCell>
@@ -50,7 +50,7 @@ Default.args = {
 		  <DataGridCell>DataGridCell</DataGridCell>
 		</DataGridRow>
 	</DataGridBody>,
-	<DataGridFoot>
+	<DataGridFoot key="3">
 		<DataGridFootRow>
 		  <DataGridHeadCell>DataGridCell</DataGridHeadCell>
 		  <DataGridCell>DataGridCell</DataGridCell>
@@ -73,13 +73,13 @@ Auto.parameters = {
 Auto.args = {
 	auto: true,
 	children: [
-		<DataGridHead>
+		<DataGridHead key="1">
 			<DataGridHeadRow>
 				<DataGridCell>Auto DataGrid Cell</DataGridCell>
 				<DataGridCell>Auto DataGrid Cell</DataGridCell>
 			</DataGridHeadRow>
 		</DataGridHead>,
-		<DataGridBody>
+		<DataGridBody key="2">
 			<DataGridRow>
 				<DataGridCell>Auto DataGrid Cell</DataGridCell>
 				<DataGridCell>Auto DataGrid Cell</DataGridCell>
@@ -99,7 +99,7 @@ Selectable.parameters = {
 Selectable.args = {
 	selectable: true,
 	children: [
-		<DataGridHead>
+		<DataGridHead key="1">
 			<DataGridHeadRow>
 				<DataGridHeadCell>Item Title</DataGridHeadCell>
 				<DataGridHeadCell>Item Data 1</DataGridHeadCell>
@@ -107,7 +107,7 @@ Selectable.args = {
 				<DataGridHeadCell>Item Options</DataGridHeadCell>
 			</DataGridHeadRow>
 		</DataGridHead>,
-		<DataGridBody>
+		<DataGridBody key="2">
 			<DataGridRow>
 				<DataGridCell>Item Title</DataGridCell>
 				<DataGridCell>Item Data 1</DataGridCell>
@@ -141,7 +141,7 @@ WithToolbar.parameters = {
 WithToolbar.args = {
 	showToolbar: true,
 	children: [
-		<DataGridHead>
+		<DataGridHead key="1">
 			<DataGridHeadRow>
 				<DataGridHeadCell sortable>Column Title</DataGridHeadCell>
 				<DataGridHeadCell>Column Title</DataGridHeadCell>
@@ -149,7 +149,7 @@ WithToolbar.args = {
 				<DataGridHeadCell>Column Title</DataGridHeadCell>
 			</DataGridHeadRow>
 		</DataGridHead>,
-		<DataGridBody>
+		<DataGridBody key="2">
 			<DataGridRow>
 				<DataGridCell>Item Title</DataGridCell>
 				<DataGridCell>Item Data 1</DataGridCell>
@@ -184,14 +184,14 @@ FullyFeatured.args = {
 	selectable: true,
 	showToolbar: true,
 	children: [
-		<DataGridHead>
+		<DataGridHead key="1">
 			<DataGridHeadRow>
 				<DataGridHeadCell>Column 1</DataGridHeadCell>
 				<DataGridHeadCell>Column 2</DataGridHeadCell>
 				<DataGridHeadCell>Column 3</DataGridHeadCell>
 			</DataGridHeadRow>
 		</DataGridHead>,
-		<DataGridBody>
+		<DataGridBody key="2">
 			<DataGridRow>
 				<DataGridCell>Item 1</DataGridCell>
 				<DataGridCell>Item 1</DataGridCell>
@@ -203,7 +203,7 @@ FullyFeatured.args = {
 				<DataGridCell>Item 2</DataGridCell>
 			</DataGridRow>
 		</DataGridBody>,
-		<DataGridFoot>
+		<DataGridFoot key="3">
 			<DataGridFootRow>
 				<DataGridCell>Foot Cell</DataGridCell>
 				<DataGridCell>Foot Cell</DataGridCell>
