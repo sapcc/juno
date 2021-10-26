@@ -15,6 +15,7 @@ export const DataGridRow = ({
 	disabled,
 	className,
 	children,
+	onChange,
 	...props
 }) => {
 	const dataGridContext = useDataGridContext() || {}
@@ -27,7 +28,7 @@ export const DataGridRow = ({
 	
 	const toggleSelected = (event) => {
 		setIsSelected(!isSelected)
-		onChange()
+		onChange(event)
 	}
 	
 	return (
@@ -47,6 +48,8 @@ DataGridRow.propTypes = {
 	children: PropTypes.node,
 	/** Add a classname */
 	className: PropTypes.string,
+	/** Pass a handler to be executed when selected state changes */
+	onChange: PropTypes.func,
 }
 
 DataGridRow.defaultProps = {
@@ -54,4 +57,5 @@ DataGridRow.defaultProps = {
 	disabled: false,
 	className: "",
 	children: null,
+	onChange: undefined,
 }
