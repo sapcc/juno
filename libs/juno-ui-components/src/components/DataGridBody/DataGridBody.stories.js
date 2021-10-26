@@ -11,8 +11,10 @@ export default {
 }
 
 const Template = (args) =>
-<DataGridBody {...args}>
-</DataGridBody>
+<table>
+	<DataGridBody {...args}>
+	</DataGridBody>
+</table>
 
 
 export const Default = Template.bind({})
@@ -25,21 +27,21 @@ Default.parameters = {
 }
 Default.args = {
   children: [
-	  <DataGridRow>
+	  <DataGridRow key="1">
 	  <DataGridCell>Data Grid Cell 1</DataGridCell>
 	  <DataGridCell>Data Grid Cell 2</DataGridCell>
 	  <DataGridCell>Data Grid Cell 3</DataGridCell>
 	  <DataGridCell>Data Grid Cell 4</DataGridCell>
 	  <DataGridCell>Data Grid Cell 5</DataGridCell>
 	</DataGridRow>,
-	<DataGridRow>
+	<DataGridRow key="2">
 		<DataGridCell>Data Grid Cell 1</DataGridCell>
 		<DataGridCell>Data Grid Cell 2</DataGridCell>
 		<DataGridCell>Data Grid Cell 3</DataGridCell>
 		<DataGridCell>Data Grid Cell 4</DataGridCell>
 		<DataGridCell>Data Grid Cell 5</DataGridCell>
 	</DataGridRow>,
-	<DataGridRow>
+	<DataGridRow key="3">
 		<DataGridCell>Data Grid Cell 1</DataGridCell>
 		<DataGridCell>Data Grid Cell 2</DataGridCell>
 		<DataGridCell>Data Grid Cell 3</DataGridCell>
