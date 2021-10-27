@@ -4,6 +4,8 @@ import PropTypes from "prop-types"
 const datalistcellbasestyles = `
 	flex
 	p-2
+	overflow-hidden
+	overflow-ellipsis
 `
 
 const datalistcellautostyles = `
@@ -20,8 +22,18 @@ export const DataListCell = ({
 	children,
 	...props
 }) => {
+	// auto cell:
+	const autoStyles = {
+		flexGrow: "1",
+		flexShrink: "0",
+		flexBasis: "0"
+	}
+	// width cell:
+	const widthStyles = width ? { width: width + '%', flexGrow: "0", flexShrink: "0", flexBasis: width + '%' } : {}
+	// width overrides auto:
+	const cellStyles = width ? widthStyles : ( auto ? autoStyles : {} )
 	return (
-		<div className={`datalist-cell ${datalistcellbasestyles} ${className}`} {...props} >
+		<div className={`datalist-cell ${datalistcellbasestyles} ${className}`} style={cellStyles} {...props} >
 			{children}
 		</div>
 	)
