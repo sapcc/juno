@@ -7,9 +7,11 @@ export const DataList = ({
 	...props
 }) => {
 	return (
-		<ul className={`datalist ${className}`} {...props} >
-			{children}
-		</ul>
+		<div className={`datalist-container`}>
+			<ul className={`datalist ${className}`} {...props} >
+				{children}
+			</ul>
+		</div>
 	)
 }
 
