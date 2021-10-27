@@ -121,7 +121,7 @@ const extractDataFromScript = (script) => {
     }
   }
 
-  if (!name) return {}
+  if (!name) return { scope, name, version, module, url }
   // scope is variable name where the remote entry (widget) is hosted
   // we assume that the scope is name is the same as the app name.
   scope = scope || toVarName(name)

@@ -36,7 +36,7 @@ const App = (props) => {
         setIsOpen(true)
         return
       }
-      receiveResponse({ ...auth })
+      if (receiveResponse) receiveResponse({ ...auth })
     })
 
     // TODO: renew token

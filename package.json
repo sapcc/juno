@@ -10,7 +10,8 @@
   "scripts": {
     "dashboard": "yarn workspace dashboard start",
     "ui-components": "yarn workspace juno-ui-components storybook",
-    "build-libs": "yarn workspace juno-ui-components build"
+    "build-libs": "yarn workspace juno-ui-components build ; yarn workspace url-state-provider build ; yarn workspace url-state-router build",
+    "build": "yarn build-libs"
   },
   "dependenciesMeta": {
     "open@7.4.2": {
