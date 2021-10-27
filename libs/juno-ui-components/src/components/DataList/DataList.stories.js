@@ -149,3 +149,38 @@ Cols.args = {
 		</DataListRow>
 	]
 }
+
+export const Selectable = Template.bind({})
+Selectable.parameters = {
+	docs: {
+		description: {
+			story: "Juno DataList with selectable items"
+		}
+	}
+}
+Selectable.args = {
+	selectable: true,
+	children: [
+		<DataListRow key="5-1">
+		<DataListCell key="5-1_1">Default Cell</DataListCell>
+		<DataListCell key="5-1_2">Default Cell</DataListCell>
+		<DataListCell key="5-1_3">Default Cell</DataListCell>
+		<DataListCell key="5-1_4">Default Cell</DataListCell>
+		<DataListCell key="5-1_5">Default Cell</DataListCell>
+	</DataListRow>,
+	<DataListRow key="5-2">
+		<DataListCell key="5-2_1">Default Cell</DataListCell>
+		<DataListCell key="5-2_2">Default Cell</DataListCell>
+		<DataListCell key="5-2_3">Default Cell</DataListCell>
+		<DataListCell key="5-2_4">Default Cell</DataListCell>
+		<DataListCell key="5-2_5">Default Cell</DataListCell>
+	</DataListRow>,
+	<DataListRow key="5-3">
+		<DataListCell key="5-3_1">Default Cell</DataListCell>
+		<DataListCell key="5-3_2">Default Cell</DataListCell>
+		<DataListCell key="5-3_3">Default Cell</DataListCell>
+		<DataListCell key="5-3_4">Default Cell</DataListCell>
+		<DataListCell key="5-3_5">Default Cell</DataListCell>
+	</DataListRow>
+	]
+}

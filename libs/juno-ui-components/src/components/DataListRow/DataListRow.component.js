@@ -1,5 +1,7 @@
-import React from "react"
+import React, { useState, useEffect }  from "react"
 import PropTypes from "prop-types"
+import { useDataListContext } from "../DataList/DataList.component.js"
+import { DataListCheckboxCell } from "../DataListCheckboxCell/DataListCheckboxCell.component.js" 
 
 const datalistrowbasestyles = `
 	flex
@@ -9,13 +11,34 @@ const datalistrowbasestyles = `
 	mb-2
 `
 
+const rowselectedstyle = `
+	bg-theme-datalistrow-selected
+`
+
 export const DataListRow = ({
+	selected,
+	disabled,
+	onChange,
 	className,
 	children,
 	...props
 }) => {
+	const dataListContext = useDataListContext() || {}
+	const selectable = dataListContext.selectable
+	
+	const [isSelected, setIsSelected] = useState(false)
+	useEffect( () => {
+		setIsSelected(selected)
+	}, [selected])
+	
+	const toggleSelected = (event) => {
+		setIsSelected(!isSelected)
+		onChange(event)
+	}
+	
 	return (
-		<li className={`datalist-row ${datalistrowbasestyles} ${className}`} {...props} >
+		<li className={`datalist-row ${datalistrowbasestyles} ${ selectable && isSelected ? rowselectedstyle : '' }${className}`} {...props} >
+			{ selectable ? <DataListCheckboxCell selected={selected} disabled={disabled} onChange={toggleSelected} /> : null }
 			{children}
 		</li>
 	)

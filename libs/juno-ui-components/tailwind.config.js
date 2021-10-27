@@ -179,6 +179,7 @@ module.exports = {
           "required": withOpacity("--color-required-bg"),
           "introbox": withOpacity("--color-introbox-bg"),
           "datagridrow-selected": withOpacity("--color-datagridrow-selected"),
+          "datalistrow-selected": withOpacity("--color-datalistrow-selected"),
         },
       },
       backgroundImage: {
