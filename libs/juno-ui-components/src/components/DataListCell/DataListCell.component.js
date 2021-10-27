@@ -6,6 +6,9 @@ const datalistcellbasestyles = `
 	p-2
 	overflow-hidden
 	overflow-ellipsis
+	flex-grow-0
+	flex-shrink-0
+	flex-basis-auto
 `
 
 const datalistcellautostyles = `
@@ -13,6 +16,88 @@ const datalistcellautostyles = `
 	flex-shrink-0
 	flex-basis-0
 `
+
+const datalistcellgridstyles = `
+	p-grid-column
+`
+
+const cols_1 = `
+w-grid-col-1
+`
+
+const cols_2 = `
+w-grid-col-2
+`
+
+const cols_3 = `
+w-grid-col-3
+`
+
+const cols_4 = `
+w-grid-col-4
+`
+
+const cols_5 = `
+w-grid-col-6
+`
+
+const cols_6 = `
+w-grid-col-6
+`
+
+const cols_7 = `
+w-grid-col-7
+`
+
+const cols_8 = `
+w-grid-col-8
+`
+
+const cols_9 = `
+w-grid-col-9
+`
+
+const cols_10 = `
+w-grid-col-10
+`
+
+const cols_11 = `
+w-grid-col-11
+`
+
+const cols_12 = `
+w-grid-col-12
+`
+
+const colsClass = (cols) => {
+switch (cols) {
+	case 1:
+		return cols_1
+	case 2:
+		return cols_2
+	case 3:
+		return cols_3
+	case 4:
+		return cols_4
+	case 5: 
+		return cols_5
+	case 6: 
+		return cols_6
+	case 7:
+		return cols_7
+	case 8: 
+		return cols_8
+	case 9:
+		return cols_9
+	case 10:
+		return cols_10
+	case 11:
+		return cols_11
+	case 12:
+		return cols_12
+	default: null
+}
+}
 
 export const DataListCell = ({
 	cols,
@@ -33,7 +118,7 @@ export const DataListCell = ({
 	// width overrides auto:
 	const cellStyles = width ? widthStyles : ( auto ? autoStyles : {} )
 	return (
-		<div className={`datalist-cell ${datalistcellbasestyles} ${className}`} style={cellStyles} {...props} >
+		<div className={`datalist-cell ${datalistcellbasestyles} ${cols ? colsClass(cols) : '' } ${className}`} style={cellStyles} {...props} >
 			{children}
 		</div>
 	)
