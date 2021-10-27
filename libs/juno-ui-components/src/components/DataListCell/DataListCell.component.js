@@ -2,7 +2,14 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const datalistcellbasestyles = `
+	flex
+	p-2
+`
 
+const datalistcellautostyles = `
+	flex-grow
+	flex-shrink-0
+	flex-basis-0
 `
 
 export const DataListCell = ({

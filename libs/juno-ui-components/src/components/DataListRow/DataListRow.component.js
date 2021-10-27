@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 
 const datalistrowbasestyles = `
 	flex
+	rounded-[3px]
 `
 
 export const DataListRow = ({
