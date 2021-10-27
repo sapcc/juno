@@ -357,6 +357,8 @@
 --color-syntax-highlight-base0F: var(--color-juno-blue); // integer value
 // DataGrid
 --color-datagridrow-selected: var(--color-juno-blue-light-3-raw);
+// DataList
+--color-datalist-row-border: var(--color-juno-grey-light-54-raw);
   
 }
 
@@ -449,6 +451,8 @@
   --color-syntax-highlight-base0F: var(--color-juno-blue); // integer value
   // DataGrid
   --color-datagridrow-selected: var(--color-juno-blue-light-3-raw);
+  // DataList
+  --color-datalist-row-border: var( --color-juno-grey-light-104-raw);
 }
 
 // Grid configuration

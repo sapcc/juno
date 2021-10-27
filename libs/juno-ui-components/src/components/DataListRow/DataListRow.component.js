@@ -4,6 +4,9 @@ import PropTypes from "prop-types"
 const datalistrowbasestyles = `
 	flex
 	rounded-[3px]
+	border
+	border-theme-datalist-row
+	mb-2
 `
 
 export const DataListRow = ({
