@@ -69,6 +69,7 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
+                yarn install
                 yarn workspaces focus juno-ui-components
                 CI=true yarn workspace juno-ui-components test
        
@@ -125,6 +126,7 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
+                yarn install
                 yarn workspaces focus juno-ui-components dashboard
                 yarn workspace juno-ui-components build
                 CI=true yarn workspace dashboard test
@@ -201,6 +203,7 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
+                yarn install
                 yarn workspaces focus mercury
                 CI=true yarn workspace mercury test-prod
 
@@ -260,6 +263,7 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
+                yarn install
                 yarn workspaces focus juno-ui-components <%= app %>
                 yarn workspace juno-ui-components build
                 CI=true yarn workspace <%= app %> test                
