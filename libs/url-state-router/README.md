@@ -190,3 +190,10 @@ const Items = () => {
   )
 }
 ```
+
+# Development
+
+```bash
+yarn start
+yarn test
+```

@@ -1,5 +1,6 @@
 # prettier-ignore
 
+
 jobs:
   # for info only
   - name: README
@@ -144,7 +145,7 @@ jobs:
               build: app-dashboard.git
               build_args: 
                 KEPPEL_HOSTNAME: {{keppel-hostname}}
-                LIBS: juno-ui-components
+                LIBS: juno-ui-components url-state-provider url-state-router
               dockerfile: app-dashboard.git/ci/Dockerfile.dashboard
               tag: dashboard.version/version
             get_params:
@@ -218,7 +219,7 @@ jobs:
               build: api-mercury.git
               build_args: 
                 KEPPEL_HOSTNAME: {{keppel-hostname}}
-                LIBS: juno-ui-components
+                LIBS: juno-ui-components url-state-provider url-state-router
               dockerfile: api-mercury.git/ci/Dockerfile.mercury
               tag: mercury.version/version
             get_params:
@@ -278,7 +279,7 @@ jobs:
           build: app-auth.git
           build_args: 
             APP_NAME: "auth" 
-            LIBS: juno-ui-components
+            LIBS: juno-ui-components url-state-provider url-state-router
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-auth.git/ci/Dockerfile.app
 
@@ -334,7 +335,7 @@ jobs:
           build: app-designate.git
           build_args: 
             APP_NAME: "designate" 
-            LIBS: juno-ui-components
+            LIBS: juno-ui-components url-state-provider url-state-router
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-designate.git/ci/Dockerfile.app
 
@@ -390,7 +391,7 @@ jobs:
           build: app-widget-loader.git
           build_args: 
             APP_NAME: "widget-loader" 
-            LIBS: juno-ui-components
+            LIBS: juno-ui-components url-state-provider url-state-router
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-widget-loader.git/ci/Dockerfile.app
 
@@ -446,7 +447,7 @@ jobs:
           build: app-whois.git
           build_args: 
             APP_NAME: "whois" 
-            LIBS: juno-ui-components
+            LIBS: juno-ui-components url-state-provider url-state-router
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-whois.git/ci/Dockerfile.app
 
