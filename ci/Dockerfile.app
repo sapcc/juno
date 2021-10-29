@@ -15,6 +15,7 @@ ADD . /tmp/repo
 
 # install node modules, build libs and app
 RUN cd /tmp/repo/ && \
+  yarn install ; \
   yarn workspaces focus $LIBS $APP_NAME ; \
   yarn build-libs ;\
   yarn workspace $APP_NAME build 

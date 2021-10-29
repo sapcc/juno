@@ -12,7 +12,7 @@ ADD . /app
 WORKDIR /app
 
 ENV NODE_ENV="production"
-RUN yarn workspaces focus mercury 
+RUN yarn install ; yarn workspaces focus mercury 
 
 # run app
 # NODE_ENV=production yarn workspace mercury db:migrate is done via initContainer (see charts)

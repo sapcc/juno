@@ -14,8 +14,9 @@ ADD . /tmp/repo
 
 # install node modules, build libs and app
 RUN cd /tmp/repo/ && \
+  yarn install ; \
   yarn workspaces focus $LIBS dashboard ; \
-  yarn workspace $LIBS build ;\
+  yarn build-libs ;\
   yarn workspace dashboard build 
 
 # create working dir
