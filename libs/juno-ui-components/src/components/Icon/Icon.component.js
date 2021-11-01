@@ -51,8 +51,7 @@ export const Icon = ({
 	size,
 	...props
 }) => {
-	const clr = color || "text-theme-default"
-	return ( getColoredSizedIcon({icon, clr, size, ...props}) )
+	return ( getColoredSizedIcon({icon, color, size, ...props}) )
 }
 
 Icon.propTypes = { 
@@ -66,6 +65,6 @@ Icon.propTypes = {
 
 Icon.defaultProps = {
 	icon: null,
-	color: null,
+	color: "text-theme-default",
 	size: "24"
 }
