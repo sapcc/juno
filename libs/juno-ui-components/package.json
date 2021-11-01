@@ -73,7 +73,7 @@
   "scripts": {
     "storybook": "start-storybook -p $APP_PORT",
     "build-storybook": "build-storybook",
-    "build": "NODE_ENV=production rollup -c",
+    "build": "rollup -c",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },

@@ -1,7 +1,7 @@
 # prettier-ignore
 <%
   APPS = ["auth","designate","widget-loader","whois"]
-  LIBS = ["juno-ui-components", "url-state-provider", "url-state-router"] 
+  LIBS = ["juno-ui-components", "communicator", "url-state-provider", "url-state-router"] 
 %>
 
 jobs:
@@ -264,7 +264,7 @@ jobs:
               - |
                 cd $PWD/app/juno
                 yarn install
-                yarn workspaces focus juno-ui-components <%= app %>
+                yarn workspaces focus <%= LIBS.join(" ") %> <%= app %>
                 yarn workspace juno-ui-components build
                 CI=true yarn workspace <%= app %> test                
 
@@ -661,7 +661,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/<%= app %>","package.json","libs","ci/Dockerfile.app","e2e"]
+      paths: ["apps/<%= app %>","package.json","libs","ci/Dockerfile.app","e2e", ".yarn"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
