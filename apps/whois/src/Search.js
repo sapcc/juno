@@ -18,7 +18,11 @@ const searchClasses = (resultsShown) => {
 }
 
 const Search = ({ onSearch, resultsShown, value }) => {
-  const [searchTerm, setSearchTerm] = React.useState(value || "")
+  const [searchTerm, setSearchTerm] = React.useState("")
+
+  React.useEffect(() => {
+    if (value && value !== "") setSearchTerm((oldValue) => oldValue || value)
+  }, [value])
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value)
@@ -38,7 +42,7 @@ const Search = ({ onSearch, resultsShown, value }) => {
         placeholder="IPs, IP lists, or IP ranges (CIDR)"
         className=""
         variant="hero"
-        value={searchTerm || value || ""}
+        value={searchTerm}
         autoFocus={true}
         onSearch={handleSearch}
         onChange={handleChange}
