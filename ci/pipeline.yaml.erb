@@ -651,7 +651,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apis/mercury","package.json","ci/Dockerfile.mercury","e2e"]
+      paths: ["apis/mercury","package.json","ci/Dockerfile.mercury","e2e",".yarn"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
  
@@ -686,7 +686,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["ci","package.json"]
+      paths: ["ci","package.json",".yarn"]
       username: sapcc-bot
       password: {{real-github-access-token}}     
 
