@@ -49,6 +49,13 @@ spec:
                   key: postgres-password
             - name: DB_NAME
               value: {{ .Values.postgresql.database }}
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 1Gi
+            limits:
+              cpu: 1000m
+              memory: 1Gi    
       # run app         
       containers:
         - name: mercury
