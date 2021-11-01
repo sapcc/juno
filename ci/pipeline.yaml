@@ -916,7 +916,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/auth","package.json","libs","ci/Dockerfile.app","e2e", ".yarn"]
+      paths: ["apps/auth","package.json","libs","ci/Dockerfile.app","e2e", ".yarn","ci/pipeline.yaml"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
@@ -932,7 +932,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/designate","package.json","libs","ci/Dockerfile.app","e2e", ".yarn"]
+      paths: ["apps/designate","package.json","libs","ci/Dockerfile.app","e2e", ".yarn","ci/pipeline.yaml"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
@@ -948,7 +948,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/widget-loader","package.json","libs","ci/Dockerfile.app","e2e", ".yarn"]
+      paths: ["apps/widget-loader","package.json","libs","ci/Dockerfile.app","e2e", ".yarn","ci/pipeline.yaml"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
@@ -964,7 +964,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/whois","package.json","libs","ci/Dockerfile.app","e2e", ".yarn"]
+      paths: ["apps/whois","package.json","libs","ci/Dockerfile.app","e2e", ".yarn","ci/pipeline.yaml"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
