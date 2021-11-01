@@ -265,7 +265,7 @@ jobs:
                 cd $PWD/app/juno
                 yarn install
                 yarn workspaces focus <%= LIBS.join(" ") %> <%= app %>
-                yarn workspace juno-ui-components build
+                yarn build
                 CI=true yarn workspace <%= app %> test                
 
   # build image for each app in /apps

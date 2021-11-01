@@ -262,7 +262,7 @@ jobs:
                 cd $PWD/app/juno
                 yarn install
                 yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router auth
-                yarn workspace juno-ui-components build
+                yarn build
                 CI=true yarn workspace auth test                
 
   # build image for each app in /apps
@@ -319,7 +319,7 @@ jobs:
                 cd $PWD/app/juno
                 yarn install
                 yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router designate
-                yarn workspace juno-ui-components build
+                yarn build
                 CI=true yarn workspace designate test                
 
   # build image for each app in /apps
@@ -376,7 +376,7 @@ jobs:
                 cd $PWD/app/juno
                 yarn install
                 yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router widget-loader
-                yarn workspace juno-ui-components build
+                yarn build
                 CI=true yarn workspace widget-loader test                
 
   # build image for each app in /apps
@@ -433,7 +433,7 @@ jobs:
                 cd $PWD/app/juno
                 yarn install
                 yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router whois
-                yarn workspace juno-ui-components build
+                yarn build
                 CI=true yarn workspace whois test                
 
   # build image for each app in /apps
