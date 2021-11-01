@@ -97,7 +97,8 @@ export const SearchInput = ({
   variant,
   ...props
 }) => {
-  const [val, setValue] = useState("")
+
+  const [val, setValue] = useState(value)
 	
 	useEffect(() => {
 		setValue(value)
