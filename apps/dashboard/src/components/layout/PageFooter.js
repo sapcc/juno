@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 const PageFooter = () => {
   return (
     <div>
-      Footer <Link to="/">Home</Link> | <Link to="/designate">Designate</Link>
+      Footer <Link to="/">Home</Link> 
     </div>
   )
 }

@@ -94,7 +94,6 @@ module.exports = (_, argv) => {
       isDevelopment && new ReactRefreshWebpackPlugin(),
     ].filter(Boolean),
 
- 
     //Config for webpack-dev-server module version 3.x
     // devServer: {
     //   contentBase: path.resolve(__dirname, "dist"),
@@ -120,7 +119,7 @@ module.exports = (_, argv) => {
       static: {
         directory: path.resolve(__dirname, "dist"),
       },
-      port: process.env.PORT,
+      port: process.env.PORT, // try port 80 to get it working in workspace
       host: "0.0.0.0",
 
       historyApiFallback: true,

@@ -1,7 +1,7 @@
 # prettier-ignore
 <%
   APPS = ["auth","designate","widget-loader","whois"]
-  LIBS = ["juno-ui-components", "url-state-provider", "url-state-router"] 
+  LIBS = ["juno-ui-components", "communicator", "url-state-provider", "url-state-router"] 
 %>
 
 jobs:
@@ -264,8 +264,8 @@ jobs:
               - |
                 cd $PWD/app/juno
                 yarn install
-                yarn workspaces focus juno-ui-components <%= app %>
-                yarn workspace juno-ui-components build
+                yarn workspaces focus <%= LIBS.join(" ") %> <%= app %>
+                yarn build
                 CI=true yarn workspace <%= app %> test                
 
   # build image for each app in /apps
@@ -651,7 +651,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apis/mercury","package.json","ci/Dockerfile.mercury","e2e"]
+      paths: ["apis/mercury","package.json","ci/Dockerfile.mercury","e2e",".yarn"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
  
@@ -661,7 +661,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/<%= app %>","package.json","libs","ci/Dockerfile.app","e2e"]
+      paths: ["apps/<%= app %>","package.json","libs","ci/Dockerfile.app","e2e", ".yarn","ci/pipeline.yaml"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
@@ -686,7 +686,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["ci","package.json"]
+      paths: ["ci","package.json",".yarn"]
       username: sapcc-bot
       password: {{real-github-access-token}}     
 

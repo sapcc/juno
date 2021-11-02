@@ -7,7 +7,7 @@ printf "Usage:
 
 "
 
-APP_PORT=$(wb juno 'echo $APP_PORT | tr -d "\n\r"')
+APP_PORT=$(wb juno 'echo $APP_PORT' | tail -1)
 HOST="http://localhost:$APP_PORT"
 
 SPECS_FOLDER="cypress/integration/**/*"

@@ -3,21 +3,28 @@ import { SearchInput, Stack } from "juno-ui-components"
 import cidrRegex from "cidr-regex"
 
 const searchClasses = (resultsShown) => {
-  return (`
+  return `
     w-1/2
     xl:w-1/4
 
-    ${resultsShown && `
+    ${
+      resultsShown &&
+      `
       ml-auto
       mr-8
-    `}
-  `)
+    `
+    }
+  `
 }
 
-const Search = ({ onSearch, resultsShown }) => {
+const Search = ({ onSearch, resultsShown, value }) => {
   const [searchTerm, setSearchTerm] = React.useState("")
 
-  const handleChange = (e) =>{
+  React.useEffect(() => {
+    if (value && value !== "") setSearchTerm((oldValue) => oldValue || value)
+  }, [value])
+
+  const handleChange = (e) => {
     setSearchTerm(e.target.value)
   }
 
@@ -25,22 +32,27 @@ const Search = ({ onSearch, resultsShown }) => {
     onSearch && onSearch(searchTerm)
   }
 
-
   return (
-      <Stack direction="vertical" gap={2} className={`search ${searchClasses(resultsShown)}`}>
-        <SearchInput
-          placeholder="IPs, IP lists, or IP ranges (CIDR)"
-          className=""
-          variant="hero"
-          value={searchTerm}
-          autoFocus={true}
-          onSearch={handleSearch}
-          onChange={handleChange}
-        />
-        { !resultsShown && searchTerm.match(cidrRegex()) &&
-          <span className="text-theme-disabled pl-6">Searching for CIDR ranges may take a while, please be patient :)</span>
-        }
-      </Stack>
+    <Stack
+      direction="vertical"
+      gap={2}
+      className={`search ${searchClasses(resultsShown)}`}
+    >
+      <SearchInput
+        placeholder="IPs, IP lists, or IP ranges (CIDR)"
+        className=""
+        variant="hero"
+        value={searchTerm}
+        autoFocus={true}
+        onSearch={handleSearch}
+        onChange={handleChange}
+      />
+      {!resultsShown && searchTerm.match(cidrRegex()) && (
+        <span className="text-theme-disabled pl-6">
+          Searching for CIDR ranges may take a while, please be patient :)
+        </span>
+      )}
+    </Stack>
   )
 }
 

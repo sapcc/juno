@@ -23,6 +23,12 @@ describe("SearchInput", () => {
 		expect(screen.getByRole("searchbox")).toBeInTheDocument()
 		expect(screen.getByRole("searchbox")).toHaveAttribute('name', "searchbox")
 	})
+
+	test("renders a value as passed", async () => {
+		render(<SearchInput value="blah"/>)
+		expect(screen.getByRole("searchbox")).toBeInTheDocument()
+		expect(screen.getByRole("searchbox")).toHaveValue("blah")
+	})
 	
 	test("renders a default placeholder 'Search…'", async () => {
 		render(<SearchInput />)

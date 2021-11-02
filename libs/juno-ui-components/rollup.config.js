@@ -52,7 +52,7 @@ const config = [
         theme: require("./tailwind.config").theme,
       }),
       minify({ comments: false }),
-      analyze(),
+      analyze({ skipFormatted: process.env.NODE_ENV === "production" }),
     ],
     external: Object.keys(pkg.peerDependencies || {}),
   },
