@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { ClickableIcon } from "../ClickableIcon/index.js"
 
@@ -6,8 +6,14 @@ export const OverflowMenu = ({
 	disabled,
 	className
 }) => {
+	const [isOpen, setIsOpen] = useState(false)
+	
+	const handleClick = (event) => {
+		setIsOpen(!isOpen)
+	}
+	
 	return (
-		<ClickableIcon disabled={disabled} className={className} aria-haspopup/>
+		<ClickableIcon disabled={disabled} className={className} onClick={handleClick} aria-haspopup/>
 	)
 }
 
