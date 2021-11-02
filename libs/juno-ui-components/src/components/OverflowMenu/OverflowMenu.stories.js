@@ -2,7 +2,7 @@ import React from "react"
 import { OverflowMenu } from "./index.js"
 
 export default {
-  title: "Design System/OverflowMenu",
+  title: "Design System/OverflowMenu/OverflowMenu",
   component: OverflowMenu,
   argTypes: {},
   parameters: {
@@ -14,7 +14,10 @@ export default {
   },
 }
 
-const Template = (args) => <OverflowMenu {...args} />
+const Template = (args) => (
+	<OverflowMenu {...args}>
+	</OverflowMenu>
+)
 
 export const Default = Template.bind({})
 Default.args = {
