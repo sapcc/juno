@@ -18,30 +18,31 @@ import Warning from "./icons/warning.svg"
 Generic Icon component.
 */
 
-const getColoredSizedIcon = ({icon, color, size, ...props}) => {	
+const getColoredSizedIcon = ({icon, color, size, className, ...props}) => {	
+		const iconClass = `fill-current ${color} ${className || ""}`
 	  switch (icon) {
 			case "cancel":
-				return <Cancel width={size} height={size} className={`fill-current ${color}`} {...props}/>
+				return <Cancel width={size} height={size} className={iconClass} alt="cancel" role="img" {...props}/>
 			case "error":
-				return <Error width={size} height={size} className={`fill-current ${color}`} {...props} />
+				return <Error width={size} height={size} className={iconClass} alt="error" role="img" {...props} />
 			case "expandLess":
-				return <ExpandLess width={size} height={size} className={`fill-current ${color}`} {...props} />
+				return <ExpandLess width={size} height={size} className={iconClass} alt="expandLess" role="img" {...props} />
 			case "expandMore":
-				return <ExpandMore width={size} height={size} className={`fill-current ${color}`} {...props} />
+				return <ExpandMore width={size} height={size} className={iconClass} alt="expandMore" role="img" {...props} />
 			case "help":
-				return <Help width={size} height={size} className={`fill-current ${color}`} {...props} />
+				return <Help width={size} height={size} className={iconClass} alt="help" role="img" {...props} />
 			case "info":
-				return <Info width={size} height={size} className={`fill-current ${color}`} {...props} />
+				return <Info width={size} height={size} className={iconClass} alt="info" role="img" {...props} />
 			case "place":
-				return <Place width={size} height={size} className={`fill-current ${color}`} {...props} />
+				return <Place width={size} height={size} className={iconClass} alt="location" role="img" {...props} />
 			case "search":
-				return <Search width={size} height={size} className={`fill-current ${color}`} {...props} />
+				return <Search width={size} height={size} className={iconClass} alt="search" role="img" {...props} />
 			case "success":
-				return <Success width={size} height={size} className={`fill-current ${color}`} {...props} />
+				return <Success width={size} height={size} className={iconClass} alt="success" role="img" {...props} />
 			case "warning":
-				return <Warning width={size} height={size} className={`fill-current ${color}`} {...props} />
+				return <Warning width={size} height={size} className={iconClass} alt="warning" role="img" {...props} />
 		default:
-		  return <Help width={size} height={size} className={`fill-current ${color}`} {...props} />
+		  return <Help width={size} height={size} className={iconClass} alt="help" role="img" {...props} />
 	  }
 	}
 
@@ -49,9 +50,10 @@ export const Icon = ({
 	icon,
 	color,
 	size,
+	className,
 	...props
 }) => {
-	return ( getColoredSizedIcon({icon, color, size, ...props}) )
+	return ( getColoredSizedIcon({icon, color, size, className, ...props}) )
 }
 
 Icon.propTypes = { 
