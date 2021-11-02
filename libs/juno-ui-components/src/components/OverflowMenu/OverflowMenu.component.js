@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { ClickableIcon } from "../ClickableIcon/index.js"
+import { OverflowMenuFloatingMenu } from "../OverflowMenuFloatingMenu/index.js"
 
 
 
@@ -19,6 +20,8 @@ export const OverflowMenu = ({
 	return (
 		<>
 			<ClickableIcon disabled={disabled} className={className} onClick={handleClick} aria-haspopup {...props}/>
+			<OverflowMenuFloatingMenu>
+			</OverflowMenuFloatingMenu>
 		</>
 	)
 }
