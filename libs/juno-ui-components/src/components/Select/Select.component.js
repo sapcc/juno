@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { Icon } from "../Icon/index.js"
 
 const selectstyles = `
 	bg-theme-select
@@ -20,6 +21,23 @@ const selectstyles = `
 	disabled:opacity-50
 `
 
+const wrapperstyles = `
+	relative
+`
+
+const iconstyles = `
+	absolute
+	right-[.5rem]
+	top-[0]
+	pointer-events-none
+`
+
+const disablediconstyles = `
+	opacity-50
+`
+
+
+
 /*+ A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
 export const Select = ({
 	name,
@@ -30,15 +48,18 @@ export const Select = ({
 	...props
 }) => {
 	return (
-		<select 
-			name={name || "unnamed select"}
-			className={`select ${selectstyles} ${className}`}
-			onChange={onChange}
-			disabled={disabled}
-			{...props}
-		>
-		{children}
-		</select>
+		<span className={`select-wrapper ${wrapperstyles}`}>
+			<select 
+				name={name || "unnamed select"}
+				className={`select ${selectstyles} ${className}`}
+				onChange={onChange}
+				disabled={disabled}
+				{...props}
+			>
+			{children}
+			</select>
+			<Icon icon={"expandMore"} className={`${iconstyles} ${ disabled ? disablediconstyles : "" } `} />
+		</span>
 	)
 }
 
