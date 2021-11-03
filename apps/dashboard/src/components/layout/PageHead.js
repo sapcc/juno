@@ -7,7 +7,7 @@ import { PageHeader } from "juno-ui-components"
 
 const PageHead = () => {
   return (
-    <PageHeader heading="Converged Cloud" />
+    <PageHeader />
   )
 }
 

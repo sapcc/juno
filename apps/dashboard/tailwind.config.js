@@ -15,9 +15,13 @@ module.exports = {
   presets: [
     require('juno-ui-components/tailwind.config')
   ],
+  mode: "jit",
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
     extend: {
+      backgroundImage: (theme) => ({
+        'earth-top': "url('/assets/images/background_header.png')"
+      }),
       backgroundColor: {
         theme: {
         },

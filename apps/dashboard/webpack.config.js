@@ -91,6 +91,9 @@ module.exports = (_, argv) => {
         {
           test: /\.(png|jpg)$/i,
           loader: "url-loader",
+          options: {
+            limit: 10000
+          }
         },
       ],
     },
