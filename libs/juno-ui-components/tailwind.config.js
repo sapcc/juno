@@ -154,6 +154,7 @@ module.exports = {
         "message-success": withOpacity("--color-message-success-border"),
         "switch-default": withOpacity("--color-switch-default-border"),
         "switch-hover": withOpacity("--color-switch-hover-border"),
+        "datalist-row": withOpacity("--color-datalist-row-border")
       },
     }),
     extend: {
@@ -178,6 +179,7 @@ module.exports = {
           "required": withOpacity("--color-required-bg"),
           "introbox": withOpacity("--color-introbox-bg"),
           "datagridrow-selected": withOpacity("--color-datagridrow-selected"),
+          "datalistrow-selected": withOpacity("--color-datalistrow-selected"),
         },
       },
       backgroundImage: {
