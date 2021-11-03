@@ -24,8 +24,8 @@ export const Default = Template.bind({})
 Default.args = {
 	children: [
 		<OverflowMenuItem key="1">Item 1</OverflowMenuItem>,
-		<OverflowMenuItem key="1">Item 2</OverflowMenuItem>,
-		<OverflowMenuItem key="1">Item 3</OverflowMenuItem>,
-		<OverflowMenuItem key="1">Item 4</OverflowMenuItem>
+		<OverflowMenuItem key="2">Item 2</OverflowMenuItem>,
+		<OverflowMenuItem key="3">Item 3</OverflowMenuItem>,
+		<OverflowMenuItem key="4">Item 4</OverflowMenuItem>
 	]
 }
