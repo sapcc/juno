@@ -20,8 +20,13 @@ export const OverflowMenu = ({
 	return (
 		<>
 			<ClickableIcon disabled={disabled} className={className} onClick={handleClick} aria-haspopup {...props}/>
-			<OverflowMenuFloatingMenu>
-			</OverflowMenuFloatingMenu>
+			{ isOpen ? 
+				<OverflowMenuFloatingMenu>
+					{children}
+				</OverflowMenuFloatingMenu>
+				:
+				null
+			}
 		</>
 	)
 }
