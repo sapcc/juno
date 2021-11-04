@@ -37,8 +37,8 @@ describe("Select", () => {
 		const { container } = render(
 			<Select onChange={handleChange} />
 		)
-		const slct = container.firstChild
-		fireEvent.change(slct, { target: { value: 'a' } })
+		const select = screen.getByRole('combobox')
+		fireEvent.change(select, { target: { value: 'a' } })
 		expect(handleChange).toHaveBeenCalledTimes(1)
 	})
 	
