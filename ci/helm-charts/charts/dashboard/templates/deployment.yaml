@@ -27,24 +27,21 @@ spec:
         - name: app
           image: "{{ .Values.global.registry }}/juno-dashboard:{{ .Values.image_tag }}"
           imagePullPolicy: IfNotPresent
-          env:
-            - name: APP_PORT
-              value: "5000"
           ports:
             - name: http
-              containerPort: 5000
+              containerPort: 3000
 
           livenessProbe:
             httpGet:
               path: /
-              port: 5000
+              port: 3000
             timeoutSeconds: 10
             periodSeconds: 60
             initialDelaySeconds: 60
           readinessProbe:
             httpGet:
               path: /
-              port: 5000
+              port: 3000
             timeoutSeconds: 5
             periodSeconds: 5
           resources:
