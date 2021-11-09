@@ -21,18 +21,23 @@ describe("Switch", () => {
     expect(screen.getByRole("switch")).toHaveAttribute('value', "ValueAsPassed")
   })
   
-  /* TODO: */
-  // test("renders a checked switch as passed", async () => {
-  //   render(<Switch checked={true} />)
-  //   expect(screen.getByRole("switch")).toBeInTheDocument()
-  //   expect(screen.getByRole("switch")).toHaveAttribute('checked')
-  // })
-  
-  
-  test("renders no checked attribute if false", async () => {
-    render(<Switch checked={false} />)
+  test("renders a disabled switch as passed", async () => {
+    render(<Switch disabled />)
     expect(screen.getByRole("switch")).toBeInTheDocument()
-    expect(screen.getByRole("switch")).not.toHaveAttribute('checked')
+    expect(screen.getByRole("switch")).toBeDisabled()
+  })
+  
+  test("renders an aria-checked switch as passed", async () => {
+    render(<Switch on />)
+    expect(screen.getByRole("switch")).toBeInTheDocument()
+    expect(screen.getByRole("switch")).toHaveAttribute('aria-checked')
+  })
+  
+
+  test("renders an aria-checked attribute set to false if off", async () => {
+    render(<Switch />)
+    expect(screen.getByRole("switch")).toBeInTheDocument()
+    expect(screen.getByRole("switch")).toHaveAttribute('aria-checked', "false")
   })
   
   test("renders a custom className", async () => {
@@ -48,11 +53,13 @@ describe("Switch", () => {
     expect(screen.getByRole("switch")).toHaveAttribute('data-test', "23")
   })
   
-  test("renders a disabled switch as passed", async () => {
-    render(<Switch disabled />)
-    expect(screen.getByRole("switch")).toBeInTheDocument()
-    expect(screen.getByRole("switch")).toBeDisabled()
+  test("executes custom handler on change as passed", async () => {	
+    const onChangeSpy = jest.fn();
+    render(<Switch onChange={onChangeSpy} />);
+    screen.getByRole('switch').click();
+    expect(onChangeSpy).toHaveBeenCalled();	
   })
+ 
   
   /* TODO: */
   // test("fires onChange handler as passed", async () => {

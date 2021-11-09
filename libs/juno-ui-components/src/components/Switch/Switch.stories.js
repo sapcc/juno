@@ -33,14 +33,14 @@ Large.args = {
 	size: "large"
 }
 
-export const Checked = Template.bind({})
-Checked.parameters = {
+export const On = Template.bind({})
+On.parameters = {
 	docs: {
-		description: { story: 'Render a checked Switch by passing bool "checked".' }
+		description: { story: 'Render a checked Switch by passing bool "on".' }
 	}
 }
-Checked.args = {
-	checked: true
+On.args = {
+	on: true
 }
 
 export const Disabled = Template.bind({})
@@ -50,7 +50,7 @@ Disabled.parameters = {
 	}
 }
 Disabled.args = {
-	checked: true,
+	on: true,
 	disabled: true,
 }
 

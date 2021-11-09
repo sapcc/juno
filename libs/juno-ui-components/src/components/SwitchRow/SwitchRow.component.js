@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Switch } from "../Switch/index.js"
 import { Label } from "../Label/index.js"
@@ -21,6 +21,7 @@ export const SwitchRow =({
 	name,
 	label,
 	id,
+	on,
 	disabled,
 	helptext,
 	required,
@@ -28,6 +29,19 @@ export const SwitchRow =({
 	onChange,
 	...props
 }) => {
+	
+	const [isOn, setIsOn] = useState(on)
+	
+	useEffect(() => {
+		setIsOn(on)
+	  }, [on])
+	
+	const handleChange = (event) => {
+		setIsOn(!isOn)
+		onChange(event)
+	}
+	
+	
 	return (
 		<div
 			className={`switch-row ${switchrow}`}
@@ -36,9 +50,9 @@ export const SwitchRow =({
 			<div>
 				<Switch 
 					name={name} 
-					onChange={onChange} 
+					onChange={handleChange} 
 					id={id} 
-					value={value || ""} 
+					on={on}
 					disabled={disabled} 
 					className={className}
 				/>
@@ -60,6 +74,8 @@ SwitchRow.propTypes = {
 	label: PropTypes.string,
 	/** Id */
 	id: PropTypes.string,
+	/** Whether the Switch inside the row is on */
+	on: PropTypes.bool,
 	/** Disabled */
 	disabled: PropTypes.bool,
 	/** Help text */
@@ -77,9 +93,10 @@ SwitchRow.defaultProps = {
 	name: null,
 	label: null,
 	id: null,
+	on: false,
 	disabled: null,
 	helptext: null,
-	requirred: null,
+	required: null,
 	className: "",
 	onChange: undefined,
 }

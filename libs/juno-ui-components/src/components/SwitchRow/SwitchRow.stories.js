@@ -14,23 +14,23 @@ Default.args = {
 	label: "Default Switch Row",
 }
 
-export const Checked = Template.bind({})
-Checked.args = {
-  label: "Checked Switch Row",
-  checked: true,
+export const On = Template.bind({})
+On.args = {
+  label: "On Switch Row",
+  on: true,
 }
 
 export const Disabled = Template.bind({})
 Disabled.args = {
   label: "Disabled Switch Row",
-  checked: true,
+  on: true,
   disabled: true,
 }
 
 export const WithHelptext = Template.bind({})
 WithHelptext.args = {
   label: "Switch Row with Helptext",
-  checked: true,
+  on: true,
   helptext: "Oh so helpful helptext",
 }
 

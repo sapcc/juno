@@ -32,6 +32,31 @@ describe("SwitchRow", () => {
 		expect(screen.getByRole("switch")).toBeInTheDocument()
 		expect(screen.getByRole("switch")).toHaveClass("my-custom-class")
 	})
-
+	
+	test("renders all props as passed", async () => {
+		render(<SwitchRow id="switchrow-1" data-test="47" data-testid="switch-row"/>)
+		expect(screen.getByTestId("switch-row")).toBeInTheDocument()
+		expect(screen.getByTestId("switch-row")).toHaveAttribute('data-test', "47")
+	  })
+	
+	test("renders a Switch with aria-checked set to false by default", async () => {
+		render(<SwitchRow />)
+		expect(screen.getByRole("switch")).toBeInTheDocument()
+		expect(screen.getByRole("switch")).toHaveAttribute("aria-checked", 'false')
+	})
+	
+	test("renders a Switch that is aria-checked if ON is passed", async () => {
+		render(<SwitchRow on />)
+		expect(screen.getByRole("switch")).toBeInTheDocument()
+		expect(screen.getByRole("switch")).toHaveAttribute("aria-checked", 'true')
+	})
+		
+	// TODO: test custom handler
+	test("executes custom handler on change as passed", async () => {	
+		const onChangeSpy = jest.fn();
+		render(<SwitchRow onChange={onChangeSpy} />);
+		screen.getByRole('switch').click();
+		expect(onChangeSpy).toHaveBeenCalled();	
+	  })
 	
 })
