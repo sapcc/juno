@@ -41,4 +41,4 @@ echo "SPECS FOLDER   = ${SPECS_FOLDER}"
 
 # docker run -it -v "$PWD:/e2e" -w /e2e --network=host -e CYPRESS_baseUrl="http://localhost:$APP_PORT" cypress/included:7.1.0 --spec "$specs_folder"
 
-docker run -it -v "$PWD:/e2e" -w /e2e --network=host -e CYPRESS_baseUrl="$HOST" cypress/included:7.1.0 --spec "$SPECS_FOLDER"
+docker run -it -v "$PWD:/e2e" -w /e2e --network=host -e CYPRESS_baseUrl="$HOST" keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/cypress/included:7.1.0 --spec "$SPECS_FOLDER"

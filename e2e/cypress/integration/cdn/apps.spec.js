@@ -26,7 +26,7 @@ describe("apps", () => {
 
   // widget-loader
   it("contains latest version of auth", () => {
-    cy.request("widget-loader/0_0_1/app.js").then((response) => {
+    cy.request("widget-loader/0_0_3/app.js").then((response) => {
       expect(response.status).to.eq(200)
     })
   })
