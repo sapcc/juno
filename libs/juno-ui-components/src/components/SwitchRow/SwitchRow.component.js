@@ -17,7 +17,6 @@ const helptextstyles = `
 
 /** A checkbox input group containing a checkbox, associated label, and structural markup */
 export const SwitchRow =({
-	value,
 	name,
 	label,
 	id,
@@ -66,8 +65,6 @@ export const SwitchRow =({
 }
 
 SwitchRow.propTypes = {
-	/** Optional initial value */
-	value: PropTypes.string,
 	/** Name attribute of the checkbox element */
 	name: PropTypes.string,
 	/** Label text */
@@ -89,7 +86,6 @@ SwitchRow.propTypes = {
 }
 
 SwitchRow.defaultProps = {
-	value: null,
 	name: null,
 	label: null,
 	id: null,
