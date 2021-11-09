@@ -9,6 +9,7 @@ import ExpandLess from "./icons/expand_less.svg"
 import ExpandMore from "./icons/expand_more.svg"
 import Help from "./icons/help.svg"
 import Info from "./icons/info.svg"
+import ManageAccounts from "./icons/manage_accounts.svg"
 import Place from "./icons/place.svg"
 import Success from "./icons/check_box.svg"
 import Search from "./icons/search.svg"
@@ -33,6 +34,8 @@ const getColoredSizedIcon = ({icon, color, size, className, ...props}) => {
 				return <Help width={size} height={size} className={iconClass} alt="help" role="img" {...props} />
 			case "info":
 				return <Info width={size} height={size} className={iconClass} alt="info" role="img" {...props} />
+			case "manageAccounts":
+				return <ManageAccounts width={size} height={size} className={iconClass} alt="ManageAccounts" role="img" {...props} />
 			case "place":
 				return <Place width={size} height={size} className={iconClass} alt="location" role="img" {...props} />
 			case "search":
@@ -58,7 +61,7 @@ export const Icon = ({
 
 Icon.propTypes = { 
 	/** The icon to display */
-	icon: PropTypes.oneOf(["cancel", "error", "expandLess", "expandMore", "help", "info", "place", "search", "success", "warning"]),
+	icon: PropTypes.oneOf(["cancel", "error", "expandLess", "expandMore", "help", "info", "manageAccounts", "place", "search", "success", "warning"]),
 	/** The color of the icon */
 	color: PropTypes.string,
 	/** The size of the icon */
