@@ -1,33 +1,49 @@
 #!/bin/bash
 
-printf "Usage: 
-./run.sh dashboard (for localhost)
-./run.sh --host https://cdn.juno.qa-de-1.cloud.sap/ cdn
-./run.sh --host https://ui.juno.qa-de-1.cloud.sap/ ui-components
-./run.sh --host https://juno.qa-de-1.cloud.sap/ dashboard
+function help_me () {
+  echo "Usage: run.sh --host HOST* MICRO-FRONTEND-TESTS*"
+  echo "       run.sh --help will print out this message"
+  echo "       run.sh --host https://cdn.juno.qa-de-1.cloud.sap/ cdn"
+  echo "       run.sh --host https://ui.juno.qa-de-1.cloud.sap/ ui-components"
+  echo "       run.sh --host https://juno.qa-de-1.cloud.sap/ dashboard"
+  echo "Note: if you run this on our workspaces with installed juno-env you can just use 'run.sh' or 'run.sh MICRO-FRONTEND-TESTS'"
+  echo "      the script will figure out where juno is runing and will run the e2e tests against it"
+  exit 1
+}
 
-"
+if [[ "$1" == "--help" ]]; then
+  help_me
+fi
 
-APP_PORT=$(wb juno 'echo $APP_PORT' | tail -1 | tr -d '\r') 
-HOST="http://localhost:$APP_PORT"
+if [[ "$1" == "--host" ]]; then
+  shift
+  HOST=$1
+  shift
+fi
 
+if [[ -z "${HOST}" ]]; then
+  if [ -f "/usr/local/bin/wb" ]; then
+    # this runs in workspaces!!!
+    APP_PORT=$(wb juno 'echo $APP_PORT' | tail -1 | tr -d '\r') 
+    echo "APP_PORT: $APP_PORT"
+    HOST="http://localhost:$APP_PORT"
+  fi
+
+  if [[ -z "${APP_PORT}" ]]; then
+    echo "Error: no APP_PORT found"
+    help_me
+  fi
+fi
+
+# default: run all tests
 SPECS_FOLDER="cypress/integration/**/*"
 
+# check to only run tests against special part like cdn or dashbaord etc...
 while [[ $# -gt 0 ]]
 do
-key="$1"
-
-case $key in
-    -h|--host)
-    HOST="$2"
-    shift # past argument
-    shift # past value
-    ;;
-    *)    # test folder
-    SPECS_FOLDER="cypress/integration/$1/*"
-    shift # past argument
-    ;;
-esac
+  # test folder
+  SPECS_FOLDER="cypress/integration/$1/*"
+  shift # past argument
 done
 
 echo "HOST           = ${HOST}"
