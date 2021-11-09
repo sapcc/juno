@@ -2,12 +2,12 @@
 
 function help_me () {
   echo "Usage: run.sh --host HOST* MICRO-FRONTEND-TESTS*"
-  echo "run.sh --help will print out this message"
-  echo "run.sh --host https://cdn.juno.qa-de-1.cloud.sap/ cdn"
-  echo "run.sh --host https://ui.juno.qa-de-1.cloud.sap/ ui-components"
-  echo "run.sh --host https://juno.qa-de-1.cloud.sap/ dashboard"
-  echo "Note: if you run this on our workspaces with installed juno-env you can just use 'run.sh'"
-  echo "      the script will figure out where juno is runing and will run all e2e tests against it"
+  echo "       run.sh --help will print out this message"
+  echo "       run.sh --host https://cdn.juno.qa-de-1.cloud.sap/ cdn"
+  echo "       run.sh --host https://ui.juno.qa-de-1.cloud.sap/ ui-components"
+  echo "       run.sh --host https://juno.qa-de-1.cloud.sap/ dashboard"
+  echo "Note: if you run this on our workspaces with installed juno-env you can just use 'run.sh' or 'run.sh MICRO-FRONTEND-TESTS'"
+  echo "      the script will figure out where juno is runing and will run the e2e tests against it"
   exit 1
 }
 
