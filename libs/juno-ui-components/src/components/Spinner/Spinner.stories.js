@@ -31,3 +31,13 @@ Warning.args = { color: "warning" }
 
 export const Light = Template.bind({})
 Light.args = {}
+
+export const Small = Template.bind({})
+Small.args = {
+  size: "small"
+}
+
+export const Large = Template.bind({})
+Large.args = {
+  size: "large"
+}
