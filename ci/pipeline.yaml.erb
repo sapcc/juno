@@ -469,9 +469,9 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno/e2e
-                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/dashboard/*"
-                CYPRESS_BASE_URL=https://cdn.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/cdn/*"
-                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/ui-components/*"
+                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/dashboard/*" && \
+                CYPRESS_BASE_URL=https://cdn.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/cdn/*" && \
+                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/ui-components/*" && \
                 CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/mercury/*"
 
   - name: deploy to s-eu-nl-1
