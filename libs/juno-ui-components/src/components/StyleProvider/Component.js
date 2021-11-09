@@ -46,9 +46,10 @@ export const StyleProvider = ({
     link2.href = "https://fonts.gstatic.com"
     link2.crossOrigin = "anonymous"
 
-    const link3= document.createElement("link")
+    const link3 = document.createElement("link")
     link3.rel = "stylesheet"
-    link3.href = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&family=IBM+Plex+Sans+Condensed:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&family=IBM+Plex+Serif:ital@0;1&display=swap"
+    link3.href =
+      "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&family=IBM+Plex+Sans+Condensed:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&family=IBM+Plex+Serif:ital@0;1&display=swap"
 
     document.head.appendChild(link1)
     document.head.appendChild(link2)
@@ -81,13 +82,16 @@ export const StyleProvider = ({
     wrapper.prepend(style)
   }, [])
 
-
   return (
     <StylesContext.Provider value={(styles, theme)}>
       {/* handle shadowRoot -> create shadow element and insert 
           styles and children into it */}
       {stylesWrapper === "shadowRoot" ? (
-        <ShadowRoot mode={shadowRootMode || "closed"} styles={styles} themeClass={themeClass}>
+        <ShadowRoot
+          mode={shadowRootMode}
+          styles={styles}
+          themeClass={themeClass}
+        >
           {children}
         </ShadowRoot>
       ) : (

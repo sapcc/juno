@@ -1,13 +1,14 @@
 #!/bin/bash
 
 printf "Usage: 
+./run.sh dashboard (for localhost)
 ./run.sh --host https://cdn.juno.qa-de-1.cloud.sap/ cdn
 ./run.sh --host https://ui.juno.qa-de-1.cloud.sap/ ui-components
 ./run.sh --host https://juno.qa-de-1.cloud.sap/ dashboard
 
 "
 
-APP_PORT=$(wb juno 'echo $APP_PORT' | tail -1)
+APP_PORT=$(wb juno 'echo $APP_PORT' | tail -1 | tr -d '\r') 
 HOST="http://localhost:$APP_PORT"
 
 SPECS_FOLDER="cypress/integration/**/*"
