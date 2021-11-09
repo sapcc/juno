@@ -17,7 +17,7 @@ spec:
           - path: / 
             backend:
               serviceName: juno-dashboard
-              servicePort: 5000
+              servicePort: 3000
 
     - host: "cdn.juno.{{ .Values.global.region }}.cloud.sap"
       http:
