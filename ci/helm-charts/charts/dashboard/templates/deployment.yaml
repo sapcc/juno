@@ -27,6 +27,9 @@ spec:
         - name: app
           image: "{{ .Values.global.registry }}/juno-dashboard:{{ .Values.image_tag }}"
           imagePullPolicy: IfNotPresent
+          env:
+            - name: APP_PORT
+              value: 5000
           ports:
             - name: http
               containerPort: 5000
