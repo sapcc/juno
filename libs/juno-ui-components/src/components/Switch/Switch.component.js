@@ -29,7 +29,7 @@ const switchsizestyles = (size) => {
 const handlebasestyles = `
 	inline-block
 	absolute
-	top-0.5
+	top-[1px]
 	rounded-full
 	bg-theme-switch-handle
 	border-theme-default
@@ -48,10 +48,10 @@ const handlesizestyles = (size) => {
 }
 
 const handleonstyles = `
-	right-0.5 bg-theme-switch-handle-checked
+	right-[1px] bg-theme-switch-handle-checked
 `
 const handleoffstyles = `
-	left-0.5
+	left-[1px]
 `
 
 /** A Switch/Toggle component */
