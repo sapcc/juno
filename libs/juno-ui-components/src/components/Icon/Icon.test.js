@@ -9,6 +9,12 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "warning")
   })
+  
+  test("renders a custom className as passed", async () => {
+    render(<Icon className="my-custom-class" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveClass("my-custom-class")
+  })
 
   test("renders a default icon when none was passed", async () => {
     render(<Icon />)
@@ -41,6 +47,13 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("width", "48")
     expect(screen.getByRole("img")).toHaveAttribute("height", "48")
+  })
+  
+  test("renders all props as passed", async () => {
+    render(<Icon id="icon-1" data-lolol={true}/>)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute('id', 'icon-1')
+    expect(screen.getByRole("img")).toHaveAttribute('data-lolol')
   })
 
 })
