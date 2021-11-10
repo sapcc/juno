@@ -16,7 +16,7 @@ export const Form = ({
 			className={className}
 			{...props}
 		>
-			{title ?  <h1 className={`${formHeading}`}>{title}</h1> : ""}
+			{title ?  <h1 className={`form-heading ${formHeading}`}>{title}</h1> : ""}
 			{children}
 		</form>		
 	)
