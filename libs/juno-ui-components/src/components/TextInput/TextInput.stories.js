@@ -17,6 +17,11 @@ Disabled.args = {
 	disabled: true,
 }
 
+export const ReadOnly = Template.bind({})
+ReadOnly.args = {
+	readOnly: true,
+}
+
 export const Email = Template.bind({})
 Email.args = {
 	type: 'email',
@@ -30,4 +35,9 @@ Tel.args = {
 export const Url = Template.bind({})
 Url.args = {
 	type: 'url',
+}
+
+export const Number = Template.bind({})
+Number.args = {
+	type: 'number',
 }
