@@ -31,6 +31,11 @@ describe("Textarea", () => {
 		expect(screen.getByRole("textbox")).toBeDisabled()
 	})
 	
+	test("renders a placeholder as passed", async () => {
+		render(<Textarea placeholder="my placeholder"/>)
+		expect(screen.getByRole("textbox")).toHaveAttribute('placeholder', "my placeholder")
+	})
+	
 	test("renders a className as passed", async () => {
 		render(<Textarea className="my-custom-class" />)
 		expect(screen.getByRole("textbox")).toHaveClass("my-custom-class")
