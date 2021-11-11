@@ -43,7 +43,7 @@ export const SwitchRow =({
 	
 	return (
 		<div
-			className={`switch-row ${switchrow}`}
+			className={`switch-row ${switchrow} ${className}`}
 			{...props}
 		>
 			<div>
@@ -53,7 +53,6 @@ export const SwitchRow =({
 					id={id} 
 					on={on}
 					disabled={disabled} 
-					className={className}
 				/>
 			</div>
 			<div>
