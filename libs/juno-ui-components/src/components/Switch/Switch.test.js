@@ -15,10 +15,10 @@ describe("Switch", () => {
     expect(screen.getByRole("switch")).toHaveAttribute('name', "My Switch")
   })
   
-  test("renders a switch with a value as passed", async () => {
-    render(<Switch value="ValueAsPassed" />)
+  test("renders a switch with an id as passed", async () => {
+    render(<Switch id="my-switch" />)
     expect(screen.getByRole("switch")).toBeInTheDocument()
-    expect(screen.getByRole("switch")).toHaveAttribute('value', "ValueAsPassed")
+    expect(screen.getByRole("switch")).toHaveAttribute('id', "my-switch")
   })
   
   test("renders a disabled switch as passed", async () => {
@@ -27,13 +27,30 @@ describe("Switch", () => {
     expect(screen.getByRole("switch")).toBeDisabled()
   })
   
+  test("renders a default size switch by default", async () => {
+    render(<Switch />)
+    expect(screen.getByRole("switch")).toBeInTheDocument()
+    expect(screen.getByRole("switch")).toHaveClass("switch-default")
+  })
+  
+  test("renders a small switch as passed", async () => {
+    render(<Switch size="small" />)
+    expect(screen.getByRole("switch")).toBeInTheDocument()
+    expect(screen.getByRole("switch")).toHaveClass("switch-small")
+  })
+  
+  test("renders a large switch as passed", async () => {
+    render(<Switch size="large" />)
+    expect(screen.getByRole("switch")).toBeInTheDocument()
+    expect(screen.getByRole("switch")).toHaveClass("switch-large")
+  })
+  
   test("renders an aria-checked switch as passed", async () => {
     render(<Switch on />)
     expect(screen.getByRole("switch")).toBeInTheDocument()
     expect(screen.getByRole("switch")).toHaveAttribute('aria-checked')
   })
   
-
   test("renders an aria-checked attribute set to false if off", async () => {
     render(<Switch />)
     expect(screen.getByRole("switch")).toBeInTheDocument()
@@ -59,17 +76,5 @@ describe("Switch", () => {
     screen.getByRole('switch').click();
     expect(onChangeSpy).toHaveBeenCalled();	
   })
- 
-  
-  /* TODO: */
-  // test("fires onChange handler as passed", async () => {
-  //   const handleChange = jest.fn()
-  //   const { container } = render(
-  //     <Switch onChange={handleChange} />
-  //   )
-  //   const swtch = container.firstChild
-  //   fireEvent.change(swtch, { target: { value: 'a' } })
-  //   expect(handleChange).toHaveBeenCalledTimes(1)
-  // })
 
 })
