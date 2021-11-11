@@ -1,15 +1,23 @@
-import React from "react"
+import React, { useState } from "react"
 
 import CCPlusOneLogo from "../assets/images/CCplusOne_logo.svg"
 import WorldMap from "../assets/images/map.svg"
 import backgroundTop from "../assets/images/background_header.png"
 
+import LoginOverlay from "../components/landingpage/LoginOverlay"
+
 import { Button, Icon, Stack } from "juno-ui-components"
 
-
 const Home = () => {
+  const [loginOpen, setLoginOpen] = useState(false)
+
+  const handleLoginClick = () => {
+    setLoginOpen(!loginOpen)
+  }
+
   return (
-    <div className="bg-top"  style={{ backgroundImage: `url('${backgroundTop}')` }}>
+    <div >
+      <LoginOverlay show={loginOpen} />
       <div className="container mx-auto pt-16">
         <CCPlusOneLogo className="-ml-7 mb-4" alt="Converged Cloud" />
 
@@ -18,17 +26,17 @@ const Home = () => {
             Engage eyeballs collaborative: best-of-breed applications out-of-the-box dynamic next-generation optimize, B2B.
           </div>
           <div>
-            <Button className="whitespace-nowrap">
+            <Button className="whitespace-nowrap" onClick={handleLoginClick}>
               <Icon icon="place" color="text-juno-blue" className="mr-3" />
               Select region
             </Button>
           </div>
         </Stack>
-
-        <div className="pt-24">
+      </div>
+      <div className="bg-center bg-no-repeat mt-24" style={{ backgroundImage: `url('${backgroundTop}')` }}>
+        <div className="container mx-auto">
           <WorldMap className="w-full" />
         </div>
-
       </div>
     </div>
   )
