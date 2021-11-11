@@ -15,6 +15,12 @@ describe("Button", () => {
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveTextContent("Click me")
   })
+  
+  test("renders a disabled button as passed", async () => {
+    render(<Button disabled />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute("disabled")
+  })
 
   test('onclick handler is called as passed', () => {
     const onClickSpy = jest.fn();
