@@ -41,6 +41,7 @@ const disablediconstyles = `
 /*+ A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
 export const Select = ({
 	name,
+	id,
 	children,
 	className,
 	disabled,
@@ -51,6 +52,7 @@ export const Select = ({
 		<span className={`select-wrapper ${wrapperstyles}`}>
 			<select 
 				name={name || "unnamed select"}
+				id={id}
 				className={`select ${selectstyles} ${className}`}
 				onChange={onChange}
 				disabled={disabled}
@@ -66,6 +68,8 @@ export const Select = ({
 Select.propTypes = {
 	/** Pass a name. */
 	name: PropTypes.string,
+	/** The id of the select */
+	id: PropTypes.string,
 	/** Pass a classname */
 	className: PropTypes.string,
 	/** Pass SelectOption and SelectOptionGroup as children. */
@@ -78,6 +82,7 @@ Select.propTypes = {
 
 Select.defaultProps = {
 	name: null,
+	id: "",
 	className: "",
 	disabled: null,
 	onChange: undefined,
