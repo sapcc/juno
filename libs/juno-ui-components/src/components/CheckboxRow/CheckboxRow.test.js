@@ -27,10 +27,4 @@ describe("CheckboxRow", () => {
 		expect(document.querySelector('.required')).toBeInTheDocument()
 	})
 	
-	// test("renders a custom className on the checkbox as passed", async () => {
-	// 	render(<CheckboxRow className="my-custom-classname" />)
-	// 	expect(screen.getByRole("checkbox")).toBeInTheDocument()
-	// 	expect(screen.getByRole("checkbox")).toHaveClass("my-custom-classname")
-	// })
-	
 })

@@ -85,7 +85,7 @@ export const Switch = ({
 			aria-checked={isOn}
 			disabled={disabled}
 			onClick={handleChange}
-			className={`switch ${switchbasestyles} ${switchsizestyles(size)} ${className}`}
+			className={`switch switch-${size} ${switchbasestyles} ${switchsizestyles(size)} ${className}`}
 			{...props}
 		>
 			<span className={`switch-handle ${handlebasestyles} ${handlesizestyles(size)} ${ isOn ? handleonstyles : handleoffstyles}`} ></span>

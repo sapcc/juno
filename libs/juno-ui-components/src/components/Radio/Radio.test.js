@@ -17,6 +17,12 @@ describe("Radio", () => {
 		expect(screen.getByRole("radio")).toHaveAttribute('name', "My Radio")
 	})
 	
+	test("renders a radio with an id as passed", async () => {
+		render(<Radio id="my-radio" />)
+		expect(screen.getByRole("radio")).toBeInTheDocument()
+		expect(screen.getByRole("radio")).toHaveAttribute('id', "my-radio")
+	})
+	
 	test("renders a radio with a value as passed", async () => {
 		render(<Radio value="ValueAsPassed" />)
 		expect(screen.getByRole("radio")).toBeInTheDocument()

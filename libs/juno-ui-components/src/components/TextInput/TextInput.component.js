@@ -21,7 +21,11 @@ const textinputstyles = `
 export const TextInput = ({
 	name,
 	value,
+	id,
 	type,
+	placeholder,
+	disabled,
+	readOnly,
 	className,
 	autoComplete,
 	onChange,
@@ -45,6 +49,10 @@ export const TextInput = ({
 			name={name || "unnamed input"}
 			autoComplete={autoComplete}
 			value={val} 
+			id={id}
+			placeholder={placeholder}
+			disabled={disabled}
+			readOnly={readOnly}
 			onChange={handleInputChange}
 			className={`${textinputstyles} ${className}`}
 			{...props}
@@ -57,6 +65,14 @@ TextInput.propTypes = {
 	name: PropTypes.string,
 	/** Pass a value */
 	value: PropTypes.string,
+	/** Pass an id */
+	id: PropTypes.string,
+	/** Pass a placeholder */
+	placeholder: PropTypes.string,
+	/** Render a disabled input */
+	disabled: PropTypes.bool,
+	/** Render a readonly input */
+	readOnly: PropTypes.bool,
 	/** Pass a classname */
 	className: PropTypes.string,
 	/** Pass a valid autocomplete value. We do not police validity. */
@@ -64,11 +80,15 @@ TextInput.propTypes = {
 	/** Pass a handler */
 	onChange: PropTypes.func,
 	/** Specify the type attribute. Defaults to an input with no type attribute, which in turn will be treateas as type="text" by browsers. */
-	type: PropTypes.oneOf(['text', 'email', 'password', 'tel', 'url'])
+	type: PropTypes.oneOf(['text', 'email', 'password', 'tel', 'url', 'number'])
 }
 
 TextInput.defaultProps = {
 	value: "",
+	id: "",
+	placeholder: "",
+	disabled: false,
+	readOnly: false,
 	className: "",
 	autoComplete: "off",
 	onChange: undefined,

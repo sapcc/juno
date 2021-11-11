@@ -45,11 +45,11 @@ export const RadioRow =({
 	
 	return (
 		<div
-			className={`radio-row ${radiorow}`}
+			className={`radio-row ${radiorow} ${className}`}
 			{...props}
 		>
 			<div className={`radio-container ${radiocontainerstyles}`}>
-				<Radio name={name} checked={isChecked} onChange={onChange} id={id} value={value || ""} disabled={disabled} className={className} />
+				<Radio name={name} checked={isChecked} onChange={onChange} id={id} value={value} disabled={disabled}  />
 			</div>
 			<div>
 				<Label text={label} htmlFor={id} disabled={disabled} />
@@ -81,7 +81,7 @@ RadioRow.propTypes = {
 }
 
 RadioRow.defaultProps = {
-	value: null,
+	value: "",
 	checked: false,
 	name: null,
 	label: null,
