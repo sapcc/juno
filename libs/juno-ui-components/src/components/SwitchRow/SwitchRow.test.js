@@ -40,7 +40,7 @@ describe("SwitchRow", () => {
 	})
 	
 	test("renders a custom className to the parent as passed", async () => {
-		render(<SwitchRow id="switchrow-1" className="my-custom-class" />)
+		render(<SwitchRow data-testid="switch-row" className="my-custom-class" />)
 		expect(screen.getByTestId("switch-row")).toBeInTheDocument()
 		expect(screen.getByTestId("switch-row")).toHaveClass("my-custom-class")
 	})
