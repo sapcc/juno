@@ -11,6 +11,7 @@ import { Button, Icon, Stack } from "juno-ui-components"
 
 const Home = () => {
   const showLoginOverlay = useStore(useCallback((state) => state.showLoginOverlay))
+  const selectedRegion   = useStore(useCallback((state) => state.region))
 
   return (
     <div >
@@ -25,7 +26,7 @@ const Home = () => {
           <div>
             <Button className="whitespace-nowrap" onClick={() => showLoginOverlay()}>
               <Icon icon="place" color="text-juno-blue" className="mr-3" />
-              Select region
+              Select {selectedRegion ? 'domain' : 'region'}
             </Button>
           </div>
         </Stack>
