@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 
 import useStore from "../../store"
 
@@ -6,9 +6,8 @@ import { Button, Icon, PageHeader } from "juno-ui-components"
 
 // import { Link } from "react-router-dom"
 
-
 const PageHead = () => {
-  const toggleLoginOverlay = useStore((state) => state.toggleLoginOverlay)
+  const toggleLoginOverlay = useStore(useCallback((state) => state.toggleLoginOverlay))
 
   return (
     <PageHeader>

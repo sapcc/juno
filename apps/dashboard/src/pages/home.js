@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 
 import useStore from "../store"
 import CCPlusOneLogo from "../assets/images/CCplusOne_logo.svg"
@@ -10,7 +10,7 @@ import LoginOverlay from "../components/landingpage/LoginOverlay"
 import { Button, Icon, Stack } from "juno-ui-components"
 
 const Home = () => {
-  const showLoginOverlay = useStore((state) => state.showLoginOverlay)
+  const showLoginOverlay = useStore(useCallback((state) => state.showLoginOverlay))
 
   return (
     <div >
