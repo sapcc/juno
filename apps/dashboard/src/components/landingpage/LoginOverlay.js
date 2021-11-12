@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
+
+import useStore from "../../store"
 
 import { ClickableIcon, Stack } from "juno-ui-components"
 
@@ -93,15 +95,6 @@ const REGIONS = [
   }
 ]
 
-const baseStack = (direction, gap) => {
-  return (
-    `
-      ${direction === "vertical" ? 'flex flex-col' : 'md:flex md:flex-row'}
-      ${gapSize(gap)}
-    `
-  )
-}
-
 const overlayStyles = (isOpen) => {
   return (
     `
@@ -124,22 +117,15 @@ const overlayStyles = (isOpen) => {
   )
 }
 
-const LoginOverlay = ({region, show}) => {
-  const [ isOpen, setIsOpen] = useState(show) 
+const LoginOverlay = ({region}) => {
   const [ selectedRegion, setSelectedRegion] = useState(region)
-
-  useEffect(() => {
-    setIsOpen(show)
-  }, [show])
-
-  const handleClose = () => {
-    setIsOpen(false)
-  }
+  const loginOverlayVisible = useStore((state) => state.loginOverlayVisible)
+  const hideLoginOverlay = useStore((state) => state.hideLoginOverlay)
 
   return (
-    <div className={overlayStyles(isOpen)}>
+    <div className={overlayStyles(loginOverlayVisible)}>
       <div className="flex items-center">
-        <ClickableIcon onClick={handleClose} icon="close" color="text-juno-turquoise" size="35" className="ml-auto" />
+        <ClickableIcon onClick={() => hideLoginOverlay()} icon="close" color="text-juno-turquoise" size="35" className="ml-auto" />
       </div>
       <div className="max-w-screen-xl mx-auto border-b-2 border-juno-grey-light-8 mb-8">
         <Stack className="justify-around">
@@ -173,14 +159,11 @@ const LoginOverlay = ({region, show}) => {
 }
 
 LoginOverlay.propTypes = {
-  /** Set visibility of login overlay */
-  show: PropTypes.bool,
   /** Preselect region */
   variant: PropTypes.oneOf(["NA-CA-1", "NA-US-1", "NA-US-2", "NA-US-3", "LA-BR-1", "EU-NL-1", "EU-DE-1", "EU-DE-2", "EU-RU-1", "AP-SA-1", "AP-SA-2", "AP-AE-1", "AP-CN-1", "AP-JP-1", "AP-JP-2", "AP-AU-1"]),
 }
 
 LoginOverlay.defaultProps = {
-  show: false,
   region: null,
 }
 

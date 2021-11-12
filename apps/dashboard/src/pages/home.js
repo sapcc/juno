@@ -1,5 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 
+import useStore from "../store"
 import CCPlusOneLogo from "../assets/images/CCplusOne_logo.svg"
 import WorldMap from "../assets/images/map.svg"
 import backgroundTop from "../assets/images/background_header.png"
@@ -9,15 +10,11 @@ import LoginOverlay from "../components/landingpage/LoginOverlay"
 import { Button, Icon, Stack } from "juno-ui-components"
 
 const Home = () => {
-  const [loginOpen, setLoginOpen] = useState(false)
-
-  const handleLoginClick = () => {
-    setLoginOpen(!loginOpen)
-  }
+  const showLoginOverlay = useStore((state) => state.showLoginOverlay)
 
   return (
     <div >
-      <LoginOverlay show={loginOpen} />
+      <LoginOverlay />
       <div className="container mx-auto pt-16">
         <CCPlusOneLogo className="-ml-7 mb-4" alt="Converged Cloud" />
 
@@ -26,7 +23,7 @@ const Home = () => {
             Engage eyeballs collaborative: best-of-breed applications out-of-the-box dynamic next-generation optimize, B2B.
           </div>
           <div>
-            <Button className="whitespace-nowrap" onClick={handleLoginClick}>
+            <Button className="whitespace-nowrap" onClick={() => showLoginOverlay()}>
               <Icon icon="place" color="text-juno-blue" className="mr-3" />
               Select region
             </Button>

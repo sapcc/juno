@@ -9063,6 +9063,7 @@ __metadata:
     webpack: ^5.59.1
     webpack-cli: ^4.9.1
     webpack-dev-server: ^4.3.1
+    zustand: ^3.6.5
   languageName: unknown
   linkType: soft
 
@@ -24213,6 +24214,18 @@ fsevents@^1.2.7:
   version: 0.8.15
   resolution: "zen-observable@npm:0.8.15"
   checksum: b7289084bc1fc74a559b7259faa23d3214b14b538a8843d2b001a35e27147833f4107590b1b44bf5bc7f6dfe6f488660d3a3725f268e09b3925b3476153b7821
+  languageName: node
+  linkType: hard
+
+"zustand@npm:^3.6.5":
+  version: 3.6.5
+  resolution: "zustand@npm:3.6.5"
+  peerDependencies:
+    react: ">=16.8"
+  peerDependenciesMeta:
+    react:
+      optional: true
+  checksum: 1c3eee75ba04c9ec2d9390bb5f8a9ef736f21f9b266cf39e578a359325b10db816f54783ae70a5ee69cd0846e4a504d460fe8e91fde57a276cd3e7ce2538caa3
   languageName: node
   linkType: hard
 
