@@ -16,81 +16,97 @@ import FlagUSA from "./assets/images/flag_usa.svg"
 // all available regions
 const REGIONS = {
   "NA-CA-1": { 
+    continent: "AMER",
     key: "NA-CA-1",
     country: "Canada",
     icon: <FlagCanada />
   },
   "NA-US-1": {
+    continent: "AMER",
     key: "NA-US-1",
     country: "USA",
     icon: <FlagUSA />
   },
   "NA-US-2": {
+    continent: "AMER",
     key: "NA-US-2",
     country: "USA",
     icon: <FlagUSA />
   },
   "NA-US-3": {
+    continent: "AMER",
     key: "NA-US-3",
     country: "USA",
     icon: <FlagUSA />
   },
   "LA-BR-1": {
+    continent: "AMER",
     key: "LA-BR-1",
     country: "Brazil",
     icon: <FlagBrazil />
   },
   "EU-NL-1": {
+    continent: "EMEA",
     key: "EU-NL-1",
     country: "Netherlands",
     icon: <FlagNetherlands />
   },
   "EU-DE-1": {
+    continent: "EMEA",
     key: "EU-DE-1",
     country: "Germany",
     icon: <FlagGermany />
   },
   "EU-DE-2": {
+    continent: "EMEA",
     key: "EU-DE-2",
     country: "Germany",
     icon: <FlagGermany />
   },
   "EU-RU-1": {
+    continent: "EMEA",
     key: "EU-RU-1",
     country: "Russia",
     icon: <FlagRussia />
   },
   "AP-SA-1": {
+    continent: "APJ",
     key: "AP-SA-1",
     country: "Kingdom of Saudi Arabia",
     icon: <FlagSaudiArabia />
   },
   "AP-SA-2": {
+    continent: "APJ",
     key: "AP-SA-2",
     country: "Kingdom of Saudi Arabia",
     icon: <FlagSaudiArabia />
   },
   "AP-AE-1": {
+    continent: "APJ",
     key: "AP-AE-1",
     country: "United Arab Emirates",
     icon: <FlagSaudiArabia />
   },
   "AP-CN-1": {
+    continent: "APJ",
     key: "AP-CN-1",
     country: "China",
     icon: <FlagChina />
   },
   "AP-JP-1": {
+    continent: "APJ",
     key: "AP-JP-1",
     country: "Japan",
     icon: <FlagJapan />
   },
   "AP-JP-2": {
+    continent: "APJ",
     key: "AP-JP-2",
     country: "Japan",
     icon: <FlagJapan />
   },
   "AP-AU-1": {
+    continent: "APJ",
     key: "AP-AU-1",
     country: "Australia",
     icon: <FlagAustralia />
@@ -99,13 +115,13 @@ const REGIONS = {
 
 const REGIONS_BY_CONTINENT = [
   { name: "AMER",
-    regions: ["NA-CA-1", "NA-US-1", "NA-US-2", "NA-US-3","LA-BR-1"]
+    regions: Object.values(REGIONS).filter((region) => region.continent === "AMER")
   },
   { name: "EMEA",
-    regions: ["EU-NL-1", "EU-DE-1", "EU-DE-2", "EU-RU-1"]
+    regions: Object.values(REGIONS).filter((region) => region.continent === "EMEA")
   },
   { name: "APJ",
-    regions: ["AP-SA-1", "AP-SA-2", "AP-AE-1", "AP-CN-1", "AP-JP-1", "AP-JP-2", "AP-AU-1"]
+    regions: Object.values(REGIONS).filter((region) => region.continent === "APJ")
   }
 ]
 
