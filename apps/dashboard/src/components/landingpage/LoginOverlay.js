@@ -33,11 +33,20 @@ const tabClasses = (isActive) => {
   return (
     `
     uppercase 
+    text-theme-default
     text-2xl 
     pb-3 
     px-24 
     -mb-0.5
-    ${isActive ? 'text-theme-high border-b-3 border-juno-turquoise' : ''}
+    ${isActive ? 'cursor-default text-theme-high border-b-3 border-juno-turquoise' : ''}
+    `
+  )
+}
+
+const tabLinkClasses = (isActive) => {
+  return (
+    `
+    ${isActive ? '' : 'hover:text-juno-turquoise'}
     `
   )
 }
@@ -48,6 +57,7 @@ const LoginOverlay = () => {
   const loginOverlayVisible = useStore(useCallback((state) => state.loginOverlayVisible))
   const hideLoginOverlay    = useStore(useCallback((state) => state.hideLoginOverlay))
   const selectedRegion      = useStore(useCallback((state) => state.region))
+  const deselectRegion      = useStore(useCallback((state) => state.deselectRegion))
   const regionKeys          = useStore(useCallback((state) => state.regionKeys))
   
 
@@ -60,12 +70,12 @@ const LoginOverlay = () => {
       <div className="flex items-center">
         <ClickableIcon onClick={() => hideLoginOverlay()} icon="close" color="text-juno-turquoise" size="35" className="ml-auto" />
       </div>
-      <div className="max-w-screen-xl mx-auto border-b-2 border-juno-grey-light-8 mb-8">
+      <nav className="max-w-screen-xl mx-auto border-b-2 border-juno-grey-light-8 mb-8">
         <Stack className="justify-around">
-          <div className={tabClasses(!isValidRegionSelected)}>1. Choose your region</div>
+          <a href="#" onClick={() => deselectRegion()} className={`${tabClasses(!isValidRegionSelected)} ${tabLinkClasses(!isValidRegionSelected)}`}>1. Choose your region</a>
           <div className={tabClasses(isValidRegionSelected)}>2. Choose your domain</div>
         </Stack>
-      </div>
+      </nav>
       <div className="max-w-screen-xl mx-auto">
         { isValidRegionSelected ? 
           <DomainSelect />
