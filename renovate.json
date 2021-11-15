@@ -12,7 +12,10 @@
   "separateMinorPatch": false,
   "separateMajorMinor": true,
   "major": {
-    "enabled": false
+    "enabled": true
+  },
+  "minor": {
+    "enabled": true
   },
   "rangeStrategy": "update-lockfile",
   "packageRules": [
