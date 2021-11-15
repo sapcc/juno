@@ -31,7 +31,7 @@ const Home = () => {
           </div>
         </Stack>
       </div>
-      <div className="bg-center bg-no-repeat mt-24" style={{ backgroundImage: `url('${backgroundTop}')` }}>
+      <div className="bg-top bg-no-repeat mt-24" style={{ backgroundImage: `url('${backgroundTop}')` }}>
         <div className="container mx-auto">
           <WorldMap className="w-full" />
         </div>

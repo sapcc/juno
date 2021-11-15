@@ -11,7 +11,14 @@ import FlagJapan from "./assets/images/flag_japan.svg"
 import FlagNetherlands from "./assets/images/flag_netherlands.svg"
 import FlagRussia from "./assets/images/flag_russia.svg"
 import FlagSaudiArabia from "./assets/images/flag_saudiarabia.svg"
+import FlagUAE from "./assets/images/flag_unitedarabempire.svg"
 import FlagUSA from "./assets/images/flag_usa.svg"
+
+// all domains
+
+const DOMAINS = [
+  "BS", "CCADMIN", "CIS", "CP", "FSN", "HCM", "HCP03", "HEC", "MONSOON3", "NEO", "S4", "WBS" 
+]
 
 // all available regions
 const REGIONS = {
@@ -85,7 +92,7 @@ const REGIONS = {
     continent: "APJ",
     key: "AP-AE-1",
     country: "United Arab Emirates",
-    icon: <FlagSaudiArabia />
+    icon: <FlagUAE />
   },
   "AP-CN-1": {
     continent: "APJ",
