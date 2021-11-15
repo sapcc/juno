@@ -148,6 +148,7 @@ const useStore = create(devtools((set) => ({
   regions:              REGIONS,
   regionKeys:           REGION_KEYS,
   regionsByContinent:   REGIONS_BY_CONTINENT,
+  domains:              DOMAINS
 })))
 
 export default useStore

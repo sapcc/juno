@@ -8,6 +8,7 @@ const DomainSelect = () => {
 
   const selectedRegionKey = useStore(useCallback((state) => state.region))
   const regions           = useStore(useCallback((state) => state.regions))
+  const domains           = useStore(useCallback((state) => state.domains))
   
   const selectedRegion = useMemo(() => {return (regions[selectedRegionKey])}, [selectedRegionKey])
 
@@ -20,6 +21,13 @@ const DomainSelect = () => {
           {selectedRegion.country}
         </div>
       </Stack>
+      <div className="grid grid-cols-6 gap-4 mt-12">
+        { domains.map((domain) => (
+          <a href={`https://dashboard.${selectedRegionKey}.cloud.sap/${domain.toLowerCase()}/home`} className="bg-juno-grey-blue-1 text-theme-high p-4 block hover:ring-2 ring-juno-blue hover:text-juno-turquoise" key={domain}>
+            {domain}
+          </a>
+        ))}
+      </div>
     </>
   )
 }
