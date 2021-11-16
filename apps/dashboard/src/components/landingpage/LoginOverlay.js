@@ -23,6 +23,7 @@ const overlayStyles = (isOpen) => {
     -translate-x-1/2 
     w-full 
     max-w-[1700px]
+    min-h-[800px]
     p-4
     pb-24
     `

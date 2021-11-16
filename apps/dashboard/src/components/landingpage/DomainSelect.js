@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from "react"
 
 import useStore from "../../store"
 
-import { Stack } from "juno-ui-components"
+import { Icon, Stack } from "juno-ui-components"
 
 const DomainSelect = () => {
 
@@ -11,6 +11,25 @@ const DomainSelect = () => {
   const domains           = useStore(useCallback((state) => state.domains))
   
   const selectedRegion = useMemo(() => {return (regions[selectedRegionKey])}, [selectedRegionKey])
+
+  const domainCardClasses = `
+    group
+    relative
+    bg-juno-grey-blue-1 
+    text-theme-high
+    font-bold
+    p-4 
+    block
+    h-24
+    hover:bg-juno-turquoise
+    hover:text-black
+  `
+
+  const iconClasses = `
+    absolute 
+    bottom-2 
+    right-2
+  `
 
   return (
     <>
@@ -23,8 +42,17 @@ const DomainSelect = () => {
       </Stack>
       <div className="grid grid-cols-6 gap-4 mt-12">
         { domains.map((domain) => (
-          <a href={`https://dashboard.${selectedRegionKey}.cloud.sap/${domain.toLowerCase()}/home`} className="bg-juno-grey-blue-1 text-theme-high p-4 block hover:ring-2 ring-juno-blue hover:text-juno-turquoise" key={domain}>
+          <a 
+            href={`https://dashboard.${selectedRegionKey}.cloud.sap/${domain.toLowerCase()}/home`} 
+            className={domainCardClasses} 
+            key={domain}>
             {domain}
+            <div className={`${iconClasses} opacity-40 block group-hover:hidden`}>
+              <Icon icon="autoAwesomeMotion" color="text-theme-high" size="36" />
+            </div>
+            <div className={`${iconClasses} hidden group-hover:block`}>
+              <Icon icon="openInBrowser" color="text-black" size="36" />
+            </div>
           </a>
         ))}
       </div>

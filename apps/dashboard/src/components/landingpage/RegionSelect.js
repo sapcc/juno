@@ -18,9 +18,9 @@ const RegionSelect = () => {
             <Stack 
               key={region.key}
               onClick={() => selectRegion(region.key)}
-              className="bg-juno-grey-blue-1 py-3 px-5 items-center cursor-pointer hover:ring-2 ring-juno-blue">
+              className="bg-juno-grey-blue-1 py-3 px-5 items-center cursor-pointer hover:bg-juno-turquoise hover:text-black">
               <div>
-                {region.key}<br />
+                <span className="font-bold">{region.key}</span><br />
                 {region.country}
               </div>
               <div className="ml-auto">
