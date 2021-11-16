@@ -3,6 +3,8 @@ import PropTypes from "prop-types"
 
 /* Import Icons here. The icon svgs in the icons folder correspond to the respective "xyz_24px.svg" from material-ui icons. 
 */
+import AutoAwesomeMosaic from "./icons/auto_awesome_mosaic.svg"
+import AutoAwesomeMotion from "./icons/auto_awesome_motion.svg"
 import Cancel from "./icons/cancel.svg"
 import Close from "./icons/close.svg"
 import Error from "./icons/error.svg"
@@ -25,6 +27,10 @@ Generic Icon component.
 const getColoredSizedIcon = ({icon, color, size, className, ...props}) => {	
 		const iconClass = `fill-current ${color} ${className || ""}`
 	  switch (icon) {
+			case "autoAwesomeMosaic":
+				return <AutoAwesomeMosaic width={size} height={size} className={iconClass} alt="mosaic" role="img" {...props}/>
+			case "autoAwesomeMotion":
+				return <AutoAwesomeMotion width={size} height={size} className={iconClass} alt="items stacked behind each other" role="img" {...props}/>
 			case "cancel":
 				return <Cancel width={size} height={size} className={iconClass} alt="cancel" role="img" {...props}/>
 			case "close":
@@ -32,15 +38,15 @@ const getColoredSizedIcon = ({icon, color, size, className, ...props}) => {
 			case "error":
 				return <Error width={size} height={size} className={iconClass} alt="error" role="img" {...props} />
 			case "expandLess":
-				return <ExpandLess width={size} height={size} className={iconClass} alt="expandLess" role="img" {...props} />
+				return <ExpandLess width={size} height={size} className={iconClass} alt="expand less" role="img" {...props} />
 			case "expandMore":
-				return <ExpandMore width={size} height={size} className={iconClass} alt="expandMore" role="img" {...props} />
+				return <ExpandMore width={size} height={size} className={iconClass} alt="expand more" role="img" {...props} />
 			case "help":
 				return <Help width={size} height={size} className={iconClass} alt="help" role="img" {...props} />
 			case "info":
 				return <Info width={size} height={size} className={iconClass} alt="info" role="img" {...props} />
 			case "manageAccounts":
-				return <ManageAccounts width={size} height={size} className={iconClass} alt="ManageAccounts" role="img" {...props} />
+				return <ManageAccounts width={size} height={size} className={iconClass} alt="user account configuration" role="img" {...props} />
 			case "openInBrowser":
 				return <OpenInBrowser width={size} height={size} className={iconClass} alt="open in browser" role="img" {...props} />
 			case "openInNew":
@@ -70,7 +76,7 @@ export const Icon = ({
 
 Icon.propTypes = { 
 	/** The icon to display */
-	icon: PropTypes.oneOf(["cancel", "close", "error", "expandLess", "expandMore", "help", "info", "manageAccounts", "openInBrowser", "openInNew", "place", "search", "success", "warning"]),
+	icon: PropTypes.oneOf(["autoAwesomeMosaic", "autoAwesomeMotion", "cancel", "close", "error", "expandLess", "expandMore", "help", "info", "manageAccounts", "openInBrowser", "openInNew", "place", "search", "success", "warning"]),
 	/** The color of the icon */
 	color: PropTypes.string,
 	/** The size of the icon */
