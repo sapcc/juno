@@ -47,6 +47,16 @@ describe("CheckboxRow", () => {
 		expect(document.querySelector('.required')).toBeInTheDocument()
 	})
 	
+	test("renders a custom className", async () => {
+		render(<CheckboxRow data-testid="my-checkbox-row" className="my-classname" />)
+		expect(screen.getByTestId("my-checkbox-row")).toHaveClass("my-classname")
+	})
+	
+	test("renders all props as passed", async () => {
+		render(<CheckboxRow data-testid="my-checkbox-row" data-lolol="some-prop" />)
+		expect(screen.getByTestId("my-checkbox-row")).toHaveAttribute("data-lolol", 'some-prop')
+	})
+	
 	test("fire handler on change as passed", async () => {
 		const onChangeSpy = jest.fn();
 		render(<CheckboxRow onChange={onChangeSpy} />);

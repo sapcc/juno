@@ -47,11 +47,11 @@ export const CheckboxRow =({
 	
 	return (
 		<div
-			className={`${checkboxrow}`}
+			className={`${checkboxrow}  ${className}`}
 			{...props}
 		>
 			<div className={`checkbox-container ${checkboxcontainerstyles}`}>
-				<Checkbox name={name} checked={isChecked} disabled={disabled} onChange={handleChange} id={id} value={value || ""} className={className} />
+				<Checkbox name={name} checked={isChecked} disabled={disabled} onChange={handleChange} id={id} value={value || ""} />
 			</div>
 			<div>
 				<Label text={label} htmlFor={id} required={required} disabled={disabled} />
