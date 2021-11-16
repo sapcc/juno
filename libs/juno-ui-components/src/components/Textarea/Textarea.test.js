@@ -46,10 +46,10 @@ describe("Textarea", () => {
 		expect(screen.getByRole("textbox")).toHaveAttribute('autocomplete', "on")
 	})
 	
-	// test("renders autofocus as passed", async () => {
-	// 	render(<Textarea autoFocus />)
-	// 	expect(screen.getByRole("textbox")).toHaveAttribute("autofocus")
-	// })
+	test("renders autofocus as passed", async () => {
+		render(<Textarea autoFocus />)
+		expect(screen.getByRole("textbox")).toHaveFocus()
+	})
 	
 	test("fires onChange handler as passed", async () => {
 		const handleChange = jest.fn()
