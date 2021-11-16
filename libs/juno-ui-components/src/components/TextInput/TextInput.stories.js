@@ -41,3 +41,8 @@ export const Number = Template.bind({})
 Number.args = {
 	type: 'number',
 }
+
+export const Password = Template.bind({})
+Password.args = {
+	type: 'password'
+}
