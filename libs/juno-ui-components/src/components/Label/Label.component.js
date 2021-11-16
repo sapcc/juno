@@ -11,6 +11,7 @@ const stackedlabelstyles = `
 `
 
 const floatinglabelstyles = `
+	floating-label
 	text-base
 `
 
@@ -28,8 +29,9 @@ const requiredstyles = `
 	mt-2
 	bg-theme-required
 `
-
+// namespace disabled label?
 const disabledstyles = `
+	disabled 
 	opacity-50
 `
 
@@ -59,7 +61,7 @@ export const Label = ({
 }) => {
 	return (
 		<>
-		<label className={`label ${labelstyles} ${variantStyles(variant)} ${ disabled ? disabledstyles : "" } ${className}`} htmlFor={htmlFor}>{ text ? text : "unlabeled" }</label>
+		<label className={`label ${labelstyles} ${variantStyles(variant)} ${ disabled ? disabledstyles : "" } ${className}`} htmlFor={htmlFor} {...props}>{ text ? text : "unlabeled" }</label>
 		{ required ? <span className={`required ${requiredstyles}`} ></span> : "" }
 		</>
 	)
