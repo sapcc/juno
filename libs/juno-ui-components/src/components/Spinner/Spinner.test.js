@@ -72,5 +72,19 @@ describe("Spinner", () => {
 		expect(spinnerstyles.width).toBe('8rem')
 	})
 	
+	test("renders a custom className", async () => {
+		render(<Spinner className="my-custom-class" />)
+		expect(screen.getByRole("progressbar")).toBeInTheDocument()
+		expect(screen.getByRole("progressbar")).toHaveClass("my-custom-class")
+	})
+	
+	test("renders all props", async () => {
+		render(<Spinner id="a-spinner" name="the-spinner-to-test" data-lolol="some-random-prop"/>)
+		const spinner = screen.getByRole("progressbar")
+		expect(spinner).toHaveAttribute("id", 'a-spinner')
+		expect(spinner).toHaveAttribute("name", 'the-spinner-to-test')
+		expect(spinner).toHaveAttribute("data-lolol", 'some-random-prop')
+	})
+	
 	
 })
