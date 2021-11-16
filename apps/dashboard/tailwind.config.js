@@ -26,6 +26,9 @@ module.exports = {
         theme: {
         },
       },
+      transitionProperty: {
+        'max-height': 'max-height'
+      }
     },
   },
   variants: {},

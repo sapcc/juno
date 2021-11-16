@@ -4,12 +4,15 @@ import PropTypes from "prop-types"
 /* Import Icons here. The icon svgs in the icons folder correspond to the respective "xyz_24px.svg" from material-ui icons. 
 */
 import Cancel from "./icons/cancel.svg"
+import Close from "./icons/close.svg"
 import Error from "./icons/error.svg"
 import ExpandLess from "./icons/expand_less.svg"
 import ExpandMore from "./icons/expand_more.svg"
 import Help from "./icons/help.svg"
 import Info from "./icons/info.svg"
 import ManageAccounts from "./icons/manage_accounts.svg"
+import OpenInBrowser from "./icons/open_in_browser.svg"
+import OpenInNew from "./icons/open_in_new.svg"
 import Place from "./icons/place.svg"
 import Success from "./icons/check_box.svg"
 import Search from "./icons/search.svg"
@@ -24,6 +27,8 @@ const getColoredSizedIcon = ({icon, color, size, className, ...props}) => {
 	  switch (icon) {
 			case "cancel":
 				return <Cancel width={size} height={size} className={iconClass} alt="cancel" role="img" {...props}/>
+			case "close":
+				return <Close width={size} height={size} className={iconClass} alt="close" role="img" {...props}/>
 			case "error":
 				return <Error width={size} height={size} className={iconClass} alt="error" role="img" {...props} />
 			case "expandLess":
@@ -36,6 +41,10 @@ const getColoredSizedIcon = ({icon, color, size, className, ...props}) => {
 				return <Info width={size} height={size} className={iconClass} alt="info" role="img" {...props} />
 			case "manageAccounts":
 				return <ManageAccounts width={size} height={size} className={iconClass} alt="ManageAccounts" role="img" {...props} />
+			case "openInBrowser":
+				return <OpenInBrowser width={size} height={size} className={iconClass} alt="open in browser" role="img" {...props} />
+			case "openInNew":
+				return <OpenInNew width={size} height={size} className={iconClass} alt="open in new tab" role="img" {...props} />
 			case "place":
 				return <Place width={size} height={size} className={iconClass} alt="location" role="img" {...props} />
 			case "search":
@@ -61,7 +70,7 @@ export const Icon = ({
 
 Icon.propTypes = { 
 	/** The icon to display */
-	icon: PropTypes.oneOf(["cancel", "error", "expandLess", "expandMore", "help", "info", "manageAccounts", "place", "search", "success", "warning"]),
+	icon: PropTypes.oneOf(["cancel", "close", "error", "expandLess", "expandMore", "help", "info", "manageAccounts", "openInBrowser", "openInNew", "place", "search", "success", "warning"]),
 	/** The color of the icon */
 	color: PropTypes.string,
 	/** The size of the icon */
