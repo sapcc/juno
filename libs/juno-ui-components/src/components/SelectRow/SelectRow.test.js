@@ -27,10 +27,22 @@ describe("SelectRow", () => {
 		expect(document.querySelector('.required')).toBeInTheDocument()
 	})
 	
-	test("renders a custom class to select as passed", async () => {
-		render(<SelectRow className="my-custom-class" />)
+	test("renders a custom class to the row as passed", async () => {
+		render(<SelectRow data-testid="select-row" className="my-custom-class" />)
+		expect(screen.getByTestId("select-row")).toBeInTheDocument()
+		expect(screen.getByTestId("select-row")).toHaveClass("my-custom-class")
+	})
+	
+	test("renders a disabled select as passed", async () => {
+		render(<SelectRow disabled />)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
-		expect(screen.getByRole("combobox")).toHaveClass("my-custom-class")
+		expect(screen.getByRole("combobox")).toBeDisabled()
+	})
+	
+	test("renders all props as passed", async () => {
+		render(<SelectRow data-testid="select-row" data-lolol="some-prop" />)
+		expect(screen.getByTestId("select-row")).toBeInTheDocument()
+		expect(screen.getByTestId("select-row")).toHaveAttribute("data-lolol", 'some-prop')
 	})
 	
 	test("fires onChange handler as passed", async () => {
