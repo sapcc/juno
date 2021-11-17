@@ -76,7 +76,7 @@ export const Message = ({
 			{...props}
 		>
 			<div className={`message-icon-container ${iconContainerStyles} ${variantClass(variant)}`}>
-				<Icon icon={variant} color={variant} />
+				<Icon icon={ variant == 'default' ? 'info' : variant } color={variant} />
 			</div>
 			<div className={`message-content ${messageContentStyles}`}>
 				{title ?  <h1 className={`${messageHeading}`}>{title}</h1> : ""}
