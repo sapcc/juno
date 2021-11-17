@@ -22,8 +22,8 @@ const messageDefault = `
 	border-theme-message-default
 `
 
-const messageDanger = `
-	border-theme-message-danger
+const messageError = `
+	border-theme-message-error
 `
 
 const messageWarning = `
@@ -45,8 +45,8 @@ const messageHeading = `
 
 const variantClass = (variant) => {
 	  switch (variant) {
-		case "danger":
-		  return messageDanger
+		case "error":
+		  return messageError
 		case "warning":
 		  return messageWarning
 		case "success":
@@ -94,7 +94,7 @@ Message.propTypes = {
 	/** Pass an optional className */
 	className: PropTypes.string,
 	/** Specify a semantic variant */
-	variant: PropTypes.oneOf(['default', 'warning', 'danger', 'success']),
+	variant: PropTypes.oneOf(['default', 'warning', 'error', 'success']),
 	/** Pass child nodes to be rendered as contents */
 	children: PropTypes.node,
 }

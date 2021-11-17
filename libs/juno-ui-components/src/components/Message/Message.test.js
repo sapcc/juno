@@ -21,11 +21,11 @@ describe("Message", () => {
 	  expect(screen.getByRole("img")).toHaveClass("warning")
 	 })
 	
-	// test("renders a danger Message as passed", async () => {
-	// 	render(<Message data-testid="my-message" variant="danger" />)
-	// 	expect(screen.getByTestId("my-message")).toHaveClass("message-danger")
-	// 	expect(screen.getByRole("img")).toHaveClass("danger")
-	// })
+	test("renders an error Message as passed", async () => {
+		render(<Message data-testid="my-message" variant="error" />)
+		expect(screen.getByTestId("my-message")).toHaveClass("message-error")
+		expect(screen.getByRole("img")).toHaveClass("error")
+	})
 	
 	test("renders a success Message as passed", async () => {
 		render(<Message data-testid="my-message" variant="success" />)
