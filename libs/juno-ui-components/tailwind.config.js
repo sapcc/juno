@@ -182,6 +182,10 @@ module.exports = {
           "introbox": withOpacity("--color-introbox-bg"),
           "datagridrow-selected": withOpacity("--color-datagridrow-selected"),
           "datalistrow-selected": withOpacity("--color-datalistrow-selected"),
+          "message-border-default": withOpacity("--color-message-default-border"),
+          "message-border-danger": withOpacity("--color-message-danger-border"),
+          "message-border-warning": withOpacity("--color-message-warning-border"),
+          "message-border-success": withOpacity("--color-message-success-border"),
         },
       },
       backgroundImage: {
