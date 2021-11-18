@@ -30,6 +30,10 @@ const messageWarning = `
 	border-theme-message-warning
 `
 
+const messageDanger = `
+	border-theme-message-danger
+`
+
 const messageSuccess = `
 	border-theme-message-success
 `
@@ -46,15 +50,17 @@ const messageHeading = `
 const variantClass = (variant) => {
 	  switch (variant) {
 		case "error":
-		  return messageError
+		  	return messageError
 		case "warning":
-		  return messageWarning
+		  	return messageWarning
 		case "success":
-		  return messageSuccess
-		case "default":
-		return messageDefault
+		  	return messageSuccess
+		case "info":
+			return messageDefault
+		case "danger":
+			return messageDanger
 		default:
-		  return messageDefault
+		  	return messageDefault
 	  }
 	}
 
@@ -76,7 +82,7 @@ export const Message = ({
 			{...props}
 		>
 			<div className={`message-icon-container ${iconContainerStyles} ${variantClass(variant)}`}>
-				<Icon icon={ variant == 'default' ? 'info' : variant } color={variant} />
+				<Icon icon={ variant == "danger" ? "warning" : variant } color={ 'text-' + variant } />
 			</div>
 			<div className={`message-content ${messageContentStyles}`}>
 				{title ?  <h1 className={`${messageHeading}`}>{title}</h1> : ""}
@@ -94,7 +100,7 @@ Message.propTypes = {
 	/** Pass an optional className */
 	className: PropTypes.string,
 	/** Specify a semantic variant */
-	variant: PropTypes.oneOf(['default', 'warning', 'error', 'success']),
+	variant: PropTypes.oneOf(['info', 'warning', 'danger','error', 'success']),
 	/** Pass child nodes to be rendered as contents */
 	children: PropTypes.node,
 }
@@ -102,6 +108,6 @@ Message.propTypes = {
 Message.defaultProps = {
 	title: null,
 	text: null,
-	variant: 'default',
+	variant: 'info',
 	className: "",
 }

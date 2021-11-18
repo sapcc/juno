@@ -32,6 +32,12 @@ Error.args = {
 	text: "Error Message."
 }
 
+export const Danger = Template.bind({})
+Danger.args = {
+	variant: "danger",
+	text: "Danger Message."
+}
+
 export const Success = Template.bind({})
 Success.args = {
 	variant: "success",
