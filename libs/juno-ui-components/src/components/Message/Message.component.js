@@ -48,6 +48,7 @@ const messageHeading = `
 	font-bold
 `
 
+
 const variantClass = (variant) => {
 	  switch (variant) {
 		case "error":
@@ -64,6 +65,18 @@ const variantClass = (variant) => {
 		  	return messageDefault
 	  }
 	}
+
+// get the appropriate icon for messasge tyope by MUI name:
+const getMuiIcon = (messageType) => {
+	switch (messageType) {
+		case "danger":
+			return "warning"
+		case "error":
+			return "dangerous"
+		default:
+			return messageType
+	}
+}
 
 /**
 * A Message holds generally important information to help understand the contents, purpose, or state of a whole page or view.
@@ -83,7 +96,7 @@ export const Message = ({
 			{...props}
 		>
 			<div className={`message-icon-container ${iconContainerStyles} ${variantClass(variant)}`}>
-				<Icon icon={ variant == "danger" ? "warning" : variant } color={ 'text-' + variant } />
+				<Icon icon={ getMuiIcon(variant) } color={ 'text-' + variant } />
 			</div>
 			<div className={`message-content ${messageContentStyles}`}>
 				{title ?  <h1 className={`${messageHeading}`}>{title}</h1> : ""}

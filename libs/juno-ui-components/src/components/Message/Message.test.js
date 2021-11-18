@@ -9,28 +9,40 @@ describe("Message", () => {
 		expect(screen.getByTestId("my-message")).toBeInTheDocument()
 	  })
   
-	test("renders a default Message if no variant passed", async () => {
+	test("renders an info Message per default if no variant passed", async () => {
 		render(<Message data-testid="my-message" />)
-		expect(screen.getByTestId("my-message")).toHaveClass("message-default")
-		expect(screen.getByRole("img")).toHaveClass("default")
+		expect(screen.getByTestId("my-message")).toHaveClass("message-info")
+		expect(screen.getByRole("img")).toHaveClass("text-info")
+	})
+	
+	test("renders an info Message as passed", async () => {
+		render(<Message data-testid="my-message" variant="info" />)
+		expect(screen.getByTestId("my-message")).toHaveClass("message-info")
+		expect(screen.getByRole("img")).toHaveClass("text-info")
 	})
 	
 	test("renders a warning Message as passed", async () => {
 	  render(<Message data-testid="my-message" variant="warning" />)
 	  expect(screen.getByTestId("my-message")).toHaveClass("message-warning")
-	  expect(screen.getByRole("img")).toHaveClass("warning")
+	  expect(screen.getByRole("img")).toHaveClass("text-warning")
 	 })
+	 
+	test("renders a danger message as passed", async () => {
+		render(<Message data-testid="my-message" variant="danger" />)
+		expect(screen.getByTestId("my-message")).toHaveClass("message-danger")
+		expect(screen.getByRole("img")).toHaveClass("text-danger")
+	})
 	
 	test("renders an error Message as passed", async () => {
 		render(<Message data-testid="my-message" variant="error" />)
 		expect(screen.getByTestId("my-message")).toHaveClass("message-error")
-		expect(screen.getByRole("img")).toHaveClass("error")
+		expect(screen.getByRole("img")).toHaveClass("text-error")
 	})
 	
 	test("renders a success Message as passed", async () => {
 		render(<Message data-testid="my-message" variant="success" />)
 		expect(screen.getByTestId("my-message")).toHaveClass("message-success")
-		expect(screen.getByRole("img")).toHaveClass("success")
+		expect(screen.getByRole("img")).toHaveClass("text-success")
 	})
 		
 	test("renders a title as passed", async () => {

@@ -7,6 +7,7 @@ import AutoAwesomeMosaic from "./icons/auto_awesome_mosaic.svg"
 import AutoAwesomeMotion from "./icons/auto_awesome_motion.svg"
 import Cancel from "./icons/cancel.svg"
 import Close from "./icons/close.svg"
+import Dangerous from "./icons/dangerous.svg"
 import Error from "./icons/error.svg"
 import ExpandLess from "./icons/expand_less.svg"
 import ExpandMore from "./icons/expand_more.svg"
@@ -35,6 +36,8 @@ const getColoredSizedIcon = ({icon, color, size, className, ...props}) => {
 				return <Cancel width={size} height={size} className={iconClass} alt="cancel" role="img" {...props}/>
 			case "close":
 				return <Close width={size} height={size} className={iconClass} alt="close" role="img" {...props}/>
+			case "dangerous":
+				return <Dangerous width={size} height={size} className={iconClass} alt="dangerous" role="img" {...props} />
 			case "error":
 				return <Error width={size} height={size} className={iconClass} alt="error" role="img" {...props} />
 			case "expandLess":
@@ -76,7 +79,27 @@ export const Icon = ({
 
 Icon.propTypes = { 
 	/** The icon to display */
-	icon: PropTypes.oneOf(["autoAwesomeMosaic", "autoAwesomeMotion", "cancel", "close", "error", "expandLess", "expandMore", "help", "info", "manageAccounts", "openInBrowser", "openInNew", "place", "search", "success", "warning"]),
+	icon: PropTypes.oneOf(
+		[
+			"autoAwesomeMosaic", 
+			"autoAwesomeMotion", 
+			"cancel", 
+			"close", 
+			"dangerous",
+			"error", 
+			"expandLess", 
+			"expandMore", 
+			"help", 
+			"info", 
+			"manageAccounts", 
+			"openInBrowser", 
+			"openInNew", 
+			"place", 
+			"search", 
+			"success", 
+			"warning"
+		]
+	),
 	/** The color of the icon */
 	color: PropTypes.string,
 	/** The size of the icon */
