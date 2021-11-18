@@ -9,6 +9,25 @@ describe("ClickableIcon", () => {
 		expect(screen.getByRole("button")).toBeInTheDocument()
 	})
 	
+	test("renders an icon as passed", async () => {
+		render(<ClickableIcon icon="warning" />)
+		expect(screen.getByRole("img")).toBeInTheDocument()
+		expect(screen.getByRole("img")).toHaveAttribute("alt", "warning")
+	})
+	
+	test("renders an icon with a size as passed", async () => {
+		render(<ClickableIcon size="64" />)
+		expect(screen.getByRole("img")).toBeInTheDocument()
+		expect(screen.getByRole("img")).toHaveAttribute("width", "64")
+		expect(screen.getByRole("img")).toHaveAttribute("height", "64")
+	})
+	
+	test("renders an icon with a color as passed", async () => {
+		render(<ClickableIcon color="text-juno-blue" />)
+		expect(screen.getByRole("img")).toBeInTheDocument()
+		expect(screen.getByRole("img")).toHaveClass("text-juno-blue")
+	})
+	
 	test("renders a custom classname", async () => {
 		render(<ClickableIcon className="my-custom-classname"/>)
 		expect(screen.getByRole("button")).toBeInTheDocument()

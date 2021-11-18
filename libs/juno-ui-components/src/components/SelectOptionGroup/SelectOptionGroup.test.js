@@ -21,4 +21,26 @@ describe("SelectOptionGroup", () => {
 		expect(screen.getByRole("group")).toHaveAttribute('disabled')
 	})
 	
+	test("renders all children as passed", async () => {
+		render(
+			<SelectOptionGroup>
+				<option></option>
+			</SelectOptionGroup>
+		)
+		expect(screen.getByRole("group")).toBeInTheDocument()
+		expect(screen.getByRole("option")).toBeInTheDocument()
+	})
+	
+	test("renders a custom className", async () => {
+		render(<SelectOptionGroup className="my-custom-class" />)
+		expect(screen.getByRole("group")).toBeInTheDocument()
+		expect(screen.getByRole("group")).toHaveClass("my-custom-class")
+	})
+	
+	test("renders all props", async () => {
+		render(<SelectOptionGroup data-lolol="some-prop" />)
+		expect(screen.getByRole("group")).toBeInTheDocument()
+		expect(screen.getByRole("group")).toHaveAttribute("data-lolol", 'some-prop')
+	})
+	
 })

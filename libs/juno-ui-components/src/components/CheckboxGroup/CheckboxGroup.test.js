@@ -22,6 +22,15 @@ describe("CheckboxGroup", () => {
 		expect(screen.getByText("My Group of Checkboxes")).toBeInTheDocument()
 	})
 	
+	test("renders a required label as passed", async () => {
+		render(
+			<CheckboxGroup name="my-checkboxgroup" label="my-labeled-checkboxgroup" required >
+			</CheckboxGroup>
+		)
+		expect(screen.getByRole("group")).toBeInTheDocument()
+		expect(document.querySelector('.required')).toBeInTheDocument()
+	})
+	
 	test("does not render any checkboxes if no children passed", async () => {
 		render(
 			<CheckboxGroup name="my-checkboxgroup"> 
@@ -70,6 +79,26 @@ describe("CheckboxGroup", () => {
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("checkbox")).toBeChecked()
+	})
+	
+	test("renders a custom className", async () => {
+		render(
+			<CheckboxGroup name="my-checkboxgroup" className="my-custom-classname"> 
+				<CheckboxRow value="test-checkbox"/>
+			</CheckboxGroup>
+		)
+		expect(screen.getByRole("group")).toBeInTheDocument()
+		expect(screen.getByRole("group")).toHaveClass("my-custom-classname")
+	})
+	
+	test("renders all props", async () => {
+		render(
+			<CheckboxGroup name="my-checkboxgroup" data-lolol="some-prop"> 
+				<CheckboxRow value="test-checkbox"/>
+			</CheckboxGroup>
+		)
+		expect(screen.getByRole("group")).toBeInTheDocument()
+		expect(screen.getByRole("group")).toHaveAttribute("data-lolol", 'some-prop')
 	})
 	
 })

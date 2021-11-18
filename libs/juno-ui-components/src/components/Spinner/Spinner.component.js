@@ -24,6 +24,7 @@ const defaultColor = `
 export const Spinner = ({ 
 	color,
 	size,
+	className,
 	...props
 }) => {
 	
@@ -57,7 +58,7 @@ export const Spinner = ({
   
   return (
 	<svg
-	  className={`animate-spin -ml-1 mr-3 h-5 w-5 ${mode()}`}
+	  className={`spinner animate-spin -ml-1 mr-3 h-5 w-5 ${mode()} ${className}`}
 	  xmlns="http://www.w3.org/2000/svg"
 	  fill="none"
 	  viewBox="0 0 24 24"
@@ -93,9 +94,11 @@ Spinner.propTypes = {
   ]),
   /** The size of the spinner: `small`, `large`, or any valid CSS length like `1.5rem`*/
   size: PropTypes.string,
+  className: PropTypes.string
 }
 
 Spinner.defaultProps = {
+  className: null,
   color: "default",
   size: null,
 }

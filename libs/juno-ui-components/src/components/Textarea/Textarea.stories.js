@@ -20,3 +20,9 @@ Disabled.args = {
 	placeholder: "A disabled textarea"
 }
 
+export const Autofocus = Template.bind({})
+Autofocus.args = {
+	placeholder: "An autofocussing textarea",
+	autoFocus: true
+}
+

@@ -28,13 +28,14 @@ const headingStyles = `
  */
 export const PageHeader = ({
   heading,
+  className,
   children,
   ...props
 }) => {
 
   return (
     <div 
-      className={basePageHeader}
+      className={`${basePageHeader} ${className}`}
       role="banner"
       {...props}
     >
@@ -47,9 +48,12 @@ export const PageHeader = ({
 
 PageHeader.propTypes = {
   /** Heading (typically the name of the application) */
-  heading: PropTypes.string
+  heading: PropTypes.string,
+  /** Add custom class name */
+  className: PropTypes.string
 }
 
 PageHeader.defaultProps = {
-  heading: null
+  heading: null,
+  className: null
 }
