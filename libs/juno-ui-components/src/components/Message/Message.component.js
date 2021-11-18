@@ -1,50 +1,82 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { Icon } from "../Icon/index.js"
 
 const message = `
-	py-1
-	px-2
-	sm:py-3
-	sm:px-4
-	border-l-4
+	pr-2
+	sm:pr-4
 	bg-theme-message
 	text-theme-default
+	flex
+	rounded-l
+	overflow-hidden
+`
+
+const iconContainerStyles = `
+	border-l-4
+	pt-1
+	pl-6
+	sm:pt-3
 `
 
 const messageDefault = `
 	border-theme-message-default
 `
 
-const messageDanger = `
-	border-theme-message-danger
+const messageError = `
+	border-theme-message-error
 `
 
 const messageWarning = `
 	border-theme-message-warning
 `
 
+const messageDanger = `
+	border-theme-message-danger
+`
+
 const messageSuccess = `
 	border-theme-message-success
+`
+const messageContentStyles = `
+	py-1
+	sm:py-3
+	ml-7
 `
 
 const messageHeading = `
 	font-bold
 `
 
+
 const variantClass = (variant) => {
 	  switch (variant) {
-		case "danger":
-		  return messageDanger
+		case "error":
+		  	return messageError
 		case "warning":
-		  return messageWarning
+		  	return messageWarning
 		case "success":
-		  return messageSuccess
-		case "default":
-		return messageDefault
+		  	return messageSuccess
+		case "info":
+			return messageDefault
+		case "danger":
+			return messageDanger
 		default:
-		  return messageDefault
+		  	return messageDefault
 	  }
 	}
+
+// get the appropriate icon for messasge tyope by MUI name:
+const getMuiIcon = (messageType) => {
+	switch (messageType) {
+		case "danger":
+			return "warning"
+		case "error":
+			return "dangerous"
+		default:
+			return messageType
+	}
+}
 
 /**
 * A Message holds generally important information to help understand the contents, purpose, or state of a whole page or view.
@@ -60,11 +92,16 @@ export const Message = ({
 }) => {
 	return (
 		<div 
-			className={`${message} ${variantClass(variant)} message message-${variant} ${className}`}
+			className={`message message-${variant} ${message} ${className}`}
 			{...props}
 		>
-			{title ?  <h1 className={`${messageHeading}`}>{title}</h1> : ""}
-			<div>{ children ? children : text }</div>
+			<div className={`message-icon-container ${iconContainerStyles} ${variantClass(variant)}`}>
+				<Icon icon={ getMuiIcon(variant) } color={ 'text-' + variant } />
+			</div>
+			<div className={`message-content ${messageContentStyles}`}>
+				{title ?  <h1 className={`${messageHeading}`}>{title}</h1> : ""}
+				<div>{ children ? children : text }</div>
+			</div>
 		</div>
 	)
 }
@@ -77,7 +114,7 @@ Message.propTypes = {
 	/** Pass an optional className */
 	className: PropTypes.string,
 	/** Specify a semantic variant */
-	variant: PropTypes.oneOf(['default', 'warning', 'danger', 'success']),
+	variant: PropTypes.oneOf(['info', 'warning', 'danger','error', 'success']),
 	/** Pass child nodes to be rendered as contents */
 	children: PropTypes.node,
 }
@@ -85,6 +122,6 @@ Message.propTypes = {
 Message.defaultProps = {
 	title: null,
 	text: null,
-	variant: 'default',
+	variant: 'info',
 	className: "",
 }

@@ -247,6 +247,10 @@
   --color-danger: var(--color-sap-red);
   --color-danger-raw: var(--color-sap-red-raw);
   
+  // ERROR
+  --color-error: var(--color-sap-red);
+  --color-error-raw: var(--color-sap-red-raw);
+  
   // WARNING
   --color-warning: rgb(254, 196, 58);
   --color-warning-raw: 254, 196, 58;
@@ -311,6 +315,12 @@
 --color-icon-success: var(--color-sap-green-raw);
 --color-icon-warning: var(--color-warning-raw);
 // Message
+--color-message-bg: var(--color-juno-grey-light-11-raw);
+--color-message-danger-border: var(--color-sap-red-raw);
+--color-message-default-border: var(--color-juno-blue-raw);
+--color-message-error-border: var(--color-sap-red-raw);
+--color-message-warning-border: var(--color-warning-raw);
+--color-message-success-border: var(--color-sap-green-raw);
 
 // Introbox
 --color-introbox-bg: var(--color-juno-grey-light-11-raw);
@@ -402,8 +412,9 @@
   --color-icon-warning: var(--color-warning-raw);
   // Message
   --color-message-bg: var(--color-juno-grey-blue-89-raw);
-  --color-message-default-border: var(--color-juno-blue-raw);
   --color-message-danger-border: var(--color-sap-red-raw);
+  --color-message-default-border: var(--color-juno-blue-raw);
+  --color-message-error-border: var(--color-sap-red-raw);
   --color-message-warning-border: var(--color-warning-raw);
   --color-message-success-border: var(--color-sap-green-raw);
   // Introbox
