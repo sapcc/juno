@@ -69,9 +69,9 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn install
-                yarn workspaces focus juno-ui-components
-                CI=true yarn workspace juno-ui-components test
+                yarn install 1>/dev/null
+                yarn workspaces focus juno-ui-components 1>/dev/null
+                CI=true yarn workspace juno-ui-components test 1>/dev/null
        
   # build juno-ui-components image and push it to keppel
   - name: build juno-ui-components
@@ -126,10 +126,10 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn install
-                yarn workspaces focus juno-ui-components dashboard
-                yarn workspace juno-ui-components build
-                CI=true yarn workspace dashboard test
+                yarn install 1>/dev/null
+                yarn workspaces focus juno-ui-components dashboard 1>/dev/null
+                yarn workspace juno-ui-components build 1>/dev/null
+                CI=true yarn workspace dashboard test 1>/dev/null
 
   # build dashboard image and push it to keppel
   - name: build dashboard
@@ -203,9 +203,9 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn install
-                yarn workspaces focus mercury
-                CI=true yarn workspace mercury test-prod
+                yarn install 1>/dev/null
+                yarn workspaces focus mercury 1>/dev/null
+                CI=true yarn workspace mercury test-prod 1>/dev/null
 
   # build dashboard image and push it to keppel
   - name: build mercury
@@ -263,10 +263,10 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn install
-                yarn workspaces focus <%= LIBS.join(" ") %> <%= app %>
-                yarn build
-                CI=true yarn workspace <%= app %> test                
+                yarn install 1>/dev/null
+                yarn workspaces focus <%= LIBS.join(" ") %> <%= app %> 1>/dev/null
+                yarn build 1>/dev/null
+                CI=true yarn workspace <%= app %> test 1>/dev/null
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 

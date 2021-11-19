@@ -66,9 +66,9 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn install
-                yarn workspaces focus juno-ui-components
-                CI=true yarn workspace juno-ui-components test
+                yarn install 1>/dev/null
+                yarn workspaces focus juno-ui-components 1>/dev/null
+                CI=true yarn workspace juno-ui-components test 1>/dev/null
        
   # build juno-ui-components image and push it to keppel
   - name: build juno-ui-components
@@ -123,10 +123,10 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn install
-                yarn workspaces focus juno-ui-components dashboard
-                yarn workspace juno-ui-components build
-                CI=true yarn workspace dashboard test
+                yarn install 1>/dev/null
+                yarn workspaces focus juno-ui-components dashboard 1>/dev/null
+                yarn workspace juno-ui-components build 1>/dev/null
+                CI=true yarn workspace dashboard test 1>/dev/null
 
   # build dashboard image and push it to keppel
   - name: build dashboard
@@ -200,9 +200,9 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn install
-                yarn workspaces focus mercury
-                CI=true yarn workspace mercury test-prod
+                yarn install 1>/dev/null
+                yarn workspaces focus mercury 1>/dev/null
+                CI=true yarn workspace mercury test-prod 1>/dev/null
 
   # build dashboard image and push it to keppel
   - name: build mercury
@@ -260,10 +260,10 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn install
-                yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router auth
-                yarn build
-                CI=true yarn workspace auth test                
+                yarn install 1>/dev/null
+                yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router auth 1>/dev/null
+                yarn build 1>/dev/null
+                CI=true yarn workspace auth test 1>/dev/null
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
@@ -317,10 +317,10 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn install
-                yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router designate
-                yarn build
-                CI=true yarn workspace designate test                
+                yarn install 1>/dev/null
+                yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router designate 1>/dev/null
+                yarn build 1>/dev/null
+                CI=true yarn workspace designate test 1>/dev/null
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
@@ -374,10 +374,10 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn install
-                yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router widget-loader
-                yarn build
-                CI=true yarn workspace widget-loader test                
+                yarn install 1>/dev/null
+                yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router widget-loader 1>/dev/null
+                yarn build 1>/dev/null
+                CI=true yarn workspace widget-loader test 1>/dev/null
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
@@ -431,10 +431,10 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn install
-                yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router whois
-                yarn build
-                CI=true yarn workspace whois test                
+                yarn install 1>/dev/null
+                yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router whois 1>/dev/null
+                yarn build 1>/dev/null
+                CI=true yarn workspace whois test 1>/dev/null
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
