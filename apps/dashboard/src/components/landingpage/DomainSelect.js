@@ -4,32 +4,33 @@ import useStore from "../../store"
 
 import { Icon, Stack } from "juno-ui-components"
 
+const domainCardClasses = `
+  group
+  relative
+  bg-juno-grey-blue-1 
+  text-theme-high
+  p-4
+  block
+  min-h-[6.25rem]
+  hover:bg-juno-turquoise
+  hover:text-black
+`
+
+const iconClasses = `
+  absolute 
+  bottom-2 
+  right-2
+`
+
+
 const DomainSelect = () => {
 
   const selectedRegionKey = useStore(useCallback((state) => state.region))
   const regions           = useStore(useCallback((state) => state.regions))
   const domains           = useStore(useCallback((state) => state.domains))
   
-  const selectedRegion = useMemo(() => {return (regions[selectedRegionKey])}, [selectedRegionKey])
+  const selectedRegion    = useMemo(() => {return (regions[selectedRegionKey])}, [selectedRegionKey])
 
-  const domainCardClasses = `
-    group
-    relative
-    bg-juno-grey-blue-1 
-    text-theme-high
-    font-bold
-    p-4 
-    block
-    h-24
-    hover:bg-juno-turquoise
-    hover:text-black
-  `
-
-  const iconClasses = `
-    absolute 
-    bottom-2 
-    right-2
-  `
 
   return (
     <>
@@ -40,13 +41,32 @@ const DomainSelect = () => {
           {selectedRegion.country}
         </div>
       </Stack>
-      <div className="grid grid-cols-6 gap-4 mt-12">
-        { domains.map((domain) => (
+      <h4 className="text-lg uppercase mt-10 mb-3">General Purpose</h4>
+      <div className="grid grid-cols-3 gap-4">
+        { domains.general.map((domain) => (
+          <a 
+            href={`https://dashboard.${selectedRegionKey}.cloud.sap/${domain?.name?.toLowerCase()}/home`} 
+            className={domainCardClasses} 
+            key={domain?.name}>
+            <h5 className="font-bold pb-1">{domain?.name}</h5>
+            <div className="pr-9">{domain?.description}</div>
+            <div className={`${iconClasses} opacity-40 block group-hover:hidden`}>
+              <Icon icon="autoAwesomeMotion" color="text-theme-high" size="36" />
+            </div>
+            <div className={`${iconClasses} hidden group-hover:block`}>
+              <Icon icon="openInBrowser" color="text-black" size="36" />
+            </div>
+          </a>
+        ))}
+      </div>
+      <h4 className="text-lg uppercase mt-12 mb-3">Special Purpose</h4>
+      <div className="grid grid-cols-6 gap-4">
+        { domains.special.map((domain) => (
           <a 
             href={`https://dashboard.${selectedRegionKey}.cloud.sap/${domain.toLowerCase()}/home`} 
             className={domainCardClasses} 
             key={domain}>
-            {domain}
+            <h5 className="font-bold pb-1">{domain}</h5>
             <div className={`${iconClasses} opacity-40 block group-hover:hidden`}>
               <Icon icon="autoAwesomeMotion" color="text-theme-high" size="36" />
             </div>

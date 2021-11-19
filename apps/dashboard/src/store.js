@@ -16,9 +16,16 @@ import FlagUSA from "./assets/images/flag_usa.svg"
 
 // all domains
 
-const DOMAINS = [
-  "BS", "CCADMIN", "CIS", "CP", "FSN", "HCM", "HCP03", "HEC", "MONSOON3", "NEO", "S4", "WBS" 
-]
+const DOMAINS = {
+  general: 
+    [
+      { name: "HCP03",
+        description: "General purpose domain for internet facing applications"}, 
+      { name: "MONSOON3",
+        description: "General purpose domain for SAP-internal applications that cannot be reached from the internet"}
+    ],
+  special: ["BS", "CCADMIN", "CIS", "CP", "FSN", "HCM", "HEC", "NEO", "S4", "WBS"]
+  }
 
 // all available regions
 const REGIONS = {

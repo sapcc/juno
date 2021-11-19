@@ -22,8 +22,7 @@ const overlayStyles = (isOpen) => {
     transform 
     -translate-x-1/2 
     w-full 
-    max-w-[1700px]
-    min-h-[800px]
+    h-full
     p-4
     pb-24
     `
@@ -68,8 +67,8 @@ const LoginOverlay = () => {
 
   return (
     <div className={overlayStyles(loginOverlayVisible)}>
-      <div className="flex items-center">
-        <ClickableIcon onClick={() => hideLoginOverlay()} icon="close" color="text-juno-turquoise" size="35" className="ml-auto" />
+      <div className="flex items-center max-w-screen-xl mx-auto">
+        <ClickableIcon onClick={() => hideLoginOverlay()} icon="close" color="text-juno-turquoise" size="36" className="ml-auto -mr-12" />
       </div>
       <nav className="max-w-screen-xl mx-auto border-b-2 border-juno-grey-light-8 mb-8">
         <Stack className="justify-around">
