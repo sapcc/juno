@@ -17,8 +17,8 @@ ADD . /tmp/repo
 RUN cd /tmp/repo/ && \
   yarn install 1>/dev/null ; \
   yarn workspaces focus $LIBS $APP_NAME 1>/dev/null ; \
-  yarn build-libs ;\
-  yarn workspace $APP_NAME build 
+  yarn build-libs 1>/dev/null;\
+  yarn workspace $APP_NAME build 1>/dev/null
 
 # create working dir
 RUN mkdir -p /app
