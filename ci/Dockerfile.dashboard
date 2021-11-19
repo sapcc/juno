@@ -14,8 +14,8 @@ ADD . /tmp/repo
 
 # install node modules, build libs and app
 RUN cd /tmp/repo/ && \
-  yarn install --silent ; \
-  yarn workspaces focus $LIBS dashboard ; \
+  yarn install 1>/dev/null ; \
+  yarn workspaces focus $LIBS dashboard 1>/dev/null ; \
   yarn build-libs ;\
   yarn workspace dashboard build 
 
