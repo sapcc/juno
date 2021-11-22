@@ -14,7 +14,7 @@ const Home = () => {
   const selectedRegion   = useStore(useCallback((state) => state.region))
 
   return (
-    <div >
+    <div className="relative">
       <LoginOverlay />
       <div className="container mx-auto pt-16">
         <CCPlusOneLogo className="-ml-7 mb-4" alt="Converged Cloud" />

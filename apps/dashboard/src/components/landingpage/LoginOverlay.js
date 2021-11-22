@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from "react"
 
 import useStore from "../../store"
 
-import { ClickableIcon, Stack } from "juno-ui-components"
+import { Button, ClickableIcon, Icon, Stack } from "juno-ui-components"
 
 import RegionSelect from "./RegionSelect"
 import DomainSelect from "./DomainSelect"
@@ -17,12 +17,8 @@ const overlayStyles = (isOpen) => {
     bg-opacity-30
     border
     border-juno-grey-blue-5
-    fixed 
-    left-1/2 
-    transform 
-    -translate-x-1/2 
-    w-full 
-    h-full
+    absolute
+    inset-0
     p-4
     pb-24
     `
@@ -82,6 +78,21 @@ const LoginOverlay = () => {
           :
           <RegionSelect />
         }
+      </div>
+
+      <div className="absolute inset-x-0 bottom-0 bg-juno-grey-blue-9">
+        <Stack className="documentation-banner max-w-screen-xl mx-auto items-center py-10">
+          <div>
+            <h5 className="text-3xl">New here?</h5>
+            <p>Have a look at the <span className="italic">Getting Started</span> section of our documentation</p>
+          </div>
+          <div className="ml-auto pl-8 pr-20">
+            <Button variant="primary" title="Go to documentation">
+              <Icon icon="openInNew" color="text-theme-high" className=" mr-2" />
+              Go to documentation
+            </Button>
+          </div>
+        </Stack>
       </div>
 
     </div>
