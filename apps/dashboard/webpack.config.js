@@ -66,6 +66,17 @@ module.exports = (_, argv) => {
             "sass-loader",
           ],
         },
+        // config for background svgs in css
+        // {
+        //   test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        //   issuer: /\.s?css$/,
+        //   use: [{
+        //     loader: 'url-loader',
+        //     options: {
+        //       svgo: false
+        //     }
+        //   }],
+        // },
         // svg config for svgs as components in jsx files
         {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
@@ -79,21 +90,16 @@ module.exports = (_, argv) => {
           
         },
         // config for background svgs in css
+        // type "asset" chooses automatically between inline embed or loading as file depending on file size, similar to previously using url-loader and limit
         {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
           issuer: /\.s?css$/,
-          loader: 'url-loader',
-          options: {
-            svgo: false
-          }
+          type: 'asset',
         },
         //Allows use of images
         {
           test: /\.(png|jpg)$/i,
-          loader: "url-loader",
-          options: {
-            limit: 10000
-          }
+          type: 'asset',
         },
       ],
     },
