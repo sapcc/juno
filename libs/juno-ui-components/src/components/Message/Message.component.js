@@ -92,13 +92,13 @@ export const Message = ({
 }) => {
 	return (
 		<div 
-			className={`message message-${variant} ${message} ${className}`}
+			className={`juno-message juno-message-${variant} ${message} ${className}`}
 			{...props}
 		>
-			<div className={`message-icon-container ${iconContainerStyles} ${variantClass(variant)}`}>
+			<div className={`juno-message-icon-container ${iconContainerStyles} ${variantClass(variant)}`}>
 				<Icon icon={ getMuiIcon(variant) } color={ 'text-' + variant } />
 			</div>
-			<div className={`message-content ${messageContentStyles}`}>
+			<div className={`juno-message-content ${messageContentStyles}`}>
 				{title ?  <h1 className={`${messageHeading}`}>{title}</h1> : ""}
 				<div>{ children ? children : text }</div>
 			</div>

@@ -24,7 +24,7 @@ export const DataGrid = ({
 	}
 	return (
 		<DataGridContext.Provider value={dataGridConf}>
-			<div className={`datagrid-container ${className}`} {...props} >
+			<div className={`juno-datagrid-container ${className}`} {...props} >
 				{ showToolbar ? <DataGridToolbar /> : null }
 				<table className={`${ auto ? '' : datagridfullwidthstyles }`}>
 					{children}

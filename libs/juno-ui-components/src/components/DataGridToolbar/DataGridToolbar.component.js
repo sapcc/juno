@@ -20,7 +20,7 @@ export const DataGridToolbar= ({
 	const selectable = dataGridContext.selectable
 	
 	return (
-		<div className={`datagrid-toolbar ${datagridtoolbarstyles} ${className}`} {...props} >
+		<div className={`juno-datagrid-toolbar ${datagridtoolbarstyles} ${className}`} {...props} >
 			{ search ?
 				<SearchInput />
 				:

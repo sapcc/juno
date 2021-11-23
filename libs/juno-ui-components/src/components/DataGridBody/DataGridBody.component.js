@@ -7,7 +7,7 @@ export const DataGridBody = ({
 	...props
 }) => {
 	return (
-		<tbody className={className} {...props}>
+		<tbody className={`juno-datagrid-body ${className}`} {...props}>
 			{children}
 		</tbody>
 	)

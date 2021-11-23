@@ -50,7 +50,7 @@ export const CheckboxGroup = ({
 	 };
 	
 	return (
-		<div role="group" className={`checkbox-group ${checkboxgroupstyles} ${className}`} {...props} >
+		<div role="group" className={`juno-checkbox-group ${checkboxgroupstyles} ${className}`} {...props} >
 			{ label ? <Label text={label} htmlFor={name} required={required} /> : "" }
 			{ namedChildren() }
 		</div>

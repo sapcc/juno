@@ -11,7 +11,7 @@ export const DataGridCheckboxCell = ({
 	...props
 }) => {
 	return (
-		<DataGridCell className={className} {...props}>
+		<DataGridCell className={`juno-datagrid-checkbox-cell ${className}`} {...props}>
 			<Checkbox disabled={disabled} checked={selected} onChange={onChange} />
 		</DataGridCell>
 	)

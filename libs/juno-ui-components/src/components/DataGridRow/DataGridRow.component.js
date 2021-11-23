@@ -32,7 +32,7 @@ export const DataGridRow = ({
 	}
 	
 	return (
-		<tr className={`${ selectable && isSelected ? rowselectedstyle : '' } ${className}`} {...props}>
+		<tr className={`juno-datagird-row ${ selectable && isSelected ? rowselectedstyle : '' } ${className}`} {...props}>
 			{ selectable ? <DataGridCheckboxCell selected={selected} disabled={disabled} onChange={toggleSelected} /> : null }
 			{children}
 		</tr>

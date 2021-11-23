@@ -14,7 +14,7 @@ export const GridRow = ({
 	...props
 }) => {
 	return (
-		<div className={`grid-row ${gridRowBaseStyles} ${className}`} {...props} >
+		<div className={`juno-grid-row ${gridRowBaseStyles} ${className}`} {...props} >
 			{children}
 		</div>
 	)

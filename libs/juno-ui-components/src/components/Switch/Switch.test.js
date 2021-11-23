@@ -30,19 +30,19 @@ describe("Switch", () => {
   test("renders a default size switch by default", async () => {
     render(<Switch />)
     expect(screen.getByRole("switch")).toBeInTheDocument()
-    expect(screen.getByRole("switch")).toHaveClass("switch-default")
+    expect(screen.getByRole("switch")).toHaveClass("juno-switch-default")
   })
   
   test("renders a small switch as passed", async () => {
     render(<Switch size="small" />)
     expect(screen.getByRole("switch")).toBeInTheDocument()
-    expect(screen.getByRole("switch")).toHaveClass("switch-small")
+    expect(screen.getByRole("switch")).toHaveClass("juno-switch-small")
   })
   
   test("renders a large switch as passed", async () => {
     render(<Switch size="large" />)
     expect(screen.getByRole("switch")).toBeInTheDocument()
-    expect(screen.getByRole("switch")).toHaveClass("switch-large")
+    expect(screen.getByRole("switch")).toHaveClass("juno-switch-large")
   })
   
   test("renders an aria-checked switch as passed", async () => {

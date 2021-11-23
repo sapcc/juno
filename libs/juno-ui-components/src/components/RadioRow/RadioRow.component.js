@@ -45,10 +45,10 @@ export const RadioRow =({
 	
 	return (
 		<div
-			className={`radio-row ${radiorow} ${className}`}
+			className={`juno-radio-row ${radiorow} ${className}`}
 			{...props}
 		>
-			<div className={`radio-container ${radiocontainerstyles}`}>
+			<div className={`juno-radio-container ${radiocontainerstyles}`}>
 				<Radio name={name} checked={isChecked} onChange={onChange} id={id} value={value} disabled={disabled}  />
 			</div>
 			<div>

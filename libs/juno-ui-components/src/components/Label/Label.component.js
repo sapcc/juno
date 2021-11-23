@@ -61,7 +61,7 @@ export const Label = ({
 }) => {
 	return (
 		<>
-		<label className={`label ${labelstyles} ${variantStyles(variant)} ${ disabled ? disabledstyles : "" } ${className}`} htmlFor={htmlFor} {...props}>{ text ? text : "unlabeled" }</label>
+		<label className={`juno-label ${labelstyles} ${variantStyles(variant)} ${ disabled ? disabledstyles : "" } ${className}`} htmlFor={htmlFor} {...props}>{ text ? text : "unlabeled" }</label>
 		{ required ? <span className={`required ${requiredstyles}`} ></span> : "" }
 		</>
 	)

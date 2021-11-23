@@ -45,7 +45,7 @@ export const Textarea = ({
 			autoFocus={autoFocus}
 			placeholder={placeholder}
 			onChange={handleInputChange}
-			className={`${textareastyles} ${className}`}
+			className={`juno-textarea ${textareastyles} ${className}`}
 			{...props}
 		/>
 	)

@@ -13,7 +13,7 @@ export const SelectOption = ({
 		<option 
 			value={value}
 			disabled={disabled}
-			className={className}
+			className={`juno-select-option ${className}`}
 			{...props}
 		>
 		{label}

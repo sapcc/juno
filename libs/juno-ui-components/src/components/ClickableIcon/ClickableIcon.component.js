@@ -20,7 +20,7 @@ export const ClickableIcon = ({
 	...props
 }) => {
 	return (
-		<button className={`clickableicon ${clickableIconStyles} ${className}`} onClick={onClick} {...props}>
+		<button className={`juno-clickableicon ${clickableIconStyles} ${className}`} onClick={onClick} {...props}>
 			<Icon icon={icon} size={size} color={color} />
 		</button>
 	)

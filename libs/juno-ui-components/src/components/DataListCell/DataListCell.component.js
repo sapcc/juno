@@ -118,7 +118,7 @@ export const DataListCell = ({
 	// width overrides auto:
 	const cellStyles = width ? widthStyles : ( auto ? autoStyles : {} )
 	return (
-		<div className={`datalist-cell ${datalistcellbasestyles} ${cols ? colsClass(cols) : '' } ${className}`} style={cellStyles} {...props} >
+		<div className={`juno-datalist-cell ${datalistcellbasestyles} ${cols ? colsClass(cols) : '' } ${className}`} style={cellStyles} {...props} >
 			{children}
 		</div>
 	)

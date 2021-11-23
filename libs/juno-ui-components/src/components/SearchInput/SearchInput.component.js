@@ -120,7 +120,7 @@ export const SearchInput = ({
   }
 
   return (
-    <div className={`search-input-wrapper ${wrapperClasses(variant)}`} role="search">
+    <div className={`juno-search-input-wrapper ${wrapperClasses(variant)}`} role="search">
       <Stack gap={2} className="items-center">
         <input
           type="search"
@@ -128,7 +128,7 @@ export const SearchInput = ({
           placeholder={placeholder}
           value={val}
           autoComplete={autoComplete}
-          className={`search-input ${searchClasses(variant)} ${className || ""}`}
+          className={`juno-search-input ${searchClasses(variant)} ${className || ""}`}
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
           {...props}
