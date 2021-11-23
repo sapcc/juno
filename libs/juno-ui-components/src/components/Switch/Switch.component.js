@@ -85,10 +85,10 @@ export const Switch = ({
 			aria-checked={isOn}
 			disabled={disabled}
 			onClick={handleChange}
-			className={`switch switch-${size} ${switchbasestyles} ${switchsizestyles(size)} ${className}`}
+			className={`juno-switch juno-switch-${size} ${switchbasestyles} ${switchsizestyles(size)} ${className}`}
 			{...props}
 		>
-			<span className={`switch-handle ${handlebasestyles} ${handlesizestyles(size)} ${ isOn ? handleonstyles : handleoffstyles}`} ></span>
+			<span className={`juno-switch-handle ${handlebasestyles} ${handlesizestyles(size)} ${ isOn ? handleonstyles : handleoffstyles}`} ></span>
 		</button>
 	)
 }

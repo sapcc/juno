@@ -47,10 +47,10 @@ export const CheckboxRow =({
 	
 	return (
 		<div
-			className={`${checkboxrow}  ${className}`}
+			className={`juno-checkbox-row ${checkboxrow}  ${className}`}
 			{...props}
 		>
-			<div className={`checkbox-container ${checkboxcontainerstyles}`}>
+			<div className={`juno-checkbox-container ${checkboxcontainerstyles}`}>
 				<Checkbox name={name} checked={isChecked} disabled={disabled} onChange={handleChange} id={id} value={value || ""} />
 			</div>
 			<div>

@@ -37,7 +37,7 @@ export const DataListRow = ({
 	}
 	
 	return (
-		<li className={`datalist-row ${datalistrowbasestyles} ${ selectable && isSelected ? rowselectedstyle : '' }${className}`} {...props} >
+		<li className={`juno-datalist-row ${datalistrowbasestyles} ${ selectable && isSelected ? rowselectedstyle : '' }${className}`} {...props} >
 			{ selectable ? <DataListCheckboxCell selected={selected} disabled={disabled} onChange={toggleSelected} /> : null }
 			{children}
 		</li>

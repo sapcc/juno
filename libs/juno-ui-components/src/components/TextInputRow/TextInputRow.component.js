@@ -118,10 +118,10 @@ export const TextInputRow = ({
 	
 	return (
 		<div 
-			className={`textinput-row ${variantStyle(variant, "container")} ${className}`}
+			className={`juno-textinput-row ${variantStyle(variant, "container")} ${className}`}
 			{...props}
 		>
-			<div className={`label-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
+			<div className={`juno-label-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
 				<Label 
 					text={label} 
 					htmlFor={id} 
@@ -130,7 +130,7 @@ export const TextInputRow = ({
 					disabled={ variant === 'stacked' && disabled ? disabled : false }
 				/>
 			</div>
-			<div className={`input-container`} >
+			<div className={`juno-input-container`} >
 				<TextInput 
 					type={type} 
 					value={val}

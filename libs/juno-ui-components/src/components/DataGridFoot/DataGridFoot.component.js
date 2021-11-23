@@ -7,7 +7,7 @@ export const DataGridFoot = ({
 	...props
 }) => {
 	return (
-		<tfoot className={className} {...props}>
+		<tfoot className={`juno-datagrid-foot ${className}`} {...props}>
 			{children}
 		</tfoot>
 	)

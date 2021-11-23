@@ -54,7 +54,7 @@ export const TextInput = ({
 			disabled={disabled}
 			readOnly={readOnly}
 			onChange={handleInputChange}
-			className={`${textinputstyles} ${className}`}
+			className={`juno-textinput ${textinputstyles} ${className}`}
 			{...props}
 		/>
 	)

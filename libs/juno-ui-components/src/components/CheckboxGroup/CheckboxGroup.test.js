@@ -7,10 +7,10 @@ describe("CheckboxGroup", () => {
 	
 	test("renders a CheckboxGroup container", async () => {
 		render(
-			<CheckboxGroup name="my-checkboxgroup" > 
+			<CheckboxGroup name="my-checkboxgroup" data-testid="checkbox-group"> 
 			</CheckboxGroup>
 		)
-		expect(document.querySelector('.checkbox-group')).toBeInTheDocument()
+		expect(screen.getByTestId("checkbox-group")).toBeInTheDocument()
 	})
 	
 	test("renders a CheckboxGroup with a label as passed", async () => {

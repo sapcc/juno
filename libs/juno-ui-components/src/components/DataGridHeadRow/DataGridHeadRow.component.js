@@ -18,7 +18,7 @@ export const DataGridHeadRow = ({
 	}
 	
 	return (
-		<tr className={className} {...props}>
+		<tr className={`juno-datagrid-head-row ${className}`} {...props}>
 			{ selectable ? <DataGridCheckboxCell onChange={toggleItemsSelected} /> : null }
 			{children}
 		</tr>

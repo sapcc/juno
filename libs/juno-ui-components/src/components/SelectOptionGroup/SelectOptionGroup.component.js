@@ -13,7 +13,7 @@ export const SelectOptionGroup = ({
 		<optgroup 
 			label={label}
 			disabled={disabled}
-			className={className}
+			className={`juno-select-option-group ${className}`}
 			{...props}
 		>
 			{children}

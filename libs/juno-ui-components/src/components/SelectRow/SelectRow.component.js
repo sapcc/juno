@@ -32,7 +32,7 @@ export const SelectRow = ({
 }) => {
 	return (
 		<div 
-			className={`select-row ${selectrow} ${className}`}
+			className={`juno-select-row ${selectrow} ${className}`}
 			{...props}
 		>
 			<div>

@@ -18,7 +18,7 @@ export const Grid = ({
 	// Override column vars in case 'auto' was passed:
 	const gridStyles = auto ? autoStyles : {}
 	return (
-		<div className={`grid-container ${className}`}  style={gridStyles} {...props} >
+		<div className={`juno-grid ${className}`}  style={gridStyles} {...props} >
 			{children}
 		</div>
 	)
