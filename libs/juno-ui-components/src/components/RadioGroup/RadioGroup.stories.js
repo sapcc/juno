@@ -1,6 +1,7 @@
 import React from "react"
 import { RadioGroup } from "./index.js"
-import { Default as RadioRow, Checked as CheckedRadioRow } from "../RadioRow/RadioRow.stories"
+import { RadioRow } from "../RadioRow/"
+import { Default as RadioRowStory, Checked as CheckedRadioRowStory } from "../RadioRow/RadioRow.stories"
 
 export default {
   title: "Design System/Forms/RadioGroup",
@@ -8,46 +9,66 @@ export default {
   argTypes: {},
 }
 
-const Template = ({ ...args }) => 
-	<RadioGroup {...args} />
-	
-const row1args = { ...RadioRow.args, value: "v1", id: "radio1" }
-	
-const row2args = { ...RadioRow.args, value: "v2", checked: true, id: "radio2" }
+const Template = ({ items, ...args }) => (
+	<RadioGroup {...args}>
+		{items.map((item, i) => (
+			<RadioRow {...item} key={`${i}`} />
+		))}
+	</RadioGroup>
+)
 
-const row3args = { ...RadioRow.args, value: "v3", id: "radio3"}
-		
 export const Default = Template.bind({})
-
 Default.args = {
-	name: 'my-radiogroup',
-	selected: "v1",
-	children: [<RadioRow {...row1args}/>, <RadioRow {...row2args} />, <RadioRow {...row3args} />]
+	name: "default-radiogroup",
+	selected: "v-1",
+	items: 
+		[
+			{ ...RadioRowStory.args, label: "Option 1", value: "v-1" },
+			{ ...RadioRowStory.args, label: "Option 2", value: "v-2" },
+			{ ...RadioRowStory.args, label: "Option 3", value: "v-3" },
+		]
 }
 
 export const WithLabel = Template.bind({})
 WithLabel.args = {
-	name: 'my-radiogroup',
-	label: "My RadioGroup",
-	children: [<RadioRow {...row1args}/>, <RadioRow {...row2args} />, <RadioRow {...row3args} />]
+	name: "labelled-radiogroup",
+	selected: "v-1",
+	label: "Labelled RadioGroup",
+	items: 
+		[
+			{ ...RadioRowStory.args, label: "Option 1", value: "v-1" },
+			{ ...RadioRowStory.args, label: "Option 2", value: "v-2" },
+			{ ...RadioRowStory.args, label: "Option 3", value: "v-3" },
+		]
 }
 
 export const Required = Template.bind({})
 Required.args = {
-	name: 'my-required-radiogroup',
-	label: "My Radiogroup – pick one!",
+	name: "required-radiogroup",
+	selected: "v-1",
+	label: "Required RadioGroup",
 	required: true,
-	selected: "v3",
-	children: [<RadioRow {...row1args}/>, <RadioRow {...row2args} />, <RadioRow {...row3args} />]
+	items: 
+		[
+			{ ...RadioRowStory.args, label: "Option 1", value: "v-1" },
+			{ ...RadioRowStory.args, label: "Option 2", value: "v-2" },
+			{ ...RadioRowStory.args, label: "Option 3", value: "v-3" },
+		]
 }
 
 export const Disabled = Template.bind({})
 Disabled.args = {
-	name: "my-disabled-radiogroup",
-	label: "Disabled Radiogroup",
+	name: "disabled-radiogroup",
+	selected: "v-1",
+	label: "Disabled RadioGroup",
 	disabled: true,
-	selected: "v1",
-	children: [<RadioRow {...row1args}/>, <RadioRow {...row2args} />, <RadioRow {...row3args} />]
+	items: 
+		[
+			{ ...RadioRowStory.args, label: "Option 1", value: "v-1" },
+			{ ...RadioRowStory.args, label: "Option 2", value: "v-2" },
+			{ ...RadioRowStory.args, label: "Option 3", value: "v-3" },
+		]
 }
+
 
 
