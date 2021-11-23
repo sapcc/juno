@@ -1,6 +1,7 @@
 import React from "react"
 import { Form } from "./index.js"
-import { Default as DefaultTextInputRow } from "../TextInputRow/TextInputRow.stories"
+import { TextInputRow } from "../TextInputRow/index.js"
+import { Default as DefaultTextInputRowStory } from "../TextInputRow/TextInputRow.stories"
 
 export default {
   title: "Design System/Forms/Form",
@@ -8,24 +9,32 @@ export default {
   argTypes: {},
 }
 
-const Template = (args) => (
+const Template = ({ items, ...args }) => (
   <Form {...args}> 
-    {args.children.map((child,i) => (
-      <DefaultTextInputRow {...child} key={`input-${i}`} />
+    {items.map((item, i) => (
+      <TextInputRow {...item} key={`input-${i}`} />
     ))}
   </Form>
 )
 
 export const Default = Template.bind({})
 Default.args = {
-  children: [DefaultTextInputRow.args]
+  items: 
+    [
+      { ...DefaultTextInputRowStory.args, label: "First Name", id: "d-1"},
+      { ...DefaultTextInputRowStory.args, label: "Last Name", id: "d-2" }
+    ]
 }
 
 
 export const WithTitle = Template.bind({})
 WithTitle.args = {
-	title: "Form Title",
-  children: [DefaultTextInputRow.args],
+	title: "Form With A Title",
+  items: 
+    [
+      { ...DefaultTextInputRowStory.args, label: "First Name", id: "wt-1" },
+      { ...DefaultTextInputRowStory.args, label: "Last Name", id: "wt-2" }
+    ]
 }
 
 
