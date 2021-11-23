@@ -1,6 +1,8 @@
 import React from "react"
 import { CheckboxGroup } from "./index.js"
-import { Default as CheckboxRow, Checked as CheckedCheckboxRow } from "../CheckboxRow/CheckboxRow.stories"
+import { CheckboxRow } from "../CheckboxRow/index.js"
+// import CheckboxRow stories:
+import { Default as CheckboxRowStory } from "../CheckboxRow/CheckboxRow.stories"
 
 export default {
   title: "Design System/Forms/CheckboxGroup",
@@ -8,33 +10,45 @@ export default {
   argTypes: {},
 }
 
-const Template = ({ ...args }) => 
-	<CheckboxGroup {...args} />
-	
-const row1args = { ...CheckboxRow.args, value: "v1", id: "checkbox1" }
-	
-const row2args = { ...CheckboxRow.args, value: "v2", checked: true, id: "checkbox2" }
+const Template = ({ items, ...args }) => (
+	  <CheckboxGroup {...args}>
+		{items.map((item, i) => (
+		  <CheckboxRow {...item} key={`${i}`} />
+		))}
+	  </CheckboxGroup>
+	)
 
-const row3args = { ...CheckboxRow.args, value: "v3", id: "checkbox3"}
-		
+
 export const Default = Template.bind({})
 Default.args = {
-	name: 'my-checkboxgroup',
-	children: [<CheckboxRow {...row1args}/>, <CheckboxRow {...row2args} />, <CheckboxRow {...row3args} />]
+	name: "Default ChechboxGroup",
+	items: [
+		{ ...CheckboxRowStory.args, value: "val-1" , id: "checkbox-1"},
+		{ ...CheckboxRowStory.args, value: "val-2" , id: "checkbox-2"},
+		{ ...CheckboxRowStory.args, value: "val-3" , id: "checkbox-3"}
+	]
 }
 
 export const WithLabel = Template.bind({})
 WithLabel.args = {
-	name: 'my-checkboxgroup',
-	label: "My Group of Checkboxes",
-	children: [<CheckboxRow {...row1args}/>, <CheckboxRow {...row2args} />, <CheckboxRow {...row3args} />]
+	name: "Labelled ChechboxGroup",
+	label: "A Labelled CheckboxGroup",
+	items: [
+		{ ...CheckboxRowStory.args, value: "val-l-1" , id: "checkbox-l-4"},
+		{ ...CheckboxRowStory.args, value: "val-l-2" , id: "checkbox-l-5"},
+		{ ...CheckboxRowStory.args, value: "val-l-3" , id: "checkbox-l-6"}
+	]
 }
 
 export const Required = Template.bind({})
 Required.args = {
-	name: 'my-checkboxgroup',
-	label: "My Required Group of Checkboxes",
+	name: "Required Labelled ChechboxGroup",
+	label: "A Required, Labelled CheckboxGroup",
 	required: true,
-	selected: ["v1", "v3"],
-	children: [<CheckboxRow {...row1args}/>, <CheckboxRow {...row2args} />, <CheckboxRow {...row3args} />]
+	items: [
+		{ ...CheckboxRowStory.args, value: "val-r-1" , id: "checkbox-r-4"},
+		{ ...CheckboxRowStory.args, value: "val-r-2" , id: "checkbox-r-5"},
+		{ ...CheckboxRowStory.args, value: "val-r-3" , id: "checkbox-r-6"}
+	]
 }
+	
