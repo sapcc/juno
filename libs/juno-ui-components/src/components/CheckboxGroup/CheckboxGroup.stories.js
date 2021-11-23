@@ -12,8 +12,8 @@ export default {
 
 const Template = ({ items, ...args }) => (
 	  <CheckboxGroup {...args}>
-		{items.map((item) => (
-		  <CheckboxRow {...item} />
+		{items.map((item, i) => (
+		  <CheckboxRow {...item} key={`${i}`} />
 		))}
 	  </CheckboxGroup>
 	)
@@ -23,9 +23,9 @@ export const Default = Template.bind({})
 Default.args = {
 	name: "Default ChechboxGroup",
 	items: [
-		{ ...CheckboxRowStory.args, value: "val-1" , id: "checkbox-1", key: "1" },
-		{ ...CheckboxRowStory.args, value: "val-2" , id: "checkbox-2", key: "2" },
-		{ ...CheckboxRowStory.args, value: "val-3" , id: "checkbox-3", key: "3"}
+		{ ...CheckboxRowStory.args, value: "val-1" , id: "checkbox-1"},
+		{ ...CheckboxRowStory.args, value: "val-2" , id: "checkbox-2"},
+		{ ...CheckboxRowStory.args, value: "val-3" , id: "checkbox-3"}
 	]
 }
 
@@ -34,9 +34,9 @@ WithLabel.args = {
 	name: "Labelled ChechboxGroup",
 	label: "A Labelled CheckboxGroup",
 	items: [
-		{ ...CheckboxRowStory.args, value: "val-l-1" , id: "checkbox-l-4", key: "l-1" },
-		{ ...CheckboxRowStory.args, value: "val-l-2" , id: "checkbox-l-5", key: "l-2" },
-		{ ...CheckboxRowStory.args, value: "val-l-3" , id: "checkbox-l-6", key: "l-3"}
+		{ ...CheckboxRowStory.args, value: "val-l-1" , id: "checkbox-l-4"},
+		{ ...CheckboxRowStory.args, value: "val-l-2" , id: "checkbox-l-5"},
+		{ ...CheckboxRowStory.args, value: "val-l-3" , id: "checkbox-l-6"}
 	]
 }
 
@@ -46,9 +46,9 @@ Required.args = {
 	label: "A Required, Labelled CheckboxGroup",
 	required: true,
 	items: [
-		{ ...CheckboxRowStory.args, value: "val-r-1" , id: "checkbox-r-4", key: "r-1" },
-		{ ...CheckboxRowStory.args, value: "val-r-2" , id: "checkbox-r-5", key: "r-2" },
-		{ ...CheckboxRowStory.args, value: "val-r-3" , id: "checkbox-r-6", key: "r-3"}
+		{ ...CheckboxRowStory.args, value: "val-r-1" , id: "checkbox-r-4"},
+		{ ...CheckboxRowStory.args, value: "val-r-2" , id: "checkbox-r-5"},
+		{ ...CheckboxRowStory.args, value: "val-r-3" , id: "checkbox-r-6"}
 	]
 }
 	
