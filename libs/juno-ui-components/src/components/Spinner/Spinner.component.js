@@ -22,14 +22,14 @@ const defaultColor = `
 `
 
 export const Spinner = ({ 
-	color,
+	variant,
 	size,
 	className,
 	...props
 }) => {
 	
   const mode = () => {
-	switch (color) {
+	switch (variant) {
 	  case "primary":
 		return primary
 	  case "danger":
@@ -84,8 +84,8 @@ export const Spinner = ({
 }
 
 Spinner.propTypes = {
-/** The semantic color of the Spinner */
-  color: PropTypes.oneOf([
+/** The semantic color variant of the Spinner */
+  variant: PropTypes.oneOf([
 	"primary",
 	"danger",
 	"default",
@@ -99,6 +99,6 @@ Spinner.propTypes = {
 
 Spinner.defaultProps = {
   className: null,
-  color: "default",
+  variant: "default",
   size: null,
 }
