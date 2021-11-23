@@ -43,7 +43,7 @@ export const SwitchRow =({
 	
 	return (
 		<div
-			className={`switch-row ${switchrow} ${className}`}
+			className={`juno-switch-row ${switchrow} ${className}`}
 			{...props}
 		>
 			<div>

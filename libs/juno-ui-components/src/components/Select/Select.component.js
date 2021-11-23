@@ -49,11 +49,11 @@ export const Select = ({
 	...props
 }) => {
 	return (
-		<span className={`select-wrapper ${wrapperstyles}`}>
+		<span className={`juno-select-wrapper ${wrapperstyles}`}>
 			<select 
 				name={name || "unnamed select"}
 				id={id}
-				className={`select ${selectstyles} ${className}`}
+				className={`juno-select ${selectstyles} ${className}`}
 				onChange={onChange}
 				disabled={disabled}
 				{...props}

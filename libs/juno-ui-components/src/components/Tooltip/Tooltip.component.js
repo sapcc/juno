@@ -22,7 +22,7 @@ const TooltipPopover = ({
 }) => {
 	if (!isOpen) return null 
 	return (
-		<div className={`tooltip-popover ${popover}`}>
+		<div className={`juno-tooltip-popover ${popover}`}>
 			<p>{text}</p>
 		</div>
 	)

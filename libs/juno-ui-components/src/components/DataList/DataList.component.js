@@ -16,8 +16,8 @@ export const DataList = ({
 	}
 	return (
 		<DataListContext.Provider value={dataListConf}>
-			<div className={`datalist-container`}>
-				<ul className={`datalist ${className}`} {...props} >
+			<div className={`juno-datalist-container`}>
+				<ul className={`juno-datalist ${className}`} {...props} >
 					{children}
 				</ul>
 			</div>

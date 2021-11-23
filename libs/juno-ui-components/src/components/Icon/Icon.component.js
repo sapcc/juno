@@ -26,7 +26,7 @@ Generic Icon component.
 */
 
 const getColoredSizedIcon = ({icon, color, size, className, ...props}) => {	
-		const iconClass = `fill-current ${color} ${className || ""}`
+		const iconClass = `juno-icon juno-icon-${icon} fill-current ${color} ${className || ""}`
 	  switch (icon) {
 			case "autoAwesomeMosaic":
 				return <AutoAwesomeMosaic width={size} height={size} className={iconClass} alt="mosaic" role="img" {...props}/>

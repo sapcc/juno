@@ -12,7 +12,7 @@ describe("Form", () => {
 	test("renders a title", async () => {
 		render(<Form data-testid="my-form" title="My Form" />)
 		expect(screen.getByTestId("my-form")).toBeInTheDocument()
-		expect(screen.getByRole("heading")).toHaveClass("form-heading")
+		expect(screen.getByRole("heading")).toHaveClass("juno-form-heading")
 		expect(screen.getByRole("heading")).toHaveTextContent("My Form")
 	})
 	

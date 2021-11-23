@@ -105,7 +105,7 @@ export const Stack = ({
 
   return (
     <div 
-      className={`${baseStack(direction, gap)} ${className || ""}`}
+      className={`juno-stack ${baseStack(direction, gap)} ${className || ""}`}
       {...props}
     >
       {children}

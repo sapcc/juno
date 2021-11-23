@@ -70,7 +70,7 @@ export const Radio = ({
 	
 	return (
 		<div
-			className={`${mockradiostyles} ${ hasFocus ? mockfocusradiostyles : "" } ${ disabled ? mockdisabledradiostyles : "" } ${className}`}
+			className={`juno-radio ${mockradiostyles} ${ hasFocus ? mockfocusradiostyles : "" } ${ disabled ? mockdisabledradiostyles : "" } ${className}`}
 			{...props}
 		>
 			<input 

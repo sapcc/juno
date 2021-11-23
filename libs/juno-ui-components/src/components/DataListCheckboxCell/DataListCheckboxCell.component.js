@@ -16,7 +16,7 @@ export const DataListCheckboxCell = ({
 	...props
 }) => {
 	return (
-		<DataListCell className={`datalist-checkbox-cell ${datalistcheckboxcellbasestyles} ${className}`} {...props} >
+		<DataListCell className={`juno-datalist-checkbox-cell ${datalistcheckboxcellbasestyles} ${className}`} {...props} >
 			<Checkbox disabled={disabled} checked={selected} onChange={onChange} />
 		</DataListCell>
 	)

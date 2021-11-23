@@ -13,7 +13,7 @@ export const DataGridFootRow = ({
 	const selectable = dataGridContext.selectable
 	// render empty first cell in footer row to compensate checkbox cells in selectable datagrid:
 	return (
-		<tr className={className} {...props}>
+		<tr className={`juno-datagrid-foot-row ${className}`} {...props}>
 			{ selectable ? <DataGridCell /> : null }
 			{children}
 		</tr>

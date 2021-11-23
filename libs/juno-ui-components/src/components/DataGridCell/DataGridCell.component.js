@@ -11,7 +11,7 @@ export const DataGridCell = ({
 	...props
 }) => {
 	return (
-		<td className={`${datagridcellbasestyles} ${className}`} {...props}>
+		<td className={`juno-datagrid-cell ${datagridcellbasestyles} ${className}`} {...props}>
 			{children}
 		</td>
 	)

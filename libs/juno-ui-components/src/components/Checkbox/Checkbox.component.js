@@ -87,7 +87,7 @@ export const Checkbox = ({
 		
 	return (
 		<div 
-			className={`${mockcheckboxstyles} ${ hasFocus ? mockfocusstyles : "" } ${ disabled ? mockdisabledstyles : "" } ${className}`}
+			className={`juno-checkbox ${mockcheckboxstyles} ${ hasFocus ? mockfocusstyles : "" } ${ disabled ? mockdisabledstyles : "" } ${className}`}
 			{...props}
 		>
 			{ isChecked ? 	<svg 

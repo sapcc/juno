@@ -117,7 +117,7 @@ export const GridColumn = ({
 	// width overrides auto:
 	const columnStyles = width ? widthStyles : ( auto ? autoStyles : {} )
 	return (
-		<div className={`grid-column ${columnBaseStyles} ${cols ? colsClass(cols) : '' } ${className}`} style={columnStyles} {...props} >
+		<div className={`juno-grid-column ${columnBaseStyles} ${cols ? colsClass(cols) : '' } ${className}`} style={columnStyles} {...props} >
 			{children}
 		</div>
 	)

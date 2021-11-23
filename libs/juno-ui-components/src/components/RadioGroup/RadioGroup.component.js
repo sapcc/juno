@@ -52,7 +52,7 @@ export const RadioGroup = ({
 	 };
 	
 	return (
-		<div role="radiogroup" className={`${radiogroupstyles} ${className}`} onChange={namedChildren} {...props} >
+		<div role="radiogroup" className={`juno-radiogroup ${radiogroupstyles} ${className}`} onChange={namedChildren} {...props} >
 			{ label ? <Label text={label} htmlFor={name} required={required} /> : "" }
 			{ namedChildren() }
 		</div>

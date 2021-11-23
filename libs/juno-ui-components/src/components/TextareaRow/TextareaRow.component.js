@@ -111,7 +111,7 @@ export const TextareaRow = ({
 	
 	return (
 		<div
-			className={`textarea-row ${variantStyle(variant, "container")} ${className}`}
+			className={`juno-textarea-row ${variantStyle(variant, "container")} ${className}`}
 			{...props}
 		>
 			<div className={`input-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>

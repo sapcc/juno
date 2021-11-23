@@ -7,7 +7,7 @@ export const DataGridHead = ({
 	...props
 }) => {
 	return (
-		<thead className={className} {...props}>
+		<thead className={`juno-datagrid-head ${className}`} {...props}>
 			{children}
 		</thead>
 	)
