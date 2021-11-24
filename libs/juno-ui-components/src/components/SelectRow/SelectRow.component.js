@@ -16,6 +16,10 @@ const helptextstyles = `
 	mt-1
 `
 
+const selectstyles = `
+	w-full
+`
+
 
 /** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
 export const SelectRow = ({
@@ -39,7 +43,7 @@ export const SelectRow = ({
 				<Label text={label} htmlFor={id} required={required} disabled={disabled} />
 			</div>
 			<div>
-				<Select name={name} id={id} onChange={onChange} disabled={disabled} >
+				<Select className={`${selectstyles}`} name={name} id={id} onChange={onChange} disabled={disabled} >
 					{children}
 				</Select>
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}

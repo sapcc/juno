@@ -39,12 +39,17 @@ const minimizedlabelcontainerstyles = `
 const floatinginputstyles = `
 	pt-4
 	placeholder-transparent
+	w-full
 `
 
 const helptextstyles = `
 	text-xs
 	text-theme-disabled
 	mt-1
+`
+
+const stackedinputstyles = `
+	w-full
 `
 
 const variantStyle = (variant, element) => {
@@ -62,6 +67,8 @@ const variantStyle = (variant, element) => {
 			switch (element) {
 				case "container":
 					return stackedcontainerstyles
+				case "input":
+					return stackedinputstyles
 			}
 	}
 }

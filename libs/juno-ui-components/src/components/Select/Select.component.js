@@ -7,7 +7,8 @@ const selectstyles = `
 	text-theme-high
 	appearance-none
 	text-base
-	px-3
+	pl-3
+	pr-9
 	h-11
 	border
 	border-transparent
