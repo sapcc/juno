@@ -6,6 +6,9 @@ const formSection = `
 `
 
 const formSectionHeading = `
+	text-lg
+	font-bold
+	mb-3
 `
 
 /** A Form section to group form groups with an optional title. */
