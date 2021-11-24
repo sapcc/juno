@@ -2,6 +2,9 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const formHeading = `
+	text-2xl
+	font-bold
+	mb-4
 `
 
 /** A Form to hold FormSections and/or FormGroups with an optional title. */
