@@ -94,7 +94,7 @@ function loadComponent(scope, module) {
 }
 
 /**
- * Extract data from element
+ * Extract data from element (data attribute)
  * data-url
  * data-name
  * data-version
@@ -121,7 +121,7 @@ const extractDataFromScript = (script) => {
     }
   }
 
-  if (!name) return {}
+  if (!name) return { scope, name, version, module, url }
   // scope is variable name where the remote entry (widget) is hosted
   // we assume that the scope is name is the same as the app name.
   scope = scope || toVarName(name)
@@ -138,6 +138,11 @@ const extractDataFromScript = (script) => {
   return { scope, name, version, module, url }
 }
 
+/**
+ * Extract props from script tag (data-props-KEY)
+ * @param {Element} script
+ * @returns {Object} props
+ */
 const extractPropsFromScript = (script) => {
   if (!script?.dataset) return {}
   let props = {}
@@ -149,23 +154,27 @@ const extractPropsFromScript = (script) => {
   return props
 }
 
+/**
+ * load widget script.
+ * @param {Element} currentScript
+ */
 export const load = (currentScript) => {
   try {
+    // do nothing if current script tag is undefined
     if (!currentScript) return
 
+    // get widget infos from data attributes
     let { scope, name, version, module, url } =
       extractDataFromScript(currentScript)
 
     // do not accept name widget-loader or missing required data
-    if (
-      name === "widget-loader" ||
-      !(scope && name && version && module && url)
-    ) {
+    if (name === "widget-loader" || !(scope && name && module && url)) {
       console.log("Could not load widget", currentScript)
       //currentScript.remove()
       return
     }
 
+    // Log infos
     console.info("Load widget!")
     console.info(
       "url:",
@@ -179,13 +188,20 @@ export const load = (currentScript) => {
       "module:",
       module
     )
+
+    // extract props from script tag (data-props-KEY)
     const props = extractPropsFromScript(currentScript)
+    // create wrapper div
     const wrapper = document.createElement("div")
+    // preserve widget name and version as data attribute on the wrapper
     wrapper.setAttribute("data-name", name)
     wrapper.setAttribute("data-version", version)
+    // let the wrapper take the full height
+    wrapper.style.height = "100%"
     currentScript.replaceWith(wrapper)
 
-    console.log("===", url, scope, module)
+    // console.log("===", url, scope, module)
+    // load widget script
     loadDynamicScript(url)
       .then(() => {
         return loadComponent(scope, `./${module}`)()

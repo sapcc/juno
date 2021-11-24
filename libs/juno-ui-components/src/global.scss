@@ -247,6 +247,10 @@
   --color-danger: var(--color-sap-red);
   --color-danger-raw: var(--color-sap-red-raw);
   
+  // ERROR
+  --color-error: var(--color-sap-red);
+  --color-error-raw: var(--color-sap-red-raw);
+  
   // WARNING
   --color-warning: rgb(254, 196, 58);
   --color-warning-raw: 254, 196, 58;
@@ -282,8 +286,9 @@
 // Button
 // --> Primary Button
 --color-button-primary-bg: var(--color-juno-blue-light-3-raw);
---color-button-primary-hover-bg: var(--color-juno-grey-light-11-raw);
 --color-button-primary-text: var(--color-white-raw);
+--color-button-primary-border: var(--color-juno-blue-light-3-raw);
+--color-button-primary-hover-bg: var(--color-juno-grey-light-11-raw);
 --color-button-primary-hover-text: var(--color-juno-blue-light-3-raw);
 --color-button-primary-hover-border: var(--color-juno-blue-light-3-raw);
 // --> Default Button
@@ -310,6 +315,12 @@
 --color-icon-success: var(--color-sap-green-raw);
 --color-icon-warning: var(--color-warning-raw);
 // Message
+--color-message-bg: var(--color-juno-grey-light-11-raw);
+--color-message-danger-border: var(--color-sap-red-raw);
+--color-message-default-border: var(--color-juno-blue-raw);
+--color-message-error-border: var(--color-sap-red-raw);
+--color-message-warning-border: var(--color-warning-raw);
+--color-message-success-border: var(--color-sap-green-raw);
 
 // Introbox
 --color-introbox-bg: var(--color-juno-grey-light-11-raw);
@@ -337,7 +348,28 @@
 --color-required-bg: var(--color-juno-turquoise-raw);
 // Spinner
 --color-spinner-primary: var(--color-juno-blue-light-3-raw);
-// Syntax highlighting
+// Syntax Highlighting
+--color-syntax-highlight-base00: var(--color-juno-grey-light-20); // bg
+--color-syntax-highlight-base01: var(--color-juno-grey-light-20); // ?
+--color-syntax-highlight-base02: var(--color-sap-grey-3); // lines and boxes
+--color-syntax-highlight-base03: var(--color-sap-grey-3);
+--color-syntax-highlight-base04: var(--color-sap-grey-3);
+--color-syntax-highlight-base05: var(--color-juno-text-high);
+--color-syntax-highlight-base06: red;
+--color-syntax-highlight-base07: var(--color-juno-text-high);
+--color-syntax-highlight-base08: var(--color-juno-grey-blue-88); // NULL
+--color-syntax-highlight-base09: var(--color-juno-blue); // String value
+--color-syntax-highlight-base0A: var(--color-juno-grey-blue-88); // NaN
+--color-syntax-highlight-base0B: var(--color-juno-blue); // float value
+--color-syntax-highlight-base0C: var(--color-sap-gold); // array index
+--color-syntax-highlight-base0D: var(--color-sap-gold); // expanded icon
+--color-syntax-highlight-base0E: var(--color-juno-blue); // bool + collapsed icon
+--color-syntax-highlight-base0F: var(--color-juno-blue); // integer value
+// DataGrid
+--color-datagridrow-selected: var(--color-juno-blue-light-3-raw);
+// DataList
+--color-datalist-row-border: var(--color-juno-grey-light-54-raw);
+--color-datalistrow-selected: var(--color-juno-blue-light-3-raw);
   
 }
 
@@ -356,12 +388,12 @@
   --color-text-link: var(--color-juno-blue-raw);
   // Button
   // --> Primary Button
-  --color-button-primary-bg: var(--color-juno-blue-light-3-raw);
   --gradient-button-primary-bg: linear-gradient(225deg, rgba(47,234,242,0.75) 0%, rgba(21,208,224,0.36) 100%);
-  --color-button-primary-bg-start: rgba(47,234,242,0.75);
-  --color-button-primary-bg-end: rgba(21,208,224,0.36);
+  --color-button-primary-border: var(--color-juno-turquoise-raw);
   --color-button-primary-text: var(--color-white-raw);
-  --color-button-primary-foreground: var(--sap-grey-blue-100-raw);
+  --color-button-primary-hover-text: var(--color-white-raw);
+  --color-button-primary-hover-border: var(--color-juno-turquoise-raw);
+  --gradient-button-primary-hover-bg: linear-gradient(225deg, rgba(47,234,242,0.00) 0%, rgba(21,208,224,0.36) 100%);
   // --> Default Button
   --color-button-default-bg: var(--color-rgb-blue-gray-10-raw);
   --color-button-default-text: var(--color-juno-text-high-raw);
@@ -380,8 +412,9 @@
   --color-icon-warning: var(--color-warning-raw);
   // Message
   --color-message-bg: var(--color-juno-grey-blue-89-raw);
-  --color-message-default-border: var(--color-juno-blue-raw);
   --color-message-danger-border: var(--color-sap-red-raw);
+  --color-message-default-border: var(--color-juno-blue-raw);
+  --color-message-error-border: var(--color-sap-red-raw);
   --color-message-warning-border: var(--color-warning-raw);
   --color-message-success-border: var(--color-sap-green-raw);
   // Introbox
@@ -428,16 +461,32 @@
   --color-syntax-highlight-base0D: var(--color-sap-gold-light-3); // expanded icon
   --color-syntax-highlight-base0E: var(--color-juno-blue); // bool + collapsed icon
   --color-syntax-highlight-base0F: var(--color-juno-blue); // integer value
-
+  // DataGrid
+  --color-datagridrow-selected: var(--color-juno-blue-light-3-raw);
+  // DataList
+  --color-datalist-row-border: var( --color-juno-grey-light-104-raw);
+  --color-datalistrow-selected: var(--color-juno-blue-light-3-raw);
 }
+
+// Grid configuration
+:root,
+:host {
+  --grid-columns: 12;
+  --grid-row-margin-x: -.5rem;
+  --grid-column-flex-grow: 0;
+  --grid-column-flex-shrink: 1;
+  --grid-column-flex-basis: auto;
+  --grid-column-default-width: 8.333333%;
+}
+
+
 
 // default base styles using the tw base directive
 @layer base {
 
   html,
   body,
-  .shadow-body,
-  :host {
+  .shadow-body {
     @apply bg-theme-global-bg;
     @apply text-theme-default;
     @apply font-sans;
@@ -460,3 +509,42 @@
 
 @tailwind components;
 @tailwind utilities;
+
+// Add flex-basis utilities since tw doesn't support flex-basis: https://github.com/tailwindlabs/tailwindcss/issues/603
+@layer utilities {
+  .flex-basis-0 {
+    flex-basis: 0%;
+  }
+  .flex-basis-auto {
+    flex-basis: auto;
+  }
+}
+
+// // TEMPORARILY ADD MISSING tw variables relating to filters
+// // See here: https://github.com/tailwindlabs/tailwindcss/issues/5059#issuecomment-928291209
+
+@layer utilities {
+
+   *, ::before, ::after {
+    --tw-blur: var(--tw-empty,/*!*/ /*!*/);
+    --tw-brightness: var(--tw-empty,/*!*/ /*!*/);
+    --tw-contrast: var(--tw-empty,/*!*/ /*!*/);
+    --tw-grayscale: var(--tw-empty,/*!*/ /*!*/);
+    --tw-hue-rotate: var(--tw-empty,/*!*/ /*!*/);
+    --tw-invert: var(--tw-empty,/*!*/ /*!*/);
+    --tw-saturate: var(--tw-empty,/*!*/ /*!*/);
+    --tw-sepia: var(--tw-empty,/*!*/ /*!*/);
+    --tw-drop-shadow: var(--tw-empty,/*!*/ /*!*/);
+    --tw-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+    --tw-backdrop-blur: var(--tw-empty,/*!*/ /*!*/);
+    --tw-backdrop-brightness: var(--tw-empty,/*!*/ /*!*/);
+    --tw-backdrop-contrast: var(--tw-empty,/*!*/ /*!*/);
+    --tw-backdrop-grayscale: var(--tw-empty,/*!*/ /*!*/);
+    --tw-backdrop-hue-rotate: var(--tw-empty,/*!*/ /*!*/);
+    --tw-backdrop-invert: var(--tw-empty,/*!*/ /*!*/);
+    --tw-backdrop-opacity: var(--tw-empty,/*!*/ /*!*/);
+    --tw-backdrop-saturate: var(--tw-empty,/*!*/ /*!*/);
+    --tw-backdrop-sepia: var(--tw-empty,/*!*/ /*!*/);
+    --tw-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  }
+}

@@ -32,14 +32,14 @@ export const SelectRow = ({
 }) => {
 	return (
 		<div 
-			className={`select-row ${selectrow}`}
+			className={`juno-select-row ${selectrow} ${className}`}
 			{...props}
 		>
 			<div>
 				<Label text={label} htmlFor={id} required={required} disabled={disabled} />
 			</div>
 			<div>
-				<Select name={name} id={id} onChange={onChange} className={className} disabled={disabled} >
+				<Select name={name} id={id} onChange={onChange} disabled={disabled} >
 					{children}
 				</Select>
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}

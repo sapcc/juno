@@ -17,17 +17,27 @@ const Template = (args) => <Spinner {...args} />
 
 export const Primary = Template.bind({})
 Primary.args = {
-  color: "primary",
+  variant: "primary",
 }
 
 export const Danger = Template.bind({})
-Danger.args = { color: "danger" }
+Danger.args = { variant: "danger" }
 
 export const Success = Template.bind({})
-Success.args = { color: "success" }
+Success.args = { variant: "success" }
 
 export const Warning = Template.bind({})
-Warning.args = { color: "warning" }
+Warning.args = { variant: "warning" }
 
 export const Light = Template.bind({})
 Light.args = {}
+
+export const Small = Template.bind({})
+Small.args = {
+  size: "small"
+}
+
+export const Large = Template.bind({})
+Large.args = {
+  size: "large"
+}

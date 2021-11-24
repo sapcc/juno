@@ -20,15 +20,15 @@ Example:
 ```js
 <script
   defer
-  src="https://juno.global.cloud.sap/cdn/widget-loader/0_0_1/app.js"
-  data-name="auth"
-  data-version="0_0_1"
+  src="https://juno.global.cloud.sap/cdn/widget-loader/latest/app.js"
+  data-name="whois"
+  data-version="latest"
 ></script>
 ```
 
 ## Options
 
-- `data-url` an absolute URL to the MFE. Using this option, the two options **data-name** and **data-version** can be omitted.
+- `data-url` an absolute URL to the MFE. If this option is used, `data-version` is ignored, but `data-name` still has to be specified.
 
 - `data-name` name of the MFE to be loaded. If you use this option without `data-url`, `data-version` is mandatory.
 
@@ -116,4 +116,45 @@ import("./bootstrap").then((app) => app.init(document.getElementById("root")))
 ```js
 export default (wrapper, props) => {
   import("./bootstrap").then((app) => app.init(wrapper, props))
+```
+
+## Development
+
+If you run the widget loader locally and want to test whether local widgets are loaded correctly, then use the proxy.
+
+`webpack.config.js`
+
+```js
+...
+proxy: {
+  "/test": {
+    target: "http://localhost:4000",
+    pathRewrite: { "^/test": "" },
+  },
+},
+...
+```
+
+start the local widget as follows
+
+```js
+PORT=4000 yarn workspace WIDGET_NAME start
+```
+
+In the `public/index.html`
+
+```html
+<script
+  defer
+  src="/app.js"
+  data-url="https://juno.ap.workspaces-staging.eu-nl-1.cloud.sap/test/widget.js"
+  data-name="whois"
+  data-props-name="test"
+></script>
+```
+
+and finally start the widget loader app
+
+```js
+yarn workspace widget-loader start
 ```

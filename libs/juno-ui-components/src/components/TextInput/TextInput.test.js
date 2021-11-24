@@ -26,6 +26,18 @@ describe("TextInput", () => {
 		expect(screen.getByRole("textbox")).toHaveAttribute('value', "Some kind of value")
 	})
 	
+	test("renders a text input with an id as passed", async () => {
+		render(<TextInput id="my-textinput" />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveAttribute('id', "my-textinput")
+	})
+	
+	test("renders a placeholder as passed", async () => {
+		render(<TextInput placeholder="my placeholder" />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveAttribute('placeholder', "my placeholder")
+	})
+	
 	// resort to using a testId since <input type=""password" has no accessible wai-aria role:
 	test("renders a password input as passed", async () => {
 		render(<TextInput type="password" data-testid="pw"/>)
@@ -51,6 +63,12 @@ describe("TextInput", () => {
 		expect(screen.getByRole("textbox")).toHaveAttribute('type', "url")
 	})
 	
+	test("renders a number input as passed", async () => {
+		render(<TextInput type="number" />)
+		expect(screen.getByRole("spinbutton")).toBeInTheDocument()
+		expect(screen.getByRole("spinbutton")).toHaveAttribute('type', "number")
+	})
+	
 	test("renders a disabled input as passed", async () => {
 		render(<TextInput disabled />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
@@ -70,9 +88,9 @@ describe("TextInput", () => {
 	})
 	
 	test("renders other props as passed", async () => {
-		render(<TextInput placeholder="My placeholder" />)
+		render(<TextInput data-lolol="527" />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
-		expect(screen.getByRole("textbox")).toHaveAttribute('placeholder', "My placeholder")
+		expect(screen.getByRole("textbox")).toHaveAttribute('data-lolol', "527")
 	})
 
 	test("fires onChange handler as passed", async () => {

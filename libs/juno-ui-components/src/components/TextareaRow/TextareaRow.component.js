@@ -111,7 +111,7 @@ export const TextareaRow = ({
 	
 	return (
 		<div
-			className={`textarea-row ${variantStyle(variant, "container")} `}
+			className={`juno-textarea-row ${variantStyle(variant, "container")} ${className}`}
 			{...props}
 		>
 			<div className={`input-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
@@ -133,7 +133,7 @@ export const TextareaRow = ({
 					onChange={handleChange} 
 					onFocus={() => setFocus(true)}
 					onBlur={() => setFocus(false)}
-					className={`${variantStyle(variant, "input")} ${className}`} 
+					className={`${variantStyle(variant, "input")}`} 
 				/>
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>

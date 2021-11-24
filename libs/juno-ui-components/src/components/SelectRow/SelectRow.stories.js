@@ -1,6 +1,7 @@
 import React from "react"
 import { SelectRow } from "./index.js"
-import { Default as DefaultSelectOption } from "../SelectOption/SelectOption.stories"
+import { SelectOption } from "../SelectOption/"
+import { Default as DefaultSelectOptionStory } from "../SelectOption/SelectOption.stories"
 
 export default {
   title: "Design System/Forms/SelectRow",
@@ -8,10 +9,10 @@ export default {
   argTypes: {},
 }
 
-const Template = (args) => (
+const Template = ({ items, ...args}) => (
 	<SelectRow {...args}>
-		{args.children.map((child) => (
-			<DefaultSelectOption {...child} />
+		{items.map((item, i) => (
+			<SelectOption {...item} key={`${i}`} />
 		))}
 	</SelectRow>
 )
@@ -19,31 +20,43 @@ const Template = (args) => (
 export const Default = Template.bind({})
 Default.args = {
 	label: "Select Row",
-	children: [DefaultSelectOption.args]
+	items: 
+		[
+			{ ...DefaultSelectOptionStory.args, value: "d-1", label: "Option 1" },
+			{ ...DefaultSelectOptionStory.args, value: "d-2", label: "Option 2" }
+		]
 }
 
 export const WithHelpText = Template.bind({})
 WithHelpText.args = {
-	name: "my-select",
 	label: "Select Row with Helptext",
-	helptext: "Oh so helpful helptext",
-	children: [DefaultSelectOption.args]
+	helptext: "Select one",
+	items: 
+		[
+			{ ...DefaultSelectOptionStory.args, value: "d-1", label: "Option 1" },
+			{ ...DefaultSelectOptionStory.args, value: "d-2", label: "Option 2" }
+		]
 }
 
 export const Required = Template.bind({})
 Required.args = {
-	name: "my-select",
 	label: "Required Select Row",
 	required: true,
-	children: [DefaultSelectOption.args]
+	items: 
+		[
+			{ ...DefaultSelectOptionStory.args, value: "d-1", label: "Option 1" },
+			{ ...DefaultSelectOptionStory.args, value: "d-2", label: "Option 2" }
+		]
 }
 
 export const Disabled = Template.bind({})
 Disabled.args = {
-	name: "disabled-select",
-	label: "Disabled Select Row",
-	children: [DefaultSelectOption.args],
+	label: "Required Select Row",
 	disabled: true,
-	required: true,
-	helptext: "Oh so helpful helptext"
+	items: 
+		[
+			{ ...DefaultSelectOptionStory.args, value: "d-1", label: "Option 1" },
+			{ ...DefaultSelectOptionStory.args, value: "d-2", label: "Option 2" }
+		]
 }
+

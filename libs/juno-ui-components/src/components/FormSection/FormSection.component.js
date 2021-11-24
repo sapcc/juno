@@ -18,10 +18,10 @@ export const FormSection = ({
 }) => {
 	return (
 		<section 
-			className={`form-section ${formSection} ${className}`}
+			className={`juno-form-section ${formSection} ${className}`}
 			{...props}
 		>
-			{title ?  <h1 className={`${formSectionHeading}`}>{title}</h1> : ""}
+			{title ?  <h1 className={`juno-formsection-heading ${formSectionHeading}`}>{title}</h1> : ""}
 			{children}
 		</section>		
 	)

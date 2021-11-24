@@ -1,36 +1,24 @@
-import tw from "twin.macro"
-import { ReactComponent as SAPLogo } from "../../assets/images/SAP_logo.svg"
-import { LayoutContainer } from "../shared/StyledComponents"
+import React, { useCallback } from "react"
 
-// import logo from "../../assets/images/SAP_logo.svg"
-import UserProfile from "../UserProfile"
-import { Link } from "react-router-dom"
+import useStore from "../../store"
 
-const Head = tw.div`
-  bg-black
-  bg-opacity-60
-`
+import { Button, Icon, PageHeader } from "juno-ui-components"
 
-const Container = tw(LayoutContainer)`
-  flex
-  justify-between
-  items-center
-  py-6
-`
+// import { Link } from "react-router-dom"
 
 const PageHead = () => {
+  const toggleLoginOverlay = useStore(useCallback((state) => state.toggleLoginOverlay))
+
   return (
-    <Head>
-      <Container>
-        <Link to="/">
-          <SAPLogo />
-        </Link>
-        {/* <div>
-          <Link to="/">Home</Link> | <Link to="/designate">Designate</Link>
-        </div> */}
-        <UserProfile />
-      </Container>
-    </Head>
+    <PageHeader>
+      
+      <div className="ml-auto">
+        <Button variant="primary" title="Log in" onClick={() => toggleLoginOverlay()}>
+          <Icon icon="manageAccounts" color="text-white" className="mr-3" />
+          Log in
+        </Button>
+      </div>
+    </PageHeader>
   )
 }
 

@@ -5,11 +5,15 @@ import PropTypes from "prop-types"
 export const SelectOption = ({
 	value,
 	label,
+	disabled,
+	className,
 	...props
 	}) => {
 	return (
 		<option 
 			value={value}
+			disabled={disabled}
+			className={`juno-select-option ${className}`}
 			{...props}
 		>
 		{label}
@@ -20,11 +24,17 @@ export const SelectOption = ({
 SelectOption.propTypes = {
 	/** Pass a visible label */
 	label: PropTypes.string,
-	/** Pass a value the option shoudl represent */
+	/** Pass a value the option should represent */
 	value: PropTypes.string,
+	/** Whether the option is disabled */
+	disabled: PropTypes.bool,
+	/** Add a class name to the option */
+	className: PropTypes.string,
 }
 
 SelectOption.defaultProps = {
 	value: null,
 	label: null,
+	disabled: false,
+	className: null,
 }

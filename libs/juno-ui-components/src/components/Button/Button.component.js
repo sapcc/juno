@@ -6,7 +6,6 @@ const btn = `
   justify-center 
   rounded-md
   shadow-sm 
-  font-bold 
   w-full
   sm:w-auto 
   focus:outline-none 
@@ -24,13 +23,13 @@ const btnDefault = `
   hover:bg-theme-button-default-hover
   disabled:bg-theme-default
 `
-// hover:border apparently not working?
 const btnPrimary = `
-  text-theme-on-primary
+  text-theme-button-primary
+  border
+  border-theme-button-primary
   bg-theme-button-primary
-  hover:bg-theme-button-primary-hover
   hover:text-theme-button-primary-hover
-  hover:border
+  hover:bg-theme-button-primary-hover
   hover:border-theme-button-primary-hover
   disabled:bg-theme-primary
 `
@@ -105,6 +104,7 @@ export const Button = ({
   title,
   variant,
   size,
+  disabled,
   className,
   onClick,
   children,
@@ -114,7 +114,8 @@ export const Button = ({
   return (
     <button
       type="button"
-      className={`button button-${variant} ${btn} ${variantClass(variant)} ${sizeClass(size)} ${className}`}
+      className={`juno-button juno-button-${variant} ${btn} ${variantClass(variant)} ${sizeClass(size)} ${className}`}
+      disabled={disabled}
       onClick={!props.disabled ? onClick : undefined}
       title={titleValue}
       {...props}
@@ -129,6 +130,8 @@ Button.propTypes = {
   variant: PropTypes.oneOf(["primary", "danger", "default", "subdued"]),
   /** Leave empty for default size */
   size: PropTypes.oneOf(["small", "default", "large"]),
+  /** Whether the button is disabled */
+  disabled: PropTypes.bool,
   /** Button label can be passed like this or as children */
   label: PropTypes.string,
   /** Specify title for accessibility. Gets value of label if no title specified */
@@ -144,6 +147,7 @@ Button.propTypes = {
 Button.defaultProps = {
   variant: "default",
   size: "default",
+  disabled: null,
   className: "",
   title: null,
   onClick: undefined,

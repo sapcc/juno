@@ -13,10 +13,10 @@ export const Form = ({
 }) => {
 	return (
 		<form 
-			className={className}
+			className={`juno-form ${className}`}
 			{...props}
 		>
-			{title ?  <h1 className={`${formHeading}`}>{title}</h1> : ""}
+			{title ?  <h1 className={`juno-form-heading ${formHeading}`}>{title}</h1> : ""}
 			{children}
 		</form>		
 	)

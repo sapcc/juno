@@ -10,7 +10,14 @@ describe("SwitchRow", () => {
 		expect(screen.getByTestId("switch-row")).toBeInTheDocument()
 	})
 	
-	test("renders a switch row with a checkbox and an associated label with an id as passed", async () => {
+	test("renders a switch row with a name as passed", async () => {
+		render(<SwitchRow data-testid="switch-row" name="my-switch" />)
+		expect(screen.getByTestId("switch-row")).toBeInTheDocument()
+		expect(screen.getByRole("switch")).toBeInTheDocument()
+		expect(screen.getByRole("switch")).toHaveAttribute("name", 'my-switch')
+	})
+	
+	test("renders a switch row with a switch button and an associated label with an id as passed", async () => {
 		render(<SwitchRow data-testid="my-switch-row" label="My Switch Row" id="switch-row" />)
 		expect(screen.getByRole("switch")).toBeInTheDocument()
 		expect(screen.getByLabelText("My Switch Row")).toBeInTheDocument()
@@ -27,11 +34,40 @@ describe("SwitchRow", () => {
 		expect(document.querySelector('.required')).toBeInTheDocument()
 	})
 	
-	test("renders a custom className to the Switch as passed", async () => {
-		render(<SwitchRow className="my-custom-class" />)
-		expect(screen.getByRole("switch")).toBeInTheDocument()
-		expect(screen.getByRole("switch")).toHaveClass("my-custom-class")
+	test("renders a disabled switch as passed", async () => {
+		render(<SwitchRow disabled />)
+		expect(screen.getByRole("switch")).toBeDisabled()
 	})
-
+	
+	test("renders a custom className to the parent as passed", async () => {
+		render(<SwitchRow data-testid="switch-row" className="my-custom-class" />)
+		expect(screen.getByTestId("switch-row")).toBeInTheDocument()
+		expect(screen.getByTestId("switch-row")).toHaveClass("my-custom-class")
+	})
+	
+	test("renders all props as passed", async () => {
+		render(<SwitchRow id="switchrow-1" data-test="47" data-testid="switch-row"/>)
+		expect(screen.getByTestId("switch-row")).toBeInTheDocument()
+		expect(screen.getByTestId("switch-row")).toHaveAttribute('data-test', "47")
+	  })
+	
+	test("renders a Switch with aria-checked set to false by default", async () => {
+		render(<SwitchRow />)
+		expect(screen.getByRole("switch")).toBeInTheDocument()
+		expect(screen.getByRole("switch")).toHaveAttribute("aria-checked", 'false')
+	})
+	
+	test("renders a Switch that is aria-checked if ON is passed", async () => {
+		render(<SwitchRow on />)
+		expect(screen.getByRole("switch")).toBeInTheDocument()
+		expect(screen.getByRole("switch")).toHaveAttribute("aria-checked", 'true')
+	})
+		
+	test("executes custom handler on change as passed", async () => {	
+		const onChangeSpy = jest.fn();
+		render(<SwitchRow onChange={onChangeSpy} />);
+		screen.getByRole('switch').click();
+		expect(onChangeSpy).toHaveBeenCalled();	
+	  })
 	
 })

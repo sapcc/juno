@@ -1,110 +1,94 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 
-const swtchStyles = (size) => {
-	return (
-		`
-			rounded-full
-			relative
-			p-0
-			leading-0
-			focus:outline-none
-			focus:ring-2
-			focus:ring-focus
-			disabled:opacity-50
-			disabled:cursor-not-allowed
-			${ size === 'small' ? 'w-8 h-4' : '' }
-			${ size === 'large' ? 'w-12 h-6' : '' }
-			${ size === 'default' ? 'w-switch-default h-switch-default' : '' }
-		`
-	)
+const switchbasestyles = `
+	rounded-full
+	relative
+	p-0
+	leading-0
+	border
+	g-theme-default
+	border-theme-switch-default
+	focus:outline-none
+	focus:ring-2
+	focus:ring-focus
+	disabled:opacity-50
+	disabled:cursor-not-allowed
+`
+const switchsizestyles = (size) => {
+	switch (size) {
+		case "small":
+		  	return 'w-8 h-4'
+		case "large":
+			return 'w-12 h-6'
+		default:
+		  	return 'w-switch-default h-switch-default'
+	  }
 }
 
-const swtchBodyStyles = (size) => {
-	return (
-		`	
-			absolute
-			top-0
-			right-0
-			bottom-0
-			left-0
-			${ size === 'small' ? 'w-8 h-4' : '' }
-			${ size === 'large' ? 'w-12 h-6' : '' }
-			${ size === 'default' ? 'w-switch-default h-switch-default' : '' }
-		`
-	)	
-}
-
-const swtchTrackStyles = (size, checked) => {
-	return (
-		`
-			border
-			inline-block
-			absolute
-			top-0
-			right-0
-			bottom-0
-			left-0
-			rounded-full
-			g-theme-default
-			border-theme-switch-default
-			hover:border-theme-switch-hover
-			${ size === 'small' ? 'w-8 h-4' : '' }
-			${ size === 'large' ? 'w-12 h-6' : '' }
-			${ size === 'default' ? 'w-switch-default h-switch-default' : '' }
-		`
-	)
+const handlebasestyles = `
+	inline-block
+	absolute
+	top-[1px]
+	rounded-full
+	bg-theme-switch-handle
+	border-theme-default
+`
+const handlesizestyles = (size) => {
+	switch (size) {
+		case "small":
+			return 'w-[12px] h-[12px]'
+		case "large":
+			return 'w-[20px] h-[20px]'
+		default: 
+			return 'w-switch-handle-default h-switch-handle-default'
+	}
+	
 	
 }
 
-const swtchHandleStyles = (size, checked) => {
-	return (
-		`
-			inline-block
-			absolute
-			top-0.5
-			rounded-full
-			bg-theme-switch-handle
-			border-theme-default
-			${ size === 'small' ? 'w-4 h-4' : '' }
-			${ size === 'large' ? 'w-6 h-6' : '' }
-			${ size === 'default' ? 'w-switch-handle-default h-switch-handle-default' : '' }
-			${checked ? 'right-0.5 bg-theme-switch-handle-checked' : 'left-0.5'}
-		`
-	)
-}
+const handleonstyles = `
+	right-[1px] bg-theme-switch-handle-checked
+`
+const handleoffstyles = `
+	left-[1px]
+`
 
 /** A Switch/Toggle component */
 export const Switch = ({
 	name,
 	id,
-	checked,
 	onChange,
 	size,
+	on,
 	disabled,
 	className,
 	...props
 }) => {
-	const [checkedState, toggleChecked] = useState(checked)
-	const [disabledState, toggleDisabled] = useState(disabled)
+	const [isOn, setIsOn] = useState(on)
+	
+	useEffect(() => {
+		setIsOn(on)
+	  }, [on])
+	
+	const handleChange = (event) => {
+		setIsOn(!isOn)
+		onChange(event)
+	}
+	
 	return (
 		<button 
 			type="button"
 			role="switch"
 			name={name}
 			id={id}
-			className={`switch ${swtchStyles(size)} ${className}`}
-			checked={checkedState}
-			aria-checked={checkedState}
-			disabled={disabledState}
-			onChange={onChange}
-			onClick={ () => toggleChecked(!checkedState) }
+			aria-checked={isOn}
+			disabled={disabled}
+			onClick={handleChange}
+			className={`juno-switch juno-switch-${size} ${switchbasestyles} ${switchsizestyles(size)} ${className}`}
 			{...props}
 		>
-			<span className={`switch-body ${swtchBodyStyles(size)}`}>
-				<span className={`switch-track ${swtchTrackStyles(size, checkedState)}`}></span>
-				<span className={`switch-handle ${swtchHandleStyles(size, checkedState)}`}></span>
-			</span>
+			<span className={`juno-switch-handle ${handlebasestyles} ${handlesizestyles(size)} ${ isOn ? handleonstyles : handleoffstyles}`} ></span>
 		</button>
 	)
 }
@@ -117,7 +101,7 @@ Switch.propTypes = {
 	/** Leave empty for default size */
 	size: PropTypes.oneOf(["small", "default", "large"]),
 	/**  Pass checked state for initial rendering. */
-	checked: PropTypes.bool,
+	on: PropTypes.bool,
 	/** Disabled switch */
 	disabled: PropTypes.bool,
 	/** Pass a className */
@@ -129,7 +113,7 @@ Switch.propTypes = {
 Switch.defaultProps = {
 	name: "unnamed switch",
 	id: null,
-	checked: false,
+	on: false,
 	disabled: null,
 	size: "default",
 	className: "",

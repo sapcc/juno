@@ -7,14 +7,43 @@ module.exports = {
   entry: { app: "./src/index" },
   mode: "development",
 
+  // config for webpack-dev-server, version 3.x
+  // devServer: {
+  //   contentBase: path.resolve(__dirname, "build"),
+  //   port: process.env.PORT,
+  //   host: "0.0.0.0",
+
+  //   historyApiFallback: true,
+  //   disableHostCheck: true,
+  //   injectClient: false,
+  //   // Enable hot reloading server. It will provide WDS_SOCKET_PATH endpoint
+  //   // for the WebpackDevServer client so it can learn when the files were
+  //   // updated. The WebpackDevServer client is included as an entry point
+  //   // in the webpack development configuration. Note that only changes
+  //   // to CSS are currently hot reloaded. JS changes will refresh the browser.
+  //   hot: true,
+  //   // quiet: true,
+  //   // Use 'ws' instead of 'sockjs-node' on server since we're using native
+  //   // websockets in `webpackHotDevClient`.
+  //   transportMode: "ws",
+  //   proxy: {
+  //     "/test": {
+  //       target: "http://localhost:4000",
+  //       pathRewrite: { "^/test": "" },
+  //     },
+  //   },
+  // },
+  //Config for webpack-dev-server module version 4.x
   devServer: {
-    contentBase: path.resolve(__dirname, "build"),
+    static: {
+      directory: path.resolve(__dirname, "dist"),
+    },
     port: process.env.PORT,
     host: "0.0.0.0",
 
     historyApiFallback: true,
-    disableHostCheck: true,
-    injectClient: false,
+    allowedHosts: "all",
+    client: false,
     // Enable hot reloading server. It will provide WDS_SOCKET_PATH endpoint
     // for the WebpackDevServer client so it can learn when the files were
     // updated. The WebpackDevServer client is included as an entry point
@@ -24,15 +53,11 @@ module.exports = {
     // quiet: true,
     // Use 'ws' instead of 'sockjs-node' on server since we're using native
     // websockets in `webpackHotDevClient`.
-    transportMode: "ws",
+    webSocketServer: "ws",
     proxy: {
-      "/cdn/auth/0_0_1": {
+      "/test": {
         target: "http://localhost:4000",
-        pathRewrite: { "^/cdn/auth/0_0_1": "" },
-      },
-      "/cdn/auth-2/0_0_1": {
-        target: "http://localhost:4002",
-        pathRewrite: { "^/cdn/auth-2/0_0_1": "" },
+        pathRewrite: { "^/test": "" },
       },
     },
   },

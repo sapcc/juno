@@ -88,5 +88,17 @@ describe("RadioGroup", () => {
 		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
 		expect(document.querySelector("#radio-3")).toBeChecked()
 	})
+	
+	test("renders a custom className", async () => {
+		render(<RadioGroup name="my-radiogroup" className="my-classname" />)
+		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
+		expect(screen.getByRole("radiogroup")).toHaveClass("my-classname")
+	})
+	
+	test("renders all props", async () => {
+		render(<RadioGroup name="my-radiogroup" data-lolol="some-prop" />)
+		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
+		expect(screen.getByRole("radiogroup")).toHaveAttribute("data-lolol", 'some-prop')
+	})
 
 })

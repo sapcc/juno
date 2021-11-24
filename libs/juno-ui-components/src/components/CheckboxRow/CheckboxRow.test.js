@@ -10,7 +10,27 @@ describe("CheckboxRow", () => {
 		expect(screen.getByTestId("checkbox-row")).toBeInTheDocument()
 	})
 	
-	test("renders a checkbox group with a checkbox and an associated label with an id as passed", async () => {
+	test("renders a checked checkbox as passed", async () => {
+		render(<CheckboxRow checked />)
+		expect(screen.getByRole("checkbox")).toBeChecked()
+	})
+	
+	test("renders a checkbox row with a value as passed", async () => {
+		render(<CheckboxRow value="my-value" />)
+		expect(screen.getByRole("checkbox")).toHaveAttribute("value", 'my-value')
+	})
+	
+	test("renders a checkbox row with a name as passed", async () => {
+		render(<CheckboxRow name="my-checkbox" />)
+		expect(screen.getByRole("checkbox")).toHaveAttribute("name", 'my-checkbox')
+	})
+	
+	test("renders a checkbox row with an id as passed", async () => {
+		render(<CheckboxRow id="my-checkbox" />)
+		expect(screen.getByRole("checkbox")).toHaveAttribute("id", 'my-checkbox')
+	})
+	
+	test("renders a checkbox row with a checkbox and an associated label with an id as passed", async () => {
 		render(<CheckboxRow data-testid="my-checkbox-row" label="My Checkbox Row" id="checkbox-row" />)
 		expect(screen.getByRole("checkbox")).toBeInTheDocument()
 		expect(screen.getByLabelText("My Checkbox Row")).toBeInTheDocument()
@@ -27,10 +47,21 @@ describe("CheckboxRow", () => {
 		expect(document.querySelector('.required')).toBeInTheDocument()
 	})
 	
-	// test("renders a custom className on the checkbox as passed", async () => {
-	// 	render(<CheckboxRow className="my-custom-classname" />)
-	// 	expect(screen.getByRole("checkbox")).toBeInTheDocument()
-	// 	expect(screen.getByRole("checkbox")).toHaveClass("my-custom-classname")
-	// })
+	test("renders a custom className", async () => {
+		render(<CheckboxRow data-testid="my-checkbox-row" className="my-classname" />)
+		expect(screen.getByTestId("my-checkbox-row")).toHaveClass("my-classname")
+	})
+	
+	test("renders all props as passed", async () => {
+		render(<CheckboxRow data-testid="my-checkbox-row" data-lolol="some-prop" />)
+		expect(screen.getByTestId("my-checkbox-row")).toHaveAttribute("data-lolol", 'some-prop')
+	})
+	
+	test("fire handler on change as passed", async () => {
+		const onChangeSpy = jest.fn();
+		render(<CheckboxRow onChange={onChangeSpy} />);
+		screen.getByRole('checkbox').click();
+		expect(onChangeSpy).toHaveBeenCalled();
+	})
 	
 })

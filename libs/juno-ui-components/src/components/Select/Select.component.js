@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { Icon } from "../Icon/index.js"
 
 const selectstyles = `
 	bg-theme-select
@@ -20,9 +21,27 @@ const selectstyles = `
 	disabled:opacity-50
 `
 
+const wrapperstyles = `
+	relative
+`
+
+const iconstyles = `
+	absolute
+	right-[.5rem]
+	top-[0]
+	pointer-events-none
+`
+
+const disablediconstyles = `
+	opacity-50
+`
+
+
+
 /*+ A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
 export const Select = ({
 	name,
+	id,
 	children,
 	className,
 	disabled,
@@ -30,21 +49,27 @@ export const Select = ({
 	...props
 }) => {
 	return (
-		<select 
-			name={name || "unnamed select"}
-			className={`select ${selectstyles} ${className}`}
-			onChange={onChange}
-			disabled={disabled}
-			{...props}
-		>
-		{children}
-		</select>
+		<span className={`juno-select-wrapper ${wrapperstyles}`}>
+			<select 
+				name={name || "unnamed select"}
+				id={id}
+				className={`juno-select ${selectstyles} ${className}`}
+				onChange={onChange}
+				disabled={disabled}
+				{...props}
+			>
+			{children}
+			</select>
+			<Icon icon={"expandMore"} className={`${iconstyles} ${ disabled ? disablediconstyles : "" } `} />
+		</span>
 	)
 }
 
 Select.propTypes = {
 	/** Pass a name. */
 	name: PropTypes.string,
+	/** The id of the select */
+	id: PropTypes.string,
 	/** Pass a classname */
 	className: PropTypes.string,
 	/** Pass SelectOption and SelectOptionGroup as children. */
@@ -57,6 +82,7 @@ Select.propTypes = {
 
 Select.defaultProps = {
 	name: null,
+	id: "",
 	className: "",
 	disabled: null,
 	onChange: undefined,

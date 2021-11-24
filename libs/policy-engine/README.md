@@ -50,6 +50,7 @@ policy.check("admin")
   - `project_id`
   - `project_domain_id`
   - `user_id`
+  - `user_name`
 
 - PARAMS expression: `CONTEXT_VARIABLE:%(PARAM_VALUE)s`, example: `"admin": "domain_id:%(domain.id)s"`
 

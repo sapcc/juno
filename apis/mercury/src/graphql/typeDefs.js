@@ -20,7 +20,7 @@ module.exports = `
 
     processingSteps(
       requestID:ID!, 
-      prderBy: ProcessingStepOrderByInput
+      orderBy: ProcessingStepOrderByInput
       paginate: PaginateInput
     ): ProcessingSteps
   }
@@ -79,7 +79,7 @@ module.exports = `
     name: String,
     email: String,
     fullName: String,
-    ettings: JSON,
+    settings: JSON,
     createdAt: String!,
     updatedAt: String!,
   }

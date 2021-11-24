@@ -18,6 +18,7 @@ const textareastyles = `
 export const Textarea = ({
 	name,
 	value,
+	placeholder,
 	className,
 	autoComplete,
 	autoFocus,
@@ -42,8 +43,9 @@ export const Textarea = ({
 			value={val} 
 			autoComplete={autoComplete}
 			autoFocus={autoFocus}
+			placeholder={placeholder}
 			onChange={handleInputChange}
-			className={`${textareastyles} ${className}`}
+			className={`juno-textarea ${textareastyles} ${className}`}
 			{...props}
 		/>
 	)
@@ -54,6 +56,8 @@ Textarea.propTypes = {
 	name: PropTypes.string,
 	/** Pass a value */
 	value: PropTypes.string,
+	/** Pass a placeholder */
+	placeholder: PropTypes.string,
 	/** Pass a className */
 	className: PropTypes.string,
 	/** Specify whether textarea shoudl autocomplete or not */
@@ -67,6 +71,7 @@ Textarea.propTypes = {
 Textarea.defaultProps = {
 	name: null,
 	value: "",
+	placeholder: "",
 	className: "",
 	autoComplete: null,
 	autoFocus: false,

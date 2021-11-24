@@ -15,9 +15,10 @@ ADD . /tmp/repo
 
 # install node modules, build libs and app
 RUN cd /tmp/repo/ && \
-  yarn workspaces focus $LIBS $APP_NAME ; \
-  yarn build-libs ;\
-  yarn workspace $APP_NAME build 
+  yarn install 1>/dev/null ; \
+  yarn workspaces focus $LIBS $APP_NAME 1>/dev/null ; \
+  yarn build-libs 1>/dev/null;\
+  yarn workspace $APP_NAME build 1>/dev/null
 
 # create working dir
 RUN mkdir -p /app

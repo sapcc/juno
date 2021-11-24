@@ -12,7 +12,11 @@ function withOpacity(variableName) {
 }
 
 module.exports = {
-  purge: ["./src/components/**/*.{js,jsx,ts,tsx}"],
+  mode: "jit",
+  purge: [
+    "./src/components/**/*.{js,jsx,ts,tsx}",
+    "./src/dummyComponents/*.{js,jsx,ts,tsx}"
+  ],
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
@@ -47,6 +51,20 @@ module.exports = {
         9: withOpacity("--color-juno-blue-darker-1-raw"),
         10: withOpacity("--color-juno-blue-darker-raw"),
         DEFAULT: withOpacity("--color-juno-blue-raw"),
+      },
+      "juno-grey-light": {
+        1: withOpacity("--color-juno-grey-light-05-raw"),
+        2: withOpacity("--color-juno-grey-light-11-raw"),
+        3: withOpacity("--color-juno-grey-light-20-raw"),
+        4: withOpacity("--color-juno-grey-light-37-raw"),
+        5: withOpacity("--color-juno-grey-light-54-raw"),
+        6: withOpacity("--color-juno-grey-light-71-raw"),
+        7: withOpacity("--color-juno-grey-light-87-raw"),
+        8: withOpacity("--color-juno-grey-light-104-raw"),
+        9: withOpacity("--color-juno-grey-light-179-raw"),
+        10: withOpacity("--color-juno-grey-light-206-raw"),
+        11: withOpacity("--color-juno-grey-light-231-raw"),
+        DEFAULT: withOpacity("--color-juno-grey-light-05-raw"),
       },
       "sap-grey": {
         1: withOpacity("--color-sap-white-raw"),
@@ -110,11 +128,14 @@ module.exports = {
         5: withOpacity("--color-sap-red-raw"),
         6: withOpacity("--color-sap-red-dark-raw"),
         7: withOpacity("--color-sap-red-dark-1-raw"),
+        DEFAULT: withOpacity("--color-sap-red-raw"),
       },
+      "juno-turquoise": withOpacity("--color-juno-turquoise-raw"),
       white: withOpacity("--color-white-raw"),
       black: withOpacity("--color-black-raw"),
       transparent: "transparent",
       danger: withOpacity("--color-danger-raw"),
+      error: withOpacity("--color-error-raw"),
       info: withOpacity("--color-info-raw"),
       success: withOpacity("--color-success-raw"),
       warning: withOpacity("--color-warning-raw"), 
@@ -125,16 +146,19 @@ module.exports = {
       ...theme('colors'),
       theme: {
         default: withOpacity("--color-default-border"),
-        "button-default": withOpacity("--color-button-default-border"),
-        "button-subdued": withOpacity("--color-button-subdued-border"),
+        "button-primary": withOpacity("--color-button-primary-border"),
         "button-primary-hover": withOpacity("--color-button-primary-hover-border"),
+        "button-default": withOpacity("--color-button-default-border"),
         "button-default-hover": withOpacity("--color-button-default-hover-border"),
+        "button-subdued": withOpacity("--color-button-subdued-border"),
         "message-default": withOpacity("--color-message-default-border"),
         "message-danger": withOpacity("--color-message-danger-border"),
+        "message-error": withOpacity("--color-message-error-border"),
         "message-warning": withOpacity("--color-message-warning-border"),
         "message-success": withOpacity("--color-message-success-border"),
         "switch-default": withOpacity("--color-switch-default-border"),
         "switch-hover": withOpacity("--color-switch-hover-border"),
+        "datalist-row": withOpacity("--color-datalist-row-border")
       },
     }),
     extend: {
@@ -142,11 +166,11 @@ module.exports = {
         theme: {
           "global-bg": withOpacity("--color-global-bg"),
           "button-primary": withOpacity("--color-button-primary-bg"),
-          "button-danger": withOpacity("--color-button-danger-bg"),
-          "button-default": withOpacity("--color-button--default-bg"),
           "button-primary-hover": withOpacity("--color-button-primary-hover-bg"),
-          "button-danger-hover": withOpacity("--color-button-danger-hover-bg"),
+          "button-default": withOpacity("--color-button--default-bg"),
           "button-default-hover": withOpacity("--color-button-default-hover-bg"),
+          "button-danger": withOpacity("--color-button-danger-bg"),
+          "button-danger-hover": withOpacity("--color-button-danger-hover-bg"),
           "message": withOpacity("--color-message-bg"),
           "tooltip-popover": withOpacity("--color-tooltip-popover-bg"),
           "textinput": withOpacity("--color-textinput-bg"),
@@ -158,22 +182,27 @@ module.exports = {
           "switch-handle-checked": withOpacity("--color-switch-handle-checked-bg"),
           "required": withOpacity("--color-required-bg"),
           "introbox": withOpacity("--color-introbox-bg"),
+          "datagridrow-selected": withOpacity("--color-datagridrow-selected"),
+          "datalistrow-selected": withOpacity("--color-datalistrow-selected"),
+          "message-border-danger": withOpacity("--color-message-danger-border"),
+          "message-border-default": withOpacity("--color-message-default-border"),
+          "message-border-error": withOpacity("--color-message-error-border"),
+          "message-border-warning": withOpacity("--color-message-warning-border"),
+          "message-border-success": withOpacity("--color-message-success-border"),
         },
       },
-      // Not working?
-      // backgroundImage: {
-      //   theme: {
-      //     "button-primary": "var(--gradient-button-primary-bg)"
-      //   }
-      // },
+      backgroundImage: {
+        "theme-button-primary": "var(--gradient-button-primary-bg)",
+        "theme-button-primary-hover": "var(--gradient-button-primary-hover-bg)",
+      },
       textColor: {
         theme: {
           default: withOpacity("--color-global-text"),
           "high": withOpacity("--color-text-high"),
           "medium": withOpacity("--color-text-medium"),
           "disabled": withOpacity("--color-text-disabled"),
-          "link": withOpacity("--color-text-link"),
-          "on-primary": withOpacity("--color-button-primary-text"),
+          "link": withOpacity("--color-text-link"), 
+          "button-primary": withOpacity("--color-button-primary-text"),
           "button-primary-hover": withOpacity("--color-button-primary-hover-text"),
           "on-danger": withOpacity("--color-button-danger-text"),
           "on-default": withOpacity("--color-button-default-text"),
@@ -190,6 +219,7 @@ module.exports = {
         sm: "0.5rem",
         md: "1rem",
         lg: "1.5rem",
+        "grid-column": "0 .5rem"
       },
       height: {
         "textinput": "2.75rem",
@@ -200,10 +230,29 @@ module.exports = {
       width: {
         "switch-default": "2.625rem",
         "switch-handle-default": "1.1875rem",
+        "grid-column-default": "var(--grid-column-default-width)",
+        "grid-col-1": "8.333333%",
+        "grid-col-2": "16.666667%",
+        "grid-col-3": "25%",
+        "grid-col-4": "33.333333%",
+        "grid-col-5": "41.666667%",
+        "grid-col-6": "50%",
+        "grid-col-7": "58.333333%",
+        "grid-col-8": "66.666667%",
+        "grid-col-9": "75%",
+        "grid-col-10": "83.333333%",
+        "grid-col-11": "91.666667%",
+        "grid-col-12": "100%",
       },
       borderRadius: {
         "3px": "3px",
       },
+      margin: {
+        "grid-row": "0 var(--grid-row-margin-x)",
+      },
+      flex: {
+        "grid-column": "var(--grid-column-flex-grow) var(--grid-column-flex-shrink) var(--grid-column-flex-basis)"
+      }
     },
     borderWidth: {
       DEFAULT: "1px",
@@ -218,7 +267,8 @@ module.exports = {
     extend: {
       opacity: ['disabled'],
       backgroundColor: ['disabled'],
-      cursor: ['disabled']
+      cursor: ['disabled'],
+      backgroundImage: ['hover']
     }
   },
   plugins: [],

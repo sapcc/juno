@@ -1,0 +1,8 @@
+/* IMPORTANT: Don't import tailwind base in host app, it could overwrite ui component styles */
+/* @tailwind base; */
+@tailwind components;
+@tailwind utilities;
+
+.documentation-banner {
+  background: url(assets/images/docu_shape.svg) top 1rem right no-repeat;
+}

@@ -42,16 +42,16 @@ export const CheckboxRow =({
 	
 	const handleChange = (event) => {
 		setChecked(!isChecked)
-		onChange()
+		onChange(event)
 	}
 	
 	return (
 		<div
-			className={`${checkboxrow}`}
+			className={`juno-checkbox-row ${checkboxrow}  ${className}`}
 			{...props}
 		>
-			<div className={`checkbox-container ${checkboxcontainerstyles}`}>
-				<Checkbox name={name} checked={isChecked} disabled={disabled} onChange={handleChange} id={id} value={value || ""} className={className} />
+			<div className={`juno-checkbox-container ${checkboxcontainerstyles}`}>
+				<Checkbox name={name} checked={isChecked} disabled={disabled} onChange={handleChange} id={id} value={value || ""} />
 			</div>
 			<div>
 				<Label text={label} htmlFor={id} required={required} disabled={disabled} />

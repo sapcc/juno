@@ -31,9 +31,24 @@ describe("Textarea", () => {
 		expect(screen.getByRole("textbox")).toBeDisabled()
 	})
 	
+	test("renders a placeholder as passed", async () => {
+		render(<Textarea placeholder="my placeholder"/>)
+		expect(screen.getByRole("textbox")).toHaveAttribute('placeholder', "my placeholder")
+	})
+	
 	test("renders a className as passed", async () => {
 		render(<Textarea className="my-custom-class" />)
 		expect(screen.getByRole("textbox")).toHaveClass("my-custom-class")
+	})
+	
+	test("renders autocomplete on as passed", async () => {
+		render(<Textarea autoComplete="on"/>)
+		expect(screen.getByRole("textbox")).toHaveAttribute('autocomplete', "on")
+	})
+	
+	test("renders autofocus as passed", async () => {
+		render(<Textarea autoFocus />)
+		expect(screen.getByRole("textbox")).toHaveFocus()
 	})
 	
 	test("fires onChange handler as passed", async () => {
@@ -47,8 +62,7 @@ describe("Textarea", () => {
 	})
 	
 	test("renders other props as passed", async () => {
-		render(<Textarea autoComplete="on" cols="100" rows="25" minLength="0" maxLength="100"/>)
-		expect(screen.getByRole("textbox")).toHaveAttribute('autocomplete', "on")
+		render(<Textarea cols="100" rows="25" minLength="0" maxLength="100"/>)
 		expect(screen.getByRole("textbox")).toHaveAttribute('cols', "100")
 		expect(screen.getByRole("textbox")).toHaveAttribute('rows', "25")
 		expect(screen.getByRole("textbox")).toHaveAttribute('minlength', "0")

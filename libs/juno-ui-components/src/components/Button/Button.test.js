@@ -15,6 +15,12 @@ describe("Button", () => {
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveTextContent("Click me")
   })
+  
+  test("renders a disabled button as passed", async () => {
+    render(<Button disabled />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute("disabled")
+  })
 
   test('onclick handler is called as passed', () => {
     const onClickSpy = jest.fn();
@@ -51,19 +57,19 @@ describe("Button", () => {
   test("renders a default button", async () => {
     render(<Button>Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
-    expect(screen.getByRole("button")).toHaveClass("button-default")
+    expect(screen.getByRole("button")).toHaveClass("juno-button-default")
   })
   
   test("renders a primary button", async () => {
     render(<Button variant="primary">Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
-    expect(screen.getByRole("button")).toHaveClass("button-primary")
+    expect(screen.getByRole("button")).toHaveClass("juno-button-primary")
   })
 
   test("renders a danger button", async () => {
     render(<Button variant="danger">Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
-    expect(screen.getByRole("button")).toHaveClass("button-danger")
+    expect(screen.getByRole("button")).toHaveClass("juno-button-danger")
   })
 
   test("renders a disabled button", async () => {
@@ -99,6 +105,13 @@ describe("Button", () => {
   test("renders a custom className as passed", async () => {
     render(<Button className="my-custom-classname">Click me</Button>)
     expect(screen.getByRole("button")).toHaveClass("my-custom-classname")
+  })
+  
+  test("renders all props as passed", async () => {
+    render(<Button id="button-1" data-lolol={true}/>)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute('id', 'button-1')
+    expect(screen.getByRole("button")).toHaveAttribute('data-lolol')
   })
 
 })

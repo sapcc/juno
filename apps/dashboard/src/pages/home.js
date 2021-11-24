@@ -1,49 +1,42 @@
-import tw from "twin.macro"
-import { ReactComponent as CCPlusOneLogo } from "../assets/images/CCplusOne_logo.svg"
-import { LayoutContainer, PLarge } from "../components/shared/StyledComponents"
+import React, { useCallback } from "react"
 
-import Pricing from "../components/landingpage/Pricing"
-import Benefits from "../components/landingpage/Benefits"
-import Worldmap from "../components/landingpage/Worldmap"
-import Services from "../components/landingpage/Services"
-const Container = tw(LayoutContainer)`
-  pt-16
-  px-16
-`
+import useStore from "../store"
+import CCPlusOneLogo from "../assets/images/CCplusOne_logo.svg"
+import WorldMap from "../assets/images/map.svg"
+import backgroundTop from "../assets/images/background_header.png"
 
-const PageLead = tw.div`
-  mx-8
-`
+import LoginOverlay from "../components/landingpage/LoginOverlay"
 
-const LeadText = tw(PLarge)`
-  py-8
-  ml-8
-  w-3/5
-`
+import { Button, Icon, Stack } from "juno-ui-components"
 
 const Home = () => {
+  const showLoginOverlay = useStore(useCallback((state) => state.showLoginOverlay))
+  const selectedRegion   = useStore(useCallback((state) => state.region))
+
   return (
-    <>
-      <Container>
-        <PageLead>
-          <CCPlusOneLogo />
-          <LeadText>
-            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita
-            kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-            amet.
-          </LeadText>
-        </PageLead>
+    <div className="relative">
+      <LoginOverlay />
+      <div className="container mx-auto pt-16">
+        <CCPlusOneLogo className="-ml-7 mb-4" alt="Converged Cloud" />
 
-        <Pricing />
-        <Benefits />
-      </Container>
-
-      <Worldmap />
-
-      <LayoutContainer>
-        <Services />
-      </LayoutContainer>
-    </>
+        <Stack className="items-center">
+          <div className="text-2xl w-3/5 mr-auto">
+            Engage eyeballs collaborative: best-of-breed applications out-of-the-box dynamic next-generation optimize, B2B.
+          </div>
+          <div>
+            <Button className="whitespace-nowrap" onClick={() => showLoginOverlay()}>
+              <Icon icon="place" color="text-juno-blue" className="mr-3" />
+              Select {selectedRegion ? 'domain' : 'region'}
+            </Button>
+          </div>
+        </Stack>
+      </div>
+      <div className="bg-top bg-no-repeat mt-24" style={{ backgroundImage: `url('${backgroundTop}')` }}>
+        <div className="container mx-auto">
+          <WorldMap className="w-full" />
+        </div>
+      </div>
+    </div>
   )
 }
 

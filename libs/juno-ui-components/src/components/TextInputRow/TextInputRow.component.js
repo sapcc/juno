@@ -118,10 +118,10 @@ export const TextInputRow = ({
 	
 	return (
 		<div 
-			className={`textinput-row ${variantStyle(variant, "container")} `}
+			className={`juno-textinput-row ${variantStyle(variant, "container")} ${className}`}
 			{...props}
 		>
-			<div className={`label-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
+			<div className={`juno-label-container ${variantStyle(variant, "labelcontainer")} ${minimizedLabel(variant, val, focus)}`}>
 				<Label 
 					text={label} 
 					htmlFor={id} 
@@ -130,7 +130,7 @@ export const TextInputRow = ({
 					disabled={ variant === 'stacked' && disabled ? disabled : false }
 				/>
 			</div>
-			<div className={`input-container`} >
+			<div className={`juno-input-container`} >
 				<TextInput 
 					type={type} 
 					value={val}
@@ -141,7 +141,7 @@ export const TextInputRow = ({
 					onChange={handleChange} 
 					onFocus={() => setFocus(true)}
 					onBlur={() => setFocus(false)}
-					className={`${variantStyle(variant, "input")} ${className}`} 
+					className={`${variantStyle(variant, "input")}`} 
 				/>
 				{helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
 			</div>
@@ -151,7 +151,7 @@ export const TextInputRow = ({
 
 TextInputRow.propTypes = { 
 	/** The type of the input element to render */
-	type: PropTypes.oneOf(["text", "password", "email", "tel", "url"]),
+	type: PropTypes.oneOf(["text", "password", "email", "tel", "url", "number"]),
 	/** Floating (default) or stacked layout variant */
 	variant: PropTypes.oneOf(["floating", "stacked"]),
 	/** Optional initial value */

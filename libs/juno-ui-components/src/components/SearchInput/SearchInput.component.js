@@ -97,7 +97,8 @@ export const SearchInput = ({
   variant,
   ...props
 }) => {
-  const [val, setValue] = useState("")
+
+  const [val, setValue] = useState(value)
 	
 	useEffect(() => {
 		setValue(value)
@@ -109,7 +110,7 @@ export const SearchInput = ({
   }
 
   const handleKeyPress = (event) => {
-    if (event.key === "Enter" && onSearch) onSearch(val)
+    if (event.key === "Enter" && onSearch) { onSearch(val) }
     onKeyPress && onKeyPress(event)
   }
 
@@ -119,7 +120,7 @@ export const SearchInput = ({
   }
 
   return (
-    <div className={`search-input-wrapper ${wrapperClasses(variant)}`}>
+    <div className={`juno-search-input-wrapper ${wrapperClasses(variant)}`} role="search">
       <Stack gap={2} className="items-center">
         <input
           type="search"
@@ -127,7 +128,7 @@ export const SearchInput = ({
           placeholder={placeholder}
           value={val}
           autoComplete={autoComplete}
-          className={`search-input ${searchClasses(variant)} ${className || ""}`}
+          className={`juno-search-input ${searchClasses(variant)} ${className || ""}`}
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
           {...props}
@@ -135,6 +136,7 @@ export const SearchInput = ({
         <ClickableIcon
           icon="search"
           className={`absolute ${searchIconClasses(variant)}`}
+          title="Search"
           onClick={handleClick}
         />
       </Stack>

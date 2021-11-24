@@ -87,15 +87,37 @@ module.exports = {
       shared: ["react", "react-dom"],
     }),
   ],
-  //Config for webpack-dev-server module
+  //Config for webpack-dev-server module version 3.x
+  // devServer: {
+  //   contentBase: path.resolve(__dirname, "dist"),
+  //   port: process.env.PORT,
+  //   host: "0.0.0.0",
+
+  //   historyApiFallback: true,
+  //   disableHostCheck: true,
+  //   injectClient: false,
+  //   // Enable hot reloading server. It will provide WDS_SOCKET_PATH endpoint
+  //   // for the WebpackDevServer client so it can learn when the files were
+  //   // updated. The WebpackDevServer client is included as an entry point
+  //   // in the webpack development configuration. Note that only changes
+  //   // to CSS are currently hot reloaded. JS changes will refresh the browser.
+  //   hot: true,
+  //   // quiet: true,
+  //   // Use 'ws' instead of 'sockjs-node' on server since we're using native
+  //   // websockets in `webpackHotDevClient`.
+  //   transportMode: "ws",
+  // },
+  //Config for webpack-dev-server module version 4.x
   devServer: {
-    contentBase: path.resolve(__dirname, "dist"),
+    static: {
+      directory: path.resolve(__dirname, "dist"),
+    },
     port: process.env.PORT,
     host: "0.0.0.0",
 
     historyApiFallback: true,
-    disableHostCheck: true,
-    injectClient: false,
+    allowedHosts: "all",
+    client: false,
     // Enable hot reloading server. It will provide WDS_SOCKET_PATH endpoint
     // for the WebpackDevServer client so it can learn when the files were
     // updated. The WebpackDevServer client is included as an entry point
@@ -105,6 +127,6 @@ module.exports = {
     // quiet: true,
     // Use 'ws' instead of 'sockjs-node' on server since we're using native
     // websockets in `webpackHotDevClient`.
-    transportMode: "ws",
+    webSocketServer: "ws",
   },
 }

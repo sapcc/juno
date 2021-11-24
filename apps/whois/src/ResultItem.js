@@ -48,8 +48,8 @@ const ResultItem = ({ content, expand }) => {
         {content.floatingIP ? 
           <div className="font-bold">{content.floatingIP}</div>
         :
-          content.fixedIP &&
-            <div className="font-bold">{content.fixedIP}</div>
+          content.fixedIPs &&
+            <div className="font-bold">{content.fixedIPs[0]}</div>
         }
         {(content.domainName || content.projectName) &&
           <div className="text-theme-disabled">{content.domainName} / {content.projectName}</div>
@@ -65,10 +65,14 @@ const ResultItem = ({ content, expand }) => {
                 <div key={contactType}>
                   <h5>{capitalize(contactType)}:</h5>
                   {contactInfo ?
-                    contactInfo.email ? 
-                      <a href={`mailto:${contactInfo.email}`} className="block truncate">{contactInfo.email}</a>
-                      :
-                      <span className="italic">{contactInfo.ID}</span>
+                    <div className="truncate">
+                      <span className="italic pr-1">{contactInfo.ID}</span>
+                      { contactInfo.email &&
+                        <>
+                          <span className="text-theme-disabled">|</span> <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
+                        </>
+                      }
+                    </div>
                     :
                     <span className="text-theme-disabled">--</span>
                   }
@@ -79,7 +83,7 @@ const ResultItem = ({ content, expand }) => {
 
         }
       </div>
-      <div className={`${rightColumn} p-6 bg-juno-grey-blue-4`}>
+      <div className={`${rightColumn} p-6 bg-theme-details`}>
         { isExpanded &&
           <Stack gap={3} className="cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
             <div className="ml-auto">{isExpanded ? "Collapse" : "Expand"} result </div>

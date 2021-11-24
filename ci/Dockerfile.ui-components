@@ -12,9 +12,9 @@ ADD . /tmp/repo
 
 # install node modules, build libs and app
 RUN cd /tmp/repo/ && \
-  yarn workspace juno-ui-components install && \
-  yarn workspace juno-ui-components build && \
-  yarn workspace juno-ui-components build-storybook -o ./build
+  yarn workspace juno-ui-components install 1>/dev/null && \
+  yarn workspace juno-ui-components build 1>/dev/null && \
+  yarn workspace juno-ui-components build-storybook -o ./build 1>/dev/null
 
 # create working dir
 RUN mkdir -p /app

@@ -9,19 +9,40 @@ describe("Message", () => {
 		expect(screen.getByTestId("my-message")).toBeInTheDocument()
 	  })
   
-	test("renders a default Message if no variant passed", async () => {
+	test("renders an info Message per default if no variant passed", async () => {
 		render(<Message data-testid="my-message" />)
-		expect(screen.getByTestId("my-message")).toHaveClass("message-default")
+		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")
+		expect(screen.getByRole("img")).toHaveClass("text-info")
+	})
+	
+	test("renders an info Message as passed", async () => {
+		render(<Message data-testid="my-message" variant="info" />)
+		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")
+		expect(screen.getByRole("img")).toHaveClass("text-info")
 	})
 	
 	test("renders a warning Message as passed", async () => {
 	  render(<Message data-testid="my-message" variant="warning" />)
-	  expect(screen.getByTestId("my-message")).toHaveClass("message-warning")
+	  expect(screen.getByTestId("my-message")).toHaveClass("juno-message-warning")
+	  expect(screen.getByRole("img")).toHaveClass("text-warning")
 	 })
-	
-	test("renders a danger Message as passed", async () => {
+	 
+	test("renders a danger message as passed", async () => {
 		render(<Message data-testid="my-message" variant="danger" />)
-		expect(screen.getByTestId("my-message")).toHaveClass("message-danger")
+		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-danger")
+		expect(screen.getByRole("img")).toHaveClass("text-danger")
+	})
+	
+	test("renders an error Message as passed", async () => {
+		render(<Message data-testid="my-message" variant="error" />)
+		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-error")
+		expect(screen.getByRole("img")).toHaveClass("text-error")
+	})
+	
+	test("renders a success Message as passed", async () => {
+		render(<Message data-testid="my-message" variant="success" />)
+		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-success")
+		expect(screen.getByRole("img")).toHaveClass("text-success")
 	})
 		
 	test("renders a title as passed", async () => {
@@ -44,12 +65,12 @@ describe("Message", () => {
 		expect(screen.getByTestId("my-message")).toHaveTextContent("My Message children text goes here!")
 	})
 		
-	test("renders other classNames as passed", async () => {
+	test("renders custom classNames as passed", async () => {
 		render(<Message data-testid="my-message" className="my-custom-class" />)
 		expect(screen.getByTestId("my-message")).toHaveClass("my-custom-class")
 	})
 		
-	test("renders other props as passed", async () => {
+	test("renders all props as passed", async () => {
 		render(<Message data-testid="my-message" name="My shiny little Message" />)
 		expect(screen.getByTestId("my-message")).toHaveAttribute('name', "My shiny little Message")
 	})

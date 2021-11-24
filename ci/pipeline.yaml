@@ -66,8 +66,9 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn workspaces focus juno-ui-components
-                CI=true yarn workspace juno-ui-components test
+                yarn install 1>/dev/null
+                yarn workspaces focus juno-ui-components 1>/dev/null
+                CI=true yarn workspace juno-ui-components test 1>/dev/null
        
   # build juno-ui-components image and push it to keppel
   - name: build juno-ui-components
@@ -122,9 +123,10 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn workspaces focus juno-ui-components dashboard
-                yarn workspace juno-ui-components build
-                CI=true yarn workspace dashboard test
+                yarn install 1>/dev/null
+                yarn workspaces focus juno-ui-components dashboard 1>/dev/null
+                yarn workspace juno-ui-components build 1>/dev/null
+                CI=true yarn workspace dashboard test 1>/dev/null
 
   # build dashboard image and push it to keppel
   - name: build dashboard
@@ -145,7 +147,7 @@ jobs:
               build: app-dashboard.git
               build_args: 
                 KEPPEL_HOSTNAME: {{keppel-hostname}}
-                LIBS: juno-ui-components
+                LIBS: juno-ui-components communicator url-state-provider url-state-router
               dockerfile: app-dashboard.git/ci/Dockerfile.dashboard
               tag: dashboard.version/version
             get_params:
@@ -198,8 +200,9 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn workspaces focus mercury
-                CI=true yarn workspace mercury test-prod
+                yarn install 1>/dev/null
+                yarn workspaces focus mercury 1>/dev/null
+                CI=true yarn workspace mercury test-prod 1>/dev/null
 
   # build dashboard image and push it to keppel
   - name: build mercury
@@ -219,7 +222,7 @@ jobs:
               build: api-mercury.git
               build_args: 
                 KEPPEL_HOSTNAME: {{keppel-hostname}}
-                LIBS: juno-ui-components
+                LIBS: juno-ui-components communicator url-state-provider url-state-router
               dockerfile: api-mercury.git/ci/Dockerfile.mercury
               tag: mercury.version/version
             get_params:
@@ -257,9 +260,10 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn workspaces focus juno-ui-components auth
-                yarn workspace juno-ui-components build
-                CI=true yarn workspace auth test                
+                yarn install 1>/dev/null
+                yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router auth 1>/dev/null
+                yarn build 1>/dev/null
+                CI=true yarn workspace auth test 1>/dev/null
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
@@ -279,7 +283,7 @@ jobs:
           build: app-auth.git
           build_args: 
             APP_NAME: "auth" 
-            LIBS: juno-ui-components
+            LIBS: juno-ui-components communicator url-state-provider url-state-router
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-auth.git/ci/Dockerfile.app
 
@@ -313,9 +317,10 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn workspaces focus juno-ui-components designate
-                yarn workspace juno-ui-components build
-                CI=true yarn workspace designate test                
+                yarn install 1>/dev/null
+                yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router designate 1>/dev/null
+                yarn build 1>/dev/null
+                CI=true yarn workspace designate test 1>/dev/null
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
@@ -335,7 +340,7 @@ jobs:
           build: app-designate.git
           build_args: 
             APP_NAME: "designate" 
-            LIBS: juno-ui-components
+            LIBS: juno-ui-components communicator url-state-provider url-state-router
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-designate.git/ci/Dockerfile.app
 
@@ -369,9 +374,10 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn workspaces focus juno-ui-components widget-loader
-                yarn workspace juno-ui-components build
-                CI=true yarn workspace widget-loader test                
+                yarn install 1>/dev/null
+                yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router widget-loader 1>/dev/null
+                yarn build 1>/dev/null
+                CI=true yarn workspace widget-loader test 1>/dev/null
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
@@ -391,7 +397,7 @@ jobs:
           build: app-widget-loader.git
           build_args: 
             APP_NAME: "widget-loader" 
-            LIBS: juno-ui-components
+            LIBS: juno-ui-components communicator url-state-provider url-state-router
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-widget-loader.git/ci/Dockerfile.app
 
@@ -425,9 +431,10 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno
-                yarn workspaces focus juno-ui-components whois
-                yarn workspace juno-ui-components build
-                CI=true yarn workspace whois test                
+                yarn install 1>/dev/null
+                yarn workspaces focus juno-ui-components communicator url-state-provider url-state-router whois 1>/dev/null
+                yarn build 1>/dev/null
+                CI=true yarn workspace whois test 1>/dev/null
 
   # build image for each app in /apps
   # we tag this images as latest. App images only serve as a buffer 
@@ -447,7 +454,7 @@ jobs:
           build: app-whois.git
           build_args: 
             APP_NAME: "whois" 
-            LIBS: juno-ui-components
+            LIBS: juno-ui-components communicator url-state-provider url-state-router
             KEPPEL_HOSTNAME: {{keppel-hostname}}
           dockerfile: app-whois.git/ci/Dockerfile.app
 
@@ -717,9 +724,9 @@ jobs:
               - -c
               - |
                 cd $PWD/app/juno/e2e
-                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/dashboard/*"
-                CYPRESS_BASE_URL=https://cdn.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/cdn/*"
-                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/ui-components/*"
+                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/dashboard/*" && \
+                CYPRESS_BASE_URL=https://cdn.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/cdn/*" && \
+                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/ui-components/*" && \
                 CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/mercury/*"
 
   - name: deploy to s-eu-nl-1
@@ -899,7 +906,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apis/mercury","package.json","ci/Dockerfile.mercury","e2e"]
+      paths: ["apis/mercury","package.json","ci/Dockerfile.mercury","e2e",".yarn"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
  
@@ -909,7 +916,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/auth","package.json","libs","ci/Dockerfile.app","e2e"]
+      paths: ["apps/auth","package.json","libs","ci/Dockerfile.app","e2e", ".yarn","ci/pipeline.yaml"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
@@ -925,7 +932,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/designate","package.json","libs","ci/Dockerfile.app","e2e"]
+      paths: ["apps/designate","package.json","libs","ci/Dockerfile.app","e2e", ".yarn","ci/pipeline.yaml"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
@@ -941,7 +948,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/widget-loader","package.json","libs","ci/Dockerfile.app","e2e"]
+      paths: ["apps/widget-loader","package.json","libs","ci/Dockerfile.app","e2e", ".yarn","ci/pipeline.yaml"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
@@ -957,7 +964,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/whois","package.json","libs","ci/Dockerfile.app","e2e"]
+      paths: ["apps/whois","package.json","libs","ci/Dockerfile.app","e2e", ".yarn","ci/pipeline.yaml"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
 
@@ -982,7 +989,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["ci","package.json"]
+      paths: ["ci","package.json",".yarn"]
       username: sapcc-bot
       password: {{real-github-access-token}}     
 

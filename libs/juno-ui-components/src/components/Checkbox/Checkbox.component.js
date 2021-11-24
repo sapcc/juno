@@ -87,7 +87,7 @@ export const Checkbox = ({
 		
 	return (
 		<div 
-			className={`${mockcheckboxstyles} ${ hasFocus ? mockfocusstyles : "" } ${ disabled ? mockdisabledstyles : "" } ${className}`}
+			className={`juno-checkbox ${mockcheckboxstyles} ${ hasFocus ? mockfocusstyles : "" } ${ disabled ? mockdisabledstyles : "" } ${className}`}
 			{...props}
 		>
 			{ isChecked ? 	<svg 
@@ -113,7 +113,7 @@ export const Checkbox = ({
 				onBlur={handleBlur}
 			/>
 			
-			{ isIndeterminate && !isChecked ? <div class={`${mockindeterminatestyles}`}></div>
+			{ isIndeterminate && !isChecked ? <div className={`${mockindeterminatestyles}`}></div>
 											: "" }
 		</div>
 	)

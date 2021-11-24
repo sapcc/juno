@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Switch } from "../Switch/index.js"
 import { Label } from "../Label/index.js"
@@ -17,10 +17,10 @@ const helptextstyles = `
 
 /** A checkbox input group containing a checkbox, associated label, and structural markup */
 export const SwitchRow =({
-	value,
 	name,
 	label,
 	id,
+	on,
 	disabled,
 	helptext,
 	required,
@@ -28,19 +28,31 @@ export const SwitchRow =({
 	onChange,
 	...props
 }) => {
+	
+	const [isOn, setIsOn] = useState(on)
+	
+	useEffect(() => {
+		setIsOn(on)
+	  }, [on])
+	
+	const handleChange = (event) => {
+		setIsOn(!isOn)
+		onChange(event)
+	}
+	
+	
 	return (
 		<div
-			className={`switch-row ${switchrow}`}
+			className={`juno-switch-row ${switchrow} ${className}`}
 			{...props}
 		>
 			<div>
 				<Switch 
 					name={name} 
-					onChange={onChange} 
+					onChange={handleChange} 
 					id={id} 
-					value={value || ""} 
+					on={on}
 					disabled={disabled} 
-					className={className}
 				/>
 			</div>
 			<div>
@@ -52,14 +64,14 @@ export const SwitchRow =({
 }
 
 SwitchRow.propTypes = {
-	/** Optional initial value */
-	value: PropTypes.string,
 	/** Name attribute of the checkbox element */
 	name: PropTypes.string,
 	/** Label text */
 	label: PropTypes.string,
 	/** Id */
 	id: PropTypes.string,
+	/** Whether the Switch inside the row is on */
+	on: PropTypes.bool,
 	/** Disabled */
 	disabled: PropTypes.bool,
 	/** Help text */
@@ -73,13 +85,13 @@ SwitchRow.propTypes = {
 }
 
 SwitchRow.defaultProps = {
-	value: null,
 	name: null,
 	label: null,
 	id: null,
+	on: false,
 	disabled: null,
 	helptext: null,
-	requirred: null,
+	required: null,
 	className: "",
 	onChange: undefined,
 }
