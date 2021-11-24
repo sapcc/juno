@@ -105,13 +105,15 @@ export const Button = ({
   variant,
   size,
   disabled,
+  href,
   className,
   onClick,
   children,
   ...props
 }) => {
-  const titleValue = title || label || "unspecified button"
-  return (
+  const titleValue = title || label || "button"
+
+  const button = (
     <button
       type="button"
       className={`juno-button juno-button-${variant} ${btn} ${variantClass(variant)} ${sizeClass(size)} ${className}`}
@@ -123,6 +125,22 @@ export const Button = ({
       {label || children}
     </button>
   )
+
+  const anchor = (
+    <a
+      href={href}
+      role="button"
+      className={`juno-button juno-button-${variant} ${btn} ${variantClass(variant)} ${sizeClass(size)} ${className}`}
+      disabled={disabled}
+      onClick={!props.disabled ? onClick : undefined}
+      title={titleValue}
+      {...props}
+    >
+      {label || children}
+    </a>
+  )
+
+  return href ? anchor : button
 }
 
 Button.propTypes = {
@@ -132,6 +150,8 @@ Button.propTypes = {
   size: PropTypes.oneOf(["small", "default", "large"]),
   /** Whether the button is disabled */
   disabled: PropTypes.bool,
+  /** Optionally specify an href. This will turn the Button into an <a> element */
+  href: PropTypes.string,
   /** Button label can be passed like this or as children */
   label: PropTypes.string,
   /** Specify title for accessibility. Gets value of label if no title specified */
@@ -149,6 +169,7 @@ Button.defaultProps = {
   size: "default",
   disabled: null,
   className: "",
+  href: null,
   title: null,
   onClick: undefined,
 }
