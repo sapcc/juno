@@ -9,6 +9,11 @@ const switchrow = `
 	mb-5
 `
 
+const switchcontainerstyles = `
+	mr-2
+	leading-none
+`
+
 const helptextstyles = `
 	text-xs
 	text-theme-disabled
@@ -46,7 +51,7 @@ export const SwitchRow =({
 			className={`juno-switch-row ${switchrow} ${className}`}
 			{...props}
 		>
-			<div>
+			<div className={`juno-switch-container ${switchcontainerstyles}`} >
 				<Switch 
 					name={name} 
 					onChange={handleChange} 
