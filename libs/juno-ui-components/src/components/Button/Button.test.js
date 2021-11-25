@@ -22,6 +22,14 @@ describe("Button", () => {
     expect(screen.getByRole("button")).toHaveAttribute("disabled")
   })
 
+  // it seems we can't properly check whether it's an <a> element that is being rendered
+  // so for now ensure that it responds to the button aria role and has an href attribute
+  test("renders an <a> element with role button if href is passed", async () => {
+    render(<Button href="http://blah.com" />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute("href")
+  })
+
   test('onclick handler is called as passed', () => {
     const onClickSpy = jest.fn();
     render(<Button onClick={onClickSpy} />);
@@ -48,10 +56,10 @@ describe("Button", () => {
     expect(screen.getByRole("button")).toHaveAttribute('title', "Click me label")
   })
 
-  test("renders 'unspecifed button' as title if no title and no label given", async () => {
+  test("renders 'button' as title if no title and no label given", async () => {
     render(<Button>Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
-    expect(screen.getByRole("button")).toHaveAttribute('title', "unspecified button")
+    expect(screen.getByRole("button")).toHaveAttribute('title', "button")
   })
   
   test("renders a default button", async () => {

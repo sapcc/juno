@@ -89,3 +89,15 @@ Disabled.args = {
   label: "Primary Disabled",
   disabled: true,
 }
+
+export const LinkAsButton = Template.bind({})
+LinkAsButton.parameters = {
+  docs: {
+    description: { story: 'If you want to render a link that looks like a button pass an "href" to the Button. All other props work the same as for regular buttons'}
+  },
+}
+LinkAsButton.args = {
+  ...Primary.args,
+  label: "Link as button",
+  href: "https://www.sap.com",
+}
