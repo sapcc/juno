@@ -68,5 +68,14 @@ describe("Textarea", () => {
 		expect(screen.getByRole("textbox")).toHaveAttribute('minlength', "0")
 		expect(screen.getByRole("textbox")).toHaveAttribute('maxlength', "100")
 	})
+	
+	test("does not fire onChange handler when disabled", async () => {
+		const onChangeSpy = jest.fn();
+		const { container } = render(
+				<Textarea onChange={onChangeSpy} disabled />
+			)
+		screen.getByRole('textbox').click();
+		expect(onChangeSpy).not.toHaveBeenCalled();	
+	})
 
 })

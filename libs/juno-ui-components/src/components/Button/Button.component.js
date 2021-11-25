@@ -12,7 +12,8 @@ const btn = `
   focus:ring-2
   focus:ring-focus
   disabled:opacity-50
-  disabled:cursor-default
+  disabled:cursor-not-allowed
+  disabled:pointer-events-none
 `
 
 const btnDefault = `
@@ -118,7 +119,7 @@ export const Button = ({
       type="button"
       className={`juno-button juno-button-${variant} ${btn} ${variantClass(variant)} ${sizeClass(size)} ${className}`}
       disabled={disabled}
-      onClick={!props.disabled ? onClick : undefined}
+      onClick={onClick}
       title={titleValue}
       {...props}
     >
@@ -132,7 +133,7 @@ export const Button = ({
       role="button"
       className={`juno-button juno-button-${variant} ${btn} ${variantClass(variant)} ${sizeClass(size)} ${className}`}
       disabled={disabled}
-      onClick={!props.disabled ? onClick : undefined}
+      onClick={onClick}
       title={titleValue}
       {...props}
     >

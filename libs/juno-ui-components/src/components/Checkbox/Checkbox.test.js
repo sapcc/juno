@@ -68,5 +68,12 @@ describe("Checkbox", () => {
 		screen.getByRole('checkbox').click();
 		expect(onChangeSpy).toHaveBeenCalled();	
 	})
+	
+	test("does not fire a handler on change when disabled", async () => {	
+		const onChangeSpy = jest.fn();
+		render(<Checkbox onChange={onChangeSpy} disabled />);
+		screen.getByRole('checkbox').click();
+		expect(onChangeSpy).not.toHaveBeenCalled();	
+	})
 
 })
