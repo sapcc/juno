@@ -37,7 +37,6 @@ describe("Select", () => {
 		render(<Select><option data-testid="option">Option</option></Select>)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
 		expect(screen.getByTestId("option")).toBeInTheDocument()
-		
 	})
 	
 	test("renders all props as passed", async () => {
@@ -56,5 +55,12 @@ describe("Select", () => {
 		expect(handleChange).toHaveBeenCalledTimes(1)
 	})
 	
+	test("does not fire onChange handler when disabled", async () => {
+		const onChangeSpy = jest.fn()
+		render(<Select onChange={onChangeSpy} disabled />)
+		const select = screen.getByRole('combobox')
+		select.click();
+		expect(onChangeSpy).not.toHaveBeenCalled()
+	})
 	
 })

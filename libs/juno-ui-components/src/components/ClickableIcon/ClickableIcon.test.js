@@ -53,4 +53,11 @@ describe("ClickableIcon", () => {
 		expect(handleClick).toHaveBeenCalled();
 	})
 	
+	test('does not execute an onclick handler when disabled', () => {
+		const handleClick = jest.fn();
+		render(<ClickableIcon onClick={handleClick} disabled/>);
+		screen.getByRole('button').click();
+		expect(handleClick).not.toHaveBeenCalled();
+	})
+	
 })

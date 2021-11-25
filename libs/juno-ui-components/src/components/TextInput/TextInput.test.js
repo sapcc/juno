@@ -103,4 +103,13 @@ describe("TextInput", () => {
 		expect(handleChange).toHaveBeenCalledTimes(1)
 	})
 	
+	test("does not fire onChange handler when disabled", async () => {
+		const onChangeSpy = jest.fn();
+		const { container } = render(
+				<TextInput onChange={onChangeSpy} disabled />
+			)
+		screen.getByRole('textbox').click();
+		expect(onChangeSpy).not.toHaveBeenCalled();	
+	})
+	
 })

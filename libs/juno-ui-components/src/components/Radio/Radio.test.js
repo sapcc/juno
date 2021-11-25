@@ -68,4 +68,12 @@ describe("Radio", () => {
 		screen.getByRole('radio').click();
 		expect(onChangeSpy).toHaveBeenCalled();
 	})
+	
+	test("does not fire onChange handler when disabled", async () => {
+		const onChangeSpy = jest.fn()
+		render(<Radio onChange={onChangeSpy} disabled />)
+		const radio = screen.getByRole('radio')
+		radio.click();
+		expect(onChangeSpy).not.toHaveBeenCalled()
+	})
 })
