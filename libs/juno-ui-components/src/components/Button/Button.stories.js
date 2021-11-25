@@ -99,5 +99,5 @@ LinkAsButton.parameters = {
 LinkAsButton.args = {
   ...Primary.args,
   label: "Link as button",
-  href: "https://www.sap.com",
+  href: "#link",
 }
