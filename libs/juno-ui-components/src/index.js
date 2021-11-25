@@ -1,5 +1,6 @@
 import "./global.scss"
 export { Button } from "./components/Button/index.js"
+export { ButtonRow } from "./components/ButtonRow/index.js"
 export { Checkbox } from "./components/Checkbox/index.js"
 export { CheckboxRow } from "./components/CheckboxRow/index.js"
 export { CheckboxGroup } from "./components/CheckboxGroup/index.js"
