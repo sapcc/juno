@@ -87,7 +87,7 @@ const LoginOverlay = () => {
             <p>Have a look at the <span className="italic">Getting Started</span> section of our documentation</p>
           </div>
           <div className="ml-auto pl-8 pr-20">
-            <Button variant="primary" title="Go to documentation">
+            <Button variant="primary" title="Go to documentation" href="https://documentation.global.cloud.sap/docs/start-userreg" target="_blank">
               <Icon icon="openInNew" color="text-theme-high" className=" mr-2" />
               Go to documentation
             </Button>
