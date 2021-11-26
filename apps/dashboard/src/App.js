@@ -1,11 +1,20 @@
-import React from "react"
+import React, { useCallback } from "react"
 import PagesRouter from "./components/PagesRouter"
 
-const App = () => (
+import useStore from "./store"
+
+
+const App = () => {  
+  const loginOverlayVisible = useStore(useCallback((state) => state.loginOverlayVisible))
+
+  return (
   // use custom style cache to avoid conflicts with other apps
-  <React.StrictMode>
-    <PagesRouter />
-  </React.StrictMode>
-)
+
+  <div className={loginOverlayVisible ? "overflow-hidden h-full" : ""} >
+    <React.StrictMode>
+      <PagesRouter />
+    </React.StrictMode>
+  </div>
+)}
 
 export default App

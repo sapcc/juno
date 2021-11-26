@@ -17,10 +17,13 @@ const overlayStyles = (isOpen) => {
     bg-opacity-30
     border
     border-juno-grey-blue-5
+    flex
+    flex-col
     absolute
     inset-0
-    p-4
-    pb-24
+    pt-24
+    z-[99]
+    overflow-y-scroll
     `
   )
 }
@@ -55,7 +58,7 @@ const LoginOverlay = () => {
   const selectedRegion      = useStore(useCallback((state) => state.region))
   const deselectRegion      = useStore(useCallback((state) => state.deselectRegion))
   const regionKeys          = useStore(useCallback((state) => state.regionKeys))
-  
+
 
   const isValidRegionSelected = useMemo(() => {
     return selectedRegion !== null && regionKeys.includes(selectedRegion)
@@ -63,24 +66,27 @@ const LoginOverlay = () => {
 
   return (
     <div className={overlayStyles(loginOverlayVisible)}>
-      <div className="flex items-center max-w-screen-xl mx-auto">
-        <ClickableIcon onClick={() => hideLoginOverlay()} icon="close" color="text-juno-turquoise" size="36" className="ml-auto -mr-12" />
-      </div>
-      <nav className="max-w-screen-xl mx-auto border-b-2 border-juno-grey-light-8 mb-8">
-        <Stack className="justify-around">
-          <a href="#" onClick={() => deselectRegion()} className={`${tabClasses(!isValidRegionSelected)} ${tabLinkClasses(!isValidRegionSelected)}`}>1. Choose your region</a>
-          <div className={tabClasses(isValidRegionSelected)}>2. Choose your domain</div>
-        </Stack>
-      </nav>
-      <div className="max-w-screen-xl mx-auto">
-        { isValidRegionSelected ? 
-          <DomainSelect />
-          :
-          <RegionSelect />
-        }
+      <div className="w-full max-w-screen-xl mx-auto pb-12">
+        <div className="w-full flex items-center justify-end">
+          <ClickableIcon onClick={() => hideLoginOverlay()} icon="close" color="text-juno-turquoise" size="36" className="-mr-12" />
+        </div>
+        <nav className="w-full border-b-2 border-juno-grey-light-8 mb-8">
+          <Stack className="justify-around">
+            <a href="#" onClick={() => deselectRegion()} className={`${tabClasses(!isValidRegionSelected)} ${tabLinkClasses(!isValidRegionSelected)}`}>1. Choose your region</a>
+            <div className={tabClasses(isValidRegionSelected)}>2. Choose your domain</div>
+          </Stack>
+        </nav>
+        <div className="w-full">
+          { isValidRegionSelected ? 
+            <DomainSelect />
+            :
+            <RegionSelect />
+          }
+        </div>
+  
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 bg-juno-grey-blue-9">
+      <div className="w-full bg-juno-grey-blue-9 mt-auto">
         <Stack className="documentation-banner max-w-screen-xl mx-auto items-center py-10">
           <div>
             <h5 className="text-3xl">New here?</h5>

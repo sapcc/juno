@@ -12,9 +12,9 @@ import { Button, Icon, Stack } from "juno-ui-components"
 const Home = () => {
   const showLoginOverlay = useStore(useCallback((state) => state.showLoginOverlay))
   const selectedRegion   = useStore(useCallback((state) => state.region))
-
+  
   return (
-    <div className="relative">
+    <div>
       <LoginOverlay />
       <div className="container mx-auto pt-16">
         <CCPlusOneLogo className="-ml-7 mb-4" alt="Converged Cloud" />
