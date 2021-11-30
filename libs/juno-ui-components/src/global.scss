@@ -89,7 +89,7 @@
   --color-juno-grey-light-231-raw: 24, 24, 24;
   
   .theme-dark {
-    
+    // TEXT COLORS
     // RGB
     --color-juno-text-high: rgb(222, 223, 224);
     --color-juno-text-medium: rgb(187, 187, 187);
@@ -99,9 +99,26 @@
     --color-juno-text-high-raw: 222, 223, 224;
     --color-juno-text-medium-raw: 187, 187, 187;
     --color-juno-text-disabled-raw: 150, 150, 150;
+    
+    // SEMANTIC COLORS
+    // RGB
+    --color-info: var(--color-juno-turquoise);
+    --color-success: rgb(59, 255, 91);
+    --color-warning: rgb(255, 198, 0);
+    --color-danger: rgb(255, 65, 11);
+    --color-error: rgb(255, 65, 11);
+    
+    // RAW
+    --color-info-raw: var(--color-juno-turquoise-raw);
+    --color-success-raw: 59, 255, 91;
+    --color-warning-raw: 255, 198, 0;
+    --color-danger-raw: 255, 65, 11;
+    --color-error-raw: 255, 65, 11;
+    
   }
   
   .theme-light {
+    // TEXT COLORS
     // RGB
     --color-juno-text-high: rgb(37, 37, 37);
     --color-juno-text-medium: rgb(76, 76, 76);
@@ -111,6 +128,23 @@
     --color-juno-text-high-raw: 37, 37, 37;
     --color-juno-text-medium-raw: 76, 76, 76;
     --color-juno-text-disabed-raw: 150, 150, 150;
+    
+    // SEMANTIC COLORS
+    // RGB
+    --color-info: rgb(19, 103, 153);
+    --color-success: rgb(22, 145, 43);
+    --color-warning: rgb(217, 151, 0);
+    --color-danger: rgb(187, 62, 15);
+    --color-error: rgb(187, 62, 15);
+    
+    // RAW
+    --color-info-raw: 19, 103, 153;
+    --color-success-raw: 22, 145, 43;
+    --color-warning-raw: 217, 151, 0;
+    --color-danger-raw: 187, 62, 15;
+    --color-error-raw: 187, 62, 15;
+
+    
   }
   
   // SAP Brand Non-Colors
@@ -243,26 +277,6 @@
   --color-black: rgb(0, 0, 0);
   --color-black-raw: 0, 0, 0;
   
-  // DANGER
-  --color-danger: var(--color-sap-red);
-  --color-danger-raw: var(--color-sap-red-raw);
-  
-  // ERROR
-  --color-error: var(--color-sap-red);
-  --color-error-raw: var(--color-sap-red-raw);
-  
-  // WARNING
-  --color-warning: rgb(254, 196, 58);
-  --color-warning-raw: 254, 196, 58;
-
-  // INFO
-  --color-info: var(--color-juno-blue);
-  --color-info-raw: var(--color-juno-blue-raw);
-  
-  // SUCCESS
-  --color-success: var(--color-sap-green);
-  --color-success-raw: var(--color-sap-green-raw);
-  
   // PRIMARY
   --color-primary: var(--color-juno-blue-light-3);
   --color-primary-raw: var(--color-juno-blue-light-3-raw);
@@ -316,11 +330,11 @@
 --color-icon-warning: var(--color-warning-raw);
 // Message
 --color-message-bg: var(--color-juno-grey-light-11-raw);
---color-message-danger-border: var(--color-sap-red-raw);
---color-message-default-border: var(--color-juno-blue-raw);
---color-message-error-border: var(--color-sap-red-raw);
+--color-message-danger-border: var(--color-danger-raw);
+--color-message-default-border: var(--color-info-raw);
+--color-message-error-border: var(--color-error-raw);
 --color-message-warning-border: var(--color-warning-raw);
---color-message-success-border: var(--color-sap-green-raw);
+--color-message-success-border: var(--color-success-raw);
 
 // Introbox
 --color-introbox-bg: var(--color-juno-grey-light-11-raw);
@@ -412,11 +426,11 @@
   --color-icon-warning: var(--color-warning-raw);
   // Message
   --color-message-bg: var(--color-juno-grey-blue-89-raw);
-  --color-message-danger-border: var(--color-sap-red-raw);
-  --color-message-default-border: var(--color-juno-blue-raw);
-  --color-message-error-border: var(--color-sap-red-raw);
+  --color-message-danger-border: var(--color-danger-raw);
+  --color-message-default-border: var(--color-info-raw);
+  --color-message-error-border: var(--color-error-raw);
   --color-message-warning-border: var(--color-warning-raw);
-  --color-message-success-border: var(--color-sap-green-raw);
+  --color-message-success-border: var(--color-success-raw);
   // Introbox
 
   // Tooltip
