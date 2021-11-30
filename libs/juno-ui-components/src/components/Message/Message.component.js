@@ -5,9 +5,10 @@ import { Icon } from "../Icon/index.js"
 const message = `
 	pr-2
 	sm:pr-4
-	text-theme-default
+	text-theme-high
 	flex
 	rounded-l
+	leading-5
 	overflow-hidden
 `
 
