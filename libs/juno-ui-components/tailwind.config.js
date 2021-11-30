@@ -171,7 +171,6 @@ module.exports = {
           "button-default-hover": withOpacity("--color-button-default-hover-bg"),
           "button-danger": withOpacity("--color-button-danger-bg"),
           "button-danger-hover": withOpacity("--color-button-danger-hover-bg"),
-          "message": withOpacity("--color-message-bg"),
           "tooltip-popover": withOpacity("--color-tooltip-popover-bg"),
           "textinput": withOpacity("--color-textinput-bg"),
           "select": withOpacity("--color-select-bg"),
@@ -192,8 +191,13 @@ module.exports = {
         },
       },
       backgroundImage: {
-        "theme-button-primary": "var(--gradient-button-primary-bg)",
-        "theme-button-primary-hover": "var(--gradient-button-primary-hover-bg)",
+          "theme-button-primary": "var(--gradient-button-primary-bg)",
+          "theme-button-primary-hover": "var(--gradient-button-primary-hover-bg)",
+          "theme-message-default": "var(--gradient-message-default-bg)",
+          "theme-message-success": "var(--gradient-message-success-bg)",
+          "theme-message-warning": "var(--gradient-message-warning-bg)",
+          "theme-message-danger": "var(--gradient-message-danger-bg)",
+          "theme-message-error": "var(--gradient-message-error-bg)",
       },
       textColor: {
         theme: {
