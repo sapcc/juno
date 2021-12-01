@@ -281,6 +281,8 @@
   --color-primary: var(--color-juno-blue-light-3);
   --color-primary-raw: var(--color-juno-blue-light-3-raw);
   
+
+
 }
 
 /* When assigning colors to uses, use "[color]-raw" variables: */
@@ -288,6 +290,7 @@
 .theme-light {
   
 // Global
+--color-global-bg: var(--color-white-raw)
 --color-global-text: var(--color-juno-text-medium-raw);
 // FOCUS
 --color-focus: var(--color-juno-blue-light-3-raw);
