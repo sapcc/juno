@@ -158,7 +158,8 @@ module.exports = {
         "message-success": withOpacity("--color-message-success-border"),
         "switch-default": withOpacity("--color-switch-default-border"),
         "switch-hover": withOpacity("--color-switch-hover-border"),
-        "datalist-row": withOpacity("--color-datalist-row-border")
+        "datalist-row": withOpacity("--color-datalist-row-border"),
+        "introbox": withOpacity("--color-introbox-border"),
       },
     }),
     extend: {
