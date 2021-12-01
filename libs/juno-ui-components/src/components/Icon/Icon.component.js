@@ -7,6 +7,7 @@ import AutoAwesomeMosaic from "./icons/auto_awesome_mosaic.svg"
 import AutoAwesomeMotion from "./icons/auto_awesome_motion.svg"
 import Cancel from "./icons/cancel.svg"
 import Close from "./icons/close.svg"
+import Danger from "./icons/danger.svg"
 import Dangerous from "./icons/dangerous.svg"
 import Error from "./icons/error.svg"
 import ExpandLess from "./icons/expand_less.svg"
@@ -36,6 +37,8 @@ const getColoredSizedIcon = ({icon, color, size, className, ...props}) => {
 				return <Cancel width={size} height={size} className={iconClass} alt="cancel" role="img" {...props}/>
 			case "close":
 				return <Close width={size} height={size} className={iconClass} alt="close" role="img" {...props}/>
+			case "danger":
+				return <Danger width={size} height={size} className={iconClass} alt="danger" role="img" {...props}/ >
 			case "dangerous":
 				return <Dangerous width={size} height={size} className={iconClass} alt="dangerous" role="img" {...props} />
 			case "error":

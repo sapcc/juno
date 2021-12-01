@@ -105,8 +105,6 @@ const variantClass = (variant) => {
 // get the appropriate icon for messasge tyope by MUI name:
 const getMuiIcon = (messageType) => {
 	switch (messageType) {
-		case "danger":
-			return "warning"
 		case "error":
 			return "dangerous"
 		default:
