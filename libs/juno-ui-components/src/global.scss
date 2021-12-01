@@ -342,6 +342,7 @@
 
 // Introbox
 --color-introbox-bg: var(--color-juno-grey-light-05-raw);
+--color-introbox-border: var(--color-juno-blue-light-3-raw);
 // Tooltip
 --color-tooltip-popover-bg: var(--color-juno-blue-light-3-raw);
 --color-tooltip-popover-text: var(--color-white-raw);
@@ -442,6 +443,7 @@
   --gradient-message-success-bg: linear-gradient(90deg, rgb(32, 55, 46) 0%, rgb(39, 102, 57) 100%);
   // Introbox
   --color-introbox-bg: var(--color-juno-grey-blue-79-raw);
+  --color-introbox-border: var(--color-juno-turquoise-raw);
   // Tooltip
   --color-tooltip-popover-bg: var(--color-juno-blue-light-3-raw);
   --color-tooltip-popover-text: var(--color-juno-grey-blue-100-raw);

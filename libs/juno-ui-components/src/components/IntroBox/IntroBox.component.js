@@ -2,12 +2,23 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const introbox = `
+	bg-theme-introbox
+	text-theme-default
+	flex
+	rounded-l
+	overflow-hidden
+`
+
+const introboxBorder = `
+	border-l-4
+	border-theme-introbox
+`
+
+const introboxContent = `
 	py-1
 	px-2
 	sm:py-3
 	sm:px-4
-	bg-theme-introbox
-	text-theme-default
 `
 
 const introboxHeading = `
@@ -30,8 +41,11 @@ export const IntroBox = ({
 			className={`juno-introbox ${introbox} ${className}`}
 			{...props}
 		>
-			{title ?  <h1 className={`${introboxHeading}`}>{title}</h1> : ""}
-			<p>{ children ? children : text }</p>
+			<div className={`${introboxBorder}`}></div>
+			<div className={`${introboxContent}`}>
+				{title ?  <h1 className={`${introboxHeading}`}>{title}</h1> : ""}
+				<p>{ children ? children : text }</p>
+			</div>
 		</div>
 	)
 }
