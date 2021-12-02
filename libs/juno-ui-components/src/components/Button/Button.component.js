@@ -1,7 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const btn = `
+const btnBase = `
+  font-bold
   inline-flex 
   justify-center 
   rounded-md
@@ -11,38 +12,46 @@ const btn = `
   focus:outline-none 
   focus:ring-2
   focus:ring-focus
-  disabled:opacity-50
   disabled:cursor-not-allowed
   disabled:pointer-events-none
 `
 
 const btnDefault = `
-  text-theme-on-default
-  bg-theme-button-default
   border
+  text-theme-button-default
+  bg-theme-button-default
   border-theme-button-default
+  hover:text-button-default-hover
   hover:bg-theme-button-default-hover
-  disabled:bg-theme-default
+  hover:border-theme-button-default-hover
+  disabled:text-theme-button-default-disabled
+  disabled:bg-theme-button-default-disabled
+  disabled:border-theme-button-default-disabled
 `
 const btnPrimary = `
-  text-theme-button-primary
   border
-  border-theme-button-primary
+  text-theme-button-primary
   bg-theme-button-primary
+  border-theme-button-primary
   hover:text-theme-button-primary-hover
   hover:bg-theme-button-primary-hover
   hover:border-theme-button-primary-hover
-  disabled:bg-theme-primary
+  disabled:text-theme-button-primary-disabled
+  disabled:bg-theme-button-primary-disabled
+  disabled:border-theme-button-primary-disabled
 `
 
 const btnSubdued = `
-  text-theme-on-default
-  bg-theme-button-default
   border
+  text-theme-button-subdued
+  bg-theme-button-subdued
   border-theme-button-subdued
-  hover:bg-theme-button-default-hover
-  hover:text-theme-button-default-hover
-  disabled:bg-theme-default
+  hover:bg-theme-button-subdued-hover
+  hover:text-theme-button-subdued-hover
+  hover:border-theme-button-subdued-hover
+  disabled:text-theme-button-subdued-disabled
+  disabled:bg-theme-button-subdued-disabled
+  disabled:border-theme-button-subdued-disabled
 `
 
 const btnDanger = `
@@ -117,7 +126,7 @@ export const Button = ({
   const button = (
     <button
       type="button"
-      className={`juno-button juno-button-${variant} ${btn} ${variantClass(variant)} ${sizeClass(size)} ${className}`}
+      className={`juno-button juno-button-${variant} ${btnBase} ${variantClass(variant)} ${sizeClass(size)} ${className}`}
       disabled={disabled}
       onClick={onClick}
       title={titleValue}
@@ -131,7 +140,7 @@ export const Button = ({
     <a
       href={href}
       role="button"
-      className={`juno-button juno-button-${variant} ${btn} ${variantClass(variant)} ${sizeClass(size)} ${className}`}
+      className={`juno-button juno-button-${variant} ${btnBase} ${variantClass(variant)} ${sizeClass(size)} ${className}`}
       disabled={disabled}
       onClick={onClick}
       title={titleValue}
