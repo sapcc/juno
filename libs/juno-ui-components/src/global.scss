@@ -127,7 +127,7 @@
     // RAW
     --color-juno-text-high-raw: 37, 37, 37;
     --color-juno-text-medium-raw: 76, 76, 76;
-    --color-juno-text-disabed-raw: 150, 150, 150;
+    --color-juno-text-disabled-raw: 150, 150, 150;
     
     // SEMANTIC COLORS
     // RGB
@@ -298,26 +298,38 @@
 --color-text-disabled: var(--color-juno-text-disabled-raw);
 --color-text-link: var(--color-juno-blue-light-3-raw);
 // Button
-// --> Primary Button
---color-button-primary-bg: var(--color-juno-blue-light-3-raw);
+// --> Primary Button (definition here done, TODO: update tw config)
 --color-button-primary-text: var(--color-white-raw);
+--gradient-button-primary-bg: linear-gradient(to right top, rgb(51, 242, 255) 0%, var(--color-juno-blue-light-3) 100%);
 --color-button-primary-border: var(--color-juno-blue-light-3-raw);
---color-button-primary-hover-bg: var(--color-juno-grey-light-11-raw);
---color-button-primary-hover-text: var(--color-juno-blue-light-3-raw);
+--gradient-button-primary-hover-bg: linear-gradient(to right top, rgb(51, 242, 255) 0%, rgb(41, 133, 154) 100%);
 --color-button-primary-hover-border: var(--color-juno-blue-light-3-raw);
+--color-button-primary-hover-text: var(--color-white-raw);
+--gradient-button-primary-disabled-bg: linear-gradient(to right top, rgb(253, 253, 253) 0%, rgb(230, 230, 230) 100%);
+--color-button-primary-disabled-border: rgba(var(--color-juno-text-disabled-raw), 0.5);
+--color-button-primary-disabled-text: rgba(var(--color-juno-text-disabled-raw), 0.5);
 // --> Default Button
---color-button-default-bg: var(--color-white-raw);
---color-button-default-hover-bg: var(--color-juno-grey-light-11-raw);
---color-button-default-text: var(--color-juno-text-medium-raw);
---color-button-default-hover-text: var();
+--color-button-default-text: var(--color-text-medium);
+--color-button-default-bg: transparent;
 --color-button-default-border: var(--color-juno-blue-light-3-raw);
---color-button-default-hover-border: var(--color-juno-text-medium-raw);
+--color-button-default-hover-text: var(--color-text-medium);
+--gradient-button-default-hover-bg: linear-gradient(to right top, rgba(218, 218, 218, 0) 0%, rgba(218, 218, 218, 1) 100%);
+--color-button-default-hover-border: var(--color-juno-blue-light-3);
+--color-button-default-disabled-text: rgba(var(--color-juno-text-disabled-raw), 0.5);
+--color-button-default-disabled-bg: transparent;
+--color-button-default-disabled-border: rgba(var(--color-juno-text-disabled-raw), 0.5);
 // --> Subdued Button
---color-button-subdued-bg: var(--color-white-raw);
---color-button-subdued-hover-bg: var( --color-juno-grey-light-11-raw);
---color-button-subdued-hover-text: var(--color-juno-text-medium-raw);
---color-button-subdued-border: var(--color-juno-text-medium-raw);
---color-button-subdued-hover-border: var(--color-juno-text-medium-raw);
+--color-button-subdued-text: var(--color-text-medium);
+--color-button-subdued-bg: transparent;
+--color-button-subdued-border: var(--color-text-medium);
+--color-button-subdued-hover-text: var(--color-text-medium);
+--gradient-button-sundued-hover-bg: linear-gradient(to right top, rgba(218, 218, 218, 0) 0%, rgba(218, 218, 218, 1) 100%);
+--color-button-subdued-hover-border: var(--color-text-medium);
+--color-button-subdued-disabled-text: rgba(var(--color-juno-text-disabled-raw), 0.5);
+--color-button-subdued-disabled-bg: transparent;
+--color-button-default-disabled-border: rgba(var(--color-juno-text-disabled-raw), 0.5);
+
+// TODO:
 // --> Danger Button
 --color-button-danger-text: var(--color-white-raw);
 --color-button-danger-bg: var(--color-sap-red-raw);
@@ -407,18 +419,40 @@
   --color-text-link: var(--color-juno-blue-raw);
   // Button
   // --> Primary Button
-  --gradient-button-primary-bg: linear-gradient(225deg, rgba(47,234,242,0.75) 0%, rgba(21,208,224,0.36) 100%);
-  --color-button-primary-border: var(--color-juno-turquoise-raw);
-  --color-button-primary-text: var(--color-white-raw);
-  --color-button-primary-hover-text: var(--color-white-raw);
-  --color-button-primary-hover-border: var(--color-juno-turquoise-raw);
-  --gradient-button-primary-hover-bg: linear-gradient(225deg, rgba(47,234,242,0.00) 0%, rgba(21,208,224,0.36) 100%);
+ // --> Primary Button (definition here done, TODO: update tw config)
+ --color-button-primary-text: var(--color-white-raw);
+ --gradient-button-primary-bg: linear-gradient(to right top, rgb(7, 79, 90) 0%, var(--color-juno-turquoise) 100%);
+ --color-button-primary-border: var(--color-juno-turquoise-raw);
+ --gradient-button-primary-hover-bg: linear-gradient(to right top, var(--color-juno-turquoise) 0%, rgb(17, 31, 32) 100%);
+ --color-button-primary-hover-border: var(--color-juno-turquoise-raw);
+ --color-button-primary-hover-text: var(--color-white-raw);
+ --gradient-button-primary-disabled-bg: linear-gradient(to right top, rgb(0, 7, 15) 0%, rgb(44, 46, 49) 100%);
+ --color-button-primary-disabled-border: rgba(var(--color-text-disabled), 0.5);
+ --color-button-primary-disabled-text: rgba(var(--color-text-disabled), 0.5);
+ 
+ //TODO:
   // --> Default Button
-  --color-button-default-bg: var(--color-rgb-blue-gray-10-raw);
-  --color-button-default-text: var(--color-juno-text-high-raw);
-  --color-button-default-border: var(--color-juno-blue-light-3-raw);
-  // --> Subdued Button
-  --color-button-subdued-border: var(--color-juno-text-high-raw);
+--color-button-default-text: var(--color-text-medium);
+--color-button-default-bg: transparent;
+--color-button-default-border: var(--color-juno-turquoise-raw);
+--color-button-default-hover-text: var(--color-text-medium);
+--gradient-button-default-hover-bg: linear-gradient(to right top, rgba(39, 45, 52, 0) 0%, rgba(39, 45, 52, 1) 100%);
+--color-button-default-hover-border: var(--color-juno-turquoise-raw);
+--color-button-default-disabled-text: rgba(var(--color-juno-text-disabled-raw), 0.5);
+--color-button-default-disabled-bg: transparent;
+--color-button-default-disabled-border: rgba(var(--color-juno-text-disabled-raw), 0.5);
+// --> Subdued Button
+--color-button-subdued-text: var(--color-text-medium);
+--color-button-subdued-bg: transparent;
+--color-button-subdued-border: var(--color-text-medium);
+--color-button-subdued-hover-text: var(--color-text-medium);
+--gradient-button-subdued-hover-bg: linear-gradient(to right top, rgba(39, 45, 52, 0) 0%, rgba(39, 45, 52, 1) 100%);
+--color-button-subdued-hover-border: var(--color-text-medium);
+--color-button-subdued-disabled-text: rgba(var(--color-juno-text-disabled-raw), 0.5);
+--color-button-subdued-disabled-bg: transparent;
+--color-button-default-disabled-border: rgba(var(--color-juno-text-disabled-raw), 0.5);
+
+  
   // --> Danger Button
   --color-button-danger-text: var(--color-white-raw);
   --color-button-danger-bg: var(--color-sap-red-raw);

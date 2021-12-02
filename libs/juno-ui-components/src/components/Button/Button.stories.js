@@ -81,14 +81,40 @@ Small.args = {
 export const Disabled = Template.bind({})
 Disabled.parameters = {
   docs: {
-    description: { story: 'Disable any button by adding `disabled` to it. Example: Disabled Primary button.'}
+    description: { story: 'Disable any button by adding `disabled` to it.'}
   },
 }
 Disabled.args = {
+  ...Default.args,
+  label: "Default Disabled",
+  disabled: true,
+}
+
+export const SubduedDisabled = Template.bind({})
+SubduedDisabled.parameters = {
+  docs: {
+    description: { story: 'Disable any button by adding `disabled` to it.'}
+  },
+}
+SubduedDisabled.args = {
+  ...Subdued.args,
+  label: "Subdued Disabled",
+  disabled: true,
+}
+
+export const PrimaryDisabled = Template.bind({})
+PrimaryDisabled.parameters = {
+  docs: {
+    description: { story: 'Disable any button by adding `disabled` to it.'}
+  },
+}
+PrimaryDisabled.args = {
   ...Primary.args,
   label: "Primary Disabled",
   disabled: true,
 }
+
+
 
 export const LinkAsButton = Template.bind({})
 LinkAsButton.parameters = {
