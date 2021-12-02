@@ -5,10 +5,10 @@ import { Icon } from "../Icon/index.js"
 const message = `
 	pr-2
 	sm:pr-4
-	bg-theme-message
-	text-theme-default
+	text-theme-high
 	flex
 	rounded-l
+	leading-5
 	overflow-hidden
 `
 
@@ -23,21 +23,42 @@ const messageDefault = `
 	border-theme-message-default
 `
 
+const messageDefaultBg = `
+	bg-theme-message-default
+`
+
 const messageError = `
 	border-theme-message-error
+`
+
+const messageErrorBg = `
+	bg-theme-message-error
 `
 
 const messageWarning = `
 	border-theme-message-warning
 `
 
+const messageWarningBg = `
+	bg-theme-message-warning
+`
+
 const messageDanger = `
 	border-theme-message-danger
+`
+
+const messageDangerBg = `
+	bg-theme-message-danger
 `
 
 const messageSuccess = `
 	border-theme-message-success
 `
+
+const messageSuccessBg = `
+	bg-theme-message-success
+`
+
 const messageContentStyles = `
 	py-1
 	sm:py-3
@@ -47,7 +68,22 @@ const messageContentStyles = `
 const messageHeading = `
 	font-bold
 `
-
+const backgroundClass = (variant) => {
+	switch(variant) {
+		case "error":
+			return messageErrorBg
+		case "warning":
+			return messageWarningBg
+		case "success":
+			return messageSuccessBg
+		case "info":
+			return messageDefaultBg
+		case "danger":
+			return messageDangerBg
+		default:
+			return messageDefaultBg
+	}
+}
 
 const variantClass = (variant) => {
 	  switch (variant) {
@@ -69,8 +105,6 @@ const variantClass = (variant) => {
 // get the appropriate icon for messasge tyope by MUI name:
 const getMuiIcon = (messageType) => {
 	switch (messageType) {
-		case "danger":
-			return "warning"
 		case "error":
 			return "dangerous"
 		default:
@@ -92,7 +126,7 @@ export const Message = ({
 }) => {
 	return (
 		<div 
-			className={`juno-message juno-message-${variant} ${message} ${className}`}
+			className={`juno-message juno-message-${variant} ${message} ${backgroundClass(variant)} ${className}`}
 			{...props}
 		>
 			<div className={`juno-message-icon-container ${iconContainerStyles} ${variantClass(variant)}`}>
