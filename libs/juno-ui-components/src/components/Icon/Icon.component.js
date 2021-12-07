@@ -103,7 +103,7 @@ Icon.propTypes = {
 			"warning"
 		]
 	),
-	/** The color of the icon */
+	/** To color an icon, pass the name of a class that will set the `color` property. */
 	color: PropTypes.string,
 	/** The size of the icon */
 	size: PropTypes.string,
