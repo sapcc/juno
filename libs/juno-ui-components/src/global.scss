@@ -281,6 +281,8 @@
   --color-primary: var(--color-juno-blue-light-3);
   --color-primary-raw: var(--color-juno-blue-light-3-raw);
   
+
+
 }
 
 /* When assigning colors to uses, use "[color]-raw" variables: */
@@ -288,6 +290,7 @@
 .theme-light {
   
 // Global
+--color-global-bg: var(--color-white-raw)
 --color-global-text: var(--color-juno-text-medium-raw);
 // FOCUS
 --color-focus: var(--color-juno-blue-light-3-raw);
@@ -306,8 +309,8 @@
 --color-button-primary-hover-border: var(--color-juno-blue-light-3-raw);
 --color-button-primary-hover-text: var(--color-white-raw);
 --gradient-button-primary-disabled-bg: linear-gradient(to right top, rgb(253, 253, 253) 0%, rgb(230, 230, 230) 100%);
---color-button-primary-disabled-border: rgba(var(--color-juno-text-disabled-raw), 0.5);
---color-button-primary-disabled-text: rgba(var(--color-juno-text-disabled-raw), 0.5);
+--color-button-primary-disabled-border: rgb(203, 203, 203);
+--color-button-primary-disabled-text: rgb(203, 203, 203);
 // --> Default Button
 --color-button-default-text: var(--color-text-medium);
 --color-button-default-bg: transparent;
@@ -315,9 +318,9 @@
 --color-button-default-hover-text: var(--color-text-medium);
 --gradient-button-default-hover-bg: linear-gradient(to right top, rgba(218, 218, 218, 0) 0%, rgba(218, 218, 218, 1) 100%);
 --color-button-default-hover-border: var(--color-juno-blue-light-3);
---color-button-default-disabled-text: rgba(var(--color-juno-text-disabled-raw), 0.5);
+--color-button-default-disabled-text: rgb(203, 203, 203);
 --color-button-default-disabled-bg: transparent;
---color-button-default-disabled-border: rgba(var(--color-juno-text-disabled-raw), 0.5);
+--color-button-default-disabled-border: rgb(203, 203, 203);
 // --> Subdued Button
 --color-button-subdued-text: var(--color-text-medium);
 --color-button-subdued-bg: transparent;
@@ -325,9 +328,9 @@
 --color-button-subdued-hover-text: var(--color-text-medium);
 --gradient-button-sundued-hover-bg: linear-gradient(to right top, rgba(218, 218, 218, 0) 0%, rgba(218, 218, 218, 1) 100%);
 --color-button-subdued-hover-border: var(--color-text-medium);
---color-button-subdued-disabled-text: rgba(var(--color-juno-text-disabled-raw), 0.5);
+--color-button-subdued-disabled-text: rgb(203, 203, 203);
 --color-button-subdued-disabled-bg: transparent;
---color-button-default-disabled-border: rgba(var(--color-juno-text-disabled-raw), 0.5);
+--color-button-default-disabled-border: rgb(203, 203, 203);
 
 // TODO:
 // --> Danger Button
@@ -427,8 +430,8 @@
  --color-button-primary-hover-border: var(--color-juno-turquoise-raw);
  --color-button-primary-hover-text: var(--color-white-raw);
  --gradient-button-primary-disabled-bg: linear-gradient(to right top, rgb(0, 7, 15) 0%, rgb(44, 46, 49) 100%);
- --color-button-primary-disabled-border: rgba(var(--color-text-disabled), 0.5);
- --color-button-primary-disabled-text: rgba(var(--color-text-disabled), 0.5);
+ --color-button-primary-disabled-border: rgb(76, 79, 83);
+ --color-button-primary-disabled-text: rgb(76, 79, 83);
  
  //TODO:
   // --> Default Button
@@ -438,9 +441,9 @@
 --color-button-default-hover-text: var(--color-text-medium);
 --gradient-button-default-hover-bg: linear-gradient(to right top, rgba(39, 45, 52, 0) 0%, rgba(39, 45, 52, 1) 100%);
 --color-button-default-hover-border: var(--color-juno-turquoise-raw);
---color-button-default-disabled-text: rgba(var(--color-juno-text-disabled-raw), 0.5);
+--color-button-default-disabled-text: rgb(76, 79, 83);
 --color-button-default-disabled-bg: transparent;
---color-button-default-disabled-border: rgba(var(--color-juno-text-disabled-raw), 0.5);
+--color-button-default-disabled-border: rgb(76, 79, 83);
 // --> Subdued Button
 --color-button-subdued-text: var(--color-text-medium);
 --color-button-subdued-bg: transparent;
@@ -448,9 +451,9 @@
 --color-button-subdued-hover-text: var(--color-text-medium);
 --gradient-button-subdued-hover-bg: linear-gradient(to right top, rgba(39, 45, 52, 0) 0%, rgba(39, 45, 52, 1) 100%);
 --color-button-subdued-hover-border: var(--color-text-medium);
---color-button-subdued-disabled-text: rgba(var(--color-juno-text-disabled-raw), 0.5);
+--color-button-subdued-disabled-text: rgb(76, 79, 83);
 --color-button-subdued-disabled-bg: transparent;
---color-button-default-disabled-border: rgba(var(--color-juno-text-disabled-raw), 0.5);
+--color-button-default-disabled-border: rgb(76, 79, 83);
 
   
   // --> Danger Button
