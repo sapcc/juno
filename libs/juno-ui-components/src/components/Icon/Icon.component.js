@@ -115,7 +115,7 @@ Icon.propTypes = {
 			"warning"
 		]
 	),
-	/** The color of the icon */
+	/** By default, Icons will use the `color` of the current context. In order to use a different color just for the icon, a color class can be passed. These typically begin with "text-". */
 	color: PropTypes.string,
 	/** The size of the icon */
 	size: PropTypes.string,
