@@ -49,7 +49,7 @@ export const parameters = {
   controls: {
     expanded: true,
     matchers: {
-      color: /(background|color)$/i,
+      //color: /(background|color)$/i,    // comment out to prevent storybook from rendering their custom color input
       date: /Date$/,
     },
   },
