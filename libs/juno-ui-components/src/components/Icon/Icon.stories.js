@@ -29,7 +29,7 @@ Info.args = {
 
 export const Danger = Template.bind({})
 Danger.args = {
-  icon: "error",
+  icon: "danger",
   color: "text-danger",
 }
 
