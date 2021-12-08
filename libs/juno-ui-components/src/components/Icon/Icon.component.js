@@ -97,6 +97,7 @@ Icon.propTypes = {
 			"autoAwesomeMotion", 
 			"cancel", 
 			"close", 
+			"danger",
 			"dangerous",
 			"description",
 			"error", 
