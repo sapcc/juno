@@ -12,6 +12,15 @@ import { Button, Icon, Stack } from "juno-ui-components"
 const Home = () => {
   const showLoginOverlay = useStore(useCallback((state) => state.showLoginOverlay))
   const selectedRegion   = useStore(useCallback((state) => state.region))
+  const selectRegion     = useStore(useCallback((state) => state.selectRegion))
+
+  const handleWorldMapClick = (e) => {
+    console.log("Target: ", e.target, e.target.dataset.region);
+    if (e.target.dataset.region) {
+      selectRegion(e.target.dataset.region)
+      showLoginOverlay()
+    }
+  }
   
   return (
     <div>
@@ -33,7 +42,7 @@ const Home = () => {
       </div>
       <div className="bg-top bg-no-repeat mt-24" style={{ backgroundImage: `url('${backgroundTop}')` }}>
         <div className="container mx-auto">
-          <WorldMap className="w-full" />
+          <WorldMap className="w-full" onClick={handleWorldMapClick}/>
         </div>
       </div>
     </div>
