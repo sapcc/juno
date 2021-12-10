@@ -1,9 +1,9 @@
-FLY := fly -t v5
+FLY := fly7 -t v5
 ci: ci-clean ci-create
-	$(FLY) set-pipeline --pipeline juno -c pipeline.yaml -l ../../secrets/ci/shared/vars.yaml services
+	$(FLY) set-pipeline --pipeline juno -c pipeline.yaml -l ../../secrets/ci/shared/vars.yaml
 
 login:
-	$(FLY) login -c https://ci.eu-de-2.cloud.sap/ -n services
+	$(FLY) login -c https://main.ci.eu-de-2.cloud.sap -n services
 
 ci-clean: 
 	if [ -e pipeline.yaml ]; then rm pipeline.yaml; fi
