@@ -15,7 +15,6 @@ const Home = () => {
   const selectRegion     = useStore(useCallback((state) => state.selectRegion))
 
   const handleWorldMapClick = (e) => {
-    console.log(e.target, e.target.dataset.region);
     if (e.target.dataset.region) {
       selectRegion(e.target.dataset.region)
       showLoginOverlay()
