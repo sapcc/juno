@@ -11,11 +11,14 @@ import SupportIcon from "../../assets/images/icon_support.svg"
 const headlineStyles = `
   font-bold
   pb-6
+  text-lg
 `
 
 const boxStyles = `
-  py-6
+  pt-6
+  pb-8
   px-12
+  rounded
 `
 
 const noBgBoxStyles = `
