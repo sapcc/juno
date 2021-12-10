@@ -4,6 +4,174 @@
   LIBS = ["juno-ui-components", "communicator", "url-state-provider", "url-state-router"] 
 %>
 
+resources:
+  - name: qa-de-1.release
+    type: release
+    check_every: 525600h # basically never (check is a no-op anyway)
+    source: { region: "qa-de-1" }
+
+  - name: eu-nl-1.release
+    type: release
+    check_every: 525600h # basically never (check is a no-op anyway)
+    source: { region: "eu-nl-1" }
+
+
+  - name: test-image-source.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["ci/Dockerfile.test"]
+      username: sapcc-bot
+      password: {{real-github-access-token}}
+
+  - name: lib-juno-ui-components.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.ui-components","e2e"]
+      username: sapcc-bot
+      password: {{real-github-access-token}}
+
+  - name: app-dashboard.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["apps/dashboard","package.json","libs","ci/Dockerfile.dashboard","e2e"]
+      username: sapcc-bot
+      password: {{real-github-access-token}}
+
+  - name: api-mercury.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["apis/mercury","package.json","ci/Dockerfile.mercury","e2e",".yarn"]
+      username: sapcc-bot
+      password: {{real-github-access-token}}      
+ 
+  <% APPS.each do |app| %>
+  - name: app-<%= app %>.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["apps/<%= app %>","package.json","libs","ci/Dockerfile.app","e2e", ".yarn","ci/pipeline.yaml"]
+      username: sapcc-bot
+      password: {{real-github-access-token}}      
+
+  - name: juno-<%= app %>.image
+    type: docker-image
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: ((keppel-hostname))/ccloud/juno-<%= app %>    
+  <% end %>         
+
+  - name: repo.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      username: sapcc-bot
+      password: {{real-github-access-token}}     
+
+  - name: ci.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["ci","package.json",".yarn"]
+      username: sapcc-bot
+      password: {{real-github-access-token}}     
+
+  - name: secrets.git
+    type: git-proxy
+    webhook_token: lfkhslkfhs
+    check_every: 6h
+    source:
+      uri: git@github.wdf.sap.corp:cc/secrets.git
+      branch: "master"
+      private_key: {{secrets-ssh-key}}
+
+  - name: dashboard.version
+    type: time-version-resource
+    check_every: 525600h
+
+  - name: mercury.version
+    type: time-version-resource
+    check_every: 525600h   
+
+  - name: juno-ui-components.version
+    type: time-version-resource
+    check_every: 525600h    
+
+  - name: cdn.version
+    type: time-version-resource
+    check_every: 525600h    
+
+  - name: juno-dashboard.image
+    type: docker-image
+    check_every: 24h
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: ((keppel-hostname))/ccloud/juno-dashboard  
+
+  - name: juno-mercury.image
+    type: docker-image
+    check_every: 24h
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: ((keppel-hostname))/ccloud/juno-mercury        
+
+  - name: juno-ui-components.image
+    type: docker-image
+    check_every: 24h
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: ((keppel-hostname))/ccloud/juno-ui-components        
+
+  - name: juno-cdn.image
+    type: docker-image
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: ((keppel-hostname))/ccloud/juno-cdn     
+
+  - name: juno-unit-test.image
+    type: docker-image
+    check_every: 24h
+    source:
+      username: {{keppel-username}}
+      password: {{keppel-password}}
+      repository: ((keppel-hostname))/ccloud/juno-unit-test
+
+resource_types:
+  - name: git-proxy
+    type: registry-image
+    check_every: 24h
+    source:
+      repository: ((keppel-hostname))/ccloud-dockerhub-mirror/sapcc/concourse-git-resource-proxy
+
+  - name: time-version-resource
+    type: docker-image
+    check_every: 24h
+    source:
+      repository: ((keppel-hostname))/ccloud/concourse-time-version-resource
+      tag: v2
+
+  - name: release
+    type: docker-image
+    check_every: 24h
+    source:
+      repository: ((keppel-hostname))/ccloud/concourse-release-resource
+      tag: v1.1
+
 jobs:
   # for info only
   - name: readme
@@ -607,170 +775,3 @@ jobs:
                 CYPRESS_BASE_URL=https://ui.juno.global.cloud.sap cypress run --spec "cypress/integration/ui-components/*"
     
 
-resources:
-  - name: qa-de-1.release
-    type: release
-    check_every: 525600h # basically never (check is a no-op anyway)
-    source: { region: "qa-de-1" }
-
-  - name: eu-nl-1.release
-    type: release
-    check_every: 525600h # basically never (check is a no-op anyway)
-    source: { region: "eu-nl-1" }
-
-
-  - name: test-image-source.git
-    type: git
-    source:
-      uri: https://github.com/sapcc/juno.git
-      branch: main
-      paths: ["ci/Dockerfile.test"]
-      username: sapcc-bot
-      password: {{real-github-access-token}}
-
-  - name: lib-juno-ui-components.git
-    type: git
-    source:
-      uri: https://github.com/sapcc/juno.git
-      branch: main
-      paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.ui-components","e2e"]
-      username: sapcc-bot
-      password: {{real-github-access-token}}
-
-  - name: app-dashboard.git
-    type: git
-    source:
-      uri: https://github.com/sapcc/juno.git
-      branch: main
-      paths: ["apps/dashboard","package.json","libs","ci/Dockerfile.dashboard","e2e"]
-      username: sapcc-bot
-      password: {{real-github-access-token}}
-
-  - name: api-mercury.git
-    type: git
-    source:
-      uri: https://github.com/sapcc/juno.git
-      branch: main
-      paths: ["apis/mercury","package.json","ci/Dockerfile.mercury","e2e",".yarn"]
-      username: sapcc-bot
-      password: {{real-github-access-token}}      
- 
-  <% APPS.each do |app| %>
-  - name: app-<%= app %>.git
-    type: git
-    source:
-      uri: https://github.com/sapcc/juno.git
-      branch: main
-      paths: ["apps/<%= app %>","package.json","libs","ci/Dockerfile.app","e2e", ".yarn","ci/pipeline.yaml"]
-      username: sapcc-bot
-      password: {{real-github-access-token}}      
-
-  - name: juno-<%= app %>.image
-    type: docker-image
-    source:
-      username: {{keppel-username}}
-      password: {{keppel-password}}
-      repository: ((keppel-hostname))/ccloud/juno-<%= app %>    
-  <% end %>         
-
-  - name: repo.git
-    type: git
-    source:
-      uri: https://github.com/sapcc/juno.git
-      branch: main
-      username: sapcc-bot
-      password: {{real-github-access-token}}     
-
-  - name: ci.git
-    type: git
-    source:
-      uri: https://github.com/sapcc/juno.git
-      branch: main
-      paths: ["ci","package.json",".yarn"]
-      username: sapcc-bot
-      password: {{real-github-access-token}}     
-
-  - name: secrets.git
-    type: git-proxy
-    webhook_token: lfkhslkfhs
-    check_every: 6h
-    source:
-      uri: git@github.wdf.sap.corp:cc/secrets.git
-      branch: "master"
-      private_key: {{secrets-ssh-key}}
-
-  - name: dashboard.version
-    type: time-version-resource
-    check_every: 525600h
-
-  - name: mercury.version
-    type: time-version-resource
-    check_every: 525600h   
-
-  - name: juno-ui-components.version
-    type: time-version-resource
-    check_every: 525600h    
-
-  - name: cdn.version
-    type: time-version-resource
-    check_every: 525600h    
-
-  - name: juno-dashboard.image
-    type: docker-image
-    check_every: 24h
-    source:
-      username: {{keppel-username}}
-      password: {{keppel-password}}
-      repository: ((keppel-hostname))/ccloud/juno-dashboard  
-
-  - name: juno-mercury.image
-    type: docker-image
-    check_every: 24h
-    source:
-      username: {{keppel-username}}
-      password: {{keppel-password}}
-      repository: ((keppel-hostname))/ccloud/juno-mercury        
-
-  - name: juno-ui-components.image
-    type: docker-image
-    check_every: 24h
-    source:
-      username: {{keppel-username}}
-      password: {{keppel-password}}
-      repository: ((keppel-hostname))/ccloud/juno-ui-components        
-
-  - name: juno-cdn.image
-    type: docker-image
-    source:
-      username: {{keppel-username}}
-      password: {{keppel-password}}
-      repository: ((keppel-hostname))/ccloud/juno-cdn     
-
-  - name: juno-unit-test.image
-    type: docker-image
-    check_every: 24h
-    source:
-      username: {{keppel-username}}
-      password: {{keppel-password}}
-      repository: ((keppel-hostname))/ccloud/juno-unit-test
-
-resource_types:
-  - name: git-proxy
-    type: registry-image
-    check_every: 24h
-    source:
-      repository: ((keppel-hostname))/ccloud-dockerhub-mirror/sapcc/concourse-git-resource-proxy
-
-  - name: time-version-resource
-    type: docker-image
-    check_every: 24h
-    source:
-      repository: ((keppel-hostname))/ccloud/concourse-time-version-resource
-      tag: v2
-
-  - name: release
-    type: docker-image
-    check_every: 24h
-    source:
-      repository: ((keppel-hostname))/ccloud/concourse-release-resource
-      tag: v1.1
