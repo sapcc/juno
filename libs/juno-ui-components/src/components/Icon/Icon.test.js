@@ -23,10 +23,11 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toHaveAttribute("alt", "help")
   })
 
-  test("renders an Icon with default color", async () => {
+  test("renders an Icon with no text class by default so that text color is inherited from context", async () => {
     render(<Icon />)
     expect(screen.getByRole("img")).toBeInTheDocument()
-    expect(screen.getByRole("img")).toHaveClass("text-theme-default")
+    // check that there is no class that contains 'text-'
+    expect(screen.getByRole("img")).not.toHaveAttribute('class', expect.stringContaining('text-'))
   })
   
   test("renders an Icon with color as passed", async () => {
