@@ -3410,14 +3410,13 @@
             transition: all 0.5s ease;
             display:block;  
          }
-
     </style>
     <g class="spotS" transform="translate(174,113.5)">
         <g id="EU-RU-1" class="location" transform="translate(730,0)">
             <g class="spot" transform="translate(3,3.5)">
                 <ellipse id="world_map7-bJ-3" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(-5,-21.5)">
+            <g class="EU-RU-1 hover" display="none" transform="translate(-5,-21.5)">
                 <g transform="translate(8,25)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" fill-opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-bM)" fill="#000">
@@ -3455,7 +3454,7 @@
             <g class="spot" transform="translate(4,2.5)">
                 <ellipse id="world_map7-bU-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(-6.1,-21.5)">
+            <g class="EU-DE-1 hover" display="none" transform="translate(-6.1,-21.5)">
                 <g transform="translate(10.1,24)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-bX)" fill="#000">
@@ -3493,7 +3492,7 @@
             <g class="spot" transform="translate(2,3.5)">
                 <ellipse id="world_map7-cf-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(-7.1,-21.5)">
+            <g class="EU-DE-2 hover" display="none" transform="translate(-7.1,-21.5)">
                 <g transform="translate(10.1,25)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-ci)" fill="#000">
@@ -3531,7 +3530,7 @@
             <g class="spot" transform="translate(4,3.5)">
                 <ellipse id="world_map7-cq-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(-6,-21.5)">
+            <g class="EU-NL-1 hover" display="none" transform="translate(-6,-21.5)">
                 <g transform="translate(10,25)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-ct)" fill="#000">
@@ -3569,7 +3568,7 @@
             <g class="spot" transform="translate(3,3.5)">
                 <ellipse id="world_map7-cB-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(-15.7,-21.5)">
+            <g class="AP-SA-1 hover" display="none" transform="translate(-15.7,-21.5)">
                 <g transform="translate(18.7,25)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-cE)" fill="#000">
@@ -3621,7 +3620,7 @@
             <g class="spot" transform="translate(3,3.5)">
                 <ellipse id="world_map7-cM-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(-15.7,-21.5)">
+            <g class="AP-SA-2 hover" display="none" transform="translate(-15.7,-21.5)">
                 <g transform="translate(18.7,25)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" fill-opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-cP)" fill="#000">
@@ -3673,7 +3672,7 @@
             <g class="spot" transform="translate(3,3.5)">
                 <ellipse id="world_map7-cX-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(-7,-21.5)">
+            <g class="AP-AE-1 hover" display="none" transform="translate(-7,-21.5)">
                 <g transform="translate(10,25)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-da)" fill="#000">
@@ -3716,7 +3715,7 @@
             <g class="spot" transform="translate(5,4.5)">
                 <ellipse id="world_map7-di-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(-7,-21.5)">
+            <g class="AP-AU-1 hover" display="none" transform="translate(-7,-21.5)">
                 <g transform="translate(12,26)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-dl)" fill="#000">
@@ -3767,7 +3766,7 @@
             <g class="spot" transform="translate(4,3.5)">
                 <ellipse id="world_map7-dt-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(0,-21.5)">
+            <g class="AP-CN-1 hover" display="none" transform="translate(0,-21.5)">
                 <g transform="translate(4,25)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-dw)" fill="#000">
@@ -3808,7 +3807,7 @@
             <g class="spot" transform="translate(4,3.5)">
                 <ellipse id="world_map7-dE-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(0,-21.5)">
+            <g class="AP-JP-2 hover" display="none" transform="translate(0,-21.5)">
                 <g transform="translate(4,25)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-dH)" fill="#000">
@@ -3844,7 +3843,7 @@
             <g class="spot" transform="translate(4,3.5)">
                 <ellipse id="world_map7-dP-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(0,-21.5)">
+            <g class="AP-JP-1 hover" display="none" transform="translate(0,-21.5)">
                 <g transform="translate(4,25)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-dS)" fill="#000">
@@ -3880,7 +3879,7 @@
             <g class="spot" transform="translate(4,3.5)">
                 <ellipse id="world_map7-ea-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(-9.5,-21.5)">
+            <g class="NA-CA-1 hover" display="none" transform="translate(-9.5,-21.5)">
                 <g transform="translate(13.5,25)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-ed)" fill="#000">
@@ -3919,7 +3918,7 @@
             <g class="spot" transform="translate(3,3.5)">
                 <ellipse id="world_map7-el-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(-9.9,-21.5)">
+            <g class="NA-US-1 hover" display="none" transform="translate(-9.9,-21.5)">
                 <g transform="translate(12.9,25)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-eo)" fill="#000">
@@ -4018,7 +4017,7 @@
             <g class="spot" transform="translate(3,3.5)">
                 <ellipse id="world_map7-ew-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(-9.9,-21.5)">
+            <g class="NA-US-3 hover" display="none" transform="translate(-9.9,-21.5)">
                 <g transform="translate(12.9,25)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-ez)" fill="#000">
@@ -4117,7 +4116,7 @@
             <g class="spot" transform="translate(3,3.5)">
                 <ellipse id="world_map7-eH-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(-9.9,-21.5)">
+            <g class="NA-US-2 hover" display="none" transform="translate(-9.9,-21.5)">
                 <g transform="translate(12.9,25)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-eK)" fill="#000">
@@ -4216,7 +4215,7 @@
             <g class="spot" transform="translate(3,3.5)">
                 <ellipse id="world_map7-eS-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
-            <g class="hover" display="none" transform="translate(-13,-21.5)">
+            <g class="LA-BR-1 hover" display="none" transform="translate(-13,-21.5)">
                 <g transform="translate(16,25)">
                     <ellipse cx="23.7" cy="23.6" fill="#fff" opacity=".56" rx="23.7" ry="23.6"/>
                     <g filter="url(#world_map7-eV)" fill="#000">

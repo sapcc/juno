@@ -15,7 +15,7 @@ const Home = () => {
   const selectRegion     = useStore(useCallback((state) => state.selectRegion))
 
   const handleWorldMapClick = (e) => {
-    console.log("Target: ", e.target, e.target.dataset.region);
+    console.log(e.target, e.target.dataset.region);
     if (e.target.dataset.region) {
       selectRegion(e.target.dataset.region)
       showLoginOverlay()
@@ -42,7 +42,7 @@ const Home = () => {
       </div>
       <div className="bg-top bg-no-repeat mt-24" style={{ backgroundImage: `url('${backgroundTop}')` }}>
         <div className="container mx-auto">
-          <WorldMap className="w-full" onClick={handleWorldMapClick}/>
+          <WorldMap className="worldmap w-full" onClick={handleWorldMapClick} data-selected-region={selectedRegion} />
         </div>
       </div>
     </div>
