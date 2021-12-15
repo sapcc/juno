@@ -74,10 +74,10 @@ describe("Button", () => {
     expect(screen.getByRole("button")).toHaveClass("juno-button-primary")
   })
 
-  test("renders a danger button", async () => {
-    render(<Button variant="danger">Click me</Button>)
+  test("renders a primary-danger button", async () => {
+    render(<Button variant="primary-danger">Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
-    expect(screen.getByRole("button")).toHaveClass("juno-button-danger")
+    expect(screen.getByRole("button")).toHaveClass("juno-button-primary-danger")
   })
 
   test("renders a disabled button", async () => {

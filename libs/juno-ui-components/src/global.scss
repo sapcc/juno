@@ -301,7 +301,7 @@
 --color-text-disabled: var(--color-juno-text-disabled-raw);
 --color-text-link: var(--color-juno-blue-light-3-raw);
 // Button
-// --> Primary Button (definition here done, TODO: update tw config)
+// --> Primary Button
 --color-button-primary-text: var(--color-white-raw);
 --gradient-button-primary-bg: linear-gradient(to right top, rgb(51, 242, 255) 0%, var(--color-juno-blue-light-3) 100%);
 --color-button-primary-border: var(--color-juno-blue-light-3-raw);
@@ -331,13 +331,16 @@
 --color-button-subdued-disabled-text: rgb(203, 203, 203);
 --color-button-subdued-disabled-bg: transparent;
 --color-button-default-disabled-border: rgb(203, 203, 203);
-
-// TODO:
-// --> Danger Button
---color-button-danger-text: var(--color-white-raw);
---color-button-danger-bg: var(--color-sap-red-raw);
---color-button-danger-hover-bg: var(--color-sap-red-dark-raw);
---color-button-danger-foreground: var(--color-white-raw);
+// --> Primary Danger Button
+--color-button-primary-danger-text: var(--color-white-raw);
+--gradient-button-primary-danger-bg: linear-gradient( to right top, rgb(227, 107, 62) 0%, rgb(187, 62, 15) 100%); 
+--color-button-primary-danger-border: var(--color-sap-red-dark-raw);
+--color-button-primary-danger-hover-text: var(--color-white-raw);
+--gradient-button-primary-danger-hover-bg: linear-gradient( to right top, rgb(252, 169, 137) 0%, rgb(156, 43, 0) 100%);
+--color-button-primary-danger-hover-border: var(--color-sap-red-dark-raw);
+--color-button-primary-danger-disabled-text: rgb(203, 203, 203);
+--gradient-button-primary-danger-disabled-bg: linear-gradient(to right top, rgb(253, 253, 253) 0%, rgb(230, 230, 230) 100%);
+--color-button-primary-danger-disabled-border: rgb(203, 203, 203);
 // Icon
 --color-icon-danger: var(--color-sap-red-raw);
 --color-icon-info: var(--color-juno-blue-raw);
@@ -432,8 +435,6 @@
  --gradient-button-primary-disabled-bg: linear-gradient(to right top, rgb(0, 7, 15) 0%, rgb(44, 46, 49) 100%);
  --color-button-primary-disabled-border: rgb(76, 79, 83);
  --color-button-primary-disabled-text: rgb(76, 79, 83);
- 
- //TODO:
   // --> Default Button
 --color-button-default-text: var(--color-text-medium);
 --color-button-default-bg: transparent;
@@ -454,13 +455,16 @@
 --color-button-subdued-disabled-text: rgb(76, 79, 83);
 --color-button-subdued-disabled-bg: transparent;
 --color-button-default-disabled-border: rgb(76, 79, 83);
-
-  
-  // --> Danger Button
-  --color-button-danger-text: var(--color-white-raw);
-  --color-button-danger-bg: var(--color-sap-red-raw);
-  --color-button-danger-bg-hover: var(--color-sap-red-dark-raw);
-  --color-button-danger-foreground: var(--color-white-raw);
+  // --> Primary-Danger Button
+  --color-button-primary-danger-text: var(--color-white-raw);
+  --gradient-button-primary-danger-bg: linear-gradient(to right top, rgb(230, 117, 85) 0%, rgb(255, 65, 11) 100%);
+  --color-button-primary-danger-border: rgb(255, 65, 11);
+  --color-button-primary-danger-hover-text: var(--color-white-raw);
+  --gradient-button-primary-danger-hover-bg: linear-gradient(to right top, rgb(172, 172, 148) 0%, rgb(146, 32, 0) 100%);
+  --color-button-primary-danger-hover-border: rgb(255, 65, 11);
+  --color-button-primary-danger-disabled-text: rgb(76, 79, 83);
+  --gradient-button-primary-danger-disabled-bg: linear-gradient(to right top, rgb(0, 7, 15) 0%, rgb(44, 46, 49) 100%);
+  --color-button-primary-danger-disabled-border: rgb(76, 79, 83);
   // Icon
   --color-icon-danger: var(--color-sap-red-raw);
   --color-icon-info: var(--color-juno-blue-raw);
