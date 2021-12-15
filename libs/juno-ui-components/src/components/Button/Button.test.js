@@ -85,6 +85,12 @@ describe("Button", () => {
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveAttribute('disabled')
   })
+  
+  test("renders an icon as passed", async () => {
+    render(<Button icon="warning">Click Me</Button>)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute('alt', "warning")
+  })
 
   test("renders a small button", async () => {
     render(<Button size="small">Click me</Button>)

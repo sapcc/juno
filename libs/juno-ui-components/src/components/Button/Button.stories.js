@@ -114,6 +114,18 @@ PrimaryDisabled.args = {
   disabled: true,
 }
 
+export const PrimaryWithIcon = Template.bind({})
+PrimaryWithIcon.parameters = {
+  docs: {
+    story: 'Primary Button with icon'
+  }
+}
+PrimaryWithIcon.args = {
+  ...Primary.args,
+  label: "Primary with Icon",
+  icon: "warning",
+}
+
 
 
 export const LinkAsButton = Template.bind({})
@@ -126,4 +138,19 @@ LinkAsButton.args = {
   ...Primary.args,
   label: "Link as button",
   href: "#link",
+}
+
+export const LinkAsButtonWithIcon = Template.bind({})
+LinkAsButtonWithIcon.parameters = {
+  docs: {
+    description: {
+      story: 'Link styled as a button includign an icon.'
+    }
+  }
+}
+LinkAsButtonWithIcon.args = {
+  ...Primary.args,
+  icon: "warning",
+  label: "Link as button with Icon",
+  href: "#link"
 }
