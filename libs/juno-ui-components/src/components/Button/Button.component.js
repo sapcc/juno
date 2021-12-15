@@ -55,11 +55,17 @@ const btnSubdued = `
   disabled:border-theme-button-subdued-disabled
 `
 
-const btnDanger = `
-  text-theme-on-danger
-  bg-theme-button-danger
-  hover:bg-theme-danger-hover
-  disabled:bg-theme-danger
+const btnPrimaryDanger = `
+  border
+  text-theme-button-primary-danger 
+  bg-theme-button-primary-danger
+  border-theme-button-primary-danger
+  hover:text-theme-button-primary-danger-hover
+  hover:bg-theme-button-primary-danger-hover
+  hover:border-theme-button-primary-danger-hover
+  disabled:text-theme-button-primary-danger-disabled
+  disabled:bg-theme-button-primary-danger-disabled
+  disabled:border-theme-button-primary-danger-disabled
 `
 
 const btnSmall = `
@@ -87,6 +93,8 @@ const variantClass = (variant) => {
   switch (variant) {
     case "primary":
       return btnPrimary
+    case "primary-danger":
+      return btnPrimaryDanger
     case "danger":
       return btnDanger
     case "subdued":
@@ -193,7 +201,7 @@ export const Button = ({
 
 Button.propTypes = {
   /** Choose a variant for your purpose. May leave empty to get default button. */
-  variant: PropTypes.oneOf(["primary", "danger", "default", "subdued"]),
+  variant: PropTypes.oneOf(["primary", "primary-danger", "default", "subdued"]),
   /** Leave empty for default size */
   size: PropTypes.oneOf(["small", "default", "large"]),
   /** Whether the button is disabled */

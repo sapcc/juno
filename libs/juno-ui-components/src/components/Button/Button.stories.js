@@ -50,15 +50,15 @@ Subdued.args = {
   label: "Subdued",
 }
 
-export const Danger = Template.bind({})
-Danger.parameters = {
+export const PrimaryDanger = Template.bind({})
+PrimaryDanger.parameters = {
   docs: {
     description: { story: 'Use this button sparingly and only for dangerous or destructive actions'}
   },
 }
-Danger.args = {
-  variant: "danger",
-  label: "Danger",
+PrimaryDanger.args = {
+  variant: "primary-danger",
+  label: "Primary Danger",
 }
 
 export const Large = Template.bind({})
