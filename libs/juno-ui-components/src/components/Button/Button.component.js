@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { Icon } from "../Icon/index.js"
 
 const btnBase = `
   font-bold
@@ -106,6 +107,40 @@ const sizeClass = (size) => {
   }
 }
 
+const iconSize = (size) => {
+  switch (size) {
+    case "small":
+      return '21'
+    case "large":
+      return '32'
+    default:
+      return '24'
+  }
+}
+
+const btnIconSmall = `
+  mr-1
+`
+
+const btnIconLarge = `
+  mr-3
+`
+
+const btnIconDefault = `
+  mr-2
+`
+
+const iconMargin = (size) => {
+  switch (size) {
+    case "small":
+      return btnIconSmall
+    case "large":
+      return btnIconLarge
+    default:
+      return btnIconDefault
+  }
+}
+
 /**
  * The basic button component. Use this for `onClick` interactions.
  */
@@ -116,6 +151,7 @@ export const Button = ({
   size,
   disabled,
   href,
+  icon,
   className,
   onClick,
   children,
@@ -132,6 +168,7 @@ export const Button = ({
       title={titleValue}
       {...props}
     >
+      { icon ? <Icon icon={icon} className={iconMargin(size)} size={ size ? iconSize(size) : null } /> : null }
       {label || children}
     </button>
   )
@@ -146,6 +183,7 @@ export const Button = ({
       title={titleValue}
       {...props}
     >
+      { icon ? <Icon icon={icon} className={iconMargin(size)} size={ size ? iconSize(size) : null } /> : null }
       {label || children}
     </a>
   )
@@ -166,6 +204,8 @@ Button.propTypes = {
   label: PropTypes.string,
   /** Specify title for accessibility. Gets value of label if no title specified */
   title: PropTypes.string,
+  /** Pass the name of an icon the button should show. Can be any icon included with Juno. */
+  icon: PropTypes.string,
   /** Pass a className */
   className: PropTypes.string,
   /** Click handler  */
@@ -178,6 +218,7 @@ Button.defaultProps = {
   variant: "default",
   size: "default",
   disabled: null,
+  icon: null,
   className: "",
   href: null,
   title: null,
