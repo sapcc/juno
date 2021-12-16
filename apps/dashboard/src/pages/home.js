@@ -29,7 +29,7 @@ const Home = () => {
 
         <Stack className="items-center">
           <div className="text-2xl w-3/5 mr-auto">
-            Engage eyeballs collaborative: best-of-breed applications out-of-the-box dynamic next-generation optimize, B2B.
+            SAP’s strategic Infrastructure-as-a-Service (IaaS) stack, optimised for SAP solutions, running purely in SAP datacenters.
           </div>
           <div>
             <Button className="whitespace-nowrap" onClick={() => showLoginOverlay()}>

@@ -27,9 +27,9 @@ const noBgBoxStyles = `
 
 const PageFooter = () => {
   return (
-    <div className="mt-32">
+    <div className="mt-12">
       <div className="footer">
-        <div className="container mx-auto grid grid-rows-[1fr,0.25fr] grid-cols-3 gap-x-20 gap-y-8 py-8">
+        <div className="container mx-auto grid grid-rows-[1fr,0.25fr] grid-cols-3 gap-x-20 gap-y-8 pb-12 pt-[calc(2rem+var(--cloud-image-overlap))]">
           
           <Stack direction="vertical" className={`row-span-2 bg-juno-grey-blue-10 ${boxStyles}`}>
             <DocumentationIcon className="mb-3" />
@@ -85,26 +85,28 @@ const PageFooter = () => {
             </div>
           </Stack>
           
-          <a className="block col-span-2 bg-juno-turquoise text-juno-grey-blue-10 rounded py-2 px-8" href="https://documentation.global.cloud.sap/docs/support-prod-sys-down" target="_blank">
+          <a className="group block col-span-2 bg-juno-turquoise text-juno-grey-blue-10 rounded" href="https://documentation.global.cloud.sap/docs/support-prod-sys-down" target="_blank">
             <Stack gap={2}>
-              <div className="text-3xl font-bold">
+              <div className="text-3xl font-bold py-2 pl-8">
                 *
               </div>
-              <div>
+              <div className="py-2">
                 <div className="text-3xl font-bold">
                   Premium 24 hour emergency support
                 </div>
                 For emergencies in productive systems. 
               </div>
+              <Stack direction="vertical" className="bg-juno-grey-blue-10 ml-auto px-4 py-2 items-center justify-center font-bold text-juno-turquoise group-hover:text-white">
+                <Icon icon="exitToApp" size="36" />
+                <div>Learn more</div>
+              </Stack>
             </Stack>
           </a>
         </div>
       </div>
 
-      <div className="bg-juno-grey-blue-10 py-6">
-        <div className="container mx-auto">
+      <div className="bg-juno-grey-blue-10 px-6 py-5">
           <SAPLogo className="h-6" />
-        </div>
       </div>
     </div>
   )
