@@ -11,6 +11,7 @@ import Danger from "./icons/danger.svg"
 import Dangerous from "./icons/dangerous.svg"
 import Description from "./icons/description.svg"
 import Error from "./icons/error.svg"
+import ExitToApp from "./icons/exit_to_app.svg"
 import ExpandLess from "./icons/expand_less.svg"
 import ExpandMore from "./icons/expand_more.svg"
 import Forum from "./icons/forum.svg"
@@ -48,6 +49,8 @@ const getColoredSizedIcon = ({icon, color, size, className, ...props}) => {
 				return <Description width={size} height={size} className={iconClass} alt="description" role="img" {...props} />
 			case "error":
 				return <Error width={size} height={size} className={iconClass} alt="error" role="img" {...props} />
+			case "exitToApp":
+				return <ExitToApp width={size} height={size} className={iconClass} alt="exit to other app" role="img" {...props} />
 			case "expandLess":
 				return <ExpandLess width={size} height={size} className={iconClass} alt="expand less" role="img" {...props} />
 			case "expandMore":
@@ -101,8 +104,9 @@ Icon.propTypes = {
 			"dangerous",
 			"description",
 			"error", 
+			"exitToApp", 
 			"expandLess", 
-			"expandMore", 
+			"expandMore",
 			"forum", 
 			"help", 
 			"info", 
