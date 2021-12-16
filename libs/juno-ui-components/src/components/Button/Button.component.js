@@ -8,8 +8,7 @@ const btnBase = `
   justify-center 
   rounded-md
   shadow-sm 
-  w-full
-  sm:w-auto 
+  w-auto 
   focus:outline-none 
   focus:ring-2
   focus:ring-focus
@@ -70,21 +69,18 @@ const btnPrimaryDanger = `
 
 const btnSmall = `
   text-sm
-  sm:text-sm
   px-sm
   py-xs
 `
 
 const btnDefaultSize = `
-  text-sm 
-  sm:text-base
+  text-base
   px-md 
   py-sm
 `
 
 const btnLarge = `
-  text-xl
-  sm:text-2xl
+  text-2xl
   px-lg
   py-sm
 `
