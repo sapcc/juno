@@ -92,6 +92,12 @@ describe("Button", () => {
     expect(screen.getByRole("img")).toHaveAttribute('alt', "warning")
   })
 
+  test("renders the default button with default icon color", async () => {
+    render(<Button icon="warning">Click Me</Button>)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveClass("text-theme-button-default-icon")
+  })
+
   test("renders a small button", async () => {
     render(<Button size="small">Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()

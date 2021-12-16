@@ -225,6 +225,7 @@ module.exports = {
           "button-primary-danger-hover": withOpacity("--color-button-primary-danger-hover-text"),
           "button-primary-danger-disabled": withOpacity("--color-button-primary-danger-disabled-text"),
           "button-default": withOpacity("--color-button-default-text"),
+          "button-default-icon": "var(--color-button-default-icon)",
           "button-default-hover": withOpacity("--color-button-default-hover-text"),
           "button-default-disabled": "var(--color-button-default-disabled-text)",
           "button-subdued": withOpacity("--color-button-subdued-text"),

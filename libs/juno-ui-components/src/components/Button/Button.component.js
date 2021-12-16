@@ -138,14 +138,15 @@ const btnIconDefault = `
   mr-2
 `
 
-const iconMargin = (size) => {
+const iconClasses = (size, variant) => {
+  const iconColor = variant === "default" ? "text-theme-button-default-icon" : ""
   switch (size) {
     case "small":
-      return btnIconSmall
+      return `${btnIconSmall} ${iconColor}`
     case "large":
-      return btnIconLarge
+      return `${btnIconLarge} ${iconColor}`
     default:
-      return btnIconDefault
+      return `${btnIconDefault} ${iconColor}`
   }
 }
 
@@ -176,7 +177,7 @@ export const Button = ({
       title={titleValue}
       {...props}
     >
-      { icon ? <Icon icon={icon} className={iconMargin(size)} size={ size ? iconSize(size) : null } /> : null }
+      { icon ? <Icon icon={icon} className={iconClasses(size, variant)} size={ size ? iconSize(size) : null } /> : null }
       {label || children}
     </button>
   )
@@ -191,7 +192,7 @@ export const Button = ({
       title={titleValue}
       {...props}
     >
-      { icon ? <Icon icon={icon} className={iconMargin(size)} size={ size ? iconSize(size) : null } /> : null }
+      { icon ? <Icon icon={icon} className={iconClasses(size, variant)} size={ size ? iconSize(size) : null } /> : null }
       {label || children}
     </a>
   )

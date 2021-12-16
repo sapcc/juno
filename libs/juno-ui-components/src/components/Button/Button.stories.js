@@ -126,6 +126,19 @@ PrimaryWithIcon.args = {
   icon: "warning",
 }
 
+export const DefaultWithIcon = Template.bind({})
+DefaultWithIcon.parameters = {
+  docs: {
+    story: 'Default Button with icon'
+  }
+}
+
+DefaultWithIcon.args = {
+  ...Default.args,
+  label: "Default with Icon",
+  icon: "warning",
+}
+
 
 
 export const LinkAsButton = Template.bind({})
@@ -144,7 +157,7 @@ export const LinkAsButtonWithIcon = Template.bind({})
 LinkAsButtonWithIcon.parameters = {
   docs: {
     description: {
-      story: 'Link styled as a button includign an icon.'
+      story: 'Link styled as a button including an icon.'
     }
   }
 }
