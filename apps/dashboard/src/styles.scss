@@ -21,6 +21,7 @@
   // 4 background images stacked on top of each other. To make the cloud shape visually stick out of the banner a sharp linear gradient of
   // height --cloud-image-overlap and global bg color was used to visually cut off parts of the regular background gradient to give
   // the appearance that the cloud image sticks outside of the container (which it doesn't)
+  //
   // background: url(assets/images/cloud.png) top right,
   //   url(assets/images/background_footer.svg) top var(--cloud-image-overlap) left 0%,
   //   linear-gradient(180deg, rgb(var(--color-global-bg)) 0%, rgb(var(--color-global-bg)) 100%),
@@ -28,8 +29,8 @@
   // background-size: auto, cover, auto var(--cloud-image-overlap), auto;
   // background-repeat: no-repeat;
   background: linear-gradient(90deg, rgb(23, 30, 37) 0%, rgb(19, 25, 31) 100%);
-background-size: auto;
-background-repeat: no-repeat;
+  background-size: auto;
+  background-repeat: no-repeat;
 }
 
 // Worldmap: show hover info permanently for selected region
