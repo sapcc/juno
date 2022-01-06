@@ -12,6 +12,7 @@ const btnBase = `
   focus:outline-none 
   focus:ring-2
   focus:ring-focus
+  focus:ring-offset-1
   disabled:cursor-not-allowed
   disabled:pointer-events-none
 `
@@ -24,6 +25,9 @@ const btnDefault = `
   hover:text-button-default-hover
   hover:bg-theme-button-default-hover
   hover:border-theme-button-default-hover
+  active:text-theme-button-default-active
+  active:bg-theme-button-default-active
+  active:border-theme-button-default-active
   disabled:text-theme-button-default-disabled
   disabled:bg-theme-button-default-disabled
   disabled:border-theme-button-default-disabled
@@ -36,6 +40,9 @@ const btnPrimary = `
   hover:text-theme-button-primary-hover
   hover:bg-theme-button-primary-hover
   hover:border-theme-button-primary-hover
+  active:text-theme-button-primary-active
+  active:bg-theme-button-primary-active
+  active:border-theme-button-primary-active
   disabled:text-theme-button-primary-disabled
   disabled:bg-theme-button-primary-disabled
   disabled:border-theme-button-primary-disabled
@@ -49,6 +56,9 @@ const btnSubdued = `
   hover:bg-theme-button-subdued-hover
   hover:text-theme-button-subdued-hover
   hover:border-theme-button-subdued-hover
+  active:text-theme-button-subdued-active
+  active:bg-theme-button-subdued-active
+  active:border-theme-button-subdued-active
   disabled:text-theme-button-subdued-disabled
   disabled:bg-theme-button-subdued-disabled
   disabled:border-theme-button-subdued-disabled
@@ -62,6 +72,9 @@ const btnPrimaryDanger = `
   hover:text-theme-button-primary-danger-hover
   hover:bg-theme-button-primary-danger-hover
   hover:border-theme-button-primary-danger-hover
+  active:text-theme-button-primary-danger-active
+  active:bg-theme-button-primary-danger-active
+  active:border-theme-button-primary-danger-active
   disabled:text-theme-button-primary-danger-disabled
   disabled:bg-theme-button-primary-danger-disabled
   disabled:border-theme-button-primary-danger-disabled
