@@ -6,7 +6,10 @@ import StyleProvider from "juno-ui-components"
 
 export const init = (wrapper, props) => {
   ReactDOM.render(
-    <StyleProvider stylesWrapper="shadowRoot" theme={`${props.theme ? props.theme : "theme-dark"}`}>
+    <StyleProvider
+      stylesWrapper="shadowRoot"
+      theme={`${props.theme ? props.theme : "theme-dark"}`}
+    >
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <App {...props} />

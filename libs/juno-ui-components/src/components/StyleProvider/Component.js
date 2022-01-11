@@ -15,9 +15,6 @@ const styles = "%STYLES%"
 // create the context for values to be provided to the nested components.
 const StylesContext = React.createContext()
 
-// export a helper hook to use styles in nested components
-export const useStyles = () => React.useContext(StylesContext)
-
 /**
  * Functional component wich inserts the ui styles. It also creates a
  * shadow dom element with styes inside it if 'stylesWrapper' is equal
@@ -122,3 +119,7 @@ StyleProvider.defaultProps = {
   stylesWrapper: undefined,
   theme: undefined,
 }
+
+// export a helper hook to use styles in nested components
+// returns {styles, theme, setCustomCssClasses}
+StyleProvider.useStyles = () => React.useContext(StylesContext)
