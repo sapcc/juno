@@ -1,1 +1,1 @@
-export { StyleProvider } from "./Component"
+export { StyleProvider, useStyles } from "./Component"

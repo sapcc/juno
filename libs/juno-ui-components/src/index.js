@@ -37,5 +37,6 @@ export { TextInputRow } from "./components/TextInputRow/index.js"
 export { Tooltip } from "./components/Tooltip/index.js"
 export * from "./components/Form/index.js"
 
-import { StyleProvider } from "./components/StyleProvider/index.js"
+import { StyleProvider, useStyles } from "./components/StyleProvider/index.js"
+export { useStyles }
 export default StyleProvider

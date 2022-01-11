@@ -34,6 +34,8 @@ export const StyleProvider = ({
 }) => {
   // theme class default to theme-dark
   const themeClass = themeClassName || "theme-dark"
+  // manage custom css classes (useStyles)
+  const [customCssClasses, setCustomCssClasses] = React.useState("")
 
   React.useEffect(() => {
     // Add font links to head (Plex font from google CDN)
@@ -83,7 +85,7 @@ export const StyleProvider = ({
   }, [])
 
   return (
-    <StylesContext.Provider value={(styles, theme)}>
+    <StylesContext.Provider value={{ styles, theme, setCustomCssClasses }}>
       {/* handle shadowRoot -> create shadow element and insert 
           styles and children into it */}
       {stylesWrapper === "shadowRoot" ? (
@@ -91,11 +93,12 @@ export const StyleProvider = ({
           mode={shadowRootMode}
           styles={styles}
           themeClass={themeClass}
+          customCssClasses={customCssClasses}
         >
           {children}
         </ShadowRoot>
       ) : (
-        <div className={themeClass}>
+        <div className={`${themeClass} ${customCssClasses || ""}`}>
           {stylesWrapper === "inline" && (
             <style data-style-provider="inline">{styles}</style>
           )}
