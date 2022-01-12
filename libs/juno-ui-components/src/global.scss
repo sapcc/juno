@@ -307,28 +307,30 @@
 
 .theme-light {
 // Global
---color-global-bg: var(--color-white-raw)
+--color-global-bg: var(--color-white-raw);
 --color-global-text: var(--color-juno-text-medium-raw);
+--color-accent: var(--color-juno-blue-light-3);
+--color-accent-raw: var(--color-juno-blue-light-3-raw);
 // FOCUS
---color-focus: var(--color-juno-blue-light-3-raw);
+--color-focus: var(--color-accent-raw);
 --color-focus-raw: var(--color-juno-blue-light-3-raw);
 // Text
 --color-text-high: var(--color-juno-text-high-raw);
 --color-text-medium: var(--color-juno-text-medium-raw);
 --color-text-disabled: var(--color-juno-text-disabled-raw);
---color-text-link: var(--color-juno-blue-light-3-raw);
+--color-text-link: var(--color-accent-raw);
 // Button
 // --> Primary Button
 --color-button-primary-text: var(--color-white-raw);
---gradient-button-primary-bg: linear-gradient(to right top, rgb(51, 242, 255) 0%, var(--color-juno-blue-light-3) 100%);
---color-button-primary-border: var(--color-juno-blue-light-3-raw);
+--gradient-button-primary-bg: linear-gradient(to right top, rgb(51, 242, 255) 0%, var(--color-accent) 100%);
+--color-button-primary-border: var(--color-accent-raw);
 // Primary Button :hover
 --gradient-button-primary-hover-bg: linear-gradient(to right top, rgb(51, 242, 255) 0%, rgb(41, 133, 154) 100%);
---color-button-primary-hover-border: var(--color-juno-blue-light-3-raw);
+--color-button-primary-hover-border: var(--color-accent-raw);
 --color-button-primary-hover-text: var(--color-white-raw);
 // Primary Button :active
 --gradient-button-primary-active-bg: linear-gradient(to right top, var(--color-juno-blue-dark-1) 0%, var(--color-juno-blue-dark-1) 100%);
- --color-button-primary-active-border: var(--color-juno-blue-light-3-raw);
+ --color-button-primary-active-border: var(--color-accent-raw);
  --color-button-primary-active-text: var(--color-white-raw);
 // Primary Button :disabled
 --gradient-button-primary-disabled-bg: linear-gradient(to right top, rgb(253, 253, 253) 0%, rgb(230, 230, 230) 100%);
@@ -338,14 +340,14 @@
 --color-button-default-text: var(--color-text-medium);
 --color-button-default-icon: var(--color-juno-blue);
 --color-button-default-bg: transparent;
---color-button-default-border: var(--color-juno-blue-light-3-raw);
+--color-button-default-border: var(--color-accent-raw);
 // Default Button :hover
 --color-button-default-hover-text: var(--color-text-medium);
 --gradient-button-default-hover-bg: linear-gradient(to right top, rgba(218, 218, 218, 0) 0%, rgba(218, 218, 218, 1) 100%);
---color-button-default-hover-border: var(--color-juno-blue-light-3);
+--color-button-default-hover-border: var(--color-accent-raw);
 // Default Button :active
 --color-button-default-active-bg: var(--color-juno-grey-light-54);
---color-button-default-active-border: var(--color-juno-blue-light-3-raw);
+--color-button-default-active-border: var(--color-accent-raw);
 --color-button-default-active-text: var(--color-text-medium);
 // Default Button :disabled
 --color-button-default-disabled-text: rgb(203, 203, 203);
@@ -402,15 +404,15 @@
 
 // Introbox
 --color-introbox-bg: var(--color-juno-grey-light-05-raw);
---color-introbox-border: var(--color-juno-blue-light-3-raw);
+--color-introbox-border: var(--color-accent-raw);
 // Tooltip
---color-tooltip-popover-bg: var(--color-juno-blue-light-3-raw);
+--color-tooltip-popover-bg: var(--color-accent-raw);
 --color-tooltip-popover-text: var(--color-white-raw);
 // (Text-) Input
 --color-textinput-bg: var(--color-juno-grey-light-20-raw);
 --color-textinput-text: var(--color-juno-text-high-raw);
 --color-textinput-placeholder-text: var(--color-juno-text-high-raw);
---color-textinput-focus-border: var(--color-juno-blue-light-3-raw);
+--color-textinput-focus-border: var(--color-accent-raw);
 // Select
 --color-select-bg: var(--color-juno-grey-light-20-raw);
 // Checkbox
@@ -418,15 +420,15 @@
 --color-checkbox-checked-color: var(--color-juno-blue-light-3-raw);
 // Radio
 --color-radio-bg: var(--color-juno-grey-light-37-raw);
---color-radio-checked-bg: var(--color-juno-blue-light-3-raw);
+--color-radio-checked-bg: var(--color-accent-raw);
 // Switch
 --color-switch-default-border: var(--color-juno-text-medium-raw);
 --color-switch-handle-bg: var(--color-juno-text-medium-raw);
---color-switch-handle-checked-bg: var(--color-juno-blue-light-3-raw);
+--color-switch-handle-checked-bg: var(--color-accent-raw);
 // Required
 --color-required-bg: var(--color-juno-turquoise-5-raw);
 // Spinner
---color-spinner-primary: var(--color-juno-blue-light-3-raw);
+--color-spinner-primary: var(--color-accent-raw);
 // Syntax Highlighting
 --color-syntax-highlight-base00: var(--color-juno-grey-light-20); // bg
 --color-syntax-highlight-base01: var(--color-juno-grey-light-20); // ?
@@ -445,10 +447,10 @@
 --color-syntax-highlight-base0E: var(--color-juno-blue); // bool + collapsed icon
 --color-syntax-highlight-base0F: var(--color-juno-blue); // integer value
 // DataGrid
---color-datagridrow-selected: var(--color-juno-blue-light-3-raw);
+--color-datagridrow-selected: var(--color-accent-raw);
 // DataList
 --color-datalist-row-border: var(--color-juno-grey-light-54-raw);
---color-datalistrow-selected: var(--color-juno-blue-light-3-raw);
+--color-datalistrow-selected: var(--color-accent-raw);
   
 }
 
@@ -456,10 +458,12 @@
   // Global
   --color-global-bg: var(--color-juno-grey-blue-95-raw);
   --color-global-text: var(--color-juno-text-medium-raw);
+  --color-accent: var(--color-juno-turquoise-5);
+  --color-accent-raw: var(--color-juno-turquoise-5-raw);
   // FOCUS
-  --color-focus: var(--color-juno-turquoise-5);
-  --color-focus-raw: var(--color-juno-turquoise-5-raw);
-  --color-focus-border: var(--color-juno-turquoise-5-raw);
+  --color-focus: var(--color-accent);
+  --color-focus-raw: var(--color-accent-raw);
+  --color-focus-border: var(--color-accent-raw);
   // Text
   --color-text-high: var(--color-juno-text-high-raw);
   --color-text-medium: var(--color-juno-text-medium-raw);
@@ -468,15 +472,15 @@
   // Button
   // --> Primary Button
  --color-button-primary-text: var(--color-white-raw);
- --gradient-button-primary-bg: linear-gradient(to right top, rgb(7, 79, 90) 0%, var(--color-juno-turquoise-5) 100%);
+ --gradient-button-primary-bg: linear-gradient(to right top, rgb(7, 79, 90) 0%, var(--color-accent) 100%);
  // Primary Button :hover
  --color-button-primary-border: var(--color-juno-turquoise-5-raw);
- --gradient-button-primary-hover-bg: linear-gradient(to right top, var(--color-juno-turquoise-5) 0%, rgb(17, 31, 32) 100%);
- --color-button-primary-hover-border: var(--color-juno-turquoise-5-raw);
+ --gradient-button-primary-hover-bg: linear-gradient(to right top, var(--color-accent) 0%, rgb(17, 31, 32) 100%);
+ --color-button-primary-hover-border: var(--color-accent-raw);
  --color-button-primary-hover-text: var(--color-white-raw);
  // Primary Button :active
  --gradient-button-primary-active-bg: linear-gradient(to right top, var(--color-juno-turqoise-8) 0%, var(--color-juno-turqoise-8) 100%);
- --color-button-primary-active-border: var(--color-juno-turqoise-5-raw);
+ --color-button-primary-active-border: var(--color-accent-raw);
  --color-button-primary-active-text: var(--color-white-raw);
  // Primary Button :disabled
  --gradient-button-primary-disabled-bg: linear-gradient(to right top, rgb(0, 7, 15) 0%, rgb(44, 46, 49) 100%);
@@ -484,16 +488,16 @@
  --color-button-primary-disabled-text: rgb(76, 79, 83);
   // --> Default Button
 --color-button-default-text: var(--color-text-medium);
---color-button-default-icon: var(--color-juno-turquoise-5-raw);
+--color-button-default-icon: var(--color-accent-raw);
 --color-button-default-bg: transparent;
---color-button-default-border: var(--color-juno-turquoise-5-raw);
+--color-button-default-border: var(--color-accent-raw);
 // Default Button :hover
 --color-button-default-hover-text: var(--color-text-medium);
 --gradient-button-default-hover-bg: linear-gradient(to right top, rgba(39, 45, 52, 0) 0%, rgba(39, 45, 52, 1) 100%);
---color-button-default-hover-border: var(--color-juno-turquoise-5-raw);
+--color-button-default-hover-border: var(--color-accent-raw);
 // Default Button :active
 --color-button-default-active-bg: var(--color-juno-grey-light-231-raw);
---color-button-default-active-border: var(--color-juno-turquoise-5-raw);
+--color-button-default-active-border: var(--color-accent-raw);
 --color-button-default-active-text: var(--color-text-medium);
 // Default Button :disabled
 --color-button-default-disabled-text: rgb(76, 79, 83);
@@ -549,7 +553,7 @@
   --gradient-message-success-bg: linear-gradient(90deg, rgb(32, 55, 46) 0%, rgb(39, 102, 57) 100%);
   // Introbox
   --color-introbox-bg: var(--color-juno-grey-blue-79-raw);
-  --color-introbox-border: var(--color-juno-turquoise-5-raw);
+  --color-introbox-border: var(--color-accent-raw);
   // Tooltip
   --color-tooltip-popover-bg: var(--color-juno-blue-light-3-raw);
   --color-tooltip-popover-text: var(--color-juno-grey-blue-100-raw);
@@ -557,24 +561,24 @@
   --color-textinput-bg: var(--color-juno-grey-blue-81-raw);
   --color-textinput-text: var(--color-juno-text-high-raw);
   --color-textinput-placeholder-text: var(--color-juno-text-high-raw);
-  --color-textinput-focus-border: var(--color-juno-turquoise-5-raw);
+  --color-textinput-focus-border: var(--color-accent-raw);
   // Select
   --color-select-bg: var(--color-juno-grey-blue-81-raw);
   // Checkbox
   --color-checkbox-bg: var(--color-juno-grey-blue-81-raw);
-  --color-checkbox-checked-color: var(--color-juno-turquoise-5-raw);
+  --color-checkbox-checked-color: var(--color-accent-raw);
   // Radio
   --color-radio-bg: var(--color-juno-grey-blue-81-raw);
-  --color-radio-checked-bg: var(--color-juno-turquoise-5-raw);
+  --color-radio-checked-bg: var(--color-accent-raw);
   // Switch
   --color-switch-default-border: var(--color-juno-text-high-raw);
   --color-switch-handle-bg: var(--color-juno-text-high-raw);
-  --color-switch-handle-checked-bg: var(--color-juno-turquoise-5-raw);
-  --color-switch-hover-border: var(--color-juno-turquoise-5-raw);
+  --color-switch-handle-checked-bg: var(--color-accent-raw);
+  --color-switch-hover-border: var(--color-accent-raw);
   // Required
-  --color-required-bg: var(--color-juno-turquoise-5-raw);
+  --color-required-bg: var(--color-accent-raw);
   // Spinner 
-  --color-spinner-primary: var(--color-juno-turquoise-5-raw);
+  --color-spinner-primary: var(--color-accent-raw);
   // Syntax Highlighting
   --color-syntax-highlight-base00: var(--color-juno-grey-blue-88); // bg
   --color-syntax-highlight-base01: var(--color-juno-grey-blue-84); // ?
