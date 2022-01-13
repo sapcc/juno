@@ -266,6 +266,11 @@ module.exports = {
         "switch-default": "1.4375rem",
         "switch-handle-default": "1.1875rem",
       },
+      ringOffsetColor: {
+        theme: {
+          "focus": withOpacity("--color-global-bg"),
+        }  
+      },
       width: {
         "switch-default": "2.625rem",
         "switch-handle-default": "1.1875rem",
