@@ -6,14 +6,14 @@ const datalistcellbasestyles = `
 	p-2
 	overflow-hidden
 	overflow-ellipsis
-	flex-grow-0
-	flex-shrink-0
+	grow-0
+	shrink-0
 	flex-basis-auto
 `
 
 const datalistcellautostyles = `
-	flex-grow
-	flex-shrink-0
+	grow
+	shrink-0
 	flex-basis-0
 `
 

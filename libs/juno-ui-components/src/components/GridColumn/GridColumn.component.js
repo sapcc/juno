@@ -3,13 +3,13 @@ import PropTypes from "prop-types"
 import { useGrid } from "../Grid/Grid.component.js"
 
 const autoColumnStyles = `
-	flex-grow
-	flex-shrink-0
+	grow
+	shrink-0
 	flex-basis-0
 `
 const widthColumnStyles = `
-	flex-grow-0
-	flex-shrink-1
+	grow-0
+	shrink-1
 	flex-basis-auto
 `
 

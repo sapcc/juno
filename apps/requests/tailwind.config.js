@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ["./src/**/*.js"],
+  content: ["./src/**/*.js"],
   theme: {
     extend: {
       transformOrigin: {
@@ -10,6 +10,5 @@ module.exports = {
       },
     },
   },
-  variants: {},
   plugins: [],
 }

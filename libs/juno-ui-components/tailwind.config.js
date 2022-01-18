@@ -12,12 +12,10 @@ function withOpacity(variableName) {
 }
 
 module.exports = {
-  mode: "jit",
-  purge: [
+  content: [
     "./src/components/**/*.{js,jsx,ts,tsx}",
     "./src/dummyComponents/*.{js,jsx,ts,tsx}"
   ],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
       'sans': ['"IBM Plex Sans"', 'ui-sans-serif', 'Arial', 'system-ui', 'sans-serif'],
@@ -26,6 +24,7 @@ module.exports = {
       'mono': ['"IBM Plex Mono"', 'ui-monospace', 'monospace']
     },
     colors: {
+      current: 'currentColor', // this is required for fill-current and stroke-current to work when you have custom colors
       "juno-grey-blue": {
         1: withOpacity("--color-juno-grey-blue-84-raw"),
         2: withOpacity("--color-juno-grey-blue-85-raw"),
@@ -51,6 +50,19 @@ module.exports = {
         9: withOpacity("--color-juno-blue-darker-1-raw"),
         10: withOpacity("--color-juno-blue-darker-raw"),
         DEFAULT: withOpacity("--color-juno-blue-raw"),
+      },
+      "juno-turquoise": {
+        1: withOpacity("--color-juno-turquoise-1-raw"),
+        2: withOpacity("--color-juno-turquoise-2-raw"),
+        3: withOpacity("--color-juno-turquoise-3-raw"),
+        4: withOpacity("--color-juno-turquoise-4-raw"),
+        5: withOpacity("--color-juno-turquoise-5-raw"),
+        6: withOpacity("--color-juno-turquoise-6-raw"),
+        7: withOpacity("--color-juno-turquoise-7-raw"),
+        8: withOpacity("--color-juno-turquoise-8-raw"),
+        9: withOpacity("--color-juno-turquoise-9-raw"),
+        10: withOpacity("--color-juno-turquoise-10-raw"),
+        DEFAULT: withOpacity("--color-juno-turquoise-5-raw"),
       },
       "juno-grey-light": {
         1: withOpacity("--color-juno-grey-light-05-raw"),
@@ -130,7 +142,6 @@ module.exports = {
         7: withOpacity("--color-sap-red-dark-1-raw"),
         DEFAULT: withOpacity("--color-sap-red-raw"),
       },
-      "juno-turquoise": withOpacity("--color-juno-turquoise-raw"),
       white: withOpacity("--color-white-raw"),
       black: withOpacity("--color-black-raw"),
       transparent: "transparent",
@@ -306,14 +317,6 @@ module.exports = {
       4: "4px",
       6: "6px",
     },
-  },
-  variants: {
-    extend: {
-      opacity: ['disabled'],
-      backgroundColor: ['disabled'],
-      cursor: ['disabled'],
-      backgroundImage: ['hover']
-    }
   },
   plugins: [],
 }
