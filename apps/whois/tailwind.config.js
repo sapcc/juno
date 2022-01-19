@@ -15,8 +15,7 @@ module.exports = {
   presets: [
     require('juno-ui-components/tailwind.config')
   ],
-  mode: "jit",
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
     extend: {
       backgroundColor: {
@@ -27,6 +26,5 @@ module.exports = {
       },
     },
   },
-  variants: {},
   plugins: [],
 }
