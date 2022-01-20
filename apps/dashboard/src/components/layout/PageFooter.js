@@ -34,7 +34,7 @@ const PageFooter = () => {
           <Stack direction="vertical" className={`row-span-2 bg-juno-grey-blue-10 ${boxStyles}`}>
             <DocumentationIcon className="mb-3" />
             <h5 className={headlineStyles}>
-              <span className="text-juno-turquoise">Documentation</span>
+              <span className="text-theme-accent">Documentation</span>
               <br />
               Detailed information
             </h5>
@@ -43,7 +43,7 @@ const PageFooter = () => {
             </p>
             <div className="mt-auto">
               <Button href="https://documentation.global.cloud.sap/" target="_blank" className="w-auto">
-                <Icon icon="description" color="text-juno-turquoise" className=" mr-2" />
+                <Icon icon="description" color="text-theme-accent" className=" mr-2" />
                 Read the documentation
               </Button>
             </div>
@@ -52,7 +52,7 @@ const PageFooter = () => {
           <Stack direction="vertical" className={noBgBoxStyles}>
             <SlackIcon className="mb-3" />
             <h5 className={headlineStyles}>
-            <span className="text-juno-turquoise">Join the community</span>
+            <span className="text-theme-accent">Join the community</span>
               <br />
               Ask questions and connect with others
             </h5>
@@ -70,7 +70,7 @@ const PageFooter = () => {
           <Stack direction="vertical" className={noBgBoxStyles}>
             <SupportIcon className="mb-3" />
             <h5 className={headlineStyles}>
-            <span className="text-juno-turquoise">Need help?</span>
+            <span className="text-theme-accent">Need help?</span>
               <br />
               Contact our support team *
             </h5>
@@ -85,7 +85,7 @@ const PageFooter = () => {
             </div>
           </Stack>
           
-          <a className="group block col-span-2 bg-juno-turquoise text-juno-grey-blue-10 rounded" href="https://documentation.global.cloud.sap/docs/support-prod-sys-down" target="_blank">
+          <a className="group block col-span-2 bg-theme-accent text-juno-grey-blue-10 rounded" href="https://documentation.global.cloud.sap/docs/support-prod-sys-down" target="_blank">
             <Stack gap={2}>
               <div className="text-3xl font-bold py-2 pl-8">
                 *
@@ -96,7 +96,7 @@ const PageFooter = () => {
                 </div>
                 For emergencies in productive systems. 
               </div>
-              <Stack direction="vertical" className="bg-juno-grey-blue-10 ml-auto px-4 py-2 items-center justify-center font-bold text-juno-turquoise group-hover:text-white">
+              <Stack direction="vertical" className="bg-juno-grey-blue-10 ml-auto px-4 py-2 items-center justify-center font-bold text-theme-accent group-hover:text-white">
                 <Icon icon="exitToApp" size="36" />
                 <div>Learn more</div>
               </Stack>

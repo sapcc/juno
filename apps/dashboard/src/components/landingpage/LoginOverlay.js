@@ -37,7 +37,7 @@ const tabClasses = (isActive) => {
     pb-3 
     px-24 
     -mb-0.5
-    ${isActive ? 'cursor-default text-theme-high border-b-3 border-juno-turquoise' : ''}
+    ${isActive ? 'cursor-default text-theme-high border-b-3 border-theme-accent' : ''}
     `
   )
 }
@@ -45,7 +45,7 @@ const tabClasses = (isActive) => {
 const tabLinkClasses = (isActive) => {
   return (
     `
-    ${isActive ? '' : 'hover:text-juno-turquoise'}
+    ${isActive ? '' : 'hover:text-theme-accent'}
     `
   )
 }
@@ -68,7 +68,7 @@ const LoginOverlay = () => {
     <div className={overlayStyles(loginOverlayVisible)}>
       <div className="w-full max-w-screen-xl mx-auto pb-12">
         <div className="w-full flex items-center justify-end">
-          <ClickableIcon onClick={() => hideLoginOverlay()} icon="close" color="text-juno-turquoise" size="36" className="-mr-12" />
+          <ClickableIcon onClick={() => hideLoginOverlay()} icon="close" color="text-theme-accent" size="36" className="-mr-12" />
         </div>
         <nav className="w-full border-b-2 border-juno-grey-light-8 mb-8">
           <Stack className="justify-around">

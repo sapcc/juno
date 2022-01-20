@@ -12,7 +12,7 @@ const domainCardClasses = `
   p-4
   block
   min-h-[6.25rem]
-  hover:bg-juno-turquoise
+  hover:bg-theme-accent
   hover:text-black
 `
 

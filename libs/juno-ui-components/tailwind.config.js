@@ -152,6 +152,9 @@ module.exports = {
       warning: withOpacity("--color-warning-raw"), 
       focus: withOpacity("--color-focus-raw"),
       primary: withOpacity("--color-primary-raw"),
+      theme: {
+        accent: withOpacity("--color-accent-raw")
+      }
     },
     borderColor: theme => ({
       ...theme('colors'),
