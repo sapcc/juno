@@ -7,7 +7,7 @@ import { Icon, Stack } from "juno-ui-components"
 const domainCardClasses = `
   group
   relative
-  bg-juno-grey-blue-1 
+  bg-juno-grey-blue-3 
   text-theme-high
   p-4
   block
@@ -88,7 +88,7 @@ const DomainSelect = () => {
 //       <Stack 
 //         key={region.key}
 //         onClick={() => selectRegion(region.key)}
-//         className="bg-juno-grey-blue-1 py-3 px-5 items-center cursor-pointer hover:ring-2 ring-juno-blue">
+//         className="bg-juno-grey-blue-3 py-3 px-5 items-center cursor-pointer hover:ring-2 ring-juno-blue">
 //         <div>
 //           {region.key}<br />
 //           {region.label}

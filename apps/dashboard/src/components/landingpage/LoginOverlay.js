@@ -13,10 +13,10 @@ const overlayStyles = (isOpen) => {
     ${isOpen ? 'block' : 'hidden' }
     backdrop-blur-xl
     backdrop-saturate-200
-    bg-juno-grey-blue-10
+    bg-juno-grey-blue-11
     bg-opacity-30
     border
-    border-juno-grey-blue-5
+    border-juno-grey-blue-7
     flex
     flex-col
     absolute
@@ -86,7 +86,7 @@ const LoginOverlay = () => {
   
       </div>
 
-      <div className="w-full bg-juno-grey-blue-9 mt-auto">
+      <div className="w-full bg-juno-grey-blue-10 mt-auto">
         <Stack className="documentation-banner max-w-screen-xl mx-auto items-center py-10">
           <div>
             <h5 className="text-3xl">New here?</h5>

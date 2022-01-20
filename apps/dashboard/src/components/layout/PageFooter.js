@@ -31,7 +31,7 @@ const PageFooter = () => {
       <div className="footer">
         <div className="container mx-auto grid grid-rows-[1fr,0.25fr] grid-cols-3 gap-x-20 gap-y-8 pb-12 pt-[calc(2rem+var(--cloud-image-overlap))]">
           
-          <Stack direction="vertical" className={`row-span-2 bg-juno-grey-blue-10 ${boxStyles}`}>
+          <Stack direction="vertical" className={`row-span-2 bg-juno-grey-blue-11 ${boxStyles}`}>
             <DocumentationIcon className="mb-3" />
             <h5 className={headlineStyles}>
               <span className="text-theme-accent">Documentation</span>
@@ -85,7 +85,7 @@ const PageFooter = () => {
             </div>
           </Stack>
           
-          <a className="group block col-span-2 bg-theme-accent text-juno-grey-blue-10 rounded" href="https://documentation.global.cloud.sap/docs/support-prod-sys-down" target="_blank">
+          <a className="group block col-span-2 bg-theme-accent text-juno-grey-blue-11 rounded" href="https://documentation.global.cloud.sap/docs/support-prod-sys-down" target="_blank">
             <Stack gap={2}>
               <div className="text-3xl font-bold py-2 pl-8">
                 *
@@ -96,7 +96,7 @@ const PageFooter = () => {
                 </div>
                 For emergencies in productive systems. 
               </div>
-              <Stack direction="vertical" className="bg-juno-grey-blue-10 ml-auto px-4 py-2 items-center justify-center font-bold text-theme-accent group-hover:text-white">
+              <Stack direction="vertical" className="bg-juno-grey-blue-11 ml-auto px-4 py-2 items-center justify-center font-bold text-theme-accent group-hover:text-white">
                 <Icon icon="exitToApp" size="36" />
                 <div>Learn more</div>
               </Stack>
@@ -105,7 +105,7 @@ const PageFooter = () => {
         </div>
       </div>
 
-      <div className="bg-juno-grey-blue-10 px-6 py-5">
+      <div className="bg-juno-grey-blue-11 px-6 py-5">
           <SAPLogo className="h-6" />
       </div>
     </div>
