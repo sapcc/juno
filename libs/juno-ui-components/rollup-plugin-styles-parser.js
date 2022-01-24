@@ -17,7 +17,7 @@ export default function myExample({ stylesFileName, theme }) {
         key.startsWith(stylesFileName)
       )
       // get css string
-      let styles = stylesKey && bundle[stylesKey].source.replace(/`/g, "'")
+      let styles = stylesKey && bundle[stylesKey].source.toString().replace(/`/g, "'")
 
       // find all bundles which match placeholders %STYLES% and %THEME%
       for (let bundleName in bundle) {
