@@ -43,7 +43,7 @@ const config = [
           path: "./postcss.config.js",
         },
         extract: "styles.css",
-        minimize: true,
+        minimize: false,
         inject: false,
         extensions: [".scss", ".css"],
       }),
