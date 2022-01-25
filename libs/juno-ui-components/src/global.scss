@@ -82,30 +82,30 @@
   
   // Juno Grey
   // RGB
-  --color-juno-grey-light-05: rgb(250, 250, 250);
-  --color-juno-grey-light-11: rgb(244, 244, 244);
-  --color-juno-grey-light-20: rgb(235, 235, 235);
-  --color-juno-grey-light-37: rgb(218, 218, 218);
-  --color-juno-grey-light-54: rgb(201, 201, 201);
-  --color-juno-grey-light-71: rgb(184, 184, 184);
-  --color-juno-grey-light-87: rgb(168, 168, 168);
-  --color-juno-grey-light-104: rgb(151, 151, 151);
-  --color-juno-grey-light-179: rgb(76, 76, 76);
-  --color-juno-grey-light-206: rgb(49, 49, 49);
-  --color-juno-grey-light-231: rgb(24, 24, 24);
+  --color-juno-grey-light-1: rgb(250, 250, 250);
+  --color-juno-grey-light-2: rgb(244, 244, 244);
+  --color-juno-grey-light-3: rgb(235, 235, 235);
+  --color-juno-grey-light-4: rgb(218, 218, 218);
+  --color-juno-grey-light-5: rgb(201, 201, 201);
+  --color-juno-grey-light-6: rgb(184, 184, 184);
+  --color-juno-grey-light-7: rgb(168, 168, 168);
+  --color-juno-grey-light-8: rgb(151, 151, 151);
+  --color-juno-grey-light-9: rgb(76, 76, 76);
+  --color-juno-grey-light-10: rgb(49, 49, 49);
+  --color-juno-grey-light-11: rgb(24, 24, 24);
  
   // RAW
-  --color-juno-grey-light-05-raw: 250, 250, 250;
-  --color-juno-grey-light-11-raw: 244, 244, 244;
-  --color-juno-grey-light-20-raw: 235, 235, 235;
-  --color-juno-grey-light-37-raw: 218, 218, 218;
-  --color-juno-grey-light-54-raw: 201, 201, 201;
-  --color-juno-grey-light-71-raw: 184, 184, 184;
-  --color-juno-grey-light-87-raw: 168, 168, 168;
-  --color-juno-grey-light-104-raw: 151, 151, 151;
-  --color-juno-grey-light-179-raw: 76, 76, 76;
-  --color-juno-grey-light-206-raw: 49, 49, 49;
-  --color-juno-grey-light-231-raw: 24, 24, 24;
+  --color-juno-grey-light-1-raw: 250, 250, 250;
+  --color-juno-grey-light-2-raw: 244, 244, 244;
+  --color-juno-grey-light-3-raw: 235, 235, 235;
+  --color-juno-grey-light-4-raw: 218, 218, 218;
+  --color-juno-grey-light-5-raw: 201, 201, 201;
+  --color-juno-grey-light-6-raw: 184, 184, 184;
+  --color-juno-grey-light-7-raw: 168, 168, 168;
+  --color-juno-grey-light-8-raw: 151, 151, 151;
+  --color-juno-grey-light-9-raw: 76, 76, 76;
+  --color-juno-grey-light-10-raw: 49, 49, 49;
+  --color-juno-grey-light-11-raw: 24, 24, 24;
   
   .theme-dark {
     // TEXT COLORS
@@ -341,7 +341,7 @@
 --gradient-button-default-hover-bg: linear-gradient(to right top, rgba(218, 218, 218, 0) 0%, rgba(218, 218, 218, 1) 100%);
 --color-button-default-hover-border: var(--color-accent-raw);
 // Default Button :active
---color-button-default-active-bg: var(--color-juno-grey-light-54);
+--color-button-default-active-bg: var(--color-juno-grey-light-5);
 --color-button-default-active-border: var(--color-accent-raw);
 --color-button-default-active-text: var(--color-text-medium);
 // Default Button :disabled
@@ -357,7 +357,7 @@
 --gradient-button-sundued-hover-bg: linear-gradient(to right top, rgba(218, 218, 218, 0) 0%, rgba(218, 218, 218, 1) 100%);
 --color-button-subdued-hover-border: var(--color-text-medium);
 // Subdued Button :active
---color-button-subdued-active-bg: var(--color-juno-grey-light-54);
+--color-button-subdued-active-bg: var(--color-juno-grey-light-5);
 --color-button-subdued-active-border: var(--color-text-medium);
 --color-button-subdued-active-text: var(--color-text-medium);
 // Subdued Button :disabled
@@ -398,23 +398,23 @@
 --gradient-message-success-bg: linear-gradient(90deg, rgb(230, 247, 233) 0%, rgb(170, 229, 180) 100%);
 
 // Introbox
---color-introbox-bg: var(--color-juno-grey-light-05-raw);
+--color-introbox-bg: var(--color-juno-grey-light-1-raw);
 --color-introbox-border: var(--color-accent-raw);
 // Tooltip
 --color-tooltip-popover-bg: var(--color-accent-raw);
 --color-tooltip-popover-text: var(--color-white-raw);
 // (Text-) Input
---color-textinput-bg: var(--color-juno-grey-light-20-raw);
+--color-textinput-bg: var(--color-juno-grey-light-3-raw);
 --color-textinput-text: var(--color-juno-text-high-raw);
 --color-textinput-placeholder-text: var(--color-juno-text-high-raw);
 --color-textinput-focus-border: var(--color-accent-raw);
 // Select
---color-select-bg: var(--color-juno-grey-light-20-raw);
+--color-select-bg: var(--color-juno-grey-light-3-raw);
 // Checkbox
---color-checkbox-bg: var(--color-juno-grey-light-37-raw);
+--color-checkbox-bg: var(--color-juno-grey-light-4-raw);
 --color-checkbox-checked-color: var(--color-accent-raw);
 // Radio
---color-radio-bg: var(--color-juno-grey-light-37-raw);
+--color-radio-bg: var(--color-juno-grey-light-4-raw);
 --color-radio-checked-bg: var(--color-accent-raw);
 // Switch
 --color-switch-default-border: var(--color-juno-text-medium-raw);
@@ -425,15 +425,15 @@
 // Spinner
 --color-spinner-primary: var(--color-accent-raw);
 // Syntax Highlighting
---color-syntax-highlight-base00: var(--color-juno-grey-light-20); // bg
---color-syntax-highlight-base01: var(--color-juno-grey-light-20); // ?
+--color-syntax-highlight-base00: var(--color-juno-grey-light-3); // bg
+--color-syntax-highlight-base01: var(--color-juno-grey-light-3); // ?
 --color-syntax-highlight-base02: var(--color-sap-grey-3); // lines and boxes
 --color-syntax-highlight-base03: var(--color-sap-grey-3);
 --color-syntax-highlight-base04: var(--color-sap-grey-3);
 --color-syntax-highlight-base05: var(--color-juno-text-high);
 --color-syntax-highlight-base06: red;
 --color-syntax-highlight-base07: var(--color-juno-text-high);
---color-syntax-highlight-base08: var(--color-juno-grey-blue-88); // NULL
+--color-syntax-highlight-base08: var(--color-juno-grey-blue-6); // NULL
 --color-syntax-highlight-base09: var(--color-juno-blue-4); // String value
 --color-syntax-highlight-base0A: var(--color-juno-grey-blue-6); // NaN
 --color-syntax-highlight-base0B: var(--color-juno-blue-4); // float value
@@ -444,7 +444,7 @@
 // DataGrid
 --color-datagridrow-selected: var(--color-accent-raw);
 // DataList
---color-datalist-row-border: var(--color-juno-grey-light-54-raw);
+--color-datalist-row-border: var(--color-juno-grey-light-5-raw);
 --color-datalistrow-selected: var(--color-accent-raw);
   
 }
@@ -491,7 +491,7 @@
 --gradient-button-default-hover-bg: linear-gradient(to right top, rgba(39, 45, 52, 0) 0%, rgba(39, 45, 52, 1) 100%);
 --color-button-default-hover-border: var(--color-accent-raw);
 // Default Button :active
---color-button-default-active-bg: var(--color-juno-grey-light-231-raw);
+--color-button-default-active-bg: var(--color-juno-grey-light-11-raw);
 --color-button-default-active-border: var(--color-accent-raw);
 --color-button-default-active-text: var(--color-text-medium);
 // Default Button :disabled
@@ -507,7 +507,7 @@
 --gradient-button-subdued-hover-bg: linear-gradient(to right top, rgba(39, 45, 52, 0) 0%, rgba(39, 45, 52, 1) 100%);
 --color-button-subdued-hover-border: var(--color-text-medium);
 // Subdued Button :active
---color-button-subdued-active-bg: var(--color-juno-grey-light-231-raw);
+--color-button-subdued-active-bg: var(--color-juno-grey-light-11-raw);
 --color-button-subdued-active-border: var(--color-text-medium);
 --color-button-subdued-active-text: var(--color-text-medium);
 // Subdued Button :disabled
@@ -575,8 +575,8 @@
   // Spinner 
   --color-spinner-primary: var(--color-accent-raw);
   // Syntax Highlighting
-  --color-syntax-highlight-base00: var(--color-juno-grey-blue-88); // bg
-  --color-syntax-highlight-base01: var(--color-juno-grey-blue-84); // ?
+  --color-syntax-highlight-base00: var(--color-juno-grey-blue-6); // bg
+  --color-syntax-highlight-base01: var(--color-juno-grey-blue-3); // ?
   --color-syntax-highlight-base02: #bbb; // lines and boxes
   --color-syntax-highlight-base03: var(--color-sap-grey-3);
   --color-syntax-highlight-base04: var(--color-sap-grey-3);
@@ -594,7 +594,7 @@
   // DataGrid
   --color-datagridrow-selected: var(--color-accent-raw);
   // DataList
-  --color-datalist-row-border: var( --color-juno-grey-light-104-raw);
+  --color-datalist-row-border: var( --color-juno-grey-light-8-raw);
   --color-datalistrow-selected: var(--color-accent-raw);
 }
 
