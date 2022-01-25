@@ -26,20 +26,24 @@ yarn install
 ## Working With Tailwind
 Juno comes with [Tailwind](https://tailwindcss.com/) included, so when using Juno you automatically can use tailwind in your project.
 
-## Color Variables
-The Juno Design System comes with all colors defined as CSS variables ("custom properties").
-Juno includes SAP brand colors (`--color-sap-…`), Juno specific colors (`--color-juno-…`), Juno theme specific colors (`--color-juno-theme-…`) as well as semantic colors.
+To be able to make full use of the predefined colors and other custom properties from the Juno UI components library you will need to include the ui components tailwind config into your application's tailwind config like this:
 
-A full overview of all colors included with Juno is here: *TODO: Include list here or reference to docs/storybook/website?*
+```js
+module.exports = {
+  presets: [
+    require('juno-ui-components/tailwind.config')
+  ],
+ ...
+}
+```
 
-## Adding Your Own Variables
-*TODO*
+Doing this lets you use Tailwind classnames from the Juno UI Components library.
 
 ## Development
 In order to work ON (NOT WITH) the Juno Design System and its components run storybook from the root directory of this repository:
 
 ```bash
-yarn storybook
+yarn workspace juno-ui-components storybook
 ```
 
 Run the test suite:
