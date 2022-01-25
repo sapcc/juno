@@ -2,17 +2,11 @@
 
 ## Installation
 
-To include Juno UI components in your app or start building a new one install with npm or yarn:
-
-```bash
-npm install --save-dev juno-ui-components
-```
+To include Juno UI components as a dev dependency in your app install with yarn:
 
 ```bash
 yarn add --dev juno-ui-components
 ```
-*correct?*
-
 
 …or declare manually as a dev-dependency:
 
