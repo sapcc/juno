@@ -622,6 +622,8 @@
   html,
   body,
   .shadow-body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     @apply bg-theme-global-bg;
     @apply text-theme-default;
     @apply font-sans;
