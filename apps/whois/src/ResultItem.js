@@ -83,7 +83,7 @@ const ResultItem = ({ content, expand }) => {
 
         }
       </div>
-      <div className={`${rightColumn} p-6 bg-theme-details`}>
+      <div className={`${rightColumn} p-6 bg-theme-background-lvl-3`}>
         { isExpanded &&
           <Stack gap={3} className="cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
             <div className="ml-auto">{isExpanded ? "Collapse" : "Expand"} result </div>

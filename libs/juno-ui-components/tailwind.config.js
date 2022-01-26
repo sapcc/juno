@@ -154,7 +154,18 @@ module.exports = {
       focus: withOpacity("--color-focus-raw"),
       primary: withOpacity("--color-primary-raw"),
       theme: {
-        accent: withOpacity("--color-accent-raw")
+        accent: withOpacity("--color-accent-raw"),
+        "background-lvl-0": withOpacity("--color-background-lvl-0-raw"),
+        "background-lvl-1": withOpacity("--color-background-lvl-1-raw"),
+        "background-lvl-2": withOpacity("--color-background-lvl-2-raw"),
+        "background-lvl-3": withOpacity("--color-background-lvl-3-raw"),
+        "background-lvl-4": withOpacity("--color-background-lvl-4-raw"),
+        "background-lvl-5": withOpacity("--color-background-lvl-5-raw"),
+        "background-lvl-6": withOpacity("--color-background-lvl-6-raw"),
+        "background-lvl-7": withOpacity("--color-background-lvl-7-raw"),
+        "background-lvl-8": withOpacity("--color-background-lvl-8-raw"),
+        "background-lvl-9": withOpacity("--color-background-lvl-9-raw"),
+        "background-lvl-10": withOpacity("--color-background-lvl-10-raw"),
       }
     },
     extend: {

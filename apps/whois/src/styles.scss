@@ -3,8 +3,6 @@
 @tailwind utilities;
 
 .theme-dark {
-  --color-theme-results-bg: var(--color-juno-grey-blue-10-raw);
-  --color-theme-details-bg: var(--color-juno-grey-blue-8-raw);
 
   .whois {
     background: url(img/IP-Background.svg) bottom right no-repeat;
@@ -12,8 +10,6 @@
 }
 
 .theme-light {
-  --color-theme-results-bg: var(--color-juno-grey-light-2-raw);
-  --color-theme-details-bg: var(--color-juno-grey-light-3-raw);
 
   .whois {
     background: url(img/IP-Background_light.svg) bottom right no-repeat;
