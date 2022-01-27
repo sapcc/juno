@@ -56,6 +56,136 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toHaveAttribute("alt", "my super custom icon alt text")
   })
   
+  // Test individual icons:
+  
+  test("renders a autoAwesomeMosaic icon", async () => {
+    render(<Icon icon="autoAwesomeMosaic" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "mosaic")
+  })
+  
+  test("renders a autoAwesomeMotion icon", async () => {
+    render(<Icon icon="autoAwesomeMotion" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "items stacked behind each other")
+  })
+  
+  test("renders a cancel icon", async () => {
+    render(<Icon icon="cancel" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "cancel")
+  })
+  
+  test("renders a close icon", async () => {
+    render(<Icon icon="close" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "close")
+  })
+  
+  test("renders a danger icon", async () => {
+    render(<Icon icon="danger" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "danger")
+  })
+  
+  test("renders a dangerous icon", async () => {
+    render(<Icon icon="dangerous" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "dangerous")
+  })
+  
+  test("renders a description icon", async () => {
+    render(<Icon icon="description" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "description")
+  })
+  
+  test("renders an error icon", async () => {
+    render(<Icon icon="error" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "error")
+  })
+  
+  test("renders an exitToApp icon", async () => {
+    render(<Icon icon="exitToApp" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "exit to other app")
+  })
+  
+  test("renders an expandLess icon", async () => {
+    render(<Icon icon="expandLess" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "expand less")
+  })
+  
+  test("renders an expandMore icon", async () => {
+    render(<Icon icon="expandMore" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "expand more")
+  })
+  
+  test("renders an forum icon", async () => {
+    render(<Icon icon="forum" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "forum")
+  })
+  
+  test("renders an forum help", async () => {
+    render(<Icon icon="help" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "help")
+  })
+  
+  test("renders an info icon", async () => {
+    render(<Icon icon="info" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "info")
+  })
+  
+  test("renders an insertComment icon", async () => {
+    render(<Icon icon="insertComment" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "insert comment")
+  })
+  
+  test("renders a manageAccounts icon", async () => {
+    render(<Icon icon="manageAccounts" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "user account configuration")
+  })
+  
+  test("renders an openInBrowser icon", async () => {
+    render(<Icon icon="openInBrowser" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "open in browser")
+  })
+  
+  test("renders a place icon", async () => {
+    render(<Icon icon="place" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "location")
+  })
+  
+  test("renders a search icon", async () => {
+    render(<Icon icon="search" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "search")
+  })
+  
+  test("renders a success icon", async () => {
+    render(<Icon icon="success" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "success")
+  })
+  
+  test("renders a warning icon", async () => {
+    render(<Icon icon="warning" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "warning")
+  })
+  
+  // Test all props:
+  
   test("renders all props as passed", async () => {
     render(<Icon id="icon-1" data-lolol={true}/>)
     expect(screen.getByRole("img")).toBeInTheDocument()
