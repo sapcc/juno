@@ -928,11 +928,14 @@ jobs:
           image_resource:
             type: docker-image
             source:
-              repository: ((keppel-hostname))/ccloud-dockerhub-mirror/cypress/included
-              tag: "7.1.0"
+              repository: ((keppel-hostname))/ccloud/cypress-client
+              tag: "latest"
           inputs:
             - name: repo.git
               path: /app/juno
+          params:
+            CYPRESS_API_URL: "https://director.cypress.qa-de-1.cloud.sap"
+            CYPRESS_BROWSER: chrome
 
           run:
             path: /bin/sh
@@ -940,10 +943,18 @@ jobs:
               - -c
               - |
                 cd /app/juno/e2e
-                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/dashboard/*" && \
-                CYPRESS_BASE_URL=https://cdn.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/cdn/*" && \
-                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/ui-components/*" && \
-                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --spec "cypress/integration/mercury/*"
+                CI_BUID_ID="$(date) - CI - dashboard-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/dashboard/*" && \
+                CI_BUID_ID="$(date) - CI - cdn-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://cdn.juno.qa-de-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/cdn/*" && \
+                CI_BUID_ID="$(date) - CI - ui-components-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/ui-components/*" && \
+                CI_BUID_ID="$(date) - CI - mercury-components-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/mercury/*"
 
   - name: deploy-to-s-eu-nl-1
     serial: true
@@ -954,9 +965,9 @@ jobs:
           - get: cdn.version
             passed: ["e2e-s-qa-de-1"]
           - get: juno-ui-components.version
-            passed: ["e2e-s-qa-de-1"]  
+            passed: ["e2e-s-qa-de-1"]
           - get: mercury.version
-            passed: ["e2e-s-qa-de-1"]              
+            passed: ["e2e-s-qa-de-1"]
           - get: ci.git
           - get: secrets.git
             params:
