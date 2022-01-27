@@ -33,7 +33,7 @@ const DomainSelect = () => {
 
   return (
     <>
-      <Stack gap={3} className="items-center">
+      <Stack gap="3" className="items-center">
         {selectedRegion.icon}
         <div>
           {selectedRegion.key}
@@ -94,9 +94,9 @@ const DomainSelect = () => {
   )
 }
 
-// <Stack gap={6} className="justify-center">
+// <Stack gap="6" className="justify-center">
 // { regions.map(continent => (
-//   <Stack direction="vertical" gap={1.5} className="flex-1" key={continent.name}>
+//   <Stack direction="vertical" gap="1.5" className="flex-1" key={continent.name}>
 //     <div className="text-lg text-theme-high pb-2">{continent.name}</div>
 //     { continent.regions.map( region => (
 //       <Stack

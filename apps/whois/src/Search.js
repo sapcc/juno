@@ -35,7 +35,7 @@ const Search = ({ onSearch, resultsShown, value }) => {
   return (
     <Stack
       direction="vertical"
-      gap={2}
+      gap="2"
       className={`search ${searchClasses(resultsShown)}`}
     >
       <SearchInput

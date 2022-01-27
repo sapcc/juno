@@ -114,7 +114,7 @@ const PageFooter = () => {
             href="https://documentation.global.cloud.sap/docs/support-prod-sys-down"
             target="_blank"
           >
-            <Stack gap={2}>
+            <Stack gap="2">
               <div className="text-3xl font-bold py-2 pl-8">*</div>
               <div className="py-2">
                 <div className="text-3xl font-bold">

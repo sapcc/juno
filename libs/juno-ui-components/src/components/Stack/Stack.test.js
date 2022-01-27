@@ -31,7 +31,7 @@ describe("Stack", () => {
 	})
 
   test("renders a Stack with gap 4", async () => {
-		render(<Stack data-testid="my-stack" gap={4}></Stack>)
+		render(<Stack data-testid="my-stack" gap="4"></Stack>)
 		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
     expect(screen.getByTestId("my-stack")).toHaveClass(
       "gap-4"

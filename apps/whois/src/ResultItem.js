@@ -44,7 +44,7 @@ const ResultItem = ({ content, expand }) => {
   }, [expand])
 
   return (
-    <Stack gap={4}>
+    <Stack gap="4">
       <div className={leftColumn}>
         {content.floatingIP ? (
           <div className="font-bold">{content.floatingIP}</div>
@@ -64,7 +64,7 @@ const ResultItem = ({ content, expand }) => {
         {content.responsibles && (
           <>
             <h4 className="font-bold mt-3">Responsible Persons:</h4>
-            <Stack direction="vertical" gap={2}>
+            <Stack direction="vertical" gap="2">
               {Object.entries(content.responsibles).map(
                 ([contactType, contactInfo]) => (
                   <div key={contactType}>
@@ -94,7 +94,7 @@ const ResultItem = ({ content, expand }) => {
       <div className={`${rightColumn} p-6 bg-theme-background-lvl-3`}>
         {isExpanded && (
           <Stack
-            gap={3}
+            gap="3"
             className="cursor-pointer"
             onClick={() => setIsExpanded(!isExpanded)}
           >
@@ -132,7 +132,7 @@ const ResultItem = ({ content, expand }) => {
         </div>
 
         <Stack
-          gap={3}
+          gap="3"
           className="cursor-pointer mt-4"
           onClick={() => setIsExpanded(!isExpanded)}
         >

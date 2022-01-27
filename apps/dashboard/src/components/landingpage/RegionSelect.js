@@ -11,11 +11,11 @@ const RegionSelect = () => {
   )
 
   return (
-    <Stack gap={6} className="justify-center">
+    <Stack gap="6" className="justify-center">
       {regionsByContinent.map((continent) => (
         <Stack
           direction="vertical"
-          gap={1.5}
+          gap="1.5"
           className="flex-1"
           key={continent.name}
         >
