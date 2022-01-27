@@ -98,9 +98,6 @@ module.exports = {
         5: withOpacity("--sap-blue-raw"),
         6: withOpacity("--sap-blue-dark-1-raw"),
         7: withOpacity("--sap-blue-dark-raw"),
-        8: withOpacity("--color-sap-blue-darker-2-raw"),
-        9: withOpacity("--color-sap-blue-darker-1-raw"),
-        10: withOpacity("--color-sap-blue-darker-raw"),
         DEFAULT: withOpacity("--sap-blue-raw"),
       },
       "sap-gold": {

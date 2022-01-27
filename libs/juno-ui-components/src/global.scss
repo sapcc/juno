@@ -166,6 +166,9 @@
     --color-error-raw: 187, 62, 15;
   }
 
+  // SAP BRAND COLORS
+  // from https://sap.frontify.com/document/68#/identity/colors
+
   // SAP Brand Non-Colors
   // RGB
   --color-sap-black: rgb(0, 0, 0);
@@ -189,9 +192,6 @@
 
   // SAP Brand Blue
   // RGB
-  --color-sap-blue-darker: rgb(3, 51, 78);
-  --color-sap-blue-darker-1: rgb(5, 71, 107);
-  --color-sap-blue-darker-2: rgb(8, 93, 138);
   --color-sap-blue-dark: rgb(0, 103, 153);
   --color-sap-blue-dark-1: rgb(30, 106, 146);
   --color-sap-blue: rgb(0, 125, 184);
@@ -201,9 +201,6 @@
   --color-sap-blue-light: rgb(203, 232, 247);
 
   //RAW
-  --color-sap-blue-darker-raw: 3, 51, 78;
-  --color-sap-blue-darker-1-raw: 5, 71, 107;
-  --color-sap-blue-darker-2-raw: 8, 93, 138;
   --color-sap-blue-dark-raw: 0, 103, 153;
   --color-sap-blue-dark-1-raw: 30, 106, 146;
   --color-sap-blue-raw: 0, 125, 184;
