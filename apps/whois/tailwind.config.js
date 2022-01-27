@@ -16,15 +16,9 @@ module.exports = {
     require('juno-ui-components/tailwind.config')
   ],
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  theme: {
-    extend: {
-      backgroundColor: {
-        theme: {
-          "results": withOpacity("--color-theme-results-bg"),
-          "details": withOpacity("--color-theme-details-bg"),
-        },
-      },
-    },
+  theme: {},
+  corePlugins: {
+    preflight: false,
   },
   plugins: [],
 }

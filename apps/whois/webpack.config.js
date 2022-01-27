@@ -79,18 +79,16 @@ module.exports = (_, argv) => {
           
         },
         // config for background svgs in css
+        // type "asset" chooses automatically between inline embed or loading as file depending on file size, similar to previously using url-loader and limit
         {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
           issuer: /\.s?css$/,
-          loader: 'url-loader',
-          options: {
-            svgo: false
-          }
+          type: 'asset',
         },
         //Allows use of images
         {
           test: /\.(png|jpg)$/i,
-          loader: "url-loader",
+          type: 'asset',
         },
       ],
     },

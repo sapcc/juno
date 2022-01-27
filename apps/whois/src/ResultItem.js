@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import ReactJson from 'react-json-view'
+import ReactJson from "react-json-view"
 import { DateTime } from "luxon"
 import { Icon, Stack } from "juno-ui-components"
 
@@ -13,27 +13,28 @@ const rightColumn = `
 `
 
 const resultStyles = (isExpanded) => {
-  return (
-    `
+  return `
     overflow-hidden
     transition-max-height
     duration-700
     ease-in-out
 
-    ${isExpanded ? `
+    ${
+      isExpanded
+        ? `
       max-h-full
-    ` : `
+    `
+        : `
       max-h-96
       fade
-    `}
     `
-  )
+    }
+    `
 }
 
 const capitalize = (string) => {
-  return string[0].toUpperCase() + string.slice(1);
+  return string[0].toUpperCase() + string.slice(1)
 }
-
 
 const ResultItem = ({ content, expand }) => {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -45,54 +46,67 @@ const ResultItem = ({ content, expand }) => {
   return (
     <Stack gap={4}>
       <div className={leftColumn}>
-        {content.floatingIP ? 
+        {content.floatingIP ? (
           <div className="font-bold">{content.floatingIP}</div>
-        :
-          content.fixedIPs &&
+        ) : (
+          content.fixedIPs && (
             <div className="font-bold">{content.fixedIPs[0]}</div>
-        }
-        {(content.domainName || content.projectName) &&
-          <div className="text-theme-disabled">{content.domainName} / {content.projectName}</div>
-        }
-        {content.region && 
-          <div className="text-theme-disabled">{content.region}</div>
-        }
-        { content.responsibles &&
+          )
+        )}
+        {(content.domainName || content.projectName) && (
+          <div className="text-theme-light">
+            {content.domainName} / {content.projectName}
+          </div>
+        )}
+        {content.region && (
+          <div className="text-theme-light">{content.region}</div>
+        )}
+        {content.responsibles && (
           <>
             <h4 className="font-bold mt-3">Responsible Persons:</h4>
             <Stack direction="vertical" gap={2}>
-              {Object.entries(content.responsibles).map(([contactType, contactInfo]) => (
-                <div key={contactType}>
-                  <h5>{capitalize(contactType)}:</h5>
-                  {contactInfo ?
-                    <div className="truncate">
-                      <span className="italic pr-1">{contactInfo.ID}</span>
-                      { contactInfo.email &&
-                        <>
-                          <span className="text-theme-disabled">|</span> <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
-                        </>
-                      }
-                    </div>
-                    :
-                    <span className="text-theme-disabled">--</span>
-                  }
-                </div>
-              ))}
+              {Object.entries(content.responsibles).map(
+                ([contactType, contactInfo]) => (
+                  <div key={contactType}>
+                    <h5>{capitalize(contactType)}:</h5>
+                    {contactInfo ? (
+                      <div className="truncate">
+                        <span className="italic pr-1">{contactInfo.ID}</span>
+                        {contactInfo.email && (
+                          <>
+                            <span className="text-theme-light">|</span>{" "}
+                            <a href={`mailto:${contactInfo.email}`}>
+                              {contactInfo.email}
+                            </a>
+                          </>
+                        )}
+                      </div>
+                    ) : (
+                      <span className="text-theme-light">--</span>
+                    )}
+                  </div>
+                )
+              )}
             </Stack>
           </>
-
-        }
+        )}
       </div>
-      <div className={`${rightColumn} p-6 bg-theme-details`}>
-        { isExpanded &&
-          <Stack gap={3} className="cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
-            <div className="ml-auto">{isExpanded ? "Collapse" : "Expand"} result </div>
+      <div className={`${rightColumn} p-6 bg-theme-background-lvl-3`}>
+        {isExpanded && (
+          <Stack
+            gap={3}
+            className="cursor-pointer"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            <div className="ml-auto">
+              {isExpanded ? "Collapse" : "Expand"} result{" "}
+            </div>
             <Icon icon={isExpanded ? "expandLess" : "expandMore"} />
           </Stack>
-        }
+        )}
 
         <div className={resultStyles(isExpanded)}>
-          <ReactJson 
+          <ReactJson
             src={content}
             iconStyle="square"
             collapsed={3}
@@ -112,17 +126,24 @@ const ResultItem = ({ content, expand }) => {
               base0C: "var(--color-syntax-highlight-base0C)", // index
               base0D: "var(--color-syntax-highlight-base0D)", // expanded icon
               base0E: "var(--color-syntax-highlight-base0E)", // bool + collapsed icon
-              base0F: "var(--color-syntax-highlight-base0F)" // integer value
+              base0F: "var(--color-syntax-highlight-base0F)", // integer value
             }}
           />
         </div>
 
-        <Stack gap={3} className="cursor-pointer mt-4" onClick={() => setIsExpanded(!isExpanded)}>
-          <div className="text-theme-medium text-opacity-30">Added to cache: {DateTime.fromISO(content.timestamp).toRelative()}</div>
-          <div className="ml-auto">{isExpanded ? "Collapse" : "Expand"} result </div>
+        <Stack
+          gap={3}
+          className="cursor-pointer mt-4"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+          <div className="text-theme-default text-opacity-30">
+            Added to cache: {DateTime.fromISO(content.timestamp).toRelative()}
+          </div>
+          <div className="ml-auto">
+            {isExpanded ? "Collapse" : "Expand"} result{" "}
+          </div>
           <Icon icon={isExpanded ? "expandLess" : "expandMore"} />
         </Stack>
-          
       </div>
     </Stack>
   )

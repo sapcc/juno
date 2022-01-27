@@ -24,25 +24,25 @@ Default.args = {
 export const Info_Colored = Template.bind({})
 Info_Colored.args = {
   icon: "info",
-  color: "text-info",
+  color: "text-theme-info",
 }
 
 export const Danger_Colored = Template.bind({})
 Danger_Colored.args = {
   icon: "danger",
-  color: "text-danger",
+  color: "text-theme-danger",
 }
 
 export const Success_Colored = Template.bind({})
 Success_Colored.args = {
   icon: "success",
-  color: "text-success",
+  color: "text-theme-success",
 }
 
 export const Warning_Colored = Template.bind({})
 Warning_Colored.args = {
   icon: "warning",
-  color: "text-warning",
+  color: "text-theme-warning",
 }
 
 export const ThemeColor = Template.bind({})

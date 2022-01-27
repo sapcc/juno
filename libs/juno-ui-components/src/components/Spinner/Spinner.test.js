@@ -18,25 +18,25 @@ describe("Spinner", () => {
 	test("renders a primary color spinner", async () => {
 		render(<Spinner variant="primary" />)
 		expect(screen.getByRole("progressbar")).toBeInTheDocument()
-		expect(screen.getByRole("progressbar")).toHaveClass('text-primary')
+		expect(screen.getByRole("progressbar")).toHaveClass('text-theme-accent')
 	})
 	
 	test("renders a warning color spinner", async () => {
 		render(<Spinner variant="warning" />)
 		expect(screen.getByRole("progressbar")).toBeInTheDocument()
-		expect(screen.getByRole("progressbar")).toHaveClass('text-warning')
+		expect(screen.getByRole("progressbar")).toHaveClass('text-theme-warning')
 	})
 	
 	test("renders a danger color spinner", async () => {
 		render(<Spinner variant="danger" />)
 		expect(screen.getByRole("progressbar")).toBeInTheDocument()
-		expect(screen.getByRole("progressbar")).toHaveClass('text-danger')
+		expect(screen.getByRole("progressbar")).toHaveClass('text-theme-danger')
 	})
 	
 	test("renders a success color spinner", async () => {
 		render(<Spinner variant="success" />)
 		expect(screen.getByRole("progressbar")).toBeInTheDocument()
-		expect(screen.getByRole("progressbar")).toHaveClass('text-success')
+		expect(screen.getByRole("progressbar")).toHaveClass('text-theme-success')
 	})
 	
 	test("renders a default sized Spinner", async () => {

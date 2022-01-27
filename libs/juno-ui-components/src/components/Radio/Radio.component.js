@@ -30,7 +30,7 @@ const mockradiostyles = `
 const mockfocusradiostyles = `
 	outline-none
 	ring-2
-	ring-focus
+	ring-theme-focus
 `
 
 const mockdisabledradiostyles = `

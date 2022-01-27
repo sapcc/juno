@@ -12,37 +12,37 @@ describe("Message", () => {
 	test("renders an info Message per default if no variant passed", async () => {
 		render(<Message data-testid="my-message" />)
 		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")
-		expect(screen.getByRole("img")).toHaveClass("text-info")
+		expect(screen.getByRole("img")).toHaveClass("text-theme-info")
 	})
 	
 	test("renders an info Message as passed", async () => {
 		render(<Message data-testid="my-message" variant="info" />)
 		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")
-		expect(screen.getByRole("img")).toHaveClass("text-info")
+		expect(screen.getByRole("img")).toHaveClass("text-theme-info")
 	})
 	
 	test("renders a warning Message as passed", async () => {
 	  render(<Message data-testid="my-message" variant="warning" />)
 	  expect(screen.getByTestId("my-message")).toHaveClass("juno-message-warning")
-	  expect(screen.getByRole("img")).toHaveClass("text-warning")
+	  expect(screen.getByRole("img")).toHaveClass("text-theme-warning")
 	 })
 	 
 	test("renders a danger message as passed", async () => {
 		render(<Message data-testid="my-message" variant="danger" />)
 		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-danger")
-		expect(screen.getByRole("img")).toHaveClass("text-danger")
+		expect(screen.getByRole("img")).toHaveClass("text-theme-danger")
 	})
 	
 	test("renders an error Message as passed", async () => {
 		render(<Message data-testid="my-message" variant="error" />)
 		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-error")
-		expect(screen.getByRole("img")).toHaveClass("text-error")
+		expect(screen.getByRole("img")).toHaveClass("text-theme-error")
 	})
 	
 	test("renders a success Message as passed", async () => {
 		render(<Message data-testid="my-message" variant="success" />)
 		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-success")
-		expect(screen.getByRole("img")).toHaveClass("text-success")
+		expect(screen.getByRole("img")).toHaveClass("text-theme-success")
 	})
 		
 	test("renders a title as passed", async () => {

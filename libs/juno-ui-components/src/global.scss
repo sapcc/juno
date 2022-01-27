@@ -3,121 +3,123 @@
 /* Colors */
 :root,
 :host {
-  
-  // Juno Grey Blue 
+  // Juno Grey Blue
   // RGB
-  --color-juno-grey-blue-100: rgb(0, 8, 16);
-  --color-juno-grey-blue-95: rgb(13, 20, 28);
-  --color-juno-grey-blue-93: rgb(18, 25, 32);
-  --color-juno-grey-blue-92: rgb(20, 27, 34);
-  --color-juno-grey-blue-91: rgb(23, 30, 37);
-  --color-juno-grey-blue-89: rgb(28, 35, 42);
-  --color-juno-grey-blue-88: rgb(31, 38, 45);
-  --color-juno-grey-blue-86: rgb(36, 42, 49);
-  --color-juno-grey-blue-85: rgb(38, 44, 51);
-  --color-juno-grey-blue-84: rgb(41, 47, 54);
-  --color-juno-grey-blue-81: rgb(48, 54, 60);
-  --color-juno-grey-blue-79: rgb(54, 60, 66);
-  
+  --color-juno-grey-blue-11: rgb(0, 8, 16);
+  --color-juno-grey-blue-10: rgb(13, 20, 28);
+  --color-juno-grey-blue-9: rgb(18, 25, 32);
+  --color-juno-grey-blue-8: rgb(23, 30, 37);
+  --color-juno-grey-blue-7: rgb(28, 35, 42);
+  --color-juno-grey-blue-6: rgb(31, 38, 45);
+  --color-juno-grey-blue-5: rgb(36, 42, 49);
+  --color-juno-grey-blue-4: rgb(38, 44, 51);
+  --color-juno-grey-blue-3: rgb(41, 47, 54);
+  --color-juno-grey-blue-2: rgb(48, 54, 60);
+  --color-juno-grey-blue-1: rgb(54, 60, 66);
+
   // RAW
-  --color-juno-grey-blue-100-raw: 0, 8, 16;
-  --color-juno-grey-blue-95-raw: 13, 20, 28;
-  --color-juno-grey-blue-93-raw: 18, 25, 32;
-  --color-juno-grey-blue-92-raw: 20, 27, 34;
-  --color-juno-grey-blue-91-raw: 23, 30, 37;
-  --color-juno-grey-blue-89-raw: 28, 35, 42;
-  --color-juno-grey-blue-88-raw: 31, 38, 45;
-  --color-juno-grey-blue-86-raw: 36, 42, 49;
-  --color-juno-grey-blue-85-raw: 38, 44, 51;
-  --color-juno-grey-blue-84-raw: 41, 47, 54;
-  --color-juno-grey-blue-81-raw: 48, 54, 60;
-  --color-juno-grey-blue-79-raw: 54, 60, 66;
-  
+  --color-juno-grey-blue-11-raw: 0, 8, 16;
+  --color-juno-grey-blue-10-raw: 13, 20, 28;
+  --color-juno-grey-blue-9-raw: 18, 25, 32;
+  --color-juno-grey-blue-8-raw: 23, 30, 37;
+  --color-juno-grey-blue-7-raw: 28, 35, 42;
+  --color-juno-grey-blue-6-raw: 31, 38, 45;
+  --color-juno-grey-blue-5-raw: 36, 42, 49;
+  --color-juno-grey-blue-4-raw: 38, 44, 51;
+  --color-juno-grey-blue-3-raw: 41, 47, 54;
+  --color-juno-grey-blue-2-raw: 48, 54, 60;
+  --color-juno-grey-blue-1-raw: 54, 60, 66;
+
   // Juno Blue
   // RGB
-  --color-juno-blue-darker: rgb(3, 33, 40);
-  --color-juno-blue-darker-1: rgb(8, 52, 63);
-  --color-juno-blue-darker-2: rgb(15, 74, 87);
-  --color-juno-blue-dark: rgb(22, 96, 113);
-  --color-juno-blue-dark-1: rgb(30, 119, 139);
-  --color-juno-blue: rgb(38, 143, 167);
-  --color-juno-blue-light-3: rgb(46, 168, 196);
-  --color-juno-blue-light-2: rgb(54, 193, 225);
-  --color-juno-blue-light-1: rgb(88, 218, 251);
-  --color-juno-blue-light: rgb(185, 235, 253);
-  
+  --color-juno-blue-10: rgb(3, 33, 40);
+  --color-juno-blue-9: rgb(8, 52, 63);
+  --color-juno-blue-8: rgb(15, 74, 87);
+  --color-juno-blue-7: rgb(22, 96, 113);
+  --color-juno-blue-6: rgb(30, 119, 139);
+  --color-juno-blue-5: rgb(38, 143, 167);
+  --color-juno-blue-4: rgb(46, 168, 196);
+  --color-juno-blue-3: rgb(54, 193, 225);
+  --color-juno-blue-2: rgb(88, 218, 251);
+  --color-juno-blue-1: rgb(185, 235, 253);
+
   // RAW
-  --color-juno-blue-darker-1-raw: 8, 52, 63;
-  --color-juno-blue-darker-2-raw: 15, 74, 87;
-  --color-juno-blue-dark-raw: 22, 96, 113;
-  --color-juno-blue-dark-1-raw: 30, 119, 139;
-  --color-juno-blue-raw: 38, 143, 167;
-  --color-juno-blue-light-3-raw: 46, 168, 196;
-  --color-juno-blue-light-2-raw: 54, 193, 225;
-  --color-juno-blue-light-1-raw: 88, 218, 251;
-  --color-juno-blue-light-raw: 185, 235, 253;
-  
+  --color-juno-blue-10-raw: 3, 33, 40;
+  --color-juno-blue-9-raw: 8, 52, 63;
+  --color-juno-blue-8-raw: 15, 74, 87;
+  --color-juno-blue-7-raw: 22, 96, 113;
+  --color-juno-blue-6-raw: 30, 119, 139;
+  --color-juno-blue-5-raw: 38, 143, 167;
+  --color-juno-blue-4-raw: 46, 168, 196;
+  --color-juno-blue-3-raw: 54, 193, 225;
+  --color-juno-blue-2-raw: 88, 218, 251;
+  --color-juno-blue-1-raw: 185, 235, 253;
+
   // Juno Turquoise
-  --color-juno-turqoise-1: rgb(197, 247, 255);
-  --color-juno-turqoise-1-raw: 197, 247, 255;
-  --color-juno-turqoise-2: rgb(132, 241, 255);
-  --color-juno-turqoise-2-raw: 132, 241, 255;
-  --color-juno-turqoise-3: rgb(25, 232, 250);
-  --color-juno-turqoise-3-raw: 25, 232, 250;
-  --color-juno-turqoise-4: rgb(22, 217, 234);
-  --color-juno-turqoise-4-raw: 22, 217, 234;
+  --color-juno-turquoise-1: rgb(197, 247, 255);
+  --color-juno-turquoise-2: rgb(132, 241, 255);
+  --color-juno-turquoise-3: rgb(25, 232, 250);
+  --color-juno-turquoise-4: rgb(22, 217, 234);
   --color-juno-turquoise-5: rgb(21, 208, 224);
+  --color-juno-turquoise-6: rgb(15, 167, 180);
+  --color-juno-turquoise-7: rgb(9, 133, 144);
+  --color-juno-turquoise-8: rgb(5, 100, 109);
+  --color-juno-turquoise-9: rgb(2, 69, 75);
+  --color-juno-turquoise-10: rgb(1, 41, 45);
+
+  // RAW
+  --color-juno-turquoise-1-raw: 197, 247, 255;
+  --color-juno-turquoise-2-raw: 132, 241, 255;
+  --color-juno-turquoise-3-raw: 25, 232, 250;
+  --color-juno-turquoise-4-raw: 22, 217, 234;
   --color-juno-turquoise-5-raw: 21, 208, 224;
-  --color-juno-turqoise-6: rgb(15, 167, 180);
-  --color-juno-turqoise-6-raw: 15, 167, 180;
-  --color-juno-turqoise-7: rgb(9, 133, 144);
-  --color-juno-turqoise-7-raw: 9, 133, 144;
-  --color-juno-turqoise-8: rgb(5, 100, 109);
-  --color-juno-turqoise-8-raw: 5, 100, 109;
-  --color-juno-turqoise-9: rgb(2, 69, 75);
-  --color-juno-turqoise-9-raw: 2, 69, 75;
-  --color-juno-turqoise-10: rgb(1, 41, 45);
-  --color-juno-turqoise-10-raw: 1, 41, 45;
-  
+  --color-juno-turquoise-6-raw: 15, 167, 180;
+  --color-juno-turquoise-7-raw: 9, 133, 144;
+  --color-juno-turquoise-8-raw: 5, 100, 109;
+  --color-juno-turquoise-9-raw: 2, 69, 75;
+  --color-juno-turquoise-10-raw: 1, 41, 45;
+
   // Juno Grey
   // RGB
-  --color-juno-grey-light-05: rgb(250, 250, 250);
-  --color-juno-grey-light-11: rgb(244, 244, 244);
-  --color-juno-grey-light-20: rgb(235, 235, 235);
-  --color-juno-grey-light-37: rgb(218, 218, 218);
-  --color-juno-grey-light-54: rgb(201, 201, 201);
-  --color-juno-grey-light-71: rgb(184, 184, 184);
-  --color-juno-grey-light-87: rgb(168, 168, 168);
-  --color-juno-grey-light-104: rgb(151, 151, 151);
-  --color-juno-grey-light-179: rgb(76, 76, 76);
-  --color-juno-grey-light-206: rgb(49, 49, 49);
-  --color-juno-grey-light-231: rgb(24, 24, 24);
- 
+  --color-juno-grey-light-1: rgb(250, 250, 250);
+  --color-juno-grey-light-2: rgb(244, 244, 244);
+  --color-juno-grey-light-3: rgb(235, 235, 235);
+  --color-juno-grey-light-4: rgb(218, 218, 218);
+  --color-juno-grey-light-5: rgb(201, 201, 201);
+  --color-juno-grey-light-6: rgb(184, 184, 184);
+  --color-juno-grey-light-7: rgb(168, 168, 168);
+  --color-juno-grey-light-8: rgb(151, 151, 151);
+  --color-juno-grey-light-9: rgb(76, 76, 76);
+  --color-juno-grey-light-10: rgb(49, 49, 49);
+  --color-juno-grey-light-11: rgb(24, 24, 24);
+
   // RAW
-  --color-juno-grey-light-05-raw: 250, 250, 250;
-  --color-juno-grey-light-11-raw: 244, 244, 244;
-  --color-juno-grey-light-20-raw: 235, 235, 235;
-  --color-juno-grey-light-37-raw: 218, 218, 218;
-  --color-juno-grey-light-54-raw: 201, 201, 201;
-  --color-juno-grey-light-71-raw: 184, 184, 184;
-  --color-juno-grey-light-87-raw: 168, 168, 168;
-  --color-juno-grey-light-104-raw: 151, 151, 151;
-  --color-juno-grey-light-179-raw: 76, 76, 76;
-  --color-juno-grey-light-206-raw: 49, 49, 49;
-  --color-juno-grey-light-231-raw: 24, 24, 24;
-  
+  --color-juno-grey-light-1-raw: 250, 250, 250;
+  --color-juno-grey-light-2-raw: 244, 244, 244;
+  --color-juno-grey-light-3-raw: 235, 235, 235;
+  --color-juno-grey-light-4-raw: 218, 218, 218;
+  --color-juno-grey-light-5-raw: 201, 201, 201;
+  --color-juno-grey-light-6-raw: 184, 184, 184;
+  --color-juno-grey-light-7-raw: 168, 168, 168;
+  --color-juno-grey-light-8-raw: 151, 151, 151;
+  --color-juno-grey-light-9-raw: 76, 76, 76;
+  --color-juno-grey-light-10-raw: 49, 49, 49;
+  --color-juno-grey-light-11-raw: 24, 24, 24;
+
   .theme-dark {
     // TEXT COLORS
     // RGB
     --color-juno-text-high: rgb(222, 223, 224);
-    --color-juno-text-medium: rgb(187, 187, 187);
-    --color-juno-text-disabled: rgb(150, 150, 150);
-    
+    --color-juno-text-default: rgb(187, 187, 187);
+    --color-juno-text-light: rgb(150, 150, 150);
+    --color-juno-text-disabled: rgb(92, 92, 92);
+
     // RAW
     --color-juno-text-high-raw: 222, 223, 224;
-    --color-juno-text-medium-raw: 187, 187, 187;
-    --color-juno-text-disabled-raw: 150, 150, 150;
-    
+    --color-juno-text-default-raw: 187, 187, 187;
+    --color-juno-text-light-raw: 150, 150, 150;
+    --color-juno-text-disabled-raw: 92, 92, 92;
+
     // SEMANTIC COLORS
     // RGB
     --color-info: var(--color-juno-turquoise-5);
@@ -125,46 +127,45 @@
     --color-warning: rgb(255, 198, 0);
     --color-danger: rgb(255, 65, 11);
     --color-error: rgb(255, 65, 11);
-    
+
     // RAW
     --color-info-raw: var(--color-juno-turquoise-5-raw);
     --color-success-raw: 59, 255, 91;
     --color-warning-raw: 255, 198, 0;
     --color-danger-raw: 255, 65, 11;
     --color-error-raw: 255, 65, 11;
-    
   }
-  
+
   .theme-light {
     // TEXT COLORS
     // RGB
-    --color-juno-text-high: rgb(37, 37, 37);
-    --color-juno-text-medium: rgb(76, 76, 76);
-    --color-juno-text-disabled: rgb(150, 150, 150);
-    
+    --color-juno-text-high: rgb(0, 0, 0);
+    --color-juno-text-default: rgb(76, 76, 76);
+    --color-juno-text-light: rgb(150, 150, 150);
+    --color-juno-text-disabled: rgb(183, 183, 183);
+
     // RAW
-    --color-juno-text-high-raw: 37, 37, 37;
-    --color-juno-text-medium-raw: 76, 76, 76;
-    --color-juno-text-disabled-raw: 150, 150, 150;
-    
+    --color-juno-text-high-raw: 0, 0, 0;
+    --color-juno-text-default-raw: 76, 76, 76;
+    --color-juno-text-light-raw: 150, 150, 150;
+    --color-juno-text-disabled-raw: 183, 183, 183;
+
     // SEMANTIC COLORS
     // RGB
-    --color-info: rgb(19, 103, 153);
+    --color-info: var(--color-juno-blue-4);
     --color-success: rgb(22, 145, 43);
-    --color-warning: rgb(217, 151, 0);
+    --color-warning: rgb(255, 205, 0);
     --color-danger: rgb(187, 62, 15);
     --color-error: rgb(187, 62, 15);
-    
+
     // RAW
-    --color-info-raw: 19, 103, 153;
+    --color-info-raw: var(--color-juno-blue-4-raw);
     --color-success-raw: 22, 145, 43;
-    --color-warning-raw: 217, 151, 0;
+    --color-warning-raw: 255, 205, 0;
     --color-danger-raw: 187, 62, 15;
     --color-error-raw: 187, 62, 15;
-
-    
   }
-  
+
   // SAP Brand Non-Colors
   // RGB
   --color-sap-black: rgb(0, 0, 0);
@@ -175,7 +176,7 @@
   --color-sap-grey-4: rgb(198, 198, 198);
   --color-sap-grey-5: rgb(234, 234, 234);
   --color-sap-white: rgb(255, 255, 255);
-  
+
   // RAW
   --color-sap-black-raw: 0, 0, 0;
   --color-sap-grey-0-raw: 34, 34, 34;
@@ -185,7 +186,7 @@
   --color-sap-grey-4-raw: 198, 198, 198;
   --color-sap-grey-5-raw: 234, 234, 234;
   --color-sap-white-raw: 255, 255, 255;
-  
+
   // SAP Brand Blue
   // RGB
   --color-sap-blue-darker: rgb(3, 51, 78);
@@ -198,7 +199,7 @@
   --color-sap-blue-light-2: rgb(137, 201, 232);
   --color-sap-blue-light-1: rgb(165, 211, 234);
   --color-sap-blue-light: rgb(203, 232, 247);
-  
+
   //RAW
   --color-sap-blue-darker-raw: 3, 51, 78;
   --color-sap-blue-darker-1-raw: 5, 71, 107;
@@ -210,9 +211,9 @@
   --color-sap-blue-light-2-raw: 137, 201, 232;
   --color-sap-blue-light-1-raw: 165, 211, 234;
   --color-sap-blue-light-raw: 203, 232, 247;
-  
+
   // SAP Brand Gold
-  // RGB 
+  // RGB
   --color-sap-gold-dark-1: rgb(150, 105, 0);
   --color-sap-gold-dark: rgb(217, 151, 0);
   --color-sap-gold: rgb(240, 171, 0);
@@ -220,7 +221,7 @@
   --color-sap-gold-light-2: rgb(246, 204, 108);
   --color-sap-gold-light-1: rgb(248, 219, 150);
   --color-sap-gold-light: rgb(251, 232, 188);
-  
+
   // RAW
   --color-sap-gold-dark-1-raw: 150, 105, 0;
   --color-sap-gold-dark-raw: 217, 151, 0;
@@ -229,7 +230,7 @@
   --color-sap-gold-light-2-raw: 246, 204, 108;
   --color-sap-gold-light-1-raw: 248, 219, 150;
   --color-sap-gold-light-raw: 251, 232, 188;
-  
+
   // SAP Brand Purple
   // RGB
   --color-sap-purple-dark-1: rgb(97, 6, 85);
@@ -239,7 +240,7 @@
   --color-sap-purple-light-2: rgb(209, 147, 201);
   --color-sap-purple-light-1: rgb(223, 181, 218);
   --color-sap-purple-light: rgb(235, 209, 232);
-  
+
   // RAW
   --color-sap-purple-dark-1-raw: 97, 6, 85;
   --color-sap-purple-dark-raw: 118, 7, 103;
@@ -248,7 +249,7 @@
   --color-sap-purple-light-2-raw: 209, 147, 201;
   --color-sap-purple-light-1-raw: 223, 181, 218;
   --color-sap-purple-light-raw: 235, 209, 232;
-  
+
   // SAP Brand Green
   // RGB
   --color-sap-green-dark-1: rgb(18, 120, 35);
@@ -258,7 +259,7 @@
   --color-sap-green-light-2: rgb(132, 216, 146);
   --color-sap-green-light-1: rgb(169, 228, 179);
   --color-sap-green-light: rgb(201, 238, 207);
-  
+
   // RAW
   --color-sap-green-dark-1-raw: 18, 120, 35;
   --color-sap-green-dark-raw: 22, 145, 42;
@@ -266,8 +267,8 @@
   --color-sap-green-light-3-raw: 87, 202, 106;
   --color-sap-green-light-2-raw: 132, 216, 146;
   --color-sap-green-light-1-raw: 169, 228, 179;
-  --color-sap-green-light-raw: 201, 238, 207; 
-  
+  --color-sap-green-light-raw: 201, 238, 207;
+
   // SAP Brand Red
   // RGB
   --color-sap-red-dark-1: rgb(164, 54, 13);
@@ -277,7 +278,7 @@
   --color-red-light-2: rgb(231, 163, 137);
   --color-red-light-1: rgb(238, 191, 174);
   --color-red-light: rgb(244, 215, 204);
-  
+
   // RAW
   --color-sap-red-dark-1-raw: 164, 54, 13;
   --color-sap-red-dark-raw: 187, 62, 15;
@@ -286,178 +287,282 @@
   --color-sap-red-light-2-raw: 231, 163, 137;
   --color-sap-red-light-1-raw: 238, 191, 174;
   --color-sap-red-light-raw: 244, 215, 204;
-  
+
   // WHITE
   --color-white: rgb(255, 255, 255);
   --color-white-raw: 255, 255, 255;
-  
+
   // BLACK
   --color-black: rgb(0, 0, 0);
   --color-black-raw: 0, 0, 0;
-  
-  // PRIMARY
-  --color-primary: var(--color-juno-blue-light-3);
-  --color-primary-raw: var(--color-juno-blue-light-3-raw);
-  
-
-
 }
 
 /* When assigning colors to uses, use "[color]-raw" variables: */
 
 .theme-light {
-// Global
---color-global-bg: var(--color-white-raw);
---color-global-text: var(--color-juno-text-medium-raw);
---color-accent: var(--color-juno-blue-light-3);
---color-accent-raw: var(--color-juno-blue-light-3-raw);
-// FOCUS
---color-focus: var(--color-accent-raw);
---color-focus-raw: var(--color-juno-blue-light-3-raw);
-// Text
---color-text-high: var(--color-juno-text-high-raw);
---color-text-medium: var(--color-juno-text-medium-raw);
---color-text-disabled: var(--color-juno-text-disabled-raw);
---color-text-link: var(--color-accent-raw);
-// Button
-// --> Primary Button
---color-button-primary-text: var(--color-white-raw);
---gradient-button-primary-bg: linear-gradient(to right top, rgb(51, 242, 255) 0%, var(--color-accent) 100%);
---color-button-primary-border: var(--color-accent-raw);
-// Primary Button :hover
---gradient-button-primary-hover-bg: linear-gradient(to right top, rgb(51, 242, 255) 0%, rgb(41, 133, 154) 100%);
---color-button-primary-hover-border: var(--color-accent-raw);
---color-button-primary-hover-text: var(--color-white-raw);
-// Primary Button :active
---gradient-button-primary-active-bg: linear-gradient(to right top, var(--color-juno-blue-dark-1) 0%, var(--color-juno-blue-dark-1) 100%);
- --color-button-primary-active-border: var(--color-accent-raw);
- --color-button-primary-active-text: var(--color-white-raw);
-// Primary Button :disabled
---gradient-button-primary-disabled-bg: linear-gradient(to right top, rgb(253, 253, 253) 0%, rgb(230, 230, 230) 100%);
---color-button-primary-disabled-border: rgb(203, 203, 203);
---color-button-primary-disabled-text: rgb(203, 203, 203);
-// --> Default Button
---color-button-default-text: var(--color-text-medium);
---color-button-default-icon: var(--color-juno-blue);
---color-button-default-bg: transparent;
---color-button-default-border: var(--color-accent-raw);
-// Default Button :hover
---color-button-default-hover-text: var(--color-text-medium);
---gradient-button-default-hover-bg: linear-gradient(to right top, rgba(218, 218, 218, 0) 0%, rgba(218, 218, 218, 1) 100%);
---color-button-default-hover-border: var(--color-accent-raw);
-// Default Button :active
---color-button-default-active-bg: var(--color-juno-grey-light-54);
---color-button-default-active-border: var(--color-accent-raw);
---color-button-default-active-text: var(--color-text-medium);
-// Default Button :disabled
---color-button-default-disabled-text: rgb(203, 203, 203);
---color-button-default-disabled-bg: transparent;
---color-button-default-disabled-border: rgb(203, 203, 203);
-// --> Subdued Button
---color-button-subdued-text: var(--color-text-medium);
---color-button-subdued-bg: transparent;
---color-button-subdued-border: var(--color-text-medium);
-// Subdued Button :hover
---color-button-subdued-hover-text: var(--color-text-medium);
---gradient-button-sundued-hover-bg: linear-gradient(to right top, rgba(218, 218, 218, 0) 0%, rgba(218, 218, 218, 1) 100%);
---color-button-subdued-hover-border: var(--color-text-medium);
-// Subdued Button :active
---color-button-subdued-active-bg: var(--color-juno-grey-light-54);
---color-button-subdued-active-border: var(--color-text-medium);
---color-button-subdued-active-text: var(--color-text-medium);
-// Subdued Button :disabled
---color-button-subdued-disabled-text: rgb(203, 203, 203);
---color-button-subdued-disabled-bg: transparent;
---color-button-default-disabled-border: rgb(203, 203, 203);
-// --> Primary Danger Button
---color-button-primary-danger-text: var(--color-white-raw);
---gradient-button-primary-danger-bg: linear-gradient( to right top, rgb(227, 107, 62) 0%, rgb(187, 62, 15) 100%); 
---color-button-primary-danger-border: var(--color-sap-red-dark-raw);
-// Primary Danger Button :hover
---color-button-primary-danger-hover-text: var(--color-white-raw);
---gradient-button-primary-danger-hover-bg: linear-gradient( to right top, rgb(252, 169, 137) 0%, rgb(156, 43, 0) 100%);
---color-button-primary-danger-hover-border: var(--color-sap-red-dark-raw);
-// Primary Danger Button :active
---gradient-button-primary-danger-active-bg: linear-gradient( to right top, var(--color-sap-red-dark-1) 0%, var(--color-sap-red-dark-1) 100%);
---color-button-primary-danger-active-border: var(--color-danger-raw);
---color-button-primary-danger-active-text: var(--color-white-raw);
-// Primary Danger Button  :disabled
---color-button-primary-danger-disabled-text: rgb(203, 203, 203);
---gradient-button-primary-danger-disabled-bg: linear-gradient(to right top, rgb(253, 253, 253) 0%, rgb(230, 230, 230) 100%);
---color-button-primary-danger-disabled-border: rgb(203, 203, 203);
-// Icon
---color-icon-danger: var(--color-sap-red-raw);
---color-icon-info: var(--color-juno-blue-raw);
---color-icon-success: var(--color-sap-green-raw);
---color-icon-warning: var(--color-warning-raw);
-// Message
---color-message-danger-border: var(--color-danger-raw);
---gradient-message-danger-bg: linear-gradient(90deg, rgb(255, 231, 224) 0%, rgb(255, 180, 158) 100%);
---color-message-default-border: var(--color-info-raw);
---gradient-message-default-bg: linear-gradient(90deg, rgb(229, 244, 248) 0%, rgb(46, 168, 196) 100%);
---color-message-error-border: var(--color-error-raw);
---gradient-message-error-bg: linear-gradient(90deg, rgb(255, 231, 224) 0%, rgb(255, 180, 158) 100%);
---color-message-warning-border: var(--color-warning-raw);
---gradient-message-warning-bg: linear-gradient(90deg, rgb(253, 245, 226) 0%, rgb(255, 231, 147) 100%);
---color-message-success-border: var(--color-success-raw);
---gradient-message-success-bg: linear-gradient(90deg, rgb(230, 247, 233) 0%, rgb(170, 229, 180) 100%);
+  // Background Colors
+  --color-background-lvl-0: var(--color-white);
+  --color-background-lvl-1: var(--color-juno-grey-light-1);
+  --color-background-lvl-2: var(--color-juno-grey-light-2);
+  --color-background-lvl-3: var(--color-juno-grey-light-3);
+  --color-background-lvl-4: var(--color-juno-grey-light-4);
+  --color-background-lvl-5: var(--color-juno-grey-light-5);
+  --color-background-lvl-6: var(--color-juno-grey-light-6);
+  --color-background-lvl-7: var(--color-juno-grey-light-7);
+  --color-background-lvl-8: var(--color-juno-grey-light-8);
+  --color-background-lvl-9: var(--color-juno-grey-light-9);
+  --color-background-lvl-10: var(--color-juno-grey-light-10);
 
-// Introbox
---color-introbox-bg: var(--color-juno-grey-light-05-raw);
---color-introbox-border: var(--color-accent-raw);
-// Tooltip
---color-tooltip-popover-bg: var(--color-accent-raw);
---color-tooltip-popover-text: var(--color-white-raw);
-// (Text-) Input
---color-textinput-bg: var(--color-juno-grey-light-20-raw);
---color-textinput-text: var(--color-juno-text-high-raw);
---color-textinput-placeholder-text: var(--color-juno-text-high-raw);
---color-textinput-focus-border: var(--color-accent-raw);
-// Select
---color-select-bg: var(--color-juno-grey-light-20-raw);
-// Checkbox
---color-checkbox-bg: var(--color-juno-grey-light-37-raw);
---color-checkbox-checked-color: var(--color-juno-blue-light-3-raw);
-// Radio
---color-radio-bg: var(--color-juno-grey-light-37-raw);
---color-radio-checked-bg: var(--color-accent-raw);
-// Switch
---color-switch-default-border: var(--color-juno-text-medium-raw);
---color-switch-handle-bg: var(--color-juno-text-medium-raw);
---color-switch-handle-checked-bg: var(--color-accent-raw);
-// Required
---color-required-bg: var(--color-juno-turquoise-5-raw);
-// Spinner
---color-spinner-primary: var(--color-accent-raw);
-// Syntax Highlighting
---color-syntax-highlight-base00: var(--color-juno-grey-light-20); // bg
---color-syntax-highlight-base01: var(--color-juno-grey-light-20); // ?
---color-syntax-highlight-base02: var(--color-sap-grey-3); // lines and boxes
---color-syntax-highlight-base03: var(--color-sap-grey-3);
---color-syntax-highlight-base04: var(--color-sap-grey-3);
---color-syntax-highlight-base05: var(--color-juno-text-high);
---color-syntax-highlight-base06: red;
---color-syntax-highlight-base07: var(--color-juno-text-high);
---color-syntax-highlight-base08: var(--color-juno-grey-blue-88); // NULL
---color-syntax-highlight-base09: var(--color-juno-blue); // String value
---color-syntax-highlight-base0A: var(--color-juno-grey-blue-88); // NaN
---color-syntax-highlight-base0B: var(--color-juno-blue); // float value
---color-syntax-highlight-base0C: var(--color-sap-gold); // array index
---color-syntax-highlight-base0D: var(--color-sap-gold); // expanded icon
---color-syntax-highlight-base0E: var(--color-juno-blue); // bool + collapsed icon
---color-syntax-highlight-base0F: var(--color-juno-blue); // integer value
-// DataGrid
---color-datagridrow-selected: var(--color-accent-raw);
-// DataList
---color-datalist-row-border: var(--color-juno-grey-light-54-raw);
---color-datalistrow-selected: var(--color-accent-raw);
-  
+  --color-background-lvl-0-raw: var(--color-white-raw);
+  --color-background-lvl-1-raw: var(--color-juno-grey-light-1-raw);
+  --color-background-lvl-2-raw: var(--color-juno-grey-light-2-raw);
+  --color-background-lvl-3-raw: var(--color-juno-grey-light-3-raw);
+  --color-background-lvl-4-raw: var(--color-juno-grey-light-4-raw);
+  --color-background-lvl-5-raw: var(--color-juno-grey-light-5-raw);
+  --color-background-lvl-6-raw: var(--color-juno-grey-light-6-raw);
+  --color-background-lvl-7-raw: var(--color-juno-grey-light-7-raw);
+  --color-background-lvl-8-raw: var(--color-juno-grey-light-8-raw);
+  --color-background-lvl-9-raw: var(--color-juno-grey-light-9-raw);
+  --color-background-lvl-10-raw: var(--color-juno-grey-light-10-raw);
+
+  // Global
+  --color-global-bg: var(--color-background-lvl-0-raw);
+  --color-global-text: var(--color-juno-text-default-raw);
+  --color-accent: var(--color-juno-blue-4);
+  --color-accent-raw: var(--color-juno-blue-4-raw);
+  // FOCUS
+  --color-focus: var(--color-accent);
+  --color-focus-raw: var(--color-accent-raw);
+  // Text
+  --color-text-high: var(--color-juno-text-high-raw);
+  --color-text-default: var(--color-juno-text-default-raw);
+  --color-text-disabled: var(--color-juno-text-disabled-raw);
+  --color-text-link: var(--color-accent-raw);
+  // Button
+  // --> Primary Button
+  --color-button-primary-text: var(--color-white-raw);
+  --gradient-button-primary-bg: linear-gradient(
+    to right top,
+    rgb(51, 242, 255) 0%,
+    var(--color-accent) 100%
+  );
+  --color-button-primary-border: var(--color-accent-raw);
+  // Primary Button :hover
+  --gradient-button-primary-hover-bg: linear-gradient(
+    to right top,
+    rgb(51, 242, 255) 0%,
+    rgb(41, 133, 154) 100%
+  );
+  --color-button-primary-hover-border: var(--color-accent-raw);
+  --color-button-primary-hover-text: var(--color-white-raw);
+  // Primary Button :active
+  --gradient-button-primary-active-bg: linear-gradient(
+    to right top,
+    var(--color-juno-blue-6) 0%,
+    var(--color-juno-blue-6) 100%
+  );
+  --color-button-primary-active-border: var(--color-accent-raw);
+  --color-button-primary-active-text: var(--color-white-raw);
+  // Primary Button :disabled
+  --gradient-button-primary-disabled-bg: linear-gradient(
+    to right top,
+    rgb(253, 253, 253) 0%,
+    rgb(230, 230, 230) 100%
+  );
+  --color-button-primary-disabled-border: rgb(203, 203, 203);
+  --color-button-primary-disabled-text: rgb(203, 203, 203);
+  // --> Default Button
+  --color-button-default-text: var(--color-text-default);
+  --color-button-default-icon: var(--color-accent);
+  --color-button-default-bg: transparent;
+  --color-button-default-border: var(--color-accent-raw);
+  // Default Button :hover
+  --color-button-default-hover-text: var(--color-text-default);
+  --gradient-button-default-hover-bg: linear-gradient(
+    to right top,
+    rgba(218, 218, 218, 0) 0%,
+    rgba(218, 218, 218, 1) 100%
+  );
+  --color-button-default-hover-border: var(--color-accent-raw);
+  // Default Button :active
+  --color-button-default-active-bg: var(--color-juno-grey-light-5);
+  --color-button-default-active-border: var(--color-accent-raw);
+  --color-button-default-active-text: var(--color-text-default);
+  // Default Button :disabled
+  --color-button-default-disabled-text: rgb(203, 203, 203);
+  --color-button-default-disabled-bg: transparent;
+  --color-button-default-disabled-border: rgb(203, 203, 203);
+  // --> Subdued Button
+  --color-button-subdued-text: var(--color-text-default);
+  --color-button-subdued-bg: transparent;
+  --color-button-subdued-border: var(--color-text-default);
+  // Subdued Button :hover
+  --color-button-subdued-hover-text: var(--color-text-default);
+  --gradient-button-sundued-hover-bg: linear-gradient(
+    to right top,
+    rgba(218, 218, 218, 0) 0%,
+    rgba(218, 218, 218, 1) 100%
+  );
+  --color-button-subdued-hover-border: var(--color-text-default);
+  // Subdued Button :active
+  --color-button-subdued-active-bg: var(--color-juno-grey-light-5);
+  --color-button-subdued-active-border: var(--color-text-default);
+  --color-button-subdued-active-text: var(--color-text-default);
+  // Subdued Button :disabled
+  --color-button-subdued-disabled-text: rgb(203, 203, 203);
+  --color-button-subdued-disabled-bg: transparent;
+  --color-button-default-disabled-border: rgb(203, 203, 203);
+  // --> Primary Danger Button
+  --color-button-primary-danger-text: var(--color-white-raw);
+  --gradient-button-primary-danger-bg: linear-gradient(
+    to right top,
+    rgb(227, 107, 62) 0%,
+    rgb(187, 62, 15) 100%
+  );
+  --color-button-primary-danger-border: var(--color-sap-red-dark-raw);
+  // Primary Danger Button :hover
+  --color-button-primary-danger-hover-text: var(--color-white-raw);
+  --gradient-button-primary-danger-hover-bg: linear-gradient(
+    to right top,
+    rgb(252, 169, 137) 0%,
+    rgb(156, 43, 0) 100%
+  );
+  --color-button-primary-danger-hover-border: var(--color-sap-red-dark-raw);
+  // Primary Danger Button :active
+  --gradient-button-primary-danger-active-bg: linear-gradient(
+    to right top,
+    var(--color-sap-red-dark-1) 0%,
+    var(--color-sap-red-dark-1) 100%
+  );
+  --color-button-primary-danger-active-border: var(--color-danger-raw);
+  --color-button-primary-danger-active-text: var(--color-white-raw);
+  // Primary Danger Button  :disabled
+  --color-button-primary-danger-disabled-text: rgb(203, 203, 203);
+  --gradient-button-primary-danger-disabled-bg: linear-gradient(
+    to right top,
+    rgb(253, 253, 253) 0%,
+    rgb(230, 230, 230) 100%
+  );
+  --color-button-primary-danger-disabled-border: rgb(203, 203, 203);
+  // Icon
+  --color-icon-danger: var(--color-sap-red-raw);
+  --color-icon-info: var(--color-accent-raw);
+  --color-icon-success: var(--color-sap-green-raw);
+  --color-icon-warning: var(--color-warning-raw);
+  // Message
+  --color-message-danger-border: var(--color-danger-raw);
+  --gradient-message-danger-bg: linear-gradient(
+    90deg,
+    rgb(255, 231, 224) 0%,
+    rgb(255, 180, 158) 100%
+  );
+  --color-message-default-border: var(--color-info-raw);
+  --gradient-message-default-bg: linear-gradient(
+    90deg,
+    rgb(229, 244, 248) 0%,
+    rgb(46, 168, 196) 100%
+  );
+  --color-message-error-border: var(--color-error-raw);
+  --gradient-message-error-bg: linear-gradient(
+    90deg,
+    rgb(255, 231, 224) 0%,
+    rgb(255, 180, 158) 100%
+  );
+  --color-message-warning-border: var(--color-warning-raw);
+  --gradient-message-warning-bg: linear-gradient(
+    90deg,
+    rgb(253, 245, 226) 0%,
+    rgb(255, 231, 147) 100%
+  );
+  --color-message-success-border: var(--color-success-raw);
+  --gradient-message-success-bg: linear-gradient(
+    90deg,
+    rgb(230, 247, 233) 0%,
+    rgb(170, 229, 180) 100%
+  );
+
+  // Introbox
+  --color-introbox-bg: var(--color-background-lvl-1-raw);
+  --color-introbox-border: var(--color-accent-raw);
+  // Tooltip
+  --color-tooltip-popover-bg: var(--color-accent-raw);
+  --color-tooltip-popover-text: var(--color-white-raw);
+  // (Text-) Input
+  --color-textinput-bg: var(--color-background-lvl-3-raw);
+  --color-textinput-text: var(--color-juno-text-high-raw);
+  --color-textinput-placeholder-text: var(--color-juno-text-high-raw);
+  --color-textinput-focus-border: var(--color-accent-raw);
+  // Select
+  --color-select-bg: var(--color-background-lvl-3-raw);
+  // Checkbox
+  --color-checkbox-bg: var(--color-background-lvl-4-raw);
+  --color-checkbox-checked-color: var(--color-accent-raw);
+  // Radio
+  --color-radio-bg: var(--color-background-lvl-4-raw);
+  --color-radio-checked-bg: var(--color-accent-raw);
+  // Switch
+  --color-switch-default-border: var(--color-juno-text-default-raw);
+  --color-switch-handle-bg: var(--color-juno-text-default-raw);
+  --color-switch-handle-checked-bg: var(--color-accent-raw);
+  // Required
+  --color-required-bg: var(--color-accent-raw);
+  // Spinner
+  --color-spinner-primary: var(--color-accent-raw);
+  // Syntax Highlighting
+  --color-syntax-highlight-base00: var(--color-background-lvl-3); // bg
+  --color-syntax-highlight-base01: var(--color-juno-grey-light-3); // ?
+  --color-syntax-highlight-base02: var(--color-sap-grey-3); // lines and boxes
+  --color-syntax-highlight-base03: var(--color-sap-grey-3);
+  --color-syntax-highlight-base04: var(--color-sap-grey-3);
+  --color-syntax-highlight-base05: var(--color-juno-text-high);
+  --color-syntax-highlight-base06: red;
+  --color-syntax-highlight-base07: var(--color-juno-text-high);
+  --color-syntax-highlight-base08: var(--color-juno-grey-blue-6); // NULL
+  --color-syntax-highlight-base09: var(--color-juno-blue-4); // String value
+  --color-syntax-highlight-base0A: var(--color-juno-grey-blue-6); // NaN
+  --color-syntax-highlight-base0B: var(--color-juno-blue-4); // float value
+  --color-syntax-highlight-base0C: var(--color-sap-gold); // array index
+  --color-syntax-highlight-base0D: var(--color-sap-gold); // expanded icon
+  --color-syntax-highlight-base0E: var(
+    --color-juno-blue-4
+  ); // bool + collapsed icon
+  --color-syntax-highlight-base0F: var(--color-juno-blue-4); // integer value
+  // DataGrid
+  --color-datagridrow-selected: var(--color-accent-raw);
+  // DataList
+  --color-datalist-row-border: var(--color-background-lvl-5-raw);
+  --color-datalistrow-selected: var(--color-accent-raw);
 }
 
 .theme-dark {
+  // Background Colors
+  --color-background-lvl-0: var(--color-juno-grey-blue-11);
+  --color-background-lvl-1: var(--color-juno-grey-blue-10);
+  --color-background-lvl-2: var(--color-juno-grey-blue-9);
+  --color-background-lvl-3: var(--color-juno-grey-blue-8);
+  --color-background-lvl-4: var(--color-juno-grey-blue-7);
+  --color-background-lvl-5: var(--color-juno-grey-blue-6);
+  --color-background-lvl-6: var(--color-juno-grey-blue-5);
+  --color-background-lvl-7: var(--color-juno-grey-blue-4);
+  --color-background-lvl-8: var(--color-juno-grey-blue-3);
+  --color-background-lvl-9: var(--color-juno-grey-blue-2);
+  --color-background-lvl-10: var(--color-juno-grey-blue-1);
+
+  --color-background-lvl-0-raw: var(--color-juno-grey-blue-11-raw);
+  --color-background-lvl-1-raw: var(--color-juno-grey-blue-10-raw);
+  --color-background-lvl-2-raw: var(--color-juno-grey-blue-9-raw);
+  --color-background-lvl-3-raw: var(--color-juno-grey-blue-8-raw);
+  --color-background-lvl-4-raw: var(--color-juno-grey-blue-7-raw);
+  --color-background-lvl-5-raw: var(--color-juno-grey-blue-6-raw);
+  --color-background-lvl-6-raw: var(--color-juno-grey-blue-5-raw);
+  --color-background-lvl-7-raw: var(--color-juno-grey-blue-4-raw);
+  --color-background-lvl-8-raw: var(--color-juno-grey-blue-3-raw);
+  --color-background-lvl-9-raw: var(--color-juno-grey-blue-2-raw);
+  --color-background-lvl-10-raw: var(--color-juno-grey-blue-1-raw);
+
   // Global
-  --color-global-bg: var(--color-juno-grey-blue-95-raw);
-  --color-global-text: var(--color-juno-text-medium-raw);
+  --color-global-bg: var(--color-background-lvl-0-raw);
+  --color-global-text: var(--color-juno-text-default-raw);
   --color-accent: var(--color-juno-turquoise-5);
   --color-accent-raw: var(--color-juno-turquoise-5-raw);
   // FOCUS
@@ -466,109 +571,169 @@
   --color-focus-border: var(--color-accent-raw);
   // Text
   --color-text-high: var(--color-juno-text-high-raw);
-  --color-text-medium: var(--color-juno-text-medium-raw);
+  --color-text-default: var(--color-juno-text-default-raw);
   --color-text-disabled: var(--color-juno-text-disabled-raw);
-  --color-text-link: var(--color-juno-blue-raw);
+  --color-text-link: var(--color-accent-raw);
   // Button
   // --> Primary Button
- --color-button-primary-text: var(--color-white-raw);
- --gradient-button-primary-bg: linear-gradient(to right top, rgb(7, 79, 90) 0%, var(--color-accent) 100%);
- // Primary Button :hover
- --color-button-primary-border: var(--color-juno-turquoise-5-raw);
- --gradient-button-primary-hover-bg: linear-gradient(to right top, var(--color-accent) 0%, rgb(17, 31, 32) 100%);
- --color-button-primary-hover-border: var(--color-accent-raw);
- --color-button-primary-hover-text: var(--color-white-raw);
- // Primary Button :active
- --gradient-button-primary-active-bg: linear-gradient(to right top, var(--color-juno-turqoise-8) 0%, var(--color-juno-turqoise-8) 100%);
- --color-button-primary-active-border: var(--color-accent-raw);
- --color-button-primary-active-text: var(--color-white-raw);
- // Primary Button :disabled
- --gradient-button-primary-disabled-bg: linear-gradient(to right top, rgb(0, 7, 15) 0%, rgb(44, 46, 49) 100%);
- --color-button-primary-disabled-border: rgb(76, 79, 83);
- --color-button-primary-disabled-text: rgb(76, 79, 83);
+  --color-button-primary-text: var(--color-white-raw);
+  --gradient-button-primary-bg: linear-gradient(
+    to right top,
+    rgb(7, 79, 90) 0%,
+    var(--color-accent) 100%
+  );
+  // Primary Button :hover
+  --color-button-primary-border: var(--color-accent-raw);
+  --gradient-button-primary-hover-bg: linear-gradient(
+    to right top,
+    var(--color-accent) 0%,
+    rgb(17, 31, 32) 100%
+  );
+  --color-button-primary-hover-border: var(--color-accent-raw);
+  --color-button-primary-hover-text: var(--color-white-raw);
+  // Primary Button :active
+  --gradient-button-primary-active-bg: linear-gradient(
+    to right top,
+    var(--color-juno-turquoise-8) 0%,
+    var(--color-juno-turquoise-8) 100%
+  );
+  --color-button-primary-active-border: var(--color-accent-raw);
+  --color-button-primary-active-text: var(--color-white-raw);
+  // Primary Button :disabled
+  --gradient-button-primary-disabled-bg: linear-gradient(
+    to right top,
+    rgb(0, 7, 15) 0%,
+    rgb(44, 46, 49) 100%
+  );
+  --color-button-primary-disabled-border: rgb(76, 79, 83);
+  --color-button-primary-disabled-text: rgb(76, 79, 83);
   // --> Default Button
---color-button-default-text: var(--color-text-medium);
---color-button-default-icon: var(--color-accent-raw);
---color-button-default-bg: transparent;
---color-button-default-border: var(--color-accent-raw);
-// Default Button :hover
---color-button-default-hover-text: var(--color-text-medium);
---gradient-button-default-hover-bg: linear-gradient(to right top, rgba(39, 45, 52, 0) 0%, rgba(39, 45, 52, 1) 100%);
---color-button-default-hover-border: var(--color-accent-raw);
-// Default Button :active
---color-button-default-active-bg: var(--color-juno-grey-light-231-raw);
---color-button-default-active-border: var(--color-accent-raw);
---color-button-default-active-text: var(--color-text-medium);
-// Default Button :disabled
---color-button-default-disabled-text: rgb(76, 79, 83);
---color-button-default-disabled-bg: transparent;
---color-button-default-disabled-border: rgb(76, 79, 83);
-// --> Subdued Button
---color-button-subdued-text: var(--color-text-medium);
---color-button-subdued-bg: transparent;
---color-button-subdued-border: var(--color-text-medium);
-// Subdued Button :hover
---color-button-subdued-hover-text: var(--color-text-medium);
---gradient-button-subdued-hover-bg: linear-gradient(to right top, rgba(39, 45, 52, 0) 0%, rgba(39, 45, 52, 1) 100%);
---color-button-subdued-hover-border: var(--color-text-medium);
-// Subdued Button :active
---color-button-subdued-active-bg: var(--color-juno-grey-light-231-raw);
---color-button-subdued-active-border: var(--color-text-medium);
---color-button-subdued-active-text: var(--color-text-medium);
-// Subdued Button :disabled
---color-button-subdued-disabled-text: rgb(76, 79, 83);
---color-button-subdued-disabled-bg: transparent;
---color-button-default-disabled-border: rgb(76, 79, 83);
+  --color-button-default-text: var(--color-text-default);
+  --color-button-default-icon: var(--color-accent-raw);
+  --color-button-default-bg: transparent;
+  --color-button-default-border: var(--color-accent-raw);
+  // Default Button :hover
+  --color-button-default-hover-text: var(--color-text-default);
+  --gradient-button-default-hover-bg: linear-gradient(
+    to right top,
+    rgba(39, 45, 52, 0) 0%,
+    rgba(39, 45, 52, 1) 100%
+  );
+  --color-button-default-hover-border: var(--color-accent-raw);
+  // Default Button :active
+  --color-button-default-active-bg: var(--color-juno-grey-light-11-raw);
+  --color-button-default-active-border: var(--color-accent-raw);
+  --color-button-default-active-text: var(--color-text-default);
+  // Default Button :disabled
+  --color-button-default-disabled-text: rgb(76, 79, 83);
+  --color-button-default-disabled-bg: transparent;
+  --color-button-default-disabled-border: rgb(76, 79, 83);
+  // --> Subdued Button
+  --color-button-subdued-text: var(--color-text-default);
+  --color-button-subdued-bg: transparent;
+  --color-button-subdued-border: var(--color-text-default);
+  // Subdued Button :hover
+  --color-button-subdued-hover-text: var(--color-text-default);
+  --gradient-button-subdued-hover-bg: linear-gradient(
+    to right top,
+    rgba(39, 45, 52, 0) 0%,
+    rgba(39, 45, 52, 1) 100%
+  );
+  --color-button-subdued-hover-border: var(--color-text-default);
+  // Subdued Button :active
+  --color-button-subdued-active-bg: var(--color-juno-grey-light-11-raw);
+  --color-button-subdued-active-border: var(--color-text-default);
+  --color-button-subdued-active-text: var(--color-text-default);
+  // Subdued Button :disabled
+  --color-button-subdued-disabled-text: rgb(76, 79, 83);
+  --color-button-subdued-disabled-bg: transparent;
+  --color-button-default-disabled-border: rgb(76, 79, 83);
   // --> Primary-Danger Button
   --color-button-primary-danger-text: var(--color-white-raw);
-  --gradient-button-primary-danger-bg: linear-gradient(to right top, rgb(230, 117, 85) 0%, rgb(255, 65, 11) 100%);
+  --gradient-button-primary-danger-bg: linear-gradient(
+    to right top,
+    rgb(230, 117, 85) 0%,
+    rgb(255, 65, 11) 100%
+  );
   --color-button-primary-danger-border: rgb(255, 65, 11);
   // Primary-Danger Button :hover
   --color-button-primary-danger-hover-text: var(--color-white-raw);
-  --gradient-button-primary-danger-hover-bg: linear-gradient(to right top, rgb(172, 172, 148) 0%, rgb(146, 32, 0) 100%);
+  --gradient-button-primary-danger-hover-bg: linear-gradient(
+    to right top,
+    rgb(172, 172, 148) 0%,
+    rgb(146, 32, 0) 100%
+  );
   --color-button-primary-danger-hover-border: rgb(255, 65, 11);
   // Primary-Danger Button :active
-  --gradient-button-primary-danger-active-bg: linear-gradient( to right top, var(--color-sap-red-dark-1) 0%, var(--color-sap-red-dark-1) 100%);
+  --gradient-button-primary-danger-active-bg: linear-gradient(
+    to right top,
+    var(--color-sap-red-dark-1) 0%,
+    var(--color-sap-red-dark-1) 100%
+  );
   --color-button-primary-danger-active-border: var(--color-danger);
   --color-button-primary-danger-active-text: var(--color-white-raw);
   // Primary-Danger Button :disabled
   --color-button-primary-danger-disabled-text: rgb(76, 79, 83);
-  --gradient-button-primary-danger-disabled-bg: linear-gradient(to right top, rgb(0, 7, 15) 0%, rgb(44, 46, 49) 100%);
+  --gradient-button-primary-danger-disabled-bg: linear-gradient(
+    to right top,
+    rgb(0, 7, 15) 0%,
+    rgb(44, 46, 49) 100%
+  );
   --color-button-primary-danger-disabled-border: rgb(76, 79, 83);
   // Icon
   --color-icon-danger: var(--color-sap-red-raw);
-  --color-icon-info: var(--color-juno-blue-raw);
+  --color-icon-info: var(--color-accent-raw);
   --color-icon-success: var(--color-sap-green-raw);
   --color-icon-warning: var(--color-warning-raw);
   // Message
   --color-message-danger-border: var(--color-danger-raw);
-  --gradient-message-danger-bg: linear-gradient(90deg, rgb(57, 39, 38) 0%, rgb(124, 48, 30) 100%);
+  --gradient-message-danger-bg: linear-gradient(
+    90deg,
+    rgb(57, 39, 38) 0%,
+    rgb(124, 48, 30) 100%
+  );
   --color-message-default-border: var(--color-info-raw);
-  --gradient-message-default-bg: linear-gradient(90deg, rgb(28, 57, 65) 0%, rgb(25, 108, 119) 100%);
+  --gradient-message-default-bg: linear-gradient(
+    90deg,
+    rgb(28, 57, 65) 0%,
+    rgb(25, 108, 119) 100%
+  );
   --color-message-error-border: var(--color-error-raw);
-  --gradient-message-error-bg: linear-gradient(90deg, rgb(57, 39, 38) 0%, rgb(124, 48, 30) 100%);
+  --gradient-message-error-bg: linear-gradient(
+    90deg,
+    rgb(57, 39, 38) 0%,
+    rgb(124, 48, 30) 100%
+  );
   --color-message-warning-border: var(--color-warning-raw);
-  --gradient-message-warning-bg: linear-gradient(90deg, rgb(57, 56, 36) 0%, rgb(124, 104, 24) 100%);
+  --gradient-message-warning-bg: linear-gradient(
+    90deg,
+    rgb(57, 56, 36) 0%,
+    rgb(124, 104, 24) 100%
+  );
   --color-message-success-border: var(--color-success-raw);
-  --gradient-message-success-bg: linear-gradient(90deg, rgb(32, 55, 46) 0%, rgb(39, 102, 57) 100%);
+  --gradient-message-success-bg: linear-gradient(
+    90deg,
+    rgb(32, 55, 46) 0%,
+    rgb(39, 102, 57) 100%
+  );
   // Introbox
-  --color-introbox-bg: var(--color-juno-grey-blue-79-raw);
+  --color-introbox-bg: var(--color-background-lvl-10-raw);
   --color-introbox-border: var(--color-accent-raw);
   // Tooltip
-  --color-tooltip-popover-bg: var(--color-juno-blue-light-3-raw);
-  --color-tooltip-popover-text: var(--color-juno-grey-blue-100-raw);
+  --color-tooltip-popover-bg: var(--color-accent-raw);
+  --color-tooltip-popover-text: var(--color-juno-grey-blue-11-raw);
   // (Text-)Input
-  --color-textinput-bg: var(--color-juno-grey-blue-81-raw);
+  --color-textinput-bg: var(--color-background-lvl-9-raw);
   --color-textinput-text: var(--color-juno-text-high-raw);
   --color-textinput-placeholder-text: var(--color-juno-text-high-raw);
   --color-textinput-focus-border: var(--color-accent-raw);
   // Select
-  --color-select-bg: var(--color-juno-grey-blue-81-raw);
+  --color-select-bg: var(--color-background-lvl-9-raw);
   // Checkbox
-  --color-checkbox-bg: var(--color-juno-grey-blue-81-raw);
+  --color-checkbox-bg: var(--color-background-lvl-9-raw);
   --color-checkbox-checked-color: var(--color-accent-raw);
   // Radio
-  --color-radio-bg: var(--color-juno-grey-blue-81-raw);
+  --color-radio-bg: var(--color-background-lvl-9-raw);
   --color-radio-checked-bg: var(--color-accent-raw);
   // Switch
   --color-switch-default-border: var(--color-juno-text-high-raw);
@@ -577,48 +742,49 @@
   --color-switch-hover-border: var(--color-accent-raw);
   // Required
   --color-required-bg: var(--color-accent-raw);
-  // Spinner 
+  // Spinner
   --color-spinner-primary: var(--color-accent-raw);
   // Syntax Highlighting
-  --color-syntax-highlight-base00: var(--color-juno-grey-blue-88); // bg
-  --color-syntax-highlight-base01: var(--color-juno-grey-blue-84); // ?
+  --color-syntax-highlight-base00: var(--color-background-lvl-3); // bg
+  --color-syntax-highlight-base01: var(--color-juno-grey-blue-3); // ?
   --color-syntax-highlight-base02: #bbb; // lines and boxes
   --color-syntax-highlight-base03: var(--color-sap-grey-3);
   --color-syntax-highlight-base04: var(--color-sap-grey-3);
-  --color-syntax-highlight-base05: #DEDFE0;
+  --color-syntax-highlight-base05: #dedfe0;
   --color-syntax-highlight-base06: red;
-  --color-syntax-highlight-base07: #DEDFE0;
-  --color-syntax-highlight-base08: var(--color-juno-grey-blue-88); // NULL
-  --color-syntax-highlight-base09: var(--color-juno-blue); // String value
-  --color-syntax-highlight-base0A: var(--color-juno-grey-blue-88); // NaN
-  --color-syntax-highlight-base0B: var(--color-juno-blue); // float value
+  --color-syntax-highlight-base07: #dedfe0;
+  --color-syntax-highlight-base08: var(--color-juno-grey-blue-6); // NULL
+  --color-syntax-highlight-base09: var(--color-juno-blue-4); // String value
+  --color-syntax-highlight-base0A: var(--color-juno-grey-blue-6); // NaN
+  --color-syntax-highlight-base0B: var(--color-juno-blue-4); // float value
   --color-syntax-highlight-base0C: var(--color-sap-gold-light-3); // array index
-  --color-syntax-highlight-base0D: var(--color-sap-gold-light-3); // expanded icon
-  --color-syntax-highlight-base0E: var(--color-juno-blue); // bool + collapsed icon
-  --color-syntax-highlight-base0F: var(--color-juno-blue); // integer value
+  --color-syntax-highlight-base0D: var(
+    --color-sap-gold-light-3
+  ); // expanded icon
+  --color-syntax-highlight-base0E: var(
+    --color-juno-blue-4
+  ); // bool + collapsed icon
+  --color-syntax-highlight-base0F: var(--color-juno-blue-4); // integer value
   // DataGrid
-  --color-datagridrow-selected: var(--color-juno-blue-light-3-raw);
+  --color-datagridrow-selected: var(--color-accent-raw);
   // DataList
-  --color-datalist-row-border: var( --color-juno-grey-light-104-raw);
-  --color-datalistrow-selected: var(--color-juno-blue-light-3-raw);
+  --color-datalist-row-border: var(--color-background-lvl-5-raw);
+  --color-datalistrow-selected: var(--color-accent-raw);
 }
 
 // Grid configuration
 :root,
 :host {
   --grid-columns: 12;
-  --grid-row-margin-x: -.5rem;
+  --grid-row-margin-x: -0.5rem;
   --grid-column-flex-grow: 0;
   --grid-column-flex-shrink: 1;
   --grid-column-flex-basis: auto;
   --grid-column-default-width: 8.333333%;
 }
 
-
-
 // default base styles using the tw base directive
 @layer base {
-
   html,
   body,
   .shadow-body {
@@ -643,7 +809,6 @@
   // }
 }
 
-
 @tailwind components;
 @tailwind utilities;
 
@@ -661,27 +826,34 @@
 // // See here: https://github.com/tailwindlabs/tailwindcss/issues/5059#issuecomment-928291209
 
 @layer utilities {
-
-   *, ::before, ::after {
-    --tw-blur: var(--tw-empty,/*!*/ /*!*/);
-    --tw-brightness: var(--tw-empty,/*!*/ /*!*/);
-    --tw-contrast: var(--tw-empty,/*!*/ /*!*/);
-    --tw-grayscale: var(--tw-empty,/*!*/ /*!*/);
-    --tw-hue-rotate: var(--tw-empty,/*!*/ /*!*/);
-    --tw-invert: var(--tw-empty,/*!*/ /*!*/);
-    --tw-saturate: var(--tw-empty,/*!*/ /*!*/);
-    --tw-sepia: var(--tw-empty,/*!*/ /*!*/);
-    --tw-drop-shadow: var(--tw-empty,/*!*/ /*!*/);
-    --tw-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-    --tw-backdrop-blur: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-brightness: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-contrast: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-grayscale: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-hue-rotate: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-invert: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-opacity: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-saturate: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-sepia: var(--tw-empty,/*!*/ /*!*/);
-    --tw-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  *,
+  ::before,
+  ::after {
+    --tw-blur: var(--tw-empty, /*!*/ /*!*/);
+    --tw-brightness: var(--tw-empty, /*!*/ /*!*/);
+    --tw-contrast: var(--tw-empty, /*!*/ /*!*/);
+    --tw-grayscale: var(--tw-empty, /*!*/ /*!*/);
+    --tw-hue-rotate: var(--tw-empty, /*!*/ /*!*/);
+    --tw-invert: var(--tw-empty, /*!*/ /*!*/);
+    --tw-saturate: var(--tw-empty, /*!*/ /*!*/);
+    --tw-sepia: var(--tw-empty, /*!*/ /*!*/);
+    --tw-drop-shadow: var(--tw-empty, /*!*/ /*!*/);
+    --tw-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+      var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+      var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+    --tw-backdrop-blur: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-brightness: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-contrast: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-grayscale: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-hue-rotate: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-invert: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-opacity: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-saturate: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-sepia: var(--tw-empty, /*!*/ /*!*/);
+    --tw-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
+      var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
+      var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
+      var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
+      var(--tw-backdrop-sepia);
   }
 }

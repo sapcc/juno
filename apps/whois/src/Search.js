@@ -48,7 +48,7 @@ const Search = ({ onSearch, resultsShown, value }) => {
         onChange={handleChange}
       />
       {!resultsShown && searchTerm.match(cidrRegex()) && (
-        <span className="text-theme-disabled pl-6">
+        <span className="text-theme-light pl-6">
           Searching for CIDR ranges may take a while, please be patient :)
         </span>
       )}
