@@ -45,6 +45,16 @@ Warning.args = {
   color: "text-warning",
 }
 
+export const Error = Template.bind({})
+Error.args = {
+  icon: "dangerous"
+}
+
+export const Dangerous = Template.bind({})
+Dangerous.args = {
+  icon: "dangerous"
+}
+
 export const ThemeColor = Template.bind({})
 ThemeColor.args = {
   icon: "help",
