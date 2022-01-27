@@ -1,1 +1,4 @@
-{}
+{
+  "projectId": "juno",
+  "defaultCommandTimeout": 30000
+}
