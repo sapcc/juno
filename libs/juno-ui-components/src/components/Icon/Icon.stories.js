@@ -48,7 +48,7 @@ Warning.args = {
 export const ThemeColor = Template.bind({})
 ThemeColor.args = {
   icon: "help",
-  color: "text-juno-blue",
+  color: "text-default",
 }
 
 export const Smaller = Template.bind({})
