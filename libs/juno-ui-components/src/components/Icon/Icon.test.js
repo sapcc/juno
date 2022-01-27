@@ -50,6 +50,12 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toHaveAttribute("height", "48")
   })
   
+  test("renders a custom alt text instead of default when passed", async () => {
+    render(<Icon alt="my super custom icon alt text" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "my super custom icon alt text")
+  })
+  
   test("renders all props as passed", async () => {
     render(<Icon id="icon-1" data-lolol={true}/>)
     expect(screen.getByRole("img")).toBeInTheDocument()
