@@ -2,19 +2,19 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const primary = `
-  text-primary
+  text-theme-accent
 `
 
 const danger = `
-  text-danger 
+  text-theme-danger 
 `
 
 const success = `
-  text-success
+  text-theme-success
 `
 
 const warning = `
-  text-warning  
+  text-theme-warning  
 `
 
 const defaultColor = `

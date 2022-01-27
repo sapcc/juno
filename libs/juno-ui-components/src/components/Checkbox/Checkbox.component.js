@@ -19,12 +19,12 @@ const mockcheckboxstyles = `
 	relative
 	focus:outline-none
 	focus:ring-2
-	focus:ring-focus
+	focus:ring-theme-focus
 `
 
 const mockfocusstyles = `
 	ring-2
-	ring-focus
+	ring-theme-focus
 `
 
 const mockcheckmarkstyles = `
@@ -43,7 +43,7 @@ const mockindeterminatestyles = `
 	top-2
 	left-1
 	inline-block
-	bg-focus
+	bg-theme-focus
 `
 
 const mockdisabledstyles = `

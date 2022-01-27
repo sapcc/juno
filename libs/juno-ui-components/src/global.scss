@@ -152,16 +152,16 @@
 
     // SEMANTIC COLORS
     // RGB
-    --color-info: rgb(19, 103, 153);
+    --color-info: var(--color-juno-blue-4);
     --color-success: rgb(22, 145, 43);
-    --color-warning: rgb(217, 151, 0);
+    --color-warning: rgb(255, 205, 0);
     --color-danger: rgb(187, 62, 15);
     --color-error: rgb(187, 62, 15);
 
     // RAW
-    --color-info-raw: 19, 103, 153;
+    --color-info-raw: var(--color-juno-blue-4-raw);
     --color-success-raw: 22, 145, 43;
-    --color-warning-raw: 217, 151, 0;
+    --color-warning-raw: 255, 205, 0;
     --color-danger-raw: 187, 62, 15;
     --color-error-raw: 187, 62, 15;
   }

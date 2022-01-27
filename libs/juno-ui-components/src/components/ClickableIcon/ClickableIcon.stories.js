@@ -42,5 +42,5 @@ Larger.args = {
 export const Color = Template.bind({})
 Color.args = {
 	icon: "info",
-	color: "text-info"
+	color: "text-theme-info"
 }

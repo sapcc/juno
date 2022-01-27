@@ -18,7 +18,7 @@ const selectstyles = `
 	bg-no-repeat
 	focus:outline-none
 	focus:ring-2
-	focus:ring-focus
+	focus:ring-theme-focus
 	disabled:opacity-50
 `
 

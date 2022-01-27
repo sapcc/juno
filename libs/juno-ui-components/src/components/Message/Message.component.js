@@ -130,7 +130,7 @@ export const Message = ({
 			{...props}
 		>
 			<div className={`juno-message-icon-container ${iconContainerStyles} ${variantClass(variant)}`}>
-				<Icon icon={ getMuiIcon(variant) } color={ 'text-' + variant } />
+				<Icon icon={ getMuiIcon(variant) } color={ 'text-theme-' + variant } />
 			</div>
 			<div className={`juno-message-content ${messageContentStyles}`}>
 				{title ?  <h1 className={`${messageHeading}`}>{title}</h1> : ""}

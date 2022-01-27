@@ -11,7 +11,7 @@ const btnBase = `
   w-auto 
   focus:outline-none 
   focus:ring-2
-  focus:ring-focus
+  focus:ring-theme-focus
   focus:ring-offset-1
   focus:ring-offset-theme-focus
   disabled:cursor-not-allowed
