@@ -82,13 +82,50 @@ const gapSize = (gap) => {
   }
 }
 
-const baseStack = (direction, gap) => {
+const baseStack = (direction, gap, wrap) => {
   return (
     `
       ${direction === "vertical" ? 'flex flex-col' : 'md:flex md:flex-row'}
+      ${wrap && "flex-wrap"}
       ${gapSize(gap)}
     `
   )
+}
+
+const alignItems = (alignment) => {
+  switch (alignment) {
+    case "start":
+      return "items-start"
+    case "end":
+      return "items-end"
+    case "center":
+      return "items-center"
+    case "baseline":
+      return "items-baseline"
+    case "stretch":
+      return "items-stretch"
+    default:
+      return ""
+  }
+}
+
+const justifyItems = (distribution) => {
+  switch (distribution) {
+    case "start":
+      return "justify-start"
+    case "end":
+      return "justify-end"
+    case "center":
+      return "justify-center"
+    case "between":
+      return "justify-between"
+    case "around":
+      return "justify-around"
+    case "evenly":
+      return "justify-evenly"
+    default:
+      return ""
+  }
 }
 
 /**
@@ -98,6 +135,9 @@ const baseStack = (direction, gap) => {
 export const Stack = ({
   direction,
   gap,
+  alignment,
+  distribution,
+  wrap,
   className,
   children,
   ...props
@@ -105,7 +145,7 @@ export const Stack = ({
 
   return (
     <div 
-      className={`juno-stack ${baseStack(direction, gap)} ${className || ""}`}
+      className={`juno-stack ${baseStack(direction, gap, wrap)} ${alignItems(alignment)} ${justifyItems(distribution)} ${className || ""}`}
       {...props}
     >
       {children}
@@ -116,12 +156,21 @@ export const Stack = ({
 Stack.propTypes = {
   /** Stack items horizontally or vertically */
   direction: PropTypes.oneOf(["horizontal", "vertical"]),
+  /** Specify how items should be aligned on the cross axis (in a horizontal Stack this is the vertical alignment, in a vertical Stack it is the horizontal alignment) */
+  alignment: PropTypes.oneOf(["start", "end", "center", "baseline", "stretch"]),
+  /** Specify how items should be distributed on the main axis (in a horizontal Stack this is the horizontal distribution, in a vertical Stack it is the vertical distribution) */
+  distribution: PropTypes.oneOf(["start", "end", "center", "between", "around", "evenly"]),
+  /** Specify whether the Stack children should be allowed to wrap or not */
+  wrap: PropTypes.bool,
   /** Can be any valid tailwind  spacing. See here: https://tailwindcss.com/docs/customizing-spacing#default-spacing-scale */
   gap: PropTypes.oneOf(["0","px","0.5","1","1.5","2","2.5","3","3.5","4","5","6","7","8","9","10","11","12","14","16","20","24","28","32","36","40","44","48","52","56","60","64","72","80","96"])
 }
 
 Stack.defaultProps = {
   direction: "horizontal",
+  alignment: "stretch",
+  distribution: "start",
+  wrap: false,
   gap: "0",
   className: ""
 }

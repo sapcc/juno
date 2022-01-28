@@ -10,17 +10,17 @@ const DummyComponentList = ({count}) => {
           return (
             <div 
               className="
+                flex
                 bg-juno-blue
                 rounded
                 text-white
-                px-4
+                px-8
                 py-3
                 border
-                border-juno-blue-7
-                text-center"
+                border-juno-blue-7"
               key={i}  
             >
-              {i}
+             <div className="m-auto">{i}</div>
             </div>
           )
         })

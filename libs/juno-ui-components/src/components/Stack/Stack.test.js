@@ -38,5 +38,55 @@ describe("Stack", () => {
     )
 	})
 
+  test("renders a Stack to have alignment stretch by default", async () => {
+		render(<Stack data-testid="my-stack"></Stack>)
+		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
+    expect(screen.getByTestId("my-stack")).toHaveClass(
+      "items-stretch"
+    )
+	})
+  
+  test("renders a Stack with items aligned to center", async () => {
+		render(<Stack data-testid="my-stack" alignment="center"></Stack>)
+		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
+    expect(screen.getByTestId("my-stack")).toHaveClass(
+      "items-center"
+    )
+	})
+
+  test("renders a Stack to have justification to start by default", async () => {
+		render(<Stack data-testid="my-stack"></Stack>)
+		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
+    expect(screen.getByTestId("my-stack")).toHaveClass(
+      "justify-start"
+    )
+	})
+  
+  test("renders a Stack with items justified center", async () => {
+		render(<Stack data-testid="my-stack" distribution="center"></Stack>)
+		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
+    expect(screen.getByTestId("my-stack")).toHaveClass(
+      "justify-center"
+    )
+	})
+
+  test("renders a Stack with nowrap by default", async () => {
+		render(<Stack data-testid="my-stack"></Stack>)
+		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
+    expect(screen.getByTestId("my-stack")).not.toHaveClass(
+      "flex-wrap"
+    )
+	})
+  
+  test("renders a Stack with flex wrap", async () => {
+		render(<Stack data-testid="my-stack" wrap={true}></Stack>)
+		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
+    expect(screen.getByTestId("my-stack")).toHaveClass(
+      "flex-wrap"
+    )
+	})
+
+
+
 
 })
