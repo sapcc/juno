@@ -11,7 +11,7 @@ const RegionSelect = () => {
   )
 
   return (
-    <Stack gap="6" className="justify-center">
+    <Stack gap="6" distribution="center">
       {regionsByContinent.map((continent) => (
         <Stack
           direction="vertical"
@@ -24,7 +24,8 @@ const RegionSelect = () => {
             <Stack
               key={region.key}
               onClick={() => selectRegion(region.key)}
-              className="bg-theme-background-lvl-8 py-3 px-5 items-center cursor-pointer hover:bg-theme-accent hover:text-black"
+              alignment="center"
+              className="bg-theme-background-lvl-8 py-3 px-5 cursor-pointer hover:bg-theme-accent hover:text-black"
             >
               <div>
                 <span className="font-bold">{region.key}</span>

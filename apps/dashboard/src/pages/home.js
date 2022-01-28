@@ -27,7 +27,7 @@ const Home = () => {
       <div className="container mx-auto pt-8">
         <CCLogo className="-ml-7 mb-4" alt="Converged Cloud" />
 
-        <Stack className="items-center">
+        <Stack alignment="center">
           <div className="text-2xl w-3/5 mr-auto">
             SAP’s strategic Infrastructure-as-a-Service (IaaS) stack, optimised for SAP solutions, running purely in SAP datacenters.
           </div>

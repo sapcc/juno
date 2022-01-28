@@ -124,7 +124,9 @@ const PageFooter = () => {
               </div>
               <Stack
                 direction="vertical"
-                className="bg-theme-background-lvl-0 ml-auto px-4 py-2 items-center justify-center font-bold text-theme-accent group-hover:text-white"
+                alignment="center"
+                distribution="center"
+                className="bg-theme-background-lvl-0 ml-auto px-4 py-2 font-bold text-theme-accent group-hover:text-white"
               >
                 <Icon icon="exitToApp" size="36" />
                 <div>Learn more</div>

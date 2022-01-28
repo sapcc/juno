@@ -33,7 +33,7 @@ const DomainSelect = () => {
 
   return (
     <>
-      <Stack gap="3" className="items-center">
+      <Stack gap="3" alignment="center">
         {selectedRegion.icon}
         <div>
           {selectedRegion.key}

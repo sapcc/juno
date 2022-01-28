@@ -76,7 +76,7 @@ const LoginOverlay = () => {
           />
         </div>
         <nav className="w-full border-b-2 border-juno-grey-light-8 mb-8">
-          <Stack className="justify-around">
+          <Stack distribution="around">
             <a
               href="#"
               onClick={() => deselectRegion()}
@@ -97,7 +97,7 @@ const LoginOverlay = () => {
       </div>
 
       <div className="w-full bg-juno-grey-blue-10 mt-auto">
-        <Stack className="documentation-banner max-w-screen-xl mx-auto items-center py-10">
+        <Stack alignment="center" className="documentation-banner max-w-screen-xl mx-auto py-10">
           <div>
             <h5 className="text-3xl">New here?</h5>
             <p>

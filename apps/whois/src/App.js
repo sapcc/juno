@@ -100,7 +100,7 @@ const App = (props) => {
         className={`${contentClasses({ resultsShown })}`}
       >
         {!resultsShown && (
-          <Stack direction="vertical" gap="1" className="items-center">
+          <Stack direction="vertical" gap="1" alignment="center">
             <h1 className="text-2xl">WHOIS Search</h1>
             <p className="text-theme-default text-opacity-70">
               Find detailed information for IP addresses
@@ -113,7 +113,7 @@ const App = (props) => {
           resultsShown={resultsShown}
         />
         {processing && (
-          <Stack direction="vertical" className="items-center mt-20">
+          <Stack direction="vertical" alignment="center" className="mt-20">
             <SearchingIndicator />
             <span>Searching...</span>
           </Stack>
@@ -122,7 +122,7 @@ const App = (props) => {
           <Message variant="danger">
             {error}
             {statusCode === 404 && (
-              <Stack gap="4" className="items-center">
+              <Stack gap="4" alignment="center">
                 <span>
                   {" "}
                   It might be that we haven't cached this search yet. A live
@@ -140,7 +140,7 @@ const App = (props) => {
         )}
         {!processing && statusCode === 206 && (
           <Message>
-            <Stack gap="4" className="items-center">
+            <Stack gap="4" alignment="center">
               <span>
                 {" "}
                 Only partial results could be retrieved from the search cache. A

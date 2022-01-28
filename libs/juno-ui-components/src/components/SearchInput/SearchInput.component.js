@@ -121,7 +121,7 @@ export const SearchInput = ({
 
   return (
     <div className={`juno-search-input-wrapper ${wrapperClasses(variant)}`} role="search">
-      <Stack gap={2} className="items-center">
+      <Stack gap="2" alignment="center">
         <input
           type="search"
           name={name || "search"}
