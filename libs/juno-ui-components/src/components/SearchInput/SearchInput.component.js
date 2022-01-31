@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import "./searchinput.css"
-import { ClickableIcon, Stack } from "../../index"
+import { ClickableIcon } from "../ClickableIcon/index"
+import { Stack } from "../Stack/index"
 
 const wrapperClasses = (variant) => {
   return `
