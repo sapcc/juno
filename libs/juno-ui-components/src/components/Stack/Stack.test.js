@@ -86,6 +86,15 @@ describe("Stack", () => {
     )
 	})
 
+  test("renders custom classNames as passed", async () => {
+		render(<Stack data-testid="my-stack" className="my-custom-class" />)
+		expect(screen.getByTestId("my-stack")).toHaveClass("my-custom-class")
+	})
+		
+	test("renders all props as passed", async () => {
+		render(<Stack data-testid="my-stack" name="My shiny little Message" />)
+		expect(screen.getByTestId("my-stack")).toHaveAttribute('name', "My shiny little Message")
+	})
 
 
 

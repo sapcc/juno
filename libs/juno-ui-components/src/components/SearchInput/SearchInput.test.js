@@ -106,6 +106,16 @@ describe("SearchInput", () => {
 		expect(handleChange).toHaveBeenCalledTimes(3)
 	})
 
+	test("renders custom classNames as passed", async () => {
+		render(<SearchInput className="my-custom-class" />)
+		expect(screen.getByRole("searchbox")).toHaveClass("my-custom-class")
+	})
+		
+	test("renders all props as passed", async () => {
+		render(<SearchInput name="My shiny little Message" />)
+		expect(screen.getByRole("searchbox")).toHaveAttribute('name', "My shiny little Message")
+	})
+
 
 	// various props, disabled
 		
