@@ -1,1 +1,1 @@
-export { ShadowRoot } from "./Component"
+export { ShadowRoot } from "./ShadowRoot.component"
