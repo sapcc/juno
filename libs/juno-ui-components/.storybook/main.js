@@ -10,6 +10,7 @@ module.exports = {
     "@storybook/addon-essentials",
     "@storybook/addon-docs",
     "@storybook/addon-controls",
+    // "@storybook/theming",
     "storybook-dark-mode",
     {
       name: "@storybook/addon-postcss",
