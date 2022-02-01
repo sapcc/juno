@@ -6,6 +6,7 @@ export default {
   title: "Design System/DataGrid/DataGridCell",
   component: DataGridCell,
   argTypes: {},
+  decorators: [ story => <table><tbody><tr>{story()}</tr></tbody></table>],
 }
 
 const Template = (args) =>
