@@ -8,6 +8,7 @@ export default {
   title: "Design System/DataGrid/DataGridBody",
   component: DataGridBody,
   argTypes: {},
+  decorators: [ story => <table>{story()}</table>],
 }
 
 const Template = (args) =>

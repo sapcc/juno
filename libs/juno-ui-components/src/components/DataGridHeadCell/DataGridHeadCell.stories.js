@@ -6,6 +6,7 @@ export default {
   title: "Design System/DataGrid/DataGridHeadCell",
   component: DataGridHeadCell,
   argTypes: {},
+  decorators: [ story => <table><tbody><tr>{story()}</tr></tbody></table>],
 }
 
 const Template = (args) =>

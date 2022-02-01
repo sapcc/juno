@@ -7,6 +7,7 @@ export default {
   title: "Design System/DataGrid/DataGridFootRow",
   component: DataGridFootRow,
   argTypes: {},
+  decorators: [ story => <table><tfoot>{story()}</tfoot></table>],
 }
 
 const Template = (args) =>
