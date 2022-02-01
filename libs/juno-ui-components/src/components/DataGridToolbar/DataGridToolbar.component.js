@@ -1,6 +1,5 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { useDataGridContext } from "../DataGrid/DataGrid.component.js"
 import { SearchInput } from "../SearchInput/SearchInput.component.js"
 import { Button } from "../Button/Button.component.js"
 
@@ -15,10 +14,7 @@ export const DataGridToolbar= ({
 	className,
 	children,
 	...props
-}) => {
-	const dataGridContext = useDataGridContext() || {}
-	const selectable = dataGridContext.selectable
-	
+}) => {	
 	return (
 		<div className={`juno-datagrid-toolbar ${datagridtoolbarstyles} ${className}`} {...props} >
 			{ search ?
