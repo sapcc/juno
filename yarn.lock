@@ -6768,7 +6768,7 @@ __metadata:
     react-refresh: ^0.10.0
     react-test-renderer: ^17.0.2
     regenerator-runtime: ^0.13.9
-    sass-loader: ^12.2.0
+    sass-loader: ^12.4.0
     tailwindcss: ^3.0.18
     util: ^0.12.3
     webpack: ^5.59.1
@@ -9601,7 +9601,7 @@ __metadata:
     react-router-dom: ^5.3.0
     react-test-renderer: ^17.0.2
     regenerator-runtime: ^0.13.9
-    sass-loader: ^12.2.0
+    sass-loader: ^12.4.0
     tailwindcss: ^3.0.18
     url-loader: ^4.1.1
     util: ^0.12.3
@@ -13226,6 +13226,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"immutable@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "immutable@npm:4.0.0"
+  checksum: 4b5e9181e4d5fa06728a481835ec09c86367e5d03268666c95b522b7644ab891098022e4479a43c4c81a68f2ed82f10751ce5d33e208d7b873b6e7f9dfaf4d87
+  languageName: node
+  linkType: hard
+
 "immutable@npm:~3.7.6":
   version: 3.7.6
   resolution: "immutable@npm:3.7.6"
@@ -15755,9 +15762,9 @@ fsevents@^1.2.7:
     rollup-plugin-delete: ^2.0.0
     rollup-plugin-includepaths: ^0.2.4
     rollup-plugin-node-resolve: ^5.2.0
-    rollup-plugin-postcss: ^4.0.1
-    sass: ^1.32.13
-    sass-loader: ^12.2.0
+    rollup-plugin-postcss: ^4.0.2
+    sass: ^1.49.7
+    sass-loader: ^12.4.0
     storybook-dark-mode: ^1.0.8
     style-loader: ^3.3.1
     tailwindcss: ^3.0.18
@@ -20673,9 +20680,9 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"rollup-plugin-postcss@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "rollup-plugin-postcss@npm:4.0.1"
+"rollup-plugin-postcss@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "rollup-plugin-postcss@npm:4.0.2"
   dependencies:
     chalk: ^4.1.0
     concat-with-sourcemaps: ^1.1.0
@@ -20692,7 +20699,7 @@ fsevents@^1.2.7:
     style-inject: ^0.3.0
   peerDependencies:
     postcss: 8.x
-  checksum: d49e4063237db4367e6067f59e2a586fa711b22490e31386df400100f0a7f1053d712e31cfaacb014517ed9a25968c84f01e78447fc22b2fd0ae3d3321a07beb
+  checksum: 67875e024fa36ba4bd43604dc50d02eabba0c93626cc372588260ae42aae3f98015ea1b0c3a78bcbd345ebea465ef636e5cb0f60dbc8b2e94fbe2514384395f0
   languageName: node
   linkType: hard
 
@@ -20834,15 +20841,15 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"sass-loader@npm:^12.2.0":
-  version: 12.2.0
-  resolution: "sass-loader@npm:12.2.0"
+"sass-loader@npm:^12.4.0":
+  version: 12.4.0
+  resolution: "sass-loader@npm:12.4.0"
   dependencies:
     klona: ^2.0.4
     neo-async: ^2.6.2
   peerDependencies:
     fibers: ">= 3.1.0"
-    node-sass: ^4.0.0 || ^5.0.0 || ^6.0.0
+    node-sass: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
     sass: ^1.3.0
     webpack: ^5.0.0
   peerDependenciesMeta:
@@ -20852,11 +20859,11 @@ fsevents@^1.2.7:
       optional: true
     sass:
       optional: true
-  checksum: 2b2dd04ab5db65e8b9f5e6b6066735ef0bae134180ac7dc1912048065a6ce7797280f547937078c6f59bc8bd2889cbe8828240f5dd011cfb4a333b49fa628bdd
+  checksum: 0f7ca3633e7f61c412b0628766a9b57cb15f68def45e4303e68eb2f3a0722aec231956fbfd118489d93c997ab605470e89de8e3f7d6776830cc6366d9657d618
   languageName: node
   linkType: hard
 
-"sass@npm:*, sass@npm:^1.32.13":
+"sass@npm:*":
   version: 1.43.3
   resolution: "sass@npm:1.43.3"
   dependencies:
@@ -20864,6 +20871,19 @@ fsevents@^1.2.7:
   bin:
     sass: sass.js
   checksum: d253980cdafe6eab223cd57a44a49a43fc3123c0459c3d09d7f95ab4d4f2a8e3559996c6bfeed5be8dc428c85fd5b8f3cd165a0ede695df9fbd002f2094f8ea1
+  languageName: node
+  linkType: hard
+
+"sass@npm:^1.49.7":
+  version: 1.49.7
+  resolution: "sass@npm:1.49.7"
+  dependencies:
+    chokidar: ">=3.0.0 <4.0.0"
+    immutable: ^4.0.0
+    source-map-js: ">=0.6.2 <2.0.0"
+  bin:
+    sass: sass.js
+  checksum: 514d1abff594aa56afdc9eb7e40d1cbd9cf1ed6954c4e0ef494266d18965151c6f936e137cd118a138f7677a7bb98f2bbf2d1a485a3f5f66c78be0007506cc9b
   languageName: node
   linkType: hard
 
@@ -21500,6 +21520,13 @@ fsevents@^1.2.7:
   version: 2.0.1
   resolution: "source-list-map@npm:2.0.1"
   checksum: 806efc6f75e7cd31e4815e7a3aaf75a45c704871ea4075cb2eb49882c6fca28998f44fc5ac91adb6de03b2882ee6fb02f951fdc85e6a22b338c32bfe19557938
+  languageName: node
+  linkType: hard
+
+"source-map-js@npm:>=0.6.2 <2.0.0":
+  version: 1.0.2
+  resolution: "source-map-js@npm:1.0.2"
+  checksum: c049a7fc4deb9a7e9b481ae3d424cc793cb4845daa690bc5a05d428bf41bf231ced49b4cf0c9e77f9d42fdb3d20d6187619fc586605f5eabe995a316da8d377c
   languageName: node
   linkType: hard
 
@@ -24362,7 +24389,7 @@ fsevents@^1.2.7:
     react-refresh: ^0.10.0
     react-test-renderer: ^17.0.2
     regenerator-runtime: ^0.13.9
-    sass-loader: ^12.2.0
+    sass-loader: ^12.4.0
     tailwindcss: ^3.0.18
     url-loader: ^4.1.1
     url-state-provider: "workspace:*"
