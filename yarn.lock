@@ -6173,21 +6173,21 @@ __metadata:
     bundle-loader: ^0.5.6
     clean-webpack-plugin: ^4.0.0
     communicator: "workspace:*"
-    css-loader: ^6.4.0
-    css-minimizer-webpack-plugin: ^3.1.1
+    css-loader: ^6.6.0
+    css-minimizer-webpack-plugin: ^3.4.1
     custom-event-polyfill: ^1.0.7
     glob: ^7.2.0
     html-webpack-plugin: ^5.4.0
     jest: ^27.4.7
     juno-ui-components: "workspace:*"
-    mini-css-extract-plugin: ^2.4.3
+    mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.4.6
     postcss-loader: ^6.2.1
     process: ^0.11.10
     prop-types: ^15.8.1
-    purgecss-webpack-plugin: ^4.0.3
+    purgecss-webpack-plugin: ^4.1.3
     react: ^17.0.2
     react-dom: ^17.0.2
     react-refresh: ^0.10.0
@@ -6195,7 +6195,7 @@ __metadata:
     regenerator-runtime: ^0.13.9
     sass-loader: ^12.4.0
     tailwindcss: ^3.0.18
-    util: ^0.12.3
+    util: ^0.12.4
     webpack: ^5.68.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
@@ -8528,7 +8528,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-loader@npm:^6.3.0, css-loader@npm:^6.4.0":
+"css-loader@npm:^6.6.0":
   version: 6.6.0
   resolution: "css-loader@npm:6.6.0"
   dependencies:
@@ -8546,7 +8546,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-minimizer-webpack-plugin@npm:^3.1.1":
+"css-minimizer-webpack-plugin@npm:^3.4.1":
   version: 3.4.1
   resolution: "css-minimizer-webpack-plugin@npm:3.4.1"
   dependencies:
@@ -8798,22 +8798,22 @@ __metadata:
     bundle-loader: ^0.5.6
     clean-webpack-plugin: ^4.0.0
     communicator: "workspace:*"
-    css-loader: ^6.4.0
-    css-minimizer-webpack-plugin: ^3.1.1
+    css-loader: ^6.6.0
+    css-minimizer-webpack-plugin: ^3.4.1
     custom-event-polyfill: ^1.0.7
     glob: ^7.2.0
     html-webpack-plugin: ^5.4.0
     jest: ^27.4.7
     juno-ui-components: "workspace:*"
     luxon: ^2.0.1
-    mini-css-extract-plugin: ^2.4.3
+    mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.4.6
     postcss-loader: ^6.2.1
     process: ^0.11.10
     prop-types: ^15.8.1
-    purgecss-webpack-plugin: ^4.0.3
+    purgecss-webpack-plugin: ^4.1.3
     react: ^17.0.2
     react-dom: ^17.0.2
     react-refresh: ^0.10.0
@@ -8822,7 +8822,7 @@ __metadata:
     regenerator-runtime: ^0.13.9
     sass-loader: ^12.4.0
     tailwindcss: ^3.0.18
-    util: ^0.12.3
+    util: ^0.12.4
     webpack: ^5.68.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
@@ -9147,14 +9147,14 @@ __metadata:
     html-webpack-plugin: ^5.4.0
     jest: ^27.4.7
     juno-ui-components: "workspace:*"
-    mini-css-extract-plugin: ^2.4.3
+    mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     process: ^0.11.10
     react: ^17.0.2
     react-dom: ^17.0.2
     serve: ^11.3.2
-    util: ^0.12.3
+    util: ^0.12.4
     webpack: ^5.68.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
@@ -14222,7 +14222,7 @@ __metadata:
     autoprefixer: ^10.4.2
     babel-jest: ^27.4.6
     babel-loader: ^8.2.3
-    css-loader: ^6.4.0
+    css-loader: ^6.6.0
     jest: ^27.4.7
     postcss: ^8.4.6
     postcss-loader: ^6.2.1
@@ -15099,20 +15099,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mini-css-extract-plugin@npm:^1.3.8":
-  version: 1.6.2
-  resolution: "mini-css-extract-plugin@npm:1.6.2"
-  dependencies:
-    loader-utils: ^2.0.0
-    schema-utils: ^3.0.0
-    webpack-sources: ^1.1.0
-  peerDependencies:
-    webpack: ^4.4.0 || ^5.0.0
-  checksum: c2c1f3d7e5bc206b5bece0f37b65467ee58e0bb0b61d5e031bb818682b02db2552b296f5018af9058b18eb7127e00f6462fb718712a3d4432079dfa848b510cc
-  languageName: node
-  linkType: hard
-
-"mini-css-extract-plugin@npm:^2.4.3":
+"mini-css-extract-plugin@npm:^2.5.3":
   version: 2.5.3
   resolution: "mini-css-extract-plugin@npm:2.5.3"
   dependencies:
@@ -17642,7 +17629,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"purgecss-webpack-plugin@npm:^4.0.3":
+"purgecss-webpack-plugin@npm:^4.1.3":
   version: 4.1.3
   resolution: "purgecss-webpack-plugin@npm:4.1.3"
   dependencies:
@@ -18644,14 +18631,14 @@ __metadata:
     bundle-loader: ^0.5.6
     clean-webpack-plugin: ^3.0.0
     communicator: "workspace:*"
-    css-loader: ^6.3.0
+    css-loader: ^6.6.0
     dotenv: ^8.2.0
     graphql: ^15.5.1
     html-webpack-plugin: ^5.1.0
     jest: ^27.4.7
     juno-ui-components: "workspace:*"
     lz-string: ^1.4.4
-    mini-css-extract-plugin: ^1.3.8
+    mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     policy-engine: "workspace:*"
@@ -18664,7 +18651,7 @@ __metadata:
     tailwindcss: ^3.0.18
     url-state-provider: "workspace:libs/url-state-provider"
     url-state-router: "workspace:*"
-    util: ^0.12.3
+    util: ^0.12.4
     webpack: ^5.68.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
@@ -21604,7 +21591,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"util@npm:^0.12.0, util@npm:^0.12.3":
+"util@npm:^0.12.0, util@npm:^0.12.4":
   version: 0.12.4
   resolution: "util@npm:0.12.4"
   dependencies:
@@ -22057,7 +22044,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-sources@npm:^1.1.0, webpack-sources@npm:^1.4.0, webpack-sources@npm:^1.4.1, webpack-sources@npm:^1.4.3":
+"webpack-sources@npm:^1.4.0, webpack-sources@npm:^1.4.1, webpack-sources@npm:^1.4.3":
   version: 1.4.3
   resolution: "webpack-sources@npm:1.4.3"
   dependencies:
@@ -22325,8 +22312,8 @@ __metadata:
     cidr-regex: ^3.1.1
     clean-webpack-plugin: ^4.0.0
     communicator: "workspace:*"
-    css-loader: ^6.4.0
-    css-minimizer-webpack-plugin: ^3.1.1
+    css-loader: ^6.6.0
+    css-minimizer-webpack-plugin: ^3.4.1
     custom-event-polyfill: ^1.0.7
     file-loader: ^6.2.0
     glob: ^7.2.0
@@ -22335,14 +22322,14 @@ __metadata:
     jest: ^27.4.7
     juno-ui-components: "workspace:*"
     luxon: ^2.0.1
-    mini-css-extract-plugin: ^2.4.3
+    mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.4.6
     postcss-loader: ^6.2.1
     process: ^0.11.10
     prop-types: ^15.8.1
-    purgecss-webpack-plugin: ^4.0.3
+    purgecss-webpack-plugin: ^4.1.3
     react: ^17.0.2
     react-dom: ^17.0.2
     react-json-view: ^1.21.3
@@ -22353,7 +22340,7 @@ __metadata:
     tailwindcss: ^3.0.18
     url-loader: ^4.1.1
     url-state-provider: "workspace:*"
-    util: ^0.12.3
+    util: ^0.12.4
     webpack: ^5.68.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
