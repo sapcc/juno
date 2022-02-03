@@ -9,7 +9,7 @@
     "bundle-loader": "^0.5.6",
     "clean-webpack-plugin": "^4.0.0",
     "html-webpack-plugin": "^5.4.0",
-    "jest": "^26.6.3",
+    "jest": "^27.4.7",
     "regenerator-runtime": "^0.13.9",
     "serve": "^11.3.2",
     "webpack": "^5.59.1",
@@ -22,6 +22,7 @@
     "test": "jest"
   },
   "jest": {
+    "testEnvironment": "jsdom",
     "setupFiles": [
       "./setupTests.js"
     ]

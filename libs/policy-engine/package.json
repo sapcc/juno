@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "main": "src/index.js",
   "devDependencies": {
-    "jest": "^26.6.3"
+    "jest": "^27.4.7"
   },
   "scripts": {
     "start": "PORT=$APP_PORT yarn nodemon ./src/index.js",

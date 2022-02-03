@@ -1,5 +1,6 @@
 module.exports = {
   transform: { "\\.[jt]sx?$": "babel-jest" },
+  testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/setupTests.js"],
   transformIgnorePatterns: ["/node_modules/", "\\.pnp\\.[^\\/]+$"],
   moduleNameMapper: {
