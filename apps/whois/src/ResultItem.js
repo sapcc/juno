@@ -46,8 +46,8 @@ const ResultItem = ({ content, expand }) => {
   return (
     <Stack gap="4">
       <div className={leftColumn}>
-        {content.floatingIP ? (
-          <div className="font-bold">{content.floatingIP}</div>
+        {content.ip ? (
+          <div className="font-bold">{content.ip}</div>
         ) : (
           content.fixedIPs && (
             <div className="font-bold">{content.fixedIPs[0]}</div>

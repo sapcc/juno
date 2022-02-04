@@ -130,6 +130,7 @@ const App = (props) => {
                 </span>
                 <Button
                   size="small"
+                  variant="subdued"
                   onClick={() => search(currentSearchTerm, { realtime: true })}
                   label="Trigger live search"
                   className="whitespace-nowrap"
@@ -148,6 +149,7 @@ const App = (props) => {
               </span>
               <Button
                 size="small"
+                variant="subdued"
                 onClick={() => search(currentSearchTerm, { realtime: true })}
                 label="Trigger live search"
                 className="whitespace-nowrap"
