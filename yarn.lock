@@ -8805,7 +8805,7 @@ __metadata:
     html-webpack-plugin: ^5.4.0
     jest: ^27.4.7
     juno-ui-components: "workspace:*"
-    luxon: ^2.0.1
+    luxon: ^2.3.0
     mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
@@ -8826,7 +8826,7 @@ __metadata:
     webpack: ^5.68.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
-    zustand: ^3.6.5
+    zustand: ^3.6.9
   languageName: unknown
   linkType: soft
 
@@ -14609,7 +14609,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^2.0.1":
+"luxon@npm:^2.3.0":
   version: 2.3.0
   resolution: "luxon@npm:2.3.0"
   checksum: 3d00e1b812a31082cf0d97e844d7354c93891fbd14795756f396ee5656387e21d2c862edb841516114eb391f8314a6cf3848799acc6d59cf9560c88c909b91f0
@@ -22321,7 +22321,7 @@ __metadata:
     ip-regex: ^4.3.0
     jest: ^27.4.7
     juno-ui-components: "workspace:*"
-    luxon: ^2.0.1
+    luxon: ^2.3.0
     mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
@@ -22678,7 +22678,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zustand@npm:^3.6.5":
+"zustand@npm:^3.6.9":
   version: 3.6.9
   resolution: "zustand@npm:3.6.9"
   peerDependencies:
