@@ -12390,10 +12390,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ip-regex@npm:^4.1.0, ip-regex@npm:^4.3.0":
+"ip-regex@npm:^4.1.0":
   version: 4.3.0
   resolution: "ip-regex@npm:4.3.0"
   checksum: 7ff904b891221b1847f3fdf3dbb3e6a8660dc39bc283f79eb7ed88f5338e1a3d1104b779bc83759159be266249c59c2160e779ee39446d79d4ed0890dfd06f08
+  languageName: node
+  linkType: hard
+
+"ip-regex@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "ip-regex@npm:5.0.0"
+  checksum: 4098b2df89c015f1484a5946e733ec126af8c1828719d90e09f04af23ce487e1a852670e4d3f51b0dc6dfbaf7d8bfab23fd7893ca60e69833da99b7b1ee3623b
   languageName: node
   linkType: hard
 
@@ -22315,10 +22322,9 @@ __metadata:
     css-loader: ^6.6.0
     css-minimizer-webpack-plugin: ^3.4.1
     custom-event-polyfill: ^1.0.7
-    file-loader: ^6.2.0
     glob: ^7.2.0
     html-webpack-plugin: ^5.4.0
-    ip-regex: ^4.3.0
+    ip-regex: ^5.0.0
     jest: ^27.4.7
     juno-ui-components: "workspace:*"
     luxon: ^2.3.0
@@ -22338,7 +22344,6 @@ __metadata:
     regenerator-runtime: ^0.13.9
     sass-loader: ^12.4.0
     tailwindcss: ^3.0.18
-    url-loader: ^4.1.1
     url-state-provider: "workspace:*"
     util: ^0.12.4
     webpack: ^5.68.0
