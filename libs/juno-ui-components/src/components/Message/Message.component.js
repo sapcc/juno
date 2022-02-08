@@ -10,13 +10,14 @@ const message = `
 	rounded-l
 	leading-5
 	overflow-hidden
+	items-center
 `
 
-const iconContainerStyles = `
+const messageBorderStyles = `
+	w-[4px]
+	self-stretch
 	border-l-4
-	pt-1
-	pl-6
-	sm:pt-3
+	mr-6
 `
 
 const messageDefault = `
@@ -129,9 +130,8 @@ export const Message = ({
 			className={`juno-message juno-message-${variant} ${message} ${backgroundClass(variant)} ${className}`}
 			{...props}
 		>
-			<div className={`juno-message-icon-container ${iconContainerStyles} ${variantClass(variant)}`}>
-				<Icon icon={ getMuiIcon(variant) } color={ 'text-theme-' + variant } />
-			</div>
+			<div className={`juno-message-border ${messageBorderStyles} ${variantClass(variant)}`}></div>
+			<Icon icon={ getMuiIcon(variant) } color={ 'text-theme-' + variant } />
 			<div className={`juno-message-content ${messageContentStyles}`}>
 				{title ?  <h1 className={`${messageHeading}`}>{title}</h1> : ""}
 				<div>{ children ? children : text }</div>
