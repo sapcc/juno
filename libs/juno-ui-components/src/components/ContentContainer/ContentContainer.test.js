@@ -1,0 +1,39 @@
+import * as React from "react"
+import { render, screen } from "@testing-library/react"
+import { ContentContainer } from "./index"
+
+describe("ContentContainer", () => {
+  test("renders a content container", async () => {
+    render(<ContentContainer data-testid="content-container" />)
+    expect(screen.getByTestId("content-container")).toBeInTheDocument()
+    expect(screen.getByTestId("content-container")).toHaveClass("juno-content-container")
+  })
+
+  test("renders children as passed", async () => {
+    render(
+      <ContentContainer data-testid="content-container" >
+        <button></button>
+      </ContentContainer>
+    )
+    expect(screen.getByTestId("content-container")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toBeInTheDocument()
+  })
+
+  test("renders a custom className", async () => {
+    render(<ContentContainer  data-testid="content-container" className="my-custom-classname" />)
+    expect(screen.getByTestId("content-container")).toBeInTheDocument()
+    expect(screen.getByTestId("content-container")).toHaveClass("my-custom-classname")
+  })
+
+  test("renders all props", async () => {
+    render(<ContentContainer  data-testid="content-container" data-lolol="some-prop" />)
+    expect(screen.getByTestId("content-container")).toBeInTheDocument()
+    expect(screen.getByTestId("content-container")).toHaveAttribute("data-lolol", "some-prop")
+  })
+
+  test("renders a content container as container when largest breakpoint is reached", async () => {
+    render(<ContentContainer data-testid="content-container" />)
+    expect(screen.getByTestId("content-container")).toBeInTheDocument()
+    expect(screen.getByTestId("content-container")).toHaveClass("2xl:container")
+  })
+})
