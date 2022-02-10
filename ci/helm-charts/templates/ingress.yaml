@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   annotations:
     dns-manager: "true"
-    dns-manager/zone-name: "{{ .Values.global.region }}.cloud.sap"
+    dns-manager/zone-name: "{{ .Values.global.region }}.{{ .Values.global.tld }}"
     kubernetes.io/tls-acme: "true"
   # labels:
   #   app: juno
@@ -11,7 +11,7 @@ metadata:
   namespace: juno
 spec:
   rules:
-    - host: "juno.{{ .Values.global.region }}.cloud.sap"
+    - host: "juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
           - path: / 
@@ -19,7 +19,23 @@ spec:
               serviceName: juno-dashboard
               servicePort: 3000
 
-    - host: "cdn.juno.{{ .Values.global.region }}.cloud.sap"
+    - host: "ccloud.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+      http:
+        paths:
+          - path: / 
+            backend:
+              serviceName: juno-dashboard
+              servicePort: 3000              
+
+    - host: "convergedcloud.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+      http:
+        paths:
+          - path: / 
+            backend:
+              serviceName: juno-dashboard
+              servicePort: 3000
+
+    - host: "cdn.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
           - path: / 
@@ -27,7 +43,7 @@ spec:
               serviceName: juno-cdn
               servicePort: 8888
 
-    - host: "ui.juno.{{ .Values.global.region }}.cloud.sap"
+    - host: "ui.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
           - path: /                 
@@ -35,7 +51,7 @@ spec:
               serviceName: juno-ui-components
               servicePort: 3000
 
-    - host: "mercury.juno.{{ .Values.global.region }}.cloud.sap"
+    - host: "mercury.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
           - path: /                 
@@ -44,7 +60,7 @@ spec:
               servicePort: 5000              
                     
 {{- if eq .Values.global.region "eu-nl-1" }}
-    - host: "juno.global.cloud.sap"
+    - host: "juno.global.{{ .Values.global.tld }}"
       http:
         paths:
           - path: / 
@@ -52,7 +68,23 @@ spec:
               serviceName: juno-dashboard
               servicePort: 3000
 
-    - host: "cdn.juno.global.cloud.sap"
+    - host: "ccloud.global.{{ .Values.global.tld }}"
+      http:
+        paths:
+          - path: / 
+            backend:
+              serviceName: juno-dashboard
+              servicePort: 3000              
+
+    - host: "convergedcloud.global.{{ .Values.global.tld }}"
+      http:
+        paths:
+          - path: / 
+            backend:
+              serviceName: juno-dashboard
+              servicePort: 3000
+
+    - host: "cdn.juno.global.{{ .Values.global.tld }}"
       http:
         paths:
           - path: / 
@@ -60,7 +92,7 @@ spec:
               serviceName: juno-cdn
               servicePort: 8888
 
-    - host: "ui.juno.global.cloud.sap"
+    - host: "ui.juno.global.{{ .Values.global.tld }}"
       http:
         paths:
           - path: /                 
@@ -68,7 +100,7 @@ spec:
               serviceName: juno-ui-components
               servicePort: 3000
 
-    - host: "mercury.juno.global.cloud.sap"
+    - host: "mercury.juno.global.{{ .Values.global.tld }}"
       http:
         paths:
           - path: /                 
@@ -80,10 +112,14 @@ spec:
 
   tls:
     - hosts: 
-        - "juno.{{ .Values.global.region }}.cloud.sap"
-        - "*.juno.{{ .Values.global.region }}.cloud.sap"
+        - "juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+        - "ccloud.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+        - "convergedcloud.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+        - "*.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
 {{- if eq .Values.global.region "eu-nl-1" }}      
-        - "juno.global.cloud.sap"
-        - "*.juno.global.cloud.sap"
+        - "juno.global.{{ .Values.global.tld }}"
+        - "ccloud.global.{{ .Values.global.tld }}"
+        - "convergedcloud.global.{{ .Values.global.tld }}"
+        - "*.juno.global.{{ .Values.global.tld }}"
 {{- end }}        
       secretName: "tls-juno-{{ .Values.global.region }}-cloud-sap"
