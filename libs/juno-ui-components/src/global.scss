@@ -791,11 +791,15 @@
   .shadow-body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    @apply bg-theme-global-bg;
-    @apply text-theme-default;
     @apply font-sans;
     @apply text-base;
     @apply h-full;
+  }
+
+  // theme-dependant  colors need to be applied in the context of the theme classes.
+  .theme-dark, .theme-light {
+    @apply bg-theme-global-bg;
+    @apply text-theme-default;
   }
 
   a {
