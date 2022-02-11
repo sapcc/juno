@@ -21,7 +21,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["ci/Dockerfile.test"]
+      paths: ["ci/Dockerfile.test", "ci/helm-charts"]
       username: sapcc-bot
       password: {{real-github-access-token}}
 
@@ -30,7 +30,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.ui-components","e2e"]
+      paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.ui-components","e2e", "ci/helm-charts"]
       username: sapcc-bot
       password: {{real-github-access-token}}
 
@@ -39,7 +39,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/dashboard","package.json","libs","ci/Dockerfile.dashboard","e2e"]
+      paths: ["apps/dashboard","package.json","libs","ci/Dockerfile.dashboard","e2e", "ci/helm-charts"]
       username: sapcc-bot
       password: {{real-github-access-token}}
 
@@ -48,7 +48,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apis/mercury","package.json","ci/Dockerfile.mercury","e2e",".yarn"]
+      paths: ["apis/mercury","package.json","ci/Dockerfile.mercury","e2e",".yarn", "ci/helm-charts"]
       username: sapcc-bot
       password: {{real-github-access-token}}      
  

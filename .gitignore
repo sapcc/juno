@@ -17,7 +17,7 @@ node_modules
 
 # production
 /build
-
+/ci/pipeline.yaml
 # yarn.lock
 
 # misc
