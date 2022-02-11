@@ -2,7 +2,7 @@ import React from "react"
 
 import { exampleFetch as fetchStuff } from "./actions"
 
-import { Message, PageHeader, Stack, Spinner } from "juno-ui-components"
+import { AppBody, AppIntro, Button, ContentArea, ContentAreaToolbar, ContentContainer, MainContainer, Message, PageHeader, Spinner } from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
 /* Replace this with your app's name */
 const URL_STATE_KEY = "template"
@@ -64,33 +64,45 @@ const App = (props) => {
   }, [apiCallExample])
 
   return (
-    <div className="juno-body flex flex-col h-full">
+    <AppBody>
       {!embedded && <PageHeader heading="App Template" />}
-      <div className="juno-main flex flex-col grow">
-        <div className="juno-content-container ml-8 2xl:container 2xl:mx-auto flex flex-col grow">
-          <div className="juno-content-intro p-16">Intro text here</div>
-          <div className="juno-content-area content bg-theme-background-lvl-4 grow p-6 mt-8">
+      <MainContainer>
+        <ContentContainer className="bg-[url('img/app_bg.svg')]">
+          <AppIntro>
+            Intro text here. Explain what this app is in a short lead text.
+            Lorem ipsum dolor sit amet. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet.
+          </AppIntro>
+
+          <ContentArea heading="App Template">
+            <ContentAreaToolbar>
+              <Button>Action</Button>
+            </ContentAreaToolbar>
             
             {/* Messages always at the top of the content area */}
-            <Message>Welcome to the example app</Message>
-            {processing && (
-              <Spinner variant="primary" />
-            )}
-            {error && (
-              <Message variant="danger">
-                {error}
-                {statusCode === 404 && (
-                  <>
-                    Custom error message for status code 404
-                  </>
-                )}
-              </Message>
-            )}
+            <div className="juno-message-container mb-8">
+              <Message>Welcome to the example app</Message>
+              {processing && (
+                <Spinner variant="primary" />
+              )}
+              {error && (
+                <Message variant="danger">
+                  {error}
+                  {statusCode === 404 && (
+                    <>
+                      Custom error message for status code 404
+                    </>
+                  )}
+                </Message>
+              )}
+            </div>
 
-          </div>
-        </div>
-      </div>
-    </div>
+            {/* CONTENT GOES HERE */}
+            <div>Content goes here</div>
+
+          </ContentArea>
+        </ContentContainer>
+      </MainContainer>
+    </AppBody>
   )
 }
 
