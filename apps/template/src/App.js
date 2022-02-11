@@ -64,25 +64,33 @@ const App = (props) => {
   }, [apiCallExample])
 
   return (
-    <>
+    <div className="juno-body flex flex-col h-full">
       {!embedded && <PageHeader heading="App Template" />}
-      <div className="container mx-auto mt-12">
-        <Message>Welcome to the example app</Message>
-        {processing && (
-          <Spinner variant="primary" />
-        )}
-        {error && (
-          <Message variant="danger">
-            {error}
-            {statusCode === 404 && (
-              <>
-                Custom error message for status code 404
-              </>
+      <div className="juno-main flex flex-col grow">
+        <div className="juno-content-container ml-8 2xl:container 2xl:mx-auto flex flex-col grow">
+          <div className="juno-content-intro p-16">Intro text here</div>
+          <div className="juno-content-area content bg-theme-background-lvl-4 grow p-6 mt-8">
+            
+            {/* Messages always at the top of the content area */}
+            <Message>Welcome to the example app</Message>
+            {processing && (
+              <Spinner variant="primary" />
             )}
-          </Message>
-        )}
+            {error && (
+              <Message variant="danger">
+                {error}
+                {statusCode === 404 && (
+                  <>
+                    Custom error message for status code 404
+                  </>
+                )}
+              </Message>
+            )}
+
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 
