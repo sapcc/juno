@@ -5,7 +5,7 @@ import SAPLogo from "../../img/sap_logo.svg"
 const basePageHeader = `
   flex
   items-center
-  bg-black
+  bg-juno-grey-blue-11
   sticky
   top-0
   px-6

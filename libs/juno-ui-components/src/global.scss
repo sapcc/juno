@@ -325,6 +325,8 @@
   // Global
   --color-global-bg: var(--color-background-lvl-0-raw);
   --color-global-text: var(--color-juno-text-default-raw);
+  --color-content-area-bg: var(--color-background-lvl-4);
+  --color-content-area-bg-raw: var(--color-background-lvl-4-raw);
   --color-accent: var(--color-juno-blue-4);
   --color-accent-raw: var(--color-juno-blue-4-raw);
   // FOCUS
@@ -558,8 +560,10 @@
   --color-background-lvl-10-raw: var(--color-juno-grey-blue-1-raw);
 
   // Global
-  --color-global-bg: var(--color-background-lvl-0-raw);
+  --color-global-bg: var(--color-background-lvl-1-raw);
   --color-global-text: var(--color-juno-text-default-raw);
+  --color-content-area-bg: var(--color-background-lvl-4);
+  --color-content-area-bg-raw: var(--color-background-lvl-4-raw);
   --color-accent: var(--color-juno-turquoise-5);
   --color-accent-raw: var(--color-juno-turquoise-5-raw);
   // FOCUS

@@ -37,7 +37,7 @@ module.exports = {
         9: withOpacity("--color-juno-grey-blue-9-raw"),
         10: withOpacity("--color-juno-grey-blue-10-raw"),
         11: withOpacity("--color-juno-grey-blue-11-raw"),
-        DEFAULT: withOpacity("--color-juno-grey-blue-11-raw"),
+        DEFAULT: withOpacity("--color-juno-grey-blue-10-raw"),
       },
       "juno-blue": {
         1: withOpacity("--color-juno-blue-1-raw"),
@@ -168,6 +168,7 @@ module.exports = {
       backgroundColor: {
         theme: {
           "global-bg": withOpacity("--color-global-bg"),
+          "content-area-bg": withOpacity("--color-content-area-bg-raw"),
           "button-primary-active": "var(--color-button-primary-active-bg)",
           "button-default": "var(--color-button-default-bg)",
           "button-default-active": "var(--color-button-default-active-bg)",
