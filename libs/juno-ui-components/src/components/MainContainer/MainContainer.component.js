@@ -1,7 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-
+const mainClasses = `
+  flex
+  flex-col
+  grow
+`
 
 /**
  * The main container for app content.
@@ -14,7 +18,7 @@ export const MainContainer = ({
 
   return (
     <main
-      className={`juno-main ${className}`}
+      className={`juno-main ${mainClasses} ${className}`}
       {...props}
     >
       {children}
@@ -28,5 +32,5 @@ MainContainer.propTypes = {
 }
 
 MainContainer.defaultProps = {
-  className: null
+  className: ""
 }

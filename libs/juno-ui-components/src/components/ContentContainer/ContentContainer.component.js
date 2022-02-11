@@ -3,9 +3,14 @@ import PropTypes from "prop-types"
 
 
 const containerStyles = `
+  flex
+  flex-col
+  grow
   ml-8
   2xl:container
   2xl:mx-auto
+  bg-[right_top_1rem]
+  bg-no-repeat
 `
 
 /**
@@ -13,9 +18,9 @@ const containerStyles = `
  */
 export const ContentContainer = ({ className, children, ...props }) => {
   return (
-    <main className={`juno-content-container ${containerStyles} ${className}`} {...props}>
+    <div className={`juno-content-container ${containerStyles} ${className}`} {...props}>
       {children}
-    </main>
+    </div>
   )
 }
 
@@ -25,5 +30,5 @@ ContentContainer.propTypes = {
 }
 
 ContentContainer.defaultProps = {
-  className: null,
+  className: "",
 }

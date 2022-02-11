@@ -10,13 +10,13 @@ export default {
 
 const Template = (args) => <ContentContainer {...args}></ContentContainer>
 
-export const Main = Template.bind({})
-Main.parameters = {
+export const Centered = Template.bind({})
+Centered.parameters = {
   docs: {
     description: {
       story:
-        "Main container for all content of the app. Wrapper for content containers.",
+        "A wrapper for content components. Parent of ContentArea. Width will grow to the maximum breakpoint width and then be centered on the page if the browser is wider.",
     },
   },
 }
-Main.args = {}
+Centered.args = {}

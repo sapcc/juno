@@ -169,6 +169,7 @@ module.exports = {
         theme: {
           "global-bg": withOpacity("--color-global-bg"),
           "content-area-bg": withOpacity("--color-content-area-bg-raw"),
+          "content-area-toolbar-bg": withOpacity("--color-background-lvl-3-raw"),
           "button-primary-active": "var(--color-button-primary-active-bg)",
           "button-default": "var(--color-button-default-bg)",
           "button-default-active": "var(--color-button-default-active-bg)",

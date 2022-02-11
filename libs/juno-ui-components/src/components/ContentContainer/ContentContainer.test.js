@@ -9,6 +9,18 @@ describe("ContentContainer", () => {
     expect(screen.getByTestId("content-container")).toHaveClass("juno-content-container")
   })
 
+  test("renders a content container with flex col layout", async () => {
+    render(<ContentContainer data-testid="content-container" />)
+    expect(screen.getByTestId("content-container")).toBeInTheDocument()
+    expect(screen.getByTestId("content-container")).toHaveClass("flex-col")
+  })
+
+  test("renders a content container with flex grow", async () => {
+    render(<ContentContainer data-testid="content-container" />)
+    expect(screen.getByTestId("content-container")).toBeInTheDocument()
+    expect(screen.getByTestId("content-container")).toHaveClass("grow")
+  })
+
   test("renders children as passed", async () => {
     render(
       <ContentContainer data-testid="content-container" >
