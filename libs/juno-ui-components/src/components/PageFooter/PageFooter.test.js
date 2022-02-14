@@ -14,12 +14,6 @@ describe("PageFooter", () => {
     expect(screen.getByRole("contentinfo")).toBeInTheDocument()
     expect(screen.getByRole("contentinfo")).toHaveClass("bg-theme-background-lvl-1")
   })
-  
-  test("renders a Page Footer to have a background image", async () => {
-    render(<PageFooter />)
-    expect(screen.getByRole("contentinfo")).toBeInTheDocument()
-    expect(screen.getByRole("contentinfo")).toHaveAttribute('class', expect.stringContaining('bg-[url'))
-  })
 
   test("renders children as passed", async () => {
     render(
