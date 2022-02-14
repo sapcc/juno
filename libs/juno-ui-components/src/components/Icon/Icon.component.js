@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 
 /* Import Icons here. The icon svgs in the icons folder correspond to the respective "xyz_24px.svg" from material-ui icons. 
 */
+import AddCircle from "./icons/add_circle.svg"
 import AutoAwesomeMosaic from "./icons/auto_awesome_mosaic.svg"
 import AutoAwesomeMotion from "./icons/auto_awesome_motion.svg"
 import Cancel from "./icons/cancel.svg"
@@ -33,6 +34,8 @@ Generic Icon component.
 const getColoredSizedIcon = ({icon, color, size, className, ...props}) => {	
 		const iconClass = `juno-icon juno-icon-${icon} inline-block fill-current ${color} ${className || ""}`
 	  switch (icon) {
+			case "addCircle":
+				return <AddCircle width={size} height={size} className={iconClass} alt="add" role="img" {...props} />
 			case "autoAwesomeMosaic":
 				return <AutoAwesomeMosaic width={size} height={size} className={iconClass} alt="mosaic" role="img" {...props} />
 			case "autoAwesomeMotion":
@@ -96,6 +99,7 @@ Icon.propTypes = {
 	/** The icon to display */
 	icon: PropTypes.oneOf(
 		[
+			"addCircle", 
 			"autoAwesomeMosaic", 
 			"autoAwesomeMotion", 
 			"cancel", 

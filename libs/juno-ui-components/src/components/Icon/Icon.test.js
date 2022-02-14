@@ -58,6 +58,12 @@ describe("Icon", () => {
   
   // Test individual icons:
   
+  test("renders an addCircle icon", async () => {
+    render(<Icon icon="addCircle" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "add")
+  })
+  
   test("renders a autoAwesomeMosaic icon", async () => {
     render(<Icon icon="autoAwesomeMosaic" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
