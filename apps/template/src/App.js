@@ -2,7 +2,7 @@ import React from "react"
 
 import { exampleFetch as fetchStuff } from "./actions"
 
-import { AppBody, AppIntro, Button, ContentArea, ContentAreaToolbar, ContentContainer, MainContainer, Message, PageHeader, Spinner } from "juno-ui-components"
+import { AppBody, AppIntro, Button, ContentArea, ContentAreaToolbar, ContentContainer, MainContainer, Message, PageFooter, PageHeader, Spinner } from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
 /* Replace this with your app's name */
 const URL_STATE_KEY = "template"
@@ -65,15 +65,23 @@ const App = (props) => {
 
   return (
     <AppBody>
-      {!embedded && <PageHeader heading="App Template" />}
+      <PageHeader heading="App Template" />
+
+      {/* Wrap everything except page header and footer in a main container */}
       <MainContainer>
+        {/* Exchange image with app specific image (save in src/img/). If you don't have a background graphic for your app just remove the whole className prop */}
         <ContentContainer className="bg-[url('img/app_bg.svg')]">
+
+          {/* App intro text */}
           <AppIntro>
             Intro text here. Explain what this app is in a short lead text.
             Lorem ipsum dolor sit amet. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet.
           </AppIntro>
 
+          {/* Content Area. This is the place to add the app's main content */}
           <ContentArea heading="App Template">
+
+            {/* Add a toolbar if you have action buttons or search/filter functionality that affects the whole page */}
             <ContentAreaToolbar>
               <Button>Action</Button>
             </ContentAreaToolbar>
@@ -100,8 +108,12 @@ const App = (props) => {
             <div>Content goes here</div>
 
           </ContentArea>
+
         </ContentContainer>
       </MainContainer>
+      
+      <PageFooter />
+
     </AppBody>
   )
 }
