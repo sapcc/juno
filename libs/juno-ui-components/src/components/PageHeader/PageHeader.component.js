@@ -24,7 +24,7 @@ const headingStyles = `
 `
 
 /**
- * The page header component renders a header at the top of the website.
+ * The page header component renders a header at the top of the website. Place as first child of AppBody.
  */
 export const PageHeader = ({
   heading,
