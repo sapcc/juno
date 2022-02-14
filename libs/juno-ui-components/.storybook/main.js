@@ -30,7 +30,7 @@ module.exports = {
     fileLoaderRule.exclude = /\.svg$/;  
 
     config.module.rules.push({
-      test: /\.svg$/,
+      test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
       enforce: 'pre',
       issuer: /\.jsx?$/,
       loader: require.resolve('@svgr/webpack'),
@@ -43,10 +43,13 @@ module.exports = {
     config.module.rules.push({
       test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
       issuer: /\.s?css$/,
-      loader: 'url-loader',
-      options: {
-        svgo: false
-      }
+      type: 'asset',
+    })
+
+    // other images
+    config.module.rules.push({
+      test: /\.(png|jpg)$/i,
+      type: 'asset',
     })
 
     config.module.rules.push({
