@@ -83,7 +83,7 @@ const App = (props) => {
 
             {/* Add a toolbar if you have action buttons or search/filter functionality that affects the whole page */}
             <ContentAreaToolbar>
-              <Button>Action</Button>
+              <Button icon="addCircle">Add Action</Button>
             </ContentAreaToolbar>
             
             {/* Messages always at the top of the content area */}
