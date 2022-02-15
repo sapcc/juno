@@ -6,16 +6,13 @@ const toolbarStyles = `
   bg-theme-content-area-toolbar-bg
   py-3
   px-6
-  absolute
-  top-0
-  inset-x-0
   flex
   items-center
   justify-end
 `
 
 /**
- * This is the main toolbar of the content area. Add main actions, search bar, filters for the current page here.
+ * This is the main toolbar of the content area. Add main actions for the current page here.
  */
 export const ContentAreaToolbar = ({
   className,
