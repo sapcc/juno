@@ -2,8 +2,9 @@ import React from "react"
 
 import { exampleFetch as fetchStuff } from "./actions"
 
-import { AppBody, AppIntro, Button, ContentArea, ContentAreaToolbar, ContentContainer, MainContainer, Message, PageFooter, PageHeader, Spinner } from "juno-ui-components"
+import { AppBody, AppIntro, Button, ContentArea, ContentAreaHeading, ContentAreaToolbar, ContentAreaWrapper, ContentContainer, MainContainer, Message, PageFooter, PageHeader, Spinner } from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
+import ContentAreaHeadingStories from "../../../libs/juno-ui-components/src/components/ContentAreaHeading/ContentAreaHeading.stories"
 /* Replace this with your app's name */
 const URL_STATE_KEY = "template"
 
@@ -78,22 +79,22 @@ const App = (props) => {
             Lorem ipsum dolor sit amet. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet.
           </AppIntro>
 
-          {/* Content Area. This is the place to add the app's main content
-              --> Be sure to set a proper heading for the displayed content <--
-          */}
-          <ContentArea heading="App Template Title">
+          <ContentAreaHeading heading="App Template Page Title" />
 
-            {/* Add a toolbar if you have action buttons or search/filter functionality that affects the whole page */}
+          {/* This wrapper goes around the content area and content area toolbar */}
+          <ContentAreaWrapper>
+
+            {/* Add a toolbar if you have action buttons that affect the whole page */}
             <ContentAreaToolbar>
               <Button icon="addCircle">Add Action</Button>
             </ContentAreaToolbar>
+
             
-            {/* Messages always at the top of the content area */}
-            <div className="juno-message-container mb-8">
+            {/* Content Area. This is the place to add the app's main content */}
+            <ContentArea className="mt-0">
+              
+              {/* Messages always at the top of the content area */}
               <Message>Welcome to the example app</Message>
-              {processing && (
-                <Spinner variant="primary" />
-              )}
               {error && (
                 <Message variant="danger">
                   {error}
@@ -104,12 +105,24 @@ const App = (props) => {
                   )}
                 </Message>
               )}
-            </div>
-
-            {/* CONTENT GOES HERE */}
-            <div>Content goes here</div>
-
-          </ContentArea>
+  
+              {/* Loading indicator for page content */}
+              {processing && (
+                <Spinner variant="primary" />
+              )}
+  
+              {/* 
+                *
+                *
+                * CONTENT GOES HERE 
+                * 
+                * 
+                * 
+                * */}
+              Content goes here
+  
+            </ContentArea>
+          </ContentAreaWrapper>
 
         </ContentContainer>
       </MainContainer>
