@@ -7,8 +7,6 @@ const basePageFooter = `
   relative
   bg-theme-background-lvl-1
   min-h-[4rem]
-  sticky
-  bottom-0
   pl-6
   pr-24
   py-5
