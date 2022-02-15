@@ -127,6 +127,8 @@ Icon.propTypes = {
 	),
 	/** By default, Icons will use the `color` of the current context. In order to use a different color just for the icon, a color class can be passed. These typically begin with "text-". */
 	color: PropTypes.string,
+	/** Class name to add to the icon. Will be added to the svg element. */
+	className: PropTypes.string,
 	/** The size of the icon */
 	size: PropTypes.string,
 	/** The title of the icon. Important for accessibility, will also show as a tooltip: */
@@ -136,6 +138,7 @@ Icon.propTypes = {
 Icon.defaultProps = {
 	icon: null,
 	color: "",
+	className: "",
 	size: "24",
 	title: "",
 }
