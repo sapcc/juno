@@ -23,11 +23,6 @@ describe("ContentArea", () => {
     expect(screen.getByTestId("content-area")).toHaveClass("grow")
   })
 
-  test("renders a content area with heading", async () => {
-    const { getByText } = render(<ContentArea data-testid="content-area" heading="My super heading" />)
-    expect(getByText(/My super heading/i)).toBeInTheDocument();
-  })
-
   test("renders children as passed", async () => {
     render(
       <ContentArea data-testid="content-area">
