@@ -35,7 +35,8 @@ module.exports = {
       issuer: /\.jsx?$/,
       loader: require.resolve('@svgr/webpack'),
       options: {
-        svgo: false
+        svgo: false, 
+        titleProp: true
       }
     })
 

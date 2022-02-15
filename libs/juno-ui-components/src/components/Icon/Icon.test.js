@@ -190,6 +190,12 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toHaveAttribute("alt", "warning")
   })
   
+  test("renders a custom title", async () => {
+    render(<Icon title="My custom title" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("title", "My custom title")
+  })
+  
   // Test all props:
   
   test("renders all props as passed", async () => {
