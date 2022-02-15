@@ -65,7 +65,7 @@ const App = (props) => {
 
   return (
     <AppBody>
-      <PageHeader heading="App Template" />
+      <PageHeader heading="Converged Cloud | App Template" />
 
       {/* Wrap everything except page header and footer in a main container */}
       <MainContainer>
@@ -78,8 +78,10 @@ const App = (props) => {
             Lorem ipsum dolor sit amet. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet.
           </AppIntro>
 
-          {/* Content Area. This is the place to add the app's main content */}
-          <ContentArea heading="App Template">
+          {/* Content Area. This is the place to add the app's main content
+              --> Be sure to set a proper heading for the displayed content <--
+          */}
+          <ContentArea heading="App Template Title">
 
             {/* Add a toolbar if you have action buttons or search/filter functionality that affects the whole page */}
             <ContentAreaToolbar>
