@@ -3,7 +3,12 @@ import PropTypes from "prop-types"
 import { Label } from "../Label/index.js"
 
 const radiogroupstyles = `
-	mb-5
+	mb-4
+`
+
+const radiogrouplabelstyles = `
+	inline-block
+	mb-2
 `
 
 export const RadioGroup = ({
@@ -53,7 +58,7 @@ export const RadioGroup = ({
 	
 	return (
 		<div role="radiogroup" className={`juno-radiogroup ${radiogroupstyles} ${className}`} onChange={namedChildren} {...props} >
-			{ label ? <Label text={label} htmlFor={name} required={required} /> : "" }
+			{ label ? <Label text={label} htmlFor={name} className={`${radiogrouplabelstyles}`} required={required} /> : "" }
 			{ namedChildren() }
 		</div>
 	)

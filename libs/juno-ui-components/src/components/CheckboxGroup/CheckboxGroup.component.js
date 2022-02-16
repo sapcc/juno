@@ -3,7 +3,12 @@ import PropTypes from "prop-types"
 import { Label } from "../Label/index.js"
 
 const checkboxgroupstyles = `
-	mb-5
+	mb-4
+`
+
+const checkboxgrouplabelstyles = `
+	inline-block
+	mb-2
 `
 
 export const CheckboxGroup = ({
@@ -51,7 +56,7 @@ export const CheckboxGroup = ({
 	
 	return (
 		<div role="group" className={`juno-checkbox-group ${checkboxgroupstyles} ${className}`} {...props} >
-			{ label ? <Label text={label} htmlFor={name} required={required} /> : "" }
+			{ label ? <Label text={label} htmlFor={name} required={required} className={`${checkboxgrouplabelstyles}`}/> : "" }
 			{ namedChildren() }
 		</div>
 	)

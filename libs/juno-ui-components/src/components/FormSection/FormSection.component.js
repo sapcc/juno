@@ -3,12 +3,13 @@ import PropTypes from "prop-types"
 
 
 const formSection = `
+	mb-4
 `
 
 const formSectionHeading = `
 	text-lg
 	font-bold
-	mb-3
+	mb-4
 `
 
 /** A Form section to group form groups with an optional title. */
