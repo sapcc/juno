@@ -1,7 +1,6 @@
 import React from "react"
 
 import { ContentAreaToolbar } from "./index.js"
-import { ContentArea } from "../ContentArea/index.js"
 import { Button } from "../Button/index.js"
 
 export default {
@@ -11,7 +10,7 @@ export default {
 }
 
 const Template = (args) => (
-  <ContentArea><ContentAreaToolbar {...args}><Button>Main Action</Button></ContentAreaToolbar>This is the content area</ContentArea>
+  <ContentAreaToolbar {...args}><Button>Main Action</Button></ContentAreaToolbar>
 )
 
 export const Basic = Template.bind({})
@@ -25,14 +24,3 @@ Basic.parameters = {
 }
 Basic.args = {}
 
-export const WithHeading = Template.bind({})
-WithHeading.parameters = {
-  docs: {
-    description: {
-      story: "Content Area with Heading.",
-    },
-  },
-}
-WithHeading.args = {
-  heading: "My Content Heading",
-}

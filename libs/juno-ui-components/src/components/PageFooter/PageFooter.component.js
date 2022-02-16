@@ -1,28 +1,25 @@
 import React from "react"
 import PropTypes from "prop-types"
+import CCloudShape from "../../img/ccloud_shape.svg"
 
 const basePageFooter = `
   flex
+  relative
   bg-theme-background-lvl-1
-  bg-[url('img/ccloud_shape.svg')]
-  bg-right-bottom
-  bg-no-repeat
   min-h-[4rem]
-  sticky
-  bottom-0
-  px-6
+  pl-6
+  pr-24
   py-5
   z-50
 `
 
 const logoStyles = `
-  h-6
+  h-[3.25rem]
+  absolute
+  right-0
+  bottom-0
 `
 
-const headingStyles = `
-  uppercase
-  text-white
-`
 
 /**
  * The page footer component renders a footer at the bottom of the website. Place as last child of AppBody.
@@ -35,6 +32,7 @@ export const PageFooter = ({ className, children, ...props }) => {
       {...props}
     >
       {children}
+      <CCloudShape className={logoStyles} alt="cloud shape" />
     </div>
   )
 }

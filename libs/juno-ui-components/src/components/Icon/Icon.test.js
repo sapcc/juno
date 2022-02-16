@@ -58,6 +58,12 @@ describe("Icon", () => {
   
   // Test individual icons:
   
+  test("renders an addCircle icon", async () => {
+    render(<Icon icon="addCircle" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "add")
+  })
+  
   test("renders a autoAwesomeMosaic icon", async () => {
     render(<Icon icon="autoAwesomeMosaic" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
@@ -182,6 +188,12 @@ describe("Icon", () => {
     render(<Icon icon="warning" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "warning")
+  })
+  
+  test("renders a custom title", async () => {
+    render(<Icon title="My custom title" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("title", "My custom title")
   })
   
   // Test all props:

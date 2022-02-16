@@ -20,16 +20,3 @@ Basic.parameters = {
   },
 }
 Basic.args = {}
-
-export const WithHeading = Template.bind({})
-WithHeading.parameters = {
-  docs: {
-    description: {
-      story:
-        "Content Area with Heading.",
-    },
-  },
-}
-WithHeading.args = {
-  heading: "My Content Heading"
-}

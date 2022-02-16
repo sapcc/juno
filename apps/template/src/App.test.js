@@ -4,6 +4,6 @@ import App from "./App"
 
 test("renders app", () => {
   render(<App />)
-  const loginTitle = screen.getAllByText(/Template/i)
+  const loginTitle = screen.getAllByText(/Converged Cloud/i)
   expect(loginTitle.length > 0).toBe(true)
 })

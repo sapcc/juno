@@ -7,6 +7,7 @@ const message = `
 	sm:pr-4
 	text-theme-high
 	flex
+	mb-8
 	rounded-l
 	leading-5
 	overflow-hidden

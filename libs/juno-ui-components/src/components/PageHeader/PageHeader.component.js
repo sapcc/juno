@@ -19,8 +19,8 @@ const logoStyles = `
 `
 
 const headingStyles = `
-  uppercase
-  text-white
+  text-lg
+  text-theme-high
 `
 
 /**
