@@ -51,6 +51,7 @@
     "production": "PORT=$APP_PORT webpack serve --mode production"
   },
   "dependencies": {
+    "@peculiar/x509": "^1.6.1",
     "custom-event-polyfill": "^1.0.7",
     "luxon": "^2.3.0",
     "prop-types": "^15.8.1",

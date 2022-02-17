@@ -22,6 +22,7 @@ import {
   QueryClientProvider,
 } from "react-query"
 import Certificates from "./components/Certificates"
+import NewCertificate from "./components/NewCertificate"
 
 /* Replace this with your app's name */
 const URL_STATE_KEY = "volta"
@@ -122,6 +123,7 @@ const App = (props) => {
               </div>
 
               {/* CONTENT GOES HERE */}
+              <NewCertificate show={true} />
               <Certificates />
             </ContentArea>
           </ContentContainer>

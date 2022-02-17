@@ -2699,6 +2699,153 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@peculiar/asn1-cms@npm:^2.0.44":
+  version: 2.0.44
+  resolution: "@peculiar/asn1-cms@npm:2.0.44"
+  dependencies:
+    "@peculiar/asn1-schema": ^2.0.44
+    "@peculiar/asn1-x509": ^2.0.44
+    "@peculiar/asn1-x509-attr": ^2.0.44
+    asn1js: ^2.1.1
+    tslib: ^2.3.0
+  checksum: 8fea977d41597270a9c787aea94e35286e408cd2de38f5e39ef11db0f89983ac3e09ffe45ed6661181ac479cb8f6e18fd0af290ce39453006bd84facc6dfce96
+  languageName: node
+  linkType: hard
+
+"@peculiar/asn1-csr@npm:^2.0.44":
+  version: 2.0.44
+  resolution: "@peculiar/asn1-csr@npm:2.0.44"
+  dependencies:
+    "@peculiar/asn1-schema": ^2.0.44
+    "@peculiar/asn1-x509": ^2.0.44
+    asn1js: ^2.1.1
+    tslib: ^2.3.0
+  checksum: eb6c6846f97ca6b189f93f2ce724bc9aa8c7b160b3ec4c18321670a78488ea08822b46d939d0109f57ab2b426a7a79171ab7ef36ac8ec9a741f3b27c359bd9bc
+  languageName: node
+  linkType: hard
+
+"@peculiar/asn1-ecc@npm:^2.0.44":
+  version: 2.0.44
+  resolution: "@peculiar/asn1-ecc@npm:2.0.44"
+  dependencies:
+    "@peculiar/asn1-schema": ^2.0.44
+    "@peculiar/asn1-x509": ^2.0.44
+    asn1js: ^2.1.1
+    tslib: ^2.3.0
+  checksum: aeec3dba3877cb6fdb7cf43add6669b6d90dd916716d498d93db819c67287c4207dcb70a18404a1313c537e069c78310745882a770d24e5d8270713224293a17
+  languageName: node
+  linkType: hard
+
+"@peculiar/asn1-pfx@npm:^2.0.44":
+  version: 2.0.44
+  resolution: "@peculiar/asn1-pfx@npm:2.0.44"
+  dependencies:
+    "@peculiar/asn1-cms": ^2.0.44
+    "@peculiar/asn1-pkcs8": ^2.0.44
+    "@peculiar/asn1-rsa": ^2.0.44
+    "@peculiar/asn1-schema": ^2.0.44
+    asn1js: ^2.1.1
+    tslib: ^2.3.0
+  checksum: 405323031dfa20c3baefecabbbaa8c875f92015fd1ec6010e12f16647c31702cce40d794b80a524d924ba12ad8246c409450ec8cd753d73413ad38fd0f3b850e
+  languageName: node
+  linkType: hard
+
+"@peculiar/asn1-pkcs8@npm:^2.0.44":
+  version: 2.0.44
+  resolution: "@peculiar/asn1-pkcs8@npm:2.0.44"
+  dependencies:
+    "@peculiar/asn1-schema": ^2.0.44
+    "@peculiar/asn1-x509": ^2.0.44
+    asn1js: ^2.1.1
+    tslib: ^2.3.0
+  checksum: 17c1e0f966df978b95b85d21abaee71028ac4c6de362acb54a604f10862b5de5d17a020a951a5aa7ebd887a858515ed932ffe9756547991f27ad7eebd4453836
+  languageName: node
+  linkType: hard
+
+"@peculiar/asn1-pkcs9@npm:^2.0.44":
+  version: 2.0.44
+  resolution: "@peculiar/asn1-pkcs9@npm:2.0.44"
+  dependencies:
+    "@peculiar/asn1-cms": ^2.0.44
+    "@peculiar/asn1-pfx": ^2.0.44
+    "@peculiar/asn1-pkcs8": ^2.0.44
+    "@peculiar/asn1-schema": ^2.0.44
+    "@peculiar/asn1-x509": ^2.0.44
+    "@peculiar/asn1-x509-attr": ^2.0.44
+    asn1js: ^2.1.1
+    tslib: ^2.3.0
+  checksum: aa4ed87cbb905bfe3b25e4de01c21b75b13bd208a8a942acceda95a5e95e5e46e2d51ba693445c23e3730f3e640828e250ebcdfa9b15274c44ba1f682b0bc768
+  languageName: node
+  linkType: hard
+
+"@peculiar/asn1-rsa@npm:^2.0.44":
+  version: 2.0.44
+  resolution: "@peculiar/asn1-rsa@npm:2.0.44"
+  dependencies:
+    "@peculiar/asn1-schema": ^2.0.44
+    "@peculiar/asn1-x509": ^2.0.44
+    asn1js: ^2.1.1
+    tslib: ^2.3.0
+  checksum: 844188c25ea184a3cfb27d982ce0c81655fa9d94e707e65cf1191d2c04046b0216e9ac0247b54a9d62990de9ba5d0b7192c9cb102ac7350372a86b6fd334ac53
+  languageName: node
+  linkType: hard
+
+"@peculiar/asn1-schema@npm:^2.0.44":
+  version: 2.0.44
+  resolution: "@peculiar/asn1-schema@npm:2.0.44"
+  dependencies:
+    "@types/asn1js": ^2.0.2
+    asn1js: ^2.1.1
+    pvtsutils: ^1.2.1
+    tslib: ^2.3.0
+  checksum: e069481cf31701f23a8bdc5018303d27d7da2917741d52ddbce89ae03ea9d41a543dd154201fffabbab8050bda8e7339738368431b6ce40a2dbd9ddf709c6a6c
+  languageName: node
+  linkType: hard
+
+"@peculiar/asn1-x509-attr@npm:^2.0.44":
+  version: 2.0.44
+  resolution: "@peculiar/asn1-x509-attr@npm:2.0.44"
+  dependencies:
+    "@peculiar/asn1-schema": ^2.0.44
+    "@peculiar/asn1-x509": ^2.0.44
+    asn1js: ^2.1.1
+    tslib: ^2.3.0
+  checksum: 7e3b62ea252f1f9a55624297e2d39ffb436b4cb01fd2605a976aec6ef5a74ed793aa5998d1d723e0b8a4dd4b2e9bf3c567f0b93836135e374edc64f80ecfe298
+  languageName: node
+  linkType: hard
+
+"@peculiar/asn1-x509@npm:^2.0.44":
+  version: 2.0.44
+  resolution: "@peculiar/asn1-x509@npm:2.0.44"
+  dependencies:
+    "@peculiar/asn1-schema": ^2.0.44
+    asn1js: ^2.1.1
+    ipaddr.js: ^2.0.1
+    pvtsutils: ^1.2.1
+    tslib: ^2.3.0
+  checksum: 6b9768551e5faf2b6613212cc80c026487701c1267e52b0cbb037e74d23ff9f65265a731dc637accac0c71c90794b65786d9270d122b3c682104b6293d43cf26
+  languageName: node
+  linkType: hard
+
+"@peculiar/x509@npm:^1.6.1":
+  version: 1.6.1
+  resolution: "@peculiar/x509@npm:1.6.1"
+  dependencies:
+    "@peculiar/asn1-cms": ^2.0.44
+    "@peculiar/asn1-csr": ^2.0.44
+    "@peculiar/asn1-ecc": ^2.0.44
+    "@peculiar/asn1-pkcs9": ^2.0.44
+    "@peculiar/asn1-rsa": ^2.0.44
+    "@peculiar/asn1-schema": ^2.0.44
+    "@peculiar/asn1-x509": ^2.0.44
+    pvtsutils: ^1.2.1
+    reflect-metadata: ^0.1.13
+    tslib: ^2.3.1
+    tsyringe: ^4.6.0
+  checksum: 6165a154a316d7457157ed9dc45853c11eae6e5aa0967ae3ea2e1e8962ee106022db17a6d8747b722878a423a470390e3def0d8040133c488071e0bc6901a585
+  languageName: node
+  linkType: hard
+
 "@pmmmwh/react-refresh-webpack-plugin@npm:^0.5.1":
   version: 0.5.4
   resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.4"
@@ -4854,6 +5001,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/asn1js@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@types/asn1js@npm:2.0.2"
+  checksum: 4079eca4c0916a0cea6bf490fec3bb5d64cd54e99efc0b32dfb1f6636712d47045042b9cd503afd2c0251e1095578dbb7f8d246a088fa1598fdb00ab4c05614f
+  languageName: node
+  linkType: hard
+
 "@types/babel__core@npm:^7.0.0, @types/babel__core@npm:^7.1.14":
   version: 7.1.18
   resolution: "@types/babel__core@npm:7.1.18"
@@ -6536,6 +6690,15 @@ __metadata:
   dependencies:
     safer-buffer: ~2.1.0
   checksum: 39f2ae343b03c15ad4f238ba561e626602a3de8d94ae536c46a4a93e69578826305366dc09fbb9b56aec39b4982a463682f259c38e59f6fa380cd72cd61e493d
+  languageName: node
+  linkType: hard
+
+"asn1js@npm:^2.1.1":
+  version: 2.2.0
+  resolution: "asn1js@npm:2.2.0"
+  dependencies:
+    pvutils: latest
+  checksum: 936e233b7453d7e9805c1637f02da7145d73d5158105710f9bc79efaf51aa935a8bce87b0efed59da4c32fc304bfe28eb22fad1e1bf2f926478e110c6f3da240
   languageName: node
   linkType: hard
 
@@ -18203,6 +18366,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pvtsutils@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "pvtsutils@npm:1.2.1"
+  dependencies:
+    tslib: ^2.3.1
+  checksum: 7930149a50f8eb5b9685aa06d0fdffb32a9fa82de964441c5ff26bad02266cf1139e611fcf1d002083e8048572d396ed6e86c5a10d66468582c8183585db40d1
+  languageName: node
+  linkType: hard
+
+"pvutils@npm:latest":
+  version: 1.0.17
+  resolution: "pvutils@npm:1.0.17"
+  checksum: 370cc6c7ed2cddeb97e85339f4cac06cc07e3195774b0b8707a7994db0acd73451745cc57209a2bc6d4138b9b14d5ab0335e3614743a91010a74db597428dfe8
+  languageName: node
+  linkType: hard
+
 "qlobber@npm:^5.0.0":
   version: 5.0.3
   resolution: "qlobber@npm:5.0.3"
@@ -18838,6 +19017,13 @@ __metadata:
     indent-string: ^4.0.0
     strip-indent: ^3.0.0
   checksum: fa1ef20404a2d399235e83cc80bd55a956642e37dd197b4b612ba7327bf87fa32745aeb4a1634b2bab25467164ab4ed9c15be2c307923dd08b0fe7c52431ae6b
+  languageName: node
+  linkType: hard
+
+"reflect-metadata@npm:^0.1.13":
+  version: 0.1.13
+  resolution: "reflect-metadata@npm:0.1.13"
+  checksum: 798d379a7b6f6455501145419505c97dd11cbc23857a386add2b9ef15963ccf15a48d9d15507afe01d4cd74116df8a213247200bac00320bd7c11ddeaa5e8fb4
   languageName: node
   linkType: hard
 
@@ -21597,14 +21783,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.10.0":
+"tslib@npm:^1.10.0, tslib@npm:^1.9.3":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:~2.3.0":
+"tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.0.3, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.3.1, tslib@npm:~2.3.0":
   version: 2.3.1
   resolution: "tslib@npm:2.3.1"
   checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
@@ -21629,6 +21815,15 @@ __metadata:
   version: 2.2.0
   resolution: "tslib@npm:2.2.0"
   checksum: a48c9639f7496fa701ea8ffe0561070fcb44c104a59632f7f845c0af00825c99b6373575ec59b2b5cdbfd7505875086dbe5dc83312304d8979f22ce571218ca3
+  languageName: node
+  linkType: hard
+
+"tsyringe@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "tsyringe@npm:4.6.0"
+  dependencies:
+    tslib: ^1.9.3
+  checksum: e7c68e032dc07d6271a3709847063486aaa6186306698cbbb62d990320b21328a0b19b34f4c381c71c94aab6e0693a1a60cf2baafd20124a07f4a3d607c29e15
   languageName: node
   linkType: hard
 
@@ -22397,6 +22592,7 @@ __metadata:
     "@babel/core": ^7.17.0
     "@babel/preset-env": ^7.16.11
     "@babel/preset-react": ^7.16.7
+    "@peculiar/x509": ^1.6.1
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.1
     "@svgr/webpack": ^6.2.1
     "@testing-library/dom": ^8.11.3

@@ -1,6 +1,6 @@
 import React from "react"
 import { useQuery, useMutation, useQueryClient, QueryClient } from "react-query"
-import { certificates, hermes } from "../actions"
+import { certificates, hermes, kubernikus } from "../actions"
 
 const Certificates = ({ certs }) => {
   // Access the client
