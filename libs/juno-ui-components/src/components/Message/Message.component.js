@@ -8,7 +8,7 @@ const message = `
 	text-theme-high
 	flex
 	mb-8
-	rounded-l
+	rounded
 	leading-5
 	overflow-hidden
 	items-center

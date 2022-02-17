@@ -6,6 +6,7 @@ import { Label } from "../Label/index.js"
 const radiorow = `
 	flex
 	flex-row
+  mb-1
 `
 
 const radiocontainerstyles = `

@@ -6,7 +6,7 @@ import { Label } from "../Label/index.js"
 const switchrow = `
 	flex
 	flex-row
-	mb-5
+	mb-1
 `
 
 const switchcontainerstyles = `

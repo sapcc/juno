@@ -6,6 +6,7 @@ import { Label } from "../Label/index.js"
 const checkboxrow = `
 	flex
 	flex-row
+  mb-1
 `
 
 const checkboxcontainerstyles = `
