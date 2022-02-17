@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 const introStyles = `
   pt-16
   pb-14
-  text-2xl
+  text-xl
   pr-[45%]
 `
 
