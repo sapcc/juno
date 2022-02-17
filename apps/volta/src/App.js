@@ -1,11 +1,12 @@
 import React from "react"
-import { exampleFetch } from "./actions"
 import {
   AppBody,
   AppIntro,
   Button,
   ContentArea,
+  ContentAreaHeading,
   ContentAreaToolbar,
+  ContentAreaWrapper,
   ContentContainer,
   MainContainer,
   Message,
@@ -13,6 +14,8 @@ import {
   PageHeader,
   Spinner,
 } from "juno-ui-components"
+import ContentAreaHeadingStories from "../../../libs/juno-ui-components/src/components/ContentAreaHeading/ContentAreaHeading.stories"
+
 import { currentState, push } from "url-state-provider"
 import {
   useQuery,
@@ -95,23 +98,17 @@ const App = (props) => {
           <ContentContainer className="bg-[url('img/app_bg.svg')]">
             {/* App intro text */}
             <AppIntro>
-              Intro text here. Explain what this app is in a short lead text.
-              Lorem ipsum dolor sit amet. At vero eos et accusam et justo duo
-              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est. Lorem ipsum dolor sit amet.
+              Volta UI manages your SSO certificates stored in a Vault instance.
             </AppIntro>
 
-            {/* Content Area. This is the place to add the app's main content */}
-            <ContentArea heading="SSO Certificates">
-              {/* Add a toolbar if you have action buttons or search/filter functionality that affects the whole page */}
+            <ContentAreaHeading heading="SSO Certificates" />
+            <ContentAreaWrapper>
               <ContentAreaToolbar>
-                <Button>Action</Button>
+                <Button icon="addCircle">Add SSO Cert</Button>
               </ContentAreaToolbar>
 
-              {/* Messages always at the top of the content area */}
-              <div className="juno-message-container mb-8">
+              <ContentArea className="mt-0">
                 <Message>Welcome to the example app</Message>
-                {processing && <Spinner variant="primary" />}
                 {error && (
                   <Message variant="danger">
                     {error}
@@ -120,12 +117,11 @@ const App = (props) => {
                     )}
                   </Message>
                 )}
-              </div>
-
-              {/* CONTENT GOES HERE */}
-              <NewCertificate show={true} />
-              <Certificates />
-            </ContentArea>
+                {processing && <Spinner variant="primary" />}
+                <NewCertificate show={true} />
+                <Certificates />
+              </ContentArea>
+            </ContentAreaWrapper>
           </ContentContainer>
         </MainContainer>
 
