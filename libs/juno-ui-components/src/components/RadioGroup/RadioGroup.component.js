@@ -4,6 +4,7 @@ import { Label } from "../Label/index.js"
 
 const radiogroupstyles = `
 	mb-4
+	last:mb-0
 `
 
 const radiogrouplabelstyles = `

@@ -3,7 +3,8 @@ import PropTypes from "prop-types"
 
 
 const formSection = `
-	mb-4
+	mb-8
+	last:mb-0
 `
 
 const formSectionHeading = `
