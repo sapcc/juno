@@ -6,7 +6,7 @@ import { Label } from "../Label/index.js"
 const selectrow = `
 	flex
 	flex-col
-	mb-5
+	mb-2
 `
 
 const helptextstyles = `

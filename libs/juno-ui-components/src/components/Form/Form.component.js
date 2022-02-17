@@ -1,6 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+const formStyles = `
+	mb-8
+`
+
 const formHeading = `
 	text-2xl
 	font-bold
@@ -16,7 +20,7 @@ export const Form = ({
 }) => {
 	return (
 		<form 
-			className={`juno-form ${className}`}
+			className={`juno-form ${formStyles} ${className}`}
 			{...props}
 		>
 			{title ?  <h1 className={`juno-form-heading ${formHeading}`}>{title}</h1> : ""}

@@ -6,11 +6,12 @@ import { Label } from "../Label/index.js"
 const stackedcontainerstyles = `
 	flex
 	flex-col
+  mb-2
 `
 
 const floatingcontainerstyles = `
 	relative
-	mb-5
+	mb-2
 `
 
 const stackedlabelcontainerstyles = `
