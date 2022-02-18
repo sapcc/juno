@@ -30,15 +30,21 @@ export const generateKeys = (algorithm) => {
   return crypto.subtle.generateKey(algorithm, true, ["sign", "verify"])
 }
 
-export const pemEncodePrivateKey = (keys) => {
-  return crypto.subtle.exportKey("pkcs8", keys.privateKey).then((pkcs8) => {
+// Export a key and return an exported-key space.
+export const pemEncodeKey = (key) => {
+  // set the format
+  // KeyFormat = "jwk" | "pkcs8" | "raw" | "spki";
+  let KeyFormat = "raw"
+  if (key.type === "public") KeyFormat = "spki"
+  else if (key.type === "private") KeyFormat = "pkcs8"
+
+  // export crypto key
+  return crypto.subtle.exportKey(KeyFormat, key).then((exportedKey) => {
     return new Promise((handleSuccess, handleError) => {
       try {
-        const pemExported = exportCryptoKey(pkcs8)
-        console.log("pemExported: ", pemExported)
+        const pemExported = abToBase64String(exportedKey, key.type)
         handleSuccess(pemExported)
       } catch (error) {
-        console.log("error: ", error)
         handleError(error)
       }
     })
@@ -46,7 +52,7 @@ export const pemEncodePrivateKey = (keys) => {
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/exportKey
-const exportCryptoKey = (keyBuffer) => {5
+const abToBase64String = (keyBuffer, keyType) => {
   // Convert  an ArrayBuffer into a string
   // from https://developers.google.com/web/updates/2012/06/How-to-convert-ArrayBuffer-to-and-from-String
   const exportedAsString = String.fromCharCode.apply(
@@ -54,7 +60,13 @@ const exportCryptoKey = (keyBuffer) => {5
     new Uint8Array(keyBuffer)
   )
   const exportedAsBase64 = window.btoa(exportedAsString)
-  return `-----BEGIN PRIVATE KEY-----\n${exportedAsBase64}\n-----END PRIVATE KEY-----`
+  if (keyType == "public") {
+    return `-----BEGIN PUBLIC KEY-----\n${exportedAsBase64}\n-----END PUBLIC KEY-----`
+  } else if (keyType == "private") {
+    return `-----BEGIN PRIVATE KEY-----\n${exportedAsBase64}\n-----END PRIVATE KEY-----`
+  } else {
+    return `-----KEY TYPE NOT KNOWN-----\n${exportedAsBase64}\n-----KEY TYPE NOT KNOWN-----`
+  }
 }
 
 export const getAlgorithm = (keyAlgorithm) => {
