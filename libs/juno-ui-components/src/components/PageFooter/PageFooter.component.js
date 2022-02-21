@@ -6,7 +6,7 @@ const basePageFooter = `
   flex
   relative
   bg-theme-background-lvl-1
-  min-h-[4rem]
+  min-h-[3.25rem]
   pl-6
   pr-24
   py-5
@@ -14,7 +14,7 @@ const basePageFooter = `
 `
 
 const logoStyles = `
-  h-[3.25rem]
+  h-[2.625rem]
   absolute
   right-0
   bottom-0
