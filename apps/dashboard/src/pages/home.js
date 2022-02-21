@@ -40,7 +40,7 @@ const Home = () => {
       </div>
       <div className="bg-top bg-no-repeat mt-8 pb-12 grow" style={{ backgroundImage: `url('${backgroundTop}')` }}>
         <div className="max-w-[1280px] mx-auto">
-          <WorldMap className="worldmap w-4/5 h-auto mx-auto" onClick={handleWorldMapClick} data-selected-region={selectedRegion} />
+          <WorldMap className="worldmap w-[90%] h-auto mx-auto" onClick={handleWorldMapClick} data-selected-region={selectedRegion} />
         </div>
       </div>
     </div>
