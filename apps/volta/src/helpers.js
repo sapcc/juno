@@ -14,9 +14,10 @@ export const generateCsr = (algorithm, keys) => {
   // Certificate extensions
   return x509.SubjectKeyIdentifierExtension.create(keys.publicKey).then(
     (extension) => {
+      console.log("extension: ", extension)
       extensions.push(extension)
       return x509.Pkcs10CertificateRequestGenerator.create({
-        name: "CN=Test",
+        name: "CN=Test, E=some@email.net",
         signingAlgorithm: algorithm,
         keys: keys,
         extensions,

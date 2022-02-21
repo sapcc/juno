@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useMemo } from "react"
 import { Button, ContentArea } from "juno-ui-components"
 import {
   getAlgorithm,
@@ -17,20 +17,24 @@ w-full
 break-all
 `
 
+const ALGORITHM_KEY = "RSA-2048"
+
 const NewCertificate = () => {
   const [keys, setKeys] = useState(null)
+  const [pemCsr, setPemCsr] = useState(null)
   const [pemEncodedPublicKey, setPemEncodedPublicKey] = useState(null)
   const [pemEncodedPrivateKey, setPemEncodedPrivateKey] = useState(null)
 
-  const onGenerateClicked = () => {
-    const alg = getAlgorithm("RSA-2048")
-    console.log("alg: ", alg)
+  const algorithm = useMemo(() => getAlgorithm(ALGORITHM_KEY), [ALGORITHM_KEY])
 
-    generateKeys(alg).then((keys) => {
-      // reset obj
-      setPemEncodedPublicKey(null)
-      setPemEncodedPrivateKey(null)
+  const getNewKeys = () => {
+    // reset obj
+    setKeys(null)
+    setPemEncodedPublicKey(null)
+    setPemEncodedPrivateKey(null)
 
+    generateKeys(algorithm).then((keys) => {
+      setKeys(keys)
       pemEncodeKey(keys.publicKey)
         .then((pemKey) => {
           setPemEncodedPublicKey(pemKey)
@@ -49,6 +53,20 @@ const NewCertificate = () => {
     })
   }
 
+  const onGenerateClicked = () => getNewKeys()
+
+  const onGenerateCSRClicked = () => {
+    if (!keys) return
+    setPemCsr(null)
+    generateCsr(algorithm, keys)
+      .then((csr) => {
+        setPemCsr(csr.toString("pem"))
+      })
+      .catch((error) => {
+        console.log("error: ", error)
+      })
+  }
+
   return (
     <>
       <Button label="Generate keys" onClick={onGenerateClicked} />
@@ -60,6 +78,12 @@ const NewCertificate = () => {
       {pemEncodedPrivateKey && (
         <pre className={`volta-codeblock ${preClasses}`}>
           <code className={codeClasses}>{pemEncodedPrivateKey}</code>
+        </pre>
+      )}
+      <Button label="Generate CSR" onClick={onGenerateCSRClicked} />
+      {pemCsr && (
+        <pre className={`volta-codeblock ${preClasses}`}>
+          <code className={codeClasses}>{pemCsr}</code>
         </pre>
       )}
     </>
