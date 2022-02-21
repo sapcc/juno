@@ -22,7 +22,7 @@ const Home = () => {
   }
   
   return (
-    <div>
+    <div className="flex flex-col grow">
       <LoginOverlay />
       <div className="max-w-[1280px] mx-auto pt-8">
         <CCLogo className="-ml-5 mb-4 w-[200px] h-auto" alt="Converged Cloud" />
@@ -32,13 +32,13 @@ const Home = () => {
             SAP's strategic Infrastructure-as-a-Service (IaaS) stack, optimised for SAP solutions, running purely in SAP datacenters.
           </div>
           <div>
-            <Button icon="place" title="Select region/domain" className="whitespace-nowrap" onClick={() => showLoginOverlay()}>
+            <Button icon="place" title="Select region/domain" className="whitespace-nowrap py-1.5 px-3" onClick={() => showLoginOverlay()}>
               Select {selectedRegion ? 'domain' : 'region'}
             </Button>
           </div>
         </Stack>
       </div>
-      <div className="bg-top bg-no-repeat mt-8 pb-12" style={{ backgroundImage: `url('${backgroundTop}')` }}>
+      <div className="bg-top bg-no-repeat mt-8 pb-12 grow" style={{ backgroundImage: `url('${backgroundTop}')` }}>
         <div className="max-w-[1280px] mx-auto">
           <WorldMap className="worldmap w-4/5 h-auto mx-auto" onClick={handleWorldMapClick} data-selected-region={selectedRegion} />
         </div>
