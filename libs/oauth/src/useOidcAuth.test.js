@@ -29,12 +29,4 @@ describe("useOidcAuth", () => {
       const error = result.current.error
     }).toThrow("issuerURL is undefined. Please provide a issuerURL.")
   })
-
-  // it("get jwt from provider", () => {
-  //   const { result } = renderHook(() =>
-  //     useOidcAuth({ clientID: "test", issuerURL: "" })
-  //   )
-
-  //   expect(result.current).toBeDefined()
-  // })
 })

@@ -5,6 +5,8 @@ Web ONLY!!!
 
 The oauth hook implements the "id token" flow of the OIDC specification. The hook expects two parameters "issuerURL" and "clientID". Calling the "login" functions redirects the user to the Open ID Provider and after a successful login, the user ends up back at the last visited URL. Calling the "logout" functions resets the current session.
 
+## Usage
+
 ```js
 import { useOidcAuth } from "oauth"
 
@@ -51,7 +53,13 @@ Executes the id token flow against the issuerURL with the clientID.
 
 ### Returns
 
-- auth, object which contains "id_token", "first_name", "last_name", "full_name", "email" and "expiresAt"
+- auth, object which contains
+  - **id_token**, the bearer token to be used in API calls
+  - **first_name**
+  - **last_name**
+  - **full_name**
+  - **email**
+  - **expiresAt**, milliseconds since Epoch
 - login, function
 - logout, function(resetOIDCSession:bool). If resetOIDCSession is true then the user is redirected to the OIDC logout page
 
