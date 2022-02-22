@@ -21,7 +21,7 @@ const Template = ({ items, ...args }) => (
 
 export const Default = Template.bind({})
 Default.args = {
-	name: "Default ChechboxGroup",
+	name: "Default CheckboxGroup",
 	items: [
 		{ ...CheckboxRowStory.args, value: "val-1" , id: "checkbox-1"},
 		{ ...CheckboxRowStory.args, value: "val-2" , id: "checkbox-2"},
