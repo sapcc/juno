@@ -17,7 +17,7 @@ export const generateCsr = (algorithm, keys) => {
       console.log("extension: ", extension)
       extensions.push(extension)
       return x509.Pkcs10CertificateRequestGenerator.create({
-        name: "CN=Test, E=some@email.net",
+        name: "", //volta will set these values
         signingAlgorithm: algorithm,
         keys: keys,
         extensions,

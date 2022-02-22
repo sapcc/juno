@@ -16,6 +16,7 @@ import {
 } from "juno-ui-components"
 import ContentAreaHeadingStories from "../../../libs/juno-ui-components/src/components/ContentAreaHeading/ContentAreaHeading.stories"
 
+import { useOidcAuth } from "oauth"
 import { currentState, push } from "url-state-provider"
 import {
   useQuery,
@@ -26,6 +27,17 @@ import {
 } from "react-query"
 import Certificates from "./components/Certificates"
 import NewCertificate from "./components/NewCertificate"
+import Messages from "./components/Messages"
+
+const preClasses = `
+whitespace-pre-wrap
+bg-theme-background-lvl-3
+p-4
+`
+const codeClasses = `
+w-full 
+break-all
+`
 
 /* Replace this with your app's name */
 const URL_STATE_KEY = "volta"
@@ -36,6 +48,19 @@ const App = (props) => {
   const [error, setError] = React.useState(null)
   const [statusCode, setStatusCode] = React.useState(null)
   const { embedded } = props
+
+  const { auth, login, logout } = useOidcAuth({
+    issuerURL: "https://accounts400.sap.com/", //"https://ajfc1jphz.accounts.ondemand.com",
+    clientID: "b3b4e19c-815f-48cb-a9af-d7838a0d8616", //"6f9796ad-2fc1-4553-ab77-f1b91034d4d2",
+  })
+
+  const expiresAtString = React.useMemo(() => {
+    if (!auth) return ""
+    const date = new Date(auth.expiresAt)
+    return date.toLocaleString()
+  }, [auth])
+
+  console.log("auth obj: ", auth)
 
   // Create a client
   const queryClient = new QueryClient()
@@ -108,7 +133,7 @@ const App = (props) => {
               </ContentAreaToolbar>
 
               <ContentArea className="mt-0">
-                <Message>Welcome to the example app</Message>
+                <Messages />
                 {error && (
                   <Message variant="danger">
                     {error}
@@ -118,6 +143,29 @@ const App = (props) => {
                   </Message>
                 )}
                 {processing && <Spinner variant="primary" />}
+
+                <div>
+                  {auth ? (
+                    <>
+                      <h1>Hi {auth.first_name}</h1>
+                      <p>{auth.full_name}</p>
+                      <p>{expiresAtString}</p>
+                      <pre className={`volta-codeblock ${preClasses}`}>
+                        <code className={codeClasses}>{auth.id_token}</code>
+                      </pre>
+                      <button
+                        onClick={() => {
+                          logout({ resetOIDCSession: true })
+                        }}
+                      >
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    <button onClick={login}>Login</button>
+                  )}
+                </div>
+
                 <NewCertificate show={true} />
                 <Certificates />
               </ContentArea>

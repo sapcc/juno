@@ -1,23 +1,11 @@
 import React from "react"
-import { useQuery, useMutation, useQueryClient, QueryClient } from "react-query"
-import { certificates, hermes, kubernikus } from "../actions"
+import { getCertificates } from "../queries"
 
 const Certificates = ({ certs }) => {
-  // Access the client
-  const queryClient = useQueryClient()
+  const { isLoading, isError, data, error } = getCertificates()
 
-  // consecutive retries defaults to 3
-  const { isLoading, isError, data, error } = useQuery(
-    "certificates",
-    certificates
-  )
-
-  if (isLoading) {
+  if (isLoading && !data) {
     return <span>Loading...</span>
-  }
-
-  if (isError) {
-    return <span>Error: {error.message}</span>
   }
 
   return (
