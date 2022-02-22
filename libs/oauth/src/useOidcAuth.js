@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 const CACHE_STATE_KEY = "state"
 const CACHE_NONCE_KEY = "nonce"
 const CACHE_URI_KEY = "uri"
-const CACHE_AUTH_KEY = "auth"
 
 let queryString = window.location.search || window.location.hash
 if (queryString[0] === "#") queryString = queryString.substring(1)
+
 const searchParams = new URLSearchParams(queryString)
 
 function randomString() {
@@ -14,12 +14,6 @@ function randomString() {
     Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15)
   )
-}
-
-// This function checks whether the current URL contains OIDC callback information.
-// Callback URL should contain the id_token and state
-function isOIDCCallback() {
-  return searchParams.get("id_token") && searchParams.get("state")
 }
 
 // This function processes the callback from the OIDC.
@@ -41,7 +35,6 @@ function handleOIDCResponse() {
   window.sessionStorage.removeItem(CACHE_STATE_KEY)
   window.sessionStorage.removeItem(CACHE_NONCE_KEY)
   window.sessionStorage.removeItem(CACHE_URI_KEY)
-  window.sessionStorage.removeItem(CACHE_AUTH_KEY)
 
   // return if state is not equal to the cached state
   if (state !== storedState) return
@@ -61,32 +54,10 @@ function handleOIDCResponse() {
     auth["full_name"] = `${tokenJson.first_name} ${tokenJson.last_name}`
     auth["email"] = tokenJson.mail
     auth["expiresAt"] = tokenJson.exp * 1000
-
-    // cache auth in local storage
-    window.sessionStorage.setItem(CACHE_AUTH_KEY, JSON.stringify(auth))
+    auth["expiresAtDate"] = new Date(tokenJson.exp * 1000)
   } catch (e) {}
 
   return auth
-}
-
-// This function checks whether there is a cached auth and whether
-// the expiration time is still valid.
-function cachedAuth() {
-  // get cached auth data
-  let auth = window.sessionStorage.getItem(CACHE_AUTH_KEY)
-  try {
-    // try to parse it to json
-    auth = JSON.parse(auth)
-    // return cached auth if it exists and the expiration time
-    // is less than now minus 5 minutes
-    if (auth && auth.expiresAt > Date.now() - 5 * 60 * 1000) {
-      return auth
-    }
-  } catch (e) {}
-  // Hasn't returned yet, clean the cache
-  window.sessionStorage.removeItem(CACHE_AUTH_KEY)
-  // return null
-  return null
 }
 
 // This function makes the oidc id_token flow
@@ -118,17 +89,8 @@ function oidcRequest({ issuerURL, clientID }) {
 }
 
 // This function removes cached token from storage.
-function resetOidcSession(issuerURL, { resetOIDCSession }) {
-  window.sessionStorage.removeItem(CACHE_STATE_KEY)
-  window.sessionStorage.removeItem(CACHE_NONCE_KEY)
-  window.sessionStorage.removeItem(CACHE_URI_KEY)
-  window.sessionStorage.removeItem(CACHE_AUTH_KEY)
-
-  if (resetOIDCSession) {
-    window.location.replace(`${issuerURL}/oauth2/logout`)
-  } else {
-    window.location.reload()
-  }
+function oidcLogout(issuerURL) {
+  window.location.replace(`${issuerURL}/oauth2/logout`)
 }
 
 /**
@@ -140,19 +102,25 @@ function resetOidcSession(issuerURL, { resetOIDCSession }) {
  * endpoint https://PROVIDER_HOST/.well-known/openid-configuration.
  * @returns {Object} {id_token,first_name,last_name,full_name,email}
  */
-const useOidcAuth = ({ clientID, issuerURL }) => {
+const useOidcAuth = ({ clientID, issuerURL, initialLogin }) => {
   if (!clientID)
     throw new Error("clientID is undefined. Please provide a clientID.")
   if (!issuerURL)
     throw new Error("issuerURL is undefined. Please provide a issuerURL.")
 
-  let auth = isOIDCCallback() ? handleOIDCResponse() : cachedAuth()
+  const [auth, setAuth] = useState(handleOIDCResponse())
+
+  if (!auth && initialLogin) {
+    oidcRequest({ issuerURL, clientID })
+  }
 
   return {
     auth,
     login: () => oidcRequest({ issuerURL, clientID }),
-    logout: ({ resetOIDCSession }) =>
-      resetOidcSession(issuerURL, { resetOIDCSession }),
+    logout: ({ resetOIDCSession }) => {
+      if (resetOIDCSession) oidcLogout(issuerURL)
+      else setAuth(null)
+    },
   }
 }
 
