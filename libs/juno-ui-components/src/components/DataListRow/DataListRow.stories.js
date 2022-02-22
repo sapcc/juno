@@ -1,6 +1,7 @@
 import React from "react"
 import { DataListRow } from "./index.js"
-import { Default as DataListCell } from "../DataListCell/DataListCell.stories.js"
+import { DataListCell } from "../DataListCell/index.js"
+import { Default as DataListCellStory } from "../DataListCell/DataListCell.stories.js"
 
 export default {
   title: "Design System/DataList/DataListRow",
@@ -8,9 +9,14 @@ export default {
   argTypes: {},
 }
 
-const Template = (args) =>
-<DataListRow {...args}>
-</DataListRow>
+const Template = ({ items, ...args }) => (
+	<DataListRow {...args}>
+		{items.map((item, i) => (
+			<DataListCell {...item} key={`${i}`} />
+		))}
+	</DataListRow>
+)
+
 
 
 export const Default = Template.bind({})
@@ -22,11 +28,11 @@ Default.parameters = {
   },
 }
 Default.args = {
-  children: [
-	<DataListCell key="1_1_1">DataListCell</DataListCell>,
-	<DataListCell key="1_1_2">DataListCell</DataListCell>,
-	<DataListCell key="1_1_3">DataListCell</DataListCell>,
-	<DataListCell key="1_1_4">DataListCell</DataListCell>,
-	<DataListCell key="1_1_5">DataListCell</DataListCell>
+  items: [
+	{...DataListCellStory.args},
+	{...DataListCellStory.args},
+	{...DataListCellStory.args},
+	{...DataListCellStory.args},
+	{...DataListCellStory.args},
   ]
 }
