@@ -98,7 +98,7 @@ Spinner.propTypes = {
 }
 
 Spinner.defaultProps = {
-  className: null,
+  className: "",
   variant: "default",
   size: null,
 }

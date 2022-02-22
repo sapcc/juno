@@ -55,5 +55,5 @@ PageHeader.propTypes = {
 
 PageHeader.defaultProps = {
   heading: null,
-  className: null
+  className: ""
 }
