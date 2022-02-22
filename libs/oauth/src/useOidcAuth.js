@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react"
 
+const CACHE_STATE_KEY = "state"
+const CACHE_NONCE_KEY = "nonce"
+const CACHE_URI_KEY = "uri"
+const CACHE_AUTH_KEY = "auth"
+
 let queryString = window.location.search || window.location.hash
 if (queryString[0] === "#") queryString = queryString.substring(1)
 const searchParams = new URLSearchParams(queryString)
@@ -11,52 +16,95 @@ function randomString() {
   )
 }
 
+// This function checks whether the current URL contains OIDC callback information.
+// Callback URL should contain the id_token and state
 function isOIDCCallback() {
   return searchParams.get("id_token") && searchParams.get("state")
 }
 
+// This function processes the callback from the OIDC.
 function handleOIDCResponse() {
+  // get the id_token from URL
   const id_token = searchParams.get("id_token")
+  // return if no id_token available
   if (!id_token) return
+  // get the state from URL
   const state = searchParams.get("state")
+  // return if no state available
   if (!state) return
 
   // get state and last URL from the local store (browser)
-  const storedState = window.sessionStorage.getItem("state")
-  const storedNonce = window.sessionStorage.getItem("nonce")
-  const lastURL = window.sessionStorage.getItem("uri")
-  window.sessionStorage.clear()
+  const storedState = window.sessionStorage.getItem(CACHE_STATE_KEY)
+  const storedNonce = window.sessionStorage.getItem(CACHE_NONCE_KEY)
+  const lastURL = window.sessionStorage.getItem(CACHE_URI_KEY)
+  // clear the cache
+  window.sessionStorage.removeItem(CACHE_STATE_KEY)
+  window.sessionStorage.removeItem(CACHE_NONCE_KEY)
+  window.sessionStorage.removeItem(CACHE_URI_KEY)
+  window.sessionStorage.removeItem(CACHE_AUTH_KEY)
 
+  // return if state is not equal to the cached state
   if (state !== storedState) return
 
+  // return to the URL before the OIDC redirect.
   window.history.replaceState("", "", lastURL || "/")
 
-  const result = { id_token }
+  // construct auth object
+  const auth = { id_token }
   try {
     const [_, tokenData] = id_token.split(".")
     let tokenJson = JSON.parse(atob(tokenData))
+
     if (tokenJson.nonce !== storedNonce) return
-    result["first_name"] = tokenJson.first_name
-    result["last_name"] = tokenJson.last_name
-    result["full_name"] = `${tokenJson.first_name} ${tokenJson.last_name}`
-    result["email"] = tokenJson.mail
-    console.log(tokenJson)
+    auth["first_name"] = tokenJson.first_name
+    auth["last_name"] = tokenJson.last_name
+    auth["full_name"] = `${tokenJson.first_name} ${tokenJson.last_name}`
+    auth["email"] = tokenJson.mail
+    auth["expiresAt"] = tokenJson.exp * 1000
+
+    // cache auth in local storage
+    window.sessionStorage.setItem(CACHE_AUTH_KEY, JSON.stringify(auth))
   } catch (e) {}
 
-  return result
+  return auth
 }
 
+// This function checks whether there is a cached auth and whether
+// the expiration time is still valid.
+function cachedAuth() {
+  // get cached auth data
+  let auth = window.sessionStorage.getItem(CACHE_AUTH_KEY)
+  try {
+    // try to parse it to json
+    auth = JSON.parse(auth)
+    // return cached auth if it exists and the expiration time
+    // is less than now minus 5 minutes
+    if (auth && auth.expiresAt > Date.now() - 5 * 60 * 1000) {
+      return auth
+    }
+  } catch (e) {}
+  // Hasn't returned yet, clean the cache
+  window.sessionStorage.removeItem(CACHE_AUTH_KEY)
+  // return null
+  return null
+}
+
+// This function makes the oidc id_token flow
 function oidcRequest({ issuerURL, clientID }) {
   // generate a random string to use as state
   const state = randomString()
   // generate a random string to use as nonce (it is encoded into the id_token from provider)
   const nonce = randomString()
 
-  // store state and current URL to the local store (browser)
+  // store state, nonce and current URL to the local store (browser)
+  // state is used to verify that the response is not sabotaged.
   window.sessionStorage.setItem("state", state)
+  // nonce is used to verify that the token has not been sabotaged
   window.sessionStorage.setItem("nonce", nonce)
+  // current URL is saved to return to this URL after the OIDC dance
   window.sessionStorage.setItem("uri", window.location.href)
 
+  // build the OIDC URL
   let url = `${issuerURL}/oauth2/authorize`
   url += "?response_type=id_token"
   url += `&client_id=${clientID}`
@@ -65,10 +113,24 @@ function oidcRequest({ issuerURL, clientID }) {
   url += `&state=${state}`
   url += `&nonce=${nonce}`
 
+  // redirect to this URL
   window.location.replace(url)
 }
 
-console.log("1. ", searchParams.toString())
+// This function removes cached token from storage.
+function resetOidcSession(issuerURL, { resetOIDCSession }) {
+  window.sessionStorage.removeItem(CACHE_STATE_KEY)
+  window.sessionStorage.removeItem(CACHE_NONCE_KEY)
+  window.sessionStorage.removeItem(CACHE_URI_KEY)
+  window.sessionStorage.removeItem(CACHE_AUTH_KEY)
+
+  if (resetOIDCSession) {
+    window.location.replace(`${issuerURL}/oauth2/logout`)
+  } else {
+    window.location.reload()
+  }
+}
+
 /**
  * This hook ensures that the user is logged on via OIDC and SAP ID Provider.
  * Use this hook only in web applications. OIDC flow requires a redirect!
@@ -84,14 +146,14 @@ const useOidcAuth = ({ clientID, issuerURL }) => {
   if (!issuerURL)
     throw new Error("issuerURL is undefined. Please provide a issuerURL.")
 
-  let result
-  if (isOIDCCallback()) {
-    result = handleOIDCResponse()
-  } else {
-    oidcRequest({ issuerURL, clientID })
-  }
+  let auth = isOIDCCallback() ? handleOIDCResponse() : cachedAuth()
 
-  return result
+  return {
+    auth,
+    login: () => oidcRequest({ issuerURL, clientID }),
+    logout: ({ resetOIDCSession }) =>
+      resetOidcSession(issuerURL, { resetOIDCSession }),
+  }
 }
 
 export default useOidcAuth
