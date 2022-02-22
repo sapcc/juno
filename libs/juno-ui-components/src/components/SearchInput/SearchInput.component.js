@@ -129,7 +129,7 @@ export const SearchInput = ({
           placeholder={placeholder}
           value={val}
           autoComplete={autoComplete}
-          className={`juno-search-input ${searchClasses(variant)} ${className || ""}`}
+          className={`juno-search-input ${searchClasses(variant)} ${className}`}
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
           {...props}
@@ -177,4 +177,5 @@ SearchInput.defaultProps = {
   onKeyPress: undefined,
   autoComplete: "off",
   placeholder: "Search…",
+  className: "",
 }

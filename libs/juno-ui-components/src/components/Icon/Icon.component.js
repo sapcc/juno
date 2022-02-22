@@ -131,6 +131,8 @@ Icon.propTypes = {
 	size: PropTypes.string,
 	/** The title of the icon. Important for accessibility, will also show as a tooltip: */
 	title: PropTypes.string,
+	/** A custom className */
+	className: PropTypes.string,
 }
 
 Icon.defaultProps = {
@@ -138,4 +140,5 @@ Icon.defaultProps = {
 	color: "",
 	size: "24",
 	title: "",
+	className: ""
 }
