@@ -3,11 +3,8 @@
     <path id="a" d="M0 0h64v38H0z"/>
   </defs>
   <g fill="none" fill-rule="evenodd">
-    <mask id="b" fill="#fff">
-      <use xlink:href="#a"/>
-    </mask>
-    <use fill="#3D9635" fill-rule="nonzero" xlink:href="#a"/>
-    <g fill-rule="nonzero" mask="url(#b)">
+    <use fill="#3D9635" fill-rule="nonzero" />
+    <g fill-rule="nonzero">
       <path fill="#00732F" d="M0 0h75.722v38.537H0z"/>
       <path fill="#FFF" d="M0 12.17h75.722v26.367H0z"/>
       <path fill="#000" d="M0 26.367h75.722v12.17H0z"/>

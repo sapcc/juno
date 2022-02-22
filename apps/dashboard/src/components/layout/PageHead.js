@@ -13,8 +13,7 @@ const PageHead = () => {
     <PageHeader>
       
       <div className="ml-auto">
-        <Button variant="primary" title="Log in" onClick={() => toggleLoginOverlay()}>
-          <Icon icon="manageAccounts" color="text-white" className="mr-3" />
+        <Button variant="primary" size="small" icon="manageAccounts" title="Log in" onClick={() => toggleLoginOverlay()}>
           Log in
         </Button>
       </div>

@@ -30,7 +30,7 @@ const tabClasses = (isActive) => {
   return `
     uppercase 
     text-theme-default
-    text-2xl 
+    text-xl 
     pb-3 
     px-24 
     -mb-0.5

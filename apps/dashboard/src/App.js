@@ -10,7 +10,7 @@ const App = () => {
   return (
   // use custom style cache to avoid conflicts with other apps
 
-  <div className={loginOverlayVisible ? "overflow-hidden h-full" : ""} >
+  <div className={`flex flex-col h-full ${loginOverlayVisible ? "overflow-hidden h-full" : ""}`} >
     <React.StrictMode>
       <PagesRouter />
     </React.StrictMode>

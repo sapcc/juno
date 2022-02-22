@@ -6,7 +6,7 @@ import PageFooter from "./PageFooter"
 
 const Layout = ({ children }) => {
   return (
-    <div>
+    <div className="flex flex-col grow">
       <PageHead />
       {children}
       <PageFooter />

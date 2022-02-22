@@ -9,7 +9,7 @@ const basePageHeader = `
   sticky
   top-0
   px-6
-  py-4
+  py-3
   z-50
 `
 
