@@ -63,7 +63,7 @@ const PageFooter = () => {
               Ask questions and connect with others
             </h5>
             <p className="pb-6">
-              Join the #cc-users channel on Slack to connect with other users or
+              Join the #sap-cc-users channel on Slack to connect with other users or
               ask questions.
             </p>
             <div className="mt-auto">
