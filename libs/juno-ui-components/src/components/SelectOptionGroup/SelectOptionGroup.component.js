@@ -35,5 +35,5 @@ SelectOptionGroup.propTypes = {
 SelectOptionGroup.defaultProps = {
 	label: null,
 	disabled: false,
-	className: null,
+	className: "",
 }
