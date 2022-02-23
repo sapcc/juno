@@ -4,7 +4,9 @@ import { Checkbox } from "../Checkbox/Checkbox.component.js"
 import { DataListCell } from "../DataListCell/DataListCell.component.js"
 
 const datalistcheckboxcellbasestyles = `
-	w-grid-col-1
+	flex
+	flex-col
+	justify-center
 `
 
 export const DataListCheckboxCell = ({
