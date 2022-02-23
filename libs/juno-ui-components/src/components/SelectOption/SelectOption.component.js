@@ -36,5 +36,5 @@ SelectOption.defaultProps = {
 	value: null,
 	label: null,
 	disabled: false,
-	className: null,
+	className: "",
 }
