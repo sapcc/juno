@@ -1,6 +1,7 @@
 import React from "react"
 import { DataGridHeadRow } from "./index.js"
-import { Default as DataGridHeadCell } from "../DataGridHeadCell/DataGridHeadCell.stories.js"
+import { DataGridHeadCell } from "../DataGridHeadCell/index.js"
+import { Default as DataGridHeadCellStory } from "../DataGridHeadCell/DataGridHeadCell.stories.js"
 
 
 export default {
@@ -10,25 +11,29 @@ export default {
   decorators: [ story => <table><tbody>{story()}</tbody></table>],
 }
 
-const Template = (args) =>
-<DataGridHeadRow {...args}>
-</DataGridHeadRow>
+const Template = ({ items, ...args }) => (
+  <DataGridHeadRow {...args}>
+    {items.map((item, i) => (
+      <DataGridHeadCell {...item} key={`${i}`} />
+    ))}
+  </DataGridHeadRow>
+)
 
 
 export const Default = Template.bind({})
 Default.parameters = {
   docs: {
-	description: { 
-	  story: "Juno DataGridHeadRow for use in DataGrid head"
-	}
-  }
+	  description: { 
+	    story: "Juno DataGridHeadRow for use in DataGrid head"
+	  }
+  },
 }
 Default.args = {
-  children: [
-  	<DataGridHeadCell key="1">Data Grid Head Cell 1</DataGridHeadCell>,
-	  <DataGridHeadCell key="2">Data Grid Head Cell 2</DataGridHeadCell>,
-	  <DataGridHeadCell key="3">Data Grid Head Cell 3</DataGridHeadCell>,
-	  <DataGridHeadCell key="4">Data Grid Head Cell 4</DataGridHeadCell>,
-	  <DataGridHeadCell key="5">Data Grid Head Cell 5</DataGridHeadCell>
+  items: [
+    {...DataGridHeadCellStory.args},
+    {...DataGridHeadCellStory.args, sortable: true, children: "Sortable"},
+    {...DataGridHeadCellStory.args, sortable: true, children: "Sortable"},
+    {...DataGridHeadCellStory.args},
+    {...DataGridHeadCellStory.args},
   ]
 }

@@ -1,7 +1,9 @@
 import React from "react"
 import { DataGridBody } from "./index.js"
-import { Default as DataGridRow } from "../DataGridRow/DataGridRow.stories.js"
-import { Default as DataGridCell } from "../DataGridCell/DataGridCell.stories.js"
+import { DataGridRow } from "../DataGridRow/index.js"
+import { DataGridCell } from "../DataGridCell/index.js"
+import { Default as DataGridRowStory } from "../DataGridRow/DataGridRow.stories.js"
+import { Default as DataGridCellStory } from "../DataGridCell/DataGridCell.stories.js"
 
 
 export default {
@@ -11,8 +13,15 @@ export default {
   decorators: [ story => <table>{story()}</table>],
 }
 
-const Template = (args) =>
+const Template = ({items, ...args}) =>
 	<DataGridBody {...args}>
+		{items.map((item, i) => (
+			<DataGridRow key={`b_${i}`}>
+				{item.args.items.map((cell, c) => 
+					<DataGridCell {...cell} key={`b_${i}_{c}`} />
+				)}
+			</DataGridRow>
+		))}
 	</DataGridBody>
 
 
@@ -26,28 +35,12 @@ Default.parameters = {
   },
 }
 Default.args = {
-  children: [
-	  <DataGridRow key="1">
-	  <DataGridCell key="1_1">Data Grid Cell 1</DataGridCell>
-	  <DataGridCell key="1_2">Data Grid Cell 2</DataGridCell>
-	  <DataGridCell key="1_3">Data Grid Cell 3</DataGridCell>
-	  <DataGridCell key="1_4">Data Grid Cell 4</DataGridCell>
-	  <DataGridCell key="1_5">Data Grid Cell 5</DataGridCell>
-	</DataGridRow>,
-	<DataGridRow key="2">
-		<DataGridCell key="2_1">Data Grid Cell 1</DataGridCell>
-		<DataGridCell key="2_2">Data Grid Cell 2</DataGridCell>
-		<DataGridCell key="2_3">Data Grid Cell 3</DataGridCell>
-		<DataGridCell key="2_4">Data Grid Cell 4</DataGridCell>
-		<DataGridCell key="2_5">Data Grid Cell 5</DataGridCell>
-	</DataGridRow>,
-	<DataGridRow key="3">
-		<DataGridCell key="3_1">Data Grid Cell 1</DataGridCell>
-		<DataGridCell key="3_2">Data Grid Cell 2</DataGridCell>
-		<DataGridCell key="3_3">Data Grid Cell 3</DataGridCell>
-		<DataGridCell key="3_4">Data Grid Cell 4</DataGridCell>
-		<DataGridCell key="3_5">Data Grid Cell 5</DataGridCell>
-	</DataGridRow>
+  items: [
+  	{...DataGridRowStory},
+	{...DataGridRowStory},
+	{...DataGridRowStory},
+	{...DataGridRowStory},
+	{...DataGridRowStory},
   ]
 }
 
