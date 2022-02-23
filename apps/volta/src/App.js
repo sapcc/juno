@@ -49,9 +49,9 @@ const App = (props) => {
   const { embedded } = props
   const dispatch = useDispatch()
 
-  const { auth, login, logout } = useOidcAuth({
-    issuerURL: "https://accounts400.sap.com/", //"https://ajfc1jphz.accounts.ondemand.com",
-    clientID: "b3b4e19c-815f-48cb-a9af-d7838a0d8616", //"6f9796ad-2fc1-4553-ab77-f1b91034d4d2",
+  const { auth, logout } = useOidcAuth({
+    issuerURL: props.issuerURL,
+    clientID: props.clientID,
     initialLogin: true,
   })
 
@@ -98,7 +98,7 @@ const App = (props) => {
                 {processing && <Spinner variant="primary" />}
 
                 <div>
-                  {auth ? (
+                  {auth && (
                     <>
                       <h1>Hi {auth.first_name}</h1>
                       <p>{auth.full_name}</p>
@@ -108,14 +108,12 @@ const App = (props) => {
                       </pre>
                       <button
                         onClick={() => {
-                          logout({ resetOIDCSession: true })
+                          logout({ resetOIDCSession: false })
                         }}
                       >
                         Logout
                       </button>
                     </>
-                  ) : (
-                    <button onClick={login}>Login</button>
                   )}
                 </div>
 
@@ -132,8 +130,8 @@ const App = (props) => {
   )
 }
 
-export default () => (
+export default (props) => (
   <StateProvider reducers={reducers}>
-    <App />
+    <App {...props} />
   </StateProvider>
 )

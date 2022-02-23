@@ -10080,10 +10080,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv-defaults@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "dotenv-defaults@npm:2.0.2"
+  dependencies:
+    dotenv: ^8.2.0
+  checksum: c005960bd048e2189c4799e729c41f362e415e6e0b54313d3f31e853a84b049bf770b25cb21c112c2805bb13a8376edc9de451fb514abf8546392d327c27f6e5
+  languageName: node
+  linkType: hard
+
 "dotenv-expand@npm:^5.1.0":
   version: 5.1.0
   resolution: "dotenv-expand@npm:5.1.0"
   checksum: 8017675b7f254384915d55f9eb6388e577cf0a1231a28d54b0ca03b782be9501b0ac90ac57338636d395fa59051e6209e9b44b8ddf169ce6076dffb5dea227d3
+  languageName: node
+  linkType: hard
+
+"dotenv-webpack@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "dotenv-webpack@npm:7.1.0"
+  dependencies:
+    dotenv-defaults: ^2.0.2
+  peerDependencies:
+    webpack: ^4 || ^5
+  checksum: e69f5b5de16f99a0acc35f2bc75e1dd40a587053cdb62ffb2fe80cea197ba703a829771f6db270a01e96ca8f52c8160671c243875a7b9c7c040bc32fc3d400f1
   languageName: node
   linkType: hard
 
@@ -22638,6 +22658,7 @@ __metadata:
     css-loader: ^6.6.0
     css-minimizer-webpack-plugin: ^3.4.1
     custom-event-polyfill: ^1.0.7
+    dotenv-webpack: ^7.1.0
     glob: ^7.2.0
     html-webpack-plugin: ^5.4.0
     jest: ^27.4.7
