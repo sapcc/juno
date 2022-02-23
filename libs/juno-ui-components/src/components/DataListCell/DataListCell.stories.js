@@ -25,18 +25,3 @@ Default.args = {
 	"DataListCell"
   ]
 }
-
-export const AutoWidth = Template.bind({})
-AutoWidth.parameters = {
-  docs: {
-    description: {
-      story: "Juno DataListCell set to 'auto' in order to maximize width"
-    }
-  },
-}
-AutoWidth.args = {
-  auto: true,
-  children: [
-    "AutoDataListCell"
-  ]
-}
