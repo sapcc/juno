@@ -18,7 +18,11 @@ export default {
 const Template = ({items, ...args}) =>
 <DataList {...args}>
 	{items.map((item, i) => (
+<<<<<<< HEAD
 		<DataListRow key={`${i}`} >
+=======
+		<DataListRow {...item} key={`${i}`} >
+>>>>>>> main
 			{item.items.map((cell, c) =>
 				<DataListCell {...cell} key={`${i}_${c}`} />
 			)}
