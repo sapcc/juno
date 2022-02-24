@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import {
   AppBody,
   AppIntro,
@@ -30,23 +30,14 @@ import NewCertificate from "./components/NewCertificate"
 import Messages from "./components/Messages"
 import { StateProvider, useDispatch } from "./components/StateProvider"
 import reducers from "./reducers"
-
-const preClasses = `
-whitespace-pre-wrap
-bg-theme-background-lvl-3
-p-4
-`
-const codeClasses = `
-w-full 
-break-all
-`
+import HeaderUser from "./components/HeaderUser"
 
 /* Replace this with your app's name */
 const URL_STATE_KEY = "volta"
 
 const App = (props) => {
-  const [processing, setProcessing] = React.useState(false)
-  const { embedded } = props
+  const [processing, setProcessing] = useState(false)
+  const [showNewCertView, setShowNewCertView] = useState(false)
   const dispatch = useDispatch()
 
   const { auth, logout } = useOidcAuth({
@@ -61,21 +52,19 @@ const App = (props) => {
     dispatch({ type: "SET_AUTH", auth })
   }, [auth])
 
-  const expiresAtString = React.useMemo(() => {
-    if (!auth) return ""
-    const date = new Date(auth.expiresAt)
-    return date.toLocaleString()
-  }, [auth])
-
-  console.log("auth obj: ", auth)
-
   // Create a client
   const queryClient = new QueryClient()
+
+  const onCloseNewCertView = () => {
+    setShowNewCertView(false)
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
       <AppBody>
-        <PageHeader heading="Converged Cloud | Volta" />
+        <PageHeader heading="Converged Cloud | Volta">
+          {auth && <HeaderUser name={auth.full_name} logout={logout} />}
+        </PageHeader>
 
         {/* Wrap everything except page header and footer in a main container */}
         <MainContainer>
@@ -89,7 +78,12 @@ const App = (props) => {
             <ContentAreaHeading heading="SSO Certificates" />
             <ContentAreaWrapper>
               <ContentAreaToolbar>
-                <Button icon="addCircle">Add SSO Cert</Button>
+                <Button
+                  icon="addCircle"
+                  onClick={() => setShowNewCertView(true)}
+                >
+                  Add SSO Cert
+                </Button>
               </ContentAreaToolbar>
 
               <ContentArea className="mt-0">
@@ -97,27 +91,9 @@ const App = (props) => {
 
                 {processing && <Spinner variant="primary" />}
 
-                <div>
-                  {auth && (
-                    <>
-                      <h1>Hi {auth.first_name}</h1>
-                      <p>{auth.full_name}</p>
-                      <p>{expiresAtString}</p>
-                      <pre className={`volta-codeblock ${preClasses}`}>
-                        <code className={codeClasses}>{auth.id_token}</code>
-                      </pre>
-                      <button
-                        onClick={() => {
-                          logout({ resetOIDCSession: false })
-                        }}
-                      >
-                        Logout
-                      </button>
-                    </>
-                  )}
-                </div>
-
-                <NewCertificate show={true} />
+                {auth && showNewCertView && (
+                  <NewCertificate onClose={onCloseNewCertView} />
+                )}
                 <Certificates />
               </ContentArea>
             </ContentAreaWrapper>
