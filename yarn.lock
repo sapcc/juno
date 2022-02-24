@@ -6121,6 +6121,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ajv@npm:6.12.6, ajv@npm:^6.1.0, ajv@npm:^6.10.2, ajv@npm:^6.11.0, ajv@npm:^6.12.2, ajv@npm:^6.12.3, ajv@npm:^6.12.4, ajv@npm:^6.12.5, ajv@npm:^6.12.6":
+  version: 6.12.6
+  resolution: "ajv@npm:6.12.6"
+  dependencies:
+    fast-deep-equal: ^3.1.1
+    fast-json-stable-stringify: ^2.0.0
+    json-schema-traverse: ^0.4.1
+    uri-js: ^4.2.2
+  checksum: 874972efe5c4202ab0a68379481fbd3d1b5d0a7bd6d3cc21d40d3536ebff3352a2a1fabb632d4fd2cc7fe4cbdcd5ed6782084c9bbf7f32a1536d18f9da5007d4
+  languageName: node
+  linkType: hard
+
 "ajv@npm:6.5.3":
   version: 6.5.3
   resolution: "ajv@npm:6.5.3"
@@ -6130,18 +6142,6 @@ __metadata:
     json-schema-traverse: ^0.4.1
     uri-js: ^4.2.2
   checksum: 787f5a6a69a75f48723bcdb5d17eea0bfbac39bd83ff96b8e82e8f1f7e40be3558a26252152ff917ccca14176b31a3dba4e219ed2f4195a72f6fbd97530f419a
-  languageName: node
-  linkType: hard
-
-"ajv@npm:^6.1.0, ajv@npm:^6.10.2, ajv@npm:^6.11.0, ajv@npm:^6.12.2, ajv@npm:^6.12.3, ajv@npm:^6.12.4, ajv@npm:^6.12.5, ajv@npm:^6.12.6":
-  version: 6.12.6
-  resolution: "ajv@npm:6.12.6"
-  dependencies:
-    fast-deep-equal: ^3.1.1
-    fast-json-stable-stringify: ^2.0.0
-    json-schema-traverse: ^0.4.1
-    uri-js: ^4.2.2
-  checksum: 874972efe5c4202ab0a68379481fbd3d1b5d0a7bd6d3cc21d40d3536ebff3352a2a1fabb632d4fd2cc7fe4cbdcd5ed6782084c9bbf7f32a1536d18f9da5007d4
   languageName: node
   linkType: hard
 
@@ -6318,7 +6318,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"arch@npm:^2.1.0":
+"arch@npm:^2.1.0, arch@npm:^2.1.1":
   version: 2.2.0
   resolution: "arch@npm:2.2.0"
   checksum: e21b7635029fe8e9cdd5a026f9a6c659103e63fff423834323cdf836a1bb240a72d0c39ca8c470f84643385cf581bd8eda2cad8bf493e27e54bd9783abe9101f
@@ -7498,7 +7498,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"boxen@npm:^5.0.0, boxen@npm:^5.1.2":
+"boxen@npm:5.1.2, boxen@npm:^5.0.0, boxen@npm:^5.1.2":
   version: 5.1.2
   resolution: "boxen@npm:5.1.2"
   dependencies:
@@ -8259,6 +8259,17 @@ __metadata:
     arch: ^2.1.0
     execa: ^0.8.0
   checksum: 013b226bfd196e54641d58d7047c4ffbad5ba5849cbdb4d9938860256923ffa6ae2eb10a75e7cda6d1f69c313fc2372c15fbba8d6e6cdf50e756acd3faa75bb6
+  languageName: node
+  linkType: hard
+
+"clipboardy@npm:2.3.0":
+  version: 2.3.0
+  resolution: "clipboardy@npm:2.3.0"
+  dependencies:
+    arch: ^2.1.1
+    execa: ^1.0.0
+    is-wsl: ^2.1.1
+  checksum: 2733790bc8bbb76a5be7706fa4632f655010774e579a9d3ebe31dc10cf44a2b82cf07b0b6f74162e63048ce32d912193c08c5b5311dce5c19fc641a3bda1292b
   languageName: node
   linkType: hard
 
@@ -9290,6 +9301,7 @@ __metadata:
     react-test-renderer: ^17.0.2
     regenerator-runtime: ^0.13.9
     sass-loader: ^12.4.0
+    serve: ^13.0.2
     tailwindcss: ^3.0.18
     util: ^0.12.4
     webpack: ^5.68.0
@@ -16340,7 +16352,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"oauth@workspace:*, oauth@workspace:libs/oauth":
+"oauth@workspace:libs/oauth":
   version: 0.0.0-use.local
   resolution: "oauth@workspace:libs/oauth"
   dependencies:
@@ -16364,61 +16376,6 @@ __metadata:
   peerDependencies:
     prop-types: "*"
     react: "*"
-  languageName: unknown
-  linkType: soft
-
-"oauth_test@workspace:apps/oauth-test":
-  version: 0.0.0-use.local
-  resolution: "oauth_test@workspace:apps/oauth-test"
-  dependencies:
-    "@babel/core": ^7.17.0
-    "@babel/preset-env": ^7.16.11
-    "@babel/preset-react": ^7.16.7
-    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.1
-    "@svgr/webpack": ^6.2.1
-    "@testing-library/dom": ^8.11.3
-    "@testing-library/jest-dom": ^5.16.1
-    "@testing-library/react": ^12.1.2
-    "@testing-library/user-event": ^13.5.0
-    assert: ^2.0.0
-    autoprefixer: ^10.4.2
-    babel-jest: ^27.4.6
-    babel-loader: ^8.2.3
-    babel-plugin-macros: ^3.1.0
-    buffer: ^6.0.3
-    bundle-loader: ^0.5.6
-    clean-webpack-plugin: ^4.0.0
-    communicator: "workspace:*"
-    css-loader: ^6.6.0
-    css-minimizer-webpack-plugin: ^3.4.1
-    custom-event-polyfill: ^1.0.7
-    glob: ^7.2.0
-    html-webpack-plugin: ^5.4.0
-    jest: ^27.4.7
-    juno-ui-components: "workspace:*"
-    luxon: ^2.3.0
-    mini-css-extract-plugin: ^2.5.3
-    oauth: "workspace:*"
-    os-browserify: ^0.3.0
-    path-browserify: ^1.0.1
-    postcss: ^8.4.6
-    postcss-loader: ^6.2.1
-    process: ^0.11.10
-    prop-types: ^15.8.1
-    purgecss-webpack-plugin: ^4.1.3
-    react: ^17.0.2
-    react-dom: ^17.0.2
-    react-json-view: ^1.21.3
-    react-refresh: ^0.10.0
-    react-test-renderer: ^17.0.2
-    regenerator-runtime: ^0.13.9
-    sass-loader: ^12.4.0
-    tailwindcss: ^3.0.18
-    url-state-provider: "workspace:*"
-    util: ^0.12.4
-    webpack: ^5.68.0
-    webpack-cli: ^4.9.2
-    webpack-dev-server: ^4.7.4
   languageName: unknown
   linkType: soft
 
@@ -20005,6 +19962,25 @@ __metadata:
   bin:
     serve: bin/serve.js
   checksum: ef54e3fed7d77acd414014e24171f5e41f932c501f690bbf83003bf3d8e441bdeb1b0c0efcdd24bad1197f141a4b6dec2cb1286d37b9e3b146c49cff00024852
+  languageName: node
+  linkType: hard
+
+"serve@npm:^13.0.2":
+  version: 13.0.2
+  resolution: "serve@npm:13.0.2"
+  dependencies:
+    "@zeit/schemas": 2.6.0
+    ajv: 6.12.6
+    arg: 2.0.0
+    boxen: 5.1.2
+    chalk: 2.4.1
+    clipboardy: 2.3.0
+    compression: 1.7.3
+    serve-handler: 6.1.3
+    update-check: 1.5.2
+  bin:
+    serve: bin/serve.js
+  checksum: abc6ad27d5702f1311c18f185666f674e1df3fc80cf025ae75c3fd679275b4652f0cd55a718d6bdc2435702387b6d7ae0c54c1425fe347f61255430b13365e04
   languageName: node
   linkType: hard
 
