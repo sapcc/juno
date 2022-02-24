@@ -1,5 +1,16 @@
 import React, { useState, useMemo } from "react"
-import { Button, Modal, Spinner, Stack, Message } from "juno-ui-components"
+import {
+  Button,
+  Modal,
+  Spinner,
+  Stack,
+  Message,
+  Select,
+  SelectOption,
+  Label,
+  TextInputRow,
+  TextareaRow,
+} from "juno-ui-components"
 import { newCertificateMutation } from "../queries"
 import {
   getAlgorithm,
@@ -23,9 +34,6 @@ break-all
 const section = `
 py-2
 `
-const sectionBody = `
-py-2
-`
 
 const ALGORITHM_KEY = "RSA-2048"
 
@@ -36,6 +44,8 @@ const NewCertificate = ({ onClose }) => {
   const [pemEncodedPrivateKey, setPemEncodedPrivateKey] = useState(null)
   const [processingAuto, setProcessingAuto] = useState(false)
   const [error, setError] = useState(null)
+  const [showAutoSection, setShowAutoSection] = useState(false)
+  const [showManuallySection, setShowManuallySection] = useState(false)
 
   const algorithm = useMemo(() => getAlgorithm(ALGORITHM_KEY), [ALGORITHM_KEY])
 
@@ -94,9 +104,16 @@ const NewCertificate = ({ onClose }) => {
   }
   const onManuallyClicked = () => {}
 
+  const onSelectChanged = (e) => {
+    setShowAutoSection(false)
+    setShowManuallySection(false)
+    if (e.target.value === "auto") setShowAutoSection(true)
+    else if (e.target.value === "manually") setShowManuallySection(true)
+  }
+
   return (
     <Modal isOpen={true} title="New SSO Cert" close={onClose}>
-      <Message variant="danger">Error</Message>
+      {/* <Message variant="danger">Error</Message> */}
       <div>
         In order to create a new SSO certificat you can choose between:
         <ul>
@@ -109,7 +126,7 @@ const NewCertificate = ({ onClose }) => {
               remember to secure the private key since it is not saved anywhere
               else.
             </div>
-            <div className={sectionBody}>
+            <div className={section}>
               <Stack alignment="center" className="">
                 <Button
                   disabled={processingAuto}
@@ -148,11 +165,41 @@ const NewCertificate = ({ onClose }) => {
             >
               Documentation | Sign a certificate
             </a>
-            <div className={sectionBody}>
+            <div className={section}>
               <Button label="Manually" onClick={onManuallyClicked} />
             </div>
           </li>
         </ul>
+        <div className="select-method">
+          <Label text="Please select how you want to proceed" />
+          <div>
+            <Select name="Simple-Select" onChange={onSelectChanged}>
+              <SelectOption label="Select..." value="" />
+              <SelectOption label="Autogenerate" value="auto" />
+              <SelectOption label="Manually" value="manually" />
+            </Select>
+          </div>
+        </div>
+        {showAutoSection && (
+          <div className={section}>
+            <TextInputRow
+              label="Description"
+              onChange={function noRefCheck() {}}
+            />
+          </div>
+        )}
+        {showManuallySection && (
+          <div className={section}>
+            <TextInputRow
+              label="Description"
+              onChange={function noRefCheck() {}}
+            />
+            <TextareaRow
+              label="Certificate sign request"
+              onChange={function noRefCheck() {}}
+            />
+          </div>
+        )}
       </div>
     </Modal>
   )

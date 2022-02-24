@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from "react"
-import { Message } from "juno-ui-components"
-import { getCertificates } from "../queries"
-import { useGlobalState } from "./StateProvider"
+import React from "react"
+import { Message, Icon, Stack } from "juno-ui-components"
+import { useMessagesState } from "./MessagesProvider"
 
 const Messages = () => {
-  const auth = useGlobalState().auth
-  const [errors, setErrors] = useState({ certificatesError: null })
-  const { isError: isCertsError, error: certsError } = getCertificates(
-    auth.attr?.id_token
-  )
-
-  useEffect(() => {
-    let errMsg = certsError?.message
-    if (certsError?.message) {
-      try {
-        errMsg = JSON.parse(certsError?.message).msg
-      } catch (error) {}
-    }
-    setErrors({ ...errors, certificatesError: errMsg })
-  }, [certsError])
-
+  const messagesState = useMessagesState()
   return (
     <>
-      {isCertsError && (
-        <Message variant="danger">{errors.certificatesError}</Message>
+      {messagesState?.items && (
+        <>
+          {messagesState?.items.map((item) => (
+            <Message key={item.id} variant={item.variant}>
+              {item.text}
+              {/* <Stack alignment="center" className="w-full">
+                {item.text}
+                <Stack
+                  alignment="center"
+                  className="ml-auto"
+                  distribution="end"
+                >
+                  <Icon icon="close" />
+                </Stack>
+              </Stack> */}
+            </Message>
+          ))}
+        </>
       )}
     </>
   )

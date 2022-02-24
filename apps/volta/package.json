@@ -54,6 +54,7 @@
   "dependencies": {
     "@peculiar/x509": "^1.6.1",
     "custom-event-polyfill": "^1.0.7",
+    "lodash.uniqueid": "^4.0.1",
     "luxon": "^2.3.0",
     "oauth": "workspace:*",
     "prop-types": "^15.8.1",

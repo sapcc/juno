@@ -31,6 +31,7 @@ import Messages from "./components/Messages"
 import { StateProvider, useDispatch } from "./components/StateProvider"
 import reducers from "./reducers"
 import HeaderUser from "./components/HeaderUser"
+import { MessagesStateProvider } from "./components/MessagesProvider"
 
 /* Replace this with your app's name */
 const URL_STATE_KEY = "volta"
@@ -87,14 +88,16 @@ const App = (props) => {
               </ContentAreaToolbar>
 
               <ContentArea className="mt-0">
-                <Messages />
+                <MessagesStateProvider>
+                  <Messages />
 
-                {processing && <Spinner variant="primary" />}
+                  {processing && <Spinner variant="primary" />}
 
-                {auth && showNewCertView && (
-                  <NewCertificate onClose={onCloseNewCertView} />
-                )}
-                <Certificates />
+                  {auth && showNewCertView && (
+                    <NewCertificate onClose={onCloseNewCertView} />
+                  )}
+                  <Certificates />
+                </MessagesStateProvider>
               </ContentArea>
             </ContentAreaWrapper>
           </ContentContainer>
