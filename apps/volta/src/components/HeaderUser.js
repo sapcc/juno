@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import { Stack, Button } from "juno-ui-components"
-
-const headerUserName = `
-mr-4
-`
 
 const HeaderUser = ({ name, logout }) => {
   return (
-    <Stack alignment="center" className="w-full" distribution="end">
-      <div className={headerUserName}>{name}</div>
+    <Stack alignment="center" className="ml-auto" distribution="end">
+      <div className="mr-4">{name}</div>
 
       <Button
         label="Logout"

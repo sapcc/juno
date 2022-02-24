@@ -16652,7 +16652,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"oauth@workspace:libs/oauth":
+"oauth@workspace:*, oauth@workspace:libs/oauth":
   version: 0.0.0-use.local
   resolution: "oauth@workspace:libs/oauth"
   dependencies:
