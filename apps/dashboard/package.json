@@ -48,16 +48,16 @@
     "start": "PORT=$APP_PORT webpack serve --mode development --hot",
     "test": "jest",
     "build": "webpack --mode production",
-    "production": "serve -s build -l $APP_PORT"
+    "production": "NODE_ENV=production yarn node serve.js"
   },
   "dependencies": {
     "custom-event-polyfill": "^1.0.7",
+    "express": "^4.17.3",
     "luxon": "^2.3.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.3.0",
-    "serve": "^13.0.2",
     "zustand": "^3.6.9"
   }
 }
