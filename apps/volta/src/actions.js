@@ -39,3 +39,14 @@ export const certificates = ({ queryKey }) => {
     },
   }).then(checkStatus)
 }
+
+export const createCertificate = (bearerToken, csr, desc) => {
+  return fetch(`${ENDPOINT}/galvani-pki/certificate`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${bearerToken}`,
+    },
+    body: JSON.stringify({ data: csr, description: desc }),
+  }).then(checkStatus)
+}

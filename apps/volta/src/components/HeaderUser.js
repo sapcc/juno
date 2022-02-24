@@ -13,6 +13,7 @@ const HeaderUser = ({ name, logout }) => {
       <Button
         label="Logout"
         size="small"
+        variant="primary"
         onClick={() => logout({ resetOIDCSession: true })}
       />
     </Stack>

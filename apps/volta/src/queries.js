@@ -1,5 +1,5 @@
-import { useQuery } from "react-query"
-import { certificates } from "./actions"
+import { useQuery, useMutation } from "react-query"
+import { certificates, createCertificate } from "./actions"
 
 // get all certificates
 export const getCertificates = (bearerToken) => {
@@ -7,4 +7,11 @@ export const getCertificates = (bearerToken) => {
     // The query will not execute until the bearerToken exists
     enabled: !!bearerToken,
   })
+}
+
+// add new cert
+export const newCertificateMutation = () => {
+  return useMutation(({ bearerToken, csr }) =>
+    createCertificate(bearerToken, csr)
+  )
 }

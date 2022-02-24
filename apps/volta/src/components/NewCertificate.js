@@ -1,11 +1,13 @@
 import React, { useState, useMemo } from "react"
-import { Button, Modal, Spinner, Stack } from "juno-ui-components"
+import { Button, Modal, Spinner, Stack, Message } from "juno-ui-components"
+import { newCertificateMutation } from "../queries"
 import {
   getAlgorithm,
   generateKeys,
   pemEncodeKey,
   generateCsr,
 } from "../helpers"
+import { useGlobalState } from "./StateProvider"
 
 const preClasses = `
 whitespace-pre-wrap
@@ -28,37 +30,64 @@ py-2
 const ALGORITHM_KEY = "RSA-2048"
 
 const NewCertificate = ({ onClose }) => {
-  const [keys, setKeys] = useState(null)
+  const auth = useGlobalState().auth
   const [pemCsr, setPemCsr] = useState(null)
+  const [sso, setSso] = useState(null)
   const [pemEncodedPrivateKey, setPemEncodedPrivateKey] = useState(null)
   const [processingAuto, setProcessingAuto] = useState(false)
+  const [error, setError] = useState(null)
 
   const algorithm = useMemo(() => getAlgorithm(ALGORITHM_KEY), [ALGORITHM_KEY])
 
+  const mutation = newCertificateMutation()
+
   const onAutoClicked = () => {
     setProcessingAuto(true)
-    setKeys(null)
     setPemEncodedPrivateKey(null)
     setPemCsr(null)
     // get the keys first
-    generateKeys(algorithm).then((keys) => {
-      setKeys(keys)
+    generateKeys(algorithm).then((newKeys) => {
       // encode private key
-      pemEncodeKey(keys.privateKey)
+      pemEncodeKey(newKeys.privateKey)
         .then((pemKey) => {
           setPemEncodedPrivateKey(pemKey)
+          return newKeys
         })
         .catch((error) => {
           // TODO break process
           console.log("error: ", error)
         })
-        .then(() => {
-          generateCsr(algorithm, keys)
+        .then((newKeys) => {
+          generateCsr(algorithm, newKeys)
             .then((csr) => {
+              // convert csr to pem string
               setPemCsr(csr.toString("pem"))
+              return csr.toString("pem")
             })
             .catch((error) => {
               console.log("error: ", error)
+            })
+            .then((newPemCsr) => {
+              // make request
+              mutation.mutate(
+                {
+                  bearerToken: auth.attr?.id_token,
+                  csr: newPemCsr,
+                },
+                {
+                  onSuccess: (data, variables, context) => {
+                    // I will fire first
+                  },
+                  onError: (error, variables, context) => {
+                    console.log("onError: ", error.message)
+                    console.log("variables: ", variables)
+                    console.log("context: ", context)
+                  },
+                  onSettled: (data, error, variables, context) => {
+                    // I will fire first
+                  },
+                }
+              )
             })
         })
     })
@@ -67,6 +96,7 @@ const NewCertificate = ({ onClose }) => {
 
   return (
     <Modal isOpen={true} title="New SSO Cert" close={onClose}>
+      <Message variant="danger">Error</Message>
       <div>
         In order to create a new SSO certificat you can choose between:
         <ul>
@@ -98,9 +128,11 @@ const NewCertificate = ({ onClose }) => {
               )}
               {/* <Button label="Generate CSR" onClick={onGenerateCSRClicked} /> */}
               {pemCsr && (
-                <pre className={`volta-codeblock ${preClasses}`}>
-                  <code className={codeClasses}>{pemCsr}</code>
-                </pre>
+                <>
+                  <pre className={`volta-codeblock ${preClasses}`}>
+                    <code className={codeClasses}>{pemCsr}</code>
+                  </pre>
+                </>
               )}
             </div>
           </li>
