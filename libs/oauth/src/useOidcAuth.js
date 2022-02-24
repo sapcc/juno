@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 
 const CACHE_STATE_KEY = "state"
 const CACHE_NONCE_KEY = "nonce"
@@ -93,6 +93,7 @@ function oidcLogout(issuerURL) {
   window.location.replace(`${issuerURL}/oauth2/logout`)
 }
 
+let initialized = false
 /**
  * This hook ensures that the user is logged on via OIDC and SAP ID Provider.
  * Use this hook only in web applications. OIDC flow requires a redirect!
@@ -102,26 +103,38 @@ function oidcLogout(issuerURL) {
  * endpoint https://PROVIDER_HOST/.well-known/openid-configuration.
  * @returns {Object} {id_token,first_name,last_name,full_name,email}
  */
-const useOidcAuth = ({ clientID, issuerURL, initialLogin }) => {
-  if (!clientID)
-    throw new Error("clientID is undefined. Please provide a clientID.")
-  if (!issuerURL)
-    throw new Error("issuerURL is undefined. Please provide a issuerURL.")
-
+const useOidcAuth = (options) => {
+  const { clientID, issuerURL, initialLogin } = options || {}
   const [auth, setAuth] = useState(handleOIDCResponse())
-
-  if (!auth && initialLogin) {
+  const login = useCallback(() => {
     oidcRequest({ issuerURL, clientID })
-  }
+  }, [clientID, issuerURL])
 
-  return {
-    auth,
-    login: () => oidcRequest({ issuerURL, clientID }),
-    logout: ({ resetOIDCSession }) => {
-      if (resetOIDCSession) oidcLogout(issuerURL)
+  const logout = useCallback(
+    (options) => {
+      if (options?.resetOIDCSession) oidcLogout(issuerURL)
       else setAuth(null)
     },
+    [setAuth]
+  )
+
+  let result = { login, logout, error: null, isProcessing: false }
+
+  if (!clientID || !issuerURL) {
+    const error =
+      "clientID or issuerURL are undefined. Please provide a clientID and issuerURL."
+    console.warn(error)
+    return { ...result, error }
   }
+
+  if (!auth && !initialized && initialLogin) {
+    oidcRequest({ issuerURL, clientID })
+    return { ...result, isProcessing: true }
+  }
+
+  initialized = true
+
+  return { ...result, auth }
 }
 
 export default useOidcAuth
