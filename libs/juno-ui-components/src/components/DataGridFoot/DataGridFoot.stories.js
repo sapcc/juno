@@ -1,7 +1,9 @@
 import React from "react"
 import { DataGridFoot } from "./index.js"
-import { Default as DataGridCell } from "../DataGridCell/DataGridCell.stories.js"
-import { Default as DataGridFootRow } from "../DataGridFootRow/DataGridFootRow.stories.js"
+import { DataGridFootRow } from "../DataGridFootRow/index.js"
+import { DataGridCell } from "../DataGridCell/index.js"
+import { Default as DataGridCellStory } from "../DataGridCell/DataGridCell.stories.js"
+import { Default as DataGridFootRowStory } from "../DataGridFootRow/DataGridFootRow.stories.js"
 
 
 export default {
@@ -11,25 +13,28 @@ export default {
   decorators: [ story => <table>{story()}</table>],
 }
 
-const Template = (args) =>
+const Template = ({items, ...args}) =>
 <DataGridFoot {...args}>
+  {items.map((item, i) => (
+    <DataGridFootRow key={`f_${i}`} >
+      {item.items.map((cell, c) => (
+        <DataGridCell {...cell} key={`f_${i}_${c}`} />
+      ))}
+    </DataGridFootRow>
+  ))}
 </DataGridFoot>
 
 
 export const Default = Template.bind({})
 Default.parameters = {
   docs: {
-	description: { 
-	  story: "Juno DataGridFoot for use in DataGrid"
-	}
+	  description: { 
+	    story: "Juno DataGridFoot for use in DataGrid"
+	  }
   },
 }
 Default.args = {
-  children: [
-  	<DataGridFootRow key="1">
-      <DataGridCell key="2">Cell</DataGridCell>
-      <DataGridCell key="3">Cell</DataGridCell>
-      <DataGridCell key="4">Cell</DataGridCell>
-    </DataGridFootRow>
+  items: [
+    {...DataGridFootRowStory.args},
   ]
 }

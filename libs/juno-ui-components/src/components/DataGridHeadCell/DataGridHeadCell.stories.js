@@ -17,14 +17,14 @@ const Template = (args) =>
 export const Default = Template.bind({})
 Default.parameters = {
   docs: {
-	description: { 
-	  story: "Juno DataGridHeadCell for use in DataGrid"
-	}
+	  description: { 
+	    story: "Juno DataGridHeadCell for use in DataGrid"
+	  }
   },
 }
 Default.args = {
   children: [
-  "DataGridHeadCell goes here"
+    "DataGridHeadCell"
   ]
 }
 
