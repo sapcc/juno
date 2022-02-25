@@ -6,6 +6,7 @@ const containerStyles = `
   grow
   flex
   flex-col
+  overflow-hidden
 `
 
 /**
