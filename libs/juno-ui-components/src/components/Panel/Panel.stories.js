@@ -1,5 +1,6 @@
 import React from "react"
 import { Panel } from "./index.js"
+import { PanelBody } from "../PanelBody/index.js"
 import { ContentAreaWrapper } from "../ContentAreaWrapper/index.js"
 import { ContentArea } from "../ContentArea/index.js"
 
@@ -13,7 +14,7 @@ export default {
 const Template = (args) => 
   <ContentAreaWrapper>
     <Panel {...args}>
-      Panel Content
+      <PanelBody>Panel Body Content</PanelBody>
     </Panel>
     <ContentArea className="dummy-css-ignore h-[150px]">
       Content Area

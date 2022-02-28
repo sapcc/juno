@@ -36,11 +36,7 @@ const panelTitleClasses = `
   font-bold
 `
 
-const panelContentClasses = `
-  px-8
-  py-4
-  overflow-auto
-`
+
 
 /** A slide-in panel for the Content Area.  */
 export const Panel = ({
@@ -74,9 +70,7 @@ export const Panel = ({
         <div className={`juno-panel-title ${panelTitleClasses}`} id="juno-panel-title">{heading}</div>
         <ClickableIcon icon="close" onClick={handleClose} className="juno-panel-close ml-auto" />
       </div>
-      <div className={`juno-panel-content ${panelContentClasses}`}>
-        {children}
-      </div>
+      {children}
     </div>
   )
 }
