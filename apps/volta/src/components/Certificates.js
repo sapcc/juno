@@ -4,6 +4,10 @@ import { useGlobalState } from "./StateProvider"
 import { useMessagesDispatch } from "./MessagesProvider"
 import { DataList, DataListRow, DataListCell } from "juno-ui-components"
 
+const datListHeaderItem = `
+font-bold
+`
+
 const Certificates = () => {
   const dispatch = useMessagesDispatch()
   const auth = useGlobalState().auth
@@ -34,22 +38,32 @@ const Certificates = () => {
 
   return (
     <>
-      <div>Certificates goes here</div>
-      {JSON.stringify(data)}
-
-      {/* <DataList>
-        <DataListRow>
-          <DataListCell>DataListCell</DataListCell>
-          <DataListCell>Auto DataListCell</DataListCell>
-          <DataListCell>DataListCell</DataListCell>
-          <DataListCell>DataListCell</DataListCell>
-          <DataListCell>DataListCell</DataListCell>
-        </DataListRow>
-      </DataList> */}
-
-      {/* {data.map((item) => (
-          <li key={item.id}>{item.title}</li>
-        ))} */}
+      {data && (
+        <DataList>
+          <DataListRow>
+            <DataListCell className={datListHeaderItem}>Name</DataListCell>
+            <DataListCell className={datListHeaderItem}>
+              Serial number
+            </DataListCell>
+            <DataListCell className={datListHeaderItem}>
+              User name / ID
+            </DataListCell>
+            <DataListCell className={datListHeaderItem}>
+              Expiration date
+            </DataListCell>
+            <DataListCell className={datListHeaderItem}></DataListCell>
+          </DataListRow>
+          {data.map((item, i) => (
+            <DataListRow key={i}>
+              <DataListCell>{item.description}</DataListCell>
+              <DataListCell>{item.serial}</DataListCell>
+              <DataListCell>{item.common_name}</DataListCell>
+              <DataListCell>{item.not_after}</DataListCell>
+              <DataListCell></DataListCell>
+            </DataListRow>
+          ))}
+        </DataList>
+      )}
     </>
   )
 }

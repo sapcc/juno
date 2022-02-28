@@ -40,7 +40,9 @@ export const certificates = ({ queryKey }) => {
   })
     .then(checkStatus)
     .then((response) => {
-      return response.json()
+      return response.json().then((jsonData) => {
+        return jsonData?.serials
+      })
     })
 }
 
