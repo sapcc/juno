@@ -1,7 +1,12 @@
 import React from "react"
-import { DataListRow, DataListCell, Icon } from "juno-ui-components"
+import { DataListRow, DataListCell, ClickableIcon } from "juno-ui-components"
 
-const clickableIcon = ``
+const serial = `
+bg-theme-background-lvl-7
+px-3
+py-1
+rounded
+`
 
 const CertificateListItem = ({ item, revoke }) => {
   const expiresAtString = React.useMemo(() => {
@@ -17,11 +22,13 @@ const CertificateListItem = ({ item, revoke }) => {
   return (
     <DataListRow>
       <DataListCell width={15}>{item.description}</DataListCell>
-      <DataListCell width={40}>{item.serial}</DataListCell>
+      <DataListCell width={40}>
+        <div className={serial}>{item.serial}</div>
+      </DataListCell>
       <DataListCell width={15}>{item.common_name}</DataListCell>
       <DataListCell width={20}>{expiresAtString}</DataListCell>
       <DataListCell width={10}>
-        <Icon color="global-text" icon="dangerous" onClick={onRevokeClicked} />
+        <ClickableIcon icon="deleteForever" onClick={onRevokeClicked} />
       </DataListCell>
     </DataListRow>
   )
