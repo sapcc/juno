@@ -22,6 +22,11 @@ const Template = (args) =>
 
 
 export const WithHeading = Template.bind({})
+WithHeading.parameters = {
+  docs: {
+    description: { story: 'The panel component slides into view from the right. It is to be used as a drawer containing forms for actions on the current view, like "new item" etc. Panels should have a heading.'}
+  },
+}
 WithHeading.args = {
   heading: "Panel Heading",
   opened: true
