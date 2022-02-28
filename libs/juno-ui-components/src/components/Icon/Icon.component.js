@@ -10,6 +10,7 @@ import Cancel from "./icons/cancel.svg"
 import Close from "./icons/close.svg"
 import Danger from "./icons/juno-danger.svg"
 import Dangerous from "./icons/dangerous.svg"
+import DeleteForever from "./icons/delete_forever.svg"
 import Description from "./icons/description.svg"
 import Error from "./icons/dangerous.svg"
 import ExitToApp from "./icons/exit_to_app.svg"
@@ -48,6 +49,8 @@ const getColoredSizedIcon = ({icon, color, size, title, className, ...props}) =>
 				return <Danger width={size} height={size} className={iconClass} alt="danger" title={ title ? title : "Danger" } role="img" {...props} />
 			case "dangerous":
 				return <Dangerous width={size} height={size} className={iconClass} alt="dangerous" title={ title ? title : "Dangerous" } role="img" {...props} />
+			case "deleteForever":
+				return <DeleteForever width={size} height={size} className={iconClass} alt="delete forever" title={ title ? title : "Delete Forever" } role="img" {...props} />
 			case "description":
 				return <Description width={size} height={size} className={iconClass} alt="description" title={ title ? title : "Description" } role="img" {...props} />
 			case "error":
@@ -107,6 +110,7 @@ Icon.propTypes = {
 			"close", 
 			"danger",
 			"dangerous",
+			"deleteForever",
 			"description",
 			"error", 
 			"exitToApp", 
