@@ -92,7 +92,10 @@ const App = (props) => {
                   <Messages />
 
                   {auth && showNewCertView && (
-                    <NewCertificate onClose={onCloseNewCertView} />
+                    <NewCertificate
+                      show={showNewCertView}
+                      onClose={onCloseNewCertView}
+                    />
                   )}
                   <CertificateList />
                 </MessagesStateProvider>

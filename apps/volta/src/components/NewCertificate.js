@@ -9,6 +9,9 @@ import {
   TextInputRow,
   TextareaRow,
   ContentAreaHeading,
+  Panel,
+  PanelBody,
+  PanelFooter,
 } from "juno-ui-components"
 import { newCertificateMutation } from "../queries"
 import {
@@ -41,7 +44,7 @@ py-2
 
 const ALGORITHM_KEY = "RSA-2048"
 
-const NewCertificate = ({ onClose }) => {
+const NewCertificate = ({ show, onClose }) => {
   const auth = useGlobalState().auth
   const [pemCsr, setPemCsr] = useState(null)
   const [sso, setSso] = useState(null)
@@ -126,48 +129,8 @@ const NewCertificate = ({ onClose }) => {
   }
 
   return (
-    <div className={bodyArea}>
-      <ContentAreaHeading heading="New SSO Certificates" />
-      In order to create a new SSO certificat you can choose between:
-      <ul>
-        <li className={section}>
-          <div>
-            <b>Autogenerate</b>: the app creates for you a private key and the
-            needed certificate sign request (CSR) which are send automatically
-            to the backend by clicking the button below. As a result you will
-            get a pem coded private key and the SSO certificate. Please remember
-            to secure the private key since it is not saved anywhere else.
-          </div>
-          <div className={section}>
-            {pemEncodedPrivateKey && (
-              <pre className={`volta-codeblock ${preClasses}`}>
-                <code className={codeClasses}>{pemEncodedPrivateKey}</code>
-              </pre>
-            )}
-            {pemCsr && (
-              <>
-                <pre className={`volta-codeblock ${preClasses}`}>
-                  <code className={codeClasses}>{pemCsr}</code>
-                </pre>
-              </>
-            )}
-          </div>
-        </li>
-        <li>
-          <b>Manually</b>: you create your self the certificate sign request
-          (CSR) and paste it in the text area displayed when clicking the button
-          below. As a result you will get a pem coded SSO certificate. Please
-          see following information and examples for creating a certificate sign
-          request (CSR):
-          <a
-            href="https://github.wdf.sap.corp/cc/volta/blob/master/docs/api-v1.md#Sign-a-certificate"
-            target="_blank"
-          >
-            Documentation | Sign a certificate
-          </a>
-        </li>
-      </ul>
-      <div className={section}>
+    <Panel heading="New SSO Certificates" opened={show} onClose={onClose}>
+      <PanelBody>
         <TextInputRow
           label="Name"
           required
@@ -193,8 +156,11 @@ const NewCertificate = ({ onClose }) => {
           onChange={function noRefCheck() {}}
           helptext={textAreaHelpText()}
         />
-      </div>
-    </div>
+      </PanelBody>
+      <PanelFooter>
+        <Button>Do it</Button>
+      </PanelFooter>
+    </Panel>
   )
 }
 
