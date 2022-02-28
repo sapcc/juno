@@ -100,6 +100,12 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toHaveAttribute("alt", "dangerous")
   })
   
+  test("renders a deleteForever icon", async () => {
+    render(<Icon icon="deleteForever" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "delete forever")
+  })
+  
   test("renders a description icon", async () => {
     render(<Icon icon="description" />)
     expect(screen.getByRole("img")).toBeInTheDocument()

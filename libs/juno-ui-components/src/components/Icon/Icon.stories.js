@@ -106,6 +106,11 @@ Dangerous.args = {
   icon: "dangerous"
 }
 
+export const DeleteForever = Template.bind({})
+DeleteForever.args = {
+  icon: "deleteForever"
+}
+
 export const Description = Template.bind({})
 Description.args = {
   ...Default.args,
