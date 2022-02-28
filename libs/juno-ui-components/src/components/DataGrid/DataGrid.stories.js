@@ -1,14 +1,24 @@
 import React from "react"
 import { DataGrid } from "./index.js"
-import { Default as DataGridRow } from "../DataGridRow/DataGridRow.stories.js"
-import { Default as DataGridCell } from "../DataGridCell/DataGridCell.stories.js"
-import { Default as DataGridHead } from "../DataGridHead/DataGridHead.stories.js"
-import { Default as DataGridHeadRow } from "../DataGridHeadRow/DataGridHeadRow.stories.js"
-import { Default as DataGridHeadCell } from "../DataGridHeadCell/DataGridHeadCell.stories.js"
-import { Default as DataGridBody } from "../DataGridBody/DataGridBody.stories.js"
-import { Default as DataGridFoot } from "../DataGridFoot/DataGridFoot.stories.js"
-import { Default as DataGridFootRow } from "../DataGridFootRow/DataGridFootRow.stories.js"
-import { Default as DataGridToolbar } from "../DataGridToolbar/DataGridToolbar.stories.js"
+import { DataGridBody } from "../DataGridBody/index.js"
+import { DataGridRow } from "../DataGridRow/index.js"
+import { DataGridCell } from "../DataGridCell/index.js"
+import { DataGridCheckboxCell } from "../DataGridCheckboxCell/index.js"
+import { DataGridHead } from "../DataGridHead/index.js"
+import { DataGridHeadRow } from "../DataGridHeadRow/index.js"
+import { DataGridHeadCell } from "../DataGridHeadCell/index.js"
+import { DataGridFoot } from "../DataGridFoot/index.js"
+import { DataGridFootRow } from "../DataGridFootRow/index.js"
+import { DataGridToolbar } from "../DataGridToolbar/index.js"
+import { Default as DataGridRowStory } from "../DataGridRow/DataGridRow.stories.js"
+import { Default as DataGridCellStory } from "../DataGridCell/DataGridCell.stories.js"
+import { Default as DataGridHeadStory } from "../DataGridHead/DataGridHead.stories.js"
+import { Default as DataGridHeadRowStory } from "../DataGridHeadRow/DataGridHeadRow.stories.js"
+import { Default as DataGridHeadCellStory } from "../DataGridHeadCell/DataGridHeadCell.stories.js"
+import { Default as DataGridBodyStory } from "../DataGridBody/DataGridBody.stories.js"
+import { Default as DataGridFootStory } from "../DataGridFoot/DataGridFoot.stories.js"
+import { Default as DataGridFootRowStory } from "../DataGridFootRow/DataGridFootRow.stories.js"
+import { Default as DataGridToolbarStory } from "../DataGridToolbar/DataGridToolbar.stories.js"
 
 
 export default {
@@ -17,9 +27,47 @@ export default {
   argTypes: {},
 }
 
-const Template = (args) =>
+const Template = ({items, ...args}) =>
 <DataGrid {...args}>
+	<DataGridBody>
+		{items.map((row, r) => (
+			<DataGridRow key={`b_${r}`}>
+				{row.items.map((cell, c) => (
+					<DataGridCell {...cell} key={`b_${r}_${c}`} />
+				))}
+			</DataGridRow>
+		))}
+	</DataGridBody>
 </DataGrid>
+
+const WithHeadAndFootTemplate = ({items, ...args}) => 
+<DataGrid {...args}>
+	<DataGridHead>
+		<DataGridHeadRow>
+			{DataGridHeadRowStory.args.items.map((headcell, h) => (
+				<DataGridHeadCell {...headcell} key={`h_${h}`} />
+			))}
+		</DataGridHeadRow>
+	</DataGridHead>
+	<DataGridBody>
+		{items.map((row, r) => (
+			<DataGridRow key={`b_${r}`}>
+				{row.items.map((cell, c) => (
+					<DataGridCell {...cell} key={`b_${r}_${c}`} />
+				))}
+			</DataGridRow>
+		))}
+	</DataGridBody>
+	<DataGridFoot>
+		<DataGridFootRow>
+			{DataGridFootRowStory.args.items.map((footcell, f) => (
+				<DataGridCell {...footcell} key={`f_${f}`} />
+			))}
+		</DataGridFootRow>
+	</DataGridFoot>
+</DataGrid>
+
+
 
 
 export const Default = Template.bind({})
@@ -31,60 +79,13 @@ Default.parameters = {
   },
 }
 Default.args = {
-  children: [
-	<DataGridHead key="1">
-		<DataGridHeadRow>
-			<DataGridHeadCell>Head Cell</DataGridHeadCell>
-			<DataGridHeadCell sortable>Head Cell</DataGridHeadCell>
-			<DataGridHeadCell sortable>Head Cell</DataGridHeadCell>
-			<DataGridHeadCell>Head Cell</DataGridHeadCell>
-			<DataGridHeadCell>Head Cell</DataGridHeadCell>
-		</DataGridHeadRow>
-	</DataGridHead>,
-	<DataGridBody key="2">
-	  	<DataGridRow>
-		  <DataGridHeadCell>DataGridCell</DataGridHeadCell>
-		  <DataGridCell>DataGridCell</DataGridCell>
-		  <DataGridCell>DataGridCell</DataGridCell>
-		  <DataGridCell>DataGridCell</DataGridCell>
-		  <DataGridCell>DataGridCell</DataGridCell>
-		</DataGridRow>
-	</DataGridBody>,
-	<DataGridFoot key="3">
-		<DataGridFootRow>
-		  <DataGridHeadCell>DataGridCell</DataGridHeadCell>
-		  <DataGridCell>DataGridCell</DataGridCell>
-		  <DataGridCell>DataGridCell</DataGridCell>
-		  <DataGridCell>DataGridCell</DataGridCell>
-		  <DataGridCell>DataGridCell</DataGridCell>
-		</DataGridFootRow>
-	</DataGridFoot>
-  ]
-}
-
-export const Auto = Template.bind({})
-Auto.parameters = {
-	  docs: {
-		description: { 
-		  story: "Juno DataGrid set to auto-size."
-		}
-	  },
-	}
-Auto.args = {
-	auto: true,
-	children: [
-		<DataGridHead key="1">
-			<DataGridHeadRow>
-				<DataGridCell>Auto DataGrid Cell</DataGridCell>
-				<DataGridCell>Auto DataGrid Cell</DataGridCell>
-			</DataGridHeadRow>
-		</DataGridHead>,
-		<DataGridBody key="2">
-			<DataGridRow>
-				<DataGridCell>Auto DataGrid Cell</DataGridCell>
-				<DataGridCell>Auto DataGrid Cell</DataGridCell>
-			</DataGridRow>
-		</DataGridBody>
+	head: "foo",
+	items: [
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
 	]
 }
 
@@ -92,125 +93,55 @@ export const Selectable = Template.bind({})
 Selectable.parameters = {
 	docs: {
 		description: {
-			story: "Juno DataGrid with selectable items/rows"
+			story: "Jono Datagrid with Selectable rows"
 		}
 	}
 }
 Selectable.args = {
 	selectable: true,
-	children: [
-		<DataGridHead key="1">
-			<DataGridHeadRow key="1_1">
-				<DataGridHeadCell key="1_1_1">Item Title</DataGridHeadCell>
-				<DataGridHeadCell key="1_1_2">Item Data 1</DataGridHeadCell>
-				<DataGridHeadCell key="1_1_3">Item Data 2</DataGridHeadCell>
-				<DataGridHeadCell key="1_1_4">Item Options</DataGridHeadCell>
-			</DataGridHeadRow>
-		</DataGridHead>,
-		<DataGridBody key="2">
-			<DataGridRow key="2_1">
-				<DataGridCell key="2_1_1">Item Title</DataGridCell>
-				<DataGridCell key="2_1_2">Item Data 1</DataGridCell>
-				<DataGridCell key="2_1_3">Item Data 2</DataGridCell>
-				<DataGridCell key="2_1_4">Item Options</DataGridCell>
-			</DataGridRow>
-			<DataGridRow key="2_2" selected >
-				<DataGridCell key="2_2_1">Selected Item Title</DataGridCell>
-				<DataGridCell key="2_2_2">Item Data 1</DataGridCell>
-				<DataGridCell key="2_2_3">Item Data 2</DataGridCell>
-				<DataGridCell key="2_2_4">Item Options</DataGridCell>
-			</DataGridRow>
-			<DataGridRow key="2_3" disabled >
-				<DataGridCell key="2_3_1">Disabled Item Title</DataGridCell>
-				<DataGridCell key="2_3_2">Item Data 1</DataGridCell>
-				<DataGridCell key="2_3_3">Item Data 2</DataGridCell>
-				<DataGridCell key="2_3_4">Item Options</DataGridCell>
-			</DataGridRow>
-		</DataGridBody>
+	items: [
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
 	]
 }
 
-export const WithToolbar = Template.bind({})
-WithToolbar.parameters = {
+export const WithHeadAndFoot = WithHeadAndFootTemplate.bind({})
+WithHeadAndFoot.parameters = {
 	docs: {
 		description: {
-			story: "Juno Datagrid with Toolbar"
+			story: "Juno DataGrid complete with Head and Foot"
 		}
 	}
 }
-WithToolbar.args = {
-	showToolbar: true,
-	children: [
-		<DataGridHead key="1">
-			<DataGridHeadRow key="1_1">
-				<DataGridHeadCell key="1_1_1" sortable>Column Title</DataGridHeadCell>
-				<DataGridHeadCell key="1_1_2">Column Title</DataGridHeadCell>
-				<DataGridHeadCell key="1_1_3">Column Title</DataGridHeadCell>
-				<DataGridHeadCell key="1_1_4">Column Title</DataGridHeadCell>
-			</DataGridHeadRow>
-		</DataGridHead>,
-		<DataGridBody key="2">
-			<DataGridRow key="2_1">
-				<DataGridCell key="2_1_1">Item Title</DataGridCell>
-				<DataGridCell key="2_1_2">Item Data 1</DataGridCell>
-				<DataGridCell key="2_1_3">Item Data 2</DataGridCell>
-				<DataGridCell key="2_1_4">Item Options</DataGridCell>
-			</DataGridRow>
-			<DataGridRow key="2_2" selected >
-				<DataGridCell key="2_2_1">Selected Item Title</DataGridCell>
-				<DataGridCell key="2_2_2">Item Data 1</DataGridCell>
-				<DataGridCell key="2_2_3">Item Data 2</DataGridCell>
-				<DataGridCell key="2_2_4">Item Options</DataGridCell>
-			</DataGridRow>
-			<DataGridRow key="2_3" disabled >
-				<DataGridCell key="2_3_1">Disabled Item Title</DataGridCell>
-				<DataGridCell key="2_3_2">Item Data 1</DataGridCell>
-				<DataGridCell key="2_3_3">Item Data 2</DataGridCell>
-				<DataGridCell key="2_3_4">Item Options</DataGridCell>
-			</DataGridRow>
-		</DataGridBody>
+WithHeadAndFoot.args = {
+	items: [
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
 	]
 }
 
-export const FullyFeatured = Template.bind({})
+export const FullyFeatured = WithHeadAndFootTemplate.bind({})
 FullyFeatured.parameters = {
 	docs: {
 		description: {
-			story: "Fully Featured DataGrid"
+			story: "Fully-Featured Juno DataGrid complete with Head, Foot, and Toolbar"
 		}
 	}
 }
 FullyFeatured.args = {
-	selectable: true,
 	showToolbar: true,
-	children: [
-		<DataGridHead key="1">
-			<DataGridHeadRow key="1_1">
-				<DataGridHeadCell key="1_1_1">Column 1</DataGridHeadCell>
-				<DataGridHeadCell key="1_1_2">Column 2</DataGridHeadCell>
-				<DataGridHeadCell key="1_1_3">Column 3</DataGridHeadCell>
-			</DataGridHeadRow>
-		</DataGridHead>,
-		<DataGridBody key="2">
-			<DataGridRow key="2_1">
-				<DataGridCell key="2_1_1">Item 1</DataGridCell>
-				<DataGridCell key="2_1_2">Item 1</DataGridCell>
-				<DataGridCell key="2_1_3">Item 1</DataGridCell>
-			</DataGridRow>
-			<DataGridRow key="2_2">
-				<DataGridCell key="2_2_1">Item 2</DataGridCell>
-				<DataGridCell key="2_2_2">Item 2</DataGridCell>
-				<DataGridCell key="2_2_3">Item 2</DataGridCell>
-			</DataGridRow>
-		</DataGridBody>,
-		<DataGridFoot key="3">
-			<DataGridFootRow key="3_1">
-				<DataGridCell key="3_1_1">Foot Cell</DataGridCell>
-				<DataGridCell key="3_1_2">Foot Cell</DataGridCell>
-				<DataGridCell key="3_1_3">Foot Cell</DataGridCell>
-			</DataGridFootRow>
-		</DataGridFoot>
+	selectable: true,
+	items: [
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
+		{...DataGridRowStory.args},
 	]
 }
-
-
