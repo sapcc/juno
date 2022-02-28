@@ -1,10 +1,8 @@
 import React, { useState, useMemo } from "react"
 import {
   Button,
-  Modal,
   Spinner,
   Stack,
-  Message,
   Select,
   SelectOption,
   Label,
@@ -113,96 +111,90 @@ const NewCertificate = ({ onClose }) => {
   }
 
   return (
-    <Modal isOpen={true} title="New SSO Cert" close={onClose}>
-      {/* <Message variant="danger">Error</Message> */}
-      <div>
-        In order to create a new SSO certificat you can choose between:
-        <ul>
-          <li className={section}>
-            <div>
-              <b>Autogenerate</b>: the app creates for you a private key and the
-              needed certificate sign request (CSR) which are send automatically
-              to the backend by clicking the button below. As a result you will
-              get a pem coded private key and the SSO certificate. Please
-              remember to secure the private key since it is not saved anywhere
-              else.
-            </div>
-            <div className={section}>
-              <Stack alignment="center" className="">
-                <Button
-                  disabled={processingAuto}
-                  label="Auto"
-                  onClick={onAutoClicked}
-                />
-                {processingAuto && (
-                  <Spinner className="ml-2" variant="primary" />
-                )}
-              </Stack>
-
-              {pemEncodedPrivateKey && (
-                <pre className={`volta-codeblock ${preClasses}`}>
-                  <code className={codeClasses}>{pemEncodedPrivateKey}</code>
-                </pre>
-              )}
-              {/* <Button label="Generate CSR" onClick={onGenerateCSRClicked} /> */}
-              {pemCsr && (
-                <>
-                  <pre className={`volta-codeblock ${preClasses}`}>
-                    <code className={codeClasses}>{pemCsr}</code>
-                  </pre>
-                </>
-              )}
-            </div>
-          </li>
-          <li>
-            <b>Manually</b>: you create your self the certificate sign request
-            (CSR) and paste it in the text area displayed when clicking the
-            button below. As a result you will get a pem coded SSO certificate.
-            Please see following information and examples for creating a
-            certificate sign request (CSR):
-            <a
-              href="https://github.wdf.sap.corp/cc/volta/blob/master/docs/api-v1.md#Sign-a-certificate"
-              target="_blank"
-            >
-              Documentation | Sign a certificate
-            </a>
-            <div className={section}>
-              <Button label="Manually" onClick={onManuallyClicked} />
-            </div>
-          </li>
-        </ul>
-        <div className="select-method">
-          <Label text="Please select how you want to proceed" />
+    <div className="">
+      In order to create a new SSO certificat you can choose between:
+      <ul>
+        <li className={section}>
           <div>
-            <Select name="Simple-Select" onChange={onSelectChanged}>
-              <SelectOption label="Select..." value="" />
-              <SelectOption label="Autogenerate" value="auto" />
-              <SelectOption label="Manually" value="manually" />
-            </Select>
+            <b>Autogenerate</b>: the app creates for you a private key and the
+            needed certificate sign request (CSR) which are send automatically
+            to the backend by clicking the button below. As a result you will
+            get a pem coded private key and the SSO certificate. Please remember
+            to secure the private key since it is not saved anywhere else.
           </div>
+          <div className={section}>
+            <Stack alignment="center" className="">
+              <Button
+                disabled={processingAuto}
+                label="Auto"
+                onClick={onAutoClicked}
+              />
+              {processingAuto && <Spinner className="ml-2" variant="primary" />}
+            </Stack>
+
+            {pemEncodedPrivateKey && (
+              <pre className={`volta-codeblock ${preClasses}`}>
+                <code className={codeClasses}>{pemEncodedPrivateKey}</code>
+              </pre>
+            )}
+            {/* <Button label="Generate CSR" onClick={onGenerateCSRClicked} /> */}
+            {pemCsr && (
+              <>
+                <pre className={`volta-codeblock ${preClasses}`}>
+                  <code className={codeClasses}>{pemCsr}</code>
+                </pre>
+              </>
+            )}
+          </div>
+        </li>
+        <li>
+          <b>Manually</b>: you create your self the certificate sign request
+          (CSR) and paste it in the text area displayed when clicking the button
+          below. As a result you will get a pem coded SSO certificate. Please
+          see following information and examples for creating a certificate sign
+          request (CSR):
+          <a
+            href="https://github.wdf.sap.corp/cc/volta/blob/master/docs/api-v1.md#Sign-a-certificate"
+            target="_blank"
+          >
+            Documentation | Sign a certificate
+          </a>
+          <div className={section}>
+            <Button label="Manually" onClick={onManuallyClicked} />
+          </div>
+        </li>
+      </ul>
+      <div className="select-method">
+        <Label text="Please select how you want to proceed" />
+        <div>
+          <Select name="Simple-Select" onChange={onSelectChanged}>
+            <SelectOption label="Select..." value="" />
+            <SelectOption label="Autogenerate" value="auto" />
+            <SelectOption label="Manually" value="manually" />
+          </Select>
         </div>
-        {showAutoSection && (
-          <div className={section}>
-            <TextInputRow
-              label="Description"
-              onChange={function noRefCheck() {}}
-            />
-          </div>
-        )}
-        {showManuallySection && (
-          <div className={section}>
-            <TextInputRow
-              label="Description"
-              onChange={function noRefCheck() {}}
-            />
-            <TextareaRow
-              label="Certificate sign request"
-              onChange={function noRefCheck() {}}
-            />
-          </div>
-        )}
       </div>
-    </Modal>
+      {showAutoSection && (
+        <div className={section}>
+          <TextInputRow
+            label="Description"
+            onChange={function noRefCheck() {}}
+          />
+        </div>
+      )}
+      {showManuallySection && (
+        <div className={section}>
+          <TextInputRow
+            label="Description"
+            onChange={function noRefCheck() {}}
+          />
+          <TextareaRow
+            label="Certificate sign request"
+            onChange={function noRefCheck() {}}
+          />
+        </div>
+      )}
+    </div>
   )
 }
 

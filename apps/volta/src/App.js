@@ -25,7 +25,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "react-query"
-import Certificates from "./components/Certificates"
+import CertificateList from "./components/CertificateList"
 import NewCertificate from "./components/NewCertificate"
 import Messages from "./components/Messages"
 import { StateProvider, useDispatch } from "./components/StateProvider"
@@ -37,7 +37,6 @@ import { MessagesStateProvider } from "./components/MessagesProvider"
 const URL_STATE_KEY = "volta"
 
 const App = (props) => {
-  const [processing, setProcessing] = useState(false)
   const [showNewCertView, setShowNewCertView] = useState(false)
   const dispatch = useDispatch()
 
@@ -92,12 +91,10 @@ const App = (props) => {
                 <MessagesStateProvider>
                   <Messages />
 
-                  {processing && <Spinner variant="primary" />}
-
                   {auth && showNewCertView && (
                     <NewCertificate onClose={onCloseNewCertView} />
                   )}
-                  <Certificates />
+                  <CertificateList />
                 </MessagesStateProvider>
               </ContentArea>
             </ContentAreaWrapper>
