@@ -8,6 +8,7 @@ import {
   Label,
   TextInputRow,
   TextareaRow,
+  ContentAreaHeading,
 } from "juno-ui-components"
 import { newCertificateMutation } from "../queries"
 import {
@@ -17,6 +18,11 @@ import {
   generateCsr,
 } from "../helpers"
 import { useGlobalState } from "./StateProvider"
+
+const bodyArea = `
+bg-theme-background-lvl-3
+p-6
+`
 
 const preClasses = `
 whitespace-pre-wrap
@@ -40,17 +46,40 @@ const NewCertificate = ({ onClose }) => {
   const [pemCsr, setPemCsr] = useState(null)
   const [sso, setSso] = useState(null)
   const [pemEncodedPrivateKey, setPemEncodedPrivateKey] = useState(null)
-  const [processingAuto, setProcessingAuto] = useState(false)
+  const [generatingCSR, setGeneretingCSR] = useState(false)
   const [error, setError] = useState(null)
-  const [showAutoSection, setShowAutoSection] = useState(false)
-  const [showManuallySection, setShowManuallySection] = useState(false)
 
   const algorithm = useMemo(() => getAlgorithm(ALGORITHM_KEY), [ALGORITHM_KEY])
 
   const mutation = newCertificateMutation()
 
-  const onAutoClicked = () => {
-    setProcessingAuto(true)
+  const submit = () => {
+    // TODO validation
+
+    // make request
+    mutation.mutate(
+      {
+        bearerToken: auth.attr?.id_token,
+        csr: pemCsr,
+      },
+      {
+        onSuccess: (data, variables, context) => {
+          // I will fire first
+        },
+        onError: (error, variables, context) => {
+          console.log("onError: ", error.message)
+          console.log("variables: ", variables)
+          console.log("context: ", context)
+        },
+        onSettled: (data, error, variables, context) => {
+          // I will fire first
+        },
+      }
+    )
+  }
+
+  const generateCSR = () => {
+    setGeneretingCSR(true)
     setPemEncodedPrivateKey(null)
     setPemCsr(null)
     // get the keys first
@@ -76,42 +105,29 @@ const NewCertificate = ({ onClose }) => {
             .catch((error) => {
               console.log("error: ", error)
             })
-            .then((newPemCsr) => {
-              // make request
-              mutation.mutate(
-                {
-                  bearerToken: auth.attr?.id_token,
-                  csr: newPemCsr,
-                },
-                {
-                  onSuccess: (data, variables, context) => {
-                    // I will fire first
-                  },
-                  onError: (error, variables, context) => {
-                    console.log("onError: ", error.message)
-                    console.log("variables: ", variables)
-                    console.log("context: ", context)
-                  },
-                  onSettled: (data, error, variables, context) => {
-                    // I will fire first
-                  },
-                }
-              )
-            })
         })
     })
   }
-  const onManuallyClicked = () => {}
 
-  const onSelectChanged = (e) => {
-    setShowAutoSection(false)
-    setShowManuallySection(false)
-    if (e.target.value === "auto") setShowAutoSection(true)
-    else if (e.target.value === "manually") setShowManuallySection(true)
+  const textAreaHelpText = () => {
+    return (
+      <>
+        Create a certificate sign request (CSR) and paste it in the text area.
+        Please see following information and examples for creating a certificate
+        sign request (CSR):{" "}
+        <a
+          href="https://github.wdf.sap.corp/cc/volta/blob/master/docs/api-v1.md#Sign-a-certificate"
+          target="_blank"
+        >
+          Documentation | Sign a certificate
+        </a>
+      </>
+    )
   }
 
   return (
-    <div className="">
+    <div className={bodyArea}>
+      <ContentAreaHeading heading="New SSO Certificates" />
       In order to create a new SSO certificat you can choose between:
       <ul>
         <li className={section}>
@@ -123,21 +139,11 @@ const NewCertificate = ({ onClose }) => {
             to secure the private key since it is not saved anywhere else.
           </div>
           <div className={section}>
-            <Stack alignment="center" className="">
-              <Button
-                disabled={processingAuto}
-                label="Auto"
-                onClick={onAutoClicked}
-              />
-              {processingAuto && <Spinner className="ml-2" variant="primary" />}
-            </Stack>
-
             {pemEncodedPrivateKey && (
               <pre className={`volta-codeblock ${preClasses}`}>
                 <code className={codeClasses}>{pemEncodedPrivateKey}</code>
               </pre>
             )}
-            {/* <Button label="Generate CSR" onClick={onGenerateCSRClicked} /> */}
             {pemCsr && (
               <>
                 <pre className={`volta-codeblock ${preClasses}`}>
@@ -159,41 +165,35 @@ const NewCertificate = ({ onClose }) => {
           >
             Documentation | Sign a certificate
           </a>
-          <div className={section}>
-            <Button label="Manually" onClick={onManuallyClicked} />
-          </div>
         </li>
       </ul>
-      <div className="select-method">
-        <Label text="Please select how you want to proceed" />
-        <div>
-          <Select name="Simple-Select" onChange={onSelectChanged}>
-            <SelectOption label="Select..." value="" />
-            <SelectOption label="Autogenerate" value="auto" />
-            <SelectOption label="Manually" value="manually" />
-          </Select>
-        </div>
+      <div className={section}>
+        <TextInputRow
+          label="Name"
+          required
+          onChange={function noRefCheck() {}}
+        />
+        <TextInputRow label="Description" onChange={function noRefCheck() {}} />
+        <TextInputRow
+          label="User"
+          onChange={function noRefCheck() {}}
+          helptext="Owner for whom the certificate will be issued."
+        />
+        <Stack alignment="center" className="mb-2" distribution="end">
+          <Button
+            disabled={generatingCSR}
+            label="Generate CSR"
+            onClick={generateCSR}
+          />
+          {generatingCSR && <Spinner className="ml-2" variant="primary" />}
+        </Stack>
+        <TextareaRow
+          required
+          label="Certificate sign request (CSR)"
+          onChange={function noRefCheck() {}}
+          helptext={textAreaHelpText()}
+        />
       </div>
-      {showAutoSection && (
-        <div className={section}>
-          <TextInputRow
-            label="Description"
-            onChange={function noRefCheck() {}}
-          />
-        </div>
-      )}
-      {showManuallySection && (
-        <div className={section}>
-          <TextInputRow
-            label="Description"
-            onChange={function noRefCheck() {}}
-          />
-          <TextareaRow
-            label="Certificate sign request"
-            onChange={function noRefCheck() {}}
-          />
-        </div>
-      )}
     </div>
   )
 }
