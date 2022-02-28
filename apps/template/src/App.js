@@ -1,12 +1,14 @@
-import React from "react"
+import React, { useCallback } from "react"
 
 import { exampleFetch as fetchStuff } from "./actions"
+import useStore from "./store"
+import NewItemForm from "./components/NewItemForm"
 
 import { AppBody, AppIntro, Button, ContentArea, ContentAreaHeading, ContentAreaToolbar, ContentAreaWrapper, ContentContainer, MainContainer, Message, PageFooter, PageHeader, Spinner } from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
-import ContentAreaHeadingStories from "../../../libs/juno-ui-components/src/components/ContentAreaHeading/ContentAreaHeading.stories"
-/* Replace this with your app's name */
+/* IMPORTANT: Replace this with your app's name */
 const URL_STATE_KEY = "template"
+/* --------------------------- */
 
 
 const App = (props) => {
@@ -64,6 +66,10 @@ const App = (props) => {
     }
   }, [apiCallExample])
 
+  const openNewItemForm = useStore(
+    useCallback((state) => state.openNewItemForm)
+  )
+
   return (
     <AppBody>
       <PageHeader heading="Converged Cloud | App Template" />
@@ -83,10 +89,13 @@ const App = (props) => {
 
           {/* This wrapper goes around the content area and content area toolbar */}
           <ContentAreaWrapper>
+            
+            {/* Example component using a Panel */}
+            <NewItemForm />
 
             {/* Add a toolbar if you have action buttons that affect the whole page */}
             <ContentAreaToolbar>
-              <Button icon="addCircle">Add Action</Button>
+              <Button icon="addCircle" onClick={openNewItemForm}>Add Action</Button>
             </ContentAreaToolbar>
 
             
