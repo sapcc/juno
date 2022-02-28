@@ -1,8 +1,10 @@
-import React from "react"
+import React, { useCallback } from "react"
 
 import { exampleFetch as fetchStuff } from "./actions"
+import useStore from "./store"
+import NewItemForm from "./components/NewItemForm"
 
-import { AppBody, AppIntro, Button, ContentArea, ContentAreaHeading, ContentAreaToolbar, ContentAreaWrapper, ContentContainer, MainContainer, Message, Panel, PageFooter, PageHeader, Spinner } from "juno-ui-components"
+import { AppBody, AppIntro, Button, ContentArea, ContentAreaHeading, ContentAreaToolbar, ContentAreaWrapper, ContentContainer, MainContainer, Message, PageFooter, PageHeader, Spinner } from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
 /* IMPORTANT: Replace this with your app's name */
 const URL_STATE_KEY = "template"
@@ -14,7 +16,6 @@ const App = (props) => {
   const [items, setItems] = React.useState(null)
   const [error, setError] = React.useState(null)
   const [statusCode, setStatusCode] = React.useState(null)
-  const [panelOpened, setPanelOpened] = React.useState(false)
   const { embedded } = props
 
   
@@ -65,13 +66,9 @@ const App = (props) => {
     }
   }, [apiCallExample])
 
-  const handleAddClick = () => {
-    setPanelOpened(true)
-  }
-
-  const handlePanelClosed = () => {
-    setPanelOpened(false)
-  }
+  const openNewItemForm = useStore(
+    useCallback((state) => state.openNewItemForm)
+  )
 
   return (
     <AppBody>
@@ -92,44 +89,13 @@ const App = (props) => {
 
           {/* This wrapper goes around the content area and content area toolbar */}
           <ContentAreaWrapper>
-
-            <Panel heading="Panel Title" opened={panelOpened} onClose={handlePanelClosed}>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content</div>
-              <div>Panel Content blah</div>
-              <div className="juno-panel-footer border-t border-t-theme-background-lvl-0 px-8 py-5 flex justify-end w-full">
-                <Button>Do it</Button>
-              </div>
-            </Panel>
+            
+            {/* Example component using a Panel */}
+            <NewItemForm />
 
             {/* Add a toolbar if you have action buttons that affect the whole page */}
             <ContentAreaToolbar>
-              <Button icon="addCircle" onClick={handleAddClick}>Add Action</Button>
+              <Button icon="addCircle" onClick={openNewItemForm}>Add Action</Button>
             </ContentAreaToolbar>
 
             
