@@ -50,6 +50,7 @@ const App = (props) => {
   useEffect(() => {
     if (!auth) return ""
     console.log("auth changed: ", auth)
+    console.log("auth id: ", auth.id_token)
     dispatch({ type: "SET_AUTH", auth })
   }, [auth])
 

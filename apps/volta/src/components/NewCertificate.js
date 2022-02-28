@@ -71,8 +71,9 @@ const NewCertificate = ({ onClose }) => {
           generateCsr(algorithm, newKeys)
             .then((csr) => {
               // convert csr to pem string
-              setPemCsr(csr.toString("pem"))
-              return csr.toString("pem")
+              const pemEncodedCSR = csr.toString("pem")
+              setPemCsr(pemEncodedCSR)
+              return pemEncodedCSR
             })
             .catch((error) => {
               console.log("error: ", error)

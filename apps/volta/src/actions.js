@@ -37,16 +37,25 @@ export const certificates = ({ queryKey }) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${bearerToken}`,
     },
-  }).then(checkStatus)
+  })
+    .then(checkStatus)
+    .then((response) => {
+      return response.json()
+    })
 }
 
 export const createCertificate = (bearerToken, csr, desc) => {
+  const sendBody = JSON.stringify({ csr: csr, description: desc })
+  console.log("body: ", sendBody)
   return fetch(`${ENDPOINT}/galvani-pki/certificate`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${bearerToken}`,
     },
-    body: JSON.stringify({ data: csr, description: desc }),
+    xhrFields: {
+      withCredentials: true,
+    },
+    body: sendBody,
   }).then(checkStatus)
 }
