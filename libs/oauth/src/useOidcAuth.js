@@ -49,6 +49,9 @@ function handleOIDCResponse() {
     let tokenJson = JSON.parse(atob(tokenData))
 
     if (tokenJson.nonce !== storedNonce) return
+    // console.log("=======================================")
+    // console.log(tokenJson)
+    auth["login_name"] = tokenJson.login_name
     auth["first_name"] = tokenJson.first_name
     auth["last_name"] = tokenJson.last_name
     auth["full_name"] = `${tokenJson.first_name} ${tokenJson.last_name}`
