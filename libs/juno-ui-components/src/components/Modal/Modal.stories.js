@@ -29,6 +29,11 @@ export default {
 }
 
 export const Simple = Template.bind({})
+Simple.parameters = {
+  docs: {
+    description: { story: "DO NOT USE!!! The modal component isn't ready to be used."}
+  },
+}
 Simple.args = {
   title: "Simple",
   icon: "attention",
@@ -37,6 +42,11 @@ Simple.args = {
 }
 
 export const CustomContent = Template.bind({})
+CustomContent.parameters = {
+  docs: {
+    description: { story: "DO NOT USE!!! The modal component isn't ready to be used."}
+  },
+}
 CustomContent.args = {
   title: "Custom Content",
   icon: null,
