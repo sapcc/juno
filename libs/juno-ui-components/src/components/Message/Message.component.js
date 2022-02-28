@@ -3,8 +3,7 @@ import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 
 const message = `
-	pr-2
-	sm:pr-4
+	pr-4
 	text-theme-high
 	flex
 	mb-8
@@ -62,8 +61,7 @@ const messageSuccessBg = `
 `
 
 const messageContentStyles = `
-	py-1
-	sm:py-3
+	py-3
 	ml-7
 `
 

@@ -17,9 +17,9 @@ const Template = (args) =>
 export const Default = Template.bind({})
 Default.parameters = {
   docs: {
-	description: { 
-	  story: "Juno DataGridCheckboxCell for use in DataGrid"
-	}
+	  description: { 
+	    story: "Juno DataGridCheckboxCell for use in DataGrid"
+	  }
   },
 }
 Default.args = {}
