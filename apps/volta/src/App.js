@@ -13,6 +13,9 @@ import {
   PageFooter,
   PageHeader,
   Spinner,
+  Panel,
+  PanelBody,
+  PanelFooter,
 } from "juno-ui-components"
 import ContentAreaHeadingStories from "../../../libs/juno-ui-components/src/components/ContentAreaHeading/ContentAreaHeading.stories"
 
@@ -32,12 +35,12 @@ import { StateProvider, useDispatch } from "./components/StateProvider"
 import reducers from "./reducers"
 import HeaderUser from "./components/HeaderUser"
 import { MessagesStateProvider } from "./components/MessagesProvider"
+import Toolbar from "./components/Toolbar"
 
 /* Replace this with your app's name */
 const URL_STATE_KEY = "volta"
 
 const App = (props) => {
-  const [showNewCertView, setShowNewCertView] = useState(false)
   const dispatch = useDispatch()
 
   const { auth, logout } = useOidcAuth({
@@ -55,10 +58,6 @@ const App = (props) => {
 
   // Create a client
   const queryClient = new QueryClient()
-
-  const onCloseNewCertView = () => {
-    setShowNewCertView(false)
-  }
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -78,25 +77,14 @@ const App = (props) => {
 
             <ContentAreaHeading heading="SSO Certificates" />
             <ContentAreaWrapper>
-              <ContentAreaToolbar>
-                <Button
-                  icon="addCircle"
-                  onClick={() => setShowNewCertView(true)}
-                >
-                  Add SSO Cert
-                </Button>
-              </ContentAreaToolbar>
+              <Toolbar />
 
               <ContentArea className="mt-0">
                 <MessagesStateProvider>
                   <Messages />
 
-                  {auth && showNewCertView && (
-                    <NewCertificate
-                      show={showNewCertView}
-                      onClose={onCloseNewCertView}
-                    />
-                  )}
+                  <NewCertificate />
+
                   <CertificateList />
                 </MessagesStateProvider>
               </ContentArea>

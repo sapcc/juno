@@ -1,12 +1,13 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { getCertificates } from "../queries"
-import { useGlobalState } from "./StateProvider"
+import { useGlobalState, useDispatch } from "./StateProvider"
 import { useMessagesDispatch } from "./MessagesProvider"
 import {
   DataList,
   DataListRow,
   DataListCell,
   Spinner,
+  Stack,
 } from "juno-ui-components"
 import CertificateListItem from "./CertificateListItem"
 
@@ -15,11 +16,32 @@ font-bold
 `
 
 const CertificateList = () => {
-  const dispatch = useMessagesDispatch()
+  const [enableCreateSSO, setEnableCreateSSO] = useState(false)
+  const dispatchMessage = useMessagesDispatch()
+  const dispatchGlobals = useDispatch()
   const auth = useGlobalState().auth
   const { isLoading, isError, data, error } = getCertificates(
     auth.attr?.id_token
   )
+
+  // wait until we get the cert list to enable create new sso certs
+  // getCertificates query waits until the id_token exists
+  // once the data appears the create new sso button will be enabled
+  useEffect(() => {
+    if (data) {
+      setEnableCreateSSO(true)
+    }
+  }, [data])
+
+  // just set the state once
+  useEffect(() => {
+    if (enableCreateSSO) {
+      dispatchGlobals({
+        type: "UPDATE_NEW_SSO_ENABLED",
+        enabled: true,
+      })
+    }
+  }, [enableCreateSSO])
 
   useEffect(() => {
     let errMsg = error?.message
@@ -29,7 +51,7 @@ const CertificateList = () => {
       } catch (error) {}
     }
     if (errMsg) {
-      dispatch({
+      dispatchMessage({
         type: "SET_MESSAGE",
         msg: { variant: "error", text: errMsg },
       })
@@ -40,12 +62,16 @@ const CertificateList = () => {
   //   return <span>Loading...</span>
   // }
 
-  console.log("data: ", data)
+  console.log("data: ", data, " loadisLoadingng: ", isLoading)
 
+  // TODO add memo
   return (
     <>
-      {isLoading && !data ? (
-        <Spinner variant="primary" />
+      {isLoading || !data ? (
+        <Stack alignment="center">
+          <Spinner variant="primary" />
+          Loading certificates...
+        </Stack>
       ) : (
         <>
           {data && (
