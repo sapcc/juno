@@ -178,7 +178,7 @@ TextInputRow.propTypes = {
   /** Placeholder for the text input. Will not be visible on floating label inputs. */
   placeholder: PropTypes.string,
   /** Help text */
-  helptext: PropTypes.string,
+  helptext: PropTypes.node,
   /** Specify whether the input is required */
   required: PropTypes.bool,
   /** Pass a className */
