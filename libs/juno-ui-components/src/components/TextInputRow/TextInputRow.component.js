@@ -104,7 +104,7 @@ export const TextInputRow = ({
 
   const handleChange = (event) => {
     setValue(event.target.value)
-    onChange()
+    onChange(event)
   }
 
   const minimizedLabel = (variant, value, focus) => {
