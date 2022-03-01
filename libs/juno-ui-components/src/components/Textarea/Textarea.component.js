@@ -8,6 +8,7 @@ const textareastyles = `
 	leading-4
 	p-3
 	rounded-3px
+	h-[14rem]
 	focus:outline-none
 	focus:ring-2
 	focus:ring-theme-focus
