@@ -15,9 +15,7 @@ const floatingcontainerstyles = `
 `
 
 const floatinglabelcontainerstyles = (minimizedLabel) => {
-
-  return (
-    `
+  return `
     absolute
     top-0
     left-0
@@ -29,7 +27,8 @@ const floatinglabelcontainerstyles = (minimizedLabel) => {
     duration-100 
     ease-in-out
 
-    ${minimizedLabel &&
+    ${
+      minimizedLabel &&
       `
       scale-75
       opacity-75
@@ -39,19 +38,17 @@ const floatinglabelcontainerstyles = (minimizedLabel) => {
       `
     }
   `
-  )
-} 
+}
 
-const floatinginputstyles = (minimizedLabel) => { 
-  
-  return (
-    `
-    ${minimizedLabel ? `
+const floatinginputstyles = (minimizedLabel) => {
+  return `
+    ${
+      minimizedLabel
+        ? `
       px-3
       pt-5
       `
-      :
-      `
+        : `
       p-3 
       pt-4
       `
@@ -59,7 +56,6 @@ const floatinginputstyles = (minimizedLabel) => {
     placeholder-transparent
     w-full
   `
-  )
 }
 
 const helptextstyles = `
@@ -118,14 +114,14 @@ export const TextareaRow = ({
 
   const handleChange = (event) => {
     setValue(event.target.value)
-    onChange()
+    onChange(event)
   }
 
   const minimizedLabel = (variant, value, focus) => {
     if (variant === "floating") {
       if (focus || (value && value.length > 0)) {
         return true
-      } 
+      }
     }
 
     return false
@@ -143,7 +139,8 @@ export const TextareaRow = ({
         className={`juno-label-container ${variantStyle(
           variant,
           "labelcontainer",
-          minimizedLabel(variant, val, focus))}`}
+          minimizedLabel(variant, val, focus)
+        )}`}
       >
         <Label
           text={label}
@@ -163,7 +160,11 @@ export const TextareaRow = ({
           onChange={handleChange}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
-          className={`${variantStyle(variant, "input", minimizedLabel(variant, val, focus))}`}
+          className={`${variantStyle(
+            variant,
+            "input",
+            minimizedLabel(variant, val, focus)
+          )}`}
         />
         {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
       </div>
@@ -181,7 +182,7 @@ TextareaRow.propTypes = {
   /** Id */
   id: PropTypes.string,
   /** Help text */
-  helptext: PropTypes.string,
+  helptext: PropTypes.node,
   /** Placeholder for the text input. Will not be visible on floating label inputs. */
   placeholder: PropTypes.string,
   /** Specify whether the input is required */
