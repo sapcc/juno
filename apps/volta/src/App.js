@@ -78,12 +78,10 @@ const App = (props) => {
             <ContentAreaHeading heading="SSO Certificates" />
             <ContentAreaWrapper>
               <Toolbar />
-
+              <NewCertificate />
               <ContentArea className="mt-0">
                 <MessagesStateProvider>
                   <Messages />
-
-                  <NewCertificate />
 
                   <CertificateList />
                 </MessagesStateProvider>
