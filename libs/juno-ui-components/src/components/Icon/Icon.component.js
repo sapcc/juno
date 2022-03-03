@@ -32,6 +32,24 @@ import Warning from "./icons/warning.svg"
 Generic Icon component.
 */
 
+const anchorIconStyles = `
+	text-current
+	focus:outline-none
+	focus:ring-2
+	focus:ring-theme-focus
+	disabled:opacity-50
+	disabled:cursor-not-allowed
+`
+
+const buttonIconStyles = `
+	inline-block
+	focus:outline-none
+	focus:ring-2
+	focus:ring-theme-focus
+	disabled:opacity-50
+	disabled:cursor-not-allowed
+`
+
 const getColoredSizedIcon = ({icon, color, size, title, className, ...props}) => {	
 		const iconClass = `juno-icon juno-icon-${icon} inline-block fill-current ${color} ${className || ""}`
 	  switch (icon) {
@@ -94,9 +112,30 @@ export const Icon = ({
 	size,
 	title,
 	className,
+	href,
+	onClick,
 	...props
 }) => {
-	return ( getColoredSizedIcon({icon, color, size, title, className, ...props}) )
+	
+	const icn = ( 
+		getColoredSizedIcon({icon, color, size, title, className, ...props})
+	)
+	
+	const button = (
+		<button onClick={onClick} className={`juno-icon-button ${buttonIconStyles}`} >
+			{icn}
+		</button>
+	)
+	
+	const anchor = (
+		<a href={href} className={`juno-icon-link ${anchorIconStyles}`} >
+			{icn}
+		</a>
+	)
+	
+	/* render an <a> if href was passed, otherwise render button if onClick was passes, otherwise render plain icon: */
+	return ( href ? anchor : ( onClick ? button : icn))
+
 }
 
 Icon.propTypes = { 
@@ -137,6 +176,10 @@ Icon.propTypes = {
 	title: PropTypes.string,
 	/** A custom className */
 	className: PropTypes.string,
+	/** Optionally specify an href. This will render the Icon inside an <code><a></code> element with the given url. */
+	 href: PropTypes.string,
+	 /** Optionally specify a click handler. This will render the icon inside a <code><button></code> with the given handler.  */
+	 onClick: PropTypes.func,
 }
 
 Icon.defaultProps = {
@@ -144,5 +187,7 @@ Icon.defaultProps = {
 	color: "",
 	size: "24",
 	title: "",
-	className: ""
+	className: "",
+	href:"",
+	onClick: undefined,
 }

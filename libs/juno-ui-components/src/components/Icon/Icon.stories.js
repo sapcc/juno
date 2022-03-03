@@ -200,3 +200,12 @@ Warning.args = {
   ...Default.args,
   icon: "warning"
 }
+
+export const IconAsLink = Template.bind({})
+IconAsLink.args = {
+  ...Default.args,
+  href: "#",
+  title: "The Icon is a link"
+}
+
+
