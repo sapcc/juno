@@ -69,7 +69,7 @@ const App = (props) => {
         {/* Wrap everything except page header and footer in a main container */}
         <MainContainer>
           {/* Exchange image with app specific image (save in src/img/). If you don't have a background graphic for your app just remove the whole className prop */}
-          <ContentContainer className="bg-[url('img/app_bg.svg')]">
+          <ContentContainer className="bg-[url('img/app_bg_example.svg')]">
             {/* App intro text */}
             <AppIntro>
               Volta UI manages your SSO certificates stored in a Vault instance.
