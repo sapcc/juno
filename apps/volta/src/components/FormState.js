@@ -5,10 +5,8 @@ const FormDispatch = createContext(null)
 
 const initialState = { name: "", description: "", identity: "", csr: "" }
 
-const setAttribute = (state, { attr }) => {
-  console.log("setAttribute: ", attr)
-  // return { ...state, attr }
-  return state
+const setAttribute = (state, { key, value }) => {
+  return { ...state, [key]: value }
 }
 
 function reducer(state, action) {
