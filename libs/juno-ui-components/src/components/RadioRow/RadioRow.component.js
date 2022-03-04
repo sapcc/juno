@@ -76,7 +76,7 @@ RadioRow.propTypes = {
   /** Id */
   id: PropTypes.string,
   /** Help text */
-  helptext: PropTypes.string,
+  helptext: PropTypes.node,
   /** Pass a className */
   className: PropTypes.string,
   /** Pass to disable the checkbox */
