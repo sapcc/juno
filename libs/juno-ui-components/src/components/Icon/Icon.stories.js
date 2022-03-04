@@ -208,4 +208,12 @@ IconAsLink.args = {
   title: "The Icon is a link"
 }
 
+export const IconAsButton = Template.bind({})
+IconAsButton.args = {
+  ...Default.args,
+  title: "The Icon is a button",
+  onClick: () => { console.log('click')},
+}
+
+
 
