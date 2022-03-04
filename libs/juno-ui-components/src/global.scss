@@ -531,6 +531,8 @@
   // DataList
   --color-datalist-row-border: var(--color-background-lvl-5-raw);
   --color-datalistrow-selected: var(--color-accent-raw);
+  // CodeBlock
+  //--color-codeblock-bg: ;
 }
 
 .theme-dark {
@@ -771,6 +773,8 @@
   // DataList
   --color-datalist-row-border: var(--color-background-lvl-5-raw);
   --color-datalistrow-selected: var(--color-accent-raw);
+  // CodeBlock
+  --color-codeblock-bg: var(--color-background-lvl-8-raw);
 }
 
 // Grid configuration
