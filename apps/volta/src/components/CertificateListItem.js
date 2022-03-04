@@ -21,11 +21,11 @@ const CertificateListItem = ({ item, revoke }) => {
 
   return (
     <DataListRow>
-      <DataListCell width={15}>{item.description}</DataListCell>
+      <DataListCell width={15}>{item.name}</DataListCell>
       <DataListCell width={40}>
         <div className={serial}>{item.serial}</div>
       </DataListCell>
-      <DataListCell width={15}>{item.common_name}</DataListCell>
+      <DataListCell width={15}>{item.identity}</DataListCell>
       <DataListCell width={20}>{expiresAtString}</DataListCell>
       <DataListCell width={10}>
         <ClickableIcon icon="deleteForever" onClick={onRevokeClicked} />

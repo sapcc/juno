@@ -12,7 +12,6 @@ import {
   TextInputRow,
   TextareaRow,
   Message,
-  Checkbox,
 } from "juno-ui-components"
 import {
   getAlgorithm,
@@ -26,20 +25,7 @@ import { useGlobalState } from "./StateProvider"
 
 const ALGORITHM_KEY = "RSA-2048"
 
-const preClasses = `
-whitespace-pre-wrap
-bg-theme-background-lvl-5
-p-4
-mt-2
-rounded
-max-h-40
-overflow-y-scroll
-`
-const codeClasses = `
-w-full 
-break-all
-`
-const validateForm = ({ name, description, csr, pkCopied }) => {
+export const validateForm = ({ name, description, csr }) => {
   const invalidItems = {}
 
   if (!name || name.length === 0) {
@@ -62,23 +48,15 @@ const validateForm = ({ name, description, csr, pkCopied }) => {
     invalidItems["csr"].push(`Certificate signing request can't be blank`)
   }
 
-  if (pkCopied !== undefined && !pkCopied) {
-    if (!invalidItems["pkCopied"]) invalidItems["pkCopied"] = []
-    invalidItems["pkCopied"].push(
-      `Please check you have copied the private key`
-    )
-  }
-
   return invalidItems
 }
 
-const Form = ({ onValidationChanged }, ref) => {
+const Form = ({ onFormSubmitted }, ref) => {
   const dispatch = useFormDispatch()
   const formState = useFormState()
   const auth = useGlobalState().auth
 
-  const [sso, setSso] = useState(null)
-  const [pemEncodedPrivateKey, setPemEncodedPrivateKey] = useState(null)
+  const [pemPrivateKey, setPemPrivateKey] = useState(null)
   const [generatingCSR, setGeneretingCSR] = useState(false)
   const [formValidation, setFormValidation] = useState({})
 
@@ -97,7 +75,7 @@ const Form = ({ onValidationChanged }, ref) => {
 
   const generateCSR = () => {
     setGeneretingCSR(true)
-    setPemEncodedPrivateKey(null)
+    setPemPrivateKey(null)
     dispatch({
       type: "SET_ATTR",
       key: "csr",
@@ -109,7 +87,7 @@ const Form = ({ onValidationChanged }, ref) => {
         // encode private key
         pemEncodeKey(newKeys.privateKey)
           .then((pemKey) => {
-            setPemEncodedPrivateKey(pemKey)
+            setPemPrivateKey(pemKey)
             onAttrChanged("pkCopied", false)
             return newKeys
           })
@@ -132,46 +110,46 @@ const Form = ({ onValidationChanged }, ref) => {
 
   useImperativeHandle(ref, () => ({
     submit() {
-      // TODO validation
-      const data = formState
-      console.log("submit: ", data)
-      const formValidation = validateForm({ data })
-      console.log("formValidation: ", formValidation)
-      setFormValidation(formValidation)
-      // make request
-      // mutation.mutate(
-      //   {
-      //     bearerToken: auth.attr?.id_token,
-      //     csr: pemCsr,
-      //   },
-      //   {
-      //     onSuccess: (data, variables, context) => {
-      //       // I will fire first
-      //     },
-      //     onError: (error, variables, context) => {
-      //       console.log("onError: ", error.message)
-      //       console.log("variables: ", variables)
-      //       console.log("context: ", context)
-      //     },
-      //     onSettled: (data, error, variables, context) => {
-      //       // I will fire first
-      //     },
-      //   }
-      // )
+      const validation = validateForm(formState)
+      setFormValidation(validation)
+      if (Object.keys(validation).length > 0) {
+        return
+      }
+      mutation.mutate(
+        {
+          bearerToken: auth.attr?.id_token,
+          formState: formState,
+        },
+        {
+          onSuccess: (data) => {
+            onFormSubmitted(pemPrivateKey, data?.certificate)
+          },
+          onError: (error) => {
+            console.log("onError: ", error.message)
+            console.log("variables: ", variables)
+            console.log("context: ", context)
+          },
+          onSettled: (data, error, variables, context) => {
+            // Invalidate certificates query
+          },
+        }
+      )
     },
   }))
 
   const textAreaHelpText = () => {
     return (
       <>
-        Create a certificate sign request (CSR) and paste it in the text area.
-        Please see following information and examples for creating a certificate
-        sign request (CSR):{" "}
+        You can either create your own certificate signing request (CSR) using
+        an existing private key or we can create one for you (this will also
+        create a new private key; we will not store this key). Please see
+        following information and examples for creating a certificate signing
+        request:{" "}
         <a
           href="https://github.wdf.sap.corp/cc/volta/blob/master/docs/api-v1.md#Sign-a-certificate"
           target="_blank"
         >
-          Documentation | Sign a certificate
+          Documentation | Signing a certificate
         </a>
       </>
     )
@@ -188,11 +166,6 @@ const Form = ({ onValidationChanged }, ref) => {
   const onAttrChanged = (key, value) => {
     dispatch({ type: "SET_ATTR", key: key, value: value })
   }
-
-  // update form validation so it can be used outside of the form
-  useEffect(() => {
-    onValidationChanged(validateForm(formState))
-  }, [formState])
 
   return (
     <>
@@ -237,6 +210,7 @@ const Form = ({ onValidationChanged }, ref) => {
         <Button
           disabled={generatingCSR}
           label="Generate CSR"
+          size="small"
           onClick={generateCSR}
         />
         {generatingCSR && <Spinner className="ml-2" variant="primary" />}
@@ -246,7 +220,7 @@ const Form = ({ onValidationChanged }, ref) => {
         label="Certificate sign request (CSR)"
         value={formState.csr}
         onChange={(e) => {
-          setPemEncodedPrivateKey(null)
+          setPemPrivateKey(null)
           onAttrChanged("csr", e.target.value)
         }}
         helptext={
@@ -256,29 +230,6 @@ const Form = ({ onValidationChanged }, ref) => {
         }
         className={formValidation["csr"] && "text-theme-danger border-2"}
       />
-
-      {pemEncodedPrivateKey && (
-        <div className="mt-10">
-          <Message
-            text="Please copy the private key below and store it in a save place. This key is being used to create the certificate sign request and it is not store anyware."
-            variant="warning"
-          />
-          <pre className={preClasses}>
-            <code className={codeClasses}>{pemEncodedPrivateKey}</code>
-          </pre>
-
-          <Stack alignment="center" className="mt-5">
-            <Checkbox
-              onChange={(e) => {
-                onAttrChanged("pkCopied", e.target.checked)
-              }}
-            />
-            <span className="ml-2">
-              I have copied the private key and stored it in a save place.
-            </span>
-          </Stack>
-        </div>
-      )}
     </>
   )
 }

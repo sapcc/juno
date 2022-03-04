@@ -11,7 +11,7 @@ export const getCertificates = (bearerToken) => {
 
 // add new cert
 export const newCertificateMutation = () => {
-  return useMutation(({ bearerToken, csr }) =>
-    createCertificate(bearerToken, csr)
+  return useMutation(({ bearerToken, formState }) =>
+    createCertificate(bearerToken, formState)
   )
 }
