@@ -202,6 +202,34 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toHaveAttribute("title", "My custom title")
   })
   
+  test("renders an <a> element if href is passed as prop", async () => {
+    render(<Icon href="#" />)
+    expect(screen.getByRole("link")).toBeInTheDocument()
+    expect(screen.getByRole("link")).toHaveAttribute("href", "#")
+  })
+  
+  test("renders a <button> element if a click handler is passed", async () => {
+    const handleClick = jest.fn();
+    render(<Icon onClick={handleClick} />);
+    expect(screen.getByRole("button")).toBeInTheDocument()
+  })
+  
+  test('an onClick handler is called as passed', () => {
+    const handleClick = jest.fn();
+    render(<Icon onClick={handleClick} />);
+    screen.getByRole('button').click();
+    expect(handleClick).toHaveBeenCalled();
+  })
+  
+  test("renders an <a> element and ignore onClick handler if both href and onClick handler are passed", async () => {
+    const handleClick = jest.fn();
+    render(<Icon href="#" onClick={handleClick}/>)
+    expect(screen.getByRole("link")).toBeInTheDocument()
+    expect(screen.getByRole("link")).toHaveAttribute("href", "#")
+    screen.getByRole('link').click();
+    expect(handleClick).not.toHaveBeenCalled();
+  })
+  
   // Test all props:
   
   test("renders all props as passed", async () => {
