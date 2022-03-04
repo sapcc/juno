@@ -9,10 +9,16 @@ describe("Message", () => {
 		expect(screen.getByTestId("my-message")).toBeInTheDocument()
 	  })
   
-	test("renders an info Message per default if no variant passed", async () => {
+	test("renders an info Message by default if no variant passed", async () => {
 		render(<Message data-testid="my-message" />)
 		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")
 		expect(screen.getByRole("img")).toHaveClass("text-theme-info")
+	})
+
+	test("renders a Message where the icon is not allowed to shrink", async () => {
+		render(<Message data-testid="my-message" />)
+		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")
+		expect(screen.getByRole("img")).toHaveClass("shrink-0")
 	})
 	
 	test("renders an info Message as passed", async () => {
