@@ -66,7 +66,7 @@ SelectRow.propTypes = {
   /** Id */
   id: PropTypes.string,
   /** Help text */
-  helptext: PropTypes.string,
+  helptext: PropTypes.node,
   /** Specify whether the select is required */
   required: PropTypes.bool,
   /** Pass a classname */
