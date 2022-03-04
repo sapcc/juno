@@ -17,34 +17,54 @@ const floatingcontainerstyles = `
 const stackedlabelcontainerstyles = `
 `
 
-const floatinglabelcontainerstyles = `
-	absolute
-	top-0
-	left-0
-	p-2.5
-	pointer-events-none
-	transform 
-	origin-top-left 
-	transition-all 
-	duration-100 
-	ease-in-out
-`
+const floatinglabelcontainerstyles = (minimizedLabel) => {
 
-const minimizedlabelcontainerstyles = `
-	scale-75
-	opacity-75
-	pt-3
-	-translate-y-2.5
-	translate-x-1
-`
+  return (
+    `
+    absolute
+    top-0
+    left-0
+    p-2.5
+    pointer-events-none
+    transform 
+    origin-top-left 
+    transition-all 
+    duration-100 
+    ease-in-out
 
-const floatinginputstyles = `
-	p-3 
-	pt-4
-	h-16
-	placeholder-transparent
-	w-full
-`
+    ${minimizedLabel &&
+      `
+      scale-75
+      opacity-75
+      pt-3
+      -translate-y-2
+      translate-x-1
+      `
+    }
+  `
+  )
+} 
+
+const floatinginputstyles = (minimizedLabel) => { 
+  
+  return (
+    `
+    ${minimizedLabel ? `
+      px-3
+      pt-5
+      pb-1  
+      `
+      :
+      `
+      p-3 
+      pt-4
+      `
+    }
+    placeholder-transparent
+    w-full
+  `
+  )
+}
 
 const helptextstyles = `
 	text-xs
@@ -56,16 +76,16 @@ const stackedinputstyles = `
 	w-full
 `
 
-const variantStyle = (variant, element) => {
+const variantStyle = (variant, element, isLabelMinimized) => {
   switch (variant) {
     case "floating":
       switch (element) {
         case "container":
           return floatingcontainerstyles
         case "labelcontainer":
-          return floatinglabelcontainerstyles
+          return floatinglabelcontainerstyles(isLabelMinimized)
         case "input":
-          return floatinginputstyles
+          return floatinginputstyles(isLabelMinimized)
       }
     case "stacked":
       switch (element) {
@@ -104,21 +124,17 @@ export const TextInputRow = ({
 
   const handleChange = (event) => {
     setValue(event.target.value)
-    onChange()
+    onChange(event)
   }
 
   const minimizedLabel = (variant, value, focus) => {
     if (variant === "floating") {
-      if (focus) {
-        return minimizedlabelcontainerstyles
-      } else if (value && value.length > 0) {
-        return minimizedlabelcontainerstyles
-      } else {
-        return ""
-      }
-    } else {
-      return ""
+      if (focus || (value && value.length > 0)) {
+        return true
+      } 
     }
+
+    return false
   }
 
   return (
@@ -132,8 +148,8 @@ export const TextInputRow = ({
       <div
         className={`juno-label-container ${variantStyle(
           variant,
-          "labelcontainer"
-        )} ${minimizedLabel(variant, val, focus)}`}
+          "labelcontainer",
+          minimizedLabel(variant, val, focus))}`}
       >
         <Label
           text={label}
@@ -154,7 +170,7 @@ export const TextInputRow = ({
           onChange={handleChange}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
-          className={`${variantStyle(variant, "input")}`}
+          className={`${variantStyle(variant, "input", minimizedLabel(variant, val, focus))}`}
         />
         {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
       </div>
@@ -178,7 +194,7 @@ TextInputRow.propTypes = {
   /** Placeholder for the text input. Will not be visible on floating label inputs. */
   placeholder: PropTypes.string,
   /** Help text */
-  helptext: PropTypes.string,
+  helptext: PropTypes.node,
   /** Specify whether the input is required */
   required: PropTypes.bool,
   /** Pass a className */

@@ -165,5 +165,5 @@ LinkAsButtonWithIcon.args = {
   ...Primary.args,
   icon: "warning",
   label: "Link as button with Icon",
-  href: "#link"
+  href: "#"
 }

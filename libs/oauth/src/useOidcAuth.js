@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 const CACHE_STATE_KEY = "state"
 const CACHE_NONCE_KEY = "nonce"
@@ -120,6 +120,14 @@ const useOidcAuth = (options) => {
     },
     [setAuth]
   )
+
+  useEffect(() => {
+    if (!auth) return
+
+    let timer = setTimeout(() => setAuth(null), auth.expiresAt - Date.now())
+
+    return () => clearTimeout(timer)
+  }, [setAuth, auth])
 
   let result = { login, logout, error: null, isProcessing: false }
 
