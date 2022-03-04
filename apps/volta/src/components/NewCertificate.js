@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react"
 import { Button, Panel, PanelBody, PanelFooter } from "juno-ui-components"
 import { useGlobalState, useDispatch } from "./StateProvider"
 import { FormStateProvider } from "./FormState"
-import Form from "./Form"
+import CertificateForm from "./CertificateForm"
 import SSO from "./SSO"
 
 const NewCertificate = () => {
@@ -14,7 +14,7 @@ const NewCertificate = () => {
 
   const onPanelClose = () => {
     dispatch({ type: "SHOW_NEW_SSO", show: false })
-    // reset from results
+    // reset form results
     setPk(null)
     setSsoCert(null)
     setFormResutlsCopied(false)
@@ -47,7 +47,10 @@ const NewCertificate = () => {
               <SSO pk={pk} ssoCert={ssoCert} onCopied={onFormResutlsCopied} />
             ) : (
               <FormStateProvider>
-                <Form ref={formRef} onFormSubmitted={onFormSubmitted} />
+                <CertificateForm
+                  ref={formRef}
+                  onFormSubmitted={onFormSubmitted}
+                />
               </FormStateProvider>
             )}
           </>

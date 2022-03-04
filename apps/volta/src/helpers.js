@@ -14,7 +14,6 @@ export const generateCsr = (algorithm, keys) => {
   // Certificate extensions
   return x509.SubjectKeyIdentifierExtension.create(keys.publicKey).then(
     (extension) => {
-      console.log("extension: ", extension)
       extensions.push(extension)
       return x509.Pkcs10CertificateRequestGenerator.create({
         name: "", //volta will set these values
@@ -99,4 +98,15 @@ export const getAlgorithm = (keyAlgorithm) => {
     default:
   }
   return alg
+}
+
+const parseError = (error) => {
+  let errMsg = error
+  if (error?.message) {
+    errMsg = error?.message
+    try {
+      errMsg = JSON.parse(error?.message).msg
+    } catch (error) {}
+  }
+  return errMsg
 }

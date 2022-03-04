@@ -12,6 +12,7 @@ import {
   TextInputRow,
   TextareaRow,
   Message,
+  Form,
 } from "juno-ui-components"
 import {
   getAlgorithm,
@@ -22,6 +23,7 @@ import {
 import { newCertificateMutation } from "../queries"
 import { useFormState, useFormDispatch } from "./FormState"
 import { useGlobalState } from "./StateProvider"
+import { parseError } from "../helpers"
 
 const ALGORITHM_KEY = "RSA-2048"
 
@@ -51,17 +53,22 @@ export const validateForm = ({ name, description, csr }) => {
   return invalidItems
 }
 
-const Form = ({ onFormSubmitted }, ref) => {
+const CertificateForm = ({ onFormSubmitted }, ref) => {
   const dispatch = useFormDispatch()
   const formState = useFormState()
   const auth = useGlobalState().auth
 
+  // const [error, setError] = useState(null)
   const [pemPrivateKey, setPemPrivateKey] = useState(null)
   const [generatingCSR, setGeneretingCSR] = useState(false)
   const [formValidation, setFormValidation] = useState({})
 
   const algorithm = useMemo(() => getAlgorithm(ALGORITHM_KEY), [ALGORITHM_KEY])
-  const mutation = newCertificateMutation()
+  const { isLoading, isError, error, data, isSuccess, mutate } =
+    newCertificateMutation()
+
+  console.log("isLoading: ", isLoading)
+  console.log("MUTATION ERROR", error)
 
   useEffect(() => {
     if (auth && auth?.attr?.login_name) {
@@ -115,25 +122,10 @@ const Form = ({ onFormSubmitted }, ref) => {
       if (Object.keys(validation).length > 0) {
         return
       }
-      mutation.mutate(
-        {
-          bearerToken: auth.attr?.id_token,
-          formState: formState,
-        },
-        {
-          onSuccess: (data) => {
-            onFormSubmitted(pemPrivateKey, data?.certificate)
-          },
-          onError: (error) => {
-            console.log("onError: ", error.message)
-            console.log("variables: ", variables)
-            console.log("context: ", context)
-          },
-          onSettled: (data, error, variables, context) => {
-            // Invalidate certificates query
-          },
-        }
-      )
+      mutate({
+        bearerToken: auth.attr?.id_token,
+        formState: formState,
+      })
     },
   }))
 
@@ -168,7 +160,7 @@ const Form = ({ onFormSubmitted }, ref) => {
   }
 
   return (
-    <>
+    <Form autoComplete="off" onSubmit={(e) => e.preventDefault()}>
       <TextInputRow
         label="Name"
         required
@@ -230,8 +222,8 @@ const Form = ({ onFormSubmitted }, ref) => {
         }
         className={formValidation["csr"] && "text-theme-danger border-2"}
       />
-    </>
+    </Form>
   )
 }
 
-export default forwardRef(Form)
+export default forwardRef(CertificateForm)
