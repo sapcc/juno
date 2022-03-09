@@ -1,5 +1,14 @@
 import { useCallback, useEffect, useState } from "react"
 
+/**
+ * This hook implements the implicit flow of the oidc specification.
+ * The user is redirected to the Identity Provider and after a successful login,
+ * he returns to the app. Here, this hook extracts the credentials from the
+ * URL parameters and returns them.
+ *
+ * In addition, "silent" mode is supported. The ID token is silently renewed
+ * with the help of an iFrame.
+ */
 const CACHE_STATE_KEY = "state"
 const CACHE_NONCE_KEY = "nonce"
 const CACHE_URI_KEY = "uri"
@@ -11,6 +20,7 @@ function randomString() {
   )
 }
 
+// Extract auth data from id_token
 function decodeIDToken(idToken) {
   const [_, tokenData] = idToken.split(".")
   try {
@@ -69,10 +79,12 @@ function handleOIDCResponse() {
 
   const [_, silent] = state.split(":")
 
+  // silent means the response came within an iframe, it is the refresh mode.
+  // In this case use the postMessage API to inform the parent window.
   if (silent) {
     window.parent.postMessage({ newAuth: auth }, window.location.origin)
   } else {
-    // return to the URL before the OIDC redirect.
+    // Return to the URL before the redirect.
     window.history.replaceState("", "", lastURL || "/")
   }
   return auth
@@ -83,6 +95,7 @@ function handleOIDCResponse() {
 function oidcRequest({ issuerURL, clientID, silent }) {
   // generate a random string and extend it with silent prop
   let state = randomString()
+  // add silent flag to state to inform response handler about the silence mode.
   if (silent) state += ":silent"
   // generate a random string to use as nonce (it is encoded into the id_token from provider)
   const nonce = randomString()
