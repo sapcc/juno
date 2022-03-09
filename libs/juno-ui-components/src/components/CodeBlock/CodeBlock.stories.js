@@ -23,6 +23,28 @@ Default.args = {
 	children: "Some code goes here",
 }
 
+export const MultiLine = Template.bind({})
+MultiLine.parameters = {
+	docs: {
+		description: {
+			story: "Multiline CodeBlock"
+		}
+	}
+}
+MultiLine.args = {
+	children: 
+`<html lang="en">
+<head>
+	<title="Multi-line Html" />
+</head>
+<body>
+	<main>
+	</main>
+</body>
+</html>
+`
+}
+
 export const noWrap = Template.bind({})
 noWrap.parameters = {
   docs: {
