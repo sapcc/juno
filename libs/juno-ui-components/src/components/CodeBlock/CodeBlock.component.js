@@ -21,7 +21,7 @@ export const CodeBlock = ({
 	...props
 }) => {
 	return (
-		<div className={`juno-codeblock ${codeBlockBaseStyles} ${ !wrap ? nonWrapStyles : ''} `} >
+		<div className={`juno-codeblock ${codeBlockBaseStyles} ${ !wrap ? nonWrapStyles : ''} ${className}`} {...props} >
 			<pre>
 				<code className={`${codeStyles}`} >
 					{children}
