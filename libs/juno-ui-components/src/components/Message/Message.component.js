@@ -18,6 +18,7 @@ const messageBorderStyles = `
 	self-stretch
 	border-l-4
 	mr-6
+	shrink-0
 `
 
 const messageDefault = `
@@ -130,7 +131,7 @@ export const Message = ({
 			{...props}
 		>
 			<div className={`juno-message-border ${messageBorderStyles} ${variantClass(variant)}`}></div>
-			<Icon icon={ getMuiIcon(variant) } color={ 'text-theme-' + variant } />
+			<Icon icon={ getMuiIcon(variant) } color={ 'text-theme-' + variant } className="shrink-0" />
 			<div className={`juno-message-content ${messageContentStyles}`}>
 				{title ?  <h1 className={`${messageHeading}`}>{title}</h1> : ""}
 				<div>{ children ? children : text }</div>

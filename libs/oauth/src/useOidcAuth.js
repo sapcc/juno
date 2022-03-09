@@ -1,13 +1,17 @@
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
+/**
+ * This hook implements the implicit flow of the oidc specification.
+ * The user is redirected to the Identity Provider and after a successful login,
+ * he returns to the app. Here, this hook extracts the credentials from the
+ * URL parameters and returns them.
+ *
+ * In addition, "silent" mode is supported. The ID token is silently renewed
+ * with the help of an iFrame.
+ */
 const CACHE_STATE_KEY = "state"
 const CACHE_NONCE_KEY = "nonce"
 const CACHE_URI_KEY = "uri"
-
-let queryString = window.location.search || window.location.hash
-if (queryString[0] === "#") queryString = queryString.substring(1)
-
-const searchParams = new URLSearchParams(queryString)
 
 function randomString() {
   return (
@@ -16,16 +20,31 @@ function randomString() {
   )
 }
 
+// Extract auth data from id_token
+function decodeIDToken(idToken) {
+  const [_, tokenData] = idToken.split(".")
+  try {
+    return JSON.parse(atob(tokenData))
+  } catch (e) {
+    return null
+  }
+}
+
 // This function processes the callback from the OIDC.
 function handleOIDCResponse() {
-  // get the id_token from URL
+  let queryString = window.location.search || window.location.hash
+  if (queryString[0] === "#") queryString = queryString.substring(1)
+
+  const searchParams = new URLSearchParams(queryString)
   const id_token = searchParams.get("id_token")
-  // return if no id_token available
-  if (!id_token) return
-  // get the state from URL
   const state = searchParams.get("state")
-  // return if no state available
-  if (!state) return
+  const error = searchParams.get("error")
+
+  searchParams.delete("id_token")
+  searchParams.delete("state")
+  searchParams.delete("error")
+
+  if (!id_token && !state && !error) return
 
   // get state and last URL from the local store (browser)
   const storedState = window.sessionStorage.getItem(CACHE_STATE_KEY)
@@ -36,47 +55,58 @@ function handleOIDCResponse() {
   window.sessionStorage.removeItem(CACHE_NONCE_KEY)
   window.sessionStorage.removeItem(CACHE_URI_KEY)
 
-  // return if state is not equal to the cached state
-  if (state !== storedState) return
+  const auth = (() => {
+    if (error) return { error }
 
-  // return to the URL before the OIDC redirect.
-  window.history.replaceState("", "", lastURL || "/")
+    // return if state is not equal to the cached state
+    if (state !== storedState) return { error: "Compromised id token" }
 
-  // construct auth object
-  const auth = { id_token }
-  try {
-    const [_, tokenData] = id_token.split(".")
-    let tokenJson = JSON.parse(atob(tokenData))
+    const tokenData = decodeIDToken(id_token)
+    if (!tokenData || tokenData.nonce !== storedNonce)
+      return { error: "Compromised id token content" }
 
-    if (tokenJson.nonce !== storedNonce) return
-    // console.log("=======================================")
-    // console.log(tokenJson)
-    auth["login_name"] = tokenJson.login_name || tokenJson.sub
-    auth["first_name"] = tokenJson.first_name
-    auth["last_name"] = tokenJson.last_name
-    auth["full_name"] = `${tokenJson.first_name} ${tokenJson.last_name}`
-    auth["email"] = tokenJson.mail
-    auth["expiresAt"] = tokenJson.exp * 1000
-    auth["expiresAtDate"] = new Date(tokenJson.exp * 1000)
-  } catch (e) {}
+    return {
+      id_token,
+      login_name: tokenData.login_name || tokenData.sub,
+      first_name: tokenData.first_name,
+      last_name: tokenData.last_name,
+      full_name: `${tokenData.first_name} ${tokenData.last_name}`,
+      email: tokenData.mail,
+      expiresAt: tokenData.exp * 1000,
+      expiresAtDate: new Date(tokenData.exp * 1000),
+    }
+  })()
 
+  const [_, silent] = state.split(":")
+
+  // silent means the response came within an iframe, it is the refresh mode.
+  // In this case use the postMessage API to inform the parent window.
+  if (silent) {
+    window.parent.postMessage({ newAuth: auth }, window.location.origin)
+  } else {
+    // Return to the URL before the redirect.
+    window.history.replaceState("", "", lastURL || "/")
+  }
   return auth
 }
 
 // This function makes the oidc id_token flow
-function oidcRequest({ issuerURL, clientID }) {
-  // generate a random string to use as state
-  const state = randomString()
+// silent option is used to refresh id_token in the background (silently) using iframe.
+function oidcRequest({ issuerURL, clientID, silent }) {
+  // generate a random string and extend it with silent prop
+  let state = randomString()
+  // add silent flag to state to inform response handler about the silence mode.
+  if (silent) state += ":silent"
   // generate a random string to use as nonce (it is encoded into the id_token from provider)
   const nonce = randomString()
 
   // store state, nonce and current URL to the local store (browser)
   // state is used to verify that the response is not sabotaged.
-  window.sessionStorage.setItem("state", state)
+  window.sessionStorage.setItem(CACHE_STATE_KEY, state)
   // nonce is used to verify that the token has not been sabotaged
-  window.sessionStorage.setItem("nonce", nonce)
+  window.sessionStorage.setItem(CACHE_NONCE_KEY, nonce)
   // current URL is saved to return to this URL after the OIDC dance
-  window.sessionStorage.setItem("uri", window.location.href)
+  window.sessionStorage.setItem(CACHE_URI_KEY, window.location.href)
 
   // build the OIDC URL
   let url = `${issuerURL}/oauth2/authorize`
@@ -87,13 +117,33 @@ function oidcRequest({ issuerURL, clientID }) {
   url += `&state=${state}`
   url += `&nonce=${nonce}`
 
-  // redirect to this URL
-  window.location.replace(url)
+  if (silent) {
+    // refresh token using iframe and postMessage API
+    const iframe = document.createElement("iframe")
+    url += "&prompt=none"
+    iframe.setAttribute("src", url)
+    iframe.setAttribute("width", 0)
+    iframe.setAttribute("height", 0)
+    document.body.append(iframe)
+  } else {
+    // redirect to this URL
+    window.location.replace(url)
+  }
 }
 
 // This function removes cached token from storage.
-function oidcLogout(issuerURL) {
-  window.location.replace(`${issuerURL}/oauth2/logout`)
+function oidcLogout(issuerURL, { silent }) {
+  if (silent) {
+    // refresh token using iframe and postMessage API
+    const iframe = document.createElement("iframe")
+    url += "&prompt=none"
+    iframe.setAttribute("src", `${issuerURL}/oauth2/logout`)
+    iframe.setAttribute("width", 0)
+    iframe.setAttribute("height", 0)
+    document.body.append(iframe)
+  } else {
+    window.location.replace(`${issuerURL}/oauth2/logout`)
+  }
 }
 
 let initialized = false
@@ -107,37 +157,64 @@ let initialized = false
  * @returns {Object} {id_token,first_name,last_name,full_name,email}
  */
 const useOidcAuth = (options) => {
-  const { clientID, issuerURL, initialLogin } = options || {}
+  const { clientID, issuerURL, initialLogin, refresh } = options || {}
   const [auth, setAuth] = useState(handleOIDCResponse())
+
   const login = useCallback(() => {
-    oidcRequest({ issuerURL, clientID })
+    oidcRequest({ issuerURL, clientID, silent: false })
   }, [clientID, issuerURL])
 
   const logout = useCallback(
     (options) => {
-      if (options?.resetOIDCSession) oidcLogout(issuerURL)
+      if (options?.resetOIDCSession)
+        oidcLogout(issuerURL, { silent: options.silent !== false })
       else setAuth(null)
     },
     [setAuth]
   )
 
-  let result = { login, logout, error: null, isProcessing: false }
+  useEffect(() => {
+    const listener = (event) => {
+      if (event?.origin !== window.origin || !event?.data?.newAuth) return
+      setAuth(event.data.newAuth)
+    }
+
+    window.addEventListener("message", listener, false)
+    return () => window.removeEventListener("message", listener)
+  }, [setAuth])
+
+  useEffect(() => {
+    if (!auth || !auth.expiresAt) return
+
+    // refresh token 10 seconds before expiration
+    let timer = setTimeout(
+      () => oidcRequest({ issuerURL, clientID, silent: true }),
+      auth.expiresAt - Date.now() - 10000
+    )
+    return () => clearTimeout(timer)
+  }, [setAuth, auth])
+
+  let result = {
+    auth,
+    login,
+    logout,
+    loggedIn: !!auth?.id_token,
+    isProcessing: false,
+  }
+
+  if (!auth && !initialized && initialLogin) {
+    result.isProcessing = true
+    oidcRequest({ issuerURL, clientID, silent: false })
+  }
 
   if (!clientID || !issuerURL) {
     const error =
       "clientID or issuerURL are undefined. Please provide a clientID and issuerURL."
     console.warn(error)
-    return { ...result, error }
+    result.error = error
   }
 
-  if (!auth && !initialized && initialLogin) {
-    oidcRequest({ issuerURL, clientID })
-    return { ...result, isProcessing: true }
-  }
-
-  initialized = true
-
-  return { ...result, auth }
+  return result
 }
 
 export default useOidcAuth
