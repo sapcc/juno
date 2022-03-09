@@ -43,7 +43,7 @@ const URL_STATE_KEY = "volta"
 const App = (props) => {
   const dispatch = useDispatch()
 
-  const { auth, logout } = useOidcAuth({
+  const { auth, loggedIn, logout } = useOidcAuth({
     issuerURL: props.issuerURL,
     clientID: props.clientID,
     initialLogin: true,
@@ -63,7 +63,7 @@ const App = (props) => {
     <QueryClientProvider client={queryClient}>
       <AppBody>
         <PageHeader heading="Converged Cloud | Volta">
-          {auth && <HeaderUser name={auth.full_name} logout={logout} />}
+          {loggedIn && <HeaderUser name={auth.full_name} logout={logout} />}
         </PageHeader>
 
         {/* Wrap everything except page header and footer in a main container */}
