@@ -13,14 +13,14 @@ Explicit
 import { useOidcAuth } from "oauth"
 
 const App = () => {
-  const { auth, login, logout, error, isProcessing } = useOidcAuth({
+  const { auth, login, logout, error, isProcessing, loggedIn } = useOidcAuth({
     issuerURL: "ISSUER_URL",
     clientID: "CLIENT_ID",
   })
 
   return (
     <div>
-      {auth ? (
+      {loggedIn ? (
         <div>
           <h1>Hi {auth.first_name}</h1>
           <p>{auth.full_name}</p>
@@ -42,7 +42,7 @@ Implicit
 import { useOidcAuth } from "oauth"
 
 const App = () => {
-  const { auth, logout, login, isProcessing, error } = useOidcAuth({
+  const { auth, logout, login, isProcessing, error, loggedIn } = useOidcAuth({
     issuerURL: "ISSUER_URL",
     clientID: "CLIENT_ID",
     initialLogin: true,
@@ -50,7 +50,7 @@ const App = () => {
 
   return (
     <div>
-      {auth ? (
+      {loggedIn ? (
         <div>
           <h1>Hi {auth.full_name}</h1>
           <Button onClick={() => logout({ resetOIDCSession: true })}>
