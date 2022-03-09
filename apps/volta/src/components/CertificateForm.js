@@ -25,6 +25,7 @@ import { useFormState, useFormDispatch } from "./FormState"
 import { useGlobalState } from "./StateProvider"
 import { parseError } from "../helpers"
 import { useMessagesDispatch } from "./MessagesProvider"
+import { useQueryClient } from "react-query"
 
 const ALGORITHM_KEY = "RSA-2048"
 
@@ -59,6 +60,7 @@ const CertificateForm = ({ onFormSuccess, onFormLoading }, ref) => {
   const formState = useFormState()
   const auth = useGlobalState().auth
   const dispatchMessage = useMessagesDispatch()
+  const queryClient = useQueryClient()
 
   const [pemPrivateKey, setPemPrivateKey] = useState(null)
   const [formValidation, setFormValidation] = useState({})
@@ -156,10 +158,25 @@ const CertificateForm = ({ onFormSuccess, onFormLoading }, ref) => {
       if (Object.keys(validation).length > 0) {
         return
       }
-      mutate({
-        bearerToken: auth.attr?.id_token,
-        formState: formState,
-      })
+      mutate(
+        {
+          bearerToken: auth.attr?.id_token,
+          formState: formState,
+        },
+        {
+          onSuccess: (data, variables, context) => {
+            dispatchMessage({
+              type: "SET_MESSAGE",
+              msg: {
+                variant: "success",
+                text: <span>Successfully create SSO cert</span>,
+              },
+            })
+            // refetch cert list
+            queryClient.invalidateQueries("certificates")
+          },
+        }
+      )
     },
   }))
 

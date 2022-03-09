@@ -77,7 +77,7 @@ const CertificateList = () => {
           {data && (
             <DataList>
               <DataListRow>
-                <DataListCell className={datListHeaderItem} width={15}>
+                <DataListCell className={datListHeaderItem} width={20}>
                   Name
                 </DataListCell>
                 <DataListCell className={datListHeaderItem} width={40}>
@@ -86,7 +86,7 @@ const CertificateList = () => {
                 <DataListCell className={datListHeaderItem} width={15}>
                   User name / ID
                 </DataListCell>
-                <DataListCell className={datListHeaderItem} width={20}>
+                <DataListCell className={datListHeaderItem} width={15}>
                   Expiration date
                 </DataListCell>
                 <DataListCell

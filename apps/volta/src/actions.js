@@ -52,13 +52,22 @@ export const createCertificate = (bearerToken, formState) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${bearerToken}`,
     },
-    xhrFields: {
-      withCredentials: true,
-    },
     body: sendBody,
   })
     .then(checkStatus)
     .then((response) => {
       return response.json()
     })
+}
+
+export const revokeCertificate = (bearerToken, serial) => {
+  const sendBody = JSON.stringify({ serial: serial })
+  return fetch(`${ENDPOINT}/galvani-pki/certificate`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${bearerToken}`,
+    },
+    body: sendBody,
+  }).then(checkStatus)
 }
