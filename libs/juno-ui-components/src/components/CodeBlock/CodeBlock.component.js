@@ -2,9 +2,12 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const codeBlockBaseStyles = `
-	text-sm
 	p-6
 	bg-theme-code-block
+`
+
+const codeStyles = `
+	text-sm
 `
 
 const nonWrapStyles = `
@@ -20,7 +23,7 @@ export const CodeBlock = ({
 	return (
 		<div className={`juno-codeblock ${codeBlockBaseStyles} ${ !wrap ? nonWrapStyles : ''} `} >
 			<pre>
-				<code>
+				<code className={`${codeStyles}`} >
 					{children}
 				</code>
 			</pre>
