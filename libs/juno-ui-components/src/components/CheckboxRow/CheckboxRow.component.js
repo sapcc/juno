@@ -85,7 +85,7 @@ CheckboxRow.propTypes = {
   /** Id */
   id: PropTypes.string,
   /** Help text */
-  helptext: PropTypes.string,
+  helptext: PropTypes.node,
   /** Specify whether the checkbox is required */
   required: PropTypes.bool,
   /** Pass a custom className */

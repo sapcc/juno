@@ -80,7 +80,7 @@ SwitchRow.propTypes = {
   /** Disabled */
   disabled: PropTypes.bool,
   /** Help text */
-  helptext: PropTypes.string,
+  helptext: PropTypes.node,
   /** Specify whether the Switch is required */
   required: PropTypes.bool,
   /** Pass a className */
