@@ -24,6 +24,7 @@ import { newCertificateMutation } from "../queries"
 import { useFormState, useFormDispatch } from "./FormState"
 import { useGlobalState } from "./StateProvider"
 import { parseError } from "../helpers"
+import { useMessagesDispatch } from "./MessagesProvider"
 
 const ALGORITHM_KEY = "RSA-2048"
 
@@ -53,23 +54,43 @@ export const validateForm = ({ name, description, csr }) => {
   return invalidItems
 }
 
-const CertificateForm = ({ onFormSubmitted }, ref) => {
+const CertificateForm = ({ onFormSuccess, onFormLoading }, ref) => {
   const dispatch = useFormDispatch()
   const formState = useFormState()
   const auth = useGlobalState().auth
+  const dispatchMessage = useMessagesDispatch()
 
-  // const [error, setError] = useState(null)
   const [pemPrivateKey, setPemPrivateKey] = useState(null)
-  const [generatingCSR, setGeneretingCSR] = useState(false)
   const [formValidation, setFormValidation] = useState({})
 
   const algorithm = useMemo(() => getAlgorithm(ALGORITHM_KEY), [ALGORITHM_KEY])
+
+  // useMutation can't create a subscription like for useQuery. State can't be shared
+  // https://github.com/tannerlinsley/react-query/issues/2304
   const { isLoading, isError, error, data, isSuccess, mutate } =
     newCertificateMutation()
 
-  console.log("isLoading: ", isLoading)
-  console.log("MUTATION ERROR", error)
+  // on error add to the provider
+  useEffect(() => {
+    if (!isError) return
+    const errMsg = parseError(error)
+    dispatchMessage({
+      type: "SET_MESSAGE",
+      msg: { variant: "error", text: errMsg },
+    })
+  }, [isError])
 
+  useEffect(() => {
+    if (!onFormSuccess) return
+    onFormSuccess(pemPrivateKey, data?.certificate)
+  }, [isSuccess])
+
+  useEffect(() => {
+    if (!onFormLoading) return
+    onFormLoading(isLoading)
+  }, [isLoading])
+
+  // onload set the identity attributes
   useEffect(() => {
     if (auth && auth?.attr?.login_name) {
       dispatch({
@@ -81,7 +102,6 @@ const CertificateForm = ({ onFormSubmitted }, ref) => {
   }, [])
 
   const generateCSR = () => {
-    setGeneretingCSR(true)
     setPemPrivateKey(null)
     dispatch({
       type: "SET_ATTR",
@@ -89,34 +109,48 @@ const CertificateForm = ({ onFormSubmitted }, ref) => {
       value: "",
     })
     // get the keys first
-    generateKeys(algorithm)
-      .then((newKeys) => {
-        // encode private key
-        pemEncodeKey(newKeys.privateKey)
-          .then((pemKey) => {
-            setPemPrivateKey(pemKey)
-            onAttrChanged("pkCopied", false)
-            return newKeys
-          })
-          .catch((error) => {
-            // TODO break process
-            console.log("error: ", error)
-          })
-          .then((newKeys) => {
-            generateCsr(algorithm, newKeys)
-              .then((csr) => {
-                onAttrChanged("csr", csr.toString("pem"))
+    generateKeys(algorithm).then((newKeys) => {
+      // encode private key
+      pemEncodeKey(newKeys?.privateKey)
+        .then((pemKey) => {
+          // save the private key pem encoded
+          setPemPrivateKey(pemKey)
+          // create csr
+          generateCsr(algorithm, newKeys)
+            .then((csr) => {
+              onAttrChanged("csr", csr.toString("pem"))
+            })
+            .catch((error) => {
+              console.error("generateCsr: ", error)
+              dispatchMessage({
+                type: "SET_MESSAGE",
+                msg: {
+                  variant: "error",
+                  text: "Error generating certificate signing request. Please check the console for details.",
+                },
               })
-              .catch((error) => {
-                console.log("error: ", error)
-              })
+            })
+        })
+        .catch((error) => {
+          console.error("pemEncodeKey: ", error)
+          dispatchMessage({
+            type: "SET_MESSAGE",
+            msg: {
+              variant: "error",
+              text: "Error generating certificate signing request. Please check the console for details.",
+            },
           })
-      })
-      .then(() => setGeneretingCSR(false))
+        })
+    })
   }
 
   useImperativeHandle(ref, () => ({
     submit() {
+      // reset panel messages
+      dispatchMessage({
+        type: "RESET_MESSAGE",
+      })
+      // check validaton
       const validation = validateForm(formState)
       setFormValidation(validation)
       if (Object.keys(validation).length > 0) {
@@ -199,13 +233,7 @@ const CertificateForm = ({ onFormSubmitted }, ref) => {
         className={formValidation["identity"] && "text-theme-danger border-2"}
       />
       <Stack alignment="center" className="mb-2" distribution="end">
-        <Button
-          disabled={generatingCSR}
-          label="Generate CSR"
-          size="small"
-          onClick={generateCSR}
-        />
-        {generatingCSR && <Spinner className="ml-2" variant="primary" />}
+        <Button label="Generate CSR" size="small" onClick={generateCSR} />
       </Stack>
       <TextareaRow
         required

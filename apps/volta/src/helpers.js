@@ -12,7 +12,7 @@ export const generateCsr = (algorithm, keys) => {
   // attributes.push(new x509.ChallengePasswordAttribute(password));
 
   // Certificate extensions
-  return x509.SubjectKeyIdentifierExtension.create(keys.publicKey).then(
+  return x509.SubjectKeyIdentifierExtension.create(keys?.publicKey).then(
     (extension) => {
       extensions.push(extension)
       return x509.Pkcs10CertificateRequestGenerator.create({
@@ -35,8 +35,8 @@ export const pemEncodeKey = (key) => {
   // set the format
   // KeyFormat = "jwk" | "pkcs8" | "raw" | "spki";
   let KeyFormat = "raw"
-  if (key.type === "public") KeyFormat = "spki"
-  else if (key.type === "private") KeyFormat = "pkcs8"
+  if (key?.type === "public") KeyFormat = "spki"
+  else if (key?.type === "private") KeyFormat = "pkcs8"
 
   // export crypto key
   return crypto.subtle.exportKey(KeyFormat, key).then((exportedKey) => {
@@ -100,8 +100,8 @@ export const getAlgorithm = (keyAlgorithm) => {
   return alg
 }
 
-const parseError = (error) => {
-  let errMsg = error
+export const parseError = (error) => {
+  let errMsg = JSON.stringify(error)
   if (error?.message) {
     errMsg = error?.message
     try {

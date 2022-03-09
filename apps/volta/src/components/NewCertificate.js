@@ -4,13 +4,17 @@ import { useGlobalState, useDispatch } from "./StateProvider"
 import { FormStateProvider } from "./FormState"
 import CertificateForm from "./CertificateForm"
 import SSO from "./SSO"
+import { MessagesStateProvider } from "./MessagesProvider"
+import Messages from "./Messages"
 
 const NewCertificate = () => {
   const showPanel = useGlobalState().globals.showNewSSO
   const dispatch = useDispatch()
+
   const [pk, setPk] = useState(null)
   const [ssoCert, setSsoCert] = useState(null)
   const [formResutlsCopied, setFormResutlsCopied] = useState(false)
+  const [isFormLoading, setIsFormLoading] = useState(false)
 
   const onPanelClose = () => {
     dispatch({ type: "SHOW_NEW_SSO", show: false })
@@ -25,13 +29,17 @@ const NewCertificate = () => {
     formRef.current.submit()
   }
 
-  const onFormSubmitted = (newPk, newssoCert) => {
+  const onFormSuccess = (newPk, newssoCert) => {
     setPk(newPk)
     setSsoCert(newssoCert)
   }
 
   const onFormResutlsCopied = (isCopied) => {
     setFormResutlsCopied(isCopied)
+  }
+
+  const onFormLoading = (isLoading) => {
+    setIsFormLoading(isLoading)
   }
 
   return (
@@ -41,20 +49,24 @@ const NewCertificate = () => {
       onClose={onPanelClose}
     >
       <PanelBody>
-        {showPanel && (
-          <>
-            {ssoCert ? (
-              <SSO pk={pk} ssoCert={ssoCert} onCopied={onFormResutlsCopied} />
-            ) : (
-              <FormStateProvider>
-                <CertificateForm
-                  ref={formRef}
-                  onFormSubmitted={onFormSubmitted}
-                />
-              </FormStateProvider>
-            )}
-          </>
-        )}
+        <MessagesStateProvider>
+          {showPanel && (
+            <>
+              <Messages />
+              {ssoCert ? (
+                <SSO pk={pk} ssoCert={ssoCert} onCopied={onFormResutlsCopied} />
+              ) : (
+                <FormStateProvider>
+                  <CertificateForm
+                    ref={formRef}
+                    onFormSuccess={onFormSuccess}
+                    onFormLoading={onFormLoading}
+                  />
+                </FormStateProvider>
+              )}
+            </>
+          )}
+        </MessagesStateProvider>
       </PanelBody>
       <PanelFooter>
         {ssoCert ? (
@@ -67,7 +79,11 @@ const NewCertificate = () => {
           </Button>
         ) : (
           <>
-            <Button onClick={onPanelClose} variant="subdued">
+            <Button
+              disabled={isFormLoading}
+              onClick={onPanelClose}
+              variant="subdued"
+            >
               Cancel
             </Button>
             <Button onClick={onSaveClicked} variant="primary">

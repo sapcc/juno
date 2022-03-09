@@ -24,12 +24,18 @@ const removeMessage = (state, { id }) => {
   return { ...state, items: newItems }
 }
 
+const resetMessages = (state) => {
+  return { ...state, items: [] }
+}
+
 function reducer(state, action) {
   switch (action.type) {
     case "SET_MESSAGE":
       return setMessage(state, action)
-    case "REMOVE_REMOVE":
+    case "REMOVE_MESSAGE":
       return removeMessage(state, action)
+    case "RESET_MESSAGE":
+      return resetMessages(state, action)
     default:
       return StaticRange
   }
