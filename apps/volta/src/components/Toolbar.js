@@ -17,7 +17,7 @@ const Toolbar = () => {
         disabled={!isNewSSOEnabled}
         onClick={onAddClicked}
       >
-        Add SSO Cert
+        Add SSO cert
       </Button>
     </ContentAreaToolbar>
   )
