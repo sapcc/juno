@@ -16686,6 +16686,61 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"oauth_test@workspace:apps/oauth-test":
+  version: 0.0.0-use.local
+  resolution: "oauth_test@workspace:apps/oauth-test"
+  dependencies:
+    "@babel/core": ^7.17.0
+    "@babel/preset-env": ^7.16.11
+    "@babel/preset-react": ^7.16.7
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.1
+    "@svgr/webpack": ^6.2.1
+    "@testing-library/dom": ^8.11.3
+    "@testing-library/jest-dom": ^5.16.1
+    "@testing-library/react": ^12.1.2
+    "@testing-library/user-event": ^13.5.0
+    assert: ^2.0.0
+    autoprefixer: ^10.4.2
+    babel-jest: ^27.4.6
+    babel-loader: ^8.2.3
+    babel-plugin-macros: ^3.1.0
+    buffer: ^6.0.3
+    bundle-loader: ^0.5.6
+    clean-webpack-plugin: ^4.0.0
+    communicator: "workspace:*"
+    css-loader: ^6.6.0
+    css-minimizer-webpack-plugin: ^3.4.1
+    custom-event-polyfill: ^1.0.7
+    glob: ^7.2.0
+    html-webpack-plugin: ^5.4.0
+    jest: ^27.4.7
+    juno-ui-components: "workspace:*"
+    luxon: ^2.3.0
+    mini-css-extract-plugin: ^2.5.3
+    oauth: "workspace:*"
+    os-browserify: ^0.3.0
+    path-browserify: ^1.0.1
+    postcss: ^8.4.6
+    postcss-loader: ^6.2.1
+    process: ^0.11.10
+    prop-types: ^15.8.1
+    purgecss-webpack-plugin: ^4.1.3
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    react-json-view: ^1.21.3
+    react-refresh: ^0.10.0
+    react-test-renderer: ^17.0.2
+    regenerator-runtime: ^0.13.9
+    sass-loader: ^12.4.0
+    tailwindcss: ^3.0.18
+    url-state-provider: "workspace:*"
+    util: ^0.12.4
+    webpack: ^5.68.0
+    webpack-cli: ^4.9.2
+    webpack-dev-server: ^4.7.4
+  languageName: unknown
+  linkType: soft
+
 "object-assign@npm:^4.0.1, object-assign@npm:^4.1.0, object-assign@npm:^4.1.1":
   version: 4.1.1
   resolution: "object-assign@npm:4.1.1"
