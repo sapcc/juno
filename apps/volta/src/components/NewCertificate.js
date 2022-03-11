@@ -50,9 +50,9 @@ const NewCertificate = () => {
     >
       <PanelBody>
         <MessagesStateProvider>
+          <Messages />
           {showPanel && (
             <>
-              <Messages />
               {ssoCert ? (
                 <SSO pk={pk} ssoCert={ssoCert} onCopied={onFormResutlsCopied} />
               ) : (
