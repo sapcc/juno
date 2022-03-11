@@ -7,6 +7,17 @@ const MessagesDispatch = createContext(null)
 const initialState = { items: [] }
 
 const setMessage = (state, { msg }) => {
+  // check if a message with the same text and variant exists
+  const index = state.items.findIndex((item) => {
+    return (
+      JSON.stringify(item.text) === JSON.stringify(msg.text) &&
+      item.variant === msg.variant
+    )
+  })
+
+  if (index >= 0) {
+    return state
+  }
   let items = state.items.slice()
   msg.id = uniqueId("message-")
   items.push(msg)
