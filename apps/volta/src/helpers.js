@@ -110,3 +110,12 @@ export const parseError = (error) => {
   }
   return errMsg
 }
+
+export const isExpired = (date) => {
+  if (!(date instanceof Date) || date === undefined) {
+    throw new Error("var date muss be an instance of Date")
+  }
+  const now = new Date()
+  if (date < new Date()) return true
+  return false
+}

@@ -77,14 +77,17 @@ const CertificateList = () => {
           {data && (
             <DataList>
               <DataListRow>
-                <DataListCell className={datListHeaderItem} width={20}>
+                <DataListCell className={datListHeaderItem} width={15}>
                   Name
                 </DataListCell>
                 <DataListCell className={datListHeaderItem} width={40}>
                   Serial number
                 </DataListCell>
-                <DataListCell className={datListHeaderItem} width={15}>
+                <DataListCell className={datListHeaderItem} width={10}>
                   User name / ID
+                </DataListCell>
+                <DataListCell className={datListHeaderItem} width={10}>
+                  State
                 </DataListCell>
                 <DataListCell className={datListHeaderItem} width={15}>
                   Expiration date

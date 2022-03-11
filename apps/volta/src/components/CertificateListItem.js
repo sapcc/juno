@@ -5,7 +5,8 @@ import { revokeCertificateMutation } from "../queries"
 import { useGlobalState } from "./StateProvider"
 import { useMessagesDispatch } from "./MessagesProvider"
 import { useQueryClient } from "react-query"
-import { parseError } from "../helpers"
+import { parseError, isExpired } from "../helpers"
+import Badge from "./Badge"
 
 const serial = `
 bg-theme-background-lvl-7
@@ -29,6 +30,14 @@ const CertificateListItem = ({ item }) => {
     if (!item.not_after) return ""
     const date = new Date(item.not_after)
     return date.toLocaleString()
+  }, [item?.not_after])
+
+  const stateBadge = React.useMemo(() => {
+    const date = new Date(item.not_after)
+    if (isExpired(date)) {
+      return <Badge variant="danger" text="Expired" />
+    }
+    return <Badge text="Active" />
   }, [item?.not_after])
 
   const onRemoveConfirmed = () => {
@@ -69,11 +78,12 @@ const CertificateListItem = ({ item }) => {
 
   return (
     <DataListRow>
-      <DataListCell width={20}>{item.name}</DataListCell>
+      <DataListCell width={15}>{item.name}</DataListCell>
       <DataListCell width={40}>
         <div className={serial}>{item.serial}</div>
       </DataListCell>
-      <DataListCell width={15}>{item.identity}</DataListCell>
+      <DataListCell width={10}>{item.identity}</DataListCell>
+      <DataListCell width={10}>{stateBadge}</DataListCell>
       <DataListCell width={15}>{expiresAtString}</DataListCell>
       <DataListCell width={10}>
         <InlineConfirmRemove
