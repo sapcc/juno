@@ -5,6 +5,11 @@ const panelBodyClasses = `
   overflow-auto
 `
 
+const bodyContentClasses = `
+  px-8
+  py-4
+`
+
 /**
  * The panel body component. The main (form) content for the panel goes here.
  */
@@ -14,7 +19,7 @@ export const PanelBody = ({ className, footer, children, ...props }) => {
       className={`juno-panel-body ${panelBodyClasses}  ${className}`}
       {...props}  
     >
-      <div className="px-8 py-4">
+      <div className={`juno-panel-body-content ${bodyContentClasses}`}>
         {children}
       </div>
       
