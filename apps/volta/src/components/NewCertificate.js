@@ -48,8 +48,8 @@ const NewCertificate = () => {
       opened={showPanel}
       onClose={onPanelClose}
     >
-      <PanelBody>
-        <MessagesStateProvider>
+      <MessagesStateProvider>
+        <PanelBody>
           <Messages />
           {showPanel && (
             <>
@@ -66,32 +66,33 @@ const NewCertificate = () => {
               )}
             </>
           )}
-        </MessagesStateProvider>
-      </PanelBody>
-      <PanelFooter>
-        {ssoCert ? (
-          <Button
-            disabled={!formResutlsCopied}
-            onClick={onPanelClose}
-            variant="subdued"
-          >
-            Close
-          </Button>
-        ) : (
-          <>
+        </PanelBody>
+
+        <PanelFooter>
+          {ssoCert ? (
             <Button
-              disabled={isFormLoading}
+              disabled={!formResutlsCopied}
               onClick={onPanelClose}
               variant="subdued"
             >
-              Cancel
+              Close
             </Button>
-            <Button onClick={onSaveClicked} variant="primary">
-              Create
-            </Button>
-          </>
-        )}
-      </PanelFooter>
+          ) : (
+            <>
+              <Button
+                disabled={isFormLoading}
+                onClick={onPanelClose}
+                variant="subdued"
+              >
+                Cancel
+              </Button>
+              <Button onClick={onSaveClicked} variant="primary">
+                Create
+              </Button>
+            </>
+          )}
+        </PanelFooter>
+      </MessagesStateProvider>
     </Panel>
   )
 }

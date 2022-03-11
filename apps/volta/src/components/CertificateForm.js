@@ -11,15 +11,14 @@ import {
   Stack,
   TextInputRow,
   TextareaRow,
-  Message,
   Form,
 } from "juno-ui-components"
 import {
-  getAlgorithm,
   generateKeys,
   pemEncodeKey,
   generateCsr,
-} from "../helpers"
+  getAlgorithm,
+} from "../lib/csrUtils"
 import { newCertificateMutation } from "../queries"
 import { useFormState, useFormDispatch } from "./FormState"
 import { useGlobalState } from "./StateProvider"
@@ -88,6 +87,16 @@ const CertificateForm = ({ onFormSuccess, onFormLoading }, ref) => {
     }
   }, [])
 
+  const onGenerateCSRError = () => {
+    dispatchMessage({
+      type: "SET_MESSAGE",
+      msg: {
+        variant: "error",
+        text: "Error generating certificate signing request. Please check the console for details.",
+      },
+    })
+  }
+
   const generateCSR = () => {
     setPemPrivateKey(null)
     dispatch({
@@ -109,24 +118,12 @@ const CertificateForm = ({ onFormSuccess, onFormLoading }, ref) => {
             })
             .catch((error) => {
               console.error("generateCsr: ", error)
-              dispatchMessage({
-                type: "SET_MESSAGE",
-                msg: {
-                  variant: "error",
-                  text: "Error generating certificate signing request. Please check the console for details.",
-                },
-              })
+              onGenerateCSRError()
             })
         })
         .catch((error) => {
           console.error("pemEncodeKey: ", error)
-          dispatchMessage({
-            type: "SET_MESSAGE",
-            msg: {
-              variant: "error",
-              text: "Error generating certificate signing request. Please check the console for details.",
-            },
-          })
+          onGenerateCSRError()
         })
     })
   }
