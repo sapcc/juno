@@ -61,13 +61,11 @@ export const createCertificate = (bearerToken, formState) => {
 }
 
 export const revokeCertificate = (bearerToken, serial) => {
-  const sendBody = JSON.stringify({ serial: serial })
-  return fetch(`${ENDPOINT}/galvani-pki/certificate`, {
+  return fetch(`${ENDPOINT}/galvani-pki/certificate/${serial}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${bearerToken}`,
     },
-    body: sendBody,
   }).then(checkStatus)
 }
