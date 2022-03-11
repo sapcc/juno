@@ -72,27 +72,12 @@ const CertificateForm = ({ onFormSuccess, onFormLoading }, ref) => {
   const { isLoading, isError, error, data, isSuccess, mutate } =
     newCertificateMutation()
 
-  // on error add to the provider
-  useEffect(() => {
-    if (!isError) return
-    const errMsg = parseError(error)
-    dispatchMessage({
-      type: "SET_MESSAGE",
-      msg: { variant: "error", text: errMsg },
-    })
-  }, [isError])
-
-  useEffect(() => {
-    if (!onFormSuccess) return
-    onFormSuccess(pemPrivateKey, data?.certificate)
-  }, [isSuccess])
-
   useEffect(() => {
     if (!onFormLoading) return
     onFormLoading(isLoading)
   }, [isLoading])
 
-  // onload set the identity attributes
+  // on form init set the identity attributes
   useEffect(() => {
     if (auth && auth?.attr?.login_name) {
       dispatch({
@@ -172,8 +157,21 @@ const CertificateForm = ({ onFormSuccess, onFormLoading }, ref) => {
                 text: <span>Successfully create SSO cert</span>,
               },
             })
+            // return response to the parent
+            if (onFormSuccess) {
+              onFormSuccess(pemPrivateKey, data?.certificate)
+            }
             // refetch cert list
             queryClient.invalidateQueries("certificates")
+          },
+          onError: (error, variables, context) => {
+            dispatchMessage({
+              type: "SET_MESSAGE",
+              msg: {
+                variant: "error",
+                text: parseError(error),
+              },
+            })
           },
         }
       )
