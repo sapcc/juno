@@ -16,15 +16,21 @@ const NewItemForm = () => {
     useCallback((state) => state.closeNewItemForm)
   )
 
-
-  return (
-    <Panel heading="Panel Title" opened={panelOpened} onClose={closeNewItemForm}>
-      <PanelBody>
-        <div>Panel Content here</div>
-      </PanelBody>
+  const FormFooter = () => {
+    return (
       <PanelFooter>
         <Button>Do it</Button>
       </PanelFooter>
+    )
+    }
+
+
+  return (
+    <Panel heading="Panel Title" opened={panelOpened} onClose={closeNewItemForm}>
+      <PanelBody footer={FormFooter()}>
+        <div>Panel Content here</div>
+      </PanelBody>
+
     </Panel>
   )
 }
