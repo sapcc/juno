@@ -16,10 +16,14 @@ export default {
 const Template = (args) => (
   <ContentAreaWrapper>
     <Panel heading="My Panel" opened>
-      <PanelBody>This is the panel body</PanelBody>
-      <PanelFooter {...args}>
-        <Button>Do it</Button>
-      </PanelFooter>
+      <PanelBody 
+        footer={
+          <PanelFooter {...args}>
+            <Button>Do it</Button>
+          </PanelFooter>}
+      >
+        This is the panel body
+      </PanelBody>
     </Panel>
     <ContentArea className="dummy-css-ignore h-[250px]">
       Content Area
@@ -31,7 +35,7 @@ export const Footer = Template.bind({})
 Footer.parameters = {
   docs: {
     description: {
-      story: "A container for panel footer elements, typically buttons.",
+      story: "A container for panel footer elements, typically buttons. Add the footer to the PanelBody component via its `footer` parameter.",
     },
   },
 }
