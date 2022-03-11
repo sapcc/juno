@@ -76,17 +76,17 @@ const CertificateList = () => {
         <>
           {data && (
             <DataList>
-              <DataListRow>
+              <DataListRow className="relative">
                 <DataListCell className={datListHeaderItem} width={15}>
                   Name
                 </DataListCell>
                 <DataListCell className={datListHeaderItem} width={40}>
                   Serial number
                 </DataListCell>
-                <DataListCell className={datListHeaderItem} width={10}>
+                <DataListCell className={datListHeaderItem} width={13}>
                   User name / ID
                 </DataListCell>
-                <DataListCell className={datListHeaderItem} width={10}>
+                <DataListCell className={datListHeaderItem} width={13}>
                   State
                 </DataListCell>
                 <DataListCell className={datListHeaderItem} width={15}>
@@ -94,7 +94,7 @@ const CertificateList = () => {
                 </DataListCell>
                 <DataListCell
                   className={datListHeaderItem}
-                  width={10}
+                  width={4}
                 ></DataListCell>
               </DataListRow>
               {data.map((item, i) => (

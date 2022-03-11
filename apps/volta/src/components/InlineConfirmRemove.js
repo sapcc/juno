@@ -1,53 +1,68 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react"
+import React from "react"
 import { Stack, Button, Icon } from "juno-ui-components"
 
-const InlineConfirmRemove = ({ onRemoveConfirmed }, ref) => {
-  const [showConfirm, setShowConfirm] = useState(false)
+const inlineConfirmRemove = (isOpen) => {
+  return `
+      absolute
+      w-full
+      top-full
+      z-50
+      mt-0.5
+      opacity-0
+      transition-opacity
+      ease-out
+      duration-300
+			${isOpen && `opacity-100`}
+		`
+    .replace(/\n/g, " ")
+    .replace(/\s+/g, " ")
+}
 
-  useImperativeHandle(ref, () => ({
-    reset() {
-      setShowConfirm(false)
-    },
-  }))
+const inlineConfirmContainer = `
+rounded
+bg-theme-background-lvl-0
+backdrop-blur
+bg-opacity-70
+px-2
+py-2.5
+text-theme-default 
+text-opacity-70
+`
 
-  const onRemoveClicked = () => {
-    setShowConfirm(true)
-  }
-
-  const onConfirmClicked = () => {
-    if (onRemoveConfirmed) onRemoveConfirmed()
-  }
-
-  const onCancelClicked = () => {
-    setShowConfirm(false)
-  }
-
+const InlineConfirmRemove = ({
+  show,
+  text,
+  actionText,
+  actionIcon,
+  onConfirm,
+  onCancel,
+}) => {
   return (
-    <Stack direction="vertical">
-      {showConfirm ? (
-        <div>
-          <span>Are you sure?</span>
+    <div className={`juno-inline-remove ${inlineConfirmRemove(show)}`}>
+      {show && (
+        <div className={inlineConfirmContainer}>
           <Stack alignment="center">
+            <span className="w-full">{text || "Are you sure?"}</span>
             <Button
-              label="Revoke"
+              icon={actionIcon || "deleteForever"}
+              label={actionText || "Confirm"}
               size="small"
               variant="primary-danger"
-              onClick={onConfirmClicked}
+              onClick={onConfirm}
             />
             <Button
+              icon="cancel"
               className="ml-2"
               label="Cancel"
               size="small"
-              onClick={onCancelClicked}
+              onClick={onCancel}
               variant="subdued"
             />
           </Stack>
         </div>
-      ) : (
-        <Icon icon="deleteForever" onClick={onRemoveClicked} />
       )}
-    </Stack>
+    </div>
   )
 }
 
-export default forwardRef(InlineConfirmRemove)
+export default InlineConfirmRemove

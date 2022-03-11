@@ -1,5 +1,5 @@
-import React, { useRef } from "react"
-import { DataListRow, DataListCell } from "juno-ui-components"
+import React, { useState, useMemo } from "react"
+import { DataListRow, DataListCell, Icon } from "juno-ui-components"
 import InlineConfirmRemove from "./InlineConfirmRemove"
 import { revokeCertificateMutation } from "../queries"
 import { useGlobalState } from "./StateProvider"
@@ -10,17 +10,33 @@ import Badge from "./Badge"
 
 const serial = `
 bg-theme-background-lvl-7
-px-3
-py-1
+px-2
 rounded
 h-min
 `
+
+const rowClasses = (isConfirmOpen) => {
+  return `
+			${
+        isConfirmOpen &&
+        `border 
+         border-theme-danger 
+         text-theme-danger
+         transition
+         ease-out
+         duration-300`
+      }
+		`
+    .replace(/\n/g, " ")
+    .replace(/\s+/g, " ")
+}
 
 const CertificateListItem = ({ item }) => {
   const auth = useGlobalState().auth
   const dispatchMessage = useMessagesDispatch()
   const queryClient = useQueryClient()
-  const removeRef = useRef()
+  const [showConfirm, setShowConfirm] = useState(false)
+
   // useMutation can't create a subscription like for useQuery. State can't be shared
   // https://github.com/tannerlinsley/react-query/issues/2304
   const { isLoading, isError, error, data, isSuccess, mutate } =
@@ -41,6 +57,7 @@ const CertificateListItem = ({ item }) => {
   }, [item?.not_after])
 
   const onRemoveConfirmed = () => {
+    setShowConfirm(false)
     mutate(
       {
         bearerToken: auth.attr?.id_token,
@@ -70,25 +87,51 @@ const CertificateListItem = ({ item }) => {
               text: parseError(error),
             },
           })
-          removeRef.current.reset()
         },
       }
     )
   }
 
+  const onRemoveClicked = () => {
+    setShowConfirm(true)
+  }
+
+  const onRemoveCancel = () => {
+    setShowConfirm(false)
+  }
+
+  const inlineConfirmText = useMemo(() => {
+    let name = item?.name
+    if (!name || name.length === 0) name = "this"
+    return (
+      <span>
+        Are you sure you want to revoke <b>{name}</b> cert?
+      </span>
+    )
+  }, [item?.name])
+
   return (
-    <DataListRow>
+    <DataListRow className={`relative ${rowClasses(showConfirm)}`}>
+      <InlineConfirmRemove
+        text={inlineConfirmText}
+        actionText="Revoke"
+        actionIcon="deleteForever"
+        show={showConfirm}
+        onConfirm={onRemoveConfirmed}
+        onCancel={onRemoveCancel}
+      />
       <DataListCell width={15}>{item.name}</DataListCell>
       <DataListCell width={40}>
         <div className={serial}>{item.serial}</div>
       </DataListCell>
-      <DataListCell width={10}>{item.identity}</DataListCell>
-      <DataListCell width={10}>{stateBadge}</DataListCell>
+      <DataListCell width={13}>{item.identity}</DataListCell>
+      <DataListCell width={13}>{stateBadge}</DataListCell>
       <DataListCell width={15}>{expiresAtString}</DataListCell>
-      <DataListCell width={10}>
-        <InlineConfirmRemove
-          ref={removeRef}
-          onRemoveConfirmed={onRemoveConfirmed}
+      <DataListCell width={4}>
+        <Icon
+          disabled={showConfirm}
+          icon="deleteForever"
+          onClick={onRemoveClicked}
         />
       </DataListCell>
     </DataListRow>
