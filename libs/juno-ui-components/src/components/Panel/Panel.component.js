@@ -12,7 +12,7 @@ const panelClasses = (isOpen) => {
       inset-y-0
       z-10
       grid
-      grid-rows-[auto_1fr_auto]
+      grid-rows-[auto_1fr]
       bg-theme-background-lvl-0
       backdrop-blur
       bg-opacity-70
