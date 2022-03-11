@@ -5,10 +5,12 @@ const badge = `
 	text-sm
   font-bold
 	flex
-	mb-8
 	rounded
 	overflow-hidden
-	items-center  
+	items-center
+  h-min  
+  text-theme-default
+  text-opacity-70
 `
 
 const backgroundClass = (variant) => {
