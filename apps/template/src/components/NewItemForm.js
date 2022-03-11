@@ -27,7 +27,7 @@ const NewItemForm = () => {
 
   return (
     <Panel heading="Panel Title" opened={panelOpened} onClose={closeNewItemForm}>
-      <PanelBody footer={FormFooter()}>
+      <PanelBody footer={<FormFooter />}>
         <div>Panel Content here</div>
       </PanelBody>
 
