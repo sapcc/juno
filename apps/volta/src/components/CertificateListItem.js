@@ -48,13 +48,18 @@ const CertificateListItem = ({ item }) => {
     return date.toLocaleString()
   }, [item?.not_after])
 
-  const stateBadge = React.useMemo(() => {
+  const isCertExpired = React.useMemo(() => {
+    if (!item.not_after) return false
     const date = new Date(item.not_after)
-    if (isExpired(date)) {
+    return isExpired(date)
+  }, [item?.not_after])
+
+  const stateBadge = React.useMemo(() => {
+    if (isCertExpired) {
       return <Badge variant="danger" text="Expired" />
     }
     return <Badge text="Active" />
-  }, [item?.not_after])
+  }, [isCertExpired])
 
   const onRemoveConfirmed = () => {
     setShowConfirm(false)
@@ -92,14 +97,6 @@ const CertificateListItem = ({ item }) => {
     )
   }
 
-  const onRemoveClicked = () => {
-    setShowConfirm(true)
-  }
-
-  const onRemoveCancel = () => {
-    setShowConfirm(false)
-  }
-
   const inlineConfirmText = useMemo(() => {
     let name = item?.name
     if (!name || name.length === 0) name = "this"
@@ -118,7 +115,7 @@ const CertificateListItem = ({ item }) => {
         actionIcon="deleteForever"
         show={showConfirm}
         onConfirm={onRemoveConfirmed}
-        onCancel={onRemoveCancel}
+        onCancel={() => setShowConfirm(false)}
       />
       <DataListCell width={15}>{item.name}</DataListCell>
       <DataListCell width={40}>
@@ -128,11 +125,13 @@ const CertificateListItem = ({ item }) => {
       <DataListCell width={13}>{stateBadge}</DataListCell>
       <DataListCell width={15}>{expiresAtString}</DataListCell>
       <DataListCell width={4}>
-        <Icon
-          disabled={showConfirm}
-          icon="deleteForever"
-          onClick={onRemoveClicked}
-        />
+        {!isCertExpired && (
+          <Icon
+            disabled={showConfirm}
+            icon="deleteForever"
+            onClick={() => setShowConfirm(true)}
+          />
+        )}
       </DataListCell>
     </DataListRow>
   )
