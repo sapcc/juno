@@ -10,6 +10,7 @@ import {
   Stack,
 } from "juno-ui-components"
 import CertificateListItem from "./CertificateListItem"
+import { parseError } from "../helpers"
 
 const datListHeaderItem = `
 font-bold
@@ -20,6 +21,8 @@ const CertificateList = () => {
   const dispatchMessage = useMessagesDispatch()
   const dispatchGlobals = useDispatch()
   const auth = useGlobalState().auth
+
+  // fetch the certificates
   const { isLoading, isError, data, error } = getCertificates(
     auth.attr?.id_token
   )
@@ -43,24 +46,15 @@ const CertificateList = () => {
     }
   }, [enableCreateSSO])
 
+  // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
-    let errMsg = error?.message
-    if (error?.message) {
-      try {
-        errMsg = JSON.parse(error?.message).msg
-      } catch (error) {}
-    }
-    if (errMsg) {
+    if (error) {
       dispatchMessage({
         type: "SET_MESSAGE",
-        msg: { variant: "error", text: errMsg },
+        msg: { variant: "error", text: parseError(error) },
       })
     }
   }, [error])
-
-  // if (isLoading && !data) {
-  //   return <span>Loading...</span>
-  // }
 
   console.log("data: ", data, " loadisLoadingng: ", isLoading)
 

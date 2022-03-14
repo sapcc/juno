@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useMemo } from "react"
 import { Button, Panel, PanelBody, PanelFooter } from "juno-ui-components"
 import { useGlobalState, useDispatch } from "./StateProvider"
 import { FormStateProvider } from "./FormState"
-import CertificateForm from "./CertificateForm"
-import SSO from "./SSO"
+import NewCertificateForm from "./NewCertificateForm"
+import NewCertificateResutls from "./NewCertificateResults"
 import { MessagesStateProvider } from "./MessagesProvider"
 import Messages from "./Messages"
 
@@ -42,57 +42,70 @@ const NewCertificate = () => {
     setIsFormLoading(isLoading)
   }
 
+  const resultsPanelFooter = useMemo(
+    () => (
+      <PanelFooter>
+        <Button
+          disabled={!formResutlsCopied}
+          onClick={onPanelClose}
+          variant="subdued"
+        >
+          Close
+        </Button>
+      </PanelFooter>
+    ),
+    [formResutlsCopied]
+  )
+
+  const formPanelFooter = useMemo(
+    () => (
+      <PanelFooter>
+        <Button
+          disabled={isFormLoading}
+          onClick={onPanelClose}
+          variant="subdued"
+        >
+          Cancel
+        </Button>
+        <Button className="ml-2" onClick={onSaveClicked} variant="primary">
+          Create
+        </Button>
+      </PanelFooter>
+    ),
+    [isFormLoading]
+  )
+
   return (
     <Panel
       heading="New SSO Certificates"
       opened={showPanel}
       onClose={onPanelClose}
     >
-      <MessagesStateProvider>
-        <PanelBody>
-          <Messages />
-          {showPanel && (
-            <>
-              {ssoCert ? (
-                <SSO pk={pk} ssoCert={ssoCert} onCopied={onFormResutlsCopied} />
-              ) : (
-                <FormStateProvider>
-                  <CertificateForm
-                    ref={formRef}
-                    onFormSuccess={onFormSuccess}
-                    onFormLoading={onFormLoading}
-                  />
-                </FormStateProvider>
-              )}
-            </>
-          )}
-        </PanelBody>
-
-        <PanelFooter>
+      {showPanel && (
+        <MessagesStateProvider>
           {ssoCert ? (
-            <Button
-              disabled={!formResutlsCopied}
-              onClick={onPanelClose}
-              variant="subdued"
-            >
-              Close
-            </Button>
+            <PanelBody footer={resultsPanelFooter}>
+              <Messages />
+              <NewCertificateResutls
+                pk={pk}
+                ssoCert={ssoCert}
+                onCopied={onFormResutlsCopied}
+              />
+            </PanelBody>
           ) : (
-            <>
-              <Button
-                disabled={isFormLoading}
-                onClick={onPanelClose}
-                variant="subdued"
-              >
-                Cancel
-              </Button>
-              <Button onClick={onSaveClicked} variant="primary">
-                Create
-              </Button>
-            </>
+            <PanelBody footer={formPanelFooter}>
+              <Messages />
+              <FormStateProvider>
+                <NewCertificateForm
+                  ref={formRef}
+                  onFormSuccess={onFormSuccess}
+                  onFormLoading={onFormLoading}
+                />
+              </FormStateProvider>
+            </PanelBody>
           )}
-        </PanelFooter>
-      </MessagesStateProvider>
+        </MessagesStateProvider>
+      )}
     </Panel>
   )
 }

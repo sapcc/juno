@@ -11,16 +11,6 @@ const Messages = () => {
           {messagesState?.items.map((item) => (
             <Message key={item.id} variant={item.variant}>
               {item.text}
-              {/* <Stack alignment="center" className="w-full">
-                {item.text}
-                <Stack
-                  alignment="center"
-                  className="ml-auto"
-                  distribution="end"
-                >
-                  <Icon icon="close" />
-                </Stack>
-              </Stack> */}
             </Message>
           ))}
         </>
