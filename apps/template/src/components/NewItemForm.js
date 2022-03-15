@@ -1,9 +1,27 @@
 import React, { useCallback } from "react"
 
-import { Panel, PanelBody } from "juno-ui-components"
-import NewItemFormFooter from "./NewItemFormFooter"
+import { Button, Panel, PanelBody, PanelFooter } from "juno-ui-components"
 import useStore from "../store"
 
+const NewItemFormFooter = () => {
+
+  // call close reducer from global store
+  const closeNewItemForm = useStore(
+    useCallback((state) => state.closeNewItemForm)
+  )
+
+  return (
+    <PanelFooter>
+      <Button 
+        variant="subdued"
+        onClick={closeNewItemForm}
+      >
+        Cancel
+      </Button>
+      <Button variant="primary">Do it</Button>
+    </PanelFooter>
+  )
+}
 
 
 const NewItemForm = () => {
