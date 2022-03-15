@@ -39,15 +39,15 @@ export const CodeBlock = ({
 	}
 	
 	const codeBlockHeading = (
-		<div>
-			<span className={`font-bold text-sm inline-block px-6 py-2`}>
+		<div className={`juno-codeblock-titlebar`}>
+			<span className={`juno-codeblock-tab font-bold text-sm inline-block px-6 py-2`}>
 				{heading}
 			</span>
 		</div>
 	)
 	
 	const copy = (
-		<div className={`flex justify-end px-4 pb-4`}>
+		<div className={`juno-codeblock-copybar flex justify-end px-4 pb-4`}>
 			<span className={`font-bold text-sm mr-4 mt-1`} >{ isCopied ? "Copied!" : "" }</span>
 			<Icon icon="contentCopy" onClick={copyTextToClipboard} />
 		</div>
