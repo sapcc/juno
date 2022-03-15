@@ -37,8 +37,6 @@ const panelTitleClasses = `
   font-bold
 `
 
-
-
 /** A slide-in panel for the Content Area.  */
 export const Panel = ({
   heading,
@@ -48,14 +46,13 @@ export const Panel = ({
   children,
   ...props
 }) => {
-
   const [isOpen, setIsOpen] = useState(opened)
   const [isTransitioning, setIsTransitioning] = useState(false)
-	
+
   // ensure we notice if the opened parameter is changed from the outside
-	useEffect(() => {
-		setIsOpen(opened)
-	}, [opened])
+  useEffect(() => {
+    setIsOpen(opened)
+  }, [opened])
 
   // ----- Timeout stuff -------
   // necessary because we want to set the panel to invisible only after the closing transition has finished
@@ -68,14 +65,12 @@ export const Panel = ({
 
   // if isOpen state changes to false set the transitioning state to true for 500ms
   useEffect(() => {
-		if (!isOpen) {
+    if (!isOpen) {
       setIsTransitioning(true)
-      clearTimeout(timeoutRef.current);
+      clearTimeout(timeoutRef.current)
       timeoutRef.current = setTimeout(() => setIsTransitioning(false), 500)
-
     }
-	}, [isOpen])
-
+  }, [isOpen])
 
   const handleClose = (event) => {
     setIsOpen(false)
@@ -85,14 +80,27 @@ export const Panel = ({
   }
 
   return (
-    <div 
-      className={`juno-panel ${panelClasses(isOpen, isTransitioning)} ${className}`}
+    <div
+      className={`juno-panel ${panelClasses(
+        isOpen,
+        isTransitioning
+      )} ${className}`}
       role="dialog"
       aria-labelledby="juno-panel-title"
-      {...props} >
+      {...props}
+    >
       <div className={`juno-panel-header ${panelHeaderClasses}`}>
-        <div className={`juno-panel-title ${panelTitleClasses}`} id="juno-panel-title">{heading}</div>
-        <ClickableIcon icon="close" onClick={handleClose} className="juno-panel-close ml-auto" />
+        <div
+          className={`juno-panel-title ${panelTitleClasses}`}
+          id="juno-panel-title"
+        >
+          {heading}
+        </div>
+        <ClickableIcon
+          icon="close"
+          onClick={handleClose}
+          className="juno-panel-close ml-auto"
+        />
       </div>
       {children}
     </div>
@@ -103,13 +111,13 @@ Panel.propTypes = {
   /** Pass a Panel heading/title. */
   heading: PropTypes.string,
   /**  Pass open state  */
-	opened: PropTypes.bool,
+  opened: PropTypes.bool,
   /** Pass a handler that will be called when the close button is clicked */
   onClose: PropTypes.func,
-  	/** Pass an optional className */
-	className: PropTypes.string,
-	/** Pass child nodes to be rendered in the main body of the Panel */
-	children: PropTypes.node,
+  /** Pass an optional className */
+  className: PropTypes.string,
+  /** Pass child nodes to be rendered in the main body of the Panel */
+  children: PropTypes.node,
 }
 
 Panel.defaultProps = {
