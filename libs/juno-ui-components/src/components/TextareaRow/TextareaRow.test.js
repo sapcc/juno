@@ -81,5 +81,12 @@ describe("TextInputRow", () => {
     const textarea = screen.getByRole("textbox")
     fireEvent.change(textarea, { target: { value: "a" } })
     expect(handleChange).toHaveBeenCalledTimes(1)
+    expect(handleChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        _reactName: "onChange",
+        target: textarea,
+        type: "change",
+      })
+    )
   })
 })

@@ -118,5 +118,12 @@ describe("TextInputRow", () => {
     const input = screen.getByRole("textbox")
     fireEvent.change(input, { target: { value: "a" } })
     expect(handleChange).toHaveBeenCalledTimes(1)
+    expect(handleChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        _reactName: "onChange",
+        target: input,
+        type: "change",
+      })
+    )
   })
 })
