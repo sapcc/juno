@@ -95,6 +95,11 @@ Close.args = {
   icon: "close"
 }
 
+export const ContentCopy = Template.bind({})
+ContentCopy.args = {
+  icon: "contentCopy"
+}
+
 export const Danger = Template.bind({})
 Danger.args = {
   ...Default.args,
