@@ -6,7 +6,7 @@ import { ContentAreaToolbar } from "../ContentAreaToolbar/index.js"
 import { Button } from "../Button/index.js"
 
 export default {
-  title: "Design System/Layout/ContentAreaWrapper",
+  title: "Design System/Internal/ContentAreaWrapper",
   component: ContentAreaWrapper,
   argTypes: {},
 }
@@ -25,7 +25,7 @@ Basic.parameters = {
   docs: {
     description: {
       story:
-        "This is the area in which the actual content of each page should be injected.",
+        "OBSOLETE: Will be deleted!",
     },
   },
 }

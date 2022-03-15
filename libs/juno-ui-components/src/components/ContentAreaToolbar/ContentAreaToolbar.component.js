@@ -6,6 +6,7 @@ const toolbarStyles = `
   bg-theme-content-area-toolbar-bg
   py-3
   px-6
+  mb-4
   flex
   items-center
   justify-end

@@ -9,7 +9,7 @@ const introStyles = `
 `
 
 /**
- * App intro section. Typically contains an introductory lead text explaining what the app is about.
+ * OBSOLETE: Will be deleted!
  */
 export const AppIntro = ({ className, children, ...props }) => {
   return (
