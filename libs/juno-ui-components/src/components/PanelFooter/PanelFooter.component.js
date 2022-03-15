@@ -9,6 +9,7 @@ const panelFooterClasses = `
   flex
   items-center
   justify-end
+  gap-3
   w-full
 `
 

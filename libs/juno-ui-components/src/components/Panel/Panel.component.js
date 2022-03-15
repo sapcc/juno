@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
-import { ClickableIcon } from "../ClickableIcon/index"
+import { ClickableIcon } from "../ClickableIcon"
 
-const panelClasses = (isOpen) => {
+const panelClasses = (isOpen, isTransitioning) => {
   return `
       absolute
       right-0
       transition-transform
-      ease-in-out
+      ease-out
       duration-300
       inset-y-0
       z-10
@@ -17,7 +17,8 @@ const panelClasses = (isOpen) => {
       backdrop-blur
       bg-opacity-70
       w-[45%]
-			${!isOpen ? `hidden translate-x-[100%]` : ""}
+			${!isOpen ? `translate-x-[100%]` : ""}
+			${!isOpen && !isTransitioning ? `invisible` : ""}
 		`
     .replace(/\n/g, " ")
     .replace(/\s+/g, " ")
@@ -49,23 +50,45 @@ export const Panel = ({
 }) => {
 
   const [isOpen, setIsOpen] = useState(opened)
+  const [isTransitioning, setIsTransitioning] = useState(false)
 	
+  // ensure we notice if the opened parameter is changed from the outside
 	useEffect(() => {
 		setIsOpen(opened)
 	}, [opened])
 
+  // ----- Timeout stuff -------
+  // necessary because we want to set the panel to invisible only after the closing transition has finished
+  // the invisible panel is to ensure that the panel can't be tab targeted when closed
+  const timeoutRef = React.useRef(null)
+
+  React.useEffect(() => {
+    return () => clearTimeout(timeoutRef.current) // clear when component is unmounted
+  }, [])
+
+  // if isOpen state changes to false set the transitioning state to true for 500ms
+  useEffect(() => {
+		if (!isOpen) {
+      setIsTransitioning(true)
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => setIsTransitioning(false), 500)
+
+    }
+	}, [isOpen])
+
+
   const handleClose = (event) => {
     setIsOpen(false)
+
     // call passed onClose event handler (if any)
     onClose && onClose(event)
   }
 
   return (
     <div 
-      className={`juno-panel ${panelClasses(isOpen)} ${className}`}
+      className={`juno-panel ${panelClasses(isOpen, isTransitioning)} ${className}`}
       role="dialog"
       aria-labelledby="juno-panel-title"
-      aria-hidden={isOpen ? "false" : "true"}
       {...props} >
       <div className={`juno-panel-header ${panelHeaderClasses}`}>
         <div className={`juno-panel-title ${panelTitleClasses}`} id="juno-panel-title">{heading}</div>
