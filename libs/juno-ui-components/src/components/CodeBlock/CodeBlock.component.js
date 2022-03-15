@@ -32,7 +32,7 @@ const tabStyles = `
 `
 
 const tabStylesActive = `
-
+	border-b-[3px]
 `
 
 const copyBarStyles = `
@@ -64,7 +64,7 @@ export const CodeBlock = ({
 	
 	const codeBlockHeading = (
 		<div className={`juno-codeblock-titlebar ${titleBarStyles}`}>
-			<span className={`juno-codeblock-tab ${tabStyles}`}>
+			<span className={`juno-codeblock-tab ${tabStyles} ${tabStylesActive}`}>
 				{heading}
 			</span>
 		</div>
