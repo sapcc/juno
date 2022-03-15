@@ -19,6 +19,30 @@ const nonWrapStyles = `
 	overflow-x-auto
 `
 
+const titleBarStyles = `
+
+`
+
+const tabStyles = `
+	font-bold 
+	text-sm 
+	inline-block 
+	px-6 
+	py-2
+`
+
+const tabStylesActive = `
+
+`
+
+const copyBarStyles = `
+	flex 
+	justify-end 
+	px-4 
+	pb-4
+`
+
+
 export const CodeBlock = ({
 	wrap,
 	heading,
@@ -39,15 +63,15 @@ export const CodeBlock = ({
 	}
 	
 	const codeBlockHeading = (
-		<div className={`juno-codeblock-titlebar`}>
-			<span className={`juno-codeblock-tab font-bold text-sm inline-block px-6 py-2`}>
+		<div className={`juno-codeblock-titlebar ${titleBarStyles}`}>
+			<span className={`juno-codeblock-tab ${tabStyles}`}>
 				{heading}
 			</span>
 		</div>
 	)
 	
 	const copy = (
-		<div className={`juno-codeblock-copybar flex justify-end px-4 pb-4`}>
+		<div className={`juno-codeblock-copybar ${copyBarStyles}`}>
 			<span className={`font-bold text-sm mr-4 mt-1`} >{ isCopied ? "Copied!" : "" }</span>
 			<Icon icon="contentCopy" onClick={copyTextToClipboard} />
 		</div>
