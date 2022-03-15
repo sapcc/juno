@@ -12,12 +12,12 @@ const panelClasses = (isOpen) => {
       inset-y-0
       z-10
       grid
-      grid-rows-[auto_1fr_auto]
+      grid-rows-[auto_1fr]
       bg-theme-background-lvl-0
       backdrop-blur
       bg-opacity-70
       w-[45%]
-			${!isOpen && `translate-x-[100%]`}
+			${!isOpen ? `hidden translate-x-[100%]` : ""}
 		`
     .replace(/\n/g, " ")
     .replace(/\s+/g, " ")
@@ -65,6 +65,7 @@ export const Panel = ({
       className={`juno-panel ${panelClasses(isOpen)} ${className}`}
       role="dialog"
       aria-labelledby="juno-panel-title"
+      aria-hidden={isOpen ? "false" : "true"}
       {...props} >
       <div className={`juno-panel-header ${panelHeaderClasses}`}>
         <div className={`juno-panel-title ${panelTitleClasses}`} id="juno-panel-title">{heading}</div>

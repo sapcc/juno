@@ -1,7 +1,9 @@
 import React, { useCallback } from "react"
 
-import { Button, Panel, PanelBody, PanelFooter } from "juno-ui-components"
+import { Panel, PanelBody } from "juno-ui-components"
+import NewItemFormFooter from "./NewItemFormFooter"
 import useStore from "../store"
+
 
 
 const NewItemForm = () => {
@@ -19,12 +21,10 @@ const NewItemForm = () => {
 
   return (
     <Panel heading="Panel Title" opened={panelOpened} onClose={closeNewItemForm}>
-      <PanelBody>
+      <PanelBody footer={<NewItemFormFooter />}>
         <div>Panel Content here</div>
       </PanelBody>
-      <PanelFooter>
-        <Button>Do it</Button>
-      </PanelFooter>
+
     </Panel>
   )
 }

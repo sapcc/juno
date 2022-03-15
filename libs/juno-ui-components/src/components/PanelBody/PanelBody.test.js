@@ -1,6 +1,7 @@
 import * as React from "react"
 import { render, screen } from "@testing-library/react"
 import { PanelBody } from "./index"
+import { PanelFooter } from "../PanelFooter/index"
 
 describe("PanelBody", () => {
   test("renders a panel body", async () => {
@@ -25,6 +26,16 @@ describe("PanelBody", () => {
     )
     expect(screen.getByTestId("panel-body")).toBeInTheDocument()
     expect(screen.getByRole("button")).toBeInTheDocument()
+  })
+
+  test("renders footer as passed", async () => {
+    render(
+      <PanelBody data-testid="panel-body" footer={<PanelFooter>This is the footer</PanelFooter>}>
+      </PanelBody>
+    )
+    expect(screen.getByTestId("panel-body")).toBeInTheDocument()
+    expect(screen.getByTestId("panel-body")).toHaveTextContent("This is the footer")
+    
   })
 
   test("renders a custom className", async () => {

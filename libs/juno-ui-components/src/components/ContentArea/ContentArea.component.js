@@ -6,12 +6,14 @@ const containerStyles = `
   relative
   grow
   p-6
+  overflow-hidden
 `
 
 
 
 /**
- * This is the area in which the actual content of each page should be injected.
+ * Only needed if you want to build your app's scaffold manually. In most cases it is better to use the AppShell component instead.
+ * This is the area in which the actual content of each page should be injected. 
  */
 export const ContentArea = ({ className, children, ...props }) => {
 

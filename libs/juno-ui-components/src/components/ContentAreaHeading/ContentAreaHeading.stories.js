@@ -5,24 +5,22 @@ import { ContentArea } from "../ContentArea/index.js"
 import { Button } from "../Button/index.js"
 
 export default {
-  title: "Design System/Layout/ContentAreaHeading",
+  title: "Design System/Internal/ContentAreaHeading",
   component: ContentAreaHeading,
   argTypes: {},
 }
 
-const Template = (args) => (
-  <ContentAreaHeading {...args} />
-)
+const Template = (args) => <ContentAreaHeading {...args} />
 
 export const Basic = Template.bind({})
 Basic.parameters = {
   docs: {
     description: {
       story:
-        "This is the main heading of the content area.",
+        "Only needed if you want to build your app's scaffold manually. In most cases it is better to use the AppShell component instead. This is the main heading of the content area.",
     },
   },
 }
 Basic.args = {
-  heading: "My Page Heading"
+  heading: "My Page Heading",
 }

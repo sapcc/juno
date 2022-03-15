@@ -3,10 +3,9 @@ import React from "react"
 import { MainContainer } from "./index.js"
 
 export default {
-  title: "Design System/Layout/MainContainer",
+  title: "Design System/Internal/MainContainer",
   component: MainContainer,
-  argTypes: {
-  },
+  argTypes: {},
 }
 
 const Template = (args) => <MainContainer {...args}></MainContainer>
@@ -14,8 +13,10 @@ const Template = (args) => <MainContainer {...args}></MainContainer>
 export const Main = Template.bind({})
 Main.parameters = {
   docs: {
-    description: { story: 'Main container for all content of the app. Wrapper for content containers.'}
+    description: {
+      story:
+        "Only needed if you want to build your app's scaffold manually. In most cases it is better to use the AppShell component instead. Main container for all content of the app. Wrapper for content containers.",
+    },
   },
 }
 Main.args = {}
-

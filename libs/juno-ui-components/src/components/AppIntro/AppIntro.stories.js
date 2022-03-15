@@ -17,7 +17,7 @@ export const Intro = Template.bind({})
 Intro.parameters = {
   docs: {
     description: {
-      story: "App intro section. Typically contains an introductory lead text explaining what the app is about.",
+      story: "OBSOLETE: Will be deleted!",
     },
   },
 }
