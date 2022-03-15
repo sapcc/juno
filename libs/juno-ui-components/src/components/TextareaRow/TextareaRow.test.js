@@ -79,12 +79,14 @@ describe("TextInputRow", () => {
     const handleChange = jest.fn()
     render(<TextareaRow onChange={handleChange} />)
     const textarea = screen.getByRole("textbox")
-    fireEvent.change(textarea, { target: { value: "a" } })
+    fireEvent.change(textarea, { target: { value: "test value a" } })
     expect(handleChange).toHaveBeenCalledTimes(1)
     expect(handleChange).toHaveBeenCalledWith(
       expect.objectContaining({
         _reactName: "onChange",
-        target: textarea,
+        target: expect.objectContaining({
+          value: "test value a",
+        }),
         type: "change",
       })
     )
