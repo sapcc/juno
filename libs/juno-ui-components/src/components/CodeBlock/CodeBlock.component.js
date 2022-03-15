@@ -20,7 +20,8 @@ const nonWrapStyles = `
 `
 
 const titleBarStyles = `
-
+	border-b-[1px]
+	border-theme-codeblock-titlebar
 `
 
 const tabStyles = `
