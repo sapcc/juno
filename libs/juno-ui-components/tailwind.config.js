@@ -168,6 +168,7 @@ module.exports = {
       backgroundColor: {
         theme: {
           "global-bg": withOpacity("--color-global-bg"),
+          "code-block": withOpacity("--color-codeblock-bg"),
           "content-area-bg": withOpacity("--color-content-area-bg-raw"),
           "content-area-toolbar-bg": withOpacity("--color-background-lvl-3-raw"),
           "button-primary-active": "var(--color-button-primary-active-bg)",
@@ -263,6 +264,8 @@ module.exports = {
           "button-subdued-hover": withOpacity("--color-button-subdued-hover-border"),
           "button-subdued-active": withOpacity("--color-button-subdued-active-border"),
           "button-subdued-disabled": "var(--color-button-subdued-disabled-border)",
+          "codeblock-titlebar": withOpacity("--color-codeblock-titlebar-bottom-border"),
+          "codeblock-tab-active": withOpacity("--color-text-default"),
           "message-default": withOpacity("--color-message-default-border"),
           "message-danger": withOpacity("--color-message-danger-border"),
           "message-error": withOpacity("--color-message-error-border"),

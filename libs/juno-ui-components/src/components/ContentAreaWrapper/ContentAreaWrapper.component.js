@@ -10,7 +10,7 @@ const containerStyles = `
 `
 
 /**
- * This is a wrapper for content area and toolbar.
+ * OBSOLETE: Will be deleted!
  */
 export const ContentAreaWrapper = ({ className, children, ...props }) => {
   return (

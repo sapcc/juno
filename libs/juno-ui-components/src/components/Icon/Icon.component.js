@@ -8,6 +8,7 @@ import AutoAwesomeMosaic from "./icons/auto_awesome_mosaic.svg"
 import AutoAwesomeMotion from "./icons/auto_awesome_motion.svg"
 import Cancel from "./icons/cancel.svg"
 import Close from "./icons/close.svg"
+import ContentCopy from "./icons/content_copy.svg"
 import Danger from "./icons/juno-danger.svg"
 import Dangerous from "./icons/dangerous.svg"
 import DeleteForever from "./icons/delete_forever.svg"
@@ -63,6 +64,8 @@ const getColoredSizedIcon = ({icon, color, size, title, className, ...props}) =>
 				return <Cancel width={size} height={size} className={iconClass} alt="cancel" title={ title ? title : "Cancel" } role="img" {...props} />
 			case "close":
 				return <Close width={size} height={size} className={iconClass} alt="close" title={ title ? title : "Close" } role="img" {...props} />
+			case "contentCopy":
+				return <ContentCopy width={size} height={size} className={iconClass} alt="copy" title={ title ? title : "Copy" } role="img" {...props}/>
 			case "danger":
 				return <Danger width={size} height={size} className={iconClass} alt="danger" title={ title ? title : "Danger" } role="img" {...props} />
 			case "dangerous":
@@ -147,6 +150,7 @@ Icon.propTypes = {
 			"autoAwesomeMotion", 
 			"cancel", 
 			"close", 
+			"contentCopy",
 			"danger",
 			"dangerous",
 			"deleteForever",

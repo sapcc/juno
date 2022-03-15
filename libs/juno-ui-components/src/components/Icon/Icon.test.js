@@ -88,6 +88,12 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toHaveAttribute("alt", "close")
   })
   
+  test("renders a copy icon", async () => {
+    render(<Icon icon="contentCopy" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "copy")
+  })
+  
   test("renders a danger icon", async () => {
     render(<Icon icon="danger" />)
     expect(screen.getByRole("img")).toBeInTheDocument()

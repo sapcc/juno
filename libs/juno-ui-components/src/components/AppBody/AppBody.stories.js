@@ -3,7 +3,7 @@ import React from "react"
 import { AppBody } from "./index.js"
 
 export default {
-  title: "Design System/Layout/AppBody",
+  title: "Design System/Internal/AppBody",
   component: AppBody,
   argTypes: {},
 }
@@ -15,7 +15,7 @@ Body.parameters = {
   docs: {
     description: {
       story:
-        "Body of the app. Treat this like the body tag of an html page.",
+        "Only needed if you want to build your app's scaffold manually. In most cases it is better to use the AppShell component instead. Body of the app. Treat this like the body tag of an html page.",
     },
   },
 }

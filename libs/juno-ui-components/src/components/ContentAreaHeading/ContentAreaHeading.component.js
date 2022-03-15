@@ -10,6 +10,7 @@ const toolbarStyles = `
 `
 
 /**
+ * Only needed if you want to build your app's scaffold manually. In most cases it is better to use the AppShell component instead.
  * This is the title of the content displayed in the content area.
  */
 export const ContentAreaHeading = ({ heading, className, children, ...props }) => {

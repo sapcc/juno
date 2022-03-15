@@ -4,7 +4,7 @@ import { exampleFetch as fetchStuff } from "./actions"
 import useStore from "./store"
 import NewItemForm from "./components/NewItemForm"
 
-import { AppBody, AppIntro, Button, ContentArea, ContentAreaHeading, ContentAreaToolbar, ContentAreaWrapper, ContentContainer, MainContainer, Message, PageFooter, PageHeader, Spinner } from "juno-ui-components"
+import { AppShell, AppBody, AppIntro, Button, ContentArea, ContentAreaHeading, ContentAreaToolbar, ContentAreaWrapper, ContentContainer, MainContainer, Message, PageFooter, PageHeader, Spinner } from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
 /* IMPORTANT: Replace this with your app's name */
 const URL_STATE_KEY = "template"
@@ -71,74 +71,47 @@ const App = (props) => {
   )
 
   return (
-    <AppBody>
-      <PageHeader heading="Converged Cloud | App Template" />
+    <AppShell 
+      pageHeader="Converged Cloud | App Template"
+      contentHeading="App template page title"
+    >
+      {/* Messages always at the top of the content area */}
+      <Message>Welcome to the example app</Message>
+      {error && (
+        <Message variant="danger">
+          {error}
+          {statusCode === 404 && (
+            <>
+              Custom error message for status code 404
+            </>
+          )}
+        </Message>
+      )}
 
-      {/* Wrap everything except page header and footer in a main container */}
-      <MainContainer>
-        {/* Exchange image with app specific image (save in src/img/). If you don't have a background graphic for your app just remove the whole className prop */}
-        <ContentContainer className="bg-[url('img/app_bg_example.svg')]">
+      {/* Loading indicator for page content */}
+      {processing && (
+        <Spinner variant="primary" />
+      )}
 
-          {/* App intro text */}
-          <AppIntro>
-            Intro text here. Explain what this app is in a short lead text.
-            Lorem ipsum dolor sit amet. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est. Lorem ipsum dolor sit amet.
-          </AppIntro>
+      {/* Example component using a Panel */}
+      <NewItemForm />
 
-          <ContentAreaHeading heading="App Template Page Title" />
+      {/* Add a toolbar  */}
+      <ContentAreaToolbar>
+        <Button icon="addCircle" onClick={openNewItemForm}>Add Action</Button>
+      </ContentAreaToolbar>
 
-          {/* This wrapper goes around the content area and content area toolbar */}
-          <ContentAreaWrapper>
-            
-            {/* Example component using a Panel */}
-            <NewItemForm />
+      {/* 
+        *
+        *
+        * CONTENT GOES HERE 
+        * 
+        * 
+        * 
+        * */}
+      Content goes here
 
-            {/* Add a toolbar if you have action buttons that affect the whole page */}
-            <ContentAreaToolbar>
-              <Button icon="addCircle" onClick={openNewItemForm}>Add Action</Button>
-            </ContentAreaToolbar>
-
-            
-            {/* Content Area. This is the place to add the app's main content */}
-            <ContentArea className="mt-0">
-              
-              {/* Messages always at the top of the content area */}
-              <Message>Welcome to the example app</Message>
-              {error && (
-                <Message variant="danger">
-                  {error}
-                  {statusCode === 404 && (
-                    <>
-                      Custom error message for status code 404
-                    </>
-                  )}
-                </Message>
-              )}
-  
-              {/* Loading indicator for page content */}
-              {processing && (
-                <Spinner variant="primary" />
-              )}
-  
-              {/* 
-                *
-                *
-                * CONTENT GOES HERE 
-                * 
-                * 
-                * 
-                * */}
-              Content goes here
-  
-            </ContentArea>
-          </ContentAreaWrapper>
-
-        </ContentContainer>
-      </MainContainer>
-      
-      <PageFooter />
-
-    </AppBody>
+    </AppShell>
   )
 }
 

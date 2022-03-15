@@ -1,6 +1,7 @@
 import "./global.scss"
 export { AppBody } from "./components/AppBody/index.js"
 export { AppIntro } from "./components/AppIntro/index.js"
+export { AppShell } from "./components/AppShell/index.js"
 export { Button } from "./components/Button/index.js"
 export { ButtonRow } from "./components/ButtonRow/index.js"
 export { Checkbox } from "./components/Checkbox/index.js"
