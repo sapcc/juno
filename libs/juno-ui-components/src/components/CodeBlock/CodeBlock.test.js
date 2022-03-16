@@ -17,8 +17,8 @@ describe("CodeBlock", () => {
 	
 	test("renders a non-wrapping CodeBlock as passed", async () => {
 		render(<CodeBlock data-testid="my-codeblock" wrap={false} />)
-		expect(screen.getByTestId("my-codeblock")).toBeInTheDocument()
-		expect(screen.getByTestId("my-codeblock")).toHaveClass("overflow-x-auto")
+		expect(screen.getByTestId("juno-codeblock-pre")).toBeInTheDocument()
+		expect(screen.getByTestId("juno-codeblock-pre")).toHaveClass("overflow-x-auto")
 	})
 	
 	test("renders all props as passed", async () => {

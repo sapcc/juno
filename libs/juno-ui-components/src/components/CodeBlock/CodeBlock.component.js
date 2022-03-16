@@ -81,7 +81,7 @@ export const CodeBlock = ({
 	return (
 		<div className={`juno-codeblock ${codeBlockBaseStyles} ${className}`} {...props} >
 			{ heading ? codeBlockHeading : null }
-			<pre className={`${codeContainerStyles} ${ !wrap ? nonWrapStyles : '' } `} >
+			<pre className={`${codeContainerStyles} ${ !wrap ? nonWrapStyles : '' } `} data-testid="juno-codeblock-pre">
 				<code className={`${codeStyles}`} >
 					{children}
 				</code>
