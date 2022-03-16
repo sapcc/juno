@@ -240,7 +240,7 @@ const NewCertificateForm = ({ onFormSuccess, onFormLoading }, ref) => {
         helptext={
           formValidation["identity"]
             ? errorHelpText(formValidation["identity"])
-            : "Owner for whom the certificate will be issued"
+            : "Owner for whom the certificate will be issued. Owner can be also a technical user or technical team user which belongs to the user who is creating the SSO certificate."
         }
         className={formValidation["identity"] && "text-theme-danger border-2"}
       />

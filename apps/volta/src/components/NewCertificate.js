@@ -77,7 +77,7 @@ const NewCertificate = () => {
 
   return (
     <Panel
-      heading="New SSO Certificates"
+      heading="New SSO Certificate"
       opened={showPanel}
       onClose={onPanelClose}
     >
