@@ -72,14 +72,25 @@ const App = (props) => {
           <ContentContainer className="bg-[url('img/app_bg_example.svg')]">
             {/* App intro text */}
             <AppIntro>
-              Volta UI manages your SSO certificates stored in a Vault instance.
+              Secure storage and management of single sign-on certificates
+              <div>
+                <small>
+                  <a
+                    href="https://github.wdf.sap.corp/cc/volta/blob/master/docs/api-v1.md"
+                    target="_blank"
+                  >
+                    Read more about Volta service in our documentation
+                  </a>
+                </small>
+              </div>
             </AppIntro>
 
             <ContentAreaHeading heading="SSO Certificates" />
             <ContentAreaWrapper>
-              <Toolbar />
               <NewCertificate />
               <ContentArea className="mt-0">
+                <Toolbar />
+
                 <MessagesStateProvider>
                   <Messages />
 
