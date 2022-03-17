@@ -1,0 +1,105 @@
+import React, { useEffect, useState } from "react"
+import { getCertificates } from "../queries"
+import { useGlobalState, useDispatch } from "./StateProvider"
+import { useMessagesDispatch } from "./MessagesProvider"
+import {
+  DataList,
+  DataListRow,
+  DataListCell,
+  Spinner,
+  Stack,
+} from "juno-ui-components"
+import CertificateListItem from "./CertificateListItem"
+import { parseError } from "../helpers"
+
+const datListHeaderItem = `
+font-bold
+`
+
+const CertificateList = () => {
+  const [enableCreateSSO, setEnableCreateSSO] = useState(false)
+  const dispatchMessage = useMessagesDispatch()
+  const dispatchGlobals = useDispatch()
+  const auth = useGlobalState().auth
+
+  // fetch the certificates
+  const { isLoading, isError, data, error } = getCertificates(
+    auth.attr?.id_token
+  )
+
+  // wait until we get the cert list to enable create new sso certs
+  // getCertificates query waits until the id_token exists
+  // once the data appears the create new sso button will be enabled
+  useEffect(() => {
+    if (data) {
+      setEnableCreateSSO(true)
+    }
+  }, [data])
+
+  // just set the state once
+  useEffect(() => {
+    if (enableCreateSSO) {
+      dispatchGlobals({
+        type: "UPDATE_NEW_SSO_ENABLED",
+        enabled: true,
+      })
+    }
+  }, [enableCreateSSO])
+
+  // dispatch error with useEffect because error variable will first set once all retries did not succeed
+  useEffect(() => {
+    if (error) {
+      dispatchMessage({
+        type: "SET_MESSAGE",
+        msg: { variant: "error", text: parseError(error) },
+      })
+    }
+  }, [error])
+
+  console.log("data: ", data, " loadisLoadingng: ", isLoading)
+
+  // TODO add memo
+  return (
+    <>
+      {isLoading || !data ? (
+        <Stack alignment="center">
+          <Spinner variant="primary" />
+          Loading certificates...
+        </Stack>
+      ) : (
+        <>
+          {data && (
+            <DataList>
+              <DataListRow className="relative">
+                <DataListCell className={datListHeaderItem} width={15}>
+                  Name
+                </DataListCell>
+                <DataListCell className={datListHeaderItem} width={40}>
+                  Serial number
+                </DataListCell>
+                <DataListCell className={datListHeaderItem} width={13}>
+                  User name / ID
+                </DataListCell>
+                <DataListCell className={datListHeaderItem} width={13}>
+                  State
+                </DataListCell>
+                <DataListCell className={datListHeaderItem} width={15}>
+                  Expiration date
+                </DataListCell>
+                <DataListCell
+                  className={datListHeaderItem}
+                  width={4}
+                ></DataListCell>
+              </DataListRow>
+              {data.map((item, i) => (
+                <CertificateListItem key={i} item={item} />
+              ))}
+            </DataList>
+          )}
+        </>
+      )}
+    </>
+  )
+}
+
+export default CertificateList
