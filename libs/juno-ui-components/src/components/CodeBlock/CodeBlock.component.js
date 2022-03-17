@@ -7,16 +7,42 @@ const codeBlockBaseStyles = `
 	rounded
 `
 
-const codeContainerStyles = `
-	p-6
-`
+const codeContainerStyles = (wrap) => {	
+
+	return `
+		p-6
+		${wrap ? "break-words break-all whitespace-pre-wrap" : "overflow-x-auto"}
+	`
+}
+
+const codeContainerSize = (size) => {	
+
+	switch(size) {
+		case "small":
+			return `
+				max-h-64
+				overflow-y-auto
+			`		
+		case "medium":
+			return `
+				max-h-[32rem]
+				overflow-y-auto
+			`		
+		case "large":
+			return `
+				max-h-[56rem]
+				overflow-y-auto
+			`	
+		default:
+			return ""	
+	}
+	
+}
+
+
 
 const codeStyles = `
 	text-sm
-`
-
-const nonWrapStyles = `
-	overflow-x-auto
 `
 
 const titleBarStyles = `
@@ -39,7 +65,8 @@ const tabStylesActive = `
 const copyBarStyles = `
 	flex 
 	justify-end 
-	px-4 
+	px-4
+	pt-2 
 	pb-4
 `
 
@@ -47,6 +74,7 @@ const copyBarStyles = `
 export const CodeBlock = ({
 	wrap,
 	heading,
+	size,
 	copyToClipboard,
 	className,
 	children,
@@ -81,7 +109,7 @@ export const CodeBlock = ({
 	return (
 		<div className={`juno-codeblock ${codeBlockBaseStyles} ${className}`} {...props} >
 			{ heading ? codeBlockHeading : null }
-			<pre className={`${codeContainerStyles} ${ !wrap ? nonWrapStyles : '' } `} data-testid="juno-codeblock-pre">
+			<pre className={`${codeContainerStyles(wrap)} ${codeContainerSize(size)}`} data-testid="juno-codeblock-pre">
 				<code className={`${codeStyles}`} >
 					{children}
 				</code>
@@ -100,6 +128,8 @@ CodeBlock.propTypes = {
 	wrap: PropTypes.bool,
 	/** Optional title */
 	heading: PropTypes.string,
+	/** Optional size (height). By default height is unrestricted. If specifying a size the CodeBlock will not grow past the given size and get scrollbars if the content is higher */
+	size: PropTypes.oneOf(["auto", "small", "medium", "large"]),
 	/** Whether to display a 'Copy to Clipboard' button */
 	copyToClipboard: PropTypes.bool,
 }
@@ -107,6 +137,7 @@ CodeBlock.propTypes = {
 CodeBlock.defaultProps  = {
 	wrap: true,
 	heading: "",
+	size: "auto",
 	copyToClipboard: true,
 	className: "",
 }
