@@ -44,8 +44,8 @@ const App = (props) => {
   const dispatch = useDispatch()
 
   const { auth, loggedIn, logout } = useOidcAuth({
-    issuerURL: props.issuerURL,
-    clientID: props.clientID,
+    issuerURL: props.issuerurl,
+    clientID: props.clientid,
     initialLogin: true,
   })
 

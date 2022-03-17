@@ -37,7 +37,10 @@ Example:
 - `data-scope` exposed component (webpack 5 module federation)
 
 - `data-props-NAME` using this option you can provide any prop to the MFE.
-  Example: `data-props-color="green"`
+  - Example: `data-props-color="green"`
+  - Example: `data-props-clientID="abc"` will map to "clientid"
+
+> :warning: **Please only use lower case and avoid special characters when difining the NAME**
 
 ## Load external MFEs
 
