@@ -1,4 +1,4 @@
-import { validateForm } from "./CertificateForm"
+import { validateForm } from "./NewCertificateForm"
 
 describe("Form", () => {
   describe("validateForm", () => {
