@@ -3,7 +3,7 @@ ci: ci-clean ci-create
 	$(FLY) set-pipeline --pipeline juno -c pipeline.yaml
 
 login:
-	$(FLY) login -c https://main.ci.eu-de-2.cloud.sap -n services
+	$(FLY) login -c https://ci1.eu-de-2.cloud.sap -n services
 
 ci-clean: 
 	if [ -e pipeline.yaml ]; then rm pipeline.yaml; fi
