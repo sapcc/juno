@@ -1,6 +1,6 @@
 # prettier-ignore
 <%
-  APPS = ["auth","designate","widget-loader","whois"]
+  APPS = ["auth","designate","widget-loader","whois","volta"]
   LIBS = ["juno-ui-components", "communicator", "url-state-provider", "url-state-router"] 
 %>
 
@@ -324,24 +324,6 @@ jobs:
             get_params:
               skip_download: true
 
-  # scan dashboard image for vulnerabilities
-  - name: vscan-dashboard
-    serial: true
-    plan:
-      - in_parallel:
-          - get: secrets.git
-            params:
-              depth: 100
-          - get: dashboard.version
-            passed: [build-dashboard]
-            trigger: true
-      - task: scan-image
-        file: secrets.git/ci/shared/task-vscan.yaml
-        input_mapping:
-          image.version: dashboard.version
-        params:
-          IMAGE_NAME: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard
-
   # ******************* MERCURY ******************************
   # run unit tests for dashboard sources
   - name: unit-test-mercury
@@ -541,7 +523,7 @@ jobs:
       - in_parallel:
           - get: dashboard.version
             trigger: true
-            passed: ["vscan-dashboard"]      
+            passed: ["build-dashboard"]    
           - get: mercury.version
             trigger: true
             passed: ["build-mercury"]      
