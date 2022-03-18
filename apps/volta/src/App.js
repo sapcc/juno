@@ -2,32 +2,17 @@ import React, { useEffect, useState } from "react"
 import {
   AppBody,
   AppIntro,
-  Button,
   ContentArea,
   ContentAreaHeading,
-  ContentAreaToolbar,
   ContentAreaWrapper,
   ContentContainer,
   MainContainer,
-  Message,
   PageFooter,
   PageHeader,
-  Spinner,
-  Panel,
-  PanelBody,
-  PanelFooter,
 } from "juno-ui-components"
-import ContentAreaHeadingStories from "../../../libs/juno-ui-components/src/components/ContentAreaHeading/ContentAreaHeading.stories"
 
 import { useOidcAuth } from "oauth"
-import { currentState, push } from "url-state-provider"
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "react-query"
+import { QueryClient, QueryClientProvider } from "react-query"
 import CertificateList from "./components/CertificateList"
 import NewCertificate from "./components/NewCertificate"
 import Messages from "./components/Messages"
@@ -35,7 +20,6 @@ import { StateProvider, useDispatch } from "./components/StateProvider"
 import reducers from "./reducers"
 import HeaderUser from "./components/HeaderUser"
 import { MessagesStateProvider } from "./components/MessagesProvider"
-import Toolbar from "./components/Toolbar"
 
 /* Replace this with your app's name */
 const URL_STATE_KEY = "volta"
@@ -88,11 +72,8 @@ const App = (props) => {
             <ContentAreaWrapper>
               <NewCertificate />
               <ContentArea className="mt-0">
-                <Toolbar />
-
                 <MessagesStateProvider>
                   <Messages />
-
                   <CertificateList />
                 </MessagesStateProvider>
               </ContentArea>

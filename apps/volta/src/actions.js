@@ -38,8 +38,9 @@ export const certificates = ({ queryKey }) => {
   })
     .then(checkStatus)
     .then((response) => {
-      // sort entries by expiration date
       return response.json().then((jsonResp) => {
+        if (!jsonResp || !Array.isArray(jsonResp)) return []
+        // sort entries by expiration date
         return jsonResp
           .sort(
             (a, b) =>

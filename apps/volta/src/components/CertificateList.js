@@ -8,8 +8,10 @@ import {
   DataListCell,
   Spinner,
   Stack,
+  ContentAreaToolbar,
 } from "juno-ui-components"
 import CertificateListItem from "./CertificateListItem"
+import AddNewSSOButton from "./AddNewSSOButton"
 import { parseError } from "../helpers"
 
 const datListHeaderItem = `
@@ -58,8 +60,6 @@ const CertificateList = () => {
     }
   }, [error])
 
-  console.log("data: ", data, " loadisLoadingng: ", isLoading)
-
   // TODO add memo
   return (
     <>
@@ -70,33 +70,51 @@ const CertificateList = () => {
         </Stack>
       ) : (
         <>
-          {data && (
-            <DataList>
-              <DataListRow className="relative">
-                <DataListCell className={datListHeaderItem} width={15}>
-                  Name
-                </DataListCell>
-                <DataListCell className={datListHeaderItem} width={40}>
-                  Serial number
-                </DataListCell>
-                <DataListCell className={datListHeaderItem} width={13}>
-                  User name / ID
-                </DataListCell>
-                <DataListCell className={datListHeaderItem} width={13}>
-                  State
-                </DataListCell>
-                <DataListCell className={datListHeaderItem} width={15}>
-                  Expiration date
-                </DataListCell>
-                <DataListCell
-                  className={datListHeaderItem}
-                  width={4}
-                ></DataListCell>
-              </DataListRow>
-              {data.map((item, i) => (
-                <CertificateListItem key={i} item={item} />
-              ))}
-            </DataList>
+          {data && data.length > 0 ? (
+            <>
+              <ContentAreaToolbar>
+                <AddNewSSOButton />
+              </ContentAreaToolbar>
+              <DataList>
+                <DataListRow className="relative">
+                  <DataListCell className={datListHeaderItem} width={15}>
+                    Name
+                  </DataListCell>
+                  <DataListCell className={datListHeaderItem} width={40}>
+                    Serial number
+                  </DataListCell>
+                  <DataListCell className={datListHeaderItem} width={13}>
+                    User name / ID
+                  </DataListCell>
+                  <DataListCell className={datListHeaderItem} width={13}>
+                    State
+                  </DataListCell>
+                  <DataListCell className={datListHeaderItem} width={15}>
+                    Expiration date
+                  </DataListCell>
+                  <DataListCell
+                    className={datListHeaderItem}
+                    width={4}
+                  ></DataListCell>
+                </DataListRow>
+                {data.map((item, i) => (
+                  <CertificateListItem key={i} item={item} />
+                ))}
+              </DataList>
+            </>
+          ) : (
+            <Stack
+              alignment="center"
+              distribution="center"
+              direction="vertical"
+              className="h-full"
+            >
+              <p className="text-xl">
+                It seems that no SSO certificates have been created yet.
+              </p>
+              <p className="text-xl">Do you want to create a new one?</p>
+              <AddNewSSOButton className="mt-4" />
+            </Stack>
           )}
         </>
       )}
