@@ -24,24 +24,16 @@ const NewCertificateResutls = ({ pk, ssoCert, onCopied }) => {
             text="Please make sure to copy the private key below used to create the SSO certificate and store it in a safe place, you won’t be able to see it again! This key was used to create the SSO certificate and it is not store anywhere!"
             variant="warning"
           />
-          {/* <b>Private key</b> */}
-
-          <CodeBlock heading="Private key">{pk}</CodeBlock>
-
-          {/* <pre className={preClasses}>
-            <code className={codeClasses}>{pk}</code>
-          </pre> */}
+          <CodeBlock heading="Private key" size="small">
+            {pk}
+          </CodeBlock>
         </>
       )}
 
       <div className="mt-8">
-        <b>SSO certificate</b>
-
-        <CodeBlock heading="SSO certificate">{ssoCert}</CodeBlock>
-
-        {/* <pre className={preClasses}>
-          <code className={codeClasses}>{ssoCert}</code>
-        </pre> */}
+        <CodeBlock heading="SSO certificate" size="small">
+          {ssoCert}
+        </CodeBlock>
       </div>
 
       <Stack alignment="center" className="mt-8">
