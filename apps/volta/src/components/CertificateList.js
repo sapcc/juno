@@ -21,10 +21,12 @@ const CertificateList = () => {
   const dispatchMessage = useMessagesDispatch()
   const dispatchGlobals = useDispatch()
   const auth = useGlobalState().auth
+  const endpoint = useGlobalState().globals.endpoint
 
   // fetch the certificates
   const { isLoading, isError, data, error } = getCertificates(
-    auth.attr?.id_token
+    auth.attr?.id_token,
+    endpoint
   )
 
   // wait until we get the cert list to enable create new sso certs

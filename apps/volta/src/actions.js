@@ -1,5 +1,3 @@
-const ENDPOINT = "https://volta.qa-de-1.cloud.sap/api/v1"
-
 class HTTPError extends Error {
   constructor(code, message) {
     super(message || code)
@@ -30,8 +28,8 @@ const checkStatus = (response) => {
 
 // https://volta.qa-de-1.cloud.sap/api/v1/${ca}/certificate
 export const certificates = ({ queryKey }) => {
-  const [_key, bearerToken] = queryKey
-  return fetch(`${ENDPOINT}/galvani-pki/certificate`, {
+  const [_key, bearerToken, endpoint] = queryKey
+  return fetch(`${endpoint}/galvani-pki/certificate`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -53,9 +51,9 @@ export const certificates = ({ queryKey }) => {
     })
 }
 
-export const createCertificate = (bearerToken, formState) => {
+export const createCertificate = (endpoint, bearerToken, formState) => {
   const sendBody = JSON.stringify(formState)
-  return fetch(`${ENDPOINT}/galvani-pki/certificate`, {
+  return fetch(`${endpoint}/galvani-pki/certificate`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -69,8 +67,8 @@ export const createCertificate = (bearerToken, formState) => {
     })
 }
 
-export const revokeCertificate = (bearerToken, serial) => {
-  return fetch(`${ENDPOINT}/galvani-pki/certificate/${serial}`, {
+export const revokeCertificate = (endpoint, bearerToken, serial) => {
+  return fetch(`${endpoint}/galvani-pki/certificate/${serial}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

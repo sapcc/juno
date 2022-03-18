@@ -58,6 +58,7 @@ const NewCertificateForm = ({ onFormSuccess, onFormLoading }, ref) => {
   const dispatch = useFormDispatch()
   const formState = useFormState()
   const auth = useGlobalState().auth
+  const endpoint = useGlobalState().globals.endpoint
   const dispatchMessage = useMessagesDispatch()
   const queryClient = useQueryClient()
 
@@ -142,6 +143,7 @@ const NewCertificateForm = ({ onFormSuccess, onFormLoading }, ref) => {
       }
       mutate(
         {
+          endpoint: endpoint,
           bearerToken: auth.attr?.id_token,
           formState: formState,
         },

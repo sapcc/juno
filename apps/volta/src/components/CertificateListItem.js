@@ -33,6 +33,7 @@ const rowClasses = (isConfirmOpen) => {
 
 const CertificateListItem = ({ item }) => {
   const auth = useGlobalState().auth
+  const endpoint = useGlobalState().globals.endpoint
   const dispatchMessage = useMessagesDispatch()
   const queryClient = useQueryClient()
   const [showConfirm, setShowConfirm] = useState(false)
@@ -65,6 +66,7 @@ const CertificateListItem = ({ item }) => {
     setShowConfirm(false)
     mutate(
       {
+        endpoint: endpoint,
         bearerToken: auth.attr?.id_token,
         serial: item.serial,
       },
