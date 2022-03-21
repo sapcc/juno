@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "custom-event-polyfill": "^1.0.7",
+    "dotenv-webpack": "^7.1.0",
     "luxon": "^2.3.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
