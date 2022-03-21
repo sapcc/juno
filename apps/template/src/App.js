@@ -114,7 +114,8 @@ const App = (props) => {
        *
        *
        * */}
-      Content goes here
+      Content goes here (adjust endpoint <b>{props.endpoint}</b> defined in
+      env.local)
     </AppShell>
   )
 }
