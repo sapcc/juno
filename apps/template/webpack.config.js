@@ -70,25 +70,26 @@ module.exports = (_, argv) => {
         {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
           issuer: /\.jsx?$/,
-          use: [{
-            loader: '@svgr/webpack',
-            options: {
-              svgo: false
-            }
-          }],
-          
+          use: [
+            {
+              loader: "@svgr/webpack",
+              options: {
+                svgo: false,
+              },
+            },
+          ],
         },
         // config for background svgs in css
         // type "asset" chooses automatically between inline embed or loading as file depending on file size, similar to previously using url-loader and limit
         {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
           issuer: /\.s?css$/,
-          type: 'asset',
+          type: "asset",
         },
         //Allows use of images
         {
           test: /\.(png|jpg)$/i,
-          type: 'asset',
+          type: "asset",
         },
       ],
     },
@@ -119,7 +120,7 @@ module.exports = (_, argv) => {
       //Allows to create an index.html in our build folder
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "public/index.html"), //we put the file that we created in public folder
-        favicon: path.resolve(__dirname, "public/favicon.ico")
+        favicon: path.resolve(__dirname, "public/favicon.ico"),
       }),
       // new PurgecssPlugin({
       //   paths: glob.sync(path.join(__dirname, "src/*.js"), { nodir: true }),
