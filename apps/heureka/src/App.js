@@ -2,7 +2,7 @@ import React, { useCallback } from "react"
 
 import { exampleFetch as fetchStuff } from "./actions"
 import useStore from "./store"
-import NewItemForm from "./components/NewItemForm"
+import Services from "./components/Services"
 
 import {
   AppShell,
@@ -82,40 +82,15 @@ const App = (props) => {
     useCallback((state) => state.openNewItemForm)
   )
 
-  console.log("PROPS: ", props)
-
   return (
-    <AppShell
-      pageHeader="Converged Cloud | Heureka"
-      contentHeading="Converged Cloud | Heureka"
-    >
-      {/* Messages always at the top of the content area */}
-      <Message>Welcome to the example app</Message>
-      {error && (
-        <Message variant="danger">
-          {error}
-          {statusCode === 404 && <>Custom error message for status code 404</>}
-        </Message>
-      )}
-      {/* Loading indicator for page content */}
-      {processing && <Spinner variant="primary" />}
-      {/* Example component using a Panel */}
-      <NewItemForm />
-      {/* Add a toolbar  */}
-      <ContentAreaToolbar>
+    <AppShell pageHeader="Converged Cloud | Heureka" contentHeading="Services">
+      {/* <Message>Welcome to the example app</Message> */}
+      {/* <ContentAreaToolbar>
         <Button icon="addCircle" onClick={openNewItemForm}>
           Add Action
         </Button>
-      </ContentAreaToolbar>
-      {/*
-       *
-       *
-       * CONTENT GOES HERE
-       *
-       *
-       *
-       * */}
-      Content goes here
+      </ContentAreaToolbar> */}
+      <Services />
     </AppShell>
   )
 }
