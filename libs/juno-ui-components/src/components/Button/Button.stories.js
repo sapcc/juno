@@ -156,11 +156,24 @@ DefaultWithIcon.parameters = {
     story: "Default Button with icon",
   },
 }
-
 DefaultWithIcon.args = {
   ...Default.args,
   label: "Default with Icon",
   icon: "warning",
+}
+
+export const SubduedWithIcon = Template.bind({})
+SubduedWithIcon.parameters = {
+  docs: {
+    description: {
+      story: "Subdued Button with Icon",
+    },
+  },
+}
+SubduedWithIcon.args = {
+  ...Subdued.args,
+  icon: "warning",
+  label: "Subdued with Icon",
 }
 
 export const SmallWithIcon = Template.bind({})
