@@ -132,7 +132,6 @@ describe("Button", () => {
     render(<Button progress={true}>Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveClass("in-progress")
-    // TODO: test if spinner exists
     expect(screen.getByRole("progressbar")).toHaveClass("juno-spinner")
   })
 
