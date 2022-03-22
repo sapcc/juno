@@ -1,8 +1,8 @@
-import React, { useCallback } from "react"
+import React, { useRef, useEffect, useCallback } from "react"
 
-import { exampleFetch as fetchStuff } from "./actions"
+import { QueryClient, QueryClientProvider } from "react-query"
 import useStore from "./store"
-import Services from "./components/Services"
+import ServicesList from "./components/ServicesList"
 
 import {
   AppShell,
@@ -31,67 +31,30 @@ const App = (props) => {
   const [statusCode, setStatusCode] = React.useState(null)
   const { embedded } = props
 
-  const apiCallExample = React.useCallback((term, options) => {
-    if (!term) return
-
-    // update URL state
-    push(URL_STATE_KEY, { p: term })
-
-    // set/reset status before searching
-    setError(null)
-    setStatusCode(200)
-    setProcessing(true)
-
-    // main fetch method (usually a list call)
-    fetchStuff(term, options)
-      .then((response) => {
-        // get status code from response
-        setStatusCode(response.status)
-        // read input stream from response and return body as an object
-        return response.json()
-      })
-      .then((data) => {
-        console.log("DATA ITEMS", data)
-        setItems(data)
-      })
-      .catch((error) => {
-        setItems([]) // if error: set items to empty, otherwise the previous result would stay in state
-        setStatusCode(error.statusCode)
-        let message = error.message || error
-        try {
-          message = JSON.parse(message)
-          message = message.error || message
-        } catch (e) {}
-        if (message === "not found") setError("Couldn't find anything")
-        else setError(message)
-      })
-      .finally(() => {
-        setProcessing(false)
-      })
-  }, [])
-
-  // read current url state and call main fetch method if state is presented
-  React.useEffect(() => {
-    const urlState = currentState(URL_STATE_KEY)
-    if (urlState && urlState.p) {
-      apiCallExample(urlState.p)
+  useEffect(() => {
+    if (props.endpoint) {
+      useStore.setState({ endpoint: props.endpoint })
     }
-  }, [apiCallExample])
+  }, [props.endpoint])
 
-  const openNewItemForm = useStore(
-    useCallback((state) => state.openNewItemForm)
-  )
+  // Create a client
+  const queryClient = new QueryClient()
 
   return (
-    <AppShell pageHeader="Converged Cloud | Heureka" contentHeading="Services">
-      {/* <Message>Welcome to the example app</Message> */}
-      {/* <ContentAreaToolbar>
+    <QueryClientProvider client={queryClient}>
+      <AppShell
+        pageHeader="Converged Cloud | Heureka"
+        contentHeading="Services"
+      >
+        {/* <Message>Welcome to the example app</Message> */}
+        {/* <ContentAreaToolbar>
         <Button icon="addCircle" onClick={openNewItemForm}>
           Add Action
         </Button>
       </ContentAreaToolbar> */}
-      <Services />
-    </AppShell>
+        <ServicesList />
+      </AppShell>
+    </QueryClientProvider>
   )
 }
 
