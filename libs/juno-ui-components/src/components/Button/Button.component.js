@@ -167,6 +167,17 @@ const progressClass = (progress) => {
   return progClass
 }
 
+const spinnerSize = (size) => {
+  switch (size) {
+    case "small":
+      return "1.125rem" // 18/16
+    case "large":
+      return "2rem" // 32/16
+    default:
+      return "1.5rem" // 24/16
+  }
+}
+
 /**
  * The basic button component. Use this for `onClick` interactions.
  */
@@ -188,7 +199,7 @@ export const Button = ({
   const titleValue = title || label || "button"
 
   const buttonIcon = progress ? (
-    <Spinner />
+    <Spinner size={spinnerSize(size)} />
   ) : icon ? (
     <Icon
       icon={icon}
