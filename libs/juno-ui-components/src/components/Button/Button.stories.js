@@ -163,6 +163,32 @@ DefaultWithIcon.args = {
   icon: "warning",
 }
 
+export const SmallWithIcon = Template.bind({})
+SmallWithIcon.parameters = {
+  docs: {
+    description: {
+      story: "Small Button with Icon",
+    },
+  },
+}
+SmallWithIcon.args = {
+  ...Small.args,
+  icon: "warning",
+}
+
+export const LargeWithIcon = Template.bind({})
+LargeWithIcon.parameters = {
+  docs: {
+    description: {
+      story: "Large Button with Icon",
+    },
+  },
+}
+LargeWithIcon.args = {
+  ...Large.args,
+  icon: "warning",
+}
+
 export const LinkAsButton = Template.bind({})
 LinkAsButton.parameters = {
   docs: {
