@@ -162,6 +162,11 @@ const iconClasses = (size, variant) => {
   }
 }
 
+const progressClass = (progress) => {
+  const progClass = progress ? `in-progress` : ``
+  return progClass
+}
+
 /**
  * The basic button component. Use this for `onClick` interactions.
  */
@@ -200,7 +205,7 @@ export const Button = ({
       type="button"
       className={`juno-button juno-button-${variant} ${btnBase} ${variantClass(
         variant
-      )} ${sizeClass(size)} ${className}`}
+      )} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
       disabled={disabled}
       onClick={onClick}
       title={titleValue}
@@ -217,7 +222,7 @@ export const Button = ({
       role="button"
       className={`juno-button juno-button-${variant} ${btnBase} ${variantClass(
         variant
-      )} ${sizeClass(size)} ${className}`}
+      )} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
       disabled={disabled}
       onClick={onClick}
       title={titleValue}
