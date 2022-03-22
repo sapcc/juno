@@ -357,3 +357,33 @@ PrimaryDangerDisabledInProgress.args = {
   progress: true,
   progressLabel: "Disabled Primary Danger Button in Progress…",
 }
+
+// small button in progress
+export const SmallInProgress = Template.bind({})
+SmallInProgress.parameters = {
+  docs: {
+    description: {
+      story: "Small Button in Progress",
+    },
+  },
+}
+SmallInProgress.args = {
+  ...Small.args,
+  progress: true,
+  progressLabel: "Small in Progress…",
+}
+
+// large button in progress
+export const LargeInProgress = Template.bind({})
+LargeInProgress.parameters = {
+  docs: {
+    description: {
+      story: "Large Button in Progress",
+    },
+  },
+}
+LargeInProgress.args = {
+  ...Large.args,
+  progress: true,
+  progressLabel: "Large in Progress…",
+}
