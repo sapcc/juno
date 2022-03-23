@@ -43,7 +43,7 @@ const ServicesList = ({}) => {
       {isLoading && !data ? (
         <Stack alignment="center">
           <Spinner variant="primary" />
-          Loading certificates...
+          Loading services...
         </Stack>
       ) : (
         <>
