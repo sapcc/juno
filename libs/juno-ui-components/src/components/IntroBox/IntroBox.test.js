@@ -22,12 +22,9 @@ describe("IntroBox", () => {
     )
   })
 
-	test("renders an IntroBox without background image as passed if variant is not hero", async () => {
+  test("renders an IntroBox without background image as passed if variant is not hero", async () => {
     render(
-      <IntroBox
-        data-testid="my-introbox"
-        heroImage="bg-[url('myimage.svg')]"
-      />
+      <IntroBox data-testid="my-introbox" heroImage="bg-[url('myimage.svg')]" />
     )
     expect(screen.getByTestId("my-introbox")).not.toHaveAttribute(
       "class",
@@ -46,9 +43,14 @@ describe("IntroBox", () => {
     render(
       <IntroBox data-testid="my-introbox" text="My IntroBox text goes here." />
     )
-    expect(screen.getByTestId("my-introbox")).toHaveTextContent(
-      "My IntroBox text goes here."
-    )
+    expect(
+      screen.getByText((content, element) => {
+        return (
+          element.tagName.toLowerCase() === "p" &&
+          content.startsWith("My IntroBox text goes here.")
+        )
+      })
+    ).toBeTruthy()
   })
 
   test("renders a custom class as passed", async () => {
@@ -56,15 +58,20 @@ describe("IntroBox", () => {
     expect(screen.getByTestId("my-introbox")).toHaveClass("my-custom-class")
   })
 
-  test("renders text as passed as children", async () => {
+  test("renders children passed as children", async () => {
     render(
       <IntroBox data-testid="my-introbox">
-        {"My Introbox children text goes here!"}
+        <div>My Introbox text in a div goes here!</div>
       </IntroBox>
     )
-    expect(screen.getByTestId("my-introbox")).toHaveTextContent(
-      "My Introbox children text goes here!"
-    )
+    expect(
+      screen.getByText((content, element) => {
+        return (
+          element.tagName.toLowerCase() === "div" &&
+          content.startsWith("My Introbox text in a div goes here!")
+        )
+      })
+    ).toBeTruthy()
   })
 
   test("renders text as passed as children if both children and 'text' prop were passed", async () => {
