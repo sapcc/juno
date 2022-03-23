@@ -1,25 +1,55 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const introbox = `
-	bg-theme-introbox
-	text-theme-default
-	flex
-	rounded-l
-	overflow-hidden
-`
+const introbox = (variant, heroImage) => {
+	
+	return (
+		`
+			bg-theme-introbox
+			text-theme-default
+			flex
+			rounded-l
+			overflow-hidden
+			mb-8
+
+			${variant === "hero" && (heroImage && heroImage.startsWith("bg-")) ?
+				`
+					${heroImage}
+					bg-right-top
+					bg-no-repeat
+				`
+				:
+				""
+			}
+		`
+	)
+}
 
 const introboxBorder = `
 	border-l-4
 	border-theme-introbox
 `
 
-const introboxContent = `
-	py-1
-	px-2
-	sm:py-3
-	sm:px-4
-`
+const introboxContent = (variant, heroImage) => {
+	return `
+		${heroImage && heroImage.startsWith("bg-") ? `pl-4 pr-56` : `px-4`}
+
+		${variant === "hero" ?
+		`
+			text-xl
+			min-h-[8rem]
+			py-4
+			flex
+			flex-col
+			justify-center
+		`
+		:
+		`
+			py-3
+		`
+	}
+	`
+}
 
 const introboxHeading = `
 	font-bold
@@ -32,17 +62,19 @@ Use sparingly, there should never be any two or more subsequent instances of Int
 export const IntroBox = ({
 	title,
 	text,
+	variant,
+	heroImage,
 	className,
 	children,
 	...props
 }) => {
 	return (
 		<div 
-			className={`juno-introbox ${introbox} ${className}`}
+			className={`juno-introbox ${introbox(variant, heroImage)} ${className}`}
 			{...props}
 		>
 			<div className={`${introboxBorder}`}></div>
-			<div className={`${introboxContent}`}>
+			<div className={`${introboxContent(variant, heroImage)}`}>
 				{title ?  <h1 className={`${introboxHeading}`}>{title}</h1> : ""}
 				<p>{ children ? children : text }</p>
 			</div>
@@ -56,6 +88,10 @@ IntroBox.propTypes = {
 	/** Pass a string of text to be rendered as contents. Alternatively, contents can be passed as children (see below) */
 	text: PropTypes.string,
 	/** Pass a custom class */
+	variant: PropTypes.oneOf(["default", "hero"]),
+	/** optional "hero" flavor image for hero variant. Specify as tailwind bg image string pointing to an image in your app, e.g. "bg-[url('img/app_bg_example.svg')]". Will always be positioned top and right */
+	heroImage: PropTypes.string,
+	/** Pass a custom class */
 	className: PropTypes.string,
 	/** Pass child nodes to be rendered as contents */
 	children: PropTypes.node,
@@ -64,5 +100,7 @@ IntroBox.propTypes = {
 IntroBox.defaultProps = {
 	title: null,
 	text: null,
+	variant: "default",
+	heroImage: null,
 	className: "",
 }
