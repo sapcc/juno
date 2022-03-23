@@ -32,12 +32,17 @@ Warning.args = { variant: "warning" }
 export const Light = Template.bind({})
 Light.args = {}
 
+export const WithCustomColor = Template.bind({})
+WithCustomColor.args = {
+  color: "text-theme-button-primary",
+}
+
 export const Small = Template.bind({})
 Small.args = {
-  size: "small"
+  size: "small",
 }
 
 export const Large = Template.bind({})
 Large.args = {
-  size: "large"
+  size: "large",
 }

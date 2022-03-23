@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
+import { Spinner } from "../Spinner/index.js"
 
 const btnBase = `
   font-bold
@@ -128,11 +129,11 @@ const sizeClass = (size) => {
 const iconSize = (size) => {
   switch (size) {
     case "small":
-      return '21'
+      return "21"
     case "large":
-      return '32'
+      return "32"
     default:
-      return '24'
+      return "24"
   }
 }
 
@@ -149,7 +150,8 @@ const btnIconDefault = `
 `
 
 const iconClasses = (size, variant) => {
-  const iconColor = variant === "default" ? "text-theme-button-default-icon" : ""
+  const iconColor =
+    variant === "default" ? "text-theme-button-default-icon" : ""
   switch (size) {
     case "small":
       return `${btnIconSmall} ${iconColor}`
@@ -157,6 +159,38 @@ const iconClasses = (size, variant) => {
       return `${btnIconLarge} ${iconColor}`
     default:
       return `${btnIconDefault} ${iconColor}`
+  }
+}
+
+const progressClass = (progress) => {
+  const progClass = progress ? `in-progress` : ``
+  return progClass
+}
+
+const spinnerSize = (size) => {
+  switch (size) {
+    case "small":
+      return "1.125rem" // 18px/16px
+    case "large":
+      return "2rem" // 32px/16px
+    default:
+      return "1.5rem" // 24px/16px
+  }
+}
+
+const spinnerColorClass = (variant, disabled) => {
+  const defaultButtonSpinnerColor = disabled
+    ? "text-theme-default"
+    : "text-theme-button-default-icon"
+  switch (variant) {
+    case "primary":
+      return "text-theme-button-primary"
+    case "primary-danger":
+      return "text-theme-button-primary-danger"
+    case "subdued":
+      return "text-theme-button-subdued"
+    default:
+      return defaultButtonSpinnerColor
   }
 }
 
@@ -174,21 +208,41 @@ export const Button = ({
   className,
   onClick,
   children,
+  progress,
+  progressLabel,
   ...props
 }) => {
-  const titleValue = title || label || "button"
+  const titleValue = title || label || ""
+
+  const buttonIcon = progress ? (
+    <Spinner
+      size={spinnerSize(size)}
+      color={`${spinnerColorClass(variant, disabled)}`}
+    />
+  ) : icon ? (
+    <Icon
+      icon={icon}
+      className={`${iconClasses(size, variant)}`}
+      size={size ? iconSize(size) : null}
+    />
+  ) : null
+
+  const buttonLabel =
+    progress && progressLabel ? progressLabel : label || children
 
   const button = (
     <button
       type="button"
-      className={`juno-button juno-button-${variant} ${btnBase} ${variantClass(variant)} ${sizeClass(size)} ${className}`}
+      className={`juno-button juno-button-${variant} ${btnBase} ${variantClass(
+        variant
+      )} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
       disabled={disabled}
       onClick={onClick}
       title={titleValue}
       {...props}
     >
-      { icon ? <Icon icon={icon} className={iconClasses(size, variant)} size={ size ? iconSize(size) : null } /> : null }
-      {label || children}
+      {buttonIcon}
+      {buttonLabel}
     </button>
   )
 
@@ -196,14 +250,16 @@ export const Button = ({
     <a
       href={href}
       role="button"
-      className={`juno-button juno-button-${variant} ${btnBase} ${variantClass(variant)} ${sizeClass(size)} ${className}`}
+      className={`juno-button juno-button-${variant} ${btnBase} ${variantClass(
+        variant
+      )} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
       disabled={disabled}
       onClick={onClick}
       title={titleValue}
       {...props}
     >
-      { icon ? <Icon icon={icon} className={iconClasses(size, variant)} size={ size ? iconSize(size) : null } /> : null }
-      {label || children}
+      {buttonIcon}
+      {buttonLabel}
     </a>
   )
 
@@ -231,6 +287,10 @@ Button.propTypes = {
   onClick: PropTypes.func,
   /** Set to true to disable */
   disabled: PropTypes.bool,
+  /** Whether the button action is in progress */
+  progress: PropTypes.bool,
+  /** Display an alternative label while the button action is in progress */
+  progressLabel: PropTypes.string,
 }
 
 Button.defaultProps = {
@@ -242,4 +302,6 @@ Button.defaultProps = {
   href: null,
   title: null,
   onClick: undefined,
+  progress: false,
+  progressLabel: "",
 }
