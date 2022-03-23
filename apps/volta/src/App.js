@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from "react"
-import {
-  AppBody,
-  AppIntro,
-  ContentArea,
-  ContentAreaHeading,
-  ContentAreaWrapper,
-  ContentContainer,
-  MainContainer,
-  PageFooter,
-  PageHeader,
-} from "juno-ui-components"
+import { AppShell, IntroBox, PageHeader } from "juno-ui-components"
 
 import { useOidcAuth } from "oauth"
 import { QueryClient, QueryClientProvider } from "react-query"
@@ -42,47 +32,36 @@ const App = (props) => {
   // Create a client
   const queryClient = new QueryClient()
 
+  const customPageHeader = React.useMemo(() => {
+    return (
+      <PageHeader heading="Converged Cloud | Volta">
+        {loggedIn && <HeaderUser name={auth?.full_name} logout={logout} />}
+      </PageHeader>
+    )
+  }, [loggedIn, logout, auth])
+
   return (
     <QueryClientProvider client={queryClient}>
-      <AppBody>
-        <PageHeader heading="Converged Cloud | Volta">
-          {loggedIn && <HeaderUser name={auth.full_name} logout={logout} />}
-        </PageHeader>
-
-        {/* Wrap everything except page header and footer in a main container */}
-        <MainContainer>
-          {/* Exchange image with app specific image (save in src/img/). If you don't have a background graphic for your app just remove the whole className prop */}
-          <ContentContainer className="bg-[url('img/app_bg_example.svg')]">
-            {/* App intro text */}
-            <AppIntro>
-              Secure storage and management of single sign-on certificates
-              <div>
-                <small>
-                  <a
-                    href="https://github.wdf.sap.corp/cc/volta/blob/master/docs/api-v1.md"
-                    target="_blank"
-                  >
-                    Read more about Volta service in our documentation
-                  </a>
-                </small>
-              </div>
-            </AppIntro>
-
-            <ContentAreaHeading heading="SSO Certificates" />
-            <ContentAreaWrapper>
-              <NewCertificate />
-              <ContentArea className="mt-0">
-                <MessagesStateProvider>
-                  <Messages />
-                  <CertificateList />
-                </MessagesStateProvider>
-              </ContentArea>
-            </ContentAreaWrapper>
-          </ContentContainer>
-        </MainContainer>
-
-        <PageFooter />
-      </AppBody>
+      <AppShell pageHeader={customPageHeader} contentHeading="SSO Certificates">
+        <IntroBox variant="hero" heroImage="bg-[url('img/app_bg_example.svg')]">
+          Secure storage and management of single sign-on certificates
+          <div>
+            <small>
+              <a
+                href="https://github.wdf.sap.corp/cc/volta/blob/master/docs/api-v1.md"
+                target="_blank"
+              >
+                Read more about Volta service in our documentation
+              </a>
+            </small>
+          </div>
+        </IntroBox>
+        <NewCertificate />
+        <MessagesStateProvider>
+          <Messages />
+          <CertificateList />
+        </MessagesStateProvider>
+      </AppShell>
     </QueryClientProvider>
   )
 }
