@@ -12564,6 +12564,7 @@ __metadata:
     html-webpack-plugin: ^5.4.0
     jest: ^27.4.7
     juno-ui-components: "workspace:*"
+    lodash.uniqueid: ^4.0.1
     luxon: ^2.3.0
     mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
