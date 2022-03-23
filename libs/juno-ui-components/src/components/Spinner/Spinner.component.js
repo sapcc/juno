@@ -1,6 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+const spinnerBaseStyles = `
+  animate-spin 
+  mr-3 
+  h-5 
+  w-5 
+`
+
 const primary = `
   text-theme-accent
 `
@@ -21,7 +28,7 @@ const defaultColor = `
   text-theme-on-default
 `
 
-export const Spinner = ({ variant, size, className, ...props }) => {
+export const Spinner = ({ variant, size, className, color, ...props }) => {
   const mode = () => {
     switch (variant) {
       case "primary":
@@ -52,7 +59,9 @@ export const Spinner = ({ variant, size, className, ...props }) => {
 
   return (
     <svg
-      className={`juno-spinner animate-spin mr-3 h-5 w-5 ${mode()} ${className}`}
+      className={`juno-spinner ${spinnerBaseStyles} ${
+        color ? color : mode()
+      } ${className}`}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -88,11 +97,15 @@ Spinner.propTypes = {
   ]),
   /** The size of the spinner: `small`, `large`, or any valid CSS length like `1.5rem`*/
   size: PropTypes.string,
+  /** Add custom classNames */
   className: PropTypes.string,
+  /** Pass a text-color class in order to apply any color to a spinner (These classes typically begin with "text-".). If passed, `color` will overwrite the semantic color as defined by `variant`. */
+  color: PropTypes.string,
 }
 
 Spinner.defaultProps = {
   className: "",
   variant: "default",
   size: null,
+  color: "",
 }
