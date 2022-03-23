@@ -61,12 +61,6 @@ describe("Button", () => {
     )
   })
 
-  test("renders 'button' as title if no title and no label given", async () => {
-    render(<Button>Click me</Button>)
-    expect(screen.getByRole("button")).toBeInTheDocument()
-    expect(screen.getByRole("button")).toHaveAttribute("title", "button")
-  })
-
   test("renders a default button", async () => {
     render(<Button>Click me</Button>)
     expect(screen.getByRole("button")).toBeInTheDocument()

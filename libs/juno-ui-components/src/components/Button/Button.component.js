@@ -170,11 +170,25 @@ const progressClass = (progress) => {
 const spinnerSize = (size) => {
   switch (size) {
     case "small":
-      return "1.125rem" // 18/16
+      return "1.125rem" // 18px/16px
     case "large":
-      return "2rem" // 32/16
+      return "2rem" // 32px/16px
     default:
-      return "1.5rem" // 24/16
+      return "1.5rem" // 24px/16px
+  }
+}
+
+// TODO: return spinner color based on variant
+const spinnerColorClass = (variant) => {
+  switch (variant) {
+    case "primary":
+      return "text-theme-button-primary"
+    case "primary-danger":
+      return "text-theme-button-primary-danger"
+    case "subdued":
+      return "text-theme-button-subdued"
+    default:
+      return "text-theme-button-default-icon"
   }
 }
 
@@ -196,14 +210,14 @@ export const Button = ({
   progressLabel,
   ...props
 }) => {
-  const titleValue = title || label || "button"
+  const titleValue = title || label || ""
 
   const buttonIcon = progress ? (
-    <Spinner size={spinnerSize(size)} />
+    <Spinner size={spinnerSize(size)} color={`${spinnerColorClass(variant)}`} />
   ) : icon ? (
     <Icon
       icon={icon}
-      className={iconClasses(size, variant)}
+      className={`${iconClasses(size, variant)}`}
       size={size ? iconSize(size) : null}
     />
   ) : null
