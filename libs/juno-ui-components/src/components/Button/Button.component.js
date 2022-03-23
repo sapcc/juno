@@ -178,8 +178,10 @@ const spinnerSize = (size) => {
   }
 }
 
-// TODO: return spinner color based on variant
-const spinnerColorClass = (variant) => {
+const spinnerColorClass = (variant, disabled) => {
+  const defaultButtonSpinnerColor = disabled
+    ? "text-theme-default"
+    : "text-theme-button-default-icon"
   switch (variant) {
     case "primary":
       return "text-theme-button-primary"
@@ -188,7 +190,7 @@ const spinnerColorClass = (variant) => {
     case "subdued":
       return "text-theme-button-subdued"
     default:
-      return "text-theme-button-default-icon"
+      return defaultButtonSpinnerColor
   }
 }
 
@@ -213,7 +215,10 @@ export const Button = ({
   const titleValue = title || label || ""
 
   const buttonIcon = progress ? (
-    <Spinner size={spinnerSize(size)} color={`${spinnerColorClass(variant)}`} />
+    <Spinner
+      size={spinnerSize(size)}
+      color={`${spinnerColorClass(variant, disabled)}`}
+    />
   ) : icon ? (
     <Icon
       icon={icon}
