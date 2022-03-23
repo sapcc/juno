@@ -22,12 +22,9 @@ describe("IntroBox", () => {
     )
   })
 
-	test("renders an IntroBox without background image as passed if variant is not hero", async () => {
+  test("renders an IntroBox without background image as passed if variant is not hero", async () => {
     render(
-      <IntroBox
-        data-testid="my-introbox"
-        heroImage="bg-[url('myimage.svg')]"
-      />
+      <IntroBox data-testid="my-introbox" heroImage="bg-[url('myimage.svg')]" />
     )
     expect(screen.getByTestId("my-introbox")).not.toHaveAttribute(
       "class",
