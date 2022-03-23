@@ -83,12 +83,17 @@ export const CodeBlock = ({
 	
 	const [isCopied, setIsCopied] = useState(false)
 	
-	const copyTextToClipboard = () => {
+	const timeoutRef = React.useRef(null)
+		
+  	React.useEffect(() => {
+	  return () => clearTimeout(timeoutRef.current) // clear when component is unmounted
+    }, [])
+	
+	const handleCopyClick = () => {
 		navigator.clipboard.writeText(children)
 		setIsCopied(true)
-		// Start and clear timer for visible feedback:
-		const timer = setTimeout( () => setIsCopied(false), 2000 )
-		return () => clearTimeout(timer)
+		clearTimeout(timeoutRef.current) // clear any possibly existing Refs
+		timeoutRef.current = setTimeout(() => setIsCopied(false), 1000)
 	}
 	
 	const codeBlockHeading = (
@@ -102,7 +107,7 @@ export const CodeBlock = ({
 	const copy = (
 		<div className={`juno-codeblock-copybar ${copyBarStyles}`}>
 			<span className={`font-bold text-sm mr-4 mt-1`} >{ isCopied ? "Copied!" : "" }</span>
-			<Icon icon="contentCopy" onClick={copyTextToClipboard} />
+			<Icon icon="contentCopy" onClick={handleCopyClick} />
 		</div>
 	)
 	
