@@ -13,6 +13,8 @@ const CACHE_STATE_KEY = "state"
 const CACHE_NONCE_KEY = "nonce"
 const CACHE_URI_KEY = "uri"
 
+let initialized = false
+
 function randomString() {
   return (
     Math.random().toString(36).substring(2, 15) +
@@ -45,6 +47,8 @@ function handleOIDCResponse() {
   searchParams.delete("error")
 
   if (!id_token && !state && !error) return
+
+  initialized = true
 
   // get state and last URL from the local store (browser)
   const storedState = window.sessionStorage.getItem(CACHE_STATE_KEY)
@@ -146,7 +150,6 @@ function oidcLogout(issuerURL, { silent }) {
   }
 }
 
-let initialized = false
 /**
  * This hook ensures that the user is logged on via OIDC and SAP ID Provider.
  * Use this hook only in web applications. OIDC flow requires a redirect!
