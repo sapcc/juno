@@ -167,7 +167,7 @@ const useOidcAuth = (options) => {
   const logout = useCallback(
     (options) => {
       if (options?.resetOIDCSession)
-        oidcLogout(issuerURL, { silent: options.silent !== false })
+        oidcLogout(issuerURL, { silent: options?.silent === true })
       else setAuth(null)
     },
     [setAuth]
