@@ -11,7 +11,6 @@ import reducers from "./reducers"
 import HeaderUser from "./components/HeaderUser"
 import { MessagesStateProvider } from "./components/MessagesProvider"
 
-/* Replace this with your app's name */
 const URL_STATE_KEY = "volta"
 
 const App = (props) => {

@@ -60,14 +60,16 @@ const NewCertificate = () => {
   const formPanelFooter = useMemo(
     () => (
       <PanelFooter>
-        <Button
-          disabled={isFormLoading}
-          onClick={onPanelClose}
-          variant="subdued"
-        >
+        <Button onClick={onPanelClose} variant="subdued">
           Cancel
         </Button>
-        <Button className="ml-2" onClick={onSaveClicked} variant="primary">
+        <Button
+          className="ml-2"
+          onClick={onSaveClicked}
+          variant="primary"
+          disabled={isFormLoading}
+          progress={isFormLoading}
+        >
           Create
         </Button>
       </PanelFooter>

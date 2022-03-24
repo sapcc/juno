@@ -26,7 +26,6 @@ const checkStatus = (response) => {
   }
 }
 
-// https://volta.qa-de-1.cloud.sap/api/v1/${ca}/certificate
 export const certificates = ({ queryKey }) => {
   const [_key, bearerToken, endpoint] = queryKey
   return fetch(`${endpoint}/galvani-pki/certificate`, {

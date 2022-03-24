@@ -118,12 +118,10 @@ const NewCertificateForm = ({ onFormSuccess, onFormLoading }, ref) => {
               onAttrChanged("csr", csr.toString("pem"))
             })
             .catch((error) => {
-              console.error("generateCsr: ", error)
               onGenerateCSRError()
             })
         })
         .catch((error) => {
-          console.error("pemEncodeKey: ", error)
           onGenerateCSRError()
         })
     })
