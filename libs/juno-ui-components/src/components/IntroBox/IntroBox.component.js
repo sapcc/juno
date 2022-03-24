@@ -86,7 +86,7 @@ IntroBox.propTypes = {
   text: PropTypes.string,
   /** Pass a custom class */
   variant: PropTypes.oneOf(["default", "hero"]),
-  /** optional "hero" flavor image for hero variant. Specify as tailwind bg image string pointing to an image in your app, e.g. "bg-[url('img/app_bg_example.svg')]". Will always be positioned top and right */
+  /** optional "hero" flavor image for hero variant. Specify as tailwind bg image string pointing to an image in your app (see template app for an example). Will always be positioned top and right */
   heroImage: PropTypes.string,
   /** Pass a custom class */
   className: PropTypes.string,
