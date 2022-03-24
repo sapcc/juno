@@ -9,7 +9,7 @@ const HeaderUser = ({ name, logout }) => {
       <Button
         label="Logout"
         size="small"
-        onClick={() => logout({ resetOIDCSession: true })}
+        onClick={() => logout({ resetOIDCSession: false, silent: true })}
       />
     </Stack>
   )

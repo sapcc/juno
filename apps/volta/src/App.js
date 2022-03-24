@@ -9,12 +9,17 @@ import Messages from "./components/Messages"
 import { StateProvider, useDispatch } from "./components/StateProvider"
 import reducers from "./reducers"
 import HeaderUser from "./components/HeaderUser"
-import { MessagesStateProvider } from "./components/MessagesProvider"
+import CustomIntroBox from "./components/CustomIntroBox"
+import {
+  MessagesStateProvider,
+  useMessagesDispatch,
+} from "./components/MessagesProvider"
 
 const URL_STATE_KEY = "volta"
 
 const App = (props) => {
   const dispatch = useDispatch()
+  const dispatchMessage = useMessagesDispatch()
 
   const { auth, loggedIn, logout } = useOidcAuth({
     issuerURL: props.issuerurl,
@@ -23,7 +28,13 @@ const App = (props) => {
   })
 
   useEffect(() => {
-    if (!auth) return ""
+    if (!auth) return null
+    if (auth?.error) {
+      dispatchMessage({
+        type: "SET_MESSAGE",
+        msg: { variant: "error", text: auth?.error },
+      })
+    }
     dispatch({ type: "SET_AUTH", auth })
     dispatch({ type: "SET_ENDPOINT", endpoint: props.endpoint })
   }, [auth])
@@ -42,24 +53,10 @@ const App = (props) => {
   return (
     <QueryClientProvider client={queryClient}>
       <AppShell pageHeader={customPageHeader} contentHeading="SSO Certificates">
-        <IntroBox variant="hero" heroImage="bg-[url('img/app_bg_example.svg')]">
-          Secure storage and management of single sign-on certificates
-          <div>
-            <small>
-              <a
-                href="https://github.wdf.sap.corp/cc/volta/blob/master/docs/api-v1.md"
-                target="_blank"
-              >
-                Read more about Volta service in our documentation
-              </a>
-            </small>
-          </div>
-        </IntroBox>
+        <CustomIntroBox isLoggedIn={loggedIn} />
         <NewCertificate />
-        <MessagesStateProvider>
-          <Messages />
-          <CertificateList />
-        </MessagesStateProvider>
+        <Messages />
+        {loggedIn && <CertificateList />}
       </AppShell>
     </QueryClientProvider>
   )
@@ -67,6 +64,8 @@ const App = (props) => {
 
 export default (props) => (
   <StateProvider reducers={reducers}>
-    <App {...props} />
+    <MessagesStateProvider>
+      <App {...props} />
+    </MessagesStateProvider>
   </StateProvider>
 )
