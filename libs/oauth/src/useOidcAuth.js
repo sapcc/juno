@@ -136,7 +136,7 @@ function oidcLogout(issuerURL, { silent }) {
   if (silent) {
     // refresh token using iframe and postMessage API
     const iframe = document.createElement("iframe")
-    url += "&prompt=none"
+    issuerURL += "&prompt=none"
     iframe.setAttribute("src", `${issuerURL}/oauth2/logout`)
     iframe.setAttribute("width", 0)
     iframe.setAttribute("height", 0)
