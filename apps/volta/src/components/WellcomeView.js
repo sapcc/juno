@@ -7,10 +7,12 @@ const WellcomeView = ({ loginCallback }) => {
       alignment="center"
       distribution="center"
       direction="vertical"
-      className="h-full"
+      className="mt-[10vh]"
     >
-      <p className="text-xl">Wellcome to the Converged Cloud Platform</p>
-      <p className="text-md">Login to manage your SSO certificates</p>
+      <p className="text-xl">
+        Wellcome to the Converged Cloud Certificate Service
+      </p>
+      <p className="text-xl">Login to manage your SSO certificates</p>
       <Button
         label="Login"
         variant="primary"

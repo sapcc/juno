@@ -108,7 +108,7 @@ const CertificateList = () => {
               alignment="center"
               distribution="center"
               direction="vertical"
-              className="h-full"
+              className="mt-[10vh]"
             >
               <p className="text-xl">
                 It seems that no SSO certificates have been created yet.
