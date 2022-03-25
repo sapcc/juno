@@ -3,7 +3,6 @@ import { certificates, createCertificate, revokeCertificate } from "./actions"
 
 // get all certificates
 export const getCertificates = (bearerToken, endpoint) => {
-  console.log("getCertificates endpoint: ", endpoint)
   return useQuery(["certificates", bearerToken, endpoint], certificates, {
     // The query will not execute until the bearerToken exists
     enabled: !!bearerToken,

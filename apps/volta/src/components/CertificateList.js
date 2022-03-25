@@ -63,14 +63,14 @@ const CertificateList = () => {
   // TODO add memo
   return (
     <>
-      {isLoading || !data ? (
+      {isLoading && !data ? (
         <Stack alignment="center">
           <Spinner variant="primary" />
           Loading certificates...
         </Stack>
       ) : (
         <>
-          {data && data.length > 0 ? (
+          {data && data.length > 0 && (
             <>
               <ContentAreaToolbar>
                 <AddNewSSOButton />
@@ -102,12 +102,13 @@ const CertificateList = () => {
                 ))}
               </DataList>
             </>
-          ) : (
+          )}
+          {data && data.length === 0 && (
             <Stack
               alignment="center"
               distribution="center"
               direction="vertical"
-              className="h-full"
+              className="mt-[10vh]"
             >
               <p className="text-xl">
                 It seems that no SSO certificates have been created yet.
