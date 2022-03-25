@@ -14,6 +14,7 @@ import {
   MessagesStateProvider,
   useMessagesDispatch,
 } from "./components/MessagesProvider"
+import WellcomeView from "./components/WellcomeView"
 
 const URL_STATE_KEY = "volta"
 
@@ -21,7 +22,7 @@ const App = (props) => {
   const dispatch = useDispatch()
   const dispatchMessage = useMessagesDispatch()
 
-  const { auth, loggedIn, logout } = useOidcAuth({
+  const { auth, loggedIn, logout, login } = useOidcAuth({
     issuerURL: props.issuerurl,
     clientID: props.clientid,
     initialLogin: true,
@@ -53,10 +54,14 @@ const App = (props) => {
   return (
     <QueryClientProvider client={queryClient}>
       <AppShell pageHeader={customPageHeader} contentHeading="SSO Certificates">
-        <CustomIntroBox isLoggedIn={loggedIn} />
+        <CustomIntroBox />
         <NewCertificate />
         <Messages />
-        {loggedIn && <CertificateList />}
+        {loggedIn ? (
+          <CertificateList />
+        ) : (
+          <WellcomeView loginCallback={login} />
+        )}
       </AppShell>
     </QueryClientProvider>
   )
