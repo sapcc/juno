@@ -1,5 +1,6 @@
 import * as React from "react"
-import { render, screen } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { Message } from "./index"
 
 describe("Message", () => {
@@ -8,19 +9,47 @@ describe("Message", () => {
 		render(<Message data-testid="my-message" />)
 		expect(screen.getByTestId("my-message")).toBeInTheDocument()
 	  })
-  
-	test("renders an info Message by default if no variant passed", async () => {
-		render(<Message data-testid="my-message" />)
-		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")
-		expect(screen.getByRole("img")).toHaveClass("text-theme-info")
+		
+		test("renders an info Message by default if no variant passed", async () => {
+			render(<Message data-testid="my-message" />)
+			expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")
+			expect(screen.getByRole("img")).toHaveClass("text-theme-info")
+		})
+		
+		test("renders a Message where the icon is not allowed to shrink", async () => {
+			render(<Message data-testid="my-message" />)
+			expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")
+			expect(screen.getByRole("img")).toHaveClass("shrink-0")
+		})
+		
+	test("renders a Message that can be dismissed", async () => {
+		render(<Message data-testid="my-message" dismissible={true} />)
+		// not checking specifically for the close button here. So if there is more than one button in the message this test will fail
+		// The reason is that it's hard to find specifically the close button because any classes added to a clickable Icon go to the image element, not the surrounding button
+		expect(screen.getByRole("button")).toBeInTheDocument()
+		userEvent.click(screen.getByRole("button"))
+		await waitFor(() => {
+			expect(screen.queryByTestId("my-message")).not.toBeInTheDocument()
+		})
 	})
 
-	test("renders a Message where the icon is not allowed to shrink", async () => {
+	test("renders a Message without dismiss button by default", async () => {
 		render(<Message data-testid="my-message" />)
-		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")
-		expect(screen.getByRole("img")).toHaveClass("shrink-0")
+		expect(screen.queryByRole("button")).not.toBeInTheDocument()
 	})
 	
+	test("renders a Message without dismiss button", async () => {
+		render(<Message data-testid="my-message" dismissible={false} />)
+		expect(screen.queryByRole("button")).not.toBeInTheDocument()
+	})
+
+	test("renders a Message that will be automatically dismissed", async () => {
+		render(<Message data-testid="my-message" autoDismiss={true} autoDismissTimeout={500} />)
+		await waitFor(() => {
+			expect(screen.queryByTestId("my-message")).not.toBeInTheDocument()
+		}, {timeout: 1000})
+	})
+
 	test("renders an info Message as passed", async () => {
 		render(<Message data-testid="my-message" variant="info" />)
 		expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")

@@ -1,9 +1,8 @@
-import React from "react"
+import React, { useEffect, useRef, useState } from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 
 const message = `
-	pr-4
 	text-theme-high
 	flex
 	mb-8
@@ -63,12 +62,23 @@ const messageSuccessBg = `
 
 const messageContentStyles = `
 	py-3
+	pr-4
 	ml-7
 `
 
 const messageHeading = `
 	font-bold
 `
+
+const dismissButtonStyles = `
+	ml-auto
+	self-stretch
+	flex
+	flex-col
+	py-2.5
+	pr-2.5
+`
+
 const backgroundClass = (variant) => {
 	switch(variant) {
 		case "error":
@@ -121,22 +131,56 @@ export const Message = ({
 	title,
 	text,
 	variant,
+	dismissible,
+	autoDismiss,
+	autoDismissTimeout,
 	className,
 	children,
 	...props
 }) => {
+
+	const [visible, setVisible] = useState(true)
+
+	  // ----- Timeout stuff -------
+  const timeoutRef = React.useRef(null)
+
+  React.useEffect(() => {
+    return () => clearTimeout(timeoutRef.current) // clear when component is unmounted
+  }, [])
+
+  // if autoDissmiss is true, hide message after passed or preconfigured timeout
+  useEffect(() => {
+    if (autoDismiss) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = setTimeout(() => setVisible(false), autoDismissTimeout)
+    }
+  }, [autoDismiss, autoDismissTimeout])
+
+	const hideMessage = () => {
+		setVisible(false)
+	}
+
 	return (
-		<div 
-			className={`juno-message juno-message-${variant} ${message} ${backgroundClass(variant)} ${className}`}
-			{...props}
-		>
-			<div className={`juno-message-border ${messageBorderStyles} ${variantClass(variant)}`}></div>
-			<Icon icon={ getMuiIcon(variant) } color={ 'text-theme-' + variant } className="shrink-0" />
-			<div className={`juno-message-content ${messageContentStyles}`}>
-				{title ?  <h1 className={`${messageHeading}`}>{title}</h1> : ""}
-				<div>{ children ? children : text }</div>
-			</div>
-		</div>
+		<>
+			{ visible &&
+				<div 
+					className={`juno-message juno-message-${variant} ${message} ${backgroundClass(variant)} ${className}`}
+					{...props}
+				>
+					<div className={`juno-message-border ${messageBorderStyles} ${variantClass(variant)}`}></div>
+					<Icon icon={ getMuiIcon(variant) } color={ 'text-theme-' + variant } className="shrink-0" />
+					<div className={`juno-message-content ${messageContentStyles}`}>
+						{title ?  <h1 className={`${messageHeading}`}>{title}</h1> : ""}
+						<div>{ children ? children : text }</div>
+					</div>
+					{ dismissible && 
+						<div className={dismissButtonStyles}>
+							<Icon icon="close" onClick={hideMessage} className="juno-message-close-button opacity-50 hover:opacity-100" />
+						</div>
+					}
+				</div>
+			}
+		</>
 	)
 }
 
@@ -145,10 +189,16 @@ Message.propTypes = {
 	title: PropTypes.string,
 	/** Pass a string of text to be rendered as contents. Alternatively, contents can be passed as children (see below) */
 	text: PropTypes.string,
-	/** Pass an optional className */
-	className: PropTypes.string,
 	/** Specify a semantic variant */
 	variant: PropTypes.oneOf(['info', 'warning', 'danger','error', 'success']),
+	/** Optional. If set to 'true', the message will get a close button to dismiss the message. */
+	dismissible: PropTypes.bool,
+	/** Optional. If set to 'true', the message will be automatically dismissed after 10 seconds by default or after the specified autoDismissTimeout */
+	autoDismiss: PropTypes.bool,
+	/** Optional. Timeout in miliseconds after which the message is automatically dismissed. By default 10000 (10s).*/
+	autoDismissTimeout: PropTypes.number,
+	/** Pass an optional className */
+	className: PropTypes.string,
 	/** Pass child nodes to be rendered as contents */
 	children: PropTypes.node,
 }
@@ -157,5 +207,8 @@ Message.defaultProps = {
 	title: null,
 	text: null,
 	variant: 'info',
+	dismissible: false,
+	autoDismiss: false,
+	autoDismissTimeout: 10000,
 	className: "",
 }

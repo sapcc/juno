@@ -4,7 +4,6 @@ import { Message } from "./index.js"
 export default {
   title: "Design System/Message",
   component: Message,
-  argTypes: {},
 }
 
 const Template = (args) => <Message {...args} />
@@ -44,5 +43,10 @@ Success.args = {
 	text: "Success Message"
 }
 
+export const Dismissible = Template.bind({})
+Dismissible.args = {
+	text: "Dismissible Message.",
+	dismissible: true
+}
 
 
