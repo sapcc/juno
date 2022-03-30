@@ -2,7 +2,7 @@ import React from "react"
 import { Checkbox } from "./index.js"
 
 export default {
-  title: "Design System/Forms/Checkbox",
+  title: "Forms/Base Elements/Checkbox",
   component: Checkbox,
   argTypes: {},
 }
@@ -10,8 +10,7 @@ export default {
 const Template = (args) => <Checkbox {...args} />
 
 export const Default = Template.bind({})
-Default.args = {
-}
+Default.args = {}
 
 export const Checked = Template.bind({})
 Checked.args = {
@@ -27,6 +26,3 @@ export const Indeterminate = Template.bind({})
 Indeterminate.args = {
   indeterminate: true,
 }
-
-
-

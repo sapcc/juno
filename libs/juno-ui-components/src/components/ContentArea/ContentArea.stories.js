@@ -3,7 +3,7 @@ import React from "react"
 import { ContentArea } from "./index.js"
 
 export default {
-  title: "Design System/Internal/ContentArea",
+  title: "Internal/ContentArea",
   component: ContentArea,
   argTypes: {},
 }

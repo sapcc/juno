@@ -2,27 +2,23 @@ import React from "react"
 import { DataGridToolbar } from "./index.js"
 import { Default as Button } from "../Button/Button.stories.js"
 
-
 export default {
-  title: "Design System/DataGrid/DataGridToolbar",
+  title: "Components/DataGrid/DataGridToolbar",
   component: DataGridToolbar,
   argTypes: {},
 }
 
-const Template = (args) =>
-<DataGridToolbar {...args}>
-</DataGridToolbar>
-
+const Template = (args) => <DataGridToolbar {...args}></DataGridToolbar>
 
 export const Default = Template.bind({})
 Default.parameters = {
   docs: {
-	description: { 
-	  story: "Optional toolbar for use in DataGrid"
-	}
+    description: {
+      story: "Optional toolbar for use in DataGrid",
+    },
   },
 }
 Default.args = {
- 	search: true,
-	addItems: true,
+  search: true,
+  addItems: true,
 }

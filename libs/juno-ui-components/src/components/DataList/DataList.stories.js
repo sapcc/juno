@@ -10,110 +10,111 @@ import { PercentageWidths as PercentageWidthsDataListRowStory } from "../DataLis
 import { GridFitted as GridFittedDataListRowStory } from "../DataListRow/DataListRow.stories.js"
 
 export default {
-  title: "Design System/DataList/DataList",
+  title: "Components/DataList/DataList",
   component: DataList,
   argTypes: {},
 }
 
-const Template = ({items, ...args}) =>
-<DataList {...args}>
-	{items.map((item, i) => (
-		<DataListRow key={`${i}`} >
-			{item.items.map((cell, c) =>
-				<DataListCell {...cell} key={`${i}_${c}`} />
-			)}
-		</DataListRow>
-	))}
-</DataList>
+const Template = ({ items, ...args }) => (
+  <DataList {...args}>
+    {items.map((item, i) => (
+      <DataListRow key={`${i}`}>
+        {item.items.map((cell, c) => (
+          <DataListCell {...cell} key={`${i}_${c}`} />
+        ))}
+      </DataListRow>
+    ))}
+  </DataList>
+)
 
 export const Default = Template.bind({})
 Default.parameters = {
   docs: {
-	description: { 
-	  story: "Default Juno DataList for displaying data"
-	}
+    description: {
+      story: "Default Juno DataList for displaying data",
+    },
   },
 }
 Default.args = {
   items: [
-	  {...DataListRowStory.args},
-	  {...DataListRowStory.args},
-	  {...DataListRowStory.args},
-	  {...DataListRowStory.args},
-	  {...DataListRowStory.args},
-  ]
+    { ...DataListRowStory.args },
+    { ...DataListRowStory.args },
+    { ...DataListRowStory.args },
+    { ...DataListRowStory.args },
+    { ...DataListRowStory.args },
+  ],
 }
 
 export const Selectable = Template.bind({})
 Selectable.parameters = {
-	docs: {
-		description: { 
-		  story: "Selectable Juno DataList for displaying and selecting data"
-		}
-	  },
+  docs: {
+    description: {
+      story: "Selectable Juno DataList for displaying and selecting data",
+    },
+  },
 }
 Selectable.args = {
-	selectable: true,
-	items: [
-		{...SelectableDataListRowStory.args},
-		{...SelectableDataListRowStory.args},
-		{...SelectableDataListRowStory.args},
-		{...SelectableDataListRowStory.args},
-		{...SelectableDataListRowStory.args},
-	]
+  selectable: true,
+  items: [
+    { ...SelectableDataListRowStory.args },
+    { ...SelectableDataListRowStory.args },
+    { ...SelectableDataListRowStory.args },
+    { ...SelectableDataListRowStory.args },
+    { ...SelectableDataListRowStory.args },
+  ],
 }
 
 export const Auto = Template.bind({})
 Auto.parameters = {
-	docs: {
-		description: {
-			story: "Juno DataList with one column set to 'auto' to maximize its width"
-		}
-	},
+  docs: {
+    description: {
+      story:
+        "Juno DataList with one column set to 'auto' to maximize its width",
+    },
+  },
 }
 Auto.args = {
-	items: [
-		{...AutoWidthDataListRowStory.args},
-		{...AutoWidthDataListRowStory.args},
-		{...AutoWidthDataListRowStory.args},
-		{...AutoWidthDataListRowStory.args},
-		{...AutoWidthDataListRowStory.args},
-	]
+  items: [
+    { ...AutoWidthDataListRowStory.args },
+    { ...AutoWidthDataListRowStory.args },
+    { ...AutoWidthDataListRowStory.args },
+    { ...AutoWidthDataListRowStory.args },
+    { ...AutoWidthDataListRowStory.args },
+  ],
 }
 
 export const Percentage = Template.bind({})
 Percentage.parameters = {
-	docs: {
-		description: {
-			story: "Juno DataList with percentage-based column widths"
-		}
-	},
+  docs: {
+    description: {
+      story: "Juno DataList with percentage-based column widths",
+    },
+  },
 }
 Percentage.args = {
-	items: [
-		{...PercentageWidthsDataListRowStory.args},
-		{...PercentageWidthsDataListRowStory.args},
-		{...PercentageWidthsDataListRowStory.args},
-		{...PercentageWidthsDataListRowStory.args},
-		{...PercentageWidthsDataListRowStory.args},
-	]
+  items: [
+    { ...PercentageWidthsDataListRowStory.args },
+    { ...PercentageWidthsDataListRowStory.args },
+    { ...PercentageWidthsDataListRowStory.args },
+    { ...PercentageWidthsDataListRowStory.args },
+    { ...PercentageWidthsDataListRowStory.args },
+  ],
 }
-
 
 export const GridFitted = Template.bind({})
 GridFitted.parameters = {
-	docs: {
-		description: {
-			story: "Juno DataList with grid column-based column widths"
-		}
-	},
+  docs: {
+    description: {
+      story: "Juno DataList with grid column-based column widths",
+    },
+  },
 }
 GridFitted.args = {
-	items: [
-		{...GridFittedDataListRowStory.args},
-		{...GridFittedDataListRowStory.args},
-		{...GridFittedDataListRowStory.args},
-		{...GridFittedDataListRowStory.args},
-		{...GridFittedDataListRowStory.args},
-	]
+  items: [
+    { ...GridFittedDataListRowStory.args },
+    { ...GridFittedDataListRowStory.args },
+    { ...GridFittedDataListRowStory.args },
+    { ...GridFittedDataListRowStory.args },
+    { ...GridFittedDataListRowStory.args },
+  ],
 }

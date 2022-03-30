@@ -8,7 +8,7 @@ const Template = (args) => (
 )
 
 export default {
-  title: "Design System/ShadowRoot",
+  title: "Layout/ShadowRoot",
   component: ShadowRoot,
 }
 

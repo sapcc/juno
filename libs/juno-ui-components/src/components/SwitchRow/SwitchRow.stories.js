@@ -2,7 +2,7 @@ import React from "react"
 import { SwitchRow } from "./index.js"
 
 export default {
-  title: "Design System/Forms/SwitchRow",
+  title: "Forms/SwitchRow",
   component: SwitchRow,
   argTypes: {},
 }
@@ -11,7 +11,7 @@ const Template = (args) => <SwitchRow {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-	label: "Default Switch Row",
+  label: "Default Switch Row",
 }
 
 export const On = Template.bind({})
@@ -37,6 +37,5 @@ WithHelptext.args = {
 export const Required = Template.bind({})
 Required.args = {
   label: "Required Switch",
-  required: true
+  required: true,
 }
-

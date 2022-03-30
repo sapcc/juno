@@ -3,7 +3,7 @@ import React from "react"
 import { Button } from "./index"
 
 export default {
-  title: "Design System/Button",
+  title: "Components/Button",
   component: Button,
   parameters: {
     docs: {

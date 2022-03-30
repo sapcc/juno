@@ -5,7 +5,7 @@ import { ContentArea } from "../ContentArea/index.js"
 import { Button } from "../Button/index.js"
 
 export default {
-  title: "Design System/Internal/ContentAreaHeading",
+  title: "Internal/ContentAreaHeading",
   component: ContentAreaHeading,
   argTypes: {},
 }

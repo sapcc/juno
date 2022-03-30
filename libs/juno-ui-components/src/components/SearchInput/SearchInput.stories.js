@@ -2,7 +2,7 @@ import React from "react"
 import { SearchInput } from "./index.js"
 
 export default {
-  title: "Design System/SearchInput",
+  title: "Components/SearchInput",
   component: SearchInput,
   argTypes: {},
 }
@@ -19,5 +19,5 @@ Hero.args = {
 
 export const Disabled = Template.bind({})
 Disabled.args = {
-	disabled: true,
+  disabled: true,
 }

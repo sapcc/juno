@@ -3,7 +3,7 @@ import React from "react"
 import { Spinner } from "./index.js"
 
 export default {
-  title: "Design System/Spinner",
+  title: "Components/Spinner",
   component: Spinner,
   argTypes: {
     // backgroundColor: { control: "color" },

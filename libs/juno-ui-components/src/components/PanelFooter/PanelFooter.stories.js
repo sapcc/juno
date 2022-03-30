@@ -8,7 +8,7 @@ import { Panel } from "../Panel/index.js"
 import { PanelBody } from "../PanelBody/index.js"
 
 export default {
-  title: "Design System/Layout/PanelFooter",
+  title: "Layout/Panel/PanelFooter",
   component: PanelFooter,
   argTypes: {},
 }
@@ -16,11 +16,12 @@ export default {
 const Template = (args) => (
   <ContentAreaWrapper>
     <Panel heading="My Panel" opened>
-      <PanelBody 
+      <PanelBody
         footer={
           <PanelFooter {...args}>
             <Button>Do it</Button>
-          </PanelFooter>}
+          </PanelFooter>
+        }
       >
         This is the panel body
       </PanelBody>
@@ -35,7 +36,8 @@ export const Footer = Template.bind({})
 Footer.parameters = {
   docs: {
     description: {
-      story: "A container for panel footer elements, typically buttons. Add the footer to the PanelBody component via its `footer` parameter.",
+      story:
+        "A container for panel footer elements, typically buttons. Add the footer to the PanelBody component via its `footer` parameter.",
     },
   },
 }

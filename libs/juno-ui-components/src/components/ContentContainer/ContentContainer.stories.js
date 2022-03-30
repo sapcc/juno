@@ -3,7 +3,7 @@ import React from "react"
 import { ContentContainer } from "./index.js"
 
 export default {
-  title: "Design System/Internal/ContentContainer",
+  title: "Internal/ContentContainer",
   component: ContentContainer,
   argTypes: {},
 }

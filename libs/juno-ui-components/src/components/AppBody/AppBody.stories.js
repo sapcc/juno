@@ -3,7 +3,7 @@ import React from "react"
 import { AppBody } from "./index.js"
 
 export default {
-  title: "Design System/Internal/AppBody",
+  title: "Internal/AppBody",
   component: AppBody,
   argTypes: {},
 }

@@ -2,17 +2,13 @@ import React from "react"
 import { GridRow } from "./index.js"
 import { Default as GridColumn } from "../GridColumn/GridColumn.stories.js"
 
-
 export default {
-  title: "Design System/Grid/GridRow",
+  title: "Layout/Grid/GridRow",
   component: GridRow,
   argTypes: {},
 }
 
-const Template = ({columns, ...args}) => (
-  <GridRow {...args}>
-  </GridRow>
-)
+const Template = ({ columns, ...args }) => <GridRow {...args}></GridRow>
 
 export const Default = Template.bind({})
 Default.args = {
@@ -28,7 +24,6 @@ Default.args = {
     <GridColumn key="9">Column</GridColumn>,
     <GridColumn key="10">Column</GridColumn>,
     <GridColumn key="11">Column</GridColumn>,
-    <GridColumn key="12">Column</GridColumn>
-  ]
+    <GridColumn key="12">Column</GridColumn>,
+  ],
 }
-

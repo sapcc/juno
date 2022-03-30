@@ -24,14 +24,16 @@ const Template = ({ isOpen: initOpenStatus, ...props }) => {
 }
 
 export default {
-  title: "Design System/Modal",
+  title: "WiP/Modal",
   component: Modal,
 }
 
 export const Simple = Template.bind({})
 Simple.parameters = {
   docs: {
-    description: { story: "DO NOT USE!!! The modal component isn't ready to be used."}
+    description: {
+      story: "DO NOT USE!!! The modal component isn't ready to be used.",
+    },
   },
 }
 Simple.args = {
@@ -44,7 +46,9 @@ Simple.args = {
 export const CustomContent = Template.bind({})
 CustomContent.parameters = {
   docs: {
-    description: { story: "DO NOT USE!!! The modal component isn't ready to be used."}
+    description: {
+      story: "DO NOT USE!!! The modal component isn't ready to be used.",
+    },
   },
 }
 CustomContent.args = {

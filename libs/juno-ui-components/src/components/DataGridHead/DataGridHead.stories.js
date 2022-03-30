@@ -4,13 +4,11 @@ import { DataGridHeadRow } from "../DataGridHeadRow/index.js"
 import { DataGridHeadCell } from "../DataGridHeadCell/index.js"
 import { Default as DataGridHeadRowStory } from "../DataGridHeadRow/DataGridHeadRow.stories.js"
 
-
-
 export default {
-  title: "Design System/DataGrid/DataGridHead",
+  title: "Components/DataGrid/DataGridHead",
   component: DataGridHead,
   argTypes: {},
-  decorators: [ story => <table>{story()}</table>],
+  decorators: [(story) => <table>{story()}</table>],
 }
 
 const Template = ({ items, ...args }) => (
@@ -25,17 +23,14 @@ const Template = ({ items, ...args }) => (
   </DataGridHead>
 )
 
-
 export const Default = Template.bind({})
 Default.parameters = {
   docs: {
-	  description: { 
-	    story: "Juno DataGridHead for use in DataGrid"
-	  }
+    description: {
+      story: "Juno DataGridHead for use in DataGrid",
+    },
   },
 }
 Default.args = {
-  items: [
-    {...DataGridHeadRowStory.args}
-  ]
+  items: [{ ...DataGridHeadRowStory.args }],
 }

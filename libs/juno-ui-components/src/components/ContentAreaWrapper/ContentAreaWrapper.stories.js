@@ -6,7 +6,7 @@ import { ContentAreaToolbar } from "../ContentAreaToolbar/index.js"
 import { Button } from "../Button/index.js"
 
 export default {
-  title: "Design System/Internal/ContentAreaWrapper",
+  title: "Internal/ContentAreaWrapper",
   component: ContentAreaWrapper,
   argTypes: {},
 }
@@ -24,8 +24,7 @@ export const Basic = Template.bind({})
 Basic.parameters = {
   docs: {
     description: {
-      story:
-        "OBSOLETE: Will be deleted!",
+      story: "OBSOLETE: Will be deleted!",
     },
   },
 }

@@ -3,7 +3,7 @@ import React from "react"
 import { MainContainer } from "./index.js"
 
 export default {
-  title: "Design System/Internal/MainContainer",
+  title: "Internal/MainContainer",
   component: MainContainer,
   argTypes: {},
 }

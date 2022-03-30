@@ -3,10 +3,9 @@ import React from "react"
 import { PageHeader } from "./index.js"
 
 export default {
-  title: "Design System/Layout/PageHeader",
+  title: "Layout/PageHeader",
   component: PageHeader,
-  argTypes: {
-  },
+  argTypes: {},
 }
 
 const Template = (args) => <PageHeader {...args}></PageHeader>
@@ -14,7 +13,10 @@ const Template = (args) => <PageHeader {...args}></PageHeader>
 export const Simple = Template.bind({})
 Simple.parameters = {
   docs: {
-    description: { story: 'The page header component renders a header at the top of the website. Place as first child of AppBody.'}
+    description: {
+      story:
+        "The page header component renders a header at the top of the website. Place as first child of AppBody.",
+    },
   },
 }
 Simple.args = {}
@@ -22,10 +24,9 @@ Simple.args = {}
 export const WithHeading = Template.bind({})
 WithHeading.parameters = {
   docs: {
-    description: { story: 'PageHeader with Heading.'}
+    description: { story: "PageHeader with Heading." },
   },
 }
 WithHeading.args = {
-  heading: "My Awesome App"
+  heading: "My Awesome App",
 }
-

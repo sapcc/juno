@@ -2,7 +2,7 @@ import React from "react"
 import { StyleProvider } from "."
 
 export default {
-  title: "Design System/StyleProvider",
+  title: "Layout/StyleProvider",
   component: StyleProvider,
   argTypes: {
     stylesWrapper: {

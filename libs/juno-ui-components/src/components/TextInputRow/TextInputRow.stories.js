@@ -2,7 +2,7 @@ import React from "react"
 import { TextInputRow } from "./index.js"
 
 export default {
-  title: "Design System/Forms/TextInputRow",
+  title: "Forms/TextInputRow",
   component: TextInputRow,
   argTypes: {},
 }
@@ -11,26 +11,24 @@ const Template = (args) => <TextInputRow {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-	label: "Text Input Row",
+  label: "Text Input Row",
 }
 
 export const Disabled = Template.bind({})
 Disabled.args = {
-	label: "Disabled Text Input Row",
-	disabled: true,
+  label: "Disabled Text Input Row",
+  disabled: true,
 }
 
 export const WithHelpText = Template.bind({})
 WithHelpText.args = {
-	name: "my-input",
-	label: "Text Input Row with Help Text",
-	helptext: "Oh so helpful helptext"
+  name: "my-input",
+  label: "Text Input Row with Help Text",
+  helptext: "Oh so helpful helptext",
 }
 
 export const Required = Template.bind({})
 Required.args = {
-	label: "Required input",
-	required: true
+  label: "Required input",
+  required: true,
 }
-
-

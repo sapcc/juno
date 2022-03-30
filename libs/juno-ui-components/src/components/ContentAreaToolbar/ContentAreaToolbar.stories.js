@@ -4,13 +4,15 @@ import { ContentAreaToolbar } from "./index.js"
 import { Button } from "../Button/index.js"
 
 export default {
-  title: "Design System/Layout/ContentAreaToolbar",
+  title: "Layout/ContentAreaToolbar",
   component: ContentAreaToolbar,
   argTypes: {},
 }
 
 const Template = (args) => (
-  <ContentAreaToolbar {...args}><Button>Main Action</Button></ContentAreaToolbar>
+  <ContentAreaToolbar {...args}>
+    <Button>Main Action</Button>
+  </ContentAreaToolbar>
 )
 
 export const Basic = Template.bind({})
@@ -23,4 +25,3 @@ Basic.parameters = {
   },
 }
 Basic.args = {}
-

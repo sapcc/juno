@@ -17,6 +17,12 @@ import { StyleProvider } from "../src/components/StyleProvider"
 import { theme } from "../tailwind.config";
 
 export const parameters = {
+  options: {
+    storySort: {
+      order: ['Components', 'Forms', 'Layout', '*', 'WiP', 'Internal'],
+      method: 'alphabetical',
+    },
+  },
   actions: { argTypesRegex: "^on[A-Z].*" },
   backgrounds: { disable: true },
   darkMode: {
