@@ -1,6 +1,6 @@
-# WHOIS UI
+# Maintenance UI
 
-This is the micro frontend app for the whois service.
+This is the micro frontend app for the maintenance app.
 
 
 ## Usage
@@ -11,7 +11,7 @@ This is the micro frontend app for the whois service.
 <script
   defer
   src="https://JUNO_CDN_HOSTNAME/widget-loader/VERSION/app.js"
-  data-name="whois"
+  data-name="maintenance"
   data-version="MFE_VERSION"
 ></script>
 ```
@@ -23,7 +23,7 @@ Example:
 <script
   defer
   src="https://cdn.juno.qa-de-1.cloud.sap/widget-loader/latest/app.js"
-  data-name="whois"
+  data-name="maintenance"
   data-version="latest"
 ></script>
 ```
