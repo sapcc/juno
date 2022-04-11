@@ -228,5 +228,6 @@ Message.defaultProps = {
   dismissible: false,
   autoDismiss: false,
   autoDismissTimeout: 10000,
+  onDismiss: undefined,
   className: "",
 }
