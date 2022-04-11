@@ -134,6 +134,7 @@ export const Message = ({
   dismissible,
   autoDismiss,
   autoDismissTimeout,
+  onDismiss,
   className,
   children,
   ...props
@@ -151,15 +152,14 @@ export const Message = ({
   useEffect(() => {
     if (autoDismiss) {
       clearTimeout(timeoutRef.current)
-      timeoutRef.current = setTimeout(
-        () => setVisible(false),
-        autoDismissTimeout
-      )
+      timeoutRef.current = setTimeout(() => hideMessage(), autoDismissTimeout)
     }
   }, [autoDismiss, autoDismissTimeout])
 
   const hideMessage = () => {
     setVisible(false)
+    // call the callback dismiss message (if any)
+    onDismiss && onDismiss()
   }
 
   return (
@@ -213,6 +213,8 @@ Message.propTypes = {
   autoDismiss: PropTypes.bool,
   /** Optional. Timeout in miliseconds after which the message is automatically dismissed. By default 10000 (10s).*/
   autoDismissTimeout: PropTypes.number,
+  /** Optional. Pass a handler that will be called when the message is dismissed */
+  onDismiss: PropTypes.func,
   /** Pass an optional className */
   className: PropTypes.string,
   /** Pass child nodes to be rendered as contents */

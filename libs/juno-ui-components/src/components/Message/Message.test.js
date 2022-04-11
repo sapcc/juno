@@ -58,6 +58,40 @@ describe("Message", () => {
     )
   })
 
+  // const handleChange = jest.fn()
+  // render(<TextareaRow onChange={handleChange} />)
+  // const textarea = screen.getByRole("textbox")
+  // fireEvent.change(textarea, { target: { value: "test value a" } })
+  // expect(handleChange).toHaveBeenCalledTimes(1)
+  // expect(handleChange).toHaveBeenCalledWith(
+  // 	expect.objectContaining({
+  // 		_reactName: "onChange",
+  // 		target: expect.objectContaining({
+  // 			value: "test value a",
+  // 		}),
+  // 		type: "change",
+  // 	})
+  // )
+
+  test("fires onDismiss handler when Message is dismissed", async () => {
+    const handleDismiss = jest.fn()
+    render(
+      <Message
+        data-testid="my-message"
+        autoDismiss={true}
+        autoDismissTimeout={500}
+        onDismiss={handleDismiss}
+      />
+    )
+    await waitFor(
+      () => {
+        expect(screen.queryByTestId("my-message")).not.toBeInTheDocument()
+        expect(handleDismiss).toHaveBeenCalledTimes(1)
+      },
+      { timeout: 1000 }
+    )
+  })
+
   test("renders an info Message as passed", async () => {
     render(<Message data-testid="my-message" variant="info" />)
     expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")
