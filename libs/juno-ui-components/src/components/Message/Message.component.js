@@ -80,47 +80,47 @@ const dismissButtonStyles = `
 `
 
 const backgroundClass = (variant) => {
-	switch(variant) {
-		case "error":
-			return messageErrorBg
-		case "warning":
-			return messageWarningBg
-		case "success":
-			return messageSuccessBg
-		case "info":
-			return messageDefaultBg
-		case "danger":
-			return messageDangerBg
-		default:
-			return messageDefaultBg
-	}
+  switch (variant) {
+    case "error":
+      return messageErrorBg
+    case "warning":
+      return messageWarningBg
+    case "success":
+      return messageSuccessBg
+    case "info":
+      return messageDefaultBg
+    case "danger":
+      return messageDangerBg
+    default:
+      return messageDefaultBg
+  }
 }
 
 const variantClass = (variant) => {
-	  switch (variant) {
-		case "error":
-		  	return messageError
-		case "warning":
-		  	return messageWarning
-		case "success":
-		  	return messageSuccess
-		case "info":
-			return messageDefault
-		case "danger":
-			return messageDanger
-		default:
-		  	return messageDefault
-	  }
-	}
+  switch (variant) {
+    case "error":
+      return messageError
+    case "warning":
+      return messageWarning
+    case "success":
+      return messageSuccess
+    case "info":
+      return messageDefault
+    case "danger":
+      return messageDanger
+    default:
+      return messageDefault
+  }
+}
 
 // get the appropriate icon for messasge tyope by MUI name:
 const getMuiIcon = (messageType) => {
-	switch (messageType) {
-		case "error":
-			return "dangerous"
-		default:
-			return messageType
-	}
+  switch (messageType) {
+    case "error":
+      return "dangerous"
+    default:
+      return messageType
+  }
 }
 
 /**
@@ -128,20 +128,19 @@ const getMuiIcon = (messageType) => {
 Use sparingly, there should never be any two or more subsequent instances of Message as direct siblings/neighbors on an individual view.
 */
 export const Message = ({
-	title,
-	text,
-	variant,
-	dismissible,
-	autoDismiss,
-	autoDismissTimeout,
-	className,
-	children,
-	...props
+  title,
+  text,
+  variant,
+  dismissible,
+  autoDismiss,
+  autoDismissTimeout,
+  className,
+  children,
+  ...props
 }) => {
+  const [visible, setVisible] = useState(true)
 
-	const [visible, setVisible] = useState(true)
-
-	  // ----- Timeout stuff -------
+  // ----- Timeout stuff -------
   const timeoutRef = React.useRef(null)
 
   React.useEffect(() => {
@@ -152,63 +151,80 @@ export const Message = ({
   useEffect(() => {
     if (autoDismiss) {
       clearTimeout(timeoutRef.current)
-      timeoutRef.current = setTimeout(() => setVisible(false), autoDismissTimeout)
+      timeoutRef.current = setTimeout(
+        () => setVisible(false),
+        autoDismissTimeout
+      )
     }
   }, [autoDismiss, autoDismissTimeout])
 
-	const hideMessage = () => {
-		setVisible(false)
-	}
+  const hideMessage = () => {
+    setVisible(false)
+  }
 
-	return (
-		<>
-			{ visible &&
-				<div 
-					className={`juno-message juno-message-${variant} ${message} ${backgroundClass(variant)} ${className}`}
-					{...props}
-				>
-					<div className={`juno-message-border ${messageBorderStyles} ${variantClass(variant)}`}></div>
-					<Icon icon={ getMuiIcon(variant) } color={ 'text-theme-' + variant } className="shrink-0" />
-					<div className={`juno-message-content ${messageContentStyles}`}>
-						{title ?  <h1 className={`${messageHeading}`}>{title}</h1> : ""}
-						<div>{ children ? children : text }</div>
-					</div>
-					{ dismissible && 
-						<div className={dismissButtonStyles}>
-							<Icon icon="close" onClick={hideMessage} className="juno-message-close-button opacity-50 hover:opacity-100" />
-						</div>
-					}
-				</div>
-			}
-		</>
-	)
+  return (
+    <>
+      {visible && (
+        <div
+          className={`juno-message juno-message-${variant} ${message} ${backgroundClass(
+            variant
+          )} ${className}`}
+          {...props}
+        >
+          <div
+            className={`juno-message-border ${messageBorderStyles} ${variantClass(
+              variant
+            )}`}
+          ></div>
+          <Icon
+            icon={getMuiIcon(variant)}
+            color={"text-theme-" + variant}
+            className="shrink-0"
+          />
+          <div className={`juno-message-content ${messageContentStyles}`}>
+            {title ? <h1 className={`${messageHeading}`}>{title}</h1> : ""}
+            <div>{children ? children : text}</div>
+          </div>
+          {dismissible && (
+            <div className={dismissButtonStyles}>
+              <Icon
+                icon="close"
+                onClick={hideMessage}
+                className="juno-message-close-button opacity-50 hover:opacity-100"
+              />
+            </div>
+          )}
+        </div>
+      )}
+    </>
+  )
 }
 
-Message.propTypes = { 
-	/** Pass an optional title */
-	title: PropTypes.string,
-	/** Pass a string of text to be rendered as contents. Alternatively, contents can be passed as children (see below) */
-	text: PropTypes.string,
-	/** Specify a semantic variant */
-	variant: PropTypes.oneOf(['info', 'warning', 'danger','error', 'success']),
-	/** Optional. If set to 'true', the message will get a close button to dismiss the message. */
-	dismissible: PropTypes.bool,
-	/** Optional. If set to 'true', the message will be automatically dismissed after 10 seconds by default or after the specified autoDismissTimeout */
-	autoDismiss: PropTypes.bool,
-	/** Optional. Timeout in miliseconds after which the message is automatically dismissed. By default 10000 (10s).*/
-	autoDismissTimeout: PropTypes.number,
-	/** Pass an optional className */
-	className: PropTypes.string,
-	/** Pass child nodes to be rendered as contents */
-	children: PropTypes.node,
+Message.propTypes = {
+  /** Pass an optional title */
+  title: PropTypes.string,
+  /** Pass a string of text to be rendered as contents. Alternatively, contents can be passed as children (see below) */
+  text: PropTypes.string,
+  /** Specify a semantic variant */
+  variant: PropTypes.oneOf(["info", "warning", "danger", "error", "success"]),
+  /** Optional. If set to 'true', the message will get a close button to dismiss the message. */
+  dismissible: PropTypes.bool,
+  /** Optional. If set to 'true', the message will be automatically dismissed after 10 seconds by default or after the specified autoDismissTimeout */
+  autoDismiss: PropTypes.bool,
+  /** Optional. Timeout in miliseconds after which the message is automatically dismissed. By default 10000 (10s).*/
+  autoDismissTimeout: PropTypes.number,
+  /** Pass an optional className */
+  className: PropTypes.string,
+  /** Pass child nodes to be rendered as contents */
+  children: PropTypes.node,
 }
 
 Message.defaultProps = {
-	title: null,
-	text: null,
-	variant: 'info',
-	dismissible: false,
-	autoDismiss: false,
-	autoDismissTimeout: 10000,
-	className: "",
+  title: null,
+  text: null,
+  variant: "info",
+  dismissible: false,
+  autoDismiss: false,
+  autoDismissTimeout: 10000,
+  className: "",
 }
