@@ -6,12 +6,31 @@ const MessagesDispatch = createContext(null)
 
 const initialState = { items: [] }
 
+export const newMessage = (msg) => {
+  const message = { id: uniqueId("message-"), text: "", variant: "info" }
+  if (
+    msg?.text &&
+    (typeof msg.text === "object" || typeof msg.text === "string")
+  ) {
+    message.text = msg.text
+  } else {
+    console.warn("Message text should be a string or html element")
+  }
+  if (msg?.variant && typeof msg.variant === "string") {
+    message.variant = msg.variant
+  } else {
+    console.warn("Message variant should be a string")
+  }
+  return message
+}
+
 const setMessage = (state, { msg }) => {
+  const message = newMessage(msg)
   // check if a message with the same text and variant exists
   const index = state.items.findIndex((item) => {
     return (
-      JSON.stringify(item.text) === JSON.stringify(msg.text) &&
-      item.variant === msg.variant
+      JSON.stringify(item.text) === JSON.stringify(message.text) &&
+      item.variant === message.variant
     )
   })
 
@@ -19,10 +38,7 @@ const setMessage = (state, { msg }) => {
     return state
   }
   let items = state.items.slice()
-  msg.id = uniqueId("message-")
-  items.push(msg)
-  // sort
-  // items = items.sort((a, b) => a.variant.localeCompare(b.variant))
+  items.push(message)
   return { ...state, items: items }
 }
 const removeMessage = (state, { id }) => {
