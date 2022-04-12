@@ -11,10 +11,10 @@ const btnBase = `
   shadow-sm 
   w-auto 
   focus:outline-none 
-  focus:ring-2
-  focus:ring-theme-focus
-  focus:ring-offset-1
-  focus:ring-offset-theme-focus
+  focus-visible:ring-2
+  focus-visible:ring-theme-focus
+  focus-visible:ring-offset-1
+  focus-visible:ring-offset-theme-focus
   disabled:cursor-not-allowed
   disabled:pointer-events-none
 `
