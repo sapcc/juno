@@ -32,6 +32,25 @@ describe("Message", () => {
     })
   })
 
+  test("fires onDismiss handler when Message is manually dismissed", async () => {
+    const handleDismiss = jest.fn()
+    render(
+      <Message
+        data-testid="my-message"
+        dismissible={true}
+        onDismiss={handleDismiss}
+      />
+    )
+    // not checking specifically for the close button here. So if there is more than one button in the message this test will fail
+    // The reason is that it's hard to find specifically the close button because any classes added to a clickable Icon go to the image element, not the surrounding button
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    userEvent.click(screen.getByRole("button"))
+    await waitFor(() => {
+      expect(screen.queryByTestId("my-message")).not.toBeInTheDocument()
+      expect(handleDismiss).toHaveBeenCalledTimes(1)
+    })
+  })
+
   test("renders a Message without dismiss button by default", async () => {
     render(<Message data-testid="my-message" />)
     expect(screen.queryByRole("button")).not.toBeInTheDocument()
@@ -53,6 +72,25 @@ describe("Message", () => {
     await waitFor(
       () => {
         expect(screen.queryByTestId("my-message")).not.toBeInTheDocument()
+      },
+      { timeout: 1000 }
+    )
+  })
+
+  test("fires onDismiss handler when Message is automatically dismissed", async () => {
+    const handleDismiss = jest.fn()
+    render(
+      <Message
+        data-testid="my-message"
+        autoDismiss={true}
+        autoDismissTimeout={500}
+        onDismiss={handleDismiss}
+      />
+    )
+    await waitFor(
+      () => {
+        expect(screen.queryByTestId("my-message")).not.toBeInTheDocument()
+        expect(handleDismiss).toHaveBeenCalledTimes(1)
       },
       { timeout: 1000 }
     )
