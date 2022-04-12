@@ -63,7 +63,13 @@ function handleOIDCResponse() {
     if (error) return { error }
 
     // return if state is not equal to the cached state
-    if (state !== storedState) return { error: "Compromised id token" }
+    if (state !== storedState) {
+      console.warn("Compromised id token")
+      return {
+        error:
+          "Authentication failed due to session mismatch. Please log in again.",
+      }
+    }
 
     const tokenData = decodeIDToken(id_token)
     if (!tokenData || tokenData.nonce !== storedNonce)
