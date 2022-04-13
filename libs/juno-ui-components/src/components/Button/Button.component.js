@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import "./button.scss"
 import { Icon } from "../Icon/index.js"
 import { Spinner } from "../Spinner/index.js"
 
@@ -20,66 +21,14 @@ const btnBase = `
 `
 
 const btnDefault = `
-  border
-  text-theme-button-default
-  bg-theme-button-default
-  border-theme-button-default
-  hover:text-button-default-hover
-  hover:bg-theme-button-default-hover
-  hover:border-theme-button-default-hover
-  active:text-theme-button-default-active
-  active:bg-theme-button-default-active
-  active:border-theme-button-default-active
-  disabled:text-theme-button-default-disabled
-  disabled:bg-theme-button-default-disabled
-  disabled:border-theme-button-default-disabled
 `
 const btnPrimary = `
-  border
-  text-theme-button-primary
-  bg-theme-button-primary
-  border-theme-button-primary
-  hover:text-theme-button-primary-hover
-  hover:bg-theme-button-primary-hover
-  hover:border-theme-button-primary-hover
-  active:text-theme-button-primary-active
-  active:bg-theme-button-primary-active
-  active:border-theme-button-primary-active
-  disabled:text-theme-button-primary-disabled
-  disabled:bg-theme-button-primary-disabled
-  disabled:border-theme-button-primary-disabled
 `
 
 const btnSubdued = `
-  border
-  text-theme-button-subdued
-  bg-theme-button-subdued
-  border-theme-button-subdued
-  hover:bg-theme-button-subdued-hover
-  hover:text-theme-button-subdued-hover
-  hover:border-theme-button-subdued-hover
-  active:text-theme-button-subdued-active
-  active:bg-theme-button-subdued-active
-  active:border-theme-button-subdued-active
-  disabled:text-theme-button-subdued-disabled
-  disabled:bg-theme-button-subdued-disabled
-  disabled:border-theme-button-subdued-disabled
 `
 
 const btnPrimaryDanger = `
-  border
-  text-theme-button-primary-danger 
-  bg-theme-button-primary-danger
-  border-theme-button-primary-danger
-  hover:text-theme-button-primary-danger-hover
-  hover:bg-theme-button-primary-danger-hover
-  hover:border-theme-button-primary-danger-hover
-  active:text-theme-button-primary-danger-active
-  active:bg-theme-button-primary-danger-active
-  active:border-theme-button-primary-danger-active
-  disabled:text-theme-button-primary-danger-disabled
-  disabled:bg-theme-button-primary-danger-disabled
-  disabled:border-theme-button-primary-danger-disabled
 `
 
 const btnSmall = `
@@ -99,21 +48,6 @@ const btnLarge = `
   px-lg
   py-sm
 `
-
-const variantClass = (variant) => {
-  switch (variant) {
-    case "primary":
-      return btnPrimary
-    case "primary-danger":
-      return btnPrimaryDanger
-    case "danger":
-      return btnDanger
-    case "subdued":
-      return btnSubdued
-    default:
-      return btnDefault
-  }
-}
 
 const sizeClass = (size) => {
   switch (size) {
@@ -233,9 +167,7 @@ export const Button = ({
   const button = (
     <button
       type="button"
-      className={`juno-button juno-button-${variant} ${btnBase} ${variantClass(
-        variant
-      )} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
+      className={`juno-button juno-button-${variant} ${btnBase} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
       disabled={disabled}
       onClick={onClick}
       title={titleValue}
@@ -250,9 +182,7 @@ export const Button = ({
     <a
       href={href}
       role="button"
-      className={`juno-button juno-button-${variant} ${btnBase} ${variantClass(
-        variant
-      )} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
+      className={`juno-button juno-button-${variant} ${btnBase} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
       disabled={disabled}
       onClick={onClick}
       title={titleValue}
