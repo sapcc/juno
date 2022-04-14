@@ -63,7 +63,7 @@
 	
 	&:active {
 		background-image: none;
-		background-color: var(--color-accent);
+		background-color: var(--color-button-primary-active-bg);
 		border-color: var(--color-button-primary-active-border);
 		color: var(--color-button-primary-active-text);
 	}

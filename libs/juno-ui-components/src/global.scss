@@ -353,19 +353,10 @@
   --color-button-primary-border: var(--color-accent);
   // |-- LT Primary Button :hover
   --color-button-primary-hover-bg: var(--color-juno-blue-6);
-  --gradient-button-primary-hover-bg: linear-gradient(
-    to right top,
-    rgb(51, 242, 255) 0%,
-    rgb(41, 133, 154) 100%
-  );
   --color-button-primary-hover-border: var(--color-accent);
   --color-button-primary-hover-text: var(--color-white);
   // |-- LT Primary Button :active
-  --gradient-button-primary-active-bg: linear-gradient(
-    to right top,
-    var(--color-juno-blue-6) 0%,
-    var(--color-juno-blue-6) 100%
-  );
+  --color-button-primary-active-bg: var(--color-accent);
   --color-button-primary-active-border: var(--color-accent);
   --color-button-primary-active-text: var(--color-white);
   // |-- LT Primary Button :disabled
@@ -399,11 +390,7 @@
   --color-button-subdued-border: var(--color-juno-text-default);
   // |-- LT Subdued Button :hover
   --color-button-subdued-hover-text: var(--color-text-default);
-  --gradient-button-sundued-hover-bg: linear-gradient(
-    to right top,
-    rgba(218, 218, 218, 0) 0%,
-    rgba(218, 218, 218, 1) 100%
-  );
+  --color-button-subdued-bg: transparent;
   --color-button-subdued-hover-border: var(--color-accent);
   // |-- LT Subdued Button :active
   --color-button-subdued-active-bg: var(--color-juno-grey-light-5);
@@ -590,11 +577,7 @@
   --color-button-primary-hover-border: var(--color-accent);
   --color-button-primary-hover-text: var(--color-white);
   // |-- DT Primary Button :active
-  --gradient-button-primary-active-bg: linear-gradient(
-    to right top,
-    var(--color-juno-turquoise-8) 0%,
-    var(--color-juno-turquoise-8) 100%
-  );
+  --color-button-primary-active-bg: var(--color-accent);
   --color-button-primary-active-border: var(--color-white);
   --color-button-primary-active-text: var(--color-white);
   // |-- DT Primary Button :disabled
@@ -628,11 +611,7 @@
   --color-button-subdued-border: var(--color-juno-text-default);
   // |-- DT Subdued Button :hover
   --color-button-subdued-hover-text: var(--color-text-default);
-  --gradient-button-subdued-hover-bg: linear-gradient(
-    to right top,
-    rgba(39, 45, 52, 0) 0%,
-    rgba(39, 45, 52, 1) 100%
-  );
+  --color-button-subdued-bg: transparent;
   --color-button-subdued-hover-border: var(--color-accent);
   // |-- DT Subdued Button :active
   --color-button-subdued-active-bg: var(--color-juno-grey-blue-1);
