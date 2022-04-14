@@ -200,11 +200,11 @@ module.exports = {
       textColor: {
         theme: {
           default: withOpacity("--color-global-text"),
-          "high": withOpacity("--color-text-high"),
-          "default": withOpacity("--color-text-default"),
+          "high": withOpacity("--color-text-high-raw"),
+          "default": withOpacity("--color-text-default-raw"),
           "light": withOpacity("--color-text-light"),
-          "disabled": withOpacity("--color-text-disabled"),
-          "link": withOpacity("--color-text-link"), 
+          "disabled": withOpacity("--color-text-disabled-raw"),
+          "link": withOpacity("--color-text-link-raw"), 
           "on-danger": withOpacity("--color-button-danger-text"),
           "on-default": withOpacity("--color-button-default-text"),
           "tooltip-popover": withOpacity("--color-tooltip-popover-text"),
@@ -216,7 +216,7 @@ module.exports = {
         theme: {
           default: withOpacity("--color-default-border"),
           "codeblock-titlebar": withOpacity("--color-codeblock-titlebar-bottom-border"),
-          "codeblock-tab-active": withOpacity("--color-text-default"),
+          "codeblock-tab-active": withOpacity("--color-text-default-raw"),
           "message-default": withOpacity("--color-message-default-border"),
           "message-danger": withOpacity("--color-message-danger-border"),
           "message-error": withOpacity("--color-message-error-border"),

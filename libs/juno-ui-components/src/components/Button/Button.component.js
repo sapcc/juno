@@ -20,17 +20,6 @@ const btnBase = `
   disabled:pointer-events-none
 `
 
-const btnDefault = `
-`
-const btnPrimary = `
-`
-
-const btnSubdued = `
-`
-
-const btnPrimaryDanger = `
-`
-
 const btnSmall = `
   text-sm
   px-sm

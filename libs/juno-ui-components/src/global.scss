@@ -333,10 +333,15 @@
   --color-focus: var(--color-accent);
   --color-focus-raw: var(--color-accent-raw);
   // Text
-  --color-text-high: var(--color-juno-text-high-raw);
-  --color-text-default: var(--color-juno-text-default-raw);
-  --color-text-disabled: var(--color-juno-text-disabled-raw);
-  --color-text-link: var(--color-accent-raw);
+  --color-text-high: var(--color-juno-text-high);
+  --color-text-default: var(--color-juno-text-default);
+  --color-text-disabled: var(--color-juno-text-disabled);
+  --color-text-link: var(--color-accent);
+  --color-text-high-raw: var(--color-juno-text-high-raw);
+  --color-text-default-raw: var(--color-juno-text-default-raw);
+  --color-text-disabled-raw: var(--color-juno-text-disabled-raw);
+  --color-text-link-raw: var(--color-accent-raw);
+  
   // Button
   // --> Primary Button
   --color-button-primary-text: var(--color-white);
@@ -353,7 +358,7 @@
     rgb(51, 242, 255) 0%,
     rgb(41, 133, 154) 100%
   );
-  --color-button-primary-hover-border: var(--color-accent-raw);
+  --color-button-primary-hover-border: var(--color-accent);
   --color-button-primary-hover-text: var(--color-white);
   // Primary Button :active
   --gradient-button-primary-active-bg: linear-gradient(
@@ -391,7 +396,7 @@
   // --> Subdued Button
   --color-button-subdued-text: var(--color-text-default);
   --color-button-subdued-bg: transparent;
-  --color-button-subdued-border: var(--color-text-default);
+  --color-button-subdued-border: var(--color-juno-text-default);
   // Subdued Button :hover
   --color-button-subdued-hover-text: var(--color-text-default);
   --gradient-button-sundued-hover-bg: linear-gradient(
@@ -418,18 +423,10 @@
   --color-button-primary-danger-border: var(--color-sap-red-dark);
   // Primary Danger Button :hover
   --color-button-primary-danger-hover-text: var(--color-white);
-  --gradient-button-primary-danger-hover-bg: linear-gradient(
-    to right top,
-    rgb(252, 169, 137) 0%,
-    rgb(156, 43, 0) 100%
-  );
+  --color-button-primary-danger-hover-bg: var(--color-red-light-3);
   --color-button-primary-danger-hover-border: var(--color-sap-red-dark);
   // Primary Danger Button :active
-  --gradient-button-primary-danger-active-bg: linear-gradient(
-    to right top,
-    var(--color-sap-red-dark-1) 0%,
-    var(--color-sap-red-dark-1) 100%
-  );
+  --color-button-primary-danger-active-bg: var(--color-sap-red-dark-1);
   --color-button-primary-danger-active-border: var(--color-danger);
   --color-button-primary-danger-active-text: var(--color-white);
   // Primary Danger Button  :disabled
@@ -571,10 +568,14 @@
   --color-focus-raw: var(--color-accent-raw);
   --color-focus-border: var(--color-accent-raw);
   // Text
-  --color-text-high: var(--color-juno-text-high-raw);
-  --color-text-default: var(--color-juno-text-default-raw);
-  --color-text-disabled: var(--color-juno-text-disabled-raw);
-  --color-text-link: var(--color-accent-raw);
+  --color-text-high: var(--color-juno-text-high);
+  --color-text-default: var(--color-juno-text-default);
+  --color-text-disabled: var(--color-juno-text-disabled);
+  --color-text-link: var(--color-accent);
+  --color-text-high-raw: var(--color-juno-text-high-raw);
+  --color-text-default-raw: var(--color-juno-text-default-raw);
+  --color-text-disabled-raw: var(--color-juno-text-disabled-raw);
+  --color-text-link-raw: var(--color-accent-raw);
   // Button
   // --> Primary Button
   --color-button-primary-text: var(--color-white);
@@ -594,8 +595,8 @@
     var(--color-juno-turquoise-8) 0%,
     var(--color-juno-turquoise-8) 100%
   );
-  --color-button-primary-active-border: var(--color-accent-raw);
-  --color-button-primary-active-text: var(--color-white-raw);
+  --color-button-primary-active-border: var(--color-white);
+  --color-button-primary-active-text: var(--color-white);
   // Primary Button :disabled
   --gradient-button-primary-disabled-bg: linear-gradient(
     to right top,
@@ -614,7 +615,7 @@
   --color-button-default-hover-bg: transparent;
   --color-button-default-hover-border: var(--color-accent);
   // Default Button :active
-  --color-button-default-active-bg: var(--color-juno-grey-light-11-raw);
+  --color-button-default-active-bg: var(--color-juno-grey-light-11);
   --color-button-default-active-border: var(--color-accent);
   --color-button-default-active-text: var(--color-text-default);
   // Default Button :disabled
@@ -624,7 +625,7 @@
   // --> Subdued Button
   --color-button-subdued-text: var(--color-text-default);
   --color-button-subdued-bg: transparent;
-  --color-button-subdued-border: var(--color-text-default);
+  --color-button-subdued-border: var(--color-juno-text-default);
   // Subdued Button :hover
   --color-button-subdued-hover-text: var(--color-text-default);
   --gradient-button-subdued-hover-bg: linear-gradient(
@@ -651,19 +652,11 @@
   --color-button-primary-danger-border: rgb(255, 65, 11);
   // Primary-Danger Button :hover
   --color-button-primary-danger-hover-text: var(--color-white);
-  --gradient-button-primary-danger-hover-bg: linear-gradient(
-    to right top,
-    rgb(172, 172, 148) 0%,
-    rgb(146, 32, 0) 100%
-  );
+  --color-button-primary-danger-hover-bg: var(--color-sap-red-dark-1);
   --color-button-primary-danger-hover-border: rgb(255, 65, 11);
   // Primary-Danger Button :active
-  --gradient-button-primary-danger-active-bg: linear-gradient(
-    to right top,
-    var(--color-sap-red-dark-1) 0%,
-    var(--color-sap-red-dark-1) 100%
-  );
-  --color-button-primary-danger-active-border: var(--color-danger);
+  --color-button-primary-danger-active-bg: var(--color-danger);
+  --color-button-primary-danger-active-border: var(--color-white);
   --color-button-primary-danger-active-text: var(--color-white);
   // Primary-Danger Button :disabled
   --color-button-primary-danger-disabled-text: rgb(76, 79, 83);
