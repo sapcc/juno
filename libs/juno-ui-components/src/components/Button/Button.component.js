@@ -23,7 +23,7 @@ const btnBase = `
 const btnSmall = `
   text-sm
   px-sm
-  py-xs
+  py-[0.3125rem]
 `
 
 const btnDefaultSize = `
@@ -52,11 +52,11 @@ const sizeClass = (size) => {
 const iconSize = (size) => {
   switch (size) {
     case "small":
-      return "21"
+      return "1.125rem"
     case "large":
-      return "32"
+      return "2rem"
     default:
-      return "24"
+      return "1.5rem"
   }
 }
 
@@ -69,7 +69,7 @@ const btnIconLarge = `
 `
 
 const btnIconDefault = `
-  mr-[0.625rem]
+  mr-1
 `
 
 const iconClasses = (size, variant) => {
