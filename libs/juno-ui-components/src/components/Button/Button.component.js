@@ -156,7 +156,7 @@ export const Button = ({
   const button = (
     <button
       type="button"
-      className={`juno-button juno-button-${variant} ${btnBase} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
+      className={`juno-button juno-button-${variant} juno-button-${size} ${btnBase} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
       disabled={disabled}
       onClick={onClick}
       title={titleValue}
