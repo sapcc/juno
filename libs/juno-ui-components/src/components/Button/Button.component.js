@@ -28,8 +28,8 @@ const btnSmall = `
 
 const btnDefaultSize = `
   text-base
-  px-md 
-  py-sm
+  px-[0.625rem] 
+  py-[0.4375rem]
 `
 
 const btnLarge = `
@@ -69,7 +69,7 @@ const btnIconLarge = `
 `
 
 const btnIconDefault = `
-  mr-2
+  mr-[0.625rem]
 `
 
 const iconClasses = (size, variant) => {
