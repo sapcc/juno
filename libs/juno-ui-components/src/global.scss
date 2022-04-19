@@ -297,7 +297,7 @@
 /* When assigning colors to uses, use "[color]-raw" variables: */
 
 .theme-light {
-  // Background Colors
+  // LT Background Colors
   --color-background-lvl-0: var(--color-white);
   --color-background-lvl-1: var(--color-juno-grey-light-1);
   --color-background-lvl-2: var(--color-juno-grey-light-2);
@@ -322,47 +322,44 @@
   --color-background-lvl-9-raw: var(--color-juno-grey-light-9-raw);
   --color-background-lvl-10-raw: var(--color-juno-grey-light-10-raw);
 
-  // Global
+  // LT Global
   --color-global-bg: var(--color-background-lvl-0-raw);
   --color-global-text: var(--color-juno-text-default-raw);
   --color-content-area-bg: var(--color-background-lvl-4);
   --color-content-area-bg-raw: var(--color-background-lvl-4-raw);
   --color-accent: var(--color-juno-blue-4);
   --color-accent-raw: var(--color-juno-blue-4-raw);
-  // FOCUS
+  // LT FOCUS
   --color-focus: var(--color-accent);
   --color-focus-raw: var(--color-accent-raw);
-  // Text
-  --color-text-high: var(--color-juno-text-high-raw);
-  --color-text-default: var(--color-juno-text-default-raw);
-  --color-text-disabled: var(--color-juno-text-disabled-raw);
-  --color-text-link: var(--color-accent-raw);
-  // Button
-  // --> Primary Button
-  --color-button-primary-text: var(--color-white-raw);
+  // LT Text
+  --color-text-high: var(--color-juno-text-high);
+  --color-text-default: var(--color-juno-text-default);
+  --color-text-disabled: var(--color-juno-text-disabled);
+  --color-text-link: var(--color-accent);
+  --color-text-high-raw: var(--color-juno-text-high-raw);
+  --color-text-default-raw: var(--color-juno-text-default-raw);
+  --color-text-disabled-raw: var(--color-juno-text-disabled-raw);
+  --color-text-link-raw: var(--color-accent-raw);
+  
+  // LT Button
+  // LT Primary Button
+  --color-button-primary-text: var(--color-white);
   --gradient-button-primary-bg: linear-gradient(
     to right top,
     rgb(51, 242, 255) 0%,
     var(--color-accent) 100%
   );
-  --color-button-primary-border: var(--color-accent-raw);
-  // Primary Button :hover
-  --gradient-button-primary-hover-bg: linear-gradient(
-    to right top,
-    rgb(51, 242, 255) 0%,
-    rgb(41, 133, 154) 100%
-  );
-  --color-button-primary-hover-border: var(--color-accent-raw);
-  --color-button-primary-hover-text: var(--color-white-raw);
-  // Primary Button :active
-  --gradient-button-primary-active-bg: linear-gradient(
-    to right top,
-    var(--color-juno-blue-6) 0%,
-    var(--color-juno-blue-6) 100%
-  );
-  --color-button-primary-active-border: var(--color-accent-raw);
-  --color-button-primary-active-text: var(--color-white-raw);
-  // Primary Button :disabled
+  --color-button-primary-border: var(--color-accent);
+  // |-- LT Primary Button :hover
+  --color-button-primary-hover-bg: var(--color-juno-blue-6);
+  --color-button-primary-hover-border: var(--color-accent);
+  --color-button-primary-hover-text: var(--color-white);
+  // |-- LT Primary Button :active
+  --color-button-primary-active-bg: var(--color-accent);
+  --color-button-primary-active-border: var(--color-accent);
+  --color-button-primary-active-text: var(--color-white);
+  // |-- LT Primary Button :disabled
   --gradient-button-primary-disabled-bg: linear-gradient(
     to right top,
     rgb(253, 253, 253) 0%,
@@ -370,72 +367,56 @@
   );
   --color-button-primary-disabled-border: rgb(203, 203, 203);
   --color-button-primary-disabled-text: rgb(203, 203, 203);
-  // --> Default Button
+  // LT Default Button
   --color-button-default-text: var(--color-text-default);
   --color-button-default-icon: var(--color-accent);
   --color-button-default-bg: transparent;
-  --color-button-default-border: var(--color-accent-raw);
-  // Default Button :hover
-  --color-button-default-hover-text: var(--color-text-default);
-  --gradient-button-default-hover-bg: linear-gradient(
-    to right top,
-    rgba(218, 218, 218, 0) 0%,
-    rgba(218, 218, 218, 1) 100%
-  );
-  --color-button-default-hover-border: var(--color-accent-raw);
-  // Default Button :active
+  --color-button-default-border: var(--color-accent);
+  // |-- LT Default Button :hover
+  --color-button-default-hover-text: var(--color-accent);
+  --color-button-default-hover-bg: transparent;
+  --color-button-default-hover-border: var(--color-accent);
+  // |-- LT Default Button :active
   --color-button-default-active-bg: var(--color-juno-grey-light-5);
-  --color-button-default-active-border: var(--color-accent-raw);
+  --color-button-default-active-border: var(--color-accent);
   --color-button-default-active-text: var(--color-text-default);
-  // Default Button :disabled
+  // |-- LT Default Button :disabled
   --color-button-default-disabled-text: rgb(203, 203, 203);
   --color-button-default-disabled-bg: transparent;
   --color-button-default-disabled-border: rgb(203, 203, 203);
-  // --> Subdued Button
+  // LT Subdued Button
   --color-button-subdued-text: var(--color-text-default);
   --color-button-subdued-bg: transparent;
-  --color-button-subdued-border: var(--color-text-default);
-  // Subdued Button :hover
+  --color-button-subdued-border: var(--color-juno-text-default);
+  // |-- LT Subdued Button :hover
   --color-button-subdued-hover-text: var(--color-text-default);
-  --gradient-button-sundued-hover-bg: linear-gradient(
-    to right top,
-    rgba(218, 218, 218, 0) 0%,
-    rgba(218, 218, 218, 1) 100%
-  );
-  --color-button-subdued-hover-border: var(--color-text-default);
-  // Subdued Button :active
+  --color-button-subdued-bg: transparent;
+  --color-button-subdued-hover-border: var(--color-accent);
+  // |-- LT Subdued Button :active
   --color-button-subdued-active-bg: var(--color-juno-grey-light-5);
   --color-button-subdued-active-border: var(--color-text-default);
   --color-button-subdued-active-text: var(--color-text-default);
-  // Subdued Button :disabled
+  // |-- LT Subdued Button :disabled
   --color-button-subdued-disabled-text: rgb(203, 203, 203);
   --color-button-subdued-disabled-bg: transparent;
   --color-button-default-disabled-border: rgb(203, 203, 203);
-  // --> Primary Danger Button
-  --color-button-primary-danger-text: var(--color-white-raw);
+  // LT Primary Danger Button
+  --color-button-primary-danger-text: var(--color-white);
   --gradient-button-primary-danger-bg: linear-gradient(
-    to right top,
+    90deg,
     rgb(227, 107, 62) 0%,
     rgb(187, 62, 15) 100%
   );
-  --color-button-primary-danger-border: var(--color-sap-red-dark-raw);
-  // Primary Danger Button :hover
-  --color-button-primary-danger-hover-text: var(--color-white-raw);
-  --gradient-button-primary-danger-hover-bg: linear-gradient(
-    to right top,
-    rgb(252, 169, 137) 0%,
-    rgb(156, 43, 0) 100%
-  );
-  --color-button-primary-danger-hover-border: var(--color-sap-red-dark-raw);
-  // Primary Danger Button :active
-  --gradient-button-primary-danger-active-bg: linear-gradient(
-    to right top,
-    var(--color-sap-red-dark-1) 0%,
-    var(--color-sap-red-dark-1) 100%
-  );
-  --color-button-primary-danger-active-border: var(--color-danger-raw);
-  --color-button-primary-danger-active-text: var(--color-white-raw);
-  // Primary Danger Button  :disabled
+  --color-button-primary-danger-border: var(--color-sap-red-dark);
+  // |-- LT Primary Danger Button :hover
+  --color-button-primary-danger-hover-text: var(--color-white);
+  --color-button-primary-danger-hover-bg: var(--color-red-light-3);
+  --color-button-primary-danger-hover-border: var(--color-sap-red-dark);
+  // |-- LT Primary Danger Button :active
+  --color-button-primary-danger-active-bg: var(--color-sap-red-dark-1);
+  --color-button-primary-danger-active-border: var(--color-danger);
+  --color-button-primary-danger-active-text: var(--color-white);
+  // |-- LT Primary Danger Button  :disabled
   --color-button-primary-danger-disabled-text: rgb(203, 203, 203);
   --gradient-button-primary-danger-disabled-bg: linear-gradient(
     to right top,
@@ -443,12 +424,12 @@
     rgb(230, 230, 230) 100%
   );
   --color-button-primary-danger-disabled-border: rgb(203, 203, 203);
-  // Icon
+  // LT Icon
   --color-icon-danger: var(--color-sap-red-raw);
   --color-icon-info: var(--color-accent-raw);
   --color-icon-success: var(--color-sap-green-raw);
   --color-icon-warning: var(--color-warning-raw);
-  // Message
+  // LT Message
   --color-message-danger-border: var(--color-danger-raw);
   --gradient-message-danger-bg: linear-gradient(
     90deg,
@@ -480,34 +461,34 @@
     rgb(170, 229, 180) 100%
   );
 
-  // Introbox
+  // LT Introbox
   --color-introbox-bg: var(--color-background-lvl-1-raw);
   --color-introbox-border: var(--color-accent-raw);
-  // Tooltip
+  // LT Tooltip
   --color-tooltip-popover-bg: var(--color-accent-raw);
   --color-tooltip-popover-text: var(--color-white-raw);
-  // (Text-) Input
+  // LT (Text-) Input
   --color-textinput-bg: var(--color-background-lvl-3-raw);
   --color-textinput-text: var(--color-juno-text-high-raw);
   --color-textinput-placeholder-text: var(--color-juno-text-high-raw);
   --color-textinput-focus-border: var(--color-accent-raw);
-  // Select
+  // LT Select
   --color-select-bg: var(--color-background-lvl-3-raw);
-  // Checkbox
+  // LT Checkbox
   --color-checkbox-bg: var(--color-background-lvl-4-raw);
   --color-checkbox-checked-color: var(--color-accent-raw);
-  // Radio
+  // LT Radio
   --color-radio-bg: var(--color-background-lvl-4-raw);
   --color-radio-checked-bg: var(--color-accent-raw);
-  // Switch
+  // LT Switch
   --color-switch-default-border: var(--color-juno-text-default-raw);
   --color-switch-handle-bg: var(--color-juno-text-default-raw);
   --color-switch-handle-checked-bg: var(--color-accent-raw);
-  // Required
+  // LT Required
   --color-required-bg: var(--color-accent-raw);
-  // Spinner
+  // LT Spinner
   --color-spinner-primary: var(--color-accent-raw);
-  // Syntax Highlighting
+  // LT Syntax Highlighting
   --color-syntax-highlight-base00: var(--color-background-lvl-3); // bg
   --color-syntax-highlight-base01: var(--color-juno-grey-light-3); // ?
   --color-syntax-highlight-base02: var(--color-sap-grey-3); // lines and boxes
@@ -524,20 +505,20 @@
   --color-syntax-highlight-base0D: var(--color-sap-gold); // expanded icon
   --color-syntax-highlight-base0E: var(
     --color-juno-blue-4
-  ); // bool + collapsed icon
+  ); // LT bool + collapsed icon
   --color-syntax-highlight-base0F: var(--color-juno-blue-4); // integer value
-  // DataGrid
+  // LT DataGrid
   --color-datagridrow-selected: var(--color-accent-raw);
-  // DataList
+  // LT DataList
   --color-datalist-row-border: var(--color-background-lvl-5-raw);
   --color-datalistrow-selected: var(--color-accent-raw);
-  // CodeBlock
+  // LT CodeBlock
   --color-codeblock-bg: var(--color-background-lvl-2-raw); 
   --color-codeblock-titlebar-bottom-border: var(--color-background-lvl-4-raw);
 }
 
 .theme-dark {
-  // Background Colors
+  // DT Background Colors
   --color-background-lvl-0: var(--color-juno-grey-blue-11);
   --color-background-lvl-1: var(--color-juno-grey-blue-10);
   --color-background-lvl-2: var(--color-juno-grey-blue-9);
@@ -562,48 +543,44 @@
   --color-background-lvl-9-raw: var(--color-juno-grey-blue-2-raw);
   --color-background-lvl-10-raw: var(--color-juno-grey-blue-1-raw);
 
-  // Global
+  // DT Global
   --color-global-bg: var(--color-background-lvl-1-raw);
   --color-global-text: var(--color-juno-text-default-raw);
   --color-content-area-bg: var(--color-background-lvl-4);
   --color-content-area-bg-raw: var(--color-background-lvl-4-raw);
   --color-accent: var(--color-juno-turquoise-5);
   --color-accent-raw: var(--color-juno-turquoise-5-raw);
-  // FOCUS
+  // DT FOCUS
   --color-focus: var(--color-accent);
   --color-focus-raw: var(--color-accent-raw);
   --color-focus-border: var(--color-accent-raw);
-  // Text
-  --color-text-high: var(--color-juno-text-high-raw);
-  --color-text-default: var(--color-juno-text-default-raw);
-  --color-text-disabled: var(--color-juno-text-disabled-raw);
-  --color-text-link: var(--color-accent-raw);
-  // Button
-  // --> Primary Button
-  --color-button-primary-text: var(--color-white-raw);
+  // DT Text
+  --color-text-high: var(--color-juno-text-high);
+  --color-text-default: var(--color-juno-text-default);
+  --color-text-disabled: var(--color-juno-text-disabled);
+  --color-text-link: var(--color-accent);
+  --color-text-high-raw: var(--color-juno-text-high-raw);
+  --color-text-default-raw: var(--color-juno-text-default-raw);
+  --color-text-disabled-raw: var(--color-juno-text-disabled-raw);
+  --color-text-link-raw: var(--color-accent-raw);
+  // DT Button
+  // DT Primary Button
+  --color-button-primary-text: var(--color-white);
   --gradient-button-primary-bg: linear-gradient(
     to right top,
     rgb(7, 79, 90) 0%,
     var(--color-accent) 100%
   );
-  // Primary Button :hover
-  --color-button-primary-border: var(--color-accent-raw);
-  --gradient-button-primary-hover-bg: linear-gradient(
-    to right top,
-    var(--color-accent) 0%,
-    rgb(17, 31, 32) 100%
-  );
-  --color-button-primary-hover-border: var(--color-accent-raw);
-  --color-button-primary-hover-text: var(--color-white-raw);
-  // Primary Button :active
-  --gradient-button-primary-active-bg: linear-gradient(
-    to right top,
-    var(--color-juno-turquoise-8) 0%,
-    var(--color-juno-turquoise-8) 100%
-  );
-  --color-button-primary-active-border: var(--color-accent-raw);
-  --color-button-primary-active-text: var(--color-white-raw);
-  // Primary Button :disabled
+  // |-- DT Primary Button :hover
+  --color-button-primary-border: var(--color-accent); 
+  --color-button-primary-hover-bg: var(--color-juno-turquoise-8);
+  --color-button-primary-hover-border: var(--color-accent);
+  --color-button-primary-hover-text: var(--color-white);
+  // |-- DT Primary Button :active
+  --color-button-primary-active-bg: var(--color-accent);
+  --color-button-primary-active-border: var(--color-white);
+  --color-button-primary-active-text: var(--color-white);
+  // |-- DT Primary Button :disabled
   --gradient-button-primary-disabled-bg: linear-gradient(
     to right top,
     rgb(0, 7, 15) 0%,
@@ -611,72 +588,56 @@
   );
   --color-button-primary-disabled-border: rgb(76, 79, 83);
   --color-button-primary-disabled-text: rgb(76, 79, 83);
-  // --> Default Button
+  // DT Default Button
   --color-button-default-text: var(--color-text-default);
   --color-button-default-icon: var(--color-accent-raw);
   --color-button-default-bg: transparent;
-  --color-button-default-border: var(--color-accent-raw);
-  // Default Button :hover
-  --color-button-default-hover-text: var(--color-text-default);
-  --gradient-button-default-hover-bg: linear-gradient(
-    to right top,
-    rgba(39, 45, 52, 0) 0%,
-    rgba(39, 45, 52, 1) 100%
-  );
-  --color-button-default-hover-border: var(--color-accent-raw);
-  // Default Button :active
-  --color-button-default-active-bg: var(--color-juno-grey-light-11-raw);
-  --color-button-default-active-border: var(--color-accent-raw);
+  --color-button-default-border: var(--color-accent);
+  // |-- DT Default Button :hover
+  --color-button-default-hover-text: var(--color-accent);
+  --color-button-default-hover-bg: transparent;
+  --color-button-default-hover-border: var(--color-accent);
+  // |-- DT Default Button :active
+  --color-button-default-active-bg: var(--color-juno-grey-blue-1);
+  --color-button-default-active-border: var(--color-accent);
   --color-button-default-active-text: var(--color-text-default);
-  // Default Button :disabled
+  // |-- DT Default Button :disabled
   --color-button-default-disabled-text: rgb(76, 79, 83);
   --color-button-default-disabled-bg: transparent;
   --color-button-default-disabled-border: rgb(76, 79, 83);
-  // --> Subdued Button
+  // DT Subdued Button
   --color-button-subdued-text: var(--color-text-default);
   --color-button-subdued-bg: transparent;
-  --color-button-subdued-border: var(--color-text-default);
-  // Subdued Button :hover
+  --color-button-subdued-border: var(--color-juno-text-default);
+  // |-- DT Subdued Button :hover
   --color-button-subdued-hover-text: var(--color-text-default);
-  --gradient-button-subdued-hover-bg: linear-gradient(
-    to right top,
-    rgba(39, 45, 52, 0) 0%,
-    rgba(39, 45, 52, 1) 100%
-  );
-  --color-button-subdued-hover-border: var(--color-text-default);
-  // Subdued Button :active
-  --color-button-subdued-active-bg: var(--color-juno-grey-light-11-raw);
+  --color-button-subdued-bg: transparent;
+  --color-button-subdued-hover-border: var(--color-accent);
+  // |-- DT Subdued Button :active
+  --color-button-subdued-active-bg: var(--color-juno-grey-blue-1);
   --color-button-subdued-active-border: var(--color-text-default);
   --color-button-subdued-active-text: var(--color-text-default);
-  // Subdued Button :disabled
+  // |-- DT Subdued Button :disabled
   --color-button-subdued-disabled-text: rgb(76, 79, 83);
   --color-button-subdued-disabled-bg: transparent;
   --color-button-default-disabled-border: rgb(76, 79, 83);
-  // --> Primary-Danger Button
-  --color-button-primary-danger-text: var(--color-white-raw);
+  // DT Primary-Danger Button
+  --color-button-primary-danger-text: var(--color-white);
   --gradient-button-primary-danger-bg: linear-gradient(
     to right top,
     rgb(230, 117, 85) 0%,
     rgb(255, 65, 11) 100%
   );
   --color-button-primary-danger-border: rgb(255, 65, 11);
-  // Primary-Danger Button :hover
-  --color-button-primary-danger-hover-text: var(--color-white-raw);
-  --gradient-button-primary-danger-hover-bg: linear-gradient(
-    to right top,
-    rgb(172, 172, 148) 0%,
-    rgb(146, 32, 0) 100%
-  );
+  // |-- DT Primary-Danger Button :hover
+  --color-button-primary-danger-hover-text: var(--color-white);
+  --color-button-primary-danger-hover-bg: var(--color-sap-red-dark-1);
   --color-button-primary-danger-hover-border: rgb(255, 65, 11);
-  // Primary-Danger Button :active
-  --gradient-button-primary-danger-active-bg: linear-gradient(
-    to right top,
-    var(--color-sap-red-dark-1) 0%,
-    var(--color-sap-red-dark-1) 100%
-  );
-  --color-button-primary-danger-active-border: var(--color-danger);
-  --color-button-primary-danger-active-text: var(--color-white-raw);
-  // Primary-Danger Button :disabled
+  // |-- DT Primary-Danger Button :active
+  --color-button-primary-danger-active-bg: var(--color-danger);
+  --color-button-primary-danger-active-border: var(--color-white);
+  --color-button-primary-danger-active-text: var(--color-white);
+  // |-- DT Primary-Danger Button :disabled
   --color-button-primary-danger-disabled-text: rgb(76, 79, 83);
   --gradient-button-primary-danger-disabled-bg: linear-gradient(
     to right top,
@@ -684,12 +645,12 @@
     rgb(44, 46, 49) 100%
   );
   --color-button-primary-danger-disabled-border: rgb(76, 79, 83);
-  // Icon
+  // DT Icon
   --color-icon-danger: var(--color-sap-red-raw);
   --color-icon-info: var(--color-accent-raw);
   --color-icon-success: var(--color-sap-green-raw);
   --color-icon-warning: var(--color-warning-raw);
-  // Message
+  // DT Message
   --color-message-danger-border: var(--color-danger-raw);
   --gradient-message-danger-bg: linear-gradient(
     90deg,
@@ -720,35 +681,35 @@
     rgb(32, 55, 46) 0%,
     rgb(39, 102, 57) 100%
   );
-  // Introbox
+  // DT Introbox
   --color-introbox-bg: var(--color-background-lvl-10-raw);
   --color-introbox-border: var(--color-accent-raw);
-  // Tooltip
+  // DT Tooltip
   --color-tooltip-popover-bg: var(--color-accent-raw);
   --color-tooltip-popover-text: var(--color-juno-grey-blue-11-raw);
-  // (Text-)Input
+  // DT (Text-)Input
   --color-textinput-bg: var(--color-background-lvl-9-raw);
   --color-textinput-text: var(--color-juno-text-high-raw);
   --color-textinput-placeholder-text: var(--color-juno-text-high-raw);
   --color-textinput-focus-border: var(--color-accent-raw);
-  // Select
+  // DT Select
   --color-select-bg: var(--color-background-lvl-9-raw);
-  // Checkbox
+  // DT Checkbox
   --color-checkbox-bg: var(--color-background-lvl-9-raw);
   --color-checkbox-checked-color: var(--color-accent-raw);
-  // Radio
+  // DT Radio
   --color-radio-bg: var(--color-background-lvl-9-raw);
   --color-radio-checked-bg: var(--color-accent-raw);
-  // Switch
+  // DT Switch
   --color-switch-default-border: var(--color-juno-text-high-raw);
   --color-switch-handle-bg: var(--color-juno-text-high-raw);
   --color-switch-handle-checked-bg: var(--color-accent-raw);
   --color-switch-hover-border: var(--color-accent-raw);
-  // Required
+  // DT Required
   --color-required-bg: var(--color-accent-raw);
-  // Spinner
+  // DT Spinner
   --color-spinner-primary: var(--color-accent-raw);
-  // Syntax Highlighting
+  // DT Syntax Highlighting
   --color-syntax-highlight-base00: var(--color-background-lvl-3); // bg
   --color-syntax-highlight-base01: var(--color-juno-grey-blue-3); // ?
   --color-syntax-highlight-base02: #bbb; // lines and boxes
@@ -764,17 +725,17 @@
   --color-syntax-highlight-base0C: var(--color-sap-gold-light-3); // array index
   --color-syntax-highlight-base0D: var(
     --color-sap-gold-light-3
-  ); // expanded icon
+  ); // DT expanded icon
   --color-syntax-highlight-base0E: var(
     --color-juno-blue-4
-  ); // bool + collapsed icon
+  ); // DT bool + collapsed icon
   --color-syntax-highlight-base0F: var(--color-juno-blue-4); // integer value
-  // DataGrid
+  // DT DataGrid
   --color-datagridrow-selected: var(--color-accent-raw);
-  // DataList
+  // DT DataList
   --color-datalist-row-border: var(--color-background-lvl-5-raw);
   --color-datalistrow-selected: var(--color-accent-raw);
-  // CodeBlock
+  // DT CodeBlock
   --color-codeblock-bg: var(--color-background-lvl-8-raw);
   --color-codeblock-titlebar-bottom-border: var(--color-background-lvl-4-raw);
 }
