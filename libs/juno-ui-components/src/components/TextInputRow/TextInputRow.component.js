@@ -3,6 +3,9 @@ import PropTypes from "prop-types"
 import { TextInput } from "../TextInput/index.js"
 import { Label } from "../Label/index.js"
 
+/* Stacked: Label is above the text input element */
+/* Floating: Label is inside the text input element */
+
 const stackedcontainerstyles = `
 	flex
 	flex-col

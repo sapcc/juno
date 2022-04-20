@@ -1,10 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+/* Stacked: Label is above the text input or native select element */
+/* Floating: label is inside the text input element */
+/* Default: Others, e.g. Radio, checkbox, etc. */
+
 const labelstyles = `
 	text-theme-high
 `
-
 
 const stackedlabelstyles = `
 	text-sm
