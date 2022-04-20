@@ -6,7 +6,7 @@ const textinputstyles = `
 	text-theme-textinput
 	text-base
 	leading-4
-	p-3
+	p-4
 	h-textinput
 	border
 	border-transparent

@@ -16,7 +16,7 @@ const floatinglabelstyles = `
 `
 
 const defaultlabelstyles = `
-	text-sm
+	text-base
 `
 
 const requiredstyles = `
