@@ -38,7 +38,7 @@
     "react-test-renderer": "^17.0.2",
     "regenerator-runtime": "^0.13.9",
     "sass-loader": "^12.4.0",
-    "tailwindcss": "^3.0.18",
+    "tailwindcss": "^3.0.24",
     "util": "^0.12.4",
     "webpack": "^5.68.0",
     "webpack-cli": "^4.9.2",
