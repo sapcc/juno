@@ -23,13 +23,13 @@ const btnBase = `
 const btnSmall = `
   text-sm
   px-sm
-  py-xs
+  py-[0.3125rem]
 `
 
 const btnDefaultSize = `
   text-base
-  px-md 
-  py-sm
+  px-[0.625rem] 
+  py-[0.4375rem]
 `
 
 const btnLarge = `
@@ -52,11 +52,11 @@ const sizeClass = (size) => {
 const iconSize = (size) => {
   switch (size) {
     case "small":
-      return "21"
+      return "1.125rem"
     case "large":
-      return "32"
+      return "2rem"
     default:
-      return "24"
+      return "1.5rem"
   }
 }
 
@@ -69,7 +69,7 @@ const btnIconLarge = `
 `
 
 const btnIconDefault = `
-  mr-2
+  mr-1
 `
 
 const iconClasses = (size, variant) => {
@@ -156,7 +156,7 @@ export const Button = ({
   const button = (
     <button
       type="button"
-      className={`juno-button juno-button-${variant} ${btnBase} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
+      className={`juno-button juno-button-${variant} juno-button-${size}-size ${btnBase} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
       disabled={disabled}
       onClick={onClick}
       title={titleValue}
@@ -171,7 +171,7 @@ export const Button = ({
     <a
       href={href}
       role="button"
-      className={`juno-button juno-button-${variant} ${btnBase} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
+      className={`juno-button juno-button-${variant} juno-button-${size}-size ${btnBase} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
       disabled={disabled}
       onClick={onClick}
       title={titleValue}
