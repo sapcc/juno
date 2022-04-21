@@ -9,7 +9,7 @@ const stackedcontainerstyles = `
 	flex-col
   mb-2
 `
-/* Floating: Label is inside the text input element */
+/* Floating: Label is inside the text input element. This is the overall container.  */
 const floatingcontainerstyles = `
 	relative
 	mb-2
@@ -43,7 +43,7 @@ const floatinglabelcontainerstyles = (minimizedLabel) => {
   )
 } 
 
-/* Styles for floating input element depending whether the label is minimized or not: */
+/* Styles for floating input element depending on whether the label is minimized or not: */
 const floatinginputstyles = (minimizedLabel) => { 
   return (
     `
