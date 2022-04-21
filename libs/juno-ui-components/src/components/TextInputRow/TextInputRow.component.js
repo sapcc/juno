@@ -23,6 +23,7 @@ const floatinglabelcontainerstyles = (minimizedLabel) => {
     top-0
     left-0
     p-2.5
+    pl-3
     pt-[0.4325rem]
     pointer-events-none
     transform 
@@ -36,7 +37,7 @@ const floatinglabelcontainerstyles = (minimizedLabel) => {
       scale-75
       opacity-75
       -translate-y-1
-      translate-x-1
+      translate-x-2
       `
     }
   `
@@ -48,13 +49,13 @@ const floatinginputstyles = (minimizedLabel) => {
   return (
     `
     ${minimizedLabel ? `
-      px-3
+      px-4
       pt-[1.125rem]
       pb-1  
       `
       :
       `
-      p-3 
+      p-4 
       pt-4
       `
     }
