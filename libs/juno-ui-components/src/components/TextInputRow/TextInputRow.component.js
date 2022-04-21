@@ -4,24 +4,19 @@ import { TextInput } from "../TextInput/index.js"
 import { Label } from "../Label/index.js"
 
 /* Stacked: Label is above the text input element */
-/* Floating: Label is inside the text input element */
-
 const stackedcontainerstyles = `
 	flex
 	flex-col
   mb-2
 `
-
+/* Floating: Label is inside the text input element */
 const floatingcontainerstyles = `
 	relative
 	mb-2
 `
-
-const stackedlabelcontainerstyles = `
-`
-
+/* Styles for FLOATING label container element depending on whether it is currently minimized or not. */
+/* All transforms are applied to the container element! */
 const floatinglabelcontainerstyles = (minimizedLabel) => {
-
   return (
     `
     absolute
@@ -48,8 +43,8 @@ const floatinglabelcontainerstyles = (minimizedLabel) => {
   )
 } 
 
+/* Styles for floating input element depending whether the label is minimized or not: */
 const floatinginputstyles = (minimizedLabel) => { 
-  
   return (
     `
     ${minimizedLabel ? `
@@ -79,26 +74,27 @@ const stackedinputstyles = `
 	w-full
 `
 
-const variantStyle = (variant, element, isLabelMinimized) => {
-  switch (variant) {
-    case "floating":
-      switch (element) {
-        case "container":
-          return floatingcontainerstyles
-        case "labelcontainer":
-          return floatinglabelcontainerstyles(isLabelMinimized)
-        case "input":
-          return floatinginputstyles(isLabelMinimized)
-      }
-    case "stacked":
-      switch (element) {
-        case "container":
-          return stackedcontainerstyles
-        case "labelcontainer":
-          return stackedlabelcontainerstyles
-        case "input":
-          return stackedinputstyles
-      }
+const getContainerStyles = (variant) => {
+  if (variant === "stacked") {
+    return stackedcontainerstyles
+  } else {
+    return floatingcontainerstyles
+  }
+}
+
+const getLabelContainerStyles = (variant, minimized) => {
+  if (variant === "stacked") {
+    return ""
+  } else {
+    return floatinglabelcontainerstyles(minimized)
+  }
+}
+
+const getInputStyles = (variant, minimized) => {
+  if (variant === "stacked") {
+    return stackedinputstyles
+  } else {
+    return floatinginputstyles(minimized)
   }
 }
 
@@ -129,30 +125,24 @@ export const TextInputRow = ({
     setValue(event.target.value)
     onChange(event)
   }
-
+  
+  /* check whether the label is minimized (either has focus and / or has a value) */
   const minimizedLabel = (variant, value, focus) => {
     if (variant === "floating") {
       if (focus || (value && value.length > 0)) {
         return true
       } 
     }
-
     return false
   }
 
   return (
     <div
-      className={`juno-textinput-row ${variantStyle(
-        variant,
-        "container"
-      )} ${className}`}
+      className={`juno-textinput-row ${getContainerStyles(variant)} ${className}`}
       {...props}
     >
       <div
-        className={`juno-label-container ${variantStyle(
-          variant,
-          "labelcontainer",
-          minimizedLabel(variant, val, focus))}`}
+        className={`juno-label-container ${getLabelContainerStyles(variant, minimizedLabel(variant, val, focus))}`}
       >
         <Label
           text={label}
@@ -173,7 +163,7 @@ export const TextInputRow = ({
           onChange={handleChange}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
-          className={`${variantStyle(variant, "input", minimizedLabel(variant, val, focus))}`}
+          className={`${getInputStyles(variant, minimizedLabel(variant, val, focus))}`}
         />
         {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
       </div>
