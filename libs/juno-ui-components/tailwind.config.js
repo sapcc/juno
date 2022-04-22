@@ -167,7 +167,7 @@ module.exports = {
         "background-lvl-1": withOpacity("--color-background-lvl-1-raw"),
         "background-lvl-2": withOpacity("--color-background-lvl-2-raw"),
         "background-lvl-3": withOpacity("--color-background-lvl-3-raw"),
-        "background-lvl-4": withOpacity("--color-background-lvl-4-raw"),,
+        "background-lvl-4": withOpacity("--color-background-lvl-4-raw"),
       },
     },
     extend: {
