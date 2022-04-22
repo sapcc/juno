@@ -15,7 +15,7 @@ const overlayStyles = (isOpen) => {
     bg-theme-background-lvl-0
     bg-opacity-30
     border
-    border-theme-background-lvl-4
+    border-theme-background-lvl-0
     flex
     flex-col
     absolute
@@ -97,7 +97,10 @@ const LoginOverlay = () => {
       </div>
 
       <div className="w-full bg-juno-grey-blue-10 mt-auto">
-        <Stack alignment="center" className="documentation-banner max-w-screen-xl mx-auto py-10">
+        <Stack
+          alignment="center"
+          className="documentation-banner max-w-screen-xl mx-auto py-10"
+        >
           <div>
             <h5 className="text-3xl">New here?</h5>
             <p>

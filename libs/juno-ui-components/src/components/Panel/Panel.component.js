@@ -13,7 +13,7 @@ const panelClasses = (isOpen, isTransitioning) => {
       z-10
       grid
       grid-rows-[auto_1fr]
-      bg-theme-background-lvl-0
+      bg-theme-panel
       backdrop-blur
       bg-opacity-70
       w-[45%]
