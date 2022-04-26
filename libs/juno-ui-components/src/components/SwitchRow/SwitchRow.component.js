@@ -55,7 +55,7 @@ export const SwitchRow = ({
           disabled={disabled}
         />
       </div>
-      <div>
+      <div className={`pt-0.5`}>
         <Label
           text={label}
           htmlFor={id}
