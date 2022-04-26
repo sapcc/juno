@@ -257,7 +257,7 @@ module.exports = {
         "grid-column": "0 .5rem",
       },
       height: {
-        textinput: "2.75rem",
+        textinput: "2.375rem",
         floatinglabelinput: "3rem",
         "switch-default": "1.4375rem",
         "switch-handle-default": "1.1875rem",
