@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 const panelFooterClasses = `
   border-t
-  border-t-theme-background-lvl-0
+  border-t-theme-panel
   px-8
   py-4
   flex

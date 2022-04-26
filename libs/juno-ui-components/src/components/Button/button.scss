@@ -22,7 +22,16 @@
 		background-color: var(--color-button-default-disabled-bg);
 		border-color: var(--color-button-default-disabled-border);
 		color: var(--color-button-default-disabled-text);
+
+		.juno-button-icon {
+			color: var(--color-button-default-disabled-text);
+		}
 	}
+
+	.juno-button-icon {
+		color: var(--color-accent);
+	}
+
 }
 
 .juno-button-subdued {

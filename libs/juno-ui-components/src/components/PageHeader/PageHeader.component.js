@@ -35,7 +35,7 @@ export const PageHeader = ({
 
   return (
     <div 
-      className={`juno-pageheader ${basePageHeader} ${className}`}
+      className={`juno-pageheader theme-dark ${basePageHeader} ${className}`}
       role="banner"
       {...props}
     >

@@ -9,7 +9,7 @@ import { parseError, isExpired } from "../helpers"
 import Badge from "./Badge"
 
 const serial = `
-bg-theme-background-lvl-7
+bg-theme-background-lvl-2
 px-2
 rounded
 h-min

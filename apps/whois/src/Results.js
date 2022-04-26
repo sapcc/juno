@@ -14,18 +14,24 @@ const rightColumn = `
 const Results = ({ items, processing }) => {
   return (
     <>
-      { !processing && items &&
+      {!processing && items && (
         <div>
-          <h2 className="text-2xl mb-3">Search Results {items.length > 1 && `(${items.length} found)`}</h2>
-        
-          <Stack direction="vertical" gap="8" className="bg-theme-background-lvl-1 p-8">
-            { items.length > 0 ? (
+          <h2 className="text-2xl mb-3">
+            Search Results {items.length > 1 && `(${items.length} found)`}
+          </h2>
+
+          <Stack
+            direction="vertical"
+            gap="8"
+            className="bg-theme-background-lvl-0 p-8"
+          >
+            {items.length > 0 ? (
               <>
                 <Stack gap="4">
                   <div className={leftColumn}>IP</div>
                   <div className={rightColumn}>Details</div>
                 </Stack>
-                { items.map((item, index) => (
+                {items.map((item, index) => (
                   <ResultItem
                     key={index}
                     content={item}
@@ -33,13 +39,12 @@ const Results = ({ items, processing }) => {
                   />
                 ))}
               </>
-              ) : (
-                "Not found"
-              )
-            }
+            ) : (
+              "Not found"
+            )}
           </Stack>
         </div>
-      }
+      )}
     </>
   )
 }

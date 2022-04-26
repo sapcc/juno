@@ -5,7 +5,7 @@ import CCloudShape from "../../img/ccloud_shape.svg"
 const basePageFooter = `
   flex
   relative
-  bg-theme-background-lvl-1
+  bg-theme-global-bg
   min-h-[3.25rem]
   pl-6
   pr-24

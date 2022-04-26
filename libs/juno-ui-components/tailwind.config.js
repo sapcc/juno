@@ -14,17 +14,29 @@ function withOpacity(variableName) {
 module.exports = {
   content: [
     "./src/components/**/*.{js,jsx,ts,tsx}",
-    "./src/dummyComponents/*.{js,jsx,ts,tsx}"
+    "./src/dummyComponents/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     fontFamily: {
-      'sans': ['"IBM Plex Sans"', 'ui-sans-serif', 'Arial', 'system-ui', 'sans-serif'],
-      'condensed': ['"IBM Plex Sans Condensed"', 'ui-sans-serif', 'Arial', 'system-ui', 'sans-serif'],
-      'serif': ['"IBM Plex Serif"', 'ui-serif', 'serif'],
-      'mono': ['"IBM Plex Mono"', 'ui-monospace', 'monospace']
+      sans: [
+        '"IBM Plex Sans"',
+        "ui-sans-serif",
+        "Arial",
+        "system-ui",
+        "sans-serif",
+      ],
+      condensed: [
+        '"IBM Plex Sans Condensed"',
+        "ui-sans-serif",
+        "Arial",
+        "system-ui",
+        "sans-serif",
+      ],
+      serif: ['"IBM Plex Serif"', "ui-serif", "serif"],
+      mono: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
     },
     colors: {
-      current: 'currentColor', // this is required for fill-current and stroke-current to work when you have custom colors
+      current: "currentColor", // this is required for fill-current and stroke-current to work when you have custom colors
       "juno-grey-blue": {
         1: withOpacity("--color-juno-grey-blue-1-raw"),
         2: withOpacity("--color-juno-grey-blue-2-raw"),
@@ -149,83 +161,89 @@ module.exports = {
         error: withOpacity("--color-error-raw"),
         info: withOpacity("--color-info-raw"),
         success: withOpacity("--color-success-raw"),
-        warning: withOpacity("--color-warning-raw"), 
+        warning: withOpacity("--color-warning-raw"),
         focus: withOpacity("--color-focus-raw"),
         "background-lvl-0": withOpacity("--color-background-lvl-0-raw"),
         "background-lvl-1": withOpacity("--color-background-lvl-1-raw"),
         "background-lvl-2": withOpacity("--color-background-lvl-2-raw"),
         "background-lvl-3": withOpacity("--color-background-lvl-3-raw"),
         "background-lvl-4": withOpacity("--color-background-lvl-4-raw"),
-        "background-lvl-5": withOpacity("--color-background-lvl-5-raw"),
-        "background-lvl-6": withOpacity("--color-background-lvl-6-raw"),
-        "background-lvl-7": withOpacity("--color-background-lvl-7-raw"),
-        "background-lvl-8": withOpacity("--color-background-lvl-8-raw"),
-        "background-lvl-9": withOpacity("--color-background-lvl-9-raw"),
-        "background-lvl-10": withOpacity("--color-background-lvl-10-raw"),
-      }
+      },
     },
     extend: {
       backgroundColor: {
         theme: {
-          "global-bg": withOpacity("--color-global-bg"),
+          "global-bg": withOpacity("--color-global-bg-raw"),
           "code-block": withOpacity("--color-codeblock-bg"),
           "content-area-bg": withOpacity("--color-content-area-bg-raw"),
-          "content-area-toolbar-bg": withOpacity("--color-background-lvl-3-raw"),
+          "content-area-toolbar-bg": withOpacity(
+            "--color-toolbar-bg-raw"
+          ),
+          panel: withOpacity("--color-panel-bg-raw"),
           "tooltip-popover": withOpacity("--color-tooltip-popover-bg"),
-          "textinput": withOpacity("--color-textinput-bg"),
-          "select": withOpacity("--color-select-bg"),
-          "checkbox": withOpacity("--color-checkbox-bg"),
-          "radio": withOpacity("--color-radio-bg"),
+          textinput: withOpacity("--color-textinput-bg"),
+          select: withOpacity("--color-select-bg"),
+          checkbox: withOpacity("--color-checkbox-bg"),
+          radio: withOpacity("--color-radio-bg"),
           "radio-checked": withOpacity("--color-radio-checked-bg"),
           "switch-handle": withOpacity("--color-switch-handle-bg"),
-          "switch-handle-checked": withOpacity("--color-switch-handle-checked-bg"),
-          "required": withOpacity("--color-required-bg"),
-          "introbox": withOpacity("--color-introbox-bg"),
+          "switch-handle-checked": withOpacity(
+            "--color-switch-handle-checked-bg"
+          ),
+          required: withOpacity("--color-required-bg"),
+          introbox: withOpacity("--color-introbox-bg"),
           "datagridrow-selected": withOpacity("--color-datagridrow-selected"),
           "datalistrow-selected": withOpacity("--color-datalistrow-selected"),
           "message-border-danger": withOpacity("--color-message-danger-border"),
-          "message-border-default": withOpacity("--color-message-default-border"),
+          "message-border-default": withOpacity(
+            "--color-message-default-border"
+          ),
           "message-border-error": withOpacity("--color-message-error-border"),
-          "message-border-warning": withOpacity("--color-message-warning-border"),
-          "message-border-success": withOpacity("--color-message-success-border"),
+          "message-border-warning": withOpacity(
+            "--color-message-warning-border"
+          ),
+          "message-border-success": withOpacity(
+            "--color-message-success-border"
+          ),
         },
       },
       backgroundImage: {
-          "theme-message-default": "var(--gradient-message-default-bg)",
-          "theme-message-success": "var(--gradient-message-success-bg)",
-          "theme-message-warning": "var(--gradient-message-warning-bg)",
-          "theme-message-danger": "var(--gradient-message-danger-bg)",
-          "theme-message-error": "var(--gradient-message-error-bg)",
+        "theme-message-default": "var(--gradient-message-default-bg)",
+        "theme-message-success": "var(--gradient-message-success-bg)",
+        "theme-message-warning": "var(--gradient-message-warning-bg)",
+        "theme-message-danger": "var(--gradient-message-danger-bg)",
+        "theme-message-error": "var(--gradient-message-error-bg)",
       },
       textColor: {
         theme: {
-          default: withOpacity("--color-global-text"),
-          "high": withOpacity("--color-text-high-raw"),
-          "default": withOpacity("--color-text-default-raw"),
-          "light": withOpacity("--color-text-light"),
-          "disabled": withOpacity("--color-text-disabled-raw"),
-          "link": withOpacity("--color-text-link-raw"), 
+          high: withOpacity("--color-text-high-raw"),
+          default: withOpacity("--color-text-default-raw"),
+          disabled: withOpacity("--color-text-disabled-raw"),
+          link: withOpacity("--color-text-link-raw"),
           "on-danger": withOpacity("--color-button-danger-text"),
           "on-default": withOpacity("--color-button-default-text"),
           "tooltip-popover": withOpacity("--color-tooltip-popover-text"),
-          "textinput": withOpacity("--color-textinput-text"),
+          textinput: withOpacity("--color-textinput-text"),
           "checkbox-checked": withOpacity("--color-checkbox-checked-color"),
         },
       },
       borderColor: {
         theme: {
           default: withOpacity("--color-default-border"),
-          "codeblock-titlebar": withOpacity("--color-codeblock-titlebar-bottom-border"),
+          "codeblock-titlebar": withOpacity(
+            "--color-codeblock-titlebar-bottom-border"
+          ),
           "codeblock-tab-active": withOpacity("--color-text-default-raw"),
           "message-default": withOpacity("--color-message-default-border"),
           "message-danger": withOpacity("--color-message-danger-border"),
           "message-error": withOpacity("--color-message-error-border"),
           "message-warning": withOpacity("--color-message-warning-border"),
           "message-success": withOpacity("--color-message-success-border"),
+          panel: withOpacity("--color-panel-border-raw"),
           "switch-default": withOpacity("--color-switch-default-border"),
           "switch-hover": withOpacity("--color-switch-hover-border"),
           "datalist-row": withOpacity("--color-datalist-row-border"),
-          "introbox": withOpacity("--color-introbox-border"),
+          introbox: withOpacity("--color-introbox-border"),
         },
       },
       // backgroundImage: theme => ({
@@ -236,18 +254,18 @@ module.exports = {
         sm: "0.5rem",
         md: "1rem",
         lg: "1.5rem",
-        "grid-column": "0 .5rem"
+        "grid-column": "0 .5rem",
       },
       height: {
-        "textinput": "2.375rem",
-        "floatinglabelinput": "3rem",
+        textinput: "2.75rem",
+        floatinglabelinput: "3rem",
         "switch-default": "1.4375rem",
         "switch-handle-default": "1.1875rem",
       },
       ringOffsetColor: {
         theme: {
-          "focus": withOpacity("--color-global-bg"),
-        }  
+          focus: withOpacity("--color-global-bg-raw"),
+        },
       },
       width: {
         "switch-default": "2.625rem",
@@ -273,8 +291,9 @@ module.exports = {
         "grid-row": "0 var(--grid-row-margin-x)",
       },
       flex: {
-        "grid-column": "var(--grid-column-flex-grow) var(--grid-column-flex-shrink) var(--grid-column-flex-basis)"
-      }
+        "grid-column":
+          "var(--grid-column-flex-grow) var(--grid-column-flex-shrink) var(--grid-column-flex-basis)",
+      },
     },
     borderWidth: {
       DEFAULT: "1px",

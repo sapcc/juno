@@ -34,7 +34,8 @@ const btnDefaultSize = `
 
 const btnLarge = `
   text-2xl
-  px-lg
+  pl-4
+  pr-lg
   py-sm
 `
 
@@ -61,7 +62,7 @@ const iconSize = (size) => {
 }
 
 const btnIconSmall = `
-  mr-1
+  mr-1.5
 `
 
 const btnIconLarge = `
@@ -69,19 +70,17 @@ const btnIconLarge = `
 `
 
 const btnIconDefault = `
-  mr-1
+  mr-2.5
 `
 
-const iconClasses = (size, variant) => {
-  const iconColor =
-    variant === "default" ? "text-theme-button-default-icon" : ""
+const iconClasses = (size) => {
   switch (size) {
     case "small":
-      return `${btnIconSmall} ${iconColor}`
+      return `${btnIconSmall}`
     case "large":
-      return `${btnIconLarge} ${iconColor}`
+      return `${btnIconLarge}`
     default:
-      return `${btnIconDefault} ${iconColor}`
+      return `${btnIconDefault}`
   }
 }
 
@@ -102,19 +101,12 @@ const spinnerSize = (size) => {
 }
 
 const spinnerColorClass = (variant, disabled) => {
-  const defaultButtonSpinnerColor = disabled
-    ? "text-theme-default"
-    : "text-theme-button-default-icon"
-  switch (variant) {
-    case "primary":
-      return "text-theme-button-primary"
-    case "primary-danger":
-      return "text-theme-button-primary-danger"
-    case "subdued":
-      return "text-theme-button-subdued"
-    default:
-      return defaultButtonSpinnerColor
+  if (disabled) {
+    return "text-theme-disabled"
+  } else if (variant === "default") {
+    return "text-theme-accent"
   }
+  return ""
 }
 
 /**
@@ -145,7 +137,7 @@ export const Button = ({
   ) : icon ? (
     <Icon
       icon={icon}
-      className={`${iconClasses(size, variant)}`}
+      className={`juno-button-icon ${iconClasses(size)}`}
       size={size ? iconSize(size) : null}
     />
   ) : null

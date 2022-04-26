@@ -31,7 +31,7 @@ const PageFooter = () => {
         <div className="max-w-[1280px] mx-auto grid grid-rows-[1fr,0.24fr] grid-cols-3 gap-x-20 gap-y-8 pb-12 pt-[calc(2rem+var(--cloud-image-overlap))]">
           <Stack
             direction="vertical"
-            className={`row-span-2 bg-theme-background-lvl-0 ${boxStyles}`}
+            className={`row-span-2 bg-juno-grey-blue-11 ${boxStyles}`}
           >
             <DocumentationIcon className="mb-3" />
             <h5 className={headlineStyles}>
@@ -120,7 +120,7 @@ const PageFooter = () => {
                 direction="vertical"
                 alignment="center"
                 distribution="center"
-                className="bg-theme-background-lvl-0 ml-auto px-4 py-2 font-bold text-theme-accent group-hover:text-white"
+                className="bg-juno-grey-blue-11 ml-auto px-4 py-2 font-bold text-theme-accent group-hover:text-white"
               >
                 <Icon icon="exitToApp" size="32" />
                 <div>Learn more</div>

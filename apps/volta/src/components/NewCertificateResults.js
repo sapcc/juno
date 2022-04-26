@@ -3,7 +3,7 @@ import { Stack, Message, Checkbox, CodeBlock } from "juno-ui-components"
 
 const preClasses = `
 whitespace-pre-wrap
-bg-theme-background-lvl-5
+bg-theme-background-lvl-2
 p-4
 mt-2
 rounded

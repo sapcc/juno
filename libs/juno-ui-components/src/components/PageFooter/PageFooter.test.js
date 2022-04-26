@@ -9,10 +9,10 @@ describe("PageFooter", () => {
     expect(screen.getByRole("contentinfo")).toHaveClass("flex")
   })
 
-  test("renders a Page Footer to have background lvl 1 color", async () => {
+  test("renders a Page Footer to have the global bg color", async () => {
     render(<PageFooter />)
     expect(screen.getByRole("contentinfo")).toBeInTheDocument()
-    expect(screen.getByRole("contentinfo")).toHaveClass("bg-theme-background-lvl-1")
+    expect(screen.getByRole("contentinfo")).toHaveClass("bg-theme-global-bg")
   })
 
   test("renders children as passed", async () => {

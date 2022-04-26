@@ -15,7 +15,7 @@
   --color-juno-grey-blue-4: rgb(38, 44, 51);
   --color-juno-grey-blue-3: rgb(41, 47, 54);
   --color-juno-grey-blue-2: rgb(48, 54, 60);
-  --color-juno-grey-blue-1: rgb(54, 60, 66);
+  --color-juno-grey-blue-1: rgb(64, 70, 75);
 
   // RAW
   --color-juno-grey-blue-11-raw: 0, 8, 16;
@@ -28,7 +28,7 @@
   --color-juno-grey-blue-4-raw: 38, 44, 51;
   --color-juno-grey-blue-3-raw: 41, 47, 54;
   --color-juno-grey-blue-2-raw: 48, 54, 60;
-  --color-juno-grey-blue-1-raw: 54, 60, 66;
+  --color-juno-grey-blue-1-raw: 64, 70, 75;
 
   // Juno Blue
   // RGB
@@ -81,30 +81,28 @@
 
   // Juno Grey
   // RGB
-  --color-juno-grey-light-1: rgb(250, 250, 250);
-  --color-juno-grey-light-2: rgb(244, 244, 244);
-  --color-juno-grey-light-3: rgb(235, 235, 235);
-  --color-juno-grey-light-4: rgb(218, 218, 218);
-  --color-juno-grey-light-5: rgb(201, 201, 201);
-  --color-juno-grey-light-6: rgb(184, 184, 184);
-  --color-juno-grey-light-7: rgb(168, 168, 168);
-  --color-juno-grey-light-8: rgb(151, 151, 151);
-  --color-juno-grey-light-9: rgb(76, 76, 76);
-  --color-juno-grey-light-10: rgb(49, 49, 49);
-  --color-juno-grey-light-11: rgb(24, 24, 24);
+  --color-juno-grey-light-1: rgb(249, 249, 249);
+  --color-juno-grey-light-2: rgb(247, 247, 247);
+  --color-juno-grey-light-3: rgb(244, 244, 244);
+  --color-juno-grey-light-4: rgb(241, 241, 241);
+  --color-juno-grey-light-5: rgb(238, 238, 238);
+  --color-juno-grey-light-6: rgb(235, 235, 235);
+  --color-juno-grey-light-7: rgb(233, 233, 233);
+  --color-juno-grey-light-8: rgb(230, 230, 230);
+  --color-juno-grey-light-9: rgb(227, 227, 227);
+  --color-juno-grey-light-10: rgb(215, 215, 215);
 
   // RAW
-  --color-juno-grey-light-1-raw: 250, 250, 250;
-  --color-juno-grey-light-2-raw: 244, 244, 244;
-  --color-juno-grey-light-3-raw: 235, 235, 235;
-  --color-juno-grey-light-4-raw: 218, 218, 218;
-  --color-juno-grey-light-5-raw: 201, 201, 201;
-  --color-juno-grey-light-6-raw: 184, 184, 184;
-  --color-juno-grey-light-7-raw: 168, 168, 168;
-  --color-juno-grey-light-8-raw: 151, 151, 151;
-  --color-juno-grey-light-9-raw: 76, 76, 76;
-  --color-juno-grey-light-10-raw: 49, 49, 49;
-  --color-juno-grey-light-11-raw: 24, 24, 24;
+  --color-juno-grey-light-1-raw: 249, 249, 249;
+  --color-juno-grey-light-2-raw: 247, 247, 247;
+  --color-juno-grey-light-3-raw: 244, 244, 244;
+  --color-juno-grey-light-4-raw: 241, 241, 241;
+  --color-juno-grey-light-5-raw: 238, 238, 238;
+  --color-juno-grey-light-6-raw: 235, 235, 235;
+  --color-juno-grey-light-7-raw: 233, 233, 233;
+  --color-juno-grey-light-8-raw: 230, 230, 230;
+  --color-juno-grey-light-9-raw: 227, 227, 227;
+  --color-juno-grey-light-10-raw: 215, 215, 215;
 
   .theme-dark {
     // TEXT COLORS
@@ -300,33 +298,23 @@
   // LT Background Colors
   --color-background-lvl-0: var(--color-white);
   --color-background-lvl-1: var(--color-juno-grey-light-1);
-  --color-background-lvl-2: var(--color-juno-grey-light-2);
-  --color-background-lvl-3: var(--color-juno-grey-light-3);
-  --color-background-lvl-4: var(--color-juno-grey-light-4);
-  --color-background-lvl-5: var(--color-juno-grey-light-5);
-  --color-background-lvl-6: var(--color-juno-grey-light-6);
-  --color-background-lvl-7: var(--color-juno-grey-light-7);
-  --color-background-lvl-8: var(--color-juno-grey-light-8);
-  --color-background-lvl-9: var(--color-juno-grey-light-9);
-  --color-background-lvl-10: var(--color-juno-grey-light-10);
+  --color-background-lvl-2: var(--color-juno-grey-light-3);
+  --color-background-lvl-3: var(--color-juno-grey-light-4  );
+  --color-background-lvl-4: var(--color-juno-grey-light-10);
 
   --color-background-lvl-0-raw: var(--color-white-raw);
   --color-background-lvl-1-raw: var(--color-juno-grey-light-1-raw);
-  --color-background-lvl-2-raw: var(--color-juno-grey-light-2-raw);
-  --color-background-lvl-3-raw: var(--color-juno-grey-light-3-raw);
-  --color-background-lvl-4-raw: var(--color-juno-grey-light-4-raw);
-  --color-background-lvl-5-raw: var(--color-juno-grey-light-5-raw);
-  --color-background-lvl-6-raw: var(--color-juno-grey-light-6-raw);
-  --color-background-lvl-7-raw: var(--color-juno-grey-light-7-raw);
-  --color-background-lvl-8-raw: var(--color-juno-grey-light-8-raw);
-  --color-background-lvl-9-raw: var(--color-juno-grey-light-9-raw);
-  --color-background-lvl-10-raw: var(--color-juno-grey-light-10-raw);
+  --color-background-lvl-2-raw: var(--color-juno-grey-light-3-raw);
+  --color-background-lvl-3-raw: var(--color-juno-grey-light-4-raw);
+  --color-background-lvl-4-raw: var(--color-juno-grey-light-10-raw);
 
   // LT Global
-  --color-global-bg: var(--color-background-lvl-0-raw);
+  --color-global-bg: var(--color-juno-grey-light-1);
+  --color-global-bg-raw: var(--color-juno-grey-light-1-raw);
+
   --color-global-text: var(--color-juno-text-default-raw);
-  --color-content-area-bg: var(--color-background-lvl-4);
-  --color-content-area-bg-raw: var(--color-background-lvl-4-raw);
+  --color-content-area-bg: var(--color-background-lvl-0);
+  --color-content-area-bg-raw: var(--color-background-lvl-0-raw);
   --color-accent: var(--color-juno-blue-4);
   --color-accent-raw: var(--color-juno-blue-4-raw);
   // LT FOCUS
@@ -462,7 +450,7 @@
   );
 
   // LT Introbox
-  --color-introbox-bg: var(--color-background-lvl-1-raw);
+  --color-introbox-bg: var(--color-background-lvl-2-raw);
   --color-introbox-border: var(--color-accent-raw);
   // LT Tooltip
   --color-tooltip-popover-bg: var(--color-accent-raw);
@@ -489,7 +477,7 @@
   // LT Spinner
   --color-spinner-primary: var(--color-accent-raw);
   // LT Syntax Highlighting
-  --color-syntax-highlight-base00: var(--color-background-lvl-3); // bg
+  --color-syntax-highlight-base00: var(--color-juno-grey-light-3); // bg
   --color-syntax-highlight-base01: var(--color-juno-grey-light-3); // ?
   --color-syntax-highlight-base02: var(--color-sap-grey-3); // lines and boxes
   --color-syntax-highlight-base03: var(--color-sap-grey-3);
@@ -510,44 +498,40 @@
   // LT DataGrid
   --color-datagridrow-selected: var(--color-accent-raw);
   // LT DataList
-  --color-datalist-row-border: var(--color-background-lvl-5-raw);
+  --color-datalist-row-border: var(--color-background-lvl-1-raw);
   --color-datalistrow-selected: var(--color-accent-raw);
   // LT CodeBlock
   --color-codeblock-bg: var(--color-background-lvl-2-raw); 
   --color-codeblock-titlebar-bottom-border: var(--color-background-lvl-4-raw);
+   // LT Panel
+   --color-panel-bg-raw: var(--color-white-raw); 
+   --color-panel-border-raw: var(--color-juno-white-raw);
+   // LT Toolbar
+   --color-toolbar-bg-raw: var(--color-juno-grey-light-5-raw); 
 }
 
 .theme-dark {
   // DT Background Colors
-  --color-background-lvl-0: var(--color-juno-grey-blue-11);
-  --color-background-lvl-1: var(--color-juno-grey-blue-10);
-  --color-background-lvl-2: var(--color-juno-grey-blue-9);
-  --color-background-lvl-3: var(--color-juno-grey-blue-8);
-  --color-background-lvl-4: var(--color-juno-grey-blue-7);
-  --color-background-lvl-5: var(--color-juno-grey-blue-6);
-  --color-background-lvl-6: var(--color-juno-grey-blue-5);
-  --color-background-lvl-7: var(--color-juno-grey-blue-4);
-  --color-background-lvl-8: var(--color-juno-grey-blue-3);
-  --color-background-lvl-9: var(--color-juno-grey-blue-2);
-  --color-background-lvl-10: var(--color-juno-grey-blue-1);
+  --color-background-lvl-0: var(--color-juno-grey-blue-7);
+  --color-background-lvl-1: var(--color-juno-grey-blue-5);
+  --color-background-lvl-2: var(--color-juno-grey-blue-3);
+  --color-background-lvl-3: var(--color-juno-grey-blue-2);
+  --color-background-lvl-4: var(--color-juno-grey-blue-1);
+  
+  --color-background-lvl-0-raw: var(--color-juno-grey-blue-7-raw);
+  --color-background-lvl-1-raw: var(--color-juno-grey-blue-5-raw);
+  --color-background-lvl-2-raw: var(--color-juno-grey-blue-3-raw);
+  --color-background-lvl-3-raw: var(--color-juno-grey-blue-2-raw);
+  --color-background-lvl-4-raw: var(--color-juno-grey-blue-1-raw);
 
-  --color-background-lvl-0-raw: var(--color-juno-grey-blue-11-raw);
-  --color-background-lvl-1-raw: var(--color-juno-grey-blue-10-raw);
-  --color-background-lvl-2-raw: var(--color-juno-grey-blue-9-raw);
-  --color-background-lvl-3-raw: var(--color-juno-grey-blue-8-raw);
-  --color-background-lvl-4-raw: var(--color-juno-grey-blue-7-raw);
-  --color-background-lvl-5-raw: var(--color-juno-grey-blue-6-raw);
-  --color-background-lvl-6-raw: var(--color-juno-grey-blue-5-raw);
-  --color-background-lvl-7-raw: var(--color-juno-grey-blue-4-raw);
-  --color-background-lvl-8-raw: var(--color-juno-grey-blue-3-raw);
-  --color-background-lvl-9-raw: var(--color-juno-grey-blue-2-raw);
-  --color-background-lvl-10-raw: var(--color-juno-grey-blue-1-raw);
 
   // DT Global
-  --color-global-bg: var(--color-background-lvl-1-raw);
+  --color-global-bg: var(--color-juno-grey-blue-10);
+  --color-global-bg-raw: var(--color-juno-grey-blue-10-raw);
+
   --color-global-text: var(--color-juno-text-default-raw);
-  --color-content-area-bg: var(--color-background-lvl-4);
-  --color-content-area-bg-raw: var(--color-background-lvl-4-raw);
+  --color-content-area-bg: var(--color-background-lvl-0);
+  --color-content-area-bg-raw: var(--color-background-lvl-0-raw);
   --color-accent: var(--color-juno-turquoise-5);
   --color-accent-raw: var(--color-juno-turquoise-5-raw);
   // DT FOCUS
@@ -682,23 +666,23 @@
     rgb(39, 102, 57) 100%
   );
   // DT Introbox
-  --color-introbox-bg: var(--color-background-lvl-10-raw);
+  --color-introbox-bg: var(--color-background-lvl-2-raw);
   --color-introbox-border: var(--color-accent-raw);
   // DT Tooltip
   --color-tooltip-popover-bg: var(--color-accent-raw);
   --color-tooltip-popover-text: var(--color-juno-grey-blue-11-raw);
   // DT (Text-)Input
-  --color-textinput-bg: var(--color-background-lvl-9-raw);
+  --color-textinput-bg: var(--color-background-lvl-3-raw);
   --color-textinput-text: var(--color-juno-text-high-raw);
   --color-textinput-placeholder-text: var(--color-juno-text-high-raw);
   --color-textinput-focus-border: var(--color-accent-raw);
   // DT Select
-  --color-select-bg: var(--color-background-lvl-9-raw);
+  --color-select-bg: var(--color-background-lvl-3-raw);
   // DT Checkbox
-  --color-checkbox-bg: var(--color-background-lvl-9-raw);
+  --color-checkbox-bg: var(--color-background-lvl-4-raw);
   --color-checkbox-checked-color: var(--color-accent-raw);
   // DT Radio
-  --color-radio-bg: var(--color-background-lvl-9-raw);
+  --color-radio-bg: var(--color-background-lvl-4-raw);
   --color-radio-checked-bg: var(--color-accent-raw);
   // DT Switch
   --color-switch-default-border: var(--color-juno-text-high-raw);
@@ -710,7 +694,7 @@
   // DT Spinner
   --color-spinner-primary: var(--color-accent-raw);
   // DT Syntax Highlighting
-  --color-syntax-highlight-base00: var(--color-background-lvl-3); // bg
+  --color-syntax-highlight-base00: var(--color-juno-grey-blue-8); // bg
   --color-syntax-highlight-base01: var(--color-juno-grey-blue-3); // ?
   --color-syntax-highlight-base02: #bbb; // lines and boxes
   --color-syntax-highlight-base03: var(--color-sap-grey-3);
@@ -733,11 +717,16 @@
   // DT DataGrid
   --color-datagridrow-selected: var(--color-accent-raw);
   // DT DataList
-  --color-datalist-row-border: var(--color-background-lvl-5-raw);
+  --color-datalist-row-border: var(--color-background-lvl-1-raw);
   --color-datalistrow-selected: var(--color-accent-raw);
   // DT CodeBlock
-  --color-codeblock-bg: var(--color-background-lvl-8-raw);
-  --color-codeblock-titlebar-bottom-border: var(--color-background-lvl-4-raw);
+  --color-codeblock-bg: var(--color-background-lvl-2-raw);
+  --color-codeblock-titlebar-bottom-border: var(--color-background-lvl-0-raw);
+  // DT Panel
+  --color-panel-bg-raw: var(--color-juno-grey-blue-11-raw); 
+  --color-panel-border-raw: var(--color-juno-grey-blue-11-raw); 
+  // DT Toolbar
+  --color-toolbar-bg-raw: var(--color-juno-grey-blue-8-raw); 
 }
 
 // Grid configuration
