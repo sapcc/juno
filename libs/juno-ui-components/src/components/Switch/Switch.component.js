@@ -18,9 +18,9 @@ const switchbasestyles = `
 const switchsizestyles = (size) => {
 	switch (size) {
 		case "small":
-		  	return 'w-8 h-4'
+		  	return 'w-[1.75rem] h-4'
 		case "large":
-			return 'w-12 h-6'
+			return 'w-[3.125rem] h-[1.6875rem]'
 		default:
 		  	return 'w-switch-default h-switch-default'
 	  }
@@ -37,9 +37,9 @@ const handlebasestyles = `
 const handlesizestyles = (size) => {
 	switch (size) {
 		case "small":
-			return 'w-[12px] h-[12px]'
+			return 'w-[0.75rem] h-[0.75rem]'
 		case "large":
-			return 'w-[20px] h-[20px]'
+			return 'w-[1.4375rem] h-[1.4375rem]'
 		default: 
 			return 'w-switch-handle-default h-switch-handle-default'
 	}
