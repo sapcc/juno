@@ -30,11 +30,20 @@ describe("Panel", () => {
     expect(screen.getByRole("dialog")).toHaveTextContent("My heading")
   })
   
-  test("renders a panel with close button", async () => {
+  test("renders a panel with close button by default", async () => {
     render(<Panel />)
     expect(screen.getByRole("dialog")).toBeInTheDocument()
     expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByLabelText("close")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute("aria-label", "close")
     expect(screen.getByRole("img")).toHaveAttribute("alt", "close")
+  })
+
+  test("renders a panel without a close button", async () => {
+    render(<Panel closeable={false} />)
+    expect(screen.getByRole("dialog")).toBeInTheDocument()
+    expect(screen.queryByRole("button")).not.toBeInTheDocument()
+    expect(screen.queryByLabelText("close")).not.toBeInTheDocument()
   })
 
   test("renders a custom classname", async () => {

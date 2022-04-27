@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
-import { ClickableIcon } from "../ClickableIcon"
+import { Icon } from "../Icon"
 
 const panelClasses = (isOpen, isTransitioning) => {
   return `
@@ -42,17 +42,24 @@ export const Panel = ({
   heading,
   className,
   opened,
+  closeable,
   onClose,
   children,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(opened)
+  const [isCloseable, setIsCloseable] = useState(closeable)
   const [isTransitioning, setIsTransitioning] = useState(false)
 
   // ensure we notice if the opened parameter is changed from the outside
   useEffect(() => {
     setIsOpen(opened)
   }, [opened])
+
+  // ensure we notice if the cloeseable parameter is changed from the outside
+  useEffect(() => {
+    setIsCloseable(closeable)
+  }, [closeable])
 
   // ----- Timeout stuff -------
   // necessary because we want to set the panel to invisible only after the closing transition has finished
@@ -96,11 +103,13 @@ export const Panel = ({
         >
           {heading}
         </div>
-        <ClickableIcon
-          icon="close"
-          onClick={handleClose}
-          className="juno-panel-close ml-auto"
-        />
+        { isCloseable &&
+            <Icon
+            icon="close"
+            onClick={handleClose}
+            className="juno-panel-close ml-auto"
+          />
+        }
       </div>
       {children}
     </div>
@@ -112,6 +121,8 @@ Panel.propTypes = {
   heading: PropTypes.string,
   /**  Pass open state  */
   opened: PropTypes.bool,
+  /**  Pass whethe panel should be closeable via a close button or not. If false, the close button will not be rendered. The panel can still be closed by setting "opened" to false.  */
+  closeable: PropTypes.bool,
   /** Pass a handler that will be called when the close button is clicked */
   onClose: PropTypes.func,
   /** Pass an optional className */
@@ -123,6 +134,7 @@ Panel.propTypes = {
 Panel.defaultProps = {
   heading: "",
   opened: false,
+  closeable: true,
   onClose: undefined,
   className: "",
 }
