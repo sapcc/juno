@@ -174,6 +174,7 @@ module.exports = {
       backgroundColor: {
         theme: {
           "global-bg": withOpacity("--color-global-bg-raw"),
+          "badge-default": "var(--color-badge-default-bg)",
           "code-block": withOpacity("--color-codeblock-bg"),
           "content-area-bg": withOpacity("--color-content-area-bg-raw"),
           "content-area-toolbar-bg": withOpacity(

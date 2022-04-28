@@ -3,20 +3,26 @@ import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 
 const badgeBaseStyles = `
+	rounded
+	text-sm
+	text-theme-default
+	py-0.5
+	px-1
 `
 
-const defaultStyles = ``
+const defaultStyles = `bg-theme-badge-default`
 
-const infoStyles = ``
+const infoStyles = `bg-theme-info/25`
 
-const successStyles = ``
+const successStyles = `bg-theme-success/25`
 
-const warningStyles = ``
+const warningStyles = `bg-theme-warning/25`
 
-const dangerStyles = ``
+const dangerStyles = `bg-theme-danger/25`
 
-const errorStyles = ``
+const errorStyles = `bg-theme-error/25`
 
+const knownVariants = ["info", "success", "warning", "danger", "error"]
 
 const getVariantStyle = (variant) => {
 	switch (variant) {
@@ -34,7 +40,6 @@ const getVariantStyle = (variant) => {
 			return defaultStyles
 			
 	}
-		
 }
 
 export const Badge = ({
@@ -49,8 +54,8 @@ export const Badge = ({
 		if (icon) {
 			// TODO:
 			// if icon is an available icon, return as passed:
-			// otherwise return icon as per variant:
-			// otherwise return default icon:
+			// otherwise return icon as per variant if === "true" (map if not congruent!):
+			// otherwise (no varaint but icon true) return default icon:
 			// return <Icon icon={variant} />
 			return "[icon] "
 		} else {
@@ -58,7 +63,7 @@ export const Badge = ({
 		}
 	}
 	return (
-		<span className={`juno-badge juno-badge-${variant} ${badgeBaseStyles} ${className}`} {...props} >
+		<span className={`juno-badge juno-badge-${variant} ${badgeBaseStyles} ${getVariantStyle(variant)} ${className}`} {...props} >
 			{icon ? getIcon(icon, variant) : null }
 			{children ? children : text}
 		</span>
@@ -66,8 +71,8 @@ export const Badge = ({
 }
 
 Badge.propTypes = {
-	variant: PropTypes.oneOf(["default", "info", "success", "warning", "danger", "error"]),
-	icon: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(["info", "success", "warning", "danger", "error"])]),  // TODO: refactor to use const of existing icons exported from icon component
+	variant: PropTypes.oneOf(["default", ...knownVariants]),
+	icon: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(["info", "success", "warning", "danger", "error"])]),  // WIP, TODO: refactor to use const of existing icons exported from icon component
 	text: PropTypes.string,
 	className: PropTypes.string,
 	children: PropTypes.node,
