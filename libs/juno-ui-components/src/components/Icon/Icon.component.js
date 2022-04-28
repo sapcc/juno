@@ -64,7 +64,7 @@ const getColoredSizedIcon = ({
   size,
   title,
   iconClassName,
-  ...props
+  ...iconProps
 }) => {
   const iconClass = `juno-icon juno-icon-${icon} inline-block fill-current ${color} ${iconClassName}`
   switch (icon) {
@@ -77,7 +77,7 @@ const getColoredSizedIcon = ({
           alt="add"
           title={title ? title : "Add"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "autoAwesomeMosaic":
@@ -89,7 +89,7 @@ const getColoredSizedIcon = ({
           alt="mosaic"
           title={title ? title : "Mosaic"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "autoAwesomeMotion":
@@ -101,7 +101,7 @@ const getColoredSizedIcon = ({
           alt="items stacked behind each other"
           title={title ? title : "Items stacked behind each other"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "cancel":
@@ -113,7 +113,7 @@ const getColoredSizedIcon = ({
           alt="cancel"
           title={title ? title : "Cancel"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "close":
@@ -125,7 +125,7 @@ const getColoredSizedIcon = ({
           alt="close"
           title={title ? title : "Close"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "contentCopy":
@@ -137,7 +137,7 @@ const getColoredSizedIcon = ({
           alt="copy"
           title={title ? title : "Copy"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "danger":
@@ -149,7 +149,7 @@ const getColoredSizedIcon = ({
           alt="danger"
           title={title ? title : "Danger"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "dangerous":
@@ -161,7 +161,7 @@ const getColoredSizedIcon = ({
           alt="dangerous"
           title={title ? title : "Dangerous"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "deleteForever":
@@ -173,7 +173,7 @@ const getColoredSizedIcon = ({
           alt="delete forever"
           title={title ? title : "Delete Forever"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "description":
@@ -185,7 +185,7 @@ const getColoredSizedIcon = ({
           alt="description"
           title={title ? title : "Description"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "error":
@@ -197,7 +197,7 @@ const getColoredSizedIcon = ({
           alt="error"
           title={title ? title : "Error"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "exitToApp":
@@ -209,7 +209,7 @@ const getColoredSizedIcon = ({
           alt="exit to other app"
           title={title ? title : "Exit to app"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "expandLess":
@@ -221,7 +221,7 @@ const getColoredSizedIcon = ({
           alt="expand less"
           title={title ? title : "Expand Less"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "expandMore":
@@ -233,7 +233,7 @@ const getColoredSizedIcon = ({
           alt="expand more"
           title={title ? title : "Expand More"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "forum":
@@ -245,7 +245,7 @@ const getColoredSizedIcon = ({
           alt="forum"
           title={title ? title : "Forum"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "help":
@@ -257,7 +257,7 @@ const getColoredSizedIcon = ({
           alt="help"
           title={title ? title : "Help"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "info":
@@ -269,7 +269,7 @@ const getColoredSizedIcon = ({
           alt="info"
           title={title ? title : "Info"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "insertComment":
@@ -281,7 +281,7 @@ const getColoredSizedIcon = ({
           alt="insert comment"
           title={title ? title : "Insert comment"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "manageAccounts":
@@ -293,7 +293,7 @@ const getColoredSizedIcon = ({
           alt="user account configuration"
           title={title ? title : "User account configuration"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "openInBrowser":
@@ -305,7 +305,7 @@ const getColoredSizedIcon = ({
           alt="open in browser"
           title={title ? title : "Open in browser"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "openInNew":
@@ -317,7 +317,7 @@ const getColoredSizedIcon = ({
           alt="open in new tab"
           title={title ? title : "Open in new tab"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "place":
@@ -329,7 +329,7 @@ const getColoredSizedIcon = ({
           alt="location"
           title={title ? title : "Location"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "search":
@@ -341,7 +341,7 @@ const getColoredSizedIcon = ({
           alt="search"
           title={title ? title : "Search"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "success":
@@ -353,7 +353,7 @@ const getColoredSizedIcon = ({
           alt="success"
           title={title ? title : "Success"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     case "warning":
@@ -365,7 +365,7 @@ const getColoredSizedIcon = ({
           alt="warning"
           title={title ? title : "Warning"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
     default:
@@ -377,7 +377,7 @@ const getColoredSizedIcon = ({
           alt="help"
           title={title ? title : "Help"}
           role="img"
-          {...props}
+          {...iconProps}
         />
       )
   }
@@ -393,16 +393,18 @@ export const Icon = ({
   onClick,
   ...props
 }) => {
-  // if href or onClick was passed, then we want to add the passed classes to the button or anchor
-  // otherwise add the passed classes to the icon itself
+  // if href or onClick was passed, then we want to add the passed classes and passed arbitrary props to the button or anchor
+  // otherwise add the passed classes/props to the icon itself
   const iconClassName = href || onClick ? "" : className
+  const iconProps = href || onClick ? {} : props
+
   const icn = getColoredSizedIcon({
     icon,
     color,
     size,
     title,
     iconClassName,
-    ...props,
+    ...iconProps,
   })
 
   const button = (
@@ -410,6 +412,7 @@ export const Icon = ({
       onClick={onClick}
       className={`juno-icon-button ${buttonIconStyles} ${className}`}
       aria-label={title || icon}
+      {...props}
     >
       {icn}
     </button>
@@ -420,6 +423,7 @@ export const Icon = ({
       href={href}
       className={`juno-icon-link ${anchorIconStyles} ${className}`}
       aria-label={title || icon}
+      {...props}
     >
       {icn}
     </a>
