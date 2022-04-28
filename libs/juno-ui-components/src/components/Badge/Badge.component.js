@@ -66,10 +66,6 @@ export const Badge = ({
 		}
 	}
 	
-	const getIconColor = (variant) => {
-		return null //TODO
-	}
-	
 	return (
 		<span className={`juno-badge juno-badge-${variant} ${badgeBaseStyles} ${getVariantStyle(variant)} ${className}`} {...props} >
 			{icon 
