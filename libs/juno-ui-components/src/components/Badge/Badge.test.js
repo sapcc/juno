@@ -11,6 +11,12 @@ describe("Badge", () => {
 	expect(screen.getByTestId("badge")).toHaveTextContent("default badge")
   })
   
+  test("renders a badge with children", async () => {
+	render(<Badge data-testid="badge" >Children inside</Badge>)
+	expect(screen.getByTestId("badge")).toBeInTheDocument()
+	expect(screen.getByTestId("badge")).toHaveTextContent("Children inside")
+  })
+  
   test("renders an info badge variant as passed", async () => {
 		render(<Badge variant="info" data-testid="badge" />)
 		expect(screen.getByTestId("badge")).toBeInTheDocument()
