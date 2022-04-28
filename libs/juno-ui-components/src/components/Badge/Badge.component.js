@@ -22,7 +22,11 @@ const dangerStyles = `bg-theme-danger/25`
 
 const errorStyles = `bg-theme-error/25`
 
+const iconStyles = `mr-1 mt-[-0.125rem]`
+
 const knownVariants = ["info", "success", "warning", "danger", "error"]
+
+const knownIcons = ["info", "success", "warning", "danger", "error"] // TODO export available icons from Icon component and import here
 
 const getVariantStyle = (variant) => {
 	switch (variant) {
@@ -50,21 +54,30 @@ export const Badge = ({
 	children,
 	...props
 }) => {
+	
 	const getIcon = (icon, variant) => {
-		if (icon) {
-			// TODO:
-			// if icon is an available icon, return as passed:
-			// otherwise return icon as per variant if === "true" (map if not congruent!):
-			// otherwise (no varaint but icon true) return default icon:
-			// return <Icon icon={variant} />
-			return "[icon] "
+		
+		if (icon && knownIcons.includes(icon)) { // if icon is an available icon, return as passed:
+			return icon  
+		} else if (icon === true) { // otherwise return icon as per variant if === "true" (map if not congruent!):
+			return variant
 		} else {
 			return null
 		}
 	}
+	
+	const getIconColor = (variant) => {
+		return null //TODO
+	}
+	
 	return (
 		<span className={`juno-badge juno-badge-${variant} ${badgeBaseStyles} ${getVariantStyle(variant)} ${className}`} {...props} >
-			{icon ? getIcon(icon, variant) : null }
+			{icon 
+				?  
+				<Icon icon={getIcon(icon, variant)} size="1.125rem" className={`${iconStyles}`} color={`text-theme-${variant}`} /> 
+				: 
+				null 
+			}
 			{children ? children : text}
 		</span>
 	)
@@ -72,7 +85,7 @@ export const Badge = ({
 
 Badge.propTypes = {
 	variant: PropTypes.oneOf(["default", ...knownVariants]),
-	icon: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(["info", "success", "warning", "danger", "error"])]),  // WIP, TODO: refactor to use const of existing icons exported from icon component
+	icon: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(knownIcons)]),  // WIP, TODO: refactor to use const of existing icons exported from icon component
 	text: PropTypes.string,
 	className: PropTypes.string,
 	children: PropTypes.node,
