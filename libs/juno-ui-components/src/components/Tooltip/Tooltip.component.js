@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types"
-import { ClickableIcon } from "../ClickableIcon/index.js"
+import { Icon } from "../Icon/index.js"
 
 /* Styles */
 
@@ -50,7 +50,7 @@ export const Tooltip = ({
 	const [open, setOpen] = useState(false)
 	return (		
 		<span className={`tooltip`} {...props}>
-			<ClickableIcon onClick={() => setOpen(!open)} className={className} disabled={disabled}/>
+			<Icon onClick={() => setOpen(!open)} className={className} disabled={disabled}/>
 			<InPortal>
 				<TooltipPopover text={text} isOpen={open} />
 			</InPortal>

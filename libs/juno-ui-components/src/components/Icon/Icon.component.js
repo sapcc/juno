@@ -32,21 +32,28 @@ import Warning from "./icons/warning.svg"
 /**
 Generic Icon component.
 */
-
+// hover style needs to be revisited. only works if no icon color was passed
 const anchorIconStyles = `
 	text-current
-	focus:outline-none
-	focus:ring-2
-	focus:ring-theme-focus
+  hover:text-theme-high
+  focus:outline-none 
+  focus-visible:ring-2
+  focus-visible:ring-theme-focus
+  focus-visible:ring-offset-1
+  focus-visible:ring-offset-theme-focus
 	disabled:opacity-50
 	disabled:cursor-not-allowed
 `
 
+// hover style needs to be revisited. only works if no icon color was passed
 const buttonIconStyles = `
+  hover:text-theme-high
 	inline-block
-	focus:outline-none
-	focus:ring-2
-	focus:ring-theme-focus
+  focus:outline-none 
+  focus-visible:ring-2
+  focus-visible:ring-theme-focus
+  focus-visible:ring-offset-1
+  focus-visible:ring-offset-theme-focus
 	disabled:opacity-50
 	disabled:cursor-not-allowed
 `
