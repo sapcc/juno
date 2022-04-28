@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from "react"
 
 import useStore from "../../store"
 
-import { Button, ClickableIcon, Icon, Stack } from "juno-ui-components"
+import { Button, Icon, Stack } from "juno-ui-components"
 
 import RegionSelect from "./RegionSelect"
 import DomainSelect from "./DomainSelect"
@@ -67,7 +67,7 @@ const LoginOverlay = () => {
     <div className={overlayStyles(loginOverlayVisible)}>
       <div className="w-full max-w-screen-xl mx-auto pb-12">
         <div className="w-full flex items-center justify-end">
-          <ClickableIcon
+          <Icon
             onClick={() => hideLoginOverlay()}
             icon="close"
             color="text-theme-accent"

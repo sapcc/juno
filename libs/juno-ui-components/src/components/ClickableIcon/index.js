@@ -1,1 +1,0 @@
-export { ClickableIcon } from "./ClickableIcon.component"

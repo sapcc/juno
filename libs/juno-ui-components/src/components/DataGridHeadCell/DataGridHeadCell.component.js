@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { ClickableIcon } from "../ClickableIcon/index.js"
+import { Icon } from "../Icon/index.js"
 
 const datagridcellbasestyles = `
 	text-left
@@ -19,7 +19,7 @@ export const DataGridHeadCell = ({
 	return (
 		<th className={`juno-datagrid-head-cell ${datagridcellbasestyles} ${className}`} {...props}>
 			{children}
-			{ sortable ? <ClickableIcon size={'1rem'} className={`${sorticonstyles}`}/> : ''}
+			{ sortable ? <Icon size={'1rem'} className={`${sorticonstyles}`}/> : ''}
 		</th>
 	)
 }

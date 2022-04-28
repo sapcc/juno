@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import "./searchinput.css"
-import { ClickableIcon } from "../ClickableIcon/index"
+import { Icon } from "../Icon/index"
 import { Stack } from "../Stack/index"
 
 const wrapperClasses = (variant) => {
@@ -134,7 +134,7 @@ export const SearchInput = ({
           onKeyPress={handleKeyPress}
           {...props}
         />
-        <ClickableIcon
+        <Icon
           icon="search"
           className={`absolute ${searchIconClasses(variant)}`}
           title="Search"
