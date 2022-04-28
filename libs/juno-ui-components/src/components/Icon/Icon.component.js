@@ -56,12 +56,10 @@ const getColoredSizedIcon = ({
   color,
   size,
   title,
-  className,
+  iconClassName,
   ...props
 }) => {
-  const iconClass = `juno-icon juno-icon-${icon} inline-block fill-current ${color} ${
-    className || ""
-  }`
+  const iconClass = `juno-icon juno-icon-${icon} inline-block fill-current ${color} ${iconClassName}`
   switch (icon) {
     case "addCircle":
       return (
@@ -388,19 +386,22 @@ export const Icon = ({
   onClick,
   ...props
 }) => {
+  // if href or onClick was passed, then we want to add the passed classes to the button or anchor
+  // otherwise add the passed classes to the icon itself
+  const iconClassName = href || onClick ? "" : className
   const icn = getColoredSizedIcon({
     icon,
     color,
     size,
     title,
-    className,
+    iconClassName,
     ...props,
   })
 
   const button = (
     <button
       onClick={onClick}
-      className={`juno-icon-button ${buttonIconStyles}`}
+      className={`juno-icon-button ${buttonIconStyles} ${className}`}
       aria-label={title || icon}
     >
       {icn}
@@ -410,7 +411,7 @@ export const Icon = ({
   const anchor = (
     <a
       href={href}
-      className={`juno-icon-link ${anchorIconStyles}`}
+      className={`juno-icon-link ${anchorIconStyles} ${className}`}
       aria-label={title || icon}
     >
       {icn}
