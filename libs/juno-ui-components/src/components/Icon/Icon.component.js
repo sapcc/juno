@@ -57,6 +57,35 @@ const buttonIconStyles = `
 	disabled:opacity-50
 	disabled:cursor-not-allowed
 `
+// export all known icons as an array of their names to be used with PropTypes here and from other components:
+export const knownIcons = [
+  "addCircle",
+  "autoAwesomeMosaic",
+  "autoAwesomeMotion",
+  "cancel",
+  "close",
+  "contentCopy",
+  "danger",
+  "dangerous",
+  "default",
+  "deleteForever",
+  "description",
+  "error",
+  "exitToApp",
+  "expandLess",
+  "expandMore",
+  "forum",
+  "help",
+  "info",
+  "insertComment",
+  "manageAccounts",
+  "openInBrowser",
+  "openInNew",
+  "place",
+  "search",
+  "success",
+  "warning",
+]
 
 const getColoredSizedIcon = ({
   icon,
@@ -368,6 +397,18 @@ const getColoredSizedIcon = ({
           {...iconProps}
         />
       )
+    case "default":
+      return (
+        <Help
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="help"
+          title={title ? title : "Help"}
+          role="img"
+          {...iconProps}
+        />
+      )
     default:
       return (
         <Help
@@ -435,33 +476,7 @@ export const Icon = ({
 
 Icon.propTypes = {
   /** The icon to display */
-  icon: PropTypes.oneOf([
-    "addCircle",
-    "autoAwesomeMosaic",
-    "autoAwesomeMotion",
-    "cancel",
-    "close",
-    "contentCopy",
-    "danger",
-    "dangerous",
-    "deleteForever",
-    "description",
-    "error",
-    "exitToApp",
-    "expandLess",
-    "expandMore",
-    "forum",
-    "help",
-    "info",
-    "insertComment",
-    "manageAccounts",
-    "openInBrowser",
-    "openInNew",
-    "place",
-    "search",
-    "success",
-    "warning",
-  ]),
+  icon: PropTypes.oneOf(knownIcons),
   /** By default, Icons will use the `color` of the current context. In order to use a different color just for the icon, a color class can be passed. These typically begin with "text-". */
   color: PropTypes.string,
   /** The size of the icon */
