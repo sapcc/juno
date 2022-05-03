@@ -29,8 +29,8 @@ Default.args = {
 	text: "default"
 }
 
-export const WithIcon = Template.bind({})
-WithIcon.parameters = {
+export const WithDefaultIcon = Template.bind({})
+WithDefaultIcon.parameters = {
 	docs: {
 		description: {
 		  story:
@@ -38,7 +38,7 @@ WithIcon.parameters = {
 		},
 	},
 }
-WithIcon.args = {
+WithDefaultIcon.args = {
 	text: "With Icon",
 	icon: true,
 }
@@ -55,7 +55,21 @@ Info.parameters = {
 Info.args = {
 	variant: "info",
 	text: "info",
-	icon: true
+}
+
+export const InfoWithIcon = Template.bind({})
+InfoWithIcon.parameters = {
+	docs: {
+		description: {
+		  story:
+			"An info badge",
+		},
+	},
+}
+InfoWithIcon.args = {
+	variant: "info",
+	text: "info",
+	icon: true,
 }
 
 export const Success = Template.bind({})
@@ -68,6 +82,20 @@ Success.parameters = {
 	},
 }
 Success.args = {
+	variant: "success",
+	text: "success",
+}
+
+export const SuccessWithIcon = Template.bind({})
+SuccessWithIcon.parameters = {
+	docs: {
+		description: {
+		  story:
+			"A success badge",
+		},
+	},
+}
+SuccessWithIcon.args = {
 	variant: "success",
 	text: "success",
 	icon: true,
@@ -85,6 +113,20 @@ Warning.parameters = {
 Warning.args = {
 	variant: "warning",
 	text: "warning",
+}
+
+export const WarningWithIcon = Template.bind({})
+WarningWithIcon.parameters = {
+	docs: {
+		description: {
+		  story:
+			"A warning badge",
+		},
+	},
+}
+WarningWithIcon.args = {
+	variant: "warning",
+	text: "warning",
 	icon: true,
 }
 
@@ -100,7 +142,21 @@ Danger.parameters = {
 Danger.args = {
 	variant: "danger",
 	text: "danger",
-	icon: true
+}
+
+export const DangerWithIcon = Template.bind({})
+DangerWithIcon.parameters = {
+	docs: {
+		description: {
+		  story:
+			"A danger badge",
+		},
+	},
+}
+DangerWithIcon.args = {
+	variant: "danger",
+	text: "danger",
+	icon: true,
 }
 
 export const Error = Template.bind({})
@@ -115,5 +171,33 @@ Error.parameters = {
 Error.args = {
 	variant: "error",
 	text: "error",
-	icon: true
+}
+
+export const ErrorWithIcon = Template.bind({})
+ErrorWithIcon.parameters = {
+	docs: {
+		description: {
+		  story:
+			"An error badge",
+		},
+	},
+}
+ErrorWithIcon.args = {
+	variant: "error",
+	text: "error",
+	icon: true,
+}
+
+export const DefaultWithAnyIcon = Template.bind({})
+DefaultWithAnyIcon.parameters = {
+	docs: {
+		description: {
+			story: 
+				""
+		}
+	}
+}
+DefaultWithAnyIcon.args = {
+	text: "deleted",
+	icon: "deleteForever"
 }
