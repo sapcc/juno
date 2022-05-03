@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
+import { knownIcons } from "../Icon/Icon.component.js"
 
 const badgeBaseStyles = `
 	rounded
@@ -26,7 +27,6 @@ const iconStyles = `mr-1 mt-[-0.125rem]`
 
 const knownVariants = ["info", "success", "warning", "danger", "error"]
 
-const knownIcons = ["info", "success", "warning", "danger", "error"] // TODO export available icons from Icon component and import here
 
 const getVariantStyle = (variant) => {
 	switch (variant) {
@@ -81,7 +81,7 @@ export const Badge = ({
 
 Badge.propTypes = {
 	variant: PropTypes.oneOf(["default", ...knownVariants]),
-	icon: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(knownIcons)]),  // WIP, TODO: refactor to use const of existing icons exported from icon component
+	icon: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(knownIcons)]),
 	text: PropTypes.string,
 	className: PropTypes.string,
 	children: PropTypes.node,
