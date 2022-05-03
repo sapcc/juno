@@ -330,6 +330,10 @@
   --color-text-disabled-raw: var(--color-juno-text-disabled-raw);
   --color-text-link-raw: var(--color-accent-raw);
   
+  // LT Badge
+  --color-badge-default-bg: var(--color-juno-grey-light-3);
+
+  
   // LT Button
   // LT Primary Button
   --color-button-primary-text: var(--color-white);
@@ -547,6 +551,10 @@
   --color-text-default-raw: var(--color-juno-text-default-raw);
   --color-text-disabled-raw: var(--color-juno-text-disabled-raw);
   --color-text-link-raw: var(--color-accent-raw);
+  
+  // LT Badge
+  --color-badge-default-bg: var(--color-juno-grey-blue-3);
+  
   // DT Button
   // DT Primary Button
   --color-button-primary-text: var(--color-white);
