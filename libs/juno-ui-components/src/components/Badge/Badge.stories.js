@@ -1,9 +1,18 @@
 import React from "react"
 import { Badge } from "./index"
+import { knownIcons } from "../Icon/Icon.component.js"
 
 export default {
 	title: "Components/Badge",
 	component: Badge,
+	argTypes: {
+		icon: {
+			control: {
+				type: 'select',
+				options: ['default', ...knownIcons],
+			}
+		}
+	},
 	parameters: {
 		docs: {
 		  description: {
