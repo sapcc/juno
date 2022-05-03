@@ -1,10 +1,24 @@
 import React from "react"
-
 import { Button } from "./index"
+import { knownIcons } from "../Icon/Icon.component.js"
 
 export default {
   title: "Components/Button",
   component: Button,
+  argTypes: {
+    icon: {
+      control: {
+        type: 'select',
+        options: ['default', ...knownIcons],
+      }
+    },
+    variant: {
+      control: {
+        type: 'select',
+        options: [ 'default', 'primary', 'primary-danger', 'subdued' ],
+      }
+    }
+  },
   parameters: {
     docs: {
       description: {
@@ -136,18 +150,6 @@ PrimaryDangerDisabled.parameters = {
 PrimaryDangerDisabled.args = {
   ...PrimaryDanger.args,
   disabled: true,
-}
-
-export const PrimaryWithIcon = Template.bind({})
-PrimaryWithIcon.parameters = {
-  docs: {
-    story: "Primary Button with icon",
-  },
-}
-PrimaryWithIcon.args = {
-  ...Primary.args,
-  label: "Primary with Icon",
-  icon: "warning",
 }
 
 export const DefaultWithIcon = Template.bind({})
