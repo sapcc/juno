@@ -55,6 +55,7 @@ Info.parameters = {
 Info.args = {
 	variant: "info",
 	text: "info",
+	icon: true
 }
 
 export const Success = Template.bind({})
@@ -69,6 +70,7 @@ Success.parameters = {
 Success.args = {
 	variant: "success",
 	text: "success",
+	icon: true,
 }
 
 export const Warning = Template.bind({})
@@ -83,6 +85,7 @@ Warning.parameters = {
 Warning.args = {
 	variant: "warning",
 	text: "warning",
+	icon: true,
 }
 
 export const Danger = Template.bind({})
@@ -97,6 +100,7 @@ Danger.parameters = {
 Danger.args = {
 	variant: "danger",
 	text: "danger",
+	icon: true
 }
 
 export const Error = Template.bind({})
@@ -111,4 +115,5 @@ Error.parameters = {
 Error.args = {
 	variant: "error",
 	text: "error",
+	icon: true
 }
