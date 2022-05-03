@@ -397,7 +397,7 @@ const getColoredSizedIcon = ({
           {...iconProps}
         />
       )
-    case "default":
+    case "default": // keep explicit default case to allow consuming components to use 'default'  w/o throwing warnings
       return (
         <Help
           width={size}
