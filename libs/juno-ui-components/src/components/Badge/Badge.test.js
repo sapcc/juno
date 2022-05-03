@@ -46,6 +46,24 @@ describe("Badge", () => {
 	expect(screen.getByTestId("badge")).toBeInTheDocument()
 	expect(screen.getByTestId("badge")).toHaveClass("juno-badge-error")
 })
+
+	test("renders a default icon as passed", async () => {
+		render(<Badge icon={true} />)
+		expect(screen.getByRole("img")).toBeInTheDocument()
+		expect(screen.getByRole("img")).toHaveClass("juno-icon-default")
+	})
+	
+	test("renders the correct variant-specific icon as passed", async () => {
+		render(<Badge variant="warning" icon={true} />)
+		expect(screen.getByRole("img")).toBeInTheDocument()
+		expect(screen.getByRole("img")).toHaveClass("juno-icon-warning")
+	})
+	
+	test("renders any available icon as passed", async () => {
+		render(<Badge icon="insertComment" />)
+		expect(screen.getByRole("img")).toBeInTheDocument()
+		expect(screen.getByRole("img")).toHaveClass("juno-icon-insertComment")
+	})
   
   test("renders all props as passed", async () => {
 	  render(<Badge data-testid="badge" data-lolol={true}/>)
