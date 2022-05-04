@@ -63,7 +63,7 @@ export const SelectRow = ({
     </div>
   
   return (
-    <div className={`juno-select-row ${selectrow} ${ variant === 'floating' ? floatingcontainerstyles : ''} ${className}`} {...props}>
+    <div className={`juno-select-row juno-select-row-${variant} ${selectrow} ${ variant === 'floating' ? floatingcontainerstyles : ''} ${className}`} {...props}>
       { variant !== 'floating' ? labelContainer : null }
       <div>
         <Select

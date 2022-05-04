@@ -162,7 +162,7 @@ export const TextareaRow = ({
 
   return (
     <div
-      className={`juno-textarea-row ${getContainerStyles(variant)} ${className}`}
+      className={`juno-textarea-row juno-textarea-row-${variant} ${getContainerStyles(variant)} ${className}`}
       {...props}
     >
       <div

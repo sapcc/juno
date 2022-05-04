@@ -66,6 +66,18 @@ describe("TextInputRow", () => {
     )
     expect(screen.getByTestId("textarea-row")).toHaveClass("my-custom-class")
   })
+  
+  test("renders a floating variant textarea-row by default", async () => {
+    render(<TextareaRow data-testid="textarea-row" />)
+    expect(screen.getByTestId("textarea-row")).toBeInTheDocument()
+    expect(screen.getByTestId("textarea-row")).toHaveClass("juno-textarea-row-floating")
+  })
+  
+  test("renders a stacked variant textarea-row as passed", async () => {
+    render(<TextareaRow data-testid="textarea-row" variant="stacked" />)
+    expect(screen.getByTestId("textarea-row")).toBeInTheDocument()
+    expect(screen.getByTestId("textarea-row")).toHaveClass("juno-textarea-row-stacked")
+  })
 
   test("renders all props to teh row as passed", async () => {
     render(<TextareaRow data-testid="textarea-row" data-lolol="some-props" />)
