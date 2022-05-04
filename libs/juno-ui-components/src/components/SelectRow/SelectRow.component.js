@@ -25,8 +25,16 @@ const floatingcontainerstyles = `
 
 const floatinglabelcontainerstyles = `
   absolute
-  top-0
-  left-0
+  top-0.5
+  left-4
+  transform 
+  origin-top-left 
+  scale-75
+  opacity-75
+`
+
+const floatingselectstyles = `
+  pt-[0.8125rem]
 `
 
 /** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
@@ -59,7 +67,7 @@ export const SelectRow = ({
       { variant !== 'floating' ? labelContainer : null }
       <div>
         <Select
-          className={`${selectstyles}`}
+          className={`${selectstyles} ${ variant === 'floating' ? floatingselectstyles : ''}`}
           name={name}
           id={id}
           onChange={onChange}
