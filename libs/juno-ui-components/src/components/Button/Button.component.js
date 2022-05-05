@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import "./button.scss"
 import { Icon } from "../Icon/index.js"
+import { knownIcons } from "../Icon/Icon.component.js"
 import { Spinner } from "../Spinner/index.js"
 
 const btnBase = `
@@ -191,7 +192,7 @@ Button.propTypes = {
   /** Specify title for accessibility. Gets value of label if no title specified */
   title: PropTypes.string,
   /** Pass the name of an icon the button should show. Can be any icon included with Juno. */
-  icon: PropTypes.string,
+  icon: PropTypes.oneOf(knownIcons),
   /** Pass a className */
   className: PropTypes.string,
   /** Click handler  */
