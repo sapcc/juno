@@ -19,9 +19,28 @@ const selectstyles = `
 	w-full
 `
 
+const floatingcontainerstyles = `
+  relative
+`
+
+const floatinglabelcontainerstyles = `
+  absolute
+  top-0.5
+  left-4
+  transform 
+  origin-top-left 
+  scale-75
+  opacity-75
+`
+
+const floatingselectstyles = `
+  pt-[0.8125rem]
+`
+
 /** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
 export const SelectRow = ({
   name,
+  variant,
   label,
   id,
   helptext,
@@ -32,19 +51,23 @@ export const SelectRow = ({
   onChange,
   ...props
 }) => {
+  // labelContainer needs to be rendered in different markup order /positions depending on variant in order to avoid z-index hassle:
+  const labelContainer = 
+    <div className={`juno-label-container ${ variant === 'floating' ? floatinglabelcontainerstyles : ''}`}>
+      <Label
+        text={label}
+        htmlFor={id}
+        required={required}
+        disabled={disabled}
+      />
+    </div>
+  
   return (
-    <div className={`juno-select-row ${selectrow} ${className}`} {...props}>
-      <div>
-        <Label
-          text={label}
-          htmlFor={id}
-          required={required}
-          disabled={disabled}
-        />
-      </div>
+    <div className={`juno-select-row juno-select-row-${variant} ${selectrow} ${ variant === 'floating' ? floatingcontainerstyles : ''} ${className}`} {...props}>
+      { variant !== 'floating' ? labelContainer : null }
       <div>
         <Select
-          className={`${selectstyles}`}
+          className={`${selectstyles} ${ variant === 'floating' ? floatingselectstyles : ''}`}
           name={name}
           id={id}
           onChange={onChange}
@@ -52,6 +75,7 @@ export const SelectRow = ({
         >
           {children}
         </Select>
+        { variant === 'floating' ? labelContainer : null }
         {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
       </div>
     </div>
@@ -61,6 +85,8 @@ export const SelectRow = ({
 SelectRow.propTypes = {
   /** Name attribute of the input */
   name: PropTypes.string,
+  /** Floating (default) or stacked layout variant */
+  variant: PropTypes.oneOf(["floating", "stacked"]),
   /** Label text */
   label: PropTypes.string,
   /** Id */
@@ -81,6 +107,7 @@ SelectRow.propTypes = {
 
 SelectRow.defaultProps = {
   name: null,
+  variant: "floating",
   label: null,
   id: null,
   required: null,

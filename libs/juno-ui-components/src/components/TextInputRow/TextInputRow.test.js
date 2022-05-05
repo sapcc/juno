@@ -103,6 +103,18 @@ describe("TextInputRow", () => {
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toBeDisabled()
   })
+  
+  test("renders a floating variant textinput-row by default", async () => {
+    render(<TextInputRow data-testid="textinput-row" />)
+    expect(screen.getByTestId("textinput-row")).toBeInTheDocument()
+    expect(screen.getByTestId("textinput-row")).toHaveClass("juno-textinput-row-floating")
+  })
+  
+  test("renders a stacked variant textinput-row as passed", async () => {
+    render(<TextInputRow data-testid="textinput-row" variant="stacked" />)
+    expect(screen.getByTestId("textinput-row")).toBeInTheDocument()
+    expect(screen.getByTestId("textinput-row")).toHaveClass("juno-textinput-row-stacked")
+  })
 
   test("renders all props to the row as passed", async () => {
     render(<TextInputRow data-testid="text-input-row" data-lolol="some-prop" />)

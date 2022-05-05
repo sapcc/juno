@@ -7,9 +7,9 @@ const selectstyles = `
 	text-theme-high
 	appearance-none
 	text-base
-	pl-3
+	pl-4
 	pr-9
-	h-11
+	h-[2.375rem]
 	border
 	border-transparent
 	rounded-3px
@@ -28,8 +28,8 @@ const wrapperstyles = `
 
 const iconstyles = `
 	absolute
-	right-[.5rem]
-	top-[0]
+	right-2
+	top-2
 	pointer-events-none
 `
 
@@ -50,7 +50,7 @@ export const Select = ({
 	...props
 }) => {
 	return (
-		<span className={`juno-select-wrapper ${wrapperstyles}`}>
+		<div className={`juno-select-wrapper ${wrapperstyles}`}>
 			<select 
 				name={name || "unnamed select"}
 				id={id}
@@ -62,7 +62,7 @@ export const Select = ({
 			{children}
 			</select>
 			<Icon icon={"expandMore"} className={`${iconstyles} ${ disabled ? disablediconstyles : "" } `} />
-		</span>
+		</div>
 	)
 }
 

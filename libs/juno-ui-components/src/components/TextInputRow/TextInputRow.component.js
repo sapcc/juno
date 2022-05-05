@@ -139,7 +139,7 @@ export const TextInputRow = ({
 
   return (
     <div
-      className={`juno-textinput-row ${getContainerStyles(variant)} ${className}`}
+      className={`juno-textinput-row juno-textinput-row-${variant} ${getContainerStyles(variant)} ${className}`}
       {...props}
     >
       <div
