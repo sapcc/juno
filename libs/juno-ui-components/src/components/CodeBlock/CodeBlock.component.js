@@ -65,9 +65,10 @@ const tabStylesActive = `
 const copyBarStyles = `
 	flex 
 	justify-end 
-	px-4
-	pt-2 
-	pb-4
+	px-3
+	py-2 
+	border-t-[1px]
+	border-theme-codeblock-titlebar
 `
 
 
