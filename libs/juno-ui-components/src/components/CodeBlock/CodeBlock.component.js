@@ -47,7 +47,7 @@ const codeStyles = `
 
 const titleBarStyles = `
 	border-b-[1px]
-	border-theme-codeblock-titlebar
+	border-theme-codeblock-bar
 `
 
 const tabStyles = `
@@ -62,13 +62,13 @@ const tabStylesActive = `
 	border-b-[3px]
 `
 
-const copyBarStyles = `
+const bottomBarStyles = `
 	flex 
 	justify-end 
 	px-3
 	py-2 
 	border-t-[1px]
-	border-theme-codeblock-titlebar
+	border-theme-codeblock-bar
 `
 
 
@@ -106,7 +106,7 @@ export const CodeBlock = ({
 	)
 	
 	const copy = (
-		<div className={`juno-codeblock-copybar ${copyBarStyles}`}>
+		<div className={`juno-codeblock-bottombar ${bottomBarStyles}`}>
 			<span className={`font-bold text-sm mr-4 mt-1`} >{ isCopied ? "Copied!" : "" }</span>
 			<Icon icon="contentCopy" onClick={handleCopyClick} />
 		</div>

@@ -231,8 +231,8 @@ module.exports = {
       borderColor: {
         theme: {
           default: withOpacity("--color-default-border"),
-          "codeblock-titlebar": withOpacity(
-            "--color-codeblock-titlebar-bottom-border"
+          "codeblock-bar": withOpacity(
+            "--color-codeblock-bar-border"
           ),
           "codeblock-tab-active": withOpacity("--color-text-default-raw"),
           "message-default": withOpacity("--color-message-default-border"),
