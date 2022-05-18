@@ -14,7 +14,8 @@ spec:
     - host: "juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
-          - path: / 
+          - path: /
+            pathType: Prefix 
             backend:
               service: 
                 name: juno-dashboard
@@ -24,7 +25,8 @@ spec:
     - host: "ccloud.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
-          - path: / 
+          - path: /
+            pathType: Prefix 
             backend:
               service: 
                 name: juno-dashboard
@@ -34,7 +36,8 @@ spec:
     - host: "convergedcloud.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
-          - path: / 
+          - path: /
+            pathType: Prefix 
             backend:
               service: 
                 name: juno-dashboard
@@ -44,7 +47,8 @@ spec:
     - host: "cdn.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
-          - path: / 
+          - path: /
+            pathType: Prefix 
             backend:
               service: 
                 name: juno-cdn
@@ -54,7 +58,8 @@ spec:
     - host: "ui.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
-          - path: /                 
+          - path: /
+            pathType: Prefix                 
             backend:
               service: 
                 name: juno-ui-components
@@ -64,7 +69,8 @@ spec:
     - host: "mercury.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
-          - path: /                 
+          - path: /
+            pathType: Prefix                 
             backend:
               service: 
                 name: juno-mercury
@@ -75,7 +81,8 @@ spec:
     - host: "juno.global.{{ .Values.global.tld }}"
       http:
         paths:
-          - path: / 
+          - path: /
+            pathType: Prefix 
             backend:
               service: 
                 name: juno-dashboard
@@ -85,7 +92,8 @@ spec:
     - host: "ccloud.global.{{ .Values.global.tld }}"
       http:
         paths:
-          - path: / 
+          - path: /
+            pathType: Prefix 
             backend:
               service: 
                 name: juno-dashboard
@@ -95,7 +103,8 @@ spec:
     - host: "convergedcloud.global.{{ .Values.global.tld }}"
       http:
         paths:
-          - path: / 
+          - path: /
+            pathType: Prefix 
             backend:
               service: 
                 name: juno-dashboard
@@ -105,7 +114,8 @@ spec:
     - host: "cdn.juno.global.{{ .Values.global.tld }}"
       http:
         paths:
-          - path: / 
+          - path: /
+            pathType: Prefix 
             backend:
               service: 
                 name: juno-cdn
@@ -115,7 +125,8 @@ spec:
     - host: "ui.juno.global.{{ .Values.global.tld }}"
       http:
         paths:
-          - path: /                 
+          - path: /
+            pathType: Prefix                 
             backend:
               service: 
                 name: juno-ui-components
@@ -125,7 +136,8 @@ spec:
     - host: "mercury.juno.global.{{ .Values.global.tld }}"
       http:
         paths:
-          - path: /                 
+          - path: /
+            pathType: Prefix                 
             backend:
               service: 
                 name: juno-mercury
