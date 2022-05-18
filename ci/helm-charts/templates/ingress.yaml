@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -16,48 +16,60 @@ spec:
         paths:
           - path: / 
             backend:
-              serviceName: juno-dashboard
-              servicePort: 3000
+              service: 
+                name: juno-dashboard
+                port: 
+                  number: 3000
 
     - host: "ccloud.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
           - path: / 
             backend:
-              serviceName: juno-dashboard
-              servicePort: 3000              
+              service: 
+                name: juno-dashboard
+                port: 
+                  number: 3000              
 
     - host: "convergedcloud.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
           - path: / 
             backend:
-              serviceName: juno-dashboard
-              servicePort: 3000
+              service: 
+                name: juno-dashboard
+                port: 
+                  number: 3000
 
     - host: "cdn.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
           - path: / 
             backend:
-              serviceName: juno-cdn
-              servicePort: 8888
+              service: 
+                name: juno-cdn
+                port: 
+                  number: 8888
 
     - host: "ui.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
           - path: /                 
             backend:
-              serviceName: juno-ui-components
-              servicePort: 3000
+              service: 
+                name: juno-ui-components
+                port: 
+                  number: 3000
 
     - host: "mercury.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
           - path: /                 
             backend:
-              serviceName: juno-mercury
-              servicePort: 5000              
+              service: 
+                name: juno-mercury
+                port: 
+                  number: 5000              
                     
 {{- if eq .Values.global.region "eu-nl-1" }}
     - host: "juno.global.{{ .Values.global.tld }}"
@@ -65,48 +77,60 @@ spec:
         paths:
           - path: / 
             backend:
-              serviceName: juno-dashboard
-              servicePort: 3000
+              service: 
+                name: juno-dashboard
+                port: 
+                  number: 3000
 
     - host: "ccloud.global.{{ .Values.global.tld }}"
       http:
         paths:
           - path: / 
             backend:
-              serviceName: juno-dashboard
-              servicePort: 3000              
+              service: 
+                name: juno-dashboard
+                port: 
+                  number: 3000              
 
     - host: "convergedcloud.global.{{ .Values.global.tld }}"
       http:
         paths:
           - path: / 
             backend:
-              serviceName: juno-dashboard
-              servicePort: 3000
+              service: 
+                name: juno-dashboard
+                port: 
+                  number: 3000
 
     - host: "cdn.juno.global.{{ .Values.global.tld }}"
       http:
         paths:
           - path: / 
             backend:
-              serviceName: juno-cdn
-              servicePort: 8888
+              service: 
+                name: juno-cdn
+                port: 
+                  number: 8888
 
     - host: "ui.juno.global.{{ .Values.global.tld }}"
       http:
         paths:
           - path: /                 
             backend:
-              serviceName: juno-ui-components
-              servicePort: 3000
+              service: 
+                name: juno-ui-components
+                port: 
+                  number: 3000
 
     - host: "mercury.juno.global.{{ .Values.global.tld }}"
       http:
         paths:
           - path: /                 
             backend:
-              serviceName: juno-mercury
-              servicePort: 5000               
+              service: 
+                name: juno-mercury
+                port: 
+                  number: 5000               
 
 {{- end }} 
 
