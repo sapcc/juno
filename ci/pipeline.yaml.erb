@@ -51,6 +51,15 @@ resources:
       paths: ["apis/mercury","package.json","ci/Dockerfile.mercury","e2e",".yarn", "ci/helm-charts"]
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
+
+  - name: error-pages.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["config/error-pages","ci/Dockerfile.error-pages-default-backend"]
+      username: sapcc-bot
+      password: ((github-access-token/sapcc-bot))      
  
   <% APPS.each do |app| %>
   - name: app-<%= app %>.git
@@ -151,6 +160,14 @@ resources:
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-unit-test
 
+  - name: error-pages-default-backend.image
+    type: docker-image
+    check_every: 24h
+    source:
+      username: ((registry-user/keppel-ccloud.username))
+      password: ((registry-user/keppel-ccloud.password))
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-error-pages/default-backend
+
 resource_types:
   - name: git-proxy
     type: registry-image
@@ -172,6 +189,39 @@ resource_types:
       repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-release-resource
       tag: v1.1
 
+groups:
+  - name: juno-apps
+    jobs:
+      - readme
+      - build-designate
+      - build-widget-loader
+      - unit-test-whois
+      - unit-test-maintenance
+      - e2e-production
+      - build-dashboard
+      - combine-apps
+      - build-volta
+      - unit-test-heureka
+      - deploy-to-s-qa-de-1
+      - unit-test-juno-ui-components
+      - unit-test-mercury
+      - build-whois
+      - unit-test-volta
+      - build-heureka
+      - unit-test-designate
+      - unit-test-widget-loader
+      - unit-test-dashboard
+      - unit-test-auth
+      - build-auth
+      - e2e-s-qa-de-1
+      - build-unit-test-image
+      - build-juno-ui-components
+      - build-mercury
+      - build-maintenance
+      - deploy-to-s-eu-nl-1
+  - name: error-pages
+    jobs: [build-default-backend-image]
+          
 jobs:
   # for info only
   - name: readme
@@ -191,6 +241,24 @@ jobs:
               - -e
               - '\tThis pipeline is defined at: https://github.com/sapcc/juno/ci/\n\n'
               - '\tManage Juno images: https://keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard\n'
+
+  # build error pages image for default backend (used in elektra)
+  - name: build-default-backend-image
+    public: true
+    plan:
+      - get: error-pages.git
+        trigger: true
+
+      - put: error-pages-default-backend.image
+        params:
+          tag_as_latest: true
+          cache: true
+          cache_tag: "latest"
+          build: error-pages.git
+          build_args: 
+            KEPPEL_HOSTNAME: keppel.eu-de-1.cloud.sap
+          dockerfile: error-pages.git/ci/Dockerfile.error-pages-default-backend
+
 
   # build the test image if Dockerfile.test changes
   - name: build-unit-test-image
