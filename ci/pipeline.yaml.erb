@@ -726,8 +726,10 @@ jobs:
           CONTEXT: s-eu-nl-1
           TAG_VARIABLE: dashboard.image_tag
           VALUES: local:globals s-local:juno extra:values.yaml
-          KUBELOGON_USER: ((registry-user/keppel-ccloud.username))
-          KUBELOGON_PASSWORD: ((registry-user/keppel-ccloud.password))
+          KUBELOGON_USER:     ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))
 
     ensure:
       put: eu-nl-1.release
