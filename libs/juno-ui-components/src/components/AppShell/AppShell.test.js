@@ -31,10 +31,19 @@ describe("AppShell", () => {
   })
 
   test("renders an app shell with custom page footer passed as component", async () => {
-    render(<AppShell data-testid="app-shell" pageHeader={<PageFooter data-testid="page-footer">My Page Footer</PageFooter>} />)
+    render(<AppShell data-testid="app-shell" pageFooter={<PageFooter data-testid="page-footer">My Page Footer</PageFooter>} />)
     expect(screen.getByTestId("app-shell")).toBeInTheDocument()
     expect(screen.getByTestId("page-footer")).toBeInTheDocument()
     expect(screen.getByText("My Page Footer")).toBeInTheDocument()
+  })
+
+  test("renders an embeddable app shell without page heading or footer", async () => {
+    render(<AppShell data-testid="app-shell" embedded={true} pageHeader={<PageHeader data-testid="page-header" heading="My Page Heading" />} pageFooter={<PageFooter data-testid="page-footer">My Page Footer</PageFooter>} />)
+    expect(screen.getByTestId("app-shell")).toBeInTheDocument()
+    expect(screen.queryByTestId("page-header")).not.toBeInTheDocument()
+    expect(screen.queryByText("My Page Heading")).not.toBeInTheDocument()
+    expect(screen.queryByTestId("page-footer")).not.toBeInTheDocument()
+    expect(screen.queryByText("My Page Footer")).not.toBeInTheDocument()
   })
 
   test("renders children as passed", async () => {

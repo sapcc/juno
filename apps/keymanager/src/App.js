@@ -79,6 +79,7 @@ const App = (props) => {
     <AppShell
       pageHeader="Converged Cloud | Keymanager"
       contentHeading="Keymanager page title"
+      embedded={embedded === "true"}
     >
       {/* Set the background graphic using tailwind background image syntax as below. The image must exist at the specified location in your app */}
       <IntroBox variant="hero" heroImage="bg-[url('img/app_bg_example.svg')]">
