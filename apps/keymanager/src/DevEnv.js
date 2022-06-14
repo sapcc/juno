@@ -32,7 +32,7 @@ const DevEnv = () => {
   React.useEffect(() => {
     const dataset = {
       // only for test
-      "data-url": "https://auth.ap.ws2.qa-de-1.cloud.sap/widget.js",
+      // "data-url": "https://auth.ap.ws2.qa-de-1.cloud.sap/widget.js",
       "data-name": "auth",
       "data-version": "latest",
       "data-props-endpoint": "identity-3.qa-de-1.cloud.sap",

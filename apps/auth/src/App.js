@@ -20,6 +20,7 @@ import { rescopeToken } from "./actions"
  * @param {object} props
  */
 const App = (props) => {
+  console.log("===============props", props)
   const [auth, setAuth] = React.useState(null)
   const [isOpen, setIsOpen] = React.useState(!!props.openonload)
 
