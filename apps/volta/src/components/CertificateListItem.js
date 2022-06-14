@@ -31,7 +31,7 @@ const rowClasses = (isConfirmOpen) => {
     .replace(/\s+/g, " ")
 }
 
-const CertificateListItem = ({ item }) => {
+const CertificateListItem = ({ item, ca }) => {
   const auth = useGlobalState().auth
   const endpoint = useGlobalState().globals.endpoint
   const dispatchMessage = useMessagesDispatch()
@@ -67,6 +67,7 @@ const CertificateListItem = ({ item }) => {
     mutate(
       {
         endpoint: endpoint,
+        ca: ca,
         bearerToken: auth.attr?.id_token,
         serial: item.serial,
       },

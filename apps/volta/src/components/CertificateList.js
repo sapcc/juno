@@ -18,7 +18,7 @@ const datListHeaderItem = `
 font-bold
 `
 
-const CertificateList = () => {
+const CertificateList = ({ ca }) => {
   const [enableCreateSSO, setEnableCreateSSO] = useState(false)
   const dispatchMessage = useMessagesDispatch()
   const dispatchGlobals = useDispatch()
@@ -28,7 +28,8 @@ const CertificateList = () => {
   // fetch the certificates
   const { isLoading, isError, data, error } = getCertificates(
     auth.attr?.id_token,
-    endpoint
+    endpoint,
+    ca
   )
 
   // wait until we get the cert list to enable create new sso certs
@@ -98,7 +99,7 @@ const CertificateList = () => {
                   ></DataListCell>
                 </DataListRow>
                 {data.map((item, i) => (
-                  <CertificateListItem key={i} item={item} />
+                  <CertificateListItem key={i} item={item} ca={ca} />
                 ))}
               </DataList>
             </>

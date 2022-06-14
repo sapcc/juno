@@ -54,7 +54,7 @@ export const validateForm = ({ name, description, csr }) => {
   return invalidItems
 }
 
-const NewCertificateForm = ({ onFormSuccess, onFormLoading }, ref) => {
+const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
   const dispatch = useFormDispatch()
   const formState = useFormState()
   const auth = useGlobalState().auth
@@ -142,6 +142,7 @@ const NewCertificateForm = ({ onFormSuccess, onFormLoading }, ref) => {
       mutate(
         {
           endpoint: endpoint,
+          ca: ca,
           bearerToken: auth.attr?.id_token,
           formState: formState,
         },

@@ -16,6 +16,7 @@ import {
 } from "./components/MessagesProvider"
 import WellcomeView from "./components/WellcomeView"
 
+const CA_NAME = "galvani-pki"
 const URL_STATE_KEY = "volta"
 
 const App = (props) => {
@@ -55,10 +56,10 @@ const App = (props) => {
     <QueryClientProvider client={queryClient}>
       <AppShell pageHeader={customPageHeader} contentHeading="SSO Certificates">
         <CustomIntroBox />
-        <NewCertificate />
+        <NewCertificate ca={CA_NAME} />
         <Messages />
         {loggedIn ? (
-          <CertificateList />
+          <CertificateList ca={CA_NAME} />
         ) : (
           <WellcomeView loginCallback={login} />
         )}
