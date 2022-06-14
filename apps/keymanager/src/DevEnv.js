@@ -3,6 +3,9 @@ import ReactDOM from "react-dom"
 import StyleProvider, { Button } from "juno-ui-components"
 import { on, send } from "communicator"
 
+let listener
+const registerAuthListener = (newListener) => (listener = newListener)
+
 const DevEnv = () => {
   const [showDetails, setShowDetails] = React.useState(false)
   const [token, setToken] = React.useState()
@@ -15,7 +18,6 @@ const DevEnv = () => {
   const login = React.useCallback(() => {
     send("AUTH_GET_TOKEN", {
       receiveResponse: ({ authToken, token }) => {
-        console.log("==============LOGIN CALLBACK", authToken)
         setToken(token)
         setAuthToken(authToken)
       },
@@ -26,6 +28,8 @@ const DevEnv = () => {
     return on("AUTH_UPDATE_TOKEN", ({ authToken, token }) => {
       setToken(token)
       setAuthToken(authToken)
+
+      if (listener) listener({ token, authToken })
     })
   }, [])
 
@@ -107,3 +111,5 @@ ReactDOM.render(
   </StyleProvider>,
   dev
 )
+
+export { registerAuthListener }

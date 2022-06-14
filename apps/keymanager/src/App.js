@@ -104,6 +104,7 @@ const App = (props) => {
           Add Action
         </Button>
       </ContentAreaToolbar>
+      Token: {props.authToken}
       {/*
        *
        *
