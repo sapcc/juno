@@ -15,6 +15,7 @@ const DevEnv = () => {
   const login = React.useCallback(() => {
     send("AUTH_GET_TOKEN", {
       receiveResponse: ({ authToken, token }) => {
+        console.log("==============LOGIN CALLBACK", authToken)
         setToken(token)
         setAuthToken(authToken)
       },
@@ -30,12 +31,15 @@ const DevEnv = () => {
 
   React.useEffect(() => {
     const dataset = {
+      // only for test
+      "data-url": "https://auth.ap.ws2.qa-de-1.cloud.sap/widget.js",
       "data-name": "auth",
       "data-version": "latest",
       "data-props-endpoint": "identity-3.qa-de-1.cloud.sap",
       "data-props-domain": "monsoon3",
       "data-props-project": "cc-demo",
       "data-props-sso": true,
+      "data-props-openonload": true,
     }
     let element = document.createElement("script")
     element.src =

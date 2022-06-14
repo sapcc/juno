@@ -21,7 +21,7 @@ import { rescopeToken } from "./actions"
  */
 const App = (props) => {
   const [auth, setAuth] = React.useState(null)
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(!!props.openonload)
 
   React.useEffect(() => {
     // send broadcast event AUTH_UPDATE_TOKEN everytime the auth object changes
