@@ -82,6 +82,7 @@ const NewCertificate = ({ ca }) => {
       heading="New SSO Certificate"
       opened={showPanel}
       onClose={onPanelClose}
+      closeable={false}
     >
       {showPanel && (
         <MessagesStateProvider>
