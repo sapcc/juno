@@ -16,6 +16,7 @@ module.exports = {
     "./src/components/**/*.{js,jsx,ts,tsx}",
     "./src/dummyComponents/*.{js,jsx,ts,tsx}",
   ],
+  prefix: 'jn-',
   theme: {
     fontFamily: {
       sans: [
