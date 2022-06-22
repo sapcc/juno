@@ -1,3 +1,5 @@
+import { DateTime } from "luxon"
+
 class HTTPError extends Error {
   constructor(code, message) {
     super(message || code)
@@ -43,8 +45,8 @@ export const certificates = ({ queryKey }) => {
         return jsonResp
           .sort(
             (a, b) =>
-              new Date(a?.not_after).getTime() -
-              new Date(b?.not_after).getTime()
+              DateTime.fromISO(a?.not_after).toMillis() -
+              DateTime.fromISO(b?.not_after).toMillis()
           )
           .reverse()
       })
