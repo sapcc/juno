@@ -5,41 +5,41 @@ import { Label } from "../Label/index.js"
 
 /* Stacked: Label is above the text input element */
 const stackedcontainerstyles = `
-	flex
-	flex-col
-	mb-2
+	jn-flex
+	jn-flex-col
+	jn-mb-2
 `
 
 /* Floating: Label is inside the text input element. This is the overall container.  */
 const floatingcontainerstyles = `
-	relative
-	mb-2
+	jn-relative
+	jn-mb-2
 `
 
 /* Styles for FLOATING label container element depending on whether it is currently minimized or not. */
 /* All transforms are applied to the container element! */
 const floatinglabelcontainerstyles = (minimizedLabel) => {
   return `
-    absolute
-    top-0
-    left-0
-    p-2.5
-    pl-3
-    pt-[0.4325rem]
-    pointer-events-none
-    transform 
-    origin-top-left 
-    transition-all 
-    duration-100 
-    ease-in-out
+    jn-absolute
+    jn-top-0
+    jn-left-0
+    jn-p-2.5
+    jn-pl-3
+    jn-pt-[0.4325rem]
+    jn-pointer-events-none
+    jn-transform 
+    jn-origin-top-left 
+    jn-transition-all 
+    jn-duration-100 
+    jn-ease-in-out
 
     ${
       minimizedLabel &&
       `
-      scale-75
-      opacity-75
-      -translate-y-2
-      translate-x-1
+      jn-scale-75
+      jn-opacity-75
+      -jn-translate-y-2
+      jn-translate-x-1
       `
     }
   `
@@ -51,28 +51,28 @@ const floatinginputstyles = (minimizedLabel) => {
     ${
       minimizedLabel
         ? `
-      px-4
-      pt-[1.125]
-      pb-1
+      jn-px-4
+      jn-pt-[1.125]
+      jn-pb-1
       `
         : `
-      p-3 
-      pt-4
+      jn-p-3 
+      jn-pt-4
       `
     }
-    placeholder-transparent
-    w-full
+    jn-placeholder-transparent
+    jn-w-full
   `
 }
 
 const helptextstyles = `
-	text-xs
-	text-theme-light
-	mt-1
+	jn-text-xs
+	jn-text-theme-light
+	jn-mt-1
 `
 
 const stackedinputstyles = `
-	w-full
+	jn-w-full
 `
 
 const getContainerStyles = (variant) => {
@@ -209,7 +209,7 @@ TextareaRow.propTypes = {
   placeholder: PropTypes.string,
   /** Specify whether the input is required */
   required: PropTypes.bool,
-  /** Pass a classnName to the Textarea */
+  /** Pass a className to the Textarea */
   className: PropTypes.string,
   /** Floating (default) or stacked layout variant */
   variant: PropTypes.oneOf(["floating", "stacked"]),

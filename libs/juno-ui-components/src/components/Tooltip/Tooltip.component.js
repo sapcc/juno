@@ -6,13 +6,13 @@ import { Icon } from "../Icon/index.js"
 /* Styles */
 
 const popover = `
-	p-2
-	rounded
-	text-xs
-	inline-block
-	absolute
-	bg-theme-tooltip-popover
-	text-theme-tooltip-popover
+	jn-p-2
+	jn-rounded
+	jn-text-xs
+	jn-inline-block
+	jn-absolute
+	jn-bg-theme-tooltip-popover
+	jn-text-theme-tooltip-popover
 `
 
 /* Create tooltip popover with content as passed */
