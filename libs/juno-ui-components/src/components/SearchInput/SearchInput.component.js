@@ -6,16 +6,16 @@ import { Stack } from "../Stack/index"
 
 const wrapperClasses = (variant) => {
   return `
-			relative
-			inline-block
-      min-w-max
+			jn-relative
+			jn-inline-block
+      jn-min-w-max
 			${
         variant === "hero"
           ? `
-					w-full
+					jn-w-full
 				`
           : `
-					w-auto
+					jn-w-auto
 				`
       }
 		`
@@ -25,29 +25,29 @@ const wrapperClasses = (variant) => {
 
 const searchClasses = (variant) => {
   return `
-			rounded-full
-			focus:outline-none
-			focus:rounded-full
-      focus:ring-2
-      focus:ring-theme-focus
-			bg-theme-textinput
-			text-theme-high
-			shadow
+			jn-rounded-full
+      jn-bg-theme-textinput
+      jn-text-theme-high
+      jn-shadow
+			focus:jn-outline-none
+			focus:jn-rounded-full
+      focus:jn-ring-2
+      focus:jn-ring-theme-focus
 			${
         variant === "hero"
           ? `
-					text-lg
-					w-full
-					pl-6
-					pr-20
-					py-2.5
+					jn-text-lg
+					jn-w-full
+					jn-pl-6
+					jn-pr-20
+					jn-py-2.5
 				`
           : `
-					text-base
-					w-auto
-					pl-3
-					pr-16
-					py-1
+					jn-text-base
+					jn-w-auto
+					jn-pl-3
+					jn-pr-16
+					jn-py-1
 				`
       }
 		`
@@ -59,10 +59,10 @@ const searchIconClasses = (variant) => {
   return `
 			${variant === "hero"
           ? `
-					right-5
+					jn-right-5
 				`
           : `
-					right-3
+					jn-right-3
 				`
       }
 		`

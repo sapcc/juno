@@ -2,40 +2,40 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 
 const inputstyles = `
-	w-4
-	h-4
-	opacity-0
-	z-50
+	jn-w-4
+	jn-h-4
+	jn-opacity-0
+	jn-z-50
 `
 
 const checkedstyles = `
-	inline-block
-	absolute
-	bg-theme-radio-checked
-	rounded-full
-	w-3
-	h-3
-	top-0.5
-	left-0.5
+	jn-inline-block
+	jn-absolute
+	jn-bg-theme-radio-checked
+	jn-rounded-full
+	jn-w-3
+	jn-h-3
+	jn-top-0.5
+	jn-left-0.5
 `
 
 const mockradiostyles = `
-	w-4
-	h-4
-	rounded-full
-	bg-theme-radio
-	relative
+	jn-w-4
+	jn-h-4
+	jn-rounded-full
+	jn-bg-theme-radio
+	jn-relative
 `
 
 const mockfocusradiostyles = `
-	outline-none
-	ring-2
-	ring-theme-focus
+	jn-outline-none
+	jn-ring-2
+	jn-ring-theme-focus
 `
 
 const mockdisabledradiostyles = `
-	opacity-50
-	cursor-not-allowed
+	jn-opacity-50
+	jn-cursor-not-allowed
 `
 /** A controlled Radio component, label not included. */
 export const Radio = ({

@@ -4,20 +4,20 @@ import { Switch } from "../Switch/index.js"
 import { Label } from "../Label/index.js"
 
 const switchrow = `
-	flex
-	flex-row
-	mb-1
+	jn-flex
+	jn-flex-row
+	jn-mb-1
 `
 
 const switchcontainerstyles = `
-	mr-2
-	leading-none
+	jn-mr-2
+	jn-leading-none
 `
 
 const helptextstyles = `
-	text-xs
-	text-theme-light
-	mt-1
+	jn-text-xs
+	jn-text-theme-light
+	jn-mt-1
 `
 
 /** A checkbox input group containing a checkbox, associated label, and structural markup */
@@ -55,7 +55,7 @@ export const SwitchRow = ({
           disabled={disabled}
         />
       </div>
-      <div className={`pt-0.5`}>
+      <div className={`jn-pt-0.5`}>
         <Label
           text={label}
           htmlFor={id}

@@ -2,30 +2,30 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const spinnerBaseStyles = `
-  animate-spin 
-  mr-3 
-  h-5 
-  w-5 
+  jn-animate-spin 
+  jn-mr-3 
+  jn-h-5 
+  jn-w-5 
 `
 
 const primary = `
-  text-theme-accent
+  jn-text-theme-accent
 `
 
 const danger = `
-  text-theme-danger 
+  jn-text-theme-danger 
 `
 
 const success = `
-  text-theme-success
+  jn-text-theme-success
 `
 
 const warning = `
-  text-theme-warning  
+  jn-text-theme-warning  
 `
 
 const defaultColor = `
-  text-theme-on-default
+  jn-text-theme-on-default
 `
 
 export const Spinner = ({ variant, size, className, color, ...props }) => {
