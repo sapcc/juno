@@ -4,37 +4,37 @@ import { Icon } from "../Icon"
 
 const panelClasses = (isOpen, isTransitioning) => {
   return `
-      absolute
-      right-0
-      transition-transform
-      ease-out
-      duration-300
-      inset-y-0
-      z-10
-      grid
-      grid-rows-[auto_1fr]
-      bg-theme-panel
-      backdrop-blur
-      bg-opacity-70
-      w-[45%]
-			${!isOpen ? `translate-x-[100%]` : ""}
-			${!isOpen && !isTransitioning ? `invisible` : ""}
+      jn-absolute
+      jn-right-0
+      jn-transition-transform
+      jn-ease-out
+      jn-duration-300
+      jn-inset-y-0
+      jn-z-10
+      jn-grid
+      jn-grid-rows-[auto_1fr]
+      jn-bg-theme-panel
+      jn-backdrop-blur
+      jn-bg-opacity-70
+      jn-w-[45%]
+			${!isOpen ? `jn-translate-x-[100%]` : ""}
+			${!isOpen && !isTransitioning ? `jn-invisible` : ""}
 		`
     .replace(/\n/g, " ")
     .replace(/\s+/g, " ")
 }
 
 const panelHeaderClasses = `
-  flex
-  items-center
-  py-4
-  px-8
+  jn-flex
+  jn-items-center
+  jn-py-4
+  jn-px-8
 `
 
 const panelTitleClasses = `
-  text-theme-high
-  text-lg
-  font-bold
+  jn-text-theme-high
+  jn-text-lg
+  jn-font-bold
 `
 
 /** A slide-in panel for the Content Area.  */
@@ -107,7 +107,7 @@ export const Panel = ({
             <Icon
             icon="close"
             onClick={handleClose}
-            className="juno-panel-close ml-auto"
+            className="juno-panel-close jn-ml-auto"
           />
         }
       </div>

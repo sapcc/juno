@@ -2,15 +2,15 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const panelFooterClasses = `
-  border-t
-  border-t-theme-panel
-  px-8
-  py-4
-  flex
-  items-center
-  justify-end
-  gap-3
-  w-full
+  jn-border-t
+  jn-border-t-theme-panel
+  jn-px-8
+  jn-py-4
+  jn-flex
+  jn-items-center
+  jn-justify-end
+  jn-gap-3
+  jn-w-full
 `
 
 /**
