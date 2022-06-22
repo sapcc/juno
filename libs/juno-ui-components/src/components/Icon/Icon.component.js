@@ -47,15 +47,15 @@ const anchorIconStyles = `
 
 // hover style needs to be revisited. only works if no icon color was passed
 const buttonIconStyles = `
-  hover:text-theme-high
-	inline-block
-  focus:outline-none 
-  focus-visible:ring-2
-  focus-visible:ring-theme-focus
-  focus-visible:ring-offset-1
-  focus-visible:ring-offset-theme-focus
-	disabled:opacity-50
-	disabled:cursor-not-allowed
+  hover:jn-text-theme-high
+	jn-inline-block
+  focus:jn-outline-none 
+  focus-visible:jn-ring-2
+  focus-visible:jn-ring-theme-focus
+  focus-visible:jn-ring-offset-1
+  focus-visible:jn-ring-offset-theme-focus
+	disabled:jn-opacity-50
+	disabled:jn-cursor-not-allowed
 `
 // export all known icons as an array of their names to be used with PropTypes here and from other components:
 export const knownIcons = [
@@ -95,7 +95,7 @@ const getColoredSizedIcon = ({
   iconClassName,
   ...iconProps
 }) => {
-  const iconClass = `juno-icon juno-icon-${icon} inline-block fill-current ${color} ${iconClassName}`
+  const iconClass = `juno-icon juno-icon-${icon} jn-inline-block jn-fill-current ${color} ${iconClassName}`
   switch (icon) {
     case "addCircle":
       return (

@@ -2,9 +2,9 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const containerStyles = `
-  flex
-  flex-col
-  h-full
+  jn-flex
+  jn-flex-col
+  jn-h-full
 `
 
 /**

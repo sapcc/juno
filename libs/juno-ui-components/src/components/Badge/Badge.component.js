@@ -4,26 +4,26 @@ import { Icon } from "../Icon/index.js"
 import { knownIcons } from "../Icon/Icon.component.js"
 
 const badgeBaseStyles = `
-	rounded
-	text-sm
-	text-theme-default
-	py-0.5
-	px-1
+	jn-rounded
+	jn-text-sm
+	jn-text-theme-default
+	jn-py-0.5
+	jn-px-1
 `
 
-const defaultStyles = `bg-theme-badge-default`
+const defaultStyles = `jn-bg-theme-badge-default`
 
-const infoStyles = `bg-theme-info/25`
+const infoStyles = `jn-bg-theme-info/25`
 
-const successStyles = `bg-theme-success/25`
+const successStyles = `jn-bg-theme-success/25`
 
-const warningStyles = `bg-theme-warning/25`
+const warningStyles = `jn-bg-theme-warning/25`
 
-const dangerStyles = `bg-theme-danger/25`
+const dangerStyles = `jn-bg-theme-danger/25`
 
-const errorStyles = `bg-theme-error/25`
+const errorStyles = `jn-bg-theme-error/25`
 
-const iconStyles = `mr-1 mt-[-0.125rem]`
+const iconStyles = `jn-mr-1 jn-mt-[-0.125rem]`
 
 const knownVariants = ["info", "success", "warning", "danger", "error"]
 
@@ -70,7 +70,7 @@ export const Badge = ({
 		<span className={`juno-badge juno-badge-${variant} ${badgeBaseStyles} ${getVariantStyle(variant)} ${className}`} {...props} >
 			{icon 
 				?  
-				<Icon icon={getIcon(icon, variant)} size="1.125rem" className={`${iconStyles}`} color={`text-theme-${variant}`} /> 
+				<Icon icon={getIcon(icon, variant)} size="1.125rem" className={`${iconStyles}`} color={`jn-text-theme-${variant}`} /> 
 				: 
 				null 
 			}
