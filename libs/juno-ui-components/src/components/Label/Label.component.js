@@ -14,7 +14,7 @@ const stackedlabelstyles = `
 `
 
 const floatinglabelstyles = `
-	jn-floating-label
+	floating-label
 	jn-text-base
 `
 
@@ -34,7 +34,7 @@ const requiredstyles = `
 `
 // namespace disabled label?
 const disabledstyles = `
-	jn-disabled 
+	disabled 
 	jn-opacity-50
 `
 
