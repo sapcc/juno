@@ -4,26 +4,26 @@ import PropTypes from "prop-types"
 
 
 const tabStyles = `
-	flex
-	font-bold
-	px-[1.5625rem]
-	items-center
-	cursor-pointer
-	focus:outline-none 
-	focus-visible:ring-2
-	focus-visible:ring-theme-focus
-	focus-visible:ring-offset-1
-	focus-visible:ring-offset-theme-focus
+	jn-flex
+	jn-font-bold
+	jn-px-[1.5625rem]
+	jn-items-center
+	jn-cursor-pointer
+	focus:jn-outline-none 
+	focus-visible:jn-ring-2
+	focus-visible:jn-ring-theme-focus
+	focus-visible:jn-ring-offset-1
+	focus-visible:jn-ring-offset-theme-focus
 `
 
 const disabledTabStyles = `
-	pointer-events-none
-	opacity-50
+	jn-pointer-events-none
+	jn-opacity-50
 `
 
 const selectedTabStyles = `
-	border-b-[3px]
-	border-theme-tab-active-bottom
+	jn-border-b-[3px]
+	jn-border-theme-tab-active-bottom
 `
 
 const Tab = ({

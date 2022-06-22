@@ -3,16 +3,19 @@ import { TabList as ReactTabList } from "react-tabs"
 import PropTypes from "prop-types"
 
 const tabListStyles = `
-	flex
-	h-[3.4375rem]
+	jn-flex
+	jn-h-[3.4375rem]
 `
 
 const getVariantStyles = (variant) => {
 	switch (variant) {
 		case "content":
-			return `border-b-[1px] border-theme-tab-navigation-content-bottom`
+			return `
+				jn-border-b-[1px] 
+				jn-border-theme-tab-navigation-content-bottom
+			`
 		default: 
-			return `bg-theme-tab-navigation-top`
+			return `jn-bg-theme-tab-navigation-top`
 	}
 }
 
