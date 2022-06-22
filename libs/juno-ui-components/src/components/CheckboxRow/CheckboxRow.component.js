@@ -4,20 +4,20 @@ import { Checkbox } from "../Checkbox/index.js"
 import { Label } from "../Label/index.js"
 
 const checkboxrow = `
-	flex
-	flex-row
-  mb-1
+	jn-flex
+	jn-flex-row
+  jn-mb-1
 `
 
 const checkboxcontainerstyles = `
-	mt-1
-	mr-2
+	jn-mt-1
+	jn-mr-2
 `
 
 const helptextstyles = `
-	text-xs
-	text-theme-light
-	mt-1
+	jn-text-xs
+	jn-text-theme-light
+	jn-mt-1
 `
 
 /** A checkbox input group containing a checkbox, associated label, and structural markup */

@@ -3,13 +3,13 @@ import PropTypes from "prop-types"
 import { Label } from "../Label/index.js"
 
 const checkboxgroupstyles = `
-	mb-4
-	last:mb-0
+	jn-mb-4
+	jn-last:mb-0
 `
 
 const checkboxgrouplabelstyles = `
-	inline-block
-	mb-2
+	jn-inline-block
+	jn-mb-2
 `
 
 export const CheckboxGroup = ({

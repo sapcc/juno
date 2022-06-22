@@ -4,51 +4,51 @@ import PropTypes from "prop-types"
 // TODO: disabled styles missing
 
 const inputstyles = `
-	w-4
-	h-4
-	opacity-0
-	cursor-pointer
+	jn-w-4
+	jn-h-4
+	jn-opacity-0
+	jn-cursor-pointer
 `
 
 const mockcheckboxstyles = `
-	w-4
-	h-4
-	rounded-sm
-	bg-theme-checkbox
-	cursor-pointer
-	relative
-	focus:outline-none
-	focus:ring-2
-	focus:ring-theme-focus
+	jn-w-4
+	jn-h-4
+	jn-rounded-sm
+	jn-bg-theme-checkbox
+	jn-cursor-pointer
+	jn-relative
+	focus:jn-outline-none
+	focus:jn-ring-2
+	focus:jn-ring-theme-focus
 `
 
 const mockfocusstyles = `
-	ring-2
-	ring-theme-focus
+	jn-ring-2
+	jn-ring-theme-focus
 `
 
 const mockcheckmarkstyles = `
-	absolute
-	top-0
-	left-0
-	text-theme-checkbox-checked
-	fill-current
+	jn-absolute
+	jn-top-0
+	jn-left-0
+	jn-text-theme-checkbox-checked
+	jn-fill-current
 `
 
 
 const mockindeterminatestyles = `
-	absolute
-	w-2
-	h-0.5
-	top-2
-	left-1
-	inline-block
-	bg-theme-focus
+	jn-absolute
+	jn-w-2
+	jn-h-0.5
+	jn-top-2
+	jn-left-1
+	jn-inline-block
+	jn-bg-theme-focus
 `
 
 const mockdisabledstyles = `
-	pointer-events-none
-	opacity-50
+	jn-pointer-events-none
+	jn-opacity-50
 `
 
 export const Checkbox = ({

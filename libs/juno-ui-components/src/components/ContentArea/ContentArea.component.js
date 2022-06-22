@@ -2,11 +2,11 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const containerStyles = `
-  bg-theme-content-area-bg
-  relative
-  grow
-  p-6
-  overflow-hidden
+  jn-bg-theme-content-area-bg
+  jn-relative
+  jn-grow
+  jn-p-6
+  jn-overflow-hidden
 `
 
 

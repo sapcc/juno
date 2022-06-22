@@ -2,10 +2,10 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const buttonrowstyles = `
-	flex
-	flex-row
-	justify-end
-	gap-2
+	jn-flex
+	jn-flex-row
+	jn-justify-end
+	jn-gap-2
 `
 
 export const ButtonRow = ({
