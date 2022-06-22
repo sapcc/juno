@@ -6,13 +6,13 @@ describe("PageFooter", () => {
   test("renders a simple Page Footer and has flexbox layout", async () => {
     render(<PageFooter />)
     expect(screen.getByRole("contentinfo")).toBeInTheDocument()
-    expect(screen.getByRole("contentinfo")).toHaveClass("flex")
+    expect(screen.getByRole("contentinfo")).toHaveClass("jn-flex")
   })
 
   test("renders a Page Footer to have the global bg color", async () => {
     render(<PageFooter />)
     expect(screen.getByRole("contentinfo")).toBeInTheDocument()
-    expect(screen.getByRole("contentinfo")).toHaveClass("bg-theme-global-bg")
+    expect(screen.getByRole("contentinfo")).toHaveClass("jn-bg-theme-global-bg")
   })
 
   test("renders children as passed", async () => {

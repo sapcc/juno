@@ -7,10 +7,10 @@ const containerStyles = `
   jn-flex-col
   jn-grow
   jn-ml-8
-  jn-2xl:container
-  jn-2xl:mx-auto
   jn-bg-[right_top_1rem]
   jn-bg-no-repeat
+  2xl:jn-container
+  2xl:jn-mx-auto
 `
 
 /**

@@ -18,32 +18,32 @@ describe("CodeBlock", () => {
 	test("renders a wrapping CodeBlock by default", async () => {
 		render(<CodeBlock data-testid="my-codeblock" />)
 		expect(screen.getByTestId("juno-codeblock-pre")).toBeInTheDocument()
-		expect(screen.getByTestId("juno-codeblock-pre")).toHaveClass("whitespace-pre-wrap")
+		expect(screen.getByTestId("juno-codeblock-pre")).toHaveClass("jn-whitespace-pre-wrap")
 	})
 
 	test("renders a non-wrapping CodeBlock as passed", async () => {
 		render(<CodeBlock data-testid="my-codeblock" wrap={false} />)
 		expect(screen.getByTestId("juno-codeblock-pre")).toBeInTheDocument()
-		expect(screen.getByTestId("juno-codeblock-pre")).toHaveClass("overflow-x-auto")
+		expect(screen.getByTestId("juno-codeblock-pre")).toHaveClass("jn-overflow-x-auto")
 	})
 
 	test("renders a CodeBlock without height restriction by default", async () => {
 		render(<CodeBlock data-testid="my-codeblock" />)
 		expect(screen.getByTestId("juno-codeblock-pre")).toBeInTheDocument()
-		expect(screen.getByTestId("juno-codeblock-pre")).not.toHaveAttribute('class', expect.stringContaining('max-h-'))
+		expect(screen.getByTestId("juno-codeblock-pre")).not.toHaveAttribute('class', expect.stringContaining('jn-max-h-'))
 	})
 
 	test("renders a CodeBlock without height restriction if size auto is passed", async () => {
 		render(<CodeBlock data-testid="my-codeblock" size="auto" />)
 		expect(screen.getByTestId("juno-codeblock-pre")).toBeInTheDocument()
-		expect(screen.getByTestId("juno-codeblock-pre")).not.toHaveAttribute('class', expect.stringContaining('max-h-'))
+		expect(screen.getByTestId("juno-codeblock-pre")).not.toHaveAttribute('class', expect.stringContaining('jn-max-h-'))
 	})
 
 	test("renders a CodeBlock with height restriction and overflow-y if size other than auto is passed", async () => {
 		render(<CodeBlock data-testid="my-codeblock" size="small" />)
 		expect(screen.getByTestId("juno-codeblock-pre")).toBeInTheDocument()
-		expect(screen.getByTestId("juno-codeblock-pre")).toHaveAttribute('class', expect.stringContaining('max-h-'))
-		expect(screen.getByTestId("juno-codeblock-pre")).toHaveClass("overflow-y-auto")
+		expect(screen.getByTestId("juno-codeblock-pre")).toHaveAttribute('class', expect.stringContaining('jn-max-h-'))
+		expect(screen.getByTestId("juno-codeblock-pre")).toHaveClass("jn-overflow-y-auto")
 	})
 	
 	test("renders all props as passed", async () => {

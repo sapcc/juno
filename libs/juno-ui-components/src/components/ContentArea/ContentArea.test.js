@@ -14,13 +14,13 @@ describe("ContentArea", () => {
   test("renders a content area with content area background color", async () => {
     render(<ContentArea data-testid="content-area" />)
     expect(screen.getByTestId("content-area")).toBeInTheDocument()
-    expect(screen.getByTestId("content-area")).toHaveClass("bg-theme-content-area-bg")
+    expect(screen.getByTestId("content-area")).toHaveClass("jn-bg-theme-content-area-bg")
   })
 
   test("renders a content area with flex grow", async () => {
     render(<ContentArea data-testid="content-area" />)
     expect(screen.getByTestId("content-area")).toBeInTheDocument()
-    expect(screen.getByTestId("content-area")).toHaveClass("grow")
+    expect(screen.getByTestId("content-area")).toHaveClass("jn-grow")
   })
 
   test("renders children as passed", async () => {
