@@ -512,6 +512,9 @@
    --color-panel-border-raw: var(--color-juno-white-raw);
    // LT Toolbar
    --color-toolbar-bg-raw: var(--color-juno-grey-light-5-raw); 
+   // LT TabNavigation
+   --color-tabnavigation-top-bg: var(--color-juno-grey-light-5-raw);
+   --color-tabnavigation-content-bottom-border: var(--color-background-lvl-4-raw);
 }
 
 .theme-dark {
@@ -734,7 +737,10 @@
   --color-panel-bg-raw: var(--color-juno-grey-blue-11-raw); 
   --color-panel-border-raw: var(--color-juno-grey-blue-11-raw); 
   // DT Toolbar
-  --color-toolbar-bg-raw: var(--color-juno-grey-blue-8-raw); 
+  --color-toolbar-bg-raw: var(--color-juno-grey-blue-8-raw);
+  // DT TabNavigation
+  --color-tabnavigation-top-bg: var(--color-juno-grey-blue-8-raw);
+  --color-tabnavigation-content-bottom-border: var(--color-background-lvl-4-raw);
 }
 
 // Grid configuration
