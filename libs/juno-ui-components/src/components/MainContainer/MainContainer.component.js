@@ -2,9 +2,9 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const mainClasses = `
-  flex
-  flex-col
-  grow
+  jn-flex
+  jn-flex-col
+  jn-grow
 `
 
 /**

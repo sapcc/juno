@@ -7,7 +7,7 @@ const rowbasestyle = `
 
 `
 const rowselectedstyle = `
-	bg-theme-datagridrow-selected
+	jn-bg-theme-datagridrow-selected
 `
 
 export const DataGridRow = ({

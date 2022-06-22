@@ -4,7 +4,7 @@ import { SearchInput } from "../SearchInput/SearchInput.component.js"
 import { Button } from "../Button/Button.component.js"
 
 const datagridtoolbarstyles = `
-	flex
+	jn-flex
 `
 
 export const DataGridToolbar= ({

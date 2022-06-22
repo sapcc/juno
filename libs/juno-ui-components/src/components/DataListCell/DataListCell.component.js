@@ -2,71 +2,71 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const datalistcellbasestyles = `
-	flex
-	p-2
-	overflow-hidden
-	overflow-ellipsis
-	grow-0
-	shrink-0
-	flex-basis-auto
+	jn-flex
+	jn-p-2
+	jn-overflow-hidden
+	jn-overflow-ellipsis
+	jn-grow-0
+	jn-shrink-0
+	jn-flex-basis-auto
 `
 
 const datalistcellautostyles = `
-	grow
-	shrink-0
-	flex-basis-0
+	jn-grow
+	jn-shrink-0
+	jn-flex-basis-0
 `
 
 const datalistcellgridstyles = `
-	p-grid-column
+	jn-p-grid-column
 `
 
 const cols_1 = `
-w-grid-col-1
+	jn-w-grid-col-1
 `
 
 const cols_2 = `
-w-grid-col-2
+	jn-w-grid-col-2
 `
 
 const cols_3 = `
-w-grid-col-3
+	jn-w-grid-col-3
 `
 
 const cols_4 = `
-w-grid-col-4
+	jn-w-grid-col-4
 `
 
 const cols_5 = `
-w-grid-col-6
+	jn-w-grid-col-6
 `
 
 const cols_6 = `
-w-grid-col-6
+	jn-w-grid-col-6
 `
 
 const cols_7 = `
-w-grid-col-7
+	jn-w-grid-col-7
 `
 
 const cols_8 = `
-w-grid-col-8
+	jn-w-grid-col-8
 `
 
 const cols_9 = `
-w-grid-col-9
+	jn-w-grid-col-9
 `
 
 const cols_10 = `
-w-grid-col-10
+	jn-w-grid-col-10
 `
 
 const cols_11 = `
-w-grid-col-11
+	jn-w-grid-col-11
 `
 
 const cols_12 = `
-w-grid-col-12
+	jn-w-grid-col-12
 `
 
 const colsClass = (cols) => {

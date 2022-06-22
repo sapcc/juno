@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const datagridcellbasestyles = `
-	text-left
+	jn-text-left
 `
 
 export const DataGridCell = ({

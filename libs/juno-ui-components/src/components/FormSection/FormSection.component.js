@@ -3,14 +3,14 @@ import PropTypes from "prop-types"
 
 
 const formSection = `
-	mb-8
-	last:mb-0
+	jn-mb-8
+	jn-last:mb-0
 `
 
 const formSectionHeading = `
-	text-lg
-	font-bold
-	mb-4
+	jn-text-lg
+	jn-font-bold
+	jn-mb-4
 `
 
 /** A Form section to group form groups with an optional title. */
