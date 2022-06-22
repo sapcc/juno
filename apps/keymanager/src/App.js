@@ -4,10 +4,17 @@ import { exampleFetch as fetchStuff } from "./actions"
 import useStore from "./store"
 import NewItemForm from "./components/NewItemForm"
 
-import { AppShell, Button, ContentAreaToolbar, IntroBox, Message, Spinner } from "juno-ui-components"
+import {
+  AppShell,
+  Button,
+  ContentAreaToolbar,
+  IntroBox,
+  Message,
+  Spinner,
+} from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
 /* IMPORTANT: Replace this with your app's name */
-const URL_STATE_KEY = "template"
+const URL_STATE_KEY = "keymanager"
 /* --------------------------- */
 
 const App = (props) => {
@@ -70,15 +77,15 @@ const App = (props) => {
 
   return (
     <AppShell
-      pageHeader="Converged Cloud | App Template"
-      contentHeading="App template page title"
+      pageHeader="Converged Cloud | Keymanager"
+      contentHeading="Keymanager page title"
       embedded={embedded === "true"}
     >
       {/* Set the background graphic using tailwind background image syntax as below. The image must exist at the specified location in your app */}
       <IntroBox variant="hero" heroImage="bg-[url('img/app_bg_example.svg')]">
-        This is the fancy introbox variant for apps that have some app specific flavor branding with a special background graphic.
+        This is the fancy introbox variant for apps that have some app specific
+        flavor branding with a special background graphic.
       </IntroBox>
-
       {/* Messages always at the top of the content area or if there is a hero introbox directly underneath that */}
       <Message>Welcome to the example app</Message>
       {error && (
@@ -97,6 +104,7 @@ const App = (props) => {
           Add Action
         </Button>
       </ContentAreaToolbar>
+      Token: {props.authToken}
       {/*
        *
        *

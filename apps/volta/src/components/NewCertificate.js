@@ -7,7 +7,7 @@ import NewCertificateResutls from "./NewCertificateResults"
 import { MessagesStateProvider } from "./MessagesProvider"
 import Messages from "./Messages"
 
-const NewCertificate = () => {
+const NewCertificate = ({ ca }) => {
   const showPanel = useGlobalState().globals.showNewSSO
   const dispatch = useDispatch()
 
@@ -82,6 +82,7 @@ const NewCertificate = () => {
       heading="New SSO Certificate"
       opened={showPanel}
       onClose={onPanelClose}
+      closeable={false}
     >
       {showPanel && (
         <MessagesStateProvider>
@@ -100,6 +101,7 @@ const NewCertificate = () => {
               <FormStateProvider>
                 <NewCertificateForm
                   ref={formRef}
+                  ca={ca}
                   onFormSuccess={onFormSuccess}
                   onFormLoading={onFormLoading}
                 />

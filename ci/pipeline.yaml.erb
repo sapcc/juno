@@ -7,14 +7,15 @@
 resources:
   - name: qa-de-1.release
     type: release
-    check_every: 525600h # basically never (check is a no-op anyway)
-    source: { region: "qa-de-1" }
+    check_every: never 
+    source: { region: qa-de-1, tenso_password: ((keystone-user-password/tenso-prod)) }
+    expose_build_created_by: true
 
   - name: eu-nl-1.release
     type: release
-    check_every: 525600h # basically never (check is a no-op anyway)
-    source: { region: "eu-nl-1" }
-
+    check_every: never 
+    source: { region: eu-nl-1, tenso_password: ((keystone-user-password/tenso-prod)) }
+    expose_build_created_by: true
 
   - name: test-image-source.git
     type: git
@@ -187,7 +188,7 @@ resource_types:
     check_every: 24h
     source:
       repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-release-resource
-      tag: v1.1
+      tag: v2.latest
 
 groups:
   - name: juno-apps
@@ -221,7 +222,7 @@ groups:
       - deploy-to-s-eu-nl-1
   - name: error-pages
     jobs: [build-default-backend-image]
-          
+
 jobs:
   # for info only
   - name: readme

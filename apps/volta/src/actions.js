@@ -27,8 +27,8 @@ const checkStatus = (response) => {
 }
 
 export const certificates = ({ queryKey }) => {
-  const [_key, bearerToken, endpoint] = queryKey
-  return fetch(`${endpoint}/galvani-pki/certificate`, {
+  const [_key, bearerToken, endpoint, ca] = queryKey
+  return fetch(`${endpoint}/${ca}/certificate`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -51,9 +51,9 @@ export const certificates = ({ queryKey }) => {
     })
 }
 
-export const createCertificate = (endpoint, bearerToken, formState) => {
+export const createCertificate = (endpoint, ca, bearerToken, formState) => {
   const sendBody = JSON.stringify(formState)
-  return fetch(`${endpoint}/galvani-pki/certificate`, {
+  return fetch(`${endpoint}/${ca}/certificate`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -67,8 +67,8 @@ export const createCertificate = (endpoint, bearerToken, formState) => {
     })
 }
 
-export const revokeCertificate = (endpoint, bearerToken, serial) => {
-  return fetch(`${endpoint}/galvani-pki/certificate/${serial}`, {
+export const revokeCertificate = (endpoint, ca, bearerToken, serial) => {
+  return fetch(`${endpoint}/${ca}/certificate/${serial}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

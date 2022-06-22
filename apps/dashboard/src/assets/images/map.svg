@@ -3504,7 +3504,7 @@
                 </g>
                 <g opacity=".8" transform="translate(7.1,21.5)">
                     <g filter="url(#world_map7-ck)" fill="#000">
-                        <rect data-region="EU-DE-2" data-region="EU-DE-2" id="world_map7-cl-2" width="171" height="54" rx="4"/>
+                        <rect data-region="EU-DE-2" id="world_map7-cl-2" width="171" height="54" rx="4"/>
                     </g>
                     <g fill="#000810">
                         <rect data-region="EU-DE-2" id="world_map7-cl-3" width="171" height="54" rx="4"/>

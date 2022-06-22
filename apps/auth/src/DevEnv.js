@@ -1,9 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-
-import globalStyles from "juno-ui-components/lib/styles.css"
-
-import { Button } from "juno-ui-components"
+import StyleProvider, { Button } from "juno-ui-components"
 import { on, send } from "communicator"
 import {
   AUTH_GET_TOKEN,
@@ -44,20 +41,19 @@ const DevEnv = () => {
 
   return (
     <>
-      <style>{globalStyles.toString()}</style>
       <h1 className="text-blue-500">Test environment for the auth app</h1>
       <br />
       {token ? (
         <>
-          <Button mode="danger" onClick={logout}>
+          <Button variant="primary-danger" onClick={logout}>
             Logout
           </Button>
-          <Button mode="success" onClick={rescope}>
+          <Button variant="success" onClick={rescope}>
             Rescope
           </Button>
         </>
       ) : (
-        <Button mode="primary" onClick={login}>
+        <Button variant="primary" onClick={login}>
           Login
         </Button>
       )}
@@ -71,6 +67,11 @@ const DevEnv = () => {
   )
 }
 
-const wrapper = document.getElementById("dev").attachShadow({ mode: "open" })
+const wrapper = document.getElementById("dev")
 
-ReactDOM.render(<DevEnv />, wrapper)
+ReactDOM.render(
+  <StyleProvider stylesWrapper="shadowRoot">
+    <DevEnv />
+  </StyleProvider>,
+  wrapper
+)

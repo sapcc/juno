@@ -1,12 +1,13 @@
 {
-  "name": "auth",
-  "version": "0.1.6",
+  "name": "keymanager",
+  "version": "0.0.1",
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.1",
+    "@svgr/webpack": "^6.2.1",
     "@testing-library/dom": "^8.11.3",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -44,15 +45,20 @@
     "webpack-dev-server": "^4.7.4"
   },
   "scripts": {
-    "start": "PORT=$APP_PORT webpack serve --mode development --hot",
+    "start": "WDS_SOCKET_PORT=80 PORT=$APP_PORT webpack serve --mode development --hot",
     "test": "jest",
     "build": "webpack --mode production",
     "production": "PORT=$APP_PORT webpack serve --mode production"
   },
   "dependencies": {
     "custom-event-polyfill": "^1.0.7",
+    "dotenv-webpack": "^7.1.0",
+    "luxon": "^2.3.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-json-view": "^1.21.3",
+    "url-state-provider": "workspace:*",
+    "zustand": "^3.7.1"
   }
 }

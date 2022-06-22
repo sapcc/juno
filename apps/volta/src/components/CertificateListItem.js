@@ -1,12 +1,11 @@
 import React, { useState, useMemo } from "react"
-import { DataListRow, DataListCell, Icon } from "juno-ui-components"
+import { DataListRow, DataListCell, Icon, Badge } from "juno-ui-components"
 import InlineConfirmRemove from "./InlineConfirmRemove"
 import { revokeCertificateMutation } from "../queries"
 import { useGlobalState } from "./StateProvider"
 import { useMessagesDispatch } from "./MessagesProvider"
 import { useQueryClient } from "react-query"
-import { parseError, isExpired } from "../helpers"
-import Badge from "./Badge"
+import { parseError } from "../helpers"
 
 const serial = `
 bg-theme-background-lvl-2
@@ -31,7 +30,7 @@ const rowClasses = (isConfirmOpen) => {
     .replace(/\s+/g, " ")
 }
 
-const CertificateListItem = ({ item }) => {
+const CertificateListItem = ({ item, ca }) => {
   const auth = useGlobalState().auth
   const endpoint = useGlobalState().globals.endpoint
   const dispatchMessage = useMessagesDispatch()
@@ -49,24 +48,32 @@ const CertificateListItem = ({ item }) => {
     return date.toLocaleString()
   }, [item?.not_after])
 
-  const isCertExpired = React.useMemo(() => {
-    if (!item.not_after) return false
-    const date = new Date(item.not_after)
-    return isExpired(date)
-  }, [item?.not_after])
+  const isCertAvtive = React.useMemo(() => {
+    return item?.status?.toLowerCase() === "active"
+  }, [item?.status])
 
   const stateBadge = React.useMemo(() => {
-    if (isCertExpired) {
-      return <Badge variant="danger" text="Expired" />
+    // Active, Expired, Pending, Revoked
+    switch (item.status) {
+      case "Active":
+        return <Badge variant="success" text={item.status} />
+      case "Expired":
+        return <Badge variant="danger" text={item.status} />
+      case "Pending":
+        return <Badge variant="warning" text={item.status} />
+      case "Revoked":
+        return <Badge text={item.status} />
+      default:
+        return <Badge text={item.status} />
     }
-    return <Badge text="Active" />
-  }, [isCertExpired])
+  }, [item?.status])
 
   const onRemoveConfirmed = () => {
     setShowConfirm(false)
     mutate(
       {
         endpoint: endpoint,
+        ca: ca,
         bearerToken: auth.attr?.id_token,
         serial: item.serial,
       },
@@ -127,7 +134,7 @@ const CertificateListItem = ({ item }) => {
       <DataListCell width={13}>{stateBadge}</DataListCell>
       <DataListCell width={15}>{expiresAtString}</DataListCell>
       <DataListCell width={4}>
-        {!isCertExpired && (
+        {isCertAvtive && (
           <Icon
             disabled={showConfirm}
             icon="deleteForever"
