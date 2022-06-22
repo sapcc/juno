@@ -8524,7 +8524,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^1.1.1":
+"clsx@npm:^1.1.0, clsx@npm:^1.1.1":
   version: 1.1.1
   resolution: "clsx@npm:1.1.1"
   checksum: ff052650329773b9b245177305fc4c4dc3129f7b2be84af4f58dc5defa99538c61d4207be7419405a5f8f3d92007c954f4daba5a7b74e563d5de71c28c830063
@@ -15063,6 +15063,7 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     react-jss: ^10.8.1
+    react-tabs: ^4.2.1
     regenerator-runtime: ^0.13.9
     rollup: ^2.67.0
     rollup-plugin-analyzer: ^4.0.0
@@ -18650,7 +18651,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.0.0, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.0.0, prop-types@npm:^15.5.0, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -19387,6 +19388,18 @@ __metadata:
   peerDependencies:
     react: ">= 0.14.0"
   checksum: fa03880a887bc0c79c0be25fc35924980d75f684f8d05620272bdfcbb9f119f45bb7f8ddd92b9e944103964a4e094b99750d0b19c992fd86f2ce0b70266e89c3
+  languageName: node
+  linkType: hard
+
+"react-tabs@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "react-tabs@npm:4.2.1"
+  dependencies:
+    clsx: ^1.1.0
+    prop-types: ^15.5.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0-0 || ^18.0.0
+  checksum: a031f358373c274432c4030873e1e41c4c744df04dbdc077f453568bf6161b8c3036934052ca9db6569d974edfceac48b2038d402eddc898f0c5752a8f8d8a93
   languageName: node
   linkType: hard
 
