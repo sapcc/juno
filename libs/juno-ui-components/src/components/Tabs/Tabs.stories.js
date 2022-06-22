@@ -11,7 +11,14 @@ import { Default as DefaultTabPanelStory } from "../TabPanel/TabPanel.stories.js
 export default {
   title: "WiP/Tabs/Tabs",
   component: Tabs,
-  argTypes: {},
+  argTypes: {
+    variant: {
+      control: {
+        type: "radio",
+        options: ["content", "top"],
+      },
+    },
+  },
 }
 
 const Template = ({variant, tabs, tabpanels, ...args}) => (
@@ -36,9 +43,9 @@ Default.args = {
     { ...DefaultTabStory.args, children: "Tab 3"},
   ],
   tabpanels: [
-    { ...DefaultTabPanelStory.args },
-    { ...DefaultTabPanelStory.args },
-    { ...DefaultTabPanelStory.args },
+    { ...DefaultTabPanelStory.args, children: "Tab 1 panel content" },
+    { ...DefaultTabPanelStory.args, children: "Tab 2 panel content" },
+    { ...DefaultTabPanelStory.args, children: "Tab 3 panel content" },
   ],
 }
 
@@ -51,9 +58,9 @@ ContentTabs.args = {
     { ...DefaultTabStory.args, children: "Tab 3"},
   ],
   tabpanels: [
-    { ...DefaultTabPanelStory.args },
-    { ...DefaultTabPanelStory.args },
-    { ...DefaultTabPanelStory.args },
+    { ...DefaultTabPanelStory.args, children: "Tab 1 panel content" },
+    { ...DefaultTabPanelStory.args, children: "Tab 2 panel content" },
+    { ...DefaultTabPanelStory.args, children: "Tab 3 panel content" },
   ],
 }
 
@@ -66,9 +73,9 @@ ControlledTabs.args = {
     { ...DefaultTabStory.args, children: "Controlled Tab 3"},
   ],
   tabpanels: [
-    { ...DefaultTabPanelStory.args },
-    { ...DefaultTabPanelStory.args },
-    { ...DefaultTabPanelStory.args },
+    { ...DefaultTabPanelStory.args, children: "Tab 1 panel content" },
+    { ...DefaultTabPanelStory.args, children: "Tab 2 panel content" },
+    { ...DefaultTabPanelStory.args, children: "Tab 3 panel content" },
   ],
   selectedIndex: 1,
   defaultIndex: null,

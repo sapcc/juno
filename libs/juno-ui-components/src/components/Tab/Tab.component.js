@@ -1,14 +1,7 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import { Tab as ReactTab } from "react-tabs"
 import PropTypes from "prop-types"
 
-const JunoTab =({ children, ...otherProps }) => (
-	<ReactTab { ...otherProps } >
-		{ children } 
-	</ReactTab>
-)
-
-JunoTab.tabsRole = 'Tab'
 
 const tabStyles = `
 	flex
@@ -33,7 +26,7 @@ const selectedTabStyles = `
 	border-theme-tab-active-bottom
 `
 
-export const Tab = ({
+const Tab = ({
 	children,
 	label,
 	disabled,
@@ -42,16 +35,18 @@ export const Tab = ({
 }) => {
 	
 	return (
-		<JunoTab 
+		<ReactTab 
 			className={`juno-tab ${tabStyles} ${className}`}
 			disabledClassName={`juno-tab-disabled ${disabledTabStyles}`}
 			selectedClassName={`juno-tab-selected ${selectedTabStyles}`}
 			disabled={disabled}
 			{...props} >
 			{ children || label }
-		</JunoTab>
+		</ReactTab>
 	)
 }
+
+Tab.tabsRole = 'Tab'
 
 Tab.propTypes = {
 	/** The children to render inside the Tab (-button) */
@@ -71,3 +66,4 @@ Tab.defaultProps = {
 	className: "",
 }
 
+export { Tab }

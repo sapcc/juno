@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import { TabList as ReactTabList } from "react-tabs"
 import PropTypes from "prop-types"
 
@@ -16,28 +16,23 @@ const getVariantStyles = (variant) => {
 	}
 }
 
-const JunoTabList =({ children, ...otherProps }) => (
-	<ReactTabList {...otherProps} >
-		{ children } 
-	</ReactTabList>
-)
 
-JunoTabList.tabsRole = 'TabList'
-
-export const TabList = ({
+const TabList = ({
 	variant,
 	children,
 	...props
 }) => {
 	
 	return (
-		<JunoTabList 
+		<ReactTabList 
 			className={`juno-tablist ${tabListStyles} ${getVariantStyles(variant)}`}
 			{...props} >
 				{children}
-		</JunoTabList>
+		</ReactTabList>
 	)
 }
+
+TabList.tabsRole = 'TabList'
 
 TabList.propTypes = {
 	/** Pick the TabList style */
@@ -50,4 +45,6 @@ TabList.defaultProps = {
 	variant: "top",
 	children: null,
 }
+
+export { TabList }
 

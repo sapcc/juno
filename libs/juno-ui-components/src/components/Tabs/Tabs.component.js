@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import { Tabs as ReactTabs } from "react-tabs" //
 import PropTypes from "prop-types"
 
-const JunoTabs =({ children, ...otherProps }) => (
-	<ReactTabs {...otherProps} >
-		{ children } 
-	</ReactTabs>
-)
 
-JunoTabs.tabsRole = 'Tabs'
-
-export const Tabs = ({
+const Tabs = ({
 	children,
 	defaultIndex,
 	selectedIndex,
@@ -19,16 +12,18 @@ export const Tabs = ({
 	...props
 }) => {
 	return (
-		<JunoTabs 
+		<ReactTabs 
 			className={`juno-tabs ${className}`}
 			defaultIndex={defaultIndex}
 			selectedIndex={selectedIndex}
 			onSelect={(index) => console.log(index)} //
 			{...props} >
 				{children}
-		</JunoTabs>
+		</ReactTabs>
 	)
 }	
+
+Tabs.tabsRole = 'Tabs'
 
 Tabs.propTypes = {
 	/** All the child elements of the Tabs: Tab(s) inside a TabList and TabPanel(s) */
@@ -49,3 +44,5 @@ Tabs.defaultProps = {
 	selectedIndex: null,
 	className: "",
 }
+
+export { Tabs }
