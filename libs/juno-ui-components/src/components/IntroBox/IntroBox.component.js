@@ -11,7 +11,7 @@ const introbox = (variant, heroImage) => {
 			jn-mb-8
 
 			${
-        variant === "hero" && heroImage && heroImage.startsWith("jn-bg-")
+        variant === "hero" && heroImage && heroImage.startsWith("bg-")
           ? `
 					${heroImage}
 					jn-bg-right-top
@@ -29,7 +29,7 @@ const introboxBorder = `
 
 const introboxContent = (variant, heroImage) => {
   return `
-		${heroImage && heroImage.startsWith("jn-bg-") ? `jn-pl-4 jn-pr-56` : `jn-px-4`}
+		${heroImage && heroImage.startsWith("bg-") ? `jn-pl-4 jn-pr-56` : `jn-px-4`}
 
 		${
       variant === "hero"
