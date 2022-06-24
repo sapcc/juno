@@ -1,26 +1,21 @@
-import { isExpired } from "./helpers"
+import { parseError } from "./helpers"
 
 describe("Helpers", () => {
-  describe("isExpired", () => {
-    test("instance of Date required", () => {
-      expect(() => {
-        isExpired("December 17, 1995 03:24:00")
-      }).toThrow()
-      expect(() => {
-        isExpired()
-      }).toThrow()
+  describe("parseError", () => {
+    test("return error as string if no object with message", () => {
+      expect(parseError({ error: "This is an error text" })).toEqual(
+        '{"error":"This is an error text"}'
+      )
     })
-    test("date not expired", () => {
-      // set 1 hour ago
-      const d = new Date()
-      d.setHours(d.getHours() - 1)
-      expect(isExpired(d)).toBeTruthy()
+    test("return error message if object with message attr exists", () => {
+      expect(parseError({ message: "This is an error text" })).toEqual(
+        "This is an error text"
+      )
     })
-    test("date is expired", () => {
-      // set 1 hour ago
-      const d = new Date()
-      d.setHours(d.getHours() + 1)
-      expect(isExpired(d)).not.toBeTruthy()
+    test("return error message if object message has attr msg", () => {
+      expect(
+        parseError({ message: '{ "msg": "This is an error text" }' })
+      ).toEqual("This is an error text")
     })
   })
 })

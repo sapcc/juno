@@ -206,6 +206,7 @@ module.exports = {
           "message-border-success": withOpacity(
             "--color-message-success-border"
           ),
+          "tab-navigation-top": withOpacity("--color-tabnavigation-top-bg"),
         },
       },
       backgroundImage: {
@@ -245,6 +246,8 @@ module.exports = {
           "switch-hover": withOpacity("--color-switch-hover-border"),
           "datalist-row": withOpacity("--color-datalist-row-border"),
           introbox: withOpacity("--color-introbox-border"),
+          "tab-navigation-content-bottom": withOpacity("--color-tabnavigation-content-bottom-border"),
+          "tab-active-bottom": withOpacity("--color-text-default-raw"),
         },
       },
       // backgroundImage: theme => ({

@@ -6,6 +6,7 @@ import { useGlobalState } from "./StateProvider"
 import { useMessagesDispatch } from "./MessagesProvider"
 import { useQueryClient } from "react-query"
 import { parseError } from "../helpers"
+import { DateTime } from "luxon"
 
 const serial = `
 bg-theme-background-lvl-2
@@ -43,9 +44,10 @@ const CertificateListItem = ({ item, ca }) => {
     revokeCertificateMutation()
 
   const expiresAtString = React.useMemo(() => {
-    if (!item.not_after) return ""
-    const date = new Date(item.not_after)
-    return date.toLocaleString()
+    if (!item.not_after) return "No date available"
+    return DateTime.fromISO(item.not_after).toLocaleString(
+      DateTime.DATETIME_FULL
+    )
   }, [item?.not_after])
 
   const isCertAvtive = React.useMemo(() => {
