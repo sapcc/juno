@@ -2,10 +2,10 @@ import React, { useEffect } from "react"
 
 import { QueryClient, QueryClientProvider } from "react-query"
 import useStore from "./store"
-import ServicesList from "./components/ServicesList"
+import AppRouter from "./components/AppRouter"
+import Breadcrumb from "./components/Breadcrumb"
 import { MessagesStateProvider } from "./messageStore"
 import Messages from "./components/Messages"
-
 import { AppShell } from "juno-ui-components"
 
 const URL_STATE_KEY = "Heureka"
@@ -25,10 +25,11 @@ const App = (props) => {
       <MessagesStateProvider>
         <AppShell
           pageHeader="Converged Cloud | Heureka"
-          contentHeading="Services"
+          // contentHeading="Services"
         >
           <Messages />
-          <ServicesList />
+          <Breadcrumb />
+          <AppRouter props={props} />
         </AppShell>
       </MessagesStateProvider>
     </QueryClientProvider>
