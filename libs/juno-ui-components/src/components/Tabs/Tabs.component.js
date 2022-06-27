@@ -11,12 +11,17 @@ const Tabs = ({
 	className,
 	...props
 }) => {
+
+	const handleSelect = (index) => {
+		onSelect && onSelect(index)
+  }
+
 	return (
 		<ReactTabs 
 			className={`juno-tabs ${className}`}
 			defaultIndex={defaultIndex}
 			selectedIndex={selectedIndex}
-			onSelect={(index) => console.log(index)} //
+			onSelect={handleSelect}
 			{...props} >
 				{children}
 		</ReactTabs>
@@ -40,8 +45,8 @@ Tabs.propTypes = {
 
 Tabs.defaultProps = {
 	children: null,
-	defaultIndex: 0,
-	selectedIndex: null,
+	defaultIndex: undefined,
+	selectedIndex: undefined,
 	className: "",
 }
 
