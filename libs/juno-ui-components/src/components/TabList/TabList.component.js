@@ -9,10 +9,10 @@ const tabListStyles = `
 
 const getVariantStyles = (variant) => {
 	switch (variant) {
-		case "content":
-			return `border-b-[1px] border-theme-tab-navigation-content-bottom`
+		case "main": `bg-theme-tab-navigation-top` 
+			return 
 		default: 
-			return `bg-theme-tab-navigation-top`
+			return `border-b-[1px] border-theme-tab-navigation-content-bottom`
 	}
 }
 
@@ -36,13 +36,13 @@ TabList.tabsRole = 'TabList'
 
 TabList.propTypes = {
 	/** Pick the TabList style */
-	variant: PropTypes.oneOf(["top", "content"]),
+	variant: PropTypes.oneOf(["main", "content"]),
 	/** The individual child Tabs to render */
 	children: PropTypes.node,
 }
 
 TabList.defaultProps = {
-	variant: "top",
+	variant: "content",
 	children: null,
 }
 
