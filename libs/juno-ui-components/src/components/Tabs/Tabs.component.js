@@ -32,7 +32,7 @@ const Tabs = ({
 	return (
 		<TabsContext.Provider value={tabsConf}>
 			<ReactTabs 
-				className={`juno-tabs ${className}`}
+				className={`juno-tabs juno-tabs-${variant} ${className}`}
 				defaultIndex={defaultIndex}
 				selectedIndex={passedIndex}
 				onSelect={handleSelect}

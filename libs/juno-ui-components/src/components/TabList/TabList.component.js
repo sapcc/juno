@@ -29,7 +29,7 @@ const TabList = ({
 	
 	return (
 		<ReactTabList 
-			className={`juno-tablist ${tabListStyles} ${getVariantStyles(tabsVariant)}`}
+			className={`juno-tablist juno-tablist-${tabsVariant} ${tabListStyles} ${getVariantStyles(tabsVariant)}`}
 			{...props} >
 				{children}
 		</ReactTabList>
