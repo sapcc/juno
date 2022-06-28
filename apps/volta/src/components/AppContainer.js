@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import CertificateList from "./CertificateList"
 import NewCertificate from "./NewCertificate"
 import { getCAs } from "../queries"
@@ -19,6 +19,8 @@ const AppContainer = () => {
   const dispatchMessage = useMessagesDispatch()
   const auth = useGlobalState().auth
   const endpoint = useGlobalState().globals.endpoint
+  const showNewSSO = useGlobalState().globals.showNewSSO
+  const [tabIndex, setTabIndex] = useState(0)
 
   // fetch the certificates
   const { isLoading, isError, data, error } = getCAs(
@@ -26,7 +28,11 @@ const AppContainer = () => {
     endpoint
   )
 
-  const onSelectTab = () => {
+  const onSelectTab = (index) => {
+    // control of the Tabs state and behaviour.
+    if (!showNewSSO) {
+      setTabIndex(index)
+    }
     // on change tab remove messages
     dispatchMessage({
       type: "RESET_MESSAGE",
@@ -43,7 +49,7 @@ const AppContainer = () => {
       ) : (
         <>
           {data && data.length > 0 && (
-            <Tabs onSelect={onSelectTab}>
+            <Tabs onSelect={onSelectTab} selectedIndex={tabIndex}>
               <TabList variant="content">
                 {data.map((item, i) => (
                   <Tab key={i}>{item?.name}</Tab>
