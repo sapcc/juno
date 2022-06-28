@@ -24,7 +24,7 @@ bg-theme-background-lvl-0
 backdrop-blur
 bg-opacity-70
 px-2
-py-2.5
+py-5
 text-theme-default 
 text-opacity-70
 `

@@ -8,13 +8,6 @@ import { useQueryClient } from "react-query"
 import { parseError } from "../helpers"
 import { DateTime } from "luxon"
 
-const serial = `
-bg-theme-background-lvl-2
-px-2
-rounded
-h-min
-`
-
 const rowClasses = (isConfirmOpen) => {
   return `
 			${
@@ -26,6 +19,16 @@ const rowClasses = (isConfirmOpen) => {
          ease-out
          duration-300`
       }
+		`
+    .replace(/\n/g, " ")
+    .replace(/\s+/g, " ")
+}
+
+const certIdClasses = (isConfirmOpen) => {
+  return `
+      text-sm 
+      pt-1       
+			${isConfirmOpen ? `text-theme-danger` : `text-theme-disabled`}
 		`
     .replace(/\n/g, " ")
     .replace(/\s+/g, " ")
@@ -128,21 +131,34 @@ const CertificateListItem = ({ item, ca }) => {
         onConfirm={onRemoveConfirmed}
         onCancel={() => setShowConfirm(false)}
       />
-      <DataListCell width={15}>{item.name}</DataListCell>
-      <DataListCell width={40}>
-        <div className={serial}>{item.serial}</div>
+      <DataListCell width={33}>
+        <div>
+          <span>{item.name}</span>
+          <div className={certIdClasses(showConfirm)}>{item.serial}</div>
+        </div>
       </DataListCell>
-      <DataListCell width={13}>{item.identity}</DataListCell>
-      <DataListCell width={13}>{stateBadge}</DataListCell>
-      <DataListCell width={15}>{expiresAtString}</DataListCell>
+      <DataListCell width={30}>
+        <div>{item.description}</div>
+      </DataListCell>
+      <DataListCell width={10}>
+        <div>{item.identity}</div>
+      </DataListCell>
+      <DataListCell width={8}>
+        <div>{stateBadge}</div>
+      </DataListCell>
+      <DataListCell width={15}>
+        <div>{expiresAtString}</div>
+      </DataListCell>
       <DataListCell width={4}>
-        {isCertAvtive && (
-          <Icon
-            disabled={showConfirm}
-            icon="deleteForever"
-            onClick={() => setShowConfirm(true)}
-          />
-        )}
+        <div>
+          {isCertAvtive && (
+            <Icon
+              disabled={showConfirm}
+              icon="deleteForever"
+              onClick={() => setShowConfirm(true)}
+            />
+          )}
+        </div>
       </DataListCell>
     </DataListRow>
   )
