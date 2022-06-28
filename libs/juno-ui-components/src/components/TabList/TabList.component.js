@@ -10,10 +10,13 @@ const tabListStyles = `
 
 const getVariantStyles = (variant) => {
 	switch (variant) {
-		case "main": `bg-theme-tab-navigation-top` 
-			return 
+		case "main": 
+			return `bg-theme-tab-navigation-top`
 		default: 
-			return `border-b-[1px] border-theme-tab-navigation-content-bottom`
+			return `
+				border-b-[1px] 
+				border-theme-tab-navigation-content-bottom
+			`
 	}
 }
 
