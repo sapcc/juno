@@ -29,3 +29,14 @@ Default.args = {
     { ...DefaultTabStory.args, disabled: true }
   ]
 }
+
+export const MainTabList = Template.bind({})
+MainTabList.args = {
+  variant: "main",
+  tabs: [
+    { ...DefaultTabStory.args },
+    { ...DefaultTabStory.args },
+    { ...DefaultTabStory.args },
+    { ...DefaultTabStory.args, disabled: true }
+  ]
+}
