@@ -14,6 +14,30 @@ describe("Tabs", () => {
 		expect(screen.getByTestId("tabs")).toHaveClass("juno-tabs")
 	})
 	
+	test("renders Content variant Tabs by default", async () => {
+		render(
+			<Tabs data-testid="tabs">
+				<TabList />
+			</Tabs>
+		)
+		expect(screen.getByTestId("tabs")).toBeInTheDocument()
+		expect(screen.getByTestId("tabs")).toHaveClass("juno-tabs-content")
+		expect(screen.getByRole("tablist")).toBeInTheDocument()
+		expect(screen.getByRole("tablist")).toHaveClass("juno-tablist-content")
+	})
+	
+	test("renders Main variant Tabs by default", async () => {
+		render(
+			<Tabs data-testid="tabs" variant="main">
+				<TabList />
+			</Tabs>
+		)
+		expect(screen.getByTestId("tabs")).toBeInTheDocument()
+		expect(screen.getByTestId("tabs")).toHaveClass("juno-tabs-main")
+		expect(screen.getByRole("tablist")).toBeInTheDocument()
+		expect(screen.getByRole("tablist")).toHaveClass("juno-tablist-main")
+	})
+	
 	test("renders all children as passed", async () => {
 		render(
 			<Tabs data-testid="tabs">
@@ -33,13 +57,15 @@ describe("Tabs", () => {
 		render(
 			<Tabs data-testid="tabs">
 				<TabList>
-					<Tab label="Tab 1"></Tab>
-					<Tab label="Tab 2"></Tab>
+					<Tab label="Tab 1" data-testid="tab-1"></Tab>
+					<Tab label="Tab 2" data-testid="tab-2"></Tab>
 				</TabList>
 				<TabPanel>Tab 1 content</TabPanel>
 				<TabPanel>Tab 2 content</TabPanel>
 			</Tabs>
 		)
+		expect(screen.getByTestId("tab-1")).toHaveAttribute("aria-selected", "true")
+		expect(screen.getByTestId("tab-2")).toHaveAttribute("aria-selected", "false")
 		expect(screen.getByText("Tab 1 content")).toBeInTheDocument()
 		expect(screen.queryByText("Tab 2 content")).not.toBeInTheDocument()
 	})
@@ -48,13 +74,15 @@ describe("Tabs", () => {
 		render(
 			<Tabs data-testid="tabs" defaultIndex={1}>
 				<TabList>
-					<Tab label="Tab 1"></Tab>
-					<Tab label="Tab 2"></Tab>
+					<Tab label="Tab 1" data-testid="tab-1"></Tab>
+					<Tab label="Tab 2" data-testid="tab-2"></Tab>
 				</TabList>
 				<TabPanel>Tab 1 content</TabPanel>
 				<TabPanel>Tab 2 content</TabPanel>
 			</Tabs>
 		)
+		expect(screen.getByTestId("tab-1")).toHaveAttribute("aria-selected", "false")
+		expect(screen.getByTestId("tab-2")).toHaveAttribute("aria-selected", "true")
 		expect(screen.getByText("Tab 2 content")).toBeInTheDocument()
 		expect(screen.queryByText("Tab 1 content")).not.toBeInTheDocument()
 	})
@@ -63,13 +91,15 @@ describe("Tabs", () => {
 		render(
 			<Tabs data-testid="tabs" selectedIndex={1}>
 				<TabList>
-					<Tab label="Tab 1"></Tab>
-					<Tab label="Tab 2"></Tab>
+					<Tab label="Tab 1" data-testid="tab-1"></Tab>
+					<Tab label="Tab 2" data-testid="tab-2"></Tab>
 				</TabList>
 				<TabPanel>Tab 1 content</TabPanel>
 				<TabPanel>Tab 2 content</TabPanel>
 			</Tabs>
 		)
+		expect(screen.getByTestId("tab-1")).toHaveAttribute("aria-selected", "false")
+		expect(screen.getByTestId("tab-2")).toHaveAttribute("aria-selected", "true")
 		expect(screen.getByText("Tab 2 content")).toBeInTheDocument()
 		expect(screen.queryByText("Tab 1 content")).not.toBeInTheDocument()
 	})
@@ -80,16 +110,20 @@ describe("Tabs", () => {
 		render(
 			<Tabs data-testid="tabs">
 				<TabList>
-					<Tab label="Tab 1"></Tab>
-					<Tab label="Tab 2"></Tab>
+					<Tab label="Tab 1" data-testid="tab-1"></Tab>
+					<Tab label="Tab 2" data-testid="tab-2"></Tab>
 				</TabList>
 				<TabPanel>Tab 1 content</TabPanel>
 				<TabPanel>Tab 2 content</TabPanel>
 			</Tabs>
 		)
+		expect(screen.getByTestId("tab-1")).toHaveAttribute("aria-selected", "true")
+		expect(screen.getByTestId("tab-2")).toHaveAttribute("aria-selected", "false")
 		expect(screen.getByText("Tab 1 content")).toBeInTheDocument()
 		expect(screen.queryByText("Tab 2 content")).not.toBeInTheDocument()
 		userEvent.click(screen.getByRole("tab", { name: 'Tab 2' }))
+		expect(screen.getByTestId("tab-1")).toHaveAttribute("aria-selected", "false")
+		expect(screen.getByTestId("tab-2")).toHaveAttribute("aria-selected", "true")
 		expect(screen.getByText("Tab 2 content")).toBeInTheDocument()
 		expect(screen.queryByText("Tab 1 content")).not.toBeInTheDocument()
 	})
