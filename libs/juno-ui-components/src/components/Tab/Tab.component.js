@@ -9,6 +9,7 @@ const tabStyles = `
 	px-[1.5625rem]
 	items-center
 	cursor-pointer
+	select-none
 	focus:outline-none 
 	focus-visible:ring-2
 	focus-visible:ring-theme-focus
