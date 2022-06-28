@@ -1,5 +1,6 @@
 import React from "react"
 import { TabList as ReactTabList } from "react-tabs"
+import { useTabsContext } from "../Tabs/Tabs.component.js"
 import PropTypes from "prop-types"
 
 const tabListStyles = `
@@ -23,9 +24,12 @@ const TabList = ({
 	...props
 }) => {
 	
+	const tabsContext = useTabsContext() || {}
+	const tabsVariant = tabsContext.variant || variant
+	
 	return (
 		<ReactTabList 
-			className={`juno-tablist ${tabListStyles} ${getVariantStyles(variant)}`}
+			className={`juno-tablist ${tabListStyles} ${getVariantStyles(tabsVariant)}`}
 			{...props} >
 				{children}
 		</ReactTabList>

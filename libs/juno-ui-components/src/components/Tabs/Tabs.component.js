@@ -3,7 +3,7 @@ import { Tabs as ReactTabs } from "react-tabs" //
 import PropTypes from "prop-types"
 
 const TabsContext = React.createContext()
-export const useTabsVariantContext = () => React.useContext(TabsContext)
+export const useTabsContext = () => React.useContext(TabsContext)
 
 const Tabs = ({
 	children,
