@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState} from "react"
 import { Tabs as ReactTabs } from "react-tabs" //
 import PropTypes from "prop-types"
 
@@ -11,12 +11,23 @@ const Tabs = ({
 	className,
 	...props
 }) => {
+	// ensure component updates if selected index changes
+	const [passedIndex, setPassedIndex] = useState(selectedIndex)
+	
+	useEffect(() => {
+		setPassedIndex(selectedIndex)
+	}, [selectedIndex])
+
+	const handleSelect = (index) => {
+		onSelect && onSelect(index)
+  }
+
 	return (
 		<ReactTabs 
 			className={`juno-tabs ${className}`}
 			defaultIndex={defaultIndex}
-			selectedIndex={selectedIndex}
-			onSelect={(index) => console.log(index)} //
+			selectedIndex={passedIndex}
+			onSelect={handleSelect}
 			{...props} >
 				{children}
 		</ReactTabs>
@@ -40,8 +51,8 @@ Tabs.propTypes = {
 
 Tabs.defaultProps = {
 	children: null,
-	defaultIndex: 0,
-	selectedIndex: null,
+	defaultIndex: undefined,
+	selectedIndex: undefined,
 	className: "",
 }
 

@@ -169,6 +169,16 @@ resources:
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-error-pages/default-backend
 
+  - name: juno-ui-components-release
+    type: github-release
+    source:
+      github_api_url: https://api.github.com/v3
+      github_uploads_url: https://uploads.github.com/
+      user: sapcc
+      repository: juno
+      access_token: ((github-access-token/juno))
+
+
 resource_types:
   - name: git-proxy
     type: registry-image
@@ -189,6 +199,12 @@ resource_types:
     source:
       repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-release-resource
       tag: v2.latest
+
+  - name: github-release
+    type: docker-image
+    check_every: 24h
+    source:
+      repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-github-release-resource      
 
 groups:
   - name: juno-apps
@@ -217,6 +233,7 @@ groups:
       - e2e-s-qa-de-1
       - build-unit-test-image
       - build-juno-ui-components
+      - release-juno-ui-components
       - build-mercury
       - build-maintenance
       - deploy-to-s-eu-nl-1
@@ -332,6 +349,70 @@ jobs:
               tag: juno-ui-components.version/version
             # get_params:
             #   skip_download: true
+
+  # build juno-ui-components image and push it to keppel
+  - name: release-juno-ui-components
+    serial: true
+    plan:
+      - in_parallel:
+        - get: juno-ui-components.image  
+          passed: ["build-juno-ui-components"]
+          trigger: true
+
+      - task: copy-build-artifacts
+        image: juno-ui-components.image
+        config:
+          platform: linux
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |      
+                mkdir release_candidate
+                cp -r /app/lib release_candidate/lib
+                cp /app/package.json /app/tailwind.config.js /app/LICENSE /app/README.md release_candidate/
+                echo "ls release_candidate"
+                ls -la release_candidate
+                VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
+            
+                echo $VERSION > release/VERSION
+                echo "juno-ui-components" > release/NAME
+
+                cd release_candidate
+                tar -czf ../release/juno-ui-components.tgz .
+
+          outputs:
+            - name: release
+
+      # - task: show
+      #   config:
+      #     platform: linux
+      #     image_resource:
+      #       type: docker-image
+      #       source:
+      #         repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+      #         tag: "latest"
+      #     inputs:
+      #       - name: release
+
+      #     run:
+      #       path: /bin/sh
+      #       args:
+      #         - -c
+      #         - |
+      #           pwd
+      #           ls -la 
+      #           ls -la release
+            
+  
+      - put: juno-ui-components-release
+        params:
+          name: release/NAME
+          tag: release/VERSION
+          tag_prefix: v
+          commitsh: release/commitsh
+          globs: [release/juno-ui-components*]
+                    
 
   # run unit tests for dashboard sources
   - name: unit-test-dashboard
