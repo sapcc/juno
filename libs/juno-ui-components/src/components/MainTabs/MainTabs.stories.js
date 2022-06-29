@@ -40,3 +40,19 @@ Default.args = {
 	],
 }
 
+export const Controlled = Template.bind({})
+Controlled.args = {
+	tabs: [
+		{ ...TabStory.args, children: "Controlled MainTab 1" },
+		{ ...TabStory.args, children: "Controlled MainTab 2" },
+		{ ...TabStory.args, children: "Controlled MainTab 3" },
+	],
+	tabpanels: [
+		{ ...TabPanelStory.args, children: "Controlled MainTab Panel 1" },
+		{ ...TabPanelStory.args, children: "Controlled MainTab Panel 2" },
+		{ ...TabPanelStory.args, children: "Controlled MainTab Panel 3" },
+	],
+	selectedIndex: 1,
+	defaultIndex: null,
+}
+
