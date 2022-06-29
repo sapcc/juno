@@ -14,8 +14,7 @@ import {
   MessagesStateProvider,
   useMessagesDispatch,
 } from "./components/MessagesProvider"
-
-const URL_STATE_KEY = "volta"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 const App = (props) => {
   const dispatch = useDispatch()
@@ -55,7 +54,17 @@ const App = (props) => {
       <AppShell pageHeader={customPageHeader} contentHeading="SSO Certificates">
         <CustomIntroBox />
         <Messages />
-        {loggedIn ? <AppContainer /> : <WellcomeView loginCallback={login} />}
+        {loggedIn ? (
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<AppContainer />}>
+                <Route path=":ca" element={<AppContainer />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        ) : (
+          <WellcomeView loginCallback={login} />
+        )}
       </AppShell>
     </QueryClientProvider>
   )
