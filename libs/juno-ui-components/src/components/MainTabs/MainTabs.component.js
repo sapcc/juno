@@ -16,7 +16,8 @@ export const MainTabs = ({
 			selectedIndex={selectedIndex}
 			onSelect={onSelect}
 			className={className}
-			variant="main">
+			variant="main"
+			{ ...props } >
 				{ children }
 		</Tabs>
 	)
