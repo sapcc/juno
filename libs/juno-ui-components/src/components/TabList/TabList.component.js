@@ -8,8 +8,7 @@ const tabListStyles = `
 	h-[3.4375rem]
 	focus-within:ring-2
 	focus-within:ring-theme-focus
-	focus-within:ring-offset-0
-	focus-within:ring-offset-theme-focus
+	focus-within:ring-inset
 `
 
 const getVariantStyles = (variant) => {
