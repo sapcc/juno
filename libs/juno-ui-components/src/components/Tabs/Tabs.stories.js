@@ -48,21 +48,6 @@ Default.args = {
   ],
 }
 
-export const MainTabs = Template.bind({}) // WIP; remove once MainTabs component is finished
-MainTabs.args = {
-  variant: "main",
-  tabs: [
-    { ...DefaultTabStory.args, children: "Tab 1"},
-    { ...DefaultTabStory.args, children: "Tab 2"},
-    { ...DefaultTabStory.args, children: "Tab 3"},
-  ],
-  tabpanels: [
-    { ...DefaultTabPanelStory.args, children: "Tab 1 panel content" },
-    { ...DefaultTabPanelStory.args, children: "Tab 2 panel content" },
-    { ...DefaultTabPanelStory.args, children: "Tab 3 panel content" },
-  ],
-}
-
 export const ControlledTabs = Template.bind({})
 ControlledTabs.args = {
   tabs: [
