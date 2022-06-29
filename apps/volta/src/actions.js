@@ -28,6 +28,25 @@ const checkStatus = (response) => {
   }
 }
 
+export const cas = ({ queryKey }) => {
+  const [_key, bearerToken, endpoint] = queryKey
+  return fetch(`${endpoint}/cas`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${bearerToken}`,
+    },
+  })
+    .then(checkStatus)
+    .then((response) => {
+      return response.json().then((jsonResp) => {
+        if (!jsonResp || !Array.isArray(jsonResp)) return []
+        // sort entries by name
+        return jsonResp.sort((a, b) => a?.name.localeCompare(b?.name))
+      })
+    })
+}
+
 export const certificates = ({ queryKey }) => {
   const [_key, bearerToken, endpoint, ca] = queryKey
   return fetch(`${endpoint}/${ca}/certificate`, {

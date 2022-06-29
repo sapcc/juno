@@ -79,7 +79,11 @@ const NewCertificate = ({ ca }) => {
 
   return (
     <Panel
-      heading="New SSO Certificate"
+      heading={
+        <span>
+          New <i>{ca}</i> SSO Certificate
+        </span>
+      }
       opened={showPanel}
       onClose={onPanelClose}
       closeable={false}

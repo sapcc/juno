@@ -65,7 +65,7 @@ const CertificateList = ({ ca }) => {
   return (
     <>
       {isLoading && !data ? (
-        <Stack alignment="center">
+        <Stack className="pt-2" alignment="center">
           <Spinner variant="primary" />
           Loading certificates...
         </Stack>
@@ -78,16 +78,16 @@ const CertificateList = ({ ca }) => {
               </ContentAreaToolbar>
               <DataList>
                 <DataListRow className="relative">
-                  <DataListCell className={datListHeaderItem} width={15}>
-                    Name
+                  <DataListCell className={datListHeaderItem} width={33}>
+                    Name / ID
                   </DataListCell>
-                  <DataListCell className={datListHeaderItem} width={40}>
-                    Serial number
+                  <DataListCell className={datListHeaderItem} width={30}>
+                    Description
                   </DataListCell>
-                  <DataListCell className={datListHeaderItem} width={13}>
+                  <DataListCell className={datListHeaderItem} width={10}>
                     User name / ID
                   </DataListCell>
-                  <DataListCell className={datListHeaderItem} width={13}>
+                  <DataListCell className={datListHeaderItem} width={8}>
                     State
                   </DataListCell>
                   <DataListCell className={datListHeaderItem} width={15}>
