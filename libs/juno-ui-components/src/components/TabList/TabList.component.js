@@ -6,6 +6,10 @@ import PropTypes from "prop-types"
 const tabListStyles = `
 	flex
 	h-[3.4375rem]
+	focus-within:ring-2
+	focus-within:ring-theme-focus
+	focus-within:ring-offset-0
+	focus-within:ring-offset-theme-focus
 `
 
 const getVariantStyles = (variant) => {
