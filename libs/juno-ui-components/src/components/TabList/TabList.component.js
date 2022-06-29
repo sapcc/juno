@@ -6,7 +6,7 @@ import PropTypes from "prop-types"
 const tabListStyles = `
 	flex
 	h-[3.4375rem]
-	focus-within:ring-2
+	focus-within:ring-1
 	focus-within:ring-theme-focus
 	focus-within:ring-inset
 `
