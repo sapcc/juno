@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { AppShell, IntroBox, PageHeader } from "juno-ui-components"
+import { AppShell, Container, PageHeader } from "juno-ui-components"
 
 import { useOidcAuth } from "oauth"
 import { QueryClient, QueryClientProvider } from "react-query"
@@ -55,14 +55,16 @@ const App = (props) => {
   return (
     <QueryClientProvider client={queryClient}>
       <AppShell pageHeader={customPageHeader} contentHeading="SSO Certificates">
-        <CustomIntroBox />
-        <NewCertificate ca={CA_NAME} />
-        <Messages />
-        {loggedIn ? (
-          <CertificateList ca={CA_NAME} />
-        ) : (
-          <WellcomeView loginCallback={login} />
-        )}
+        <Container>
+          <CustomIntroBox />
+          <NewCertificate ca={CA_NAME} />
+          <Messages />
+          {loggedIn ? (
+            <CertificateList ca={CA_NAME} />
+          ) : (
+            <WellcomeView loginCallback={login} />
+          )}
+        </Container>
       </AppShell>
     </QueryClientProvider>
   )
