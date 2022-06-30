@@ -4,7 +4,7 @@ import { exampleFetch as fetchStuff } from "./actions"
 import useStore from "./store"
 import NewItemForm from "./components/NewItemForm"
 
-import { AppShell, Button, ContentAreaToolbar, Container, IntroBox, Message, Spinner, Tabs, Tab, TabList, TabPanel } from "juno-ui-components"
+import { AppShell, Button, ContentAreaToolbar, Container, IntroBox, Message, Spinner, MainTabs, Tab, TabList, TabPanel } from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
 /* IMPORTANT: Replace this with your app's name */
 const URL_STATE_KEY = "template"
@@ -74,7 +74,7 @@ const App = (props) => {
       contentHeading="App template page title"
       embedded={embedded === "true"}
     >
-      <Tabs>
+      <MainTabs>
         <TabList variant="top">
           <Tab>Tab One</Tab>
           <Tab>Tab Two</Tab>
@@ -126,7 +126,7 @@ const App = (props) => {
           </Container>
         </TabPanel>
 
-      </Tabs>
+      </MainTabs>
 
     </AppShell>
   )
