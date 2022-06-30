@@ -4,7 +4,7 @@ import NewCertificate from "./NewCertificate"
 import { getCAs } from "../queries"
 import { useGlobalState } from "./StateProvider"
 import { useMessagesDispatch } from "./MessagesProvider"
-import { useParams, useNavigate } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
 import {
   Spinner,
   Stack,
@@ -20,8 +20,7 @@ const AppContainer = () => {
   const endpoint = useGlobalState().globals.endpoint
   const showNewSSO = useGlobalState().globals.showNewSSO
   const [tabIndex, setTabIndex] = useState(0)
-  let params = useParams()
-  let navigate = useNavigate()
+  let [searchParams, setSearchParams] = useSearchParams()
 
   // fetch the certificates
   const { isLoading, isError, data, error } = getCAs(
@@ -33,23 +32,22 @@ const AppContainer = () => {
     (index) => {
       // fetch the tab name
       if (data && data.length > 0 && data[index]?.name) {
-        return navigate(`/${data[index]?.name}`)
+        return setSearchParams({ ca: data[index]?.name })
       }
-      navigate(`/`)
     },
     [data]
   )
 
   // read current url state and call main fetch method if state is presented
   React.useEffect(() => {
-    if (data && data.length > 0 && params && params.ca) {
+    if (data && data.length > 0 && searchParams.get("ca")) {
       // update tab from url
-      const index = data.findIndex((e) => e.name == params.ca)
+      const index = data.findIndex((e) => e.name == searchParams.get("ca"))
       if (index >= 0) {
         setTabIndex(index)
       }
     }
-  }, [data, params])
+  }, [data, searchParams.get("ca")])
 
   const onSelectTab = (index) => {
     // control of the Tabs state and behaviour.
