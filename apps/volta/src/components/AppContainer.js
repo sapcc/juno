@@ -81,7 +81,7 @@ const AppContainer = () => {
               {data.map((item, i) => (
                 <TabPanel key={i}>
                   <NewCertificate ca={item?.name} />
-                  <CertificateList ca={item?.name} />
+                  <CertificateList ca={item} />
                 </TabPanel>
               ))}
             </Tabs>
