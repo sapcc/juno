@@ -73,7 +73,7 @@ const AppContainer = () => {
         <>
           {data && data.length > 0 && (
             <Tabs onSelect={onSelectTab} selectedIndex={tabIndex}>
-              <TabList variant="content">
+              <TabList>
                 {data.map((item, i) => (
                   <Tab key={i}>{item?.name}</Tab>
                 ))}
