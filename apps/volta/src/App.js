@@ -58,9 +58,7 @@ const App = (props) => {
           {loggedIn ? (
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<AppContainer />}>
-                  <Route path=":ca" element={<AppContainer />} />
-                </Route>
+                <Route path="/" element={<AppContainer />} />
               </Routes>
             </BrowserRouter>
           ) : (
