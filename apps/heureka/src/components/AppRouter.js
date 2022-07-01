@@ -1,26 +1,39 @@
 import React from "react"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { HashRouter, Routes, Route } from "react-router-dom"
+import AppContainer from "./AppContainer"
 import ServicesList from "./ServicesList"
 import ServiceDetail from "./ServiceDetail"
-import Tabs from "./Tabs"
+import ComponentsList from "./ComponentsList"
+import ComponentDetail from "./ComponentDetail"
 
 const AppRouter = (props) => {
-  console.log(props.location)
-  console.log(props.match)
-
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
-        <Route path="/" element={<Tabs />} />
-        <Route path="services" element={<Tabs tabIndex={0} />}>
-          <Route path=":serviceId" element={<Tabs tabIndex={0} />} />
-        </Route>
-        <Route path="services/:serviceId" element={<Tabs tabIndex={0} />} />
-        <Route path="components" element={<Tabs tabIndex={1} />}>
-          <Route path=":componentId" element={<Tabs tabIndex={1} />} />
-        </Route>
+        <Route
+          path="/"
+          element={<AppContainer tabIndex={0} component={<ServicesList />} />}
+        />
+        <Route
+          path="services"
+          element={<AppContainer tabIndex={0} component={<ServicesList />} />}
+        />
+        <Route
+          path="services/:serviceId"
+          element={<AppContainer tabIndex={0} component={<ServiceDetail />} />}
+        />
+        <Route
+          path="components"
+          element={<AppContainer tabIndex={1} component={<ComponentsList />} />}
+        />
+        <Route
+          path="components/:componentId"
+          element={
+            <AppContainer tabIndex={1} component={<ComponentDetail />} />
+          }
+        />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 

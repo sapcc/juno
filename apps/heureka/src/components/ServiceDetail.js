@@ -1,7 +1,7 @@
 import React from "react"
 
-const ServiceDetail = ({ service }) => {
-  return "test"
+const ServiceDetail = () => {
+  return "Service details"
 }
 
 export default ServiceDetail

@@ -6,9 +6,7 @@ import AppRouter from "./components/AppRouter"
 import Breadcrumb from "./components/Breadcrumb"
 import { MessagesStateProvider } from "./messageStore"
 import Messages from "./components/Messages"
-import { AppShell } from "juno-ui-components"
-
-const URL_STATE_KEY = "Heureka"
+import { AppShell, Container } from "juno-ui-components"
 
 const App = (props) => {
   useEffect(() => {
@@ -23,13 +21,12 @@ const App = (props) => {
   return (
     <QueryClientProvider client={queryClient}>
       <MessagesStateProvider>
-        <AppShell
-          pageHeader="Converged Cloud | Heureka"
-          // contentHeading="Services"
-        >
-          <Messages />
-          <Breadcrumb />
-          <AppRouter props={props} />
+        <AppShell pageHeader="Converged Cloud | Heureka">
+          <Container>
+            <Messages />
+            <Breadcrumb />
+            <AppRouter props={props} />
+          </Container>
         </AppShell>
       </MessagesStateProvider>
     </QueryClientProvider>
