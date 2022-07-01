@@ -1,25 +1,45 @@
-import React from "react"
+import React, { useEffect, useState} from "react"
 import { Tabs as ReactTabs } from "react-tabs" //
 import PropTypes from "prop-types"
 
+const TabsContext = React.createContext()
+export const useTabsContext = () => React.useContext(TabsContext)
 
 const Tabs = ({
 	children,
 	defaultIndex,
 	selectedIndex,
 	onSelect,
+	variant,
 	className,
 	...props
 }) => {
+	// ensure component updates if selected index changes
+	const [passedIndex, setPassedIndex] = useState(selectedIndex)
+	
+	useEffect(() => {
+		setPassedIndex(selectedIndex)
+	}, [selectedIndex])
+
+	const handleSelect = (index) => {
+		onSelect && onSelect(index)
+  	}
+	  
+	const tabsConf = {
+		variant: variant
+	}
+
 	return (
-		<ReactTabs 
-			className={`juno-tabs ${className}`}
-			defaultIndex={defaultIndex}
-			selectedIndex={selectedIndex}
-			onSelect={(index) => console.log(index)} //
-			{...props} >
-				{children}
-		</ReactTabs>
+		<TabsContext.Provider value={tabsConf}>
+			<ReactTabs 
+				className={`juno-tabs juno-tabs-${variant} ${className}`}
+				defaultIndex={defaultIndex}
+				selectedIndex={passedIndex}
+				onSelect={handleSelect}
+				{...props} >
+					{children}
+			</ReactTabs>
+		</TabsContext.Provider>
 	)
 }	
 
@@ -34,14 +54,18 @@ Tabs.propTypes = {
 	selectedIndex: PropTypes.number,
 	/** Handler required in "Controlled Mode" */
 	onSelect: PropTypes.func,
+	/** Switch on Main Tab styles and context if needed */
+	variant: PropTypes.oneOf(["main", "content"]),
 	/** Add a custom className to the whole Tabs construct */
 	className: PropTypes.string,
 }
 
 Tabs.defaultProps = {
 	children: null,
-	defaultIndex: 0,
-	selectedIndex: null,
+	defaultIndex: undefined,
+	selectedIndex: undefined,
+	onSelect: undefined,
+	variant: "content",
 	className: "",
 }
 
