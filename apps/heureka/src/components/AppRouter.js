@@ -1,5 +1,5 @@
 import React from "react"
-import { HashRouter, Routes, Route } from "react-router-dom"
+import { HashRouter, BrowserRouter, Routes, Route } from "react-router-dom"
 import AppContainer from "./AppContainer"
 import ServicesList from "./ServicesList"
 import ServiceDetail from "./ServiceDetail"
@@ -8,7 +8,7 @@ import ComponentDetail from "./ComponentDetail"
 
 const AppRouter = (props) => {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route
           path="/"
@@ -33,7 +33,7 @@ const AppRouter = (props) => {
           }
         />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 
