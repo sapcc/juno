@@ -78,7 +78,7 @@ const CertificateListItem = ({ item, ca }) => {
     mutate(
       {
         endpoint: endpoint,
-        ca: ca,
+        ca: ca.name,
         bearerToken: auth.attr?.id_token,
         serial: item.serial,
       },
