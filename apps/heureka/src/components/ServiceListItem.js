@@ -1,15 +1,16 @@
 import React, { useMemo } from "react"
-import { DataListRow, DataListCell, CodeBlock } from "juno-ui-components"
+import { DataListRow, DataListCell } from "juno-ui-components"
+import { Link } from "react-router-dom"
 
 const ServiceListItem = ({ item }) => {
-  const owners = React.useMemo(() => {
+  const owners = useMemo(() => {
     if (!item.Owners) return []
     return item.Owners.map((owner, i) => (
       <span key={i}>{(i ? "," : "") + owner.SapID}</span>
     ))
   }, [item.owners])
 
-  const operators = React.useMemo(() => {
+  const operators = useMemo(() => {
     if (!item.Operators) return []
     return item.Operators.map((operator, i) => (
       <span key={i}>{(i ? "," : "") + operator.SapID}</span>
@@ -18,7 +19,9 @@ const ServiceListItem = ({ item }) => {
 
   return (
     <DataListRow>
-      <DataListCell width={20}>{item.Name}</DataListCell>
+      <DataListCell width={20}>
+        <Link to={`/services/${item.ID}`}>{item.Name}</Link>
+      </DataListCell>
       <DataListCell width={20}>{owners}</DataListCell>
       <DataListCell width={20}>{operators}</DataListCell>
       <DataListCell width={40}></DataListCell>
