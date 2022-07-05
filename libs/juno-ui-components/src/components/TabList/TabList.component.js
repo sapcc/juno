@@ -1,14 +1,19 @@
 import React from "react"
 import { TabList as ReactTabList } from "react-tabs"
+import { useTabsContext } from "../Tabs/Tabs.component.js"
 import PropTypes from "prop-types"
 
 const tabListStyles = `
 	jn-flex
 	jn-h-[3.4375rem]
 `
+// focus-within:ring-1
+// focus-within:ring-theme-focus
+// focus-within:ring-inset
 
 const getVariantStyles = (variant) => {
 	switch (variant) {
+<<<<<<< HEAD
 		case "content":
 			return `
 				jn-border-b-[1px] 
@@ -16,6 +21,15 @@ const getVariantStyles = (variant) => {
 			`
 		default: 
 			return `jn-bg-theme-tab-navigation-top`
+=======
+		case "main": 
+			return `bg-theme-tab-navigation-top`
+		default: 
+			return `
+				border-b-[1px] 
+				border-theme-tab-navigation-content-bottom
+			`
+>>>>>>> main
 	}
 }
 
@@ -26,9 +40,12 @@ const TabList = ({
 	...props
 }) => {
 	
+	const tabsContext = useTabsContext() || {}
+	const tabsVariant = tabsContext.variant || variant
+	
 	return (
 		<ReactTabList 
-			className={`juno-tablist ${tabListStyles} ${getVariantStyles(variant)}`}
+			className={`juno-tablist juno-tablist-${tabsVariant} ${tabListStyles} ${getVariantStyles(tabsVariant)}`}
 			{...props} >
 				{children}
 		</ReactTabList>
@@ -39,13 +56,13 @@ TabList.tabsRole = 'TabList'
 
 TabList.propTypes = {
 	/** Pick the TabList style */
-	variant: PropTypes.oneOf(["top", "content"]),
+	variant: PropTypes.oneOf(["main", "content"]),
 	/** The individual child Tabs to render */
 	children: PropTypes.node,
 }
 
 TabList.defaultProps = {
-	variant: "top",
+	variant: "content",
 	children: null,
 }
 

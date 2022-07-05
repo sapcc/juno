@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 
 
 const tabStyles = `
+<<<<<<< HEAD
 	jn-flex
 	jn-font-bold
 	jn-px-[1.5625rem]
@@ -14,6 +15,15 @@ const tabStyles = `
 	focus-visible:jn-ring-theme-focus
 	focus-visible:jn-ring-offset-1
 	focus-visible:jn-ring-offset-theme-focus
+=======
+	flex
+	font-bold
+	px-[1.5625rem]
+	items-center
+	cursor-pointer
+	select-none
+	focus:outline-none
+>>>>>>> main
 `
 
 const disabledTabStyles = `

@@ -13,17 +13,17 @@ export default {
   component: Tabs,
   argTypes: {
     variant: {
+      options: ["content", "main"],
       control: {
         type: "radio",
-        options: ["content", "top"],
       },
     },
   },
 }
 
-const Template = ({variant, tabs, tabpanels, ...args}) => (
+const Template = ({tabs, tabpanels, ...args}) => (
   <Tabs {...args} >
-    <TabList variant={variant}>
+    <TabList>
       {tabs.map((tab, t) => (
         <Tab {...tab} key={`t-${t}`} ></Tab>
       ))}
@@ -36,22 +36,6 @@ const Template = ({variant, tabs, tabpanels, ...args}) => (
 
 export const Default = Template.bind({})
 Default.args = {
-  variant: null,
-  tabs: [
-    { ...DefaultTabStory.args, children: "Tab 1"},
-    { ...DefaultTabStory.args, children: "Tab 2"},
-    { ...DefaultTabStory.args, children: "Tab 3"},
-  ],
-  tabpanels: [
-    { ...DefaultTabPanelStory.args, children: "Tab 1 panel content" },
-    { ...DefaultTabPanelStory.args, children: "Tab 2 panel content" },
-    { ...DefaultTabPanelStory.args, children: "Tab 3 panel content" },
-  ],
-}
-
-export const ContentTabs = Template.bind({})
-ContentTabs.args = {
-  variant: "content",
   tabs: [
     { ...DefaultTabStory.args, children: "Tab 1"},
     { ...DefaultTabStory.args, children: "Tab 2"},
@@ -66,7 +50,6 @@ ContentTabs.args = {
 
 export const ControlledTabs = Template.bind({})
 ControlledTabs.args = {
-  variant: null,
   tabs: [
     { ...DefaultTabStory.args, children: "Controlled Tab 1"},
     { ...DefaultTabStory.args, children: "Controlled Tab 2"},

@@ -1,0 +1,1 @@
+export { MainTabs } from "./MainTabs.component"

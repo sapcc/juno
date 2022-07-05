@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import useStore from "../store"
 import { useStore as useMessageStore } from "../messageStore"
 import {
@@ -11,15 +11,23 @@ import {
 import { getServices } from "../queries"
 import ServiceListItem from "./ServiceListItem"
 import { parseError } from "../helpers"
+import Pagination from "./Pagination"
 
 const dataListHeaderItem = `
 font-bold
 `
 
+const ITEMS_PER_PAGE = 10
+
 const ServicesList = ({}) => {
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const setMessage = useMessageStore((state) => state.setMessage)
-  const { isLoading, isError, data, error } = getServices(endpoint)
+  const [pagOffset, setPagOffset] = useState(0)
+  const { isLoading, isError, data, error } = getServices(
+    endpoint,
+    ITEMS_PER_PAGE,
+    pagOffset
+  )
 
   console.log("DATA: ", data)
 
@@ -38,6 +46,13 @@ const ServicesList = ({}) => {
     return data.Results
   }, [data])
 
+  const onPaginationChanged = (offset) => {
+    console.log("offset: ", offset)
+    if (pagOffset !== offset) {
+      setPagOffset(offset)
+    }
+  }
+
   return (
     <>
       {isLoading && !data ? (
@@ -50,25 +65,32 @@ const ServicesList = ({}) => {
           {!isError && (
             <>
               {services.length > 0 ? (
-                <DataList>
-                  <DataListRow className="relative">
-                    <DataListCell className={dataListHeaderItem} width={20}>
-                      Name
-                    </DataListCell>
-                    <DataListCell className={dataListHeaderItem} width={20}>
-                      Owners
-                    </DataListCell>
-                    <DataListCell className={dataListHeaderItem} width={20}>
-                      Operators
-                    </DataListCell>
-                    <DataListCell className={dataListHeaderItem} width={40}>
-                      Components
-                    </DataListCell>
-                  </DataListRow>
-                  {services.map((item, i) => (
-                    <ServiceListItem key={i} item={item} />
-                  ))}
-                </DataList>
+                <>
+                  <DataList>
+                    <DataListRow className="relative">
+                      <DataListCell className={dataListHeaderItem} width={20}>
+                        Name
+                      </DataListCell>
+                      <DataListCell className={dataListHeaderItem} width={20}>
+                        Owners
+                      </DataListCell>
+                      <DataListCell className={dataListHeaderItem} width={20}>
+                        Operators
+                      </DataListCell>
+                      <DataListCell className={dataListHeaderItem} width={40}>
+                        Components
+                      </DataListCell>
+                    </DataListRow>
+                    {services.map((item, i) => (
+                      <ServiceListItem key={i} item={item} />
+                    ))}
+                  </DataList>
+                  <Pagination
+                    count={data.Count}
+                    limit={ITEMS_PER_PAGE}
+                    onChanged={onPaginationChanged}
+                  />
+                </>
               ) : (
                 <Stack
                   alignment="center"
