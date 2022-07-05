@@ -13,23 +13,13 @@ const tabListStyles = `
 
 const getVariantStyles = (variant) => {
 	switch (variant) {
-<<<<<<< HEAD
-		case "content":
+		case "main": 
+			return `jn-bg-theme-tab-navigation-top`
+		default: 
 			return `
 				jn-border-b-[1px] 
 				jn-border-theme-tab-navigation-content-bottom
 			`
-		default: 
-			return `jn-bg-theme-tab-navigation-top`
-=======
-		case "main": 
-			return `bg-theme-tab-navigation-top`
-		default: 
-			return `
-				border-b-[1px] 
-				border-theme-tab-navigation-content-bottom
-			`
->>>>>>> main
 	}
 }
 
