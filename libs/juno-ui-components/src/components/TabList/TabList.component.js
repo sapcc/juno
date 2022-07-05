@@ -13,19 +13,7 @@ const tabListStyles = `
 
 const getVariantStyles = (variant) => {
 	switch (variant) {
-<<<<<<< HEAD
-		case "content":
-			return `
-				juno-tablist-content 
-				border-b-[1px] 
-				border-theme-tab-navigation-content-bottom
-			`
-		default: 
-			return `
-				juno-tablist-default 
-				bg-theme-tab-navigation-top
-			`
-=======
+
 		case "main": 
 			return `bg-theme-tab-navigation-top`
 		default: 
@@ -33,7 +21,6 @@ const getVariantStyles = (variant) => {
 				border-b-[1px] 
 				border-theme-tab-navigation-content-bottom
 			`
->>>>>>> main
 	}
 }
 

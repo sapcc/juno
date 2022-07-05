@@ -18,9 +18,5 @@ Default.args = {
 
 export const WithIcon = Template.bind({})
 WithIcon.args = {
-<<<<<<< HEAD
   children: <><Icon className="mr-2"/> Tab with an Icon</>
-=======
-  children: <><Icon className="mr-2"/>Tab with Icon</>
->>>>>>> main
 }
