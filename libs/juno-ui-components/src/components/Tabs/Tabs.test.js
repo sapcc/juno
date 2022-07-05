@@ -1,9 +1,5 @@
 import * as React from "react"
-<<<<<<< HEAD
-import { render, screen, fireEvent } from "@testing-library/react"
-=======
 import { render, screen } from "@testing-library/react"
->>>>>>> main
 import userEvent from "@testing-library/user-event"
 import { Tabs } from "./index"
 import { Tab } from "../Tab/index"

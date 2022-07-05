@@ -16,20 +16,6 @@ describe("TabList", () => {
 		expect(screen.getByRole("tablist")).toHaveClass("my-custom-class")
 	})
 	
-<<<<<<< HEAD
-	test("renders a default style TabList by default", async () => {
-		render(<TabList />)
-		expect(screen.getByRole("tablist")).toBeInTheDocument()
-		expect(screen.getByRole("tablist")).toHaveClass("juno-tablist-default")
-	})
-	
-	test("renders a content style TabList as passed", async () => {
-		render(<TabList variant="content"/>)
-		expect(screen.getByRole("tablist")).toBeInTheDocument()
-		expect(screen.getByRole("tablist")).toHaveClass("juno-tablist-content")
-	})
-	
-=======
 	test("renders a Content variant TabList by default", async () => {
 		render(<TabList />)
 		expect(screen.getByRole("tablist")).toBeInTheDocument()
@@ -42,7 +28,6 @@ describe("TabList", () => {
 		expect(screen.getByRole("tablist")).toHaveClass("juno-tablist-main")
 	})
 	
->>>>>>> main
 	test("renders all other props", async () => {
 		render(<TabList data-lolol="13" />)
 		expect(screen.getByRole("tablist")).toBeInTheDocument()
