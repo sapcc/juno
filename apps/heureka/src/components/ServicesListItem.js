@@ -2,7 +2,7 @@ import React, { useMemo } from "react"
 import { DataListRow, DataListCell } from "juno-ui-components"
 import { Link } from "react-router-dom"
 
-const ServiceListItem = ({ item }) => {
+const ServicesListItem = ({ item }) => {
   const owners = useMemo(() => {
     if (!item.Owners) return []
     return item.Owners.map((owner, i) => (
@@ -17,6 +17,11 @@ const ServiceListItem = ({ item }) => {
     ))
   }, [item.operator])
 
+  const components = React.useMemo(() => {
+    if (!item?.Components) return []
+    return item.Components
+  }, [item.Components])
+
   return (
     <DataListRow>
       <DataListCell width={20}>
@@ -24,9 +29,9 @@ const ServiceListItem = ({ item }) => {
       </DataListCell>
       <DataListCell width={20}>{owners}</DataListCell>
       <DataListCell width={20}>{operators}</DataListCell>
-      <DataListCell width={40}></DataListCell>
+      <DataListCell width={40}>{components.length}</DataListCell>
     </DataListRow>
   )
 }
 
-export default ServiceListItem
+export default ServicesListItem

@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react"
 import { Stack, Button } from "juno-ui-components"
 
-const Pagination = ({ count, limit, onChanged }) => {
+const Pagination = ({ count, limit, onChanged, isFetching }) => {
   const [offset, setOffset] = useState(0)
   const [actualPage, setactualPage] = useState(1)
 
@@ -38,7 +38,9 @@ const Pagination = ({ count, limit, onChanged }) => {
   return (
     <>
       <Stack alignment="center" className="mt-4" distribution="end">
+        {isFetching ? <span> Loading...</span> : null}{" "}
         <Button
+          className="ml-4"
           disabled={actualPage === 1}
           label="<"
           onClick={onPrevChanged}

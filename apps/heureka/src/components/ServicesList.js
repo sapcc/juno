@@ -9,9 +9,10 @@ import {
   Spinner,
 } from "juno-ui-components"
 import { getServices } from "../queries"
-import ServiceListItem from "./ServiceListItem"
+import ServicesListItem from "./ServicesListItem"
 import { parseError } from "../helpers"
 import Pagination from "./Pagination"
+import ListToolBar from "./ListToolBar"
 
 const dataListHeaderItem = `
 font-bold
@@ -23,13 +24,13 @@ const ServicesList = ({}) => {
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const setMessage = useMessageStore((state) => state.setMessage)
   const [pagOffset, setPagOffset] = useState(0)
-  const { isLoading, isError, data, error } = getServices(
+  const { isLoading, isError, data, error, isFetching } = getServices(
     endpoint,
     ITEMS_PER_PAGE,
     pagOffset
   )
 
-  console.log("DATA: ", data)
+  console.log("services DATA: ", data)
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
@@ -66,6 +67,7 @@ const ServicesList = ({}) => {
             <>
               {services.length > 0 ? (
                 <>
+                  <ListToolBar />
                   <DataList>
                     <DataListRow className="relative">
                       <DataListCell className={dataListHeaderItem} width={20}>
@@ -82,13 +84,14 @@ const ServicesList = ({}) => {
                       </DataListCell>
                     </DataListRow>
                     {services.map((item, i) => (
-                      <ServiceListItem key={i} item={item} />
+                      <ServicesListItem key={i} item={item} />
                     ))}
                   </DataList>
                   <Pagination
                     count={data.Count}
                     limit={ITEMS_PER_PAGE}
                     onChanged={onPaginationChanged}
+                    isFetching={isFetching}
                   />
                 </>
               ) : (
