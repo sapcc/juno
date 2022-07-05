@@ -1,6 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+const filterStyles = `
+`
+
 export const Filters = ({
 	search,
 	filter,
@@ -9,18 +12,23 @@ export const Filters = ({
 	...props
 }) => { 
 	return (
-		<div className={`juno-filters ${className}`} {...props}>
+		<div className={`juno-filters ${filterStyles} ${className}`} {...props}>
 			{ children }
 		</div>
 	)
 }
 
 Filters.propTypes = {
+	/** Pass a SearchInput component */
 	search: PropTypes.node,
+	/** Pass an object describing the filters */
 	filters: PropTypes.string, // TBD
+	/** add custom classNames */
 	className: PropTypes.string,	
 }
 
 Filters.defaultProps = {
+	search: null,
+	filters: null,
 	className: ""
 }
