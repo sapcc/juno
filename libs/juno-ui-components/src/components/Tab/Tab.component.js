@@ -10,10 +10,6 @@ const tabStyles = `
 	jn-items-center
 	jn-cursor-pointer
 	focus:jn-outline-none 
-	focus-visible:jn-ring-2
-	focus-visible:jn-ring-theme-focus
-	focus-visible:jn-ring-offset-1
-	focus-visible:jn-ring-offset-theme-focus
 `
 
 const disabledTabStyles = `
