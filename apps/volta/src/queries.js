@@ -1,5 +1,18 @@
 import { useQuery, useMutation } from "react-query"
-import { certificates, createCertificate, revokeCertificate } from "./actions"
+import {
+  cas,
+  certificates,
+  createCertificate,
+  revokeCertificate,
+} from "./actions"
+
+// get all CAs
+export const getCAs = (bearerToken, endpoint) => {
+  return useQuery(["cas", bearerToken, endpoint], cas, {
+    // The query will not execute until the bearerToken exists
+    enabled: !!bearerToken,
+  })
+}
 
 // get all certificates
 export const getCertificates = (bearerToken, endpoint, ca) => {

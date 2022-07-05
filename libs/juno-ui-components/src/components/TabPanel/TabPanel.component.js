@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 
 
 const TabPanel = ({
+	padding,
 	children,
 	className,
 	...props

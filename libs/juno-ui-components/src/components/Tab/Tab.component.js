@@ -9,11 +9,8 @@ const tabStyles = `
 	px-[1.5625rem]
 	items-center
 	cursor-pointer
-	focus:outline-none 
-	focus-visible:ring-2
-	focus-visible:ring-theme-focus
-	focus-visible:ring-offset-1
-	focus-visible:ring-offset-theme-focus
+	select-none
+	focus:outline-none
 `
 
 const disabledTabStyles = `

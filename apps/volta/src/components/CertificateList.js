@@ -29,7 +29,7 @@ const CertificateList = ({ ca }) => {
   const { isLoading, isError, data, error } = getCertificates(
     auth.attr?.id_token,
     endpoint,
-    ca
+    ca?.name
   )
 
   // wait until we get the cert list to enable create new sso certs
@@ -65,7 +65,7 @@ const CertificateList = ({ ca }) => {
   return (
     <>
       {isLoading && !data ? (
-        <Stack alignment="center">
+        <Stack className="pt-2" alignment="center">
           <Spinner variant="primary" />
           Loading certificates...
         </Stack>
@@ -76,18 +76,19 @@ const CertificateList = ({ ca }) => {
               <ContentAreaToolbar>
                 <AddNewSSOButton />
               </ContentAreaToolbar>
-              <DataList>
+              <p>{ca?.description}</p>
+              <DataList className="mt-4">
                 <DataListRow className="relative">
-                  <DataListCell className={datListHeaderItem} width={15}>
-                    Name
+                  <DataListCell className={datListHeaderItem} width={33}>
+                    Name / ID
                   </DataListCell>
-                  <DataListCell className={datListHeaderItem} width={40}>
-                    Serial number
+                  <DataListCell className={datListHeaderItem} width={30}>
+                    Description
                   </DataListCell>
-                  <DataListCell className={datListHeaderItem} width={13}>
+                  <DataListCell className={datListHeaderItem} width={10}>
                     User name / ID
                   </DataListCell>
-                  <DataListCell className={datListHeaderItem} width={13}>
+                  <DataListCell className={datListHeaderItem} width={8}>
                     State
                   </DataListCell>
                   <DataListCell className={datListHeaderItem} width={15}>
@@ -105,18 +106,21 @@ const CertificateList = ({ ca }) => {
             </>
           )}
           {data && data.length === 0 && (
-            <Stack
-              alignment="center"
-              distribution="center"
-              direction="vertical"
-              className="mt-[10vh]"
-            >
-              <p className="text-xl">
-                It seems that no SSO certificates have been created yet.
-              </p>
-              <p className="text-xl">Do you want to create a new one?</p>
-              <AddNewSSOButton className="mt-4" />
-            </Stack>
+            <>
+              <p className="mt-4">{ca?.description}</p>
+              <Stack
+                alignment="center"
+                distribution="center"
+                direction="vertical"
+                className="mt-[10vh]"
+              >
+                <p className="text-xl">
+                  It seems that no SSO certificates have been created yet.
+                </p>
+                <p className="text-xl">Do you want to create a new one?</p>
+                <AddNewSSOButton className="mt-4" />
+              </Stack>
+            </>
           )}
         </>
       )}

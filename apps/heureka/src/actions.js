@@ -27,8 +27,8 @@ const checkStatus = (response) => {
 }
 
 export const services = ({ queryKey }) => {
-  const [_key, endpoint] = queryKey
-  return fetch(`${endpoint}/services`, {
+  const [_key, endpoint, limit, offset] = queryKey
+  return fetch(`${endpoint}/services?limit=${limit}&offset=${offset}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

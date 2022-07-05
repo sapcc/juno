@@ -7,6 +7,7 @@ import NewItemForm from "./components/NewItemForm"
 import {
   AppShell,
   Button,
+  Container,
   ContentAreaToolbar,
   IntroBox,
   Message,
@@ -81,40 +82,42 @@ const App = (props) => {
       contentHeading="Keymanager page title"
       embedded={embedded === "true"}
     >
-      {/* Set the background graphic using tailwind background image syntax as below. The image must exist at the specified location in your app */}
-      <IntroBox variant="hero" heroImage="bg-[url('img/app_bg_example.svg')]">
-        This is the fancy introbox variant for apps that have some app specific
-        flavor branding with a special background graphic.
-      </IntroBox>
-      {/* Messages always at the top of the content area or if there is a hero introbox directly underneath that */}
-      <Message>Welcome to the example app</Message>
-      {error && (
-        <Message variant="danger">
-          {error}
-          {statusCode === 404 && <>Custom error message for status code 404</>}
-        </Message>
-      )}
-      {/* Loading indicator for page content */}
-      {processing && <Spinner variant="primary" />}
-      {/* Example component using a Panel */}
-      <NewItemForm />
-      {/* Add a toolbar  */}
-      <ContentAreaToolbar>
-        <Button icon="addCircle" onClick={openNewItemForm}>
-          Add Action
-        </Button>
-      </ContentAreaToolbar>
-      Token: {props.authToken}
-      {/*
-       *
-       *
-       * CONTENT GOES HERE
-       *
-       *
-       *
-       * */}
-      Content goes here (adjust endpoint <b>{props.endpoint}</b> defined in
-      env.local)
+      <Container>
+        {/* Set the background graphic using tailwind background image syntax as below. The image must exist at the specified location in your app */}
+        <IntroBox variant="hero" heroImage="bg-[url('img/app_bg_example.svg')]">
+          This is the fancy introbox variant for apps that have some app specific
+          flavor branding with a special background graphic.
+        </IntroBox>
+        {/* Messages always at the top of the content area or if there is a hero introbox directly underneath that */}
+        <Message>Welcome to the example app</Message>
+        {error && (
+          <Message variant="danger">
+            {error}
+            {statusCode === 404 && <>Custom error message for status code 404</>}
+          </Message>
+        )}
+        {/* Loading indicator for page content */}
+        {processing && <Spinner variant="primary" />}
+        {/* Example component using a Panel */}
+        <NewItemForm />
+        {/* Add a toolbar  */}
+        <ContentAreaToolbar>
+          <Button icon="addCircle" onClick={openNewItemForm}>
+            Add Action
+          </Button>
+        </ContentAreaToolbar>
+        Token: {props.authToken}
+        {/*
+         *
+         *
+         * CONTENT GOES HERE
+         *
+         *
+         *
+         * */}
+        Content goes here (adjust endpoint <b>{props.endpoint}</b> defined in
+        env.local)
+      </Container>
     </AppShell>
   )
 }

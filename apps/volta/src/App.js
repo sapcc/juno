@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from "react"
-import { AppShell, IntroBox, PageHeader } from "juno-ui-components"
+import { AppShell, Container, PageHeader } from "juno-ui-components"
 
 import { useOidcAuth } from "oauth"
 import { QueryClient, QueryClientProvider } from "react-query"
-import CertificateList from "./components/CertificateList"
-import NewCertificate from "./components/NewCertificate"
-import Messages from "./components/Messages"
 import { StateProvider, useDispatch } from "./components/StateProvider"
 import reducers from "./reducers"
 import HeaderUser from "./components/HeaderUser"
+import Messages from "./components/Messages"
+import AppContainer from "./components/AppContainer"
 import CustomIntroBox from "./components/CustomIntroBox"
+import WellcomeView from "./components/WellcomeView"
 import {
   MessagesStateProvider,
   useMessagesDispatch,
 } from "./components/MessagesProvider"
-import WellcomeView from "./components/WellcomeView"
-
-const CA_NAME = "galvani-pki"
-const URL_STATE_KEY = "volta"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 const App = (props) => {
   const dispatch = useDispatch()
@@ -55,14 +52,19 @@ const App = (props) => {
   return (
     <QueryClientProvider client={queryClient}>
       <AppShell pageHeader={customPageHeader} contentHeading="SSO Certificates">
-        <CustomIntroBox />
-        <NewCertificate ca={CA_NAME} />
-        <Messages />
-        {loggedIn ? (
-          <CertificateList ca={CA_NAME} />
-        ) : (
-          <WellcomeView loginCallback={login} />
-        )}
+        <Container>
+          <CustomIntroBox />
+          <Messages />
+          {loggedIn ? (
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<AppContainer />} />
+              </Routes>
+            </BrowserRouter>
+          ) : (
+            <WellcomeView loginCallback={login} />
+          )}
+        </Container>
       </AppShell>
     </QueryClientProvider>
   )

@@ -5,7 +5,6 @@ const containerStyles = `
   bg-theme-content-area-bg
   relative
   grow
-  p-6
   overflow-hidden
 `
 
