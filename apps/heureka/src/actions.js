@@ -40,6 +40,20 @@ export const services = ({ queryKey }) => {
     })
 }
 
+export const service = ({ queryKey }) => {
+  const [_key, endpoint, serviceId] = queryKey
+  return fetch(`${endpoint}/services/${serviceId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(checkStatus)
+    .then((response) => {
+      return response.json()
+    })
+}
+
 export const components = ({ queryKey }) => {
   const [_key, endpoint, options] = queryKey
   // collect the options in query params format

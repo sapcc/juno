@@ -1,5 +1,5 @@
 import { useQuery } from "react-query"
-import { services, components } from "./actions"
+import { services, service, components } from "./actions"
 
 // get all services
 export const getServices = (endpoint, limit = 10, offset = 1) => {
@@ -13,9 +13,20 @@ export const getServices = (endpoint, limit = 10, offset = 1) => {
   })
 }
 
+export const getService = (endpoint, serviceId, placeholderData) => {
+  return useQuery(["service", endpoint, serviceId], service, {
+    // The query will not execute until the bearerToken exists
+    enabled: !!endpoint,
+    // Placeholder data allows a query to behave as if it already has data, similar to the initialData option,
+    // but the data is not persisted to the cache. This comes in handy for situations where you have enough partial (or fake)
+    // data to render the query successfully while the actual data is fetched in the background.
+    placeholderData: placeholderData,
+  })
+}
+
 // get all components
 export const getComponents = (endpoint, options) => {
-  return useQuery(["services", endpoint, options], components, {
+  return useQuery(["components", endpoint, options], components, {
     // The query will not execute until the bearerToken exists
     enabled: !!endpoint,
     // The data from the last successful fetch available while new data is being requested, even though the query key has changed.

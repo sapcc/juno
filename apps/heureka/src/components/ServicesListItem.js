@@ -25,7 +25,9 @@ const ServicesListItem = ({ item }) => {
   return (
     <DataListRow>
       <DataListCell width={20}>
-        <Link to={`/services/${item.ID}`}>{item.Name}</Link>
+        <Link to={`/services/${item.ID}`} state={{ placeholderData: item }}>
+          {item.Name}
+        </Link>
       </DataListCell>
       <DataListCell width={20}>{owners}</DataListCell>
       <DataListCell width={20}>{operators}</DataListCell>
