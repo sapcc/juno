@@ -3,12 +3,12 @@ import PropTypes from "prop-types"
 import { FilterInput } from "../FilterInput/FilterInput.component"
 
 const filterStyles = `
-	mb-px
+	jn-mb-px
 `
 
 const inputWrapperStyles = `
-	w-full
-	flex
+	jn-w-full
+	jn-flex
 `
 
 export const Filters = ({

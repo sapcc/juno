@@ -6,26 +6,26 @@ import { TextInput } from "../TextInput/TextInput.component"
 import { Icon } from "../Icon/Icon.component"
 
 const wrapperStyles = `
-	flex
-	relative
+	jn-flex
+	jn-relative
 `
 
 const selectStyles = `
-	rounded-r-none
+	jn-rounded-r-none
 `
 
 const textInputStyles = `
-	rounded-l-none
-	focus:z-40
-	grow
+	jn-grow
+	jn-rounded-l-none
+	focus:jn-z-40
 `
 
 const iconWrapperStyles = `
-	absolute
-	flex
-	right-2
-	top-2
-	z-50
+	jn-absolute
+	jn-flex
+	jn-right-2
+	jn-top-2
+	jn-z-50
 `
 
 export const FilterInput = ({
