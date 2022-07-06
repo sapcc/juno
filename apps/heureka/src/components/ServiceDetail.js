@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React, { useCallback, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { getService } from "../queries"
 import useStore from "../store"
@@ -12,20 +12,42 @@ import {
   Stack,
   Spinner,
 } from "juno-ui-components"
+import ComponentsList from "./ComponentsList"
+
+const Header = `
+font-bold
+`
 
 const ServiceDetail = () => {
   let { serviceId } = useParams()
   const location = useLocation()
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const setMessage = useMessageStore((state) => state.setMessage)
+  const placeholderData = location.state?.placeholderData
   const { isLoading, isError, isFetching, data, error } = getService(
     endpoint,
-    serviceId
+    serviceId,
+    placeholderData
   )
 
-  const placeholderData = location.state?.placeholderData
+  // dispatch error with useEffect because error variable will first set once all retries did not succeed
+  useEffect(() => {
+    if (error) {
+      setMessage({
+        variant: "error",
+        text: parseError(error),
+      })
+    }
+  }, [error])
+
   console.log("service detail placeholderData: ", placeholderData)
   console.log("service detail DATA: ", data)
+  console.log("isFetching: ", isFetching)
+
+  const components = React.useMemo(() => {
+    if (!data?.Components) return []
+    return data.Components
+  }, [data])
 
   return (
     <>
@@ -48,6 +70,22 @@ const ServiceDetail = () => {
                       </DataListCell>
                     </DataListRow>
                   </DataList>
+                  <p className={Header}>Vulnerabilities</p>
+                  <p className={Header}>Components</p>
+                  {components.length > 0 ? (
+                    <div className="mt-4">
+                      <ComponentsList components={components} />
+                    </div>
+                  ) : (
+                    <Stack
+                      alignment="center"
+                      distribution="center"
+                      direction="vertical"
+                      className="h-full"
+                    >
+                      <p>There is no components yet.</p>
+                    </Stack>
+                  )}
                 </>
               ) : (
                 <Stack

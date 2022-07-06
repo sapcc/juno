@@ -16,7 +16,9 @@ const ComponentsListItem = ({ item }) => {
   return (
     <DataListRow>
       <DataListCell width={20}>
-        <Link to={`/components/${item.ID}`}>{item.Name}</Link>
+        <Link to={`/components/${item.ID}`} state={{ placeholderData: item }}>
+          {item.Name}
+        </Link>
       </DataListCell>
       <DataListCell width={20}>{item.Type}</DataListCell>
       <DataListCell width={20}>{services.length}</DataListCell>
