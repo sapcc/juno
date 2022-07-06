@@ -3,11 +3,11 @@ import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 
 const datagridcellbasestyles = `
-	text-left
+	jn-text-left
 `
 
 const sorticonstyles = `
-	ml-2
+	jn-ml-2
 `
 
 export const DataGridHeadCell = ({

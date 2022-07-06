@@ -3,80 +3,80 @@ import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 
 const message = `
-	text-theme-high
-	flex
-	mb-8
-	rounded
-	leading-5
-	overflow-hidden
-	items-center
+	jn-text-theme-high
+	jn-flex
+	jn-mb-8
+	jn-rounded
+	jn-leading-5
+	jn-overflow-hidden
+	jn-items-center
 `
 
 const messageBorderStyles = `
-	w-[4px]
-	self-stretch
-	border-l-4
-	mr-6
-	shrink-0
+	jn-w-[4px]
+	jn-self-stretch
+	jn-border-l-4
+	jn-mr-6
+	jn-shrink-0
 `
 
 const messageDefault = `
-	border-theme-message-default
+	jn-border-theme-message-default
 `
 
 const messageDefaultBg = `
-	bg-theme-message-default
+	jn-bg-theme-message-default
 `
 
 const messageError = `
-	border-theme-message-error
+	jn-border-theme-message-error
 `
 
 const messageErrorBg = `
-	bg-theme-message-error
+	jn-bg-theme-message-error
 `
 
 const messageWarning = `
-	border-theme-message-warning
+	jn-border-theme-message-warning
 `
 
 const messageWarningBg = `
-	bg-theme-message-warning
+	jn-bg-theme-message-warning
 `
 
 const messageDanger = `
-	border-theme-message-danger
+	jn-border-theme-message-danger
 `
 
 const messageDangerBg = `
-	bg-theme-message-danger
+	jn-bg-theme-message-danger
 `
 
 const messageSuccess = `
-	border-theme-message-success
+	jn-border-theme-message-success
 `
 
 const messageSuccessBg = `
-	bg-theme-message-success
+	jn-bg-theme-message-success
 `
 
 const messageContentStyles = `
-	py-3
-	pr-4
-	ml-7
+	jn-py-3
+	jn-pr-4
+	jn-ml-7
 `
 
 const messageHeading = `
-	font-bold
+	jn-font-bold
 `
 
 const dismissButtonStyles = `
-	ml-auto
-	self-stretch
-	flex
-	flex-col
-	py-2.5
-	pr-2.5
+	jn-ml-auto
+	jn-self-stretch
+	jn-flex
+	jn-flex-col
+	jn-py-2.5
+	jn-pr-2.5
 `
 
 const backgroundClass = (variant) => {
@@ -179,7 +179,7 @@ export const Message = ({
           <Icon
             icon={getMuiIcon(variant)}
             color={"text-theme-" + variant}
-            className="shrink-0"
+            className="jn-shrink-0"
           />
           <div className={`juno-message-content ${messageContentStyles}`}>
             {title ? <h1 className={`${messageHeading}`}>{title}</h1> : ""}
@@ -190,7 +190,7 @@ export const Message = ({
               <Icon
                 icon="close"
                 onClick={hideMessage}
-                className="juno-message-close-button opacity-50 hover:opacity-100"
+                className="juno-message-close-button jn-opacity-50 hover:jn-opacity-100"
               />
             </div>
           )}

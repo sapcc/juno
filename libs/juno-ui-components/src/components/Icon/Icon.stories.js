@@ -20,37 +20,37 @@ const Template = (args) => <Icon {...args} />
 export const Default = Template.bind({})
 Default.args = {
   icon: "help",
-  color: "global-text",
+  color: "jn-global-text",
 }
 
 export const Info_Colored = Template.bind({})
 Info_Colored.args = {
   icon: "info",
-  color: "text-theme-info",
+  color: "jn-text-theme-info",
 }
 
 export const Danger_Colored = Template.bind({})
 Danger_Colored.args = {
   icon: "danger",
-  color: "text-theme-danger",
+  color: "jn-text-theme-danger",
 }
 
 export const Success_Colored = Template.bind({})
 Success_Colored.args = {
   icon: "success",
-  color: "text-theme-success",
+  color: "jn-text-theme-success",
 }
 
 export const Warning_Colored = Template.bind({})
 Warning_Colored.args = {
   icon: "warning",
-  color: "text-theme-warning",
+  color: "jn-text-theme-warning",
 }
 
 export const ThemeColor = Template.bind({})
 ThemeColor.args = {
   icon: "help",
-  color: "global-text",
+  color: "jn-global-text",
 }
 
 export const Smaller = Template.bind({})

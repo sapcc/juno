@@ -12,13 +12,13 @@ describe("Message", () => {
   test("renders an info Message by default if no variant passed", async () => {
     render(<Message data-testid="my-message" />)
     expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")
-    expect(screen.getByRole("img")).toHaveClass("text-theme-info")
+    expect(screen.getByRole("img")).toHaveClass("jn-text-theme-info")
   })
 
   test("renders a Message where the icon is not allowed to shrink", async () => {
     render(<Message data-testid="my-message" />)
     expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")
-    expect(screen.getByRole("img")).toHaveClass("shrink-0")
+    expect(screen.getByRole("img")).toHaveClass("jn-shrink-0")
   })
 
   test("renders a Message that can be dismissed", async () => {
@@ -99,31 +99,31 @@ describe("Message", () => {
   test("renders an info Message as passed", async () => {
     render(<Message data-testid="my-message" variant="info" />)
     expect(screen.getByTestId("my-message")).toHaveClass("juno-message-info")
-    expect(screen.getByRole("img")).toHaveClass("text-theme-info")
+    expect(screen.getByRole("img")).toHaveClass("jn-text-theme-info")
   })
 
   test("renders a warning Message as passed", async () => {
     render(<Message data-testid="my-message" variant="warning" />)
     expect(screen.getByTestId("my-message")).toHaveClass("juno-message-warning")
-    expect(screen.getByRole("img")).toHaveClass("text-theme-warning")
+    expect(screen.getByRole("img")).toHaveClass("jn-text-theme-warning")
   })
 
   test("renders a danger message as passed", async () => {
     render(<Message data-testid="my-message" variant="danger" />)
     expect(screen.getByTestId("my-message")).toHaveClass("juno-message-danger")
-    expect(screen.getByRole("img")).toHaveClass("text-theme-danger")
+    expect(screen.getByRole("img")).toHaveClass("jn-text-theme-danger")
   })
 
   test("renders an error Message as passed", async () => {
     render(<Message data-testid="my-message" variant="error" />)
     expect(screen.getByTestId("my-message")).toHaveClass("juno-message-error")
-    expect(screen.getByRole("img")).toHaveClass("text-theme-error")
+    expect(screen.getByRole("img")).toHaveClass("jn-text-theme-error")
   })
 
   test("renders a success Message as passed", async () => {
     render(<Message data-testid="my-message" variant="success" />)
     expect(screen.getByTestId("my-message")).toHaveClass("juno-message-success")
-    expect(screen.getByRole("img")).toHaveClass("text-theme-success")
+    expect(screen.getByRole("img")).toHaveClass("jn-text-theme-success")
   })
 
   test("renders a title as passed", async () => {

@@ -10,8 +10,8 @@ const codeBlockBaseStyles = `
 const codeContainerStyles = (wrap) => {	
 
 	return `
-		p-6
-		${wrap ? "break-words break-all whitespace-pre-wrap" : "overflow-x-auto"}
+		jn-p-6
+		${wrap ? "jn-break-words jn-break-all jn-whitespace-pre-wrap" : "jn-overflow-x-auto"}
 	`
 }
 
@@ -20,18 +20,18 @@ const codeContainerSize = (size) => {
 	switch(size) {
 		case "small":
 			return `
-				max-h-64
-				overflow-y-auto
+				jn-max-h-64
+				jn-overflow-y-auto
 			`		
 		case "medium":
 			return `
-				max-h-[32rem]
-				overflow-y-auto
+				jn-max-h-[32rem]
+				jn-overflow-y-auto
 			`		
 		case "large":
 			return `
-				max-h-[56rem]
-				overflow-y-auto
+				jn-max-h-[56rem]
+				jn-overflow-y-auto
 			`	
 		default:
 			return ""	
@@ -42,33 +42,33 @@ const codeContainerSize = (size) => {
 
 
 const codeStyles = `
-	text-sm
+	jn-text-sm
 `
 
 const titleBarStyles = `
-	border-b-[1px]
-	border-theme-codeblock-bar
+	jn-border-b-[1px]
+	jn-border-theme-codeblock-bar
 `
 
 const tabStyles = `
-	font-bold 
-	text-sm 
-	inline-block 
-	px-6 
-	py-2
+	jn-font-bold 
+	jn-text-sm 
+	jn-inline-block 
+	jn-px-6 
+	jn-py-2
 `
 
 const tabStylesActive = `
-	border-b-[3px]
+	jn-border-b-[3px]
 `
 
 const bottomBarStyles = `
-	flex 
-	justify-end 
-	px-3
-	py-2 
-	border-t-[1px]
-	border-theme-codeblock-bar
+	jn-flex 
+	jn-justify-end 
+	jn-px-3
+	jn-py-2 
+	jn-border-t-[1px]
+	jn-border-theme-codeblock-bar
 `
 
 
@@ -107,7 +107,7 @@ export const CodeBlock = ({
 	
 	const copy = (
 		<div className={`juno-codeblock-bottombar ${bottomBarStyles}`}>
-			<span className={`font-bold text-sm mr-4 mt-1`} >{ isCopied ? "Copied!" : "" }</span>
+			<span className={`jn-font-bold jn-text-sm jn-mr-4 jn-mt-1`} >{ isCopied ? "Copied!" : "" }</span>
 			<Icon icon="contentCopy" onClick={handleCopyClick} />
 		</div>
 	)

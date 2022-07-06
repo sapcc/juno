@@ -4,15 +4,15 @@ import { useDataListContext } from "../DataList/DataList.component.js"
 import { DataListCheckboxCell } from "../DataListCheckboxCell/DataListCheckboxCell.component.js" 
 
 const datalistrowbasestyles = `
-	flex
-	rounded-[3px]
-	border
-	border-theme-datalist-row
-	mb-2
+	jn-flex
+	jn-rounded-[3px]
+	jn-border
+	jn-border-theme-datalist-row
+	jn-mb-2
 `
 
 const rowselectedstyle = `
-	bg-theme-datalistrow-selected
+	jn-bg-theme-datalistrow-selected
 `
 
 export const DataListRow = ({

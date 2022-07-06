@@ -12,7 +12,7 @@ describe("PanelFooter", () => {
   test("renders a panel footer with flex layout", async () => {
     render(<PanelFooter data-testid="panel-footer" />)
     expect(screen.getByTestId("panel-footer")).toBeInTheDocument()
-    expect(screen.getByTestId("panel-footer")).toHaveClass("flex")
+    expect(screen.getByTestId("panel-footer")).toHaveClass("jn-flex")
   })
 
   test("renders children as passed", async () => {

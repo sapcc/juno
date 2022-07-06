@@ -12,13 +12,13 @@ describe("ContentContainer", () => {
   test("renders a content container with flex col layout", async () => {
     render(<ContentContainer data-testid="content-container" />)
     expect(screen.getByTestId("content-container")).toBeInTheDocument()
-    expect(screen.getByTestId("content-container")).toHaveClass("flex-col")
+    expect(screen.getByTestId("content-container")).toHaveClass("jn-flex-col")
   })
 
   test("renders a content container with flex grow", async () => {
     render(<ContentContainer data-testid="content-container" />)
     expect(screen.getByTestId("content-container")).toBeInTheDocument()
-    expect(screen.getByTestId("content-container")).toHaveClass("grow")
+    expect(screen.getByTestId("content-container")).toHaveClass("jn-grow")
   })
 
   test("renders children as passed", async () => {
@@ -46,6 +46,6 @@ describe("ContentContainer", () => {
   test("renders a content container as container when largest breakpoint is reached", async () => {
     render(<ContentContainer data-testid="content-container" />)
     expect(screen.getByTestId("content-container")).toBeInTheDocument()
-    expect(screen.getByTestId("content-container")).toHaveClass("2xl:container")
+    expect(screen.getByTestId("content-container")).toHaveClass("2xl:jn-container")
   })
 })

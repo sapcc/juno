@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { Panel } from "./index"
 
-const closedClass = "translate-x-[100%]"
+const closedClass = "jn-translate-x-[100%]"
 
 describe("Panel", () => {
   test("renders a panel", async () => {

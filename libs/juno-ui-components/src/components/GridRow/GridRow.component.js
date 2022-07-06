@@ -2,9 +2,9 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const gridRowBaseStyles = `
-	flex
-	flex-wrap
-	m-grid-row
+	jn-flex
+	jn-flex-wrap
+	jn-m-grid-row
 `
 
 export const GridRow = ({

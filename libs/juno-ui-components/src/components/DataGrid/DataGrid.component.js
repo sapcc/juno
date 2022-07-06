@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { DataGridToolbar } from "../DataGridToolbar/DataGridToolbar.component.js"
 
 const datagridfullwidthstyles = `
-	w-full
+	jn-w-full
 `
 
 const DataGridContext = React.createContext()

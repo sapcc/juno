@@ -3,21 +3,21 @@ import PropTypes from "prop-types"
 import CCloudShape from "../../img/ccloud_shape.svg"
 
 const basePageFooter = `
-  flex
-  relative
-  bg-theme-global-bg
-  min-h-[3.25rem]
-  pl-6
-  pr-24
-  py-5
-  z-50
+  jn-flex
+  jn-relative
+  jn-bg-theme-global-bg
+  jn-min-h-[3.25rem]
+  jn-pl-6
+  jn-pr-24
+  jn-py-5
+  jn-z-50
 `
 
 const logoStyles = `
-  h-[2.625rem]
-  absolute
-  right-0
-  bottom-0
+  jn-h-[2.625rem]
+  jn-absolute
+  jn-right-0
+  jn-bottom-0
 `
 
 

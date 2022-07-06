@@ -2,12 +2,12 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const panelBodyClasses = `
-  overflow-auto
+  jn-overflow-auto
 `
 
 const bodyContentClasses = `
-  px-8
-  py-4
+  jn-px-8
+  jn-py-4
 `
 
 /**

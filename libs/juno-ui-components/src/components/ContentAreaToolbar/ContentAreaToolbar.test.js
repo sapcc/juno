@@ -13,7 +13,7 @@ describe("ContentAreaToolbar", () => {
     render(<ContentAreaToolbar data-testid="content-area-toolbar" />)
     expect(screen.getByTestId("content-area-toolbar")).toBeInTheDocument()
     expect(screen.getByTestId("content-area-toolbar")).toHaveClass(
-      "bg-theme-content-area-toolbar-bg"
+      "jn-bg-theme-content-area-toolbar-bg"
     )
   })
 

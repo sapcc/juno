@@ -3,24 +3,24 @@ import PropTypes from "prop-types"
 import SAPLogo from "../../img/sap_logo.svg"
 
 const basePageHeader = `
-  flex
-  items-center
-  bg-juno-grey-blue-11
-  sticky
-  top-0
-  px-6
-  py-3
-  z-50
+  jn-flex
+  jn-items-center
+  jn-bg-juno-grey-blue-11
+  jn-sticky
+  jn-top-0
+  jn-px-6
+  jn-py-3
+  jn-z-50
 `
 
 const logoStyles = `
-  h-6
-  mr-3
+  jn-h-6
+  jn-mr-3
 `
 
 const headingStyles = `
-  text-lg
-  text-theme-high
+  jn-text-lg
+  jn-text-theme-high
 `
 
 /**

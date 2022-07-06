@@ -7,7 +7,7 @@ describe("PageHeader", () => {
   test("renders a simple Page Header and has flexbox layout", async () => {
 		render(<PageHeader />)
 		expect(screen.getByRole("banner")).toBeInTheDocument()
-		expect(screen.getByRole("banner")).toHaveClass("flex")
+		expect(screen.getByRole("banner")).toHaveClass("jn-flex")
 	})
 
   test("renders a Page Header with heading as passed", async () => {

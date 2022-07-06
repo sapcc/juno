@@ -4,20 +4,20 @@ import { Radio } from "../Radio/index.js"
 import { Label } from "../Label/index.js"
 
 const radiorow = `
-	flex
-	flex-row
-  mb-1
+	jn-flex
+	jn-flex-row
+  jn-mb-1
 `
 
 const radiocontainerstyles = `
-	mt-1
-	mr-2
+	jn-mt-1
+	jn-mr-2
 `
 
 const helptextstyles = `
-	text-xs
-	text-theme-light
-	mt-1
+	jn-text-xs
+	jn-text-theme-light
+	jn-mt-1
 `
 
 /** A controlled radio row containing a radio, associated label, and structural markup */

@@ -6,36 +6,36 @@ import PropTypes from "prop-types"
 /* Default: Others, e.g. Radio, checkbox, etc. */
 
 const labelstyles = `
-	text-theme-high
+	jn-text-theme-high
 `
 
 const stackedlabelstyles = `
-	text-sm
+	jn-text-sm
 `
 
 const floatinglabelstyles = `
 	floating-label
-	text-base
+	jn-text-base
 `
 
 const defaultlabelstyles = `
-	text-base
+	jn-text-base
 `
 
 const requiredstyles = `
-	inline-block
-	w-1
-	h-1
-	rounded-full
-	align-top
-	ml-1
-	mt-2
-	bg-theme-required
+	jn-inline-block
+	jn-w-1
+	jn-h-1
+	jn-rounded-full
+	jn-align-top
+	jn-ml-1
+	jn-mt-2
+	jn-bg-theme-required
 `
 // namespace disabled label?
 const disabledstyles = `
 	disabled 
-	opacity-50
+	jn-opacity-50
 `
 
 const variantStyles = (variant) => {

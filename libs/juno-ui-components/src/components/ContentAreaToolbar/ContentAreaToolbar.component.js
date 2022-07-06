@@ -3,13 +3,13 @@ import PropTypes from "prop-types"
 
 
 const toolbarStyles = `
-  bg-theme-content-area-toolbar-bg
-  py-3
-  px-6
-  mb-4
-  flex
-  items-center
-  justify-end
+  jn-bg-theme-content-area-toolbar-bg
+  jn-py-3
+  jn-px-6
+  jn-mb-4
+  jn-flex
+  jn-items-center
+  jn-justify-end
 `
 
 /**

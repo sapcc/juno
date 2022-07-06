@@ -2,11 +2,11 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const containerStyles = `
-  relative
-  grow
-  flex
-  flex-col
-  overflow-hidden
+  jn-relative
+  jn-grow
+  jn-flex
+  jn-flex-col
+  jn-overflow-hidden
 `
 
 /**

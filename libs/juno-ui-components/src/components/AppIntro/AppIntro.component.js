@@ -2,10 +2,10 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const introStyles = `
-  pt-16
-  pb-14
-  text-xl
-  pr-[45%]
+  jn-pt-16
+  jn-pb-14
+  jn-text-xl
+  in-pr-[45%]
 `
 
 /**

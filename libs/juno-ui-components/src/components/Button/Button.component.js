@@ -6,38 +6,38 @@ import { knownIcons } from "../Icon/Icon.component.js"
 import { Spinner } from "../Spinner/index.js"
 
 const btnBase = `
-  font-bold
-  inline-flex 
-  justify-center 
-  rounded-md
-  shadow-sm 
-  w-auto 
-  focus:outline-none 
-  focus-visible:ring-2
-  focus-visible:ring-theme-focus
-  focus-visible:ring-offset-1
-  focus-visible:ring-offset-theme-focus
-  disabled:cursor-not-allowed
-  disabled:pointer-events-none
+  jn-font-bold
+  jn-inline-flex 
+  jn-justify-center 
+  jn-rounded-md
+  jn-shadow-sm 
+  jn-w-auto 
+  focus:jn-outline-none 
+  focus-visible:jn-ring-2
+  focus-visible:jn-ring-theme-focus
+  focus-visible:jn-ring-offset-1
+  focus-visible:jn-ring-offset-theme-focus
+  disabled:jn-cursor-not-allowed
+  disabled:jn-pointer-events-none
 `
 
 const btnSmall = `
-  text-sm
-  px-sm
-  py-[0.3125rem]
+  jn-text-sm
+  jn-px-sm
+  jn-py-[0.3125rem]
 `
 
 const btnDefaultSize = `
-  text-base
-  px-[0.625rem] 
-  py-[0.4375rem]
+  jn-text-base
+  jn-px-[0.625rem] 
+  jn-py-[0.4375rem]
 `
 
 const btnLarge = `
-  text-2xl
-  pl-4
-  pr-lg
-  py-sm
+  jn-text-2xl
+  jn-pl-4
+  jn-pr-lg
+  jn-py-sm
 `
 
 const sizeClass = (size) => {

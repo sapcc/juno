@@ -12,13 +12,13 @@ describe("ContentAreaWrapper", () => {
   test("renders a content area with flex grow", async () => {
     render(<ContentAreaWrapper data-testid="content-area-wrapper" />)
     expect(screen.getByTestId("content-area-wrapper")).toBeInTheDocument()
-    expect(screen.getByTestId("content-area-wrapper")).toHaveClass("grow")
+    expect(screen.getByTestId("content-area-wrapper")).toHaveClass("jn-grow")
   })
 
   test("renders a content area with flex col layout", async () => {
     render(<ContentAreaWrapper data-testid="content-area-wrapper" />)
     expect(screen.getByTestId("content-area-wrapper")).toBeInTheDocument()
-    expect(screen.getByTestId("content-area-wrapper")).toHaveClass("flex-col")
+    expect(screen.getByTestId("content-area-wrapper")).toHaveClass("jn-flex-col")
   })
 
   test("renders children as passed", async () => {

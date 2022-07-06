@@ -2,17 +2,17 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 
 const textareastyles = `
-	bg-theme-textinput
-	text-theme-textinput
-	text-base
-	leading-4
-	p-3
-	rounded-3px
-	h-[14rem]
-	focus:outline-none
-	focus:ring-2
-	focus:ring-theme-focus
-	disabled:opacity-50
+	jn-bg-theme-textinput
+	jn-text-theme-textinput
+	jn-text-base
+	jn-leading-4
+	jn-p-3
+	jn-rounded-3px
+	jn-h-[14rem]
+	focus:jn-outline-none
+	focus:jn-ring-2
+	focus:jn-ring-theme-focus
+	disabled:jn-opacity-50
 `
 
 /** A controlled  Textarea */
