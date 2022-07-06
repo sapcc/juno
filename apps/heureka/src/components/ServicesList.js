@@ -2,6 +2,10 @@ import React, { useMemo } from "react"
 import { DataList, DataListRow, DataListCell, Stack } from "juno-ui-components"
 import ServicesListItem from "./ServicesListItem"
 
+const dataListHeader = `
+bg-theme-background-lvl-2
+`
+
 const dataListHeaderItem = `
 font-bold
 `
@@ -15,14 +19,14 @@ const ServicesList = ({ services }) => {
   return (
     <>
       <DataList>
-        <DataListRow className="relative">
+        <DataListRow className={dataListHeader}>
           <DataListCell className={dataListHeaderItem} width={20}>
             Name
           </DataListCell>
           <DataListCell className={dataListHeaderItem} width={20}>
             Owners
           </DataListCell>
-          <DataListCell className={dataListHeaderItem} width={20}>
+          <DataListCell className={dataListHeaderItem} auto>
             Operators
           </DataListCell>
           <DataListCell className={dataListHeaderItem} width={40}>

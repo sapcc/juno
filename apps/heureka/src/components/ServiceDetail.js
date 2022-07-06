@@ -13,9 +13,12 @@ import {
   Spinner,
 } from "juno-ui-components"
 import ComponentsList from "./ComponentsList"
+import VulnerabilitiesList from "./VulnerabilitiesList"
 
 const Header = `
 font-bold
+mt-4
+text-lg
 `
 
 const ServiceDetail = () => {
@@ -50,7 +53,7 @@ const ServiceDetail = () => {
   }, [data])
 
   return (
-    <>
+    <div className="mt-4">
       {isLoading && !data ? (
         <Stack alignment="center">
           <Spinner variant="primary" />
@@ -70,22 +73,14 @@ const ServiceDetail = () => {
                       </DataListCell>
                     </DataListRow>
                   </DataList>
-                  <p className={Header}>Vulnerabilities</p>
-                  <p className={Header}>Components</p>
-                  {components.length > 0 ? (
-                    <div className="mt-4">
-                      <ComponentsList components={components} />
-                    </div>
-                  ) : (
-                    <Stack
-                      alignment="center"
-                      distribution="center"
-                      direction="vertical"
-                      className="h-full"
-                    >
-                      <p>There is no components yet.</p>
-                    </Stack>
-                  )}
+                  <p className={Header}>Vulnerabilities in this service</p>
+                  <div className="mt-4">
+                    <VulnerabilitiesList components={components} />
+                  </div>
+                  <p className={Header}>All components in this service</p>
+                  <div className="mt-4">
+                    <ComponentsList components={components} />
+                  </div>
                 </>
               ) : (
                 <Stack
@@ -101,7 +96,7 @@ const ServiceDetail = () => {
           )}
         </>
       )}
-    </>
+    </div>
   )
 }
 

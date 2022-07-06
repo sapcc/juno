@@ -47,7 +47,7 @@ const Services = ({}) => {
   return (
     <>
       {isLoading && !data ? (
-        <Stack alignment="center">
+        <Stack className="mt-4" alignment="center">
           <Spinner variant="primary" />
           Loading services...
         </Stack>

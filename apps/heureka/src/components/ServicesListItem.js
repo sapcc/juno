@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { DataListRow, DataListCell } from "juno-ui-components"
+import { DataListRow, DataListCell, Icon, Badge } from "juno-ui-components"
 import { Link } from "react-router-dom"
 
 const ServicesListItem = ({ item }) => {
@@ -30,8 +30,13 @@ const ServicesListItem = ({ item }) => {
         </Link>
       </DataListCell>
       <DataListCell width={20}>{owners}</DataListCell>
-      <DataListCell width={20}>{operators}</DataListCell>
-      <DataListCell width={40}>{components.length}</DataListCell>
+      <DataListCell auto>{operators}</DataListCell>
+      <DataListCell width={40}>
+        <Badge text="default">
+          <Icon className="mr-2" icon="autoAwesomeMotion" />
+          {components.length}
+        </Badge>
+      </DataListCell>
     </DataListRow>
   )
 }

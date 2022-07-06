@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { DataListRow, DataListCell } from "juno-ui-components"
+import { DataListRow, DataListCell, Badge, Icon } from "juno-ui-components"
 import { Link } from "react-router-dom"
 
 const ComponentsListItem = ({ item }) => {
@@ -15,14 +15,19 @@ const ComponentsListItem = ({ item }) => {
 
   return (
     <DataListRow>
-      <DataListCell width={20}>
+      <DataListCell width={40}>
         <Link to={`/components/${item.ID}`} state={{ placeholderData: item }}>
           {item.Name}
         </Link>
       </DataListCell>
       <DataListCell width={20}>{item.Type}</DataListCell>
-      <DataListCell width={20}>{services.length}</DataListCell>
-      <DataListCell width={40}>{vulnerabilities.length}</DataListCell>
+      <DataListCell width={20}>
+        <Badge text="default">
+          <Icon className="mr-2" icon="autoAwesomeMosaic" />
+          {services.length}
+        </Badge>
+      </DataListCell>
+      <DataListCell width={20}>{vulnerabilities.length}</DataListCell>
     </DataListRow>
   )
 }

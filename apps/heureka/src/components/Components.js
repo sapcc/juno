@@ -49,7 +49,7 @@ const Components = () => {
   return (
     <>
       {isLoading && !data ? (
-        <Stack alignment="center">
+        <Stack className="mt-4" alignment="center">
           <Spinner variant="primary" />
           Loading components...
         </Stack>
