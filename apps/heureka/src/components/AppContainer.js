@@ -1,6 +1,15 @@
 import React from "react"
-import { Tabs, TabList, Tab, TabPanel, Icon } from "juno-ui-components"
+import {
+  Tabs,
+  TabList,
+  Tab,
+  TabPanel,
+  Icon,
+  Container,
+} from "juno-ui-components"
 import { useNavigate } from "react-router-dom"
+import Breadcrumb from "./Breadcrumb"
+import Messages from "./Messages"
 
 const AppContainer = ({ tabIndex, component }) => {
   let navigate = useNavigate()
@@ -24,7 +33,11 @@ const AppContainer = ({ tabIndex, component }) => {
         </TabList>
         <TabPanel />
         <TabPanel />
-        {component}
+        <Container>
+          <Breadcrumb />
+          <Messages />
+          {component}
+        </Container>
       </Tabs>
     </>
   )

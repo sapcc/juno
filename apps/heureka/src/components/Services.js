@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react"
 import useStore from "../store"
 import { useStore as useMessageStore } from "../messageStore"
-import { Stack, Spinner } from "juno-ui-components"
+import { Stack, Spinner, Container } from "juno-ui-components"
 import { getServices } from "../queries"
 import { parseError } from "../helpers"
 import Pagination from "./Pagination"
@@ -45,9 +45,9 @@ const Services = ({}) => {
   }
 
   return (
-    <>
+    <Container px={false}>
       {isLoading && !data ? (
-        <Stack className="mt-4" alignment="center">
+        <Stack alignment="center">
           <Spinner variant="primary" />
           Loading services...
         </Stack>
@@ -64,7 +64,7 @@ const Services = ({}) => {
           />
         </>
       )}
-    </>
+    </Container>
   )
 }
 

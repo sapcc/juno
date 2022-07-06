@@ -11,6 +11,7 @@ import {
   DataListCell,
   Stack,
   Spinner,
+  Container,
 } from "juno-ui-components"
 import ComponentsList from "./ComponentsList"
 import VulnerabilitiesList from "./VulnerabilitiesList"
@@ -53,7 +54,7 @@ const ServiceDetail = () => {
   }, [data])
 
   return (
-    <div className="mt-4">
+    <Container px={false}>
       {isLoading && !data ? (
         <Stack alignment="center">
           <Spinner variant="primary" />
@@ -96,7 +97,7 @@ const ServiceDetail = () => {
           )}
         </>
       )}
-    </div>
+    </Container>
   )
 }
 

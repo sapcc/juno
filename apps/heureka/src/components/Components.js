@@ -4,7 +4,7 @@ import useStore from "../store"
 import { useStore as useMessageStore } from "../messageStore"
 import { parseError } from "../helpers"
 import ListToolBar from "./ListToolBar"
-import { Stack, Spinner } from "juno-ui-components"
+import { Stack, Spinner, Container } from "juno-ui-components"
 import Pagination from "./Pagination"
 import ComponentsList from "./ComponentsList"
 
@@ -47,9 +47,9 @@ const Components = () => {
   }
 
   return (
-    <>
+    <Container px={false}>
       {isLoading && !data ? (
-        <Stack className="mt-4" alignment="center">
+        <Stack alignment="center">
           <Spinner variant="primary" />
           Loading components...
         </Stack>
@@ -66,7 +66,7 @@ const Components = () => {
           />
         </>
       )}
-    </>
+    </Container>
   )
 }
 
