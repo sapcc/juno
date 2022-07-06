@@ -15,7 +15,7 @@ const Template = (args) => (
     <Panel {...args}>
       <PanelBody>Panel Body Content</PanelBody>
     </Panel>
-    <ContentArea className="dummy-css-ignore h-[150px]">
+    <ContentArea className="dummy-css-ignore jn-h-[150px]">
       Content Area
     </ContentArea>
   </ContentAreaWrapper>
