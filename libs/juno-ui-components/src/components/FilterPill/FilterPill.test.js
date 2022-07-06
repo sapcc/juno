@@ -10,13 +10,13 @@ describe("FilterPill", () => {
 		expect(screen.getByTestId("my-filterpill")).toHaveClass("juno-filterpill")
 	})
 	
-	test("renders a key label as passed", async () => {
-		render(<FilterPill keyLabel="My FilterPill Key" />)
+	test("renders a filter key label as passed", async () => {
+		render(<FilterPill FilterKeyLabel="My FilterPill Key" />)
 		expect(screen.getByText("My FilterPill Key")).toBeInTheDocument()
 	})
 	
-	test("renders a value label as passed", async () => {
-		render(<FilterPill valueLabel="My FilterPill Value" />)
+	test("renders a filter value label as passed", async () => {
+		render(<FilterPill FilterValueLabel="My FilterPill Value" />)
 		expect(screen.getByText("My FilterPill Value")).toBeInTheDocument()
 	})
 	
