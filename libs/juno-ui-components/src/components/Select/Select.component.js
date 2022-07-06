@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 
 const selectstyles = `
+<<<<<<< HEAD
 	w-full
 	bg-theme-select
 	text-theme-high
@@ -21,21 +22,40 @@ const selectstyles = `
 	focus:ring-2
 	focus:ring-theme-focus
 	disabled:opacity-50
+=======
+	jn-bg-theme-select
+	jn-text-theme-high
+	jn-appearance-none
+	jn-text-base
+	jn-pl-4
+	jn-pr-9
+	jn-h-[2.375rem]
+	jn-border
+	jn-border-transparent
+	jn-rounded-3px
+	jn-bg-icon-arrow-down
+	jn-bg-right
+	jn-bg-no-repeat
+	focus:jn-outline-none
+	focus:jn-ring-2
+	focus:jn-ring-theme-focus
+	disabled:jn-opacity-50
+>>>>>>> main
 `
 
 const wrapperstyles = `
-	relative
+	jn-relative
 `
 
 const iconstyles = `
-	absolute
-	right-2
-	top-2
-	pointer-events-none
+	jn-absolute
+	jn-right-2
+	jn-top-2
+	jn-pointer-events-none
 `
 
 const disablediconstyles = `
-	opacity-50
+	jn-opacity-50
 `
 
 

@@ -2,13 +2,13 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const formStyles = `
-	mb-8
+	jn-mb-8
 `
 
 const formHeading = `
-	text-2xl
-	font-bold
-	mb-4
+	jn-text-2xl
+	jn-font-bold
+	jn-mb-4
 `
 
 /** A Form to hold FormSections and/or FormGroups with an optional title. */

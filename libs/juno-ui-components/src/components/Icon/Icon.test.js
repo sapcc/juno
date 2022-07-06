@@ -35,7 +35,7 @@ describe("Icon", () => {
   test("renders an Icon with color as passed", async () => {
     render(<Icon color="text-juno-blue" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
-    expect(screen.getByRole("img")).toHaveClass("text-juno-blue")
+    expect(screen.getByRole("img")).toHaveClass("jn-text-juno-blue")
   })
 
   test("renders an Icon with default size", async () => {

@@ -3,13 +3,13 @@ import PropTypes from "prop-types"
 import { Label } from "../Label/index.js"
 
 const radiogroupstyles = `
-	mb-4
-	last:mb-0
+	jn-mb-4
+	last:jn-mb-0
 `
 
 const radiogrouplabelstyles = `
-	inline-block
-	mb-2
+	jn-inline-block
+	jn-mb-2
 `
 
 export const RadioGroup = ({

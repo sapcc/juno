@@ -1,10 +1,11 @@
 import React from "react"
 import { ContentAreaToolbar, SearchInput } from "juno-ui-components"
 
-const ListToolBar = () => {
+const ListToolBar = ({ disabled }) => {
   return (
     <ContentAreaToolbar>
       <SearchInput
+        disabled={disabled}
         onChange={function noRefCheck() {}}
         onClick={function noRefCheck() {}}
         onKeyPress={function noRefCheck() {}}

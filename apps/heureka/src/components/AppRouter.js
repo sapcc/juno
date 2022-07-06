@@ -1,9 +1,9 @@
 import React from "react"
 import { HashRouter, BrowserRouter, Routes, Route } from "react-router-dom"
 import AppContainer from "./AppContainer"
-import ServicesList from "./ServicesList"
+import Services from "./Services"
 import ServiceDetail from "./ServiceDetail"
-import ComponentsList from "./ComponentsList"
+import Components from "./Components"
 import ComponentDetail from "./ComponentDetail"
 
 const AppRouter = (props) => {
@@ -12,11 +12,11 @@ const AppRouter = (props) => {
       <Routes>
         <Route
           path="/"
-          element={<AppContainer tabIndex={0} component={<ServicesList />} />}
+          element={<AppContainer tabIndex={0} component={<Services />} />}
         />
         <Route
           path="services"
-          element={<AppContainer tabIndex={0} component={<ServicesList />} />}
+          element={<AppContainer tabIndex={0} component={<Services />} />}
         />
         <Route
           path="services/:serviceId"
@@ -24,7 +24,7 @@ const AppRouter = (props) => {
         />
         <Route
           path="components"
-          element={<AppContainer tabIndex={1} component={<ComponentsList />} />}
+          element={<AppContainer tabIndex={1} component={<Components />} />}
         />
         <Route
           path="components/:componentId"

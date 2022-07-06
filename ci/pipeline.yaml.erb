@@ -109,18 +109,22 @@ resources:
   - name: dashboard.version
     type: time-version-resource
     check_every: 525600h
+    source: { key: juno-dashboard-version } # disambiguate from other time-version resources
 
   - name: mercury.version
     type: time-version-resource
     check_every: 525600h
+    source: { key: juno-mercuri-version } # disambiguate from other time-version resources
 
   - name: juno-ui-components.version
     type: time-version-resource
     check_every: 525600h
+    source: { key: juno-ui-components-version } # disambiguate from other time-version resources
 
   - name: cdn.version
     type: time-version-resource
     check_every: 525600h
+    source: { key: juno-cdn-version } # disambiguate from other time-version resources
 
   - name: juno-dashboard.image
     type: docker-image

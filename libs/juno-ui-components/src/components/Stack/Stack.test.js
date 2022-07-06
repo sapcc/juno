@@ -8,7 +8,7 @@ describe("Stack", () => {
 		render(<Stack data-testid="my-stack"></Stack>)
 		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
 		expect(screen.getByTestId("my-stack")).toHaveClass(
-      "md:flex"
+      "md:jn-flex"
     )
 	})
 
@@ -16,8 +16,8 @@ describe("Stack", () => {
 		render(<Stack data-testid="my-stack"></Stack>)
 		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
     expect(screen.getByTestId("my-stack")).toHaveClass(
-      "md:flex-row",
-      "gap-0"
+      "md:jn-flex-row",
+      "jn-gap-0"
     )
 	})
 
@@ -25,8 +25,8 @@ describe("Stack", () => {
 		render(<Stack data-testid="my-stack" direction="vertical"></Stack>)
 		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
     expect(screen.getByTestId("my-stack")).toHaveClass(
-      "flex-col",
-      "gap-0"
+      "jn-flex-col",
+      "jn-gap-0"
     )
 	})
 
@@ -34,7 +34,7 @@ describe("Stack", () => {
 		render(<Stack data-testid="my-stack" gap="4"></Stack>)
 		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
     expect(screen.getByTestId("my-stack")).toHaveClass(
-      "gap-4"
+      "jn-gap-4"
     )
 	})
 
@@ -42,7 +42,7 @@ describe("Stack", () => {
 		render(<Stack data-testid="my-stack"></Stack>)
 		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
     expect(screen.getByTestId("my-stack")).toHaveClass(
-      "items-stretch"
+      "jn-items-stretch"
     )
 	})
   
@@ -50,7 +50,7 @@ describe("Stack", () => {
 		render(<Stack data-testid="my-stack" alignment="center"></Stack>)
 		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
     expect(screen.getByTestId("my-stack")).toHaveClass(
-      "items-center"
+      "jn-items-center"
     )
 	})
 
@@ -58,7 +58,7 @@ describe("Stack", () => {
 		render(<Stack data-testid="my-stack"></Stack>)
 		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
     expect(screen.getByTestId("my-stack")).toHaveClass(
-      "justify-start"
+      "jn-justify-start"
     )
 	})
   
@@ -66,7 +66,7 @@ describe("Stack", () => {
 		render(<Stack data-testid="my-stack" distribution="center"></Stack>)
 		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
     expect(screen.getByTestId("my-stack")).toHaveClass(
-      "justify-center"
+      "jn-justify-center"
     )
 	})
 
@@ -74,7 +74,7 @@ describe("Stack", () => {
 		render(<Stack data-testid="my-stack"></Stack>)
 		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
     expect(screen.getByTestId("my-stack")).not.toHaveClass(
-      "flex-wrap"
+      "jn-flex-wrap"
     )
 	})
   
@@ -82,7 +82,7 @@ describe("Stack", () => {
 		render(<Stack data-testid="my-stack" wrap={true}></Stack>)
 		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
     expect(screen.getByTestId("my-stack")).toHaveClass(
-      "flex-wrap"
+      "jn-flex-wrap"
     )
 	})
 

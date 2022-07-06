@@ -4,8 +4,8 @@ import { useTabsContext } from "../Tabs/Tabs.component.js"
 import PropTypes from "prop-types"
 
 const tabListStyles = `
-	flex
-	h-[3.4375rem]
+	jn-flex
+	jn-h-[3.4375rem]
 `
 // focus-within:ring-1
 // focus-within:ring-theme-focus
@@ -14,11 +14,11 @@ const tabListStyles = `
 const getVariantStyles = (variant) => {
 	switch (variant) {
 		case "main": 
-			return `bg-theme-tab-navigation-top`
+			return `jn-bg-theme-tab-navigation-top`
 		default: 
 			return `
-				border-b-[1px] 
-				border-theme-tab-navigation-content-bottom
+				jn-border-b-[1px] 
+				jn-border-theme-tab-navigation-content-bottom
 			`
 	}
 }

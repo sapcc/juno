@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 
 const textinputstyles = `
-	bg-theme-textinput
-	text-theme-textinput
-	text-base
-	leading-4
-	p-4
-	h-textinput
-	border
-	border-transparent
-	rounded-3px
-	focus:outline-none
-	focus:ring-2
-	focus:ring-theme-focus
-	disabled:opacity-50
+	jn-bg-theme-textinput
+	jn-text-theme-textinput
+	jn-text-base
+	jn-leading-4
+	jn-p-4
+	jn-h-textinput
+	jn-border
+	jn-border-transparent
+	jn-rounded-3px
+	focus:jn-outline-none
+	focus:jn-ring-2
+	focus:jn-ring-theme-focus
+	disabled:jn-opacity-50
 `
 
 /** A controlled Text Input. Also covers email, telephone, password, url derivates. */

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React, { useCallback, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { getService } from "../queries"
 import useStore from "../store"
@@ -12,23 +12,48 @@ import {
   Stack,
   Spinner,
 } from "juno-ui-components"
+import ComponentsList from "./ComponentsList"
+import VulnerabilitiesList from "./VulnerabilitiesList"
+
+const Header = `
+font-bold
+mt-4
+text-lg
+`
 
 const ServiceDetail = () => {
   let { serviceId } = useParams()
   const location = useLocation()
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const setMessage = useMessageStore((state) => state.setMessage)
+  const placeholderData = location.state?.placeholderData
   const { isLoading, isError, isFetching, data, error } = getService(
     endpoint,
-    serviceId
+    serviceId,
+    placeholderData
   )
 
-  const placeholderData = location.state?.placeholderData
+  // dispatch error with useEffect because error variable will first set once all retries did not succeed
+  useEffect(() => {
+    if (error) {
+      setMessage({
+        variant: "error",
+        text: parseError(error),
+      })
+    }
+  }, [error])
+
   console.log("service detail placeholderData: ", placeholderData)
   console.log("service detail DATA: ", data)
+  console.log("isFetching: ", isFetching)
+
+  const components = React.useMemo(() => {
+    if (!data?.Components) return []
+    return data.Components
+  }, [data])
 
   return (
-    <>
+    <div className="mt-4">
       {isLoading && !data ? (
         <Stack alignment="center">
           <Spinner variant="primary" />
@@ -48,6 +73,14 @@ const ServiceDetail = () => {
                       </DataListCell>
                     </DataListRow>
                   </DataList>
+                  <p className={Header}>Vulnerabilities in this service</p>
+                  <div className="mt-4">
+                    <VulnerabilitiesList components={components} />
+                  </div>
+                  <p className={Header}>All components in this service</p>
+                  <div className="mt-4">
+                    <ComponentsList components={components} />
+                  </div>
                 </>
               ) : (
                 <Stack
@@ -63,7 +96,7 @@ const ServiceDetail = () => {
           )}
         </>
       )}
-    </>
+    </div>
   )
 }
 

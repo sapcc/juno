@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react"
 import { Stack, Button } from "juno-ui-components"
 
-const Pagination = ({ count, limit, onChanged, isFetching }) => {
+const Pagination = ({ count, limit, onChanged, isFetching, disabled }) => {
   const [offset, setOffset] = useState(0)
   const [actualPage, setactualPage] = useState(1)
 
@@ -41,7 +41,7 @@ const Pagination = ({ count, limit, onChanged, isFetching }) => {
         {isFetching ? <span> Loading...</span> : null}{" "}
         <Button
           className="ml-4"
-          disabled={actualPage === 1}
+          disabled={actualPage === 1 || disabled}
           label="<"
           onClick={onPrevChanged}
           size="small"
@@ -50,7 +50,7 @@ const Pagination = ({ count, limit, onChanged, isFetching }) => {
           {actualPage} / {pages}
         </p>
         <Button
-          disabled={actualPage === pages}
+          disabled={actualPage === pages || disabled}
           className="ml-4"
           label=">"
           onClick={onNextChanged}

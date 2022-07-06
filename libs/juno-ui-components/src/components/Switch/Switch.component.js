@@ -2,56 +2,56 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 
 const switchbasestyles = `
-	rounded-full
-	relative
-	p-0
-	leading-0
-	border
-	g-theme-default
-	border-theme-switch-default
-	focus:outline-none
-	focus:ring-2
-	focus:ring-theme-focus
-	disabled:opacity-50
-	disabled:cursor-not-allowed
+	jn-rounded-full
+	jn-relative
+	jn-p-0
+	jn-leading-0
+	jn-border
+	jn-g-theme-default
+	jn-border-theme-switch-default
+	focus:jn-outline-none
+	focus:jn-ring-2
+	focus:jn-ring-theme-focus
+	disabled:jn-opacity-50
+	disabled:jn-cursor-not-allowed
 `
 const switchsizestyles = (size) => {
 	switch (size) {
 		case "small":
-		  	return 'w-[1.75rem] h-4'
+		  	return 'jn-w-[1.75rem] jn-h-4'
 		case "large":
-			return 'w-[3.125rem] h-[1.6875rem]'
+			return 'jn-w-[3.125rem] jn-h-[1.6875rem]'
 		default:
-		  	return 'w-switch-default h-switch-default'
+		  	return 'jn-w-switch-default jn-h-switch-default'
 	  }
 }
 
 const handlebasestyles = `
-	inline-block
-	absolute
-	top-[1px]
-	rounded-full
-	bg-theme-switch-handle
-	border-theme-default
+	jn-inline-block
+	jn-absolute
+	jn-top-[1px]
+	jn-rounded-full
+	jn-bg-theme-switch-handle
+	jn-border-theme-default
 `
 const handlesizestyles = (size) => {
 	switch (size) {
 		case "small":
-			return 'w-[0.75rem] h-[0.75rem]'
+			return 'jn-w-[0.75rem] jn-h-[0.75rem]'
 		case "large":
-			return 'w-[1.4375rem] h-[1.4375rem]'
+			return 'jn-w-[1.4375rem] jn-h-[1.4375rem]'
 		default: 
-			return 'w-switch-handle-default h-switch-handle-default'
+			return 'jn-w-switch-handle-default jn-h-switch-handle-default'
 	}
 	
 	
 }
 
 const handleonstyles = `
-	right-[1px] bg-theme-switch-handle-checked
+	jn-right-[1px] jn-bg-theme-switch-handle-checked
 `
 const handleoffstyles = `
-	left-[1px]
+	jn-left-[1px]
 `
 
 /** A Switch/Toggle component */

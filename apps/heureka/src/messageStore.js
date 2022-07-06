@@ -27,7 +27,18 @@ const initialStore = () =>
           let items = state.items.slice()
           msg.id = uniqueId("message-")
           items.push(msg)
-          return { items: items }
+          return { ...state, items: items }
+        }),
+      removeMessage: (id) =>
+        set((state) => {
+          // find the message with id
+          const index = state.items.findIndex((item) => item.id == id)
+          if (index < 0) {
+            return state
+          }
+          let newItems = state.items.slice()
+          newItems.splice(index, 1)
+          return { ...state, items: newItems }
         }),
     }))
   )

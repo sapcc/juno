@@ -13,13 +13,13 @@ describe("MainContainer", () => {
 	test("renders a main container with flex col layout", async () => {
 		render(<MainContainer />)
 		expect(screen.getByRole("main")).toBeInTheDocument()
-		expect(screen.getByRole("main")).toHaveClass("flex-col")
+		expect(screen.getByRole("main")).toHaveClass("jn-flex-col")
 	})
 	
 	test("renders a main container with flex grow", async () => {
 		render(<MainContainer />)
 		expect(screen.getByRole("main")).toBeInTheDocument()
-		expect(screen.getByRole("main")).toHaveClass("grow")
+		expect(screen.getByRole("main")).toHaveClass("jn-grow")
 	})
 	
 	test("renders children as passed", async () => {

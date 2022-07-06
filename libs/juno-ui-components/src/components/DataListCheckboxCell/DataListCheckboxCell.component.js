@@ -4,9 +4,9 @@ import { Checkbox } from "../Checkbox/Checkbox.component.js"
 import { DataListCell } from "../DataListCell/DataListCell.component.js"
 
 const datalistcheckboxcellbasestyles = `
-	flex
-	flex-col
-	justify-center
+	jn-flex
+	jn-flex-col
+	jn-justify-center
 `
 
 export const DataListCheckboxCell = ({

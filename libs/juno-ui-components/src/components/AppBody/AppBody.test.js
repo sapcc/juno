@@ -13,14 +13,14 @@ describe("AppBody", () => {
     render(<AppBody data-testid="app-body" />)
     expect(screen.getByTestId("app-body")).toBeInTheDocument()
     expect(screen.getByTestId("app-body")).toHaveClass(
-      "flex-col"
+      "jn-flex-col"
     )
   })
 
   test("renders an app body with full height", async () => {
     render(<AppBody data-testid="app-body" />)
     expect(screen.getByTestId("app-body")).toBeInTheDocument()
-    expect(screen.getByTestId("app-body")).toHaveClass("h-full")
+    expect(screen.getByTestId("app-body")).toHaveClass("jn-h-full")
   })
 
   test("renders children as passed", async () => {

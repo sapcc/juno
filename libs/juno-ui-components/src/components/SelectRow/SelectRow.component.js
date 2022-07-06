@@ -4,37 +4,37 @@ import { Select } from "../Select/index.js"
 import { Label } from "../Label/index.js"
 
 const selectrow = `
-	flex
-	flex-col
-	mb-2
+	jn-flex
+	jn-flex-col
+	jn-mb-2
 `
 
 const helptextstyles = `
-	text-xs
-	text-theme-light
-	mt-1
+	jn-text-xs
+	jn-text-theme-light
+	jn-mt-1
 `
 
 const selectstyles = `
-	w-full
+	jn-w-full
 `
 
 const floatingcontainerstyles = `
-  relative
+  jn-relative
 `
 
 const floatinglabelcontainerstyles = `
-  absolute
-  top-0.5
-  left-4
-  transform 
-  origin-top-left 
-  scale-75
-  opacity-75
+  jn-absolute
+  jn-top-0.5
+  jn-left-4
+  jn-transform 
+  jn-origin-top-left 
+  jn-scale-75
+  jn-opacity-75
 `
 
 const floatingselectstyles = `
-  pt-[0.8125rem]
+  jn-pt-[0.8125rem]
 `
 
 /** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
