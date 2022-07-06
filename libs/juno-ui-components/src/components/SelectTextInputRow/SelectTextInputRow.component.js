@@ -38,6 +38,7 @@ const helptextstyles = `
 const selectStyles = `
 	rounded-r-none
 	w-full
+	pt-[0.8125rem]
 `
 
 const textinputStyles = `
@@ -47,7 +48,9 @@ const textinputStyles = `
 
 export const SelectTextInputRow = ({
 	label,
+	id,
 	options,
+	required,
 	helptext,
 	className,
 	...props
@@ -61,10 +64,10 @@ export const SelectTextInputRow = ({
 						{options.map((option, i) => (<SelectOption label={option.label} value={option.value}/>))}
 					</Select>
 					<div className={`juno-label-container ${labelWrapperStyles}`}>
-						<Label text={label}/>
+						<Label htmlFor={id} text={label} required={required} />
 					</div>
 				</div>
-				<TextInput className={`${textinputStyles}`} />
+				<TextInput id={id} className={`${textinputStyles}`} />
 			</div>
 			{helptext ? <p className={`${helptextstyles}`} >{helptext}</p> : ""}
 		</div>
@@ -74,8 +77,12 @@ export const SelectTextInputRow = ({
 SelectTextInputRow.propTypes = {
 	/** The Label of the Select */
 	label: PropTypes.string,
+	/** The Id of the TextInput */
+	id: PropTypes.string,
 	/** Pass an arrays of objects as options for the Select: `[{label: "Value 1", value: "val-1}, {…}] */
 	options: PropTypes.arrayOf(PropTypes.object),
+	/** Whether the Input is required */
+	required: PropTypes.bool,
 	/** Pass an helptext to display */
 	helptext: PropTypes.string,
 	/** Add custom classNames */
@@ -84,7 +91,9 @@ SelectTextInputRow.propTypes = {
 
 SelectTextInputRow.defaultProps = {
 	label: "",
+	id: "",
 	options: [],
+	required: false,
 	helptext: "",
 	className: "",
 }
