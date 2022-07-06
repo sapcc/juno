@@ -23,7 +23,7 @@ export const FilterPill = ({
 	...props
 }) => { 
 	return (
-		<span className={`juno-filterpill ${filterpillStyles} ${className}`}{...props}>
+		<span className={`juno-filterpill ${filterpillStyles} ${className}`} {...props}>
 			<span className={`${keyStyles}`}>{keyLabel}</span>
 			<span className={`${valueStyles}`}>{valueLabel}</span>
 			<span className={`${iconStyles}`}><Icon icon="close" /></span>

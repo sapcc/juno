@@ -5,7 +5,7 @@ import { SearchInput } from "../SearchInput/SearchInput.component"
 
 
 export default {
-  title: "WiP/Filters",
+  title: "WiP/Filter/Filters",
   component: Filters,
   argTypes: {},
 }
@@ -45,7 +45,7 @@ WithSearch.args = {
   }
 }
 
-export const OnlySearch = Template.bind({})
-OnlySearch.args = {
+export const SearchOnly = Template.bind({})
+SearchOnly.args = {
   search: <SearchInput />,
 }

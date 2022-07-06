@@ -1,8 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { SelectTextInputRow } from "../SelectTextInputRow/SelectTextInputRow.component"
+import { FilterInput } from "../FilterInput/FilterInput.component"
 
 const filterStyles = `
+	mb-px
 `
 
 const inputWrapperStyles = `
@@ -21,7 +22,10 @@ export const Filters = ({
 	return (
 		<div className={`juno-filters ${filterStyles} ${className}`} {...props}>
 			<div className={`juno-filters-input-wrapper ${inputWrapperStyles}`} >
-				{ filters && filters.options ? <SelectTextInputRow label={filtersLabel} options={filters.options} /> : null }
+				{ filters && filters.options ? 
+					<FilterInput label={filtersLabel} options={filters.options} /> 
+					: 
+					null }
 				{ search }
 			</div>
 			{ children }
