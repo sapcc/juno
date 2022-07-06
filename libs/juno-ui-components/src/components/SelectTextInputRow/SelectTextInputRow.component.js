@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Select } from "../Select/index.js"
+import { SelectOption } from "../SelectOption/index.js"
 import { TextInput } from "../TextInput/index.js"
 import { Label } from "../Label/index.js"
 
@@ -46,6 +47,7 @@ const textinputStyles = `
 
 export const SelectTextInputRow = ({
 	label,
+	options,
 	helptext,
 	className,
 	...props
@@ -55,7 +57,9 @@ export const SelectTextInputRow = ({
 		<div className={`juno-select-textinput-row ${selectTextInputRowStyles} ${className}`} {...props} >
 			<div className={`juno-select-textinput-row-input-wrapper ${inputWrapperStyles}`}>
 				<div className={`juno-select-textinput-row-select-wrapper ${selectWrapperStyles}`}>
-					<Select className={`${selectStyles}`}/>
+					<Select className={`${selectStyles}`}>
+						{options.map((option, i) => (<SelectOption label={option.label} value={option.value}/>))}
+					</Select>
 					<div className={`juno-label-container ${labelWrapperStyles}`}>
 						<Label text={label}/>
 					</div>
@@ -68,13 +72,19 @@ export const SelectTextInputRow = ({
 }
 
 SelectTextInputRow.propTypes = {
+	/** The Label of the Select */
 	label: PropTypes.string,
+	/** Pass an arrays of objects as options for the Select: `[{label: "Value 1", value: "val-1}, {…}] */
+	options: PropTypes.arrayOf(PropTypes.object),
+	/** Pass an helptext to display */
 	helptext: PropTypes.string,
+	/** Add custom classNames */
 	className: PropTypes.string,
 }
 
 SelectTextInputRow.defaultProps = {
 	label: "",
+	options: [],
 	helptext: "",
 	className: "",
 }

@@ -5,6 +5,11 @@ import { SelectTextInputRow } from "../SelectTextInputRow/SelectTextInputRow.com
 const filterStyles = `
 `
 
+const inputWrapperStyles = `
+	w-full
+	flex
+`
+
 export const Filters = ({
 	search,
 	filters,
@@ -15,7 +20,10 @@ export const Filters = ({
 	const filtersLabel = filters && filters.label ? filters.label : "Select"
 	return (
 		<div className={`juno-filters ${filterStyles} ${className}`} {...props}>
-			<SelectTextInputRow label={filtersLabel} />
+			<div className={`juno-filters-input-wrapper ${inputWrapperStyles}`} >
+				{ filters && filters.options ? <SelectTextInputRow label={filtersLabel} options={filters.options} /> : null }
+				{ search }
+			</div>
 			{ children }
 		</div>
 	)
@@ -25,7 +33,7 @@ Filters.propTypes = {
 	label: PropTypes.string,
 	/** Pass a SearchInput component */
 	search: PropTypes.node,
-	/** Pass an object describing the filters: { label: "Select", config: [{key: "Key 1", value: "value-1"}, {...}] } */
+	/** Pass an object describing the filters: { label: "Select", options: [{label: "Label 1", value: "value-1"}, {...}] } */
 	filters: PropTypes.object, 
 	/** add custom classNames */
 	className: PropTypes.string,	
