@@ -14,6 +14,10 @@ import CertificateListItem from "./CertificateListItem"
 import AddNewSSOButton from "./AddNewSSOButton"
 import { parseError } from "../helpers"
 
+const dataListHeader = `
+bg-theme-background-lvl-2
+`
+
 const datListHeaderItem = `
 font-bold
 `
@@ -78,7 +82,7 @@ const CertificateList = ({ ca }) => {
               </ContentAreaToolbar>
               <p>{ca?.description}</p>
               <DataList className="mt-4">
-                <DataListRow className="relative">
+                <DataListRow className={dataListHeader}>
                   <DataListCell className={datListHeaderItem} width={33}>
                     Name / ID
                   </DataListCell>
