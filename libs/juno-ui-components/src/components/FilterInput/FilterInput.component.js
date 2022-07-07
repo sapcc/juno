@@ -8,6 +8,11 @@ import { Icon } from "../Icon/Icon.component"
 const wrapperStyles = `
 	jn-flex
 	jn-relative
+	jn-p-px
+	jn-border
+	jn-rounded
+	jn-bg-theme-filter-input
+	jn-border-theme-filter-input
 `
 
 const selectStyles = `
@@ -17,6 +22,7 @@ const selectStyles = `
 const textInputStyles = `
 	jn-grow
 	jn-rounded-l-none
+	jn-bg-theme-filter-input-textinput
 	focus:jn-z-40
 `
 

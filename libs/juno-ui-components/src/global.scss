@@ -517,6 +517,15 @@
    --color-tabnavigation-content-bottom-border: var(--color-background-lvl-4-raw);
    // LT Filters
    --color-filters-bg: var(--color-background-lvl-1-raw);
+   --color-filter-input-bg: var(--color-background-lvl-0-raw);
+   --color-filter-input-border: var(--color-background-lvl-4-raw);
+   --color-filter-input-select-bg: var();
+   --color-filter-input-textinput-bg: transparent;
+   --color-filter-pill-border: var();
+   --color-filter-pill-key-bg: var();
+   --color-filter-pill-key-text: var();
+   --color-filter-pill-value-bg: var();
+   --color-filter-pill-value-text: var();
 }
 
 .theme-dark {
@@ -745,6 +754,15 @@
   --color-tabnavigation-content-bottom-border: var(--color-background-lvl-4-raw);
   // DT Filters
   --color-filters-bg: var(--color-background-lvl-1-raw);
+  --color-filter-input-bg: var(--color-background-lvl-0-raw);
+  --color-filter-input-border: var(--color-background-lvl-4-raw);
+  --color-filter-input-select-bg: var();
+  --color-filter-input-textinput-bg: transparent;
+  --color-filter-pill-border:  var(--color-background-lvl-4-raw);
+  --color-filter-pill-key-bg: var(--color-background-lvl-4-raw);
+  --color-filter-pill-key-text: var();
+  --color-filter-pill-value-bg: var();
+  --color-filter-pill-value-text: var();
 }
 
 // Grid configuration

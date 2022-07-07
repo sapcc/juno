@@ -24,6 +24,14 @@ export const Default = Template.bind({})
 Default.args = {
   filters: {
     label: "Select a Filter",
+    options: []
+  }
+}
+
+export const WithPills = Template.bind({})
+WithPills.args = {
+  filters: {
+    label: "Select a Filter",
     options: [
       {label: "Filter 1", value: "filter-1"},
       {label: "Filter 2", value: "filter-2"},
@@ -31,6 +39,8 @@ Default.args = {
     ]
   }
 }
+
+
 
 export const WithSearch = Template.bind({})
 WithSearch.args = {

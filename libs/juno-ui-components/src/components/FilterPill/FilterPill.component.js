@@ -3,15 +3,32 @@ import PropTypes from "prop-types"
 import { Icon } from "../Icon/Icon.component.js"
 
 const filterpillStyles = `
+	jn-inline-block
+	jn-text-xs
+	jn-p-px
+	jn-border
+	jn-rounded
+	jn-mr-2
+	jn-border-theme-filter-pill
 `
 
 const filterkeyStyles = `
+	jn-bg-theme-filter-pill-key
+	jn-px-1
+	jn-py-0.5
+	jn-rounded-sm
+	jn-inline-block
 `
 
 const filtervalueStyles = `
+	jn-px-1
+	jn-py-0.5
+	jn-text-theme-high
+	jn-inline-block
 `
 
-const iconStyles = `
+const iconWrapperStyles = `
+	
 `
 
 export const FilterPill = ({
@@ -23,11 +40,11 @@ export const FilterPill = ({
 	...props
 }) => { 
 	return (
-		<span className={`juno-filterpill ${filterpillStyles} ${className}`} {...props}>
+		<div className={`juno-filterpill ${filterpillStyles} ${className}`} {...props}>
 			<span className={`${filterkeyStyles}`}>{FilterKeyLabel}</span>
 			<span className={`${filtervalueStyles}`}>{FilterValueLabel}</span>
-			<span className={`${iconStyles}`}><Icon icon="close" /></span>
-		</span>
+			<Icon icon="close" size="18"/>
+		</div>
 	)
 }
 

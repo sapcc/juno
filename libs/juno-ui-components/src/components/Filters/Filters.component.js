@@ -5,15 +5,24 @@ import { FilterInput } from "../FilterInput/FilterInput.component"
 const filterStyles = `
 	jn-mb-px
 	jn-bg-theme-filters
+	jn-rounded-t
+	jn-pt-4
+	jn-px-4
+	jn-pb-2
 `
 
 const inputWrapperStyles = `
 	jn-w-full
 	jn-flex
+	jn-mb-2
 `
 
 const searchWrapperStyles = `
 	jn-ml-auto
+`
+
+const filterPillWrapperStyles = `
+
 `
 
 export const Filters = ({
@@ -37,7 +46,7 @@ export const Filters = ({
 					</div> 
 				: null }
 			</div>
-			<div>
+			<div className={`${filterPillWrapperStyles}`}>
 				{ children }
 			</div>
 		</div>
