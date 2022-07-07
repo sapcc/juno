@@ -63,15 +63,15 @@ const iconSize = (size) => {
 }
 
 const btnIconSmall = `
-  mr-1.5
+  jn-mr-1.5
 `
 
 const btnIconLarge = `
-  mr-3
+  jn-mr-3
 `
 
 const btnIconDefault = `
-  mr-2.5
+  jn-mr-2.5
 `
 
 const iconClasses = (size) => {
@@ -103,9 +103,9 @@ const spinnerSize = (size) => {
 
 const spinnerColorClass = (variant, disabled) => {
   if (disabled) {
-    return "text-theme-disabled"
+    return "jn-text-theme-disabled"
   } else if (variant === "default") {
-    return "text-theme-accent"
+    return "jn-text-theme-accent"
   }
   return ""
 }

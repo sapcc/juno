@@ -26,7 +26,7 @@ const Template = (args) => (
         This is the panel body
       </PanelBody>
     </Panel>
-    <ContentArea className="dummy-css-ignore h-[250px]">
+    <ContentArea className="dummy-css-ignore jn-h-[250px]">
       Content Area
     </ContentArea>
   </ContentAreaWrapper>

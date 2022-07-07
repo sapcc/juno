@@ -10,7 +10,7 @@ export default {
 const Template = (args) => (
   <GridColumn
     {...args}
-    className={args.className || "bg-juno-blue-3 text-juno-grey-blue"}
+    className={args.className || "jn-bg-juno-blue-3 jn-text-juno-grey-blue"}
   ></GridColumn>
 )
 

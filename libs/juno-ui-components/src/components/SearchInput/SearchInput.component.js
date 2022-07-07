@@ -136,7 +136,7 @@ export const SearchInput = ({
         />
         <Icon
           icon="search"
-          className={`absolute ${searchIconClasses(variant)}`}
+          className={`jn-absolute ${searchIconClasses(variant)}`}
           title="Search"
           onClick={handleClick}
         />

@@ -52,7 +52,7 @@ export default {
 const docuClassnames = (direction) => {
   return `
     bg-theme-background-lvl-3
-    ${direction === "vertical" ? "w-full h-80" : "h-24"}
+    ${direction === "vertical" ? "jn-w-full jn-h-80" : "jn-h-24"}
     `
 }
 
@@ -62,7 +62,7 @@ const Template = (args) => (
   </Stack>
 )
 const TemplateManyChildren = (args) => (
-  <Stack className="bg-theme-background-lvl-3" {...args}>
+  <Stack className="jn-bg-theme-background-lvl-3" {...args}>
     <DummyComponentList count={15} />
   </Stack>
 )
