@@ -178,7 +178,7 @@ export const Message = ({
           ></div>
           <Icon
             icon={getMuiIcon(variant)}
-            color={"text-theme-" + variant}
+            color={"jn-text-theme-" + variant}
             className="jn-shrink-0"
           />
           <div className={`juno-message-content ${messageContentStyles}`}>
