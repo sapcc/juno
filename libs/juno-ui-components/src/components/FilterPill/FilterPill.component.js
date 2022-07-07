@@ -3,13 +3,18 @@ import PropTypes from "prop-types"
 import { Icon } from "../Icon/Icon.component.js"
 
 const filterpillStyles = `
-	jn-inline-block
+	jn-inline-flex
+	jn-basis-auto
+	jn-shrink
+	jn-items-center
+	jn-flex-nowrap
 	jn-text-xs
 	jn-p-px
 	jn-border
 	jn-rounded
 	jn-mr-2
 	jn-border-theme-filter-pill
+	last:jn-mr-0
 `
 
 const filterkeyStyles = `

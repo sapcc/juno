@@ -22,7 +22,7 @@ const selectStyles = `
 const textInputStyles = `
 	jn-grow
 	jn-rounded-l-none
-	jn-bg-theme-filter-input-textinput
+	!jn-bg-theme-filter-input-textinput
 	focus:jn-z-40
 `
 
@@ -60,7 +60,7 @@ export const FilterInput = ({
 
 FilterInput.propTypes = {
 	label: PropTypes.string,
-	options: PropTypes.arrayOf(PropTypes.object),
+	options: PropTypes.arrayOf(PropTypes.object), // TODO test for correctly formed object
 	inputLabel: PropTypes.string,
 	className: PropTypes.string,
 }

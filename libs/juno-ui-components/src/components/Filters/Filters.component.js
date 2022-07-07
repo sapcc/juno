@@ -22,7 +22,8 @@ const searchWrapperStyles = `
 `
 
 const filterPillWrapperStyles = `
-
+	jn-flex
+	jn-flex-wrap
 `
 
 export const Filters = ({
@@ -57,7 +58,9 @@ Filters.propTypes = {
 	label: PropTypes.string,
 	/** Pass a SearchInput component */
 	search: PropTypes.node,
-	/** Pass an object describing the filters: { label: "Select", options: [{label: "Label 1", value: "value-1"}, {...}] } */
+	/** Pass an object describing the filters: 
+	`{ label: "Select", options: [{label: "Label 1", value: "value-1"}, {...}] }` 
+	*/
 	filters: PropTypes.object, 
 	/** add custom classNames */
 	className: PropTypes.string,	

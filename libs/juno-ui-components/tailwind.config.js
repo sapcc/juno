@@ -210,7 +210,7 @@ module.exports = {
           "tab-navigation-top": withOpacity("--color-tabnavigation-top-bg"),
           filters: withOpacity("--color-filters-bg"),
           "filter-input": withOpacity("--color-filter-input-bg"),
-          "filter-input-textinput": "var(--color-filter-input-textinput-bg)",
+          "filter-input-textinput": withOpacity("--color-filter-input-textinput-bg"),
           "filter-pill-key": withOpacity("--color-filter-pill-key-bg"),
         },
       },
