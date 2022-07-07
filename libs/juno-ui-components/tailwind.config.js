@@ -208,6 +208,7 @@ module.exports = {
             "--color-message-success-border"
           ),
           "tab-navigation-top": withOpacity("--color-tabnavigation-top-bg"),
+          filters: withOpacity("--color-filters-bg"),
         },
       },
       backgroundImage: {

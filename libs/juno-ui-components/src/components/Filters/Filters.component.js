@@ -4,6 +4,7 @@ import { FilterInput } from "../FilterInput/FilterInput.component"
 
 const filterStyles = `
 	jn-mb-px
+	jn-bg-theme-filters
 `
 
 const inputWrapperStyles = `

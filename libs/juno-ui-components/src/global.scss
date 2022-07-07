@@ -515,6 +515,8 @@
    // LT TabNavigation
    --color-tabnavigation-top-bg: var(--color-juno-grey-light-5-raw);
    --color-tabnavigation-content-bottom-border: var(--color-background-lvl-4-raw);
+   // LT Filters
+   --color-filters-bg: var(--color-background-lvl-1-raw);
 }
 
 .theme-dark {
@@ -741,6 +743,8 @@
   // DT TabNavigation
   --color-tabnavigation-top-bg: var(--color-juno-grey-blue-8-raw);
   --color-tabnavigation-content-bottom-border: var(--color-background-lvl-4-raw);
+  // DT Filters
+  --color-filters-bg: var(--color-background-lvl-1-raw);
 }
 
 // Grid configuration
