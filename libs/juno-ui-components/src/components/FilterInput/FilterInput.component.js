@@ -40,7 +40,7 @@ export const FilterInput = ({
 			<div>
 				<Select className={`${selectStyles}`} aria-label={label}>
 					{ label ? <SelectOption label={label} value="" /> : null }
-					{options.map((option, i) => (<SelectOption label={option.label} value={option.value}/>))}
+					{options.map((option, i) => (<SelectOption label={option.label} value={option.value} key={`${i}`}/>))}
 				</Select>
 			</div>
 			<TextInput className={`${textInputStyles}`} aria-label={inputLabel} />
