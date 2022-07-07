@@ -30,7 +30,11 @@ export const Filters = ({
 					<FilterInput label={filtersLabel} options={filters.options} /> 
 					: 
 					null }
-				{ search ? <div className={`${searchWrapperStyles}`} >{ search }</div> : null }
+				{ search ? 
+					<div className={`${searchWrapperStyles}`} >
+						{ search }
+					</div> 
+				: null }
 			</div>
 			{ children }
 		</div>
@@ -49,6 +53,6 @@ Filters.propTypes = {
 
 Filters.defaultProps = {
 	search: null,
-	filters: null, //{label: "Select", config: []},
-	className: ""
+	filters: null,
+	className: "",
 }
