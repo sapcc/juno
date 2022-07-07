@@ -11,6 +11,10 @@ const inputWrapperStyles = `
 	jn-flex
 `
 
+const searchWrapperStyles = `
+	jn-ml-auto
+`
+
 export const Filters = ({
 	search,
 	filters,
@@ -26,7 +30,7 @@ export const Filters = ({
 					<FilterInput label={filtersLabel} options={filters.options} /> 
 					: 
 					null }
-				{ search }
+				{ search ? <div className={`${searchWrapperStyles}`} >{ search }</div> : null }
 			</div>
 			{ children }
 		</div>
