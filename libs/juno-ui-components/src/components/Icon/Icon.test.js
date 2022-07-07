@@ -149,6 +149,12 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "expand more")
   })
+  
+  test("renders an filterAlt icon", async () => {
+    render(<Icon icon="filterAlt" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "filter")
+  })
 
   test("renders an forum icon", async () => {
     render(<Icon icon="forum" />)

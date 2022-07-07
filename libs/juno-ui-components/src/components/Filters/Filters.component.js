@@ -36,7 +36,9 @@ export const Filters = ({
 					</div> 
 				: null }
 			</div>
-			{ children }
+			<div>
+				{ children }
+			</div>
 		</div>
 	)
 }

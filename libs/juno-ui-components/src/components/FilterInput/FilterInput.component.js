@@ -46,7 +46,7 @@ export const FilterInput = ({
 			<TextInput className={`${textInputStyles}`} aria-label={inputLabel} />
 			<div className={`${iconWrapperStyles}`}>
 				<Icon icon="close" />
-				<Icon />
+				<Icon icon="filterAlt" />
 			</div>
 		</div>
 	)
