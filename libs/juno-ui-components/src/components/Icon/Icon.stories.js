@@ -9,7 +9,7 @@ export default {
     docs: {
       description: {
         component:
-          "A generic icon component. Accepts any string as a color for now.",
+          "A generic icon component. Accepts text color classes for color. Please note that the 'jn-' prefix for tailwind classes is only necessary within the juno ui design system itself. When using icons in your own applications use the normal tailwing-generated text color classes starting with 'text-'",
       },
     },
   },
@@ -67,6 +67,28 @@ Larger.args = {
   size: "64",
 }
 
+export const IconAsLink = Template.bind({})
+IconAsLink.args = {
+  ...Default.args,
+  href: "#",
+  title: "The Icon is a link",
+}
+
+export const IconAsButton = Template.bind({})
+IconAsButton.args = {
+  ...Default.args,
+  title: "The Icon is a button",
+  onClick: () => {
+    console.log("click")
+  },
+}
+
+export const Account_Circle = Template.bind({})
+Account_Circle.args = {
+  ...Default.args,
+  icon: "accountCircle",
+}
+
 export const Add_Circle = Template.bind({})
 Add_Circle.args = {
   ...Default.args,
@@ -85,6 +107,12 @@ Auto_Awesome_Motion.args = {
   icon: "autoAwesomeMotion",
 }
 
+export const Bolt = Template.bind({})
+Bolt.args = {
+  ...Default.args,
+  icon: "bolt",
+}
+
 export const Cancel = Template.bind({})
 Cancel.args = {
   ...Default.args,
@@ -94,6 +122,16 @@ Cancel.args = {
 export const Close = Template.bind({})
 Close.args = {
   icon: "close",
+}
+
+export const ChevronLeft = Template.bind({})
+ChevronLeft.args = {
+  icon: "chevronLeft",
+}
+
+export const ChevronRight = Template.bind({})
+ChevronRight.args = {
+  icon: "chevronRight",
 }
 
 export const ContentCopy = Template.bind({})
@@ -121,6 +159,12 @@ export const Description = Template.bind({})
 Description.args = {
   ...Default.args,
   icon: "description",
+}
+
+export const DNS = Template.bind({})
+DNS.args = {
+  ...Default.args,
+  icon: "dns",
 }
 
 export const Error = Template.bind({})
@@ -201,24 +245,38 @@ Search.args = {
   icon: "search",
 }
 
+export const SeverityLow = Template.bind({})
+SeverityLow.args = {
+  ...Default.args,
+  icon: "severityLow",
+}
+
+export const SeverityMedium = Template.bind({})
+SeverityMedium.args = {
+  ...Default.args,
+  icon: "severityMedium",
+}
+
+export const SeverityHigh = Template.bind({})
+SeverityHigh.args = {
+  ...Default.args,
+  icon: "severityHigh",
+}
+
+export const SeverityCritical = Template.bind({})
+SeverityCritical.args = {
+  ...Default.args,
+  icon: "severityCritical",
+}
+
 export const Warning = Template.bind({})
 Warning.args = {
   ...Default.args,
   icon: "warning",
 }
 
-export const IconAsLink = Template.bind({})
-IconAsLink.args = {
+export const Widgets = Template.bind({})
+Widgets.args = {
   ...Default.args,
-  href: "#",
-  title: "The Icon is a link",
-}
-
-export const IconAsButton = Template.bind({})
-IconAsButton.args = {
-  ...Default.args,
-  title: "The Icon is a button",
-  onClick: () => {
-    console.log("click")
-  },
+  icon: "widgets",
 }

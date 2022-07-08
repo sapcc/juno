@@ -3,16 +3,21 @@ import PropTypes from "prop-types"
 
 /* Import Icons here. The icon svgs in the icons folder correspond to the respective "xyz_24px.svg" from material-ui icons.
  */
+import AccountCircle from "./icons/account_circle.svg"
 import AddCircle from "./icons/add_circle.svg"
 import AutoAwesomeMosaic from "./icons/auto_awesome_mosaic.svg"
 import AutoAwesomeMotion from "./icons/auto_awesome_motion.svg"
+import Bolt from "./icons/bolt.svg"
 import Cancel from "./icons/cancel.svg"
+import ChevronLeft from "./icons/chevron_left.svg"
+import ChevronRight from "./icons/chevron_right.svg"
 import Close from "./icons/close.svg"
 import ContentCopy from "./icons/content_copy.svg"
 import Danger from "./icons/juno-danger.svg"
 import Dangerous from "./icons/dangerous.svg"
 import DeleteForever from "./icons/delete_forever.svg"
 import Description from "./icons/description.svg"
+import DNS from "./icons/dns.svg"
 import Error from "./icons/dangerous.svg"
 import ExitToApp from "./icons/exit_to_app.svg"
 import ExpandLess from "./icons/expand_less.svg"
@@ -27,7 +32,12 @@ import OpenInNew from "./icons/open_in_new.svg"
 import Place from "./icons/place.svg"
 import Success from "./icons/check_box.svg"
 import Search from "./icons/search.svg"
+import SeverityLow from "./icons/juno_severity_low.svg"
+import SeverityMedium from "./icons/juno_severity_medium.svg"
+import SeverityHigh from "./icons/juno_severity_high.svg"
+import SeverityCritical from "./icons/juno_severity_critical.svg"
 import Warning from "./icons/warning.svg"
+import Widgets from "./icons/widgets.svg"
 
 /**
 Generic Icon component.
@@ -59,10 +69,14 @@ const buttonIconStyles = `
 `
 // export all known icons as an array of their names to be used with PropTypes here and from other components:
 export const knownIcons = [
+  "accountCircle",
   "addCircle",
   "autoAwesomeMosaic",
   "autoAwesomeMotion",
+  "bolt",
   "cancel",
+  "chevronLeft",
+  "chevronRight",
   "close",
   "contentCopy",
   "danger",
@@ -70,6 +84,7 @@ export const knownIcons = [
   "default",
   "deleteForever",
   "description",
+  "dns",
   "error",
   "exitToApp",
   "expandLess",
@@ -83,8 +98,13 @@ export const knownIcons = [
   "openInNew",
   "place",
   "search",
+  "severityLow",
+  "severityMedium",
+  "severityHigh",
+  "severityCritical",
   "success",
   "warning",
+  "widgets",
 ]
 
 const getColoredSizedIcon = ({
@@ -97,6 +117,18 @@ const getColoredSizedIcon = ({
 }) => {
   const iconClass = `juno-icon juno-icon-${icon} jn-inline-block jn-fill-current ${color} ${iconClassName}`
   switch (icon) {
+    case "accountCircle":
+      return (
+        <AccountCircle
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="account"
+          title={title ? title : "Account"}
+          role="img"
+          {...iconProps}
+        />
+      )
     case "addCircle":
       return (
         <AddCircle
@@ -133,6 +165,18 @@ const getColoredSizedIcon = ({
           {...iconProps}
         />
       )
+    case "bolt":
+      return (
+        <Bolt
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="bolt"
+          title={title ? title : "Bolt"}
+          role="img"
+          {...iconProps}
+        />
+      )
     case "cancel":
       return (
         <Cancel
@@ -141,6 +185,30 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="cancel"
           title={title ? title : "Cancel"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "chevronLeft":
+      return (
+        <ChevronLeft
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="chevronLeft"
+          title={title ? title : "ChevronLeft"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "chevronRight":
+      return (
+        <ChevronRight
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="chevronRight"
+          title={title ? title : "ChevronRight"}
           role="img"
           {...iconProps}
         />
@@ -213,6 +281,18 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="description"
           title={title ? title : "Description"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "dns":
+      return (
+        <DNS
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="service"
+          title={title ? title : "Service"}
           role="img"
           {...iconProps}
         />
@@ -373,6 +453,54 @@ const getColoredSizedIcon = ({
           {...iconProps}
         />
       )
+    case "severityLow":
+      return (
+        <SeverityLow
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="Severity low"
+          title={title ? title : "Severity Low"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "severityMedium":
+      return (
+        <SeverityMedium
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="Severity medium"
+          title={title ? title : "Severity Medium"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "severityHigh":
+      return (
+        <SeverityHigh
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="Severity high"
+          title={title ? title : "Severity High"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "severityCritical":
+      return (
+        <SeverityCritical
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="Severity critical"
+          title={title ? title : "Severity Critical"}
+          role="img"
+          {...iconProps}
+        />
+      )
     case "success":
       return (
         <Success
@@ -381,6 +509,18 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="success"
           title={title ? title : "Success"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "widgets":
+      return (
+        <Widgets
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="widgets"
+          title={title ? title : "Widgets"}
           role="img"
           {...iconProps}
         />
@@ -477,7 +617,7 @@ export const Icon = ({
 Icon.propTypes = {
   /** The icon to display */
   icon: PropTypes.oneOf(knownIcons),
-  /** By default, Icons will use the `color` of the current context. In order to use a different color just for the icon, a color class can be passed. These typically begin with "text-". */
+  /** By default, Icons will use the `color` of the current context. In order to use a different color just for the icon, a text color class can be passed. These begin with "text-". */
   color: PropTypes.string,
   /** The size of the icon */
   size: PropTypes.string,
