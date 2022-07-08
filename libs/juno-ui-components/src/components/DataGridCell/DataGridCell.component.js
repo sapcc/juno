@@ -1,8 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const datagridcellbasestyles = `
-	jn-text-left
+const cellBaseStyles = `
+	jn-px-5
+	jn-py-3
+	jn-border-b
+	jn-border-theme-background-lvl-2
 `
 
 export const DataGridCell = ({
@@ -11,9 +14,9 @@ export const DataGridCell = ({
 	...props
 }) => {
 	return (
-		<td className={`juno-datagrid-cell ${datagridcellbasestyles} ${className}`} {...props}>
+		<div className={`juno-datagrid-cell ${cellBaseStyles} ${className}`} {...props}>
 			{children}
-		</td>
+		</div>
 	)
 }
 
