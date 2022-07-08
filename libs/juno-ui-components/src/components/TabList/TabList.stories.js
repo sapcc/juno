@@ -4,7 +4,7 @@ import { Tab } from "../Tab/index.js"
 import { Default as DefaultTabStory } from "../Tab/Tab.stories.js"
 
 export default {
-  title: "WiP/Tabs/TabList",
+  title: "Layout/Tabs/TabList",
   component: TabList,
   argTypes: {},
 }

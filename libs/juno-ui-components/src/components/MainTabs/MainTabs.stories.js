@@ -8,9 +8,17 @@ import { TabPanel } from "../TabPanel/index.js"
 import { Default as TabPanelStory } from "../TabPanel/TabPanel.stories.js"
 
 export default {
-	title: "WiP/MainTabs",
+	title: "Layout/Tabs/MainTabs",
 	component: MainTabs,
-	argTypes: {}
+	argTypes: {},
+	parameters: {
+    docs: {
+      description: {
+        component:
+          "Main Tabs are used at the top of the content area when using the tabs to switch the complete content area content. If you only want to have tabs for parts of the content use 'Tabs' instead and place them in the part of the content where the tabbed content should live. You will probably want to use a 'Container' inside the TabPanels to get nice padding.",
+      },
+    },
+  },
 }
 
 const Template = ({tabs, tabpanels, ...args}) => (

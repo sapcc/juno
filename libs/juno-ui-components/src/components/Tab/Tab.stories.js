@@ -3,7 +3,7 @@ import { Tab } from "./index.js"
 import { Icon } from "../Icon/index.js"
 
 export default {
-  title: "WiP/Tabs/Tab",
+  title: "Layout/Tabs/Tab",
   component: Tab,
   argTypes: {},
 }
