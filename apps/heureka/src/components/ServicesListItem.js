@@ -4,16 +4,16 @@ import { Link } from "react-router-dom"
 
 const ServicesListItem = ({ item }) => {
   const owners = useMemo(() => {
-    if (!item.Owners) return []
+    if (!item.Owners) return ""
     return item.Owners.map((owner, i) => (
-      <span key={i}>{(i ? "," : "") + owner.SapID}</span>
+      <span key={i}>{(i ? "," : "") + owner.Name}</span>
     ))
   }, [item.owners])
 
   const operators = useMemo(() => {
-    if (!item.Operators) return []
+    if (!item.Operators) return ""
     return item.Operators.map((operator, i) => (
-      <span key={i}>{(i ? "," : "") + operator.SapID}</span>
+      <span key={i}>{(i ? "," : "") + operator.Name}</span>
     ))
   }, [item.operator])
 
@@ -31,7 +31,12 @@ const ServicesListItem = ({ item }) => {
       </DataListCell>
       <DataListCell width={20}>{owners}</DataListCell>
       <DataListCell auto>{operators}</DataListCell>
-      <DataListCell width={40}>
+      <DataListCell auto>
+        <Icon className="mr-2" color="text-theme-success" icon="success" />
+        <Icon className="mr-2" color="text-theme-warning" icon="warning" />
+        <Icon className="mr-2" color="text-theme-danger" icon="danger" />
+      </DataListCell>
+      <DataListCell auto>
         <Badge text="default">
           <Icon className="mr-2" icon="autoAwesomeMotion" />
           {components.length}
