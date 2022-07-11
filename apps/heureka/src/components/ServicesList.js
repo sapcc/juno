@@ -29,7 +29,10 @@ const ServicesList = ({ services }) => {
           <DataListCell className={dataListHeaderItem} auto>
             Operators
           </DataListCell>
-          <DataListCell className={dataListHeaderItem} width={40}>
+          <DataListCell className={dataListHeaderItem} auto>
+            Vulnerabilities
+          </DataListCell>
+          <DataListCell className={dataListHeaderItem} auto>
             Components
           </DataListCell>
         </DataListRow>
