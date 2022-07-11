@@ -1,6 +1,6 @@
 import React from "react"
 import {
-  Tabs,
+  MainTabs,
   TabList,
   Tab,
   TabPanel,
@@ -20,14 +20,14 @@ const AppContainer = ({ tabIndex, component }) => {
 
   return (
     <>
-      <Tabs selectedIndex={tabIndex}>
-        <TabList variant="content">
+      <MainTabs selectedIndex={tabIndex}>
+        <TabList>
           <Tab onClick={() => onTabClicked("/services")}>
-            <Icon className="mr-2" icon="autoAwesomeMosaic" />
+            <Icon className="mr-2" icon="dns" />
             Services
           </Tab>
           <Tab onClick={() => onTabClicked("/components")}>
-            <Icon className="mr-2" icon="autoAwesomeMotion" />
+            <Icon className="mr-2" icon="widgets" />
             Components
           </Tab>
         </TabList>
@@ -38,7 +38,7 @@ const AppContainer = ({ tabIndex, component }) => {
           <Messages />
           {component}
         </Container>
-      </Tabs>
+      </MainTabs>
     </>
   )
 }

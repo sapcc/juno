@@ -38,7 +38,7 @@ const ServicesListItem = ({ item }) => {
       </DataListCell>
       <DataListCell auto>
         <Badge text="default">
-          <Icon className="mr-2" icon="autoAwesomeMotion" />
+          <Icon className="mr-2" icon="widgets" />
           {components.length}
         </Badge>
       </DataListCell>

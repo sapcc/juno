@@ -23,7 +23,7 @@ const ComponentsListItem = ({ item }) => {
       <DataListCell width={20}>{item.Type}</DataListCell>
       <DataListCell width={20}>
         <Badge text="default">
-          <Icon className="mr-2" icon="autoAwesomeMosaic" />
+          <Icon className="mr-2" icon="dns" />
           {services.length}
         </Badge>
       </DataListCell>
