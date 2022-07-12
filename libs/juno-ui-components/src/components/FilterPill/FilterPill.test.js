@@ -20,6 +20,13 @@ describe("FilterPill", () => {
 		expect(screen.getByText("My FilterPill Value")).toBeInTheDocument()
 	})
 	
+	test("an onClose handler is called as passed", () => {
+		const handleClose = jest.fn()
+		render(<FilterPill onClose={handleClose} />)
+		screen.getByRole("button").click()
+		expect(handleClose).toHaveBeenCalled()
+	  })
+	
 	test("renders a custom className", async () => {
 		render(<FilterPill data-testid="my-filterpill" className="my-custom-class" />)
 		expect(screen.getByTestId("my-filterpill")).toBeInTheDocument()
