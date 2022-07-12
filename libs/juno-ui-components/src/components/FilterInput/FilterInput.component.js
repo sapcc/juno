@@ -22,6 +22,7 @@ const selectStyles = `
 const textInputStyles = `
 	jn-grow
 	jn-rounded-l-none
+	jn-pr-16
 	!jn-bg-theme-filter-input-textinput
 	focus:jn-z-40
 `
@@ -39,8 +40,24 @@ export const FilterInput = ({
 	options,
 	inputLabel,
 	className,
+	onFilterChange,
+	onClear,
+	onFilter,
 	...props
 }) => {
+	
+	const handleInputChange = (event) => {
+		onFilterChange && onFilterChange(event)
+	}
+	
+	const handleClearClick = (event) => {
+		onClear && onClear(event)
+	}
+	
+	const handleFilterClick = (event) => {
+		onFilter && onFilter(event)
+	}
+	
 	return (
 		<div className={`juno-filter-input ${wrapperStyles} ${className}`} {...props} >
 			<div>
@@ -49,20 +66,31 @@ export const FilterInput = ({
 					{options.map((option, i) => (<SelectOption label={option.label} value={option.value} key={`${i}`}/>))}
 				</Select>
 			</div>
-			<TextInput className={`${textInputStyles}`} aria-label={inputLabel} />
+			<TextInput className={`${textInputStyles}`} aria-label={inputLabel} onChange={handleInputChange}/>
 			<div className={`${iconWrapperStyles}`}>
-				<Icon icon="close" />
-				<Icon icon="filterAlt" />
+				<Icon icon="close" size="18" className={`jn-mr-2`} onClick={handleClearClick} />
+				<Icon icon="filterAlt" onClick={handleFilterClick} />
 			</div>
 		</div>
 	)
 }
 
 FilterInput.propTypes = {
+	/** The label to display on the Filter Select */
 	label: PropTypes.string,
-	options: PropTypes.arrayOf(PropTypes.object), // TODO test for correctly formed object
+	/** The options for the Filter Select: `[{label: "Label 1", value: "value-1"}, {...}]` 
+	*/
+	options: PropTypes.arrayOf(PropTypes.object), // TODO test for correctly formed object?
+	/** The aria-label of the Filter Value Text Input */
 	inputLabel: PropTypes.string,
+	/** Pass a className to the wrapping element */
 	className: PropTypes.string,
+	/** Pass a handler to be executed when the filter changes */
+	onFilterChange: PropTypes.func,
+	/** Pass a handler to execute when the Filter Value Clear button is clicked */
+	onClear: PropTypes.func,
+	/** Pass a handler to execute when the Filter Value Filter button is clicked */
+	onFilter: PropTypes.func,
 }
 
 FilterInput.defaultProps = {
@@ -70,4 +98,7 @@ FilterInput.defaultProps = {
 	options: [],
 	inputLabel: "Filter by Value",
 	className: "",
+	onFilterChange: undefined,
+	onClear: undefined,
+	onFilter: undefined,
 }
