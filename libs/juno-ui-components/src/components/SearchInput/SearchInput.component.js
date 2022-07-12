@@ -162,7 +162,7 @@ export const SearchInput = ({
 SearchInput.propTypes = {
   /** Pass a name. Defaults to "search". */
   name: PropTypes.string,
-  /** Pass a variant. Defaults to "default", "hero" variant renders a search input that is meant to be used standalone on a search page, similar to the inital google search page. */
+  /** Pass a variant. Defaults to "default", "hero" variant renders a search input that is meant to be used standalone on a search page, similar to the initial google search page. */
   variant: PropTypes.oneOf(["hero", "default"]),
   /** Pass a custom placeholder to replace "Search…" default.*/
   placeholder: PropTypes.string,
@@ -172,7 +172,7 @@ SearchInput.propTypes = {
 	autoComplete: PropTypes.string,
   /** Pass whether to show Clear button or not. Default is true. */
   clear: PropTypes.bool,
-  /** The class names passed here will be merged with the exisiting class names of the component */
+  /** The class names passed here will be merged with the existing class names of the component */
   className: PropTypes.string,
   /** Pass a search handler that will be called by the component when a search is triggered either via "Enter" keypress or via click on the magnifying glass icon */
   onSearch: PropTypes.func,
