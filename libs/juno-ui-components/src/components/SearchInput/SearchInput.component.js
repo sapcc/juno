@@ -68,33 +68,33 @@ const searchIconClasses = (variant) => {
 		`
 }
 
-// const clearIconClasses = (variant) => {
-// 	return (
-// 		`
-// 			${variant === "hero" ?
-// 				`
-// 					right-16
-// 				`
-// 			:
-// 				`
-// 					right-11
-// 				`
-// 			}
-// 		`
-// 	)
-// }
+const iconWrapperStyles = (variant) => {
+  return `
+    jn-absolute
+    ${variant == "hero"
+      ? `
+      jn-right-5
+      `
+      : `
+      jn-right-3
+      `
+    }
+  `
+}
 
 /** A basic, atomic, controlled Input[type="search"] */
 export const SearchInput = ({
   name,
   value,
   placeholder,
+  clear,
   className,
   autoComplete,
   onSearch,
   onChange,
   onClick,
   onKeyPress,
+  onClear,
   variant,
   ...props
 }) => {
@@ -115,9 +115,14 @@ export const SearchInput = ({
     onKeyPress && onKeyPress(event)
   }
 
-  const handleClick = (event) => {
+  const handleSearchClick = (event) => {
 		onSearch && onSearch(val)
 		onClick && onClick(event)
+  }
+  
+  const handleClearClick = (event) => {
+    setValue("")
+    onClear && onClear(event)
   }
 
   return (
@@ -134,12 +139,21 @@ export const SearchInput = ({
           onKeyPress={handleKeyPress}
           {...props}
         />
-        <Icon
-          icon="search"
-          className={`jn-absolute ${searchIconClasses(variant)}`}
-          title="Search"
-          onClick={handleClick}
-        />
+        <div className={`${iconWrapperStyles(variant)}`}>
+          { clear && val.length ? <Icon 
+                                    icon="close"
+                                    title="Clear"
+                                    onClick={handleClearClick}
+                                  /> 
+                                : 
+                                  null }
+          <Icon
+            icon="search"
+            className={`${searchIconClasses(variant)}`}
+            title="Search"
+            onClick={handleSearchClick}
+          />
+        </div>
       </Stack>
     </div>
   )
@@ -156,6 +170,8 @@ SearchInput.propTypes = {
   value: PropTypes.string,
   /** Pass a valid autocomplete value. We do not police validity. Default is "off" */
 	autoComplete: PropTypes.string,
+  /** Pass whether to show Clear button or not. Default is true. */
+  clear: PropTypes.bool,
   /** The class names passed here will be merged with the exisiting class names of the component */
   className: PropTypes.string,
   /** Pass a search handler that will be called by the component when a search is triggered either via "Enter" keypress or via click on the magnifying glass icon */
@@ -166,15 +182,19 @@ SearchInput.propTypes = {
   onChange: PropTypes.func,
   /** Pass a keyPress handler, by default the component will listen to the "Enter" key and call the passed onSearch function when it is pressed */
   onKeyPress: PropTypes.func,
+  /** Pass a handler to be executed once a user clicks on the Clear button of the SearchField */
+  onClear: PropTypes.func,
 }
 
 SearchInput.defaultProps = {
   value: "",
   variant: "default",
+  clear: true,
   onSearch: undefined,
   onChange: undefined,
   onClick: undefined,
   onKeyPress: undefined,
+  onClear: undefined,
   autoComplete: "off",
   placeholder: "Search…",
   className: "",
