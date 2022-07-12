@@ -16,6 +16,17 @@ describe("FilterInput", () => {
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 	})
 	
+	test("renders a FilterInput with a value as passed", async () => {
+		render(<FilterInput value="123abc" />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveValue("123abc")
+	})
+	
+	test("renders a Close button when the Input has a value", async () => {
+		render(<FilterInput value="123" />)
+		expect(screen.getByTitle("Clear")).toBeInTheDocument()
+	})
+	
 	test("renders a custom class to the row as passed", async () => {
 		render(<FilterInput data-testid="filter-input" className="my-custom-class" />)
 		expect(screen.getByTestId("filter-input")).toBeInTheDocument()

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Select } from "../Select/Select.component"
 import { SelectOption } from "../SelectOption/SelectOption.component"
@@ -40,17 +40,26 @@ export const FilterInput = ({
 	options,
 	inputLabel,
 	className,
+	value,
 	onFilterChange,
 	onClear,
 	onFilter,
 	...props
 }) => {
 	
+	const [val, setValue] = useState(value)
+	
+	useEffect(() => {
+		setValue(value)
+	}, [value])
+	
 	const handleInputChange = (event) => {
+		setValue(event.target.value)
 		onFilterChange && onFilterChange(event)
 	}
 	
 	const handleClearClick = (event) => {
+		setValue("")
 		onClear && onClear(event)
 	}
 	
@@ -66,10 +75,19 @@ export const FilterInput = ({
 					{options.map((option, i) => (<SelectOption label={option.label} value={option.value} key={`${i}`}/>))}
 				</Select>
 			</div>
-			<TextInput className={`${textInputStyles}`} aria-label={inputLabel} onChange={handleInputChange}/>
+			<TextInput 
+				value={val} 
+				className={`${textInputStyles}`} 
+				aria-label={inputLabel} 
+				onChange={handleInputChange} 
+			/>
 			<div className={`${iconWrapperStyles}`}>
-				<Icon icon="close" size="18" className={`jn-mr-2`} onClick={handleClearClick} />
-				<Icon icon="filterAlt" onClick={handleFilterClick} />
+				{ val && val.length ?
+					<Icon icon="close" title="Clear" size="18" className={`jn-mr-2`} onClick={handleClearClick} />
+					:
+					null
+				}
+				<Icon icon="filterAlt" title="Filter" onClick={handleFilterClick} />
 			</div>
 		</div>
 	)
@@ -83,6 +101,8 @@ FilterInput.propTypes = {
 	options: PropTypes.arrayOf(PropTypes.object), // TODO test for correctly formed object?
 	/** The aria-label of the Filter Value Text Input */
 	inputLabel: PropTypes.string,
+	/** Value of the input */
+	value: PropTypes.string,
 	/** Pass a className to the wrapping element */
 	className: PropTypes.string,
 	/** Pass a handler to be executed when the filter changes */
@@ -97,6 +117,7 @@ FilterInput.defaultProps = {
 	label: "Select Filter",
 	options: [],
 	inputLabel: "Filter by Value",
+	value: "",
 	className: "",
 	onFilterChange: undefined,
 	onClear: undefined,
