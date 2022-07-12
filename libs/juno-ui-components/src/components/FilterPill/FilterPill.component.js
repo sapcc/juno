@@ -32,10 +32,6 @@ const filtervalueStyles = `
 	jn-inline-block
 `
 
-const iconWrapperStyles = `
-	
-`
-
 export const FilterPill = ({
 	FilterKey,
 	FilterValue,
