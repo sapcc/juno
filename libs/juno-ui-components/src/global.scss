@@ -519,13 +519,9 @@
    --color-filters-bg: var(--color-background-lvl-1-raw);
    --color-filter-input-bg: var(--color-background-lvl-0-raw);
    --color-filter-input-border: var(--color-background-lvl-4-raw);
-   --color-filter-input-select-bg: var();
    --color-filter-input-textinput-bg: transparent;
-   --color-filter-pill-border: var();
-   --color-filter-pill-key-bg: var();
-   --color-filter-pill-key-text: var();
-   --color-filter-pill-value-bg: var();
-   --color-filter-pill-value-text: var();
+   --color-filter-pill-border: var(--color-background-lvl-4-raw);
+   --color-filter-pill-key-bg: var(--color-background-lvl-3-raw);
 }
 
 .theme-dark {
@@ -566,7 +562,7 @@
   --color-text-disabled-raw: var(--color-juno-text-disabled-raw);
   --color-text-link-raw: var(--color-accent-raw);
   
-  // LT Badge
+  // DT Badge
   --color-badge-default-bg: var(--color-juno-grey-blue-3);
   
   // DT Button
@@ -756,13 +752,9 @@
   --color-filters-bg: var(--color-background-lvl-1-raw);
   --color-filter-input-bg: var(--color-background-lvl-0-raw);
   --color-filter-input-border: var(--color-background-lvl-4-raw);
-  --color-filter-input-select-bg: var();
   --color-filter-input-textinput-bg: transparent;
   --color-filter-pill-border:  var(--color-background-lvl-4-raw);
   --color-filter-pill-key-bg: var(--color-background-lvl-4-raw);
-  --color-filter-pill-key-text: var();
-  --color-filter-pill-value-bg: var();
-  --color-filter-pill-value-text: var();
 }
 
 // Grid configuration

@@ -70,7 +70,7 @@ FilterPill.propTypes = {
 	FilterValueLabel: PropTypes.string,
 	/** add custom classNames */
 	className: PropTypes.string,
-	/** Pass a handler to be executed when closing the Pill */
+	/** Pass a handler to be executed when closing the FilterPill */
 	onClose: PropTypes.func,
 }
 
