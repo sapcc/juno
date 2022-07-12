@@ -4,82 +4,66 @@ import "./searchinput.css"
 import { Icon } from "../Icon/index"
 import { Stack } from "../Stack/index"
 
-const wrapperClasses = (variant) => {
-  return `
-			jn-relative
-			jn-inline-block
-      jn-min-w-max
-			${
-        variant === "hero"
-          ? `
-					jn-w-full
-				`
-          : `
-					jn-w-auto
-				`
-      }
-		`
-    .replace(/\n/g, " ")
-    .replace(/\s+/g, " ")
+const wrapperStyles = (variant) => {
+  const wrapperBaseStyles = `
+    jn-relative
+    jn-inline-block
+    jn-win-max
+  `
+  switch (variant) {
+    case "rounded":
+      return `${wrapperBaseStyles} jn-w-auto`
+    case "hero":
+      return `${wrapperBaseStyles} jn-w-full`
+    default:
+      return `${wrapperBaseStyles} jn-w-auto`
+  }
+
 }
 
-const searchClasses = (variant) => {
-  return `
-			jn-rounded-full
-      jn-bg-theme-textinput
-      jn-text-theme-high
-      jn-shadow
-			focus:jn-outline-none
-			focus:jn-rounded-full
-      focus:jn-ring-2
-      focus:jn-ring-theme-focus
-			${
-        variant === "hero"
-          ? `
-					jn-text-lg
-					jn-w-full
-					jn-pl-6
-					jn-pr-20
-					jn-py-2.5
-				`
-          : `
-					jn-text-base
-					jn-w-auto
-					jn-pl-3
-					jn-pr-16
-					jn-py-1
-				`
-      }
-		`
-    .replace(/\n/g, " ")
-    .replace(/\s+/g, " ")
-}
-
-const searchIconClasses = (variant) => {
-  return `
-			${variant === "hero"
-          ? `
-					jn-right-5
-				`
-          : `
-					jn-right-3
-				`
-      }
-		`
+const searchStyles = (variant) => {
+  const searchBaseStyles = `
+    jn-bg-theme-textinput
+    jn-text-theme-high
+    jn-shadow
+    focus:jn-outline-none
+    focus:jn-ring-2
+    focus:jn-ring-theme-focus
+    disabled:jn-opacity-50
+  ` 
+  
+  const roundedStyles = `
+    jn-rounded-full 
+    focus:jn-rounded-full
+  `
+  switch (variant) {
+    case "rounded":
+      return `${searchBaseStyles} ${roundedStyles} jn-text-base jn-w-auto jn-pl-3 jn-pr-16 jn-py-1`
+    case "hero":
+      return `${searchBaseStyles} ${roundedStyles} jn-text-lg jn-w-full jn-pl-6 jn-pr-20 jn-py-2.5`
+    default:
+      return `${searchBaseStyles} jn-rounded jn-text-base jn-leading-4 jn-pl-4 jn-pr-16 jn-py-2.5`
+  }
 }
 
 const iconWrapperStyles = (variant) => {
-  return `
-    jn-absolute
-    ${variant == "hero"
-      ? `
-      jn-right-5
-      `
-      : `
-      jn-right-3
-      `
-    }
-  `
+  switch (variant) {
+    case "rounded":
+      return `jn-absolute jn-right-3`
+    case "hero":
+      return `jn-absolute jn-right-5`
+    default:
+      return `jn-absolute jn-right-3`
+  }
+}
+
+const clearIconSize = (variant) => {
+  switch (variant) {
+    case "hero":
+      return "24"
+    default: 
+      return "18"
+  }
 }
 
 /** A basic, atomic, controlled Input[type="search"] */
@@ -96,6 +80,7 @@ export const SearchInput = ({
   onKeyPress,
   onClear,
   variant,
+  disabled,
   ...props
 }) => {
 
@@ -126,32 +111,36 @@ export const SearchInput = ({
   }
 
   return (
-    <div className={`juno-search-input-wrapper ${wrapperClasses(variant)}`} role="search">
+    <div className={`juno-search-input-wrapper ${wrapperStyles(variant)}`} role="search">
       <Stack gap="2" alignment="center">
         <input
           type="search"
           name={name || "search"}
           placeholder={placeholder}
+          disabled={disabled}
           value={val}
           autoComplete={autoComplete}
-          className={`juno-search-input ${searchClasses(variant)} ${className}`}
+          className={`juno-search-input ${searchStyles(variant)} ${className}`}
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
           {...props}
         />
         <div className={`${iconWrapperStyles(variant)}`}>
-          { clear && val.length ? <Icon 
-                                    icon="close"
-                                    title="Clear"
-                                    onClick={handleClearClick}
-                                  /> 
-                                : 
-                                  null }
+          { clear && val.length ? 
+            <Icon 
+                icon="close"
+                size={`${clearIconSize(variant)}`}
+                title="Clear"
+                onClick={handleClearClick}
+                disabled={disabled}
+              /> 
+            : 
+              null }
           <Icon
             icon="search"
-            className={`${searchIconClasses(variant)}`}
             title="Search"
             onClick={handleSearchClick}
+            disabled={disabled}
           />
         </div>
       </Stack>
@@ -163,7 +152,9 @@ SearchInput.propTypes = {
   /** Pass a name. Defaults to "search". */
   name: PropTypes.string,
   /** Pass a variant. Defaults to "default", "hero" variant renders a search input that is meant to be used standalone on a search page, similar to the initial google search page. */
-  variant: PropTypes.oneOf(["hero", "default"]),
+  variant: PropTypes.oneOf(["rounded", "hero", "default"]),
+  /** Whether the SearchInput is disabled */
+  disabled: PropTypes.bool,
   /** Pass a custom placeholder to replace "Search…" default.*/
   placeholder: PropTypes.string,
   /** Pass a value for initial rendering. Will NOT be updated once user changes for now */
@@ -189,6 +180,7 @@ SearchInput.propTypes = {
 SearchInput.defaultProps = {
   value: "",
   variant: "default",
+  disabled: false,
   clear: true,
   onSearch: undefined,
   onChange: undefined,

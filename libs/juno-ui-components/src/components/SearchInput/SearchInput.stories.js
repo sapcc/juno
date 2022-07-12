@@ -12,6 +12,11 @@ const Template = (args) => <SearchInput {...args} />
 export const Default = Template.bind({})
 Default.args = {}
 
+export const Rounded = Template.bind({})
+Rounded.args = {
+  variant: "rounded",
+}
+
 export const Hero = Template.bind({})
 Hero.args = {
   variant: "hero",
