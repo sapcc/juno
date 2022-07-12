@@ -29,6 +29,7 @@ const searchStyles = (variant) => {
     focus:jn-outline-none
     focus:jn-ring-2
     focus:jn-ring-theme-focus
+    disabled:jn-cursor-not-allowed
     disabled:jn-opacity-50
   ` 
   
@@ -54,6 +55,17 @@ const iconWrapperStyles = (variant) => {
       return `jn-absolute jn-right-5`
     default:
       return `jn-absolute jn-right-3`
+  }
+}
+
+const clearIconStyles = (variant) => {
+  switch (variant) {
+    case "rounded":
+      return `jn-mr-2`
+    case "hero":
+      return `jn-mr-2.5`
+    default:
+      return `jn-mr-2`
   }
 }
 
@@ -131,6 +143,7 @@ export const SearchInput = ({
                 icon="close"
                 size={`${clearIconSize(variant)}`}
                 title="Clear"
+                className={`${clearIconStyles(variant)}`}
                 onClick={handleClearClick}
                 disabled={disabled}
               /> 
