@@ -1,17 +1,23 @@
 import React from "react"
-import { ContentAreaToolbar, SearchInput } from "juno-ui-components"
+import { SearchInput } from "juno-ui-components"
+
+const ToolbarStyles = `
+h-15
+bg-theme-background-lvl-2
+mb-0.5
+p-4
+`
 
 const ListToolBar = ({ disabled }) => {
   return (
-    <ContentAreaToolbar>
+    <div className={ToolbarStyles}>
       <SearchInput
-        disabled={disabled}
         onChange={function noRefCheck() {}}
         onClick={function noRefCheck() {}}
         onKeyPress={function noRefCheck() {}}
         onSearch={function noRefCheck() {}}
       />
-    </ContentAreaToolbar>
+    </div>
   )
 }
 

@@ -6,6 +6,14 @@ export default {
   title: "Layout/Container",
   component: Container,
   argTypes: {},
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "A very basic layout element with padding. By default has padding all around. Can be set to have only vertical padding.",
+      },
+    },
+  },
 }
 
 const Template = (args) => <Container {...args}>Content goes here</Container>

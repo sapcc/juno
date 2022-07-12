@@ -63,6 +63,12 @@ describe("Icon", () => {
 
   // Test individual icons:
 
+  test("renders an accountCircle icon", async () => {
+    render(<Icon icon="accountCircle" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "account")
+  })
+  
   test("renders an addCircle icon", async () => {
     render(<Icon icon="addCircle" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
@@ -84,10 +90,27 @@ describe("Icon", () => {
     )
   })
 
+  test("renders a bolt icon", async () => {
+    render(<Icon icon="bolt" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "bolt")
+  })
   test("renders a cancel icon", async () => {
     render(<Icon icon="cancel" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "cancel")
+  })
+
+  test("renders a chevronLeft icon", async () => {
+    render(<Icon icon="chevronLeft" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "chevronLeft")
+  })
+  
+  test("renders a chevronRight icon", async () => {
+    render(<Icon icon="chevronRight" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "chevronRight")
   })
 
   test("renders a close icon", async () => {
@@ -124,6 +147,12 @@ describe("Icon", () => {
     render(<Icon icon="description" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "description")
+  })
+
+  test("renders a dns icon", async () => {
+    render(<Icon icon="dns" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "service")
   })
 
   test("renders an error icon", async () => {

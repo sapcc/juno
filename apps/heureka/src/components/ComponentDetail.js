@@ -1,7 +1,8 @@
 import React from "react"
+import { Container } from "juno-ui-components"
 
 const ComponentDetail = () => {
-  return "Component details"
+  return <Container px={false}>Component details</Container>
 }
 
 export default ComponentDetail
