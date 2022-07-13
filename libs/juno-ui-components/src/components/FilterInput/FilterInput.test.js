@@ -18,9 +18,21 @@ describe("FilterInput", () => {
 	})
 	
 	test("renders a Select with an aria-label as passed", async () => {
-		render(<FilterInput label={"my select"}/>)
+		render(<FilterInput keyLabel={"my select"}/>)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
 		expect(screen.getByRole("combobox")).toHaveAttribute("aria-label", "my select")
+	})
+	
+	test("renders a Select with a default option selected if no filterKey is passed", async () => {
+		render(<FilterInput />)
+		expect(screen.getByRole("option", { name: "Select Filter" })).toBeInTheDocument()
+		expect(screen.getByRole("option", { name: "Select Filter" }).selected).toBe(true)
+	})
+	
+	test("renders a Select with a default option as passed", async () => {
+		render(<FilterInput keyLabel="My Custom Key Label" />)
+		expect(screen.getByRole("option", { name: "My Custom Key Label" })).toBeInTheDocument()
+		expect(screen.getByRole("option", { name: "My Custom Key Label" }).selected).toBe(true)
 	})
 	
 	test("renders a select with options and values as passed", async () => {
@@ -30,31 +42,59 @@ describe("FilterInput", () => {
 	})
 	
 	test("renders a text input with an aria-label as passed", async () => {
-		render(<FilterInput inputLabel={"my input"}/>)
+		render(<FilterInput valueLabel={"my value input"}/>)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
-		expect(screen.getByRole("textbox")).toHaveAttribute("aria-label", "my input")
+		expect(screen.getByRole("textbox")).toHaveAttribute("aria-label", "my value input")
+	})
+	
+	test("renders a selected filter as passed", async () => {
+		const filterOptions = [{label: "OS", value: "byOs"}, {label: "Region", value: "byRegion"}]
+		render(<FilterInput options={filterOptions} filterKey="byRegion" />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.getByRole("option", { name: "Region" }).selected).toBe(true)
+	})
+	
+	test("allows users to change the filter key", async () => {
+		const filters = [{label: "OS", value: "byOs"}, {label: "Region", value: "byRegion"}, {label: "Time Zone", value: "byTimezone"}]
+		render(<FilterInput options={filters} />)
+		userEvent.selectOptions(
+			screen.getByRole("combobox"),
+			screen.getByRole("option", { name: "Time Zone" }),			
+		)
+		expect(screen.getByRole("option", { name: "Time Zone"}).selected).toBe(true)
+	})
+	
+	test("should reset the filter value when the filter key changes", async () => {
+		const filters = [{label: "OS", value: "byOs"}, {label: "Region", value: "byRegion"}, {label: "Time Zone", value: "byTimezone"}]
+		render(<FilterInput options={filters} filterValue="MacOS" />)
+		expect(screen.getByRole("textbox")).toHaveValue("MacOS")
+		userEvent.selectOptions(
+			screen.getByRole("combobox"),
+			screen.getByRole("option", { name: "Region" }),
+		)
+		expect(screen.getByRole("textbox")).toHaveValue("")
 	})
 	
 	test("renders a FilterInput with a value as passed", async () => {
-		render(<FilterInput value="123abc" />)
+		render(<FilterInput filterValue="123abc" />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveValue("123abc")
 	})
 	
 	test("renders a Close button when the Input has a value", async () => {
-		render(<FilterInput value="123" />)
+		render(<FilterInput filterValue="123" />)
 		expect(screen.getByTitle("Clear")).toBeInTheDocument()
 	})
 	
 	test("executes a handler as passed when the input value changes", async () => {
-		const handleFilterChange = jest.fn()
-		render(<FilterInput onFilterChange={handleFilterChange} />)
+		const handleFilterValueChange = jest.fn()
+		render(<FilterInput onFilterValueChange={handleFilterValueChange} />)
 		userEvent.type(screen.getByRole("textbox"), "987")
-		expect(handleFilterChange).toHaveBeenCalledTimes(3)
+		expect(handleFilterValueChange).toHaveBeenCalledTimes(3)
 	})
 	
 	test("empties the field when Clear button is clicked", async () => {
-		render(<FilterInput value="abc" />)
+		render(<FilterInput filterValue="abc" />)
 		expect(screen.getByTitle("Clear")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveValue("abc")
 		userEvent.click(screen.getByTitle("Clear"))
@@ -79,6 +119,5 @@ describe("FilterInput", () => {
 		expect(screen.getByTestId("filter-input")).toBeInTheDocument()
 		expect(screen.getByTestId("filter-input")).toHaveAttribute("data-lolol", 'some-prop')
 	})
-
 	
 })

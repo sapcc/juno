@@ -13,31 +13,46 @@ describe("Filters", () => {
 	})
 	
 	test("renders a FilterInput when filter prop is passed", async () => {
-		const filters = {label: "Filter", options: [{label: "option 1", value: "option-1"}]}
+		const filters = {options: [{label: "option 1", value: "option-1"}]}
 		render(<Filters filters={filters} />)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
 		expect(screen.getByRole("combobox")).toHaveClass("juno-filter-input-select")
 	})
 	
 	test("renders Select with options as passed", async () => {
-		const filters = {label: "Filter", options: [{label: "option 1", value: "option-1"}, {label: "option 2", value: "option-2"}]}
+		const filters = {keyLabel: "Filter", options: [{label: "option 1", value: "option-1"}, {label: "option 2", value: "option-2"}]}
 		render(<Filters filters={filters} />)
+		expect(screen.getByRole("option", {name: "Filter"})).toBeInTheDocument()
 		expect(screen.getByRole("option", {name: "option 1"})).toHaveValue("option-1")
 		expect(screen.getByRole("option", {name: "option 2"})).toHaveValue("option-2")
 	})
 	
+	test("renders a Select with selected filter key as passed", async () => {
+		const filters = {options: [{label: "option 1", value: "option-1"}, {label: "option 2", value: "option-2"}]}
+		render(<Filters filters={filters} filterKey="option-2" />)
+		expect(screen.getByRole("option", {name: "option 2"}).selected).toBe(true)
+	})
+	
+	test("renders a Filter value text input with an aria-label as passed", async () => {
+		const filters = {valueLabel: "Enter a filter value", options: []}
+		render(<Filters filters={filters} />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveAttribute("aria-label", "Enter a filter value")
+
+	})
+	
 	test("renders a Filter value as passed", async () => {
-		const filters = {label: "Filter", options: [{label: "option 1", value: "option-1"}]}
+		const filters = {options: [{label: "option 1", value: "option-1"}]}
 		render(<Filters filters={filters} filterValue="abc" />)
 		expect(screen.getByRole("textbox")).toHaveValue("abc")
 	})
 
 	test("executes a handler as passed when the filter input value changes", async () => {
-		const handleFilterChange = jest.fn()
-		const filters = {label: "Filter", options: [{label: "option 1", value: "option-1"}]}
-		render(<Filters filters={filters} onFilterChange={handleFilterChange} />)
+		const handleFilterValueChange = jest.fn()
+		const filters = {options: [{label: "option 1", value: "option-1"}]}
+		render(<Filters filters={filters} onFilterValueChange={handleFilterValueChange} />)
 		userEvent.type(screen.getByRole("textbox"), "123")
-		expect(handleFilterChange).toHaveBeenCalledTimes(3)
+		expect(handleFilterValueChange).toHaveBeenCalledTimes(3)
 	})
 	
 	test("executes a handler as passed when the filter icon is clicked", async () => {

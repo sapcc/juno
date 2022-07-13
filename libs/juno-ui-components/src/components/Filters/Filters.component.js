@@ -29,25 +29,29 @@ const filterPillWrapperStyles = `
 export const Filters = ({
 	search,
 	filters,
+	filterKey,
+	onFilterKeyChange,
 	filterValue,
+	onFilterValueChange,
 	onFilter,
-	onFilterChange,
 	onFilterClear,
 	children,
 	className,
 	...props
 }) => {
-	const filtersLabel = filters && filters.label ? filters.label : "Select"
 	return (
-		<div className={`juno-filters ${filterStyles} ${className}`} {...props}>
+		<div className={`juno-filters ${filterStyles} ${className}`} {...props} >
 			<div className={`juno-filters-input-wrapper ${inputWrapperStyles}`} >
 				{ filters && filters.options ? 
 					<FilterInput 
-						label={filtersLabel} 
-						options={filters.options} 
-						value={filterValue}
+						keyLabel={filters.keyLabel}
+						valueLabel={filters.valueLabel}
+						options={filters.options}
+						filterKey={filterKey}
+						onFilterKeyChange={onFilterKeyChange}
+						filterValue={filterValue}
+						onFilterValueChange={onFilterValueChange}
 						onFilter={onFilter}
-						onFilterChange={onFilterChange}
 						onClear={onFilterClear}
 					/> 
 					: 
@@ -66,17 +70,20 @@ export const Filters = ({
 }
 
 Filters.propTypes = {
-	label: PropTypes.string,
 	/** Pass a SearchInput component */
 	search: PropTypes.node,
-	/** Pass an object describing the filters: 
-	`{ label: "Select", options: [{label: "Label 1", value: "value-1"}, {...}] }` 
+	/** Pass an object describing the filter keyLabel, valueLabel, and options: 
+	`{ keyLabel: "Select a Filter", valueLabel: "Enter a Value", options: [{label: "Label 1", value: "value-1"}, {...}] }` 
 	*/
 	filters: PropTypes.object, 
+	/** The key of the current filter */
+	filterKey: PropTypes.string,
+	/** Pass a handler to be executed when the filter key changes */
+	onFilterKeyChange: PropTypes.func,
 	/** The value of the FilterInput */
 	filterValue: PropTypes.string,
 	/** Pass a handler to be executed whenever the value of the filter value input changes */
-	onFilterChange: PropTypes.func,  
+	onFilterValueChange: PropTypes.func,  
 	/** Pass a handler to be executed once the user clicks the filter button */
 	onFilter: PropTypes.func,
 	/** Pas a handler to be executed once the Filter input is cleared */
@@ -88,9 +95,11 @@ Filters.propTypes = {
 Filters.defaultProps = {
 	search: null,
 	filters: null,
+	filterKey: "",
+	onFilterKeyChange: undefined,
 	filterValue: "",
 	onFilter: undefined,
-	onFilterChange: undefined,
+	onFilterValueChange: undefined,
 	onFilterClear: undefined,
 	className: "",
 }

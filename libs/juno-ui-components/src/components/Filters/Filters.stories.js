@@ -31,7 +31,7 @@ Default.args = {
 export const WithPills = Template.bind({})
 WithPills.args = {
   filters: {
-    label: "Select a Filter",
+    keyLabel: "Select a Filter",
     options: [
       {label: "Filter 1", value: "filter-1"},
       {label: "Filter 2", value: "filter-2"},
@@ -42,11 +42,12 @@ WithPills.args = {
 
 
 
-export const WithSearch = Template.bind({})
-WithSearch.args = {
+export const PreseletedWithSearch = Template.bind({})
+PreseletedWithSearch.args = {
+  filterKey: "filter-2",
   search: <SearchInput />,
   filters: {
-    label: "Select a Filter",
+    keyLabel: "Select a Filter",
     options: [
       {label: "Filter 1", value: "filter-1"},
       {label: "Filter 2", value: "filter-2"},
