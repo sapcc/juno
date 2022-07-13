@@ -31,7 +31,7 @@ const iconWrapperStyles = `
 	jn-absolute
 	jn-flex
 	jn-right-2
-	jn-top-2
+	jn-top-1.5
 	jn-z-50
 `
 
