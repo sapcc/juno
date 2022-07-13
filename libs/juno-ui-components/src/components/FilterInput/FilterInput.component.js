@@ -70,7 +70,7 @@ export const FilterInput = ({
 	return (
 		<div className={`juno-filter-input ${wrapperStyles} ${className}`} {...props} >
 			<div>
-				<Select className={`${selectStyles}`} aria-label={label}>
+				<Select className={`juno-filter-input-select ${selectStyles}`} aria-label={label}>
 					{ label ? <SelectOption label={label} value="" /> : null }
 					{options.map((option, i) => (<SelectOption label={option.label} value={option.value} key={`${i}`}/>))}
 				</Select>

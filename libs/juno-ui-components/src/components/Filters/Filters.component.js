@@ -29,6 +29,10 @@ const filterPillWrapperStyles = `
 export const Filters = ({
 	search,
 	filters,
+	filterValue,
+	onFilter,
+	onFilterChange,
+	onFilterClear,
 	children,
 	className,
 	...props
@@ -38,7 +42,14 @@ export const Filters = ({
 		<div className={`juno-filters ${filterStyles} ${className}`} {...props}>
 			<div className={`juno-filters-input-wrapper ${inputWrapperStyles}`} >
 				{ filters && filters.options ? 
-					<FilterInput label={filtersLabel} options={filters.options} /> 
+					<FilterInput 
+						label={filtersLabel} 
+						options={filters.options} 
+						value={filterValue}
+						onFilter={onFilter}
+						onFilterChange={onFilterChange}
+						onClear={onFilterClear}
+					/> 
 					: 
 					null }
 				{ search ? 
@@ -62,6 +73,14 @@ Filters.propTypes = {
 	`{ label: "Select", options: [{label: "Label 1", value: "value-1"}, {...}] }` 
 	*/
 	filters: PropTypes.object, 
+	/** The value of the FilterInput */
+	filterValue: PropTypes.string,
+	/** Pass a handler to be executed whenever the value of the filter value input changes */
+	onFilterChange: PropTypes.func,  
+	/** Pass a handler to be executed once the user clicks the filter button */
+	onFilter: PropTypes.func,
+	/** Pas a handler to be executed once the Filter input is cleared */
+	onFilterClear: PropTypes.func,
 	/** add custom classNames */
 	className: PropTypes.string,	
 }
@@ -69,5 +88,9 @@ Filters.propTypes = {
 Filters.defaultProps = {
 	search: null,
 	filters: null,
+	filterValue: "",
+	onFilter: undefined,
+	onFilterChange: undefined,
+	onFilterClear: undefined,
 	className: "",
 }
