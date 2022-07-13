@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 const containerStyles = (px) => {
   return `
-    ${px ? "p-6" : "py-6"}
+    ${px ? "jn-p-6" : "jn-py-6"}
   `
 }
 
