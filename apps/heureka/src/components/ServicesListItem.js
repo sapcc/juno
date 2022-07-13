@@ -1,6 +1,11 @@
 import React, { useMemo } from "react"
 import { DataListRow, DataListCell, Icon, Badge } from "juno-ui-components"
 import { Link } from "react-router-dom"
+import { classifyVulnerabilities } from "../helpers"
+
+const vulnerabilityCss = `
+  mr-4
+`
 
 const ServicesListItem = ({ item }) => {
   const owners = useMemo(() => {
@@ -22,6 +27,10 @@ const ServicesListItem = ({ item }) => {
     return item.Components
   }, [item.Components])
 
+  const vulnerabilities = React.useMemo(() => {
+    return classifyVulnerabilities(components)
+  }, [components])
+
   return (
     <DataListRow>
       <DataListCell width={20}>
@@ -32,9 +41,40 @@ const ServicesListItem = ({ item }) => {
       <DataListCell width={20}>{owners}</DataListCell>
       <DataListCell auto>{operators}</DataListCell>
       <DataListCell auto>
-        <Icon className="mr-2" color="text-theme-success" icon="success" />
-        <Icon className="mr-2" color="text-theme-warning" icon="warning" />
-        <Icon className="mr-2" color="text-theme-danger" icon="danger" />
+        <div className={vulnerabilityCss}>
+          <Icon
+            className="mr-1"
+            color="text-theme-success"
+            icon="severityLow"
+          />
+          <span>{vulnerabilities.low}</span>
+        </div>
+        <div className={vulnerabilityCss}>
+          <div>
+            <Icon
+              className="mr-1"
+              color="text-theme-warning"
+              icon="severityMedium"
+            />
+            <span>{vulnerabilities.medium}</span>
+          </div>
+        </div>
+        <div className={vulnerabilityCss}>
+          <Icon
+            className="mr-1"
+            color="text-theme-danger"
+            icon="severityHigh"
+          />
+          <span>{vulnerabilities.high}</span>
+        </div>
+        <div>
+          <Icon
+            className="mr-1"
+            color="text-theme-danger"
+            icon="severityCritical"
+          />
+          <span>{vulnerabilities.critical}</span>
+        </div>
       </DataListCell>
       <DataListCell auto>
         <Badge text="default">
