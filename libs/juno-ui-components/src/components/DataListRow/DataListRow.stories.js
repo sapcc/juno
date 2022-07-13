@@ -6,9 +6,17 @@ import { Default as DataListCellStory } from "../DataListCell/DataListCell.stori
 import { Default as DataListCheckboxCellStory } from "../DataListCheckboxCell/DataListCheckboxCell.stories.js"
 
 export default {
-  title: "Components/DataList/DataListRow",
+  title: "Deprecated/DataList/DataListRow",
   component: DataListRow,
   argTypes: {},
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "DataList is deprecated and will be removed. Please use DataGrid instead.",
+      },
+    },
+  },
 }
 
 const Template = ({ items, ...args }) => (

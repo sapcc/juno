@@ -5,6 +5,7 @@ import { DataGridCell } from "../DataGridCell/index.js"
 // import { DataGridCheckboxCell } from "../DataGridCheckboxCell/index.js"
 import { DataGridHeadCell } from "../DataGridHeadCell/index.js"
 import { ContentArea } from "../ContentArea/index.js"
+import { Container } from "../Container/index.js"
 // import { DataGridFoot } from "../DataGridFoot/index.js"
 // import { DataGridFootRow } from "../DataGridFootRow/index.js"
 // import { DataGridToolbar } from "../DataGridToolbar/index.js"
@@ -22,29 +23,49 @@ export default {
   title: "Components/DataGrid/DataGrid",
   component: DataGrid,
   argTypes: {},
+  decorators: [
+    (story) => (
+      <ContentArea className="container-is-only-here-to-make-it-look-nice-do-not-copy-this jn-overflow-x-auto">
+        <Container>{story()}</Container>
+      </ContentArea>
+    ),
+  ],
 }
 
-const Template = ({ ...args }) => (
-  <ContentArea>
-    <DataGrid {...args}>
+const defaultColumns = 3
+
+const Template = ({ hideHead, includeColSpanRow, ...args }) => (
+  <DataGrid {...args}>
+    { !hideHead && 
       <DataGridRow>
-        {[...Array(args.columns)].map((cell, c) => (
+        {[...Array(args.columns || defaultColumns)].map((_, c) => (
           <DataGridHeadCell key={`h_${c}`}>
             {`Head cell ${c}`}
           </DataGridHeadCell>
         ))}
       </DataGridRow>
-      {[...Array(4)].map((row, r) => (
-        <DataGridRow key={`b_${r}`}>
-          {[...Array(args.columns)].map((cell, c) => (
-            <DataGridCell key={`b_${r}_${c}`}>
-              {`Cell ${r}-${c}`}
-            </DataGridCell>
-          ))}
-        </DataGridRow>
-      ))}
-    </DataGrid>
-  </ContentArea>
+    }
+    {!includeColSpanRow && [...Array(4)].map((_, r) => (
+      <DataGridRow key={`b_${r}`}>
+        {[...Array(args.columns || defaultColumns)].map((_, c) => (
+          <DataGridCell key={`b_${r}_${c}`}>
+            { c === args.columns - 2 ?
+              `Cell ${r}-${c} has more content than others`
+              :
+              `Cell ${r}-${c}`
+            }
+          </DataGridCell>
+        ))}
+      </DataGridRow>
+    ))}
+    { includeColSpanRow &&
+      <DataGridRow>
+        <DataGridCell colSpan={args.columns}>
+          This is a cell with colspan spanning all available columns
+        </DataGridCell>
+      </DataGridRow>
+    }
+  </DataGrid>
 )
 
 // const WithHeadAndFootTemplate = ({ items, ...args }) => (
@@ -79,12 +100,89 @@ export const Default = Template.bind({})
 Default.parameters = {
   docs: {
     description: {
-      story: "Juno DataGrid for displaying data",
+      story: "Juno DataGrid for displaying data. Example with 5 columns.",
     },
   },
 }
 Default.args = {
+  columns: 5
+}
+
+export const EqualColumnSize = Template.bind({})
+EqualColumnSize.parameters = {
+  docs: {
+    description: {
+      story: "Example: change column max size to '1fr'. This ensures that all columns get the same width, even if some columns have more content than others",
+    },
+  },
+}
+EqualColumnSize.args = {
   columns: 5,
+  columnMaxSize: "1fr"
+}
+
+export const ColumnMinSize = Template.bind({})
+ColumnMinSize.parameters = {
+  docs: {
+    description: {
+      story: "Example: set a minimum width for columns. Columns will always be at least this wide, even if they have very little content. This may cause horizontal scrollbars if the DataGrid doesn't fit into the container anymore",
+    },
+  },
+}
+ColumnMinSize.args = {
+  columns: 5,
+  columnMinSize: "300px"
+}
+
+export const MinimumSizedColumns = Template.bind({})
+MinimumSizedColumns.parameters = {
+  docs: {
+    description: {
+      story: "Example: specify some columns that should be as small as possible (typically used for when you have a cell that contains only a button and you want to ensure the cell is only exactly as wide as the button",
+    },
+  },
+}
+MinimumSizedColumns.args = {
+  columns: 5,
+  minContentColumns: [0,4]
+}
+
+export const CustomGridTemplate = Template.bind({})
+CustomGridTemplate.parameters = {
+  docs: {
+    description: {
+      story: "Example: specify a completely custom css grid column template. The value passed is used for the css 'grid-template-columns' property. All other settings are ignored",
+    },
+  },
+}
+CustomGridTemplate.args = {
+  gridColumnTemplate: `min-content repeat(${defaultColumns - 1}, 1fr)`
+}
+
+export const NoHead = Template.bind({})
+NoHead.parameters = {
+  docs: {
+    description: {
+      story: "Without head cells",
+    },
+  },
+}
+NoHead.args = {
+  columns: 5,
+  hideHead: true
+}
+
+export const ColSpanCell = Template.bind({})
+ColSpanCell.parameters = {
+  docs: {
+    description: {
+      story: "With a col span cell",
+    },
+  },
+}
+ColSpanCell.args = {
+  columns: 5,
+  includeColSpanRow: true
 }
 
 // export const Selectable = Template.bind({})

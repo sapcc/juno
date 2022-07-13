@@ -2,6 +2,9 @@ import React from "react"
 import { DataGridRow } from "./index.js"
 import { DataGridCell } from "../DataGridCell/index.js"
 import { Default as DataGridCellStory } from "../DataGridCell/DataGridCell.stories.js"
+import { DataGrid } from "../DataGrid/index.js"
+
+const columns = 5
 
 export default {
   title: "Components/DataGrid/DataGridRow",
@@ -9,9 +12,9 @@ export default {
   argTypes: {},
   decorators: [
     (story) => (
-      <table>
-        <tbody>{story()}</tbody>
-      </table>
+      <DataGrid columns={columns}>
+        {story()}
+      </DataGrid>
     ),
   ],
 }
@@ -33,11 +36,5 @@ Default.parameters = {
   },
 }
 Default.args = {
-  items: [
-    { ...DataGridCellStory.args },
-    { ...DataGridCellStory.args },
-    { ...DataGridCellStory.args },
-    { ...DataGridCellStory.args },
-    { ...DataGridCellStory.args },
-  ],
+  items: Array(columns).fill({ ...DataGridCellStory.args }),
 }

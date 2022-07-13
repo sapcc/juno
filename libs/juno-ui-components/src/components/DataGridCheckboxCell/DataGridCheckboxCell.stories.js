@@ -2,7 +2,7 @@ import React from "react"
 import { DataGridCheckboxCell } from "./index.js"
 
 export default {
-  title: "Components/DataGrid/DataGridCheckboxCell",
+  title: "WiP/DataGrid/DataGridCheckboxCell",
   component: DataGridCheckboxCell,
   argTypes: {},
   decorators: [

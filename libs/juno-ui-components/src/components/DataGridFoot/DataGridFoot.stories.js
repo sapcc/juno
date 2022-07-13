@@ -1,12 +1,10 @@
 import React from "react"
 import { DataGridFoot } from "./index.js"
-import { DataGridFootRow } from "../DataGridFootRow/index.js"
 import { DataGridCell } from "../DataGridCell/index.js"
 import { Default as DataGridCellStory } from "../DataGridCell/DataGridCell.stories.js"
-import { Default as DataGridFootRowStory } from "../DataGridFootRow/DataGridFootRow.stories.js"
 
 export default {
-  title: "Components/DataGrid/DataGridFoot",
+  title: "WiP/DataGrid/DataGridFoot",
   component: DataGridFoot,
   argTypes: {},
   decorators: [(story) => <table>{story()}</table>],
@@ -14,13 +12,13 @@ export default {
 
 const Template = ({ items, ...args }) => (
   <DataGridFoot {...args}>
-    {items.map((item, i) => (
+    {/* {items.map((item, i) => (
       <DataGridFootRow key={`f_${i}`}>
         {item.items.map((cell, c) => (
           <DataGridCell {...cell} key={`f_${i}_${c}`} />
         ))}
       </DataGridFootRow>
-    ))}
+    ))} */}
   </DataGridFoot>
 )
 
@@ -33,5 +31,4 @@ Default.parameters = {
   },
 }
 Default.args = {
-  items: [{ ...DataGridFootRowStory.args }],
 }
