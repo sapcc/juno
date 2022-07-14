@@ -41,6 +41,12 @@ describe("FilterInput", () => {
 		expect(screen.getByRole("option", {name: "option 2"})).toHaveValue("option-2")
 	})
 	
+	test("renders a select with arbitrary props for options", async () => {
+		render(<FilterInput options={[{label: "option 1", value: "option-1", disabled: true}, {label: "option 2", value: "option-2"}]} />)
+		expect(screen.getByRole("option", {name: "option 1"})).toHaveValue("option-1")
+		expect(screen.getByRole("option", {name: "option 1"})).toBeDisabled()
+	})
+	
 	test("renders a text input with an aria-label as passed", async () => {
 		render(<FilterInput valueLabel={"my value input"}/>)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
