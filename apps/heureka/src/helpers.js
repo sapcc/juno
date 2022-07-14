@@ -9,6 +9,13 @@ export const parseError = (error) => {
   return errMsg
 }
 
+export const usersListToString = (users) => {
+  if (!users) users = []
+  if (!Array.isArray(users)) users = [users]
+
+  return users.map((user) => user.Name).join(", ")
+}
+
 const THREAD_LEVEL_LOW = "low"
 const THREAD_LEVEL_MEDIUM = "medium"
 const THREAD_LEVEL_HIGH = "high"

@@ -7,30 +7,17 @@ import {
   Stack,
 } from "juno-ui-components"
 import { Link } from "react-router-dom"
-import { classifyVulnerabilities } from "../helpers"
+import { classifyVulnerabilities, usersListToString } from "../helpers"
 import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
-import Avatar from "./Avatar"
 
 const ServicesListItem = ({ item }) => {
   const owners = useMemo(() => {
-    if (!item.Owners) return ""
-    return item.Owners.map((owner, i) => (
-      <span key={i}>{(i ? "," : "") + owner.Name}</span>
-    ))
+    return usersListToString(item.Owners)
   }, [item.Owners])
 
   const operators = useMemo(() => {
-    if (!item.Operators) return ""
-    return (
-      <Stack direction="vertical">
-        {item.Operators.map((operator, i) => (
-          <div key={i} className={i ? "mt-2" : ""}>
-            <Avatar user={operator} />
-          </div>
-        ))}
-      </Stack>
-    )
-  }, [item.Operator])
+    return usersListToString(item.Operators)
+  }, [item.Operators])
 
   const components = React.useMemo(() => {
     if (!item?.Components) return []

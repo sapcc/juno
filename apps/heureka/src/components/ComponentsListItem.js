@@ -2,7 +2,7 @@ import React, { useMemo } from "react"
 import { DataListRow, DataListCell, Badge, Icon } from "juno-ui-components"
 import { Link } from "react-router-dom"
 import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
-import { classifyVulnerabilities } from "../helpers"
+import { classifyVulnerabilities, usersListToString } from "../helpers"
 
 const ComponentsListItem = ({ item }) => {
   const services = useMemo(() => {
@@ -15,18 +15,12 @@ const ComponentsListItem = ({ item }) => {
   }, [item])
 
   const owners = useMemo(() => {
-    if (!item.Owners) return ""
-    return item.Owners.map((owner, i) => (
-      <span key={i}>{(i ? "," : "") + owner.Name}</span>
-    ))
+    return usersListToString(item.Owners)
   }, [item.Owners])
 
   const operators = useMemo(() => {
-    if (!item.Operators) return ""
-    return item.Operators.map((operator, i) => (
-      <span key={i}>{(i ? "," : "") + operator.Name}</span>
-    ))
-  }, [item.Operator])
+    return usersListToString(item.Operators)
+  }, [item.Operators])
 
   return (
     <DataListRow>
