@@ -11,12 +11,12 @@ describe("FilterPill", () => {
 	})
 	
 	test("renders a filter key label as passed", async () => {
-		render(<FilterPill FilterKeyLabel="My FilterPill Key" />)
+		render(<FilterPill filterKeyLabel="My FilterPill Key" />)
 		expect(screen.getByText("My FilterPill Key")).toBeInTheDocument()
 	})
 	
 	test("renders a filter value label as passed", async () => {
-		render(<FilterPill FilterValueLabel="My FilterPill Value" />)
+		render(<FilterPill filterValueLabel="My FilterPill Value" />)
 		expect(screen.getByText("My FilterPill Value")).toBeInTheDocument()
 	})
 	

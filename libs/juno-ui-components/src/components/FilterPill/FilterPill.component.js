@@ -33,10 +33,10 @@ const filtervalueStyles = `
 `
 
 export const FilterPill = ({
-	FilterKey,
-	FilterValue,
-	FilterKeyLabel,
-	FilterValueLabel,
+	filterKey,
+	filterValue,
+	filterKeyLabel,
+	filterValueLabel,
 	onClose,
 	className,
 	...props
@@ -48,8 +48,8 @@ export const FilterPill = ({
 	
 	return (
 		<div className={`juno-filterpill ${filterpillStyles} ${className}`} {...props} >
-			<span className={`${filterkeyStyles}`}>{FilterKeyLabel}</span>
-			<span className={`${filtervalueStyles}`}>{FilterValueLabel}</span>
+			<span className={`${filterkeyStyles}`}>{filterKeyLabel}</span>
+			<span className={`${filtervalueStyles}`}>{filterValueLabel}</span>
 			<Icon icon="close" size="18" onClick={handleCloseClick} />
 		</div>
 	)
@@ -57,13 +57,13 @@ export const FilterPill = ({
 
 FilterPill.propTypes = {
 	/** The key of the filter the pill represents */
-	FilterKey: PropTypes.string,
+	filterKey: PropTypes.string,
 	/** The visible label to describe the filter key */
-	FilterKeyLabel: PropTypes.string,
+	filterKeyLabel: PropTypes.string,
 	/** The value of the filter the pill represents */
-	FilterValue: PropTypes.string,
+	filterValue: PropTypes.string,
 	/** The visible label to describe the filter value */
-	FilterValueLabel: PropTypes.string,
+	filterValueLabel: PropTypes.string,
 	/** add custom classNames */
 	className: PropTypes.string,
 	/** Pass a handler to be executed when closing the FilterPill */
@@ -71,8 +71,9 @@ FilterPill.propTypes = {
 }
 
 FilterPill.defaultProps = {
-	FilterKeyLabel: "Key",
-	FilterValueLabel: "Value",
+	filterKey: "",
+	filterKeyLabel: "Key",
+	filterValueLabel: "Value",
 	onClose: undefined,
 	className: ""
 }
