@@ -105,6 +105,7 @@ export const FilterInput = ({
 							label={option.label} 
 							value={option.value}
 							key={`${i}`}
+							{...option}
 						/>))}
 				</Select>
 			</div>
