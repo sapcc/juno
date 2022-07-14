@@ -45,6 +45,7 @@ export const FilterInput = ({
 	filterValue,
 	onFilterValueChange,
 	onClear,
+	onKeyPress,
 	onFilter,
 	...props
 }) => {
@@ -80,6 +81,13 @@ export const FilterInput = ({
 		onFilter && onFilter(event)
 	}
 	
+	const handleKeyPress = (event) => {
+		if (event.key === "Enter" && onFilter) { 
+			onFilter && onFilter(event) 
+		}
+		onKeyPress && onKeyPress(event)
+	 }
+	
 	return (
 		<div className={`juno-filter-input ${wrapperStyles} ${className}`} {...props} >
 			<div>
@@ -104,7 +112,8 @@ export const FilterInput = ({
 				value={value} 
 				className={`${textInputStyles}`} 
 				aria-label={valueLabel} 
-				onChange={handleFilterValueChange} 
+				onChange={handleFilterValueChange}
+				onKeyPress={handleKeyPress}
 			/>
 			<div className={`${iconWrapperStyles}`}>
 				{ value && value.length ?

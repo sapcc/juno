@@ -63,6 +63,15 @@ describe("Filters", () => {
 		expect(handleFilter).toHaveBeenCalledTimes(1)
 	})
 	
+	test("executes a handler as passed when the input has focus and the user presses enter", async () => {
+		const handleFilter = jest.fn()
+		const filters = {label: "Filter", options: [{label: "option 1", value: "option-1"}]}
+		render(<Filters filters={filters} onFilter={handleFilter} />)
+		userEvent.type(screen.getByRole("textbox"), '{enter}')
+		expect(handleFilter).toHaveBeenCalledTimes(1)
+		expect(handleFilter).toHaveBeenCalledTimes(1)
+	})
+	
 	test("clears the filter input and executes a handler as passed when the filter input clear icon is clicked", async () => {
 		const handleClear = jest.fn()
 		const filters = {label: "Filter", options: [{label: "option 1", value: "option-1"}]}
@@ -72,6 +81,7 @@ describe("Filters", () => {
 		expect(screen.getByRole("textbox")).toHaveValue("")
 		expect(handleClear).toHaveBeenCalledTimes(1)
 	})
+	
 	
 	test("renders a SearchInput as passed", async () => {
 		render(<Filters><SearchInput/></Filters>)

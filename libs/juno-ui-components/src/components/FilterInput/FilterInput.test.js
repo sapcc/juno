@@ -108,6 +108,13 @@ describe("FilterInput", () => {
 		expect(handleFilter).toHaveBeenCalledTimes(1)
 	})
 	
+	test("executes a handler as passed when the input has focus and the user presses enter", async () => {
+		const handleFilter = jest.fn()
+		render(<FilterInput onFilter={handleFilter} />)
+		userEvent.type(screen.getByRole("textbox"), '{enter}')
+		expect(handleFilter).toHaveBeenCalledTimes(1)
+	})
+	
 	test("renders a custom class to the row as passed", async () => {
 		render(<FilterInput data-testid="filter-input" className="my-custom-class" />)
 		expect(screen.getByTestId("filter-input")).toBeInTheDocument()
