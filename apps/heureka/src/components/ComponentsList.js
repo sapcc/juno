@@ -19,17 +19,23 @@ const ComponentsList = ({ components }) => {
   return (
     <DataList>
       <DataListRow className={dataListHeader}>
-        <DataListCell className={dataListHeaderItem} width={40}>
+        <DataListCell className={dataListHeaderItem} width={20}>
           Name
         </DataListCell>
-        <DataListCell className={dataListHeaderItem} width={20}>
+        <DataListCell className={dataListHeaderItem} width={10}>
           Type
         </DataListCell>
-        <DataListCell className={dataListHeaderItem} width={20}>
+        <DataListCell className={dataListHeaderItem} width={10}>
           Belongs to
         </DataListCell>
         <DataListCell className={dataListHeaderItem} width={20}>
           Vulnerabilities
+        </DataListCell>
+        <DataListCell className={dataListHeaderItem} width={20}>
+          Owners
+        </DataListCell>
+        <DataListCell className={dataListHeaderItem} width={20}>
+          Operators
         </DataListCell>
       </DataListRow>
       {components.length > 0 ? (
