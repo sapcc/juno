@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
 import { classifyVulnerabilities, usersListToString } from "../helpers"
 
-const ComponentsListItem = ({ item }) => {
+const ComponentsListItem = ({ item, minimized }) => {
   const services = useMemo(() => {
     if (!item.Services) return []
     return item.Services
@@ -30,17 +30,23 @@ const ComponentsListItem = ({ item }) => {
         </Link>
       </DataListCell>
       <DataListCell width={10}>{item.Type}</DataListCell>
-      <DataListCell width={10}>
-        <Badge text="default">
-          <Icon className="mr-2" icon="dns" />
-          {services.length}
-        </Badge>
-      </DataListCell>
+      {!minimized && (
+        <DataListCell width={10}>
+          <Badge text="default">
+            <Icon className="mr-2" icon="dns" />
+            {services.length}
+          </Badge>
+        </DataListCell>
+      )}
       <DataListCell width={20}>
         <VulnerabilitiesOverview vulnerabilities={vulnerabilities} />
       </DataListCell>
-      <DataListCell width={20}>{owners}</DataListCell>
-      <DataListCell width={20}>{operators}</DataListCell>
+      {!minimized && (
+        <>
+          <DataListCell width={20}>{owners}</DataListCell>
+          <DataListCell width={20}>{operators}</DataListCell>
+        </>
+      )}
     </DataListRow>
   )
 }

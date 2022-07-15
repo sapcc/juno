@@ -80,7 +80,7 @@ const ServiceDetail = () => {
                   </div>
                   <p className={Header}>All components in this service</p>
                   <div className="mt-4">
-                    <ComponentsList components={components} />
+                    <ComponentsList components={components} minimized />
                   </div>
                 </>
               ) : (

@@ -10,7 +10,7 @@ const dataListHeaderItem = `
 font-bold
 `
 
-const ComponentsList = ({ components }) => {
+const ComponentsList = ({ components, minimized }) => {
   components = useMemo(() => {
     if (!components) return []
     return components
@@ -25,23 +25,29 @@ const ComponentsList = ({ components }) => {
         <DataListCell className={dataListHeaderItem} width={10}>
           Type
         </DataListCell>
-        <DataListCell className={dataListHeaderItem} width={10}>
-          Belongs to
-        </DataListCell>
+        {!minimized && (
+          <DataListCell className={dataListHeaderItem} width={10}>
+            Belongs to
+          </DataListCell>
+        )}
         <DataListCell className={dataListHeaderItem} width={20}>
           Vulnerabilities
         </DataListCell>
-        <DataListCell className={dataListHeaderItem} width={20}>
-          Owners
-        </DataListCell>
-        <DataListCell className={dataListHeaderItem} width={20}>
-          Operators
-        </DataListCell>
+        {!minimized && (
+          <>
+            <DataListCell className={dataListHeaderItem} width={20}>
+              Owners
+            </DataListCell>
+            <DataListCell className={dataListHeaderItem} width={20}>
+              Operators
+            </DataListCell>
+          </>
+        )}
       </DataListRow>
       {components.length > 0 ? (
         <>
           {components.map((item, i) => (
-            <ComponentsListItem key={i} item={item} />
+            <ComponentsListItem key={i} item={item} minimized={minimized} />
           ))}
         </>
       ) : (
