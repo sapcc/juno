@@ -1,26 +1,23 @@
 import React, { useMemo } from "react"
-import { DataListRow, DataListCell, Icon, Badge } from "juno-ui-components"
+import {
+  DataListRow,
+  DataListCell,
+  Icon,
+  Badge,
+  Stack,
+} from "juno-ui-components"
 import { Link } from "react-router-dom"
-import { classifyVulnerabilities } from "../helpers"
-
-const vulnerabilityCss = `
-  mr-4
-`
+import { classifyVulnerabilities, usersListToString } from "../helpers"
+import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
 
 const ServicesListItem = ({ item }) => {
   const owners = useMemo(() => {
-    if (!item.Owners) return ""
-    return item.Owners.map((owner, i) => (
-      <span key={i}>{(i ? "," : "") + owner.Name}</span>
-    ))
-  }, [item.owners])
+    return usersListToString(item.Owners)
+  }, [item.Owners])
 
   const operators = useMemo(() => {
-    if (!item.Operators) return ""
-    return item.Operators.map((operator, i) => (
-      <span key={i}>{(i ? "," : "") + operator.Name}</span>
-    ))
-  }, [item.operator])
+    return usersListToString(item.Operators)
+  }, [item.Operators])
 
   const components = React.useMemo(() => {
     if (!item?.Components) return []
@@ -41,46 +38,15 @@ const ServicesListItem = ({ item }) => {
       <DataListCell width={20}>{owners}</DataListCell>
       <DataListCell auto>{operators}</DataListCell>
       <DataListCell auto>
-        <div className={vulnerabilityCss}>
-          <Icon
-            className="mr-1"
-            color="text-theme-success"
-            icon="severityLow"
-          />
-          <span>{vulnerabilities.low}</span>
-        </div>
-        <div className={vulnerabilityCss}>
-          <div>
-            <Icon
-              className="mr-1"
-              color="text-theme-warning"
-              icon="severityMedium"
-            />
-            <span>{vulnerabilities.medium}</span>
-          </div>
-        </div>
-        <div className={vulnerabilityCss}>
-          <Icon
-            className="mr-1"
-            color="text-theme-danger"
-            icon="severityHigh"
-          />
-          <span>{vulnerabilities.high}</span>
-        </div>
-        <div>
-          <Icon
-            className="mr-1"
-            color="text-theme-danger"
-            icon="severityCritical"
-          />
-          <span>{vulnerabilities.critical}</span>
-        </div>
+        <VulnerabilitiesOverview vulnerabilities={vulnerabilities} />
       </DataListCell>
       <DataListCell auto>
-        <Badge text="default">
-          <Icon className="mr-2" icon="widgets" />
-          {components.length}
-        </Badge>
+        <div>
+          <Badge className="pb-1.5" text="default">
+            <Icon className="mr-2" icon="widgets" />
+            {components.length}
+          </Badge>
+        </div>
       </DataListCell>
     </DataListRow>
   )
