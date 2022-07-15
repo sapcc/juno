@@ -105,6 +105,17 @@ describe("SearchInput", () => {
 		userEvent.type(screen.getByRole("searchbox"), 'abc')
 		expect(handleChange).toHaveBeenCalledTimes(3)
 	})
+	
+	test("renders a Clear icon if passed and field has a value", async () => {
+		render(<SearchInput value="123" />)
+		expect(screen.getByTitle("Clear")).toBeInTheDocument()
+	})
+	
+	test("Clears the field when the Clear icon is clicked", async () => {
+		render(<SearchInput value="abc" />)
+		userEvent.click(screen.getByTitle("Clear"))
+		expect(screen.getByRole("searchbox")).toHaveValue("")
+	})
 
 	test("renders custom classNames as passed", async () => {
 		render(<SearchInput className="my-custom-class" />)

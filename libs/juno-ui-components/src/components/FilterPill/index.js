@@ -1,0 +1,1 @@
+export { FilterPill } from "./FilterPill.component"

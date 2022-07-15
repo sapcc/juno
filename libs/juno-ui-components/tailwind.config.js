@@ -208,6 +208,10 @@ module.exports = {
             "--color-message-success-border"
           ),
           "tab-navigation-top": withOpacity("--color-tabnavigation-top-bg"),
+          filters: withOpacity("--color-filters-bg"),
+          "filter-input": withOpacity("--color-filter-input-bg"),
+          "filter-input-textinput": withOpacity("--color-filter-input-textinput-bg"),
+          "filter-pill-key": withOpacity("--color-filter-pill-key-bg"),
         },
       },
       backgroundImage: {
@@ -249,6 +253,8 @@ module.exports = {
           introbox: withOpacity("--color-introbox-border"),
           "tab-navigation-content-bottom": withOpacity("--color-tabnavigation-content-bottom-border"),
           "tab-active-bottom": withOpacity("--color-text-default-raw"),
+          "filter-input": withOpacity("--color-filter-input-border"),
+          "filter-pill": withOpacity("--color-filter-pill-border"),
         },
       },
       // backgroundImage: theme => ({

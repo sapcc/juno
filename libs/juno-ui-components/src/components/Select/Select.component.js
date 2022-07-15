@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 
 const selectstyles = `
+	jn-w-full
 	jn-bg-theme-select
 	jn-text-theme-high
 	jn-appearance-none

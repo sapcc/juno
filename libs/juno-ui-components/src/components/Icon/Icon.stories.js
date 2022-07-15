@@ -191,6 +191,12 @@ Expand_More.args = {
   icon: "expandMore",
 }
 
+export const Filter_Alt = Template.bind({})
+Filter_Alt.args = {
+  ...Default.args,
+  icon: "filterAlt",
+}
+
 export const Forum = Template.bind({})
 Forum.args = {
   ...Default.args,

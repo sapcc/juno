@@ -22,6 +22,7 @@ import Error from "./icons/dangerous.svg"
 import ExitToApp from "./icons/exit_to_app.svg"
 import ExpandLess from "./icons/expand_less.svg"
 import ExpandMore from "./icons/expand_more.svg"
+import FilterAlt from "./icons/filter_alt.svg"
 import Forum from "./icons/forum.svg"
 import Help from "./icons/help.svg"
 import Info from "./icons/info.svg"
@@ -89,6 +90,7 @@ export const knownIcons = [
   "exitToApp",
   "expandLess",
   "expandMore",
+  "filterAlt",
   "forum",
   "help",
   "info",
@@ -341,6 +343,18 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="expand more"
           title={title ? title : "Expand More"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "filterAlt":
+      return (
+        <FilterAlt
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="filter"
+          title={title ? title : "Filter"}
           role="img"
           {...iconProps}
         />
