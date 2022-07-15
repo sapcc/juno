@@ -2,9 +2,17 @@ import React from "react"
 import { DataListCheckboxCell } from "./index.js"
 
 export default {
-  title: "Components/DataList/DataListCheckboxCell",
+  title: "Deprecated/DataList/DataListCheckboxCell",
   component: DataListCheckboxCell,
   argTypes: {},
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "DataList is deprecated and will be removed. Please use DataGrid instead.",
+      },
+    },
+  },
 }
 
 const Template = (args) => (

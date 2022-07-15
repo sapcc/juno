@@ -3,7 +3,7 @@ import { DataGridToolbar } from "./index.js"
 import { Default as Button } from "../Button/Button.stories.js"
 
 export default {
-  title: "Components/DataGrid/DataGridToolbar",
+  title: "WiP/DataGrid/DataGridToolbar",
   component: DataGridToolbar,
   argTypes: {},
 }

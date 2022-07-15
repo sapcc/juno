@@ -10,9 +10,17 @@ import { PercentageWidths as PercentageWidthsDataListRowStory } from "../DataLis
 import { GridFitted as GridFittedDataListRowStory } from "../DataListRow/DataListRow.stories.js"
 
 export default {
-  title: "Components/DataList/DataList",
+  title: "Deprecated/DataList/DataList",
   component: DataList,
   argTypes: {},
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "DataList is deprecated and will be removed. Please use DataGrid instead.",
+      },
+    },
+  },
 }
 
 const Template = ({ items, ...args }) => (
