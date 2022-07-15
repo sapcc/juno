@@ -8,6 +8,13 @@ const cellBaseStyles = `
 	jn-border-theme-background-lvl-2
 `
 
+const cellInnerWrapperStyles = `
+	jn-flex
+	jn-flex-col
+	jn-justify-center
+	jn-h-full
+`
+
 const cellCustomStyles = (colSpan) => {
 	let styles
 	if (colSpan) {
@@ -26,8 +33,11 @@ export const DataGridCell = ({
 		<div 
 			className={`juno-datagrid-cell ${cellBaseStyles} ${className}`} 
 			style={cellCustomStyles(colSpan)}
+			role="gridcell"
 			{...props}>
-			{children}
+			<div className={cellInnerWrapperStyles}>
+				{children}
+			</div>
 		</div>
 	)
 }

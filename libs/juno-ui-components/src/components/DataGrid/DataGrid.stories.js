@@ -6,18 +6,6 @@ import { DataGridCell } from "../DataGridCell/index.js"
 import { DataGridHeadCell } from "../DataGridHeadCell/index.js"
 import { ContentArea } from "../ContentArea/index.js"
 import { Container } from "../Container/index.js"
-// import { DataGridFoot } from "../DataGridFoot/index.js"
-// import { DataGridFootRow } from "../DataGridFootRow/index.js"
-// import { DataGridToolbar } from "../DataGridToolbar/index.js"
-// import { Default as DataGridRowStory } from "../DataGridRow/DataGridRow.stories.js"
-// import { Default as DataGridCellStory } from "../DataGridCell/DataGridCell.stories.js"
-// import { Default as DataGridHeadStory } from "../DataGridHead/DataGridHead.stories.js"
-// import { Default as DataGridHeadRowStory } from "../DataGridHeadRow/DataGridHeadRow.stories.js"
-// import { Default as DataGridHeadCellStory } from "../DataGridHeadCell/DataGridHeadCell.stories.js"
-// import { Default as DataGridBodyStory } from "../DataGridBody/DataGridBody.stories.js"
-// import { Default as DataGridFootStory } from "../DataGridFoot/DataGridFoot.stories.js"
-// import { Default as DataGridFootRowStory } from "../DataGridFootRow/DataGridFootRow.stories.js"
-// import { Default as DataGridToolbarStory } from "../DataGridToolbar/DataGridToolbar.stories.js"
 
 export default {
   title: "Components/DataGrid/DataGrid",
@@ -25,8 +13,10 @@ export default {
   argTypes: {},
   decorators: [
     (story) => (
-      <ContentArea className="container-is-only-here-to-make-it-look-nice-do-not-copy-this jn-overflow-x-auto">
-        <Container>{story()}</Container>
+      <ContentArea className="this-is-only-here-to-make-it-look-nice-do-not-copy-this jn-overflow-x-auto">
+        <Container className="this-is-only-here-to-make-it-look-nice-do-not-copy-this">
+          {story()}
+        </Container>
       </ContentArea>
     ),
   ],
@@ -50,9 +40,9 @@ const Template = ({ hideHead, includeColSpanRow, ...args }) => (
         {[...Array(args.columns || defaultColumns)].map((_, c) => (
           <DataGridCell key={`b_${r}_${c}`}>
             { c === args.columns - 2 ?
-              `Cell ${r}-${c} has more content than others`
-              :
-              `Cell ${r}-${c}`
+                `Cell ${r}-${c} has more content than others`
+              : 
+                `Cell ${r}-${c}`
             }
           </DataGridCell>
         ))}

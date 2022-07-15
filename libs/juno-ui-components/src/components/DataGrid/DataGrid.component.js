@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 
 const dataGridStyles = `
 	jn-grid
-	jn-items-center
 `
 
 const gridTemplate = (columns, columnMaxSize, columnMinSize, minContentColumns, gridColumnTemplate) => {
@@ -54,6 +53,7 @@ export const DataGrid = ({
 			<div 
 				className={`juno-datagrid ${dataGridStyles} ${className}`} 
 				style={gridTemplate(columns, columnMaxSize, columnMinSize, minContentColumns, gridColumnTemplate)}
+				role="grid"
 				{...props} >
 					{children}
 			</div>

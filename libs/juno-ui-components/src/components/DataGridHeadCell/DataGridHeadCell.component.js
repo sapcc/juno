@@ -21,7 +21,10 @@ export const DataGridHeadCell = ({
 	...props
 }) => {
 	return (
-		<div className={`juno-datagrid-head-cell ${headCellBaseStyles} ${className}`} {...props}>
+		<div 
+			className={`juno-datagrid-head-cell ${headCellBaseStyles} ${className}`}
+			role="columnheader"
+			{...props}>
 			{children}
 			{/* { sortable ? <Icon size={'1rem'} className={`${sortIconStyles}`}/> : ''} */}
 		</div>
