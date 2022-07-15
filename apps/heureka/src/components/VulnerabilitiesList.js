@@ -11,8 +11,6 @@ font-bold
 `
 
 const VulnerabilitiesList = ({ components }) => {
-  console.log("vulnerabilities===> ", components)
-
   // TODO: remove components without vulnerabilities
   components = useMemo(() => {
     if (!components) return []

@@ -1,17 +1,17 @@
 import React from "react"
+import { DataGrid } from "../DataGrid/index.js"
+import { DataGridRow } from "../DataGridRow/index.js"
 import { DataGridCheckboxCell } from "./index.js"
 
 export default {
-  title: "Components/DataGrid/DataGridCheckboxCell",
+  title: "WiP/DataGrid/DataGridCheckboxCell",
   component: DataGridCheckboxCell,
   argTypes: {},
   decorators: [
     (story) => (
-      <table>
-        <tbody>
-          <tr>{story()}</tr>
-        </tbody>
-      </table>
+      <DataGrid columns={3}>
+        <DataGridRow>{story()}</DataGridRow>
+      </DataGrid>
     ),
   ],
 }

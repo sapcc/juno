@@ -5,18 +5,14 @@ import { DataGridHeadCell } from "./index"
 describe("DataGridHeadCell", () => {
 	
 	test("renders a DataGridHeadCell", async () => {
-		const tablerow = document.createElement('tr')
-		const {container} = render(<DataGridHeadCell data-testid="my-datagridheadcell" />, 
-			{ container: document.body.appendChild(tablerow)})
-		expect(screen.getByTestId("my-datagridheadcell")).toBeInTheDocument()
+		render(<DataGridHeadCell />)
+		expect(screen.getByRole("columnheader")).toBeInTheDocument()
 	})
 	
 	test("renders a custom className", async () => {
-		const tablerow = document.createElement('tr')
-		const {container} = render(<DataGridHeadCell data-testid="my-datagridheadcell" className="my-custom-class"/>, 
-			{ container: document.body.appendChild(tablerow)})
-		expect(screen.getByTestId("my-datagridheadcell")).toBeInTheDocument()
-		expect(screen.getByTestId("my-datagridheadcell")).toHaveClass("my-custom-class")
+		render(<DataGridHeadCell className="my-custom-class"/>)
+		expect(screen.getByRole("columnheader")).toBeInTheDocument()
+		expect(screen.getByRole("columnheader")).toHaveClass("my-custom-class")
 	})
 	
 })

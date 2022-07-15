@@ -1,23 +1,50 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const datagridcellbasestyles = `
-	jn-text-left
+const cellBaseStyles = `
+	jn-px-5
+	jn-py-3
+	jn-border-b
+	jn-border-theme-background-lvl-2
 `
 
+const cellInnerWrapperStyles = `
+	jn-flex
+	jn-flex-col
+	jn-justify-center
+	jn-h-full
+`
+
+const cellCustomStyles = (colSpan) => {
+	let styles
+	if (colSpan) {
+		styles = { gridColumn: `span ${colSpan} / span ${colSpan}`}
+	}
+	return styles
+}
+
 export const DataGridCell = ({
+	colSpan,
 	className,
 	children,
 	...props
 }) => {
 	return (
-		<td className={`juno-datagrid-cell ${datagridcellbasestyles} ${className}`} {...props}>
-			{children}
-		</td>
+		<div 
+			className={`juno-datagrid-cell ${cellBaseStyles} ${className}`} 
+			style={cellCustomStyles(colSpan)}
+			role="gridcell"
+			{...props}>
+			<div className={cellInnerWrapperStyles}>
+				{children}
+			</div>
+		</div>
 	)
 }
 
 DataGridCell.propTypes = {
+	/** Add a col span to the cell. This works like a colspan in a normal html table, so you have to take care not to place too many cells in a row if some of them have a colspan.  */
+	colSpan: PropTypes.number,
 	/** Children to render in the DataGridCell */
 	children: PropTypes.node,
 	/** Add a classname */
@@ -25,6 +52,7 @@ DataGridCell.propTypes = {
 }
 
 DataGridCell.defaultProps = {
+	colSpan: undefined,
 	className: "",
 	children: null,
 }

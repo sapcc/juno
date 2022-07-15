@@ -1,4 +1,6 @@
 import React from "react"
+import { DataGrid } from "../DataGrid/index.js"
+import { DataGridRow } from "../DataGridRow/index.js"
 import { DataGridCell } from "./index.js"
 
 export default {
@@ -7,11 +9,9 @@ export default {
   argTypes: {},
   decorators: [
     (story) => (
-      <table>
-        <tbody>
-          <tr>{story()}</tr>
-        </tbody>
-      </table>
+      <DataGrid columns={3}>
+        <DataGridRow>{story()}</DataGridRow>
+      </DataGrid>
     ),
   ],
 }

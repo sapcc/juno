@@ -1,1 +1,0 @@
-export { DataGridBody } from "./DataGridBody.component"

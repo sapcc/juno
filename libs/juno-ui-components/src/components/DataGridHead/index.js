@@ -1,1 +1,0 @@
-export { DataGridHead } from "./DataGridHead.component"
