@@ -5,7 +5,7 @@ import { SearchInput } from "../SearchInput/SearchInput.component"
 
 
 export default {
-  title: "WiP/Filter/Filters",
+  title: "Components/Filter/Filters",
   component: Filters,
   argTypes: {},
 }
