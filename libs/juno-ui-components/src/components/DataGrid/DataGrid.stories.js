@@ -6,6 +6,11 @@ import { DataGridCell } from "../DataGridCell/index.js"
 import { DataGridHeadCell } from "../DataGridHeadCell/index.js"
 import { ContentArea } from "../ContentArea/index.js"
 import { Container } from "../Container/index.js"
+import { PreseletedWithSearch as FiltersStory } from "../Filters/Filters.stories"
+import { Filters } from "../Filters/index.js"
+import { DataGridToolbar } from "../DataGridToolbar/index.js"
+import { Default as DataGridToolbarStory } from "../DataGridToolbar/DataGridToolbar.stories"
+import { Button } from "../Button/index.js"
 
 export default {
   title: "Components/DataGrid/DataGrid",
@@ -24,38 +29,46 @@ export default {
 
 const defaultColumns = 3
 
-const Template = ({ hideHead, includeColSpanRow, ...args }) => (
-  <DataGrid {...args}>
-    { !hideHead && 
-      <DataGridRow>
-        {[...Array(args.columns || defaultColumns)].map((_, c) => (
-          <DataGridHeadCell key={`h_${c}`}>
-            {`Head cell ${c}`}
-          </DataGridHeadCell>
-        ))}
-      </DataGridRow>
+const Template = ({ hideHead, includeColSpanRow, withToolbar, withFilters, ...args }) => (
+  <>
+    { withFilters &&
+      <Filters {...FiltersStory.args} ></Filters>
     }
-    {!includeColSpanRow && [...Array(4)].map((_, r) => (
-      <DataGridRow key={`b_${r}`}>
-        {[...Array(args.columns || defaultColumns)].map((_, c) => (
-          <DataGridCell key={`b_${r}_${c}`}>
-            { c === args.columns - 2 ?
-                `Cell ${r}-${c} has more content than others`
-              : 
-                `Cell ${r}-${c}`
-            }
+    { withToolbar &&
+      <DataGridToolbar {...DataGridToolbarStory.args} ><Button variant="primary">Add new</Button></DataGridToolbar>
+    }
+    <DataGrid {...args}>
+      { !hideHead && 
+        <DataGridRow>
+          {[...Array(args.columns || defaultColumns)].map((_, c) => (
+            <DataGridHeadCell key={`h_${c}`}>
+              {`Head cell ${c}`}
+            </DataGridHeadCell>
+          ))}
+        </DataGridRow>
+      }
+      {!includeColSpanRow && [...Array(4)].map((_, r) => (
+        <DataGridRow key={`b_${r}`}>
+          {[...Array(args.columns || defaultColumns)].map((_, c) => (
+            <DataGridCell key={`b_${r}_${c}`}>
+              { c === args.columns - 2 ?
+                  `Cell ${r}-${c} has more content than others`
+                : 
+                  `Cell ${r}-${c}`
+              }
+            </DataGridCell>
+          ))}
+        </DataGridRow>
+      ))}
+      { includeColSpanRow &&
+        <DataGridRow>
+          <DataGridCell colSpan={args.columns}>
+            This is a cell with colspan spanning all available columns
           </DataGridCell>
-        ))}
-      </DataGridRow>
-    ))}
-    { includeColSpanRow &&
-      <DataGridRow>
-        <DataGridCell colSpan={args.columns}>
-          This is a cell with colspan spanning all available columns
-        </DataGridCell>
-      </DataGridRow>
-    }
-  </DataGrid>
+        </DataGridRow>
+      }
+    </DataGrid>
+  </>
 )
 
 // const WithHeadAndFootTemplate = ({ items, ...args }) => (
@@ -173,6 +186,46 @@ ColSpanCell.parameters = {
 ColSpanCell.args = {
   columns: 5,
   includeColSpanRow: true
+}
+
+export const WithToolbar = Template.bind({})
+WithToolbar.parameters = {
+  docs: {
+    description: {
+      story: "With toolbar",
+    },
+  },
+}
+WithToolbar.args = {
+  columns: 5,
+  withToolbar: true
+}
+
+export const WithFilters = Template.bind({})
+WithFilters.parameters = {
+  docs: {
+    description: {
+      story: "With filters",
+    },
+  },
+}
+WithFilters.args = {
+  columns: 5,
+  withFilters: true
+}
+
+export const WithToolbarAndFilters = Template.bind({})
+WithToolbarAndFilters.parameters = {
+  docs: {
+    description: {
+      story: "With toolbar and filters",
+    },
+  },
+}
+WithToolbarAndFilters.args = {
+  columns: 5,
+  withFilters: true,
+  withToolbar: true
 }
 
 // export const Selectable = Template.bind({})

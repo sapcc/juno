@@ -5,49 +5,36 @@ import { Button } from "../Button/Button.component.js"
 
 const datagridtoolbarstyles = `
 	jn-flex
+	jn-items-center
+	jn-justify-end
+	jn-bg-theme-background-lvl-1
+	jn-py-3
+	jn-px-6
+	jn-mb-px
 `
 
+/** This is the toolbar for use with a DataGrid. This is the place where you would put buttons and other controls that affect the items in the DataGrid (e.g. triggering batch actions) */
 export const DataGridToolbar= ({
-	search,
-	addItems,
-	addItemsLabel,
 	className,
 	children,
 	...props
 }) => {	
 	return (
 		<div className={`juno-datagrid-toolbar ${datagridtoolbarstyles} ${className}`} {...props} >
-			{ search ?
-				<SearchInput />
-				:
-				null
-			}
-			{ addItems ?
-				<Button label={addItemsLabel} size={"small"}></Button>
-				:
-				null
+			{ children
 			}
 		</div>
 	)
 }
 
 DataGridToolbar.propTypes = {
-	/** Whether to display a Search Input to filter items */
-	search: PropTypes.bool,
-	/** Whether to display a button to add items */
-	addItems: PropTypes.bool,
-	/** Label of the button to add items */
-	addItemsLabel: PropTypes.string,
-	/** Children to render in the DataGridRow */
+	/** Children to render in the DataGridToolbar */
 	children: PropTypes.node,
 	/** Add a classname */
 	className: PropTypes.string,
 }
 
 DataGridToolbar.defaultProps = {
-	search: true,
-	addItems: true,
-	addItemsLabel: "Add Item",
 	className: "",
 	children: null,
 }

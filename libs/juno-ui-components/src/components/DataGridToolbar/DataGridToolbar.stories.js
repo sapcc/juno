@@ -1,14 +1,15 @@
 import React from "react"
+import { Button } from "../Button/index.js"
 import { DataGridToolbar } from "./index.js"
-import { Default as Button } from "../Button/Button.stories.js"
+
 
 export default {
-  title: "WiP/DataGrid/DataGridToolbar",
+  title: "Components/DataGrid/DataGridToolbar",
   component: DataGridToolbar,
   argTypes: {},
 }
 
-const Template = (args) => <DataGridToolbar {...args}></DataGridToolbar>
+const Template = (args) => <DataGridToolbar {...args}><Button variant="primary">Add new</Button></DataGridToolbar>
 
 export const Default = Template.bind({})
 Default.parameters = {
@@ -18,7 +19,4 @@ Default.parameters = {
     },
   },
 }
-Default.args = {
-  search: true,
-  addItems: true,
-}
+Default.args = {}
