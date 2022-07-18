@@ -21,11 +21,13 @@ const warningStyles = `jn-bg-theme-warning/25`
 
 const dangerStyles = `jn-bg-theme-danger/25`
 
+const criticalStyles = `jn-bg-theme-danger/70 jn-text-theme-high`
+
 const errorStyles = `jn-bg-theme-error/25`
 
 const iconStyles = `jn-mr-1 jn-mt-[-0.125rem]`
 
-const knownVariants = ["info", "success", "warning", "danger", "error"]
+const knownVariants = ["info", "success", "warning", "danger", "error", "critical"]
 
 
 const getVariantStyle = (variant) => {
@@ -40,6 +42,8 @@ const getVariantStyle = (variant) => {
 			return dangerStyles
 		case "error":
 			return errorStyles
+		case "critical":
+			return criticalStyles
 		default:
 			return defaultStyles
 			
@@ -65,12 +69,20 @@ export const Badge = ({
 			return null
 		}
 	}
+
+	const getIconColor = (icon, variant) => {
+		if (icon === true) { // if icon is set to true this means the icon will be chosen according to the variant. In this case make sure the color matches the variant
+			return `jn-text-theme-${variant}`
+		} else {
+			return undefined
+		}
+	}
 	
 	return (
 		<span className={`juno-badge juno-badge-${variant} ${badgeBaseStyles} ${getVariantStyle(variant)} ${className}`} {...props} >
 			{icon 
 				?  
-				<Icon icon={getIcon(icon, variant)} size="1.125rem" className={`${iconStyles}`} color={`jn-text-theme-${variant}`} /> 
+				<Icon icon={getIcon(icon, variant)} size="1.125rem" className={`${iconStyles}`} color={getIconColor(icon, variant)} /> 
 				: 
 				null 
 			}
