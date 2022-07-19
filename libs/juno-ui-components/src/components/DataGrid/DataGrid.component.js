@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 
 const dataGridStyles = `
 	jn-grid
+	jn-items-stretch
 `
 
 const gridTemplate = (columns, columnMaxSize, columnMinSize, minContentColumns, gridColumnTemplate) => {
