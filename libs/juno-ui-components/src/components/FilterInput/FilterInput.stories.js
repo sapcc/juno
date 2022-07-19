@@ -12,9 +12,9 @@ const Template = (args) => <FilterInput {...args} />
 export const Default = Template.bind({})
 Default.args = {
 	options: [
-		{label: "Filter 1", value: "filter-1"},
-		{label: "Filter 2", value: "filter-2", disabled: true},
-		{label: "Filter 3", value: "filter-3"},
+		{label: "Filter 1", key: "filter-1"},
+		{label: "Filter 2", key: "filter-2", disabled: true},
+		{label: "Filter 3", key: "filter-3"},
 	  ]
 }
 
@@ -23,8 +23,8 @@ Preselected.args = {
 	keyLabel: "Select a fancy Filter",
 	selectedFilterKey: "filter-2",
 	options: [
-		{label: "Filter 1", value: "filter-1"},
-		{label: "Filter 2", value: "filter-2"},
-		{label: "Filter 3", value: "filter-3"},
+		{label: "Filter 1", key: "filter-1"},
+		{label: "Filter 2", key: "filter-2"},
+		{label: "Filter 3", key: "filter-3"},
 	]
 }

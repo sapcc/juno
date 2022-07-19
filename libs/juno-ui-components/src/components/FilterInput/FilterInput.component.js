@@ -103,7 +103,7 @@ export const FilterInput = ({
 					{options.map((option, i) => (
 						<SelectOption 
 							label={option.label} 
-							value={option.value}
+							value={option.key}
 							key={`${i}`}
 							{...option}
 						/>))}
@@ -131,7 +131,7 @@ export const FilterInput = ({
 FilterInput.propTypes = {
 	/** The label to display on the Filter Key Select */
 	keyLabel: PropTypes.string,
-	/** The options for the Filter Select: `[{Label: "Value 1", value: "value-1"}, {...}]` 
+	/** The options for the Filter Select: `[{Label: "Filter 1", key: "filter-1"}, {...}]` 
 	*/
 	options: PropTypes.arrayOf(PropTypes.object), 
 	/** The key of the current filter */

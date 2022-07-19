@@ -72,14 +72,14 @@ export const Filters = ({
 Filters.propTypes = {
 	/** Pass a SearchInput component */
 	search: PropTypes.node,
-	/** Pass an object describing the filter keyLabel, valueLabel, and options: 
-	`{ keyLabel: "Select a Filter", valueLabel: "Enter a Value", options: [{label: "Label 1", value: "value-1"}, {...}] }` 
+	/** Pass an object describing the filter keyLabel, valueLabel, and the available filter options: 
+	`{ keyLabel: "Select a Filter", valueLabel: "Enter a Value", options: [{label: "Filter 1", key: "filter-1"}, {...}] }` 
 	*/
 	filters: PropTypes.object, 
-	/** The key of the current filter */
+	/** The key of the currently selected filter */
 	selectedFilterKey: PropTypes.string,
 	/** Pass a handler to be executed when the filter key changes */
-	onselectedFilterKeyChange: PropTypes.func,
+	onSelectedFilterKeyChange: PropTypes.func,
 	/** The value of the FilterInput */
 	filterValue: PropTypes.string,
 	/** Pass a handler to be executed whenever the value of the filter value input changes */
@@ -96,7 +96,7 @@ Filters.defaultProps = {
 	search: null,
 	filters: null,
 	selectedFilterKey: "",
-	onselectedFilterKeyChange: undefined,
+	onSelectedFilterKeyChange: undefined,
 	filterValue: "",
 	onFilter: undefined,
 	onFilterValueChange: undefined,
