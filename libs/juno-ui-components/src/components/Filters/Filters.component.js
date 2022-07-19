@@ -29,8 +29,8 @@ const filterPillWrapperStyles = `
 export const Filters = ({
 	search,
 	filters,
-	filterKey,
-	onFilterKeyChange,
+	selectedFilterKey,
+	onSelectedFilterKeyChange,
 	filterValue,
 	onFilterValueChange,
 	onFilter,
@@ -47,8 +47,8 @@ export const Filters = ({
 						keyLabel={filters.keyLabel}
 						valueLabel={filters.valueLabel}
 						options={filters.options}
-						filterKey={filterKey}
-						onFilterKeyChange={onFilterKeyChange}
+						selectedFilterKey={selectedFilterKey}
+						onSelectedFilterKeyChange={onSelectedFilterKeyChange}
 						filterValue={filterValue}
 						onFilterValueChange={onFilterValueChange}
 						onFilter={onFilter}
@@ -77,9 +77,9 @@ Filters.propTypes = {
 	*/
 	filters: PropTypes.object, 
 	/** The key of the current filter */
-	filterKey: PropTypes.string,
+	selectedFilterKey: PropTypes.string,
 	/** Pass a handler to be executed when the filter key changes */
-	onFilterKeyChange: PropTypes.func,
+	onselectedFilterKeyChange: PropTypes.func,
 	/** The value of the FilterInput */
 	filterValue: PropTypes.string,
 	/** Pass a handler to be executed whenever the value of the filter value input changes */
@@ -95,8 +95,8 @@ Filters.propTypes = {
 Filters.defaultProps = {
 	search: null,
 	filters: null,
-	filterKey: "",
-	onFilterKeyChange: undefined,
+	selectedFilterKey: "",
+	onselectedFilterKeyChange: undefined,
 	filterValue: "",
 	onFilter: undefined,
 	onFilterValueChange: undefined,

@@ -23,7 +23,7 @@ describe("FilterInput", () => {
 		expect(screen.getByRole("combobox")).toHaveAttribute("aria-label", "my select")
 	})
 	
-	test("renders a Select with a default option selected if no filterKey is passed", async () => {
+	test("renders a Select with a default option selected if no selectedFilterKey is passed", async () => {
 		render(<FilterInput />)
 		expect(screen.getByRole("option", { name: "Select Filter" })).toBeInTheDocument()
 		expect(screen.getByRole("option", { name: "Select Filter" }).selected).toBe(true)
@@ -55,7 +55,7 @@ describe("FilterInput", () => {
 	
 	test("renders a selected filter as passed", async () => {
 		const filterOptions = [{label: "OS", value: "byOs"}, {label: "Region", value: "byRegion"}]
-		render(<FilterInput options={filterOptions} filterKey="byRegion" />)
+		render(<FilterInput options={filterOptions} selectedFilterKey="byRegion" />)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
 		expect(screen.getByRole("option", { name: "Region" }).selected).toBe(true)
 	})
@@ -70,7 +70,7 @@ describe("FilterInput", () => {
 		expect(screen.getByRole("option", { name: "Time Zone"}).selected).toBe(true)
 	})
 	
-	test("should reset the filter value when the filter key changes", async () => {
+	test("should reset the filter value when the selected filter key changes", async () => {
 		const filters = [{label: "OS", value: "byOs"}, {label: "Region", value: "byRegion"}, {label: "Time Zone", value: "byTimezone"}]
 		render(<FilterInput options={filters} filterValue="MacOS" />)
 		expect(screen.getByRole("textbox")).toHaveValue("MacOS")
@@ -79,6 +79,19 @@ describe("FilterInput", () => {
 			screen.getByRole("option", { name: "Region" }),
 		)
 		expect(screen.getByRole("textbox")).toHaveValue("")
+	})
+	
+	test("executes a handler as passed when selected filter key changes", async () => {
+		const handleSelectedFilterChange = jest.fn()
+		const filters = [{label: "OS", value: "byOs"}, {label: "Region", value: "byRegion"}, {label: "Time Zone", value: "byTimezone"}]
+		render(<FilterInput options={filters} selectedFilterKey="byRegion" onSelectedFilterKeyChange={handleSelectedFilterChange} />)
+		expect(screen.getByRole("option", { name: "Region" }).selected).toBe(true)
+		userEvent.selectOptions(
+			screen.getByRole("combobox"),
+			screen.getByRole("option", { name: "OS" }),
+		)
+		expect(screen.getByRole("option", { name: "OS" }).selected).toBe(true)
+		expect(handleSelectedFilterChange).toHaveBeenCalledTimes(1)
 	})
 	
 	test("renders a FilterInput with a value as passed", async () => {

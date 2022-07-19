@@ -50,7 +50,7 @@ WithPills.args = {
 
 export const PreseletedWithSearch = Template.bind({})
 PreseletedWithSearch.args = {
-  filterKey: "filter-2",
+  selectedFilterKey: "filter-2",
   search: <SearchInput onSearch={() => {console.log("Searching…")}} />,
   filters: {
     keyLabel: "Select a Filter",

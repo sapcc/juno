@@ -40,8 +40,8 @@ export const FilterInput = ({
 	options,
 	valueLabel,
 	className,
-	filterKey,
-	onFilterKeyChange,
+	selectedFilterKey,
+	onSelectedFilterKeyChange,
 	filterValue,
 	onFilterValueChange,
 	onClear,
@@ -50,7 +50,7 @@ export const FilterInput = ({
 	...props
 }) => {
 	
-	const [key, setKey] = useState(filterKey)
+	const [selectedFilter, setSelectedFilter] = useState(selectedFilterKey)
 	const [value, setValue] = useState(filterValue)
 	
 	useEffect(() => {
@@ -58,13 +58,13 @@ export const FilterInput = ({
 	}, [filterValue])
 	
 	useEffect(() => {
-		setKey(filterKey)
-	}, [filterKey])
+		setSelectedFilter(selectedFilterKey)
+	}, [selectedFilterKey])
 	
-	const handleFilterKeyChange = (event) => {
-		setKey(event.target.value)
+	const handleSelectedFilterChange = (event) => {
+		setSelectedFilter(event.target.value)
 		setValue("")
-		onFilterKeyChange && onFilterKeyChange(event)
+		onSelectedFilterKeyChange && onSelectedFilterKeyChange(event)
 	}
 	
 	const handleFilterValueChange = (event) => {
@@ -94,8 +94,8 @@ export const FilterInput = ({
 				<Select 
 					className={`juno-filter-input-select ${selectStyles}`} 
 					aria-label={keyLabel}
-					value={key}
-					onChange={handleFilterKeyChange}
+					value={selectedFilter}
+					onChange={handleSelectedFilterChange}
 				>	
 					// First "Placeholder" option:
 					<SelectOption label={keyLabel || "Select Filter"} value="" />
@@ -134,10 +134,10 @@ FilterInput.propTypes = {
 	/** The options for the Filter Select: `[{Label: "Value 1", value: "value-1"}, {...}]` 
 	*/
 	options: PropTypes.arrayOf(PropTypes.object), 
-	/** The current key of the filter */
-	filterKey: PropTypes.string,
+	/** The key of the current filter */
+	selectedFilterKey: PropTypes.string,
 	/** Pass a handler to be executed when the filter key changes */
-	onFilterKeyChange: PropTypes.func,
+	onSelectedFilterKeyChange: PropTypes.func,
 	/** The aria-label of the Filter Value Text Input */
 	valueLabel: PropTypes.string, // TODO -> valueLabel
 	/** The current value of the Filter Input */
@@ -155,8 +155,8 @@ FilterInput.propTypes = {
 FilterInput.defaultProps = {
 	keyLabel: "Select Filter",
 	options: [],
-	filterKey: "",
-	onFilterKeyChange: undefined,
+	selectedFilterKey: "",
+	onSelectedFilterKeyChange: undefined,
 	valueLabel: "Filter by Value",
 	filterValue: "",
 	onFilterValueChange: undefined,
