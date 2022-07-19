@@ -34,7 +34,6 @@ const filtervalueStyles = `
 
 export const FilterPill = ({
 	filterKey,
-	filterValue,
 	filterKeyLabel,
 	filterValueLabel,
 	onClose,
@@ -60,8 +59,6 @@ FilterPill.propTypes = {
 	filterKey: PropTypes.string,
 	/** The visible label to describe the filter key */
 	filterKeyLabel: PropTypes.string,
-	/** The value of the filter the pill represents */
-	filterValue: PropTypes.string,
 	/** The visible label to describe the filter value */
 	filterValueLabel: PropTypes.string,
 	/** add custom classNames */

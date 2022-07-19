@@ -16,7 +16,6 @@ const Template = (args) => <Filters {...args}>
         <FilterPill 
           filterKey={filter.key} 
           filterKeyLabel={filter.label} 
-          filterValue={filter.value} 
           key={`filter-${i}`}
           onClose={() => console.log(filter.key, "closing")}
         />
@@ -39,9 +38,9 @@ WithPills.args = {
   filters: {
     keyLabel: "Select a Filter",
     options: [
-      {label: "Filter 1", value: "filter-1", key: "filter-01"},
-      {label: "Filter 2", value: "filter-2", key: "filter-02"},
-      {label: "Filter 3", value: "filter-3", key: "filter-03"},
+      {label: "Filter 1", key: "filter-01"},
+      {label: "Filter 2", key: "filter-02"},
+      {label: "Filter 3", key: "filter-03"},
     ]
   }
 }
@@ -55,9 +54,9 @@ PreseletedWithSearch.args = {
   filters: {
     keyLabel: "Select a Filter",
     options: [
-      {label: "Filter 1", value: "filter-1", key: "filter-01"},
-      {label: "Filter 2", value: "filter-2", key: "filter-02"},
-      {label: "Filter 3", value: "filter-3", key: "filter-03"},
+      {label: "Filter 1", key: "filter-01"},
+      {label: "Filter 2", key: "filter-02"},
+      {label: "Filter 3", key: "filter-03"},
     ]
   }
 }
