@@ -6,9 +6,6 @@ const cellBaseStyles = `
 	jn-py-3
 	jn-border-b
 	jn-border-theme-background-lvl-2
-`
-
-const cellInnerWrapperStyles = `
 	jn-flex
 	jn-flex-col
 	jn-justify-center
@@ -35,7 +32,8 @@ export const DataGridCell = ({
 			style={cellCustomStyles(colSpan)}
 			role="gridcell"
 			{...props}>
-			<div className={cellInnerWrapperStyles}>
+			{/* The div wrapper is important, otherwise the flexbox layout of the cell causes unexpected behaviour if you don't know about it. With the cell content behaves as expected */}
+			<div className="juno-datagrid-cell-inner-wrapper">
 				{children}
 			</div>
 		</div>
