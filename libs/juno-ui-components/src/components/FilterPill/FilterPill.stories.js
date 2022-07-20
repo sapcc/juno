@@ -11,8 +11,7 @@ const Template = (args) => <FilterPill {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  filterKey: "some key",
+  filterKey: "os",
   filterKeyLabel: "OS",
-  filterValue: "mac-os",
   filterValueLabel: "Mac OS",
 }

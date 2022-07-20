@@ -29,7 +29,7 @@ describe("Filters", () => {
 	
 	test("renders a Select with selected filter key as passed", async () => {
 		const filters = {options: [{label: "option 1", value: "option-1"}, {label: "option 2", value: "option-2"}]}
-		render(<Filters filters={filters} filterKey="option-2" />)
+		render(<Filters filters={filters} selectedFilterKey="option-2" />)
 		expect(screen.getByRole("option", {name: "option 2"}).selected).toBe(true)
 	})
 	
