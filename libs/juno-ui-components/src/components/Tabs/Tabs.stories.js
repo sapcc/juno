@@ -56,6 +56,20 @@ Default.args = {
   ],
 }
 
+export const TabsWithIcons = Template.bind({})
+TabsWithIcons.args = {
+  tabs: [
+    { ...DefaultTabStory.args, children: "Warning", icon: "warning"},
+    { ...DefaultTabStory.args, children: "Danger", icon: "danger"},
+    { ...DefaultTabStory.args, children: "Info", icon: "info"},
+  ],
+  tabpanels: [
+    { ...DefaultTabPanelStory.args, children: "Warning content" },
+    { ...DefaultTabPanelStory.args, children: "Danger content" },
+    { ...DefaultTabPanelStory.args, children: "Info content" },
+  ],
+}
+
 export const ControlledTabs = Template.bind({})
 ControlledTabs.args = {
   tabs: [

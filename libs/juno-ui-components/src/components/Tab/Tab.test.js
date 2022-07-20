@@ -16,6 +16,13 @@ describe("Tab", () => {
 		expect(screen.getByRole("tab")).toHaveTextContent("My Tab")
 	})
 	
+	test("renders an Icon as passed", async () => {
+		render(<Tab label="My Tab" icon="warning" />)
+		expect(screen.getByRole("tab")).toBeInTheDocument()
+		expect(screen.getByRole("img")).toBeInTheDocument()
+		expect(screen.getByRole("img")).toHaveAttribute("alt", "warning")
+	})
+	
 	test("renders a disabled Tab as passed", async () => {
 		render(<Tab disabled />)
 		expect(screen.getByRole("tab")).toBeInTheDocument()
