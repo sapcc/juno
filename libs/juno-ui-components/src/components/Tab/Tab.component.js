@@ -1,5 +1,7 @@
 import React from "react"
 import { Tab as ReactTab } from "react-tabs"
+import { Icon } from "../Icon/index.js"
+import { knownIcons } from "../Icon/Icon.component.js"
 import PropTypes from "prop-types"
 
 
@@ -22,9 +24,14 @@ const selectedTabStyles = `
 	jn-border-theme-tab-active-bottom
 `
 
+const iconStyles = `
+	jn-mr-2
+`
+
 const Tab = ({
 	children,
 	label,
+	icon,
 	disabled,
 	className,
 	...props
@@ -37,6 +44,7 @@ const Tab = ({
 			selectedClassName={`juno-tab-selected ${selectedTabStyles}`}
 			disabled={disabled}
 			{...props} >
+			{ icon ? <Icon icon={icon} size="18" className={`${iconStyles}`} /> : null }
 			{ children || label }
 		</ReactTab>
 	)
@@ -49,6 +57,8 @@ Tab.propTypes = {
 	children: PropTypes.node,
 	/** The Tab label (only rendered when no children are supplied) */
 	label: PropTypes.string,
+	/** Pass the name of an icon to render in the Tab. Can be any icon included with Juno. */
+	icon: PropTypes.oneOf(knownIcons),
 	/** Whether the Tab is disabled */
 	disabled: PropTypes.bool,
 	/** Add custom classNames to the Tab */
