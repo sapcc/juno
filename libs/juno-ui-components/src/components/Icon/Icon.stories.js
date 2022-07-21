@@ -167,6 +167,12 @@ DNS.args = {
   icon: "dns",
 }
 
+export const Edit = Template.bind({})
+Edit.args = {
+  ...Default.args,
+  icon: "edit",
+}
+
 export const Error = Template.bind({})
 Error.args = {
   ...Default.args,
