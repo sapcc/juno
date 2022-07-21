@@ -155,6 +155,12 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toHaveAttribute("alt", "service")
   })
 
+  test("renders an edit icon", async () => {
+    render(<Icon icon="edit" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "edit")
+  })
+  
   test("renders an error icon", async () => {
     render(<Icon icon="error" />)
     expect(screen.getByRole("img")).toBeInTheDocument()

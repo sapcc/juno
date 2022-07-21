@@ -20,8 +20,15 @@ const cellCustomStyles = (colSpan) => {
 	return styles
 }
 
+const innerWrapperStyles = (wrap) => {
+	return `
+		${wrap ? '' : 'jn-whitespace-nowrap' }
+	`
+}
+
 export const DataGridCell = ({
 	colSpan,
+	wrap,
 	className,
 	children,
 	...props
@@ -33,7 +40,7 @@ export const DataGridCell = ({
 			role="gridcell"
 			{...props}>
 			{/* The div wrapper is important, otherwise the flexbox layout of the cell causes unexpected behaviour if you don't know about it. With the cell content behaves as expected */}
-			<div className="juno-datagrid-cell-inner-wrapper">
+			<div className={`juno-datagrid-cell-inner-wrapper ${innerWrapperStyles(wrap)}`}>
 				{children}
 			</div>
 		</div>
@@ -43,6 +50,8 @@ export const DataGridCell = ({
 DataGridCell.propTypes = {
 	/** Add a col span to the cell. This works like a colspan in a normal html table, so you have to take care not to place too many cells in a row if some of them have a colspan.  */
 	colSpan: PropTypes.number,
+	/** Set wrap to false if the content shouldn't wrap */
+	wrap: PropTypes.bool,
 	/** Children to render in the DataGridCell */
 	children: PropTypes.node,
 	/** Add a classname */
@@ -51,6 +60,7 @@ DataGridCell.propTypes = {
 
 DataGridCell.defaultProps = {
 	colSpan: undefined,
+	wrap: true,
 	className: "",
 	children: null,
 }

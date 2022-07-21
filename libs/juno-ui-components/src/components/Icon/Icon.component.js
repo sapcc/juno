@@ -18,6 +18,7 @@ import Dangerous from "./icons/dangerous.svg"
 import DeleteForever from "./icons/delete_forever.svg"
 import Description from "./icons/description.svg"
 import DNS from "./icons/dns.svg"
+import Edit from "./icons/edit.svg"
 import Error from "./icons/dangerous.svg"
 import ExitToApp from "./icons/exit_to_app.svg"
 import ExpandLess from "./icons/expand_less.svg"
@@ -86,6 +87,7 @@ export const knownIcons = [
   "deleteForever",
   "description",
   "dns",
+  "edit",
   "error",
   "exitToApp",
   "expandLess",
@@ -295,6 +297,18 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="service"
           title={title ? title : "Service"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "edit":
+      return (
+        <Edit
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="edit"
+          title={title ? title : "Edit"}
           role="img"
           {...iconProps}
         />
