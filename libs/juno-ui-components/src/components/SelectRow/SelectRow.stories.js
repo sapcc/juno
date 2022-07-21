@@ -36,6 +36,16 @@ WithHelpText.args = {
   ],
 }
 
+export const WithHelpTextWithLink = Template.bind({})
+WithHelpTextWithLink.args = {
+  label: "Select Row with Helptext",
+  helptext: <>Helptext with a <a href="#">Link</></>,
+  items: [
+    { ...DefaultSelectOptionStory.args, value: "d-1", label: "Option 1" },
+    { ...DefaultSelectOptionStory.args, value: "d-2", label: "Option 2" },
+  ],
+}
+
 export const Required = Template.bind({})
 Required.args = {
   label: "Required Select Row",

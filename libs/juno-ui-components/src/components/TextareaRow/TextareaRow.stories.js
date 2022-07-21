@@ -27,6 +27,13 @@ WithHelpText.args = {
   helptext: "Oh so helpful helptext",
 }
 
+export const WithHelpTextWithLink = Template.bind({})
+WithHelpTextWithLink.args = {
+  name: "my-input",
+  label: "Textarea Row with Helptext",
+  helptext: <>Helptext with a <a href="#">Link</a></>,
+}
+
 export const Required = Template.bind({})
 Required.args = {
   label: "Required Textarea",

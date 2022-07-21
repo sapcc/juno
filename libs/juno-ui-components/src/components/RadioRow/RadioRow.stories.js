@@ -30,6 +30,14 @@ WithHelpText.args = {
   id: "radio-row-withHelptext",
 }
 
+export const WithHelpTextWithLink = Template.bind({})
+WithHelpTextWithLink.args = {
+  name: "my-input",
+  label: "Radio Row with help text",
+  helptext: <>Helptext with a <a href="#">Link</a></>,
+  id: "radio-row-withHelptext-WithLink",
+}
+
 export const Disabled = Template.bind({})
 Disabled.args = {
   label: "Disabled Radio",

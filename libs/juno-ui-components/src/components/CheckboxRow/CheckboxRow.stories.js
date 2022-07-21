@@ -29,6 +29,14 @@ WithHelpText.args = {
   id: "withHelptext",
 }
 
+export const WithHelpTextWithLink = Template.bind({})
+WithHelpTextWithLink.args = {
+  name: "my-input",
+  label: "Checkbox Row with Help text",
+  helptext: <>Helptext with a <a href="#">Link</a></>,
+  id: "withHelptext-withLink",
+}
+
 export const Required = Template.bind({})
 Required.args = {
   label: "Required Checkbox Row",

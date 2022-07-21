@@ -33,6 +33,13 @@ describe("RadioRow", () => {
 		expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
 	})
 	
+	test("renders a helpt text with a link as passed", async () => {
+		render(<RadioRow helptext={<a href="#">Link</a>} />)
+		expect(screen.getByRole("link")).toBeInTheDocument()
+		expect(screen.getByRole("link")).toHaveAttribute("href", "#")
+		expect(screen.getByRole("link")).toHaveTextContent("Link")
+	  })
+	
 	test("renders a disabled radio as passed", async () => {
 		render(<RadioRow disabled />)
 		expect(screen.getByRole("radio")).toBeDisabled()

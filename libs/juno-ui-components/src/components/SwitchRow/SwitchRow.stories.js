@@ -34,6 +34,13 @@ WithHelptext.args = {
   helptext: "Oh so helpful helptext",
 }
 
+export const WithHelptextWithLink = Template.bind({})
+WithHelptextWithLink.args = {
+  label: "Switch Row with Helptext",
+  on: true,
+  helptext: <>Helptext with a <a href="#">Link</a></>,
+}
+
 export const Required = Template.bind({})
 Required.args = {
   label: "Required Switch",
