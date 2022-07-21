@@ -33,6 +33,15 @@ Default.args = {
   }
 }
 
+export const Loading = Template.bind({})
+Loading.args = {
+  filters: {
+    label: "Select a Filter",
+    options: []
+  },
+  loading: true
+}
+
 export const WithPills = Template.bind({})
 WithPills.args = {
   filters: {
@@ -44,8 +53,6 @@ WithPills.args = {
     ]
   }
 }
-
-
 
 export const PreseletedWithSearch = Template.bind({})
 PreseletedWithSearch.args = {

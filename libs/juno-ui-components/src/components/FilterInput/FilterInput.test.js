@@ -134,6 +134,12 @@ describe("FilterInput", () => {
 		expect(handleFilter).toHaveBeenCalledTimes(1)
 	})
 	
+	test("renders loading filter input as passed", async () => {
+		render(<FilterInput loading />)
+		expect(screen.getByRole("combobox")).toBeDisabled()
+		expect(screen.getByText("Loading")).toBeInTheDocument() // Update when using icon
+	})
+	
 	test("renders a custom class to the row as passed", async () => {
 		render(<FilterInput data-testid="filter-input" className="my-custom-class" />)
 		expect(screen.getByTestId("filter-input")).toBeInTheDocument()

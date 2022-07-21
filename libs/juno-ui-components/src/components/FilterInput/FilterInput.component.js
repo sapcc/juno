@@ -47,6 +47,7 @@ export const FilterInput = ({
 	onClear,
 	onKeyPress,
 	onFilter,
+	loading,
 	...props
 }) => {
 	
@@ -96,7 +97,8 @@ export const FilterInput = ({
 					aria-label={keyLabel}
 					value={selectedFilter}
 					onChange={handleSelectedFilterChange}
-				>	
+					loading={loading}
+				>
 					// First "Placeholder" option:
 					<SelectOption label={keyLabel || "Select Filter"} value="" />
 					// Options representing actual filter key values:
@@ -115,6 +117,7 @@ export const FilterInput = ({
 				aria-label={valueLabel} 
 				onChange={handleFilterValueChange}
 				onKeyPress={handleKeyPress}
+				placeholder={ loading ? "Loading Filter Options…" : null }
 			/>
 			<div className={`${iconWrapperStyles}`}>
 				{ value && value.length ?
@@ -146,6 +149,8 @@ FilterInput.propTypes = {
 	onFilterValueChange: PropTypes.func,
 	/** Pass a handler to execute when the Filter Value Clear button is clicked */
 	onClear: PropTypes.func,
+	/** Whether the filter is currently loading */
+	loading: PropTypes.bool,
 	/** Pass a className to the wrapping element */
 	className: PropTypes.string,
 	/** Pass a handler to execute when the Filter Value Filter button is clicked */
@@ -162,5 +167,6 @@ FilterInput.defaultProps = {
 	onFilterValueChange: undefined,
 	onClear: undefined,
 	onFilter: undefined,
+	loading: false,
 	className: "",
 }

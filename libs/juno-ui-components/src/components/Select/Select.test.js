@@ -21,7 +21,7 @@ describe("Select", () => {
 		expect(screen.getByRole("combobox")).toHaveAttribute('id', "my-select")
 	})
 	
-	test("renders a custom class", async () => {
+	test("renders a custom className", async () => {
 		render(<Select className="my-custom-class" />)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
 		expect(screen.getByRole("combobox")).toHaveClass('my-custom-class')
@@ -37,12 +37,6 @@ describe("Select", () => {
 		render(<Select><option data-testid="option">Option</option></Select>)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
 		expect(screen.getByTestId("option")).toBeInTheDocument()
-	})
-	
-	test("renders all props as passed", async () => {
-		render(<Select data-lolol="some-random-prop" />)
-		expect(screen.getByRole("combobox")).toBeInTheDocument()
-		expect(screen.getByRole("combobox")).toHaveAttribute("data-lolol", 'some-random-prop')
 	})
 	
 	test("fires onChange handler as passed", async () => {
@@ -61,6 +55,25 @@ describe("Select", () => {
 		const select = screen.getByRole('combobox')
 		select.click();
 		expect(onChangeSpy).not.toHaveBeenCalled()
+	})
+	
+	test("renders a loading Select as passed", async () => {
+		render(<Select loading />)
+		expect(screen.getByRole("combobox")).toBeDisabled()
+		expect(screen.getByText("Loading")).toBeInTheDocument() // update when loading icon is used
+	})
+	
+	test("can not be clicked when loading", async () => {
+		const onClickSpy = jest.fn()
+		render(<Select loading onClick={onClickSpy} />)
+		screen.getByRole("combobox").click()
+		expect(onClickSpy).not.toHaveBeenCalled()
+	})
+	
+	test("renders all props as passed", async () => {
+		render(<Select data-lolol="some-random-prop" />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.getByRole("combobox")).toHaveAttribute("data-lolol", 'some-random-prop')
 	})
 	
 })
