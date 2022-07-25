@@ -29,3 +29,29 @@ Default.parameters = {
 Default.args = {
   children: ["DataGridCell"],
 }
+
+export const NoWrap = Template.bind({})
+NoWrap.parameters = {
+  docs: {
+    description: {
+      story: "Juno DataGridCell with nowrap option (content has white-space: nowrap;)",
+    },
+  },
+}
+NoWrap.args = {
+  nowrap: true,
+  children: ["DataGridCell does not wrap"],
+}
+
+export const ColSpan = Template.bind({})
+ColSpan.parameters = {
+  docs: {
+    description: {
+      story: "Juno DataGridCell with colspan",
+    },
+  },
+}
+ColSpan.args = {
+  colSpan: 3,
+  children: ["DataGridCell with colspan"],
+}
