@@ -13,10 +13,11 @@ const panelClasses = (isOpen, isTransitioning) => {
       jn-z-10
       jn-grid
       jn-grid-rows-[auto_1fr]
-      jn-bg-theme-panel
+      jn-bg-theme-panel/60
       jn-backdrop-blur
-      jn-bg-opacity-70
+      jn-backdrop-saturate-150     
       jn-w-[45%]
+      jn-shadow-md
 			${!isOpen ? `jn-translate-x-[100%]` : ""}
 			${!isOpen && !isTransitioning ? `jn-invisible` : ""}
 		`
