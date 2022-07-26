@@ -97,7 +97,7 @@ export const FilterInput = ({
 					aria-label={keyLabel}
 					value={selectedFilter}
 					onChange={handleSelectedFilterChange}
-					loading={loading}
+					loading={options.length < 1 || loading}
 				>
 					// First "Placeholder" option:
 					<SelectOption label={keyLabel || "Select Filter"} value="" />
@@ -117,7 +117,8 @@ export const FilterInput = ({
 				aria-label={valueLabel} 
 				onChange={handleFilterValueChange}
 				onKeyPress={handleKeyPress}
-				placeholder={ loading ? "Loading Filter Options…" : null }
+				disabled={options.length < 1 || loading}
+				placeholder={ options.length < 1 || loading ? "Loading Filter Options…" : null }
 			/>
 			<div className={`${iconWrapperStyles}`}>
 				{ value && value.length ?

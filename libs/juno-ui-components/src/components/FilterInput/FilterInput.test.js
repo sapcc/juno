@@ -83,7 +83,7 @@ describe("FilterInput", () => {
 	
 	test("executes a handler as passed when selected filter key changes", async () => {
 		const handleSelectedFilterChange = jest.fn()
-		const filters = [{label: "OS", value: "byOs"}, {label: "Region", value: "byRegion"}, {label: "Time Zone", value: "byTimezone"}]
+		const filters = [{label: "OS", key: "byOs"}, {label: "Region", key: "byRegion"}, {label: "Time Zone", key: "byTimezone"}]
 		render(<FilterInput options={filters} selectedFilterKey="byRegion" onSelectedFilterKeyChange={handleSelectedFilterChange} />)
 		expect(screen.getByRole("option", { name: "Region" }).selected).toBe(true)
 		userEvent.selectOptions(
@@ -106,8 +106,9 @@ describe("FilterInput", () => {
 	})
 	
 	test("executes a handler as passed when the input value changes", async () => {
+		const opts = [{label: "A Filter", key: "a-filter"}]
 		const handleFilterValueChange = jest.fn()
-		render(<FilterInput onFilterValueChange={handleFilterValueChange} />)
+		render(<FilterInput options={opts} onFilterValueChange={handleFilterValueChange} />)
 		userEvent.type(screen.getByRole("textbox"), "987")
 		expect(handleFilterValueChange).toHaveBeenCalledTimes(3)
 	})
@@ -122,14 +123,16 @@ describe("FilterInput", () => {
 	
 	test("executes a handler as passed when Filter icon is clicked", async () => {
 		const handleFilter = jest.fn()
-		render(<FilterInput onFilter={handleFilter} />)
+		const opts = [{label: "A Filter", key: "a-filter"}]
+		render(<FilterInput options={opts} onFilter={handleFilter} />)
 		userEvent.click(screen.getByTitle("Filter"))
 		expect(handleFilter).toHaveBeenCalledTimes(1)
 	})
 	
 	test("executes a handler as passed when the input has focus and the user presses enter", async () => {
 		const handleFilter = jest.fn()
-		render(<FilterInput onFilter={handleFilter} />)
+		const opts = [{label: "A Filter", key: "a-filter"}]
+		render(<FilterInput options={opts} onFilter={handleFilter} />)
 		userEvent.type(screen.getByRole("textbox"), '{enter}')
 		expect(handleFilter).toHaveBeenCalledTimes(1)
 	})
@@ -137,6 +140,23 @@ describe("FilterInput", () => {
 	test("renders loading filter input as passed", async () => {
 		render(<FilterInput loading />)
 		expect(screen.getByRole("combobox")).toBeDisabled()
+		expect(screen.getByRole("textbox")).toBeDisabled()
+		expect(screen.getByText("Loading")).toBeInTheDocument() // Update when using icon
+	})
+	
+	test("renders a loading filter if passed options are present but empty", async () => {
+		const filters = []
+		render(<FilterInput options={filters} />)
+		expect(screen.getByRole("combobox")).toBeDisabled()
+		expect(screen.getByRole("textbox")).toBeDisabled()
+		expect(screen.getByText("Loading")).toBeInTheDocument() // Update when using icon
+	})
+	
+	test("renders loading filter as passed even if options are present and not empty", async () => {
+		const opts = [{label: "A Filter", key: "a-filter"}]
+		render(<FilterInput options={opts} loading />)
+		expect(screen.getByRole("combobox")).toBeDisabled()
+		expect(screen.getByRole("textbox")).toBeDisabled()
 		expect(screen.getByText("Loading")).toBeInTheDocument() // Update when using icon
 	})
 	
