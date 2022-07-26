@@ -95,13 +95,15 @@ describe("FilterInput", () => {
 	})
 	
 	test("renders a FilterInput with a value as passed", async () => {
-		render(<FilterInput filterValue="123abc" />)
+		const opts = [{label: "something", key: "something"}]
+		render(<FilterInput options={opts} filterValue="123abc" />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveValue("123abc")
 	})
 	
 	test("renders a Close button when the Input has a value", async () => {
-		render(<FilterInput filterValue="123" />)
+		const opts = [{label: "something", key: "something"}]
+		render(<FilterInput options={opts} filterValue="123" />)
 		expect(screen.getByTitle("Clear")).toBeInTheDocument()
 	})
 	
@@ -114,7 +116,8 @@ describe("FilterInput", () => {
 	})
 	
 	test("empties the field when Clear button is clicked", async () => {
-		render(<FilterInput filterValue="abc" />)
+		const opts = [{label: "something", key: "something"}]
+		render(<FilterInput options={opts} filterValue="abc" />)
 		expect(screen.getByTitle("Clear")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveValue("abc")
 		userEvent.click(screen.getByTitle("Clear"))
