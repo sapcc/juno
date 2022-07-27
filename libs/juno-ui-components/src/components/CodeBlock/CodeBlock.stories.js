@@ -19,20 +19,38 @@ Default.parameters = {
   },
 }
 Default.args = {
-  heading: "My code",
   children: "Some code goes here",
 }
 
-export const DefaultNoHeading = Template.bind({})
-DefaultNoHeading.parameters = {
+export const WithHeading = Template.bind({})
+WithHeading.parameters = {
   docs: {
     description: {
       story: "Default CodeBlock, no heading",
     },
   },
 }
-DefaultNoHeading.args = {
+WithHeading.args = {
   children: "Some code goes here",
+  heading: "My code",
+}
+
+export const WithTabs = Template.bind({})
+WithTabs.parameters = {
+  docs: {
+    description: {
+      story: "Tabbed Codeblock"
+    }
+  }
+}
+WithTabs.args = {
+  tabs: ["React.js", "Vue.js", "Svelte.js", "html"],
+  contents: [
+    "<Component />",
+    "<VueComponent />",
+    "SvelteComponent />",
+    "<div>Component</div>",
+  ]
 }
 
 export const MultiLineWithHeading = Template.bind({})
