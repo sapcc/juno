@@ -32,28 +32,28 @@
 
   // Juno Blue
   // RGB
-  --color-juno-blue-10: rgb(3, 33, 40);
-  --color-juno-blue-9: rgb(8, 52, 63);
-  --color-juno-blue-8: rgb(15, 74, 87);
-  --color-juno-blue-7: rgb(22, 96, 113);
-  --color-juno-blue-6: rgb(30, 119, 139);
-  --color-juno-blue-5: rgb(38, 143, 167);
-  --color-juno-blue-4: rgb(46, 168, 196);
-  --color-juno-blue-3: rgb(54, 193, 225);
-  --color-juno-blue-2: rgb(88, 218, 251);
-  --color-juno-blue-1: rgb(185, 235, 253);
+  --color-juno-blue-10: rgb(3, 55, 84);
+  --color-juno-blue-9: rgb(5, 70, 105);
+  --color-juno-blue-8: rgb(7, 85, 128);
+  --color-juno-blue-7: var(--color-sap-blue-dark);
+  --color-juno-blue-6: var(--color-sap-blue-dark-1);
+  --color-juno-blue-5: var(--color-sap-blue);
+  --color-juno-blue-4: var(--color-sap-blue-light-3);
+  --color-juno-blue-3: var(--color-sap-blue-light-2);
+  --color-juno-blue-2: var(--color-sap-blue-light-1);
+  --color-juno-blue-1: var(--color-sap-blue-light);
 
   // RAW
-  --color-juno-blue-10-raw: 3, 33, 40;
-  --color-juno-blue-9-raw: 8, 52, 63;
-  --color-juno-blue-8-raw: 15, 74, 87;
-  --color-juno-blue-7-raw: 22, 96, 113;
-  --color-juno-blue-6-raw: 30, 119, 139;
-  --color-juno-blue-5-raw: 38, 143, 167;
-  --color-juno-blue-4-raw: 46, 168, 196;
-  --color-juno-blue-3-raw: 54, 193, 225;
-  --color-juno-blue-2-raw: 88, 218, 251;
-  --color-juno-blue-1-raw: 185, 235, 253;
+  --color-juno-blue-10-raw: 3, 55, 84;
+  --color-juno-blue-9-raw: 5, 70, 105;
+  --color-juno-blue-8-raw: 7, 85, 128;
+  --color-juno-blue-7-raw: var(--color-sap-blue-dark-raw);
+  --color-juno-blue-6-raw: var(--color-sap-blue-dark-1-raw);
+  --color-juno-blue-5-raw: var(--color-sap-blue-raw);
+  --color-juno-blue-4-raw: var(--color-sap-blue-light-3-raw);
+  --color-juno-blue-3-raw: var(--color-sap-blue-light-2-raw);
+  --color-juno-blue-2-raw: var(--color-sap-blue-light-1-raw);
+  --color-juno-blue-1-raw: var(--color-sap-blue-light-raw);
 
   // Juno Turquoise
   --color-juno-turquoise-1: rgb(197, 247, 255);
@@ -150,7 +150,7 @@
 
     // SEMANTIC COLORS
     // RGB
-    --color-info: var(--color-juno-blue-4);
+    --color-info: var(--color-juno-blue-5);
     --color-success: rgb(22, 145, 43);
     --color-warning: rgb(255, 205, 0);
     --color-danger: rgb(187, 62, 15);
@@ -190,18 +190,18 @@
 
   // SAP Brand Blue
   // RGB
-  --color-sap-blue-dark: rgb(0, 103, 153);
+  --color-sap-blue-dark: rgb(10, 103, 153);
   --color-sap-blue-dark-1: rgb(30, 106, 146);
-  --color-sap-blue: rgb(0, 125, 184);
+  --color-sap-blue: rgb(15, 125, 184);
   --color-sap-blue-light-3: rgb(67, 162, 208);
   --color-sap-blue-light-2: rgb(137, 201, 232);
   --color-sap-blue-light-1: rgb(165, 211, 234);
   --color-sap-blue-light: rgb(203, 232, 247);
 
   //RAW
-  --color-sap-blue-dark-raw: 0, 103, 153;
+  --color-sap-blue-dark-raw: 10, 103, 153;
   --color-sap-blue-dark-1-raw: 30, 106, 146;
-  --color-sap-blue-raw: 0, 125, 184;
+  --color-sap-blue-raw: 15, 125, 184;
   --color-sap-blue-light-3-raw: 67, 162, 208;
   --color-sap-blue-light-2-raw: 137, 201, 232;
   --color-sap-blue-light-1-raw: 165, 211, 234;
@@ -315,8 +315,8 @@
   --color-global-text: var(--color-juno-text-default-raw);
   --color-content-area-bg: var(--color-background-lvl-0);
   --color-content-area-bg-raw: var(--color-background-lvl-0-raw);
-  --color-accent: var(--color-juno-blue-4);
-  --color-accent-raw: var(--color-juno-blue-4-raw);
+  --color-accent: var(--color-juno-blue-5);
+  --color-accent-raw: var(--color-juno-blue-5-raw);
   // LT FOCUS
   --color-focus: var(--color-accent);
   --color-focus-raw: var(--color-accent-raw);
