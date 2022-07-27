@@ -1,5 +1,6 @@
 import * as React from "react"
 import { render, screen} from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { CodeBlock } from "./index"
 
 describe("CodeBlock", () => {
@@ -44,6 +45,21 @@ describe("CodeBlock", () => {
 		expect(screen.getByTestId("juno-codeblock-pre")).toBeInTheDocument()
 		expect(screen.getByTestId("juno-codeblock-pre")).toHaveAttribute('class', expect.stringContaining('jn-max-h-'))
 		expect(screen.getByTestId("juno-codeblock-pre")).toHaveClass("jn-overflow-y-auto")
+	})
+	
+	test("renders a tabbed codeblock as passed", async () => {
+		const tabs = ["tab-a", "tab-b", "tab-c"]
+		const contents = ["a-content", "b-content", "c-content"]
+		render(<CodeBlock contents={contents} tabs={tabs} />)
+		expect(screen.getByRole("tab", {name: "tab-a"})).toBeInTheDocument()
+		expect(screen.getByRole("tab", {name: "tab-b"})).toBeInTheDocument()
+		expect(screen.getByRole("tab", {name: "tab-c"})).toBeInTheDocument()
+		expect(screen.getByRole("tab", {name: "tab-a"})).toHaveAttribute("aria-selected", "true")
+		expect(screen.getByText("a-content")).toBeInTheDocument()
+		userEvent.click(screen.getByRole("tab", { name: 'tab-c' }))
+		expect(screen.getByRole("tab", {name: "tab-c"})).toHaveAttribute("aria-selected", "true")
+		expect(screen.getByRole("tab", {name: "tab-a"})).not.toHaveAttribute("aria-selected", "true")
+		expect(screen.getByText("c-content")).toBeInTheDocument()
 	})
 	
 	test("renders all props as passed", async () => {
