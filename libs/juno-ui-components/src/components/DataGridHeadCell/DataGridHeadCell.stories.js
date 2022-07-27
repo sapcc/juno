@@ -29,3 +29,29 @@ Default.parameters = {
 Default.args = {
   children: ["DataGridHeadCell"],
 }
+
+export const NoWrap = Template.bind({})
+NoWrap.parameters = {
+  docs: {
+    description: {
+      story: "Juno DataGridHeadCell with nowrap option (content has white-space: nowrap;)",
+    },
+  },
+}
+NoWrap.args = {
+  nowrap: true,
+  children: ["DataGridHeadCell does not wrap"],
+}
+
+export const ColSpan = Template.bind({})
+ColSpan.parameters = {
+  docs: {
+    description: {
+      story: "Juno DataGridHeadCell with colspan",
+    },
+  },
+}
+ColSpan.args = {
+  colSpan: 3,
+  children: ["DataGridHeadCell with colspan"],
+}

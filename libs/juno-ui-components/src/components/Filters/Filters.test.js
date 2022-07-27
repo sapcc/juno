@@ -84,7 +84,7 @@ describe("Filters", () => {
 	
 	
 	test("renders a SearchInput as passed", async () => {
-		render(<Filters><SearchInput/></Filters>)
+		render(<Filters search={<SearchInput/>}></Filters>)
 		expect(screen.getByRole("searchbox")).toBeInTheDocument()
 	})
 	
