@@ -13,7 +13,7 @@ const panelClasses = (isOpen, isTransitioning) => {
       jn-z-10
       jn-grid
       jn-grid-rows-[auto_1fr]
-      jn-bg-theme-panel/60
+      jn-bg-theme-panel
       jn-backdrop-blur
       jn-backdrop-saturate-150     
       jn-w-[45%]

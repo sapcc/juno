@@ -3,8 +3,8 @@ import PropTypes from "prop-types"
 import { Icon } from "../Icon/Icon.component.js"
 
 const codeBlockBaseStyles = `
-	bg-theme-code-block
-	rounded
+	jn-bg-theme-code-block
+	jn-rounded
 `
 
 const codeContainerStyles = (wrap) => {	
