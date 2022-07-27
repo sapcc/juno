@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
+import { Spinner } from "../Spinner/Spinner.component"
 
 const selectstyles = `
 	jn-w-full
@@ -56,7 +57,10 @@ const loadingStyles = `
 	jn-cursor-not-allowed
 `
 
-
+const loadingSpinnerStyles = `
+	jn-ml-auto
+	jn-mr-auto
+`
 
 /*+ A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
 export const Select = ({
@@ -90,7 +94,7 @@ export const Select = ({
 				<div 
 					className={`juno-select-loading ${loadingStyles}`} 
 				>
-					Loading
+					<Spinner className={`${loadingSpinnerStyles}`} />
 				</div>
 				:
 				null
