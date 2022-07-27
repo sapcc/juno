@@ -92,7 +92,7 @@ describe("Filters", () => {
 		const filters = {label: "Filter", options: [{label: "option 1", value: "option-1"}]}
 		render(<Filters filters={filters} loading />)
 		expect(screen.getByRole("combobox")).toBeDisabled()
-		expect(screen.getByText("Loading")).toBeInTheDocument() // Update when using icon
+		expect(screen.getByRole("progressbar")).toBeInTheDocument()
 	})
 	
 	test("renders a custom className", async () => {

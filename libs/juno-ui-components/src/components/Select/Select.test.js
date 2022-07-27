@@ -60,7 +60,7 @@ describe("Select", () => {
 	test("renders a loading Select as passed", async () => {
 		render(<Select loading />)
 		expect(screen.getByRole("combobox")).toBeDisabled()
-		expect(screen.getByText("Loading")).toBeInTheDocument() // update when loading icon is used
+		expect(screen.getByRole("progressbar")).toBeInTheDocument()
 	})
 	
 	test("can not be clicked when loading", async () => {

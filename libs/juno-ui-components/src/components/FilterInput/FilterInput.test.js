@@ -144,7 +144,7 @@ describe("FilterInput", () => {
 		render(<FilterInput loading />)
 		expect(screen.getByRole("combobox")).toBeDisabled()
 		expect(screen.getByRole("textbox")).toBeDisabled()
-		expect(screen.getByText("Loading")).toBeInTheDocument() // Update when using icon
+		expect(screen.getByRole("progressbar")).toBeInTheDocument() 
 	})
 	
 	test("renders a loading filter if passed options are present but empty", async () => {
@@ -152,7 +152,7 @@ describe("FilterInput", () => {
 		render(<FilterInput options={filters} />)
 		expect(screen.getByRole("combobox")).toBeDisabled()
 		expect(screen.getByRole("textbox")).toBeDisabled()
-		expect(screen.getByText("Loading")).toBeInTheDocument() // Update when using icon
+		expect(screen.getByRole("progressbar")).toBeInTheDocument() 
 	})
 	
 	test("renders loading filter as passed even if options are present and not empty", async () => {
@@ -160,7 +160,7 @@ describe("FilterInput", () => {
 		render(<FilterInput options={opts} loading />)
 		expect(screen.getByRole("combobox")).toBeDisabled()
 		expect(screen.getByRole("textbox")).toBeDisabled()
-		expect(screen.getByText("Loading")).toBeInTheDocument() // Update when using icon
+		expect(screen.getByRole("progressbar")).toBeInTheDocument() 
 	})
 	
 	test("renders a custom class to the row as passed", async () => {
