@@ -6,7 +6,6 @@ const toolbarStyles = `
   jn-bg-theme-background-lvl-1
   jn-py-3
   jn-px-6
-  jn-mb-4
   jn-flex
   jn-items-center
   jn-justify-end

@@ -29,13 +29,6 @@ export default {
       },
     },
   },
-  decorators: [
-    (story) => (
-      <ContentArea>
-        <Container>{story()}</Container>
-      </ContentArea>
-    ),
-  ],
 }
 
 const Template = (args) => <Button {...args} />

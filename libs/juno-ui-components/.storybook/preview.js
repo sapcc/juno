@@ -14,6 +14,7 @@ import {
 import React from "react"
 import "../src/global.scss"
 import { StyleProvider } from "../src/components/StyleProvider"
+import { ContentArea } from "../src/components/ContentArea/index"
 import { theme } from "../tailwind.config"
 
 export const parameters = {
@@ -79,7 +80,9 @@ export const decorators = [
 
     return (
       <StyleProvider stylesWrapper="head" theme={themeClass}>
-        <Story />
+        <ContentArea>
+          <Story />
+        </ContentArea>
       </StyleProvider>
     )
   },
