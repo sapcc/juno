@@ -88,6 +88,13 @@ describe("Filters", () => {
 		expect(screen.getByRole("searchbox")).toBeInTheDocument()
 	})
 	
+	test("renders loading Filters as passed", async () => {
+		const filters = {label: "Filter", options: [{label: "option 1", value: "option-1"}]}
+		render(<Filters filters={filters} loading />)
+		expect(screen.getByRole("combobox")).toBeDisabled()
+		expect(screen.getByRole("progressbar")).toBeInTheDocument()
+	})
+	
 	test("renders a custom className", async () => {
 		render(<Filters data-testid="my-filters" className="my-custom-class" />)
 		expect(screen.getByTestId("my-filters")).toBeInTheDocument()

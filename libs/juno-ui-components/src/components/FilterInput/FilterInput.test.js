@@ -83,7 +83,7 @@ describe("FilterInput", () => {
 	
 	test("executes a handler as passed when selected filter key changes", async () => {
 		const handleSelectedFilterChange = jest.fn()
-		const filters = [{label: "OS", value: "byOs"}, {label: "Region", value: "byRegion"}, {label: "Time Zone", value: "byTimezone"}]
+		const filters = [{label: "OS", key: "byOs"}, {label: "Region", key: "byRegion"}, {label: "Time Zone", key: "byTimezone"}]
 		render(<FilterInput options={filters} selectedFilterKey="byRegion" onSelectedFilterKeyChange={handleSelectedFilterChange} />)
 		expect(screen.getByRole("option", { name: "Region" }).selected).toBe(true)
 		userEvent.selectOptions(
@@ -95,25 +95,29 @@ describe("FilterInput", () => {
 	})
 	
 	test("renders a FilterInput with a value as passed", async () => {
-		render(<FilterInput filterValue="123abc" />)
+		const opts = [{label: "something", key: "something"}]
+		render(<FilterInput options={opts} filterValue="123abc" />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveValue("123abc")
 	})
 	
 	test("renders a Close button when the Input has a value", async () => {
-		render(<FilterInput filterValue="123" />)
+		const opts = [{label: "something", key: "something"}]
+		render(<FilterInput options={opts} filterValue="123" />)
 		expect(screen.getByTitle("Clear")).toBeInTheDocument()
 	})
 	
 	test("executes a handler as passed when the input value changes", async () => {
+		const opts = [{label: "A Filter", key: "a-filter"}]
 		const handleFilterValueChange = jest.fn()
-		render(<FilterInput onFilterValueChange={handleFilterValueChange} />)
+		render(<FilterInput options={opts} onFilterValueChange={handleFilterValueChange} />)
 		userEvent.type(screen.getByRole("textbox"), "987")
 		expect(handleFilterValueChange).toHaveBeenCalledTimes(3)
 	})
 	
 	test("empties the field when Clear button is clicked", async () => {
-		render(<FilterInput filterValue="abc" />)
+		const opts = [{label: "something", key: "something"}]
+		render(<FilterInput options={opts} filterValue="abc" />)
 		expect(screen.getByTitle("Clear")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveValue("abc")
 		userEvent.click(screen.getByTitle("Clear"))
@@ -122,16 +126,41 @@ describe("FilterInput", () => {
 	
 	test("executes a handler as passed when Filter icon is clicked", async () => {
 		const handleFilter = jest.fn()
-		render(<FilterInput onFilter={handleFilter} />)
+		const opts = [{label: "A Filter", key: "a-filter"}]
+		render(<FilterInput options={opts} onFilter={handleFilter} />)
 		userEvent.click(screen.getByTitle("Filter"))
 		expect(handleFilter).toHaveBeenCalledTimes(1)
 	})
 	
 	test("executes a handler as passed when the input has focus and the user presses enter", async () => {
 		const handleFilter = jest.fn()
-		render(<FilterInput onFilter={handleFilter} />)
+		const opts = [{label: "A Filter", key: "a-filter"}]
+		render(<FilterInput options={opts} onFilter={handleFilter} />)
 		userEvent.type(screen.getByRole("textbox"), '{enter}')
 		expect(handleFilter).toHaveBeenCalledTimes(1)
+	})
+	
+	test("renders loading filter input as passed", async () => {
+		render(<FilterInput loading />)
+		expect(screen.getByRole("combobox")).toBeDisabled()
+		expect(screen.getByRole("textbox")).toBeDisabled()
+		expect(screen.getByRole("progressbar")).toBeInTheDocument() 
+	})
+	
+	test("renders a loading filter if passed options are present but empty", async () => {
+		const filters = []
+		render(<FilterInput options={filters} />)
+		expect(screen.getByRole("combobox")).toBeDisabled()
+		expect(screen.getByRole("textbox")).toBeDisabled()
+		expect(screen.getByRole("progressbar")).toBeInTheDocument() 
+	})
+	
+	test("renders loading filter as passed even if options are present and not empty", async () => {
+		const opts = [{label: "A Filter", key: "a-filter"}]
+		render(<FilterInput options={opts} loading />)
+		expect(screen.getByRole("combobox")).toBeDisabled()
+		expect(screen.getByRole("textbox")).toBeDisabled()
+		expect(screen.getByRole("progressbar")).toBeInTheDocument() 
 	})
 	
 	test("renders a custom class to the row as passed", async () => {

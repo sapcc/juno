@@ -37,6 +37,7 @@ export const Filters = ({
 	onFilterClear,
 	children,
 	className,
+	loading,
 	...props
 }) => {
 	return (
@@ -53,6 +54,7 @@ export const Filters = ({
 						onFilterValueChange={onFilterValueChange}
 						onFilter={onFilter}
 						onClear={onFilterClear}
+						loading={loading}
 					/> 
 					: 
 					null }
@@ -89,7 +91,9 @@ Filters.propTypes = {
 	/** Pas a handler to be executed once the Filter input is cleared */
 	onFilterClear: PropTypes.func,
 	/** add custom classNames */
-	className: PropTypes.string,	
+	className: PropTypes.string,
+	/** Whether the filters are currently loading */
+	loading: PropTypes.bool,
 }
 
 Filters.defaultProps = {
@@ -102,4 +106,5 @@ Filters.defaultProps = {
 	onFilterValueChange: undefined,
 	onFilterClear: undefined,
 	className: "",
+	loading: false,
 }

@@ -65,3 +65,10 @@ GroupedSelect.args = {
     },
   ],
 }
+
+export const LoadingSelect = SelectTemplate.bind({})
+LoadingSelect.args = {
+  name: "Loading Select",
+  options: [],
+  loading: true,
+}

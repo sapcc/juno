@@ -28,3 +28,9 @@ Preselected.args = {
 		{label: "Filter 3", key: "filter-3"},
 	]
 }
+
+export const Loading = Template.bind({})
+Loading.args = {
+	options: [],
+	loading: true,
+}

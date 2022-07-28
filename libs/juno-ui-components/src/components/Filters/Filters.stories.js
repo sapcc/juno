@@ -10,7 +10,9 @@ export default {
   argTypes: {},
 }
 
-const Template = (args) => <Filters {...args}>
+const Template = (args) => <Filters {...args} />
+
+const PillsTemplate = (args) => <Filters {...args}>
     {
       args.filters && args.filters.options && args.filters.options.length ? args.filters.options.map((filter, i) => (
         <FilterPill 
@@ -29,11 +31,22 @@ export const Default = Template.bind({})
 Default.args = {
   filters: {
     label: "Select a Filter",
-    options: []
+    options: [
+      {label: "Filter 1", key: "filter-1"}
+    ]
   }
 }
 
-export const WithPills = Template.bind({})
+export const Loading = Template.bind({})
+Loading.args = {
+  filters: {
+    label: "Select a Filter",
+    options: []
+  },
+  loading: true
+}
+
+export const WithPills = PillsTemplate.bind({})
 WithPills.args = {
   filters: {
     keyLabel: "Select a Filter",
@@ -44,8 +57,6 @@ WithPills.args = {
     ]
   }
 }
-
-
 
 export const PreseletedWithSearch = Template.bind({})
 PreseletedWithSearch.args = {
