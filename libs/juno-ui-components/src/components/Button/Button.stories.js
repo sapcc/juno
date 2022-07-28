@@ -1,6 +1,8 @@
 import React from "react"
 import { Button } from "./index"
 import { knownIcons } from "../Icon/Icon.component.js"
+import { ContentArea } from "../ContentArea/index"
+import { Container } from "../Container/index"
 
 export default {
   title: "Components/Button",

@@ -9,14 +9,6 @@ describe("ContentAreaToolbar", () => {
     expect(screen.getByTestId("content-area-toolbar")).toHaveClass("juno-content-area-toolbar")
   })
 
-  test("renders a content area toolbar with correct background color", async () => {
-    render(<ContentAreaToolbar data-testid="content-area-toolbar" />)
-    expect(screen.getByTestId("content-area-toolbar")).toBeInTheDocument()
-    expect(screen.getByTestId("content-area-toolbar")).toHaveClass(
-      "jn-bg-theme-content-area-toolbar-bg"
-    )
-  })
-
   test("renders children as passed", async () => {
     render(
       <ContentAreaToolbar data-testid="content-area-toolbar">
