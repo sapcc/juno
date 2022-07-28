@@ -4,7 +4,11 @@
    * color variables so that the color value changes depending on chosen theme. This ensures that
    * the background color of the story matches the chosen theme.
    */
-  .sbdocs .docs-story {
+  .sbdocs .docs-story { /* this is for the Story iframe in Docs */
+    background: var(--color-content-area-bg);
+  }
+
+  .sb-main-padded.sb-show-main { /* this is for the Story iframe in Canvas */
     background: var(--color-content-area-bg);
   }
 </style>
