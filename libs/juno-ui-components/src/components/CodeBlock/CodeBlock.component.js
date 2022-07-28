@@ -43,27 +43,14 @@ const codeContainerSize = (size) => {
 	
 }
 
-
-
 const codeStyles = `
 	jn-text-sm
 `
 
-const titleBarStyles = `
-	jn-border-b-[1px]
-	jn-border-theme-codeblock-bar
-`
-
 const tabStyles = `
-	jn-font-bold 
 	jn-text-sm 
-	jn-inline-block 
 	jn-px-6 
 	jn-py-2
-`
-
-const tabStylesActive = `
-	jn-border-b-[3px]
 `
 
 const bottomBarStyles = `
@@ -119,7 +106,7 @@ export const CodeBlock = ({
 				<Tabs>
 					<TabList>
 						{theTabs.map((tab, t) => (
-							<Tab key={t}>{tab}</Tab>
+							<Tab className={`${tabStyles}`} key={t}>{tab}</Tab>
 						))}
 					</TabList>
 					{theContents.map((element, c) => (

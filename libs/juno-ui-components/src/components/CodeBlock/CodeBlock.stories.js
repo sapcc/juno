@@ -46,9 +46,9 @@ WithTabs.parameters = {
 WithTabs.args = {
   tabs: ["React.js", "Vue.js", "Svelte.js", "html"],
   contents: [
-    "<Component />",
+    "<ReactComponent />",
     "<VueComponent />",
-    "SvelteComponent />",
+    "<SvelteComponent />",
     "<div>Component</div>",
   ]
 }
