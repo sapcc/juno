@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/Icon.component.js"
+import { Tabs } from "../Tabs/Tabs.component.js"
+import { TabList } from "../TabList/TabList.component.js"
+import { Tab } from "../Tab/Tab.component.js"
+import { TabPanel } from "../TabPanel/TabPanel.component.js"
 
 const codeBlockBaseStyles = `
 	jn-bg-theme-code-block
@@ -39,27 +43,14 @@ const codeContainerSize = (size) => {
 	
 }
 
-
-
 const codeStyles = `
 	jn-text-sm
 `
 
-const titleBarStyles = `
-	jn-border-b-[1px]
-	jn-border-theme-codeblock-bar
-`
-
 const tabStyles = `
-	jn-font-bold 
 	jn-text-sm 
-	jn-inline-block 
 	jn-px-6 
 	jn-py-2
-`
-
-const tabStylesActive = `
-	jn-border-b-[3px]
 `
 
 const bottomBarStyles = `
@@ -75,6 +66,8 @@ const bottomBarStyles = `
 export const CodeBlock = ({
 	wrap,
 	heading,
+	tabs,
+	contents,
 	size,
 	copyToClipboard,
 	className,
@@ -91,36 +84,58 @@ export const CodeBlock = ({
     }, [])
 	
 	const handleCopyClick = () => {
-		navigator.clipboard.writeText(children)
+		navigator.clipboard.writeText(theCode.current.textContent)
 		setIsCopied(true)
 		clearTimeout(timeoutRef.current) // clear any possibly existing Refs
 		timeoutRef.current = setTimeout(() => setIsCopied(false), 1000)
 	}
 	
-	const codeBlockHeading = (
-		<div className={`juno-codeblock-titlebar ${titleBarStyles}`}>
-			<span className={`juno-codeblock-tab ${tabStyles} ${tabStylesActive}`}>
-				{heading}
-			</span>
-		</div>
-	)
+	/* If tabs were passed, use these. If not, but heading was been passed, create an array with heading as only element. Otherwise, return empty array: */
+	const theTabs = tabs.length ? tabs : (heading.length ? [heading] : [])
+
+	/* If contents was passed, use these. If not, but heading was passed, create an array with children as the only element. Otherwise, return empty array: */
+	const theContents = contents.length ? contents : (children ? [children] : [])
 	
-	const copy = (
-		<div className={`juno-codeblock-bottombar ${bottomBarStyles}`}>
-			<span className={`jn-font-bold jn-text-sm jn-mr-4 jn-mt-1`} >{ isCopied ? "Copied!" : "" }</span>
-			<Icon icon="contentCopy" onClick={handleCopyClick} />
-		</div>
-	)
+	const theCode = useRef(null)
 	
 	return (
+		
 		<div className={`juno-codeblock ${codeBlockBaseStyles} ${className}`} {...props} >
-			{ heading ? codeBlockHeading : null }
-			<pre className={`${codeContainerStyles(wrap)} ${codeContainerSize(size)}`} data-testid="juno-codeblock-pre">
-				<code className={`${codeStyles}`} >
-					{children}
-				</code>
-			</pre>
-			{ copyToClipboard ? copy : null }
+
+			{ theTabs.length ? 
+				<Tabs>
+					<TabList>
+						{theTabs.map((tab, t) => (
+							<Tab className={`${tabStyles}`} key={t}>{tab}</Tab>
+						))}
+					</TabList>
+					{theContents.map((element, c) => (
+						<TabPanel key={c}>
+							<pre className={`${codeContainerStyles(wrap)} ${codeContainerSize(size)}`} data-testid="juno-codeblock-pre">
+								<code className={`${codeStyles}`} ref={theCode} >
+									{element}
+								</code>
+							</pre>
+						</TabPanel>
+					))}
+				</Tabs>
+			: 
+				<pre className={`${codeContainerStyles(wrap)} ${codeContainerSize(size)}`} data-testid="juno-codeblock-pre">
+					<code className={`${codeStyles}`} ref={theCode} >
+						{children}
+					</code>
+				</pre>
+			}
+			
+			{ copyToClipboard ? 
+				<div className={`juno-codeblock-bottombar ${bottomBarStyles}`}>
+					<span className={`jn-font-bold jn-text-sm jn-mr-4 jn-mt-1`} >{ isCopied ? "Copied!" : "" }</span>
+					<Icon icon="contentCopy" onClick={handleCopyClick} />
+				</div> 
+			: 
+				null
+			}
+			
 		</div>
 	)
 }
@@ -134,6 +149,10 @@ CodeBlock.propTypes = {
 	wrap: PropTypes.bool,
 	/** Optional title */
 	heading: PropTypes.string,
+	/** Optional tabs. Pass an array of strings to be rendered as tabs */
+	tabs: PropTypes.arrayOf(PropTypes.string),
+	/* Optional contents. Pass an array of code sample strings to be rendered to work with tabs: */
+	contents: PropTypes.arrayOf(PropTypes.string),
 	/** Optional size (height). By default height is unrestricted. If specifying a size the CodeBlock will not grow past the given size and get scrollbars if the content is higher */
 	size: PropTypes.oneOf(["auto", "small", "medium", "large"]),
 	/** Whether to display a 'Copy to Clipboard' button */
@@ -143,6 +162,8 @@ CodeBlock.propTypes = {
 CodeBlock.defaultProps  = {
 	wrap: true,
 	heading: "",
+	tabs: [],
+	contents: [],
 	size: "auto",
 	copyToClipboard: true,
 	className: "",
