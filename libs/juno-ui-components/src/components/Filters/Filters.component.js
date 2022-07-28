@@ -74,8 +74,10 @@ export const Filters = ({
 Filters.propTypes = {
 	/** Pass a SearchInput component */
 	search: PropTypes.node,
-	/** Pass an object describing the filter keyLabel, valueLabel, and the available filter options: 
-	`{ keyLabel: "Select a Filter", valueLabel: "Enter a Value", options: [{label: "Filter 1", key: "filter-1"}, {...}] }` 
+	/** Pass an object describing the filter keyLabel, valueLabel, and the available filter options:
+	`{ keyLabel: "Select a Filter",`
+		 `valueLabel: "Enter a Value",`
+		 `options: [{label: "Filter 1", key: "filter-1"}, {...}] }` 
 	*/
 	filters: PropTypes.object, 
 	/** The key of the currently selected filter */
