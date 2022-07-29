@@ -6,9 +6,10 @@ import {
   DataGrid,
   DataGridRow,
   DataGridHeadCell,
+  DataGridToolbar,
+  ButtonRow,
   Spinner,
   Stack,
-  ContentAreaToolbar,
 } from "juno-ui-components"
 import CertificateListItem from "./CertificateListItem"
 import AddNewSSOButton from "./AddNewSSOButton"
@@ -69,10 +70,12 @@ const CertificateList = ({ ca }) => {
         <>
           {data && data.length > 0 && (
             <>
-              <ContentAreaToolbar>
-                <AddNewSSOButton />
-              </ContentAreaToolbar>
-              <p>{ca?.description}</p>
+              <DataGridToolbar>
+                <ButtonRow>
+                  <AddNewSSOButton />
+                </ButtonRow>
+              </DataGridToolbar>
+              <p className="mt-2">{ca?.description}</p>
               <DataGrid
                 className="mt-4"
                 gridColumnTemplate="minmax(0%, 31%) minmax(0%, 29%) minmax(0%, 12%) minmax(0%, 7%) minmax(0%, 16%) minmax(0%, 5%)"
