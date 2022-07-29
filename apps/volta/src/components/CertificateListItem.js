@@ -8,12 +8,16 @@ import { useQueryClient } from "react-query"
 import { parseError } from "../helpers"
 import { DateTime } from "luxon"
 
-const rowClasses = (isConfirmOpen) => {
+// if remove row shows
+// - remove cell bottom border so the 2 cells belongs together
+// - change the background color so it is easier to difference from the other rows
+// - text text color to red
+const cellClasses = (isConfirmOpen) => {
   return `
 			${
         isConfirmOpen &&
-        `border 
-         border-theme-danger 
+        `border-b-0 
+         bg-theme-background-lvl-2
          text-theme-danger
          transition
          ease-out
@@ -127,7 +131,35 @@ const CertificateListItem = ({ item, ca }) => {
   }, [item?.name])
 
   return (
-    <DataGridRow className={`relative ${rowClasses(showConfirm)}`}>
+    <>
+      <DataGridRow>
+        <DataGridCell className={cellClasses(showConfirm)}>
+          <span>{item.name}</span>
+          <div className={certIdClasses(showConfirm)}>{item.serial}</div>
+        </DataGridCell>
+        <DataGridCell className={cellClasses(showConfirm)}>
+          {item.description}
+        </DataGridCell>
+        <DataGridCell className={cellClasses(showConfirm)}>
+          {item.identity}
+        </DataGridCell>
+        <DataGridCell className={cellClasses(showConfirm)}>
+          {stateBadge}
+        </DataGridCell>
+        <DataGridCell className={cellClasses(showConfirm)}>
+          <span className={expirationDateClasses}>{expiresAtString}</span>
+        </DataGridCell>
+        <DataGridCell className={cellClasses(showConfirm)}>
+          {isCertAvtive && (
+            <Icon
+              disabled={showConfirm}
+              icon="deleteForever"
+              onClick={() => setShowConfirm(true)}
+            />
+          )}
+        </DataGridCell>
+      </DataGridRow>
+
       <InlineConfirmRemove
         text={inlineConfirmText}
         actionText="Revoke"
@@ -136,26 +168,7 @@ const CertificateListItem = ({ item, ca }) => {
         onConfirm={onRemoveConfirmed}
         onCancel={() => setShowConfirm(false)}
       />
-      <DataGridCell>
-        <span>{item.name}</span>
-        <div className={certIdClasses(showConfirm)}>{item.serial}</div>
-      </DataGridCell>
-      <DataGridCell>{item.description}</DataGridCell>
-      <DataGridCell>{item.identity}</DataGridCell>
-      <DataGridCell>{stateBadge}</DataGridCell>
-      <DataGridCell>
-        <span className={expirationDateClasses}>{expiresAtString}</span>
-      </DataGridCell>
-      <DataGridCell>
-        {isCertAvtive && (
-          <Icon
-            disabled={showConfirm}
-            icon="deleteForever"
-            onClick={() => setShowConfirm(true)}
-          />
-        )}
-      </DataGridCell>
-    </DataGridRow>
+    </>
   )
 }
 

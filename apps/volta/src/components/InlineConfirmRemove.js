@@ -1,33 +1,21 @@
 import React from "react"
-import { Stack, Button, Icon } from "juno-ui-components"
+import { Stack, Button, DataGridCell, DataGridRow } from "juno-ui-components"
 
-const inlineConfirmRemove = (isOpen) => {
+const inlineConfirmRemoveClasses = (isOpen) => {
   return `
-      absolute
-      w-full
-      top-full
-      z-50
-      mt-0.5
+      bg-theme-background-lvl-2
       opacity-0
-      transition-opacity
+      transition
       ease-out
       duration-300
-			${isOpen && `opacity-100`}
+      py-0
+      border-b-1
+      border-theme-background-lvl-0
+			${isOpen && `opacity-100 py-3 `}
 		`
     .replace(/\n/g, " ")
     .replace(/\s+/g, " ")
 }
-
-const inlineConfirmContainer = `
-rounded
-bg-theme-background-lvl-0
-backdrop-blur
-bg-opacity-70
-px-2
-py-5
-text-theme-default 
-text-opacity-70
-`
 
 const InlineConfirmRemove = ({
   show,
@@ -38,9 +26,9 @@ const InlineConfirmRemove = ({
   onCancel,
 }) => {
   return (
-    <div className={`juno-inline-remove ${inlineConfirmRemove(show)}`}>
-      {show && (
-        <div className={inlineConfirmContainer}>
+    <DataGridRow className="juno-inline-remove">
+      <DataGridCell colSpan={6} className={inlineConfirmRemoveClasses(show)}>
+        {show && (
           <Stack alignment="center">
             <span className="w-full">{text || "Are you sure?"}</span>
             <Button
@@ -59,9 +47,9 @@ const InlineConfirmRemove = ({
               variant="subdued"
             />
           </Stack>
-        </div>
-      )}
-    </div>
+        )}
+      </DataGridCell>
+    </DataGridRow>
   )
 }
 

@@ -73,7 +73,10 @@ const CertificateList = ({ ca }) => {
                 <AddNewSSOButton />
               </ContentAreaToolbar>
               <p>{ca?.description}</p>
-              <DataGrid className="mt-4" columns={6} minContentColumns={[3, 5]}>
+              <DataGrid
+                className="mt-4"
+                gridColumnTemplate="minmax(0%, 31%) minmax(0%, 29%) minmax(0%, 12%) minmax(0%, 7%) minmax(0%, 16%) minmax(0%, 5%)"
+              >
                 <DataGridRow>
                   <DataGridHeadCell wrap={false}>Name / ID</DataGridHeadCell>
                   <DataGridHeadCell>Description</DataGridHeadCell>
