@@ -58,7 +58,6 @@ const CertificateList = ({ ca }) => {
     }
   }, [error])
 
-  // TODO add memo
   return (
     <>
       {isLoading && !data ? (
@@ -78,7 +77,7 @@ const CertificateList = ({ ca }) => {
               <p className="mt-2">{ca?.description}</p>
               <DataGrid
                 className="mt-4"
-                gridColumnTemplate="minmax(0%, 31%) minmax(0%, 29%) minmax(0%, 12%) minmax(0%, 7%) minmax(0%, 16%) minmax(0%, 5%)"
+                gridColumnTemplate="2fr 2.25fr 0.75fr min-content 1.5fr min-content"
               >
                 <DataGridRow>
                   <DataGridHeadCell wrap={false}>Name / ID</DataGridHeadCell>
