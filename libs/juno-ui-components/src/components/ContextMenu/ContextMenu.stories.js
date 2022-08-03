@@ -22,6 +22,6 @@ Default.args = {
 	children: [
 		{ ...ContextMenuItemDefaultStory.args, label: "Item 1" },
 		{ ...ContextMenuItemDefaultStory.args, label: "Item 2" },
-		{ ...ContextMenuItemDefaultStory.args, label: "Item 3" },
+		{ ...ContextMenuItemDefaultStory.args, label: "Item 3", icon: "danger" },
 	]
 }
