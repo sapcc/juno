@@ -47,11 +47,13 @@ export const FilterInput = ({
 	onClear,
 	onKeyPress,
 	onFilter,
+	loading,
 	...props
 }) => {
 	
 	const [selectedFilter, setSelectedFilter] = useState(selectedFilterKey)
 	const [value, setValue] = useState(filterValue)
+	const [isLoading, setIsLoading] = useState( options.length < 1 || loading)
 	
 	useEffect(() => {
 		setValue(filterValue)
@@ -61,6 +63,17 @@ export const FilterInput = ({
 		setSelectedFilter(selectedFilterKey)
 	}, [selectedFilterKey])
 	
+	// Reset the (text input) value whenever the component is loading:
+	useEffect(() => {
+		if ( options.length < 1 || loading ) {
+			setIsLoading(true)
+			setValue("")
+		} else {
+			setIsLoading(false)
+		}
+	}, [options, loading])
+	
+	// Reset the (text input) value whenever the selected Filter key changes:
 	const handleSelectedFilterChange = (event) => {
 		setSelectedFilter(event.target.value)
 		setValue("")
@@ -96,7 +109,8 @@ export const FilterInput = ({
 					aria-label={keyLabel}
 					value={selectedFilter}
 					onChange={handleSelectedFilterChange}
-				>	
+					loading={isLoading}
+				>
 					// First "Placeholder" option:
 					<SelectOption label={keyLabel || "Select Filter"} value="" />
 					// Options representing actual filter key values:
@@ -115,6 +129,8 @@ export const FilterInput = ({
 				aria-label={valueLabel} 
 				onChange={handleFilterValueChange}
 				onKeyPress={handleKeyPress}
+				disabled={isLoading}
+				placeholder={ isLoading ? "Loading Filter Options…" : null }
 			/>
 			<div className={`${iconWrapperStyles}`}>
 				{ value && value.length ?
@@ -131,7 +147,8 @@ export const FilterInput = ({
 FilterInput.propTypes = {
 	/** The label to display on the Filter Key Select */
 	keyLabel: PropTypes.string,
-	/** The options for the Filter Select: `[{Label: "Filter 1", key: "filter-1"}, {...}]` 
+	/** The options for the Filter Select: `[{Label: "Filter 1", key: "filter-1"}, {...}]`
+	The array MUST have a length in order for the component to render.
 	*/
 	options: PropTypes.arrayOf(PropTypes.object), 
 	/** The key of the current filter */
@@ -146,6 +163,8 @@ FilterInput.propTypes = {
 	onFilterValueChange: PropTypes.func,
 	/** Pass a handler to execute when the Filter Value Clear button is clicked */
 	onClear: PropTypes.func,
+	/** Whether the filter is currently loading */
+	loading: PropTypes.bool,
 	/** Pass a className to the wrapping element */
 	className: PropTypes.string,
 	/** Pass a handler to execute when the Filter Value Filter button is clicked */
@@ -162,5 +181,6 @@ FilterInput.defaultProps = {
 	onFilterValueChange: undefined,
 	onClear: undefined,
 	onFilter: undefined,
+	loading: false,
 	className: "",
 }

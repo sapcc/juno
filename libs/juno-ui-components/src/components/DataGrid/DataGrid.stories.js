@@ -16,15 +16,6 @@ export default {
   title: "Components/DataGrid/DataGrid",
   component: DataGrid,
   argTypes: {},
-  decorators: [
-    (story) => (
-      <ContentArea className="this-is-only-here-to-make-it-look-nice-do-not-copy-this jn-overflow-x-auto">
-        <Container className="this-is-only-here-to-make-it-look-nice-do-not-copy-this">
-          {story()}
-        </Container>
-      </ContentArea>
-    ),
-  ],
 }
 
 const defaultColumns = 3

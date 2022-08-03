@@ -178,10 +178,7 @@ module.exports = {
           "badge-default": "var(--color-badge-default-bg)",
           "code-block": withOpacity("--color-codeblock-bg"),
           "content-area-bg": withOpacity("--color-content-area-bg-raw"),
-          "content-area-toolbar-bg": withOpacity(
-            "--color-toolbar-bg-raw"
-          ),
-          panel: withOpacity("--color-panel-bg-raw"),
+          panel: "var(--color-panel-bg)",
           "tooltip-popover": withOpacity("--color-tooltip-popover-bg"),
           textinput: withOpacity("--color-textinput-bg"),
           select: withOpacity("--color-select-bg"),

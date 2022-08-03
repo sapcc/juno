@@ -6,6 +6,7 @@ const headCellBaseStyles = `
 	jn-font-bold
 	jn-text-theme-high
 	jn-bg-theme-background-lvl-1
+	jn-border-theme-background-lvl-0
 `
 
 const sortIconStyles = `

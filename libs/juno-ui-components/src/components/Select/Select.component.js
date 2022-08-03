@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
+import { Spinner } from "../Spinner/Spinner.component"
 
 const selectstyles = `
 	jn-w-full
@@ -38,7 +39,28 @@ const disablediconstyles = `
 	jn-opacity-50
 `
 
+const loadingStyles = `
+	jn-absolute
+	jn-top-0
+	jn-right-0
+	jn-bottom-0
+	jn-left-0
+	jn-text-center
+	jn-bg-theme-select
+	jn-text-theme-high
+	jn-text-base
+	jn-rounded-3px
+	jn-flex
+	jn-flex-col
+	jn-justify-center
+	jn-select-none
+	jn-cursor-not-allowed
+`
 
+const loadingSpinnerStyles = `
+	jn-ml-auto
+	jn-mr-auto
+`
 
 /*+ A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
 export const Select = ({
@@ -48,6 +70,7 @@ export const Select = ({
 	className,
 	disabled,
 	onChange,
+	loading,
 	...props
 }) => {
 	return (
@@ -57,12 +80,25 @@ export const Select = ({
 				id={id}
 				className={`juno-select ${selectstyles} ${className}`}
 				onChange={onChange}
-				disabled={disabled}
+				disabled={disabled || loading}
 				{...props}
 			>
-			{children}
+				{children}
 			</select>
-			<Icon icon={"expandMore"} className={`${iconstyles} ${ disabled ? disablediconstyles : "" } `} />
+			{loading ?
+				null
+				:
+				<Icon icon={"expandMore"} className={`${iconstyles} ${ disabled ? disablediconstyles : "" } `} />
+			}
+			{ loading ? 
+				<div 
+					className={`juno-select-loading ${loadingStyles}`} 
+				>
+					<Spinner className={`${loadingSpinnerStyles}`} />
+				</div>
+				:
+				null
+			}
 		</div>
 	)
 }
@@ -80,6 +116,8 @@ Select.propTypes = {
 	disabled: PropTypes.bool,
 	/** Pass a handler */
 	onChange: PropTypes.func,
+	/** Whether the select is currently loading */
+	loading: PropTypes.bool,
 }
 
 Select.defaultProps = {
@@ -88,4 +126,5 @@ Select.defaultProps = {
 	className: "",
 	disabled: null,
 	onChange: undefined,
+	loading: false,
 }
