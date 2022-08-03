@@ -21,5 +21,19 @@ describe("LoadingIndicator", () => {
 		expect(screen.getByRole("progressbar")).toBeInTheDocument()
 		expect(screen.getByRole("progressbar")).toHaveClass("jn-text-danger")
 	})
+	
+	test("renders a custom className as passed", async () => {
+		render(<LoadingIndicator className="some-custom-class" />)
+		expect(screen.getByRole("progressbar")).toBeInTheDocument()
+		expect(screen.getByRole("progressbar")).toHaveClass("some-custom-class")
+	})
+	
+	test("renders all props as passed", async () => {
+		render(<LoadingIndicator data-lolol="1-2-3-lol" />)
+		expect(screen.getByRole("progressbar")).toBeInTheDocument()
+		expect(screen.getByRole("progressbar")).toHaveAttribute("data-lolol", "1-2-3-lol")
+	})
+	
+
   
 })

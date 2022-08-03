@@ -15,6 +15,7 @@ export const LoadingIndicator = ({
 			height={size}
 			className={`${className} ${color}`}
 			role="progressbar"
+			{ ...props }
 		/>
 	)
 }
