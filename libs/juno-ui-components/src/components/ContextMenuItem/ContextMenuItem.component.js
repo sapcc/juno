@@ -3,6 +3,10 @@ import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 import { knownIcons } from "../Icon/Icon.component.js"
 
+const itemStyles = `
+	jn-text-sm
+`
+
 const iconStyles = `
 	jn-mr-1.5
 `
@@ -21,21 +25,35 @@ export const ContextMenuItem = ({
 	const content = label || children
 	
 	const anchor = (
-		<a href={href}>
+		<a 
+			href={href} 
+			className={`juno-contextmenu-item juno-contextmenu-item-anchor ${itemStyles} ${className}`} 
+			role="menuitem"
+			{ ...props } 
+		>
 			{icn}
 			{content}
 		</a>
 	)
 	
 	const button = (
-		<button onClick={onClick} >
+		<button 
+			onClick={onClick} 
+			className={`juno-contextmenu-item juno-contextmenu-item-button ${itemStyles} ${className}`}
+			role="menuitem"
+			{ ...props }
+		>
 			{icn}
 			{content}
 		</button>
 	)
 	
 	const plain = (
-		<div className={`${className}`} { ...props } >
+		<div 
+			className={`juno-contextmenu-item ${itemStyles} ${className}`} 
+			role="menuitem"
+			{ ...props } 
+		>
 			{icn}
 			{content}
 		</div>
