@@ -13,6 +13,17 @@ TODO:
 * Rename Portal API: "InPortal" -> "Portal"
 */
 
+const toggleStyles = `
+
+`
+
+const menuStyles = `
+	jn-text-sm
+	jn-w-auto
+	jn-w-[11.25rem]
+	jn-flex-col
+`
+
 export const ContextMenu = ({
 	icon,
 	className,
@@ -28,11 +39,11 @@ export const ContextMenu = ({
 	
 	return (
 		<>
-			<Icon className={`juno-contextmenu-toggle`} onClick={toggleOpen} />
+			<Icon icon="moreVert" className={`juno-contextmenu-toggle ${toggleStyles}`} onClick={toggleOpen} />
 			{ isOpen ?
 				/* <Portal targetNode={document.getElementById("root")} >*/
 				
-					<div className={`juno-contextmenu-menu`} role="menu">
+					<div className={`juno-contextmenu-menu ${menuStyles}`} role="menu">
 						{ children }
 					</div>
 					

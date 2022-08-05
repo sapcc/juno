@@ -9,6 +9,8 @@ describe("ContextMenu", () => {
 	  render(<ContextMenu/>)
 	  expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveClass("juno-contextmenu-toggle")
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("title", "More")
   })
   
   test("toggles Context Menu on click", async () => {
