@@ -4,14 +4,14 @@ import { Message } from "../Message/index.js"
 
 export default {
   title: "WiP/Portal",
-  component: InPortal,
+  component: Portal,
   argTypes: {},
 }
 
 const Template = ({ options, ...args }) => (
-  <InPortal>
+  <Portal>
     <Message {...args} />
-  </InPortal>
+  </Portal>
 )
 
 export const Default = Template.bind({})

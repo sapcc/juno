@@ -1,1 +1,1 @@
-export { InPortal } from "./Portal.component"
+export { Portal } from "./Portal.component"

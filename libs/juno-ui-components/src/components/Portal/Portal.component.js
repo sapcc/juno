@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types"
 
-export const InPortal = ({
+export const Portal = ({
 	children,
 	targetNode
 }) => {
@@ -11,10 +11,10 @@ export const InPortal = ({
 	)
 }
 
-InPortal.propTypes = {
+Portal.propTypes = {
 	children: PropTypes.node,
 }
 
-InPortal.defaultProps = {
+Portal.defaultProps = {
 	targetNode: document.body,
 }
