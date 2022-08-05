@@ -2,6 +2,13 @@ import React from "react"
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types"
 
+/*
+TODO:
+* allow targetSelector
+* allow TargetRef
+*/
+
+
 export const Portal = ({
 	children,
 	targetNode
