@@ -1,5 +1,5 @@
 import React from "react"
-import { InPortal } from "./index.js"
+import { Portal } from "./index.js"
 import { Message } from "../Message/index.js"
 
 export default {
