@@ -20,8 +20,8 @@ const Template = ({children, ...args}) => (
 export const Default = Template.bind({})
 Default.args = {
 	children: [
-		{ ...ContextMenuItemDefaultStory.args, label: "Item 1" },
+		{ ...ContextMenuItemDefaultStory.args, label: "Juno on Github", href: "https://github.com/sapcc/juno" },
 		{ ...ContextMenuItemDefaultStory.args, label: "Item 2" },
-		{ ...ContextMenuItemDefaultStory.args, label: "Item 3", icon: "danger" },
+		{ ...ContextMenuItemDefaultStory.args, label: "Item 3", icon: "deleteForever" },
 	]
 }
