@@ -9,8 +9,6 @@ TODO:
 * use Portal
 * close on [ESC]
 * keyboard navigation: arrow up/down moves focus
-* build generic Menu component and use it
-* build generic MenuItem component (rename/refactor ContextMenuItem)
 * create MenuSection (with divider, optional title) component
 * comfortably find targetNode for Portal (should be in StyleProvider?)
 * for toggle styles (hover, active, etc.) -> expand icon (interactive) component or handle here (aka are these styles generically useful or specific to this component?)

@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import "./menu-section.scss"
 
 export const MenuSection = ({
 	title,

@@ -1,5 +1,7 @@
 import React from "react"
 import { MenuSection } from "./index.js"
+import { MenuItem } from "../MenuItem/index.js"
+import { Default as MenuItemDefaultStory } from "../MenuItem/MenuItem.stories.js"
 
 
 export default {
@@ -8,9 +10,20 @@ export default {
   argTypes: {},
 }
 
-const Template = (args) => (<MenuSection {...args} />)
+const Template = ({items, ...args}) => (
+  <MenuSection {...args}>
+    {items.map((item, i) => (
+      <MenuItem {...item} key={i} />
+    ))}
+  </MenuSection>
+)
 
 export const Default = Template.bind({})
 Default.args = {
-	title: "Menu Section"
+	title: "Menu Section",
+  items: [
+    { ...MenuItemDefaultStory.args },
+    { ...MenuItemDefaultStory.args },
+    { ...MenuItemDefaultStory.args },
+  ]
 }
