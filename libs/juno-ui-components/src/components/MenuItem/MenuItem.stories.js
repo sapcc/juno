@@ -1,34 +1,34 @@
 import React from "react"
-import { ContextMenuItem } from "./index.js"
+import { MenuItem } from "./index.js"
 
 
 export default {
-  title: "WiP/ContextMenu/ContextMenuItem",
-  component: ContextMenuItem,
+  title: "WiP/Menu/MenuItem",
+  component: MenuItem,
   argTypes: {},
 }
 
-const Template = (args) => <ContextMenuItem {...args} />
+const Template = (args) => <MenuItem {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-	label: "Context Menu Item"
+	label: "Menu Item"
 }
 
 export const WithIcon = Template.bind({})
 WithIcon.args = {
-	label: "Context menu Item with Icon",
+	label: "Menu Item with Icon",
 	icon: "deleteForever"
 }
 
 export const AsLink = Template.bind({})
 AsLink.args = {
-	label: "Context Menu Item as Link",
+	label: "Menu Item as Link",
 	href: "https://github.com/sapcc/juno",
 }
 
 export const AsButton = Template.bind({})
 AsButton.args = {
-	label: "Context Menu Item as Button",
+	label: "Menu Item as Button",
 	onClick: (() => (console.log("clicked")))
 }

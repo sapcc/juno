@@ -1,7 +1,7 @@
 import React from "react"
 import { ContextMenu } from "./index.js"
-import { ContextMenuItem } from "../ContextMenuItem/"
-import { Default as ContextMenuItemDefaultStory } from "../ContextMenuItem/ContextMenuItem.stories"
+import { MenuItem } from "../MenuItem/"
+import { Default as MenuItemDefaultStory } from "../MenuItem/MenuItem.stories"
 
 export default {
   title: "WiP/ContextMenu/ContextMenu",
@@ -12,7 +12,7 @@ export default {
 const Template = ({children, ...args}) => (
 	<ContextMenu {...args}>
 		{children.map((item, i) => (
-			<ContextMenuItem {...item} key={`${i}`} />
+			<MenuItem {...item} key={`${i}`} />
 		))}
 	</ContextMenu>
 )
@@ -20,8 +20,8 @@ const Template = ({children, ...args}) => (
 export const Default = Template.bind({})
 Default.args = {
 	children: [
-		{ ...ContextMenuItemDefaultStory.args, label: "Juno on Github", href: "https://github.com/sapcc/juno" },
-		{ ...ContextMenuItemDefaultStory.args, label: "Item 2" },
-		{ ...ContextMenuItemDefaultStory.args, label: "Item 3", icon: "deleteForever" },
+		{ ...MenuItemDefaultStory.args, label: "Juno on Github", href: "https://github.com/sapcc/juno" },
+		{ ...MenuItemDefaultStory.args, label: "Item 2" },
+		{ ...MenuItemDefaultStory.args, label: "Item 3", icon: "deleteForever" },
 	]
 }

@@ -11,7 +11,7 @@ const iconStyles = `
 	jn-mr-1.5
 `
 
-export const ContextMenuItem = ({
+export const MenuItem = ({
 	label,
 	icon,
 	children,
@@ -27,7 +27,7 @@ export const ContextMenuItem = ({
 	const anchor = (
 		<a 
 			href={href} 
-			className={`juno-contextmenu-item juno-contextmenu-item-anchor ${itemStyles} ${className}`} 
+			className={`juno-menu-item juno-menu-item-anchor ${itemStyles} ${className}`} 
 			role="menuitem"
 			{ ...props } 
 		>
@@ -39,7 +39,7 @@ export const ContextMenuItem = ({
 	const button = (
 		<button 
 			onClick={onClick} 
-			className={`juno-contextmenu-item juno-contextmenu-item-button ${itemStyles} ${className}`}
+			className={`juno-menu-item juno-menu-item-button ${itemStyles} ${className}`}
 			role="menuitem"
 			{ ...props }
 		>
@@ -50,7 +50,7 @@ export const ContextMenuItem = ({
 	
 	const plain = (
 		<div 
-			className={`juno-contextmenu-item ${itemStyles} ${className}`} 
+			className={`juno-menu-item ${itemStyles} ${className}`} 
 			role="menuitem"
 			{ ...props } 
 		>
@@ -59,12 +59,12 @@ export const ContextMenuItem = ({
 		</div>
 	)
 	
-
+	// render an anchor if an href prop was passed, otherwise render a button if onClick was passed, otherwise render non.interactive, plain element:
 	return href ? anchor : onClick ? button : plain
 
 }
 
-ContextMenuItem.propTypes = {
+MenuItem.propTypes = {
 	/** The label of the menu item. Will take precedence over children passed to the component. */
 	label: PropTypes.string,
 	/** Pass the name of an icon the button should show. Can be any icon included with Juno. */
@@ -79,7 +79,7 @@ ContextMenuItem.propTypes = {
 	onClick: PropTypes.func,
 }
 
-ContextMenuItem.defaultProps = {
+MenuItem.defaultProps = {
 	label: "",
 	className: "",
 	icon: null,
