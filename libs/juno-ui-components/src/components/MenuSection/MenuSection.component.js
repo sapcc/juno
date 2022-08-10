@@ -2,6 +2,10 @@ import React from "react"
 import PropTypes from "prop-types"
 import "./menu-section.scss"
 
+const titleStyles = `
+	jn-text-xs
+`
+
 export const MenuSection = ({
 	title,
 	children,
@@ -10,7 +14,7 @@ export const MenuSection = ({
 }) => {
 	return (
 		<div className={`juno-menu-section ${className}`} {...props} >
-			{ title ? <div>{title}</div> : null }
+			{ title ? <div className={`${titleStyles}`}>{title}</div> : null }
 			{ children }
 		</div>
 	)
