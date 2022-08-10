@@ -39,6 +39,16 @@ Default.args = {
   ]
 }
 
+export const Small = Template.bind({})
+Small.args = {
+  variant: "small",
+  items: [
+    { ...MenuItemDefaultStory.args }, 
+    { ...MenuItemDefaultStory.args }, 
+    { ...MenuItemDefaultStory.args }, 
+  ]
+}
+
 export const WithSections = WithSectionsTemplate.bind({})
 WithSections.args = {
   sections: [

@@ -21,6 +21,18 @@ describe("Menu", () => {
     expect(screen.getByRole("menuitem")).toHaveAttribute("href", "#")
   })
   
+  test("renders a normal Menu variant by default", async () => {
+    render(<Menu />)
+    expect(screen.getByRole("menu")).toBeInTheDocument()
+    expect(screen.getByRole("menu")).toHaveClass("juno-menu-normal")
+  })
+  
+  test("renders a small Menu variant as passed", async () => {
+    render(<Menu variant="small" />)
+    expect(screen.getByRole("menu")).toBeInTheDocument()
+    expect(screen.getByRole("menu")).toHaveClass("juno-menu-small")
+  })
+  
   test("renders a className as passed", async () => {
     render(<Menu className="my-class" />)
     expect(screen.getByRole("menu")).toBeInTheDocument()

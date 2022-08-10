@@ -6,10 +6,12 @@ import { Portal } from "../Portal/index.js"
 
 /*
 TODO:
-* use Portal
-* close on [ESC]
+* Icon styles bg, rounded corner
+* use Portal (prop?)
+* close on [ESC] (prop?)
+* close on click outside (prop?)
 * keyboard navigation: arrow up/down moves focus
-* create MenuSection (with divider, optional title) component
+* Move styles to Menu component (variant normal, small?)?
 * comfortably find targetNode for Portal (should be in StyleProvider?)
 * for toggle styles (hover, active, etc.) -> expand icon (interactive) component or handle here (aka are these styles generically useful or specific to this component?)
 * a11y
@@ -46,11 +48,15 @@ export const ContextMenu = ({
 	
 	return (
 		<>
-			<Icon icon="moreVert" className={`juno-contextmenu-toggle ${toggleStyles}`} onClick={handleClick} />
+			<Icon 
+				icon="moreVert" 
+				className={`juno-contextmenu-toggle ${toggleStyles}`} 
+				onClick={handleClick}
+			/>
 			{ isOpen ?
 				/* <Portal targetNode={document.getElementById("root")} >*/
 				
-					<Menu className={`juno-contextmenu-menu ${menuStyles}`}>
+					<Menu className={`juno-contextmenu-menu ${menuStyles}`} variant="small" >
 						{ children }
 					</Menu>
 					
