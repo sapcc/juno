@@ -6,16 +6,16 @@ import { Portal } from "../Portal/index.js"
 
 /*
 TODO:
-* Icon styles bg, rounded corner
 * use Portal (prop?)
 * close on [ESC] (prop?)
 * close on click outside (prop?)
 * keyboard navigation: arrow up/down moves focus
-* Move styles to Menu component (variant normal, small?)?
 * comfortably find targetNode for Portal (should be in StyleProvider?)
 * for toggle styles (hover, active, etc.) -> expand icon (interactive) component or handle here (aka are these styles generically useful or specific to this component?)
 * a11y
 * docstrings
+* fix stories
+* don't ALWAYS render button!?!
 */
 
 const toggleStyles = `
@@ -23,10 +23,7 @@ const toggleStyles = `
 `
 
 const menuStyles = `
-	jn-text-sm
-	jn-w-auto
 	jn-w-[11.25rem]
-	jn-flex-col
 `
 
 export const ContextMenu = ({

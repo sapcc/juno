@@ -2,9 +2,10 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 import { knownIcons } from "../Icon/Icon.component.js"
+import "./menu-item.scss"
 
 const itemStyles = `
-	jn-text-sm
+	
 `
 
 const iconStyles = `
@@ -71,7 +72,7 @@ MenuItem.propTypes = {
 	icon: PropTypes.oneOf(knownIcons),
 	/** Add a className to the menu item */
 	className: PropTypes.string,
-	/** Children of the mneu item */
+	/** Children of the menu item */
 	children: PropTypes.node,
 	/** Pass an href to the menu item. Will result in the menu item being rendered as an `<a>`. Will take precedence over an onClick prop being passed to the component */
 	href: PropTypes.string,

@@ -35,7 +35,7 @@ Default.args = {
   items: [
     { ...MenuItemDefaultStory.args }, 
     { ...MenuItemDefaultStory.args }, 
-    { ...MenuItemDefaultStory.args }, 
+    { ...MenuItemDefaultStory.args, icon: "deleteForever" }, 
   ]
 }
 
@@ -45,7 +45,7 @@ Small.args = {
   items: [
     { ...MenuItemDefaultStory.args }, 
     { ...MenuItemDefaultStory.args }, 
-    { ...MenuItemDefaultStory.args }, 
+    { ...MenuItemDefaultStory.args, icon: "deleteForever"  }, 
   ]
 }
 
@@ -56,15 +56,13 @@ WithSections.args = {
       items: [
         { ...MenuItemDefaultStory.args }, 
         { ...MenuItemDefaultStory.args }, 
-        { ...MenuItemDefaultStory.args }, 
+        { ...MenuItemDefaultStory.args}, 
       ]
     },
     {
       title: "DangerZone",
       items: [
-        { ...MenuItemDefaultStory.args }, 
-        { ...MenuItemDefaultStory.args }, 
-        { ...MenuItemDefaultStory.args }, 
+        { ...MenuItemDefaultStory.args, icon: "deleteForever"   }, 
       ]
     }
   ]

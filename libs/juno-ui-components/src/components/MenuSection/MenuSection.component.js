@@ -14,7 +14,7 @@ export const MenuSection = ({
 }) => {
 	return (
 		<div className={`juno-menu-section ${className}`} {...props} >
-			{ title ? <div className={`${titleStyles}`}>{title}</div> : null }
+			{ title ? <div className={`juno-menu-section-title ${titleStyles}`}>{title}</div> : null }
 			{ children }
 		</div>
 	)

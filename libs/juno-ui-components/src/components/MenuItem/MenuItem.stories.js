@@ -1,5 +1,6 @@
 import React from "react"
 import { MenuItem } from "./index.js"
+import { Button } from "../Button/index.js"
 
 
 export default {
@@ -31,4 +32,11 @@ export const AsButton = Template.bind({})
 AsButton.args = {
 	label: "Menu Item as Button",
 	onClick: (() => (console.log("clicked")))
+}
+
+export const WithChildren = Template.bind({})
+WithChildren.args = {
+	children: [
+		<Button label="Delete" size="small" variant="subdued" icon="deleteForever" />
+	]
 }

@@ -521,6 +521,11 @@
    --color-filter-input-textinput-bg: transparent;
    --color-filter-pill-border: var(--color-background-lvl-4-raw);
    --color-filter-pill-key-bg: var(--color-background-lvl-3-raw);
+   // DT Menu, MenuItem
+   --color-menu-bg: var(--color-background-lvl-1);
+   --color-menu-item-default-bg: var(--color-background-lvl-1);
+   --color-menu-item-hover-bg: var(--color-background-lvl-3);
+   --color-menu-section-border: var(--color-background-lvl-3);
 }
 
 .theme-dark {
@@ -752,6 +757,11 @@
   --color-filter-input-textinput-bg: transparent;
   --color-filter-pill-border:  var(--color-background-lvl-4-raw);
   --color-filter-pill-key-bg: var(--color-background-lvl-4-raw);
+  // DT Menu, MenuItem, MenuSection
+  --color-menu-bg: var(--color-background-lvl-1);
+  --color-menu-item-default-bg: var(--color-background-lvl-1);
+  --color-menu-item-hover-bg: var(--color-background-lvl-3);
+  --color-menu-section-border: var(--color-background-lvl-3);
 }
 
 // Grid configuration

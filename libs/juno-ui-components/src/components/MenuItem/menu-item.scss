@@ -1,0 +1,29 @@
+.juno-menu-item {
+	background-color: var(--color-menu-item-default-bg);
+	background-clip: padding-box; // Needed so items respect parents border-radius
+	cursor: pointer;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	padding-top: 0.6875rem; // 11px
+	padding-bottom: 0.5rem; // 8px
+	padding-left: 0.875rem; // 14px
+	padding-right: 0.875rem; // 14px
+	&:hover {
+		background-color: var(--color-menu-item-hover-bg);
+	}
+}
+
+// Avoid having to use context in order to cater for different styles by size/variant:
+
+// .juno-menu-normal {
+// 	.juno-menu-item {
+// 
+// 	}
+// }
+// 
+// .juno-menu-small {
+// 	.juno-menu-item {
+//
+// 	}
+// }

@@ -1,3 +1,15 @@
-.juno-menu-section:not(:last-child) {
-	border-bottom: 1px solid red;
+.juno-menu-section {
+	background-color: var(--color-menu-item-default-bg);
+	
+	&:not(:last-child) {
+		border-bottom: 1px solid var(--color-menu-section-border);
+	}
+	
+}
+
+.juno-menu-section-title {
+	padding-top: 0.5rem;
+	padding-left: 0.875rem; // 14px
+	padding-right: 0.875rem; // 14px
+	padding-bottom: 0.5rem;
 }
