@@ -9,6 +9,7 @@
 	padding-bottom: 0.5rem; // 8px
 	padding-left: 0.875rem; // 14px
 	padding-right: 0.875rem; // 14px
+	display: inline-block;
 	&:hover {
 		background-color: var(--color-menu-item-hover-bg);
 	}
