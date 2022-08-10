@@ -33,9 +33,9 @@ const WithSectionsTemplate = ( {sections, ...args} ) => (
 export const Default = Template.bind({})
 Default.args = {
   items: [
-    { ...MenuItemDefaultStory.args }, 
-    { ...MenuItemDefaultStory.args }, 
-    { ...MenuItemDefaultStory.args, icon: "deleteForever" }, 
+    { ...MenuItemDefaultStory.args, onClick: () => {} }, 
+    { ...MenuItemDefaultStory.args, onClick: () => {} }, 
+    { ...MenuItemDefaultStory.args, onClick: () => {}, icon: "deleteForever" }, 
   ]
 }
 
@@ -43,9 +43,9 @@ export const Small = Template.bind({})
 Small.args = {
   variant: "small",
   items: [
-    { ...MenuItemDefaultStory.args }, 
-    { ...MenuItemDefaultStory.args }, 
-    { ...MenuItemDefaultStory.args, icon: "deleteForever"  }, 
+    { ...MenuItemDefaultStory.args, onClick: () => {} }, 
+    { ...MenuItemDefaultStory.args, onClick: () => {} }, 
+    { ...MenuItemDefaultStory.args, onClick: () => {}, icon: "deleteForever"  }, 
   ]
 }
 
@@ -54,15 +54,15 @@ WithSections.args = {
   sections: [
     {
       items: [
-        { ...MenuItemDefaultStory.args }, 
-        { ...MenuItemDefaultStory.args }, 
-        { ...MenuItemDefaultStory.args}, 
+        { ...MenuItemDefaultStory.args, onClick: () => {} }, 
+        { ...MenuItemDefaultStory.args, onClick: () => {} }, 
+        { ...MenuItemDefaultStory.args, onClick: () => {} }, 
       ]
     },
     {
       title: "DangerZone",
       items: [
-        { ...MenuItemDefaultStory.args, icon: "deleteForever"   }, 
+        { ...MenuItemDefaultStory.args, onClick: () => {}, icon: "deleteForever"   }, 
       ]
     }
   ]

@@ -5,7 +5,7 @@ import { knownIcons } from "../Icon/Icon.component.js"
 import "./menu-item.scss"
 
 const itemStyles = `
-	
+	jn-text-theme-default
 `
 
 const iconStyles = `
@@ -86,5 +86,5 @@ MenuItem.defaultProps = {
 	icon: null,
 	children: null,
 	href: "",
-	onClick: undefined,
+	onClick: null,
 }

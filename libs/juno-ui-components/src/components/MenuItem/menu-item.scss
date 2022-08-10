@@ -5,11 +5,16 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	text-align: left;
 	padding-top: 0.6875rem; // 11px
 	padding-bottom: 0.5rem; // 8px
 	padding-left: 0.875rem; // 14px
 	padding-right: 0.875rem; // 14px
-	display: inline-block;
+}
+
+// render hover bg only if the elements are interactive:
+.juno-menu-item-anchor,
+.juno-menu-item-button {
 	&:hover {
 		background-color: var(--color-menu-item-hover-bg);
 	}

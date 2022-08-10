@@ -13,7 +13,7 @@ const Template = (args) => <MenuItem {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-	label: "Menu Item"
+	label: "Menu Item",
 }
 
 export const WithIcon = Template.bind({})

@@ -1,4 +1,6 @@
 .juno-menu-section {
+	display: flex;
+	flex-direction: column;
 	background-color: var(--color-menu-item-default-bg);
 	
 	&:not(:last-child) {
@@ -8,8 +10,8 @@
 }
 
 .juno-menu-section-title {
-	padding-top: 0.5rem;
+	padding-top: 0.25rem;
 	padding-left: 0.875rem; // 14px
 	padding-right: 0.875rem; // 14px
-	padding-bottom: 0.5rem;
+	padding-bottom: 0.25rem;
 }

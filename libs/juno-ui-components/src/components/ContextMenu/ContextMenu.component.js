@@ -19,7 +19,13 @@ TODO:
 */
 
 const toggleStyles = `
+	hover:jn-text-theme-accent
+	hover:jn-bg-theme-contextmenu-toggle-hover-active
+`
 
+const toggleOpenStyle = `
+	jn-text-theme-accent
+	jn-bg-theme-contextmenu-toggle-hover-active
 `
 
 const menuStyles = `
@@ -47,7 +53,7 @@ export const ContextMenu = ({
 		<>
 			<Icon 
 				icon="moreVert" 
-				className={`juno-contextmenu-toggle ${toggleStyles}`} 
+				className={`juno-contextmenu-toggle ${toggleStyles} ${ isOpen ? toggleOpenStyle : "" }`} 
 				onClick={handleClick}
 			/>
 			{ isOpen ?
