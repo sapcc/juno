@@ -11,17 +11,25 @@ TODO:
 
 export const Portal = ({
 	children,
-	targetNode
+	targetNode,
+	targetSelector,
 }) => {
+	
+	const target = targetNode || targetSelector && targetSelector.length ? document.querySelector(targetSelector) : document.body
+	
 	return (
-		ReactDOM.createPortal( children, targetNode)
+		ReactDOM.createPortal( children, target )
 	)
 }
 
 Portal.propTypes = {
 	children: PropTypes.node,
+	targetNode: PropTypes.node,
+	targetSelector: PropTypes.string,
 }
 
 Portal.defaultProps = {
-	targetNode: document.body,
+	children: null,
+	targetNode: null,
+	targetSelector: "",
 }
