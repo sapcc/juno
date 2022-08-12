@@ -13,13 +13,26 @@ export default {
 const Template = ({children, ...args}) => (
 	<ContextMenu {...args}>
 		{children.map((item, i) => (
-			<MenuItem {...item} key={`${i}`} />
+			<MenuItem {...item} key={i} />
 		))}
 	</ContextMenu>
 )
 
 export const Default = Template.bind({})
 Default.args = {
+	children: [
+		{ ...MenuItemDefaultStory.args, label: "Juno on Github", href: "https://github.com/sapcc/juno" },
+		{ ...MenuItemDefaultStory.args, label: "Item 2" },
+		{ ...MenuItemDefaultStory.args, label: "Item 3", icon: "deleteForever" },
+		{ ...MenuItemDefaultStory.args, label: null, children: [<Button label="Child" variant="subdued" size="small" className="jn-w-full" />] },
+		
+	]
+}
+
+export const InPortal = Template.bind({})
+InPortal.args = {
+	portal: true,
+	targetSelector: "#root .theme-dark",
 	children: [
 		{ ...MenuItemDefaultStory.args, label: "Juno on Github", href: "https://github.com/sapcc/juno" },
 		{ ...MenuItemDefaultStory.args, label: "Item 2" },

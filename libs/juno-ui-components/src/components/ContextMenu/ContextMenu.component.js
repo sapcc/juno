@@ -6,11 +6,10 @@ import { Portal } from "../Portal/index.js"
 
 /*
 TODO:
-* use Portal (prop?)
+
 * close on [ESC] (prop?)
 * close on click outside (prop?)
 * keyboard navigation: arrow up/down moves focus
-* comfortably find targetNode for Portal (should be in StyleProvider?)
 * for toggle styles (hover, active, etc.) -> expand icon (interactive) component or handle here (aka are these styles generically useful or specific to this component?)
 * a11y
 * docstrings
@@ -28,6 +27,7 @@ const toggleOpenStyle = `
 	jn-bg-theme-contextmenu-toggle-hover-active
 `
 
+// TODO: add 	jn-absolute jn-top-0 jn-left-0 ?
 const menuStyles = `
 	jn-w-[11.25rem]
 `
@@ -37,6 +37,8 @@ export const ContextMenu = ({
 	className,
 	children,
 	open,
+	portal,
+	targetSelector,
 	...props
 }) => {
 	const [isOpen, setIsOpen] = useState(false)
@@ -49,6 +51,12 @@ export const ContextMenu = ({
 		setIsOpen(open)
 	}, [open])
 	
+	const menu = (
+		<Menu className={`juno-contextmenu-menu ${menuStyles}`} variant="small" >
+			{ children }
+		</Menu>
+	)
+	
 	return (
 		<>
 			<Icon 
@@ -57,13 +65,13 @@ export const ContextMenu = ({
 				onClick={handleClick}
 			/>
 			{ isOpen ?
-				/* <Portal targetNode={document.getElementById("root")} >*/
-				
-					<Menu className={`juno-contextmenu-menu ${menuStyles}`} variant="small" >
-						{ children }
-					</Menu>
-					
-				/* </Portal> */
+			
+				portal ?
+					<Portal targetSelector={targetSelector}>
+						{ menu }
+					</Portal>
+				:
+					menu
 			:
 				null	
 			}
@@ -75,10 +83,14 @@ ContextMenu.propTypes = {
 	className: PropTypes.string,
 	children: PropTypes.node,
 	open: PropTypes.bool,
+	portal: PropTypes.bool,
+	targetSelector: PropTypes.string,
 }
 
 ContextMenu.defaultProps = {
 	className: "",
 	children: null,
 	open: false,
+	portal: false,
+	targetSelector: "",
 }
