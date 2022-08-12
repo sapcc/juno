@@ -25,6 +25,10 @@ export const MenuItem = ({
 	const icn = icon ? <Icon icon={icon} size="18" className={`${iconStyles}`} /> : null
 	const content = label || children
 	
+	const handleClick = (event) => {
+		onClick && onClick(event)
+	}
+	
 	const anchor = (
 		<a 
 			href={href} 
@@ -39,7 +43,7 @@ export const MenuItem = ({
 	
 	const button = (
 		<button 
-			onClick={onClick} 
+			onClick={handleClick} 
 			className={`juno-menu-item juno-menu-item-button ${itemStyles} ${className}`}
 			role="menuitem"
 			{ ...props }
@@ -86,5 +90,5 @@ MenuItem.defaultProps = {
 	icon: null,
 	children: null,
 	href: "",
-	onClick: null,
+	onClick: undefined,
 }

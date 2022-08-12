@@ -14,6 +14,7 @@ const Template = (args) => <MenuItem {...args} />
 export const Default = Template.bind({})
 Default.args = {
 	label: "Menu Item",
+	onClick: null, // ???
 }
 
 export const WithIcon = Template.bind({})
@@ -31,12 +32,12 @@ AsLink.args = {
 export const AsButton = Template.bind({})
 AsButton.args = {
 	label: "Menu Item as Button",
-	onClick: (() => (console.log("clicked")))
 }
 
 export const WithChildren = Template.bind({})
 WithChildren.args = {
 	children: [
-		<Button label="Delete" size="small" variant="subdued" icon="deleteForever" />
-	]
+		<Button label="Delete" size="small" variant="subdued" icon="deleteForever" className="jn-w-full" />
+	],
+	onClick: null, // ???
 }
