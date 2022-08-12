@@ -8,6 +8,12 @@ export default {
   argTypes: {},
 }
 
+/* TODO
+* story renders any children
+* add stories for targetSelector, targetNode
+* add tests for targetNode, targetSelector, default target
+*/
+
 const Template = ({ options, ...args }) => (
   <Portal>
     <Message {...args} />
