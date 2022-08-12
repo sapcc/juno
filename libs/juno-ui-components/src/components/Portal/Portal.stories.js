@@ -10,18 +10,22 @@ export default {
 
 /* TODO
 * story renders any children
-* add stories for targetSelector, targetNode
+* add story for targetNode
 * add tests for targetNode, targetSelector, default target
 */
 
-const Template = ({ options, ...args }) => (
-  <Portal>
-    <Message {...args} />
-  </Portal>
+const Template = (args) => (
+  <Portal {...args} />
 )
 
 export const Default = Template.bind({})
 Default.args = {
-  title: "Portal",
-  text: "Hi, I'm in a Portal 🤪",
+  children: <Message title="Hi!" text="I'm in a Default Portal! 👻" />
 }
+
+export const InRoot = Template.bind({})
+InRoot.args = {
+  children: <Message title="Hi!" text="I'm in a Portal at `#root`! 👻" />,
+  targetSelector: "#root",
+}
+

@@ -2,20 +2,18 @@ import React from "react"
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types"
 
-/*
-TODO:
-* allow targetSelector
-* allow TargetRef
-*/
-
-
 export const Portal = ({
 	children,
 	targetNode,
 	targetSelector,
 }) => {
 	
-	const target = targetNode || targetSelector && targetSelector.length ? document.querySelector(targetSelector) : document.body
+	// render in targetNod if exists, otherwise in an element matching targetSelector if such an element exists, otherwise render to document.body:
+	const target = 	targetNode || 
+					targetSelector && document.querySelector(targetSelector) ? 
+						document.querySelector(targetSelector) 
+					: 
+						document.body
 	
 	return (
 		ReactDOM.createPortal( children, target )
@@ -23,8 +21,11 @@ export const Portal = ({
 }
 
 Portal.propTypes = {
+	/** The children to render in the Portal */
 	children: PropTypes.node,
+	/** Any valid DOM node in the document to render the Portal in */
 	targetNode: PropTypes.node,
+	/** A valid CSS selector of an element to render the Portal in */
 	targetSelector: PropTypes.string,
 }
 

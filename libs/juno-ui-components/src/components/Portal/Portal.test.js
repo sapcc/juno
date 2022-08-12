@@ -11,4 +11,10 @@ describe("Portal", () => {
 		expect(screen.getByTestId("portal-content")).toHaveTextContent("stuff")
 	})
 	
+	test("renders stuff as last children of the document body by default", async () => {
+		render(<Portal data-testid="portal"><span data-testid="portal-content" >stuff</span></Portal>)
+		expect(screen.getByTestId("portal-content")).toBeInTheDocument()
+		expect(screen.getByTestId("portal-content").nextSibling).toBe(null)
+	})
+	
 })
