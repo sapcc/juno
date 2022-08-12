@@ -8,7 +8,7 @@ export const Portal = ({
 	targetSelector,
 }) => {
 	
-	// render in targetNod if exists, otherwise in an element matching targetSelector if such an element exists, otherwise render to document.body:
+	// render in targetNode if exists, otherwise in an element matching targetSelector if such an element exists, otherwise render to document.body:
 	const target = 	targetNode || 
 					targetSelector && document.querySelector(targetSelector) ? 
 						document.querySelector(targetSelector) 
