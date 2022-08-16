@@ -6,6 +6,16 @@ import "./menu-item.scss"
 
 const itemStyles = `
 	jn-text-theme-default
+	jn-flex
+	jn-items-center
+	jn-w-full
+	jn-pt-[0.6875rem]
+	jn-pb-[0.5rem]
+	jn-px-[0.875rem]
+	cursor-pointer
+	bg-clip-padding
+	jn-truncate
+	jn-text-left
 `
 
 const iconStyles = `
