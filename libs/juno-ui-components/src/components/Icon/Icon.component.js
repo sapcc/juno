@@ -659,9 +659,9 @@ export const Icon = ({
 Icon.propTypes = {
   /** The icon to display */
   icon: PropTypes.oneOf(knownIcons),
-  /** By default, Icons will use the `color` of the current context. In order to use a different color just for the icon, a text color class can be passed. These begin with "text-". */
+  /** By default, Icons will use the `color` of the current context. In order to use a different color just for the icon, a text color class can be passed. These begin with "jn-text-". */
   color: PropTypes.string,
-  /** The size of the icon */
+  /** The size of the icon as a number of pixels (without "px": "16" will render an icon of 16px x 16px)*/
   size: PropTypes.string,
   /** The title of the icon. Important for accessibility, will also show as a tooltip: */
   title: PropTypes.string,
