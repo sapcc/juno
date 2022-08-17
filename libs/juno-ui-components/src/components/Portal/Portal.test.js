@@ -31,7 +31,7 @@ describe("Portal", () => {
 		document.body.removeChild(portalRoot)
 	})
 	
-	test("renders stuff at a targetNode as passed", async () => {
+	test.skip("renders stuff at a targetNode as passed", async () => {
 		// Create a parent node for the portal Parent first to avoid warnings from React:
 		const app = document.createElement('div')
 		app.setAttribute('id', "App")
