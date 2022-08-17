@@ -10,13 +10,12 @@ export const Portal = ({
 	
 	// render in targetNode if exists, otherwise in an element matching targetSelector if such an element exists, otherwise render to document.body:
 	const target = 	targetNode ?
-					targetNode
+						targetNode
 					:  
-					targetSelector && document.querySelector(targetSelector) ? 
-						document.querySelector(targetSelector) 
-					: 
-						document.body
-	
+						targetSelector && document.querySelector(targetSelector) ? 
+							document.querySelector(targetSelector) 
+						: 
+							document.body
 	return (
 		ReactDOM.createPortal( children, target )
 	)

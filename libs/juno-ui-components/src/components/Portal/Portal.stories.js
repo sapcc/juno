@@ -9,8 +9,7 @@ export default {
 }
 
 /* TODO
-* add story for targetNode
-* add tests for targetNode, targetSelector, default target
+* add story for targetNode?
 */
 
 const Template = (args) => {
@@ -19,18 +18,13 @@ const Template = (args) => {
   )
 }
 
-
-
 export const Default = Template.bind({})
 Default.args = {
   children: <Message title="Hi!" text="I'm in a Default Portal! 👻 That's why I render at `document body`" />
 }
 
-export const InRoot = Template.bind({})
-InRoot.args = {
+export const InPortalWithSelector = Template.bind({})
+InPortalWithSelector.args = {
   children: <Message title="Hi!" text="I'm in a Portal at `#root`! 👻" />,
   targetSelector: "#root",
 }
-
-
-
