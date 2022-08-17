@@ -2,7 +2,6 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 import { knownIcons } from "../Icon/Icon.component.js"
-import "./menu-item.scss"
 
 const itemStyles = `
 	jn-text-theme-default
@@ -16,6 +15,11 @@ const itemStyles = `
 	bg-clip-padding
 	jn-truncate
 	jn-text-left
+	jn-bg-theme-background-lvl-1
+`
+
+const actionableItemStyles = `
+	hover:jn-bg-theme-background-lvl-3
 `
 
 const iconStyles = `
@@ -42,7 +46,7 @@ export const MenuItem = ({
 	const anchor = (
 		<a 
 			href={href} 
-			className={`juno-menu-item juno-menu-item-anchor ${itemStyles} ${className}`} 
+			className={`juno-menu-item juno-menu-item-anchor ${itemStyles} ${actionableItemStyles} ${className}`} 
 			role="menuitem"
 			{ ...props } 
 		>
@@ -54,7 +58,7 @@ export const MenuItem = ({
 	const button = (
 		<button 
 			onClick={handleClick} 
-			className={`juno-menu-item juno-menu-item-button ${itemStyles} ${className}`}
+			className={`juno-menu-item juno-menu-item-button ${itemStyles} ${actionableItemStyles} ${className}`}
 			role="menuitem"
 			{ ...props }
 		>

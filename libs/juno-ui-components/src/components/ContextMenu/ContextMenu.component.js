@@ -19,12 +19,11 @@ TODO:
 
 const toggleStyles = `
 	hover:jn-text-theme-accent
-	hover:jn-bg-theme-contextmenu-toggle-hover-active
+	active:jn-text-theme-accent
 `
 
 const toggleOpenStyle = `
 	jn-text-theme-accent
-	jn-bg-theme-contextmenu-toggle-hover-active
 `
 
 // TODO: add 	jn-absolute jn-top-0 jn-left-0 ?

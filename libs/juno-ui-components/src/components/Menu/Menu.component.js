@@ -6,7 +6,7 @@ const baseStyles = `
 	jn-flex
 	jn-flex-col
 	jn-rounded
-	jn-bg-theme-menu
+	jn-bg-theme-background-lvl-1
 `
 
 const smallStyles = `

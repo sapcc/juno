@@ -209,8 +209,6 @@ module.exports = {
           "filter-input": withOpacity("--color-filter-input-bg"),
           "filter-input-textinput": withOpacity("--color-filter-input-textinput-bg"),
           "filter-pill-key": withOpacity("--color-filter-pill-key-bg"),
-          menu: "var(--color-menu-bg)",
-          "contextmenu-toggle-hover-active": "var(--color-contextmenu-toggle-hover-active-bg)",
         },
       },
       backgroundImage: {
