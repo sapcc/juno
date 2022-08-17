@@ -15,7 +15,7 @@ Default.args = {
 };
 
 export const Warning = Template.bind({});
-Waring.args = {
+Warning.args = {
   variant: 'warning',
   text: 'Warning Message.',
 };
