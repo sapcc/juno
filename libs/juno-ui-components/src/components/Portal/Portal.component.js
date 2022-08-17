@@ -9,7 +9,9 @@ export const Portal = ({
 }) => {
 	
 	// render in targetNode if exists, otherwise in an element matching targetSelector if such an element exists, otherwise render to document.body:
-	const target = 	targetNode || 
+	const target = 	targetNode ?
+					targetNode
+					:  
 					targetSelector && document.querySelector(targetSelector) ? 
 						document.querySelector(targetSelector) 
 					: 
@@ -23,7 +25,7 @@ export const Portal = ({
 Portal.propTypes = {
 	/** The children to render in the Portal */
 	children: PropTypes.node,
-	/** Any valid React DOM node in the document to render the Portal in */
+	/** Any valid ReactDOM node in the document to render the Portal in */
 	targetNode: PropTypes.node,
 	/** A valid CSS selector of an element to render the Portal in */
 	targetSelector: PropTypes.string,
