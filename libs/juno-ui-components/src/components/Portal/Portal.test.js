@@ -17,4 +17,17 @@ describe("Portal", () => {
 		expect(screen.getByTestId("portal-content").nextSibling).toBe(null)
 	})
 	
+	test.skip("renders stuff at a targetSelector as passed", async () => {
+		render(
+			<>
+				<Portal targetSelector="#target"><span data-testid="portal-content" id="test-content">stuff</span></Portal>	
+				<div id="target" className="target"></div>
+			</>
+		)
+	})
+	
+	test.skip("renders stuff at a targetNode as passed", async () => {
+		
+	})
+	
 })
