@@ -299,7 +299,7 @@
   --color-background-lvl-0: var(--color-white);
   --color-background-lvl-1: var(--color-juno-grey-light-1);
   --color-background-lvl-2: var(--color-juno-grey-light-3);
-  --color-background-lvl-3: var(--color-juno-grey-light-4  );
+  --color-background-lvl-3: var(--color-juno-grey-light-4);
   --color-background-lvl-4: var(--color-juno-grey-light-10);
 
   --color-background-lvl-0-raw: var(--color-white-raw);
@@ -329,11 +329,10 @@
   --color-text-default-raw: var(--color-juno-text-default-raw);
   --color-text-disabled-raw: var(--color-juno-text-disabled-raw);
   --color-text-link-raw: var(--color-accent-raw);
-  
+
   // LT Badge
   --color-badge-default-bg: var(--color-juno-grey-light-3);
 
-  
   // LT Button
   // LT Primary Button
   --color-button-primary-text: var(--color-white);
@@ -505,22 +504,24 @@
   --color-datalist-row-border: var(--color-background-lvl-1-raw);
   --color-datalistrow-selected: var(--color-accent-raw);
   // LT CodeBlock
-  --color-codeblock-bg: var(--color-background-lvl-2-raw); 
+  --color-codeblock-bg: var(--color-background-lvl-2-raw);
   --color-codeblock-bar-border: var(--color-background-lvl-4-raw);
-   // LT Panel
-  //  --color-panel-bg-raw: var(--color-white-raw); 
-   --color-panel-bg: rgba(252,252,252,0.8); 
-   --color-panel-border-raw: var(--color-juno-white-raw);
-   // LT TabNavigation
-   --color-tabnavigation-top-bg: var(--color-juno-grey-light-5-raw);
-   --color-tabnavigation-content-bottom-border: var(--color-background-lvl-4-raw);
-   // LT Filters
-   --color-filters-bg: var(--color-background-lvl-1-raw);
-   --color-filter-input-bg: var(--color-background-lvl-0-raw);
-   --color-filter-input-border: var(--color-background-lvl-4-raw);
-   --color-filter-input-textinput-bg: transparent;
-   --color-filter-pill-border: var(--color-background-lvl-4-raw);
-   --color-filter-pill-key-bg: var(--color-background-lvl-3-raw);
+  // LT Panel
+  //  --color-panel-bg-raw: var(--color-white-raw);
+  --color-panel-bg: rgba(252, 252, 252, 0.8);
+  --color-panel-border-raw: var(--color-juno-white-raw);
+  // LT TabNavigation
+  --color-tabnavigation-top-bg: var(--color-juno-grey-light-5-raw);
+  --color-tabnavigation-content-bottom-border: var(
+    --color-background-lvl-4-raw
+  );
+  // LT Filters
+  --color-filters-bg: var(--color-background-lvl-1-raw);
+  --color-filter-input-bg: var(--color-background-lvl-0-raw);
+  --color-filter-input-border: var(--color-background-lvl-4-raw);
+  --color-filter-input-textinput-bg: transparent;
+  --color-filter-pill-border: var(--color-background-lvl-4-raw);
+  --color-filter-pill-key-bg: var(--color-background-lvl-3-raw);
 }
 
 .theme-dark {
@@ -530,13 +531,12 @@
   --color-background-lvl-2: var(--color-juno-grey-blue-3);
   --color-background-lvl-3: var(--color-juno-grey-blue-2);
   --color-background-lvl-4: var(--color-juno-grey-blue-1);
-  
+
   --color-background-lvl-0-raw: var(--color-juno-grey-blue-7-raw);
   --color-background-lvl-1-raw: var(--color-juno-grey-blue-5-raw);
   --color-background-lvl-2-raw: var(--color-juno-grey-blue-3-raw);
   --color-background-lvl-3-raw: var(--color-juno-grey-blue-2-raw);
   --color-background-lvl-4-raw: var(--color-juno-grey-blue-1-raw);
-
 
   // DT Global
   --color-global-bg: var(--color-juno-grey-blue-10);
@@ -560,10 +560,10 @@
   --color-text-default-raw: var(--color-juno-text-default-raw);
   --color-text-disabled-raw: var(--color-juno-text-disabled-raw);
   --color-text-link-raw: var(--color-accent-raw);
-  
+
   // DT Badge
   --color-badge-default-bg: var(--color-juno-grey-blue-3);
-  
+
   // DT Button
   // DT Primary Button
   --color-button-primary-text: var(--color-white);
@@ -573,7 +573,7 @@
     var(--color-accent) 100%
   );
   // |-- DT Primary Button :hover
-  --color-button-primary-border: var(--color-accent); 
+  --color-button-primary-border: var(--color-accent);
   --color-button-primary-hover-bg: var(--color-juno-turquoise-8);
   --color-button-primary-hover-border: var(--color-accent);
   --color-button-primary-hover-text: var(--color-white);
@@ -740,17 +740,19 @@
   --color-codeblock-bg: var(--color-background-lvl-2-raw);
   --color-codeblock-bar-border: var(--color-background-lvl-0-raw);
   // DT Panel
-  --color-panel-bg: rgba(var(--color-juno-grey-blue-11-raw), 0.6); 
-  --color-panel-border-raw: var(--color-juno-grey-blue-11-raw); 
+  --color-panel-bg: rgba(var(--color-juno-grey-blue-11-raw), 0.6);
+  --color-panel-border-raw: var(--color-juno-grey-blue-11-raw);
   // DT TabNavigation
   --color-tabnavigation-top-bg: var(--color-juno-grey-blue-8-raw);
-  --color-tabnavigation-content-bottom-border: var(--color-background-lvl-4-raw);
+  --color-tabnavigation-content-bottom-border: var(
+    --color-background-lvl-4-raw
+  );
   // DT Filters
   --color-filters-bg: var(--color-background-lvl-1-raw);
   --color-filter-input-bg: var(--color-background-lvl-0-raw);
   --color-filter-input-border: var(--color-background-lvl-4-raw);
   --color-filter-input-textinput-bg: transparent;
-  --color-filter-pill-border:  var(--color-background-lvl-4-raw);
+  --color-filter-pill-border: var(--color-background-lvl-4-raw);
   --color-filter-pill-key-bg: var(--color-background-lvl-4-raw);
 }
 
@@ -778,7 +780,8 @@
   }
 
   // theme-dependant  colors need to be applied in the context of the theme classes.
-  .theme-dark, .theme-light {
+  .theme-dark,
+  .theme-light {
     @apply jn-bg-theme-global-bg;
     @apply jn-text-theme-default;
   }
@@ -800,4 +803,3 @@
     flex-basis: auto;
   }
 }
-
