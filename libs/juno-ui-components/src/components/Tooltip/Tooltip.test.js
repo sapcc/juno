@@ -1,5 +1,5 @@
 import * as React from "react"
-import { render, screen } from "@testing-library/react"
+import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from '@testing-library/user-event';
 import { composeStories } from '@storybook/testing-react'
 
@@ -65,6 +65,16 @@ describe("Tooltip", () => {
 		expect(document.querySelector(".juno-tooltip-popover-danger")).toBeInTheDocument()
 		expect(screen.getByTitle("Danger")).toBeInTheDocument()
 	})
+	
+	test('fires onClick handler as passed', async () => {
+		const handleClick = jest.fn();
+		render(<Default onClick={handleClick} />);
+		expect(screen.getByRole('button')).toBeInTheDocument();
+		userEvent.click(screen.getByRole('button'));
+		await waitFor(() => {
+		  expect(handleClick).toHaveBeenCalledTimes(1);
+		});
+	  });
 	
 	test("renders a tooltip with a className as passed", async () => {
 		render(<Default text="My simple Tooltip" className="my-custom-class" />)

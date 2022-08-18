@@ -66,7 +66,7 @@ export const Tooltip = ({
 	return (		
 		<span className={`juno-tooltip`} {...props}>
 			<Icon 
-				onClick={() => setIsOpen(!isOpen)} 
+				onClick={handleClick} 
 				className={`${className}`} 
 				disabled={disabled}
 			/>
