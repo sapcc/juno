@@ -4,16 +4,6 @@ import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 
 /* Styles */
-const popover = `
-	jn-p-2
-	jn-rounded
-	jn-text-xs
-	jn-inline-block
-	jn-absolute
-	jn-bg-theme-tooltip-popover
-	jn-text-theme-tooltip-popover
-`
-
 const popoverStyles = `
 	jn-bg-theme-background-lvl-1
 	jn-text-theme-high 
