@@ -71,12 +71,12 @@ export const Tooltip = ({
 				disabled={disabled}
 			/>
 			{ isOpen ?
-				<div className={`juno-tooltip-popover ${popoverStyles}`}>
+				<div className={`juno-tooltip-popover juno-tooltip-popover-${variant} ${popoverStyles}`}>
 					{ variant ? 
 						<Icon 
 							icon={getIcon(variant)}
 							color={"jn-text-theme-" + variant}
-							className={`${popoverIconStyles}`}
+							className={`juno-tooltip-popover-icon ${popoverIconStyles}`}
 						/>
 					:
 						null
