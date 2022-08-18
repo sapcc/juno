@@ -10,7 +10,6 @@ const popoverStyles = `
 	jn-inline-flex	
 	jn-items-start
 	jn-p-2
-	jn-mb-8
 	jn-rounded
 `
 
