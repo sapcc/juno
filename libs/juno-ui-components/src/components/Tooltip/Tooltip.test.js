@@ -27,7 +27,6 @@ describe("Tooltip", () => {
 		expect(screen.getByRole("button", {name: "Child"})).toBeInTheDocument()
 	})
 	
-	// Skip for now: hard to test because there is alway an element[role="button"] aka the toggle in the document:
 	test("renders a plain tooltip popover without an icon by default", async () => {
 		render(<Default text="Tooltip" />)
 		expect(screen.getByRole("button")).toBeInTheDocument()	
