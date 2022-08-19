@@ -3042,10 +3042,10 @@
             <path stroke="url(#Gradient-14)" filter="url(#world_map01-bv)" d="M611.1 66l653.5 43.8v1l-653.6-43.8Z"/>
             <path stroke="url(#Gradient-15)" filter="url(#world_map01-bx)" d="M811.6 201.4l.4 .9l-476 191.5l-0.3-0.9Z"/>
             <path stroke="url(#Gradient-16)" filter="url(#world_map01-bz)" d="M602.5 57.3l.1 1l-594.3 79l-0.1-1Z"/>
-            <path stroke="url(#Gradient-17)" filter="url(#world_map01-bB)" d="M742 5.6l116 183.5l-0.8 .5l-116-183.5Z"/>
+            <!-- <path stroke="url(#Gradient-17)" filter="url(#world_map01-bB)" d="M742 5.6l116 183.5l-0.8 .5l-116-183.5Z"/> -->
             <path stroke="url(#Gradient-18)" filter="url(#world_map01-bD)" d="M48.3 116l777.1 48v1l-777.2-48Z"/>
             <!-- <path stroke="url(#Gradient-19)" filter="url(#world_map01-bF)" d="M737.2 3.5l.7 .7l-399.2 387.9l-0.7-0.7Z"/> -->
-            <!-- <path stroke="url(#Gradient-20)" filter="url(#world_map01-bH)" d="M195.8 85.5l1152 423.2l-0.4 .9l-1152-423.1Z"/> -->
+            <path stroke="url(#Gradient-20)" filter="url(#world_map01-bH)" d="M195.8 85.5l1152 423.2l-0.4 .9l-1152-423.1Z"/>
             <!-- <path stroke="url(#Gradient-21)" filter="url(#world_map01-bJ)" d="M613.6 20.6l128.5-15.4"/> -->
             <path stroke="url(#Gradient-22)" filter="url(#world_map01-bL)" d="M613.6 15.3l651 92.5"/>
         </g>
