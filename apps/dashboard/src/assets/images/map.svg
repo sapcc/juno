@@ -3034,7 +3034,7 @@
             <path stroke="url(#Gradient-6)" filter="url(#world_map01-bf)" d="M1177.5 161l.1 1l-315 28.8l-0.1-1Z"/>
             <path stroke="url(#Gradient-7)" filter="url(#world_map01-bh)" d="M177.7 50.4l.4 .9l-177.7 82.3l-0.4-0.9Z"/>
             <path stroke="url(#Gradient-8)" filter="url(#world_map01-bj)" d="M561 20.1l.1 1l-374.2 31.2l-0.1-1Z"/>
-            <path stroke="url(#Gradient-9)" filter="url(#world_map01-bl)" d="M743.7 0l516.4 106.3l-0.2 1l-516.4-106.3Z"/>
+            <!-- <path stroke="url(#Gradient-9)" filter="url(#world_map01-bl)" d="M743.7 0l516.4 106.3l-0.2 1l-516.4-106.3Z"/> -->
             <path stroke="url(#Gradient-10)" filter="url(#world_map01-bn)" d="M53.1 116.5l288.4 270.5l-0.7 .7l-288.4-270.5Z"/>
             <path stroke="url(#Gradient-11)" filter="url(#world_map01-bp)" d="M198.4 87.6l140.7 305.3l-0.9 .4l-140.7-305.3Z"/>
             <path stroke="url(#Gradient-12)" filter="url(#world_map01-br)" d="M338.8 395.6l1001.3 107.2l-0.1 1l-1001.3-107.2Z"/>
@@ -3044,9 +3044,9 @@
             <path stroke="url(#Gradient-16)" filter="url(#world_map01-bz)" d="M602.5 57.3l.1 1l-594.3 79l-0.1-1Z"/>
             <path stroke="url(#Gradient-17)" filter="url(#world_map01-bB)" d="M742 5.6l116 183.5l-0.8 .5l-116-183.5Z"/>
             <path stroke="url(#Gradient-18)" filter="url(#world_map01-bD)" d="M48.3 116l777.1 48v1l-777.2-48Z"/>
-            <path stroke="url(#Gradient-19)" filter="url(#world_map01-bF)" d="M737.2 3.5l.7 .7l-399.2 387.9l-0.7-0.7Z"/>
-            <path stroke="url(#Gradient-20)" filter="url(#world_map01-bH)" d="M195.8 85.5l1152 423.2l-0.4 .9l-1152-423.1Z"/>
-            <path stroke="url(#Gradient-21)" filter="url(#world_map01-bJ)" d="M613.6 20.6l128.5-15.4"/>
+            <!-- <path stroke="url(#Gradient-19)" filter="url(#world_map01-bF)" d="M737.2 3.5l.7 .7l-399.2 387.9l-0.7-0.7Z"/> -->
+            <!-- <path stroke="url(#Gradient-20)" filter="url(#world_map01-bH)" d="M195.8 85.5l1152 423.2l-0.4 .9l-1152-423.1Z"/> -->
+            <!-- <path stroke="url(#Gradient-21)" filter="url(#world_map01-bJ)" d="M613.6 20.6l128.5-15.4"/> -->
             <path stroke="url(#Gradient-22)" filter="url(#world_map01-bL)" d="M613.6 15.3l651 92.5"/>
         </g>
     </g>
@@ -3115,14 +3115,14 @@
                 <ellipse fill="#d0d4d4" filter="url(#streamspot-b)" rx="5.3" ry="5.3" transform="translate(5.3,5.3)"/>
             </g>
         </g>
-        <g id="stream-9" opacity="0" transform="translate(586,-109.2) translate(-11,-11)" style="animation: 11.4s linear infinite both stream-9_t, 11.4s linear infinite both stream-9_o;">
+        <!-- <g id="stream-9" opacity="0" transform="translate(586,-109.2) translate(-11,-11)" style="animation: 11.4s linear infinite both stream-9_t, 11.4s linear infinite both stream-9_o;">
             <g id="Streamspot_l-9" fill="none" fill-rule="evenodd" filter="opacity(0.49) blur(2px)">
                 <ellipse fill="#718e90" filter="url(#streamspot-a) opacity(1) blur(2px)" rx="11" ry="11" transform="translate(11,11)"/>
             </g>
             <g filter="opacity(0.44) blur(0.8px)" transform="translate(5.7,5.7)">
                 <ellipse fill="#d0d4d4" filter="url(#streamspot-b)" rx="5.3" ry="5.3" transform="translate(5.3,5.3)"/>
             </g>
-        </g>
+        </g> -->
         <g id="stream-11" opacity="0" transform="translate(535.4,-5.4) scale(1.3,1.3) translate(-11,-11)" style="animation: 11.4s linear infinite both stream-11_t, 11.4s linear infinite both stream-11_o;">
             <g id="Streamspot_l-11" fill="none" fill-rule="evenodd" filter="opacity(0.49) blur(2px)">
                 <ellipse fill="#718e90" filter="url(#streamspot-a) opacity(1) blur(2px)" rx="11" ry="11" transform="translate(11,11)"/>
@@ -3131,17 +3131,17 @@
                 <ellipse fill="#d0d4d4" filter="url(#streamspot-b)" rx="5.3" ry="5.3" transform="translate(5.3,5.3)"/>
             </g>
         </g>
-        <g id="stream-10" opacity="0" transform="translate(589,-109.9) translate(-11,-11)" style="animation: 11.4s linear infinite both stream-10_t, 11.4s linear infinite both stream-10_o;">
+        <!-- <g id="stream-10" opacity="0" transform="translate(589,-109.9) translate(-11,-11)" style="animation: 11.4s linear infinite both stream-10_t, 11.4s linear infinite both stream-10_o;">
             <g id="Streamspot_l-10" fill="none" fill-rule="evenodd" filter="opacity(0.49) blur(2px)">
                 <ellipse fill="#718e90" filter="url(#streamspot-a) opacity(1) blur(2px)" rx="11" ry="11" transform="translate(11,11)"/>
             </g>
             <g filter="opacity(0.44) blur(0.8px)" transform="translate(5.7,5.7)">
                 <ellipse fill="#d0d4d4" filter="url(#streamspot-b)" rx="5.3" ry="5.3" transform="translate(5.3,5.3)"/>
             </g>
-        </g>
+        </g> -->
     </g>
     <g id="Spotpool" transform="translate(177,117)">
-        <g id="locspot" transform="translate(730,0)">
+        <!-- <g id="locspot" transform="translate(730,0)">
             <g opacity=".56">
                 <g filter="url(#world_map7-bI)" fill="#000">
                     <ellipse id="world_map7-bJ-4" cx="23.7" cy="23.6" rx="23.7" ry="23.6"/>
@@ -3156,7 +3156,7 @@
             <g fill="#dedfe0">
                 <ellipse id="world_map7-bL-5" cx="23.7" cy="23.6" rx="13.2" ry="13.1"/>
             </g>
-        </g>
+        </g> -->
         <g id="locspot-2" transform="translate(596,50)">
             <g opacity=".56">
                 <g filter="url(#world_map7-bT)" fill="#000">
@@ -3412,7 +3412,7 @@
          }
     </style>
     <g class="spotS" transform="translate(174,113.5)">
-        <g id="EU-RU-1" class="location" transform="translate(730,0)">
+        <!-- <g id="EU-RU-1" class="location" transform="translate(730,0)">
             <g class="spot" transform="translate(3,3.5)">
                 <ellipse id="world_map7-bJ-3" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>
             </g>
@@ -3449,7 +3449,7 @@
           <tspan data-region="EU-RU-1" x="54.386" y="36.859">EU-RU-1</tspan>
         </text>
             </g>
-        </g>
+        </g> -->
         <g id="EU-DE-1" class="location"  transform="translate(595,51)">
             <g class="spot" transform="translate(4,2.5)">
                 <ellipse id="world_map7-bU-2" cx="23.7" cy="23.6" rx="23.7" ry="23.6" fill="#fff" fill-opacity="0"/>

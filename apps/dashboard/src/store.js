@@ -77,12 +77,6 @@ const REGIONS = {
     country: "Germany",
     icon: <FlagGermany />
   },
-  "EU-RU-1": {
-    continent: "EMEA",
-    key: "EU-RU-1",
-    country: "Russia",
-    icon: <FlagRussia />
-  },
   "AP-SA-1": {
     continent: "APJ",
     key: "AP-SA-1",
