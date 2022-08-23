@@ -23,6 +23,7 @@ const cellClasses = (isConfirmOpen) => {
          ease-out
          duration-300`
       }
+      justify-start
 		`
     .replace(/\n/g, " ")
     .replace(/\s+/g, " ")
