@@ -1,7 +1,8 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
+import { usePopper } from 'react-popper'
 
 /* Styles */
 const popoverStyles = `
@@ -52,15 +53,29 @@ export const Tooltip = ({
 		onClick && onClick(event)
 	}
 	
+	// Popper:
+	const [referenceElement, setReferenceElement] = useState(null)
+    const [popperElement, setPopperElement] = useState(null)
+    const [arrowElement, setArrowElement] = useState(null)
+    const { styles, attributes } = usePopper(referenceElement, popperElement, {
+		modifiers: [{ name: 'arrow', options: { element: arrowElement } }],
+  	});
+	
 	return (		
-		<span className={`juno-tooltip`} {...props}>
+		<>
 			<Icon 
 				onClick={handleClick} 
 				className={`${className}`} 
 				disabled={disabled}
+				ref={setReferenceElement}
 			/>
 			{ isOpen ?
-				<div className={`juno-tooltip-popover juno-tooltip-popover-${variant} ${popoverStyles}`}>
+				<div 
+					className={`juno-tooltip-popover juno-tooltip-popover-${variant} ${popoverStyles}`} 
+					ref={setPopperElement}
+					style={styles.popper}
+					{...attributes.popper}
+				>
 					{ variant ? 
 						<Icon 
 							icon={getIcon(variant)}
@@ -73,11 +88,12 @@ export const Tooltip = ({
 					<p className={`${popoverTextStyles}`}>
 						{ children || text }
 					</p>
+					<div ref={setArrowElement} style={styles.arrow} />
 				</div>
 			:
 				null
 			}
-		</span>
+		</>
 	)
 }
 
