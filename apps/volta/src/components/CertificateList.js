@@ -3,24 +3,17 @@ import { getCertificates } from "../queries"
 import { useGlobalState, useDispatch } from "./StateProvider"
 import { useMessagesDispatch } from "./MessagesProvider"
 import {
-  DataList,
-  DataListRow,
-  DataListCell,
+  DataGrid,
+  DataGridRow,
+  DataGridHeadCell,
+  DataGridToolbar,
+  ButtonRow,
   Spinner,
   Stack,
-  ContentAreaToolbar,
 } from "juno-ui-components"
 import CertificateListItem from "./CertificateListItem"
 import AddNewSSOButton from "./AddNewSSOButton"
 import { parseError } from "../helpers"
-
-const dataListHeader = `
-bg-theme-background-lvl-2
-`
-
-const datListHeaderItem = `
-font-bold
-`
 
 const CertificateList = ({ ca }) => {
   const [enableCreateSSO, setEnableCreateSSO] = useState(false)
@@ -65,7 +58,6 @@ const CertificateList = ({ ca }) => {
     }
   }, [error])
 
-  // TODO add memo
   return (
     <>
       {isLoading && !data ? (
@@ -77,36 +69,28 @@ const CertificateList = ({ ca }) => {
         <>
           {data && data.length > 0 && (
             <>
-              <ContentAreaToolbar>
-                <AddNewSSOButton />
-              </ContentAreaToolbar>
-              <p>{ca?.description}</p>
-              <DataList className="mt-4">
-                <DataListRow className={dataListHeader}>
-                  <DataListCell className={datListHeaderItem} width={33}>
-                    Name / ID
-                  </DataListCell>
-                  <DataListCell className={datListHeaderItem} width={30}>
-                    Description
-                  </DataListCell>
-                  <DataListCell className={datListHeaderItem} width={10}>
-                    User name / ID
-                  </DataListCell>
-                  <DataListCell className={datListHeaderItem} width={8}>
-                    State
-                  </DataListCell>
-                  <DataListCell className={datListHeaderItem} width={15}>
-                    Expiration date
-                  </DataListCell>
-                  <DataListCell
-                    className={datListHeaderItem}
-                    width={4}
-                  ></DataListCell>
-                </DataListRow>
+              <DataGridToolbar>
+                <ButtonRow>
+                  <AddNewSSOButton />
+                </ButtonRow>
+              </DataGridToolbar>
+              <p className="mt-2">{ca?.description}</p>
+              <DataGrid
+                className="mt-4"
+                gridColumnTemplate="2fr 2.25fr 0.75fr min-content 1.5fr min-content"
+              >
+                <DataGridRow>
+                  <DataGridHeadCell wrap={false}>Name / ID</DataGridHeadCell>
+                  <DataGridHeadCell>Description</DataGridHeadCell>
+                  <DataGridHeadCell>User name / ID</DataGridHeadCell>
+                  <DataGridHeadCell>State</DataGridHeadCell>
+                  <DataGridHeadCell>Expiration date</DataGridHeadCell>
+                  <DataGridHeadCell></DataGridHeadCell>
+                </DataGridRow>
                 {data.map((item, i) => (
                   <CertificateListItem key={i} item={item} ca={ca} />
                 ))}
-              </DataList>
+              </DataGrid>
             </>
           )}
           {data && data.length === 0 && (

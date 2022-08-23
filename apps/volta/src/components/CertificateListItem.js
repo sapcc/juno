@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react"
-import { DataListRow, DataListCell, Icon, Badge } from "juno-ui-components"
+import { DataGridRow, DataGridCell, Icon, Badge } from "juno-ui-components"
 import InlineConfirmRemove from "./InlineConfirmRemove"
 import { revokeCertificateMutation } from "../queries"
 import { useGlobalState } from "./StateProvider"
@@ -8,17 +8,22 @@ import { useQueryClient } from "react-query"
 import { parseError } from "../helpers"
 import { DateTime } from "luxon"
 
-const rowClasses = (isConfirmOpen) => {
+// if remove row shows
+// - remove cell bottom border so the 2 cells belongs together
+// - change the background color so it is easier to difference from the other rows
+// - text text color to red
+const cellClasses = (isConfirmOpen) => {
   return `
 			${
         isConfirmOpen &&
-        `border 
-         border-theme-danger 
+        `border-b-0 
+         bg-theme-background-lvl-2
          text-theme-danger
          transition
          ease-out
          duration-300`
       }
+      justify-start
 		`
     .replace(/\n/g, " ")
     .replace(/\s+/g, " ")
@@ -27,12 +32,17 @@ const rowClasses = (isConfirmOpen) => {
 const certIdClasses = (isConfirmOpen) => {
   return `
       text-sm 
-      pt-1       
+      pt-1
+      whitespace-nowrap
 			${isConfirmOpen ? `text-theme-danger` : `text-theme-disabled`}
 		`
     .replace(/\n/g, " ")
     .replace(/\s+/g, " ")
 }
+
+const expirationDateClasses = `
+whitespace-nowrap
+`
 
 const CertificateListItem = ({ item, ca }) => {
   const auth = useGlobalState().auth
@@ -122,7 +132,35 @@ const CertificateListItem = ({ item, ca }) => {
   }, [item?.name])
 
   return (
-    <DataListRow className={`relative ${rowClasses(showConfirm)}`}>
+    <>
+      <DataGridRow>
+        <DataGridCell className={cellClasses(showConfirm)}>
+          <span>{item.name}</span>
+          <div className={certIdClasses(showConfirm)}>{item.serial}</div>
+        </DataGridCell>
+        <DataGridCell className={cellClasses(showConfirm)}>
+          {item.description}
+        </DataGridCell>
+        <DataGridCell className={cellClasses(showConfirm)}>
+          {item.identity}
+        </DataGridCell>
+        <DataGridCell className={cellClasses(showConfirm)}>
+          {stateBadge}
+        </DataGridCell>
+        <DataGridCell className={cellClasses(showConfirm)}>
+          <span className={expirationDateClasses}>{expiresAtString}</span>
+        </DataGridCell>
+        <DataGridCell className={cellClasses(showConfirm)}>
+          {isCertAvtive && (
+            <Icon
+              disabled={showConfirm}
+              icon="deleteForever"
+              onClick={() => setShowConfirm(true)}
+            />
+          )}
+        </DataGridCell>
+      </DataGridRow>
+
       <InlineConfirmRemove
         text={inlineConfirmText}
         actionText="Revoke"
@@ -131,36 +169,7 @@ const CertificateListItem = ({ item, ca }) => {
         onConfirm={onRemoveConfirmed}
         onCancel={() => setShowConfirm(false)}
       />
-      <DataListCell width={33}>
-        <div>
-          <span>{item.name}</span>
-          <div className={certIdClasses(showConfirm)}>{item.serial}</div>
-        </div>
-      </DataListCell>
-      <DataListCell width={30}>
-        <div>{item.description}</div>
-      </DataListCell>
-      <DataListCell width={10}>
-        <div>{item.identity}</div>
-      </DataListCell>
-      <DataListCell width={8}>
-        <div>{stateBadge}</div>
-      </DataListCell>
-      <DataListCell width={15}>
-        <div>{expiresAtString}</div>
-      </DataListCell>
-      <DataListCell width={4}>
-        <div>
-          {isCertAvtive && (
-            <Icon
-              disabled={showConfirm}
-              icon="deleteForever"
-              onClick={() => setShowConfirm(true)}
-            />
-          )}
-        </div>
-      </DataListCell>
-    </DataListRow>
+    </>
   )
 }
 
