@@ -73,6 +73,7 @@ export const certificates = ({ queryKey }) => {
 }
 
 export const createCertificate = (endpoint, ca, bearerToken, formState) => {
+  // Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
   const sendBody = JSON.stringify(formState)
   return fetch(`${endpoint}/${ca}/certificate`, {
     method: "POST",
