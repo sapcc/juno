@@ -67,6 +67,7 @@ export { Tabs } from "./components/Tabs/index.js"
 export { TextareaRow } from "./components/TextareaRow/index.js"
 export { TextInput } from "./components/TextInput/index.js"
 export { TextInputRow } from "./components/TextInputRow/index.js"
+export { Toast } from "./components/Toast/index.js"
 export { Tooltip } from "./components/Tooltip/index.js"
 export * from "./components/Form/index.js"
 
