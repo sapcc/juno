@@ -1,5 +1,5 @@
 import React from "react"
-import { HashRouter, BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import AppContainer from "./AppContainer"
 import Services from "./Services"
 import ServiceDetail from "./ServiceDetail"

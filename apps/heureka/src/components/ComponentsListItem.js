@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { DataListRow, DataListCell, Badge, Icon } from "juno-ui-components"
+import { Badge, Icon, DataGridRow, DataGridCell } from "juno-ui-components"
 import { Link } from "react-router-dom"
 import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
 import { classifyVulnerabilities, usersListToString } from "../helpers"
@@ -23,31 +23,31 @@ const ComponentsListItem = ({ item, minimized }) => {
   }, [item.Operators])
 
   return (
-    <DataListRow>
-      <DataListCell width={20}>
+    <DataGridRow>
+      <DataGridCell>
         <Link to={`/components/${item.ID}`} state={{ placeholderData: item }}>
           {item.Name}
         </Link>
-      </DataListCell>
-      <DataListCell width={10}>{item.Type}</DataListCell>
+      </DataGridCell>
+      <DataGridCell>{item.Type}</DataGridCell>
       {!minimized && (
-        <DataListCell width={10}>
+        <DataGridCell>
           <Badge text="default">
             <Icon className="mr-2" icon="dns" />
             {services.length}
           </Badge>
-        </DataListCell>
+        </DataGridCell>
       )}
-      <DataListCell width={20}>
+      <DataGridCell>
         <VulnerabilitiesOverview vulnerabilities={vulnerabilities} />
-      </DataListCell>
+      </DataGridCell>
       {!minimized && (
         <>
-          <DataListCell width={20}>{owners}</DataListCell>
-          <DataListCell width={20}>{operators}</DataListCell>
+          <DataGridCell>{owners}</DataGridCell>
+          <DataGridCell>{operators}</DataGridCell>
         </>
       )}
-    </DataListRow>
+    </DataGridRow>
   )
 }
 
