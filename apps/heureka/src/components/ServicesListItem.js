@@ -1,14 +1,12 @@
 import React, { useMemo } from "react"
-import {
-  DataListRow,
-  DataListCell,
-  Icon,
-  Badge,
-  Stack,
-} from "juno-ui-components"
+import { Icon, Badge, DataGridRow, DataGridCell } from "juno-ui-components"
 import { Link } from "react-router-dom"
 import { classifyVulnerabilities, usersListToString } from "../helpers"
 import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
+
+const cellClasses = `
+justify-start
+`
 
 const ServicesListItem = ({ item }) => {
   const owners = useMemo(() => {
@@ -29,26 +27,26 @@ const ServicesListItem = ({ item }) => {
   }, [components])
 
   return (
-    <DataListRow>
-      <DataListCell width={20}>
+    <DataGridRow>
+      <DataGridCell className={cellClasses}>
         <Link to={`/services/${item.ID}`} state={{ placeholderData: item }}>
           {item.Name}
         </Link>
-      </DataListCell>
-      <DataListCell width={20}>{owners}</DataListCell>
-      <DataListCell auto>{operators}</DataListCell>
-      <DataListCell auto>
+      </DataGridCell>
+      <DataGridCell className={cellClasses}>{owners}</DataGridCell>
+      <DataGridCell className={cellClasses}>{operators}</DataGridCell>
+      <DataGridCell className={cellClasses}>
         <VulnerabilitiesOverview vulnerabilities={vulnerabilities} />
-      </DataListCell>
-      <DataListCell auto>
+      </DataGridCell>
+      <DataGridCell className={cellClasses}>
         <div>
           <Badge className="pb-1.5" text="default">
             <Icon className="mr-2" icon="widgets" />
             {components.length}
           </Badge>
         </div>
-      </DataListCell>
-    </DataListRow>
+      </DataGridCell>
+    </DataGridRow>
   )
 }
 

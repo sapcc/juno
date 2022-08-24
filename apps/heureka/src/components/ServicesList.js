@@ -1,14 +1,11 @@
 import React, { useMemo } from "react"
-import { DataList, DataListRow, DataListCell, Stack } from "juno-ui-components"
+import {
+  Stack,
+  DataGrid,
+  DataGridRow,
+  DataGridHeadCell,
+} from "juno-ui-components"
 import ServicesListItem from "./ServicesListItem"
-
-const dataListHeader = `
-bg-theme-background-lvl-2
-`
-
-const dataListHeaderItem = `
-font-bold
-`
 
 const ServicesList = ({ services }) => {
   services = useMemo(() => {
@@ -18,24 +15,14 @@ const ServicesList = ({ services }) => {
 
   return (
     <>
-      <DataList>
-        <DataListRow className={dataListHeader}>
-          <DataListCell className={dataListHeaderItem} width={20}>
-            Name
-          </DataListCell>
-          <DataListCell className={dataListHeaderItem} width={20}>
-            Owners
-          </DataListCell>
-          <DataListCell className={dataListHeaderItem} auto>
-            Operators
-          </DataListCell>
-          <DataListCell className={dataListHeaderItem} auto>
-            Vulnerabilities
-          </DataListCell>
-          <DataListCell className={dataListHeaderItem} auto>
-            Components
-          </DataListCell>
-        </DataListRow>
+      <DataGrid gridColumnTemplate="2fr 3fr 2fr 2fr 1fr">
+        <DataGridRow>
+          <DataGridHeadCell>Name</DataGridHeadCell>
+          <DataGridHeadCell>Owners</DataGridHeadCell>
+          <DataGridHeadCell>Operators</DataGridHeadCell>
+          <DataGridHeadCell>Vulnerabilities</DataGridHeadCell>
+          <DataGridHeadCell>Components</DataGridHeadCell>
+        </DataGridRow>
         {services.length > 0 ? (
           <>
             {services.map((item, i) => (
@@ -52,7 +39,7 @@ const ServicesList = ({ services }) => {
             <p>No services found</p>
           </Stack>
         )}
-      </DataList>
+      </DataGrid>
     </>
   )
 }
