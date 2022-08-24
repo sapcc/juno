@@ -1,14 +1,11 @@
 import React, { useMemo } from "react"
 import ComponentsListItem from "./ComponentsListItem"
-import { DataList, DataListRow, DataListCell, Stack } from "juno-ui-components"
-
-const dataListHeader = `
-bg-theme-background-lvl-2
-`
-
-const dataListHeaderItem = `
-font-bold
-`
+import {
+  Stack,
+  DataGrid,
+  DataGridRow,
+  DataGridHeadCell,
+} from "juno-ui-components"
 
 const ComponentsList = ({ components, minimized }) => {
   components = useMemo(() => {
@@ -17,33 +14,19 @@ const ComponentsList = ({ components, minimized }) => {
   }, [components])
 
   return (
-    <DataList>
-      <DataListRow className={dataListHeader}>
-        <DataListCell className={dataListHeaderItem} width={20}>
-          Name
-        </DataListCell>
-        <DataListCell className={dataListHeaderItem} width={10}>
-          Type
-        </DataListCell>
-        {!minimized && (
-          <DataListCell className={dataListHeaderItem} width={10}>
-            Belongs to
-          </DataListCell>
-        )}
-        <DataListCell className={dataListHeaderItem} width={20}>
-          Vulnerabilities
-        </DataListCell>
+    <DataGrid columns={minimized ? 3 : 6}>
+      <DataGridRow>
+        <DataGridHeadCell>Name</DataGridHeadCell>
+        <DataGridHeadCell>Type</DataGridHeadCell>
+        {!minimized && <DataGridHeadCell>Belongs to</DataGridHeadCell>}
+        <DataGridHeadCell>Vulnerabilities</DataGridHeadCell>
         {!minimized && (
           <>
-            <DataListCell className={dataListHeaderItem} width={20}>
-              Owners
-            </DataListCell>
-            <DataListCell className={dataListHeaderItem} width={20}>
-              Operators
-            </DataListCell>
+            <DataGridHeadCell>Owners</DataGridHeadCell>
+            <DataGridHeadCell>Operators</DataGridHeadCell>
           </>
         )}
-      </DataListRow>
+      </DataGridRow>
       {components.length > 0 ? (
         <>
           {components.map((item, i) => (
@@ -60,7 +43,7 @@ const ComponentsList = ({ components, minimized }) => {
           <p>No components found</p>
         </Stack>
       )}
-    </DataList>
+    </DataGrid>
   )
 }
 
