@@ -1,11 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react"
 import useStore from "../store"
 import { useStore as useMessageStore } from "../messageStore"
-import { Stack, Spinner, Container } from "juno-ui-components"
+import {
+  Stack,
+  Spinner,
+  Container,
+  DataGridToolbar,
+  SearchInput,
+} from "juno-ui-components"
 import { getServices } from "../queries"
 import { parseError } from "../helpers"
 import Pagination from "./Pagination"
-import ListToolBar from "./ListToolBar"
 import ServicesList from "./ServicesList"
 
 const ITEMS_PER_PAGE = 10
@@ -53,7 +58,14 @@ const Services = ({}) => {
         </Stack>
       ) : (
         <>
-          <ListToolBar disabled={isError} />
+          <DataGridToolbar
+            search={
+              <SearchInput
+                disabled={isError}
+                onSearch={function noRefCheck() {}}
+              />
+            }
+          />
           <ServicesList services={services} />
           <Pagination
             count={data?.Count}
