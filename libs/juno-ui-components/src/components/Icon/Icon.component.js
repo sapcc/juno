@@ -592,7 +592,7 @@ const getColoredSizedIcon = ({
   }
 }
 
-export const Icon = ({
+export const Icon = React.forwardRef(({
   icon,
   color,
   size,
@@ -601,12 +601,13 @@ export const Icon = ({
   href,
   onClick,
   ...props
-}) => {
+}, ref ) => {
   // if href or onClick was passed, then we want to add the passed classes and passed arbitrary props to the button or anchor
   // otherwise add the passed classes/props to the icon itself
   const iconClassName = href || onClick ? "" : className
   const iconProps = href || onClick ? {} : props
-
+  
+  // TODO: we would need to pass ref to each individual icon and add it there, but only in case NEITHER onClick NOR href were passed (in which cases ref goes to the parent <button> / <a>):
   const icn = getColoredSizedIcon({
     icon,
     color,
@@ -621,6 +622,7 @@ export const Icon = ({
       onClick={onClick}
       className={`juno-icon-button ${buttonIconStyles} ${className}`}
       aria-label={title || icon}
+      ref={ref}
       {...props}
     >
       {icn}
@@ -632,6 +634,7 @@ export const Icon = ({
       href={href}
       className={`juno-icon-link ${anchorIconStyles} ${className}`}
       aria-label={title || icon}
+      ref={ref}
       {...props}
     >
       {icn}
@@ -640,7 +643,7 @@ export const Icon = ({
 
   /* render an <a> if href was passed, otherwise render button if onClick was passes, otherwise render plain icon: */
   return href ? anchor : onClick ? button : icn
-}
+})
 
 Icon.propTypes = {
   /** The icon to display */

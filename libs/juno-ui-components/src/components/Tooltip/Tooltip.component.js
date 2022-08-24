@@ -61,6 +61,7 @@ export const Tooltip = ({
 		modifiers: [{ name: 'arrow', options: { element: arrowElement } }],
   	});
 	
+	console.log("referenceElement: ", referenceElement)
 	return (		
 		<>
 			<Icon 
@@ -70,11 +71,13 @@ export const Tooltip = ({
 				ref={setReferenceElement}
 			/>
 			{ isOpen ?
+				
 				<div 
 					className={`juno-tooltip-popover juno-tooltip-popover-${variant} ${popoverStyles}`} 
 					ref={setPopperElement}
 					style={styles.popper}
 					{...attributes.popper}
+					test={console.log("popperElement: ", popperElement)}
 				>
 					{ variant ? 
 						<Icon 
@@ -85,7 +88,9 @@ export const Tooltip = ({
 					:
 						null
 					}
-					<p className={`${popoverTextStyles}`}>
+					<p 
+						className={`${popoverTextStyles}`}
+					>
 						{ children || text }
 					</p>
 					<div ref={setArrowElement} style={styles.arrow} />
@@ -120,3 +125,5 @@ Tooltip.defaultProps = {
 	disabled: null,
 	open: false,
 }
+
+
