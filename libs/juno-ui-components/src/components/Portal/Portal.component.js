@@ -24,7 +24,7 @@ export const Portal = ({
 Portal.propTypes = {
 	/** The children to render in the Portal */
 	children: PropTypes.node,
-	/** Any valid ReactDOM node in the document to render the Portal in */
+	/** Any valid ReactDOM node in the document to render the Portal in. This is currently not tested nor in storybook! */
 	targetNode: PropTypes.node,
 	/** A valid CSS selector of an element to render the Portal in */
 	targetSelector: PropTypes.string,

@@ -8,10 +8,6 @@ export default {
   argTypes: {},
 }
 
-/* TODO
-* add story for targetNode?
-*/
-
 const Template = (args) => {
   return (
     <Portal {...args} />
