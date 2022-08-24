@@ -233,6 +233,12 @@ Manage_Accounts.args = {
   icon: "manageAccounts",
 }
 
+export const More_Vert = Template.bind({})
+More_Vert.args = {
+  ...Default.args,
+  icon: "moreVert",
+}
+
 export const Open_In_Browser = Template.bind({})
 Open_In_Browser.args = {
   ...Default.args,

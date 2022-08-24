@@ -29,6 +29,7 @@ import Help from "./icons/help.svg"
 import Info from "./icons/info.svg"
 import InsertComment from "./icons/insert_comment.svg"
 import ManageAccounts from "./icons/manage_accounts.svg"
+import MoreVert from "./icons/more_vert.svg"
 import OpenInBrowser from "./icons/open_in_browser.svg"
 import OpenInNew from "./icons/open_in_new.svg"
 import Place from "./icons/place.svg"
@@ -98,6 +99,7 @@ export const knownIcons = [
   "info",
   "insertComment",
   "manageAccounts",
+  "moreVert",
   "openInBrowser",
   "openInNew",
   "place",
@@ -429,6 +431,18 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="user account configuration"
           title={title ? title : "User account configuration"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "moreVert":
+      return (
+        <MoreVert 
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="more"
+          title={title ? title : "More"}
           role="img"
           {...iconProps}
         />
