@@ -29,8 +29,8 @@ Default.args = {
 	]
 }
 
-export const InPortal = Template.bind({})
-InPortal.args = {
+export const InPortalAtSelector = Template.bind({})
+InPortalAtSelector.args = {
 	portal: true,
 	targetSelector: "#root .theme-dark",
 	children: [
