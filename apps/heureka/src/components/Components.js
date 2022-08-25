@@ -3,8 +3,7 @@ import { getComponents } from "../queries"
 import useStore from "../store"
 import { useStore as useMessageStore } from "../messageStore"
 import { parseError } from "../helpers"
-import ListToolBar from "./ListToolBar"
-import { Stack, Spinner, Container } from "juno-ui-components"
+import { Stack, Spinner, Container, DataGridToolbar } from "juno-ui-components"
 import Pagination from "./Pagination"
 import ComponentsList from "./ComponentsList"
 
@@ -55,7 +54,14 @@ const Components = () => {
         </Stack>
       ) : (
         <>
-          <ListToolBar disabled={isError} />
+          <DataGridToolbar
+            search={
+              <SearchInput
+                disabled={isError}
+                onSearch={function noRefCheck() {}}
+              />
+            }
+          />
           <ComponentsList components={components} />
           <Pagination
             disabled={isError}
