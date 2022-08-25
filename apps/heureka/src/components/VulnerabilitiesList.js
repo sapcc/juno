@@ -1,14 +1,6 @@
 import React, { useMemo } from "react"
 import VulnerabilitiesListItem from "./VulnerabilitiesListItem"
-import { DataList, DataListRow, DataListCell } from "juno-ui-components"
-
-const dataListHeader = `
-bg-theme-background-lvl-2
-`
-
-const dataListHeaderItem = `
-font-bold
-`
+import { DataGrid, DataGridRow, DataGridHeadCell } from "juno-ui-components"
 
 const VulnerabilitiesList = ({ components }) => {
   // TODO: remove components without vulnerabilities
@@ -17,28 +9,20 @@ const VulnerabilitiesList = ({ components }) => {
     return components
   }, [components])
 
+  console.log("components: ", components)
+
   return (
-    <>
-      <DataList>
-        <DataListRow className={dataListHeader}>
-          <DataListCell className={dataListHeaderItem} width={20}>
-            Component
-          </DataListCell>
-          <DataListCell className={dataListHeaderItem} width={35}>
-            Belongs to
-          </DataListCell>
-          <DataListCell className={dataListHeaderItem} width={10}>
-            Thread levels
-          </DataListCell>
-          <DataListCell className={dataListHeaderItem} width={35}>
-            CVs
-          </DataListCell>
-        </DataListRow>
-        {components.map((item, i) => (
-          <VulnerabilitiesListItem key={i} item={item} />
-        ))}
-      </DataList>
-    </>
+    <DataGrid columns={4}>
+      <DataGridRow>
+        <DataGridHeadCell>Component</DataGridHeadCell>
+        <DataGridHeadCell>Belongs to</DataGridHeadCell>
+        <DataGridHeadCell>Thread levels</DataGridHeadCell>
+        <DataGridHeadCell>CVs</DataGridHeadCell>
+      </DataGridRow>
+      {components.map((item, i) => (
+        <VulnerabilitiesListItem key={i} item={item} />
+      ))}
+    </DataGrid>
   )
 }
 

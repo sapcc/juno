@@ -3,7 +3,13 @@ import { getComponents } from "../queries"
 import useStore from "../store"
 import { useStore as useMessageStore } from "../messageStore"
 import { parseError } from "../helpers"
-import { Stack, Spinner, Container, DataGridToolbar } from "juno-ui-components"
+import {
+  Stack,
+  Spinner,
+  Container,
+  DataGridToolbar,
+  SearchInput,
+} from "juno-ui-components"
 import Pagination from "./Pagination"
 import ComponentsList from "./ComponentsList"
 
