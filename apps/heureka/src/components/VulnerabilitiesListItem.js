@@ -1,11 +1,14 @@
 import React, { useMemo } from "react"
-import { DataListRow, DataListCell } from "juno-ui-components"
+import { DataGridRow, DataGridCell } from "juno-ui-components"
 
 const VulnerabilitiesListItem = ({ item }) => {
   return (
-    <DataListRow>
-      <DataListCell>{item.Name}</DataListCell>
-    </DataListRow>
+    <DataGridRow>
+      <DataGridCell>{item.Name}</DataGridCell>
+      <DataGridCell>{}</DataGridCell>
+      <DataGridCell>{}</DataGridCell>
+      <DataGridCell>{}</DataGridCell>
+    </DataGridRow>
   )
 }
 

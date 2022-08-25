@@ -6,9 +6,9 @@ import { useStore as useMessageStore } from "../messageStore"
 import { useLocation } from "react-router-dom"
 import {
   Icon,
-  DataList,
-  DataListRow,
-  DataListCell,
+  DataGrid,
+  DataGridRow,
+  DataGridCell,
   Stack,
   Spinner,
   Container,
@@ -66,14 +66,13 @@ const ServiceDetail = () => {
             <>
               {data ? (
                 <>
-                  <DataList>
-                    <DataListRow className="relative">
-                      <DataListCell>
-                        <Icon className="mr-2" icon="autoAwesomeMosaic" />{" "}
-                        {data.Name}
-                      </DataListCell>
-                    </DataListRow>
-                  </DataList>
+                  <DataGrid>
+                    <DataGridRow className="relative">
+                      <DataGridCell>
+                        <Icon className="mr-2" icon="dns" /> {data.Name}
+                      </DataGridCell>
+                    </DataGridRow>
+                  </DataGrid>
                   <p className={Header}>Vulnerabilities in this service</p>
                   <div className="mt-4">
                     <VulnerabilitiesList components={components} />
