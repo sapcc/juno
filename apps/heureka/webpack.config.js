@@ -109,7 +109,7 @@ module.exports = (_, argv) => {
     },
     optimization: {
       splitChunks: { chunks: "all" },
-      minimize: true,
+      minimize: !isDevelopment,
       minimizer: [new CssMinimizerPlugin()],
     },
     plugins: [
