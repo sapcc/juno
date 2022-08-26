@@ -18,6 +18,8 @@ module.exports = (_, argv) => {
     output: {
       path: path.resolve(__dirname, "build"),
       filename: "bundle.[contenthash].js",
+      // Do NOT CHANGE public path since a micro frontend should not change the URL. Micro frontends do not OWN the URL because
+      // normally they are hosted and should not change the state from the host.
       // publicPath: process.env.PUBLIC_URL || "/",
     },
     // This says to webpack that we are in development mode and write the code in webpack file in different way
