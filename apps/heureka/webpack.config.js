@@ -6,6 +6,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const webpack = require("webpack")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const package = require("./package.json")
+const TerserPlugin = require("terser-webpack-plugin")
 
 module.exports = (_, argv) => {
   const mode = argv.mode
@@ -109,8 +110,11 @@ module.exports = (_, argv) => {
     },
     optimization: {
       splitChunks: { chunks: "all" },
+      // Minimize just in production.
       minimize: !isDevelopment,
-      minimizer: [new CssMinimizerPlugin()],
+      // Default minimizer for JAVASCRIPT is also included, no need to define a new one BUT do NOT REMOVE `...` to
+      // not override default minimizers
+      minimizer: [`...`, new CssMinimizerPlugin()],
     },
     plugins: [
       new Dotenv({

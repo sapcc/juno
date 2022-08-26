@@ -106,8 +106,11 @@ module.exports = (_, argv) => {
     },
     optimization: {
       splitChunks: { chunks: "all" },
-      minimize: true,
-      minimizer: [new CssMinimizerPlugin()],
+      // Minimize just in production.
+      minimize: !isDevelopment,
+      // Default minimizer for JAVASCRIPT is also included, no need to define a new one BUT do NOT REMOVE `...` to
+      // not override default minimizers
+      minimizer: [`...`, new CssMinimizerPlugin()],
     },
     plugins: [
       new webpack.ProvidePlugin({
