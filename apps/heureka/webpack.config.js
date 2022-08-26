@@ -18,7 +18,6 @@ module.exports = (_, argv) => {
     output: {
       path: path.resolve(__dirname, "build"),
       filename: "bundle.[contenthash].js",
-      publicPath: "/",
       // publicPath: process.env.PUBLIC_URL || "/",
     },
     // This says to webpack that we are in development mode and write the code in webpack file in different way
@@ -114,7 +113,7 @@ module.exports = (_, argv) => {
     plugins: [
       new Dotenv({
         path: "./.env.local",
-        safe: true,
+        safe: false,
       }),
 
       new webpack.ProvidePlugin({
