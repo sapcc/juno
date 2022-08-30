@@ -47,6 +47,7 @@ In principle it is a context provider. Immediately after mounting, this componen
 
 - currentPath, intial it is the state from the URL or "/"
 - options, path options like { tab: 2 }
+- routeParams, params mapped on the matching route. Ex. navigating to `/services/abc` and matching route ` <Route exact path="/services/:serviceId" ... />` routeParams will be then `{serviceId: "abc"}`
 - navigateTo, function, which receives the path and options as parameters
 - redirectTo, similar to navigateTo with the difference that the window history does not get a new entry, but the last URL is replaced.
 
