@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
 import { Icon, Badge, DataGridRow, DataGridCell } from "juno-ui-components"
-import { Link } from "react-router-dom"
+import { Link } from "url-state-router"
 import { classifyVulnerabilities, usersListToString } from "../helpers"
 import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
 
@@ -29,9 +29,7 @@ const ServicesListItem = ({ item }) => {
   return (
     <DataGridRow>
       <DataGridCell className={cellClasses}>
-        <Link to={`/services/${item.ID}`} state={{ placeholderData: item }}>
-          {item.Name}
-        </Link>
+        <Link to={`/services/${item.ID}`}>{item.Name}</Link>
       </DataGridCell>
       <DataGridCell className={cellClasses}>{owners}</DataGridCell>
       <DataGridCell className={cellClasses}>{operators}</DataGridCell>

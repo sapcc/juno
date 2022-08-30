@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect } from "react"
-import { useParams } from "react-router-dom"
 import { getService } from "../queries"
 import useStore from "../store"
 import { useStore as useMessageStore } from "../messageStore"
-import { useLocation } from "react-router-dom"
+import { useRouter } from "url-state-router"
 import {
   Icon,
   DataGrid,
@@ -23,15 +22,15 @@ text-lg
 `
 
 const ServiceDetail = () => {
-  let { serviceId } = useParams()
-  const location = useLocation()
+  const { options, routeParams } = useRouter()
+
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const setMessage = useMessageStore((state) => state.setMessage)
-  const placeholderData = location.state?.placeholderData
+  const serviceId = routeParams?.serviceId
+  const placeholderData = options?.placeholderData
   const { isLoading, isError, isFetching, data, error } = getService(
     endpoint,
-    serviceId,
-    placeholderData
+    serviceId
   )
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
@@ -43,10 +42,6 @@ const ServiceDetail = () => {
       })
     }
   }, [error])
-
-  console.log("service detail placeholderData: ", placeholderData)
-  console.log("service detail DATA: ", data)
-  console.log("isFetching: ", isFetching)
 
   const components = React.useMemo(() => {
     if (!data?.Components) return []
