@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
 import { Badge, Icon, DataGridRow, DataGridCell } from "juno-ui-components"
-import { Link } from "react-router-dom"
+import { Link } from "url-state-router"
 import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
 import { classifyVulnerabilities, usersListToString } from "../helpers"
 
