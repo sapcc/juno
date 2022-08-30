@@ -27,7 +27,7 @@ const Switch = ({ children }) => {
       if (
         !element &&
         React.isValidElement(child) &&
-        child.type.name === "Route"
+        child.type.displayName === "Route"
       ) {
         const [match, _] = routeMatcher(currentPath, child.props.path, {
           exact: child.props.exact,

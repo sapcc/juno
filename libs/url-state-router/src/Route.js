@@ -35,4 +35,6 @@ Route.propTypes = {
   component: PropTypes.func,
 }
 
+Route.displayName = "Route"
+
 export default Route
