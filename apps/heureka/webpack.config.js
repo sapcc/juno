@@ -6,7 +6,6 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const webpack = require("webpack")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const package = require("./package.json")
-const TerserPlugin = require("terser-webpack-plugin")
 
 module.exports = (_, argv) => {
   const mode = argv.mode

@@ -8,7 +8,7 @@ import { useRouter } from "."
  * @param {object} props, "to" is the path string
  * @returns component
  */
-const Link = ({ to, children, ...props }) => {
+const Link = ({ to, children, options, ...props }) => {
   const { navigateTo } = useRouter()
 
   return (
@@ -17,7 +17,7 @@ const Link = ({ to, children, ...props }) => {
       href="#"
       onClick={(e) => {
         e.preventDefault()
-        navigateTo(to)
+        navigateTo(to, options)
       }}
     >
       {children}
