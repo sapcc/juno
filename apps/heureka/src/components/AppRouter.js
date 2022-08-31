@@ -1,31 +1,41 @@
 import React from "react"
-import { Router, Route, Switch } from "url-state-router"
+import { Router, Route, Redirect, Switch } from "url-state-router"
 import AppContainer from "./AppContainer"
 import Services from "./Services"
 import ServiceDetail from "./ServiceDetail"
 import Components from "./Components"
 import ComponentDetail from "./ComponentDetail"
 
+export const SERVICES_PATH = "/services"
+export const COMPONENTS_PATH = "/components"
+export const TABS_CONFIG = [
+  { path: SERVICES_PATH, label: "Services", icon: "dns" },
+  { path: COMPONENTS_PATH, label: "Components", icon: "widgets" },
+]
+
 const AppRouter = (props) => {
   return (
     <Router stateID="heurekaApp">
-      <Switch>
-        <Route exact path="/">
-          <AppContainer tabIndex={0} component={<Services />} />
-        </Route>
-        <Route exact path="/services">
-          <AppContainer tabIndex={0} component={<Services />} />
-        </Route>
-        <Route exact path="/services/:serviceId">
-          <AppContainer tabIndex={0} component={<ServiceDetail />} />
-        </Route>
-        <Route exact path="/components">
-          <AppContainer tabIndex={1} component={<Components />} />
-        </Route>
-        <Route exact path="/components/:componentId">
-          <AppContainer tabIndex={1} component={<ComponentDetail />} />
-        </Route>
-      </Switch>
+      <Route exact path="/">
+        <Redirect to={SERVICES_PATH} />
+      </Route>
+
+      <AppContainer tabsConfig={TABS_CONFIG}>
+        <Switch>
+          <Route exact path={SERVICES_PATH} component={Services} />
+          <Route
+            exact
+            path={`${SERVICES_PATH}/:serviceId`}
+            component={ServiceDetail}
+          />
+          <Route exact path={COMPONENTS_PATH} component={Components} />
+          <Route
+            exact
+            path={`${COMPONENTS_PATH}/:componentId`}
+            component={ComponentDetail}
+          />
+        </Switch>
+      </AppContainer>
     </Router>
   )
 }

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import {
   MainTabs,
   TabList,
@@ -11,31 +11,31 @@ import { useRouter } from "url-state-router"
 import Breadcrumb from "./Breadcrumb"
 import Messages from "./Messages"
 
-const AppContainer = ({ tabIndex, test, component }) => {
-  const { navigateTo } = useRouter()
+const AppContainer = ({ tabsConfig, component, children }) => {
+  const { navigateTo, currentPath } = useRouter()
 
-  const onTabClicked = (target) => {
-    navigateTo(target)
-  }
+  const tabIndex = useMemo(
+    () => tabsConfig.findIndex((tab) => currentPath.startsWith(tab.path)),
+    [currentPath]
+  )
 
   return (
     <MainTabs selectedIndex={tabIndex}>
       <TabList>
-        <Tab onClick={() => onTabClicked("/services")}>
-          <Icon className="mr-2" icon="dns" />
-          Services
-        </Tab>
-        <Tab onClick={() => onTabClicked("/components")}>
-          <Icon className="mr-2" icon="widgets" />
-          Components
-        </Tab>
+        {tabsConfig.map((tab, index) => (
+          <Tab key={index} onClick={() => navigateTo(tab.path)}>
+            <Icon className="mr-2" icon={tab.icon} />
+            {tab.label}
+          </Tab>
+        ))}
       </TabList>
-      <TabPanel />
-      <TabPanel />
+      {tabsConfig.map((tab, index) => (
+        <TabPanel key={index} />
+      ))}
       <Container>
         <Breadcrumb />
         <Messages />
-        {component}
+        {component || children}
       </Container>
     </MainTabs>
   )

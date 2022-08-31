@@ -3,6 +3,7 @@ import { Badge, Icon, DataGridRow, DataGridCell } from "juno-ui-components"
 import { Link } from "url-state-router"
 import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
 import { classifyVulnerabilities, usersListToString } from "../helpers"
+import { COMPONENTS_PATH } from "./AppRouter"
 
 const ComponentsListItem = ({ item, minimized }) => {
   const services = useMemo(() => {
@@ -25,7 +26,10 @@ const ComponentsListItem = ({ item, minimized }) => {
   return (
     <DataGridRow>
       <DataGridCell>
-        <Link to={`/components/${item.ID}`} state={{ placeholderData: item }}>
+        <Link
+          to={`${COMPONENTS_PATH}/${item.ID}`}
+          state={{ placeholderData: item }}
+        >
           {item.Name}
         </Link>
       </DataGridCell>

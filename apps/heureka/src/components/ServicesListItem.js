@@ -3,6 +3,7 @@ import { Icon, Badge, DataGridRow, DataGridCell } from "juno-ui-components"
 import { Link } from "url-state-router"
 import { classifyVulnerabilities, usersListToString } from "../helpers"
 import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
+import { SERVICES_PATH } from "./AppRouter"
 
 const cellClasses = `
 justify-start
@@ -29,7 +30,7 @@ const ServicesListItem = ({ item }) => {
   return (
     <DataGridRow>
       <DataGridCell className={cellClasses}>
-        <Link to={`/services/${item.ID}`}>{item.Name}</Link>
+        <Link to={`${SERVICES_PATH}/${item.ID}`}>{item.Name}</Link>
       </DataGridCell>
       <DataGridCell className={cellClasses}>{owners}</DataGridCell>
       <DataGridCell className={cellClasses}>{operators}</DataGridCell>
