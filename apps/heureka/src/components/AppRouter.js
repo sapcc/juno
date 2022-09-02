@@ -5,12 +5,19 @@ import Services from "./Services"
 import ServiceDetail from "./ServiceDetail"
 import Components from "./Components"
 import ComponentDetail from "./ComponentDetail"
+import Vulnerabilities from "./Vulnerabilities"
 
 export const SERVICES_PATH = "/services"
 export const COMPONENTS_PATH = "/components"
+export const VULNERABILITIES_PATH = "/vulnerabilities"
 export const TABS_CONFIG = [
   { path: SERVICES_PATH, label: "Services", icon: "dns" },
   { path: COMPONENTS_PATH, label: "Components", icon: "widgets" },
+  {
+    path: VULNERABILITIES_PATH,
+    label: "Vulnerabilities",
+    icon: "autoAwesomeMotion",
+  },
 ]
 
 const AppRouter = (props) => {
@@ -33,6 +40,11 @@ const AppRouter = (props) => {
             exact
             path={`${COMPONENTS_PATH}/:componentId`}
             component={ComponentDetail}
+          />
+          <Route
+            exact
+            path={VULNERABILITIES_PATH}
+            component={Vulnerabilities}
           />
         </Switch>
       </AppContainer>

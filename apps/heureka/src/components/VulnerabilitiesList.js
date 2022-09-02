@@ -1,26 +1,29 @@
 import React, { useMemo } from "react"
-import VulnerabilitiesListItem from "./VulnerabilitiesListItem"
 import { DataGrid, DataGridRow, DataGridHeadCell } from "juno-ui-components"
+import VulnerabilitiesListItem from "./VulnerabilitiesListItem"
 
-const VulnerabilitiesList = ({ components }) => {
-  // TODO: remove components without vulnerabilities
-  components = useMemo(() => {
-    if (!components) return []
-    return components
-  }, [components])
+const VulnerabilitiesList = ({ vulnerabilities }) => {
+  vulnerabilities = useMemo(() => {
+    if (!vulnerabilities) return []
+    // inforce input as array
+    if (!Array.isArray(vulnerabilities)) vulnerabilities = [vulnerabilities]
+    return vulnerabilities
+  }, [vulnerabilities])
 
-  console.log("components: ", components)
+  console.log("vulnerabilities: ", vulnerabilities)
 
   return (
-    <DataGrid columns={4}>
+    <DataGrid columns={3}>
       <DataGridRow>
-        <DataGridHeadCell>Component</DataGridHeadCell>
-        <DataGridHeadCell>Belongs to</DataGridHeadCell>
-        <DataGridHeadCell>Thread levels</DataGridHeadCell>
-        <DataGridHeadCell>CVs</DataGridHeadCell>
+        <DataGridHeadCell>CveID</DataGridHeadCell>
+        <DataGridHeadCell>Thread level</DataGridHeadCell>
+        <DataGridHeadCell>State</DataGridHeadCell>
       </DataGridRow>
-      {components.map((item, i) => (
-        <VulnerabilitiesListItem key={i} item={item} />
+      {vulnerabilities.map((item, index) => (
+        <VulnerabilitiesListItem
+          key={index}
+          item={item}
+        ></VulnerabilitiesListItem>
       ))}
     </DataGrid>
   )

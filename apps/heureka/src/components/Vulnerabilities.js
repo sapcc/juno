@@ -8,24 +8,24 @@ import {
   DataGridToolbar,
   SearchInput,
 } from "juno-ui-components"
-import { getServices } from "../queries"
+import { getVulnerabilities } from "../queries"
 import { parseError } from "../helpers"
 import Pagination from "./Pagination"
-import ServicesList from "./ServicesList"
+import VulnerabilitiesList from "./VulnerabilitiesList"
 
 const ITEMS_PER_PAGE = 10
 
-const Services = ({}) => {
+const Vulnerabilities = ({}) => {
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const setMessage = useMessageStore((state) => state.setMessage)
   const [pagOffset, setPagOffset] = useState(0)
-  const { isLoading, isError, data, error, isFetching } = getServices(
+  const { isLoading, isError, data, error, isFetching } = getVulnerabilities(
     endpoint,
     ITEMS_PER_PAGE,
     pagOffset
   )
 
-  console.log("services: ", data)
+  console.log("Vulnerabilities: ", data)
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
@@ -37,7 +37,7 @@ const Services = ({}) => {
     }
   }, [error])
 
-  const services = React.useMemo(() => {
+  const vulnerabilities = React.useMemo(() => {
     if (!data?.Results) return []
     return data.Results
   }, [data])
@@ -54,7 +54,7 @@ const Services = ({}) => {
       {isLoading && !data ? (
         <Stack alignment="center">
           <Spinner variant="primary" />
-          Loading services...
+          Loading vulnerabilities...
         </Stack>
       ) : (
         <>
@@ -66,7 +66,7 @@ const Services = ({}) => {
               />
             }
           />
-          <ServicesList services={services} />
+          <VulnerabilitiesList vulnerabilities={vulnerabilities} />
           <Pagination
             count={data?.Count}
             limit={ITEMS_PER_PAGE}
@@ -80,4 +80,4 @@ const Services = ({}) => {
   )
 }
 
-export default Services
+export default Vulnerabilities

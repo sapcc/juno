@@ -63,9 +63,46 @@ export const components = ({ queryKey }) => {
       params.push(`${key}=${options[key]}`)
     })
   }
-  // concat the prarms
+  // concat the params
   const query = params.join("&")
   return fetch(`${endpoint}/components?${query}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(checkStatus)
+    .then((response) => {
+      return response.json()
+    })
+}
+
+export const component = ({ queryKey }) => {
+  const [_key, endpoint, componentId] = queryKey
+  return fetch(`${endpoint}/components/${componentId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(checkStatus)
+    .then((response) => {
+      return response.json()
+    })
+}
+
+export const vulnerabilities = ({ queryKey }) => {
+  const [_key, endpoint, options] = queryKey
+  // collect the options in query params format
+  let params = []
+  if (options && typeof options === "object") {
+    Object.keys(options).forEach((key) => {
+      params.push(`${key}=${options[key]}`)
+    })
+  }
+  // concat the params
+  const query = params.join("&")
+  return fetch(`${endpoint}/vulnerabilities?${query}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

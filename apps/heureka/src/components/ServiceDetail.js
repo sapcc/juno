@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react"
+import React, { useCallback, useEffect, useMemo } from "react"
 import { getService } from "../queries"
 import useStore from "../store"
 import { useStore as useMessageStore } from "../messageStore"
@@ -13,7 +13,8 @@ import {
   Container,
 } from "juno-ui-components"
 import ComponentsList from "./ComponentsList"
-import VulnerabilitiesList from "./VulnerabilitiesList"
+import ServiceVulnerabilitiesList from "./ServiceVulnerabilitiesList"
+import { usersListToString } from "../helpers"
 
 const Header = `
 font-bold
@@ -21,13 +22,25 @@ mt-4
 text-lg
 `
 
+const DetailSection = `
+mt-6
+`
+
+const DetailContentHeading = `
+juno-content-area-heading 
+jn-font-bold
+jn-text-lg
+jn-text-theme-high
+jn-pb-2
+jn-pt-6
+ `
+
 const ServiceDetail = () => {
   const { options, routeParams } = useRouter()
 
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const setMessage = useMessageStore((state) => state.setMessage)
   const serviceId = routeParams?.serviceId
-  const placeholderData = options?.placeholderData
   const { isLoading, isError, isFetching, data, error } = getService(
     endpoint,
     serviceId
@@ -43,10 +56,22 @@ const ServiceDetail = () => {
     }
   }, [error])
 
-  const components = React.useMemo(() => {
+  const owners = useMemo(() => {
+    if (!data?.Owners) return []
+    return usersListToString(data.Owners)
+  }, [data?.Owners])
+
+  const operators = useMemo(() => {
+    if (!data?.Operators) return []
+    return usersListToString(data.Operators)
+  }, [data?.Operators])
+
+  const components = useMemo(() => {
     if (!data?.Components) return []
     return data.Components
   }, [data])
+
+  console.log("Service Details: ", data)
 
   return (
     <Container px={false}>
@@ -61,20 +86,44 @@ const ServiceDetail = () => {
             <>
               {data ? (
                 <>
-                  <DataGrid>
-                    <DataGridRow className="relative">
-                      <DataGridCell>
-                        <Icon className="mr-2" icon="dns" /> {data.Name}
-                      </DataGridCell>
-                    </DataGridRow>
-                  </DataGrid>
-                  <p className={Header}>Vulnerabilities in this service</p>
-                  <div className="mt-4">
-                    <VulnerabilitiesList components={components} />
+                  <h1 className={DetailContentHeading}>
+                    <Icon className="mr-2" icon="dns" /> {data.Name}
+                  </h1>
+
+                  <div className={DetailSection}>
+                    <DataGrid gridColumnTemplate="1fr 9fr">
+                      <DataGridRow>
+                        <DataGridCell>
+                          <b>ID: </b>
+                        </DataGridCell>
+                        <DataGridCell>{data.ID}</DataGridCell>
+                      </DataGridRow>
+                      <DataGridRow>
+                        <DataGridCell>
+                          <b>Owners: </b>
+                        </DataGridCell>
+                        <DataGridCell>{owners}</DataGridCell>
+                      </DataGridRow>
+                      <DataGridRow>
+                        <DataGridCell>
+                          <b>Operators: </b>
+                        </DataGridCell>
+                        <DataGridCell>{operators}</DataGridCell>
+                      </DataGridRow>
+                    </DataGrid>
                   </div>
-                  <p className={Header}>All components in this service</p>
-                  <div className="mt-4">
-                    <ComponentsList components={components} minimized />
+
+                  <div className={DetailSection}>
+                    <p className={Header}>Vulnerabilities in this service</p>
+                    <div className="mt-4">
+                      <ServiceVulnerabilitiesList components={components} />
+                    </div>
+                  </div>
+                  <div className={DetailSection}>
+                    <p className={Header}>All components in this service</p>
+                    <div className="mt-4">
+                      <ComponentsList components={components} minimized />
+                    </div>
                   </div>
                 </>
               ) : (

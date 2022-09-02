@@ -11,7 +11,7 @@ const ComponentsListItem = ({ item, minimized }) => {
     return item.Services
   }, [item.Services])
 
-  const vulnerabilities = React.useMemo(() => {
+  const vulnerabilities = useMemo(() => {
     return classifyVulnerabilities(item)
   }, [item])
 
@@ -34,19 +34,18 @@ const ComponentsListItem = ({ item, minimized }) => {
         </Link>
       </DataGridCell>
       <DataGridCell>{item.Type}</DataGridCell>
-      {!minimized && (
-        <DataGridCell>
-          <Badge text="default">
-            <Icon className="mr-2" icon="dns" />
-            {services.length}
-          </Badge>
-        </DataGridCell>
-      )}
-      <DataGridCell>
-        <VulnerabilitiesOverview vulnerabilities={vulnerabilities} />
-      </DataGridCell>
+      <DataGridCell>{item.Details.PushedAt}</DataGridCell>
       {!minimized && (
         <>
+          <DataGridCell>
+            <Badge text="default">
+              <Icon className="mr-2" icon="dns" />
+              {services.length}
+            </Badge>
+          </DataGridCell>
+          <DataGridCell>
+            <VulnerabilitiesOverview vulnerabilities={vulnerabilities} />
+          </DataGridCell>
           <DataGridCell>{owners}</DataGridCell>
           <DataGridCell>{operators}</DataGridCell>
         </>

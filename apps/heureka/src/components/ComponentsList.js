@@ -14,14 +14,15 @@ const ComponentsList = ({ components, minimized }) => {
   }, [components])
 
   return (
-    <DataGrid columns={minimized ? 3 : 6}>
+    <DataGrid columns={minimized ? 3 : 7}>
       <DataGridRow>
         <DataGridHeadCell>Name</DataGridHeadCell>
         <DataGridHeadCell>Type</DataGridHeadCell>
-        {!minimized && <DataGridHeadCell>Belongs to</DataGridHeadCell>}
-        <DataGridHeadCell>Vulnerabilities</DataGridHeadCell>
+        <DataGridHeadCell>Pushed</DataGridHeadCell>
         {!minimized && (
           <>
+            <DataGridHeadCell>Belongs to</DataGridHeadCell>
+            <DataGridHeadCell>Vulnerabilities</DataGridHeadCell>
             <DataGridHeadCell>Owners</DataGridHeadCell>
             <DataGridHeadCell>Operators</DataGridHeadCell>
           </>
