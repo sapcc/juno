@@ -19,38 +19,48 @@ const vulnerabilityText = `
 const VulnerabilitiesOverview = ({ vulnerabilities }) => {
   return (
     <div className="flex">
-      <Badge className={badgeCss}>
-        <div className={badgeContainerCss}>
-          <div className="flex">
-            <Icon className="mr-1" size="16" icon="severityLow" />
+      {vulnerabilities.low > 0 && (
+        <Badge className={badgeCss}>
+          <div className={badgeContainerCss}>
+            <div className="flex">
+              <Icon className="mr-1" size="16" icon="severityLow" />
+            </div>
+            <span className={vulnerabilityText}>{vulnerabilities.low}</span>
           </div>
-          <span className={vulnerabilityText}>{vulnerabilities.low}</span>
-        </div>
-      </Badge>
-      <Badge variant="warning" className={badgeCss}>
-        <div className={badgeContainerCss}>
-          <div className="flex">
-            <Icon className="mr-1" size="16" icon="severityMedium" />
+        </Badge>
+      )}
+      {vulnerabilities.medium > 0 && (
+        <Badge variant="warning" className={badgeCss}>
+          <div className={badgeContainerCss}>
+            <div className="flex">
+              <Icon className="mr-1" size="16" icon="severityMedium" />
+            </div>
+            <span className={vulnerabilityText}>{vulnerabilities.medium}</span>
           </div>
-          <span className={vulnerabilityText}>{vulnerabilities.medium}</span>
-        </div>
-      </Badge>
-      <Badge variant="danger" className={badgeCss}>
-        <div className={badgeContainerCss}>
-          <div className="flex">
-            <Icon className="mr-1" size="16" icon="severityHigh" />
+        </Badge>
+      )}
+      {vulnerabilities.high > 0 && (
+        <Badge variant="danger" className={badgeCss}>
+          <div className={badgeContainerCss}>
+            <div className="flex">
+              <Icon className="mr-1" size="16" icon="severityHigh" />
+            </div>
+            <span className={vulnerabilityText}>{vulnerabilities.high}</span>
           </div>
-          <span className={vulnerabilityText}>{vulnerabilities.high}</span>
-        </div>
-      </Badge>
-      <Badge variant="critical" className={badgeCss}>
-        <div className={badgeContainerCss}>
-          <div className="flex">
-            <Icon className="mr-1" size="16" icon="severityCritical" />
+        </Badge>
+      )}
+      {vulnerabilities.critical > 0 && (
+        <Badge variant="critical" className={badgeCss}>
+          <div className={badgeContainerCss}>
+            <div className="flex">
+              <Icon className="mr-1" size="16" icon="severityCritical" />
+            </div>
+            <span className={vulnerabilityText}>
+              {vulnerabilities.critical}
+            </span>
           </div>
-          <span className={vulnerabilityText}>{vulnerabilities.critical}</span>
-        </div>
-      </Badge>
+        </Badge>
+      )}
     </div>
   )
 }

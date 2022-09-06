@@ -13,10 +13,11 @@ const VulnerabilitiesList = ({ vulnerabilities }) => {
   console.log("vulnerabilities: ", vulnerabilities)
 
   return (
-    <DataGrid columns={3}>
+    <DataGrid columns={4}>
       <DataGridRow>
-        <DataGridHeadCell>CveID</DataGridHeadCell>
-        <DataGridHeadCell>Thread level</DataGridHeadCell>
+        <DataGridHeadCell>ID</DataGridHeadCell>
+        <DataGridHeadCell>Last modified</DataGridHeadCell>
+        <DataGridHeadCell>Threat level</DataGridHeadCell>
         <DataGridHeadCell>State</DataGridHeadCell>
       </DataGridRow>
       {vulnerabilities.map((item, index) => (

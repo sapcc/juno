@@ -47,3 +47,34 @@ export const classifyVulnerabilities = (components = []) => {
   })
   return severities
 }
+
+export const COMPONENT_TYPE_KEPPEL = "KeppelImage"
+
+export const componentTypes = () => {
+  return [COMPONENT_TYPE_KEPPEL]
+}
+
+export const componentDetailsByType = (componentType) => {
+  let detailKeys = []
+  switch (componentType) {
+    case COMPONENT_TYPE_KEPPEL:
+      detailKeys = [
+        { key: "PushedAt", label: "Version" },
+        { key: "Maintainer", label: "Maintainer" },
+        { key: "Region", label: "Region" },
+        { key: "SourceRepository", label: "Source Repository" },
+      ]
+    default:
+  }
+  return detailKeys
+}
+
+export const componentVersionByType = (componentType) => {
+  let versionKey = ""
+  switch (componentType) {
+    case COMPONENT_TYPE_KEPPEL:
+      versionKey = "PushedAt"
+    default:
+  }
+  return versionKey
+}
