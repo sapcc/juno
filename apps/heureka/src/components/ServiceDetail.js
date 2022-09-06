@@ -119,12 +119,6 @@ const ServiceDetail = () => {
                       <ServiceVulnerabilitiesList components={components} />
                     </div>
                   </div>
-                  <div className={DetailSection}>
-                    <p className={Header}>All components in this service</p>
-                    <div className="mt-4">
-                      <ComponentsList components={components} minimized />
-                    </div>
-                  </div>
                 </>
               ) : (
                 <Stack
