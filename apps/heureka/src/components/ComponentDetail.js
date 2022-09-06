@@ -12,7 +12,8 @@ import { useRouter } from "url-state-router"
 import { getComponent } from "../queries"
 import { useStore as useMessageStore } from "../messageStore"
 import useStore from "../store"
-import { usersListToString } from "../helpers"
+import { usersListToString, componentDetailsByType } from "../helpers"
+import VulnerabilitiesList from "./VulnerabilitiesList"
 
 const Header = `
 font-bold
@@ -20,8 +21,13 @@ mt-4
 text-lg
 `
 
-const DetailSection = `
+const Section = `
 mt-6
+`
+
+const DetailSection = `
+bg-theme-code-block
+rounded
 `
 
 const DetailContentHeading = `
@@ -81,8 +87,8 @@ const ComponentDetail = () => {
                 <Icon className="mr-2" icon="widgets" /> {data.Name}
               </h1>
 
-              <div className={DetailSection}>
-                <DataGrid gridColumnTemplate="1fr 9fr">
+              <div className={`${Section} ${DetailSection}`}>
+                <DataGrid gridColumnTemplate="1.5fr 8.5fr">
                   <DataGridRow>
                     <DataGridCell>
                       <b>ID: </b>
@@ -102,16 +108,27 @@ const ComponentDetail = () => {
                     <DataGridCell>{operators}</DataGridCell>
                   </DataGridRow>
                 </DataGrid>
+                <DataGrid gridColumnTemplate="1.5fr 8.5fr">
+                  {componentDetailsByType(data.Type).map((item, index) => (
+                    <DataGridRow key={index}>
+                      <DataGridCell>
+                        <b>{`${item.label}: `}</b>
+                      </DataGridCell>
+                      <DataGridCell test={console.log("item.key: ", item.key)}>
+                        {data?.Details[item.key]}
+                      </DataGridCell>
+                    </DataGridRow>
+                  ))}
+                </DataGrid>
               </div>
-
-              <div className={DetailSection}>
+              <div className={Section}>
                 <p className={Header}>Vulnerabilities</p>
                 <div className="mt-4">
-                  {/* <VulnerabilitiesList vulnerabilities={} /> */}
+                  <VulnerabilitiesList vulnerabilities={data.Vulnerabilities} />
                 </div>
               </div>
 
-              <div className={DetailSection}>
+              <div className={Section}>
                 <p className={Header}>Packages</p>
                 <div className="mt-4">
                   {/* <VulnerabilitiesList vulnerabilities={} /> */}
