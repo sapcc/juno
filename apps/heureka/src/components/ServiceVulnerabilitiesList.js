@@ -48,7 +48,7 @@ const ServiceVulnerabilitiesList = ({ components }) => {
         <DataGridHeadCell>Vulnerabilities</DataGridHeadCell>
       </DataGridRow>
       {components.map((item, i) => (
-        <ServiceVulnerabilitiesListItem key={i} item={item} />
+        <ServiceVulnerabilitiesListItem key={i} component={item} />
       ))}
     </DataGrid>
   )

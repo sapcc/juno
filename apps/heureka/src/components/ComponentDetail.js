@@ -14,6 +14,7 @@ import { useStore as useMessageStore } from "../messageStore"
 import useStore from "../store"
 import { usersListToString, componentDetailsByType } from "../helpers"
 import VulnerabilitiesList from "./VulnerabilitiesList"
+import PackagesList from "./PackagesList"
 
 const Header = `
 font-bold
@@ -25,9 +26,16 @@ const Section = `
 mt-6
 `
 
-const DetailSection = `
+const DetailSectionTop = `
 bg-theme-code-block
-rounded
+rounded-t
+mb-0.5
+`
+
+const DetailSectionBottom = `
+bg-theme-code-block
+rounded-b
+pb-0.5
 `
 
 const DetailContentHeading = `
@@ -87,39 +95,47 @@ const ComponentDetail = () => {
                 <Icon className="mr-2" icon="widgets" /> {data.Name}
               </h1>
 
-              <div className={`${Section} ${DetailSection}`}>
-                <DataGrid gridColumnTemplate="1.5fr 8.5fr">
-                  <DataGridRow>
-                    <DataGridCell>
-                      <b>ID: </b>
-                    </DataGridCell>
-                    <DataGridCell>{data.ID}</DataGridCell>
-                  </DataGridRow>
-                  <DataGridRow>
-                    <DataGridCell>
-                      <b>Owners: </b>
-                    </DataGridCell>
-                    <DataGridCell>{owners}</DataGridCell>
-                  </DataGridRow>
-                  <DataGridRow>
-                    <DataGridCell>
-                      <b>Operators: </b>
-                    </DataGridCell>
-                    <DataGridCell>{operators}</DataGridCell>
-                  </DataGridRow>
-                </DataGrid>
-                <DataGrid gridColumnTemplate="1.5fr 8.5fr">
-                  {componentDetailsByType(data.Type).map((item, index) => (
-                    <DataGridRow key={index}>
+              <div className={Section}>
+                <div className={DetailSectionTop}>
+                  <DataGrid gridColumnTemplate="1.5fr 8.5fr">
+                    <DataGridRow>
                       <DataGridCell>
-                        <b>{`${item.label}: `}</b>
+                        <b>ID: </b>
                       </DataGridCell>
-                      <DataGridCell test={console.log("item.key: ", item.key)}>
-                        {data?.Details[item.key]}
-                      </DataGridCell>
+                      <DataGridCell>{data.ID}</DataGridCell>
                     </DataGridRow>
-                  ))}
-                </DataGrid>
+                    <DataGridRow>
+                      <DataGridCell>
+                        <b>Owners: </b>
+                      </DataGridCell>
+                      <DataGridCell>{owners}</DataGridCell>
+                    </DataGridRow>
+                    <DataGridRow>
+                      <DataGridCell>
+                        <b>Operators: </b>
+                      </DataGridCell>
+                      <DataGridCell>{operators}</DataGridCell>
+                    </DataGridRow>
+                    <DataGridRow>
+                      <DataGridCell>
+                        <b>Type: </b>
+                      </DataGridCell>
+                      <DataGridCell>{data.Type}</DataGridCell>
+                    </DataGridRow>
+                  </DataGrid>
+                </div>
+                <div className={DetailSectionBottom}>
+                  <DataGrid gridColumnTemplate="1.5fr 8.5fr">
+                    {componentDetailsByType(data).map((item, index) => (
+                      <DataGridRow key={index}>
+                        <DataGridCell>
+                          <b>{`${item.label}: `}</b>
+                        </DataGridCell>
+                        <DataGridCell>{item.value}</DataGridCell>
+                      </DataGridRow>
+                    ))}
+                  </DataGrid>
+                </div>
               </div>
               <div className={Section}>
                 <p className={Header}>Vulnerabilities</p>
@@ -131,7 +147,7 @@ const ComponentDetail = () => {
               <div className={Section}>
                 <p className={Header}>Packages</p>
                 <div className="mt-4">
-                  {/* <VulnerabilitiesList vulnerabilities={} /> */}
+                  <PackagesList packages={data.Packages} />
                 </div>
               </div>
             </>

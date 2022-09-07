@@ -18,7 +18,7 @@ const ComponentsList = ({ components, minimized }) => {
       <DataGridRow>
         <DataGridHeadCell>Name</DataGridHeadCell>
         <DataGridHeadCell>Type</DataGridHeadCell>
-        <DataGridHeadCell>Pushed</DataGridHeadCell>
+        <DataGridHeadCell>Version</DataGridHeadCell>
         {!minimized && (
           <>
             <DataGridHeadCell>Belongs to</DataGridHeadCell>

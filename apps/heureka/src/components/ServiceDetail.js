@@ -12,7 +12,6 @@ import {
   Spinner,
   Container,
 } from "juno-ui-components"
-import ComponentsList from "./ComponentsList"
 import ServiceVulnerabilitiesList from "./ServiceVulnerabilitiesList"
 import { usersListToString } from "../helpers"
 
@@ -21,9 +20,14 @@ font-bold
 mt-4
 text-lg
 `
-
+const Section = `
+mt-6
+`
 const DetailSection = `
 mt-6
+bg-theme-code-block
+rounded
+pb-0.5
 `
 
 const DetailContentHeading = `
@@ -90,30 +94,32 @@ const ServiceDetail = () => {
                     <Icon className="mr-2" icon="dns" /> {data.Name}
                   </h1>
 
-                  <div className={DetailSection}>
-                    <DataGrid gridColumnTemplate="1fr 9fr">
-                      <DataGridRow>
-                        <DataGridCell>
-                          <b>ID: </b>
-                        </DataGridCell>
-                        <DataGridCell>{data.ID}</DataGridCell>
-                      </DataGridRow>
-                      <DataGridRow>
-                        <DataGridCell>
-                          <b>Owners: </b>
-                        </DataGridCell>
-                        <DataGridCell>{owners}</DataGridCell>
-                      </DataGridRow>
-                      <DataGridRow>
-                        <DataGridCell>
-                          <b>Operators: </b>
-                        </DataGridCell>
-                        <DataGridCell>{operators}</DataGridCell>
-                      </DataGridRow>
-                    </DataGrid>
+                  <div className={Section}>
+                    <div className={DetailSection}>
+                      <DataGrid gridColumnTemplate="1fr 9fr">
+                        <DataGridRow>
+                          <DataGridCell>
+                            <b>ID: </b>
+                          </DataGridCell>
+                          <DataGridCell>{data.ID}</DataGridCell>
+                        </DataGridRow>
+                        <DataGridRow>
+                          <DataGridCell>
+                            <b>Owners: </b>
+                          </DataGridCell>
+                          <DataGridCell>{owners}</DataGridCell>
+                        </DataGridRow>
+                        <DataGridRow>
+                          <DataGridCell>
+                            <b>Operators: </b>
+                          </DataGridCell>
+                          <DataGridCell>{operators}</DataGridCell>
+                        </DataGridRow>
+                      </DataGrid>
+                    </div>
                   </div>
 
-                  <div className={DetailSection}>
+                  <div className={Section}>
                     <p className={Header}>Vulnerabilities in this service</p>
                     <div className="mt-4">
                       <ServiceVulnerabilitiesList components={components} />
