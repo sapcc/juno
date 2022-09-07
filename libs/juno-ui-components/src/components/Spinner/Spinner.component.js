@@ -27,7 +27,9 @@ const warning = `
 const defaultColor = `
   jn-text-theme-on-default
 `
-
+/** 
+A generic Spinner component to indicate an individual component or portion of the UI is busy processing or awaiting data. 
+To indicate full views, panels, or other larger parts of an interface are busy or waiting for data, use LoadingIndicator instead.*/
 export const Spinner = ({ variant, size, className, color, ...props }) => {
   const mode = () => {
     switch (variant) {

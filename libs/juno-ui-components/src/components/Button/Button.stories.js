@@ -21,14 +21,7 @@ export default {
       }
     }
   },
-  parameters: {
-    docs: {
-      description: {
-        component:
-          "The basic button component. Use this for onClick interactions.",
-      },
-    },
-  },
+  
 }
 
 const Template = (args) => <Button {...args} />

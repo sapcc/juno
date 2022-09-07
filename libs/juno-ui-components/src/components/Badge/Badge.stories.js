@@ -13,14 +13,6 @@ export default {
 			}
 		}
 	},
-	parameters: {
-		docs: {
-		  description: {
-			component:
-			  "A Badge component",
-		  },
-		},
-	  },
 }
 
 const Template = (args) => <Badge {...args} />

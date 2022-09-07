@@ -25,7 +25,11 @@ const actionableItemStyles = `
 const iconStyles = `
 	jn-mr-1.5
 `
-
+/** 
+A menu item to be used inside Menu.
+Can render `<a>`, `<button>`, or generic elements to hold other interactive elements.
+Use MenuSection to structure items inside a menu if needed.
+*/
 export const MenuItem = ({
 	label,
 	icon,

@@ -35,6 +35,9 @@ const iconWrapperStyles = `
 	jn-z-50
 `
 
+/** 
+A special Input to select key and value of a filter.
+*/
 export const FilterInput = ({
 	keyLabel,
 	options,

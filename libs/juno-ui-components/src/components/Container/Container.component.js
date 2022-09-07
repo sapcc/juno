@@ -8,7 +8,7 @@ const containerStyles = (px) => {
 }
 
 /**
- * A very basic layout element with padding.
+ * A very basic layout container with padding.
  */
 export const Container = ({
   px,

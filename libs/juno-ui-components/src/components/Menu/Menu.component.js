@@ -26,7 +26,7 @@ const variantStyles = (variant) => {
 	}
 }
 
-
+/** A generic menu component */
 export const Menu = ({
 	children,
 	variant,

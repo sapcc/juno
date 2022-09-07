@@ -26,6 +26,10 @@ const getMuiIcon = (messageType) => {
   }
 };
 
+/**
+A Toast component. Use for short-lived, temporary/transient messaging to users relating to their current usage context, e.g. 'Edits changed successfully'. For more general, persistent messaging, e.g. 'Our servers will be down for maintenance all weekend', use Message instead.
+*/
+
 export const Toast = ({
   variant,
   children,

@@ -31,6 +31,10 @@ const getIcon = (variant) => {
 	}
 }
 
+/**
+A ToolTip component. Renders a non-semantic version by default, and can render 'Info', 'Warning', 'Error', 'Danger', and 'Success' semantic variants.
+*/
+
 export const Tooltip = ({
 	variant,
 	children,

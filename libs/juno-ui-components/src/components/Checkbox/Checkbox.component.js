@@ -50,7 +50,9 @@ const mockdisabledstyles = `
 	jn-pointer-events-none
 	jn-opacity-50
 `
-
+/** 
+A controlled Checkbox component.
+*/
 export const Checkbox = ({
 	name,
 	id,

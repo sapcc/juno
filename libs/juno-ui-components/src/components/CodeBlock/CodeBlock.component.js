@@ -62,7 +62,9 @@ const bottomBarStyles = `
 	jn-border-theme-codeblock-bar
 `
 
-
+/**
+Use to render a block of code. Can wrap or not wrap, show Tabs for various kinds of related code (e.g. .jsx and resulting .html), and can optionally show a button to copy the code to the clipboard.
+*/
 export const CodeBlock = ({
 	wrap,
 	heading,

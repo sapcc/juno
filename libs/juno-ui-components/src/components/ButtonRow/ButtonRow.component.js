@@ -8,6 +8,7 @@ const buttonrowstyles = `
 	jn-gap-2
 `
 
+/** A container to hold one or multiple buttons and align them. Obsolete - promote using Stack instead? */
 export const ButtonRow = ({
 	children,
 	className,

@@ -25,6 +25,9 @@ const filterPillWrapperStyles = `
 	jn-flex
 	jn-flex-wrap
 `
+/**
+A component to hold a FilterInput, resulting FilterPills, and optional SearchBar for any filter-able content.
+*/
 
 export const Filters = ({
 	search,

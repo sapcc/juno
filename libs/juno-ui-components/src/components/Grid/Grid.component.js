@@ -1,6 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+/**
+A general-use grid. Use in conjunction with GridColumn and GridRow.
+*/
 
 export const Grid = ({
 	auto,

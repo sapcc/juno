@@ -28,6 +28,10 @@ const iconStyles = `
 	jn-mr-2
 `
 
+/** A Tab Component representing an individual Tab inside a wrapping TabList inside a wrapping Tabs component. Not to be used standalone outside of the mentioned parent components.
+
+
+*/
 const Tab = ({
 	children,
 	label,

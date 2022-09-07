@@ -50,6 +50,9 @@ const getVariantStyle = (variant) => {
 	}
 }
 
+/** 
+A Badge component to visually indicate properties or states of an entity. Besides the default, there are also semantic versions. Can optionally contain an icon to emphasize their meaning.
+*/
 export const Badge = ({
 	variant,
 	icon,
