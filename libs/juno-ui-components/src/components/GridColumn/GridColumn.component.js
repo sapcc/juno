@@ -96,6 +96,9 @@ const colsClass = (cols) => {
 	}
 }
 
+/**
+A grid column to be used inside a Grid.
+*/
 
 export const GridColumn = ({
 	width,

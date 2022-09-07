@@ -129,8 +129,8 @@ const justifyItems = (distribution) => {
 }
 
 /**
- * A stack is a layout primitive that ensures its children are stacked either horizontally next to each other or vertically, one below the other.
- * In addition a gap can be defined which the stack injects between its children so they have some margin from one another.
+ * A Stack is a layout primitive that ensures its children are stacked either horizontally next to each other or vertically, one below the other.
+ * In addition a gap can be defined which the Stack injects between its children so they have some margin from one another.
  */
 export const Stack = ({
   direction,

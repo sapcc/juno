@@ -16,7 +16,7 @@ const titleStyles = `
 	jn-py-1
 	jn-px-3.5
 `
-
+/** Use MenuSection to structure and sub-divide MenuItems in a menu. All but the last MenuSection will render a visible divider at the bottom. Optionally, a MenuSection can have a title.*/
 export const MenuSection = ({
 	title,
 	children,

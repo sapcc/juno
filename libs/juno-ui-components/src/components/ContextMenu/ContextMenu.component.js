@@ -31,6 +31,8 @@ const menuStyles = `
 	jn-w-[11.25rem]
 `
 
+/** A context menu with a toggle. */
+
 export const ContextMenu = ({
 	icon,
 	className,

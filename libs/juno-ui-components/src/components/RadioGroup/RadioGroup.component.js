@@ -11,6 +11,9 @@ const radiogrouplabelstyles = `
 	jn-inline-block
 	jn-mb-2
 `
+/**
+A component to semantically and functionally group individual RadioRows: All contained child RadioRows will share the same `name`-attribute passed as a prop to the group, and thus make the Radios work with each other as expected.
+*/
 
 export const RadioGroup = ({
 	name,

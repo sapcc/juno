@@ -12,6 +12,9 @@ const checkboxgrouplabelstyles = `
 	jn-mb-2
 `
 
+/**
+A component to semantically group Checkboxes together. All Checkboxes inside the CheckboxGroup will share the same 'name' attribute.
+*/
 export const CheckboxGroup = ({
 	name,
 	label,

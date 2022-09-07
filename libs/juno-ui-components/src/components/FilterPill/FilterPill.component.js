@@ -32,6 +32,9 @@ const filtervalueStyles = `
 	jn-inline-block
 `
 
+/**
+A Pill to represent Key and Value of a filter. Can be closed to un-apply the filter represented.
+Mostly to be used inside a Filters component in conjunction with FilterInput. */
 export const FilterPill = ({
 	filterKey,
 	filterKeyLabel,

@@ -11,11 +11,18 @@ export default {
 }
 
 const Template = ({items, ...args}) => (
+  <>
   <MenuSection {...args}>
     {items.map((item, i) => (
       <MenuItem {...item} key={i} />
     ))}
   </MenuSection>
+  <MenuSection {...args}>
+    {items.map((item, i) => (
+      <MenuItem {...item} key={i} />
+    ))}
+  </MenuSection>
+  </>
 )
 
 export const Default = Template.bind({})

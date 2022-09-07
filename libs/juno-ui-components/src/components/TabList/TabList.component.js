@@ -23,6 +23,7 @@ const getVariantStyles = (variant) => {
 	}
 }
 
+/** A tabList component wraps all individual Tabs inside a parent Tabs component */
 
 const TabList = ({
 	variant,

@@ -5,6 +5,12 @@ import PropTypes from "prop-types"
 const TabsContext = React.createContext()
 export const useTabsContext = () => React.useContext(TabsContext)
 
+/** 
+A Tabs component.
+The parent wrapping TabList, Tab, and TabPanel subcomponents.
+Tabs are used to provide a tabbed section within the content area when combining static content and tabbed content on the same page. You will probably want to use a 'Container' (px=false) inside the TabPanels to get nice padding.
+*/
+
 const Tabs = ({
 	children,
 	defaultIndex,

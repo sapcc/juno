@@ -19,14 +19,6 @@ export default {
       },
     },
   },
-  parameters: {
-    docs: {
-      description: {
-        component:
-          "Tabs are used to provide a tabbed section within the content area when combining static content and tabbed content on the same page. You will probably want to use a 'Container' (px=false) inside the TabPanels to get nice padding.",
-      },
-    },
-  },
 }
 
 const Template = ({tabs, tabpanels, ...args}) => (

@@ -2,6 +2,9 @@ import React from "react"
 import { TabPanel as ReactTabPanel } from "react-tabs"
 import PropTypes from "prop-types"
 
+/**
+The TabPanel holds content related to a Tab in a TabList in a wrapping Tab component. Not to be used standalone / outside a Tabs wrapper.
+*/
 
 const TabPanel = ({
 	padding,

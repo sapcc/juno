@@ -6,7 +6,9 @@ const gridRowBaseStyles = `
 	jn-flex-wrap
 	jn-m-grid-row
 `
-
+/**
+A grid row to hold GridColumn elements inside a Grid.
+*/
 export const GridRow = ({
 	children,
 	className,

@@ -15,7 +15,7 @@ const textareastyles = `
 	disabled:jn-opacity-50
 `
 
-/** A controlled  Textarea */
+/** A controlled Textarea component */
 export const Textarea = ({
 	name,
 	value,
