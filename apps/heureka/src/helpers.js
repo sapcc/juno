@@ -1,4 +1,6 @@
 export const parseError = (error) => {
+  if (!error || (typeof error === "object" && Object.keys(error).length === 0))
+    return "An error occurred. There is no further information"
   let errMsg = JSON.stringify(error)
   if (error?.message) {
     errMsg = error?.message
