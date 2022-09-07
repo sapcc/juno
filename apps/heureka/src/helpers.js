@@ -1,3 +1,5 @@
+import { DateTime } from "luxon"
+
 export const parseError = (error) => {
   if (!error || (typeof error === "object" && Object.keys(error).length === 0))
     return "An error occurred. There is no further information"
@@ -56,27 +58,43 @@ export const componentTypes = () => {
   return [COMPONENT_TYPE_KEPPEL]
 }
 
-export const componentDetailsByType = (componentType) => {
+export const componentDetailsByType = (component) => {
   let detailKeys = []
-  switch (componentType) {
+  switch (component.Type) {
     case COMPONENT_TYPE_KEPPEL:
       detailKeys = [
-        { key: "PushedAt", label: "Version" },
-        { key: "Maintainer", label: "Maintainer" },
-        { key: "Region", label: "Region" },
-        { key: "SourceRepository", label: "Source Repository" },
+        {
+          label: "Version",
+          value: componentVersionByType(component),
+        },
+        {
+          label: "Maintainer",
+          value: component?.Details?.Maintainer,
+        },
+        {
+          label: "Region",
+          value: component?.Details?.Region,
+        },
+        {
+          label: "Source Repository",
+          value: component?.Details?.SourceRepository,
+        },
       ]
     default:
   }
   return detailKeys
 }
 
-export const componentVersionByType = (componentType) => {
-  let versionKey = ""
-  switch (componentType) {
+export const componentVersionByType = (component) => {
+  let version = ""
+  switch (component.Type) {
     case COMPONENT_TYPE_KEPPEL:
-      versionKey = "PushedAt"
+      if (component?.Details?.PushedAt) {
+        version = DateTime.fromSeconds(
+          component?.Details?.PushedAt
+        ).toLocaleString(DateTime.DATETIME_FULL)
+      }
     default:
   }
-  return versionKey
+  return version
 }

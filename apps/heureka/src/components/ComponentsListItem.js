@@ -2,7 +2,11 @@ import React, { useMemo } from "react"
 import { Badge, Icon, DataGridRow, DataGridCell } from "juno-ui-components"
 import { Link } from "url-state-router"
 import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
-import { classifyVulnerabilities, usersListToString } from "../helpers"
+import {
+  classifyVulnerabilities,
+  usersListToString,
+  componentVersionByType,
+} from "../helpers"
 import { COMPONENTS_PATH } from "./AppRouter"
 
 const ComponentsListItem = ({ item, minimized }) => {
@@ -34,7 +38,7 @@ const ComponentsListItem = ({ item, minimized }) => {
         </Link>
       </DataGridCell>
       <DataGridCell>{item.Type}</DataGridCell>
-      <DataGridCell>{item.Details.PushedAt}</DataGridCell>
+      <DataGridCell>{componentVersionByType(item)}</DataGridCell>
       {!minimized && (
         <>
           <DataGridCell>

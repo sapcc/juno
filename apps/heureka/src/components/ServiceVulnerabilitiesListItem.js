@@ -5,25 +5,23 @@ import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
 import { Link } from "url-state-router"
 import { COMPONENTS_PATH } from "./AppRouter"
 
-const ServiceVulnerabilitiesListItem = ({ item }) => {
+const ServiceVulnerabilitiesListItem = ({ component }) => {
   const vulnerabilities = useMemo(() => {
-    return classifyVulnerabilities(item)
-  }, [item])
+    return classifyVulnerabilities(component)
+  }, [component])
 
   return (
     <DataGridRow>
       <DataGridCell>
         <Link
-          to={`${COMPONENTS_PATH}/${item.ID}`}
-          state={{ placeholderData: item }}
+          to={`${COMPONENTS_PATH}/${component.ID}`}
+          state={{ placeholderData: component }}
         >
-          {item.Name}
+          {component.Name}
         </Link>
       </DataGridCell>
-      <DataGridCell>{item.Type}</DataGridCell>
-      <DataGridCell>
-        {item.Details[componentVersionByType(item.Type)]}
-      </DataGridCell>
+      <DataGridCell>{component.Type}</DataGridCell>
+      <DataGridCell>{componentVersionByType(component)}</DataGridCell>
       <DataGridCell>
         <VulnerabilitiesOverview vulnerabilities={vulnerabilities} />
       </DataGridCell>
