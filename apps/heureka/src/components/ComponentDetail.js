@@ -14,6 +14,7 @@ import { useStore as useMessageStore } from "../messageStore"
 import useStore from "../store"
 import { usersListToString, componentDetailsByType } from "../helpers"
 import VulnerabilitiesList from "./VulnerabilitiesList"
+import PackagesList from "./PackagesList"
 
 const Header = `
 font-bold
@@ -146,7 +147,7 @@ const ComponentDetail = () => {
               <div className={Section}>
                 <p className={Header}>Packages</p>
                 <div className="mt-4">
-                  {/* <VulnerabilitiesList vulnerabilities={} /> */}
+                  <PackagesList packages={data.Packages} />
                 </div>
               </div>
             </>
