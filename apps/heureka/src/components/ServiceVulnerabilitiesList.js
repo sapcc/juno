@@ -4,17 +4,6 @@ import { DataGrid, DataGridRow, DataGridHeadCell } from "juno-ui-components"
 import { classifyVulnerabilities } from "../helpers"
 
 const ServiceVulnerabilitiesList = ({ components }) => {
-  // components = useMemo(() => {
-  //   if (!components) return []
-  //   // inforce input as array
-  //   if (!Array.isArray(components)) components = [components]
-  //   // remove components without vulnerabilities
-  //   let filteredComponents = components.filter(
-  //     (item) => item?.Vulnerabilities?.length > 0
-  //   )
-  //   return filteredComponents
-  // }, [components])
-
   components = useMemo(() => {
     if (!components) return []
     // inforce input as array
@@ -32,9 +21,6 @@ const ServiceVulnerabilitiesList = ({ components }) => {
         )
       })
       .reverse()
-    // let severities = { low: 0, medium: 0, high: 0, critical: 0 }
-    // components.sort((a, b) => a.localeCompare(b))
-    // a.city.localeCompare(b.city) || b.price - a.price
   }, [components])
 
   console.log("components with vulnerabilities: ", components)

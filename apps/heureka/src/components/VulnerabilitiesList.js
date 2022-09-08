@@ -1,12 +1,20 @@
 import React, { useMemo } from "react"
 import { DataGrid, DataGridRow, DataGridHeadCell } from "juno-ui-components"
 import VulnerabilitiesListItem from "./VulnerabilitiesListItem"
+import { threadLevelToWeight } from "../helpers"
 
-const VulnerabilitiesList = ({ vulnerabilities }) => {
+const VulnerabilitiesList = ({ vulnerabilities, sortBy }) => {
   vulnerabilities = useMemo(() => {
     if (!vulnerabilities) return []
-    // inforce input as array
     if (!Array.isArray(vulnerabilities)) vulnerabilities = [vulnerabilities]
+    if (sortBy === "ThreatLevelOverall") {
+      return vulnerabilities
+        .sort(
+          (a, b) =>
+            threadLevelToWeight(a[sortBy]) - threadLevelToWeight(b[sortBy])
+        )
+        .reverse()
+    }
     return vulnerabilities
   }, [vulnerabilities])
 

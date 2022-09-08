@@ -140,7 +140,10 @@ const ComponentDetail = () => {
               <div className={Section}>
                 <p className={Header}>Vulnerabilities</p>
                 <div className="mt-4">
-                  <VulnerabilitiesList vulnerabilities={data.Vulnerabilities} />
+                  <VulnerabilitiesList
+                    vulnerabilities={data.Vulnerabilities}
+                    sortBy="ThreatLevelOverall"
+                  />
                 </div>
               </div>
 

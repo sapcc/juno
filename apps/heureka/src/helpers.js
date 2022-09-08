@@ -20,10 +20,23 @@ export const usersListToString = (users) => {
   return users.map((user) => user.Name).join(", ")
 }
 
-const THREAD_LEVEL_LOW = "low"
-const THREAD_LEVEL_MEDIUM = "medium"
-const THREAD_LEVEL_HIGH = "high"
-const THREAD_LEVEL_CRITICAL = "critical"
+export const THREAD_LEVEL_LOW = "low"
+export const THREAD_LEVEL_MEDIUM = "medium"
+export const THREAD_LEVEL_HIGH = "high"
+export const THREAD_LEVEL_CRITICAL = "critical"
+
+export const threadLevelToWeight = (level) => {
+  switch (level.toLowerCase()) {
+    case THREAD_LEVEL_LOW:
+      return 3
+    case THREAD_LEVEL_MEDIUM:
+      return 5
+    case THREAD_LEVEL_HIGH:
+      return 8
+    case THREAD_LEVEL_CRITICAL:
+      return 10
+  }
+}
 
 export const classifyVulnerabilities = (components = []) => {
   if (!components) components = []

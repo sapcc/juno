@@ -1,12 +1,16 @@
 import React, { useMemo } from "react"
 import { DataGridRow, DataGridCell } from "juno-ui-components"
 import { DateTime } from "luxon"
+import VulnerabilityBadge from "./VulnerabilityBadge"
 
 const IdClasses = `
 text-sm 
 pt-1
 whitespace-nowrap
 text-theme-disabled
+`
+const VulnerabilityCss = `
+flex
 `
 
 const VulnerabilitiesListItem = ({ item }) => {
@@ -24,7 +28,12 @@ const VulnerabilitiesListItem = ({ item }) => {
         <div className={IdClasses}>{item.CveID}</div>
       </DataGridCell>
       <DataGridCell>{lastModifiedtString}</DataGridCell>
-      <DataGridCell>{item.ThreatLevelOverall}</DataGridCell>
+      <DataGridCell>
+        <div className={VulnerabilityCss}>
+          <VulnerabilityBadge level={item.ThreatLevelOverall} />
+          {item.ThreatLevelOverall}
+        </div>
+      </DataGridCell>
       <DataGridCell>{item.State}</DataGridCell>
     </DataGridRow>
   )
