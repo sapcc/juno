@@ -14,25 +14,25 @@ const VulnerabilitiesOverview = ({ vulnerabilities }) => {
       {vulnerabilities.low > 0 && (
         <VulnerabilityBadge
           level={THREAD_LEVEL_LOW}
-          quantity={vulnerabilities.low}
+          label={vulnerabilities.low}
         />
       )}
       {vulnerabilities.medium > 0 && (
         <VulnerabilityBadge
           level={THREAD_LEVEL_MEDIUM}
-          quantity={vulnerabilities.medium}
+          label={vulnerabilities.medium}
         />
       )}
       {vulnerabilities.high > 0 && (
         <VulnerabilityBadge
           level={THREAD_LEVEL_HIGH}
-          quantity={vulnerabilities.high}
+          label={vulnerabilities.high}
         />
       )}
       {vulnerabilities.critical > 0 && (
         <VulnerabilityBadge
           level={THREAD_LEVEL_CRITICAL}
-          quantity={vulnerabilities.critical}
+          label={vulnerabilities.critical}
         />
       )}
     </div>

@@ -30,8 +30,10 @@ const VulnerabilitiesListItem = ({ item }) => {
       <DataGridCell>{lastModifiedtString}</DataGridCell>
       <DataGridCell>
         <div className={VulnerabilityCss}>
-          <VulnerabilityBadge level={item.ThreatLevelOverall} />
-          {item.ThreatLevelOverall}
+          <VulnerabilityBadge
+            level={item.ThreatLevelOverall}
+            label={item.ThreatLevelOverall}
+          />
         </div>
       </DataGridCell>
       <DataGridCell>{item.State}</DataGridCell>
