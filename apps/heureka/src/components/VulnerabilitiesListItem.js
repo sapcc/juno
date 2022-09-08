@@ -27,7 +27,6 @@ const VulnerabilitiesListItem = ({ item }) => {
         <span>{item.ScnID}</span>
         <div className={IdClasses}>{item.CveID}</div>
       </DataGridCell>
-      <DataGridCell>{lastModifiedtString}</DataGridCell>
       <DataGridCell>
         <div className={VulnerabilityCss}>
           <VulnerabilityBadge
@@ -36,6 +35,8 @@ const VulnerabilitiesListItem = ({ item }) => {
           />
         </div>
       </DataGridCell>
+      <DataGridCell>{item?.Component?.Name}</DataGridCell>
+      <DataGridCell>{lastModifiedtString}</DataGridCell>
       <DataGridCell>{item.State}</DataGridCell>
     </DataGridRow>
   )

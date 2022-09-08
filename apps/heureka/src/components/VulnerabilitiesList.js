@@ -21,11 +21,12 @@ const VulnerabilitiesList = ({ vulnerabilities, sortBy }) => {
   console.log("vulnerabilities: ", vulnerabilities)
 
   return (
-    <DataGrid columns={4}>
+    <DataGrid columns={5}>
       <DataGridRow>
         <DataGridHeadCell>ID</DataGridHeadCell>
-        <DataGridHeadCell>Last modified</DataGridHeadCell>
         <DataGridHeadCell>Threat level</DataGridHeadCell>
+        <DataGridHeadCell>Component</DataGridHeadCell>
+        <DataGridHeadCell>Last modified</DataGridHeadCell>
         <DataGridHeadCell>State</DataGridHeadCell>
       </DataGridRow>
       {vulnerabilities.map((item, index) => (
