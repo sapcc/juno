@@ -21,8 +21,7 @@ const Services = ({}) => {
   const [pagOffset, setPagOffset] = useState(0)
   const { isLoading, isError, data, error, isFetching } = getServices(
     endpoint,
-    ITEMS_PER_PAGE,
-    pagOffset
+    { limit: ITEMS_PER_PAGE, offset: pagOffset }
   )
 
   console.log("services: ", data)

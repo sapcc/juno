@@ -8,8 +8,8 @@ import {
 } from "./actions"
 
 // get all services
-export const getServices = (endpoint, limit = 10, offset = 1) => {
-  return useQuery(["services", endpoint, limit, offset], services, {
+export const getServices = (endpoint, options) => {
+  return useQuery(["services", endpoint, options], services, {
     // The query will not execute until the bearerToken exists
     enabled: !!endpoint,
     // The data from the last successful fetch available while new data is being requested, even though the query key has changed.

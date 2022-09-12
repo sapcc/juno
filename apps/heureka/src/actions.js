@@ -26,9 +26,21 @@ const checkStatus = (response) => {
   }
 }
 
+export const objectToURLParams = (options) => {
+  let params = []
+  if (options && typeof options === "object") {
+    Object.keys(options).forEach((key) => {
+      params.push(`${key}=${options[key]}`)
+    })
+  }
+  return params.join("&")
+}
+
 export const services = ({ queryKey }) => {
-  const [_key, endpoint, limit, offset] = queryKey
-  return fetch(`${endpoint}/services?limit=${limit}&offset=${offset}`, {
+  const [_key, endpoint, options] = queryKey
+  // convert the options to params URL
+  const query = objectToURLParams(options)
+  return fetch(`${endpoint}/services?${query}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -57,14 +69,7 @@ export const service = ({ queryKey }) => {
 export const components = ({ queryKey }) => {
   const [_key, endpoint, options] = queryKey
   // collect the options in query params format
-  let params = []
-  if (options && typeof options === "object") {
-    Object.keys(options).forEach((key) => {
-      params.push(`${key}=${options[key]}`)
-    })
-  }
-  // concat the params
-  const query = params.join("&")
+  const query = objectToURLParams(options)
   return fetch(`${endpoint}/components?${query}`, {
     method: "GET",
     headers: {
@@ -94,14 +99,7 @@ export const component = ({ queryKey }) => {
 export const vulnerabilities = ({ queryKey }) => {
   const [_key, endpoint, options] = queryKey
   // collect the options in query params format
-  let params = []
-  if (options && typeof options === "object") {
-    Object.keys(options).forEach((key) => {
-      params.push(`${key}=${options[key]}`)
-    })
-  }
-  // concat the params
-  const query = params.join("&")
+  const query = objectToURLParams(options)
   return fetch(`${endpoint}/vulnerabilities?${query}`, {
     method: "GET",
     headers: {
