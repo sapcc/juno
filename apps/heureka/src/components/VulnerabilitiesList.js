@@ -3,7 +3,7 @@ import { DataGrid, DataGridRow, DataGridHeadCell } from "juno-ui-components"
 import VulnerabilitiesListItem from "./VulnerabilitiesListItem"
 import { threadLevelToWeight } from "../helpers"
 
-const VulnerabilitiesList = ({ vulnerabilities, sortBy }) => {
+const VulnerabilitiesList = ({ vulnerabilities, sortBy, minimized }) => {
   vulnerabilities = useMemo(() => {
     if (!vulnerabilities) return []
     if (!Array.isArray(vulnerabilities)) vulnerabilities = [vulnerabilities]
@@ -21,11 +21,11 @@ const VulnerabilitiesList = ({ vulnerabilities, sortBy }) => {
   console.log("vulnerabilities: ", vulnerabilities)
 
   return (
-    <DataGrid columns={5}>
+    <DataGrid columns={minimized ? 4 : 5}>
       <DataGridRow>
         <DataGridHeadCell>ID</DataGridHeadCell>
         <DataGridHeadCell>Threat level</DataGridHeadCell>
-        <DataGridHeadCell>Component</DataGridHeadCell>
+        {!minimized && <DataGridHeadCell>Component</DataGridHeadCell>}
         <DataGridHeadCell>Last modified</DataGridHeadCell>
         <DataGridHeadCell>State</DataGridHeadCell>
       </DataGridRow>
@@ -33,6 +33,7 @@ const VulnerabilitiesList = ({ vulnerabilities, sortBy }) => {
         <VulnerabilitiesListItem
           key={index}
           item={item}
+          minimized={minimized}
         ></VulnerabilitiesListItem>
       ))}
     </DataGrid>

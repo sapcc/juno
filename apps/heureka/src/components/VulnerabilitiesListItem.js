@@ -13,7 +13,7 @@ const VulnerabilityCss = `
 flex
 `
 
-const VulnerabilitiesListItem = ({ item }) => {
+const VulnerabilitiesListItem = ({ item, minimized }) => {
   const lastModifiedtString = useMemo(() => {
     if (!item.ScnLastModified) return "No date available"
     return DateTime.fromSQL(item.ScnLastModified).toLocaleString(
@@ -35,7 +35,7 @@ const VulnerabilitiesListItem = ({ item }) => {
           />
         </div>
       </DataGridCell>
-      <DataGridCell>{item?.Component?.Name}</DataGridCell>
+      {!minimized && <DataGridCell>{item?.Component?.Name}</DataGridCell>}
       <DataGridCell>{lastModifiedtString}</DataGridCell>
       <DataGridCell>{item.State}</DataGridCell>
     </DataGridRow>

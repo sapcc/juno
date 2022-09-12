@@ -143,6 +143,7 @@ const ComponentDetail = () => {
                   <VulnerabilitiesList
                     vulnerabilities={data.Vulnerabilities}
                     sortBy="ThreatLevelOverall"
+                    minimized
                   />
                 </div>
               </div>
