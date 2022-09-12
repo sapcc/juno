@@ -19,9 +19,10 @@ const Services = ({}) => {
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const setMessage = useMessageStore((state) => state.setMessage)
   const [pagOffset, setPagOffset] = useState(0)
+  const [searchTerm, setSearchTerm] = useState("")
   const { isLoading, isError, data, error, isFetching } = getServices(
     endpoint,
-    { limit: ITEMS_PER_PAGE, offset: pagOffset }
+    { limit: ITEMS_PER_PAGE, offset: pagOffset, name: searchTerm }
   )
 
   console.log("services: ", data)
@@ -48,6 +49,15 @@ const Services = ({}) => {
     }
   }
 
+  const onSearchTerm = (value) => {
+    console.log("onSearchTerm: ", value)
+    setSearchTerm(value)
+  }
+
+  const onClearTerm = () => {
+    setSearchTerm("")
+  }
+
   return (
     <Container px={false}>
       {isLoading && !data ? (
@@ -61,7 +71,8 @@ const Services = ({}) => {
             search={
               <SearchInput
                 disabled={isError}
-                onSearch={function noRefCheck() {}}
+                onSearch={onSearchTerm}
+                onClear={onClearTerm}
               />
             }
           />
