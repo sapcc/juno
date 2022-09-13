@@ -8,7 +8,6 @@ A Footer component for Modals.
 Renders a simple "Close" Button (and accepts a corresponding onClose-handler) by default.
 Can be passed a confirmButtonLabel and cancelButton label with corresponding onConfirm- and onCancel-handlers.
 Can alternatively render all custom children as passed.
-
 */
 export const ModalFooter = ({
 	children,
@@ -25,6 +24,10 @@ export const ModalFooter = ({
 		onClose && onClose(event)
 	}
 	
+	const handleConfirmClick = (event) => {
+		onConfirm && onConfirm(event)
+	}
+	
 	return (
 		<div className={`juno-modal-footer`} >
 			{ children ?
@@ -32,7 +35,7 @@ export const ModalFooter = ({
 				:
 					confirmButtonLabel ? 
 						<>
-							<Button variant="primary" label={ confirmButtonLabel } />
+							<Button variant="primary" label={ confirmButtonLabel } onClick={handleConfirmClick} />
 							<Button label={ cancelButtonLabel || "Cancel"} />
 						</>
 					:
@@ -49,7 +52,7 @@ ModalFooter.propTypes = {
 	confirmButtonLabel: PropTypes.string,
 	/** Custom label for the cancel button. ONLY has an effect if a `confirmButtonLabel` is passed. */
 	cancelButtonLabel: PropTypes.string,
-	/** Custom Close-button label. ONLY has an effect if NO `confirmButtonLabel`is passed */
+	/** Custom Close-button label. ONLY has an effect if NO `confirmButtonLabel`is passed, otherwise the confirming button and a calncel button will be rendered. */
 	closeButtonLabel: PropTypes.string,
 	/** Handler to execute once the confirming button is clicked */
 	onConfirm: PropTypes.func,

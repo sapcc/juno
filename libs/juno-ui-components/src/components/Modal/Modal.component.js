@@ -14,6 +14,8 @@ TODO:
 * always show header bar regardless whether there is title and/or close button?
 * SM/LG sizes. 
 * Spare "variant" prop for semantic variants later.
+* a11y (voicereader, keyboard accessibilty)
+* trap focus
 */
 
 const modalstyles = `
@@ -72,14 +74,21 @@ export const Modal = ({
 }
 
 Modal.propTypes = {
+	/** The title of the modal */
 	title: PropTypes.string,
+	/** Also the title of the modal, just for API flexibility. If both `title` and `heading` are passed, `title` will win. */
 	heading: PropTypes.string,
+	/** Whether the modal will be open */
 	open: PropTypes.bool,
+	/** The children of the modal. These will be rendered as the modal content. To render custom buttons at the bottom, see `modalFooter` below.*/
 	children: PropTypes.node,
 	/** Optional. Pass a <ModalFooter /> component with custom content as required. Will default to using the <ModalFooter/> component internally. */
 	modalFooter: PropTypes.node,
+	/** Whether the modal can be closed using an "X"-Button at the top right. Defaults to true. */
 	closeable: PropTypes.bool,
+	/** A handler to execute once the modal is closed by clicking the Close button (or pressing ESC TODO) */
 	onClose: PropTypes.func,
+	/** A handler to execute once the modal is cancelled using the Cancel-button or pressing ESC */
 	onCancel: PropTypes.func,
 }
 

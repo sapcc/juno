@@ -41,12 +41,12 @@ Login.args = {
   title: "Log In",
   children:
     <Form>
-      <TextInputRow label="Username"/>
-      <TextInputRow type="password" label="Password"/>
-      <CheckboxRow label="Remember Me" id="remember-me"/>
+      <TextInputRow label="Username" name="username" id="username" />
+      <TextInputRow type="password" label="Password" name="password" id="password" />
+      <CheckboxRow label="Remember Me" id="remember-me" />
     </Form>
   ,
-  modalFooter:  <ModalFooter confirmButtonLabel="Log In" />,
+  modalFooter:  <ModalFooter confirmButtonLabel="Log In" onConfirm={()=>{console.log("Log In")}} />,
 }
 
 
