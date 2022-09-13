@@ -7,7 +7,9 @@ export const parseError = (error) => {
   if (error?.message) {
     errMsg = error?.message
     try {
-      errMsg = JSON.parse(error?.message).msg
+      const msgJson = JSON.parse(error?.message)
+      if (msgJson.error) errMsg = msgJson.error
+      if (msgJson.msg) errMsg = msgJson.msg
     } catch (error) {}
   }
   return errMsg

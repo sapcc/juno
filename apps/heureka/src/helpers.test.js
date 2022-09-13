@@ -17,6 +17,11 @@ describe("Helpers", () => {
         parseError({ message: '{ "msg": "This is an error text" }' })
       ).toEqual("This is an error text")
     })
+    test("return error message if object message has attr error", () => {
+      expect(
+        parseError({ message: '{ "error": "This is an error text" }' })
+      ).toEqual("This is an error text")
+    })
     test("return standard error message if no object message available", () => {
       expect(parseError({})).toEqual(
         "An error occurred. There is no further information"
