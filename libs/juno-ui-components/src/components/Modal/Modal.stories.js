@@ -1,12 +1,12 @@
 import React from "react"
 import { Modal } from "./index.js"
+import { ModalFooter } from "../ModalFooter/index.js"
+import { Button } from "../Button/index.js"
+import { Form } from "../Form/index.js"
+import { TextInputRow } from "../TextInputRow"
+import { CheckboxRow } from "../CheckboxRow"
 
-const Template = (args) => {
-  return (
-    <Modal {...args} >
-    </Modal>
-  )
-}
+const Template = (args) => <Modal {...args} ></Modal>
  
 export default {
   title: "WiP/Modal",
@@ -17,24 +17,36 @@ export default {
 export const Default = Template.bind({})
 Default.args = {
   children: [
-    <p>A simple modal.</p>
+    <p>A default modal.</p>
   ]
 }
 
 export const WithTitle = Template.bind({})
 WithTitle.args = {
-  title: "Modal Title"
+  title: "Modal Title",
+  children: [
+    <p>A modal with a title</p>
+  ]
 }
 
 export const NonCloseable = Template.bind({})
 NonCloseable.args = {
   title: "Non-Closeable Modal",
+  children: "Use only if all else fails. If you need to inform users about something, in 99.9% of cases <Message> is the better choice.",
   closeable: false
 }
 
 export const Login = Template.bind({})
 Login.args = {
-  title: "Login"
+  title: "Log In",
+  children:
+    <Form>
+      <TextInputRow label="Username"/>
+      <TextInputRow type="password" label="Password"/>
+      <CheckboxRow label="Remember Me" id="remember-me"/>
+    </Form>
+  ,
+  modalFooter:  <ModalFooter confirmButtonLabel="Log In" />,
 }
 
 

@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
+import { ModalFooter } from "../ModalFooter"
 import { Icon } from "../Icon"
 
 /*
 TODO:
 * backdrop
-* optional title
-* closeable by default
+* optional title ✓
+* closeable by default ✓
 * open programmatically
-* pass onClose handler
-* allow for creating modals without buttons?
+* pass onClose handler ✓
+* allow for creating modals without buttons?  ✓
 * always show header bar regardless whether there is title and/or close button?
-* SM/LG: variant or size? default? how to use/pass when passing custom content?
-* do we expect semantic variants?
-* use SM/LG for two kind-of default behaviours, pass additional width/height props? Or pass additonal CSS/classes?
+* SM/LG sizes. 
+* Spare "variant" prop for semantic variants later.
 */
 
 const modalstyles = `
@@ -34,8 +34,10 @@ export const Modal = ({
 	heading,
 	open,
 	children,
+	modalFooter,
 	closeable,
 	onClose,
+	onCancel,
 	...props
 }) => {
 	
@@ -57,6 +59,14 @@ export const Modal = ({
 				{ closeable ? <Icon icon="close" onClick={ handleCloseClick }/> : null }
 			</div>
 			{ children }
+			{ closeable ? 
+				modalFooter ?
+					modalFooter
+					:
+					<ModalFooter></ModalFooter>
+				: 
+				null 
+			}
 		</div>
 	)
 }
@@ -66,14 +76,20 @@ Modal.propTypes = {
 	heading: PropTypes.string,
 	open: PropTypes.bool,
 	children: PropTypes.node,
+	/** Optional. Pass a <ModalFooter /> component with custom content as required. Will default to using the <ModalFooter/> component internally. */
+	modalFooter: PropTypes.node,
 	closeable: PropTypes.bool,
 	onClose: PropTypes.func,
+	onCancel: PropTypes.func,
 }
 
 Modal.defaultProps = {
 	title: "",
 	heading: "",
 	open: false,
+	children: null,
+	modalFooter: <ModalFooter />,
 	closeable: true,
 	onClose: undefined,
+	onCancel: undefined,
 }

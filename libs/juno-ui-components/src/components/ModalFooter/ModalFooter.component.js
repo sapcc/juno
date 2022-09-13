@@ -1,0 +1,64 @@
+import React, { useState, useEffect } from "react"
+import PropTypes from "prop-types"
+import { Button } from "../Button/index.js"
+
+
+/**
+A Footer component for Modals.
+Renders a simple "Close" Button (and accepts a corresponding onClose-handler) by default.
+Can be passed a confirmButtonLabel and cancelButton label with corresponding onConfirm- and onCancel-handlers.
+Can alternatively render all custom children as passed.
+
+*/
+export const ModalFooter = ({
+	children,
+	confirmButtonLabel,
+	cancelButtonLabel,
+	closeButtonLabel,
+	onConfirm,
+	onCancel,
+	onClose,
+	...props
+}) => {
+	
+	const handleCloseClick = (event) => {
+		onClose && onClose(event)
+	}
+	
+	return (
+		<div className={`juno-modal-footer`} >
+			{ children ?
+				children
+				:
+					confirmButtonLabel ? 
+						<>
+							<Button variant="primary" label={ confirmButtonLabel } />
+							<Button label={ cancelButtonLabel || "Cancel"} />
+						</>
+					:
+						<Button onClick={handleCloseClick} label={ closeButtonLabel || "Close" } />
+			}
+		</div>
+	)
+}
+
+ModalFooter.propTypes = {
+	/** Custom children to render. Anything goes. */
+	children: PropTypes.node,
+	/** The label for the Confirm-button. When passed, the component will render a Confirm button and a cancel button, otherwise the component will ONLY render a Close-Button. */
+	confirmButtonLabel: PropTypes.string,
+	/** Custom label for the cancel button. ONLY has an effect if a `confirmButtonLabel` is passed. */
+	cancelButtonLabel: PropTypes.string,
+	/** Custom Close-button label. ONLY has an effect if NO `confirmButtonLabel`is passed */
+	closeButtonLabel: PropTypes.string,
+	/** Handler to execute once the confirming button is clicked */
+	onConfirm: PropTypes.func,
+	/** Handler to execute once the cancelling button is clicked */
+	onCancel: PropTypes.func,
+	/** Handler to execute once the Close button is clicked */
+	onClose: PropTypes.func,
+}
+
+ModalFooter.defaultProps = {
+	
+}
