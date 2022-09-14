@@ -30,6 +30,7 @@ Configure.args = {
 	onClose: () => { console.log("Close!")},
 }
 
+/** TODO use ButtonRow, Stack -> don't use jn-prefixed classes in code examples */
 export const Custom = Template.bind({})
 Custom.args = {
 	className: "jn-justify-between jn-items-center",

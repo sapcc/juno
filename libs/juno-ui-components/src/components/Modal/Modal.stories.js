@@ -38,6 +38,7 @@ NonCloseable.args = {
   closeable: false
 }
 
+/** TODO: use Container for padding? Container pads 24px, we need 32px as per design? */
 export const Login = Template.bind({})
 Login.args = {
   title: "Log In",
