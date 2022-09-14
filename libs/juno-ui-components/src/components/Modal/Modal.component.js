@@ -4,22 +4,22 @@ import { ModalFooter } from "../ModalFooter"
 import { Icon } from "../Icon"
 
 /*
-TODO:
-* backdrop
+* backdrop TODO
 * optional title ✓
 * closeable by default ✓
-* open programmatically
+* open programmatically TODO
 * pass onClose handler ✓
-* styling 
+* styling TODO: padding content?
 * min-height for content?  ✓
-* always padded content?
+* always padded content? TODO
 * allow for creating modals without buttons?
-* always show header bar regardless whether there is title and/or close button?
+* always show header bar regardless whether there is title and/or close button?  ✓
 * SM/LG sizes (widths for now).  ✓ 
-* confirmButtonIcon prop? 
-* Spare "variant" prop for semantic variants later.
-* a11y (voicereader, keyboard accessibilty)
-* trap focus
+* confirmButtonIcon prop? TODO
+* Spare "variant" prop for semantic variants later. TODO
+* a11y (voicereader, keyboard accessibilty) TODO
+* trap focus TODO
+* render in Portal (how to make sure we're always in scope of StyleProvider? TODO
 */
 
 const modalstyles = `
