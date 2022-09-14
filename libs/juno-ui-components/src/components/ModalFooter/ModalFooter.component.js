@@ -2,9 +2,23 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Button } from "../Button/index.js"
 
+const modalfooterstyles = `
+	jn-flex
+	jn-flex-row
+	jn-bg-theme-background-lvl-2
+	jn-border-t
+	jn-border-theme-background-lvl-4
+	jn-py-2
+	jn-px-8
+`
+
+const defaultmodalfooterstyles = `
+	jn-justify-end
+	jn-gap-3.5
+`
 
 /**
-A Footer component for Modals.
+A Footer component for Modal.
 Renders a simple "Close" Button (and accepts a corresponding onClose-handler) by default.
 Can be passed a confirmButtonLabel and cancelButton label with corresponding onConfirm- and onCancel-handlers.
 Can alternatively render all custom children as passed.
@@ -17,6 +31,7 @@ export const ModalFooter = ({
 	onConfirm,
 	onCancel,
 	onClose,
+	className,
 	...props
 }) => {
 	
@@ -29,17 +44,17 @@ export const ModalFooter = ({
 	}
 	
 	return (
-		<div className={`juno-modal-footer`} >
-			{ children ?
+		<div className={`juno-modal-footer ${modalfooterstyles} ${ children ? null : defaultmodalfooterstyles } ${className} `} >
+			{ children ? 
 				children
+			:
+				confirmButtonLabel ? 
+					<>
+						<Button variant="primary" label={ confirmButtonLabel } onClick={handleConfirmClick} />
+						<Button variant="subdued" label={ cancelButtonLabel || "Cancel"} />
+					</>
 				:
-					confirmButtonLabel ? 
-						<>
-							<Button variant="primary" label={ confirmButtonLabel } onClick={handleConfirmClick} />
-							<Button label={ cancelButtonLabel || "Cancel"} />
-						</>
-					:
-						<Button onClick={handleCloseClick} label={ closeButtonLabel || "Close" } />
+					<Button variant="subdued" onClick={handleCloseClick} label={ closeButtonLabel || "Close" } />
 			}
 		</div>
 	)
@@ -54,6 +69,8 @@ ModalFooter.propTypes = {
 	cancelButtonLabel: PropTypes.string,
 	/** Custom Close-button label. ONLY has an effect if NO `confirmButtonLabel`is passed, otherwise the confirming button and a calncel button will be rendered. */
 	closeButtonLabel: PropTypes.string,
+	/** A custom className. Useful to configure flex items alignment when passing custom content as children. */
+	className: PropTypes.string,
 	/** Handler to execute once the confirming button is clicked */
 	onConfirm: PropTypes.func,
 	/** Handler to execute once the cancelling button is clicked */
@@ -63,5 +80,12 @@ ModalFooter.propTypes = {
 }
 
 ModalFooter.defaultProps = {
-	
+	children: null,
+	confirmButtonLabel: "",
+	cancelButtonLabel: "",
+	closeButtonLabel: "",
+	className: "",
+	onConfirm: undefined,
+	onCancel: undefined,
+	onClose: undefined,
 }

@@ -9,7 +9,7 @@ import { CheckboxRow } from "../CheckboxRow"
 const Template = (args) => <Modal {...args} ></Modal>
  
 export default {
-  title: "WiP/Modal",
+  title: "WiP/Modal/Modal",
   component: Modal,
   argTypes: {},
 }
@@ -21,11 +21,13 @@ Default.args = {
   ]
 }
 
-export const WithTitle = Template.bind({})
-WithTitle.args = {
-  title: "Modal Title",
+export const LargeWithTitle = Template.bind({})
+LargeWithTitle.args = {
+  size: "large",
+  title: "Large Modal",
+  confirmButtonLabel: "OK",
   children: [
-    <p>A modal with a title</p>
+    <p>A large modal with a title</p>
   ]
 }
 
@@ -40,10 +42,11 @@ export const Login = Template.bind({})
 Login.args = {
   title: "Log In",
   children:
-    <Form>
+    <Form className="jn-px-8 jn-pt-3 jn-mb-1">
       <TextInputRow label="Username" name="username" id="username" />
       <TextInputRow type="password" label="Password" name="password" id="password" />
       <CheckboxRow label="Remember Me" id="remember-me" />
+      <a href="#">Register</a>
     </Form>
   ,
   modalFooter:  <ModalFooter confirmButtonLabel="Log In" onConfirm={()=>{console.log("Log In")}} />,
