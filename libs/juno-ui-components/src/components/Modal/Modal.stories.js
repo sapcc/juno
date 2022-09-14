@@ -42,11 +42,11 @@ export const Login = Template.bind({})
 Login.args = {
   title: "Log In",
   children:
-    <Form className="jn-px-8 jn-pt-3 jn-mb-1">
+    <Form className="jn-px-8 jn-mt-5 jn-mb-1">
       <TextInputRow label="Username" name="username" id="username" />
       <TextInputRow type="password" label="Password" name="password" id="password" />
       <CheckboxRow label="Remember Me" id="remember-me" />
-      <a href="#">Register</a>
+      <div className="jn-text-sm jn-mt-4"><a href="#">Register</a></div>
     </Form>
   ,
   modalFooter:  <ModalFooter confirmButtonLabel="Log In" onConfirm={()=>{console.log("Log In")}} />,
