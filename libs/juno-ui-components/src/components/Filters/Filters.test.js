@@ -41,6 +41,13 @@ describe("Filters", () => {
 
 	})
 	
+	test("renders a Filter vlaue text input witn a placeholder as passed", async () => {
+		const filters = {valueLabel: "Enter a filter value", options: [{label: "option 1", value: "option-1"}, {label: "option 2", value: "option-2"}]}
+		render(<Filters valuePlaceholder="my placeholder" filters={filters} />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveAttribute("placeholder", "my placeholder")
+	})
+	
 	test("renders a Filter value as passed", async () => {
 		const filters = {options: [{label: "option 1", value: "option-1"}]}
 		render(<Filters filters={filters} filterValue="abc" />)

@@ -53,6 +53,12 @@ describe("FilterInput", () => {
 		expect(screen.getByRole("textbox")).toHaveAttribute("aria-label", "my value input")
 	})
 	
+	test("renders a text input with a placeholder as passed", async () => {
+		render(<FilterInput options={[{label: "option 1", value: "option-1", disabled: true}, {label: "option 2", value: "option-2"}]} valuePlaceholder={"my value placeholder"}/>)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveAttribute("placeholder", "my value placeholder")
+	})
+	
 	test("renders a selected filter as passed", async () => {
 		const filterOptions = [{label: "OS", value: "byOs"}, {label: "Region", value: "byRegion"}]
 		render(<FilterInput options={filterOptions} selectedFilterKey="byRegion" />)

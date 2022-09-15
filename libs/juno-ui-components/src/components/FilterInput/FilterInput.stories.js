@@ -11,6 +11,7 @@ const Template = (args) => <FilterInput {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
+	valuePlaceholder: "Enter a value",
 	options: [
 		{label: "Filter 1", key: "filter-1"},
 		{label: "Filter 2", key: "filter-2", disabled: true},

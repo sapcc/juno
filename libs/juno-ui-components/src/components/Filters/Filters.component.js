@@ -35,6 +35,7 @@ export const Filters = ({
 	selectedFilterKey,
 	onSelectedFilterKeyChange,
 	filterValue,
+	valuePlaceholder,
 	onFilterValueChange,
 	onFilter,
 	onFilterClear,
@@ -54,6 +55,7 @@ export const Filters = ({
 						selectedFilterKey={selectedFilterKey}
 						onSelectedFilterKeyChange={onSelectedFilterKeyChange}
 						filterValue={filterValue}
+						valuePlaceholder={valuePlaceholder}
 						onFilterValueChange={onFilterValueChange}
 						onFilter={onFilter}
 						onClear={onFilterClear}
@@ -89,6 +91,8 @@ Filters.propTypes = {
 	onSelectedFilterKeyChange: PropTypes.func,
 	/** The value of the FilterInput */
 	filterValue: PropTypes.string,
+	/** Optional: Pass a placeholder for the filter value text input */
+	valuePlaceholder: PropTypes.string,
 	/** Pass a handler to be executed whenever the value of the filter value input changes */
 	onFilterValueChange: PropTypes.func,  
 	/** Pass a handler to be executed once the user clicks the filter button */
@@ -107,6 +111,7 @@ Filters.defaultProps = {
 	selectedFilterKey: "",
 	onSelectedFilterKeyChange: undefined,
 	filterValue: "",
+	valuePlaceholder: "",
 	onFilter: undefined,
 	onFilterValueChange: undefined,
 	onFilterClear: undefined,
