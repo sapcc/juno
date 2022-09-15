@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { Modal } from "./index.js"
 import { ModalFooter } from "../ModalFooter/index.js"
 import { Button } from "../Button/index.js"
@@ -6,7 +6,33 @@ import { Form } from "../Form/index.js"
 import { TextInputRow } from "../TextInputRow"
 import { CheckboxRow } from "../CheckboxRow"
 
-const Template = (args) => <Modal {...args} ></Modal>
+const Template = (args) => {
+
+  const [isOpen, setIsOpen] = useState(false)
+  
+  const openModal = () => {
+    setIsOpen(true)
+  }
+  
+  const closeModal = () => {
+    setIsOpen(false)  
+  }
+  
+  return (
+    <>
+      <Button 
+        label="Open Modal" 
+        variant="primary" 
+        onClick={() =>{setIsOpen(!isOpen)}} 
+      />
+      <Modal  
+          open={isOpen}
+          onCancel={closeModal}
+          {...args}
+      />
+    </>
+  )
+}
  
 export default {
   title: "WiP/Modal/Modal",
@@ -42,12 +68,11 @@ export const Login = Template.bind({})
 Login.args = {
   title: "Log In",
   children:
-    <Form>
+    <>
       <TextInputRow label="Username" name="username" id="username" />
       <TextInputRow type="password" label="Password" name="password" id="password" />
       <CheckboxRow label="Remember Me" id="remember-me" />
-      <div className="jn-text-sm jn-mt-4"><a href="#">Register</a></div>
-    </Form>
+    </>
   ,
   modalFooter:  <ModalFooter confirmButtonLabel="Log In" confirmButtonIcon="accountCircle" onConfirm={()=>{console.log("Log In")}} cancelButtonLabel="Never Mind" />,
 }

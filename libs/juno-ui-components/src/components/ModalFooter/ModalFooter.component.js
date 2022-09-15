@@ -46,7 +46,7 @@ export const ModalFooter = ({
 	}
 	
 	return (
-		<div className={`juno-modal-footer ${modalfooterstyles} ${ children ? null : defaultmodalfooterstyles } ${className} `} >
+		<div className={`juno-modal-footer ${modalfooterstyles} ${ children ? null : defaultmodalfooterstyles } ${className} `} {...props} >
 			{ children ? 
 				children
 			:

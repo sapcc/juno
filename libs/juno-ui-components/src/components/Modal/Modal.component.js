@@ -8,7 +8,6 @@ import { Icon } from "../Icon"
 
 * optional title ✓
 * closeable by default ✓
-* pass onClose handler ✓
 * padding content? -> 'unpad'  ✓
 * min-height for content?  ✓
 * allow for creating modals without buttons? ✓
@@ -46,7 +45,7 @@ const contentstyles = `
 `
 
 const contentpaddingstyles = `
-	jn-py-3
+	jn-py-4
 	jn-px-8
 `
 
@@ -75,7 +74,7 @@ export const Modal = ({
 	modalFooter,
 	closeable,
 	unpad,
-	onClose,
+	onConfirm,
 	onCancel,
 	className,
 	...props
@@ -91,35 +90,46 @@ export const Modal = ({
 	useEffect(() => {
 		setIsCloseable(closeable)
 	}, [closeable])
+	
+	const handleConfirmClick = (event) => {
+		onConfirm && onConfirm(event)
+	}
 	  
-	const handleCloseClick = (event) => {
+	const handleCancelClick = (event) => {
 		setIsOpen(false)
-		onClose && onClose(event)
+		onCancel && onCancel(event)
 	}
 	
 	return (
-		<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog">
-			<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
-				{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} >{ title || heading }</h1> : null }
-				{ isCloseable ? <Icon icon="close" onClick={ handleCloseClick }/> : null }
-			</div>
-			<div className={`juno-modal-content ${contentstyles} ${ unpad ? "" : contentpaddingstyles }`} >
-				{ children }
-			</div>
-			{ isCloseable ? 
-				modalFooter ?
-					modalFooter
-					:
-					<ModalFooter 
-						confirmButtonLabel={confirmButtonLabel} 
-						cancelButtonLabel={cancelButtonLabel} 
-						confirmButtonIcon={confirmButtonIcon}
-						cancelButtonIcon={cancelButtonIcon}
-					/>
-				: 
-				null 
+		<>
+			{ isOpen && (
+					<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" {...props} >
+						<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
+							{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} >{ title || heading }</h1> : null }
+							{ isCloseable ? <Icon icon="close" onClick={ handleCancelClick }/> : null }
+						</div>
+						<div className={`juno-modal-content ${contentstyles} ${ unpad ? "" : contentpaddingstyles }`} >
+							{ children }
+						</div>
+						{ isCloseable ? 
+							modalFooter ?
+								modalFooter
+								:
+								<ModalFooter 
+									confirmButtonLabel={confirmButtonLabel} 
+									cancelButtonLabel={cancelButtonLabel} 
+									confirmButtonIcon={confirmButtonIcon}
+									cancelButtonIcon={cancelButtonIcon}
+									onConfirm={handleConfirmClick}
+									onCancel={handleCancelClick}
+								/>
+							: 
+							null 
+						}
+					</div>
+				)
 			}
-		</div>
+		</>
 	)
 }
 
@@ -150,9 +160,7 @@ Modal.propTypes = {
 	unpad: PropTypes.bool,
 	/** Custom className to add to the modal */
 	className: PropTypes.string,
-	/** A handler to execute once the modal is closed by clicking the Close button (or pressing ESC TODO) */
-	onClose: PropTypes.func,
-	/** A handler to execute once the modal is cancelled using the Cancel-button or pressing ESC */
+	/** A handler to execute once the modal is cancelled using the x-Close button,  Cancel-button or pressing ESC */
 	onCancel: PropTypes.func,
 }
 
@@ -170,6 +178,6 @@ Modal.defaultProps = {
 	closeable: true,
 	unpad: false,
 	className: "",
-	onClose: undefined,
+	onConfirm: undefined,
 	onCancel: undefined,
 }
