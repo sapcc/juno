@@ -5,10 +5,9 @@ import { knownIcons } from "../Icon/Icon.component.js"
 import { Icon } from "../Icon"
 
 /*
-* backdrop TODO
+
 * optional title ✓
 * closeable by default ✓
-* open programmatically TODO
 * pass onClose handler ✓
 * padding content? -> 'unpad'  ✓
 * min-height for content?  ✓
@@ -17,6 +16,8 @@ import { Icon } from "../Icon"
 * SM/LG sizes (widths for now).  ✓ 
 * confirmButtonIcon prop  ✓
 * cancelButtonIcon prop  ✓
+* backdrop TODO
+* open programmatically TODO
 * Spare "variant" prop for semantic variants later. TODO
 * a11y (voicereader, keyboard accessibilty) TODO
 * trap focus TODO
