@@ -19,7 +19,7 @@ export const usersListToString = (users) => {
   if (!users) users = []
   if (!Array.isArray(users)) users = [users]
 
-  return users.map((user) => user.Name).join(", ")
+  return users.map((user) => `${user.Name} (${user.SapID})`).join(", ")
 }
 
 export const THREAD_LEVEL_LOW = "low"

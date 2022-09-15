@@ -9,21 +9,39 @@ const cellClasses = `
 justify-start
 `
 
+const IdClasses = `
+text-sm 
+pt-1
+whitespace-nowrap
+text-theme-disabled
+`
+
+const listOfUsers = (users) => {
+  users = users || []
+  return users.map((user, index) => (
+    <span key={index}>
+      <span>{index ? ", " : ""}</span>
+      {`${user.Name} `}
+      <small className={IdClasses}>({user.SapID})</small>
+    </span>
+  ))
+}
+
 const ServicesListItem = ({ item }) => {
   const owners = useMemo(() => {
-    return usersListToString(item.Owners)
+    return listOfUsers(item.Owners)
   }, [item.Owners])
 
   const operators = useMemo(() => {
-    return usersListToString(item.Operators)
+    return listOfUsers(item.Operators)
   }, [item.Operators])
 
-  const components = React.useMemo(() => {
+  const components = useMemo(() => {
     if (!item?.Components) return []
     return item.Components
   }, [item.Components])
 
-  const vulnerabilities = React.useMemo(() => {
+  const vulnerabilities = useMemo(() => {
     return classifyVulnerabilities(components)
   }, [components])
 
