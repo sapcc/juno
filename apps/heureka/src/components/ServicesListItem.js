@@ -9,20 +9,15 @@ const cellClasses = `
 justify-start
 `
 
-const IdClasses = `
-text-sm 
-pt-1
-whitespace-nowrap
-text-theme-disabled
-`
-
 const listOfUsers = (users) => {
   users = users || []
   return users.map((user, index) => (
     <span key={index}>
       <span>{index ? ", " : ""}</span>
       {`${user.Name} `}
-      <small className={IdClasses}>({user.SapID})</small>
+      <small className="text-sm pt-1 whitespace-nowrap text-theme-disabled">
+        ({user.SapID})
+      </small>
     </span>
   ))
 }
