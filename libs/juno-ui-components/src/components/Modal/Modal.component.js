@@ -77,6 +77,7 @@ export const Modal = ({
 	unpad,
 	onClose,
 	onCancel,
+	className,
 	...props
 }) => {
 	
@@ -97,7 +98,7 @@ export const Modal = ({
 	}
 	
 	return (
-		<div className={`juno-modal ${sizeClass(size)} ${modalstyles}`} role="dialog">
+		<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog">
 			<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
 				{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} >{ title || heading }</h1> : null }
 				{ isCloseable ? <Icon icon="close" onClick={ handleCloseClick }/> : null }
@@ -147,6 +148,8 @@ Modal.propTypes = {
 	closeable: PropTypes.bool,
 	/** Pass to remove default padding from the content area of the modal */
 	unpad: PropTypes.bool,
+	/** Custom className to add to the modal */
+	className: PropTypes.string,
 	/** A handler to execute once the modal is closed by clicking the Close button (or pressing ESC TODO) */
 	onClose: PropTypes.func,
 	/** A handler to execute once the modal is cancelled using the Cancel-button or pressing ESC */
@@ -166,6 +169,7 @@ Modal.defaultProps = {
 	modalFooter: null,
 	closeable: true,
 	unpad: false,
+	className: "",
 	onClose: undefined,
 	onCancel: undefined,
 }
