@@ -30,7 +30,7 @@ const PillsTemplate = (args) => <Filters {...args}>
 export const Default = Template.bind({})
 Default.args = {
   filters: {
-    label: "Select a Filter",
+    keyLabel: "Select a Filter",
     options: [
       {label: "Filter 1", key: "filter-1"}
     ]
@@ -40,7 +40,7 @@ Default.args = {
 export const Loading = Template.bind({})
 Loading.args = {
   filters: {
-    label: "Select a Filter",
+    keyLabel: "Select a Filter",
     options: []
   },
   loading: true
