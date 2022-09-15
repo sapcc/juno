@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { ModalFooter } from "../ModalFooter/index"
+import { knownIcons } from "../Icon/Icon.component.js"
 import { Icon } from "../Icon"
 
 /*
@@ -9,16 +10,17 @@ import { Icon } from "../Icon"
 * closeable by default ✓
 * open programmatically TODO
 * pass onClose handler ✓
-* styling TODO: padding content? -> 'unpad'
+* padding content? -> 'unpad'  ✓
 * min-height for content?  ✓
 * allow for creating modals without buttons? ✓
 * always show header bar regardless whether there is title and/or close button?  ✓
 * SM/LG sizes (widths for now).  ✓ 
-* confirmButtonIcon prop? TODO
+* confirmButtonIcon prop TODO
+* cancelButtonIcon prop TODO
 * Spare "variant" prop for semantic variants later. TODO
 * a11y (voicereader, keyboard accessibilty) TODO
 * trap focus TODO
-* render in Portal (how to make sure we're always in scope of StyleProvider? TODO -> add element to styleprovider
+* render in Portal (how to make sure we're always in scope of StyleProvider? TODO -> add element to styleprovider TODO
 * Error messasges PascalCase? TODO
 */
 
@@ -66,6 +68,8 @@ export const Modal = ({
 	heading,
 	confirmButtonLabel,
 	cancelButtonLabel,
+	confirmButtonIcon,
+	cancelButtonIcon,
 	open,
 	children,
 	modalFooter,
@@ -105,7 +109,12 @@ export const Modal = ({
 				modalFooter ?
 					modalFooter
 					:
-					<ModalFooter confirmButtonLabel={confirmButtonLabel} cancelButtonLabel={cancelButtonLabel} />
+					<ModalFooter 
+						confirmButtonLabel={confirmButtonLabel} 
+						cancelButtonLabel={cancelButtonLabel} 
+						confirmButtonIcon={confirmButtonIcon}
+						cancelButtonIcon={cancelButtonIcon}
+					/>
 				: 
 				null 
 			}
@@ -124,6 +133,10 @@ Modal.propTypes = {
 	confirmButtonLabel: PropTypes.string,
 	/** Pass a label for the cancel button. Defaults to "Cancel" */
 	cancelButtonLabel: PropTypes.string,
+	/** Pass an Icon name to show on the confirming action button */
+	confirmButtonIcon: PropTypes.oneOf(knownIcons),
+	/** Pass an icon name to show on the cancelling button */
+	cancelButtonIcon:  PropTypes.oneOf(knownIcons),
 	/** Whether the modal will be open */
 	open: PropTypes.bool,
 	/** The children of the modal. These will be rendered as the modal content. To render custom buttons at the bottom, see `modalFooter` below.*/
@@ -146,6 +159,8 @@ Modal.defaultProps = {
 	heading: "",
 	confirmButtonLabel: "",
 	cancelButtonLabel: "",
+	confirmButtonIcon: null,
+	cancelButtonIcon: null,
 	open: false,
 	children: null,
 	modalFooter: null,

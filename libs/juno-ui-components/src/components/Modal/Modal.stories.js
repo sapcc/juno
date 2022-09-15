@@ -49,7 +49,7 @@ Login.args = {
       <div className="jn-text-sm jn-mt-4"><a href="#">Register</a></div>
     </Form>
   ,
-  modalFooter:  <ModalFooter confirmButtonLabel="Log In" onConfirm={()=>{console.log("Log In")}} cancelButtonLabel="Never Mind" />,
+  modalFooter:  <ModalFooter confirmButtonLabel="Log In" confirmButtonIcon="accountCircle" onConfirm={()=>{console.log("Log In")}} cancelButtonLabel="Never Mind" />,
 }
 
 

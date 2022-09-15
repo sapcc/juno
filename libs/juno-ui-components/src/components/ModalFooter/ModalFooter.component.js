@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Button } from "../Button/index.js"
 import { ButtonRow } from "../ButtonRow/index.js"
+import { knownIcons } from "../Icon/Icon.component.js"
 
 const modalfooterstyles = `
 	jn-flex
@@ -29,6 +30,8 @@ export const ModalFooter = ({
 	confirmButtonLabel,
 	cancelButtonLabel,
 	closeButtonLabel,
+	confirmButtonIcon,
+	cancelButtonIcon,
 	onConfirm,
 	onCancel,
 	onClose,
@@ -51,8 +54,8 @@ export const ModalFooter = ({
 			:
 				confirmButtonLabel ? 
 					<ButtonRow>
-						<Button variant="primary" label={ confirmButtonLabel } onClick={handleConfirmClick} />
-						<Button variant="subdued" label={ cancelButtonLabel || "Cancel"} />
+						<Button variant="primary" label={ confirmButtonLabel } icon={confirmButtonIcon} onClick={handleConfirmClick} />
+						<Button variant="subdued" label={ cancelButtonLabel || "Cancel"} icon={cancelButtonIcon} />
 					</ButtonRow>
 				:
 					<ButtonRow>
@@ -72,6 +75,10 @@ ModalFooter.propTypes = {
 	cancelButtonLabel: PropTypes.string,
 	/** Custom Close-button label. ONLY has an effect if NO `confirmButtonLabel`is passed, otherwise the confirming button and a calncel button will be rendered. */
 	closeButtonLabel: PropTypes.string,
+	/** Pass an Icon name to show on the confirming action button */
+	confirmButtonIcon: PropTypes.oneOf(knownIcons),
+	/** Pass an icon name to show on the cancelling button */
+	cancelButtonIcon:  PropTypes.oneOf(knownIcons),
 	/** A custom className. Useful to configure flex items alignment when passing custom content as children. */
 	className: PropTypes.string,
 	/** Handler to execute once the confirming button is clicked */
@@ -87,6 +94,8 @@ ModalFooter.defaultProps = {
 	confirmButtonLabel: "",
 	cancelButtonLabel: "",
 	closeButtonLabel: "",
+	confirmButtonIcon: null,
+	cancelButtonIcon: null,
 	className: "",
 	onConfirm: undefined,
 	onCancel: undefined,
