@@ -43,6 +43,11 @@ const contentstyles = `
 	jn-min-h-[5rem]
 `
 
+const contentpaddingstyles = `
+	jn-py-3
+	jn-px-8
+`
+
 const sizeClass = (size) => {
 	switch (size) {
 		case "large":
@@ -64,6 +69,7 @@ export const Modal = ({
 	children,
 	modalFooter,
 	closeable,
+	unpad,
 	onClose,
 	onCancel,
 	...props
@@ -91,7 +97,7 @@ export const Modal = ({
 				{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} >{ title || heading }</h1> : null }
 				{ isCloseable ? <Icon icon="close" onClick={ handleCloseClick }/> : null }
 			</div>
-			<div className={`juno-modal-content ${contentstyles}`} >
+			<div className={`juno-modal-content ${contentstyles} ${ unpad ? "" : contentpaddingstyles }`} >
 				{ children }
 			</div>
 			{ isCloseable ? 
@@ -123,6 +129,8 @@ Modal.propTypes = {
 	modalFooter: PropTypes.element,
 	/** Whether the modal can be closed using an "X"-Button at the top right. Defaults to true. */
 	closeable: PropTypes.bool,
+	/** Pass to remove default padding from the content area of the modal */
+	unpad: PropTypes.bool,
 	/** A handler to execute once the modal is closed by clicking the Close button (or pressing ESC TODO) */
 	onClose: PropTypes.func,
 	/** A handler to execute once the modal is cancelled using the Cancel-button or pressing ESC */
@@ -138,6 +146,7 @@ Modal.defaultProps = {
 	children: null,
 	modalFooter: null,
 	closeable: true,
+	unpad: false,
 	onClose: undefined,
 	onCancel: undefined,
 }

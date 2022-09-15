@@ -43,7 +43,7 @@ export const Login = Template.bind({})
 Login.args = {
   title: "Log In",
   children:
-    <Form className="jn-px-8 jn-mt-5 jn-mb-1">
+    <Form>
       <TextInputRow label="Username" name="username" id="username" />
       <TextInputRow type="password" label="Password" name="password" id="password" />
       <CheckboxRow label="Remember Me" id="remember-me" />
