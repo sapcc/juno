@@ -65,6 +65,7 @@ export const Modal = ({
 	title,
 	heading,
 	confirmButtonLabel,
+	cancelButtonLabel,
 	open,
 	children,
 	modalFooter,
@@ -104,7 +105,7 @@ export const Modal = ({
 				modalFooter ?
 					modalFooter
 					:
-					<ModalFooter confirmButtonLabel={confirmButtonLabel} />
+					<ModalFooter confirmButtonLabel={confirmButtonLabel} cancelButtonLabel={cancelButtonLabel} />
 				: 
 				null 
 			}
@@ -121,6 +122,8 @@ Modal.propTypes = {
 	heading: PropTypes.string,
 	/** Pass a label to render a confirm button and a Cancel button */
 	confirmButtonLabel: PropTypes.string,
+	/** Pass a label for the cancel button. Defaults to "Cancel" */
+	cancelButtonLabel: PropTypes.string,
 	/** Whether the modal will be open */
 	open: PropTypes.bool,
 	/** The children of the modal. These will be rendered as the modal content. To render custom buttons at the bottom, see `modalFooter` below.*/
@@ -142,6 +145,7 @@ Modal.defaultProps = {
 	title: "",
 	heading: "",
 	confirmButtonLabel: "",
+	cancelButtonLabel: "",
 	open: false,
 	children: null,
 	modalFooter: null,

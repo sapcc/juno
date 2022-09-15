@@ -43,7 +43,7 @@ Custom.args = {
 		<ButtonRow>
 			<Button variant="primary-danger" label="Destruction" onClick={()=>{console.log("Custom Click Destroy")}} key="b-1"/>
 			<Button variant="primary" label="World Peace" onClick={()=>{console.log("Custom Click Peace")}} key="b-2"/>
-			<Button label="Surprise Me!" onClick={()=>{console.log("Custom Click Surprise")}} key="b-3"/>
+			<Button variant="subdued" label="Surprise Me!" onClick={()=>{console.log("Custom Click Surprise")}} key="b-3"/>
 		</ButtonRow>
 	]
 }
