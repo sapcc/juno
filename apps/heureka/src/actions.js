@@ -66,6 +66,22 @@ export const service = ({ queryKey }) => {
     })
 }
 
+export const serviceFilters = ({ queryKey }) => {
+  const [_key, endpoint, options] = queryKey
+  // convert the options to params URL
+  const query = objectToURLParams(options)
+  return fetch(`${endpoint}/services/filters?${query}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(checkStatus)
+    .then((response) => {
+      return response.json()
+    })
+}
+
 export const components = ({ queryKey }) => {
   const [_key, endpoint, options] = queryKey
   // collect the options in query params format

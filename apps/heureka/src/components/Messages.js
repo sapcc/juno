@@ -20,8 +20,8 @@ const Messages = () => {
 
   return (
     <>
-      {messages && (
-        <>
+      {messages && messages.length > 0 && (
+        <div className="mt-4">
           {messages.map((item) => (
             <Message
               key={item.id}
@@ -33,7 +33,7 @@ const Messages = () => {
               {item.text}
             </Message>
           ))}
-        </>
+        </div>
       )}
     </>
   )

@@ -13,7 +13,6 @@ import {
   Container,
 } from "juno-ui-components"
 import ServiceVulnerabilitiesList from "./ServiceVulnerabilitiesList"
-import { usersListToString } from "../helpers"
 
 const Header = `
 font-bold
@@ -39,6 +38,18 @@ jn-pb-2
 jn-pt-6
  `
 
+const listOfUsers = (users) => {
+  users = users || []
+  return users.map((user, index) => (
+    <span key={index}>
+      <span>{index ? ", " : ""}</span>
+      {`${user.Name} `}
+      <small className="text-sm pt-1 whitespace-nowrap text-theme-disabled">
+        ({user.SapID})
+      </small>
+    </span>
+  ))
+}
 const ServiceDetail = () => {
   const { options, routeParams } = useRouter()
 
@@ -62,12 +73,12 @@ const ServiceDetail = () => {
 
   const owners = useMemo(() => {
     if (!data?.Owners) return []
-    return usersListToString(data.Owners)
+    return listOfUsers(data.Owners)
   }, [data?.Owners])
 
   const operators = useMemo(() => {
     if (!data?.Operators) return []
-    return usersListToString(data.Operators)
+    return listOfUsers(data.Operators)
   }, [data?.Operators])
 
   const components = useMemo(() => {

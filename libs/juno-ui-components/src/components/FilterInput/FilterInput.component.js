@@ -46,6 +46,7 @@ export const FilterInput = ({
 	selectedFilterKey,
 	onSelectedFilterKeyChange,
 	filterValue,
+	valuePlaceholder,
 	onFilterValueChange,
 	onClear,
 	onKeyPress,
@@ -133,7 +134,7 @@ export const FilterInput = ({
 				onChange={handleFilterValueChange}
 				onKeyPress={handleKeyPress}
 				disabled={isLoading}
-				placeholder={ isLoading ? "Loading Filter Options…" : null }
+				placeholder={ isLoading ? "Loading Filter Options…" : valuePlaceholder }
 			/>
 			<div className={`${iconWrapperStyles}`}>
 				{ value && value.length ?
@@ -162,6 +163,8 @@ FilterInput.propTypes = {
 	valueLabel: PropTypes.string, // TODO -> valueLabel
 	/** The current value of the Filter Input */
 	filterValue: PropTypes.string,
+	/** Optional: pass a placeholder for the filter value text input */
+	valuePlaceholder: PropTypes.string,
 	/** Pass a handler to be executed when the filter value changes */
 	onFilterValueChange: PropTypes.func,
 	/** Pass a handler to execute when the Filter Value Clear button is clicked */
@@ -181,6 +184,7 @@ FilterInput.defaultProps = {
 	onSelectedFilterKeyChange: undefined,
 	valueLabel: "Filter by Value",
 	filterValue: "",
+	valuePlaceholder: "",
 	onFilterValueChange: undefined,
 	onClear: undefined,
 	onFilter: undefined,
