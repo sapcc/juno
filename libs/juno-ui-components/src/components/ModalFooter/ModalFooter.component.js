@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Button } from "../Button/index.js"
+import { ButtonRow } from "../ButtonRow/index.js"
 
 const modalfooterstyles = `
 	jn-flex
@@ -49,12 +50,14 @@ export const ModalFooter = ({
 				children
 			:
 				confirmButtonLabel ? 
-					<>
+					<ButtonRow>
 						<Button variant="primary" label={ confirmButtonLabel } onClick={handleConfirmClick} />
 						<Button variant="subdued" label={ cancelButtonLabel || "Cancel"} />
-					</>
+					</ButtonRow>
 				:
-					<Button variant="subdued" onClick={handleCloseClick} label={ closeButtonLabel || "Close" } />
+					<ButtonRow>
+						<Button variant="subdued" onClick={handleCloseClick} label={ closeButtonLabel || "Close" } />
+					</ButtonRow>
 			}
 		</div>
 	)
