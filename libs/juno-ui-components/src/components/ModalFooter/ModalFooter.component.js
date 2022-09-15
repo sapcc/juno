@@ -21,7 +21,7 @@ const defaultmodalfooterstyles = `
 
 /**
 A Footer component for Modal.
-Renders a simple "Close" Button (and accepts a corresponding onClose-handler) by default.
+Renders a simple "Close" Button (and accepts a corresponding onCancel-handler) by default.
 Can be passed a confirmButtonLabel and cancelButton label with corresponding onConfirm- and onCancel-handlers.
 Can alternatively render all custom children as passed.
 */
@@ -29,22 +29,20 @@ export const ModalFooter = ({
 	children,
 	confirmButtonLabel,
 	cancelButtonLabel,
-	closeButtonLabel,
 	confirmButtonIcon,
 	cancelButtonIcon,
 	onConfirm,
 	onCancel,
-	onClose,
 	className,
 	...props
 }) => {
 	
-	const handleCloseClick = (event) => {
-		onClose && onClose(event)
-	}
-	
 	const handleConfirmClick = (event) => {
 		onConfirm && onConfirm(event)
+	}
+	
+	const handleCancelClick = (event) => {
+		onCancel && onCancel(event)
 	}
 	
 	return (
@@ -55,11 +53,11 @@ export const ModalFooter = ({
 				confirmButtonLabel ? 
 					<ButtonRow>
 						<Button variant="primary" label={ confirmButtonLabel } icon={confirmButtonIcon} onClick={handleConfirmClick} />
-						<Button variant="subdued" label={ cancelButtonLabel || "Cancel"} icon={cancelButtonIcon} />
+						<Button variant="subdued" label={ cancelButtonLabel || "Cancel"} icon={cancelButtonIcon} onClick={handleCancelClick} />
 					</ButtonRow>
 				:
 					<ButtonRow>
-						<Button variant="subdued" onClick={handleCloseClick} label={ closeButtonLabel || "Close" } />
+						<Button variant="subdued" onClick={handleCancelClick} label={ cancelButtonLabel || "Close" } icon={cancelButtonIcon} />
 					</ButtonRow>
 			}
 		</div>
@@ -73,8 +71,6 @@ ModalFooter.propTypes = {
 	confirmButtonLabel: PropTypes.string,
 	/** Custom label for the cancel button. ONLY has an effect if a `confirmButtonLabel` is passed. */
 	cancelButtonLabel: PropTypes.string,
-	/** Custom Close-button label. ONLY has an effect if NO `confirmButtonLabel`is passed, otherwise the confirming button and a calncel button will be rendered. */
-	closeButtonLabel: PropTypes.string,
 	/** Pass an Icon name to show on the confirming action button */
 	confirmButtonIcon: PropTypes.oneOf(knownIcons),
 	/** Pass an icon name to show on the cancelling button */
@@ -85,8 +81,6 @@ ModalFooter.propTypes = {
 	onConfirm: PropTypes.func,
 	/** Handler to execute once the cancelling button is clicked */
 	onCancel: PropTypes.func,
-	/** Handler to execute once the Close button is clicked */
-	onClose: PropTypes.func,
 }
 
 ModalFooter.defaultProps = {
@@ -99,5 +93,4 @@ ModalFooter.defaultProps = {
 	className: "",
 	onConfirm: undefined,
 	onCancel: undefined,
-	onClose: undefined,
 }
