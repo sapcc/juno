@@ -29,6 +29,7 @@ const PillsTemplate = (args) => <Filters {...args}>
 
 export const Default = Template.bind({})
 Default.args = {
+  valuePlaceholder: "Enter a value",
   filters: {
     keyLabel: "Select a Filter",
     options: [
