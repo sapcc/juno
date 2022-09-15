@@ -15,13 +15,12 @@ import { Icon } from "../Icon"
 * allow for creating modals without buttons? ✓
 * always show header bar regardless whether there is title and/or close button?  ✓
 * SM/LG sizes (widths for now).  ✓ 
-* confirmButtonIcon prop TODO
-* cancelButtonIcon prop TODO
+* confirmButtonIcon prop  ✓
+* cancelButtonIcon prop  ✓
 * Spare "variant" prop for semantic variants later. TODO
 * a11y (voicereader, keyboard accessibilty) TODO
 * trap focus TODO
 * render in Portal (how to make sure we're always in scope of StyleProvider? TODO -> add element to styleprovider TODO
-* Error messasges PascalCase? TODO
 */
 
 const modalstyles = `
