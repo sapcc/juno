@@ -3,7 +3,6 @@ import { Filters } from "./index.js"
 import { FilterPill } from "../FilterPill/FilterPill.component"
 import { SearchInput } from "../SearchInput/SearchInput.component"
 
-
 export default {
   title: "Components/Filter/Filters",
   component: Filters,
@@ -12,39 +11,38 @@ export default {
 
 const Template = (args) => <Filters {...args} />
 
-const PillsTemplate = (args) => <Filters {...args}>
-    {
-      args.filters && args.filters.options && args.filters.options.length ? args.filters.options.map((filter, i) => (
-        <FilterPill 
-          filterKey={filter.key} 
-          filterKeyLabel={filter.label} 
-          key={`filter-${i}`}
-          onClose={() => console.log(filter.key, "closing")}
-        />
+const PillsTemplate = (args) => (
+  <Filters {...args}>
+    {args.filters && args.filters.options && args.filters.options.length
+      ? args.filters.options.map((filter, i) => (
+          <FilterPill
+            filterKey={filter.key}
+            filterKeyLabel={filter.label}
+            filterValueLabel={filter.value}
+            key={`filter-${i}`}
+            onClose={() => console.log(filter.key, "closing")}
+          />
         ))
-    :
-      null
-    }
-</Filters>
+      : null}
+  </Filters>
+)
 
 export const Default = Template.bind({})
 Default.args = {
   valuePlaceholder: "Enter a value",
   filters: {
     keyLabel: "Select a Filter",
-    options: [
-      {label: "Filter 1", key: "filter-1"}
-    ]
-  }
+    options: [{ key: "filter-1", label: "Filter 1", value: "Value 1" }],
+  },
 }
 
 export const Loading = Template.bind({})
 Loading.args = {
   filters: {
     keyLabel: "Select a Filter",
-    options: []
+    options: [],
   },
-  loading: true
+  loading: true,
 }
 
 export const WithPills = PillsTemplate.bind({})
@@ -52,25 +50,31 @@ WithPills.args = {
   filters: {
     keyLabel: "Select a Filter",
     options: [
-      {label: "Filter 1", key: "filter-01"},
-      {label: "Filter 2", key: "filter-02"},
-      {label: "Filter 3", key: "filter-03"},
-    ]
-  }
+      { key: "filter-01", label: "Filter 1", value: "Value 1" },
+      { key: "filter-02", label: "Filter 2", value: "Value 2" },
+      { key: "filter-03", label: "Filter 3", value: "Value 3" },
+    ],
+  },
 }
 
 export const PreseletedWithSearch = Template.bind({})
 PreseletedWithSearch.args = {
   selectedFilterKey: "filter-2",
-  search: <SearchInput onSearch={() => {console.log("Searching…")}} />,
+  search: (
+    <SearchInput
+      onSearch={() => {
+        console.log("Searching…")
+      }}
+    />
+  ),
   filters: {
     keyLabel: "Select a Filter",
     options: [
-      {label: "Filter 1", key: "filter-01"},
-      {label: "Filter 2", key: "filter-02"},
-      {label: "Filter 3", key: "filter-03"},
-    ]
-  }
+      { key: "filter-01", label: "Filter 1", value: "Value 1" },
+      { key: "filter-02", label: "Filter 2", value: "Value 2" },
+      { key: "filter-03", label: "Filter 3", value: "Value 3" },
+    ],
+  },
 }
 
 export const SearchOnly = Template.bind({})
@@ -80,5 +84,11 @@ const searchProps = {
   },
 }
 SearchOnly.args = {
-  search: <SearchInput onSearch={() => {console.log("Searching…")}} />,
+  search: (
+    <SearchInput
+      onSearch={() => {
+        console.log("Searching…")
+      }}
+    />
+  ),
 }
