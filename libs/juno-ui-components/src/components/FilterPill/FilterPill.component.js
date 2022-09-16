@@ -55,7 +55,6 @@ export const FilterPill = ({
   }, [filterValueLabel])
 
   filterKeyLabel = useMemo(() => {
-    console.log("filterKeyLabel: ", filterKeyLabel, filterKey)
     if (!filterKeyLabel) return filterKey
     return filterKeyLabel
   }, [filterKeyLabel])
