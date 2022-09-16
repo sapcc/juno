@@ -28,6 +28,9 @@ export const getServiceFilters = (endpoint, options) => {
     // When the new data arrives, the previous data is seamlessly swapped to show the new data.
     // isPreviousData is made available to know what data the query is currently providing you
     keepPreviousData: true,
+    // If a user leaves your application and returns to stale data, React Query automatically requests fresh data for you in the background.
+    // You can disable this globally or per-query using the refetchOnWindowFocus option
+    refetchOnWindowFocus: false,
   })
 }
 

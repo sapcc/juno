@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react"
 import { Filters, FilterPill } from "juno-ui-components"
+import uniqueId from "lodash.uniqueid"
 
 const SEARCH_STRING_TYPE = "string"
 const SEARCH_ARRAY_TYPE = "[string]"
@@ -16,9 +17,10 @@ const filterLabel = (filterType, filterName) => {
   return label
 }
 
-const Search = ({ filters, onSearchTerm, isLoading }) => {
+const FilterToolbar = ({ filters, onSearchTerm, isLoading }) => {
   const [placeholder, setPlaceholder] = useState("")
   const [filterKey, setFilterKey] = useState("")
+  const [selectedFilters, setSelectedFilters] = useState({})
   const [error, setError] = useState(null)
 
   const filterOptions = useMemo(() => {
@@ -32,18 +34,26 @@ const Search = ({ filters, onSearchTerm, isLoading }) => {
     return []
   }, [filters])
 
-  // const filterKeys = useMemo(() => {
-  //   if (!filters) return []
-  //   if (filters && typeof filters === "object") return Object.keys(filters)
-  // }, [filters])
+  useEffect(() => {
+    onSearchTerm(selectedFilters)
+  }, [selectedFilters])
 
-  // useEffect(() => {
-  //   const key = filterKeys.length > 0 && filterKeys[0]
-  //   const value = filterKeys.length > 0 && filters[filterKeys[0]]
-  //   const label = filterLabel(value, key)
-  //   setPlaceholder(label)
-  //   setFilterKey(key)
-  // }, [filterKeys])
+  const pills = useMemo(() => {
+    return Object.keys(selectedFilters).map((sfk, index) => {
+      const filterKey = sfk
+      const filterValue = selectedFilters[sfk]
+      console.log("pills: ", filterKey, filterValue, index)
+      return (
+        <FilterPill
+          key={index}
+          uid={filterKey}
+          filterKey={filterKey}
+          filterValue={filterValue}
+          onClose={onPillClosed}
+        />
+      )
+    })
+  }, [selectedFilters])
 
   const onSelectChange = (event) => {
     const selectedValue = event.target.value
@@ -54,12 +64,19 @@ const Search = ({ filters, onSearchTerm, isLoading }) => {
     setPlaceholder(label)
   }
 
+  const onPillClosed = (uid) => {
+    let newSelectedFilters = { ...selectedFilters }
+    delete newSelectedFilters[uid]
+    setSelectedFilters(newSelectedFilters)
+  }
+
   const onSearch = (value) => {
     setError(null)
     if (filterKey === "") {
       setError("Please select a filter")
     }
-    onSearchTerm(filterKey, value)
+    // update selected filter key:value
+    setSelectedFilters({ ...selectedFilters, [filterKey]: value })
   }
 
   return (
@@ -71,12 +88,20 @@ const Search = ({ filters, onSearchTerm, isLoading }) => {
       valuePlaceholder={placeholder}
       loading={isLoading}
       onFilter={(e) => onSearch(e.target.value)}
-      onFilterClear={() => onSearch("")}
       onSelectedFilterKeyChange={onSelectChange}
     >
+      {Object.keys(selectedFilters).map((sfk, index) => (
+        <FilterPill
+          key={index}
+          uid={sfk}
+          filterKey={sfk}
+          filterValue={selectedFilters[sfk]}
+          onClose={onPillClosed}
+        />
+      ))}
       {error && <span className="text-theme-danger">{error}</span>}
     </Filters>
   )
 }
 
-export default Search
+export default FilterToolbar
