@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/Icon.component.js"
 
@@ -36,16 +36,29 @@ const filtervalueStyles = `
 A Pill to represent Key and Value of a filter. Can be closed to un-apply the filter represented.
 Mostly to be used inside a Filters component in conjunction with FilterInput. */
 export const FilterPill = ({
+  uid,
   filterKey,
   filterKeyLabel,
+  filterValue,
   filterValueLabel,
   onClose,
   className,
   ...props
 }) => {
   const handleCloseClick = () => {
-    onClose && onClose(filterKey)
+    onClose && onClose(uid || filterKey)
   }
+
+  filterValueLabel = useMemo(() => {
+    if (!filterValueLabel) return filterValue
+    return filterValueLabel
+  }, [filterValueLabel])
+
+  filterKeyLabel = useMemo(() => {
+    console.log("filterKeyLabel: ", filterKeyLabel, filterKey)
+    if (!filterKeyLabel) return filterKey
+    return filterKeyLabel
+  }, [filterKeyLabel])
 
   return (
     <div
@@ -60,12 +73,16 @@ export const FilterPill = ({
 }
 
 FilterPill.propTypes = {
-  /** The key of the filter the pill represents */
-  filterKey: PropTypes.string,
-  /** The visible label to describe the filter key */
+  /** The unique identifier of the pill. Returned by the onClose callback */
+  uid: PropTypes.string,
+  /** The key of the filter the pill represents. Returned by the onClose callback if uid undefined */
+  filterKey: PropTypes.string.isRequired,
+  /** The visible label to describe the filter key. If not set filterKey is used */
   filterKeyLabel: PropTypes.string,
-  /** The visible label to describe the filter value */
-  filterValueLabel: PropTypes.string,
+  /** The value of filter the pill represents */
+  filterValue: PropTypes.string.isRequired,
+  /** The visible label to describe the filter value. If not set filterValue is used */
+  filterValueLabel: PropTypes.string.isRequired,
   /** add custom classNames */
   className: PropTypes.string,
   /** Pass a handler to be executed when closing the FilterPill */
@@ -73,9 +90,11 @@ FilterPill.propTypes = {
 }
 
 FilterPill.defaultProps = {
-  filterKey: "filterKey not set",
-  filterKeyLabel: "filterKeyLabel not set",
-  filterValueLabel: "filterValueLabel not set",
+  uid: undefined,
+  filterKey: undefined,
+  filterKeyLabel: undefined,
+  filterValue: undefined,
+  filterValueLabel: undefined,
   onClose: undefined,
   className: "",
 }

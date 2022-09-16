@@ -18,7 +18,8 @@ const PillsTemplate = (args) => (
           <FilterPill
             filterKey={filter.key}
             filterKeyLabel={filter.label}
-            filterValueLabel={filter.value}
+            filterValue={`value_${i}`}
+            filterValueLabel={`Value ${i}`}
             key={`filter-${i}`}
             onClose={() => console.log(filter.key, "closing")}
           />
@@ -32,7 +33,7 @@ Default.args = {
   valuePlaceholder: "Enter a value",
   filters: {
     keyLabel: "Select a Filter",
-    options: [{ key: "filter-1", label: "Filter 1", value: "Value 1" }],
+    options: [{ key: "filter-1", label: "Filter 1" }],
   },
 }
 
@@ -50,9 +51,9 @@ WithPills.args = {
   filters: {
     keyLabel: "Select a Filter",
     options: [
-      { key: "filter-01", label: "Filter 1", value: "Value 1" },
-      { key: "filter-02", label: "Filter 2", value: "Value 2" },
-      { key: "filter-03", label: "Filter 3", value: "Value 3" },
+      { key: "filter-01", label: "Filter 1" },
+      { key: "filter-02", label: "Filter 2" },
+      { key: "filter-03", label: "Filter 3" },
     ],
   },
 }
@@ -70,9 +71,9 @@ PreseletedWithSearch.args = {
   filters: {
     keyLabel: "Select a Filter",
     options: [
-      { key: "filter-01", label: "Filter 1", value: "Value 1" },
-      { key: "filter-02", label: "Filter 2", value: "Value 2" },
-      { key: "filter-03", label: "Filter 3", value: "Value 3" },
+      { key: "filter-01", label: "Filter 1" },
+      { key: "filter-02", label: "Filter 2" },
+      { key: "filter-03", label: "Filter 3" },
     ],
   },
 }
