@@ -82,7 +82,7 @@ FilterPill.propTypes = {
   /** The value of filter the pill represents */
   filterValue: PropTypes.string.isRequired,
   /** The visible label to describe the filter value. If not set filterValue is used */
-  filterValueLabel: PropTypes.string.isRequired,
+  filterValueLabel: PropTypes.string,
   /** add custom classNames */
   className: PropTypes.string,
   /** Pass a handler to be executed when closing the FilterPill */
