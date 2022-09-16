@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/Icon.component.js"
 
@@ -49,23 +49,17 @@ export const FilterPill = ({
     onClose && onClose(uid || filterKey)
   }
 
-  filterValueLabel = useMemo(() => {
-    if (!filterValueLabel) return filterValue
-    return filterValueLabel
-  }, [filterValueLabel])
-
-  filterKeyLabel = useMemo(() => {
-    if (!filterKeyLabel) return filterKey
-    return filterKeyLabel
-  }, [filterKeyLabel])
-
   return (
     <div
       className={`juno-filterpill ${filterpillStyles} ${className}`}
       {...props}
     >
-      <span className={`${filterkeyStyles}`}>{filterKeyLabel}</span>
-      <span className={`${filtervalueStyles}`}>{filterValueLabel}</span>
+      <span className={`${filterkeyStyles}`}>
+        {filterKeyLabel || filterKey}
+      </span>
+      <span className={`${filtervalueStyles}`}>
+        {filterValueLabel || filterValue}
+      </span>
       <Icon icon="close" size="18" onClick={handleCloseClick} />
     </div>
   )
