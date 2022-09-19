@@ -36,87 +36,56 @@ export const objectToURLParams = (options) => {
   return params.join("&")
 }
 
+//
+// SERVICES
+//
+
 export const services = ({ queryKey }) => {
   const [_key, endpoint, options] = queryKey
-  // convert the options to params URL
-  const query = objectToURLParams(options)
-  return fetch(`${endpoint}/services?${query}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then(checkStatus)
-    .then((response) => {
-      return response.json()
-    })
+  return fetchFromAPI(endpoint, "/services", options)
 }
 
 export const service = ({ queryKey }) => {
   const [_key, endpoint, serviceId] = queryKey
-  return fetch(`${endpoint}/services/${serviceId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then(checkStatus)
-    .then((response) => {
-      return response.json()
-    })
+  return fetchFromAPI(endpoint, `/services/${serviceId}`)
 }
 
 export const serviceFilters = ({ queryKey }) => {
   const [_key, endpoint, options] = queryKey
-  // convert the options to params URL
-  const query = objectToURLParams(options)
-  return fetch(`${endpoint}/services/filters?${query}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then(checkStatus)
-    .then((response) => {
-      return response.json()
-    })
+  return fetchFromAPI(endpoint, "/services/filters", options)
 }
+
+//
+// COMPONENTS
+//
 
 export const components = ({ queryKey }) => {
   const [_key, endpoint, options] = queryKey
-  // collect the options in query params format
-  const query = objectToURLParams(options)
-  return fetch(`${endpoint}/components?${query}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then(checkStatus)
-    .then((response) => {
-      return response.json()
-    })
+  return fetchFromAPI(endpoint, "/components", options)
 }
 
 export const component = ({ queryKey }) => {
   const [_key, endpoint, componentId] = queryKey
-  return fetch(`${endpoint}/components/${componentId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then(checkStatus)
-    .then((response) => {
-      return response.json()
-    })
+  return fetchFromAPI(endpoint, `/components/${componentId}`)
 }
+
+export const componentFilters = ({ queryKey }) => {
+  const [_key, endpoint, options] = queryKey
+  return fetchFromAPI(endpoint, "/components/filters", options)
+}
+
+//
+// VULNERABILITIES
+//
 
 export const vulnerabilities = ({ queryKey }) => {
   const [_key, endpoint, options] = queryKey
-  // collect the options in query params format
+  return fetchFromAPI(endpoint, "/vulnerabilities", options)
+}
+
+const fetchFromAPI = (endpoint, path, options) => {
   const query = objectToURLParams(options)
-  return fetch(`${endpoint}/vulnerabilities?${query}`, {
+  return fetch(`${endpoint}${path}?${query}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
