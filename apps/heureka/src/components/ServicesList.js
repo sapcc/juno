@@ -4,6 +4,7 @@ import {
   DataGrid,
   DataGridRow,
   DataGridHeadCell,
+  DataGridCell,
 } from "juno-ui-components"
 import ServicesListItem from "./ServicesListItem"
 
@@ -30,14 +31,13 @@ const ServicesList = ({ services }) => {
             ))}
           </>
         ) : (
-          <Stack
-            alignment="center"
-            distribution="center"
-            direction="vertical"
-            className="h-full"
-          >
-            <p>No services found</p>
-          </Stack>
+          <DataGridRow>
+            <DataGridCell colSpan={5}>
+              <Stack alignment="center" distribution="center">
+                <span>No services found</span>
+              </Stack>
+            </DataGridCell>
+          </DataGridRow>
         )}
       </DataGrid>
     </>

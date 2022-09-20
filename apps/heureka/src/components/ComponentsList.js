@@ -35,14 +35,13 @@ const ComponentsList = ({ components, minimized }) => {
           ))}
         </>
       ) : (
-        <Stack
-          alignment="center"
-          distribution="center"
-          direction="vertical"
-          className="h-full"
-        >
-          <p>No components found</p>
-        </Stack>
+        <DataGridRow>
+          <DataGridCell colSpan={minimized ? 3 : 7}>
+            <Stack alignment="center" distribution="center">
+              <span>No components found</span>
+            </Stack>
+          </DataGridCell>
+        </DataGridRow>
       )}
     </DataGrid>
   )
