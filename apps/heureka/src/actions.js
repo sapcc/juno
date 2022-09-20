@@ -73,6 +73,11 @@ export const vulnerabilities = ({ queryKey }) => {
   return fetchFromAPI(endpoint, "/vulnerabilities", options)
 }
 
+export const vulnerabilityFilters = ({ queryKey }) => {
+  const [_key, endpoint, options] = queryKey
+  return fetchFromAPI(endpoint, "/vulnerabilities/filters", options)
+}
+
 const fetchFromAPI = (endpoint, path, options) => {
   const query = encodeUrlParamsFromObject(options)
   return fetch(`${endpoint}${path}?${query}`, {

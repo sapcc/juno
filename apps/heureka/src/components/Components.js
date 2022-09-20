@@ -37,11 +37,6 @@ const Components = () => {
     }
   }, [components.error])
 
-  // const components = React.useMemo(() => {
-  //   if (!components.data?.Results) return []
-  //   return components.data.Results
-  // }, [components.data])
-
   const onPaginationChanged = (offset) => {
     setPaginationOptions({ ...paginationOptions, offset: offset })
   }
