@@ -50,7 +50,7 @@ export const ModalFooter = ({
 			{ children ? 
 				children
 			:
-				confirmButtonLabel ? 
+				confirmButtonLabel ?
 					<ButtonRow>
 						<Button variant="primary" label={ confirmButtonLabel } icon={confirmButtonIcon} onClick={handleConfirmClick} />
 						<Button variant="subdued" label={ cancelButtonLabel || "Cancel"} icon={cancelButtonIcon} onClick={handleCancelClick} />
@@ -87,7 +87,6 @@ ModalFooter.defaultProps = {
 	children: null,
 	confirmButtonLabel: "",
 	cancelButtonLabel: "",
-	closeButtonLabel: "",
 	confirmButtonIcon: null,
 	cancelButtonIcon: null,
 	className: "",
