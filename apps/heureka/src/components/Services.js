@@ -49,14 +49,11 @@ const Services = ({}) => {
   }
 
   const onSearchTerm = (options) => {
-    console.log("onSearchTerm: ", options)
     setSearchOptions(options)
   }
 
   return useMemo(() => {
-    console.log("searchOptions: ", searchOptions)
-    console.log("services: ", services)
-    console.log("filters: ", filters)
+    console.log("RENDER services")
     return (
       <Container px={false}>
         {services.isLoading && !services.data ? (
@@ -67,10 +64,14 @@ const Services = ({}) => {
         ) : (
           <>
             <FilterToolbar
-              filters={filters.data}
+              filterTypes={filters.data}
               onSearchTerm={onSearchTerm}
               isLoading={filters.isLoading}
-              isFetching={true}
+              filterLabels={{ name: "service name" }}
+              placeholders={{
+                operators: "User ID or name",
+                owners: "User ID or name",
+              }}
             />
             <ServicesList services={services.data?.Results} />
             <Pagination

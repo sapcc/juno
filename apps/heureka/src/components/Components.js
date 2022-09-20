@@ -1,80 +1,84 @@
 import React, { useEffect, useCallback, useState } from "react"
-import { getComponents } from "../queries"
+import { getComponents, getComponentFilters } from "../queries"
 import useStore from "../store"
 import { useStore as useMessageStore } from "../messageStore"
 import { parseError } from "../helpers"
-import {
-  Stack,
-  Spinner,
-  Container,
-  DataGridToolbar,
-  SearchInput,
-} from "juno-ui-components"
+import { Stack, Spinner, Container } from "juno-ui-components"
 import Pagination from "./Pagination"
 import ComponentsList from "./ComponentsList"
+import FilterToolbar from "./FilterToolbar"
 
 const ITEMS_PER_PAGE = 10
 
 const Components = () => {
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const setMessage = useMessageStore((state) => state.setMessage)
-  const [pagOffset, setPagOffset] = useState(0)
-  const { isLoading, isError, isFetching, data, error } = getComponents(
-    endpoint,
-    {
-      limit: ITEMS_PER_PAGE,
-      offset: pagOffset,
-    }
-  )
+  const [paginationOptions, setPaginationOptions] = useState({
+    limit: ITEMS_PER_PAGE,
+    offset: 0,
+  })
+  const [searchOptions, setSearchOptions] = useState({})
+  const components = getComponents(endpoint, {
+    ...paginationOptions,
+    ...searchOptions,
+  })
 
-  console.log("components DATA: ", data)
+  const filters = getComponentFilters(endpoint)
+
+  console.log("components DATA: ", components.data)
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
-    if (error) {
+    if (components.error) {
       setMessage({
         variant: "error",
-        text: parseError(error),
+        text: parseError(components.error),
       })
     }
-  }, [error])
+  }, [components.error])
 
-  const components = React.useMemo(() => {
-    if (!data?.Results) return []
-    return data.Results
-  }, [data])
+  // const components = React.useMemo(() => {
+  //   if (!components.data?.Results) return []
+  //   return components.data.Results
+  // }, [components.data])
 
   const onPaginationChanged = (offset) => {
-    console.log("offset: ", offset)
-    if (pagOffset !== offset) {
-      setPagOffset(offset)
-    }
+    setPaginationOptions({ ...paginationOptions, offset: offset })
+  }
+
+  const onSearchTerm = (options) => {
+    setSearchOptions(options)
   }
 
   return (
     <Container px={false}>
-      {isLoading && !data ? (
+      {components.isLoading && !components.data ? (
         <Stack alignment="center">
           <Spinner variant="primary" />
           Loading components...
         </Stack>
       ) : (
         <>
-          <DataGridToolbar
-            search={
-              <SearchInput
-                disabled={isError}
-                onSearch={function noRefCheck() {}}
-              />
-            }
+          <FilterToolbar
+            filterTypes={filters.data}
+            onSearchTerm={onSearchTerm}
+            isLoading={filters.isLoading}
+            filterLabels={{
+              name: "component name",
+            }}
+            placeholders={{
+              operators: "User ID or name",
+              owners: "User ID or name",
+              inKeppel: `"true" or "false"`,
+            }}
           />
-          <ComponentsList components={components} />
+          <ComponentsList components={components.data?.Results} />
           <Pagination
-            disabled={isError}
-            count={data?.Count}
+            disabled={components.isError}
+            count={components.data?.Count}
             limit={ITEMS_PER_PAGE}
             onChanged={onPaginationChanged}
-            isFetching={isFetching}
+            isFetching={components.isFetching}
           />
         </>
       )}

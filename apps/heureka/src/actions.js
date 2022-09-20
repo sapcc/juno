@@ -26,16 +26,6 @@ const checkStatus = (response) => {
   }
 }
 
-export const objectToURLParams = (options) => {
-  let params = []
-  if (options && typeof options === "object") {
-    Object.keys(options).forEach((key) => {
-      params.push(`${key}=${options[key]}`)
-    })
-  }
-  return params.join("&")
-}
-
 //
 // SERVICES
 //
@@ -84,7 +74,7 @@ export const vulnerabilities = ({ queryKey }) => {
 }
 
 const fetchFromAPI = (endpoint, path, options) => {
-  const query = objectToURLParams(options)
+  const query = encodeUrlParamsFromObject(options)
   return fetch(`${endpoint}${path}?${query}`, {
     method: "GET",
     headers: {
