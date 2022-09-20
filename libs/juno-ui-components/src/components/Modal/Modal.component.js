@@ -15,16 +15,28 @@ import { Icon } from "../Icon"
 * SM/LG sizes (widths for now).  ✓ 
 * confirmButtonIcon prop  ✓
 * cancelButtonIcon prop  ✓
-* backdrop TODO
+* backdrop  ✓
 * open programmatically TODO
+* handle height/scrolling TODO
 * Spare "variant" prop for semantic variants later. TODO
 * a11y (voicereader, keyboard accessibilty) TODO
 * trap focus TODO
 * render in Portal (how to make sure we're always in scope of StyleProvider? TODO -> add element to styleprovider TODO
 */
 
+const modalcontainerstyles = `
+	jn-fixed
+	jn-inset-0
+	jn-flex
+	jn-items-center
+	jn-bg-theme-modal-backdrop/60
+	jn-backdrop-blur-[2px]
+`
+
 const modalstyles = `
 	jn-bg-theme-background-lvl-2
+	jn-relative
+	jn-m-auto
 `
 
 const headerstyles = `
@@ -103,29 +115,31 @@ export const Modal = ({
 	return (
 		<>
 			{ isOpen && (
-					<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" {...props} >
-						<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
-							{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} >{ title || heading }</h1> : null }
-							{ isCloseable ? <Icon icon="close" onClick={ handleCancelClick }/> : null }
+					<div className={`juno-modal-container ${modalcontainerstyles}`} >
+						<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" {...props} >
+							<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
+								{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} >{ title || heading }</h1> : null }
+								{ isCloseable ? <Icon icon="close" onClick={ handleCancelClick }/> : null }
+							</div>
+							<div className={`juno-modal-content ${contentstyles} ${ unpad ? "" : contentpaddingstyles }`} >
+								{ children }
+							</div>
+							{ isCloseable ? 
+								modalFooter ?
+									modalFooter
+									:
+									<ModalFooter 
+										confirmButtonLabel={confirmButtonLabel} 
+										cancelButtonLabel={cancelButtonLabel} 
+										confirmButtonIcon={confirmButtonIcon}
+										cancelButtonIcon={cancelButtonIcon}
+										onConfirm={handleConfirmClick}
+										onCancel={handleCancelClick}
+									/>
+								: 
+								null 
+							}
 						</div>
-						<div className={`juno-modal-content ${contentstyles} ${ unpad ? "" : contentpaddingstyles }`} >
-							{ children }
-						</div>
-						{ isCloseable ? 
-							modalFooter ?
-								modalFooter
-								:
-								<ModalFooter 
-									confirmButtonLabel={confirmButtonLabel} 
-									cancelButtonLabel={cancelButtonLabel} 
-									confirmButtonIcon={confirmButtonIcon}
-									cancelButtonIcon={cancelButtonIcon}
-									onConfirm={handleConfirmClick}
-									onCancel={handleCancelClick}
-								/>
-							: 
-							null 
-						}
 					</div>
 				)
 			}
