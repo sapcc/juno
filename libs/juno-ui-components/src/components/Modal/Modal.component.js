@@ -16,12 +16,14 @@ import { Icon } from "../Icon"
 * confirmButtonIcon prop  ✓
 * cancelButtonIcon prop  ✓
 * backdrop  ✓
+* EMPTY DOCS IN STORYBOOK? TODO
 * open programmatically TODO
-* handle height/scrolling TODO
+* handle height/scrolling TODO -> allow optional constrainHeight=false prop?
+* Optional CloseOnBackdropClick ? TODO (Discuss)
 * Spare "variant" prop for semantic variants later. TODO
 * a11y (voicereader, keyboard accessibilty) TODO
 * trap focus TODO
-* render in Portal (how to make sure we're always in scope of StyleProvider? TODO -> add element to styleprovider TODO
+* render in Portal (how to make sure we're always in scope of StyleProvider? TODO -> add element to styleprovider TODO, what if there are several StyleProvider on the page?
 */
 
 const modalcontainerstyles = `
@@ -37,6 +39,8 @@ const modalstyles = `
 	jn-bg-theme-background-lvl-2
 	jn-relative
 	jn-m-auto
+	jn-overflow-y-auto
+	jn-max-h-[90%]
 `
 
 const headerstyles = `
@@ -129,12 +133,12 @@ export const Modal = ({
 									modalFooter
 									:
 									<ModalFooter 
-										confirmButtonLabel={confirmButtonLabel} 
-										cancelButtonLabel={cancelButtonLabel} 
-										confirmButtonIcon={confirmButtonIcon}
-										cancelButtonIcon={cancelButtonIcon}
-										onConfirm={handleConfirmClick}
-										onCancel={handleCancelClick}
+										confirmButtonLabel={ confirmButtonLabel } 
+										cancelButtonLabel={ cancelButtonLabel } 
+										confirmButtonIcon={ confirmButtonIcon }
+										cancelButtonIcon={ cancelButtonIcon }
+										onConfirm={ handleConfirmClick }
+										onCancel={ handleCancelClick }
 									/>
 								: 
 								null 
@@ -174,7 +178,7 @@ Modal.propTypes = {
 	unpad: PropTypes.bool,
 	/** Custom className to add to the modal */
 	className: PropTypes.string,
-	/** A handler to execute once the modal is cancelled using the x-Close button,  Cancel-button or pressing ESC */
+	/** A handler to execute once the modal is cancelled or dismissed using the x-Close button,  Cancel-button or pressing ESC */
 	onCancel: PropTypes.func,
 }
 
