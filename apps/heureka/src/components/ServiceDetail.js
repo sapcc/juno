@@ -13,30 +13,13 @@ import {
   Container,
 } from "juno-ui-components"
 import ServiceVulnerabilitiesList from "./ServiceVulnerabilitiesList"
-
-const Header = `
-font-bold
-mt-4
-text-lg
-`
-const Section = `
-mt-6
-`
-const DetailSection = `
-mt-6
-bg-theme-code-block
-rounded
-pb-0.5
-`
-
-const DetailContentHeading = `
-juno-content-area-heading 
-jn-font-bold
-jn-text-lg
-jn-text-theme-high
-jn-pb-2
-jn-pt-6
- `
+import {
+  DetailSection,
+  DetailSectionBox,
+  DetailContentHeading,
+  DetailSectionHeader,
+} from "../styles"
+import LoadingHint from "./LoadingHint"
 
 const listOfUsers = (users) => {
   users = users || []
@@ -91,10 +74,7 @@ const ServiceDetail = () => {
   return (
     <Container px={false}>
       {isLoading && !data ? (
-        <Stack alignment="center">
-          <Spinner variant="primary" />
-          Loading details...
-        </Stack>
+        <LoadingHint text="Loading details..." />
       ) : (
         <>
           {!isError && (
@@ -105,8 +85,8 @@ const ServiceDetail = () => {
                     <Icon className="mr-2" icon="dns" /> {data.Name}
                   </h1>
 
-                  <div className={Section}>
-                    <div className={DetailSection}>
+                  <div className={DetailSection}>
+                    <div className={DetailSectionBox}>
                       <DataGrid gridColumnTemplate="1fr 9fr">
                         <DataGridRow>
                           <DataGridCell>
@@ -130,8 +110,10 @@ const ServiceDetail = () => {
                     </div>
                   </div>
 
-                  <div className={Section}>
-                    <p className={Header}>Vulnerabilities in this service</p>
+                  <div className={DetailSection}>
+                    <p className={DetailSectionHeader}>
+                      Vulnerabilities in this service
+                    </p>
                     <div className="mt-4">
                       <ServiceVulnerabilitiesList components={components} />
                     </div>

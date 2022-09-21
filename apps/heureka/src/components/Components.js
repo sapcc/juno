@@ -7,6 +7,7 @@ import { Stack, Spinner, Container } from "juno-ui-components"
 import Pagination from "./Pagination"
 import ComponentsList from "./ComponentsList"
 import FilterToolbar from "./FilterToolbar"
+import LoadingHint from "./LoadingHint"
 
 const ITEMS_PER_PAGE = 10
 
@@ -48,10 +49,7 @@ const Components = () => {
   return (
     <Container px={false}>
       {components.isLoading && !components.data ? (
-        <Stack alignment="center">
-          <Spinner variant="primary" />
-          Loading components...
-        </Stack>
+        <LoadingHint text="Loading components..." />
       ) : (
         <>
           <FilterToolbar

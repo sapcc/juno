@@ -1,0 +1,23 @@
+export const DetailContentHeading = `
+jn-font-bold
+jn-text-lg
+jn-text-theme-high
+jn-pb-2
+jn-pt-6
+ `
+
+export const DetailSection = `
+mt-6
+`
+
+export const DetailSectionHeader = `
+font-bold
+mt-4
+text-lg
+`
+
+export const DetailSectionBox = `
+bg-theme-code-block
+rounded
+pb-0.5
+`
