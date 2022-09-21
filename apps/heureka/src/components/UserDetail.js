@@ -78,7 +78,7 @@ const UserDetail = ({}) => {
               <div className={DetailSection}>
                 <p className={DetailSectionHeader}>Owned Services</p>
                 <div className="mt-4">
-                  <ServicesList services={data.OwnServices} />
+                  <ServicesList services={data.OwnServices} minimized />
                 </div>
               </div>
 

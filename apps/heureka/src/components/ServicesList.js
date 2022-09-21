@@ -8,7 +8,7 @@ import {
 } from "juno-ui-components"
 import ServicesListItem from "./ServicesListItem"
 
-const ServicesList = ({ services }) => {
+const ServicesList = ({ services, minimized }) => {
   services = useMemo(() => {
     if (!services) return []
     return services
@@ -16,18 +16,22 @@ const ServicesList = ({ services }) => {
 
   return (
     <>
-      <DataGrid gridColumnTemplate="2fr 3fr 2fr 2fr 1fr">
+      <DataGrid gridColumnTemplate={minimized ? "2fr" : "2fr 3fr 2fr 2fr 1fr"}>
         <DataGridRow>
           <DataGridHeadCell>Name</DataGridHeadCell>
-          <DataGridHeadCell>Owners</DataGridHeadCell>
-          <DataGridHeadCell>Operators</DataGridHeadCell>
-          <DataGridHeadCell>Vulnerabilities</DataGridHeadCell>
-          <DataGridHeadCell>Components</DataGridHeadCell>
+          {!minimized && (
+            <>
+              <DataGridHeadCell>Owners</DataGridHeadCell>
+              <DataGridHeadCell>Operators</DataGridHeadCell>
+              <DataGridHeadCell>Vulnerabilities</DataGridHeadCell>
+              <DataGridHeadCell>Components</DataGridHeadCell>
+            </>
+          )}
         </DataGridRow>
         {services.length > 0 ? (
           <>
             {services.map((item, i) => (
-              <ServicesListItem key={i} item={item} />
+              <ServicesListItem key={i} item={item} minimized={minimized} />
             ))}
           </>
         ) : (
