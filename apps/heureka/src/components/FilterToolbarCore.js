@@ -2,15 +2,10 @@ import React, { useMemo, useState, useEffect, useCallback } from "react"
 import { Filters, FilterPill } from "juno-ui-components"
 import { useStore } from "./FilterToolbarStore"
 
-// group selected filters bey key so it can be forwarded as options to the query
-const groupByKey = (items) => {
-  let options = {}
+const toURLOptions = (items) => {
+  let options = []
   items.forEach((item) => {
-    if (options[item.key]) {
-      options[item.key] = `${options[item.key]},${item.value}`
-      return
-    }
-    options[item.key] = item.value
+    options.push({ [item.key]: item.value })
   })
   return options
 }
@@ -47,7 +42,9 @@ const FilterToolbarCore = ({
   }, [filterTypes, filterLabels])
 
   useEffect(() => {
-    onSearchTerm(groupByKey(selectedFilters))
+    console.log("TEST: ", toURLOptions(selectedFilters))
+
+    onSearchTerm(toURLOptions(selectedFilters))
   }, [selectedFilters])
 
   const onSelectChange = (event) => {

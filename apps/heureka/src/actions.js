@@ -9,7 +9,18 @@ class HTTPError extends Error {
 export const encodeUrlParamsFromObject = (options) => {
   if (!options) return ""
   let encodedOptions = Object.keys(options)
-    .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(options[k])}`)
+    .map((k) => {
+      if (typeof options[k] === "object") {
+        const childOption = options[k]
+        return Object.keys(childOption).map(
+          (childKey) =>
+            `${encodeURIComponent(childKey)}=${encodeURIComponent(
+              childOption[childKey]
+            )}`
+        )
+      }
+      return `${encodeURIComponent(k)}=${encodeURIComponent(options[k])}`
+    })
     .join("&")
   return `&${encodedOptions}`
 }
@@ -73,6 +84,11 @@ export const vulnerabilities = ({ queryKey }) => {
   return fetchFromAPI(endpoint, "/vulnerabilities", options)
 }
 
+export const vulnerability = ({ queryKey }) => {
+  const [_key, endpoint, vulnerabilityId] = queryKey
+  return fetchFromAPI(endpoint, `/vulnerabilities/${vulnerabilityId}`)
+}
+
 export const vulnerabilityFilters = ({ queryKey }) => {
   const [_key, endpoint, options] = queryKey
   return fetchFromAPI(endpoint, "/vulnerabilities/filters", options)
@@ -102,6 +118,7 @@ export const userFilters = ({ queryKey }) => {
 //
 
 const fetchFromAPI = (endpoint, path, options) => {
+  console.log("OPTIONS: ", options)
   const query = encodeUrlParamsFromObject(options)
   return fetch(`${endpoint}${path}?${query}`, {
     method: "GET",

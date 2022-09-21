@@ -10,5 +10,15 @@ describe("Actions", () => {
         "&limit=10&offset=0"
       )
     })
+    test("return url param also when object value has an object", () => {
+      expect(
+        encodeUrlParamsFromObject({
+          obj1: { operators: "arturo" },
+          obj2: { operators: "michi" },
+          limit: 10,
+          offset: 0,
+        })
+      ).toEqual("&operators=arturo&operators=michi&limit=10&offset=0")
+    })
   })
 })
