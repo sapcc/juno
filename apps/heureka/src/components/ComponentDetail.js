@@ -4,15 +4,17 @@ import {
   DataGrid,
   DataGridRow,
   DataGridCell,
-  Stack,
-  Spinner,
   Container,
 } from "juno-ui-components"
 import { useRouter } from "url-state-router"
 import { getComponent } from "../queries"
 import { useStore as useMessageStore } from "../messageStore"
 import useStore from "../store"
-import { usersListToString, componentDetailsByType } from "../helpers"
+import {
+  usersListToString,
+  componentDetailsByType,
+  parseError,
+} from "../helpers"
 import VulnerabilitiesList from "./VulnerabilitiesList"
 import PackagesList from "./PackagesList"
 import {
