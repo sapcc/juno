@@ -36,7 +36,7 @@ const ServicesList = ({ services, minimized }) => {
           </>
         ) : (
           <DataGridRow>
-            <DataGridCell colSpan={5}>
+            <DataGridCell colSpan={minimized ? 1 : 5}>
               <Stack alignment="center" distribution="center">
                 <span>No services found</span>
               </Stack>
