@@ -3,7 +3,6 @@ jn-font-bold
 jn-text-lg
 jn-text-theme-high
 jn-pb-2
-jn-pt-6
  `
 
 export const DetailSection = `
