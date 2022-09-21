@@ -10,7 +10,6 @@ import {
   DataGridRow,
   DataGridCell,
   Stack,
-  Spinner,
   Container,
 } from "juno-ui-components"
 import ServiceVulnerabilitiesList from "./ServiceVulnerabilitiesList"
@@ -20,7 +19,8 @@ import {
   DetailContentHeading,
   DetailSectionHeader,
 } from "../styles"
-import LoadingHint from "./LoadingHint"
+import HintLoading from "./HintLoading"
+import HintNotFound from "./HintNotFound"
 
 const listOfUsers = (users) => {
   users = users || []
@@ -75,62 +75,53 @@ const ServiceDetail = () => {
   return (
     <Container px={false}>
       {isLoading && !data ? (
-        <LoadingHint text="Loading details..." />
+        <HintLoading text="Loading details..." />
       ) : (
         <>
-          {!isError && (
+          {data ? (
             <>
-              {data ? (
-                <>
-                  <h1 className={DetailContentHeading}>
-                    <Icon className="mr-2" icon="dns" /> {data.Name}
-                  </h1>
+              <h1 className={DetailContentHeading}>
+                <Icon className="mr-2" icon="dns" /> {data.Name}
+              </h1>
 
-                  <div className={DetailSection}>
-                    <div className={DetailSectionBox}>
-                      <DataGrid gridColumnTemplate="1fr 9fr">
-                        <DataGridRow>
-                          <DataGridCell>
-                            <b>ID: </b>
-                          </DataGridCell>
-                          <DataGridCell>{data.ID}</DataGridCell>
-                        </DataGridRow>
-                        <DataGridRow>
-                          <DataGridCell>
-                            <b>Owners: </b>
-                          </DataGridCell>
-                          <DataGridCell>{owners}</DataGridCell>
-                        </DataGridRow>
-                        <DataGridRow>
-                          <DataGridCell>
-                            <b>Operators: </b>
-                          </DataGridCell>
-                          <DataGridCell>{operators}</DataGridCell>
-                        </DataGridRow>
-                      </DataGrid>
-                    </div>
-                  </div>
+              <div className={DetailSection}>
+                <div className={DetailSectionBox}>
+                  <DataGrid gridColumnTemplate="1fr 9fr">
+                    <DataGridRow>
+                      <DataGridCell>
+                        <b>ID: </b>
+                      </DataGridCell>
+                      <DataGridCell>{data.ID}</DataGridCell>
+                    </DataGridRow>
+                    <DataGridRow>
+                      <DataGridCell>
+                        <b>Owners: </b>
+                      </DataGridCell>
+                      <DataGridCell>{owners}</DataGridCell>
+                    </DataGridRow>
+                    <DataGridRow>
+                      <DataGridCell>
+                        <b>Operators: </b>
+                      </DataGridCell>
+                      <DataGridCell>{operators}</DataGridCell>
+                    </DataGridRow>
+                  </DataGrid>
+                </div>
+              </div>
 
-                  <div className={DetailSection}>
-                    <p className={DetailSectionHeader}>
-                      Vulnerabilities in this service
-                    </p>
-                    <div className="mt-4">
-                      <ServiceVulnerabilitiesList components={components} />
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <Stack
-                  alignment="center"
-                  distribution="center"
-                  direction="vertical"
-                  className="h-full"
-                >
-                  <p>{`No details found for service id ${serviceId}`}</p>
-                </Stack>
-              )}
+              <div className={DetailSection}>
+                <p className={DetailSectionHeader}>
+                  Vulnerabilities in this service
+                </p>
+                <div className="mt-4">
+                  <ServiceVulnerabilitiesList components={components} />
+                </div>
+              </div>
             </>
+          ) : (
+            <HintNotFound
+              text={`No details found for service id ${serviceId}`}
+            />
           )}
         </>
       )}

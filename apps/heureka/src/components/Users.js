@@ -4,7 +4,7 @@ import { useStore as useMessageStore } from "../messageStore"
 import { Stack, Spinner, Container } from "juno-ui-components"
 import { getUsers } from "../queries"
 import UsersList from "./UsersList"
-import LoadingHint from "./LoadingHint"
+import HintLoading from "./HintLoading"
 import { parseError } from "../helpers"
 
 const ITEMS_PER_PAGE = 10
@@ -27,9 +27,11 @@ const Users = ({}) => {
   return (
     <Container px={false}>
       {users.isLoading && !users.data ? (
-        <LoadingHint text="Loading users..." />
+        <HintLoading text="Loading users..." />
       ) : (
-        <UsersList users={users.data?.Results} />
+        <>
+          <UsersList users={users.data?.Results} />
+        </>
       )}
     </Container>
   )

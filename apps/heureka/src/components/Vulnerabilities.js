@@ -7,7 +7,7 @@ import { parseError } from "../helpers"
 import Pagination from "./Pagination"
 import VulnerabilitiesList from "./VulnerabilitiesList"
 import FilterToolbar from "./FilterToolbar"
-import LoadingHint from "./LoadingHint"
+import HintLoading from "./HintLoading"
 
 const ITEMS_PER_PAGE = 10
 
@@ -48,7 +48,7 @@ const Vulnerabilities = ({}) => {
   return (
     <Container px={false}>
       {vulnerabilities.isLoading && !vulnerabilities.data ? (
-        <LoadingHint text="Loading vulnerabilities..." />
+        <HintLoading text="Loading vulnerabilities..." />
       ) : (
         <>
           <FilterToolbar

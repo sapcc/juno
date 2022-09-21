@@ -7,6 +7,7 @@ import {
   DataGridCell,
 } from "juno-ui-components"
 import ServicesListItem from "./ServicesListItem"
+import HintNotFound from "./HintNotFound"
 
 const ServicesList = ({ services, minimized }) => {
   services = useMemo(() => {
@@ -37,9 +38,7 @@ const ServicesList = ({ services, minimized }) => {
         ) : (
           <DataGridRow>
             <DataGridCell colSpan={minimized ? 1 : 5}>
-              <Stack alignment="center" distribution="center">
-                <span>No services found</span>
-              </Stack>
+              <HintNotFound text="No services found" />
             </DataGridCell>
           </DataGridRow>
         )}

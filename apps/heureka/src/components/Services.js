@@ -7,7 +7,7 @@ import { parseError } from "../helpers"
 import Pagination from "./Pagination"
 import ServicesList from "./ServicesList"
 import FilterToolbar from "./FilterToolbar"
-import LoadingHint from "./LoadingHint"
+import HintLoading from "./HintLoading"
 
 const ITEMS_PER_PAGE = 10
 
@@ -58,7 +58,7 @@ const Services = ({}) => {
     return (
       <Container px={false}>
         {services.isLoading && !services.data ? (
-          <LoadingHint text="Loading services..." />
+          <HintLoading text="Loading services..." />
         ) : (
           <>
             <FilterToolbar

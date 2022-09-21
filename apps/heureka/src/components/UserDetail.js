@@ -19,9 +19,10 @@ import {
   DetailContentHeading,
   DetailSectionHeader,
 } from "../styles"
-import LoadingHint from "./LoadingHint"
+import HintLoading from "./HintLoading"
 import ServicesList from "./ServicesList"
 import { parseError } from "../helpers"
+import HintNotFound from "./HintNotFound"
 
 const UserDetail = ({}) => {
   const { routeParams } = useRouter()
@@ -48,10 +49,10 @@ const UserDetail = ({}) => {
   return (
     <Container px={false}>
       {isLoading && !data ? (
-        <LoadingHint text="Loading details..." />
+        <HintLoading text="Loading details..." />
       ) : (
         <>
-          {!isError && (
+          {data ? (
             <>
               <h1 className={DetailContentHeading}>
                 <Icon className="mr-2" icon="accountCircle" /> {data.Name}
@@ -87,6 +88,8 @@ const UserDetail = ({}) => {
                 <div className="mt-4"></div>
               </div>
             </>
+          ) : (
+            <HintNotFound text={`No details found for user id ${userId}`} />
           )}
         </>
       )}

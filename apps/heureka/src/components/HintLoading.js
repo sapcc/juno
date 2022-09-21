@@ -1,7 +1,7 @@
 import React from "react"
 import { Stack, Spinner } from "juno-ui-components"
 
-const LoadingHint = ({ text }) => {
+const HintLoading = ({ text }) => {
   return (
     <Stack alignment="center">
       <Spinner variant="primary" />
@@ -10,4 +10,4 @@ const LoadingHint = ({ text }) => {
   )
 }
 
-export default LoadingHint
+export default HintLoading

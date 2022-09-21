@@ -22,7 +22,8 @@ import {
   DetailContentHeading,
   DetailSectionHeader,
 } from "../styles"
-import LoadingHint from "./LoadingHint"
+import HintLoading from "./HintLoading"
+import HintNotFound from "./HintNotFound"
 
 const DetailSectionTop = `
 bg-theme-code-block
@@ -72,10 +73,10 @@ const ComponentDetail = () => {
   return (
     <Container px={false}>
       {isLoading && !data ? (
-        <LoadingHint text="Loading details..." />
+        <HintLoading text="Loading details..." />
       ) : (
         <>
-          {!isError && (
+          {data ? (
             <>
               <h1 className={DetailContentHeading}>
                 <Icon className="mr-2" icon="widgets" /> {data.Name}
@@ -141,6 +142,10 @@ const ComponentDetail = () => {
                 </div>
               </div>
             </>
+          ) : (
+            <HintNotFound
+              text={`No details found for component id ${componentId}`}
+            />
           )}
         </>
       )}

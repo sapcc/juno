@@ -7,6 +7,7 @@ import {
   DataGridHeadCell,
   DataGridCell,
 } from "juno-ui-components"
+import HintNotFound from "./HintNotFound"
 
 const ComponentsList = ({ components, minimized }) => {
   components = useMemo(() => {
@@ -38,9 +39,7 @@ const ComponentsList = ({ components, minimized }) => {
       ) : (
         <DataGridRow>
           <DataGridCell colSpan={minimized ? 3 : 7}>
-            <Stack alignment="center" distribution="center">
-              <span>No components found</span>
-            </Stack>
+            <HintNotFound text="No components found" />
           </DataGridCell>
         </DataGridRow>
       )}

@@ -7,6 +7,7 @@ import {
   DataGridHeadCell,
 } from "juno-ui-components"
 import UserListItem from "./UsersListItem"
+import HintNotFound from "./HintNotFound"
 
 const UsersList = ({ users }) => {
   users = useMemo(() => {
@@ -32,9 +33,7 @@ const UsersList = ({ users }) => {
         ) : (
           <DataGridRow>
             <DataGridCell colSpan={4}>
-              <Stack alignment="center" distribution="center">
-                <span>No users found</span>
-              </Stack>
+              <HintNotFound text="No users found" />
             </DataGridCell>
           </DataGridRow>
         )}

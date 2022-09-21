@@ -8,6 +8,7 @@ import {
 } from "juno-ui-components"
 import VulnerabilitiesListItem from "./VulnerabilitiesListItem"
 import { threadLevelToWeight } from "../helpers"
+import HintNotFound from "./HintNotFound"
 
 const VulnerabilitiesList = ({ vulnerabilities, sortBy, minimized }) => {
   vulnerabilities = useMemo(() => {
@@ -49,9 +50,7 @@ const VulnerabilitiesList = ({ vulnerabilities, sortBy, minimized }) => {
       ) : (
         <DataGridRow>
           <DataGridCell colSpan={minimized ? 4 : 5}>
-            <Stack alignment="center" distribution="center">
-              <span>No vulnerabilities found</span>
-            </Stack>
+            <HintNotFound text="No vulnerabilities found" />
           </DataGridCell>
         </DataGridRow>
       )}
