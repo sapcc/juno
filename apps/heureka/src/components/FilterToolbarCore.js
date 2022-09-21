@@ -71,6 +71,9 @@ const FilterToolbarCore = ({
     if (filterKey === "") {
       return setError("Please select a filter type")
     }
+    if (value === "") {
+      return setError("Filter value can't be blank")
+    }
     addFilter(filterKey, value)
   }
 
@@ -82,7 +85,7 @@ const FilterToolbarCore = ({
       }}
       valuePlaceholder={placeholder}
       loading={isLoading}
-      onFilter={(e) => onFilter(e.target.value)}
+      onFilter={onFilter}
       onSelectedFilterKeyChange={onSelectChange}
     >
       {selectedFilters.map((item, index) => (
@@ -94,7 +97,11 @@ const FilterToolbarCore = ({
           onClose={onPillClosed}
         />
       ))}
-      {error && <span className="text-theme-danger">{error}</span>}
+      {error && (
+        <div className="basis-full">
+          <span className="text-theme-danger">{error}</span>
+        </div>
+      )}
     </Filters>
   )
 }
