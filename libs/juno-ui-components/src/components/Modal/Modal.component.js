@@ -24,6 +24,7 @@ import { Icon } from "../Icon"
 * a11y (voicereader, keyboard accessibilty) TODO
 * trap focus TODO
 * render in Portal (how to make sure we're always in scope of StyleProvider? TODO -> add element to styleprovider TODO, what if there are several StyleProvider on the page?
+* Tests TODO
 */
 
 const modalcontainerstyles = `
