@@ -78,6 +78,24 @@ export const vulnerabilityFilters = ({ queryKey }) => {
   return fetchFromAPI(endpoint, "/vulnerabilities/filters", options)
 }
 
+//
+// USERS
+//
+
+export const users = ({ queryKey }) => {
+  const [_key, endpoint, options] = queryKey
+  return fetchFromAPI(endpoint, "/users", options)
+}
+
+export const user = ({ queryKey }) => {
+  const [_key, endpoint, userId] = queryKey
+  return fetchFromAPI(endpoint, `/users/${userId}`)
+}
+
+//
+// COMMONS
+//
+
 const fetchFromAPI = (endpoint, path, options) => {
   const query = encodeUrlParamsFromObject(options)
   return fetch(`${endpoint}${path}?${query}`, {

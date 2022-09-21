@@ -6,10 +6,13 @@ import ServiceDetail from "./ServiceDetail"
 import Components from "./Components"
 import ComponentDetail from "./ComponentDetail"
 import Vulnerabilities from "./Vulnerabilities"
+import Users from "./Users"
+import UserDetail from "./UserDetail"
 
 export const SERVICES_PATH = "/services"
 export const COMPONENTS_PATH = "/components"
 export const VULNERABILITIES_PATH = "/vulnerabilities"
+export const USERS_PATH = "/users"
 export const TABS_CONFIG = [
   { path: SERVICES_PATH, label: "Services", icon: "dns" },
   { path: COMPONENTS_PATH, label: "Components", icon: "widgets" },
@@ -17,6 +20,11 @@ export const TABS_CONFIG = [
     path: VULNERABILITIES_PATH,
     label: "Vulnerabilities",
     icon: "autoAwesomeMotion",
+  },
+  {
+    path: USERS_PATH,
+    label: "Users",
+    icon: "accountCircle",
   },
 ]
 
@@ -46,6 +54,8 @@ const AppRouter = (props) => {
             path={VULNERABILITIES_PATH}
             component={Vulnerabilities}
           />
+          <Route exact path={USERS_PATH} component={Users} />
+          <Route exact path={`${USERS_PATH}/:userId`} component={UserDetail} />
         </Switch>
       </AppContainer>
     </Router>
