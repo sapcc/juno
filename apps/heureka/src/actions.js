@@ -6,7 +6,7 @@ class HTTPError extends Error {
   }
 }
 
-const encodeUrlParamsFromObject = (options) => {
+export const encodeUrlParamsFromObject = (options) => {
   if (!options) return ""
   let encodedOptions = Object.keys(options)
     .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(options[k])}`)

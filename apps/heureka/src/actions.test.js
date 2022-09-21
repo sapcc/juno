@@ -1,13 +1,13 @@
-import { objectToURLParams } from "./actions"
+import { encodeUrlParamsFromObject } from "./actions"
 
 describe("Actions", () => {
-  describe("objectToURLParams", () => {
+  describe("encodeUrlParamsFromObject", () => {
     test("return empty string if no object given", () => {
-      expect(objectToURLParams()).toEqual("")
+      expect(encodeUrlParamsFromObject()).toEqual("")
     })
     test("return url params when object given", () => {
-      expect(objectToURLParams({ limit: 10, offset: 0 })).toEqual(
-        "limit=10&offset=0"
+      expect(encodeUrlParamsFromObject({ limit: 10, offset: 0 })).toEqual(
+        "&limit=10&offset=0"
       )
     })
   })
