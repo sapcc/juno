@@ -2,6 +2,8 @@ import React, { useMemo } from "react"
 import { DataGridRow, DataGridCell } from "juno-ui-components"
 import { DateTime } from "luxon"
 import VulnerabilityBadge from "./VulnerabilityBadge"
+import { Link } from "url-state-router"
+import { VULNERABILITIES_PATH } from "./AppRouter"
 
 const IdClasses = `
 text-sm 
@@ -24,8 +26,10 @@ const VulnerabilitiesListItem = ({ item, minimized }) => {
   return (
     <DataGridRow>
       <DataGridCell>
-        <span>{item.ScnID}</span>
-        <div className={IdClasses}>{item.CveID}</div>
+        <Link to={`${VULNERABILITIES_PATH}/${item.ID}`}>
+          <span>{item.ScnID}</span>
+          <div className={IdClasses}>{item.CveID}</div>
+        </Link>
       </DataGridCell>
       <DataGridCell>
         <div className={VulnerabilityCss}>

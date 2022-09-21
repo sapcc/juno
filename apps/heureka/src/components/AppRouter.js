@@ -6,6 +6,7 @@ import ServiceDetail from "./ServiceDetail"
 import Components from "./Components"
 import ComponentDetail from "./ComponentDetail"
 import Vulnerabilities from "./Vulnerabilities"
+import VulnerabilitiyDetails from "./VulnerabilitiyDetails"
 import Users from "./Users"
 import UserDetail from "./UserDetail"
 
@@ -53,6 +54,11 @@ const AppRouter = (props) => {
             exact
             path={VULNERABILITIES_PATH}
             component={Vulnerabilities}
+          />
+          <Route
+            exact
+            path={`${VULNERABILITIES_PATH}/:vulnerabilityId`}
+            component={VulnerabilitiyDetails}
           />
           <Route exact path={USERS_PATH} component={Users} />
           <Route exact path={`${USERS_PATH}/:userId`} component={UserDetail} />

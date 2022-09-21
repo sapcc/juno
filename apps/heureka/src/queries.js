@@ -7,6 +7,7 @@ import {
   componentFilters,
   component,
   vulnerabilities,
+  vulnerability,
   vulnerabilityFilters,
   users,
   user,
@@ -95,6 +96,21 @@ export const getVulnerabilities = (endpoint, options) => {
     // When the new data arrives, the previous data is seamlessly swapped to show the new data.
     // isPreviousData is made available to know what data the query is currently providing you
     keepPreviousData: true,
+  })
+}
+
+export const getVulnerability = (
+  endpoint,
+  vulnerabilityId,
+  placeholderData
+) => {
+  return useQuery(["user", endpoint, vulnerabilityId], vulnerability, {
+    // The query will not execute until the bearerToken exists
+    enabled: !!endpoint,
+    // Placeholder data allows a query to behave as if it already has data, similar to the initialData option,
+    // but the data is not persisted to the cache. This comes in handy for situations where you have enough partial (or fake)
+    // data to render the query successfully while the actual data is fetched in the background.
+    placeholderData: placeholderData,
   })
 }
 

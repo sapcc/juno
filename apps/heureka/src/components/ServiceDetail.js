@@ -9,7 +9,6 @@ import {
   DataGrid,
   DataGridRow,
   DataGridCell,
-  Stack,
   Container,
 } from "juno-ui-components"
 import ServiceVulnerabilitiesList from "./ServiceVulnerabilitiesList"
