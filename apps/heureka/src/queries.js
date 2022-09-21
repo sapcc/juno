@@ -4,8 +4,10 @@ import {
   serviceFilters,
   service,
   components,
+  componentFilters,
   component,
   vulnerabilities,
+  vulnerabilityFilters,
 } from "./actions"
 
 // get all services
@@ -28,6 +30,9 @@ export const getServiceFilters = (endpoint, options) => {
     // When the new data arrives, the previous data is seamlessly swapped to show the new data.
     // isPreviousData is made available to know what data the query is currently providing you
     keepPreviousData: true,
+    // If a user leaves your application and returns to stale data, React Query automatically requests fresh data for you in the background.
+    // You can disable this globally or per-query using the refetchOnWindowFocus option
+    refetchOnWindowFocus: false,
   })
 }
 
@@ -54,6 +59,20 @@ export const getComponents = (endpoint, options) => {
   })
 }
 
+export const getComponentFilters = (endpoint, options) => {
+  return useQuery(["componentFilters", endpoint, options], componentFilters, {
+    // The query will not execute until the bearerToken exists
+    enabled: !!endpoint,
+    // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
+    // When the new data arrives, the previous data is seamlessly swapped to show the new data.
+    // isPreviousData is made available to know what data the query is currently providing you
+    keepPreviousData: true,
+    // If a user leaves your application and returns to stale data, React Query automatically requests fresh data for you in the background.
+    // You can disable this globally or per-query using the refetchOnWindowFocus option
+    refetchOnWindowFocus: false,
+  })
+}
+
 export const getComponent = (endpoint, componentId, placeholderData) => {
   return useQuery(["component", endpoint, componentId], component, {
     // The query will not execute until the bearerToken exists
@@ -74,4 +93,22 @@ export const getVulnerabilities = (endpoint, options) => {
     // isPreviousData is made available to know what data the query is currently providing you
     keepPreviousData: true,
   })
+}
+
+export const getVulnerabilityFilters = (endpoint, options) => {
+  return useQuery(
+    ["vulnerabilityFilters", endpoint, options],
+    vulnerabilityFilters,
+    {
+      // The query will not execute until the bearerToken exists
+      enabled: !!endpoint,
+      // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
+      // When the new data arrives, the previous data is seamlessly swapped to show the new data.
+      // isPreviousData is made available to know what data the query is currently providing you
+      keepPreviousData: true,
+      // If a user leaves your application and returns to stale data, React Query automatically requests fresh data for you in the background.
+      // You can disable this globally or per-query using the refetchOnWindowFocus option
+      refetchOnWindowFocus: false,
+    }
+  )
 }

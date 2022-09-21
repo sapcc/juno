@@ -93,7 +93,7 @@ const PageFooter = () => {
             <div className="mt-auto">
               <Button
                 label="Contact our support"
-                href="https://documentation.global.cloud.sap/docs/support#support"
+                href="https://documentation.global.cloud.sap/docs/customer/docs/support/contact-us/"
                 icon="insertComment"
                 size="small"
                 target="_blank"
@@ -105,7 +105,7 @@ const PageFooter = () => {
 
           <a
             className="group block col-span-2 bg-theme-accent text-juno-grey-blue-11 rounded"
-            href="https://documentation.global.cloud.sap/docs/support-prod-sys-down"
+            href="https://documentation.global.cloud.sap/docs/customer/docs/support/service-now-ticket-creation/support-prod-sys-down/"
             target="_blank"
           >
             <Stack gap="2">

@@ -13,5 +13,6 @@ export const Default = Template.bind({})
 Default.args = {
   filterKey: "os",
   filterKeyLabel: "OS",
+  filterValue: "mac_os",
   filterValueLabel: "Mac OS",
 }

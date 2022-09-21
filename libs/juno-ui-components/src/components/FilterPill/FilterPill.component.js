@@ -36,44 +36,58 @@ const filtervalueStyles = `
 A Pill to represent Key and Value of a filter. Can be closed to un-apply the filter represented.
 Mostly to be used inside a Filters component in conjunction with FilterInput. */
 export const FilterPill = ({
-	filterKey,
-	filterKeyLabel,
-	filterValueLabel,
-	onClose,
-	className,
-	...props
-}) => { 
-	
-	const handleCloseClick = (event) => {
-		onClose && onClose(event)
-	}
-	
-	return (
-		<div className={`juno-filterpill ${filterpillStyles} ${className}`} {...props} >
-			<span className={`${filterkeyStyles}`}>{filterKeyLabel}</span>
-			<span className={`${filtervalueStyles}`}>{filterValueLabel}</span>
-			<Icon icon="close" size="18" onClick={handleCloseClick} />
-		</div>
-	)
+  uid,
+  filterKey,
+  filterKeyLabel,
+  filterValue,
+  filterValueLabel,
+  onClose,
+  className,
+  ...props
+}) => {
+  const handleCloseClick = () => {
+    onClose && onClose(uid || filterKey)
+  }
+
+  return (
+    <div
+      className={`juno-filterpill ${filterpillStyles} ${className}`}
+      {...props}
+    >
+      <span className={`${filterkeyStyles}`}>
+        {filterKeyLabel || filterKey}
+      </span>
+      <span className={`${filtervalueStyles}`}>
+        {filterValueLabel || filterValue}
+      </span>
+      <Icon icon="close" size="18" onClick={handleCloseClick} />
+    </div>
+  )
 }
 
 FilterPill.propTypes = {
-	/** The key of the filter the pill represents */
-	filterKey: PropTypes.string,
-	/** The visible label to describe the filter key */
-	filterKeyLabel: PropTypes.string,
-	/** The visible label to describe the filter value */
-	filterValueLabel: PropTypes.string,
-	/** add custom classNames */
-	className: PropTypes.string,
-	/** Pass a handler to be executed when closing the FilterPill */
-	onClose: PropTypes.func,
+  /** The unique identifier of the pill. Returned by the onClose callback */
+  uid: PropTypes.string,
+  /** The key of the filter the pill represents. Returned by the onClose callback if uid undefined */
+  filterKey: PropTypes.string.isRequired,
+  /** The visible label to describe the filter key. If not set filterKey is used */
+  filterKeyLabel: PropTypes.string,
+  /** The value of filter the pill represents */
+  filterValue: PropTypes.string.isRequired,
+  /** The visible label to describe the filter value. If not set filterValue is used */
+  filterValueLabel: PropTypes.string,
+  /** add custom classNames */
+  className: PropTypes.string,
+  /** Pass a handler to be executed when closing the FilterPill */
+  onClose: PropTypes.func,
 }
 
 FilterPill.defaultProps = {
-	filterKey: "",
-	filterKeyLabel: "Key",
-	filterValueLabel: "Value",
-	onClose: undefined,
-	className: ""
+  uid: undefined,
+  filterKey: undefined,
+  filterKeyLabel: undefined,
+  filterValue: undefined,
+  filterValueLabel: undefined,
+  onClose: undefined,
+  className: "",
 }
