@@ -5,6 +5,7 @@ import {
   DataGrid,
   DataGridRow,
   DataGridHeadCell,
+  DataGridCell,
 } from "juno-ui-components"
 
 const ComponentsList = ({ components, minimized }) => {
