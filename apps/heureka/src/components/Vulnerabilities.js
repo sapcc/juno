@@ -25,8 +25,6 @@ const Vulnerabilities = ({}) => {
   })
   const filters = getVulnerabilityFilters(endpoint)
 
-  console.log("Vulnerabilities: ", vulnerabilities.data)
-
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
     if (vulnerabilities.error) {
@@ -37,6 +35,15 @@ const Vulnerabilities = ({}) => {
     }
   }, [vulnerabilities.error])
 
+  useEffect(() => {
+    if (filters.error) {
+      setMessage({
+        variant: "error",
+        text: parseError(filters.error),
+      })
+    }
+  }, [filters.error])
+
   const onPaginationChanged = (offset) => {
     setPaginationOptions({ ...paginationOptions, offset: offset })
   }
@@ -44,6 +51,8 @@ const Vulnerabilities = ({}) => {
   const onSearchTerm = (options) => {
     setSearchOptions(options)
   }
+
+  console.log("Vulnerabilities: ", vulnerabilities.data)
 
   return (
     <Container px={false}>

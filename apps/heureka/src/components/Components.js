@@ -26,8 +26,6 @@ const Components = () => {
 
   const filters = getComponentFilters(endpoint)
 
-  console.log("components DATA: ", components.data)
-
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
     if (components.error) {
@@ -38,6 +36,15 @@ const Components = () => {
     }
   }, [components.error])
 
+  useEffect(() => {
+    if (filters.error) {
+      setMessage({
+        variant: "error",
+        text: parseError(filters.error),
+      })
+    }
+  }, [filters.error])
+
   const onPaginationChanged = (offset) => {
     setPaginationOptions({ ...paginationOptions, offset: offset })
   }
@@ -45,6 +52,8 @@ const Components = () => {
   const onSearchTerm = (options) => {
     setSearchOptions(options)
   }
+
+  console.log("components DATA: ", components.data)
 
   return (
     <Container px={false}>

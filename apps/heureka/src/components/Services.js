@@ -37,7 +37,6 @@ const Services = ({}) => {
 
   useEffect(() => {
     if (filters.error) {
-      console.log("filters error:", filters.error)
       setMessage({
         variant: "error",
         text: parseError(filters.error),

@@ -92,6 +92,11 @@ export const user = ({ queryKey }) => {
   return fetchFromAPI(endpoint, `/users/${userId}`)
 }
 
+export const userFilters = ({ queryKey }) => {
+  const [_key, endpoint, options] = queryKey
+  return fetchFromAPI(endpoint, "/users/filters", options)
+}
+
 //
 // COMMONS
 //
