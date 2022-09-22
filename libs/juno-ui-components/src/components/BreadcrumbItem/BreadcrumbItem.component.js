@@ -24,11 +24,14 @@ export const BreadcrumbItem = ({
       { children ?
           children
         : 
-          active ? 
-              label
-            : 
-              <a href={href}>{label}</a> 
-
+          <>
+            { icon ? <Icon icon={icon} /> : null}
+            { active ? 
+                label
+              : 
+                <a href={href}>{label}</a> 
+            }
+          </>
       }
     </span>
   )

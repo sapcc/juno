@@ -28,7 +28,7 @@ export default {
 export const Default = Template.bind({})
 Default.args = {
   children: [
-    {...HomeItem.args, label: "Home"},
+    {...HomeItem.args, label: "Home", icon: "place"},
     {...Item.args, children: "Child"}, // test with actual Icon component
     {...Item.args},
     {...ActiveItem.args},
