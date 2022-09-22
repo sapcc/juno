@@ -1,7 +1,14 @@
 import React, { useMemo } from "react"
-import { DataGrid, DataGridRow, DataGridHeadCell } from "juno-ui-components"
+import {
+  DataGrid,
+  DataGridRow,
+  DataGridHeadCell,
+  DataGridCell,
+  Stack,
+} from "juno-ui-components"
 import VulnerabilitiesListItem from "./VulnerabilitiesListItem"
 import { threadLevelToWeight } from "../helpers"
+import HintNotFound from "./HintNotFound"
 
 const VulnerabilitiesList = ({ vulnerabilities, sortBy, minimized }) => {
   vulnerabilities = useMemo(() => {
@@ -29,13 +36,24 @@ const VulnerabilitiesList = ({ vulnerabilities, sortBy, minimized }) => {
         <DataGridHeadCell>Last modified</DataGridHeadCell>
         <DataGridHeadCell>State</DataGridHeadCell>
       </DataGridRow>
-      {vulnerabilities.map((item, index) => (
-        <VulnerabilitiesListItem
-          key={index}
-          item={item}
-          minimized={minimized}
-        ></VulnerabilitiesListItem>
-      ))}
+      {vulnerabilities.length > 0 ? (
+        <>
+          {" "}
+          {vulnerabilities.map((item, index) => (
+            <VulnerabilitiesListItem
+              key={index}
+              item={item}
+              minimized={minimized}
+            ></VulnerabilitiesListItem>
+          ))}
+        </>
+      ) : (
+        <DataGridRow>
+          <DataGridCell colSpan={minimized ? 4 : 5}>
+            <HintNotFound text="No vulnerabilities found" />
+          </DataGridCell>
+        </DataGridRow>
+      )}
     </DataGrid>
   )
 }

@@ -7,6 +7,7 @@ import { parseError } from "../helpers"
 import Pagination from "./Pagination"
 import ServicesList from "./ServicesList"
 import FilterToolbar from "./FilterToolbar"
+import HintLoading from "./HintLoading"
 
 const ITEMS_PER_PAGE = 10
 
@@ -36,7 +37,6 @@ const Services = ({}) => {
 
   useEffect(() => {
     if (filters.error) {
-      console.log("filters error:", filters.error)
       setMessage({
         variant: "error",
         text: parseError(filters.error),
@@ -57,10 +57,7 @@ const Services = ({}) => {
     return (
       <Container px={false}>
         {services.isLoading && !services.data ? (
-          <Stack alignment="center">
-            <Spinner variant="primary" />
-            Loading services...
-          </Stack>
+          <HintLoading text="Loading services..." />
         ) : (
           <>
             <FilterToolbar

@@ -10,7 +10,7 @@ mr-2
 bg-cover 
 `
 
-const Avatar = ({ user }) => {
+const Avatar = ({ user, displayName }) => {
   return (
     <Stack alignment="center">
       <div
@@ -20,7 +20,7 @@ const Avatar = ({ user }) => {
         }}
         className={avatarCss}
       />
-      <span>{user.Name}</span>
+      {displayName && <span>{user.Name}</span>}
     </Stack>
   )
 }

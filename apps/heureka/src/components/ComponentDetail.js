@@ -4,27 +4,26 @@ import {
   DataGrid,
   DataGridRow,
   DataGridCell,
-  Stack,
-  Spinner,
   Container,
 } from "juno-ui-components"
 import { useRouter } from "url-state-router"
 import { getComponent } from "../queries"
 import { useStore as useMessageStore } from "../messageStore"
 import useStore from "../store"
-import { usersListToString, componentDetailsByType } from "../helpers"
+import {
+  usersListToString,
+  componentDetailsByType,
+  parseError,
+} from "../helpers"
 import VulnerabilitiesList from "./VulnerabilitiesList"
 import PackagesList from "./PackagesList"
-
-const Header = `
-font-bold
-mt-4
-text-lg
-`
-
-const Section = `
-mt-6
-`
+import {
+  DetailSection,
+  DetailContentHeading,
+  DetailSectionHeader,
+} from "../styles"
+import HintLoading from "./HintLoading"
+import HintNotFound from "./HintNotFound"
 
 const DetailSectionTop = `
 bg-theme-code-block
@@ -37,15 +36,6 @@ bg-theme-code-block
 rounded-b
 pb-0.5
 `
-
-const DetailContentHeading = `
-juno-content-area-heading 
-jn-font-bold
-jn-text-lg
-jn-text-theme-high
-jn-pb-2
-jn-pt-6
- `
 
 const ComponentDetail = () => {
   const { options, routeParams } = useRouter()
@@ -83,19 +73,16 @@ const ComponentDetail = () => {
   return (
     <Container px={false}>
       {isLoading && !data ? (
-        <Stack alignment="center">
-          <Spinner variant="primary" />
-          Loading details...
-        </Stack>
+        <HintLoading text="Loading details..." />
       ) : (
         <>
-          {!isError && (
+          {data ? (
             <>
               <h1 className={DetailContentHeading}>
                 <Icon className="mr-2" icon="widgets" /> {data.Name}
               </h1>
 
-              <div className={Section}>
+              <div className={DetailSection}>
                 <div className={DetailSectionTop}>
                   <DataGrid gridColumnTemplate="1.5fr 8.5fr">
                     <DataGridRow>
@@ -137,8 +124,8 @@ const ComponentDetail = () => {
                   </DataGrid>
                 </div>
               </div>
-              <div className={Section}>
-                <p className={Header}>Vulnerabilities</p>
+              <div className={DetailSection}>
+                <p className={DetailSectionHeader}>Vulnerabilities</p>
                 <div className="mt-4">
                   <VulnerabilitiesList
                     vulnerabilities={data.Vulnerabilities}
@@ -148,13 +135,17 @@ const ComponentDetail = () => {
                 </div>
               </div>
 
-              <div className={Section}>
-                <p className={Header}>Packages</p>
+              <div className={DetailSection}>
+                <p className={DetailSectionHeader}>Packages</p>
                 <div className="mt-4">
                   <PackagesList packages={data.Packages} />
                 </div>
               </div>
             </>
+          ) : (
+            <HintNotFound
+              text={`No details found for component id ${componentId}`}
+            />
           )}
         </>
       )}

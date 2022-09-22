@@ -22,7 +22,7 @@ const listOfUsers = (users) => {
   ))
 }
 
-const ServicesListItem = ({ item }) => {
+const ServicesListItem = ({ item, minimized }) => {
   const owners = useMemo(() => {
     return listOfUsers(item.Owners)
   }, [item.Owners])
@@ -45,19 +45,23 @@ const ServicesListItem = ({ item }) => {
       <DataGridCell className={cellClasses}>
         <Link to={`${SERVICES_PATH}/${item.ID}`}>{item.Name}</Link>
       </DataGridCell>
-      <DataGridCell className={cellClasses}>{owners}</DataGridCell>
-      <DataGridCell className={cellClasses}>{operators}</DataGridCell>
-      <DataGridCell className={cellClasses}>
-        <VulnerabilitiesOverview vulnerabilities={vulnerabilities} />
-      </DataGridCell>
-      <DataGridCell className={cellClasses}>
-        <div>
-          <Badge className="pb-1.5" text="default">
-            <Icon className="mr-2" icon="widgets" />
-            {components.length}
-          </Badge>
-        </div>
-      </DataGridCell>
+      {!minimized && (
+        <>
+          <DataGridCell className={cellClasses}>{owners}</DataGridCell>
+          <DataGridCell className={cellClasses}>{operators}</DataGridCell>
+          <DataGridCell className={cellClasses}>
+            <VulnerabilitiesOverview vulnerabilities={vulnerabilities} />
+          </DataGridCell>
+          <DataGridCell className={cellClasses}>
+            <div>
+              <Badge className="pb-1.5" text="default">
+                <Icon className="mr-2" icon="widgets" />
+                {components.length}
+              </Badge>
+            </div>
+          </DataGridCell>
+        </>
+      )}
     </DataGridRow>
   )
 }

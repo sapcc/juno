@@ -7,6 +7,7 @@ import { parseError } from "../helpers"
 import Pagination from "./Pagination"
 import VulnerabilitiesList from "./VulnerabilitiesList"
 import FilterToolbar from "./FilterToolbar"
+import HintLoading from "./HintLoading"
 
 const ITEMS_PER_PAGE = 10
 
@@ -24,8 +25,6 @@ const Vulnerabilities = ({}) => {
   })
   const filters = getVulnerabilityFilters(endpoint)
 
-  console.log("Vulnerabilities: ", vulnerabilities.data)
-
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
     if (vulnerabilities.error) {
@@ -36,6 +35,15 @@ const Vulnerabilities = ({}) => {
     }
   }, [vulnerabilities.error])
 
+  useEffect(() => {
+    if (filters.error) {
+      setMessage({
+        variant: "error",
+        text: parseError(filters.error),
+      })
+    }
+  }, [filters.error])
+
   const onPaginationChanged = (offset) => {
     setPaginationOptions({ ...paginationOptions, offset: offset })
   }
@@ -44,13 +52,12 @@ const Vulnerabilities = ({}) => {
     setSearchOptions(options)
   }
 
+  console.log("Vulnerabilities: ", vulnerabilities.data)
+
   return (
     <Container px={false}>
       {vulnerabilities.isLoading && !vulnerabilities.data ? (
-        <Stack alignment="center">
-          <Spinner variant="primary" />
-          Loading vulnerabilities...
-        </Stack>
+        <HintLoading text="Loading vulnerabilities..." />
       ) : (
         <>
           <FilterToolbar

@@ -7,6 +7,7 @@ import { Stack, Spinner, Container } from "juno-ui-components"
 import Pagination from "./Pagination"
 import ComponentsList from "./ComponentsList"
 import FilterToolbar from "./FilterToolbar"
+import HintLoading from "./HintLoading"
 
 const ITEMS_PER_PAGE = 10
 
@@ -25,8 +26,6 @@ const Components = () => {
 
   const filters = getComponentFilters(endpoint)
 
-  console.log("components DATA: ", components.data)
-
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
     if (components.error) {
@@ -37,6 +36,15 @@ const Components = () => {
     }
   }, [components.error])
 
+  useEffect(() => {
+    if (filters.error) {
+      setMessage({
+        variant: "error",
+        text: parseError(filters.error),
+      })
+    }
+  }, [filters.error])
+
   const onPaginationChanged = (offset) => {
     setPaginationOptions({ ...paginationOptions, offset: offset })
   }
@@ -45,13 +53,12 @@ const Components = () => {
     setSearchOptions(options)
   }
 
+  console.log("components DATA: ", components.data)
+
   return (
     <Container px={false}>
       {components.isLoading && !components.data ? (
-        <Stack alignment="center">
-          <Spinner variant="primary" />
-          Loading components...
-        </Stack>
+        <HintLoading text="Loading components..." />
       ) : (
         <>
           <FilterToolbar

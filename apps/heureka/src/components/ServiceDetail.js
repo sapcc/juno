@@ -3,40 +3,23 @@ import { getService } from "../queries"
 import useStore from "../store"
 import { useStore as useMessageStore } from "../messageStore"
 import { useRouter } from "url-state-router"
+import { parseError } from "../helpers"
 import {
   Icon,
   DataGrid,
   DataGridRow,
   DataGridCell,
-  Stack,
-  Spinner,
   Container,
 } from "juno-ui-components"
 import ServiceVulnerabilitiesList from "./ServiceVulnerabilitiesList"
-
-const Header = `
-font-bold
-mt-4
-text-lg
-`
-const Section = `
-mt-6
-`
-const DetailSection = `
-mt-6
-bg-theme-code-block
-rounded
-pb-0.5
-`
-
-const DetailContentHeading = `
-juno-content-area-heading 
-jn-font-bold
-jn-text-lg
-jn-text-theme-high
-jn-pb-2
-jn-pt-6
- `
+import {
+  DetailSection,
+  DetailSectionBox,
+  DetailContentHeading,
+  DetailSectionHeader,
+} from "../styles"
+import HintLoading from "./HintLoading"
+import HintNotFound from "./HintNotFound"
 
 const listOfUsers = (users) => {
   users = users || []
@@ -91,63 +74,53 @@ const ServiceDetail = () => {
   return (
     <Container px={false}>
       {isLoading && !data ? (
-        <Stack alignment="center">
-          <Spinner variant="primary" />
-          Loading details...
-        </Stack>
+        <HintLoading text="Loading details..." />
       ) : (
         <>
-          {!isError && (
+          {data ? (
             <>
-              {data ? (
-                <>
-                  <h1 className={DetailContentHeading}>
-                    <Icon className="mr-2" icon="dns" /> {data.Name}
-                  </h1>
+              <h1 className={DetailContentHeading}>
+                <Icon className="mr-2" icon="dns" /> {data.Name}
+              </h1>
 
-                  <div className={Section}>
-                    <div className={DetailSection}>
-                      <DataGrid gridColumnTemplate="1fr 9fr">
-                        <DataGridRow>
-                          <DataGridCell>
-                            <b>ID: </b>
-                          </DataGridCell>
-                          <DataGridCell>{data.ID}</DataGridCell>
-                        </DataGridRow>
-                        <DataGridRow>
-                          <DataGridCell>
-                            <b>Owners: </b>
-                          </DataGridCell>
-                          <DataGridCell>{owners}</DataGridCell>
-                        </DataGridRow>
-                        <DataGridRow>
-                          <DataGridCell>
-                            <b>Operators: </b>
-                          </DataGridCell>
-                          <DataGridCell>{operators}</DataGridCell>
-                        </DataGridRow>
-                      </DataGrid>
-                    </div>
-                  </div>
+              <div className={DetailSection}>
+                <div className={DetailSectionBox}>
+                  <DataGrid gridColumnTemplate="1fr 9fr">
+                    <DataGridRow>
+                      <DataGridCell>
+                        <b>ID: </b>
+                      </DataGridCell>
+                      <DataGridCell>{data.ID}</DataGridCell>
+                    </DataGridRow>
+                    <DataGridRow>
+                      <DataGridCell>
+                        <b>Owners: </b>
+                      </DataGridCell>
+                      <DataGridCell>{owners}</DataGridCell>
+                    </DataGridRow>
+                    <DataGridRow>
+                      <DataGridCell>
+                        <b>Operators: </b>
+                      </DataGridCell>
+                      <DataGridCell>{operators}</DataGridCell>
+                    </DataGridRow>
+                  </DataGrid>
+                </div>
+              </div>
 
-                  <div className={Section}>
-                    <p className={Header}>Vulnerabilities in this service</p>
-                    <div className="mt-4">
-                      <ServiceVulnerabilitiesList components={components} />
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <Stack
-                  alignment="center"
-                  distribution="center"
-                  direction="vertical"
-                  className="h-full"
-                >
-                  <p>{`No details found for service id ${serviceId}`}</p>
-                </Stack>
-              )}
+              <div className={DetailSection}>
+                <p className={DetailSectionHeader}>
+                  Vulnerabilities in this service
+                </p>
+                <div className="mt-4">
+                  <ServiceVulnerabilitiesList components={components} />
+                </div>
+              </div>
             </>
+          ) : (
+            <HintNotFound
+              text={`No details found for service id ${serviceId}`}
+            />
           )}
         </>
       )}
