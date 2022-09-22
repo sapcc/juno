@@ -26,7 +26,7 @@ export const BreadcrumbItem = ({
         : 
           <>
             { icon ? <Icon icon={icon} /> : null}
-            { active ? 
+            { active || disabled ? 
                 label
               : 
                 <a href={href}>{label}</a> 

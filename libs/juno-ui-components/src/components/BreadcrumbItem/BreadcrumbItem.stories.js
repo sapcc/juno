@@ -26,7 +26,7 @@ Active.args = {
 
 export const Disabled = Template.bind({})
 Disabled.args = {
-  label: "Disabled Breadcrumg Item",
+  label: "Disabled Breadcrumb Item",
   disabled: true,
 }
 
