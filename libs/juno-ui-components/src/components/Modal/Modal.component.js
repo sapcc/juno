@@ -5,7 +5,6 @@ import { knownIcons } from "../Icon/Icon.component.js"
 import { Icon } from "../Icon"
 
 /*
-
 * optional title ✓
 * closeable by default ✓
 * padding content? -> 'unpad'  ✓
@@ -16,12 +15,13 @@ import { Icon } from "../Icon"
 * confirmButtonIcon prop  ✓
 * cancelButtonIcon prop  ✓
 * backdrop  ✓
-* EMPTY DOCS IN STORYBOOK? TODO
 * open programmatically TODO
 * handle height/scrolling TODO -> allow optional constrainHeight=false prop?
-* Optional CloseOnBackdropClick ? TODO (Discuss)
+* Optional CloseOnBackdropClick -> NOT FOR NOW  ✓
 * Spare "variant" prop for semantic variants later. TODO
 * a11y (voicereader, keyboard accessibilty) TODO
+* autofocus ?
+* icon TODO
 * trap focus TODO
 * render in Portal (how to make sure we're always in scope of StyleProvider? TODO -> add element to styleprovider TODO, what if there are several StyleProvider on the page?
 * Tests TODO
@@ -109,6 +109,7 @@ export const Modal = ({
 	}, [closeable])
 	
 	const handleConfirmClick = (event) => {
+		setIsOpen(false)
 		onConfirm && onConfirm(event)
 	}
 	  
@@ -179,8 +180,10 @@ Modal.propTypes = {
 	unpad: PropTypes.bool,
 	/** Custom className to add to the modal */
 	className: PropTypes.string,
+	/** A handler to execute once the modal is confirmed */
+	//onConfirm: PropTypes.func,
 	/** A handler to execute once the modal is cancelled or dismissed using the x-Close button,  Cancel-button or pressing ESC */
-	onCancel: PropTypes.func,
+	//onCancel: PropTypes.func,
 }
 
 Modal.defaultProps = {

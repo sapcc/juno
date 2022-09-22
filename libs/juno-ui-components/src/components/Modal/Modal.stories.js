@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { Modal } from "./index.js"
 import { ModalFooter } from "../ModalFooter/index.js"
 import { Button } from "../Button/index.js"
@@ -8,26 +8,24 @@ import { CheckboxRow } from "../CheckboxRow"
 
 const Template = (args) => {
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setOpen] = useState(false)
   
-  const openModal = () => {
-    setIsOpen(true)
-  }
+  const open = () => { setOpen(true) }
+  const close = () => { setOpen(false) }
   
-  const closeModal = () => {
-    setIsOpen(false)  
-  }
-  
+  console.log("Story parent isOpen: ", isOpen)
+
   return (
     <>
       <Button 
         label="Open Modal" 
         variant="primary" 
-        onClick={() =>{setIsOpen(!isOpen)}} 
+        onClick={open} 
       />
       <Modal  
           open={isOpen}
-          onCancel={closeModal}
+          onConfirm={close}
+          onCancel={close}
           {...args}
       />
     </>
@@ -37,7 +35,10 @@ const Template = (args) => {
 export default {
   title: "WiP/Modal/Modal",
   component: Modal,
-  argTypes: {},
+  argTypes: {
+    // onConfirm: {action: 'confirmed'},
+    // onCancel: {action: 'cancelled'},
+  },
 }
 
 export const Default = Template.bind({})
