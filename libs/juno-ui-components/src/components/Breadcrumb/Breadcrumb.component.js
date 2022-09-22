@@ -23,7 +23,7 @@ export const Breadcrumb = ({
     breadcrumbArrayWithSeparators.push(
       <>
         <BreadcrumbItem {...child.props} />
-        { i < breadcrumbArray.length - 2 ?
+        { i < breadcrumbArray.length - 1 ?
             <Icon icon="chevronRight" />
           :
             null

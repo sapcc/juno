@@ -2,7 +2,6 @@ import React from "react"
 import { BreadcrumbItem } from "./index"
 
 
-
 const Template = (args) => {
   return (<BreadcrumbItem {...args} />)
 }
