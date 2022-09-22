@@ -14,12 +14,22 @@ export const BreadcrumbItem = ({
   ariaLabel,
   active,
   children,
+  onClick,
+  disabled,
   className,
   ...props
 }) => {
   return (
     <span className={`juno-breadcrumb-item ${breadcrumbitemstyles} ${className}`}>
-      { children || label }
+      { children ?
+          children
+        : 
+          active ? 
+              label
+            : 
+              <a href={href}>{label}</a> 
+
+      }
     </span>
   )
 }
@@ -30,6 +40,8 @@ BreadcrumbItem.propTypes = {
   label: PropTypes.string,
   ariaLabel: PropTypes.string,
   active: PropTypes.bool,
+  onClick: PropTypes.func,
+  disabled: PropTypes.bool,
   className: PropTypes.string,
   children: PropTypes.node,
 }
@@ -40,6 +52,8 @@ BreadcrumbItem.defaultProps = {
   label: "Item",
   ariaLabel: "",
   active: false,
+  onClick: undefined,
+  disabled: false,
   className: "",
   children: null,
 }
