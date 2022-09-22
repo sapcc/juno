@@ -1,7 +1,6 @@
 import React, { useMemo } from "react"
 import ComponentsListItem from "./ComponentsListItem"
 import {
-  Stack,
   DataGrid,
   DataGridRow,
   DataGridHeadCell,

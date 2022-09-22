@@ -21,7 +21,7 @@ import UsersList from "./UsersList"
 
 const ITEMS_PER_PAGE = 10
 
-const SupportGroup = () => {
+const Home = () => {
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const setMessage = useMessageStore((state) => state.setMessage)
   const [servicesPaginationOptions, setServicesPaginationOptions] = useState({
@@ -29,8 +29,7 @@ const SupportGroup = () => {
     offset: 0,
   })
   const [servicesSearchOptions, setServicesSearchOptions] = useState({
-    name: "Elektra",
-    name: "Swift",
+    operators: "D038720",
   })
   const services = getServices(endpoint, {
     ...servicesPaginationOptions,
@@ -42,33 +41,34 @@ const SupportGroup = () => {
   })
   const [usersSearchOptions, setUsersSearchOptions] = useState({
     sapId: "D038720",
+    sapId: "D058266",
   })
   const users = getUsers(endpoint, {
     ...usersPaginationOptions,
     ...usersSearchOptions,
   })
 
-  console.log("SUPORT GROUP: ", services)
+  console.log("HOME: ", services)
 
   return (
     <Container px={false}>
-      <h1 className={DetailContentHeading}>
+      {/* <h1 className={DetailContentHeading}>
         <Icon className="mr-2" icon="manageAccounts" /> Services Team
-      </h1>
+      </h1> */}
       <div className={DetailSection}>
         <div className={DetailSectionBox}>
           <DataGrid gridColumnTemplate="1fr 9fr">
             <DataGridRow>
               <DataGridCell>
-                <b>ID: </b>
+                <b>Attr: </b>
               </DataGridCell>
-              <DataGridCell>team_123</DataGridCell>
+              <DataGridCell>123</DataGridCell>
             </DataGridRow>
           </DataGrid>
         </div>
       </div>
       <div className={DetailSection}>
-        <p className={DetailSectionHeader}>Members</p>
+        <p className={DetailSectionHeader}>Support groups</p>
         <div className="mt-4">
           {users.isLoading && !users.data ? (
             <HintLoading text="Loading users..." />
@@ -91,4 +91,4 @@ const SupportGroup = () => {
   )
 }
 
-export default SupportGroup
+export default Home

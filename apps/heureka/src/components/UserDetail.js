@@ -73,11 +73,17 @@ const UserDetail = ({}) => {
                       </DataGridCell>
                       <DataGridCell>{data.SapID}</DataGridCell>
                     </DataGridRow>
+                    <DataGridRow>
+                      <DataGridCell>
+                        <b>Support team: </b>
+                      </DataGridCell>
+                      <DataGridCell>Services team</DataGridCell>
+                    </DataGridRow>
                   </DataGrid>
                 </div>
               </div>
               <div className={DetailSection}>
-                <p className={DetailSectionHeader}>Owned Services</p>
+                <p className={DetailSectionHeader}>Owned services</p>
                 <div className="mt-4">
                   <ServicesList services={data.OwnServices} minimized />
                 </div>

@@ -23,13 +23,13 @@ const UserListItem = ({ item }) => {
         </Link>
       </DataGridCell>
       <DataGridCell>{item.SapID}</DataGridCell>
+      <DataGridCell>Services team</DataGridCell>
       <DataGridCell>
         <Badge text="default">
           <Icon className="mr-2" icon="dns" />
           {ownServices.length}
         </Badge>
       </DataGridCell>
-      <DataGridCell>{evidences}</DataGridCell>
     </DataGridRow>
   )
 }

@@ -9,15 +9,17 @@ import Vulnerabilities from "./Vulnerabilities"
 import VulnerabilitiyDetails from "./VulnerabilitiyDetails"
 import Users from "./Users"
 import UserDetail from "./UserDetail"
-import SupportGroup from "./SupportGroup"
+import SupportGroups from "./SupportGroups"
+import Home from "./Home"
 
+export const HOME_PATH = "/home"
 export const SUPPORT_GROUP_PATH = "/support_group"
 export const SERVICES_PATH = "/services"
 export const COMPONENTS_PATH = "/components"
 export const VULNERABILITIES_PATH = "/vulnerabilities"
 export const USERS_PATH = "/users"
 export const TABS_CONFIG = [
-  { path: SUPPORT_GROUP_PATH, label: "Support group", icon: "manageAccounts" },
+  { path: HOME_PATH, label: "Home", icon: "autoAwesomeMosaic" },
   { path: SERVICES_PATH, label: "Services", icon: "dns" },
   { path: COMPONENTS_PATH, label: "Components", icon: "widgets" },
   {
@@ -25,6 +27,7 @@ export const TABS_CONFIG = [
     label: "Vulnerabilities",
     icon: "autoAwesomeMotion",
   },
+  { path: SUPPORT_GROUP_PATH, label: "Support group", icon: "manageAccounts" },
   {
     path: USERS_PATH,
     label: "Users",
@@ -36,12 +39,12 @@ const AppRouter = (props) => {
   return (
     <Router stateID="heurekaApp">
       <Route exact path="/">
-        <Redirect to={SUPPORT_GROUP_PATH} />
+        <Redirect to={HOME_PATH} />
       </Route>
 
       <AppContainer tabsConfig={TABS_CONFIG}>
         <Switch>
-          <Route exact path={SUPPORT_GROUP_PATH} component={SupportGroup} />
+          <Route exact path={HOME_PATH} component={Home} />
           <Route exact path={SERVICES_PATH} component={Services} />
           <Route
             exact
@@ -64,6 +67,7 @@ const AppRouter = (props) => {
             path={`${VULNERABILITIES_PATH}/:vulnerabilityId`}
             component={VulnerabilitiyDetails}
           />
+          <Route exact path={SUPPORT_GROUP_PATH} component={SupportGroups} />
           <Route exact path={USERS_PATH} component={Users} />
           <Route exact path={`${USERS_PATH}/:userId`} component={UserDetail} />
         </Switch>
