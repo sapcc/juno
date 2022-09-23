@@ -18,6 +18,9 @@ import { useStore as useMessageStore } from "../messageStore"
 import ServicesList from "./ServicesList"
 import HintLoading from "./HintLoading"
 import UsersList from "./UsersList"
+import Pagination from "./Pagination"
+import { classifyVulnerabilitiesV2 } from "../helpers"
+import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
 
 const ITEMS_PER_PAGE = 10
 
@@ -48,42 +51,92 @@ const Home = () => {
     ...usersSearchOptions,
   })
 
+  // collect vulnerabilities
+  const vulnerabilities = useMemo(() => {
+    const result = []
+    if (services.data?.Results) {
+      services.data?.Results.forEach((service, i) => {
+        if (service?.Components) {
+          service?.Components.forEach((component) => {
+            if (component?.Vulnerabilities) {
+              result.push(component?.Vulnerabilities)
+            }
+          })
+        }
+      })
+    }
+    return classifyVulnerabilitiesV2(result.flat())
+  }, [services.data])
+
+  const onServicesPaginationChanged = (offset) => {
+    setServicesSearchOptions({ ...servicesSearchOptions, offset: offset })
+  }
+
+  const onUsersPaginationChanged = (offset) => {
+    setUsersPaginationOptions({ ...usersPaginationOptions, offset: offset })
+  }
+
   console.log("HOME: ", services)
 
   return (
     <Container px={false}>
-      {/* <h1 className={DetailContentHeading}>
-        <Icon className="mr-2" icon="manageAccounts" /> Services Team
-      </h1> */}
       <div className={DetailSection}>
         <div className={DetailSectionBox}>
-          <DataGrid gridColumnTemplate="1fr 9fr">
+          <DataGrid gridColumnTemplate="2fr 8fr">
             <DataGridRow>
               <DataGridCell>
-                <b>Attr: </b>
+                <b>Services: </b>
               </DataGridCell>
-              <DataGridCell>123</DataGridCell>
+              <DataGridCell>{services.data?.Count}</DataGridCell>
+            </DataGridRow>
+            <DataGridRow>
+              <DataGridCell>
+                <b>Vulnerabilities: </b>
+              </DataGridCell>
+              <DataGridCell>
+                <VulnerabilitiesOverview vulnerabilities={vulnerabilities} />
+              </DataGridCell>
             </DataGridRow>
           </DataGrid>
         </div>
       </div>
       <div className={DetailSection}>
-        <p className={DetailSectionHeader}>Support groups</p>
-        <div className="mt-4">
-          {users.isLoading && !users.data ? (
-            <HintLoading text="Loading users..." />
-          ) : (
-            <UsersList users={users.data?.Results} />
-          )}
-        </div>
-      </div>
-      <div className={DetailSection}>
-        <p className={DetailSectionHeader}>Owned services</p>
+        <p className={DetailSectionHeader}>Services</p>
+        <p>List of services belonging to your support groups</p>
         <div className="mt-4">
           {services.isLoading && !services.data ? (
             <HintLoading text="Loading services..." />
           ) : (
-            <ServicesList services={services.data?.Results} />
+            <>
+              <ServicesList services={services.data?.Results} />
+              <Pagination
+                count={services.data?.Count}
+                limit={ITEMS_PER_PAGE}
+                onChanged={onServicesPaginationChanged}
+                isFetching={services.isFetching}
+                disabled={services.isError}
+              />
+            </>
+          )}
+        </div>
+      </div>
+      <div className={DetailSection}>
+        <p className={DetailSectionHeader}>Support groups</p>
+        <p>List of support groups where you belong</p>
+        <div className="mt-4">
+          {users.isLoading && !users.data ? (
+            <HintLoading text="Loading users..." />
+          ) : (
+            <>
+              <UsersList users={users.data?.Results} />
+              <Pagination
+                count={users.data?.Count}
+                limit={ITEMS_PER_PAGE}
+                onChanged={onUsersPaginationChanged}
+                isFetching={users.isFetching}
+                disabled={users.isError}
+              />
+            </>
           )}
         </div>
       </div>

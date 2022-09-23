@@ -63,13 +63,19 @@ const UserDetail = ({}) => {
                   <DataGrid gridColumnTemplate="1fr 9fr">
                     <DataGridRow>
                       <DataGridCell>
+                        <b>ID: </b>
+                      </DataGridCell>
+                      <DataGridCell>{data.ID}</DataGridCell>
+                    </DataGridRow>
+                    <DataGridRow>
+                      <DataGridCell>
                         <b>Email: </b>
                       </DataGridCell>
                       <DataGridCell>{data.Email}</DataGridCell>
                     </DataGridRow>
                     <DataGridRow>
                       <DataGridCell>
-                        <b>ID: </b>
+                        <b>SAP ID: </b>
                       </DataGridCell>
                       <DataGridCell>{data.SapID}</DataGridCell>
                     </DataGridRow>

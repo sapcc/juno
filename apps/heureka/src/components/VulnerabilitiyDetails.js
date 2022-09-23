@@ -60,6 +60,12 @@ const VulnerabilitiyDetails = () => {
                   <DataGrid gridColumnTemplate="1fr 9fr">
                     <DataGridRow>
                       <DataGridCell>
+                        <b>ID: </b>
+                      </DataGridCell>
+                      <DataGridCell>{data.ID}</DataGridCell>
+                    </DataGridRow>
+                    <DataGridRow>
+                      <DataGridCell>
                         <b>CveID: </b>
                       </DataGridCell>
                       <DataGridCell>{data.CveID}</DataGridCell>

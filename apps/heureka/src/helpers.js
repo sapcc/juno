@@ -40,6 +40,26 @@ export const threadLevelToWeight = (level) => {
   }
 }
 
+export const classifyVulnerabilitiesV2 = (vulnerabilites = []) => {
+  if (!vulnerabilites) vulnerabilites = []
+  if (!Array.isArray(vulnerabilites)) vulnerabilites = [vulnerabilites]
+  let severities = { low: 0, medium: 0, high: 0, critical: 0 }
+  vulnerabilites.forEach((vulnerability) => {
+    // use of ThreatLevelOverall to get the index
+    switch (vulnerability?.ThreatLevelOverall.toLowerCase()) {
+      case THREAD_LEVEL_LOW:
+        return (severities.low += 1)
+      case THREAD_LEVEL_MEDIUM:
+        return (severities.medium += 1)
+      case THREAD_LEVEL_HIGH:
+        return (severities.high += 1)
+      case THREAD_LEVEL_CRITICAL:
+        return (severities.critical += 1)
+    }
+  })
+  return severities
+}
+
 export const classifyVulnerabilities = (components = []) => {
   if (!components) components = []
   if (!Array.isArray(components)) components = [components]
