@@ -1,6 +1,6 @@
 import React from "react"
 import create from "zustand"
-import {devtools} from "zustand/middleware"
+import { devtools } from "zustand/middleware"
 
 import FlagAustralia from "./assets/images/flag_australia.svg"
 import FlagBrazil from "./assets/images/flag_brazil.svg"
@@ -9,7 +9,6 @@ import FlagChina from "./assets/images/flag_china.svg"
 import FlagGermany from "./assets/images/flag_germany.svg"
 import FlagJapan from "./assets/images/flag_japan.svg"
 import FlagNetherlands from "./assets/images/flag_netherlands.svg"
-import FlagRussia from "./assets/images/flag_russia.svg"
 import FlagSaudiArabia from "./assets/images/flag_saudiarabia.svg"
 import FlagUAE from "./assets/images/flag_unitedarabempire.svg"
 import FlagUSA from "./assets/images/flag_usa.svg"
@@ -25,7 +24,9 @@ const DOMAINS = {
         description: "General purpose domain for SAP-internal applications that cannot be reached from the internet"}
     ],
   special: ["BS", "CCADMIN", "CIS", "CP", "FSN", "HCM", "HEC", "NEO", "S4", "WBS"]
-  }
+}
+
+const DOMAIN_KEYS = DOMAINS.general.map((domain) => domain.name).concat(DOMAINS.special)
 
 // all available regions
 const REGIONS = {
@@ -143,13 +144,28 @@ const useStore = create(devtools((set) => ({
   hideLoginOverlay:     () => set((state) => ({loginOverlayVisible: false})),
 
   region:               null,
-  selectRegion:         (selectedRegion) => set((state) => ({region: selectedRegion})),
+  selectRegion:         (selectedRegion) => {
+                          // only set if the given value is valid
+                          if (REGION_KEYS.includes(selectedRegion)) {
+                            set((state) => ({region: selectedRegion}))
+                          }
+                        },
   deselectRegion:       () => set((state) => ({region: null})),
+  
+  domain:               null,
+  selectDomain:         (selectedDomain) => {
+                          // only set if the given value is valid
+                          if (DOMAIN_KEYS.includes(selectedDomain)) {
+                            set((state) => ({domain: selectedDomain}))
+                          }
+                        },
+  deselectDomain:       () => set((state) => ({domain: null})),
 
   regions:              REGIONS,
   regionKeys:           REGION_KEYS,
   regionsByContinent:   REGIONS_BY_CONTINENT,
-  domains:              DOMAINS
+  domains:              DOMAINS,
+  domainKeys:           DOMAIN_KEYS
 })))
 
 export default useStore
