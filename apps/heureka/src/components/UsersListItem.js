@@ -1,8 +1,9 @@
 import React, { useMemo } from "react"
-import { Badge, Icon, DataGridRow, DataGridCell } from "juno-ui-components"
+import { DataGridRow, DataGridCell } from "juno-ui-components"
 import { USERS_PATH } from "./AppRouter"
 import { Link } from "url-state-router"
 import Avatar from "./Avatar"
+import CustomBadge from "./CustomBadge"
 
 const UserListItem = ({ item }) => {
   const ownServices = useMemo(() => {
@@ -25,10 +26,7 @@ const UserListItem = ({ item }) => {
       <DataGridCell>{item.SapID}</DataGridCell>
       <DataGridCell>Services team</DataGridCell>
       <DataGridCell>
-        <Badge text="default">
-          <Icon className="mr-2" icon="dns" />
-          {ownServices.length}
-        </Badge>
+        <CustomBadge icon="dns" label={ownServices.length} />
       </DataGridCell>
     </DataGridRow>
   )
