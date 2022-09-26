@@ -18,7 +18,6 @@ import { useStore as useMessageStore } from "../messageStore"
 import ServicesList from "./ServicesList"
 import HintLoading from "./HintLoading"
 import UsersList from "./UsersList"
-import Pagination from "./Pagination"
 import { classifyVulnerabilitiesV2 } from "../helpers"
 import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
 
@@ -109,13 +108,6 @@ const Home = () => {
           ) : (
             <>
               <ServicesList services={services.data?.Results} />
-              <Pagination
-                count={services.data?.Count}
-                limit={ITEMS_PER_PAGE}
-                onChanged={onServicesPaginationChanged}
-                isFetching={services.isFetching}
-                disabled={services.isError}
-              />
             </>
           )}
         </div>
@@ -129,13 +121,6 @@ const Home = () => {
           ) : (
             <>
               <UsersList users={users.data?.Results} />
-              <Pagination
-                count={users.data?.Count}
-                limit={ITEMS_PER_PAGE}
-                onChanged={onUsersPaginationChanged}
-                isFetching={users.isFetching}
-                disabled={users.isError}
-              />
             </>
           )}
         </div>
