@@ -136,9 +136,10 @@ export const componentVersionByType = (component) => {
 
 export const patchExampl1 = {
   ID: "123",
-  Components: [
+  Components: [{ Name: "apic-exporter" }],
+  BeforeState: [
     {
-      Action: "delete",
+      ID: "3",
       Name: "apic-exporter",
       Type: "KeppelImage",
       Details: { PushedAt: 1643964164 },
@@ -157,8 +158,10 @@ export const patchExampl1 = {
         },
       ],
     },
+  ],
+  AfterState: [
     {
-      Action: "post",
+      ID: "444",
       Name: "apic-exporter",
       Type: "KeppelImage",
       Details: { PushedAt: 1657021351 },

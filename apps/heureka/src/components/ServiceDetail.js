@@ -3,7 +3,7 @@ import { getService } from "../queries"
 import useStore from "../store"
 import { useStore as useMessageStore } from "../messageStore"
 import { useRouter } from "url-state-router"
-import { parseError } from "../helpers"
+import { parseError, patchExampl1 } from "../helpers"
 import {
   Icon,
   DataGrid,
@@ -19,6 +19,8 @@ import {
 } from "../styles"
 import HintLoading from "./HintLoading"
 import HintNotFound from "./HintNotFound"
+import PatchLogList from "./PatchLogList"
+import ComponentsList from "./ComponentsList"
 
 const listOfUsers = (users) => {
   users = users || []
@@ -68,6 +70,13 @@ const ServiceDetail = () => {
     return data.Components
   }, [data])
 
+  const patches = useMemo(() => {
+    if (data?.Name && data?.Name === "Elektra") {
+      return [patchExampl1]
+    }
+    return []
+  }, [data])
+
   console.log("Service Details: ", data)
 
   return (
@@ -112,7 +121,14 @@ const ServiceDetail = () => {
                   Vulnerabilities in this service
                 </p>
                 <div className="mt-4">
-                  <ServiceVulnerabilitiesList components={components} />
+                  <ComponentsList minimized sorted components={components} />
+                </div>
+              </div>
+
+              <div className={DetailSection}>
+                <p className={DetailSectionHeader}>Patches log</p>
+                <div className="mt-4">
+                  <PatchLogList patches={patches} />
                 </div>
               </div>
             </>
