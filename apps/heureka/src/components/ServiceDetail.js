@@ -11,7 +11,6 @@ import {
   DataGridCell,
   Container,
 } from "juno-ui-components"
-import ServiceVulnerabilitiesList from "./ServiceVulnerabilitiesList"
 import {
   DetailSection,
   DetailSectionBox,
