@@ -40,13 +40,13 @@ const ComponentsListItem = ({ item, minimized }) => {
       </DataGridCell>
       <DataGridCell>{item.Type}</DataGridCell>
       <DataGridCell>{componentVersionByType(item)}</DataGridCell>
+      <DataGridCell>
+        <VulnerabilitiesOverview vulnerabilities={vulnerabilities} />
+      </DataGridCell>
       {!minimized && (
         <>
           <DataGridCell>
             <CustomBadge icon="dns" label={services.length} />
-          </DataGridCell>
-          <DataGridCell>
-            <VulnerabilitiesOverview vulnerabilities={vulnerabilities} />
           </DataGridCell>
           <DataGridCell>{owners}</DataGridCell>
           <DataGridCell>{operators}</DataGridCell>
