@@ -19,7 +19,7 @@ const VulnerabilitiesListItem = ({ item, minimized }) => {
   const lastModifiedtString = useMemo(() => {
     if (!item.ScnLastModified) return "No date available"
     return DateTime.fromSQL(item.ScnLastModified).toLocaleString(
-      DateTime.DATETIME_FULL
+      DateTime.DATETIME_SHORT
     )
   }, [item?.ScnLastModified])
 
