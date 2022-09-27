@@ -10,7 +10,7 @@ import {
 import { COMPONENTS_PATH } from "./AppRouter"
 import CustomBadge from "./CustomBadge"
 
-const ComponentsListItem = ({ item, minimized }) => {
+const ComponentsListItem = ({ item, minimized, unlink }) => {
   const services = useMemo(() => {
     if (!item.Services) return []
     return item.Services
@@ -31,12 +31,16 @@ const ComponentsListItem = ({ item, minimized }) => {
   return (
     <DataGridRow>
       <DataGridCell>
-        <Link
-          to={`${COMPONENTS_PATH}/${item.ID}`}
-          state={{ placeholderData: item }}
-        >
-          {item.Name}
-        </Link>
+        {unlink ? (
+          <>{item.Name}</>
+        ) : (
+          <Link
+            to={`${COMPONENTS_PATH}/${item.ID}`}
+            state={{ placeholderData: item }}
+          >
+            {item.Name}
+          </Link>
+        )}
       </DataGridCell>
       <DataGridCell>{item.Type}</DataGridCell>
       <DataGridCell>{componentVersionByType(item)}</DataGridCell>

@@ -9,7 +9,7 @@ import {
 import HintNotFound from "./HintNotFound"
 import { classifyVulnerabilities } from "../helpers"
 
-const ComponentsList = ({ components, minimized, sorted }) => {
+const ComponentsList = ({ components, minimized, sorted, unlink }) => {
   components = useMemo(() => {
     if (!components) return []
     // inforce input as array
@@ -50,7 +50,12 @@ const ComponentsList = ({ components, minimized, sorted }) => {
       {components.length > 0 ? (
         <>
           {components.map((item, i) => (
-            <ComponentsListItem key={i} item={item} minimized={minimized} />
+            <ComponentsListItem
+              key={i}
+              item={item}
+              minimized={minimized}
+              unlink={unlink}
+            />
           ))}
         </>
       ) : (
