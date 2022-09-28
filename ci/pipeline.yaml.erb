@@ -35,6 +35,15 @@ resources:
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
 
+  - name: static-assets.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["assets"]
+      username: sapcc-bot
+      password: ((github-access-token/sapcc-bot))
+
   - name: app-dashboard.git
     type: git
     source:
@@ -608,7 +617,9 @@ jobs:
         passed: ["build-<%= app %>"]
         trigger: true
       <% end %>  
-      - get: ci.git  
+      - get: ci.git
+      - get: static-assets.git  
+        trigger: true
       - put: cdn.version
       <% APPS.each do |app| %>
       - in_parallel:
@@ -624,11 +635,10 @@ jobs:
               path: /bin/sh
               args:
                 - -c
-                - |         
+                - |
                   VERSION=$(cat /app/package.json | grep version | sed 's/^.*"version": "\([^"]*\).*$/\1/' | sed 's/\./_/g')
                   cp -r /app/build ./<%= app %>-output/$VERSION
                   cp -r /app/build ./<%= app %>-output/latest
-                   
             outputs:
               - name: <%= app %>-output
       <% end %>    
@@ -645,25 +655,38 @@ jobs:
             <% APPS.each do |app| %>
             - name: <%= app %>-output 
             <% end %>
+            - name: static-assets.git 
           run:
             path: /bin/sh
             args:
               - -c
               - |
                 <% APPS.each do |app| %>
-                cp -r ./<%= app %>-output  ./build/<%= app %>;
+                echo "add <%= app %> to cdn folder ./dist/<%= app %>"
+                cp -r ./<%= app %>-output  ./dist/<%= app %>;
+                ls -all ./dist/<%= app %>
+                echo ""
                 <% end %>
+                
+                echo "add static assets to cdn folder ./dist/assets"
+                cp -r ./static-assets.git/assets ./dist
+                ls -all ./dist/assets/
+                echo ""
+
                 echo $(date) > ./updated_at
 
           outputs:
-            - name: build
+            - name: dist
 
+      # to serve our js, css and stattic assets this step will add all the created data 
+      # in dist/ to the nginx image in /usr/share/nginx/html/
       - put: juno-cdn.image
         params:
           tag_as_latest: true
           cache: true
           cache_tag: "latest"
-          build: build
+          # root for docker build, its using the output dir from the step before
+          build: dist
           build_args: 
             KEPPEL_HOSTNAME: keppel.eu-de-1.cloud.sap
           dockerfile: ci.git/ci/Dockerfile.cdn

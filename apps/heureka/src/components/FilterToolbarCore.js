@@ -42,8 +42,6 @@ const FilterToolbarCore = ({
   }, [filterTypes, filterLabels])
 
   useEffect(() => {
-    console.log("TEST: ", toURLOptions(selectedFilters))
-
     onSearchTerm(toURLOptions(selectedFilters))
   }, [selectedFilters])
 

@@ -24,6 +24,7 @@ import {
 } from "../styles"
 import HintLoading from "./HintLoading"
 import HintNotFound from "./HintNotFound"
+import ServicesList from "./ServicesList"
 
 const DetailSectionTop = `
 bg-theme-code-block
@@ -124,6 +125,14 @@ const ComponentDetail = () => {
                   </DataGrid>
                 </div>
               </div>
+
+              <div className={DetailSection}>
+                <p className={DetailSectionHeader}>Belongs to</p>
+                <div className="mt-4">
+                  <ServicesList minimized services={data.Services} />
+                </div>
+              </div>
+
               <div className={DetailSection}>
                 <p className={DetailSectionHeader}>Vulnerabilities</p>
                 <div className="mt-4">

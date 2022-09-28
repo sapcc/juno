@@ -20,9 +20,9 @@ const UsersList = ({ users }) => {
       <DataGrid columns={4}>
         <DataGridRow>
           <DataGridHeadCell>Name</DataGridHeadCell>
-          <DataGridHeadCell>Sap ID</DataGridHeadCell>
-          <DataGridHeadCell>Owned Services</DataGridHeadCell>
-          <DataGridHeadCell>Evidences</DataGridHeadCell>
+          <DataGridHeadCell>SAP ID</DataGridHeadCell>
+          <DataGridHeadCell>Support group</DataGridHeadCell>
+          <DataGridHeadCell>Owned services</DataGridHeadCell>
         </DataGridRow>
         {users.length > 0 ? (
           <>

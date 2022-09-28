@@ -16,7 +16,7 @@ text-lg
 `
 
 export const DetailSectionBox = `
-bg-theme-code-block
+bg-theme-background-lvl-1
 rounded
 pb-0.5
 `

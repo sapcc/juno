@@ -1,4 +1,5 @@
 const path = require("path")
+const Dotenv = require("dotenv-webpack")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin")
 const { CleanWebpackPlugin } = require("clean-webpack-plugin")
@@ -126,6 +127,11 @@ module.exports = (_, argv) => {
       minimizer: [`...`, new CssMinimizerPlugin()],
     },
     plugins: [
+      new Dotenv({
+        path: "./.env.local",
+        safe: true,
+      }),
+
       new webpack.ProvidePlugin({
         process: require.resolve("process/browser"),
         Buffer: require.resolve("buffer/"),
