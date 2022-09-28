@@ -215,6 +215,12 @@ Help.args = {
   icon: "help",
 }
 
+export const Home = Template.bind({})
+Home.args = {
+  ...Default.args,
+  icon: "home",
+}
+
 export const Info = Template.bind({})
 Info.args = {
   ...Default.args,
