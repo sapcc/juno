@@ -17,6 +17,7 @@ const breadcrumblinkstyles = `
 
 const disabledstyles = `
   jn-text-theme-disabled
+  jn-pointer-events-none
 `
 
 export const BreadcrumbItem = ({
@@ -39,14 +40,17 @@ export const BreadcrumbItem = ({
       children ?
           { children }
         : 
-          <span className={`juno-breadcrumb-item ${breadcrumbitemstyles} ${ disabled ? disabledstyles : "" } ${className}`} {...props} >
-            { active || disabled ? 
+          <span className={`juno-breadcrumb-item ${breadcrumbitemstyles} ${ disabled ? "juno-breadcrumb-item-disabled" : "" } ${className}`} {...props} >
+            { active ? 
                 <>
                   { icn }
                   { label }
                 </>
               : 
-                <a href={href} className={`${breadcrumblinkstyles}`} >
+                <a href={href} 
+                  className={`${breadcrumblinkstyles} ${ disabled ? disabledstyles : "" }`}
+                  aria-label={ariaLabel || label} 
+                >
                   { icn }
                   { label }
                 </a> 
