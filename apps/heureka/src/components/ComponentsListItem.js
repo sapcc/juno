@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { DataGridRow, DataGridCell } from "juno-ui-components"
+import { DataGridRow, DataGridCell, CheckboxRow } from "juno-ui-components"
 import { Link } from "url-state-router"
 import VulnerabilitiesOverview from "./VulnerabilitiesOverview"
 import {
@@ -10,7 +10,7 @@ import {
 import { COMPONENTS_PATH } from "./AppRouter"
 import CustomBadge from "./CustomBadge"
 
-const ComponentsListItem = ({ item, minimized, unlink }) => {
+const ComponentsListItem = ({ item, columns, unlink, selectable }) => {
   const services = useMemo(() => {
     if (!item.Services) return []
     return item.Services
@@ -30,32 +30,45 @@ const ComponentsListItem = ({ item, minimized, unlink }) => {
 
   return (
     <DataGridRow>
-      <DataGridCell>
-        {unlink ? (
-          <>{item.Name}</>
-        ) : (
-          <Link
-            to={`${COMPONENTS_PATH}/${item.ID}`}
-            state={{ placeholderData: item }}
-          >
-            {item.Name}
-          </Link>
-        )}
-      </DataGridCell>
-      <DataGridCell>{item.Type}</DataGridCell>
-      <DataGridCell>{componentVersionByType(item)}</DataGridCell>
-      <DataGridCell>
-        <VulnerabilitiesOverview vulnerabilities={vulnerabilities} />
-      </DataGridCell>
-      {!minimized && (
-        <>
-          <DataGridCell>
-            <CustomBadge icon="dns" label={services.length} />
-          </DataGridCell>
-          <DataGridCell>{owners}</DataGridCell>
-          <DataGridCell>{operators}</DataGridCell>
-        </>
+      {selectable && (
+        <DataGridCell>
+          <CheckboxRow
+            id="selectable"
+            label=" "
+            onChange={function noRefCheck() {}}
+          />
+        </DataGridCell>
       )}
+      {columns?.name && (
+        <DataGridCell>
+          {unlink ? (
+            <>{item.Name}</>
+          ) : (
+            <Link
+              to={`${COMPONENTS_PATH}/${item.ID}`}
+              state={{ placeholderData: item }}
+            >
+              {item.Name}
+            </Link>
+          )}
+        </DataGridCell>
+      )}
+      {columns?.type && <DataGridCell>{item.Type}</DataGridCell>}
+      {columns?.version && (
+        <DataGridCell>{componentVersionByType(item)}</DataGridCell>
+      )}
+      {columns?.vulnerabilities && (
+        <DataGridCell>
+          <VulnerabilitiesOverview vulnerabilities={vulnerabilities} />
+        </DataGridCell>
+      )}
+      {columns?.belongsTo && (
+        <DataGridCell>
+          <CustomBadge icon="dns" label={services.length} />
+        </DataGridCell>
+      )}
+      {columns?.owners && <DataGridCell>{owners}</DataGridCell>}
+      {columns?.operators && <DataGridCell>{operators}</DataGridCell>}
     </DataGridRow>
   )
 }
