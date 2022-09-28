@@ -97,6 +97,7 @@ export const knownIcons = [
   "filterAlt",
   "forum",
   "help",
+  "home",
   "info",
   "insertComment",
   "manageAccounts",
