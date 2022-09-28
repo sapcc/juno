@@ -57,14 +57,23 @@ export const BreadcrumbItem = ({
 }
 
 BreadcrumbItem.propTypes = {
+  /** pass an icon name */
   icon: PropTypes.oneOf(knownIcons),
+  /** The link of the path/route/page the breacrumb item points to */
   href: PropTypes.string,
+  /** The text to render in the breadcumb item */
   label: PropTypes.string,
+  /** Pass an aria-label */
   ariaLabel: PropTypes.string,
+  /** Whether the item is the last / active item */
   active: PropTypes.bool,
+  /** Pass an onClick handler */
   onClick: PropTypes.func,
+  /** Whether the item is disabled */
   disabled: PropTypes.bool,
+  /** Pass a custom className */
   className: PropTypes.string,
+  /** The children of the item */
   children: PropTypes.node,
 }
 
