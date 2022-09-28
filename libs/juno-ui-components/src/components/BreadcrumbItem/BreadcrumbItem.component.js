@@ -5,6 +5,18 @@ import { knownIcons } from "../Icon/Icon.component.js"
 
 const breadcrumbitemstyles = `
   jn-text-sm
+  jn-text-theme-high
+  jn-flex
+  jn-gap-1
+  jn-items-center
+`
+
+const breadcrumblinkstyles = `
+  jn-text-theme-high
+`
+
+const disabledstyles = `
+  jn-text-theme-disabled
 `
 
 export const BreadcrumbItem = ({
@@ -20,28 +32,27 @@ export const BreadcrumbItem = ({
   ...props
 }) => {
   
-  const icn = icon ? <Icon icon={icon} size="18" className={ label && label.length ? "jn-mr-1" : "" } /> : null
+  const icn = icon ? <Icon icon={icon} size="18" color="jn-text-theme-default" className={ label && label.length ? "jn-mr-1" : "" } /> : null
   
   return (
-    <span className={`juno-breadcrumb-item ${breadcrumbitemstyles} ${className}`} {...props} >
-      { children ?
-          children
+    
+      children ?
+          { children }
         : 
-          <>
+          <span className={`juno-breadcrumb-item ${breadcrumbitemstyles} ${ disabled ? disabledstyles : "" } ${className}`} {...props} >
             { active || disabled ? 
-                <span> 
+                <>
                   { icn }
                   { label }
-                </span>
+                </>
               : 
-                <a href={href}>
+                <a href={href} className={`${breadcrumblinkstyles}`} >
                   { icn }
                   { label }
                 </a> 
             }
-          </>
-      }
-    </span>
+          </span>
+
   )
 }
 

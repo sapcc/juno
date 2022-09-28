@@ -30,8 +30,9 @@ export const Default = Template.bind({})
 Default.args = {
   children: [
     {...HomeItem.args},
-    {...ItemWithIcon.args, },
     {...Item.args},
+    {...ItemWithIcon.args, },
+    {...DisabledItem.args},
     {...ActiveItem.args},
   ]
 }
