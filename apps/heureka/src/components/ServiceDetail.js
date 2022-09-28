@@ -3,13 +3,21 @@ import { getService } from "../queries"
 import useStore from "../store"
 import { useStore as useMessageStore } from "../messageStore"
 import { useRouter } from "url-state-router"
-import { parseError, patchExampl1 } from "../helpers"
+import {
+  parseError,
+  patchExampl1,
+  patchExampl2,
+  changeLogExample1,
+  changeLogExample2,
+} from "../helpers"
 import {
   Icon,
   DataGrid,
   DataGridRow,
   DataGridCell,
   Container,
+  Stack,
+  Button,
 } from "juno-ui-components"
 import {
   DetailSection,
@@ -19,8 +27,10 @@ import {
 } from "../styles"
 import HintLoading from "./HintLoading"
 import HintNotFound from "./HintNotFound"
-import PatchLogList from "./PatchLogList"
+import PatchLogsList from "./PatchLogsList"
 import ComponentsList from "./ComponentsList"
+import { SERVICES_PATH } from "./AppRouter"
+import ChangesLogList from "./ChangesLogList"
 
 const listOfUsers = (users) => {
   users = users || []
@@ -35,7 +45,7 @@ const listOfUsers = (users) => {
   ))
 }
 const ServiceDetail = () => {
-  const { options, routeParams } = useRouter()
+  const { options, routeParams, navigateTo } = useRouter()
 
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const setMessage = useMessageStore((state) => state.setMessage)
@@ -72,7 +82,14 @@ const ServiceDetail = () => {
 
   const patches = useMemo(() => {
     if (data?.Name && data?.Name === "Elektra") {
-      return [patchExampl1]
+      return [patchExampl2, patchExampl1]
+    }
+    return []
+  }, [data])
+
+  const changes = useMemo(() => {
+    if (data?.Name && data?.Name === "Elektra") {
+      return [changeLogExample1, changeLogExample2]
     }
     return []
   }, [data])
@@ -121,14 +138,48 @@ const ServiceDetail = () => {
                   Vulnerabilities in this service
                 </p>
                 <div className="mt-4">
-                  <ComponentsList minimized sorted components={components} />
+                  <ComponentsList
+                    columns={{
+                      name: {},
+                      type: {},
+                      version: {},
+                      vulnerabilities: {},
+                    }}
+                    sorted
+                    components={components}
+                  />
                 </div>
               </div>
 
               <div className={DetailSection}>
-                <p className={DetailSectionHeader}>Patches log</p>
+                <Stack alignment="center">
+                  <p className={`${DetailSectionHeader} w-full`}>Patches log</p>
+                  <Button
+                    label="Add"
+                    onClick={() =>
+                      navigateTo(`${SERVICES_PATH}/${serviceId}/patchLog/new`)
+                    }
+                    size="small"
+                  />
+                </Stack>
                 <div className="mt-4">
-                  <PatchLogList patches={patches} />
+                  <PatchLogsList patches={patches} />
+                </div>
+              </div>
+
+              <div className={DetailSection}>
+                <Stack alignment="center">
+                  <p className={`${DetailSectionHeader} w-full`}>Changes log</p>
+                  <Button
+                    label="Add"
+                    onClick={() =>
+                      navigateTo(`${SERVICES_PATH}/${serviceId}/patchLog/new`)
+                    }
+                    size="small"
+                  />
+                </Stack>
+                <div className="mt-4">
+                  <ChangesLogList changes={changes} />
                 </div>
               </div>
             </>

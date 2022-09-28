@@ -3,6 +3,8 @@ import { Router, Route, Redirect, Switch } from "url-state-router"
 import AppContainer from "./AppContainer"
 import Services from "./Services"
 import ServiceDetail from "./ServiceDetail"
+import ChangesLogDetail from "./ChangesLogDetail"
+import PatchLogNew from "./PatchLogNew"
 import PatchLogDetail from "./PatchLogDetail"
 import Components from "./Components"
 import ComponentDetail from "./ComponentDetail"
@@ -47,10 +49,23 @@ const AppRouter = (props) => {
         <Route exact path={HOME_PATH} component={Home} />
         <Route exact path={SERVICES_PATH} component={Services} />
         <Route path={`${SERVICES_PATH}/:serviceId`} component={ServiceDetail} />
-        <Route
-          path={`${SERVICES_PATH}/:serviceId/patchLog/:patchLogId`}
-          component={PatchLogDetail}
-        />
+        <Switch>
+          <Route
+            exact
+            path={`${SERVICES_PATH}/:serviceId/changeLog/:changeLogId`}
+            component={ChangesLogDetail}
+          />
+          <Route
+            exact
+            path={`${SERVICES_PATH}/:serviceId/patchLog/new`}
+            component={PatchLogNew}
+          />
+          <Route
+            exact
+            path={`${SERVICES_PATH}/:serviceId/patchLog/:patchLogId`}
+            component={PatchLogDetail}
+          />
+        </Switch>
         <Route exact path={COMPONENTS_PATH} component={Components} />
         <Route
           exact

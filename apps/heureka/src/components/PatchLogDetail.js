@@ -19,8 +19,8 @@ import { patchExampl1, patchExampl2 } from "../helpers"
 import { useRouter } from "url-state-router"
 import { DateTime } from "luxon"
 import EvidencesList from "./EvidencesList"
-import ComponentsList from "./ComponentsList"
 import { SERVICES_PATH } from "./AppRouter"
+import ChangesLogList from "./ChangesLogList"
 
 const PatchLogDetail = ({}) => {
   const { options, routeParams, navigateTo } = useRouter()
@@ -37,12 +37,12 @@ const PatchLogDetail = ({}) => {
   }, [patchLogId])
 
   const createdAt = useMemo(() => {
-    if (patch.CreatedAt) {
+    if (patch?.CreatedAt) {
       return DateTime.fromSQL(patch.CreatedAt).toLocaleString(
         DateTime.DATETIME_SHORT
       )
     }
-  }, [patch.CreatedAt])
+  }, [patch?.CreatedAt])
 
   const onPanelClose = () => {
     navigateTo(`${SERVICES_PATH}/${serviceId}`)
@@ -71,18 +71,21 @@ const PatchLogDetail = ({}) => {
             </DataGrid>
           </div>
         </div>
+
         <div className={DetailSection}>
-          <p className={DetailSectionHeader}>State before</p>
+          <Stack alignment="center">
+            <p className={`${DetailSectionHeader} w-full`}>Changes</p>
+            <Button
+              label="Add"
+              onClick={function noRefCheck() {}}
+              size="small"
+            />
+          </Stack>
           <div className="mt-4">
-            <ComponentsList minimized unlink components={patch.BeforeState} />
+            <ChangesLogList changes={patch.Changes} />
           </div>
         </div>
-        <div className={DetailSection}>
-          <p className={DetailSectionHeader}>State after</p>
-          <div className="mt-4">
-            <ComponentsList minimized unlink components={patch.AfterState} />
-          </div>
-        </div>
+
         <div className={DetailSection}>
           <Stack alignment="center">
             <p className={`${DetailSectionHeader} w-full`}>Evidences</p>

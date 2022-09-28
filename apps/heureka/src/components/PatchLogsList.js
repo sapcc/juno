@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import PatchLogListItem from "./PatchLogListItem"
+import PatchLogsListItem from "./PatchLogsListItem"
 import {
   DataGrid,
   DataGridRow,
@@ -8,7 +8,7 @@ import {
 } from "juno-ui-components"
 import HintNotFound from "./HintNotFound"
 
-const PatchLogList = ({ patches }) => {
+const PatchLogsList = ({ patches }) => {
   patches = useMemo(() => {
     if (!patches) return []
     return patches
@@ -20,13 +20,13 @@ const PatchLogList = ({ patches }) => {
         <DataGridRow>
           <DataGridHeadCell>ID</DataGridHeadCell>
           <DataGridHeadCell>Date</DataGridHeadCell>
-          <DataGridHeadCell>Changed components</DataGridHeadCell>
+          <DataGridHeadCell>Changes</DataGridHeadCell>
           <DataGridHeadCell>Evidences</DataGridHeadCell>
         </DataGridRow>
         {patches.length > 0 ? (
           <>
             {patches.map((item, i) => (
-              <PatchLogListItem key={i} item={item} />
+              <PatchLogsListItem key={i} item={item} />
             ))}
           </>
         ) : (
@@ -41,4 +41,4 @@ const PatchLogList = ({ patches }) => {
   )
 }
 
-export default PatchLogList
+export default PatchLogsList
