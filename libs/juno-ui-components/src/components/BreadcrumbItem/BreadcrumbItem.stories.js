@@ -1,5 +1,6 @@
 import React from "react"
 import { BreadcrumbItem } from "./index"
+import { knownIcons } from "../Icon/Icon.component.js"
 
 
 const Template = (args) => {
@@ -9,12 +10,25 @@ const Template = (args) => {
 export default {
   title: "Components/Breadcrumb/BreadcrumbItem",
   component: BreadcrumbItem,
-  argTypes: {},
+  argTypes: {
+    icon: {
+      control: {
+        type: 'select',
+        options: ['default', ...knownIcons],
+      }
+    },
+  },
 }
 
 export const Default = Template.bind({})
 Default.args = {
   label: "Breadcrumb Item"
+}
+
+export const WithIcon = Template.bind({})
+WithIcon.args = {
+  icon: "place",
+  label: "Breadcrumb Item with Icon",
 }
 
 export const Active = Template.bind({})
@@ -31,5 +45,6 @@ Disabled.args = {
 
 export const Home = Template.bind({})
 Home.args = {
-  label: "Home",
+  label: "",
+  icon: "home",
 }

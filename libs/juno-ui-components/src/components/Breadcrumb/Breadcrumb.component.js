@@ -16,13 +16,11 @@ export const Breadcrumb = ({
   
   const breadcrumbArray = Children.toArray(children)
   const breadcrumbArrayWithSeparators = []
-
-  console.log(breadcrumbArrayWithSeparators)
   
   breadcrumbArray.forEach( (child, i) => {
     breadcrumbArrayWithSeparators.push(
       <>
-        <BreadcrumbItem {...child.props} />
+        <BreadcrumbItem {...child.props} key={i} />
         { i < breadcrumbArray.length - 1 ?
             <Icon icon="chevronRight" />
           :
@@ -33,7 +31,7 @@ export const Breadcrumb = ({
   })
   
   return (
-    <Stack className={`juno-breadcrumb ${breadcrumbstyles} ${className}`} gap="3">
+    <Stack className={`juno-breadcrumb ${breadcrumbstyles} ${className}`} gap="1.5">
       { breadcrumbArrayWithSeparators }
     </Stack>
   )

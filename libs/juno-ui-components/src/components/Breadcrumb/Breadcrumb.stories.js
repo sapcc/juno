@@ -5,6 +5,7 @@ import { Default as Item } from "../BreadcrumbItem/BreadcrumbItem.stories"
 import { Home as HomeItem } from "../BreadcrumbItem/BreadcrumbItem.stories"
 import { Active as ActiveItem } from "../BreadcrumbItem/BreadcrumbItem.stories"
 import { Disabled as DisabledItem } from "../BreadcrumbItem/BreadcrumbItem.stories"
+import { WithIcon as ItemWithIcon } from  "../BreadcrumbItem/BreadcrumbItem.stories"
 
 
 
@@ -28,8 +29,8 @@ export default {
 export const Default = Template.bind({})
 Default.args = {
   children: [
-    {...HomeItem.args, label: "Home", icon: "place"},
-    {...Item.args, children: "Child"}, // test with actual Icon component
+    {...HomeItem.args},
+    {...ItemWithIcon.args, },
     {...Item.args},
     {...ActiveItem.args},
   ]
