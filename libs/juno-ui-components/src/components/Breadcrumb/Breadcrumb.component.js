@@ -31,14 +31,16 @@ export const Breadcrumb = ({
   })
   
   return (
-    <Stack className={`juno-breadcrumb ${breadcrumbstyles} ${className}`} gap="1.5">
+    <Stack className={`juno-breadcrumb ${breadcrumbstyles} ${className}`} gap="1.5" {...props} >
       { breadcrumbArrayWithSeparators }
     </Stack>
   )
 }
 
 Breadcrumb.propTypes = {
+  /** Pass a custom className */
   className: PropTypes.string,
+  /** The children to render. Typically use the BreadcrumbItem component. */
   children: PropTypes.node,
 }
 
