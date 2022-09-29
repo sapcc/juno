@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect } from "react"
-import PagesRouter from "./components/PagesRouter"
+import PageFooter from "./components/layout/PageFooter"
+import PageHead from "./components/layout/PageHead"
+import Home from "./pages/home"
 
 import useStore from "./store"
 
@@ -18,9 +20,11 @@ const App = (props) => {
   return (
     // use custom style cache to avoid conflicts with other apps
     <div className={`flex flex-col h-full ${loginOverlayVisible ? "overflow-hidden h-full" : ""}`} >
-      <React.StrictMode>
-        <PagesRouter />
-      </React.StrictMode>
+      <div className="flex flex-col grow">
+        <PageHead />
+        <Home />
+        <PageFooter />
+      </div>
     </div>
 )}
 
