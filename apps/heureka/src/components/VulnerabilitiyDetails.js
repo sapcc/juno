@@ -93,6 +93,12 @@ const VulnerabilitiyDetails = () => {
                       </DataGridCell>
                       <DataGridCell>{data?.CCScoreReason}</DataGridCell>
                     </DataGridRow>
+                    <DataGridRow>
+                      <DataGridCell>
+                        <b>State: </b>
+                      </DataGridCell>
+                      <DataGridCell>{data?.State}</DataGridCell>
+                    </DataGridRow>
                   </DataGrid>
                 </div>
               </div>
