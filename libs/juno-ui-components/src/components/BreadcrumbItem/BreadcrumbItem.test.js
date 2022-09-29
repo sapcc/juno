@@ -1,18 +1,24 @@
 import * as React from "react"
 import { render, screen } from "@testing-library/react"
 import { BreadcrumbItem } from "./index"
+import { Button } from "../Button/index"
 
 
 describe("BreadcrumbItem", () => {
   
   test("renders a breadcrumb item with text as passed", async () => {
-  render(<BreadcrumbItem data-testid="breadcrumbitem" />)
-  expect(screen.getByTestId("breadcrumbitem")).toBeInTheDocument()
-  expect(screen.getByTestId("breadcrumbitem")).toHaveClass("juno-breadcrumb-item")
+    render(<BreadcrumbItem data-testid="breadcrumbitem" />)
+    expect(screen.getByTestId("breadcrumbitem")).toBeInTheDocument()
+    expect(screen.getByTestId("breadcrumbitem")).toHaveClass("juno-breadcrumb-item")
   })
   
-  test.skip("returns children as passed", async () => {
-    
+  test("returns children as passed", async () => {
+    render(
+      <BreadcrumbItem>
+        <Button label="Test Button"/>
+      </BreadcrumbItem>)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveTextContent("Test Button")
   })
   
   test("renders an icon as passed", async () => {
@@ -39,16 +45,27 @@ describe("BreadcrumbItem", () => {
     expect(screen.getByRole("link")).toHaveAttribute("aria-label", "My Item")
   })
   
-  test.skip("renders an active item as passed", async () => {
-    
+  test("renders an active item that is not a link as passed", async () => {
+    render(<BreadcrumbItem href="#" active data-testid="breadcrumbitem"/>)
+    expect(screen.queryByRole("link")).not.toBeInTheDocument()
+    expect(screen.getByTestId("breadcrumbitem")).toBeInTheDocument()
+    expect(screen.getByTestId("breadcrumbitem")).toHaveClass("juno-breadcrumb-item-active")
   })
   
-  test.skip("renders a disabled item as passed", async () => {
-    
+  test("renders a disabled item as passed", async () => {
+    const onClickSpy = jest.fn()
+    render(<BreadcrumbItem href="#" disabled data-testid="breadcrumbitem" onClick={onClickSpy} />)
+    expect(screen.getByTestId("breadcrumbitem")).toBeInTheDocument()
+    expect(screen.getByTestId("breadcrumbitem")).toHaveClass("juno-breadcrumb-item-disabled")
+    screen.getByTestId("breadcrumbitem").click()
+    expect(onClickSpy).not.toHaveBeenCalled()
   })
   
-  test.skip("executes an onClick handler as passed", async () => {
-    
+  test("executes an onClick handler as passed", async () => {
+    const onClickSpy = jest.fn()
+    render(<BreadcrumbItem onClick={onClickSpy} />)
+    screen.getByRole("link").click()
+    expect(onClickSpy).toHaveBeenCalled()
   })
   
   test("renders a custom className as passed", async () => {
