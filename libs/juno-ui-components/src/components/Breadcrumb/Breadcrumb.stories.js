@@ -27,6 +27,14 @@ export default {
 }
 
 export const Default = Template.bind({})
+Default.parameters = {
+  docs: {
+    description: {
+      story:
+        "Generic breadcrumb component. Use this to Wrap `Breadcrumb` items or custom children in a breadcrumb.",
+    },
+  },
+}
 Default.args = {
   children: [
     {...HomeItem.args},

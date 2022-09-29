@@ -7,7 +7,7 @@ import { Icon } from "../Icon/"
 const breadcrumbstyles = `
 
 `
-
+/** Generic breadcrumb component. Use this to Wrap `Breadcrumb` items or custom children in a breadcrumb. */
 export const Breadcrumb = ({
   children,
   className,

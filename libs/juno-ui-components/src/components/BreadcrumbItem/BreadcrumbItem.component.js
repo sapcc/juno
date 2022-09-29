@@ -20,6 +20,7 @@ const disabledstyles = `
   jn-pointer-events-none
 `
 
+/** An individual item in a breadcrumb */
 export const BreadcrumbItem = ({
   icon,
   href,
