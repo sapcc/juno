@@ -38,7 +38,7 @@ export const BreadcrumbItem = ({
   return (
     
       children ?
-          { children }
+          children
         : 
           <span className={`juno-breadcrumb-item ${breadcrumbitemstyles} ${ disabled ? "juno-breadcrumb-item-disabled" : "" } ${className}`} {...props} >
             { active ? 
