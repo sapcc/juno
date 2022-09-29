@@ -3,6 +3,9 @@ import { Router, Route, Redirect, Switch } from "url-state-router"
 import AppContainer from "./AppContainer"
 import Services from "./Services"
 import ServiceDetail from "./ServiceDetail"
+import ChangesLogDetail from "./ChangesLogDetail"
+import PatchLogNew from "./PatchLogNew"
+import PatchLogDetail from "./PatchLogDetail"
 import Components from "./Components"
 import ComponentDetail from "./ComponentDetail"
 import Vulnerabilities from "./Vulnerabilities"
@@ -43,34 +46,41 @@ const AppRouter = (props) => {
       </Route>
 
       <AppContainer tabsConfig={TABS_CONFIG}>
+        <Route exact path={HOME_PATH} component={Home} />
+        <Route exact path={SERVICES_PATH} component={Services} />
+        <Route path={`${SERVICES_PATH}/:serviceId`} component={ServiceDetail} />
         <Switch>
-          <Route exact path={HOME_PATH} component={Home} />
-          <Route exact path={SERVICES_PATH} component={Services} />
           <Route
             exact
-            path={`${SERVICES_PATH}/:serviceId`}
-            component={ServiceDetail}
-          />
-          <Route exact path={COMPONENTS_PATH} component={Components} />
-          <Route
-            exact
-            path={`${COMPONENTS_PATH}/:componentId`}
-            component={ComponentDetail}
+            path={`${SERVICES_PATH}/:serviceId/changeLog/:changeLogId`}
+            component={ChangesLogDetail}
           />
           <Route
             exact
-            path={VULNERABILITIES_PATH}
-            component={Vulnerabilities}
+            path={`${SERVICES_PATH}/:serviceId/patchLog/new`}
+            component={PatchLogNew}
           />
           <Route
             exact
-            path={`${VULNERABILITIES_PATH}/:vulnerabilityId`}
-            component={VulnerabilitiyDetails}
+            path={`${SERVICES_PATH}/:serviceId/patchLog/:patchLogId`}
+            component={PatchLogDetail}
           />
-          <Route exact path={SUPPORT_GROUP_PATH} component={SupportGroups} />
-          <Route exact path={USERS_PATH} component={Users} />
-          <Route exact path={`${USERS_PATH}/:userId`} component={UserDetail} />
         </Switch>
+        <Route exact path={COMPONENTS_PATH} component={Components} />
+        <Route
+          exact
+          path={`${COMPONENTS_PATH}/:componentId`}
+          component={ComponentDetail}
+        />
+        <Route exact path={VULNERABILITIES_PATH} component={Vulnerabilities} />
+        <Route
+          exact
+          path={`${VULNERABILITIES_PATH}/:vulnerabilityId`}
+          component={VulnerabilitiyDetails}
+        />
+        <Route exact path={SUPPORT_GROUP_PATH} component={SupportGroups} />
+        <Route exact path={USERS_PATH} component={Users} />
+        <Route exact path={`${USERS_PATH}/:userId`} component={UserDetail} />
       </AppContainer>
     </Router>
   )
