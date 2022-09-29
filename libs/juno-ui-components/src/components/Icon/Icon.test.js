@@ -197,10 +197,16 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toHaveAttribute("alt", "forum")
   })
 
-  test("renders an forum help", async () => {
+  test("renders a forum help icon", async () => {
     render(<Icon icon="help" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "help")
+  })
+  
+  test("renders a Home icon", async () => {
+    render(<Icon icon="home" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "home")
   })
 
   test("renders an info icon", async () => {
