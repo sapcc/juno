@@ -7,10 +7,8 @@ export default {
 	component: Badge,
 	argTypes: {
 		icon: {
-			control: {
-				type: 'select',
-				options: ['default', ...knownIcons],
-			}
+			options: [ 'default', ...knownIcons ],
+			control: { type: 'select' }
 		}
 	},
 }

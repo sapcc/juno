@@ -1,12 +1,18 @@
 import React from "react"
 import { MenuItem } from "./index.js"
 import { Button } from "../Button/index.js"
+import { knownIcons } from "../Icon/Icon.component.js"
 
 
 export default {
   title: "WiP/Menu/MenuItem",
   component: MenuItem,
-  argTypes: {},
+  argTypes: {
+		icon: {
+			options: [ 'default', ...knownIcons ],
+			control: { type: 'select' }
+		}
+	},
 }
 
 const Template = (args) => <MenuItem {...args} />

@@ -1,11 +1,17 @@
 import React from "react"
 import { Tab } from "./index.js"
 import { Icon } from "../Icon/index.js"
+import { knownIcons } from "../Icon/Icon.component.js"
 
 export default {
   title: "Layout/Tabs/Tab",
   component: Tab,
-  argTypes: {},
+  argTypes: {
+    icon: {
+      options: [ 'default', ...knownIcons ],
+      control: { type: 'select' }
+    }
+  }
 }
 
 const Template = (args) => <Tab {...args} /> 
