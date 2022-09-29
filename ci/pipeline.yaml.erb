@@ -1,6 +1,6 @@
 # prettier-ignore
 <%
-  APPS = ["auth","designate","widget-loader","whois","volta","heureka","maintenance"]
+  APPS = ["auth","dashboard","designate","widget-loader","whois","volta","heureka","maintenance"]
   LIBS = ["juno-ui-components", "communicator", "url-state-provider", "url-state-router"] 
 %>
 
@@ -44,14 +44,14 @@ resources:
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
 
-  - name: app-dashboard.git
-    type: git
-    source:
-      uri: https://github.com/sapcc/juno.git
-      branch: main
-      paths: ["apps/dashboard","package.json","libs","ci/Dockerfile.dashboard","e2e", "ci/helm-charts"]
-      username: sapcc-bot
-      password: ((github-access-token/sapcc-bot))
+  # - name: app-dashboard.git
+  #  type: git
+  #  source:
+  #    uri: https://github.com/sapcc/juno.git
+  #    branch: main
+  #    paths: ["apps/dashboard","package.json","libs","ci/Dockerfile.dashboard","e2e", "ci/helm-charts"]
+  #    username: sapcc-bot
+  #    password: ((github-access-token/sapcc-bot))
 
   - name: api-mercury.git
     type: git
@@ -77,12 +77,13 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["apps/<%= app %>","package.json","libs","ci/Dockerfile.app","e2e", ".yarn","ci/pipeline.yaml"]
+      paths: ["apps/<%= app %>","package.json","libs","ci/Dockerfile.app","e2e", ".yarn","ci/pipeline.yaml", "ci/helm-charts"]
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
 
   - name: juno-<%= app %>.image
     type: docker-image
+    check_every: 24h
     source:
       username: ((registry-user/keppel-ccloud.username))
       password: ((registry-user/keppel-ccloud.password))
@@ -134,14 +135,6 @@ resources:
     type: time-version-resource
     check_every: 525600h
     source: { key: juno-cdn-version } # disambiguate from other time-version resources
-
-  - name: juno-dashboard.image
-    type: docker-image
-    check_every: 24h
-    source:
-      username: ((registry-user/keppel-ccloud.username))
-      password: ((registry-user/keppel-ccloud.password))
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-dashboard  
 
   - name: juno-mercury.image
     type: docker-image
@@ -427,68 +420,9 @@ jobs:
           globs: [release/juno-ui-components*]
                     
 
-  # run unit tests for dashboard sources
-  - name: unit-test-dashboard
-    public: true
-    plan:
-      - get: juno-unit-test.image
-        passed: ["build-unit-test-image"]
-        trigger: true
-      - get: lib-juno-ui-components.git
-        passed: ["unit-test-juno-ui-components"]
-      - get: app-dashboard.git
-        trigger: true
-
-      - task: unit
-        config:
-          platform: linux
-          image_resource:
-            type: docker-image
-            source:
-              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-unit-test
-              tag: "latest"
-          inputs:
-            - name: app-dashboard.git
-              path: /app/juno
-
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                cd /app/juno
-                yarn install 1>/dev/null
-                yarn workspaces focus juno-ui-components dashboard 1>/dev/null
-                yarn workspace juno-ui-components build 1>/dev/null
-                CI=true yarn workspace dashboard test 1>/dev/null
-
-  # build dashboard image and push it to keppel
-  - name: build-dashboard
-    serial: true
-    plan:
-      - in_parallel:
-          - get: app-dashboard.git
-            passed: ["unit-test-dashboard"]
-
-            trigger: true
-          - put: dashboard.version
-      - in_parallel:
-          - put: juno-dashboard.image
-            params:
-              tag_as_latest: true
-              cache: true
-              cache_tag: "latest"
-              build: app-dashboard.git
-              build_args: 
-                KEPPEL_HOSTNAME: keppel.eu-de-1.cloud.sap
-                LIBS: <%= LIBS.join(" ") %>
-              dockerfile: app-dashboard.git/ci/Dockerfile.dashboard
-              tag: dashboard.version/version
-            get_params:
-              skip_download: true
 
   # ******************* MERCURY ******************************
-  # run unit tests for dashboard sources
+  # run unit tests for mercury sources
   - name: unit-test-mercury
     public: true
     plan:
@@ -520,7 +454,7 @@ jobs:
                 yarn workspaces focus mercury 1>/dev/null
                 CI=true yarn workspace mercury test-prod 1>/dev/null
 
-  # build dashboard image and push it to keppel
+  # build mercury image and push it to keppel
   - name: build-mercury
     serial: true
     plan:
@@ -581,7 +515,32 @@ jobs:
                 yarn build 1>/dev/null
                 CI=true yarn workspace <%= app %> test 1>/dev/null
 
+
   # build image for each app in /apps
+  # special handling for dashboard app as it's also deployed standalone
+  <% if app == "dashboard" %>
+  - name: build-dashboard
+    serial: true
+    plan:
+      - in_parallel:
+          - get: app-dashboard.git
+            passed: ["unit-test-dashboard"]
+
+            trigger: true
+          - put: dashboard.version
+      - in_parallel:
+          - put: juno-dashboard.image
+            params:
+              tag_as_latest: true
+              cache: true
+              cache_tag: "latest"
+              build: app-dashboard.git
+              build_args: 
+                KEPPEL_HOSTNAME: keppel.eu-de-1.cloud.sap
+                LIBS: <%= LIBS.join(" ") %>
+              dockerfile: app-dashboard.git/ci/Dockerfile.dashboard
+              tag: dashboard.version/version
+  <% else %>
   # we tag this images as latest. App images only serve as a buffer 
   # to be used in the next step. After that, they are no longer used. 
   - name: build-<%= app %>
@@ -590,7 +549,6 @@ jobs:
       - get: app-<%= app %>.git
         passed: ["unit-test-<%= app %>"]
         trigger: true
-
       - put: juno-<%= app %>.image
         params:
           tag_as_latest: true
@@ -602,11 +560,11 @@ jobs:
             LIBS: <%= LIBS.join(" ") %>
             KEPPEL_HOSTNAME: keppel.eu-de-1.cloud.sap
           dockerfile: app-<%= app %>.git/ci/Dockerfile.app
-
+    <% end %>
   <% end %>
 
   # this step combines all app images
-  # for that we use nginx image and copy all builded apps (in the step before)
+  # for that we use nginx image and copy all built apps (in the step before)
   # into /usr/share/nginx/html/
   # this image will be deployed as CDN server
   - name: combine-apps
