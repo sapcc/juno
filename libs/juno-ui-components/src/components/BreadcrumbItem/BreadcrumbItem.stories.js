@@ -12,10 +12,8 @@ export default {
   component: BreadcrumbItem,
   argTypes: {
     icon: {
-      control: {
-        type: 'select',
-        options: ['default', ...knownIcons],
-      }
+      options: ['default', ...knownIcons],
+      control: {type: 'select'}
     },
   },
 }
