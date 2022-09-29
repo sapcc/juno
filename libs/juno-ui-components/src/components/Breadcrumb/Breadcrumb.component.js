@@ -31,7 +31,7 @@ export const Breadcrumb = ({
   })
   
   return (
-    <Stack className={`juno-breadcrumb ${breadcrumbstyles} ${className}`} gap="1.5" {...props} >
+    <Stack className={`juno-breadcrumb ${breadcrumbstyles} ${className}`} gap="1" {...props} >
       { breadcrumbArrayWithSeparators }
     </Stack>
   )
