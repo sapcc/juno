@@ -44,15 +44,6 @@ resources:
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
 
-  # - name: app-dashboard.git
-  #  type: git
-  #  source:
-  #    uri: https://github.com/sapcc/juno.git
-  #    branch: main
-  #    paths: ["apps/dashboard","package.json","libs","ci/Dockerfile.dashboard","e2e", "ci/helm-charts"]
-  #    username: sapcc-bot
-  #    password: ((github-access-token/sapcc-bot))
-
   - name: api-mercury.git
     type: git
     source:
@@ -69,7 +60,7 @@ resources:
       branch: main
       paths: ["config/error-pages","ci/Dockerfile.error-pages-default-backend"]
       username: sapcc-bot
-      password: ((github-access-token/sapcc-bot))      
+      password: ((github-access-token/sapcc-bot))     
  
   <% APPS.each do |app| %>
   - name: app-<%= app %>.git
@@ -538,7 +529,7 @@ jobs:
               build_args: 
                 KEPPEL_HOSTNAME: keppel.eu-de-1.cloud.sap
                 LIBS: <%= LIBS.join(" ") %>
-              dockerfile: app-dashboard.git/ci/Dockerfile.dashboard
+              dockerfile: app-dashboard.git/ci/Dockerfile.app
               tag: dashboard.version/version
   <% else %>
   # we tag this images as latest. App images only serve as a buffer 
