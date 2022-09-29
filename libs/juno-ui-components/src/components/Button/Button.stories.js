@@ -9,16 +9,12 @@ export default {
   component: Button,
   argTypes: {
     icon: {
-      control: {
-        type: 'select',
-        options: ['default', ...knownIcons],
-      }
+      options: [ 'default', ...knownIcons ],
+      control: { type: 'select' }
     },
     variant: {
-      control: {
-        type: 'select',
-        options: [ 'default', 'primary', 'primary-danger', 'subdued' ],
-      }
+      options: [ 'default', 'primary', 'primary-danger', 'subdued' ],
+      control: { type: 'select' }
     }
   },
   
