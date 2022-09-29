@@ -28,7 +28,7 @@ export const THREAD_LEVEL_HIGH = "high"
 export const THREAD_LEVEL_CRITICAL = "critical"
 
 export const threadLevelToWeight = (level) => {
-  switch (level.toLowerCase()) {
+  switch (level?.toLowerCase()) {
     case THREAD_LEVEL_LOW:
       return 3
     case THREAD_LEVEL_MEDIUM:

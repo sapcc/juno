@@ -18,8 +18,6 @@ const PatchLogsListItem = ({ item }) => {
     }
   }, [item.CreatedAt])
 
-  console.log("item.Changes: ", item)
-
   return (
     <DataGridRow>
       <DataGridCell>
