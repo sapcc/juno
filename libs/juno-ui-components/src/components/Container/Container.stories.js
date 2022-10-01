@@ -28,3 +28,16 @@ Basic.parameters = {
   },
 }
 Basic.args = {}
+
+export const WithVerticalPadding = Template.bind({})
+WithVerticalPadding.parameters = {
+  docs: {
+    description: {
+      story: 
+        "A content container with vertical padding added. This will add padding to both the top and the bottom of the container."
+    }
+  }
+}
+WithVerticalPadding.args = {
+  py: true,
+}

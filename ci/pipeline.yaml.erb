@@ -68,7 +68,11 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
+      <% if app == "dashboard" %>
+      paths: ["apps/<%= app %>","package.json","libs","ci/Dockerfile.dashboard","e2e", ".yarn","ci/pipeline.yaml", "ci/helm-charts"]
+      <% else %>
       paths: ["apps/<%= app %>","package.json","libs","ci/Dockerfile.app","e2e", ".yarn","ci/pipeline.yaml", "ci/helm-charts"]
+      <% end %>
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
 
@@ -529,7 +533,7 @@ jobs:
               build_args: 
                 KEPPEL_HOSTNAME: keppel.eu-de-1.cloud.sap
                 LIBS: <%= LIBS.join(" ") %>
-              dockerfile: app-dashboard.git/ci/Dockerfile.app
+              dockerfile: app-dashboard.git/ci/Dockerfile.dashboard
               tag: dashboard.version/version
   <% else %>
   # we tag this images as latest. App images only serve as a buffer 

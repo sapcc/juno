@@ -1,9 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const containerStyles = (px) => {
+const containerStyles = (px, py) => {
   return `
-    ${px ? "jn-p-6" : "jn-py-6"}
+    ${ px ? "jn-px-6 " : " " } 
+    ${ py ? " jn-py-6" : "" }
   `
 }
 
@@ -12,13 +13,14 @@ const containerStyles = (px) => {
  */
 export const Container = ({
   px,
+  py,
   className,
   children,
   ...props
 }) => {
   return (
     <div
-      className={`juno-container ${containerStyles(px)} ${className}`}
+      className={`juno-container ${containerStyles(px, py)} ${className}`}
       {...props}
     >
       {children}
@@ -29,11 +31,14 @@ export const Container = ({
 Container.propTypes = {
   /** Choose false if you don't want horizontal padding to be added. */
   px: PropTypes.bool,
+  /** Set to true to add vertical padding. */
+  py: PropTypes.bool,
   /** Add custom class name */
   className: PropTypes.string,
 }
 
 Container.defaultProps = {
   px: true,
+  py: false,
   className: "",
 }
