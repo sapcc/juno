@@ -75,14 +75,14 @@ const App = (props) => {
       embedded={embedded === "true"}
     >
       <MainTabs>
-        <TabList variant="top">
+        <TabList>
           <Tab>Tab One</Tab>
           <Tab>Tab Two</Tab>
         </TabList>
         
         <TabPanel>
           {/* You'll normally want to use a Container as a wrapper for your content because it has padding that makes everything look nice */}
-          <Container>
+          <Container py>
             {/* Set the background graphic using tailwind background image syntax as below. The image must exist at the specified location in your app */}
             <IntroBox variant="hero" heroImage="bg-[url('img/app_bg_example.svg')]">
               This is the fancy introbox variant for apps that have some app specific flavor branding with a special background graphic.
@@ -120,7 +120,7 @@ const App = (props) => {
         </TabPanel>
 
         <TabPanel>
-          <Container>
+          <Container py>
             Content Panel two. Normally you will probably want to put the TabPanel content into separate components.
 
           </Container>
