@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/tls-acme: "true"
     # disable the idle http timeout check
     # https://operations.global.cloud.sap/docs/support/playbook/kubernetes/idle_http_keep_alive_timeout.html
-    cloud.sap/no-http-keep-alive-monitor: "no"
+    cloud.sap/no-http-keep-alive-monitor: "true"
   # labels:
   #   app: juno
   name: juno
