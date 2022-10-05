@@ -4,7 +4,33 @@ import { exampleFetch as fetchStuff } from "./actions"
 import useStore from "./store"
 import NewItemForm from "./components/NewItemForm"
 
-import { AppShell, Button, ContentAreaToolbar, Container, IntroBox, Message, Spinner, MainTabs, Tab, TabList, TabPanel } from "juno-ui-components"
+import { 
+  AppShell, 
+  Breadcrumb, 
+  BreadcrumbItem, 
+  Button, 
+  ContentAreaToolbar, 
+  Container, 
+  DataGrid,
+  DataGridCell,
+  DataGridHeadCell,
+  DataGridRow,
+  DataGridToolbar,
+  Icon,
+  IntroBox, 
+  Message, 
+  Spinner, 
+  MainTabs, 
+  Stack,
+  Tab, 
+  TabList, 
+  TabPanel, 
+} 
+from "juno-ui-components"
+
+import { Peaks as peaks } from "./data"
+
+
 import { currentState, push } from "url-state-provider"
 /* IMPORTANT: Replace this with your app's name */
 const URL_STATE_KEY = "exampleapp"
@@ -71,12 +97,15 @@ const App = (props) => {
   return (
     <AppShell
       pageHeader="Converged Cloud | Example App"
-      contentHeading="App template page title"
+      contentHeading="Example App"
       embedded={embedded === "true"}
     >
+      <Breadcrumb>
+        <BreadcrumbItem icon="home" label="Example App Home" />
+      </Breadcrumb>
       <MainTabs>
         <TabList>
-          <Tab>Tab One</Tab>
+          <Tab>Peaks</Tab>
           <Tab>Tab Two</Tab>
         </TabList>
         
@@ -84,11 +113,10 @@ const App = (props) => {
           {/* You'll normally want to use a Container as a wrapper for your content because it has padding that makes everything look nice */}
           <Container py>
             {/* Set the background graphic using tailwind background image syntax as below. The image must exist at the specified location in your app */}
-            <IntroBox variant="hero" heroImage="bg-[url('img/app_bg_example.svg')]">
+            {/*<IntroBox variant="hero" heroImage="bg-[url('img/app_bg_example.svg')]">
               This is the fancy introbox variant for apps that have some app specific flavor branding with a special background graphic.
-            </IntroBox>
+            </IntroBox> */}
             {/* Messages always at the top of the content area or if there is a hero introbox directly underneath that */}
-            <Message>Welcome to the example app. Shown here is an example layout with tab navigation for the whole content.</Message>
             {error && (
               <Message variant="danger">
                 {error}
@@ -102,19 +130,50 @@ const App = (props) => {
             {/* Add a toolbar  */}
             <ContentAreaToolbar>
               <Button icon="addCircle" onClick={openNewItemForm}>
-                Add Action
+                Panel
               </Button>
             </ContentAreaToolbar>
-            {/*
-            *
-            *
-            * CONTENT GOES HERE
-            *
-            *
-            *
-            * */}
-            Content goes here (adjust endpoint <b>{props.endpoint}</b> defined in
-            env.local)
+           
+           { peaks.length > 0 ? (
+             <DataGrid columns={6}>
+               <DataGridRow>
+                 <DataGridHeadCell>Name</DataGridHeadCell>
+                 <DataGridHeadCell>Height</DataGridHeadCell>
+                 <DataGridHeadCell>Main Range</DataGridHeadCell>
+                 <DataGridHeadCell>Region</DataGridHeadCell>
+                 <DataGridHeadCell>Country</DataGridHeadCell>
+                 <DataGridHeadCell>Options</DataGridHeadCell>
+               </DataGridRow>
+               {peaks.map( (peak, p) => (
+                 <DataGridRow>
+                   <DataGridCell><strong>{peak.name}</strong></DataGridCell>
+                   <DataGridCell>{peak.height}</DataGridCell>
+                   <DataGridCell>{peak.mainrange}</DataGridCell>
+                   <DataGridCell>{peak.region}</DataGridCell>
+                   <DataGridCell>
+                     {peak.country.map( (c, i) => (
+                       c + ( i < peak.country.length - 1 ? ", " : "" )
+                     ))}
+                   </DataGridCell>
+                   <DataGridCell>
+                     {/* Use <Stack> to align and space elements: */}
+                     <Stack gap="1.5">
+                       <Icon icon="edit" size="18"/>
+                       <Icon icon="deleteForever" size="18"/>
+                       <Icon icon="openInNew" size="18" href={peak.url} target="_blank" className="leading-none" />
+                     </Stack>
+                   </DataGridCell>
+                 </DataGridRow>
+               ))
+                 
+               }
+             </DataGrid>
+             
+           ) : (
+             <div>There are no peaks to display.</div>
+           )
+             
+           }
 
           </Container>
         </TabPanel>
@@ -127,7 +186,7 @@ const App = (props) => {
         </TabPanel>
 
       </MainTabs>
-
+      
     </AppShell>
   )
 }
