@@ -6,8 +6,10 @@ import WorldMap from "../assets/images/map.svg"
 import backgroundTop from "../assets/images/background_header.png"
 
 import LoginOverlay from "../components/landingpage/LoginOverlay"
+import WorldMapQASelect from "../components/landingpage/WorldMapQASelect"
 
 import { Button, Stack } from "juno-ui-components"
+
 
 const Home = () => {
   const showLoginOverlay = useStore(useCallback((state) => state.showLoginOverlay))
@@ -66,7 +68,8 @@ const Home = () => {
         </Stack>
       </div>
       <div className="bg-top bg-no-repeat mt-8 pb-12 grow" style={{ backgroundImage: `url('${backgroundTop}')` }}>
-        <div className="max-w-[1280px] mx-auto">
+        <div className="max-w-[1280px] mx-auto relative">
+          <WorldMapQASelect />
           <WorldMap className="worldmap w-[90%] h-auto mx-auto" onClick={handleWorldMapClick} data-selected-region={selectedRegion} />
         </div>
       </div>

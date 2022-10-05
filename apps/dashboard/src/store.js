@@ -119,7 +119,7 @@ const REGIONS = {
     key: "AP-AU-1",
     country: "Australia",
     icon: <FlagAustralia />
-  }
+  },
 }
 
 const REGIONS_BY_CONTINENT = [
@@ -135,6 +135,7 @@ const REGIONS_BY_CONTINENT = [
 ]
 
 const REGION_KEYS = Object.keys(REGIONS)
+const QA_REGION_KEYS = ["QA-DE-1", "QA-DE-2", "QA-DE-3"]
 
 // global store
 const useStore = create(devtools((set) => ({
@@ -146,23 +147,27 @@ const useStore = create(devtools((set) => ({
   region:               null,
   selectRegion:         (selectedRegion) => {
                           // only set if the given value is valid
-                          if (REGION_KEYS.includes(selectedRegion)) {
-                            set((state) => ({region: selectedRegion}))
+                          if (REGION_KEYS.includes(selectedRegion.toUpperCase()) || selectedRegion.toUpperCase().startsWith("QA-")) {
+                            set((state) => ({region: selectedRegion.toUpperCase()}))
                           }
                         },
   deselectRegion:       () => set((state) => ({region: null})),
+
+  preselectedRegion:    null,
+  setPreselectedRegion: (propRegion) => set((state) => ({preselectedRegion: propRegion.toUpperCase()})),
   
   domain:               null,
   selectDomain:         (selectedDomain) => {
                           // only set if the given value is valid
-                          if (DOMAIN_KEYS.includes(selectedDomain)) {
-                            set((state) => ({domain: selectedDomain}))
+                          if (DOMAIN_KEYS.includes(selectedDomain.toUpperCase())) {
+                            set((state) => ({domain: selectedDomain.toUpperCase()}))
                           }
                         },
   deselectDomain:       () => set((state) => ({domain: null})),
 
   regions:              REGIONS,
   regionKeys:           REGION_KEYS,
+  qaRegionKeys:         QA_REGION_KEYS,
   regionsByContinent:   REGIONS_BY_CONTINENT,
   domains:              DOMAINS,
   domainKeys:           DOMAIN_KEYS

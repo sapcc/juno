@@ -58,9 +58,10 @@ const LoginOverlay = () => {
   const selectedRegion = useStore(useCallback((state) => state.region))
   const deselectRegion = useStore(useCallback((state) => state.deselectRegion))
   const regionKeys = useStore(useCallback((state) => state.regionKeys))
+  const qaRegionKeys = useStore(useCallback((state) => state.qaRegionKeys))
 
   const isValidRegionSelected = useMemo(() => {
-    return selectedRegion !== null && regionKeys.includes(selectedRegion)
+    return selectedRegion !== null && (regionKeys.includes(selectedRegion) || qaRegionKeys.includes(selectedRegion))
   }, [selectedRegion])
 
   return (
