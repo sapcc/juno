@@ -34,11 +34,11 @@ const DomainSelect = () => {
   return (
     <>
       <Stack gap="3" alignment="center">
-        {selectedRegion.icon}
+        {selectedRegion?.icon}
         <div>
-          {selectedRegion.key}
+          <span className="font-bold">{selectedRegionKey}</span>
           <br />
-          {selectedRegion.country}
+          {selectedRegion?.country}
         </div>
       </Stack>
       <h4 className="text-lg uppercase mt-10 mb-3">General Purpose</h4>
