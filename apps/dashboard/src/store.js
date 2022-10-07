@@ -170,7 +170,10 @@ const useStore = create(devtools((set) => ({
   qaRegionKeys:         QA_REGION_KEYS,
   regionsByContinent:   REGIONS_BY_CONTINENT,
   domains:              DOMAINS,
-  domainKeys:           DOMAIN_KEYS
+  domainKeys:           DOMAIN_KEYS,
+  
+  prodMode:             true,
+  setProdMode:          (isProdMode) => set((state) => ({prodMode: isProdMode}))
 })))
 
 export default useStore
