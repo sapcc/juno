@@ -32,7 +32,7 @@ const WorldMapQASelect = () => {
       { preselectedRegion?.startsWith("QA") &&
         <Stack direction="vertical" gap="2" className="absolute right-0 top-0">
           { qaRegionKeys.map(qaRegion => (
-            <a href="#" onClick={(e) => handleQARegionClick(e, qaRegion)}>
+            <a href="#" key={qaRegion} onClick={(e) => handleQARegionClick(e, qaRegion)}>
               <div className={qaRegionStyles(qaRegion === selectedRegion)}>{qaRegion}</div>
             </a>
           ))}

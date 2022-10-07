@@ -10,6 +10,7 @@ const App = (props) => {
   const selectRegion = useStore(useCallback((state) => state.selectRegion))
   const setPreselectedRegion = useStore(useCallback((state) => state.setPreselectedRegion))
   const selectDomain = useStore(useCallback((state) => state.selectDomain))
+  const setProdMode = useStore(useCallback((state) => state.setProdMode))
 
   // if a preselected region or domain has been passed into the app be sure to set them in the state
   useEffect(() => {
@@ -18,7 +19,8 @@ const App = (props) => {
       setPreselectedRegion(props.region.toUpperCase())
     }
     if (props.domain) { selectDomain(props.domain.toUpperCase()) }
-  }, [props.region, props.domain])
+    if (props.prodmode) { setProdMode(props.prodmode === "true")}
+  }, [props.region, props.domain, props.prodmode])
 
 
   return (

@@ -1,6 +1,7 @@
 import React, { useCallback } from "react"
 
 import useStore from "../../store"
+import FlagCloud from "../../assets/images/flag_ccloud.svg"
 
 import { Stack } from "juno-ui-components"
 
@@ -38,23 +39,39 @@ const RegionSelect = () => {
             ))}
           </Stack>
         ))}
+        {preselectedRegion?.startsWith("QA") &&
+          <div>
+            <div className="text-lg text-theme-high pb-2">QA REGIONS</div>
+            <Stack 
+              direction="vertical"
+              gap="1.5"
+              className="flex-1">
+              {qaRegionKeys.map((region) => (
+                <Stack
+                  key={region}
+                  onClick={() => selectRegion(region)}
+                  alignment="center"
+                  className="bg-juno-grey-blue-9 py-3 px-5 cursor-pointer hover:bg-theme-accent hover:text-black"
+                >
+                  <div className="mr-8">
+                    <span className="font-bold">{region}</span>
+                    <br />
+                    QA
+                  </div>
+                  <div className="ml-auto"><FlagCloud /></div>
+                </Stack>
+                // <div
+                //   key={region}
+                //   onClick={() => selectRegion(region)}
+                //   className="font-bold bg-juno-grey-blue-9 py-3 px-5 cursor-pointer hover:bg-theme-accent hover:text-black"
+                // >
+                //   {region}
+                // </div>
+              ))}
+            </Stack>
+          </div>
+        }
       </Stack>
-      {preselectedRegion?.startsWith("QA") &&
-        <>
-          <div className="text-lg text-theme-high pb-2">QA REGIONS</div>
-          <Stack gap="4">
-            {qaRegionKeys.map((region) => (
-              <div
-                key={region}
-                onClick={() => selectRegion(region)}
-                className="font-bold bg-juno-grey-blue-9 py-3 px-5 cursor-pointer hover:bg-theme-accent hover:text-black"
-              >
-                {region}
-              </div>
-            ))}
-          </Stack>
-        </>
-      }
 
     </>
   )
