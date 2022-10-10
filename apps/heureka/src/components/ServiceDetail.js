@@ -48,9 +48,11 @@ const ServiceDetail = () => {
   const { options, routeParams, navigateTo } = useRouter()
 
   const endpoint = useStore(useCallback((state) => state.endpoint))
+  const auth = useStore(useCallback((state) => state.auth))
   const setMessage = useMessageStore((state) => state.setMessage)
   const serviceId = routeParams?.serviceId
   const { isLoading, isError, isFetching, data, error } = getService(
+    auth?.id_token,
     endpoint,
     serviceId
   )

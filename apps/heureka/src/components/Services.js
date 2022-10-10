@@ -13,17 +13,18 @@ const ITEMS_PER_PAGE = 10
 
 const Services = ({}) => {
   const endpoint = useStore(useCallback((state) => state.endpoint))
+  const auth = useStore(useCallback((state) => state.auth))
   const setMessage = useMessageStore((state) => state.setMessage)
   const [paginationOptions, setPaginationOptions] = useState({
     limit: ITEMS_PER_PAGE,
     offset: 0,
   })
   const [searchOptions, setSearchOptions] = useState({})
-  const services = getServices(endpoint, {
+  const services = getServices(auth?.id_token, endpoint, {
     ...paginationOptions,
     ...searchOptions,
   })
-  const filters = getServiceFilters(endpoint)
+  const filters = getServiceFilters(auth?.id_token, endpoint)
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {

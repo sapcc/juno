@@ -42,18 +42,18 @@ const checkStatus = (response) => {
 //
 
 export const services = ({ queryKey }) => {
-  const [_key, endpoint, options] = queryKey
-  return fetchFromAPI(endpoint, "/services", options)
+  const [_key, bearerToken, endpoint, options] = queryKey
+  return fetchFromAPI(bearerToken, endpoint, "/services", options)
 }
 
 export const service = ({ queryKey }) => {
-  const [_key, endpoint, serviceId] = queryKey
-  return fetchFromAPI(endpoint, `/services/${serviceId}`)
+  const [_key, bearerToken, endpoint, serviceId] = queryKey
+  return fetchFromAPI(bearerToken, endpoint, `/services/${serviceId}`)
 }
 
 export const serviceFilters = ({ queryKey }) => {
-  const [_key, endpoint, options] = queryKey
-  return fetchFromAPI(endpoint, "/services/filters", options)
+  const [_key, bearerToken, endpoint, options] = queryKey
+  return fetchFromAPI(bearerToken, endpoint, "/services/filters", options)
 }
 
 //
@@ -61,18 +61,18 @@ export const serviceFilters = ({ queryKey }) => {
 //
 
 export const components = ({ queryKey }) => {
-  const [_key, endpoint, options] = queryKey
-  return fetchFromAPI(endpoint, "/components", options)
+  const [_key, bearerToken, endpoint, options] = queryKey
+  return fetchFromAPI(bearerToken, endpoint, "/components", options)
 }
 
 export const component = ({ queryKey }) => {
-  const [_key, endpoint, componentId] = queryKey
-  return fetchFromAPI(endpoint, `/components/${componentId}`)
+  const [_key, bearerToken, endpoint, componentId] = queryKey
+  return fetchFromAPI(bearerToken, endpoint, `/components/${componentId}`)
 }
 
 export const componentFilters = ({ queryKey }) => {
-  const [_key, endpoint, options] = queryKey
-  return fetchFromAPI(endpoint, "/components/filters", options)
+  const [_key, bearerToken, endpoint, options] = queryKey
+  return fetchFromAPI(bearerToken, endpoint, "/components/filters", options)
 }
 
 //
@@ -80,18 +80,27 @@ export const componentFilters = ({ queryKey }) => {
 //
 
 export const vulnerabilities = ({ queryKey }) => {
-  const [_key, endpoint, options] = queryKey
-  return fetchFromAPI(endpoint, "/vulnerabilities", options)
+  const [_key, bearerToken, endpoint, options] = queryKey
+  return fetchFromAPI(bearerToken, endpoint, "/vulnerabilities", options)
 }
 
 export const vulnerability = ({ queryKey }) => {
-  const [_key, endpoint, vulnerabilityId] = queryKey
-  return fetchFromAPI(endpoint, `/vulnerabilities/${vulnerabilityId}`)
+  const [_key, bearerToken, endpoint, vulnerabilityId] = queryKey
+  return fetchFromAPI(
+    bearerToken,
+    endpoint,
+    `/vulnerabilities/${vulnerabilityId}`
+  )
 }
 
 export const vulnerabilityFilters = ({ queryKey }) => {
-  const [_key, endpoint, options] = queryKey
-  return fetchFromAPI(endpoint, "/vulnerabilities/filters", options)
+  const [_key, bearerToken, endpoint, options] = queryKey
+  return fetchFromAPI(
+    bearerToken,
+    endpoint,
+    "/vulnerabilities/filters",
+    options
+  )
 }
 
 //
@@ -99,31 +108,32 @@ export const vulnerabilityFilters = ({ queryKey }) => {
 //
 
 export const users = ({ queryKey }) => {
-  const [_key, endpoint, options] = queryKey
-  return fetchFromAPI(endpoint, "/users", options)
+  const [_key, bearerToken, endpoint, options] = queryKey
+  return fetchFromAPI(bearerToken, endpoint, "/users", options)
 }
 
 export const user = ({ queryKey }) => {
-  const [_key, endpoint, userId] = queryKey
-  return fetchFromAPI(endpoint, `/users/${userId}`)
+  const [_key, bearerToken, endpoint, userId] = queryKey
+  return fetchFromAPI(bearerToken, endpoint, `/users/${userId}`)
 }
 
 export const userFilters = ({ queryKey }) => {
-  const [_key, endpoint, options] = queryKey
-  return fetchFromAPI(endpoint, "/users/filters", options)
+  const [_key, bearerToken, endpoint, options] = queryKey
+  return fetchFromAPI(bearerToken, endpoint, "/users/filters", options)
 }
 
 //
 // COMMONS
 //
 
-const fetchFromAPI = (endpoint, path, options) => {
+const fetchFromAPI = (bearerToken, endpoint, path, options) => {
   console.log("OPTIONS: ", options)
   const query = encodeUrlParamsFromObject(options)
   return fetch(`${endpoint}${path}?${query}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${bearerToken}`,
     },
   })
     .then(checkStatus)

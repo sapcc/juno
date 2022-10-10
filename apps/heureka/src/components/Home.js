@@ -25,6 +25,7 @@ const ITEMS_PER_PAGE = 10
 
 const Home = () => {
   const endpoint = useStore(useCallback((state) => state.endpoint))
+  const auth = useStore(useCallback((state) => state.auth))
   const setMessage = useMessageStore((state) => state.setMessage)
   const [servicesPaginationOptions, setServicesPaginationOptions] = useState({
     limit: ITEMS_PER_PAGE,
@@ -33,7 +34,7 @@ const Home = () => {
   const [servicesSearchOptions, setServicesSearchOptions] = useState({
     operators: "D038720",
   })
-  const services = getServices(endpoint, {
+  const services = getServices(auth?.id_token, endpoint, {
     ...servicesPaginationOptions,
     ...servicesSearchOptions,
   })
@@ -45,7 +46,7 @@ const Home = () => {
     sapId: "D038720",
     sapId: "D058266",
   })
-  const users = getUsers(endpoint, {
+  const users = getUsers(auth?.id_token, endpoint, {
     ...usersPaginationOptions,
     ...usersSearchOptions,
   })

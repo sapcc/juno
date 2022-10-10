@@ -7,6 +7,8 @@ const useStore = create(
   devtools((set) => ({
     endpoint: "", // this is the state
     setEndpoint: (endpoint) => set((state) => ({ endpoint: endpoint })),
+    auth: null,
+    setAuth: (auth) => set((state) => ({ auth: auth })),
   }))
 )
 
