@@ -25,9 +25,11 @@ const VulnerabilitiyDetails = () => {
   const { options, routeParams } = useRouter()
 
   const endpoint = useStore(useCallback((state) => state.endpoint))
+  const auth = useStore(useCallback((state) => state.auth))
   const setMessage = useMessageStore((state) => state.setMessage)
   const vulnerabilityId = routeParams?.vulnerabilityId
   const { isLoading, isError, isFetching, data, error } = getVulnerability(
+    auth?.id_token,
     endpoint,
     vulnerabilityId
   )

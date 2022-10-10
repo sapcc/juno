@@ -13,18 +13,19 @@ const ITEMS_PER_PAGE = 10
 
 const Users = ({}) => {
   const endpoint = useStore(useCallback((state) => state.endpoint))
+  const auth = useStore(useCallback((state) => state.auth))
   const setMessage = useMessageStore((state) => state.setMessage)
   const [paginationOptions, setPaginationOptions] = useState({
     limit: ITEMS_PER_PAGE,
     offset: 0,
   })
   const [searchOptions, setSearchOptions] = useState({})
-  const users = getUsers(endpoint, {
+  const users = getUsers(auth?.id_token, endpoint, {
     ...paginationOptions,
     ...searchOptions,
   })
 
-  const filters = getUserFilters(endpoint)
+  const filters = getUserFilters(auth?.id_token, endpoint)
 
   useEffect(() => {
     if (users.error) {

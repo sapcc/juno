@@ -18,6 +18,7 @@ const PatchLogNew = ({}) => {
   const { options, routeParams, navigateTo } = useRouter()
   const serviceId = routeParams?.serviceId
   const endpoint = useStore(useCallback((state) => state.endpoint))
+  const auth = useStore(useCallback((state) => state.auth))
 
   const changes = useMemo(() => {
     return [changeLogExample1, changeLogExample2]

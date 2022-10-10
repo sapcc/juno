@@ -27,9 +27,11 @@ import HintNotFound from "./HintNotFound"
 const UserDetail = ({}) => {
   const { routeParams } = useRouter()
   const endpoint = useStore(useCallback((state) => state.endpoint))
+  const auth = useStore(useCallback((state) => state.auth))
   const setMessage = useMessageStore((state) => state.setMessage)
   const userId = routeParams?.userId
   const { isLoading, isError, isFetching, data, error } = getUser(
+    auth?.id_token,
     endpoint,
     userId
   )

@@ -42,9 +42,11 @@ const ComponentDetail = () => {
   const { options, routeParams } = useRouter()
 
   const endpoint = useStore(useCallback((state) => state.endpoint))
+  const auth = useStore(useCallback((state) => state.auth))
   const setMessage = useMessageStore((state) => state.setMessage)
   const componentId = routeParams?.componentId
   const { isLoading, isError, isFetching, data, error } = getComponent(
+    auth?.id_token,
     endpoint,
     componentId
   )

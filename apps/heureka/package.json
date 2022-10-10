@@ -1,6 +1,6 @@
 {
   "name": "heureka",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.17.0",
@@ -55,6 +55,7 @@
     "dotenv-webpack": "^7.1.0",
     "lodash.uniqueid": "^4.0.1",
     "luxon": "^2.3.0",
+    "oauth": "workspace:*",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
