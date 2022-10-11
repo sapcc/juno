@@ -159,7 +159,7 @@ const useStore = create(devtools((set) => ({
   domain:               null,
   selectDomain:         (selectedDomain) => {
                           // only set if the given value is valid
-                          if (DOMAIN_KEYS.includes(selectedDomain.toUpperCase())) {
+                          if (DOMAIN_KEYS.includes(selectedDomain.toUpperCase()) || selectedDomain.toUpperCase() === "CC3TEST") {
                             set((state) => ({domain: selectedDomain.toUpperCase()}))
                           }
                         },
