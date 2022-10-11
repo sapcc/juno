@@ -7,7 +7,6 @@
   "style": "lib/esm/styles.css",
   "version": "0.6.0",
   "files": [
-    "src",
     "lib",
     "tailwind.config.js"
   ],
