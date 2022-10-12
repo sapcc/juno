@@ -30,7 +30,7 @@ const VulnerabilitiesList = ({ vulnerabilities, sortBy, minimized }) => {
   return (
     <DataGrid columns={minimized ? 4 : 5}>
       <DataGridRow>
-        <DataGridHeadCell>ID</DataGridHeadCell>
+        <DataGridHeadCell>SCN/CVE</DataGridHeadCell>
         <DataGridHeadCell>Threat level</DataGridHeadCell>
         {!minimized && <DataGridHeadCell>Component</DataGridHeadCell>}
         <DataGridHeadCell>Last modified</DataGridHeadCell>

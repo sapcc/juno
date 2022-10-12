@@ -26,6 +26,7 @@ import ExpandMore from "./icons/expand_more.svg"
 import FilterAlt from "./icons/filter_alt.svg"
 import Forum from "./icons/forum.svg"
 import Help from "./icons/help.svg"
+import Home from "./icons/home_sharp.svg"
 import Info from "./icons/info.svg"
 import InsertComment from "./icons/insert_comment.svg"
 import ManageAccounts from "./icons/manage_accounts.svg"
@@ -96,6 +97,7 @@ export const knownIcons = [
   "filterAlt",
   "forum",
   "help",
+  "home",
   "info",
   "insertComment",
   "manageAccounts",
@@ -395,6 +397,18 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="help"
           title={title ? title : "Help"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "home":
+      return (
+        <Home 
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="home"
+          title={title ? title : "Home"}
           role="img"
           {...iconProps}
         />

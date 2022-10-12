@@ -19,3 +19,13 @@ export const hashCode = (s) => {
   if (l > 0) while (i < l) h = ((h << 5) - h + s.charCodeAt(i++)) | 0
   return h
 }
+
+export const buildDashboardLink = (region, domain, prodMode) => {
+  if (prodMode) {
+    return `https://dashboard.${region?.toLowerCase()}.cloud.sap/${domain?.toLowerCase()}/home`
+  } else {
+    const currentLocation = new URL(window.location.href)
+    currentLocation.pathname = `${domain?.toLowerCase()}/home`
+    return currentLocation.href
+  }
+}

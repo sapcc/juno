@@ -17,31 +17,31 @@ flex
 
 const VulnerabilitiesListItem = ({ item, minimized }) => {
   const lastModifiedtString = useMemo(() => {
-    if (!item.ScnLastModified) return "No date available"
-    return DateTime.fromSQL(item.ScnLastModified).toLocaleString(
-      DateTime.DATETIME_FULL
+    if (!item?.Scn?.ScnLastModified) return "No date available"
+    return DateTime.fromSQL(item.Scn.ScnLastModified).toLocaleString(
+      DateTime.DATETIME_SHORT
     )
-  }, [item?.ScnLastModified])
+  }, [item?.Scn?.ScnLastModified])
 
   return (
     <DataGridRow>
       <DataGridCell>
         <Link to={`${VULNERABILITIES_PATH}/${item.ID}`}>
-          <span>{item.ScnID}</span>
-          <div className={IdClasses}>{item.CveID}</div>
+          <span>{item?.Scn?.Name}</span>
+          <div className={IdClasses}>{item?.Scn?.CveID}</div>
         </Link>
       </DataGridCell>
       <DataGridCell>
         <div className={VulnerabilityCss}>
           <VulnerabilityBadge
-            level={item.ThreatLevelOverall}
-            label={item.ThreatLevelOverall}
+            level={item?.Scn?.ThreatLevelOverall}
+            label={item?.Scn?.ThreatLevelOverall}
           />
         </div>
       </DataGridCell>
       {!minimized && <DataGridCell>{item?.Component?.Name}</DataGridCell>}
       <DataGridCell>{lastModifiedtString}</DataGridCell>
-      <DataGridCell>{item.State}</DataGridCell>
+      <DataGridCell>{item?.State}</DataGridCell>
     </DataGridRow>
   )
 }

@@ -19,14 +19,17 @@ import {
 } from "../styles"
 import HintLoading from "./HintLoading"
 import HintNotFound from "./HintNotFound"
+import { DateTime } from "luxon"
 
 const VulnerabilitiyDetails = () => {
   const { options, routeParams } = useRouter()
 
   const endpoint = useStore(useCallback((state) => state.endpoint))
+  const auth = useStore(useCallback((state) => state.auth))
   const setMessage = useMessageStore((state) => state.setMessage)
   const vulnerabilityId = routeParams?.vulnerabilityId
   const { isLoading, isError, isFetching, data, error } = getVulnerability(
+    auth?.id_token,
     endpoint,
     vulnerabilityId
   )
@@ -41,6 +44,22 @@ const VulnerabilitiyDetails = () => {
     }
   }, [error])
 
+  const scnLastModified = useMemo(() => {
+    if (data?.Scn?.ScnLastModified) {
+      return DateTime.fromSQL(data?.Scn?.ScnLastModified).toLocaleString(
+        DateTime.DATETIME_SHORT
+      )
+    }
+  }, [data?.Scn?.ScnLastModified])
+
+  const cveLastModified = useMemo(() => {
+    if (data?.Scn?.CveLastModified) {
+      return DateTime.fromSQL(data?.Scn?.CveLastModified).toLocaleString(
+        DateTime.DATETIME_SHORT
+      )
+    }
+  }, [data?.Scn?.CveLastModified])
+
   console.log("Vulnerability Details: ", data)
 
   return (
@@ -52,19 +71,139 @@ const VulnerabilitiyDetails = () => {
           {data ? (
             <>
               <h1 className={DetailContentHeading}>
-                <Icon className="mr-2" icon="autoAwesomeMotion" /> {data.ScnID}
+                <Icon className="mr-2" icon="autoAwesomeMotion" />{" "}
+                {data?.Scn?.Name}
               </h1>
-
               <div className={DetailSection}>
                 <div className={DetailSectionBox}>
                   <DataGrid gridColumnTemplate="1fr 9fr">
                     <DataGridRow>
                       <DataGridCell>
-                        <b>CveID: </b>
+                        <b>ID: </b>
                       </DataGridCell>
-                      <DataGridCell>{data.CveID}</DataGridCell>
+                      <DataGridCell>{data?.ID}</DataGridCell>
+                    </DataGridRow>
+                    <DataGridRow>
+                      <DataGridCell>
+                        <b>CCScore: </b>
+                      </DataGridCell>
+                      <DataGridCell>{data?.CCScore}</DataGridCell>
+                    </DataGridRow>
+                    <DataGridRow>
+                      <DataGridCell>
+                        <b>CCScoreReason: </b>
+                      </DataGridCell>
+                      <DataGridCell>{data?.CCScoreReason}</DataGridCell>
+                    </DataGridRow>
+                    <DataGridRow>
+                      <DataGridCell>
+                        <b>State: </b>
+                      </DataGridCell>
+                      <DataGridCell>{data?.State}</DataGridCell>
                     </DataGridRow>
                   </DataGrid>
+                </div>
+              </div>
+
+              <div className={DetailSection}>
+                <p className={DetailSectionHeader}>
+                  SAP CERT Notifications (SCN) information
+                </p>
+                <div className="mt-4">
+                  <div className={DetailSectionBox}>
+                    <DataGrid gridColumnTemplate="2fr 8fr">
+                      <DataGridRow>
+                        <DataGridCell>
+                          <b>Name: </b>
+                        </DataGridCell>
+                        <DataGridCell>{data?.Scn?.Name}</DataGridCell>
+                      </DataGridRow>
+                      <DataGridRow>
+                        <DataGridCell>
+                          <b>Last modified: </b>
+                        </DataGridCell>
+                        <DataGridCell>{scnLastModified}</DataGridCell>
+                      </DataGridRow>
+                      <DataGridRow>
+                        <DataGridCell>
+                          <b>Threat level client: </b>
+                        </DataGridCell>
+                        <DataGridCell>
+                          {data?.Scn?.ThreatLevelClient}
+                        </DataGridCell>
+                      </DataGridRow>
+                      <DataGridRow>
+                        <DataGridCell>
+                          <b>Threat level overall: </b>
+                        </DataGridCell>
+                        <DataGridCell>
+                          {data?.Scn?.ThreatLevelOverall}
+                        </DataGridCell>
+                      </DataGridRow>
+                      <DataGridRow>
+                        <DataGridCell>
+                          <b>Threat level server: </b>
+                        </DataGridCell>
+                        <DataGridCell>
+                          {data?.Scn?.ThreatLevelServer}
+                        </DataGridCell>
+                      </DataGridRow>
+                      <DataGridRow>
+                        <DataGridCell>
+                          <b>URL: </b>
+                        </DataGridCell>
+                        <DataGridCell>
+                          {data?.Scn?.URL && (
+                            <a href={data?.Scn?.URL} target="_blank">
+                              {data?.Scn?.URL}
+                            </a>
+                          )}
+                        </DataGridCell>
+                      </DataGridRow>
+                    </DataGrid>
+                  </div>
+                </div>
+              </div>
+
+              <div className={DetailSection}>
+                <p className={DetailSectionHeader}>
+                  Common Vulnerabilities and Exposures (CVE) information
+                </p>
+                <div className="mt-4">
+                  <div className={DetailSectionBox}>
+                    <DataGrid gridColumnTemplate="1fr 9fr">
+                      <DataGridRow>
+                        <DataGridCell>
+                          <b>Name: </b>
+                        </DataGridCell>
+                        <DataGridCell>{data?.Scn?.CveID}</DataGridCell>
+                      </DataGridRow>
+                      <DataGridRow>
+                        <DataGridCell>
+                          <b>Last modified: </b>
+                        </DataGridCell>
+                        <DataGridCell>{cveLastModified}</DataGridCell>
+                      </DataGridRow>
+                      <DataGridRow>
+                        <DataGridCell>
+                          <b>URL: </b>
+                        </DataGridCell>
+                        <DataGridCell>
+                          {data?.Scn?.CveURL && (
+                            <a href={data?.Scn?.CveURL} target="_blank">
+                              {data?.Scn?.CveURL}
+                            </a>
+                          )}
+                        </DataGridCell>
+                      </DataGridRow>
+                      <DataGridRow>
+                        <DataGridCell>
+                          <b>CVSS score: </b>
+                        </DataGridCell>
+                        <DataGridCell>{data?.Scn?.CvssBase}</DataGridCell>
+                      </DataGridRow>
+                    </DataGrid>
+                  </div>
                 </div>
               </div>
             </>

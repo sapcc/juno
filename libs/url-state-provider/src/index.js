@@ -76,7 +76,17 @@ window[STATE_KEY] = window[STATE_KEY] || URLToState()
  * @returns state for stateID
  */
 function currentState(stateID) {
-  return window[STATE_KEY][stateID]
+  // The initial state is being set when this file is loaded on browser (see a few lines below)
+  // There is a clash when using the oauth together with the url-state-router lib. Problem use case:
+  // - App, ex. heureka, tries to load with a given state: https://heureka.app/?__s=N4IgFgpgrgThDWBDAggB1SAXKDmQHoBnCGANwEsBjCQkAXzqA
+  // - Initial State is being set correctly ==> {"heurekaApp": {"p": "/services"}
+  // - oauth ask for authentication and afterwards REDIRECTS back to https://heureka.app without params to avoid garbage. The correct url (lastUrl) is been saved in the session.
+  // - due to the redirect this file is being loaded again and the initial state set to empty (redirect has no params)
+  // - right after the oauth lib reads from the session the lastUrl and adds it to the history
+  // - current state returns allways the initial state and therefore we lose the original state set by the url-state-router
+  // The fix is to return the current state represented on the URL. With this fix we should not use this method internally since we could cause loops.
+  // return window[STATE_KEY][stateID]
+  return URLToState()[stateID]
 }
 /**
  *

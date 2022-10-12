@@ -14,10 +14,10 @@ import Messages from "./Messages"
 const AppContainer = ({ tabsConfig, component, children }) => {
   const { navigateTo, currentPath } = useRouter()
 
-  const tabIndex = useMemo(
-    () => tabsConfig.findIndex((tab) => currentPath.startsWith(tab.path)),
-    [currentPath]
-  )
+  const tabIndex = useMemo(() => {
+    if (!currentPath) return 0
+    return tabsConfig.findIndex((tab) => currentPath.startsWith(tab.path))
+  }, [currentPath])
 
   return (
     <MainTabs selectedIndex={tabIndex}>

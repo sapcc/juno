@@ -24,6 +24,7 @@ import {
 } from "../styles"
 import HintLoading from "./HintLoading"
 import HintNotFound from "./HintNotFound"
+import ServicesList from "./ServicesList"
 
 const DetailSectionTop = `
 bg-theme-code-block
@@ -41,9 +42,11 @@ const ComponentDetail = () => {
   const { options, routeParams } = useRouter()
 
   const endpoint = useStore(useCallback((state) => state.endpoint))
+  const auth = useStore(useCallback((state) => state.auth))
   const setMessage = useMessageStore((state) => state.setMessage)
   const componentId = routeParams?.componentId
   const { isLoading, isError, isFetching, data, error } = getComponent(
+    auth?.id_token,
     endpoint,
     componentId
   )
@@ -124,6 +127,14 @@ const ComponentDetail = () => {
                   </DataGrid>
                 </div>
               </div>
+
+              <div className={DetailSection}>
+                <p className={DetailSectionHeader}>Belongs to</p>
+                <div className="mt-4">
+                  <ServicesList minimized services={data.Services} />
+                </div>
+              </div>
+
               <div className={DetailSection}>
                 <p className={DetailSectionHeader}>Vulnerabilities</p>
                 <div className="mt-4">

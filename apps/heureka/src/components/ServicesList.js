@@ -22,7 +22,7 @@ const ServicesList = ({ services, minimized }) => {
           <DataGridHeadCell>Name</DataGridHeadCell>
           {!minimized && (
             <>
-              <DataGridHeadCell>Owners</DataGridHeadCell>
+              <DataGridHeadCell>Support group</DataGridHeadCell>
               <DataGridHeadCell>Operators</DataGridHeadCell>
               <DataGridHeadCell>Vulnerabilities</DataGridHeadCell>
               <DataGridHeadCell>Components</DataGridHeadCell>

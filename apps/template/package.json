@@ -59,6 +59,6 @@
     "react-dom": "^17.0.2",
     "react-json-view": "^1.21.3",
     "url-state-provider": "workspace:*",
-    "zustand": "^3.7.1"
+    "zustand": "^4.1.1"
   }
 }

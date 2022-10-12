@@ -1,6 +1,8 @@
 import React, { useCallback, useMemo } from "react"
 
 import useStore from "../../store"
+import { buildDashboardLink } from "../../lib/utils"
+import FlagCloud from "../../assets/images/flag_ccloud.svg"
 
 import { Icon, Stack } from "juno-ui-components"
 
@@ -26,6 +28,7 @@ const DomainSelect = () => {
   const selectedRegionKey = useStore(useCallback((state) => state.region))
   const regions = useStore(useCallback((state) => state.regions))
   const domains = useStore(useCallback((state) => state.domains))
+  const prodMode = useStore(useCallback((state) => state.prodMode))
 
   const selectedRegion = useMemo(() => {
     return regions[selectedRegionKey]
@@ -34,18 +37,18 @@ const DomainSelect = () => {
   return (
     <>
       <Stack gap="3" alignment="center">
-        {selectedRegion.icon}
+        {selectedRegion?.icon || <FlagCloud />}
         <div>
-          {selectedRegion.key}
+          <span className="font-bold">{selectedRegionKey}</span>
           <br />
-          {selectedRegion.country}
+          {selectedRegion?.country || "QA"}
         </div>
       </Stack>
       <h4 className="text-lg uppercase mt-10 mb-3">General Purpose</h4>
       <div className="grid grid-cols-3 gap-4">
         {domains.general.map((domain) => (
           <a
-            href={`https://dashboard.${selectedRegionKey}.cloud.sap/${domain?.name?.toLowerCase()}/home`}
+            href={buildDashboardLink(selectedRegionKey, domain?.name, prodMode)}
             className={domainCardClasses}
             key={domain?.name}
           >
@@ -70,7 +73,7 @@ const DomainSelect = () => {
       <div className="grid grid-cols-6 gap-4">
         {domains.special.map((domain) => (
           <a
-            href={`https://dashboard.${selectedRegionKey}.cloud.sap/${domain.toLowerCase()}/home`}
+            href={buildDashboardLink(selectedRegionKey, domain, prodMode)}
             className={domainCardClasses}
             key={domain}
           >
@@ -93,27 +96,5 @@ const DomainSelect = () => {
     </>
   )
 }
-
-// <Stack gap="6" className="justify-center">
-// { regions.map(continent => (
-//   <Stack direction="vertical" gap="1.5" className="flex-1" key={continent.name}>
-//     <div className="text-lg text-theme-high pb-2">{continent.name}</div>
-//     { continent.regions.map( region => (
-//       <Stack
-//         key={region.key}
-//         onClick={() => selectRegion(region.key)}
-//         className="bg-juno-grey-blue-3 py-3 px-5 items-center cursor-pointer hover:ring-2 ring-juno-blue">
-//         <div>
-//           {region.key}<br />
-//           {region.label}
-//         </div>
-//         <div className="ml-auto">
-//           {region.icon}
-//         </div>
-//       </Stack>
-//     ))}
-//   </Stack>
-// ))}
-// </Stack>
 
 export default DomainSelect
