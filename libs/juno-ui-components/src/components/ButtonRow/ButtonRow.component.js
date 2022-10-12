@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { Stack } from "../Stack"
 
 const buttonrowstyles = `
 	jn-flex
@@ -8,16 +9,16 @@ const buttonrowstyles = `
 	jn-gap-2
 `
 
-/** A container to hold one or multiple buttons and align them. Obsolete - promote using Stack instead? */
+/** A container to hold one or multiple buttons and space and align them. */
 export const ButtonRow = ({
 	children,
 	className,
 	...props
 }) => {
 	return (
-		<div className={`juno-button-row ${buttonrowstyles} ${className}`} {...props} >
+		<Stack gap="2" className={`juno-button-row ${className}`} {...props} >
 			{children}
-		</div>
+		</Stack>
 	)
 }
 
