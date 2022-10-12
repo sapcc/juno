@@ -208,6 +208,7 @@ module.exports = {
           "filter-input": withOpacity("--color-filter-input-bg"),
           "filter-input-textinput": withOpacity("--color-filter-input-textinput-bg"),
           "filter-pill-key": withOpacity("--color-filter-pill-key-bg"),
+          "modal-backdrop": withOpacity("--color-modal-backdrop-bg"),
         },
       },
       backgroundImage: {

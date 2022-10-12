@@ -292,6 +292,8 @@
   --color-black-raw: 0, 0, 0;
 }
 
+/* ----- LIGHT THEME ----- */
+
 /* When assigning colors to uses, use "[color]-raw" variables: */
 
 .theme-light {
@@ -519,7 +521,13 @@
   --color-filter-input-textinput-bg: transparent;
   --color-filter-pill-border: var(--color-background-lvl-4-raw);
   --color-filter-pill-key-bg: var(--color-background-lvl-3-raw);
+  // LT Modal
+  --color-modal-backdrop-bg: var(--color-sap-white-raw);
 }
+
+/* ----- LIGHT THEME END -----*/
+
+/* ----- DARK THEME ----- */
 
 .theme-dark {
   // DT Background Colors
@@ -748,7 +756,11 @@
   --color-filter-input-textinput-bg: transparent;
   --color-filter-pill-border: var(--color-background-lvl-4-raw);
   --color-filter-pill-key-bg: var(--color-background-lvl-4-raw);
+  // DT Modal
+  --color-modal-backdrop-bg: 13, 20, 28;
 }
+
+/* ----- DARK THEME END ----- */
 
 // Grid configuration
 :root,
