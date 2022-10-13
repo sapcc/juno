@@ -6,14 +6,13 @@ import { Form } from "../Form/index.js"
 import { TextInputRow } from "../TextInputRow"
 import { CheckboxRow } from "../CheckboxRow"
 
-const Template = (args) => {
+
+const Template = ({closeOnConfirm, ...args}) => {
 
   const [isOpen, setOpen] = useState(false)
   
   const open = () => { setOpen(true) }
   const close = () => { setOpen(false) }
-  
-  console.log("Story parent isOpen: ", isOpen)
 
   return (
     <>
@@ -24,8 +23,8 @@ const Template = (args) => {
       />
       <Modal  
           open={isOpen}
-          onConfirm={close}
           onCancel={close}
+          onConfirm={ closeOnConfirm ? close : null } 
           {...args}
       />
     </>
@@ -35,10 +34,8 @@ const Template = (args) => {
 export default {
   title: "WiP/Modal/Modal",
   component: Modal,
-  argTypes: {
-    // onConfirm: {action: 'confirmed'},
-    // onCancel: {action: 'cancelled'},
-  },
+  argTypes: {},
+  parameters: { actions: { argTypesRegex: null } },
 }
 
 export const Default = Template.bind({})
@@ -53,6 +50,7 @@ LargeWithTitle.args = {
   size: "large",
   title: "Large Modal",
   confirmButtonLabel: "OK",
+  closeOnConfirm: true, /* Only relevant for storybook, this is not a native prop of the component! */
   children: [
     <p>A large modal with a title</p>
   ]
@@ -75,96 +73,5 @@ Login.args = {
       <CheckboxRow label="Remember Me" id="remember-me" />
     </>
   ,
-  modalFooter:  <ModalFooter confirmButtonLabel="Log In" confirmButtonIcon="accountCircle" onConfirm={()=>{console.log("Log In")}} cancelButtonLabel="Never Mind" />,
+  modalFooter:  <ModalFooter confirmButtonLabel="Log In" confirmButtonIcon="accountCircle" cancelButtonLabel="Never Mind" />,
 }
-
-
-
-
-// import React from "react"
-// 
-// import { Modal } from "./index.js"
-// import { Button } from "../Button/index.js"
-// import { FloatingLabelInput } from "../Form/index.js"
-// 
-// const Template = ({ isOpen: initOpenStatus, ...props }) => {
-//   const [isOpen, setIsOpen] = React.useState(initOpenStatus)
-// 
-//   return (
-//     <>
-//       <Button mode="primary" onClick={() => setIsOpen(true)}>
-//         Open Modal
-//       </Button>
-//       <Modal
-//         isOpen={isOpen}
-//         close={() => {
-//           setIsOpen(false)
-//         }}
-//         {...props}
-//       />
-//     </>
-//   )
-// }
-// 
-// export default {
-//   title: "WiP/Modal",
-//   component: Modal,
-// }
-// 
-// export const Simple = Template.bind({})
-// Simple.parameters = {
-//   docs: {
-//     description: {
-//       story: "DO NOT USE!!! The modal component isn't ready to be used.",
-//     },
-//   },
-// }
-// Simple.args = {
-//   title: "Simple",
-//   icon: "attention",
-//   children: "I am a simple modal view.",
-//   isOpen: true,
-// }
-// 
-// export const CustomContent = Template.bind({})
-// CustomContent.parameters = {
-//   docs: {
-//     description: {
-//       story: "DO NOT USE!!! The modal component isn't ready to be used.",
-//     },
-//   },
-// }
-// CustomContent.args = {
-//   title: "Custom Content",
-//   icon: null,
-//   children: ({ Body, Buttons, close }) => (
-//     <>
-//       <Body className="font-red-100">TEST</Body>
-//       <Buttons>
-//         <Button onClick={close}>Close</Button>
-//       </Buttons>
-//     </>
-//   ),
-// }
-// 
-// export const Login = Template.bind({})
-// Login.args = {
-//   title: "Login",
-//   icon: null,
-//   children: ({ Body, Buttons, close }) => (
-//     <>
-//       <Body>
-//         <form className="space-y-3">
-//           <FloatingLabelInput label="User" />
-//           <FloatingLabelInput label="Password" type="password" />
-//         </form>
-//       </Body>
-//       <Buttons>
-//         <div className="space-x-3">
-//           <Button variant="primary">Login</Button>
-//           <Button onClick={close}>Cancel</Button>
-//         </div>
-//       </Buttons>
-//     </>
-//   ),
-// }

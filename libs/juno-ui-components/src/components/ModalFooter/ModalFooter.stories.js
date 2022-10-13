@@ -16,6 +16,7 @@ export default {
   title: "WiP/Modal/ModalFooter",
   component: ModalFooter,
   argTypes: {},
+	parameters: { actions: { argTypesRegex: null } },
 }
 
 export const Default = Template.bind({})
