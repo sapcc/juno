@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import ReactDOM from "react-dom";
 import PropTypes from "prop-types"
+import { autoUpdate, useFloating, shift, offset, flip, size } from '@floating-ui/react-dom-interactions';
 import { Icon } from "../Icon/index.js"
 
 /* Styles */
@@ -45,7 +45,9 @@ export const Tooltip = ({
 	onClick,
 	...props
 }) => {
-	const [isOpen, setIsOpen] = useState(false)
+	const [isOpen, setIsOpen] = useState(true)
+	// middleware: [offset(10), flip(), shift()],
+	const {x, y, reference, floating, strategy, context} = useFloating({ isOpen, onOpenChange: setIsOpen, whileElementsMounted: autoUpdate});
 	
 	React.useEffect(() => {
 		setIsOpen(open)
@@ -62,9 +64,18 @@ export const Tooltip = ({
 				onClick={handleClick} 
 				className={`${className}`} 
 				disabled={disabled}
+				ref={reference}
 			/>
 			{ isOpen ?
-				<div className={`juno-tooltip-popover juno-tooltip-popover-${variant} ${popoverStyles}`}>
+				<div 
+					className={`juno-tooltip-popover juno-tooltip-popover-${variant} ${popoverStyles}`}
+					ref={floating}
+					style={{
+						position: strategy,
+						top: y ?? 0,
+						left: x ?? 0,
+					}}
+					>
 					{ variant ? 
 						<Icon 
 							icon={getIcon(variant)}

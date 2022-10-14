@@ -89,5 +89,8 @@
     "moduleNameMapper": {
       "^.+\\.(css|scss)$": "<rootDir>/test/__mocks__/styleMock.js"
     }
+  },
+  "dependencies": {
+    "@floating-ui/react-dom-interactions": "^0.10.1"
   }
 }
