@@ -29,3 +29,14 @@ export const buildDashboardLink = (region, domain, prodMode) => {
     return currentLocation.href
   }
 }
+
+export const buildPasswordLoginLink = (region, domain, prodMode) => {
+  if (prodMode) {
+    return `https://dashboard.${region?.toLowerCase()}.cloud.sap/${domain?.toLowerCase()}/auth/login/${domain?.toLowerCase()}?after_login=%2F${domain?.toLowerCase()}%2Fhome`
+  } else {
+    const currentLocation = new URL(window.location.href)
+    currentLocation.pathname = `/${domain?.toLowerCase()}/auth/login/${domain?.toLowerCase()}`
+    currentLocation.search = `?after_login=%2F${domain?.toLowerCase()}%2Fhome`
+    return currentLocation.href
+  }
+}
