@@ -21,7 +21,7 @@ describe("ModalFooter", () => {
 	  expect(screen.getByRole("button", {name: "Confirm"})).toBeInTheDocument()
 	  expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
   })
-	
+
 	test("renders a ModalFooter with a 'Confirm' and a 'Cancel' button when an onComfirm handler is passed", async () => {
 		const confirmHandler = () => { console.log('confirmed!')}
 		render(<ModalFooter onConfirm={confirmHandler} />)
