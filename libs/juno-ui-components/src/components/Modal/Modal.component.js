@@ -15,10 +15,10 @@ import { Icon } from "../Icon"
 * confirmButtonIcon prop  ✓
 * cancelButtonIcon prop  ✓
 * backdrop  ✓
-* open programmatically TODO
+* open programmatically ✓
 * handle height/scrolling TODO -> allow optional constrainHeight=false prop?
 * Optional CloseOnBackdropClick -> NOT FOR NOW  ✓
-* Spare "variant" prop for semantic variants later. TODO
+* Spare "variant" prop for semantic variants later. 
 * a11y (voicereader, keyboard accessibilty) TODO
 * autofocus ?
 * icon TODO
@@ -139,7 +139,7 @@ export const Modal = ({
 										cancelButtonLabel={ cancelButtonLabel } 
 										confirmButtonIcon={ confirmButtonIcon }
 										cancelButtonIcon={ cancelButtonIcon }
-										onConfirm={ handleConfirmClick }
+										onConfirm={ onConfirm ? handleConfirmClick : null }
 										onCancel={ handleCancelClick }
 									/>
 								: 
@@ -181,9 +181,9 @@ Modal.propTypes = {
 	/** Custom className to add to the modal */
 	className: PropTypes.string,
 	/** A handler to execute once the modal is confirmed */
-	//onConfirm: PropTypes.func,
+	onConfirm: PropTypes.func,
 	/** A handler to execute once the modal is cancelled or dismissed using the x-Close button,  Cancel-button or pressing ESC */
-	//onCancel: PropTypes.func,
+	onCancel: PropTypes.func,
 }
 
 Modal.defaultProps = {
