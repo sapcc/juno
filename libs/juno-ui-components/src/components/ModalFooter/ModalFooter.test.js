@@ -21,6 +21,19 @@ describe("ModalFooter", () => {
 	  expect(screen.getByRole("button", {name: "Confirm"})).toBeInTheDocument()
 	  expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
   })
+
+	test("renders a ModalFooter with a 'Confirm' and a 'Cancel' button when an onComfirm handler is passed", async () => {
+		const confirmHandler = () => { console.log('confirmed!')}
+		render(<ModalFooter onConfirm={confirmHandler} />)
+		expect(screen.getByRole("button", {name: "Confirm"})).toBeInTheDocument()
+		expect(screen.getByRole("button", {name: "Cancel"})).toBeInTheDocument()
+	})
+	
+	test("does not render a 'Confirm' button but a single 'Close' button when neither a label nor a handler are being passed", async () => {
+		render(<ModalFooter />)
+		expect(screen.getByRole("button", {name: "Close"})).toBeInTheDocument()
+		expect(screen.queryByRole("button", {name: "Confirm"})).not.toBeInTheDocument()
+	})
   
   test("renders a ModalFooter with a custom label for the cancelling button as passed", async () => {
 	  render(<ModalFooter cancelButtonLabel="Mach zu" />)
