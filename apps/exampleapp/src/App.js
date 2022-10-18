@@ -31,9 +31,6 @@ import {
 } 
 from "juno-ui-components"
 
-import { Peaks as peaks } from "./data"
-
-
 import { currentState, push } from "url-state-provider"
 /* IMPORTANT: Replace this with your app's name */
 const URL_STATE_KEY = "exampleapp"
@@ -131,8 +128,10 @@ const App = (props) => {
             )}
             {/* Loading indicator for page content */}
             {processing && <Spinner variant="primary" />}
+            
             {/* Edit an Item using a panel. TODO: show data for selected peak in panel, save changes to state(?) */}
             <EditItemPanel />
+            
             {/* Render List of Peaks: */}
             <PeaksList />
             

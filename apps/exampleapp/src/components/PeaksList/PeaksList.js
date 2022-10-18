@@ -12,12 +12,13 @@ import {
 } from "juno-ui-components"
 import PeaksListItem from "./PeaksListItem"
 import useStore from "../../store"
-import { Peaks as peaks } from "../../data" // TODO: Move to store
-
 
 const PeaksList = ({
 
 }) => {
+  
+  const peaks = useStore((state) => state.peaks)
+  
   const openNewItemModal = useStore(
     useCallback((state) => state.openNewItemModal)
   )
