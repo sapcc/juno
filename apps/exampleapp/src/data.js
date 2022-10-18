@@ -4,7 +4,7 @@ export const Peaks = [
     height: "4737m",
     region: "Svanetsia",
     mainrange: "Caucasus",
-    country: ["Georgia"],
+    countries: ["Georgia"],
     url: "https://en.wikipedia.org/wiki/Ushba",
   },
   {
@@ -12,7 +12,7 @@ export const Peaks = [
     height: "6814m",
     region: "Khumbu",
     mainrange: "Himalayas",
-    country: ["Nepal"],
+    countries: ["Nepal"],
     url: "https://en.wikipedia.org/wiki/Ama_Dablam",
   },
   {
@@ -20,7 +20,7 @@ export const Peaks = [
     height: "8516m",
     region: "Khumbu",
     mainrange: "Himalayas",
-    country: ["China", "Nepal"],
+    countries: ["China", "Nepal"],
     url: "https://en.wikipedia.org/wiki/Lhotse",
   },
   {
@@ -28,7 +28,7 @@ export const Peaks = [
     height: "7861m",
     region: "Khumbu",
     mainrange: "Himalayas",
-    country: ["Nepal"],
+    countries: ["Nepal"],
     url: "https://en.wikipedia.org/wiki/Nuptse",
   },
   {
@@ -36,7 +36,7 @@ export const Peaks = [
     height: "4506m",
     region: "Valais",
     mainrange: "Swiss Alps",
-    country: ["Switzerland"],
+    countries: ["Switzerland"],
     url: "https://en.wikipedia.org/wiki/Weisshorn",
   },
   {
@@ -44,7 +44,7 @@ export const Peaks = [
     height: "4221m",
     region: "Valais",
     mainrange: "Swiss Alps",
-    country: ["Switzerland"],
+    countries: ["Switzerland"],
     url: "https://en.wikipedia.org/wiki/Zinalrothorn",
   }
 ]

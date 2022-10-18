@@ -2,9 +2,9 @@ import React, { useCallback } from "react"
 
 import { exampleFetch as fetchStuff } from "./actions"
 import useStore from "./store"
-import NewItemForm from "./components/NewItemForm"
 import NewItemModal from "./components/NewItemModal"
 import EditItemPanel from "./components/EditItemPanel"
+import PeaksList from "./components/PeaksList/PeaksList"
 
 import { 
   AppShell, 
@@ -93,17 +93,9 @@ const App = (props) => {
     }
   }, [apiCallExample])
 
-  const openNewItemForm = useStore(
-    useCallback((state) => state.openNewItemForm)
-  )
+
   
-  const openNewItemModal = useStore(
-    useCallback((state) => state.openNewItemModal)
-  )
-  
-  const openEditPanel = useStore(
-    useCallback((state) => state.openEditItemPanel)
-  )
+
 
   return (
     <AppShell
@@ -139,69 +131,16 @@ const App = (props) => {
             )}
             {/* Loading indicator for page content */}
             {processing && <Spinner variant="primary" />}
-            {/* Example component using a Panel TODO: use Modal for new Item*/}
-            <NewItemForm />
             {/* Edit an Item using a panel. TODO: show data for selected peak in panel, save changes to state(?) */}
             <EditItemPanel />
-            {/* Add a toolbar  */}
+            {/* Render List of Peaks: */}
+            <PeaksList />
             
-            {/* TODO: modularize / create PeakList component */}
-            <ContentAreaToolbar>
-              <Button icon="addCircle" onClick={openNewItemForm}>
-                Panel
-              </Button>
-              <Button icon="addCircle" onClick={openNewItemModal} label="Add a Peak" />
-              
-            </ContentAreaToolbar>
-           
-           { peaks.length > 0 ? (
-             <DataGrid columns={6}>
-               <DataGridRow>
-                 <DataGridHeadCell>Name</DataGridHeadCell>
-                 <DataGridHeadCell>Height</DataGridHeadCell>
-                 <DataGridHeadCell>Main Range</DataGridHeadCell>
-                 <DataGridHeadCell>Region</DataGridHeadCell>
-                 <DataGridHeadCell>Country</DataGridHeadCell>
-                 <DataGridHeadCell>Options</DataGridHeadCell>
-               </DataGridRow>
-               {peaks.map( (peak, p) => (
-                 <DataGridRow key={p}>
-                   <DataGridCell><strong>{peak.name}</strong></DataGridCell>
-                   <DataGridCell>{peak.height}</DataGridCell>
-                   <DataGridCell>{peak.mainrange}</DataGridCell>
-                   <DataGridCell>{peak.region}</DataGridCell>
-                   <DataGridCell>
-                     {peak.country.map( (c, i) => (
-                       c + ( i < peak.country.length - 1 ? ", " : "" )
-                     ))}
-                   </DataGridCell>
-                   <DataGridCell>
-                     {/* Use <Stack> to align and space elements: */}
-                     <Stack gap="1.5">
-                       <Icon icon="edit" size="18" className="leading-none" onClick={openEditPanel}/>
-                       <Icon icon="deleteForever" size="18"/>
-                       <Icon icon="openInNew" size="18" href={peak.url} target="_blank" className="leading-none" />
-                     </Stack>
-                   </DataGridCell>
-                 </DataGridRow>
-               ))
-                 
-               }
-             </DataGrid>
-             
-           ) : (
-             <div>There are no peaks to display.</div>
-           )
-             
-           }
-
           </Container>
         </TabPanel>
-
         <TabPanel>
           <Container py>
             Content Panel two. Normally you will probably want to put the TabPanel content into separate components.
-
           </Container>
         </TabPanel>
 
