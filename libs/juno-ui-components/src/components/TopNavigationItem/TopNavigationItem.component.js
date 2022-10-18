@@ -7,7 +7,6 @@ const topNavigationItemStyles = `
 
 `
 
-
 export const TopNavigationItem = ({
   icon,
   label,
@@ -25,7 +24,8 @@ export const TopNavigationItem = ({
   
   return (
     <div className={`juno-topnavigation-item ${topNavigationItemStyles} ${className}`}>
-      { children }
+      { icon ? <Icon icon={icon} /> : null }
+      { label || children }
     </div>
   )
 }
