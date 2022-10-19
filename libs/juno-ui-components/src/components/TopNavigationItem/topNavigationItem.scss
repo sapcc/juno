@@ -19,7 +19,7 @@
   }
   
   &:active,
-  &.active {
+  &.juno-topnavigation-item-active {
     color: var(--color-navigation-active);
     border-bottom: 3px solid var(--color-navigation-active);
     

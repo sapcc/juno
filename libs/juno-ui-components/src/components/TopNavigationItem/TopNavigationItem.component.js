@@ -4,17 +4,6 @@ import { Icon } from "../Icon/index.js";
 import { knownIcons } from "../Icon/Icon.component.js"
 import "./topNavigationItem.scss"
 
-const topNavigationItemStyles = `
-  jn-font-bold
-`
-
-const activeStyles = `
-
-`
-
-const disabledStyles = `
-
-`
 /**
 A top level navigation item. Top be placed inside TopNavigation.
 */
@@ -40,8 +29,9 @@ export const TopNavigationItem = ({
   }
   
   const anchor = (
-    <a className={`juno-topnavigation-item ${topNavigationItemStyles} ${ active ? "active" : ""} ${className}`} 
+    <a className={`juno-topnavigation-item ${ active ? "juno-topnavigation-item-active" : ""} ${className}`} 
       href={href} 
+      aria-label={ariaLabel}
       {...props}
     >
       { icn }
@@ -51,8 +41,9 @@ export const TopNavigationItem = ({
   
   const button = (
     <button 
-      className={`juno-topnavigation-item ${topNavigationItemStyles} ${ active ? "active" : ""} ${className}`} 
+      className={`juno-topnavigation-item ${ active ? "juno-topnavigation-item-active" : ""} ${className}`} 
       onClick={handleButtonClick}
+      aria-label={ariaLabel}
       {...props}
     >
       { icn }
@@ -61,7 +52,8 @@ export const TopNavigationItem = ({
   )
   
   const plain = (
-    <div className={`juno-topnavigation-item ${topNavigationItemStyles} ${ active ? "active" : ""} ${className}`} 
+    <div className={`juno-topnavigation-item ${ active ? "juno-topnavigation-item-active" : ""} ${className}`}
+      aria-label={ariaLabel}
       {...props}
     >
       { icn }
