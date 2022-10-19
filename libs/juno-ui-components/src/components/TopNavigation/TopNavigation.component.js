@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { Stack } from "../Stack/index"
 import { Icon } from "../Icon/index.js";
 
 const topNavigationStyles = `
@@ -13,9 +14,9 @@ export const TopNavigation = ({
   ...props
 }) => {
   return (
-    <div className={`juno-topnavigation ${topNavigationStyles} ${className}`}>
+    <Stack className={`juno-topnavigation ${topNavigationStyles} ${className}`} role="navigation">
       { children }
-    </div>
+    </Stack>
   )
 }
 

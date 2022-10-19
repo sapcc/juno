@@ -19,3 +19,15 @@ WithIcon.args = {
   label: "Navigation Item",
   icon: "warning"
 }
+
+export const AsAnchor = Template.bind({})
+AsAnchor.args = {
+  label: "Navigation Item",
+  href: "#"
+}
+
+export const AsButton = Template.bind({})
+AsButton.args = {
+  label: "Navigation Item",
+  onClick: () => {console.log("clicked")}
+}

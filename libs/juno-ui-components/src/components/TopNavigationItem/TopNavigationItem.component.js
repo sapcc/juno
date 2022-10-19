@@ -22,12 +22,34 @@ export const TopNavigationItem = ({
   
   const icn = icon ? <Icon icon={icon} size="18" color="jn-text-theme-default" className={ label && label.length ? "jn-mr-1" : "" } /> : null
   
-  return (
+  const content = label || children
+  
+  const handleButtonClick = (event) => {
+    onClick && onClick(event)
+  }
+  
+  const anchor = (
+    <a href={href} >
+      { icn }
+      { content }
+    </a>
+  )
+  
+  const button = (
+    <button onClick={handleButtonClick}>
+      { icn }
+      { content }
+    </button>
+  )
+  
+  const plain = (
     <div className={`juno-topnavigation-item ${topNavigationItemStyles} ${className}`}>
-      { icon ? <Icon icon={icon} /> : null }
+      { icn }
       { label || children }
     </div>
   )
+  
+  return href ? anchor : onClick ? button : plain
 }
 
 TopNavigationItem.propTypes = {
