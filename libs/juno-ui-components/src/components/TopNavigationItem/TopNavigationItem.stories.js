@@ -33,12 +33,6 @@ AsButton.args = {
   onClick: () => {console.log("clicked")}
 }
 
-export const Disabled = Template.bind({})
-Disabled.args = {
-  label: "Navigation Item",
-  disabled: true,
-}
-
 export const Active = Template.bind({})
 Active.args = {
   label: "Navigation Item",

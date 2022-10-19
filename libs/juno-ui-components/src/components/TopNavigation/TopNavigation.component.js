@@ -17,7 +17,7 @@ export const TopNavigation = ({
   ...props
 }) => {
   return (
-    <Stack className={`juno-topnavigation ${topNavigationStyles} ${className}`} role="navigation">
+    <Stack className={`juno-topnavigation ${topNavigationStyles} ${className}`} role="navigation" {...props} >
       { children }
     </Stack>
   )

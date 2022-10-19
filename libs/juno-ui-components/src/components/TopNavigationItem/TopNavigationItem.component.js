@@ -18,6 +18,7 @@ const disabledStyles = `
 /**
 A top level navigation item. Top be placed inside TopNavigation.
 */
+
 export const TopNavigationItem = ({
   icon,
   label,
@@ -25,7 +26,6 @@ export const TopNavigationItem = ({
   href,
   active,
   onClick,
-  disabled,
   children,
   className,
   ...props
@@ -40,7 +40,7 @@ export const TopNavigationItem = ({
   }
   
   const anchor = (
-    <a className={`juno-topnavigation-item ${topNavigationItemStyles} ${ disabled ? disabledStyles : "" } ${ active ? "active" : ""} ${className}`} 
+    <a className={`juno-topnavigation-item ${topNavigationItemStyles} ${ active ? "active" : ""} ${className}`} 
       href={href} 
       {...props}
     >
@@ -53,7 +53,6 @@ export const TopNavigationItem = ({
     <button 
       className={`juno-topnavigation-item ${topNavigationItemStyles} ${ active ? "active" : ""} ${className}`} 
       onClick={handleButtonClick}
-      disabled={disabled}
       {...props}
     >
       { icn }
@@ -62,7 +61,7 @@ export const TopNavigationItem = ({
   )
   
   const plain = (
-    <div className={`juno-topnavigation-item ${topNavigationItemStyles} ${ disabled ? disabledStyles : "" } ${ active ? "active" : ""} ${className}`} 
+    <div className={`juno-topnavigation-item ${topNavigationItemStyles} ${ active ? "active" : ""} ${className}`} 
       {...props}
     >
       { icn }
@@ -90,8 +89,6 @@ TopNavigationItem.propTypes = {
   active: PropTypes.bool,
   /** A handler to execute once the item is clicked. Will render the item as a button element if passed */
   onClick: PropTypes.func,
-  /** Whether the item is disabled */
-  disabled: PropTypes.bool,
 }
 
 TopNavigationItem.defaultProps = {
@@ -103,5 +100,4 @@ TopNavigationItem.defaultProps = {
   href: "",
   active: false,
   onClick: undefined,
-  disabled: false,
 }
