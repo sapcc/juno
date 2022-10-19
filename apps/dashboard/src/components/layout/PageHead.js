@@ -1,9 +1,9 @@
 import React, { useCallback } from "react"
 
 import useStore from "../../store"
-import { buildDashboardLink } from "../../lib/utils"
+import { buildDashboardLink, buildPasswordLoginLink } from "../../lib/utils"
 
-import { Button, Icon, PageHeader } from "juno-ui-components"
+import { Button, Stack, PageHeader } from "juno-ui-components"
 
 const PageHead = () => {
   const showLoginOverlay = useStore(useCallback((state) => state.showLoginOverlay))
@@ -22,11 +22,17 @@ const PageHead = () => {
   return (
     <PageHeader>
       
-      <div className="ml-auto">
+      <Stack className="ml-auto" gap="4" alignment="center">
+        { selectedDomain === "CC3TEST" &&
+          <a 
+            href={buildPasswordLoginLink(selectedRegion, selectedDomain, prodMode)}
+            className="text-theme-disabled hover:underline"
+            >Log in with password</a>
+        }
         <Button variant="primary" size="small" icon="manageAccounts" title="Log in" onClick={handleLoginButtonClick}>
           Log in
         </Button>
-      </div>
+      </Stack>
     </PageHeader>
   )
 }

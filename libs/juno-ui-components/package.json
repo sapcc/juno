@@ -5,8 +5,9 @@
   "module": "lib/index.js",
   "source": "src/index.js",
   "style": "lib/esm/styles.css",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "files": [
+    "src",
     "lib",
     "tailwind.config.js"
   ],

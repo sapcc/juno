@@ -1,6 +1,6 @@
 {
-  "name": "dashboard",
-  "version": "0.4.1",
+  "name": "exampleapp",
+  "version": "0.0.1",
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.17.0",
@@ -23,7 +23,6 @@
     "communicator": "workspace:*",
     "css-loader": "^6.6.0",
     "css-minimizer-webpack-plugin": "^3.4.1",
-    "dotenv-webpack": "^8.0.1",
     "glob": "^7.2.0",
     "html-webpack-plugin": "^5.4.0",
     "jest": "^27.4.7",
@@ -49,15 +48,17 @@
     "start": "PORT=$APP_PORT webpack serve --mode development --hot",
     "test": "jest",
     "build": "webpack --mode production",
-    "production": "NODE_ENV=production yarn node serve.js"
+    "production": "PORT=$APP_PORT webpack serve --mode production"
   },
   "dependencies": {
     "custom-event-polyfill": "^1.0.7",
-    "express": "^4.17.3",
+    "dotenv-webpack": "^7.1.0",
     "luxon": "^2.3.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-json-view": "^1.21.3",
+    "url-state-provider": "workspace:*",
     "zustand": "^4.1.1"
   }
 }
