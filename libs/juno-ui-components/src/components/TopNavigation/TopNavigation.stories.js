@@ -23,5 +23,6 @@ Default.args = {
     {...TopNavigationItemStory.args},
     {...TopNavigationItemStory.args},
     {...TopNavigationItemStory.args, icon: "warning"},
+    {...TopNavigationItemStory.args, active: true},
   ]
 }

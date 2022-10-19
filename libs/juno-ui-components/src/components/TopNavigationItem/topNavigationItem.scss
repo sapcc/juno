@@ -1,0 +1,18 @@
+.juno-topnavigation-item {
+  color: var(--color-text-default);
+  
+  &:hover {
+    color: var(--color-text-high);
+  }
+  
+  
+  &:disabled {
+    color: var(--color-text-disabled);
+  }
+  
+  &:active,
+  &.active {
+    color: var(--color-text-high); // TODO: black -> variables
+  }
+  
+}

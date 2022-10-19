@@ -5,6 +5,7 @@ export default {
   title: "WiP/TopNavigation/TopNavigationItem",
   component: TopNavigationItem,
   argTypes: {},
+  parameters: { actions: { argTypesRegex: null } }
 }
 
 const Template = (args) => <TopNavigationItem {...args} />
@@ -30,4 +31,16 @@ export const AsButton = Template.bind({})
 AsButton.args = {
   label: "Navigation Item",
   onClick: () => {console.log("clicked")}
+}
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+  label: "Navigation Item",
+  disabled: true,
+}
+
+export const Active = Template.bind({})
+Active.args = {
+  label: "Navigation Item",
+  active: true
 }
