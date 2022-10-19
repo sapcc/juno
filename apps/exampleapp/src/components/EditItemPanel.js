@@ -11,6 +11,14 @@ import useStore from "../store"
 
 const EditItemPanelFooter = () => {
   
+  const handleCloseClick = () => {
+    closeEditPanel()
+  }
+  
+  const handleSaveClick = () => {
+    saveEditPanel()
+  }
+  
   const closeEditPanel = useStore(
     useCallback((state) => state.closeEditItemPanel)
   )
@@ -21,8 +29,8 @@ const EditItemPanelFooter = () => {
   
   return (
     <PanelFooter>
-      <Button label="Cancel" variant="subdued" onClick={closeEditPanel}/>
-      <Button label="Save" variant="primary" onClick={saveEditPanel}/>
+      <Button label="Cancel" variant="subdued" onClick={handleCloseClick}/>
+      <Button label="Save" variant="primary" onClick={handleSaveClick}/>
     </PanelFooter>
   )
 }
@@ -31,16 +39,10 @@ const EditItemPanel = (
   title
 ) => {
   
-  const panelOpened = useStore(
-    useCallback((state) => state.editItemPanelOpened)
-  )
-  
-  const closeEditPanel = useStore(
-    useCallback((state) => state.closeEditItemPanel)
-  )
+  const panelOpened = useStore((state) => state.editItemPanelOpened)
   
   return (
-    <Panel heading={"Edit Peak"} opened={panelOpened} onClose={closeEditPanel}>
+    <Panel heading={"Edit Peak"} opened={panelOpened}>
       <PanelBody footer={<EditItemPanelFooter />}>
         <Form>
           <TextInputRow label="Name"/>

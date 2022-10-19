@@ -22,6 +22,10 @@ const PeaksListItem = ({
   ...props
 }) => {
   
+  const handleEditClick = () => {
+    openEditPanel()
+  }
+  
   const openEditPanel = useStore(
     useCallback((state) => state.openEditItemPanel)
   )
@@ -40,8 +44,8 @@ const PeaksListItem = ({
       <DataGridCell>
         {/* Use <Stack> to align and space elements: */}
         <Stack gap="1.5">
-          <Icon icon="edit" size="18" className="leading-none" onClick={openEditPanel}/>
-          <Icon icon="deleteForever" size="18"/>
+          <Icon icon="edit" size="18" className="leading-none" onClick={handleEditClick}/>
+          <Icon icon="deleteForever" size="18" className="leading-none" />
           <Icon icon="openInNew" size="18" href={url} target="_blank" className="leading-none" />
         </Stack>
       </DataGridCell>

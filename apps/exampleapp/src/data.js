@@ -48,4 +48,3 @@ export const Peaks = [
     url: "https://en.wikipedia.org/wiki/Zinalrothorn",
   }
 ]
-

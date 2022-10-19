@@ -1,8 +1,7 @@
 import React, { useCallback } from "react"
-
 import { exampleFetch as fetchStuff } from "./actions"
 import useStore from "./store"
-import NewItemModal from "./components/NewItemModal"
+import ModalManager from "./components/ModalManager"
 import EditItemPanel from "./components/EditItemPanel"
 import PeaksList from "./components/PeaksList/PeaksList"
 
@@ -90,10 +89,6 @@ const App = (props) => {
     }
   }, [apiCallExample])
 
-
-  
-
-
   return (
     <AppShell
       pageHeader="Converged Cloud | Example App"
@@ -144,7 +139,7 @@ const App = (props) => {
         </TabPanel>
 
       </MainTabs>
-      <NewItemModal />
+      <ModalManager />
     </AppShell>
   )
 }

@@ -8,15 +8,16 @@ import { Peaks } from "./data"
 const useStore = create(devtools((set) => ({
   // Peaks data
   peaks: Peaks,//init with data from file
-
   
   // Panels and Modals:
+  currentModal: null,
+  setCurrentModal:      (modal) => set((state) => ({currentModal: modal})),
+  closeModal:           () => set((state) => ({currentModal: null})),
+  
+  // OLD Panel:
   editItemPanelOpened:  false, // state of the edit panel
   openEditItemPanel:    () => set((state) => ({editItemPanelOpened: true})),
   closeEditItemPanel:   () => set((state) => ({editItemPanelOpened: false})),
-  newItemModalOpenend:  false, // state of the new item modal
-  openNewItemModal:     () => set((state) => ({newItemModalOpened: true})),
-  closeNewItemModal:    () => set((state) => ({newItemModalOpened: false})),
 })))
 
 export default useStore

@@ -19,8 +19,12 @@ const PeaksList = ({
   
   const peaks = useStore((state) => state.peaks)
   
+  const handleNewPeakClick = () => {
+    openNewItemModal("NewPeaksItem")
+  }
+  
   const openNewItemModal = useStore(
-    useCallback((state) => state.openNewItemModal)
+    (state) => state.setCurrentModal
   )
   
   return (
@@ -28,7 +32,7 @@ const PeaksList = ({
       ( 
         <>
           <ContentAreaToolbar>
-            <Button icon="addCircle" onClick={openNewItemModal} label="Add a Peak" />
+            <Button icon="addCircle" onClick={handleNewPeakClick} label="Add a Peak" />
           </ContentAreaToolbar>
           <DataGrid columns={6}>
             <DataGridRow>

@@ -5,22 +5,16 @@ import useStore from "../store"
 
 const NewItemModal = () => {
   
-  // get open/closed state from global store
-  const modalOpened = useStore(
-    useCallback((state) => state.newItemModalOpened)
-  )
-  
-  // call close reducer from global store
+  const handleCloseClick = () => {
+    closeNewItemModal()
+  }
+
   const closeNewItemModal = useStore(
-    useCallback((state) => state.closeNewItemModal)
-  )
-  
-  const saveNewItemModal = useStore(
-    useCallback((state) => state.closeNewItemModal)
+    useCallback((state) => state.closeModal)
   )
   
   return (
-    <Modal title="Add a New Peak" open={ modalOpened } onCancel={closeNewItemModal} onConfirm={saveNewItemModal} confirmButtonLabel="Save New Peak" >
+    <Modal title="Add a New Peak" open onCancel={handleCloseClick} confirmButtonLabel="Save New Peak" >
       <TextInputRow label="Name"/>
       <TextInputRow label="Height"/>
       <TextInputRow label="Main Range" />
