@@ -110,7 +110,6 @@ export const Modal = ({
 	}, [closeable])
 	
 	const handleConfirmClick = (event) => {
-		setIsOpen(false)
 		onConfirm && onConfirm(event)
 	}
 	  
