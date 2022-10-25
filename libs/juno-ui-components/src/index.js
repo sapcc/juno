@@ -72,6 +72,8 @@ export { TextInput } from "./components/TextInput/index.js"
 export { TextInputRow } from "./components/TextInputRow/index.js"
 export { Toast } from "./components/Toast/index.js"
 export { Tooltip } from "./components/Tooltip/index.js"
+export { TopNavigation } from "./components/TopNavigation/index.js"
+export { TopNavigationItem } from "./components/TopNavigationItem/index.js"
 export * from "./components/Form/index.js"
 
 import { StyleProvider } from "./components/StyleProvider/index.js"
