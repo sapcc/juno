@@ -33,5 +33,22 @@ describe("MenuItem", () => {
 		expect(screen.getByRole("menuitem")).toHaveClass("juno-menu-item-button")
 		expect(screen.getByRole("menuitem")).not.toHaveClass("juno-menu-item-anchor")
 	})
+	
+	test("renders a menu item with an icon as passed", async () => {
+		render(<MenuItem icon="warning"/>)
+		expect(screen.getByRole("img")).toHaveAttribute("alt", "warning")
+	})
+	
+	test("renders children as passed", async () => {
+		render(<MenuItem><button>Child Button</button></MenuItem>)
+		expect(screen.getByRole("button", {name: "Child Button"})).toBeInTheDocument()
+	})
+	
+	test("executes an onClick handler as passed", async () => {
+		const onClickSpy = jest.fn()
+		render(<MenuItem onClick={onClickSpy} />)
+		screen.getByRole("menuitem").click()
+		expect(onClickSpy).toHaveBeenCalled()
+	})
   
  })
