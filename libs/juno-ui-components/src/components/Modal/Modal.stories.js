@@ -2,9 +2,11 @@ import React, { useState } from "react"
 import { Modal } from "./index.js"
 import { ModalFooter } from "../ModalFooter/index.js"
 import { Button } from "../Button/index.js"
+import { ButtonRow } from "../ButtonRow/index.js"
 import { Form } from "../Form/index.js"
 import { TextInputRow } from "../TextInputRow"
 import { CheckboxRow } from "../CheckboxRow"
+import { Icon } from "../Icon"
 
 
 const Template = ({closeOnConfirm, ...args}) => {
@@ -42,7 +44,7 @@ export const Default = Template.bind({})
 Default.args = {
   children: [
     <p>A default modal.</p>
-  ]
+  ],
 }
 
 export const LargeWithTitle = Template.bind({})
@@ -74,4 +76,24 @@ Login.args = {
     </>
   ,
   modalFooter:  <ModalFooter confirmButtonLabel="Log In" confirmButtonIcon="accountCircle" cancelButtonLabel="Never Mind" />,
+}
+
+export const CustomModalFooter = Template.bind({})
+CustomModalFooter.args = {
+  title: "Modal with Custom ModalFooter",
+  size: "large",
+  children: 
+    <p>
+      This Modal renders a custom footer with three buttons and a custom hint.
+    </p>
+  ,
+  modalFooter: 
+    <ModalFooter className="jn-justify-between jn-items-center">
+      <span><Icon icon="info" className="jn-mr-1" />Have some custom content</span>
+      <ButtonRow>
+        <Button variant="primary-danger">Button 1</Button>
+        <Button variant="primary">Button 2</Button>
+        <Button>Button 3</Button>
+      </ButtonRow>
+    </ModalFooter>
 }
