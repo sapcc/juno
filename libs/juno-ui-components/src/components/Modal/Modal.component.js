@@ -5,17 +5,6 @@ import { knownIcons } from "../Icon/Icon.component.js"
 import { Icon } from "../Icon"
 
 /*
-* optional title ✓
-* closeable by default ✓
-* padding content? -> 'unpad'  ✓
-* min-height for content?  ✓
-* allow for creating modals without buttons? ✓
-* always show header bar regardless whether there is title and/or close button?  ✓
-* SM/LG sizes (widths for now).  ✓ 
-* confirmButtonIcon prop  ✓
-* cancelButtonIcon prop  ✓
-* backdrop  ✓
-* open programmatically ✓
 * handle height/scrolling TODO -> allow optional constrainHeight=false prop?
 * Optional CloseOnBackdropClick -> NOT FOR NOW  ✓
 * Spare "variant" prop for semantic variants later. 
@@ -24,7 +13,6 @@ import { Icon } from "../Icon"
 * icon TODO
 * trap focus TODO
 * render in Portal (how to make sure we're always in scope of StyleProvider? TODO -> add element to styleprovider TODO, what if there are several StyleProvider on the page?
-* Tests TODO
 */
 
 const modalcontainerstyles = `
@@ -78,6 +66,14 @@ const sizeClass = (size) => {
 
 /**
 A generic Modal component.
+
+The Modal component can automatically create cancelling and confirming buttons with the desired labels and handlers. 
+
+For more complex use cases, more buttons, etc., an instance of `<ModalFooter>` with all custom content as children can be passed as prop `modalFooter` and will be rendered.
+
+The Modal uses a boolean 'open' prop to determine whether it is open or not. Alternatively, the open state can be handled outside the component, e.g. in a global state. In this case the 'open' prop needs to be passed as true always, otherwise the Modal component will not render.
+
+By default, the modal will close (i.e. set its `open` state to false) once the user cancels the Modal. When confirming, you will have to either set the `open` to false to close the modal, or use whatever global state mechanism you have to handle modals.
 */
 export const Modal = ({
 	size,
