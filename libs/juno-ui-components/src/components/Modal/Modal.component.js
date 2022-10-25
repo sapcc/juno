@@ -34,6 +34,7 @@ const modalcontainerstyles = `
 	jn-items-center
 	jn-bg-theme-modal-backdrop/60
 	jn-backdrop-blur-[2px]
+	jn-z-[9999]
 `
 
 const modalstyles = `
@@ -109,7 +110,6 @@ export const Modal = ({
 	}, [closeable])
 	
 	const handleConfirmClick = (event) => {
-		setIsOpen(false)
 		onConfirm && onConfirm(event)
 	}
 	  
