@@ -525,6 +525,9 @@
   --color-modal-backdrop-bg: var(--color-sap-white-raw);
   // LT Navigation
   --color-navigation-active: var(--color-black);
+  // LT Box
+  --color-box-bg: var(--color-background-lvl-1);
+  --color-box-border: var(--color-background-lvl-3)
 }
 
 /* ----- LIGHT THEME END -----*/
@@ -762,6 +765,9 @@
   --color-modal-backdrop-bg: 13, 20, 28;
   // DT Navigation
   --color-navigation-active: var(--color-white);
+  // DT Box
+  --color-box-bg: var(--color-background-lvl-1);
+  --color-box-border: var(--color-background-lvl-3)
 }
 
 /* ----- DARK THEME END ----- */
