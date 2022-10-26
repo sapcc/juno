@@ -36,12 +36,14 @@ const CA = () => {
 
   // read current url state and call main fetch method if state is presented
   React.useEffect(() => {
-    if (data && data.length > 0 && searchParams.get("ca")) {
+    // && searchParams.get("ca")
+    if (data && data.length > 0) {
       // find and save ca given per param in the url
       const index = data.findIndex((e) => e.name == searchParams.get("ca"))
       if (index >= 0) {
-        setSelectedCA(data[index])
+        return setSelectedCA(data[index])
       }
+      return setSelectedCA(null)
     }
   }, [data, searchParams.get("ca")])
 

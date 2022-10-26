@@ -33,7 +33,7 @@ const CAsList = ({ cas }) => {
             <div key={index} className={DetailSection}>
               <div className={DetailSectionBox}>
                 <p className={DetailSectionHeader}>
-                  {ca.displayName || ca.name}
+                  {ca.display_name || ca.name}
                 </p>
                 <div className="mt-4">{ca.description}</div>
                 <Stack alignment="center" className="mt-4" distribution="end">

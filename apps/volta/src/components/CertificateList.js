@@ -14,6 +14,7 @@ import {
 import CertificateListItem from "./CertificateListItem"
 import AddNewSSOButton from "./AddNewSSOButton"
 import { parseError } from "../helpers"
+import { Link } from "react-router-dom"
 
 const Heading = `
 jn-font-bold
@@ -67,7 +68,10 @@ const CertificateList = ({ ca }) => {
 
   return (
     <>
-      <h1 className={Heading}>{ca?.displayName || ca?.name}</h1>
+      <Link className="" to="/">
+        {`< Back`}
+      </Link>
+      <h1 className={Heading}>{ca?.display_name || ca?.name}</h1>
       <div className="mb-6">{ca?.description}</div>
       {isLoading && !data ? (
         <Stack className="pt-2" alignment="center">
@@ -105,13 +109,13 @@ const CertificateList = ({ ca }) => {
               className="mt-[10vh]"
             >
               <p className="text-xl">
-                It seems that no <b>{ca?.displayName || ca?.name}</b>{" "}
+                It seems that no <b>{ca?.display_name || ca?.name}</b>{" "}
                 certificates have been created yet.
               </p>
               <p className="text-xl">Do you want to create a new one?</p>
               <AddNewSSOButton
                 className="mt-4"
-                label={`Add ${ca?.displayName || ca?.name} cert`}
+                label={`Add ${ca?.display_name || ca?.name} cert`}
               />
             </Stack>
           )}
