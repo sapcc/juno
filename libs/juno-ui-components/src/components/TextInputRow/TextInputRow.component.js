@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { TextInput } from "../TextInput/index.js"
 import { Label } from "../Label/index.js"
+import { Icon } from "../Icon/index"
 
 /* Stacked: Label is above the text input element */
 const stackedcontainerstyles = `
@@ -71,6 +72,19 @@ const helptextstyles = `
 	jn-mt-1
 `
 
+const errortextstyles = `
+  jn-text-xs
+  jn-text-theme-error
+  jn-mt-1
+`
+
+const iconcontainerstyles = `
+  jn-flex
+  jn-absolute
+  jn-top-1.5
+  jn-right-3
+`
+
 const stackedinputstyles = `
 	jn-w-full
 `
@@ -110,6 +124,9 @@ export const TextInputRow = ({
   placeholder,
   helptext,
   required,
+  invalid,
+  errortext,
+  autoFocus,
   className,
   disabled,
   onChange,
@@ -117,10 +134,21 @@ export const TextInputRow = ({
 }) => {
   const [val, setValue] = useState("")
   const [focus, setFocus] = useState(false)
+  const [isInvalid, setIsInvalid] = useState(false)
 
   React.useEffect(() => {
     setValue(value)
   }, [value])
+  
+  const invalidated = invalid || (errortext && errortext.length ? true : false)
+  
+  React.useEffect(() => {
+    setIsInvalid(invalidated)
+  }, [invalidated])
+  
+  React.useEffect(() => {
+    setFocus(autoFocus)
+  }, [autoFocus])
 
   const handleChange = (event) => {
     setValue(event.target.value)
@@ -161,12 +189,22 @@ export const TextInputRow = ({
           id={id}
           placeholder={placeholder}
           disabled={disabled}
+          invalid={isInvalid}
+          autoFocus={autoFocus}
           onChange={handleChange}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           className={`${getInputStyles(variant, minimizedLabel(variant, val, focus))}`}
         />
-        {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
+        { isInvalid ? 
+            <div className={`juno-textinput-row-icon-container ${iconcontainerstyles}`}>
+              <Icon icon="dangerous" color="jn-text-theme-error" />
+            </div>
+          :
+            null
+        }
+        { errortext && errortext.length ? <p className={`${errortextstyles}`}>{errortext}</p> : null }
+        { helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : null }
       </div>
     </div>
   )
@@ -191,6 +229,12 @@ TextInputRow.propTypes = {
   helptext: PropTypes.node,
   /** Specify whether the input is required */
   required: PropTypes.bool,
+  /** Whether the inout is invalid */
+  invalid: PropTypes.bool,
+  /** Error text to display below the input element. When passed, the component will be set to invalid automatically. */
+  errortext: PropTypes.string,
+  /** Whether the input element should automatically receive focus */
+  autoFocus: PropTypes.bool,
   /** Pass a className */
   className: PropTypes.string,
   /** Disable the input */
@@ -209,6 +253,9 @@ TextInputRow.defaultProps = {
   placeholder: null,
   helptext: null,
   required: null,
+  invalid: false,
+  errortext: "",
+  autoFocus: false,
   className: "",
   disabled: null,
   onChange: undefined,

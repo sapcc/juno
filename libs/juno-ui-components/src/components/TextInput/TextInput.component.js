@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
+import { Icon } from "../Icon/index"
 
 const textinputstyles = `
 	jn-bg-theme-textinput
@@ -17,7 +18,14 @@ const textinputstyles = `
 	disabled:jn-opacity-50
 `
 
-/** A controlled Text Input. Also covers email, telephone, password, url derivates. */
+const invalidstyles = `
+	jn-border-theme-error
+`
+
+/** 
+A controlled Text Input.
+Also covers email, telephone, password, url derivates. 
+*/
 export const TextInput = ({
 	name,
 	value,
@@ -26,6 +34,8 @@ export const TextInput = ({
 	placeholder,
 	disabled,
 	readOnly,
+	invalid,
+	autoFocus,
 	className,
 	autoComplete,
 	onChange,
@@ -33,10 +43,15 @@ export const TextInput = ({
 }) => {
 	
 	const [val, setValue] = useState("")
+	const [isInvalid, setIsInvalid] = useState(false)
 	
 	useEffect(() => {
 		setValue(value)
 	  }, [value])
+		
+	useEffect(() => {
+		setIsInvalid(invalid)
+	}, [invalid])
 	  
 	const handleInputChange = (event) => {
 		setValue(event.target.value)
@@ -53,8 +68,9 @@ export const TextInput = ({
 			placeholder={placeholder}
 			disabled={disabled}
 			readOnly={readOnly}
+			autoFocus={autoFocus}
 			onChange={handleInputChange}
-			className={`juno-textinput ${textinputstyles} ${className}`}
+			className={`juno-textinput ${textinputstyles} ${ isInvalid ? "juno-textinput-invalid " + invalidstyles : "" } ${className}`}
 			{...props}
 		/>
 	)
@@ -73,6 +89,10 @@ TextInput.propTypes = {
 	disabled: PropTypes.bool,
 	/** Render a readonly input */
 	readOnly: PropTypes.bool,
+	/** Whether the field is invalid */
+	invalid: PropTypes.bool,
+	/** Whether the field receives autofocus */
+	autoFocus: PropTypes.bool,
 	/** Pass a classname */
 	className: PropTypes.string,
 	/** Pass a valid autocomplete value. We do not police validity. */
@@ -89,6 +109,8 @@ TextInput.defaultProps = {
 	placeholder: "",
 	disabled: false,
 	readOnly: false,
+	invalid: false,
+	autoFocus: false,
 	className: "",
 	autoComplete: "off",
 	onChange: undefined,
