@@ -81,6 +81,18 @@ describe("TextInput", () => {
 		expect(screen.getByRole("textbox")).toHaveAttribute('readonly')
 	})
 	
+	test("renders a focussed input as passed", async () => {
+		render(<TextInput autoFocus />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveFocus()
+	})
+	
+	test("renders an invalid input as passed", async () => {
+		render(<TextInput invalid />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-invalid")
+	})
+	
 	test("renders a className as passed", async () => {
 		render(<TextInput className="my-custom-class" />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
