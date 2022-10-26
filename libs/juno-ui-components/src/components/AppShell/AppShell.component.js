@@ -11,7 +11,7 @@ import { PageFooter } from "../PageFooter/index"
 /**
  * Body of the app. Treat this like the body tag of an html page.
  */
-export const AppShell = ({ pageHeader, pageFooter, contentHeading, embedded, className, children, ...props }) => {
+export const AppShell = ({ pageHeader, pageFooter, topNavigation, contentHeading, embedded, className, children, ...props }) => {
   return (
     <AppBody className={className} {...props}>
           
@@ -28,7 +28,10 @@ export const AppShell = ({ pageHeader, pageFooter, contentHeading, embedded, cla
             :
             pageHeader
           }
-          {/* Wrap everything except page header and footer in a main container */}
+          { topNavigation &&
+            topNavigation
+          }
+          {/* Wrap everything except page header and footer and navigations  in a main container */}
           <MainContainer>
           
             <ContentContainer>
@@ -60,6 +63,8 @@ AppShell.propTypes = {
   ]),
   /** Optional. If specified pass a PageFooter component. If undefined will use default PageFooter */
   pageFooter: PropTypes.element,
+  /** Optional. If specified expects a TopNavigation component. If undefined no navigation is rendered. */
+  topNavigation: PropTypes.element,
   /** Heading for the content area */
   contentHeading: PropTypes.string,
   /** Optional: Defaults to false. Set embedded to true if app is to be rendered embedded in another app/page. 
@@ -72,6 +77,7 @@ AppShell.propTypes = {
 AppShell.defaultProps = {
   pageHeader: <PageHeader />,
   pageFooter: <PageFooter />,
+  topNavigation: undefined,
   contentHeading: "",
   embedded: false,
   className: "",

@@ -4,7 +4,7 @@ import { TopNavigationItem } from "../TopNavigationItem/TopNavigationItem.compon
 import { Default as TopNavigationItemStory } from "../TopNavigationItem/TopNavigationItem.stories"
 
 export default {
-  title: "WiP/TopNavigation/TopNavigation",
+  title: "Layout/TopNavigation/TopNavigation",
   component: TopNavigation,
   argTypes: {},
 }

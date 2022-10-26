@@ -3,6 +3,8 @@ import React from "react"
 import { AppShell } from "./index.js"
 import { PageHeader } from "../PageHeader/index"
 import { PageFooter } from "../PageFooter/index"
+import { TopNavigation } from "../TopNavigation/index"
+import { TopNavigationItem } from "../TopNavigationItem/index"
 
 export default {
   title: "Layout/AppShell",
@@ -75,4 +77,27 @@ CustomPageFooter.parameters = {
 CustomPageFooter.args = {
   ...Default.args,
   pageFooter: <PageFooter>My custom footer</PageFooter>,
+}
+
+export const WithTopNavigation = Template.bind({})
+WithTopNavigation.parameters = {
+  docs: {
+    description: {
+      story:
+        "Responsive shell for your application with top navigation.",
+    },
+  },
+}
+WithTopNavigation.args = {
+  ...Default.args,
+  topNavigation:  <TopNavigation>
+                    <TopNavigationItem
+                      icon="home"
+                      label="Home"
+                    />
+                    <TopNavigationItem
+                      active
+                      label="Navigation Item"
+                    />
+                  </TopNavigation>,
 }

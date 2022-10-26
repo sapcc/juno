@@ -2,7 +2,7 @@ import React from "react"
 import { TopNavigationItem } from "./index.js"
 
 export default {
-  title: "WiP/TopNavigation/TopNavigationItem",
+  title: "Layout/TopNavigation/TopNavigationItem",
   component: TopNavigationItem,
   argTypes: {},
   parameters: { actions: { argTypesRegex: null } }

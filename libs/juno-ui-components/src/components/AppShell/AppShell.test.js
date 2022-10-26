@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react"
 import { AppShell } from "./index"
 import { PageHeader } from "../PageHeader"
 import { PageFooter } from "../PageFooter"
+import { TopNavigation } from "../TopNavigation"
 
 describe("AppShell", () => {
   test("renders an app shell", async () => {
@@ -35,6 +36,12 @@ describe("AppShell", () => {
     expect(screen.getByTestId("app-shell")).toBeInTheDocument()
     expect(screen.getByTestId("page-footer")).toBeInTheDocument()
     expect(screen.getByText("My Page Footer")).toBeInTheDocument()
+  })
+
+  test("renders an app shell with top navigation passed as component", async () => {
+    render(<AppShell data-testid="app-shell" topNavigation={<TopNavigation data-testid="top-navigation"></TopNavigation>} />)
+    expect(screen.getByTestId("app-shell")).toBeInTheDocument()
+    expect(screen.getByTestId("top-navigation")).toBeInTheDocument()
   })
 
   test("renders an embeddable app shell without page heading or footer", async () => {
