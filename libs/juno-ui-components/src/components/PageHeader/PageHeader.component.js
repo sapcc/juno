@@ -18,10 +18,15 @@ const logoStyles = `
   jn-mr-3
 `
 
-const headingStyles = `
-  jn-text-lg
-  jn-text-theme-high
-`
+const headingStyles = (clickable) => {
+  return (
+    `
+    jn-text-lg
+    jn-text-theme-high
+    ${clickable && "jn-cursor-pointer"}
+    `
+  )
+}
 
 /**
  * The page header component renders a header at the top of the website. Place as first child of AppBody.
@@ -30,6 +35,7 @@ export const PageHeader = ({
   heading,
   className,
   children,
+  onClick,
   ...props
 }) => {
 
@@ -40,7 +46,15 @@ export const PageHeader = ({
       {...props}
     >
       <SAPLogo className={logoStyles} alt="SAP" />
-      {heading && <div className={headingStyles}>{heading}</div>}
+      {heading && 
+        <div 
+          className={headingStyles(onClick !== undefined)}
+          onClick={onClick}
+          >
+            {heading}
+        </div>
+      }
+    
       {children}
     </div>
   )
@@ -50,10 +64,13 @@ PageHeader.propTypes = {
   /** Heading (typically the name of the application) */
   heading: PropTypes.string,
   /** Add custom class name */
-  className: PropTypes.string
+  className: PropTypes.string,
+  /** Optional: onClick handler for brand logo/page title. To be used to navigate to the home page.  */
+  onClick: PropTypes.func
 }
 
 PageHeader.defaultProps = {
   heading: null,
-  className: ""
+  className: "",
+  onClick: undefined
 }
