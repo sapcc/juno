@@ -12,6 +12,24 @@ const Template = (args) => <TextInput {...args} />
 export const Default = Template.bind({})
 Default.args = {}
 
+export const Invalid = Template.bind({})
+Invalid.args = {
+  invalid: true,
+}
+Invalid.parameters = {
+  docs: {
+    description: {
+      story:
+        "Note the pure `TextInput` component will not show the icon when invalidated.",
+    },
+  },
+}
+
+export const Autofocus = Template.bind({})
+Autofocus.args = {
+  autoFocus: true,
+}
+
 export const Disabled = Template.bind({})
 Disabled.args = {
   disabled: true,
