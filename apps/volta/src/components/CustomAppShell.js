@@ -1,11 +1,19 @@
 import React from "react"
-import { AppShell, Container, PageHeader } from "juno-ui-components"
+import {
+  AppShell,
+  Container,
+  PageHeader,
+  TopNavigation,
+  TopNavigationItem,
+} from "juno-ui-components"
 import Messages from "./Messages"
 import { useGlobalState } from "./StateProvider"
 import HeaderUser from "./HeaderUser"
+import { useNavigate } from "react-router-dom"
 
 const CustomAppShell = ({ children }) => {
   const oidc = useGlobalState().auth.oidc
+  const navigate = useNavigate()
 
   const pageHeader = React.useMemo(() => {
     return (
@@ -17,8 +25,20 @@ const CustomAppShell = ({ children }) => {
     )
   }, [oidc])
 
+  const topBar = (
+    <TopNavigation>
+      <TopNavigationItem
+        icon="home"
+        label="Home"
+        onClick={() => {
+          navigate("/")
+        }}
+      />
+    </TopNavigation>
+  )
+
   return (
-    <AppShell pageHeader={pageHeader}>
+    <AppShell pageHeader={pageHeader} topNavigation={topBar}>
       <Container>
         <Messages />
         {children}

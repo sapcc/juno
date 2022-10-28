@@ -14,7 +14,6 @@ import {
 import CertificateListItem from "./CertificateListItem"
 import AddNewSSOButton from "./AddNewSSOButton"
 import { parseError } from "../helpers"
-import { Link } from "react-router-dom"
 
 const Heading = `
 jn-font-bold
@@ -68,9 +67,6 @@ const CertificateList = ({ ca }) => {
 
   return (
     <>
-      <Link className="" to="/">
-        {`< Back`}
-      </Link>
       <h1 className={Heading}>{ca?.display_name || ca?.name}</h1>
       <div className="mb-6">{ca?.description}</div>
       {isLoading && !data ? (
