@@ -3,6 +3,7 @@ import React, { useCallback } from "react"
 import { exampleFetch as fetchStuff } from "./actions"
 import useStore from "./store"
 import NewItemForm from "./components/NewItemForm"
+import heroImage from "./img/app_bg_example.svg?url"
 
 import { AppShell, Button, ContentAreaToolbar, Container, IntroBox, Message, Spinner, MainTabs, Tab, TabList, TabPanel } from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
@@ -75,16 +76,18 @@ const App = (props) => {
       embedded={embedded === "true"}
     >
       <MainTabs>
-        <TabList variant="top">
+        <TabList variant="main">
           <Tab>Tab One</Tab>
           <Tab>Tab Two</Tab>
         </TabList>
         
         <TabPanel>
           {/* You'll normally want to use a Container as a wrapper for your content because it has padding that makes everything look nice */}
-          <Container>
-            {/* Set the background graphic using tailwind background image syntax as below. The image must exist at the specified location in your app */}
-            <IntroBox variant="hero" heroImage="bg-[url('img/app_bg_example.svg')]">
+          <Container px py>
+            {/* Set the background graphic using css background image syntax as below. You must import the image from the correct location in your app
+              * Ensure your webpack config has the rule for "config for background svgs in jsx." as seen in the webpack config of this template app.
+            */}
+            <IntroBox variant="hero" heroImage={`url(${heroImage})`}>
               This is the fancy introbox variant for apps that have some app specific flavor branding with a special background graphic.
             </IntroBox>
             {/* Messages always at the top of the content area or if there is a hero introbox directly underneath that */}
@@ -113,8 +116,10 @@ const App = (props) => {
             *
             *
             * */}
-            Content goes here (adjust endpoint <b>{props.endpoint}</b> defined in
-            env.local)
+            <Container px={false} py>
+              Content goes here (adjust endpoint <b>{props.endpoint}</b> defined in
+              env.local)
+            </Container>
 
           </Container>
         </TabPanel>
