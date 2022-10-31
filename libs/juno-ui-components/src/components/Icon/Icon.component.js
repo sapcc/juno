@@ -48,15 +48,15 @@ Generic Icon component.
 */
 // hover style needs to be revisited. only works if no icon color was passed
 const anchorIconStyles = `
-	text-current
-  hover:text-theme-high
-  focus:outline-none 
-  focus-visible:ring-2
-  focus-visible:ring-theme-focus
-  focus-visible:ring-offset-1
-  focus-visible:ring-offset-theme-focus
-	disabled:opacity-50
-	disabled:cursor-not-allowed
+	jn-text-current
+  hover:jn-text-theme-high
+  focus:jn-outline-none 
+  focus-visible:jn-ring-2
+  focus-visible:jn-ring-theme-focus
+  focus-visible:jn-ring-offset-1
+  focus-visible:jn-ring-offset-theme-focus
+	disabled:jn-opacity-50
+	disabled:jn-cursor-not-allowed
 `
 
 // hover style needs to be revisited. only works if no icon color was passed
