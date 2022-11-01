@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from "react"
-import { AppShell, Container, PageHeader } from "juno-ui-components"
-
+import React, { useEffect } from "react"
 import { useOidcAuth } from "oauth"
 import { QueryClient, QueryClientProvider } from "react-query"
 import { StateProvider, useDispatch } from "./components/StateProvider"
 import reducers from "./reducers"
-import HeaderUser from "./components/HeaderUser"
-import Messages from "./components/Messages"
-import AppContainer from "./components/AppContainer"
-import CustomIntroBox from "./components/CustomIntroBox"
+import CA from "./components/CA"
 import WellcomeView from "./components/WellcomeView"
 import {
   MessagesStateProvider,
@@ -20,52 +15,42 @@ const App = (props) => {
   const dispatch = useDispatch()
   const dispatchMessage = useMessagesDispatch()
 
-  const { auth, loggedIn, logout, login } = useOidcAuth({
+  const oidc = useOidcAuth({
     issuerURL: props.issuerurl,
     clientID: props.clientid,
     initialLogin: true,
   })
 
   useEffect(() => {
-    if (!auth) return null
-    if (auth?.error) {
+    if (oidc?.auth?.error) {
       dispatchMessage({
         type: "SET_MESSAGE",
-        msg: { variant: "error", text: auth?.error },
+        msg: { variant: "error", text: oidc?.auth?.error },
       })
     }
-    dispatch({ type: "SET_AUTH", auth })
+    dispatch({ type: "SET_OIDC", oidc: oidc })
     dispatch({ type: "SET_ENDPOINT", endpoint: props.endpoint })
-  }, [auth])
+  }, [oidc])
 
   // Create a client
   const queryClient = new QueryClient()
 
-  const customPageHeader = React.useMemo(() => {
-    return (
-      <PageHeader heading="Converged Cloud | Volta">
-        {loggedIn && <HeaderUser name={auth?.full_name} logout={logout} />}
-      </PageHeader>
-    )
-  }, [loggedIn, logout, auth])
-
   return (
     <QueryClientProvider client={queryClient}>
-      <AppShell pageHeader={customPageHeader} contentHeading="SSO Certificates">
-        <Container>
-          <CustomIntroBox />
-          <Messages />
-          {loggedIn ? (
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<AppContainer />} />
-              </Routes>
-            </BrowserRouter>
-          ) : (
-            <WellcomeView loginCallback={login} />
-          )}
-        </Container>
-      </AppShell>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              oidc?.loggedIn ? (
+                <CA />
+              ) : (
+                <WellcomeView loginCallback={oidc?.login} />
+              )
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </QueryClientProvider>
   )
 }
