@@ -69,10 +69,20 @@ module.exports = (_, argv) => {
             "sass-loader",
           ],
         },
+        // config for background svgs in jsx. IMPORTANT: to differentiate between svgs that are to be used as bg images and those that are to be loaded 
+        // as components we have to add a query parameter `?url` to the images to be loaded as url for use in background images in jsx files
+        //. example for import statement: import heroImage from "./img/app_bg_example.svg?url"
+        // type "asset" chooses automatically between inline embed or loading as file depending on file size, similar to previously using url-loader and limit
+        {
+          test: /\.svg$/i,
+          type: 'asset',
+          resourceQuery: /url/, // import filename: *.svg?url
+        },
         // svg config for svgs as components in jsx files
         {
-          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-          issuer: /\.jsx?$/,
+          test: /\.svg$/i,
+          issuer: /\.[jt]sx?$/,
+          resourceQuery: { not: [/url/] }, // exclude react component if import filename *.svg?url
           use: [
             {
               loader: "@svgr/webpack",
