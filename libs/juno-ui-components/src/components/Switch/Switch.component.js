@@ -47,6 +47,10 @@ const handlesizestyles = (size) => {
 	
 }
 
+const invalidbasestyles = `
+	jn-border-theme-error
+`
+
 const handleonstyles = `
 	jn-right-[1px] jn-bg-theme-switch-handle-checked
 `
@@ -62,14 +66,20 @@ export const Switch = ({
 	size,
 	on,
 	disabled,
+	invalid,
 	className,
 	...props
 }) => {
 	const [isOn, setIsOn] = useState(on)
+	const [isInvalid, setIsInvalid] = useState(false)
 	
 	useEffect(() => {
 		setIsOn(on)
 	  }, [on])
+		
+	useEffect(() => {
+		setIsInvalid(invalid)
+	}, [invalid])
 	
 	const handleChange = (event) => {
 		setIsOn(!isOn)
@@ -85,7 +95,7 @@ export const Switch = ({
 			aria-checked={isOn}
 			disabled={disabled}
 			onClick={handleChange}
-			className={`juno-switch juno-switch-${size} ${switchbasestyles} ${switchsizestyles(size)} ${className}`}
+			className={`juno-switch juno-switch-${size} ${switchbasestyles} ${switchsizestyles(size)} ${ isInvalid ? "juno-switch-invalid " + invalidbasestyles : "" } ${className}`}
 			{...props}
 		>
 			<span className={`juno-switch-handle ${handlebasestyles} ${handlesizestyles(size)} ${ isOn ? handleonstyles : handleoffstyles}`} ></span>
@@ -104,6 +114,8 @@ Switch.propTypes = {
 	on: PropTypes.bool,
 	/** Disabled switch */
 	disabled: PropTypes.bool,
+	/** Whether the Switch is invalid */
+	invalid: PropTypes.bool,
 	/** Pass a className */
 	className: PropTypes.string,
 	/** Pass a handler */
@@ -113,9 +125,10 @@ Switch.propTypes = {
 Switch.defaultProps = {
 	name: "unnamed switch",
 	id: null,
+	size: "default",
 	on: false,
 	disabled: null,
-	size: "default",
+	invalid: false,
 	className: "",
 	onChange: undefined,
 }

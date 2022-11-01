@@ -54,3 +54,8 @@ Disabled.args = {
   on: true,
   disabled: true,
 }
+
+export const Invalid = Template.bind({})
+Invalid.args = {
+  invalid: true,
+}
