@@ -70,16 +70,14 @@ const CAsList = ({ cas }) => {
                       onClick={() => onCASelected(ca.name)}
                     />
                   </div>
-                  <div className="text-red-500">
-                    <IconCertificateAuthority
-                      width={100}
-                      height={100}
-                      className="fill-blue-500"
-                      alt="Certificate Authority"
-                      title="Icon certificate authority"
-                      role="img"
-                    />
-                  </div>
+                  <IconCertificateAuthority
+                    width={150}
+                    height={150}
+                    className="fill-current text-theme-background-lvl-0"
+                    alt="Certificate Authority"
+                    title="Icon certificate authority"
+                    role="img"
+                  />
                 </Stack>
               </Stack>
             </div>
