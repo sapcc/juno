@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 import { Spinner } from "../Spinner/Spinner.component"
@@ -30,13 +30,18 @@ const wrapperstyles = `
 
 const iconstyles = `
 	jn-absolute
+	jn-flex
 	jn-right-2
-	jn-top-2
+	jn-top-1.5
 	jn-pointer-events-none
 `
 
 const disablediconstyles = `
 	jn-opacity-50
+`
+
+const invalidstyles = `
+	jn-border-theme-error
 `
 
 const loadingStyles = `
@@ -69,36 +74,56 @@ export const Select = ({
 	children,
 	className,
 	disabled,
+	invalid,
 	onChange,
 	loading,
 	...props
 }) => {
+	const [isLoading, setIsLoading] = useState(false)
+	const [isInvalid, setIsInvalid] = useState(false)
+	
+	useEffect(() => {
+		setIsLoading(loading)
+	}, [loading])
+	
+	useEffect(() => {
+		setIsInvalid(invalid)
+	}, [invalid])
+	
+	const SelectIcons = ({
+		loading, 
+		invalid, 
+		disabled
+	}) => {
+		if (isLoading) {
+			return (
+				<div className={`juno-select-loading ${loadingStyles}`} >
+					<Spinner className={`${loadingSpinnerStyles}`} />
+				</div>
+			)
+		} else {
+			return (
+				<div className={`${iconstyles} ${ disabled ? disablediconstyles : "" } `}>
+					{ invalid ? <Icon icon="dangerous" color="jn-text-theme-error" /> : null }
+					<Icon icon={"expandMore"} />
+				</div>
+			)
+		}
+	}
+	
 	return (
 		<div className={`juno-select-wrapper ${wrapperstyles}`}>
 			<select 
-				name={name || "unnamed select"}
+				name={name || "Unnamed Select"}
 				id={id}
-				className={`juno-select ${selectstyles} ${className}`}
+				className={`juno-select ${selectstyles} ${ isInvalid ? "juno-select-invalid " + invalidstyles : "" } ${className}`}
 				onChange={onChange}
-				disabled={disabled || loading}
+				disabled={disabled || isLoading}
 				{...props}
 			>
 				{children}
 			</select>
-			{loading ?
-				null
-				:
-				<Icon icon={"expandMore"} className={`${iconstyles} ${ disabled ? disablediconstyles : "" } `} />
-			}
-			{ loading ? 
-				<div 
-					className={`juno-select-loading ${loadingStyles}`} 
-				>
-					<Spinner className={`${loadingSpinnerStyles}`} />
-				</div>
-				:
-				null
-			}
+			<SelectIcons loading={isLoading} invalid={isInvalid} disabled={disabled} />
 		</div>
 	)
 }
@@ -112,8 +137,10 @@ Select.propTypes = {
 	className: PropTypes.string,
 	/** Pass SelectOption and SelectOptionGroup as children. */
 	children: PropTypes.node,
-	/** Disabled the select */
+	/** Disable the select */
 	disabled: PropTypes.bool,
+	/** Whether the Select is invalid */
+	invalid: PropTypes.bool,
 	/** Pass a handler */
 	onChange: PropTypes.func,
 	/** Whether the select is currently loading */
@@ -125,6 +152,7 @@ Select.defaultProps = {
 	id: "",
 	className: "",
 	disabled: null,
+	invalid: false,
 	onChange: undefined,
 	loading: false,
 }
