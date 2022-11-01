@@ -45,6 +45,21 @@ describe("RadioRow", () => {
 		expect(screen.getByRole("radio")).toBeDisabled()
 	})
 	
+	test("renders an invalid RadioRow as passed", async () => {
+		render(<RadioRow invalid />)
+		expect(screen.getByRole("radio")).toBeInTheDocument()
+		expect(screen.getByRole("radio")).toHaveClass("juno-radio-invalid")
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+	})
+	
+	test("renders an invalid RadioRow with an error text as passed", async () => {
+		render(<RadioRow errortext="This is an error text" />)
+		expect(screen.getByRole("radio")).toBeInTheDocument()
+		expect(screen.getByRole("radio")).toHaveClass("juno-radio-invalid")
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+		expect(screen.getByText("This is an error text")).toBeInTheDocument()
+	})
+	
 	test("renders a custom className to the parent", async () => {
 		render(<RadioRow data-testid="radio-row" className="my-class" />)
 		expect(screen.getByTestId("radio-row")).toBeInTheDocument()
