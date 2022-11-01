@@ -1,5 +1,6 @@
 import React from "react"
 import { IntroBox, Stack, Button } from "juno-ui-components"
+import heroImage from "../img/app_bg_example.svg?url"
 
 const CustomIntroBox = ({}) => {
   return (
@@ -7,7 +8,7 @@ const CustomIntroBox = ({}) => {
       <IntroBox
         title="Client Certificate Self-Service"
         variant="hero"
-        heroImage="bg-[url('img/app_bg_example.svg')]"
+        heroImage={`url(${heroImage})`}
       >
         Creation and Management of client certificates for Converged Cloud users
         <div>
