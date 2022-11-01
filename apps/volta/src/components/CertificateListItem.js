@@ -45,7 +45,7 @@ whitespace-nowrap
 `
 
 const CertificateListItem = ({ item, ca }) => {
-  const auth = useGlobalState().auth
+  const oidc = useGlobalState().auth.oidc
   const endpoint = useGlobalState().globals.endpoint
   const dispatchMessage = useMessagesDispatch()
   const queryClient = useQueryClient()
@@ -89,7 +89,7 @@ const CertificateListItem = ({ item, ca }) => {
       {
         endpoint: endpoint,
         ca: ca.name,
-        bearerToken: auth.attr?.id_token,
+        bearerToken: oidc?.auth?.id_token,
         serial: item.serial,
       },
       {

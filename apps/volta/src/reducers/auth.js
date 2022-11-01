@@ -1,20 +1,20 @@
 const initialState = {
   attr: null,
+  oidc: null,
 }
-
-const setAuth = (state, { profile, auth }) => {
-  return { ...state, attr: auth }
+const setOidc = (state, { oidc }) => {
+  return { ...state, oidc }
 }
-const removeAuth = (state) => {
-  return { ...state, attr: null }
+const removeOidc = (state) => {
+  return { ...state, oidc: null }
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case "SET_AUTH":
-      return setAuth(state, action)
-    case "REMOVE_AUTH":
-      return removeAuth(state, action)
+    case "SET_OIDC":
+      return setOidc(state, action)
+    case "REMOVE_OIDC":
+      return removeOidc(state, action)
     default:
       return state
   }

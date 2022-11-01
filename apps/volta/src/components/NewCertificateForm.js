@@ -57,7 +57,7 @@ export const validateForm = ({ name, description, csr }) => {
 const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
   const dispatch = useFormDispatch()
   const formState = useFormState()
-  const auth = useGlobalState().auth
+  const oidc = useGlobalState().auth.oidc
   const endpoint = useGlobalState().globals.endpoint
   const dispatchMessage = useMessagesDispatch()
   const queryClient = useQueryClient()
@@ -79,11 +79,11 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
 
   // on form init set the identity attributes
   useEffect(() => {
-    if (auth && auth?.attr?.login_name) {
+    if (oidc?.auth?.login_name) {
       dispatch({
         type: "SET_ATTR",
         key: "identity",
-        value: auth?.attr?.login_name,
+        value: oidc?.auth?.login_name,
       })
     }
   }, [])
@@ -143,7 +143,7 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
         {
           endpoint: endpoint,
           ca: ca,
-          bearerToken: auth.attr?.id_token,
+          bearerToken: oidc?.auth?.id_token,
           formState: formState,
         },
         {
