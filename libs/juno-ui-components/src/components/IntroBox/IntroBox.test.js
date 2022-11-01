@@ -13,26 +13,20 @@ describe("IntroBox", () => {
       <IntroBox
         data-testid="my-introbox"
         variant="hero"
-        heroImage="bg-fake-img"
+        heroImage="url('bg-fake-img')"
       />
     )
-    expect(screen.getByTestId("my-introbox")).toHaveAttribute(
-      "class",
-      expect.stringContaining("bg-fake-img")
-    )
+    expect(screen.getByTestId("my-introbox")).toHaveStyle({backgroundImage: "url('bg-fake-img')"})
   })
 
   test("renders an IntroBox without background image as passed if variant is not hero", async () => {
     render(
       <IntroBox
         data-testid="my-introbox"
-        heroImage="bg-fake-img"
+        heroImage="url('bg-fake-img')"
       />
     )
-    expect(screen.getByTestId("my-introbox")).not.toHaveAttribute(
-      "class",
-      expect.stringContaining("bg-fake-img")
-    )
+    expect(screen.getByTestId("my-introbox")).not.toHaveStyle({backgroundImage: "url('bg-fake-img')"})
   })
 
   test("renders a title as passed", async () => {

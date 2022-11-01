@@ -30,9 +30,16 @@ module.exports = {
     fileLoaderRule.exclude = /\.svg$/;  
 
     config.module.rules.push({
-      test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+      test: /\.svg$/i,
+      type: 'asset',
+      resourceQuery: /url/, // import filename: *.svg?url
+    })
+
+    config.module.rules.push({
+      test: /\.svg$/i,
       enforce: 'pre',
       issuer: /\.jsx?$/,
+      resourceQuery: { not: [/url/] }, // exclude react component if import filename *.svg?url
       loader: require.resolve('@svgr/webpack'),
       options: {
         svgo: false, 

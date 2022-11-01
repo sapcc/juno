@@ -64,10 +64,16 @@ export const IntroBox = ({
   children,
   ...props
 }) => {
+
+  
+  const isHeroWithImage = React.useMemo(() => {
+    return heroImage && variant === "hero"
+  }, [variant, heroImage])
+
   return (
     <div
       className={`juno-introbox ${introbox(variant, heroImage)} ${className}`}
-      style={heroImage && {backgroundImage: `${heroImage}`}}
+      style={isHeroWithImage ? {backgroundImage: `${heroImage}`} : {}}
       {...props}
     >
       <div className={`${introboxBorder}`}></div>
@@ -86,7 +92,7 @@ IntroBox.propTypes = {
   text: PropTypes.string,
   /** Pass a custom class */
   variant: PropTypes.oneOf(["default", "hero"]),
-  /** optional "hero" flavor image for hero variant. Specify as tailwind bg image string pointing to an image in your app (see template app for an example). Will always be positioned top and right */
+  /** optional "hero" flavor image for hero variant. Specify as css bg image string pointing to an image in your app (see template app for an example). Will always be positioned top and right */
   heroImage: PropTypes.string,
   /** Pass a custom class */
   className: PropTypes.string,
