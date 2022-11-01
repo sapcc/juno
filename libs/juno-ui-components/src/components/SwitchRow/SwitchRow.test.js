@@ -52,6 +52,19 @@ describe("SwitchRow", () => {
 		expect(screen.getByTestId("switch-row")).toHaveClass("my-custom-class")
 	})
 	
+	test("renders an invalid text input group as passed", async () => {
+		render(<SwitchRow invalid />)
+		expect(screen.getByRole("switch")).toBeInTheDocument()
+		expect(screen.getByRole("switch")).toHaveClass("juno-switch-invalid")
+	})
+	
+	test("renders an invalid text input group with an error text as passed", async () => {
+		render(<SwitchRow errortext="This is an error text" />)
+		expect(screen.getByRole("switch")).toBeInTheDocument()
+		expect(screen.getByRole("switch")).toHaveClass("juno-switch-invalid")
+		expect(screen.getByText("This is an error text")).toBeInTheDocument()
+	})
+	
 	test("renders all props as passed", async () => {
 		render(<SwitchRow id="switchrow-1" data-test="47" data-testid="switch-row"/>)
 		expect(screen.getByTestId("switch-row")).toBeInTheDocument()

@@ -20,6 +20,12 @@ const helptextstyles = `
 	jn-mt-1
 `
 
+const errortextstyles = `
+  jn-text-xs
+  jn-text-theme-error
+  jn-mt-1
+`
+
 /** A checkbox input group containing a checkbox, associated label, and structural markup */
 export const SwitchRow = ({
   name,
@@ -29,15 +35,24 @@ export const SwitchRow = ({
   disabled,
   helptext,
   required,
+  invalid,
+  errortext,
   className,
   onChange,
   ...props
 }) => {
   const [isOn, setIsOn] = useState(on)
+  const [isInvalid, setIsInvalid] = useState(false)
 
   useEffect(() => {
     setIsOn(on)
   }, [on])
+  
+  const invalidated = invalid || (errortext && errortext.length ? true : false)
+  
+  useEffect(() => {
+    setIsInvalid(invalidated)
+  }, [invalidated])
 
   const handleChange = (event) => {
     setIsOn(!isOn)
@@ -53,6 +68,7 @@ export const SwitchRow = ({
           id={id}
           on={on}
           disabled={disabled}
+          invalid={isInvalid}
         />
       </div>
       <div className={`jn-pt-0.5`}>
@@ -62,6 +78,7 @@ export const SwitchRow = ({
           required={required}
           disabled={disabled}
         />
+        { errortext && errortext.length ? <p className={`${errortextstyles}`}>{errortext}</p> : null }
         {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
       </div>
     </div>
@@ -83,6 +100,10 @@ SwitchRow.propTypes = {
   helptext: PropTypes.node,
   /** Specify whether the Switch is required */
   required: PropTypes.bool,
+  /** Whether the Switch is invalid */
+  invalid: PropTypes.bool,
+  /** Pass an error text to display when the Switch is invalid. When passed, the Switch will be set to invalid automatically. */
+  errortext: PropTypes.string,
   /** Pass a className */
   className: PropTypes.string,
   /** Pass a handler to the checkbox element */
@@ -97,6 +118,8 @@ SwitchRow.defaultProps = {
   disabled: null,
   helptext: null,
   required: null,
+  invalid: false,
+  errortext: "",
   className: "",
   onChange: undefined,
 }
