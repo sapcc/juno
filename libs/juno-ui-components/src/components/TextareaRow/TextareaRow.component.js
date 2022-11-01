@@ -71,6 +71,12 @@ const helptextstyles = `
 	jn-mt-1
 `
 
+const errortextstyles = `
+  jn-text-xs
+  jn-text-theme-error
+  jn-mt-1
+`
+
 const stackedinputstyles = `
 	jn-w-full
 `
@@ -132,6 +138,8 @@ export const TextareaRow = ({
   placeholder,
   helptext,
   required,
+  invalid,
+  errortext,
   className,
   disabled,
   onChange,
@@ -139,10 +147,17 @@ export const TextareaRow = ({
 }) => {
   const [val, setValue] = useState("")
   const [focus, setFocus] = useState(false)
+  const [isInvalid, setIsInvalid] = useState(false)
 
   React.useEffect(() => {
     setValue(value)
   }, [value])
+  
+  const invalidated = invalid || (errortext && errortext.length ? true : false)
+  
+  React.useEffect(() => {
+    setIsInvalid(invalidated)
+  }, [invalidated])
 
   const handleChange = (event) => {
     setValue(event.target.value)
@@ -183,12 +198,14 @@ export const TextareaRow = ({
           id={id}
           placeholder={placeholder}
           disabled={disabled}
+          invalid={isInvalid}
           onChange={handleChange}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           className={`${getInputStyles(variant, minimizedLabel(variant, val, focus))}`}
         />
-        {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
+        { errortext && errortext.length ? <p className={`${errortextstyles}`}>{errortext}</p> : null }
+        { helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : "" }
       </div>
     </div>
   )
@@ -209,6 +226,10 @@ TextareaRow.propTypes = {
   placeholder: PropTypes.string,
   /** Specify whether the input is required */
   required: PropTypes.bool,
+  /** Whether the field is invalid */
+  invalid: PropTypes.bool,
+  /** Error text to display when validation fails. Will automatically invalidate the field if passed. */
+  errortext: PropTypes.string,
   /** Pass a className to the Textarea */
   className: PropTypes.string,
   /** Floating (default) or stacked layout variant */
@@ -227,6 +248,8 @@ TextareaRow.defaultProps = {
   id: null,
   placeholder: null,
   required: null,
+  invalid: false,
+  errortext: "",
   helptext: null,
   className: "",
   disabled: null,

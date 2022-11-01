@@ -20,6 +20,12 @@ describe("Textarea", () => {
 		expect(screen.getByRole("textbox")).toHaveTextContent("Test some text")
 	})
 	
+	test("renders an invalid textarea as passed", async () => {
+		render(<Textarea invalid />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveClass("juno-textarea-invalid")
+	})
+	
 	test("renders a placeholder as passed", async () => {
 		render(<Textarea placeholder="My placeholder" />)
 		expect(screen.getByRole("textbox")).toHaveAttribute('placeholder', "My placeholder")
@@ -36,11 +42,6 @@ describe("Textarea", () => {
 		expect(screen.getByRole("textbox")).toHaveAttribute('placeholder', "my placeholder")
 	})
 	
-	test("renders a className as passed", async () => {
-		render(<Textarea className="my-custom-class" />)
-		expect(screen.getByRole("textbox")).toHaveClass("my-custom-class")
-	})
-	
 	test("renders autocomplete on as passed", async () => {
 		render(<Textarea autoComplete="on"/>)
 		expect(screen.getByRole("textbox")).toHaveAttribute('autocomplete', "on")
@@ -49,6 +50,11 @@ describe("Textarea", () => {
 	test("renders autofocus as passed", async () => {
 		render(<Textarea autoFocus />)
 		expect(screen.getByRole("textbox")).toHaveFocus()
+	})
+	
+	test("renders a className as passed", async () => {
+		render(<Textarea className="my-custom-class" />)
+		expect(screen.getByRole("textbox")).toHaveClass("my-custom-class")
 	})
 	
 	test("fires onChange handler as passed", async () => {
