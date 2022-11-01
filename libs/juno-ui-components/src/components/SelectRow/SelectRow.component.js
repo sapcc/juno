@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Select } from "../Select/index.js"
 import { Label } from "../Label/index.js"
@@ -37,6 +37,12 @@ const floatingselectstyles = `
   jn-pt-[0.8125rem]
 `
 
+const errortextstyles = `
+  jn-text-xs
+  jn-text-theme-error
+  jn-mt-1
+`
+
 /** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
 export const SelectRow = ({
   name,
@@ -47,10 +53,21 @@ export const SelectRow = ({
   required,
   className,
   disabled,
+  invalid,
+  errortext,
   children,
   onChange,
   ...props
 }) => {
+  
+  const [isInvalid, setIsInvalid] = useState(false)
+  
+  const invalidated = invalid || (errortext && errortext.length ? true : false)
+  
+  useEffect(() => {
+    setIsInvalid(invalidated)
+  }, [invalidated])
+  
   // labelContainer needs to be rendered in different markup order /positions depending on variant in order to avoid z-index hassle:
   const labelContainer = 
     <div className={`juno-label-container ${ variant === 'floating' ? floatinglabelcontainerstyles : ''}`}>
@@ -72,11 +89,13 @@ export const SelectRow = ({
           id={id}
           onChange={onChange}
           disabled={disabled}
+          invalid={isInvalid}
         >
           {children}
         </Select>
         { variant === 'floating' ? labelContainer : null }
-        {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
+        { errortext && errortext.length ? <p className={`${errortextstyles}`}>{errortext}</p> : null }
+        { helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : "" }
       </div>
     </div>
   )
@@ -99,6 +118,10 @@ SelectRow.propTypes = {
   className: PropTypes.string,
   /** Disable the select */
   disabled: PropTypes.bool,
+  /** Whether the SelectRow is invalid */
+  invalid: PropTypes.bool,
+  /** The error text to display in the SelectGroup. WHen passed, the SelectGroup will be invalidated automatically.*/
+  errortext: PropTypes.string,
   /** Children to render */
   children: PropTypes.node,
   /** Pass a handler to the Select element */
@@ -114,5 +137,7 @@ SelectRow.defaultProps = {
   className: "",
   helptext: null,
   disabled: null,
+  invalid: false,
+  errortext: "",
   onChange: undefined,
 }
