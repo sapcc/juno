@@ -27,11 +27,6 @@ Disabled.args = {
   disabled: true,
 }
 
-export const Invalid = Template.bind({})
-Invalid.args = {
-  invalid: true
-}
-
 export const WithHelptext = Template.bind({})
 WithHelptext.args = {
   label: "Switch Row with Helptext",
@@ -52,6 +47,12 @@ Required.args = {
   required: true,
 }
 
+export const Invalid = Template.bind({})
+Invalid.args = {
+  label: "Invalid Switch",
+  invalid: true,
+}
+
 export const WithErrorText = Template.bind({})
 WithErrorText.args = {
   label: "Input Row with Error Text",
@@ -63,6 +64,27 @@ WithErrorText.parameters = {
     description: {
       story:
         "Passing an `errortext` prop to the SwitchRow component will automatically invalidate it, so there is no need to explicitly set `invalid` as well.",
+    },
+  },
+}
+
+export const Valid = Template.bind({})
+Valid.args = {
+  label: "Valid Switch",
+  valid: true,
+}
+
+export const WithSuccessText = Template.bind({})
+WithSuccessText.args = {
+  label: "Input Row with Success Text",
+  helptext: "Oh so helpful helptext",
+  successtext: "When passed a successtext prop, the SwitchRow will be set to valid automatically.",
+}
+WithSuccessText.parameters = {
+  docs: {
+    description: {
+      story:
+        "Passing a `successtext` prop to the SwitchRow component will automatically set it to valid, so there is no need to explicitly set `valid` as well.",
     },
   },
 }
