@@ -33,6 +33,12 @@ describe("Switch", () => {
     expect(screen.getByRole("switch")).toHaveClass("juno-switch-invalid")
   })
   
+  test("renders a valid Switch as passed", async () => {
+    render(<Switch valid />)
+    expect(screen.getByRole("switch")).toBeInTheDocument()
+    expect(screen.getByRole("switch")).toHaveClass("juno-switch-valid")
+  })
+  
   test("renders a default size switch by default", async () => {
     render(<Switch />)
     expect(screen.getByRole("switch")).toBeInTheDocument()

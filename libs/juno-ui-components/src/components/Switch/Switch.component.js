@@ -8,7 +8,6 @@ const switchbasestyles = `
 	jn-leading-0
 	jn-border
 	jn-g-theme-default
-	jn-border-theme-switch-default
 	focus:jn-outline-none
 	focus:jn-ring-2
 	focus:jn-ring-theme-focus
@@ -47,8 +46,17 @@ const handlesizestyles = (size) => {
 	
 }
 
+const defaultborderstyles = `
+	jn-border-theme-switch-default
+`
+
+
 const invalidbasestyles = `
 	jn-border-theme-error
+`
+
+const validbasestyles = `
+	jn-border-theme-success
 `
 
 const handleonstyles = `
@@ -67,11 +75,13 @@ export const Switch = ({
 	on,
 	disabled,
 	invalid,
+	valid,
 	className,
 	...props
 }) => {
 	const [isOn, setIsOn] = useState(on)
 	const [isInvalid, setIsInvalid] = useState(false)
+	const [isValid, setIsValid] = useState(false)
 	
 	useEffect(() => {
 		setIsOn(on)
@@ -80,6 +90,10 @@ export const Switch = ({
 	useEffect(() => {
 		setIsInvalid(invalid)
 	}, [invalid])
+	
+	useEffect(() => {
+		setIsValid(valid)
+	}, [valid])
 	
 	const handleChange = (event) => {
 		setIsOn(!isOn)
@@ -95,7 +109,7 @@ export const Switch = ({
 			aria-checked={isOn}
 			disabled={disabled}
 			onClick={handleChange}
-			className={`juno-switch juno-switch-${size} ${switchbasestyles} ${switchsizestyles(size)} ${ isInvalid ? "juno-switch-invalid " + invalidbasestyles : "" } ${className}`}
+			className={`juno-switch juno-switch-${size} ${switchbasestyles} ${switchsizestyles(size)} ${ isInvalid ? "juno-switch-invalid " + invalidbasestyles : "" } ${ isValid ? "juno-switch-valid " + validbasestyles : "" } ${ isValid || isInvalid ? "" : defaultborderstyles } ${className}`}
 			{...props}
 		>
 			<span className={`juno-switch-handle ${handlebasestyles} ${handlesizestyles(size)} ${ isOn ? handleonstyles : handleoffstyles}`} ></span>
@@ -116,6 +130,8 @@ Switch.propTypes = {
 	disabled: PropTypes.bool,
 	/** Whether the Switch is invalid */
 	invalid: PropTypes.bool,
+	/** Whether the Switch is valid */
+	valid: PropTypes.bool,
 	/** Pass a className */
 	className: PropTypes.string,
 	/** Pass a handler */
@@ -129,6 +145,7 @@ Switch.defaultProps = {
 	on: false,
 	disabled: null,
 	invalid: false,
+	valid: false,
 	className: "",
 	onChange: undefined,
 }
