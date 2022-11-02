@@ -56,7 +56,7 @@ const errorstyles = `
 	jn-border-theme-error
 `
 
-const validstyles = `
+const successstyles = `
 	jn-border
 	jn-border-theme-success
 `
@@ -115,7 +115,7 @@ export const Checkbox = ({
 		
 	return (
 		<div 
-			className={`juno-checkbox ${mockcheckboxstyles} ${ hasFocus ? mockfocusstyles : "" } ${ disabled ? mockdisabledstyles : "" } ${ isInvalid ? errorstyles : "" } ${ isValid ? validstyles : "" } ${className}`}
+			className={`juno-checkbox ${mockcheckboxstyles} ${ hasFocus ? mockfocusstyles : "" } ${ disabled ? mockdisabledstyles : "" } ${ isInvalid ? errorstyles : "" } ${ isValid ? successstyles : "" } ${className}`}
 			{...props}
 		>
 			{ isChecked ? 	<svg 
