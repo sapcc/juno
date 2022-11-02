@@ -50,3 +50,51 @@ Required.args = {
     { ...CheckboxRowStory.args, value: "val-r-3", id: "checkbox-r-6" },
   ],
 }
+
+export const ValidCheckboxGroup = Template.bind({})
+ValidCheckboxGroup.args = {
+  name: "valid-checkbox-group",
+  label: "A valid CheckboxGroup",
+  valid: true,
+  items: [
+    { ...CheckboxRowStory.args, value: "val-r-1", id: "checkbox-r-4" },
+    { ...CheckboxRowStory.args, value: "val-r-2", id: "checkbox-r-5" },
+    { ...CheckboxRowStory.args, value: "val-r-3", id: "checkbox-r-6" },
+  ],
+}
+
+export const CheckboxGroupWithSuccess = Template.bind({})
+CheckboxGroupWithSuccess.args = {
+  name: "checkbox-group-with-success",
+  label: "A CheckboxGroup with successful validation",
+  successtext: "This group is valid.",
+  items: [
+    { ...CheckboxRowStory.args, value: "val-r-1", id: "checkbox-r-4" },
+    { ...CheckboxRowStory.args, value: "val-r-2", id: "checkbox-r-5" },
+    { ...CheckboxRowStory.args, value: "val-r-3", id: "checkbox-r-6" },
+  ],
+}
+
+export const InvalidCheckboxGroup = Template.bind({})
+InvalidCheckboxGroup.args = {
+  name: "invalid-checkbox-group",
+  label: "An invalid CheckboxGroup",
+  invalid: true,
+  items: [
+    { ...CheckboxRowStory.args, value: "val-r-1", id: "checkbox-r-4" },
+    { ...CheckboxRowStory.args, value: "val-r-2", id: "checkbox-r-5" },
+    { ...CheckboxRowStory.args, value: "val-r-3", id: "checkbox-r-6" },
+  ],
+}
+
+export const CheckboxGroupWithError = Template.bind({})
+CheckboxGroupWithError.args = {
+  name: "checkbox-group-with-error",
+  label: "A CheckboxGroup with an Error",
+  errortext: "THis group has an error.",
+  items: [
+    { ...CheckboxRowStory.args, value: "val-r-1", id: "checkbox-r-4" },
+    { ...CheckboxRowStory.args, value: "val-r-2", id: "checkbox-r-5" },
+    { ...CheckboxRowStory.args, value: "val-r-3", id: "checkbox-r-6" },
+  ],
+}

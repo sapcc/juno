@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import PropTypes from "prop-types"
 import { Label } from "../Label/index.js"
+import { Icon } from "../Icon/index"
 
 const checkboxgroupstyles = `
 	jn-mb-4
@@ -9,7 +10,46 @@ const checkboxgroupstyles = `
 
 const checkboxgrouplabelstyles = `
 	jn-inline-block
+	jn-mb-1
+`
+
+const groupstyles = `
+	jn-relative
+	jn-rounded
+	jn-border
+	jn-py-1
+`
+
+const defaultgroupstyles = `
+	jn-border-transparent
+`
+
+const validgroupstyles = `
+	jn-border-theme-success
+	jn-px-2
+`
+
+const invalidgroupstyles = `
+	jn-border-theme-error
+	jn-px-2
+`
+
+const errortextstyles = `
+	jn-text-xs
+	jn-text-theme-error
 	jn-mb-2
+`
+
+const successtextstyles = `
+	jn-text-xs
+	jn-text-theme-success
+	jn-mb-2
+`
+
+const iconstyles = `
+	jn-absolute
+	jn-right-2
+	jn-top-1.5
 `
 
 /**
@@ -21,16 +61,33 @@ export const CheckboxGroup = ({
 	selected,
 	required,
 	disabled,
+	valid,
+	errortext,
+	invalid,
+	successtext,
 	children,
 	className,
 	...props
 }) => {
 	
 	const [selectedOptions, setSelectedOptions] = useState([])
+	const [isValid, setIsValid] = useState(false)
+	const [isInvalid, setIsInvalid] = useState(false)
+	
+	const validated = valid || (successtext && successtext.length ? true : false)
+	const invalidated = invalid || (errortext && errortext.length ? true : false)
 	
 	useEffect( () => {
 		setSelectedOptions(selected)
 	}, [selected])
+	
+	useEffect(() => {
+		setIsValid(validated)
+	}, [validated])
+	
+	useEffect(() => {
+		setIsInvalid(invalidated)
+	}, [invalidated])
 	
 	const handleCheckboxChange = (event) => {
 		const changedValue = event.target.value
@@ -59,9 +116,19 @@ export const CheckboxGroup = ({
 	 };
 	
 	return (
-		<div role="group" className={`juno-checkbox-group ${checkboxgroupstyles} ${className}`} {...props} >
+		<div role="group" 
+			className={`juno-checkbox-group ${ isValid ? "juno-checkbox-group-valid" : "" } ${ isInvalid ? "juno-checkbox-group-invalid" : ""} ${checkboxgroupstyles} ${className}`} 
+			{...props} 
+		>
 			{ label ? <Label text={label} htmlFor={name} required={required} className={`${checkboxgrouplabelstyles}`}/> : "" }
-			{ namedChildren() }
+			{ errortext && errortext.length ? <p className={`${errortextstyles}`}>{errortext}</p> : null }
+			{ successtext && successtext.length ? <p className={`${successtextstyles}`}>{successtext}</p> : null }
+			<div 
+				className={`juno-checkbox-group-options ${groupstyles} ${ isValid ? validgroupstyles : "" } ${ isInvalid ? invalidgroupstyles : "" } ${ isValid || isInvalid ? "" : defaultgroupstyles }` }>
+				{ isInvalid ? <Icon icon="dangerous" color="jn-text-theme-error" className={`${iconstyles}`} /> : null }
+				{ isValid ? <Icon icon="checkCircle" color="jn-text-theme-success" className={`${iconstyles}`} /> : null }
+				{ namedChildren() }
+			</div>
 		</div>
 	)
 }
@@ -78,6 +145,14 @@ CheckboxGroup.propTypes = {
 	required: PropTypes.bool,
 	/** Disable the whole group */
 	disabled: PropTypes.bool,
+	/** Whether the CheckboxGroup is invalid */
+	invalid: PropTypes.bool,
+	/** Text to display in case validation failed. Will est the whole group to invalid when passed. */
+	errortext: PropTypes.string,
+	/** Whether the CheckboxGroup is valid */
+	valid: PropTypes.bool,
+	/** Text to display in case validation is successful. When passed, will set teh whole group tpo valid. */
+	successtext: PropTypes.string,
 	/** Custom class to be passed to the individual checkboxes of the group */
 	className: PropTypes.string,
 	/** Child checkbox components */
@@ -86,11 +161,15 @@ CheckboxGroup.propTypes = {
 
 
 CheckboxGroup.defaultProps = {
-	name: null,
+	name: "",
 	className: "",
-	label: null,
-	required: null,
+	label: "",
+	required: false,
 	selected: [],
-	disabled: null,
+	disabled: false,
+	invalid: false,
+	errortext: "",
+	valid: false,
+	successtext: "",
 	children: null,
 }
