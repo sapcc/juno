@@ -54,6 +54,26 @@ describe("CheckboxRow", () => {
 		expect(document.querySelector('.required')).toBeInTheDocument()
 	})
 	
+	test("renders a disabled Checkbox as passed", async () => {
+		render(<CheckboxRow disabled />)
+		expect(screen.getByRole("checkbox")).toBeDisabled()
+	})
+	
+	test("renders an invalid CheckboxRow as passed", async () => {
+		render(<CheckboxRow invalid />)
+		expect(screen.getByRole("checkbox")).toBeInTheDocument()
+		expect(screen.getByRole("checkbox")).toHaveClass("juno-checkbox-invalid")
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+	})
+	
+	test("renders an invalid RadioRow with an error text as passed", async () => {
+		render(<CheckboxRow errortext="This is an error text" />)
+		expect(screen.getByRole("checkbox")).toBeInTheDocument()
+		expect(screen.getByRole("checkbox")).toHaveClass("juno-checkbox-invalid")
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+		expect(screen.getByText("This is an error text")).toBeInTheDocument()
+	})
+	
 	test("renders a custom className", async () => {
 		render(<CheckboxRow data-testid="my-checkbox-row" className="my-classname" />)
 		expect(screen.getByTestId("my-checkbox-row")).toHaveClass("my-classname")
