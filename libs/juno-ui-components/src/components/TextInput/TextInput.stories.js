@@ -20,7 +20,20 @@ Invalid.parameters = {
   docs: {
     description: {
       story:
-        "Note the pure `TextInput` component will not show the icon when invalidated.",
+        "Note the pure `TextInput` component will not show the icon when invalidated. Use TextinoputRow instead.",
+    },
+  },
+}
+
+export const Valid = Template.bind({})
+Valid.args = {
+  valid: true,
+}
+Valid.parameters = {
+  docs: {
+    description: {
+      story:
+        "Note the pure `TextInput` component will not show the icon when set to valid. Use TextinoputRow instead.",
     },
   },
 }
