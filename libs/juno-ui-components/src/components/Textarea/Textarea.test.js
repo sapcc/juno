@@ -26,6 +26,12 @@ describe("Textarea", () => {
 		expect(screen.getByRole("textbox")).toHaveClass("juno-textarea-invalid")
 	})
 	
+	test("renders a valid textarea as passed", async () => {
+		render(<Textarea valid />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveClass("juno-textarea-valid")
+	})
+	
 	test("renders a placeholder as passed", async () => {
 		render(<Textarea placeholder="My placeholder" />)
 		expect(screen.getByRole("textbox")).toHaveAttribute('placeholder', "My placeholder")

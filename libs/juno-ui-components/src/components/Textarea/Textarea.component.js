@@ -10,15 +10,22 @@ const textareastyles = `
 	jn-rounded-3px
 	jn-h-[14rem]
 	jn-border
-	jn-border-transparent
 	focus:jn-outline-none
 	focus:jn-ring-2
 	focus:jn-ring-theme-focus
 	disabled:jn-opacity-50
 `
 
+const defaultborderstyles = `
+	jn-border-transparent
+`
+
 const invalidstyles = `
 	jn-border-theme-error
+`
+
+const validstyles = `
+	jn-border-theme-success
 `
 
 
@@ -31,12 +38,14 @@ export const Textarea = ({
 	autoComplete,
 	autoFocus,
 	invalid,
+	valid,
 	onChange,
 	...props
 }) => {
 	
 	const [val, setValue] = useState("")
 	const [isInvalid, setIsInvalid] = useState(false)
+	const [isValid, setIsValid] = useState(false)
 	
 	useEffect(() => {
 		setValue(value)
@@ -45,6 +54,10 @@ export const Textarea = ({
 	useEffect(() => {
 		setIsInvalid(invalid)
 	}, [invalid])
+	
+	useEffect(() => {
+		setIsValid(valid)
+	}, [valid])
 	  
 	const handleInputChange = (event) => {
 		setValue(event.target.value)
@@ -59,7 +72,7 @@ export const Textarea = ({
 			autoFocus={autoFocus}
 			placeholder={placeholder}
 			onChange={handleInputChange}
-			className={`juno-textarea ${textareastyles} ${ isInvalid ? "juno-textarea-invalid " + invalidstyles : "" } ${className}`}
+			className={`juno-textarea ${textareastyles} ${ isInvalid ? "juno-textarea-invalid " + invalidstyles : "" } ${ isValid ? "juno-textarea-valid " + validstyles : "" } ${ isInvalid || isValid ? "" : defaultborderstyles } ${className}`}
 			{...props}
 		/>
 	)
@@ -78,6 +91,8 @@ Textarea.propTypes = {
 	autoFocus: PropTypes.bool,
 	/** Whether the input is invalid */
 	invalid: PropTypes.bool,
+	/** Whether the input is valid */
+	valid: PropTypes.bool,
 	/** Pass a className */
 	className: PropTypes.string,
 	/** Pass a handler */
@@ -91,6 +106,7 @@ Textarea.defaultProps = {
 	autoComplete: null,
 	autoFocus: false,
 	invalid: false,
+	valid: false,
 	className: "",
 	onChange: undefined,
 }

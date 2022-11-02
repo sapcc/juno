@@ -17,6 +17,13 @@ Default.args = {
 export const Invalid = Template.bind({})
 Invalid.args = {
   invalid: true,
+  placeholder: "Some invalid text here",
+}
+
+export const Valid = Template.bind({})
+Valid.args = {
+  valid: true,
+  placeholder: "Some valid text here",
 }
 
 export const Disabled = Template.bind({})
