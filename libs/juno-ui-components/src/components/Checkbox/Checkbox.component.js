@@ -50,6 +50,11 @@ const mockdisabledstyles = `
 	jn-pointer-events-none
 	jn-opacity-50
 `
+
+const errorstyles = `
+	jn-border
+	jn-border-theme-error
+`
 /** 
 A controlled Checkbox component.
 */
@@ -61,17 +66,20 @@ export const Checkbox = ({
 	indeterminate,
 	className,
 	disabled,
+	invalid,
 	onChange,
 	...props
 }) => {
 	const [isChecked, setIsChecked] = useState(false)
 	const [isIndeterminate, setIndeterminate] = useState("")
 	const [hasFocus, setFocus] = useState(false)
+	const [isInvalid, setIsInvalid] = useState(false)
 	
 	useEffect( () => {
 		setIsChecked(checked)
 		setIndeterminate(indeterminate)
-	}, [checked, indeterminate])
+		setIsInvalid(invalid)
+	}, [checked, indeterminate, invalid])
 	
 	
 	const handleChange = (event) => {
@@ -89,7 +97,7 @@ export const Checkbox = ({
 		
 	return (
 		<div 
-			className={`juno-checkbox ${mockcheckboxstyles} ${ hasFocus ? mockfocusstyles : "" } ${ disabled ? mockdisabledstyles : "" } ${className}`}
+			className={`juno-checkbox ${mockcheckboxstyles} ${ hasFocus ? mockfocusstyles : "" } ${ disabled ? mockdisabledstyles : "" } ${ isInvalid ? errorstyles : "" } ${className}`}
 			{...props}
 		>
 			{ isChecked ? 	<svg 
@@ -108,7 +116,7 @@ export const Checkbox = ({
 				value={value}
 				id={id}
 				checked={isChecked}
-				className={`${inputstyles}`}
+				className={`${inputstyles} ${ isInvalid ? "juno-checkbox-invalid" : ""}`}
 				disabled={disabled}
 				onChange={handleChange}
 				onFocus={handleFocus}
@@ -132,10 +140,12 @@ Checkbox.propTypes = {
 	checked: PropTypes.bool,
 	/** Whether the checkbox is indeterminate ( parent of multiple checkboxes with differing checked states) */
 	indeterminate: PropTypes.bool,
-	/** Pass a className */
-	className: PropTypes.string,
 	/** Whether the checkbox is disabled */
 	disabled: PropTypes.bool,
+	/** Whether the checkbox */
+	invalid: PropTypes.bool,
+	/** Pass a className */
+	className: PropTypes.string,
 	/** Pass a handler */
 	onChange: PropTypes.func,
 }
@@ -145,6 +155,7 @@ Checkbox.defaultProps = {
 	value: "",
 	id: "",
 	className: "",
+	disabled: false,
 	disabled: false,
 	onChange: undefined,
 }

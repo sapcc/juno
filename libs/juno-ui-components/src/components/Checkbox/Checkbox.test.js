@@ -62,6 +62,12 @@ describe("Checkbox", () => {
 		expect(checkbox).toBeDisabled()
 	})
 	
+	test("renders an invalid Checkbox as passed", async () => {
+		render(<Checkbox invalid />)
+		expect(screen.getByRole("checkbox")).toBeInTheDocument()
+		expect(screen.getByRole("checkbox")).toHaveClass("juno-checkbox-invalid")
+	})
+	
 	test("fires handler on change as passed", async () => {	
 		const onChangeSpy = jest.fn();
 		render(<Checkbox onChange={onChangeSpy} />);
