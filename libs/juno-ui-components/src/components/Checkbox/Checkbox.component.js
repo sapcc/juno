@@ -86,11 +86,19 @@ export const Checkbox = ({
 	
 	useEffect( () => {
 		setIsChecked(checked)
-		setIndeterminate(indeterminate)
-		setIsInvalid(invalid)
-		setIsValid(valid)
-	}, [checked, indeterminate, invalid, valid])
+	}, [checked])
 	
+	useEffect( () => {
+		setIndeterminate(indeterminate)
+	}, [indeterminate])
+	
+	useEffect( () => {
+		setIsInvalid(invalid)
+	}, [invalid])
+	
+	useEffect( () => {
+		setIsValid(valid)
+	}, [valid])
 	
 	const handleChange = (event) => {
 		setIsChecked(!isChecked)
