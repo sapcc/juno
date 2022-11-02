@@ -78,11 +78,21 @@ const errortextstyles = `
   jn-mt-1
 `
 
+const successtextstyles = `
+  jn-text-xs
+  jn-text-theme-success
+  jn-mt-1
+`
+
 const iconcontainerstyles = `
   jn-flex
   jn-absolute
   jn-top-1.5
   jn-right-3
+`
+
+const disablediconstyles = `
+  jn-opacity-50
 `
 
 const stackedinputstyles = `
@@ -126,6 +136,8 @@ export const TextInputRow = ({
   required,
   invalid,
   errortext,
+  valid,
+  successtext,
   autoFocus,
   className,
   disabled,
@@ -135,18 +147,24 @@ export const TextInputRow = ({
   const [val, setValue] = useState("")
   const [focus, setFocus] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
+  const [isValid, setIsValid] = useState(false)
 
   React.useEffect(() => {
     setValue(value)
   }, [value])
   
   const invalidated = invalid || (errortext && errortext.length ? true : false)
+  const validated = valid || (successtext && successtext.length ? true : false)
   
-  React.useEffect(() => {
+  useEffect(() => {
     setIsInvalid(invalidated)
   }, [invalidated])
   
-  React.useEffect(() => {
+  useEffect(() => {
+    setIsValid(validated)
+  }, [validated])
+  
+  useEffect(() => {
     setFocus(autoFocus)
   }, [autoFocus])
 
@@ -163,6 +181,21 @@ export const TextInputRow = ({
       } 
     }
     return false
+  }
+  
+  const Icons = ({
+    disabled
+  }) => {
+    if ( isValid || isInvalid ) {
+      return (
+        <div className={`juno-textinput-row-icon-container ${iconcontainerstyles} ${ disabled ? disablediconstyles : "" }`}>
+          { isInvalid ? <Icon icon="dangerous" color="jn-text-theme-error" /> : null }
+          { isValid ? <Icon icon="checkCircle" color="jn-text-theme-success" /> : null }
+        </div>
+      )
+    } else {
+      return ""
+    }
   }
 
   return (
@@ -190,20 +223,16 @@ export const TextInputRow = ({
           placeholder={placeholder}
           disabled={disabled}
           invalid={isInvalid}
+          valid={isValid}
           autoFocus={autoFocus}
           onChange={handleChange}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           className={`${getInputStyles(variant, minimizedLabel(variant, val, focus))}`}
         />
-        { isInvalid ? 
-            <div className={`juno-textinput-row-icon-container ${iconcontainerstyles}`}>
-              <Icon icon="dangerous" color="jn-text-theme-error" />
-            </div>
-          :
-            null
-        }
+        <Icons disabled={disabled} />
         { errortext && errortext.length ? <p className={`${errortextstyles}`}>{errortext}</p> : null }
+        { successtext && successtext.length ? <p className={`${successtextstyles}`}>{successtext}</p> : null }
         { helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : null }
       </div>
     </div>
@@ -229,10 +258,14 @@ TextInputRow.propTypes = {
   helptext: PropTypes.node,
   /** Specify whether the input is required */
   required: PropTypes.bool,
-  /** Whether the inout is invalid */
+  /** Whether the input is invalid */
   invalid: PropTypes.bool,
   /** Error text to display below the input element. When passed, the component will be set to invalid automatically. */
   errortext: PropTypes.string,
+  /** Whether the input is valid */
+  valid: PropTypes.bool,
+  /** Text to display when validation is successful. Will automatically set the field to valid if passed. */
+  successtext: PropTypes.string,
   /** Whether the input element should automatically receive focus */
   autoFocus: PropTypes.bool,
   /** Pass a className */
@@ -255,6 +288,8 @@ TextInputRow.defaultProps = {
   required: null,
   invalid: false,
   errortext: "",
+  valid: false,
+  successtext: "",
   autoFocus: false,
   className: "",
   disabled: null,

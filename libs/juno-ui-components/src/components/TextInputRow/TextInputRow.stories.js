@@ -86,6 +86,35 @@ WithErrorText.parameters = {
   },
 }
 
+export const Valid = Template.bind({})
+Valid.args = {
+  label: "Valid Input Row",
+  valid: true,
+}
+Valid.parameters = {
+  docs: {
+    description: {
+      story:
+        "Set `valid` to true to set the field to valid and render the associated styles and the icon.",
+    },
+  },
+}
+
+export const WithSuccessText = Template.bind({})
+ WithSuccessText.args = {
+  label: "Input Row with Success Text",
+  helptext: "Oh so helpful helptext",
+  successtext: "When passed an errortext prop, the InputRow will be set to invalid automatically.",
+}
+ WithSuccessText.parameters = {
+  docs: {
+    description: {
+      story:
+        "Passing a `successtext` prop to the TextInputRow component will automatically set it to valid, so there is no need to explicitly set `valid` as well.",
+    },
+  },
+}
+
 export const Autofocus = Template.bind({})
 Autofocus.args = {
   autoFocus: true,
