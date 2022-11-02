@@ -124,6 +124,11 @@ Close.args = {
   icon: "close",
 }
 
+export const CheckCircle = Template.bind({})
+CheckCircle.args = {
+  icon: "checkCircle",
+}
+
 export const ChevronLeft = Template.bind({})
 ChevronLeft.args = {
   icon: "chevronLeft",

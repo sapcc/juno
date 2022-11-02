@@ -95,10 +95,17 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "bolt")
   })
+  
   test("renders a cancel icon", async () => {
     render(<Icon icon="cancel" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "cancel")
+  })
+  
+  test("renders a checkCircle icon", async () => {
+    render(<Icon icon="checkCircle" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "checkCircle")
   })
 
   test("renders a chevronLeft icon", async () => {

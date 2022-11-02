@@ -9,6 +9,7 @@ import AutoAwesomeMosaic from "./icons/auto_awesome_mosaic.svg"
 import AutoAwesomeMotion from "./icons/auto_awesome_motion.svg"
 import Bolt from "./icons/bolt.svg"
 import Cancel from "./icons/cancel.svg"
+import CheckCircle from "./icons/check_circle.svg"
 import ChevronLeft from "./icons/chevron_left.svg"
 import ChevronRight from "./icons/chevron_right.svg"
 import Close from "./icons/close.svg"
@@ -79,6 +80,7 @@ export const knownIcons = [
   "autoAwesomeMotion",
   "bolt",
   "cancel",
+  "checkCircle",
   "chevronLeft",
   "chevronRight",
   "close",
@@ -193,6 +195,18 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="cancel"
           title={title ? title : "Cancel"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "checkCircle":
+      return (
+        <CheckCircle 
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="checkCircle"
+          title={title ? title : "CheckCircle"}
           role="img"
           {...iconProps}
         />
