@@ -55,6 +55,13 @@ const errorstyles = `
 	jn-border
 	jn-border-theme-error
 `
+
+const validstyles = `
+	jn-border
+	jn-border-theme-success
+`
+
+
 /** 
 A controlled Checkbox component.
 */
@@ -67,6 +74,7 @@ export const Checkbox = ({
 	className,
 	disabled,
 	invalid,
+	valid,
 	onChange,
 	...props
 }) => {
@@ -74,12 +82,14 @@ export const Checkbox = ({
 	const [isIndeterminate, setIndeterminate] = useState("")
 	const [hasFocus, setFocus] = useState(false)
 	const [isInvalid, setIsInvalid] = useState(false)
+	const [isValid, setIsValid] = useState(false)
 	
 	useEffect( () => {
 		setIsChecked(checked)
 		setIndeterminate(indeterminate)
 		setIsInvalid(invalid)
-	}, [checked, indeterminate, invalid])
+		setIsValid(valid)
+	}, [checked, indeterminate, invalid, valid])
 	
 	
 	const handleChange = (event) => {
@@ -97,7 +107,7 @@ export const Checkbox = ({
 		
 	return (
 		<div 
-			className={`juno-checkbox ${mockcheckboxstyles} ${ hasFocus ? mockfocusstyles : "" } ${ disabled ? mockdisabledstyles : "" } ${ isInvalid ? errorstyles : "" } ${className}`}
+			className={`juno-checkbox ${mockcheckboxstyles} ${ hasFocus ? mockfocusstyles : "" } ${ disabled ? mockdisabledstyles : "" } ${ isInvalid ? errorstyles : "" } ${ isValid ? validstyles : "" } ${className}`}
 			{...props}
 		>
 			{ isChecked ? 	<svg 
@@ -116,7 +126,7 @@ export const Checkbox = ({
 				value={value}
 				id={id}
 				checked={isChecked}
-				className={`${inputstyles} ${ isInvalid ? "juno-checkbox-invalid" : ""}`}
+				className={`${inputstyles} ${ isInvalid ? "juno-checkbox-invalid" : ""} ${ isValid ? "juno-checkbox-valid" : ""} `}
 				disabled={disabled}
 				onChange={handleChange}
 				onFocus={handleFocus}
@@ -142,8 +152,10 @@ Checkbox.propTypes = {
 	indeterminate: PropTypes.bool,
 	/** Whether the checkbox is disabled */
 	disabled: PropTypes.bool,
-	/** Whether the checkbox */
+	/** Whether the checkbox is invalid */
 	invalid: PropTypes.bool,
+	/** Whether the Checkbox is valid */
+	valid: PropTypes.bool,
 	/** Pass a className */
 	className: PropTypes.string,
 	/** Pass a handler */
@@ -156,6 +168,7 @@ Checkbox.defaultProps = {
 	id: "",
 	className: "",
 	disabled: false,
-	disabled: false,
+	invalid: false,
+	valid: false,
 	onChange: undefined,
 }
