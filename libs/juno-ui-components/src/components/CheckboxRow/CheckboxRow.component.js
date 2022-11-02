@@ -27,6 +27,12 @@ const errortextstyles = `
   jn-mt-1
 `
 
+const successtextstyles = `
+  jn-text-xs
+  jn-text-theme-success
+  jn-mt-1
+`
+
 const iconstyles = `
   jn-inline-block 
   jn-ml-1 
@@ -43,22 +49,33 @@ export const CheckboxRow = ({
   id,
   helptext,
   required,
+  disabled,
   invalid,
   errortext,
-  disabled,
+  valid,
+  successtext,
   className,
   onChange,
   ...props
 }) => {
   const [isChecked, setChecked] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
+  const [isValid, setIsValid] = useState(false)
   
   const invalidated = invalid || (errortext && errortext.length ? true : false)
+  const validated = valid || (successtext && successtext.length ? true : false)
 
   useEffect(() => {
     setChecked(checked)
+  }, [checked])
+  
+  useEffect(() => {
     setIsInvalid(invalidated)
-  }, [checked, invalidated])
+  }, [invalidated])
+  
+  useEffect(() => {
+    setIsValid(validated)
+  }, [validated])
 
   const handleChange = (event) => {
     setChecked(!isChecked)
@@ -79,6 +96,7 @@ export const CheckboxRow = ({
           id={id}
           value={value || ""}
           invalid={isInvalid}
+          valid={isValid}
         />
       </div>
       <div>
@@ -89,7 +107,9 @@ export const CheckboxRow = ({
           disabled={disabled}
         />
         { isInvalid ? <Icon icon="dangerous" color="jn-text-theme-error" size="1.125rem" className={`${iconstyles}`}/> : null }
+        { isValid ? <Icon icon="checkCircle" color="jn-text-theme-success" size="1.125rem" className={`${iconstyles}`}/> : null }
         { errortext && errortext.length ? <p className={`${errortextstyles}`}>{errortext}</p> : null }
+        { successtext && successtext.length ? <p className={`${successtextstyles}`}>{successtext}</p> : null }
         { helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : null }
       </div>
     </div>
@@ -115,8 +135,12 @@ CheckboxRow.propTypes = {
   disabled: PropTypes.bool,
   /** Whether the CheckboxRow is invalid */
   invalid: PropTypes.bool,
-  /** The error text to render with the CheckboxRow. If passed, the CheckBox row will be set to invalid automatically. */
+  /** The error text to render with the CheckboxRow. If passed, the Checkbox row will be set to invalid automatically. */
   errortext: PropTypes.string,
+  /** Whether the CheckboxRow is valid */
+  valid: PropTypes.bool,
+  /** The text to render when the field is validated. If passed, the Checkbox will be set to valid automatically. */
+  successtext: PropTypes.string,
   /** Pass a custom className */
   className: PropTypes.string,
   /** Pass a handler to the checkbox element */
@@ -134,6 +158,8 @@ CheckboxRow.defaultProps = {
   disabled: false,
   invalid: false,
   errortext: "",
+  valid: false,
+  successtext: "",
   className: "",
   onChange: undefined,
 }

@@ -64,3 +64,17 @@ WithErrorText.args = {
   id: "invalid-checkbox-by-errortext",
   errortext: "Pass an errortext to invalidate a CheckboxRow"
 }
+
+export const Valid = Template.bind({})
+Valid.args = {
+  label: "Valid Checkbox",
+  id: "valid-checkbox-row",
+  valid: true,
+}
+
+export const WithSuccessText = Template.bind({})
+WithSuccessText.args = {
+  label: "Checkbox validated by successtext",
+  id: "valid-checkbox-by-successtext",
+  successtext: "Pass a successtext to validate a CheckboxRow"
+}
