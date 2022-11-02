@@ -77,6 +77,12 @@ const errortextstyles = `
   jn-mt-1
 `
 
+const successtextstyles = `
+  jn-text-xs
+  jn-text-theme-success
+  jn-mt-1
+`
+
 const stackedinputstyles = `
 	jn-w-full
 `
@@ -140,6 +146,8 @@ export const TextareaRow = ({
   required,
   invalid,
   errortext,
+  valid,
+  successtext,
   className,
   disabled,
   onChange,
@@ -148,16 +156,22 @@ export const TextareaRow = ({
   const [val, setValue] = useState("")
   const [focus, setFocus] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
+  const [isValid, setIsValid] = useState(false)
 
   React.useEffect(() => {
     setValue(value)
   }, [value])
   
   const invalidated = invalid || (errortext && errortext.length ? true : false)
+  const validated = valid || (successtext && successtext.length ? true : false)
   
-  React.useEffect(() => {
+  useEffect(() => {
     setIsInvalid(invalidated)
   }, [invalidated])
+  
+  useEffect(() => {
+    setIsValid(validated)
+  }, [validated])
 
   const handleChange = (event) => {
     setValue(event.target.value)
@@ -199,13 +213,15 @@ export const TextareaRow = ({
           placeholder={placeholder}
           disabled={disabled}
           invalid={isInvalid}
+          valid={isValid}
           onChange={handleChange}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
           className={`${getInputStyles(variant, minimizedLabel(variant, val, focus))}`}
         />
         { errortext && errortext.length ? <p className={`${errortextstyles}`}>{errortext}</p> : null }
-        { helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : "" }
+        { successtext && successtext.length ? <p className={`${successtextstyles}`}>{successtext}</p> : null }
+        { helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : null }
       </div>
     </div>
   )
@@ -230,6 +246,10 @@ TextareaRow.propTypes = {
   invalid: PropTypes.bool,
   /** Error text to display when validation fails. Will automatically invalidate the field if passed. */
   errortext: PropTypes.string,
+  /** Whether the field is valid */
+  valid: PropTypes.bool,
+  /** Text to display when validation is successful. Will automatically set the field to valid if passed. */
+  successtext: PropTypes.string,
   /** Pass a className to the Textarea */
   className: PropTypes.string,
   /** Floating (default) or stacked layout variant */
@@ -250,6 +270,8 @@ TextareaRow.defaultProps = {
   required: null,
   invalid: false,
   errortext: "",
+  valid: false,
+  successtext: "",
   helptext: null,
   className: "",
   disabled: null,
