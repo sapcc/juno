@@ -72,7 +72,6 @@ const CAsList = ({ cas }) => {
                   </div>
                   <IconCertificateAuthority
                     width={150}
-                    height={150}
                     className="fill-current text-theme-background-lvl-0"
                     alt="Certificate Authority"
                     title="Icon certificate authority"

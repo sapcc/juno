@@ -8,18 +8,20 @@ const initialState = { items: [] }
 
 export const newMessage = (msg) => {
   const message = { id: uniqueId("message-"), text: "", variant: "info" }
-  if (
-    msg?.text &&
-    (typeof msg.text === "object" || typeof msg.text === "string")
-  ) {
-    message.text = msg.text
-  } else {
-    console.warn("Message text should be a string or html element")
+  if (msg?.text) {
+    if (typeof msg.text === "object" || typeof msg.text === "string") {
+      message.text = msg.text
+    } else {
+      console.warn("Message text should be a string or html element")
+    }
   }
-  if (msg?.variant && typeof msg.variant === "string") {
-    message.variant = msg.variant
-  } else {
-    console.warn("Message variant should be a string")
+
+  if (msg?.variant) {
+    if (typeof msg.variant === "string") {
+      message.variant = msg.variant
+    } else {
+      console.warn("Message variant should be a string")
+    }
   }
   return message
 }
