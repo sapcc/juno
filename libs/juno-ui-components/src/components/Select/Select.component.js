@@ -12,8 +12,6 @@ const selectstyles = `
 	jn-pl-4
 	jn-pr-9
 	jn-h-[2.375rem]
-	jn-border
-	jn-border-transparent
 	jn-rounded-3px
 	jn-bg-icon-arrow-down
 	jn-bg-right
@@ -40,8 +38,14 @@ const disablediconstyles = `
 	jn-opacity-50
 `
 
-const invalidstyles = `
+const errorstyles = `
+	jn-border
 	jn-border-theme-error
+`
+
+const successstyles = `
+	jn-border
+	jn-border-theme-success
 `
 
 const loadingStyles = `
@@ -75,12 +79,14 @@ export const Select = ({
 	className,
 	disabled,
 	invalid,
+	valid,
 	onChange,
 	loading,
 	...props
 }) => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [isInvalid, setIsInvalid] = useState(false)
+	const [isValid, setIsValid] = useState(false)
 	
 	useEffect(() => {
 		setIsLoading(loading)
@@ -90,9 +96,11 @@ export const Select = ({
 		setIsInvalid(invalid)
 	}, [invalid])
 	
+	useEffect(() => {
+		setIsValid(valid)
+	}, [valid])
+	
 	const SelectIcons = ({
-		loading, 
-		invalid, 
 		disabled
 	}) => {
 		if (isLoading) {
@@ -104,7 +112,8 @@ export const Select = ({
 		} else {
 			return (
 				<div className={`${iconstyles} ${ disabled ? disablediconstyles : "" } `}>
-					{ invalid ? <Icon icon="dangerous" color="jn-text-theme-error" /> : null }
+					{ isInvalid ? <Icon icon="dangerous" color="jn-text-theme-error" /> : null }
+					{ isValid ? <Icon icon="checkCircle" color="jn-text-theme-success" /> : null }
 					<Icon icon={"expandMore"} />
 				</div>
 			)
@@ -116,14 +125,14 @@ export const Select = ({
 			<select 
 				name={name || "Unnamed Select"}
 				id={id}
-				className={`juno-select ${selectstyles} ${ isInvalid ? "juno-select-invalid " + invalidstyles : "" } ${className}`}
+				className={`juno-select ${selectstyles} ${ isInvalid ? "juno-select-invalid " + errorstyles : "" } ${ isValid ? "juno-select-valid " + successstyles : "" } ${className}`}
 				onChange={onChange}
 				disabled={disabled || isLoading}
 				{...props}
 			>
 				{children}
 			</select>
-			<SelectIcons loading={isLoading} invalid={isInvalid} disabled={disabled} />
+			<SelectIcons disabled={disabled} />
 		</div>
 	)
 }
@@ -141,6 +150,8 @@ Select.propTypes = {
 	disabled: PropTypes.bool,
 	/** Whether the Select is invalid */
 	invalid: PropTypes.bool,
+	/** Whether the Select is valid */
+	valid: PropTypes.bool,
 	/** Pass a handler */
 	onChange: PropTypes.func,
 	/** Whether the select is currently loading */
@@ -153,6 +164,7 @@ Select.defaultProps = {
 	className: "",
 	disabled: null,
 	invalid: false,
+	valid: false,
 	onChange: undefined,
 	loading: false,
 }

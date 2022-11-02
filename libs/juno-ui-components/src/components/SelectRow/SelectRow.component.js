@@ -43,6 +43,12 @@ const errortextstyles = `
   jn-mt-1
 `
 
+const successtextstyles = `
+  jn-text-xs
+  jn-text-theme-success
+  jn-mt-1
+`
+
 /** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
 export const SelectRow = ({
   name,
@@ -55,18 +61,26 @@ export const SelectRow = ({
   disabled,
   invalid,
   errortext,
+  valid,
+  successtext,
   children,
   onChange,
   ...props
 }) => {
   
   const [isInvalid, setIsInvalid] = useState(false)
+  const [isValid, setIsValid] = useState(false)
   
   const invalidated = invalid || (errortext && errortext.length ? true : false)
+  const validated = valid || (successtext && successtext.length ? true : false)
   
   useEffect(() => {
     setIsInvalid(invalidated)
   }, [invalidated])
+  
+  useEffect(() => {
+    setIsValid(validated)
+  }, [validated])
   
   // labelContainer needs to be rendered in different markup order /positions depending on variant in order to avoid z-index hassle:
   const labelContainer = 
@@ -90,11 +104,13 @@ export const SelectRow = ({
           onChange={onChange}
           disabled={disabled}
           invalid={isInvalid}
+          valid={isValid}
         >
           {children}
         </Select>
         { variant === 'floating' ? labelContainer : null }
         { errortext && errortext.length ? <p className={`${errortextstyles}`}>{errortext}</p> : null }
+        { successtext && successtext.length ? <p className={`${successtextstyles}`}>{successtext}</p> : null }
         { helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : "" }
       </div>
     </div>

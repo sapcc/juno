@@ -57,6 +57,12 @@ InvalidSelect.args = {
   options: [DefaultSelectOption.args, DisabledSelectOption.args],
 }
 
+export const ValidSelect = SelectTemplate.bind({})
+ValidSelect.args = {
+  valid: true,
+  options: [DefaultSelectOption.args, DisabledSelectOption.args],
+}
+
 export const GroupedSelect = GroupedSelectTemplate.bind({})
 GroupedSelect.args = {
   name: "Grouped-Select",
