@@ -43,6 +43,11 @@ const errorstyles = `
 	jn-border-theme-error
 `
 
+const successstyles = `
+	jn-border
+	jn-border-theme-success
+`
+
 
 /** A controlled Radio component, label not included. */
 export const Radio = ({
@@ -53,12 +58,14 @@ export const Radio = ({
 	className,
 	disabled,
 	invalid,
+	valid,
 	onChange,
 	...props
 }) => {
 	const [isChecked, setIsChecked] = useState(false)
 	const [hasFocus, setHasFocus] = useState(false)
 	const [isInvalid, setIsInvalid] = useState(false)
+	const [isValid, setIsValid] = useState(false)
 	
 	useEffect( () => {
 		setIsChecked(checked)
@@ -67,6 +74,10 @@ export const Radio = ({
 	useEffect(() => {
 		setIsInvalid(invalid)
 	}, [invalid])
+	
+	useEffect(() => {
+		setIsValid(valid)
+	}, [valid])
 	
 	const handleChange = (event) => {
 		setIsChecked(!isChecked)
@@ -83,7 +94,7 @@ export const Radio = ({
 	
 	return (
 		<div
-			className={`juno-radio ${mockradiostyles} ${ hasFocus ? mockfocusradiostyles : "" } ${ disabled ? mockdisabledradiostyles : "" } ${ isInvalid ? errorstyles : "" } ${className}`}
+			className={`juno-radio ${mockradiostyles} ${ hasFocus ? mockfocusradiostyles : "" } ${ disabled ? mockdisabledradiostyles : "" } ${ isInvalid ? errorstyles : "" } ${isValid ? successstyles : ""} ${className}`}
 			{...props}
 		>
 			<input 
@@ -92,7 +103,7 @@ export const Radio = ({
 				value={value}
 				id={id}
 				checked={isChecked}
-				className={`${inputstyles} ${isInvalid ? "juno-radio-invalid" : ""}`}
+				className={`${inputstyles} ${isInvalid ? "juno-radio-invalid" : ""} ${ isValid ? "juno-radio-valid" : ""}`}
 				disabled={disabled}
 				onChange={handleChange}
 				onFocus={handleFocus}
@@ -122,6 +133,8 @@ Radio.propTypes = {
 	disabled: PropTypes.bool,
 	/** Whether the Radio is invalid */
 	invalid: PropTypes.bool,
+	/** Whether the Radio is valid */
+	valid: PropTypes.bool,
 	/** Pass a handler */
 	onChange: PropTypes.func,
 }
@@ -133,5 +146,6 @@ Radio.defaultProps = {
 	className: "",
 	disabled: false,
 	invalid: false,
+	valid: false,
 	onChange: undefined,
 }

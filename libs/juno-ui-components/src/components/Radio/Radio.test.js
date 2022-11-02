@@ -5,7 +5,7 @@ import { Radio } from "./index"
 
 describe("Radio", () => {
 	
-	test("renders a valid html input type radio", async () => {
+	test("renders an html input type radio", async () => {
 		render(<Radio />)
 		expect(screen.getByRole("radio")).toBeInTheDocument()
 		expect(screen.getByRole("radio")).toHaveAttribute('type', "radio")
@@ -60,6 +60,20 @@ describe("Radio", () => {
 		const radio = screen.getByRole('radio')
 		expect(radio).toBeInTheDocument()
 		expect(radio).toBeDisabled()
+	})
+	
+	test("renders an invalid radio as passed", async () => {
+		render(<Radio invalid />)
+		const radio = screen.getByRole('radio')
+		expect(radio).toBeInTheDocument()
+		expect(radio).toHaveClass("juno-radio-invalid")
+	})
+	
+	test("renders a valid Radio as passed", async () => {
+		render(<Radio valid />)
+		const radio = screen.getByRole('radio')
+		expect(radio).toBeInTheDocument()
+		expect(radio).toHaveClass("juno-radio-valid")
 	})
 	
 	test("fire handler on change as passed", async () => {
