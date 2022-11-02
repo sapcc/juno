@@ -27,6 +27,12 @@ const errortextstyles = `
   jn-mt-1
 `
 
+const successtextstyles = `
+  jn-text-xs
+  jn-text-theme-success
+  jn-mt-1
+`
+
 const iconstyles = `
   jn-inline-block 
   jn-ml-1 
@@ -46,21 +52,29 @@ export const RadioRow = ({
   disabled,
   invalid,
   errortext,
+  valid,
+  successtext,
   onChange,
   ...props
 }) => {
   const [isChecked, setIsChecked] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
+  const [isValid, setIsValid] = useState(false)
   
   useEffect(() => {
     setIsChecked(checked)
   }, [checked])
   
   const invalidated = invalid || (errortext && errortext.length ? true : false)
+  const validated = valid || (successtext && successtext.length ? true : false)
   
   useEffect(() => {
     setIsInvalid(invalidated)
   }, [invalidated])
+  
+  useEffect(() => {
+    setIsValid(validated)
+  }, [validated])
 
   const handleChange = (event) => {
     setIsChecked(!isChecked)
@@ -78,13 +92,16 @@ export const RadioRow = ({
           value={value}
           disabled={disabled}
           invalid={isInvalid}
+          valid={isValid}
         />
       </div>
       <div>
         <Label text={label} htmlFor={id} disabled={disabled} />
         { isInvalid ? <Icon icon="dangerous" color="jn-text-theme-error" size="1.125rem" className={`${iconstyles}`}/> : null }
+        { isValid ? <Icon icon="checkCircle" color="jn-text-theme-success" size="1.125rem" className={`${iconstyles}`}/> : null }
         { errortext && errortext.length ? <p className={`${errortextstyles}`}>{errortext}</p> : null }
-        {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
+        { successtext && successtext.length ? <p className={`${successtextstyles}`}>{successtext}</p> : null }
+        { helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : null }
       </div>
     </div>
   )
@@ -109,6 +126,10 @@ RadioRow.propTypes = {
   invalid: PropTypes.bool,
   /** Error text to be displayed. When passed, the Radio will automatically be invalidated. */
   errortext: PropTypes.string,
+  /** Whether the Radio is valid */
+  valid: PropTypes.bool,
+  /** Success text to be displayed when the Radio is valid. When passed, will set the radio to valid automatically. */
+  successtext: PropTypes.string,
   /** Pass a className */
   className: PropTypes.string,
   /** Pass a handler to the checkbox element */
@@ -125,5 +146,7 @@ RadioRow.defaultProps = {
   className: "",
   disabled: false,
   errortext: "",
+  valid: false,
+  successtext: "",
   onChange: undefined,
 }

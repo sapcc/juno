@@ -65,3 +65,15 @@ WithErrorText.parameters = {
     },
   },
 }
+
+export const Valid = Template.bind({})
+Valid.args = {
+  label: "Valid Option",
+  valid: true,
+}
+
+export const WithSuccessText = Template.bind({})
+WithSuccessText.args = {
+  label: "Radio validated by successtext",
+  successtext: "Pass a successtext to validate a CheckboxRow",
+}
