@@ -124,7 +124,8 @@ export const CheckboxGroup = ({
 			{ errortext && errortext.length ? <p className={`${errortextstyles}`}>{errortext}</p> : null }
 			{ successtext && successtext.length ? <p className={`${successtextstyles}`}>{successtext}</p> : null }
 			<div 
-				className={`juno-checkbox-group-options ${groupstyles} ${ isValid ? validgroupstyles : "" } ${ isInvalid ? invalidgroupstyles : "" } ${ isValid || isInvalid ? "" : defaultgroupstyles }` }>
+				className={`juno-checkbox-group-options ${groupstyles} ${ isValid ? validgroupstyles : "" } ${ isInvalid ? invalidgroupstyles : "" } ${ isValid || isInvalid ? "" : defaultgroupstyles }` }
+			>
 				{ isInvalid ? <Icon icon="dangerous" color="jn-text-theme-error" className={`${iconstyles}`} /> : null }
 				{ isValid ? <Icon icon="checkCircle" color="jn-text-theme-success" className={`${iconstyles}`} /> : null }
 				{ namedChildren() }
@@ -147,11 +148,11 @@ CheckboxGroup.propTypes = {
 	disabled: PropTypes.bool,
 	/** Whether the CheckboxGroup is invalid */
 	invalid: PropTypes.bool,
-	/** Text to display in case validation failed. Will est the whole group to invalid when passed. */
+	/** Text to display in case validation failed. Will sett the whole group to invalid when passed. */
 	errortext: PropTypes.string,
 	/** Whether the CheckboxGroup is valid */
 	valid: PropTypes.bool,
-	/** Text to display in case validation is successful. When passed, will set teh whole group tpo valid. */
+	/** Text to display in case validation is successful. When passed, will set the whole group to valid. */
 	successtext: PropTypes.string,
 	/** Custom class to be passed to the individual checkboxes of the group */
 	className: PropTypes.string,
