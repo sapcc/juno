@@ -1,6 +1,7 @@
 import React from "react"
 import { IntroBox, Stack, Button } from "juno-ui-components"
-import heroImage from "../img/app_bg_example.svg?url"
+// import heroImage from "../img/app_bg_example.svg?url"
+import heroImage from "../img/app_bg_example.svg"
 
 const CustomIntroBox = ({}) => {
   return (
