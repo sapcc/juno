@@ -89,6 +89,52 @@ describe("RadioGroup", () => {
 		expect(document.querySelector("#radio-3")).toBeChecked()
 	})
 	
+	test("renders a valid RadioGroup as passed", async () => {
+		render(
+			<RadioGroup valid>
+				<RadioRow value="v1"/>
+			</RadioGroup>
+		)
+		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
+		expect(screen.getByRole("radiogroup")).toHaveClass("juno-radiogroup-valid")
+		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
+	})
+	
+	test("renders a valid RadioGroup when successtext is passed", async () => {
+		render(
+			<RadioGroup successtext="Great Success!">
+				<RadioRow value="v1"/>
+			</RadioGroup>
+		)
+		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
+		expect(screen.getByRole("radiogroup")).toHaveClass("juno-radiogroup-valid")
+		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
+		expect(screen.getByText("Great Success!")).toBeInTheDocument()
+	})
+	
+	test("renders a invalid RadioGroup as passed", async () => {
+		render(
+			<RadioGroup invalid>
+				<RadioRow value="v1"/>
+			</RadioGroup>
+		)
+		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
+		expect(screen.getByRole("radiogroup")).toHaveClass("juno-radiogroup-invalid")
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+	})
+	
+	test("renders an invalid RadioGroup when errortext is passed", async () => {
+		render(
+			<RadioGroup errortext="Big Error!">
+				<RadioRow value="v1"/>
+			</RadioGroup>
+		)
+		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
+		expect(screen.getByRole("radiogroup")).toHaveClass("juno-radiogroup-invalid")
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+		expect(screen.getByText("Big Error!")).toBeInTheDocument()
+	})
+	
 	test("renders a custom className", async () => {
 		render(<RadioGroup name="my-radiogroup" className="my-classname" />)
 		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
