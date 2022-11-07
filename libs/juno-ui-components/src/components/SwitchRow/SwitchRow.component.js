@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Switch } from "../Switch/index.js"
 import { Label } from "../Label/index.js"
@@ -64,15 +64,21 @@ export const SwitchRow = ({
   useEffect(() => {
     setIsOn(on)
   }, [on])
-  
-  const invalidated = invalid || (errortext && errortext.length ? true : false)
-  const validated = valid || (successtext && successtext.length ? true : false)
-  
+
+  const invalidated = useMemo(
+    () => invalid || (errortext && errortext.length ? true : false),
+    [invalid, errortext]
+  )
+  const validated = useMemo(
+    () => valid || (successtext && successtext.length ? true : false),
+    [valid, successtext]
+  )
+
   useEffect(() => {
     setIsInvalid(invalidated)
   }, [invalidated])
-  
-  useEffect( () => {
+
+  useEffect(() => {
     setIsValid(validated)
   }, [validated])
 
@@ -101,11 +107,29 @@ export const SwitchRow = ({
           required={required}
           disabled={disabled}
         />
-        { isInvalid ? <Icon icon="dangerous" color="jn-text-theme-error" size="1.125rem" className={`${iconstyles}`}/> : null }
-        { isValid ? <Icon icon="checkCircle" color="jn-text-theme-success" size="1.125rem" className={`${iconstyles}`}/> : null }
-        { errortext && errortext.length ? <p className={`${errortextstyles}`}>{errortext}</p> : null }
-        { successtext && successtext.length ? <p className={`${successtextstyles}`}>{successtext}</p> : null }
-        { helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : null }
+        {isInvalid ? (
+          <Icon
+            icon="dangerous"
+            color="jn-text-theme-error"
+            size="1.125rem"
+            className={`${iconstyles}`}
+          />
+        ) : null}
+        {isValid ? (
+          <Icon
+            icon="checkCircle"
+            color="jn-text-theme-success"
+            size="1.125rem"
+            className={`${iconstyles}`}
+          />
+        ) : null}
+        {errortext && errortext.length ? (
+          <p className={`${errortextstyles}`}>{errortext}</p>
+        ) : null}
+        {successtext && successtext.length ? (
+          <p className={`${successtextstyles}`}>{successtext}</p>
+        ) : null}
+        {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : null}
       </div>
     </div>
   )

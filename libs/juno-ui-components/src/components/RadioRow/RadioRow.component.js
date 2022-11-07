@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Radio } from "../Radio/index.js"
 import { Label } from "../Label/index.js"
@@ -60,18 +60,24 @@ export const RadioRow = ({
   const [isChecked, setIsChecked] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
-  
+
   useEffect(() => {
     setIsChecked(checked)
   }, [checked])
-  
-  const invalidated = invalid || (errortext && errortext.length ? true : false)
-  const validated = valid || (successtext && successtext.length ? true : false)
-  
+
+  const invalidated = useMemo(
+    () => invalid || (errortext && errortext.length ? true : false),
+    [invalid, errortext]
+  )
+  const validated = useMemo(
+    () => valid || (successtext && successtext.length ? true : false),
+    [valid, successtext]
+  )
+
   useEffect(() => {
     setIsInvalid(invalidated)
   }, [invalidated])
-  
+
   useEffect(() => {
     setIsValid(validated)
   }, [validated])
@@ -97,11 +103,29 @@ export const RadioRow = ({
       </div>
       <div>
         <Label text={label} htmlFor={id} disabled={disabled} />
-        { isInvalid ? <Icon icon="dangerous" color="jn-text-theme-error" size="1.125rem" className={`${iconstyles}`}/> : null }
-        { isValid ? <Icon icon="checkCircle" color="jn-text-theme-success" size="1.125rem" className={`${iconstyles}`}/> : null }
-        { errortext && errortext.length ? <p className={`${errortextstyles}`}>{errortext}</p> : null }
-        { successtext && successtext.length ? <p className={`${successtextstyles}`}>{successtext}</p> : null }
-        { helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : null }
+        {isInvalid ? (
+          <Icon
+            icon="dangerous"
+            color="jn-text-theme-error"
+            size="1.125rem"
+            className={`${iconstyles}`}
+          />
+        ) : null}
+        {isValid ? (
+          <Icon
+            icon="checkCircle"
+            color="jn-text-theme-success"
+            size="1.125rem"
+            className={`${iconstyles}`}
+          />
+        ) : null}
+        {errortext && errortext.length ? (
+          <p className={`${errortextstyles}`}>{errortext}</p>
+        ) : null}
+        {successtext && successtext.length ? (
+          <p className={`${successtextstyles}`}>{successtext}</p>
+        ) : null}
+        {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : null}
       </div>
     </div>
   )

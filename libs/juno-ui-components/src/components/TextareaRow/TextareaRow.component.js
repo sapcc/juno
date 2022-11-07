@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Textarea } from "../Textarea/index.js"
 import { Label } from "../Label/index.js"
@@ -111,7 +111,6 @@ const getInputStyles = (variant, minimized) => {
   }
 }
 
-
 const variantStyle = (variant, element, isLabelMinimized) => {
   switch (variant) {
     case "floating":
@@ -161,14 +160,20 @@ export const TextareaRow = ({
   React.useEffect(() => {
     setValue(value)
   }, [value])
-  
-  const invalidated = invalid || (errortext && errortext.length ? true : false)
-  const validated = valid || (successtext && successtext.length ? true : false)
-  
+
+  const invalidated = useMemo(
+    () => invalid || (errortext && errortext.length ? true : false),
+    [invalid, errortext]
+  )
+  const validated = useMemo(
+    () => valid || (successtext && successtext.length ? true : false),
+    [valid, successtext]
+  )
+
   useEffect(() => {
     setIsInvalid(invalidated)
   }, [invalidated])
-  
+
   useEffect(() => {
     setIsValid(validated)
   }, [validated])
@@ -177,7 +182,7 @@ export const TextareaRow = ({
     setValue(event.target.value)
     onChange(event)
   }
-  
+
   /* check whether the label is minimized (either has focus and / or has a value) */
   const minimizedLabel = (variant, value, focus) => {
     if (variant === "floating") {
@@ -191,11 +196,16 @@ export const TextareaRow = ({
 
   return (
     <div
-      className={`juno-textarea-row juno-textarea-row-${variant} ${getContainerStyles(variant)} ${className}`}
+      className={`juno-textarea-row juno-textarea-row-${variant} ${getContainerStyles(
+        variant
+      )} ${className}`}
       {...props}
     >
       <div
-        className={`juno-label-container ${getLabelContainerStyles(variant, minimizedLabel(variant, val, focus))}`}
+        className={`juno-label-container ${getLabelContainerStyles(
+          variant,
+          minimizedLabel(variant, val, focus)
+        )}`}
       >
         <Label
           text={label}
@@ -217,11 +227,18 @@ export const TextareaRow = ({
           onChange={handleChange}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
-          className={`${getInputStyles(variant, minimizedLabel(variant, val, focus))}`}
+          className={`${getInputStyles(
+            variant,
+            minimizedLabel(variant, val, focus)
+          )}`}
         />
-        { errortext && errortext.length ? <p className={`${errortextstyles}`}>{errortext}</p> : null }
-        { successtext && successtext.length ? <p className={`${successtextstyles}`}>{successtext}</p> : null }
-        { helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : null }
+        {errortext && errortext.length ? (
+          <p className={`${errortextstyles}`}>{errortext}</p>
+        ) : null}
+        {successtext && successtext.length ? (
+          <p className={`${successtextstyles}`}>{successtext}</p>
+        ) : null}
+        {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : null}
       </div>
     </div>
   )
