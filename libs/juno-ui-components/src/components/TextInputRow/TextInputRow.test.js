@@ -111,6 +111,42 @@ describe("TextInputRow", () => {
     expect(screen.getByRole("textbox")).toBeDisabled()
   })
   
+  test("renders an invalid text input group as passed", async () => {
+    render(<TextInputRow invalid />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-invalid")
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+  })
+  
+  test("renders an invalid text input group with an error text as passed", async () => {
+    render(<TextInputRow errortext="This is an error text" />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-invalid")
+    expect(screen.getByText("This is an error text")).toBeInTheDocument()
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+  })
+  
+  test("renders a valid text input group as passed", async () => {
+    render(<TextInputRow valid />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-valid")
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
+  })
+  
+  test("renders a valid text input group with a success text as passed", async () => {
+    render(<TextInputRow successtext="This is a success text" />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-valid")
+    expect(screen.getByText("This is a success text")).toBeInTheDocument()
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
+  })
+  
+  test("renders a focussed text input as passed", async () => {
+    render(<TextInputRow autoFocus />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveFocus()
+  })
+  
   test("renders a floating variant textinput-row by default", async () => {
     render(<TextInputRow data-testid="textinput-row" />)
     expect(screen.getByTestId("textinput-row")).toBeInTheDocument()

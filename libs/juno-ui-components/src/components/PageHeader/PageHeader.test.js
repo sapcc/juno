@@ -1,5 +1,6 @@
 import * as React from "react"
 import { render, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { PageHeader } from "./index"
 
 describe("PageHeader", () => {
@@ -37,5 +38,12 @@ describe("PageHeader", () => {
 		expect(screen.getByRole("banner")).toBeInTheDocument()
 		expect(screen.getByRole("banner")).toHaveAttribute("data-lolol", 'some-prop')
 	})
+
+	test("click on heading fires onClick handler as passed", async () => {
+		const handleClick = jest.fn()
+    render(<PageHeader onClick={handleClick} heading="My Heading" />)
+    userEvent.click(screen.getByText("My Heading"))
+		expect(handleClick).toHaveBeenCalledTimes(1)
+  })
 
 })

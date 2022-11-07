@@ -119,7 +119,7 @@ export const Panel = ({
 
 Panel.propTypes = {
   /** Pass a Panel heading/title. */
-  heading: PropTypes.string,
+  heading: PropTypes.node,
   /**  Pass open state  */
   opened: PropTypes.bool,
   /**  Pass whethe panel should be closeable via a close button or not. If false, the close button will not be rendered. The panel can still be closed by setting "opened" to false.  */

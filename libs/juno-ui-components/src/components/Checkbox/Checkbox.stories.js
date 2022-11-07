@@ -26,3 +26,13 @@ export const Indeterminate = Template.bind({})
 Indeterminate.args = {
   indeterminate: true,
 }
+
+export const Invalid = Template.bind({})
+Invalid.args = {
+  invalid: true,
+}
+
+export const Valid = Template.bind({})
+Valid.args = {
+  valid: true,
+}

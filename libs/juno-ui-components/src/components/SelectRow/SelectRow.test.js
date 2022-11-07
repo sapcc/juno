@@ -46,6 +46,34 @@ describe("SelectRow", () => {
 		expect(screen.getByRole("combobox")).toBeDisabled()
 	})
 	
+	test("renders an invalid SelectRow as passed", async () => {
+		render(<SelectRow invalid />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.getByRole("combobox")).toHaveClass("juno-select-invalid")
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+	})
+	
+	test("renders an invalid SelectRow when errortext prop was passed", async () => {
+		render(<SelectRow errortext="This is an error text" />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.getByRole("combobox")).toHaveClass("juno-select-invalid")
+		expect(screen.getByText("This is an error text")).toBeInTheDocument()
+	})
+	
+	test("renders a valid SelectRow as passed", async () => {
+		render(<SelectRow valid />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.getByRole("combobox")).toHaveClass("juno-select-valid")
+		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
+	})
+	
+	test("renders a valid SelectRow when successtext prop was passed", async () => {
+		render(<SelectRow successtext="This is a success text" />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.getByRole("combobox")).toHaveClass("juno-select-valid")
+		expect(screen.getByText("This is a success text")).toBeInTheDocument()
+	})
+	
 	test("renders a floating variant select row by default", async () => {
 		render(<SelectRow data-testid="select-row" />)
 		expect(screen.getByTestId("select-row")).toBeInTheDocument()

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
+import { Icon } from "../Icon/index"
 
 const textinputstyles = `
 	jn-bg-theme-textinput
@@ -9,7 +10,6 @@ const textinputstyles = `
 	jn-p-4
 	jn-h-textinput
 	jn-border
-	jn-border-transparent
 	jn-rounded-3px
 	focus:jn-outline-none
 	focus:jn-ring-2
@@ -17,7 +17,21 @@ const textinputstyles = `
 	disabled:jn-opacity-50
 `
 
-/** A controlled Text Input. Also covers email, telephone, password, url derivates. */
+const defaultborderstyles = `
+	jn-border-transparent
+`
+
+const invalidstyles = `
+	jn-border-theme-error
+`
+
+const validstyles = `
+	jn-border-theme-success
+`
+/** 
+A controlled Text Input.
+Also covers email, telephone, password, url derivates. 
+*/
 export const TextInput = ({
 	name,
 	value,
@@ -26,6 +40,9 @@ export const TextInput = ({
 	placeholder,
 	disabled,
 	readOnly,
+	invalid,
+	valid,
+	autoFocus,
 	className,
 	autoComplete,
 	onChange,
@@ -33,10 +50,20 @@ export const TextInput = ({
 }) => {
 	
 	const [val, setValue] = useState("")
+	const [isInvalid, setIsInvalid] = useState(false)
+	const [isValid, setIsValid] = useState(false)
 	
 	useEffect(() => {
 		setValue(value)
 	  }, [value])
+		
+	useEffect(() => {
+		setIsInvalid(invalid)
+	}, [invalid])
+	
+	useEffect(() => {
+		setIsValid(valid)
+	}, [valid])
 	  
 	const handleInputChange = (event) => {
 		setValue(event.target.value)
@@ -53,8 +80,9 @@ export const TextInput = ({
 			placeholder={placeholder}
 			disabled={disabled}
 			readOnly={readOnly}
+			autoFocus={autoFocus}
 			onChange={handleInputChange}
-			className={`juno-textinput ${textinputstyles} ${className}`}
+			className={`juno-textinput ${textinputstyles} ${ isInvalid ? "juno-textinput-invalid " + invalidstyles : "" } ${ isValid ? "juno-textinput-valid " + validstyles : ""}  ${ isValid || isInvalid ? "" : defaultborderstyles } ${className}`}
 			{...props}
 		/>
 	)
@@ -73,6 +101,12 @@ TextInput.propTypes = {
 	disabled: PropTypes.bool,
 	/** Render a readonly input */
 	readOnly: PropTypes.bool,
+	/** Whether the field is invalid */
+	invalid: PropTypes.bool,
+	/** Whether the field is valid */
+	valid: PropTypes.bool,
+	/** Whether the field receives autofocus */
+	autoFocus: PropTypes.bool,
 	/** Pass a classname */
 	className: PropTypes.string,
 	/** Pass a valid autocomplete value. We do not police validity. */
@@ -89,6 +123,9 @@ TextInput.defaultProps = {
 	placeholder: "",
 	disabled: false,
 	readOnly: false,
+	invalid: false,
+	valid: false,
+	autoFocus: false,
 	className: "",
 	autoComplete: "off",
 	onChange: undefined,

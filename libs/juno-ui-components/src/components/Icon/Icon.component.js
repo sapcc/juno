@@ -9,6 +9,7 @@ import AutoAwesomeMosaic from "./icons/auto_awesome_mosaic.svg"
 import AutoAwesomeMotion from "./icons/auto_awesome_motion.svg"
 import Bolt from "./icons/bolt.svg"
 import Cancel from "./icons/cancel.svg"
+import CheckCircle from "./icons/check_circle.svg"
 import ChevronLeft from "./icons/chevron_left.svg"
 import ChevronRight from "./icons/chevron_right.svg"
 import Close from "./icons/close.svg"
@@ -48,15 +49,15 @@ Generic Icon component.
 */
 // hover style needs to be revisited. only works if no icon color was passed
 const anchorIconStyles = `
-	text-current
-  hover:text-theme-high
-  focus:outline-none 
-  focus-visible:ring-2
-  focus-visible:ring-theme-focus
-  focus-visible:ring-offset-1
-  focus-visible:ring-offset-theme-focus
-	disabled:opacity-50
-	disabled:cursor-not-allowed
+	jn-text-current
+  hover:jn-text-theme-high
+  focus:jn-outline-none 
+  focus-visible:jn-ring-2
+  focus-visible:jn-ring-theme-focus
+  focus-visible:jn-ring-offset-1
+  focus-visible:jn-ring-offset-theme-focus
+	disabled:jn-opacity-50
+	disabled:jn-cursor-not-allowed
 `
 
 // hover style needs to be revisited. only works if no icon color was passed
@@ -79,6 +80,7 @@ export const knownIcons = [
   "autoAwesomeMotion",
   "bolt",
   "cancel",
+  "checkCircle",
   "chevronLeft",
   "chevronRight",
   "close",
@@ -193,6 +195,18 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="cancel"
           title={title ? title : "Cancel"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "checkCircle":
+      return (
+        <CheckCircle 
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="checkCircle"
+          title={title ? title : "CheckCircle"}
           role="img"
           {...iconProps}
         />

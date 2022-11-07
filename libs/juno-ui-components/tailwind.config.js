@@ -176,6 +176,7 @@ module.exports = {
         theme: {
           "global-bg": withOpacity("--color-global-bg-raw"),
           "badge-default": "var(--color-badge-default-bg)",
+          "box-default": "var(--color-box-bg)",
           "code-block": withOpacity("--color-codeblock-bg"),
           "content-area-bg": withOpacity("--color-content-area-bg-raw"),
           panel: "var(--color-panel-bg)",
@@ -251,6 +252,7 @@ module.exports = {
           "tab-active-bottom": withOpacity("--color-text-default-raw"),
           "filter-input": withOpacity("--color-filter-input-border"),
           "filter-pill": withOpacity("--color-filter-pill-border"),
+          "box-default": "var(--color-box-border)",
         },
       },
       // backgroundImage: theme => ({

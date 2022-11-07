@@ -11,9 +11,8 @@ const introbox = (variant, heroImage) => {
 			jn-mb-8
 
 			${
-        variant === "hero" && heroImage && heroImage.startsWith("bg-")
+        variant === "hero" && heroImage
           ? `
-					${heroImage}
 					jn-bg-right-top
 					jn-bg-no-repeat
 				`
@@ -29,7 +28,7 @@ const introboxBorder = `
 
 const introboxContent = (variant, heroImage) => {
   return `
-		${heroImage && heroImage.startsWith("bg-") ? `jn-pl-4 jn-pr-56` : `jn-px-4`}
+		${heroImage ? `jn-pl-4 jn-pr-56` : `jn-px-4`}
 
 		${
       variant === "hero"
@@ -65,9 +64,16 @@ export const IntroBox = ({
   children,
   ...props
 }) => {
+
+  
+  const isHeroWithImage = React.useMemo(() => {
+    return heroImage && variant === "hero"
+  }, [variant, heroImage])
+
   return (
     <div
       className={`juno-introbox ${introbox(variant, heroImage)} ${className}`}
+      style={isHeroWithImage ? {backgroundImage: `${heroImage}`} : {}}
       {...props}
     >
       <div className={`${introboxBorder}`}></div>
@@ -86,7 +92,7 @@ IntroBox.propTypes = {
   text: PropTypes.string,
   /** Pass a custom class */
   variant: PropTypes.oneOf(["default", "hero"]),
-  /** optional "hero" flavor image for hero variant. Specify as tailwind bg image string pointing to an image in your app (see template app for an example). Will always be positioned top and right */
+  /** optional "hero" flavor image for hero variant. Specify as css bg image string pointing to an image in your app (see template app for an example). Will always be positioned top and right */
   heroImage: PropTypes.string,
   /** Pass a custom class */
   className: PropTypes.string,
