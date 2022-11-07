@@ -81,6 +81,52 @@ describe("CheckboxGroup", () => {
 		expect(screen.getByRole("checkbox")).toBeChecked()
 	})
 	
+	test("renders a valid CheckboxGroup as passed", async () => {
+		render(
+			<CheckboxGroup valid>
+				<CheckboxRow value="test-checkbox"/>
+			</CheckboxGroup>
+		)
+		expect(screen.getByRole("group")).toBeInTheDocument()
+		expect(screen.getByRole("group")).toHaveClass("juno-checkbox-group-valid")
+		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
+	})
+	
+	test("renders a valid CheckboxGroup when successtext is passed", async () => {
+		render(
+			<CheckboxGroup successtext="Great Success!">
+				<CheckboxRow value="test-checkbox"/>
+			</CheckboxGroup>
+		)
+		expect(screen.getByRole("group")).toBeInTheDocument()
+		expect(screen.getByRole("group")).toHaveClass("juno-checkbox-group-valid")
+		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
+		expect(screen.getByText("Great Success!")).toBeInTheDocument()
+	})
+	
+	test("renders a invalid CheckboxGroup as passed", async () => {
+		render(
+			<CheckboxGroup invalid>
+				<CheckboxRow value="test-checkbox"/>
+			</CheckboxGroup>
+		)
+		expect(screen.getByRole("group")).toBeInTheDocument()
+		expect(screen.getByRole("group")).toHaveClass("juno-checkbox-group-invalid")
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+	})
+	
+	test("renders an invalid CheckboxGroup when errortext is passed", async () => {
+		render(
+			<CheckboxGroup errortext="Big Error!">
+				<CheckboxRow value="test-checkbox"/>
+			</CheckboxGroup>
+		)
+		expect(screen.getByRole("group")).toBeInTheDocument()
+		expect(screen.getByRole("group")).toHaveClass("juno-checkbox-group-invalid")
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+		expect(screen.getByText("Big Error!")).toBeInTheDocument()
+	})
+	
 	test("renders a custom className", async () => {
 		render(
 			<CheckboxGroup name="my-checkboxgroup" className="my-custom-classname"> 

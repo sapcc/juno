@@ -50,6 +50,18 @@ const mockdisabledstyles = `
 	jn-pointer-events-none
 	jn-opacity-50
 `
+
+const errorstyles = `
+	jn-border
+	jn-border-theme-error
+`
+
+const successstyles = `
+	jn-border
+	jn-border-theme-success
+`
+
+
 /** 
 A controlled Checkbox component.
 */
@@ -61,18 +73,32 @@ export const Checkbox = ({
 	indeterminate,
 	className,
 	disabled,
+	invalid,
+	valid,
 	onChange,
 	...props
 }) => {
 	const [isChecked, setIsChecked] = useState(false)
 	const [isIndeterminate, setIndeterminate] = useState("")
 	const [hasFocus, setFocus] = useState(false)
+	const [isInvalid, setIsInvalid] = useState(false)
+	const [isValid, setIsValid] = useState(false)
 	
 	useEffect( () => {
 		setIsChecked(checked)
-		setIndeterminate(indeterminate)
-	}, [checked, indeterminate])
+	}, [checked])
 	
+	useEffect( () => {
+		setIndeterminate(indeterminate)
+	}, [indeterminate])
+	
+	useEffect( () => {
+		setIsInvalid(invalid)
+	}, [invalid])
+	
+	useEffect( () => {
+		setIsValid(valid)
+	}, [valid])
 	
 	const handleChange = (event) => {
 		setIsChecked(!isChecked)
@@ -89,7 +115,7 @@ export const Checkbox = ({
 		
 	return (
 		<div 
-			className={`juno-checkbox ${mockcheckboxstyles} ${ hasFocus ? mockfocusstyles : "" } ${ disabled ? mockdisabledstyles : "" } ${className}`}
+			className={`juno-checkbox ${mockcheckboxstyles} ${ hasFocus ? mockfocusstyles : "" } ${ disabled ? mockdisabledstyles : "" } ${ isInvalid ? errorstyles : "" } ${ isValid ? successstyles : "" } ${className}`}
 			{...props}
 		>
 			{ isChecked ? 	<svg 
@@ -108,7 +134,7 @@ export const Checkbox = ({
 				value={value}
 				id={id}
 				checked={isChecked}
-				className={`${inputstyles}`}
+				className={`${inputstyles} ${ isInvalid ? "juno-checkbox-invalid" : ""} ${ isValid ? "juno-checkbox-valid" : ""} `}
 				disabled={disabled}
 				onChange={handleChange}
 				onFocus={handleFocus}
@@ -132,10 +158,14 @@ Checkbox.propTypes = {
 	checked: PropTypes.bool,
 	/** Whether the checkbox is indeterminate ( parent of multiple checkboxes with differing checked states) */
 	indeterminate: PropTypes.bool,
-	/** Pass a className */
-	className: PropTypes.string,
 	/** Whether the checkbox is disabled */
 	disabled: PropTypes.bool,
+	/** Whether the checkbox is invalid */
+	invalid: PropTypes.bool,
+	/** Whether the Checkbox is valid */
+	valid: PropTypes.bool,
+	/** Pass a className */
+	className: PropTypes.string,
 	/** Pass a handler */
 	onChange: PropTypes.func,
 }
@@ -146,5 +176,7 @@ Checkbox.defaultProps = {
 	id: "",
 	className: "",
 	disabled: false,
+	invalid: false,
+	valid: false,
 	onChange: undefined,
 }

@@ -33,6 +33,22 @@ describe("Select", () => {
 		expect(screen.getByRole("combobox")).toBeDisabled()
 	})
 	
+	test("renders an invalid Select as passed", async () => {
+		render(<Select invalid />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.getByRole("combobox")).toHaveClass("juno-select-invalid")
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+	})
+	
+	test("renders a valid Select as passed", async () => {
+		render(<Select valid />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.getByRole("combobox")).toHaveClass("juno-select-valid")
+		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
+	})
+	
+
+	
 	test("renders children as passed", async () => {
 		render(<Select><option data-testid="option">Option</option></Select>)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()

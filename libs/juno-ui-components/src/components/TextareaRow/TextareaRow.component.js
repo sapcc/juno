@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Textarea } from "../Textarea/index.js"
 import { Label } from "../Label/index.js"
@@ -71,6 +71,18 @@ const helptextstyles = `
 	jn-mt-1
 `
 
+const errortextstyles = `
+  jn-text-xs
+  jn-text-theme-error
+  jn-mt-1
+`
+
+const successtextstyles = `
+  jn-text-xs
+  jn-text-theme-success
+  jn-mt-1
+`
+
 const stackedinputstyles = `
 	jn-w-full
 `
@@ -98,7 +110,6 @@ const getInputStyles = (variant, minimized) => {
     return floatinginputstyles(minimized)
   }
 }
-
 
 const variantStyle = (variant, element, isLabelMinimized) => {
   switch (variant) {
@@ -132,6 +143,10 @@ export const TextareaRow = ({
   placeholder,
   helptext,
   required,
+  invalid,
+  errortext,
+  valid,
+  successtext,
   className,
   disabled,
   onChange,
@@ -139,16 +154,35 @@ export const TextareaRow = ({
 }) => {
   const [val, setValue] = useState("")
   const [focus, setFocus] = useState(false)
+  const [isInvalid, setIsInvalid] = useState(false)
+  const [isValid, setIsValid] = useState(false)
 
   React.useEffect(() => {
     setValue(value)
   }, [value])
 
+  const invalidated = useMemo(
+    () => invalid || (errortext && errortext.length ? true : false),
+    [invalid, errortext]
+  )
+  const validated = useMemo(
+    () => valid || (successtext && successtext.length ? true : false),
+    [valid, successtext]
+  )
+
+  useEffect(() => {
+    setIsInvalid(invalidated)
+  }, [invalidated])
+
+  useEffect(() => {
+    setIsValid(validated)
+  }, [validated])
+
   const handleChange = (event) => {
     setValue(event.target.value)
     onChange(event)
   }
-  
+
   /* check whether the label is minimized (either has focus and / or has a value) */
   const minimizedLabel = (variant, value, focus) => {
     if (variant === "floating") {
@@ -162,11 +196,16 @@ export const TextareaRow = ({
 
   return (
     <div
-      className={`juno-textarea-row juno-textarea-row-${variant} ${getContainerStyles(variant)} ${className}`}
+      className={`juno-textarea-row juno-textarea-row-${variant} ${getContainerStyles(
+        variant
+      )} ${className}`}
       {...props}
     >
       <div
-        className={`juno-label-container ${getLabelContainerStyles(variant, minimizedLabel(variant, val, focus))}`}
+        className={`juno-label-container ${getLabelContainerStyles(
+          variant,
+          minimizedLabel(variant, val, focus)
+        )}`}
       >
         <Label
           text={label}
@@ -183,12 +222,23 @@ export const TextareaRow = ({
           id={id}
           placeholder={placeholder}
           disabled={disabled}
+          invalid={isInvalid}
+          valid={isValid}
           onChange={handleChange}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
-          className={`${getInputStyles(variant, minimizedLabel(variant, val, focus))}`}
+          className={`${getInputStyles(
+            variant,
+            minimizedLabel(variant, val, focus)
+          )}`}
         />
-        {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
+        {errortext && errortext.length ? (
+          <p className={`${errortextstyles}`}>{errortext}</p>
+        ) : null}
+        {successtext && successtext.length ? (
+          <p className={`${successtextstyles}`}>{successtext}</p>
+        ) : null}
+        {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : null}
       </div>
     </div>
   )
@@ -209,6 +259,14 @@ TextareaRow.propTypes = {
   placeholder: PropTypes.string,
   /** Specify whether the input is required */
   required: PropTypes.bool,
+  /** Whether the field is invalid */
+  invalid: PropTypes.bool,
+  /** Error text to display when validation fails. Will automatically invalidate the field if passed. */
+  errortext: PropTypes.string,
+  /** Whether the field is valid */
+  valid: PropTypes.bool,
+  /** Text to display when validation is successful. Will automatically set the field to valid if passed. */
+  successtext: PropTypes.string,
   /** Pass a className to the Textarea */
   className: PropTypes.string,
   /** Floating (default) or stacked layout variant */
@@ -227,6 +285,10 @@ TextareaRow.defaultProps = {
   id: null,
   placeholder: null,
   required: null,
+  invalid: false,
+  errortext: "",
+  valid: false,
+  successtext: "",
   helptext: null,
   className: "",
   disabled: null,

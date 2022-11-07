@@ -50,3 +50,31 @@ Disabled.args = {
   id: "disabled-checkbox-row",
   disabled: true,
 }
+
+export const Invalid = Template.bind({})
+Invalid.args = {
+  label: "Invalid Checkbox",
+  id: "invalid-checkbox-row",
+  invalid: true,
+}
+
+export const WithErrorText = Template.bind({})
+WithErrorText.args = {
+  label: "Checkbox invalidated by errortext",
+  id: "invalid-checkbox-by-errortext",
+  errortext: "Pass an errortext to invalidate a CheckboxRow"
+}
+
+export const Valid = Template.bind({})
+Valid.args = {
+  label: "Valid Checkbox",
+  id: "valid-checkbox-row",
+  valid: true,
+}
+
+export const WithSuccessText = Template.bind({})
+WithSuccessText.args = {
+  label: "Checkbox validated by successtext",
+  id: "valid-checkbox-by-successtext",
+  successtext: "Pass a successtext to validate a CheckboxRow"
+}

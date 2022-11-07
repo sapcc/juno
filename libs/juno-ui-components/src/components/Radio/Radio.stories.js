@@ -19,3 +19,13 @@ Disabled.args = {
   checked: true,
   disabled: true,
 }
+
+export const Invalid = Template.bind({})
+Invalid.args = {
+  invalid: true,
+}
+
+export const Valid = Template.bind({})
+Valid.args = {
+  valid: true,
+}

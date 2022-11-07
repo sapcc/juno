@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Select } from "../Select/index.js"
 import { Label } from "../Label/index.js"
@@ -37,6 +37,18 @@ const floatingselectstyles = `
   jn-pt-[0.8125rem]
 `
 
+const errortextstyles = `
+  jn-text-xs
+  jn-text-theme-error
+  jn-mt-1
+`
+
+const successtextstyles = `
+  jn-text-xs
+  jn-text-theme-success
+  jn-mt-1
+`
+
 /** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
 export const SelectRow = ({
   name,
@@ -47,13 +59,41 @@ export const SelectRow = ({
   required,
   className,
   disabled,
+  invalid,
+  errortext,
+  valid,
+  successtext,
   children,
   onChange,
   ...props
 }) => {
+  const [isInvalid, setIsInvalid] = useState(false)
+  const [isValid, setIsValid] = useState(false)
+
+  const invalidated = useMemo(
+    () => invalid || (errortext && errortext.length ? true : false),
+    [invalid, errortext]
+  )
+  const validated = useMemo(
+    () => valid || (successtext && successtext.length ? true : false),
+    [valid, successtext]
+  )
+
+  useEffect(() => {
+    setIsInvalid(invalidated)
+  }, [invalidated])
+
+  useEffect(() => {
+    setIsValid(validated)
+  }, [validated])
+
   // labelContainer needs to be rendered in different markup order /positions depending on variant in order to avoid z-index hassle:
-  const labelContainer = 
-    <div className={`juno-label-container ${ variant === 'floating' ? floatinglabelcontainerstyles : ''}`}>
+  const labelContainer = (
+    <div
+      className={`juno-label-container ${
+        variant === "floating" ? floatinglabelcontainerstyles : ""
+      }`}
+    >
       <Label
         text={label}
         htmlFor={id}
@@ -61,21 +101,37 @@ export const SelectRow = ({
         disabled={disabled}
       />
     </div>
-  
+  )
+
   return (
-    <div className={`juno-select-row juno-select-row-${variant} ${selectrow} ${ variant === 'floating' ? floatingcontainerstyles : ''} ${className}`} {...props}>
-      { variant !== 'floating' ? labelContainer : null }
+    <div
+      className={`juno-select-row juno-select-row-${variant} ${selectrow} ${
+        variant === "floating" ? floatingcontainerstyles : ""
+      } ${className}`}
+      {...props}
+    >
+      {variant !== "floating" ? labelContainer : null}
       <div>
         <Select
-          className={`${selectstyles} ${ variant === 'floating' ? floatingselectstyles : ''}`}
+          className={`${selectstyles} ${
+            variant === "floating" ? floatingselectstyles : ""
+          }`}
           name={name}
           id={id}
           onChange={onChange}
           disabled={disabled}
+          invalid={isInvalid}
+          valid={isValid}
         >
           {children}
         </Select>
-        { variant === 'floating' ? labelContainer : null }
+        {variant === "floating" ? labelContainer : null}
+        {errortext && errortext.length ? (
+          <p className={`${errortextstyles}`}>{errortext}</p>
+        ) : null}
+        {successtext && successtext.length ? (
+          <p className={`${successtextstyles}`}>{successtext}</p>
+        ) : null}
         {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
       </div>
     </div>
@@ -99,6 +155,10 @@ SelectRow.propTypes = {
   className: PropTypes.string,
   /** Disable the select */
   disabled: PropTypes.bool,
+  /** Whether the SelectRow is invalid */
+  invalid: PropTypes.bool,
+  /** The error text to display in the SelectGroup. WHen passed, the SelectGroup will be invalidated automatically.*/
+  errortext: PropTypes.string,
   /** Children to render */
   children: PropTypes.node,
   /** Pass a handler to the Select element */
@@ -114,5 +174,7 @@ SelectRow.defaultProps = {
   className: "",
   helptext: null,
   disabled: null,
+  invalid: false,
+  errortext: "",
   onChange: undefined,
 }

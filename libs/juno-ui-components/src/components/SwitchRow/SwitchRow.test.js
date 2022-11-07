@@ -52,11 +52,34 @@ describe("SwitchRow", () => {
 		expect(screen.getByTestId("switch-row")).toHaveClass("my-custom-class")
 	})
 	
+	test("renders an invalid SwitchRow as passed", async () => {
+		render(<SwitchRow invalid />)
+		expect(screen.getByRole("switch")).toBeInTheDocument()
+		expect(screen.getByRole("switch")).toHaveClass("juno-switch-invalid")
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+	})
+	
+	test("renders an invalid SwitchRow with an error text as passed", async () => {
+		render(<SwitchRow errortext="This is an error text" />)
+		expect(screen.getByRole("switch")).toBeInTheDocument()
+		expect(screen.getByRole("switch")).toHaveClass("juno-switch-invalid")
+		expect(screen.getByText("This is an error text")).toBeInTheDocument()
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+	})
+	
+	test("renders a valid SwitchRow with a successtext as passed", async () => {
+		render(<SwitchRow successtext="This is a success text" />)
+		expect(screen.getByRole("switch")).toBeInTheDocument()
+		expect(screen.getByRole("switch")).toHaveClass("juno-switch-valid")
+		expect(screen.getByText("This is a success text")).toBeInTheDocument()
+		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
+	})
+	
 	test("renders all props as passed", async () => {
 		render(<SwitchRow id="switchrow-1" data-test="47" data-testid="switch-row"/>)
 		expect(screen.getByTestId("switch-row")).toBeInTheDocument()
 		expect(screen.getByTestId("switch-row")).toHaveAttribute('data-test', "47")
-	  })
+	})
 	
 	test("renders a Switch with aria-checked set to false by default", async () => {
 		render(<SwitchRow />)

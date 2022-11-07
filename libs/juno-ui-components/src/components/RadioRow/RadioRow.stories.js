@@ -44,3 +44,36 @@ Disabled.args = {
   id: "radio-row-disabled",
   disabled: true,
 }
+
+export const Invalid = Template.bind({})
+Invalid.args = {
+  label: "Invalid Option",
+  invalid: true,
+}
+
+export const WithErrorText = Template.bind({})
+WithErrorText.args = {
+  label: "Option with Error Text",
+  helptext: "Oh so helpful helptext",
+  errortext: "When passed an errortext prop, the RadioRow will be set to invalid automatically.",
+}
+WithErrorText.parameters = {
+  docs: {
+    description: {
+      story:
+        "Passing an `errortext` prop to the RadioRow component will automatically invalidate it, so there is no need to explicitly set `invalid` as well.",
+    },
+  },
+}
+
+export const Valid = Template.bind({})
+Valid.args = {
+  label: "Valid Option",
+  valid: true,
+}
+
+export const WithSuccessText = Template.bind({})
+WithSuccessText.args = {
+  label: "Radio validated by successtext",
+  successtext: "Pass a successtext to validate a CheckboxRow",
+}

@@ -10,7 +10,6 @@ const textinputstyles = `
 	jn-p-4
 	jn-h-textinput
 	jn-border
-	jn-border-transparent
 	jn-rounded-3px
 	focus:jn-outline-none
 	focus:jn-ring-2
@@ -18,10 +17,17 @@ const textinputstyles = `
 	disabled:jn-opacity-50
 `
 
+const defaultborderstyles = `
+	jn-border-transparent
+`
+
 const invalidstyles = `
 	jn-border-theme-error
 `
 
+const validstyles = `
+	jn-border-theme-success
+`
 /** 
 A controlled Text Input.
 Also covers email, telephone, password, url derivates. 
@@ -35,6 +41,7 @@ export const TextInput = ({
 	disabled,
 	readOnly,
 	invalid,
+	valid,
 	autoFocus,
 	className,
 	autoComplete,
@@ -44,6 +51,7 @@ export const TextInput = ({
 	
 	const [val, setValue] = useState("")
 	const [isInvalid, setIsInvalid] = useState(false)
+	const [isValid, setIsValid] = useState(false)
 	
 	useEffect(() => {
 		setValue(value)
@@ -52,6 +60,10 @@ export const TextInput = ({
 	useEffect(() => {
 		setIsInvalid(invalid)
 	}, [invalid])
+	
+	useEffect(() => {
+		setIsValid(valid)
+	}, [valid])
 	  
 	const handleInputChange = (event) => {
 		setValue(event.target.value)
@@ -70,7 +82,7 @@ export const TextInput = ({
 			readOnly={readOnly}
 			autoFocus={autoFocus}
 			onChange={handleInputChange}
-			className={`juno-textinput ${textinputstyles} ${ isInvalid ? "juno-textinput-invalid " + invalidstyles : "" } ${className}`}
+			className={`juno-textinput ${textinputstyles} ${ isInvalid ? "juno-textinput-invalid " + invalidstyles : "" } ${ isValid ? "juno-textinput-valid " + validstyles : ""}  ${ isValid || isInvalid ? "" : defaultborderstyles } ${className}`}
 			{...props}
 		/>
 	)
@@ -91,6 +103,8 @@ TextInput.propTypes = {
 	readOnly: PropTypes.bool,
 	/** Whether the field is invalid */
 	invalid: PropTypes.bool,
+	/** Whether the field is valid */
+	valid: PropTypes.bool,
 	/** Whether the field receives autofocus */
 	autoFocus: PropTypes.bool,
 	/** Pass a classname */
@@ -110,6 +124,7 @@ TextInput.defaultProps = {
 	disabled: false,
 	readOnly: false,
 	invalid: false,
+	valid: false,
 	autoFocus: false,
 	className: "",
 	autoComplete: "off",

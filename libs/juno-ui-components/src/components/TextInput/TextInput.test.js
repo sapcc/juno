@@ -93,6 +93,12 @@ describe("TextInput", () => {
 		expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-invalid")
 	})
 	
+	test("renders a valid input as passed", async () => {
+		render(<TextInput valid />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-valid")
+	})
+	
 	test("renders a className as passed", async () => {
 		render(<TextInput className="my-custom-class" />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
