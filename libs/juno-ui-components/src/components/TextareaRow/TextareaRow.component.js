@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Textarea } from "../Textarea/index.js"
 import { Label } from "../Label/index.js"
+import { Icon } from "../Icon/index"
 
 /* Stacked: Label is above the text input element */
 const stackedcontainerstyles = `
@@ -85,6 +86,21 @@ const successtextstyles = `
 
 const stackedinputstyles = `
 	jn-w-full
+`
+
+const iconcontainerstyles = `
+  jn-flex
+  jn-absolute
+  jn-top-1.5
+  jn-right-3
+`
+
+const disablediconstyles = `
+  jn-opacity-50
+`
+
+const iconpadding = `
+  jn-pr-10
 `
 
 const getContainerStyles = (variant) => {
@@ -193,6 +209,35 @@ export const TextareaRow = ({
 
     return false
   }
+  
+  const Icons = ({ disabled }) => {
+    if (isValid || isInvalid) {
+      return (
+        <div
+          className={`juno-textinput-row-icon-container ${iconcontainerstyles} ${
+            disabled ? disablediconstyles : ""
+          }`}
+        >
+          {isInvalid ? (
+            <Icon icon="dangerous" color="jn-text-theme-error" />
+          ) : null}
+          {isValid ? (
+            <Icon icon="checkCircle" color="jn-text-theme-success" />
+          ) : null}
+        </div>
+      )
+    } else {
+      return ""
+    }
+  }
+  
+  const textarearightpadding = () => {
+    if ( isValid || isInvalid ) {
+      return iconpadding
+    } else {
+      return ""
+    }
+  }
 
   return (
     <div
@@ -230,8 +275,9 @@ export const TextareaRow = ({
           className={`${getInputStyles(
             variant,
             minimizedLabel(variant, val, focus)
-          )}`}
+          )} ${textarearightpadding()}`}
         />
+        <Icons disabled={disabled} />
         {errortext && errortext.length ? (
           <p className={`${errortextstyles}`}>{errortext}</p>
         ) : null}
