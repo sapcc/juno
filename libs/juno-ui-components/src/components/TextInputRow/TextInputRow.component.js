@@ -31,6 +31,7 @@ const floatinglabelcontainerstyles = (minimizedLabel) => {
     jn-transition-all 
     jn-duration-100 
     jn-ease-in-out
+    jn-z-10
 
     ${
       minimizedLabel &&
@@ -64,6 +65,10 @@ const floatinginputstyles = (minimizedLabel) => {
   `
 }
 
+const inputcontainerstyles = `
+  jn-relative
+`
+
 const helptextstyles = `
 	jn-text-xs
 	jn-text-theme-light
@@ -95,6 +100,10 @@ const disablediconstyles = `
 
 const stackedinputstyles = `
 	jn-w-full
+`
+
+const iconpadding = `
+  jn-pr-10
 `
 
 const getContainerStyles = (variant) => {
@@ -207,6 +216,14 @@ export const TextInputRow = ({
       return ""
     }
   }
+  
+  const inputrightpadding = () => {
+    if ( isValid || isInvalid ) {
+      return iconpadding
+    } else {
+      return ""
+    }
+  }
 
   return (
     <div
@@ -229,7 +246,7 @@ export const TextInputRow = ({
           disabled={variant === "stacked" && disabled ? disabled : false}
         />
       </div>
-      <div className={`juno-input-container`}>
+      <div className={`juno-input-container ${inputcontainerstyles}`}>
         <TextInput
           type={type}
           value={val}
@@ -246,7 +263,7 @@ export const TextInputRow = ({
           className={`${getInputStyles(
             variant,
             minimizedLabel(variant, val, focus)
-          )}`}
+          )} ${inputrightpadding()}`}
         />
         <Icons disabled={disabled} />
         {errortext && errortext.length ? (

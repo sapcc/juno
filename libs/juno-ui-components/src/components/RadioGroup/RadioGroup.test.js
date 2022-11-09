@@ -91,7 +91,7 @@ describe("RadioGroup", () => {
 	
 	test("renders a valid RadioGroup as passed", async () => {
 		render(
-			<RadioGroup valid>
+			<RadioGroup valid name="my-radiogroup">
 				<RadioRow value="v1"/>
 			</RadioGroup>
 		)
@@ -102,7 +102,7 @@ describe("RadioGroup", () => {
 	
 	test("renders a valid RadioGroup when successtext is passed", async () => {
 		render(
-			<RadioGroup successtext="Great Success!">
+			<RadioGroup successtext="Great Success!" name="my-radiogroup">
 				<RadioRow value="v1"/>
 			</RadioGroup>
 		)
@@ -114,7 +114,7 @@ describe("RadioGroup", () => {
 	
 	test("renders a invalid RadioGroup as passed", async () => {
 		render(
-			<RadioGroup invalid>
+			<RadioGroup invalid name="my-radiogroup">
 				<RadioRow value="v1"/>
 			</RadioGroup>
 		)
@@ -125,7 +125,7 @@ describe("RadioGroup", () => {
 	
 	test("renders an invalid RadioGroup when errortext is passed", async () => {
 		render(
-			<RadioGroup errortext="Big Error!">
+			<RadioGroup errortext="Big Error!" name="my-radiogroup">
 				<RadioRow value="v1"/>
 			</RadioGroup>
 		)

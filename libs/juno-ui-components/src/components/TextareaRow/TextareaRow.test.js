@@ -71,6 +71,7 @@ describe("TextInputRow", () => {
     render(<TextareaRow invalid />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveClass("juno-textarea-invalid")
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
   })
   
   test("renders an invalid TextAreaRow with an error text as passed", async () => {
@@ -78,12 +79,14 @@ describe("TextInputRow", () => {
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveClass("juno-textarea-invalid")
     expect(screen.getByText("This is an error text")).toBeInTheDocument()
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
   })
   
   test("renders a valid TextAreaRow as passed", async () => {
     render(<TextareaRow valid />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveClass("juno-textarea-valid")
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
   
   test("renders an valid TextAreaRow with a success text as passed", async () => {
@@ -91,6 +94,7 @@ describe("TextInputRow", () => {
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveClass("juno-textarea-valid")
     expect(screen.getByText("This is a success text")).toBeInTheDocument()
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
 
   test("renders a className to the row as passed", async () => {
