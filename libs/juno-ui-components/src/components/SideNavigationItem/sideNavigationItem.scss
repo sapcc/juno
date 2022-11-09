@@ -1,0 +1,32 @@
+.juno-sidenavigation-item {
+color: var(--color-text-default);
+font-weight: bold;
+display: inline-flex;
+align-items: center;
+gap: .25rem;
+border-bottom: 3px solid transparent;
+padding-top: .125rem;
+padding-bottom: 0.3125rem;
+
+&:hover {
+  color: var(--color-text-high);
+  border-bottom: 3px solid var(--color-accent);
+  
+  .juno-icon {
+    color: var(--color-text-high);
+  }
+  
+}
+
+&:active,
+&.juno-sidenavigation-item-active {
+  color: var(--color-navigation-active);
+  border-bottom: 3px solid var(--color-navigation-active);
+  
+  .juno-icon {
+    color: var(--color-navigation-active);
+  }
+  
+}
+
+}
