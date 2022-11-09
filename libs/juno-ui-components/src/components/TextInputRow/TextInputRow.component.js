@@ -97,6 +97,10 @@ const stackedinputstyles = `
 	jn-w-full
 `
 
+const iconpadding = `
+  jn-pr-10
+`
+
 const getContainerStyles = (variant) => {
   if (variant === "stacked") {
     return stackedcontainerstyles
@@ -207,6 +211,14 @@ export const TextInputRow = ({
       return ""
     }
   }
+  
+  const inputrightpadding = () => {
+    if ( isValid || isInvalid ) {
+      return iconpadding
+    } else {
+      return ""
+    }
+  }
 
   return (
     <div
@@ -246,7 +258,7 @@ export const TextInputRow = ({
           className={`${getInputStyles(
             variant,
             minimizedLabel(variant, val, focus)
-          )}`}
+          )} ${inputrightpadding()}`}
         />
         <Icons disabled={disabled} />
         {errortext && errortext.length ? (
