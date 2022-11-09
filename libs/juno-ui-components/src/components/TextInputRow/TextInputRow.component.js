@@ -31,6 +31,7 @@ const floatinglabelcontainerstyles = (minimizedLabel) => {
     jn-transition-all 
     jn-duration-100 
     jn-ease-in-out
+    jn-z-10
 
     ${
       minimizedLabel &&
@@ -63,6 +64,10 @@ const floatinginputstyles = (minimizedLabel) => {
     jn-w-full
   `
 }
+
+const inputcontainerstyles = `
+  jn-relative
+`
 
 const helptextstyles = `
 	jn-text-xs
@@ -241,7 +246,7 @@ export const TextInputRow = ({
           disabled={variant === "stacked" && disabled ? disabled : false}
         />
       </div>
-      <div className={`juno-input-container`}>
+      <div className={`juno-input-container ${inputcontainerstyles}`}>
         <TextInput
           type={type}
           value={val}
