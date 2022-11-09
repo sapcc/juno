@@ -10,7 +10,6 @@ const selectstyles = `
 	jn-appearance-none
 	jn-text-base
 	jn-pl-4
-	jn-pr-9
 	jn-h-[2.375rem]
 	jn-rounded-3px
 	jn-bg-icon-arrow-down
@@ -71,6 +70,14 @@ const loadingSpinnerStyles = `
 	jn-mr-auto
 `
 
+const iconpaddingright = `
+	jn-pr-[3.75rem]
+`
+
+const defaultpaddingright = `
+	jn-pr-9
+`
+
 /*+ A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
 export const Select = ({
 	name,
@@ -120,12 +127,20 @@ export const Select = ({
 		}
 	}
 	
+	const selectPadding = () => {
+		if (isValid || isInvalid ) {
+			return iconpaddingright
+		} else {
+			return defaultpaddingright
+		}
+	}
+	
 	return (
 		<div className={`juno-select-wrapper ${wrapperstyles}`}>
 			<select 
 				name={name || "Unnamed Select"}
 				id={id}
-				className={`juno-select ${selectstyles} ${ isInvalid ? "juno-select-invalid " + errorstyles : "" } ${ isValid ? "juno-select-valid " + successstyles : "" } ${className}`}
+				className={`juno-select ${selectstyles} ${ isInvalid ? "juno-select-invalid " + errorstyles : "" } ${ isValid ? "juno-select-valid " + successstyles : "" } ${selectPadding()} ${className}`}
 				onChange={onChange}
 				disabled={disabled || isLoading}
 				{...props}
