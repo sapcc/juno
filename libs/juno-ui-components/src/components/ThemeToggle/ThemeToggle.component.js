@@ -25,8 +25,16 @@ export const ThemeToggle = ({
     }
   }
   
+  const titleText = () => {
+    if (currentTheme === "dark") {
+      return "Change theme to Light mode"
+    } else {
+      return "Change theme to Dark mode"
+    }
+  }
+  
   return (
-    <Icon onClick={toggleTheme} title={currentTheme} className={`juno-theme-toggle ${togglestyles} ${className}`}/>
+    <Icon icon={`${currentTheme}Mode`} onClick={toggleTheme} title={titleText()} className={`juno-theme-toggle ${togglestyles} ${className}`}/>
   )
 }
 
