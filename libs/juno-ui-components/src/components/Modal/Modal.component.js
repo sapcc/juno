@@ -20,7 +20,7 @@ const modalcontainerstyles = `
 	jn-inset-0
 	jn-flex
 	jn-items-center
-	jn-bg-theme-modal-backdrop/60
+	jn-bg-theme-modal-backdrop
 	jn-backdrop-blur-[2px]
 	jn-z-[9999]
 `
