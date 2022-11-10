@@ -26,7 +26,7 @@ const modalcontainerstyles = `
 `
 
 const modalstyles = `
-	jn-bg-theme-background-lvl-2
+	jn-bg-theme-background-lvl-0
 	jn-relative
 	jn-m-auto
 	jn-overflow-y-auto
