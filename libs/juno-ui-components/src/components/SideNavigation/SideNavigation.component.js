@@ -2,11 +2,6 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Stack } from "../Stack/index"
 
-const SideNavigationStyles = `
-  jn-gap-6
-  jn-px-6
-  jn-py-1.5
-`
 
 /**
 A generic vertical side navigation component.
@@ -18,7 +13,7 @@ export const SideNavigation = ({
   ...props
 }) => {
   return (
-    <Stack direction="vertical" className={`juno-sidenavigation ${SideNavigationStyles} ${className}`} role="navigation" {...props} >
+    <Stack direction="vertical" className={`juno-sidenavigation ${className}`} role="navigation" {...props} >
       { children }
     </Stack>
   )
