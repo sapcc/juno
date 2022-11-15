@@ -12,7 +12,7 @@ describe("StyleProvider", () => {
 
   test("renders a StyleProvider wrapper div with theme class as passed", async () => {
 		const { container } = render(<StyleProvider theme="my-theme"></StyleProvider>)
-    expect(container.firstChild).toHaveClass('my-theme')
+    expect(container.firstChild).toHaveClass('theme-my-theme')
 	})
 
   
