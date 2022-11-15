@@ -27,6 +27,7 @@ import {
   Tab, 
   TabList, 
   TabPanel, 
+  ThemeToggle,
 } 
 from "juno-ui-components"
 
@@ -95,6 +96,9 @@ const App = (props) => {
       contentHeading="Example App"
       embedded={embedded === "true"}
     >
+    
+    <ThemeToggle />
+    
       {/* TODO: use routes, create another page */}
       <Breadcrumb>
         <BreadcrumbItem icon="home" label="Example App Home" />
