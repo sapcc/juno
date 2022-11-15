@@ -7,7 +7,7 @@ const togglestyles = `
 `
 
 /** A Toggle to switch between Light and Dark UI themes.
-* Can auto-detect current system/useragent theme, and will the current theme in localStore.
+* Pass `theme="auto"` to auto-detect and apply current system/user agent theme. The current theme will be written to `localStorage.currentTheme`.
 */
 export const ThemeToggle = ({
   theme,
@@ -34,6 +34,8 @@ export const ThemeToggle = ({
   React.useEffect(() => {
     setCurrentTheme(theTheme)
   }, [theTheme])
+  
+  localStorage.setItem("currentTheme", theTheme)
   
   const toggleTheme = () => {
     if (currentTheme === "dark") {
@@ -66,6 +68,6 @@ ThemeToggle.propTypes = {
 }
 
 ThemeToggle.defaultProps = {
-  theme: "auto",
+  theme: "dark",
   className: "",
 }
