@@ -30,7 +30,10 @@ export const StyleProvider = ({
   shadowRootMode,
 }) => {
   // theme class defaults to checking for localStorage.currentTheme; defaults to to theme-dark:
-  const themeClass = "theme-" + theme || "theme-" + localStorage.getItem("currentTheme") || "theme-dark"
+  //const themeClass = "theme-" + theme || "theme-" + localStorage.getItem("currentTheme") || "theme-dark"
+  
+  const themeClass = theme ? "theme-" + theme : ( localStorage.getItem("currentTheme") ? "theme-" + localStorage.getItem("currentTheme") : "theme-dark" )
+  
   // manage custom css classes (useStyles)
   const [customCssClasses, setCustomCssClasses] = React.useState("")
 
