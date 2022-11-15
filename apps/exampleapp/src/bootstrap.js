@@ -8,7 +8,6 @@ export const init = (wrapper, props) => {
   ReactDOM.render(
     <StyleProvider
       stylesWrapper="shadowRoot"
-      theme={`${props.theme ? props.theme : "theme-dark"}`}
     >
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
