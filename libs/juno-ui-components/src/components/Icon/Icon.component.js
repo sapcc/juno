@@ -683,7 +683,8 @@ export const Icon = forwardRef(({
   )
 
   /* render an <a> if href was passed, otherwise render button if onClick was passes, otherwise render plain icon: */
-  return href ? anchor : onClick ? button : icn
+  /* if plain icon, add ref to the icon. In the other cases the ref goes on the anchor or button */
+  return href ? anchor : onClick ? button : <span ref={ref}>{icn}</span>
 })
 
 Icon.propTypes = {

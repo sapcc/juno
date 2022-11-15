@@ -113,7 +113,7 @@ const spinnerColorClass = (variant, disabled) => {
 /**
  * The basic button component. Use this for `onClick` interactions.
  */
-export const Button = ({
+export const Button = React.forwardRef(({
   label,
   title,
   variant,
@@ -127,7 +127,7 @@ export const Button = ({
   progress,
   progressLabel,
   ...props
-}) => {
+}, ref) => {
   const titleValue = title || label || ""
 
   const buttonIcon = progress ? (
@@ -153,6 +153,7 @@ export const Button = ({
       disabled={disabled}
       onClick={onClick}
       title={titleValue}
+      ref={ref}
       {...props}
     >
       {buttonIcon}
@@ -168,6 +169,7 @@ export const Button = ({
       disabled={disabled}
       onClick={onClick}
       title={titleValue}
+      ref={ref}
       {...props}
     >
       {buttonIcon}
@@ -176,7 +178,7 @@ export const Button = ({
   )
 
   return href ? anchor : button
-}
+})
 
 Button.propTypes = {
   /** Choose a variant for your purpose. May leave empty to get default button. */
