@@ -25,12 +25,12 @@ const StylesContext = React.createContext()
  */
 export const StyleProvider = ({
   stylesWrapper,
-  theme: themeClassName,
+  theme,
   children,
   shadowRootMode,
 }) => {
-  // theme class default to theme-dark
-  const themeClass = themeClassName || "theme-dark"
+  // theme class defaults to checking for localStorage.currentTheme; defaults to to theme-dark:
+  const themeClass = "theme-" + theme || "theme-" + localStorage.getItem("currentTheme") || "theme-dark"
   // manage custom css classes (useStyles)
   const [customCssClasses, setCustomCssClasses] = React.useState("")
 
