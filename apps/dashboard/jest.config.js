@@ -4,7 +4,10 @@ module.exports = {
   setupFilesAfterEnv: ["<rootDir>/setupTests.js"],
   transformIgnorePatterns: ["/node_modules/", "\\.pnp\\.[^\\/]+$"],
   moduleNameMapper: {
-    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+    // Jest currently doesn't support resources with query parameters.
+    // Therefore we add the optional query parameter matcher at the end
+    // https://github.com/facebook/jest/issues/4181
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)(\\?.+)?$":
       require.resolve("./__mocks__/fileMock"),
     "\\.(css|less)$": require.resolve("./__mocks__/styleMock"),
   },
