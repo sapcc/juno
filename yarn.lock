@@ -12658,7 +12658,7 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     react-json-view: ^1.21.3
-    react-query: ^3.34.16
+    react-query: ^3.39.2
     react-refresh: ^0.10.0
     react-test-renderer: ^17.0.2
     regenerator-runtime: ^0.13.9
@@ -19309,39 +19309,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-query@npm:^3.34.15":
-  version: 3.34.15
-  resolution: "react-query@npm:3.34.15"
+"react-query@npm:^3.39.2":
+  version: 3.39.2
+  resolution: "react-query@npm:3.39.2"
   dependencies:
     "@babel/runtime": ^7.5.5
     broadcast-channel: ^3.4.1
     match-sorter: ^6.0.2
   peerDependencies:
-    react: ^16.8.0 || ^17.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
   peerDependenciesMeta:
     react-dom:
       optional: true
     react-native:
       optional: true
-  checksum: 9a889af30a7ab8b9e54337cf8a1987dfb603a7cd14ce7fad1974ebc49b050b7b2fc4561a97f50c5c0cd692c14ae0251da99b1d53b8c2ce90c271f3d129a0fbf2
-  languageName: node
-  linkType: hard
-
-"react-query@npm:^3.34.16":
-  version: 3.34.16
-  resolution: "react-query@npm:3.34.16"
-  dependencies:
-    "@babel/runtime": ^7.5.5
-    broadcast-channel: ^3.4.1
-    match-sorter: ^6.0.2
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-    react-native:
-      optional: true
-  checksum: 77f5ee7279fa82642d5210b785f7b9eccc6e81c5b27b59bf112101b14e90737efeb8b73f9597bff56a08c5792ec5fa6889e14913aa196f5086ff4faeb077abd8
+  checksum: 83b199e66af28ab67ec4d22e51da42f02447186623db926b75d27a1c09a3383da6ddc9e5b83d82578fac7abdba7e6f265aecbffdb91db61981950d3d59409346
   languageName: node
   linkType: hard
 
@@ -23319,7 +23301,7 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     react-json-view: ^1.21.3
-    react-query: ^3.34.15
+    react-query: ^3.39.2
     react-refresh: ^0.10.0
     react-router-dom: ^6.3.0
     react-test-renderer: ^17.0.2
