@@ -6,6 +6,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const webpack = require("webpack")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const package = require("./package.json")
+const testData = require("./public/colors.json")
 
 module.exports = (_, argv) => {
   const mode = argv.mode
@@ -69,13 +70,13 @@ module.exports = (_, argv) => {
             "sass-loader",
           ],
         },
-        // config for background svgs in jsx. IMPORTANT: to differentiate between svgs that are to be used as bg images and those that are to be loaded 
+        // config for background svgs in jsx. IMPORTANT: to differentiate between svgs that are to be used as bg images and those that are to be loaded
         // as components we have to add a query parameter `?url` to the images to be loaded as url for use in background images in jsx files
         //. example for import statement: import heroImage from "./img/app_bg_example.svg?url"
         // type "asset" chooses automatically between inline embed or loading as file depending on file size, similar to previously using url-loader and limit
         {
           test: /\.svg$/i,
-          type: 'asset',
+          type: "asset",
           resourceQuery: /url/, // import filename: *.svg?url
         },
         // svg config for svgs as components in jsx files
@@ -184,6 +185,13 @@ module.exports = (_, argv) => {
     // },
     //Config for webpack-dev-server module version 4.x
     devServer: {
+      // This option onBeforeSetupMiddleware allows us to serve a test json to see
+      // how the react-query lib reacts
+      onBeforeSetupMiddleware: function (devServer) {
+        devServer.app.get("/colors.json", function (req, res) {
+          res.json(testData)
+        })
+      },
       static: {
         directory: path.resolve(__dirname, "dist"),
       },

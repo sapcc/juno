@@ -10,7 +10,9 @@ class HTTPError extends Error {
 
 const encodeUrlParamsFromObject = (options) => {
   if (!options) return ""
-  let encodedOptions = Object.keys(options).map(k => `${encodeURIComponent(k)}=${encodeURIComponent(options[k])}`).join('&')
+  let encodedOptions = Object.keys(options)
+    .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(options[k])}`)
+    .join("&")
   return `&${encodedOptions}`
 }
 
@@ -22,20 +24,24 @@ const checkStatus = (response) => {
     return response.text().then((message) => {
       var error = new HTTPError(response.status, message || response.statusText)
       error.statusCode = response.status
-      // throw error
       return Promise.reject(error)
     })
   }
 }
 
 // Example fetch call. Adjust as needed for your API
-export const exampleFetch = (input, options) => {
-  return fetch(`${ENDPOINT}/query?input=${input}${encodeUrlParamsFromObject(options)}`, {
+export const exampleFetch = ({ queryKey }) => {
+  const [_key, endpoint, options] = queryKey
+  const query = encodeUrlParamsFromObject(options)
+  return fetch(`${endpoint}/colors.json?${query}`, {
     method: "GET",
-    credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
   })
     .then(checkStatus)
+    .then((response) => {
+      return response.json()
+    })
 }
