@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react"
+import React from "react"
 import {
   Button,
   ContentAreaToolbar,
@@ -20,12 +20,11 @@ import { exampleFetch as fetchStuff } from "./actions"
 import { currentState, push } from "url-state-provider"
 
 const AppContent = (props) => {
-  const [queryOptions, setQueryOptions] = useState({})
-  const endpoint = useStore(useCallback((state) => state.endpoint))
-  const urlStateKey = useStore(useCallback((state) => state.urlStateKey))
+  const endpoint = useStore((state) => state.endpoint)
+  const urlStateKey = useStore((state) => state.urlStateKey)
 
   const { isLoading, isError, data, error } = useQuery(
-    ["colors", endpoint, queryOptions],
+    ["colors", endpoint, {}],
     fetchStuff,
     {
       // enable the query also if the endpoint is set. For fetching local
@@ -39,24 +38,10 @@ const AppContent = (props) => {
     }
   )
 
-  // initial load
-  React.useEffect(() => {
+  const openNewItemForm = () => {
     const urlState = currentState(urlStateKey)
-    if (urlState && urlState.offset) {
-      // read and save the options you need for the query. Ex:
-      setQueryOptions({ queryOptions, offset: urlState.offset })
-    }
-  }, [])
-
-  // update URL state
-  React.useEffect(() => {
-    const urlState = currentState(urlStateKey)
-    push(urlStateKey, { ...urlState, queryOptions })
-  }, [queryOptions])
-
-  const openNewItemForm = useStore(
-    useCallback((state) => state.openNewItemForm)
-  )
+    push(urlStateKey, { ...urlState, newItemFormOpened: true })
+  }
 
   return (
     <MainTabs>

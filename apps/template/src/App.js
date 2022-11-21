@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React from "react"
 
 import useStore from "./store"
 import { AppShell } from "juno-ui-components"
@@ -16,9 +16,10 @@ const App = (props) => {
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
 
-  // on initial load save Endpoint and URL_STATE_KEY
+  // on app initial load save Endpoint and URL_STATE_KEY so it can be
+  // used from overall in the application
   React.useEffect(() => {
-    // set to empty string to fetch local test data
+    // set to empty string to fetch local test data in dev mode
     setEndpoint(props.endpoint || "")
     setUrlStateKey(URL_STATE_KEY)
   }, [])
