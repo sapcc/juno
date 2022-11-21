@@ -16,6 +16,7 @@ const encodeUrlParamsFromObject = (options) => {
   return `&${encodedOptions}`
 }
 
+// Check response status
 const checkStatus = (response) => {
   if (response.status < 400) {
     return response

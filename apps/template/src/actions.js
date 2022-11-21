@@ -18,7 +18,7 @@ const encodeUrlParamsFromObject = (options) => {
 
 // Check response status
 const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
+  if (response.status < 400) {
     return response
   } else {
     return response.text().then((message) => {
