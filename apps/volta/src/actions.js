@@ -16,21 +16,9 @@ const encodeUrlParamsFromObject = (options) => {
   return `&${encodedOptions}`
 }
 
-const checkStatus = (response) => {
-  if (response.status < 400) {
-    return response
-  } else {
-    return response.text().then((message) => {
-      var error = new Error(message || response.statusText || response.status)
-      error.statusCode = response.status
-      throw error
-    })
-  }
-}
-
 // Check response status
 const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
+  if (response.status < 400) {
     return response
   } else {
     return response.text().then((message) => {
