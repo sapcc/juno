@@ -28,6 +28,19 @@ const checkStatus = (response) => {
   }
 }
 
+// Check response status
+const checkStatus = (response) => {
+  if (response.status >= 200 && response.status < 300) {
+    return response
+  } else {
+    return response.text().then((message) => {
+      var error = new HTTPError(response.status, message || response.statusText)
+      error.statusCode = response.status
+      return Promise.reject(error)
+    })
+  }
+}
+
 export const cas = ({ queryKey }) => {
   const [_key, bearerToken, endpoint] = queryKey
   return fetch(`${endpoint}/cas`, {
