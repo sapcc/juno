@@ -21,9 +21,9 @@ const checkStatus = (response) => {
     return response
   } else {
     return response.text().then((message) => {
-      var error = new Error(message || response.statusText || response.status)
+      var error = new HTTPError(response.status, message || response.statusText)
       error.statusCode = response.status
-      throw error
+      return Promise.reject(error)
     })
   }
 }
