@@ -2,6 +2,7 @@
   "name": "heureka",
   "version": "0.1.0",
   "main": "build/widget.js",
+  "module": "build/widget.js",
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.17.0",
@@ -63,6 +64,20 @@
     "react-json-view": "^1.21.3",
     "react-query": "^3.39.2",
     "url-state-router": "workspace:*",
+    "zustand": "^4.1.1"
+  },
+  "peerDependencies": {
+    "custom-event-polyfill": "^1.0.7",
+    "dotenv-webpack": "^7.1.0",
+    "lodash.uniqueid": "^4.0.1",
+    "luxon": "^2.3.0",
+    "oauth": "workspace:*",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-json-view": "^1.21.3",
+    "react-query": "^3.39.2",
+    "url-state-router": "latest",
     "zustand": "^4.1.1"
   }
 }

@@ -2,6 +2,7 @@
   "name": "requests",
   "version": "0.0.1",
   "main": "build/widget.js",
+  "module": "build/widget.js",
   "private": true,
   "license": "Apache-2.0",
   "devDependencies": {
@@ -52,6 +53,23 @@
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.3.0",
     "url-state-provider": "workspace:libs/url-state-provider",
+    "util": "^0.12.4"
+  },
+  "peerDependencies": {
+    "@apollo/client": "^3.3.21",
+    "assert": "^2.0.0",
+    "buffer": "^6.0.3",
+    "dotenv": "^8.2.0",
+    "graphql": "^15.5.1",
+    "lz-string": "^1.4.4",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "policy-engine": "workspace:*",
+    "process": "^0.11.10",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.3.0",
+    "url-state-provider": "latest",
     "util": "^0.12.4"
   }
 }

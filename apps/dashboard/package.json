@@ -2,6 +2,7 @@
   "name": "dashboard",
   "version": "0.4.1",
   "main": "build/widget.js",
+  "module": "build/widget.js",
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.17.0",
@@ -53,6 +54,15 @@
     "production": "NODE_ENV=production yarn node serve.js"
   },
   "dependencies": {
+    "custom-event-polyfill": "^1.0.7",
+    "express": "^4.17.3",
+    "luxon": "^2.3.0",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "zustand": "^4.1.1"
+  },
+  "peerDependencies": {
     "custom-event-polyfill": "^1.0.7",
     "express": "^4.17.3",
     "luxon": "^2.3.0",

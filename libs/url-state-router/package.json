@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "description": "Router",
   "source": "src/index.js",
-  "main": "lib/cjs/index.js",
-  "module": "lib/esm/index.js",
+  "main": "build/index.js",
+  "module": "build/index.js",
   "license": "Apache-2.0",
   "dependencies": {
     "url-state-provider": "workspace:*"
   },
   "peerDependencies": {
     "prop-types": "*",
-    "react": "*"
+    "react": "*",
+    "url-state-provider": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",

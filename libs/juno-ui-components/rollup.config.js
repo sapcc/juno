@@ -6,9 +6,15 @@ const fs = require("fs")
 import minify from "rollup-plugin-babel-minify"
 import analyze from "rollup-plugin-analyzer"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
-import svgr from '@svgr/rollup'
+import svgr from "@svgr/rollup"
 
 import parseStyles from "./rollup-plugin-styles-parser"
+
+if (!/.+\/.+\.js/.test(pkg.module))
+  throw new Error(
+    "module value is incorrect, use DIR/FILE.js like build/index.js"
+  )
+const buildDir = pkg.module.slice(0, pkg.module.lastIndexOf("/"))
 
 const input = {
   index: pkg.source,
@@ -24,7 +30,7 @@ const config = [
     output: [
       // { dir: "lib", format: "cjs", preserveModules: false },
       {
-        dir: "lib",
+        dir: buildDir,
         format: "esm",
         preserveModules: false,
         compact: true,
@@ -35,11 +41,11 @@ const config = [
         exclude: "node_modules/**",
         babelHelpers: "bundled",
       }),
-      del({ targets: ["lib/**/*"] }),
+      del({ targets: [`${buildDir}/**/*`] }),
       nodeResolve(),
-      svgr({ 
-        svgo: false, 
-        titleProp: true, 
+      svgr({
+        svgo: false,
+        titleProp: true,
       }),
       postcss({
         config: {

@@ -2,6 +2,7 @@
   "name": "template",
   "version": "0.0.1",
   "main": "build/widget.js",
+  "module": "build/widget.js",
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.17.0",
@@ -61,6 +62,18 @@
     "react-json-view": "^1.21.3",
     "react-query": "^3.39.2",
     "url-state-provider": "workspace:*",
+    "zustand": "^4.1.1"
+  },
+  "peerDependencies": {
+    "url-state-provider": "latest",
+    "custom-event-polyfill": "^1.0.7",
+    "dotenv-webpack": "^7.1.0",
+    "luxon": "^2.3.0",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-json-view": "^1.21.3",
+    "react-query": "^3.39.2",
     "zustand": "^4.1.1"
   }
 }

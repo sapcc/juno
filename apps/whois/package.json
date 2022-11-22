@@ -2,6 +2,7 @@
   "name": "whois",
   "version": "0.2.1",
   "main": "build/widget.js",
+  "module": "build/widget.js",
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.17.0",
@@ -61,5 +62,16 @@
     "react-dom": "^17.0.2",
     "react-json-view": "^1.21.3",
     "url-state-provider": "workspace:*"
+  },
+  "peerDependencies": {
+    "url-state-provider": "latest",
+    "cidr-regex": "^3.1.1",
+    "custom-event-polyfill": "^1.0.7",
+    "ip-regex": "^5.0.0",
+    "luxon": "^2.3.0",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-json-view": "^1.21.3"
   }
 }

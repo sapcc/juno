@@ -4,17 +4,16 @@ import pkg from "./package.json"
 import minify from "rollup-plugin-babel-minify"
 import analyze from "rollup-plugin-analyzer"
 
+if (!/.+\/.+\.js/.test(pkg.module))
+  throw new Error(
+    "module value is incorrect, use DIR/FILE.js like build/index.js"
+  )
+const buildDir = pkg.module.slice(0, pkg.module.lastIndexOf("/"))
+
 const config = [
   {
-    input: "src/index.js",
+    input: pkg.source,
     output: [
-      {
-        file: pkg.main,
-        name: "oidc-auth",
-        format: "cjs",
-        sourcemap: true,
-        compact: true,
-      },
       {
         file: pkg.module,
         format: "esm",
@@ -28,7 +27,7 @@ const config = [
         exclude: "node_modules/**",
         babelHelpers: "bundled",
       }),
-      del({ targets: ["lib/**/*"] }),
+      del({ targets: [`${buildDir}/**/*`] }),
       minify({ comments: false }),
       analyze(),
     ],

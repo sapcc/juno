@@ -2,5 +2,16 @@
   "name": "communicator",
   "version": "0.1.0",
   "description": "Send and receive custom events",
-  "main": "index.js"
+  "source": "src/index.js",
+  "main": "build/index.js",
+  "module": "build/index.js",
+  "scripts": {
+    "build": "NODE_ENV=production rollup -c"
+  },
+  "devDependencies": {
+    "rollup": "^2.67.0",
+    "rollup-plugin-analyzer": "^4.0.0",
+    "rollup-plugin-babel-minify": "^10.0.0",
+    "rollup-plugin-delete": "^2.0.0"
+  }
 }
