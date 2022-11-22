@@ -14,7 +14,11 @@ export const ThemeToggle = ({
   }
   
   return (
-    <Icon className={`juno-theme-toggle`} onClick={handleClick} />
+    <Icon 
+      icon={`${theme === "dark" ? "lightMode" : "darkMode" }`}
+      className={`juno-theme-toggle`} 
+      onClick={handleClick} 
+    />
   )
 }
 

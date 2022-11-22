@@ -16,6 +16,7 @@ import Close from "./icons/close.svg"
 import ContentCopy from "./icons/content_copy.svg"
 import Danger from "./icons/juno-danger.svg"
 import Dangerous from "./icons/dangerous.svg"
+import DarkMode from "./icons/dark_mode.svg"
 import DeleteForever from "./icons/delete_forever.svg"
 import Description from "./icons/description.svg"
 import DNS from "./icons/dns.svg"
@@ -30,6 +31,7 @@ import Help from "./icons/help.svg"
 import Home from "./icons/home_sharp.svg"
 import Info from "./icons/info.svg"
 import InsertComment from "./icons/insert_comment.svg"
+import LightMode from "./icons/light_mode.svg"
 import ManageAccounts from "./icons/manage_accounts.svg"
 import MoreVert from "./icons/more_vert.svg"
 import OpenInBrowser from "./icons/open_in_browser.svg"
@@ -87,6 +89,7 @@ export const knownIcons = [
   "contentCopy",
   "danger",
   "dangerous",
+  "darkMode",
   "default",
   "deleteForever",
   "description",
@@ -102,6 +105,7 @@ export const knownIcons = [
   "home",
   "info",
   "insertComment",
+  "lightMode",
   "manageAccounts",
   "moreVert",
   "openInBrowser",
@@ -283,6 +287,18 @@ const getColoredSizedIcon = ({
           {...iconProps}
         />
       )
+    case "darkMode": 
+      return (
+        <DarkMode 
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="darkMode"
+          title={title ? title : "DarkMode"}
+          role="img"
+          {...iconProps}
+        />
+      )
     case "deleteForever":
       return (
         <DeleteForever
@@ -447,6 +463,18 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="insert comment"
           title={title ? title : "Insert comment"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "lightMode":
+      return (
+        <LightMode
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="lightMode"
+          title={title ? title : "LightMode"}
           role="img"
           {...iconProps}
         />

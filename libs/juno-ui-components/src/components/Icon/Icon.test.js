@@ -143,6 +143,12 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "dangerous")
   })
+  
+  test("renders a darkMode icon", async () => {
+    render(<Icon icon="darkMode" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "darkMode")
+  })
 
   test("renders a deleteForever icon", async () => {
     render(<Icon icon="deleteForever" />)
@@ -226,6 +232,12 @@ describe("Icon", () => {
     render(<Icon icon="insertComment" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "insert comment")
+  })
+  
+  test("renders a lightMode icon", async () => {
+    render(<Icon icon="lightMode" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "lightMode")
   })
 
   test("renders a manageAccounts icon", async () => {

@@ -19,7 +19,6 @@ const Template = (args) => <Icon {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  icon: "help",
   color: "jn-global-text",
 }
 
@@ -155,6 +154,11 @@ Dangerous.args = {
   icon: "dangerous",
 }
 
+export const DarkMode = Template.bind({})
+DarkMode.args = {
+  icon: "darkMode",
+}
+
 export const DeleteForever = Template.bind({})
 DeleteForever.args = {
   icon: "deleteForever",
@@ -236,6 +240,12 @@ export const Insert_Comment = Template.bind({})
 Insert_Comment.args = {
   ...Default.args,
   icon: "insertComment",
+}
+
+export const LightMode = Template.bind({})
+LightMode.args = {
+  ...Default.args,
+  icon: "lightMode",
 }
 
 export const Manage_Accounts = Template.bind({})
