@@ -1,6 +1,7 @@
 {
   "name": "requests",
   "version": "0.0.1",
+  "main": "build/widget.js",
   "private": true,
   "license": "Apache-2.0",
   "devDependencies": {

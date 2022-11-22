@@ -7,6 +7,10 @@ const webpack = require("webpack")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const package = require("./package.json")
 
+const mainPath = (package.main || package.module || "build/index.js").split("/")
+const entryFile = mainPath.pop()
+const buildDir = mainPath.join("/") || "/"
+
 module.exports = (_, argv) => {
   const mode = argv.mode
   const isDevelopment = mode === "development"
@@ -16,7 +20,7 @@ module.exports = (_, argv) => {
     entry: "./index.js",
     //Where we put the production code
     output: {
-      path: path.resolve(__dirname, "build"),
+      path: path.resolve(__dirname, buildDir),
       filename: "bundle.[contenthash].js",
       // Do NOT CHANGE public path since a micro frontend should not change the URL. Micro frontends do not OWN the URL because
       // normally they are hosted and should not change the state from the host.
@@ -69,13 +73,13 @@ module.exports = (_, argv) => {
             "sass-loader",
           ],
         },
-        // config for background svgs in jsx. IMPORTANT: to differentiate between svgs that are to be used as bg images and those that are to be loaded 
+        // config for background svgs in jsx. IMPORTANT: to differentiate between svgs that are to be used as bg images and those that are to be loaded
         // as components we have to add a query parameter `?url` to the images to be loaded as url for use in background images in jsx files
         //. example for import statement: import heroImage from "./img/app_bg_example.svg?url"
         // type "asset" chooses automatically between inline embed or loading as file depending on file size, similar to previously using url-loader and limit
         {
           test: /\.svg$/i,
-          type: 'asset',
+          type: "asset",
           resourceQuery: /url/, // import filename: *.svg?url
         },
         // svg config for svgs as components in jsx files
@@ -150,7 +154,7 @@ module.exports = (_, argv) => {
       new webpack.container.ModuleFederationPlugin({
         name: package.name,
         library: { type: "var", name: package.name },
-        filename: "widget.js",
+        filename: entryFile,
         exposes: {
           // expose each component
           "./App": "./App",

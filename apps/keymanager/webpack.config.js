@@ -7,6 +7,10 @@ const webpack = require("webpack")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const package = require("./package.json")
 
+const mainPath = (package.main || package.module || "build/index.js").split("/")
+const entryFile = mainPath.pop()
+const buildDir = mainPath.join("/") || "/"
+
 module.exports = (_, argv) => {
   const mode = argv.mode
   const isDevelopment = mode === "development"
@@ -16,7 +20,7 @@ module.exports = (_, argv) => {
     entry: "./index.js",
     //Where we put the production code
     output: {
-      path: path.resolve(__dirname, "build"),
+      path: path.resolve(__dirname, buildDir),
       filename: "bundle.[contenthash].js",
       // publicPath: process.env.PUBLIC_URL || "/",
     },
@@ -137,7 +141,7 @@ module.exports = (_, argv) => {
       new webpack.container.ModuleFederationPlugin({
         name: package.name,
         library: { type: "var", name: package.name },
-        filename: "widget.js",
+        filename: entryFile,
         exposes: {
           // expose each component
           "./App": "./App",

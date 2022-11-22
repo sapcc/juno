@@ -8,6 +8,10 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const package = require("./package.json")
 const testData = require("./public/colors.json")
 
+const mainPath = (package.main || package.module || "build/index.js").split("/")
+const entryFile = mainPath.pop()
+const buildDir = mainPath.join("/") || "/"
+
 module.exports = (_, argv) => {
   const mode = argv.mode
   const isDevelopment = mode === "development"
@@ -17,7 +21,7 @@ module.exports = (_, argv) => {
     entry: "./index.js",
     //Where we put the production code
     output: {
-      path: path.resolve(__dirname, "build"),
+      path: path.resolve(__dirname, buildDir),
       filename: "bundle.[contenthash].js",
       // Do NOT CHANGE public path since a micro frontend should not change the URL. Micro frontends do not OWN the URL because
       // normally they are hosted and should not change the state from the host.
@@ -150,7 +154,7 @@ module.exports = (_, argv) => {
       new webpack.container.ModuleFederationPlugin({
         name: package.name,
         library: { type: "var", name: package.name },
-        filename: "widget.js",
+        filename: entryFile,
         exposes: {
           // expose each component
           "./App": "./App",

@@ -1,6 +1,7 @@
 {
   "name": "template",
   "version": "0.0.1",
+  "main": "build/widget.js",
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.17.0",

@@ -6,12 +6,16 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const { ModuleFederationPlugin } = require("webpack").container
 const webpack = require("webpack")
 
+const mainPath = (package.main || package.module || "build/index.js").split("/")
+const entryFile = mainPath.pop()
+const buildDir = mainPath.join("/") || "/"
+
 module.exports = {
   //our index file
   entry: path.resolve(__dirname, "src/index.js"),
   //Where we put the production code
   output: {
-    path: path.resolve(__dirname, "build"),
+    path: path.resolve(__dirname, buildDir),
     filename: "bundle.[contenthash].js",
     // Do NOT CHANGE public path since a micro frontend should not change the URL. Micro frontends do not OWN the URL because
     // normally they are hosted and should not change the state from the host.
@@ -86,7 +90,7 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "requests",
       library: { type: "var", name: "requests" },
-      filename: "widget.js",
+      filename: entryFile,
       exposes: {
         // expose each component
         "./App": "./src/App",
