@@ -14,6 +14,7 @@ export const ThemeToggle = ({
   className,
   ...props
 }) => {
+  const [currentTheme, setCurrentTheme] = useState(undefined)
   
   let theTheme = ""
   
@@ -29,15 +30,11 @@ export const ThemeToggle = ({
       storedTheme ? theTheme = storedTheme : "dark"
   }
   
-  const [currentTheme, setCurrentTheme] = useState(theTheme)
-  
   React.useEffect(() => {
     setCurrentTheme(theTheme)
   }, [theTheme])
   
-  localStorage.setItem("currentTheme", theTheme)
-  
-  const toggleTheme = () => {
+  const handleThemeToggleClick = () => {
     if (currentTheme === "dark") {
       setCurrentTheme("light")
       localStorage.setItem("currentTheme", "light")
@@ -45,6 +42,7 @@ export const ThemeToggle = ({
       setCurrentTheme("dark")
       localStorage.setItem("currentTheme", "dark")
     }
+    window.dispatchEvent(new Event('storage'))
   }
   
   const titleText = () => {
@@ -56,7 +54,7 @@ export const ThemeToggle = ({
   }
   
   return (
-    <Icon icon={`${currentTheme === "dark" ? "lightMode" : "darkMode" }`} onClick={toggleTheme} title={titleText()} className={`juno-theme-toggle ${togglestyles} ${className}`}/>
+    <Icon icon={`${currentTheme === "dark" ? "lightMode" : "darkMode" }`} onClick={handleThemeToggleClick} title={titleText()} className={`juno-theme-toggle ${togglestyles} ${className}`}/>
   )
 }
 

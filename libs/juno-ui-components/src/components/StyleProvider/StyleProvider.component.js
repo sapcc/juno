@@ -4,7 +4,7 @@
  * to place the ui-components styles.
  * @module StyleProvider
  */
-import React from "react"
+import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import { ShadowRoot } from "../ShadowRoot"
 
@@ -29,10 +29,27 @@ export const StyleProvider = ({
   children,
   shadowRootMode,
 }) => {
-  // theme class defaults to checking for localStorage.currentTheme; defaults to to theme-dark:
-  //const themeClass = "theme-" + theme || "theme-" + localStorage.getItem("currentTheme") || "theme-dark"
+  const DEFAULT_THEME = "dark"
+  // Use theme prop if passed, otherwise use localStorage.currentTheme if present, otherwise default to "dark":
+  const theTheme = theme ? theme : ( localStorage.getItem("currentTheme") ? localStorage.getItem("currentTheme") : DEFAULT_THEME )
+  // init theme state:
+  const [currentTheme, setCurrentTheme] = React.useState(theTheme);
   
-  const themeClass = theme ? "theme-" + theme : ( localStorage.getItem("currentTheme") ? "theme-" + localStorage.getItem("currentTheme") : "theme-dark" )
+  // update currentTheme in state when local storage changes:
+  useEffect(() => {
+    
+    const handleLocalStorageChange = () => {
+      const themeFromStorage = localStorage.getItem('currentTheme')
+      if (currentTheme != themeFromStorage) {
+        setCurrentTheme(themeFromStorage)
+      }
+    }
+    
+    window.addEventListener('storage', handleLocalStorageChange )
+    
+    return () => window.removeEventListener('storage', handleLocalStorageChange );
+    
+  }, []);
   
   // manage custom css classes (useStyles)
   const [customCssClasses, setCustomCssClasses] = React.useState("")
@@ -92,13 +109,13 @@ export const StyleProvider = ({
         <ShadowRoot
           mode={shadowRootMode}
           styles={styles}
-          themeClass={themeClass}
+          themeClass={"theme-" + currentTheme}
           customCssClasses={customCssClasses}
         >
           {children}
         </ShadowRoot>
       ) : (
-        <div className={`${themeClass} ${customCssClasses || ""}`}>
+        <div className={`theme-${currentTheme} ${customCssClasses || ""}`}>
           {stylesWrapper === "inline" && (
             <style data-style-provider="inline">{styles}</style>
           )}
