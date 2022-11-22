@@ -8,7 +8,7 @@ export default {
 };
 
 const Template = ({theme, ...args}) => {
-  
+  // Use state internal to story for now, TODO: use updated StyleProvider later
   const [ theTheme, setTheTheme ] = useState(theme)
   
   useEffect(() => {
@@ -24,7 +24,9 @@ const Template = ({theme, ...args}) => {
   }
   
   return (
-    <ThemeToggle  theme={theTheme} onClick={handleClick} />
+    <div className={"theme-" + (theTheme || "dark")} style={{padding: "40px", textAlign: "center"}}>
+      <ThemeToggle  theme={theTheme} onClick={handleClick} />
+    </div>
   )
 }
 
