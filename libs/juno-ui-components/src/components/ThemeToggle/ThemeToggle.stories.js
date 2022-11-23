@@ -51,6 +51,13 @@ const StyleProviderTemplate = ({theme, ...args}) => {
 
 export const Default = Template.bind({})
 Default.args = {}
+Default.parameters = {
+  docs: {
+    description: {
+      story: "A sole ThemeToggle will default to showing it's 'dark' state and otherwise won't do much."
+    },
+  },
+}
 
 
 export const SimpleWithCustomContainer = CustomTemplate.bind({});
@@ -68,9 +75,6 @@ SimpleWithCustomContainer.parameters = {
   }
 }
 
-
-
-
 export const CustomContainerWithHook = HookTemplate.bind({})
 CustomContainerWithHook.args = {}
 CustomContainerWithHook.parameters = {
@@ -84,5 +88,18 @@ CustomContainerWithHook.parameters = {
       type: "code",
     }
   }
+}
+
+export const WithStyleProvider = StyleProviderTemplate.bind({})
+WithStyleProvider.args = {}
+WithStyleProvider.parameters = {
+  docs: {
+    description: {
+      story: "WIP"
+    },
+    source: {
+      
+    },
+  },
 }
 
