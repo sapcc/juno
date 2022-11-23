@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Icon } from "../Icon/index.js";
 
 /**
-*  A Toggle to switch between Light and Dark UI themes.
+*  A Toggle to switch between Light and Dark UI themes. The ThemeToggle relies on a `theme` and an onClick handler to toggle the theme to be passed as a prop. There are several ways to approach this as described below.
 */
 
 export const ThemeToggle = ({
