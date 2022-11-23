@@ -15095,6 +15095,7 @@ __metadata:
     storybook-dark-mode: ^1.0.9
     style-loader: ^3.3.1
     tailwindcss: ^3.0.24
+    use-local-storage-state: 17
   peerDependencies:
     prop-types: ^15.8.1
     react: ^17.0.2
@@ -22990,6 +22991,16 @@ __metadata:
     "@types/react":
       optional: true
   checksum: f0cb3a49119e14ed46db8a946b1aa17b838b8834c8a652bde314877ede6057c55b50654a97ee802597a5839c070180195e58ea3a756b7c33db7f540642f0ddea
+  languageName: node
+  linkType: hard
+
+"use-local-storage-state@npm:17":
+  version: 17.2.0
+  resolution: "use-local-storage-state@npm:17.2.0"
+  peerDependencies:
+    react: ">=16.8.0 < 18"
+    react-dom: ">=16.8.0 < 18"
+  checksum: 1aead2d3f3326cd7e32120f4e2b9937a80d61d54d05f6886150c0e1e710ac749fc9d807c19eb08c11089af3f0121acbe2cb153b562e7a050216946b6d3688c5e
   languageName: node
   linkType: hard
 

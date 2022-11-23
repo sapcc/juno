@@ -90,5 +90,8 @@
     "moduleNameMapper": {
       "^.+\\.(css|scss)$": "<rootDir>/test/__mocks__/styleMock.js"
     }
+  },
+  "dependencies": {
+    "use-local-storage-state": "17"
   }
 }
