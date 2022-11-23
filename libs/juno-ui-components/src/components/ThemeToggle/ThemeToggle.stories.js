@@ -60,9 +60,9 @@ Default.parameters = {
 }
 
 
-export const SimpleWithCustomContainer = CustomTemplate.bind({});
-SimpleWithCustomContainer.args = {}
-SimpleWithCustomContainer.parameters = {
+export const WithCustomContainer = CustomTemplate.bind({});
+WithCustomContainer.args = {}
+WithCustomContainer.parameters = {
   docs: {
     description: {
       story: "A `<ThemeToggle/>` component inside a custom container you manage yourself. You will have to take care of handling theme state, and pass the current theme as well as a method to toggle the theme to `<ThemeToggle/>`."
@@ -75,9 +75,9 @@ SimpleWithCustomContainer.parameters = {
   }
 }
 
-export const CustomContainerWithHook = HookTemplate.bind({})
-CustomContainerWithHook.args = {}
-CustomContainerWithHook.parameters = {
+export const WithHookInCustomContainer = HookTemplate.bind({})
+WithHookInCustomContainer.args = {}
+WithHookInCustomContainer.parameters = {
   docs: {
     description: {
       story: "A `<ThemeToggle/>` component inside a custom container that use the `useTheme` hook from Juno. This hook provides acces to `currentTheme` and a `toggleTheme` method. This hook will also store the currently selected theme in localStorage so it will persist across reloads. It can also be used to apply the current user system stetting when passed `theme={'auto'}`."
@@ -91,14 +91,12 @@ CustomContainerWithHook.parameters = {
 }
 
 export const WithStyleProvider = StyleProviderTemplate.bind({})
+WithStyleProvider.storyName = "With StyleProvider (Recommended)"
 WithStyleProvider.args = {}
 WithStyleProvider.parameters = {
   docs: {
     description: {
       story: "WIP"
-    },
-    source: {
-      
     },
   },
 }
