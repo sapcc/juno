@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Icon } from "../Icon/index.js";
 
-/*
+/**
 *  A Toggle to switch between Light and Dark UI themes.
 */
 
