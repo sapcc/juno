@@ -1,9 +1,9 @@
 {
   "name": "dashboard",
-  "version": "0.4.2",
-  "main": "build/widget.js",
-  "module": "build/widget.js",
+  "version": "1.0.0",
   "private": true,
+  "source": "src/index.js",
+  "module": "build/widget.js",
   "devDependencies": {
     "@babel/core": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
@@ -25,27 +25,34 @@
     "communicator": "workspace:*",
     "css-loader": "^6.6.0",
     "css-minimizer-webpack-plugin": "^3.4.1",
+    "custom-event-polyfill": "^1.0.7",
     "dotenv-webpack": "^8.0.1",
+    "express": "^4.17.3",
     "glob": "^7.2.0",
     "html-webpack-plugin": "^5.4.0",
     "jest": "^27.4.7",
     "juno-ui-components": "workspace:*",
+    "luxon": "^2.3.0",
     "mini-css-extract-plugin": "^2.5.3",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "postcss": "^8.4.6",
     "postcss-loader": "^6.2.1",
     "process": "^0.11.10",
+    "prop-types": "^15.8.1",
     "purgecss-webpack-plugin": "^4.1.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-refresh": "^0.10.0",
     "react-test-renderer": "^17.0.2",
     "regenerator-runtime": "^0.13.9",
     "sass-loader": "^12.4.0",
     "tailwindcss": "^3.0.24",
     "util": "^0.12.4",
-    "webpack": "^5.68.0",
+    "webpack": "^5.75.0",
     "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.7.4"
+    "webpack-dev-server": "^4.7.4",
+    "zustand": "^4.1.1"
   },
   "scripts": {
     "start": "PORT=$APP_PORT webpack serve --mode development --hot",
@@ -53,22 +60,13 @@
     "build": "webpack --mode production",
     "production": "NODE_ENV=production yarn node serve.js"
   },
-  "dependencies": {
-    "custom-event-polyfill": "^1.0.7",
-    "express": "^4.17.3",
-    "luxon": "^2.3.0",
-    "prop-types": "^15.8.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "zustand": "^4.1.1"
-  },
   "peerDependencies": {
     "custom-event-polyfill": "^1.0.7",
     "express": "^4.17.3",
     "luxon": "^2.3.0",
     "prop-types": "^15.8.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "zustand": "^4.1.1"
   }
 }

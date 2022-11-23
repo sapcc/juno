@@ -65,7 +65,6 @@
     "zustand": "^4.1.1"
   },
   "peerDependencies": {
-    "url-state-provider": "latest",
     "custom-event-polyfill": "^1.0.7",
     "dotenv-webpack": "^7.1.0",
     "luxon": "^2.3.0",
@@ -74,6 +73,7 @@
     "react-dom": "^17.0.2",
     "react-json-view": "^1.21.3",
     "react-query": "^3.39.2",
+    "url-state-provider": "*",
     "zustand": "^4.1.1"
   }
 }

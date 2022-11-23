@@ -5122,6 +5122,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/eslint-scope@npm:^3.7.3":
+  version: 3.7.4
+  resolution: "@types/eslint-scope@npm:3.7.4"
+  dependencies:
+    "@types/eslint": "*"
+    "@types/estree": "*"
+  checksum: ea6a9363e92f301cd3888194469f9ec9d0021fe0a397a97a6dd689e7545c75de0bd2153dfb13d3ab532853a278b6572c6f678ce846980669e41029d205653460
+  languageName: node
+  linkType: hard
+
 "@types/eslint@npm:*":
   version: 8.4.1
   resolution: "@types/eslint@npm:8.4.1"
@@ -5143,6 +5153,13 @@ __metadata:
   version: 0.0.39
   resolution: "@types/estree@npm:0.0.39"
   checksum: 412fb5b9868f2c418126451821833414189b75cc6bf84361156feed733e3d92ec220b9d74a89e52722e03d5e241b2932732711b7497374a404fad49087adc248
+  languageName: node
+  linkType: hard
+
+"@types/estree@npm:^0.0.51":
+  version: 0.0.51
+  resolution: "@types/estree@npm:0.0.51"
+  checksum: e56a3bcf759fd9185e992e7fdb3c6a5f81e8ff120e871641607581fb3728d16c811702a7d40fa5f869b7f7b4437ab6a87eb8d98ffafeee51e85bbe955932a189
   languageName: node
   linkType: hard
 
@@ -6169,6 +6186,15 @@ __metadata:
   bin:
     acorn: bin/acorn
   checksum: e0f79409d68923fbf1aa6d4166f3eedc47955320d25c89a20cc822e6ba7c48c5963d5bc657bc242d68f7a4ac9faf96eef033e8f73656da6c640d4219935fdfd0
+  languageName: node
+  linkType: hard
+
+"acorn@npm:^8.7.1":
+  version: 8.8.1
+  resolution: "acorn@npm:8.8.1"
+  bin:
+    acorn: bin/acorn
+  checksum: 4079b67283b94935157698831967642f24a075c52ce3feaaaafe095776dfbe15d86a1b33b1e53860fc0d062ed6c83f4284a5c87c85b9ad51853a01173da6097f
   languageName: node
   linkType: hard
 
@@ -9460,17 +9486,25 @@ __metadata:
     process: ^0.11.10
     prop-types: ^15.8.1
     purgecss-webpack-plugin: ^4.1.3
-    react: ^17.0.2
-    react-dom: ^17.0.2
+    react: ^18.2.0
+    react-dom: ^18.2.0
     react-refresh: ^0.10.0
     react-test-renderer: ^17.0.2
     regenerator-runtime: ^0.13.9
     sass-loader: ^12.4.0
     tailwindcss: ^3.0.24
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
+    zustand: ^4.1.1
+  peerDependencies:
+    custom-event-polyfill: ^1.0.7
+    express: ^4.17.3
+    luxon: ^2.3.0
+    prop-types: ^15.8.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
     zustand: ^4.1.1
   languageName: unknown
   linkType: soft
@@ -10266,6 +10300,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"enhanced-resolve@npm:^5.10.0":
+  version: 5.11.0
+  resolution: "enhanced-resolve@npm:5.11.0"
+  dependencies:
+    graceful-fs: ^4.2.9
+    tapable: ^2.2.0
+  checksum: ed5169b49adc0bc89b3532f2fae6abd01e8f3bdb9c3b60194a7ead386c9e307727aab5efe756183dda9ad05f0d301e8994e818da6b987dd223392ced2d3f6aff
+  languageName: node
+  linkType: hard
+
 "enhanced-resolve@npm:^5.8.3":
   version: 5.8.3
   resolution: "enhanced-resolve@npm:5.8.3"
@@ -10730,6 +10774,16 @@ __metadata:
     webpack: ^5.68.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
+    zustand: ^4.1.1
+  peerDependencies:
+    custom-event-polyfill: ^1.0.7
+    dotenv-webpack: ^7.1.0
+    luxon: ^2.3.0
+    prop-types: ^15.8.1
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    react-json-view: ^1.21.3
+    url-state-provider: "*"
     zustand: ^4.1.1
   languageName: unknown
   linkType: soft
@@ -12572,6 +12626,19 @@ __metadata:
     webpack: ^5.68.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
+    zustand: ^4.1.1
+  peerDependencies:
+    custom-event-polyfill: ^1.0.7
+    dotenv-webpack: ^7.1.0
+    lodash.uniqueid: ^4.0.1
+    luxon: ^2.3.0
+    oauth: "workspace:*"
+    prop-types: ^15.8.1
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    react-json-view: ^1.21.3
+    react-query: ^3.39.2
+    url-state-router: "*"
     zustand: ^4.1.1
   languageName: unknown
   linkType: soft
@@ -14723,7 +14790,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json-parse-even-better-errors@npm:^2.3.0":
+"json-parse-even-better-errors@npm:^2.3.0, json-parse-even-better-errors@npm:^2.3.1":
   version: 2.3.1
   resolution: "json-parse-even-better-errors@npm:2.3.1"
   checksum: 798ed4cf3354a2d9ccd78e86d2169515a0097a5c133337807cdf7f1fc32e1391d207ccfc276518cc1d7d8d4db93288b8a50ba4293d212ad1336e52a8ec0a941f
@@ -15107,6 +15174,16 @@ __metadata:
     webpack: ^5.68.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
+    zustand: ^4.1.1
+  peerDependencies:
+    custom-event-polyfill: ^1.0.7
+    dotenv-webpack: ^7.1.0
+    luxon: ^2.3.0
+    prop-types: ^15.8.1
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    react-json-view: ^1.21.3
+    url-state-provider: "*"
     zustand: ^4.1.1
   languageName: unknown
   linkType: soft
@@ -15551,6 +15628,16 @@ __metadata:
     webpack: ^5.68.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
+    zustand: ^4.1.1
+  peerDependencies:
+    custom-event-polyfill: ^1.0.7
+    dotenv-webpack: ^7.1.0
+    luxon: ^2.3.0
+    prop-types: ^15.8.1
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    react-json-view: ^1.21.3
+    url-state-provider: "*"
     zustand: ^4.1.1
   languageName: unknown
   linkType: soft
@@ -18963,6 +19050,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-dom@npm:^18.2.0":
+  version: 18.2.0
+  resolution: "react-dom@npm:18.2.0"
+  dependencies:
+    loose-envify: ^1.1.0
+    scheduler: ^0.23.0
+  peerDependencies:
+    react: ^18.2.0
+  checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
+  languageName: node
+  linkType: hard
+
 "react-draggable@npm:^4.4.3":
   version: 4.4.4
   resolution: "react-draggable@npm:4.4.4"
@@ -19323,6 +19422,15 @@ __metadata:
     loose-envify: ^1.1.0
     object-assign: ^4.1.1
   checksum: b254cc17ce3011788330f7bbf383ab653c6848902d7936a87b09d835d091e3f295f7e9dd1597c6daac5dc80f90e778c8230218ba8ad599f74adcc11e33b9d61b
+  languageName: node
+  linkType: hard
+
+"react@npm:^18.2.0":
+  version: 18.2.0
+  resolution: "react@npm:18.2.0"
+  dependencies:
+    loose-envify: ^1.1.0
+  checksum: 88e38092da8839b830cda6feef2e8505dec8ace60579e46aa5490fc3dc9bba0bd50336507dc166f43e3afc1c42939c09fe33b25fae889d6f402721dcd78fca1b
   languageName: node
   linkType: hard
 
@@ -19807,6 +19915,22 @@ __metadata:
     webpack: ^5.68.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
+  peerDependencies:
+    "@apollo/client": ^3.3.21
+    assert: ^2.0.0
+    buffer: ^6.0.3
+    dotenv: ^8.2.0
+    graphql: ^15.5.1
+    lz-string: ^1.4.4
+    os-browserify: ^0.3.0
+    path-browserify: ^1.0.1
+    policy-engine: "workspace:*"
+    process: ^0.11.10
+    react: ^17.0.1
+    react-dom: ^17.0.1
+    react-router-dom: ^5.3.0
+    url-state-provider: "*"
+    util: ^0.12.4
   languageName: unknown
   linkType: soft
 
@@ -20270,6 +20394,15 @@ __metadata:
     loose-envify: ^1.1.0
     object-assign: ^4.1.1
   checksum: c4b35cf967c8f0d3e65753252d0f260271f81a81e427241295c5a7b783abf4ea9e905f22f815ab66676f5313be0a25f47be582254db8f9241b259213e999b8fc
+  languageName: node
+  linkType: hard
+
+"scheduler@npm:^0.23.0":
+  version: 0.23.0
+  resolution: "scheduler@npm:0.23.0"
+  dependencies:
+    loose-envify: ^1.1.0
+  checksum: d79192eeaa12abef860c195ea45d37cbf2bbf5f66e3c4dcd16f54a7da53b17788a70d109ee3d3dde1a0fd50e6a8fc171f4300356c5aee4fc0171de526bf35f8a
   languageName: node
   linkType: hard
 
@@ -21796,6 +21929,17 @@ __metadata:
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
     zustand: ^4.1.1
+  peerDependencies:
+    custom-event-polyfill: ^1.0.7
+    dotenv-webpack: ^7.1.0
+    luxon: ^2.3.0
+    prop-types: ^15.8.1
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    react-json-view: ^1.21.3
+    react-query: ^3.39.2
+    url-state-provider: "*"
+    zustand: ^4.1.1
   languageName: unknown
   linkType: soft
 
@@ -22763,6 +22907,7 @@ __metadata:
   peerDependencies:
     prop-types: "*"
     react: "*"
+    url-state-provider: "*"
   languageName: unknown
   linkType: soft
 
@@ -23081,6 +23226,18 @@ __metadata:
     webpack: ^5.68.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
+  peerDependencies:
+    "@peculiar/x509": ^1.6.1
+    custom-event-polyfill: ^1.0.7
+    lodash.uniqueid: ^4.0.1
+    luxon: ^2.3.0
+    oauth: "*"
+    prop-types: ^15.8.1
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    react-json-view: ^1.21.3
+    react-query: ^3.39.2
+    react-router-dom: ^6.3.0
   languageName: unknown
   linkType: soft
 
@@ -23162,6 +23319,16 @@ __metadata:
     glob-to-regexp: ^0.4.1
     graceful-fs: ^4.1.2
   checksum: 70a34f92842d94b5d842980f866d568d7a467de667c96ae5759c759f46587e49265863171f4650bdbafc5f3870a28f2b4453e9e847098ec4b718b38926d47d22
+  languageName: node
+  linkType: hard
+
+"watchpack@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "watchpack@npm:2.4.0"
+  dependencies:
+    glob-to-regexp: ^0.4.1
+    graceful-fs: ^4.1.2
+  checksum: 23d4bc58634dbe13b86093e01c6a68d8096028b664ab7139d58f0c37d962d549a940e98f2f201cecdabd6f9c340338dc73ef8bf094a2249ef582f35183d1a131
   languageName: node
   linkType: hard
 
@@ -23482,6 +23649,43 @@ __metadata:
   languageName: node
   linkType: hard
 
+"webpack@npm:^5.75.0":
+  version: 5.75.0
+  resolution: "webpack@npm:5.75.0"
+  dependencies:
+    "@types/eslint-scope": ^3.7.3
+    "@types/estree": ^0.0.51
+    "@webassemblyjs/ast": 1.11.1
+    "@webassemblyjs/wasm-edit": 1.11.1
+    "@webassemblyjs/wasm-parser": 1.11.1
+    acorn: ^8.7.1
+    acorn-import-assertions: ^1.7.6
+    browserslist: ^4.14.5
+    chrome-trace-event: ^1.0.2
+    enhanced-resolve: ^5.10.0
+    es-module-lexer: ^0.9.0
+    eslint-scope: 5.1.1
+    events: ^3.2.0
+    glob-to-regexp: ^0.4.1
+    graceful-fs: ^4.2.9
+    json-parse-even-better-errors: ^2.3.1
+    loader-runner: ^4.2.0
+    mime-types: ^2.1.27
+    neo-async: ^2.6.2
+    schema-utils: ^3.1.0
+    tapable: ^2.1.1
+    terser-webpack-plugin: ^5.1.3
+    watchpack: ^2.4.0
+    webpack-sources: ^3.2.3
+  peerDependenciesMeta:
+    webpack-cli:
+      optional: true
+  bin:
+    webpack: bin/webpack.js
+  checksum: 2bcc5f3c195f375944e8af2f00bf2feea39cb9fda5f763b0d1b00077f1c51783db25c94d3fae96a07dead9fa085e6ae7474417e5ab31719c9776ea5969ceb83a
+  languageName: node
+  linkType: hard
+
 "websocket-driver@npm:>=0.5.1, websocket-driver@npm:^0.7.4":
   version: 0.7.4
   resolution: "websocket-driver@npm:0.7.4"
@@ -23672,6 +23876,16 @@ __metadata:
     webpack: ^5.68.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
+  peerDependencies:
+    cidr-regex: ^3.1.1
+    custom-event-polyfill: ^1.0.7
+    ip-regex: ^5.0.0
+    luxon: ^2.3.0
+    prop-types: ^15.8.1
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    react-json-view: ^1.21.3
+    url-state-provider: "*"
   languageName: unknown
   linkType: soft
 

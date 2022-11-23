@@ -12,7 +12,7 @@
   "peerDependencies": {
     "prop-types": "*",
     "react": "*",
-    "url-state-provider": "latest"
+    "url-state-provider": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",

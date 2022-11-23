@@ -2,24 +2,15 @@ const path = require("path")
 const Dotenv = require("dotenv-webpack")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin")
-const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const webpack = require("webpack")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
-const pkg = require("./package.json")
-const outputRegex = /(.+)\/([^/]+)/
+const package = require("./package.json")
 
-if (!pkg.source)
-  throw new Error(
-    'No source found in package.json. Please add "source": "src/index.js" to package.json'
-  )
+const mainPath = (package.main || package.module || "build/index.js").split("/")
+const filename = mainPath.pop()
+const buildDir = mainPath.join("/") || "/"
 
-if (!outputRegex.test(pkg.module))
-  throw new Error(
-    'package.json: module not found or its format does not match "DIR/FILE.js"'
-  )
-
-const [_, buildDir, filename] = pkg.module.match(outputRegex)
-
+const isProduction = process.env.NODE_ENV === "production"
 module.exports = (_, argv) => {
   const mode = argv.mode
   const isDevelopment = mode === "development"
@@ -28,17 +19,24 @@ module.exports = (_, argv) => {
     experiments: {
       outputModule: true,
     },
-
     devtool: isDevelopment && "source-map",
-    entry: path.resolve(__dirname, pkg.source),
+
+    context: path.resolve(__dirname, "src"),
+    entry: "./index.js",
     //Where we put the production code
     output: {
       path: path.resolve(__dirname, buildDir),
-      filename: (pathData) =>
-        pathData.chunk.name === "main" ? filename : "[contenthash].bundle.js",
-      library: { type: "module" },
-      asyncChunks: true,
+      filename: (path) => {
+        console.log("==========", path)
+        return path.chunk.name === "main" ? filename : "bundle.[contenthash].js"
+      },
+
       clean: true,
+      asyncChunks: true,
+      environment: { module: true },
+      library: {
+        type: "module",
+      },
     },
     // This says to webpack that we are in development mode and write the code in webpack file in different way
     mode: "development",
@@ -156,11 +154,23 @@ module.exports = (_, argv) => {
 
       //Allows to create an index.html in our build folder
       new HtmlWebpackPlugin({
-        // inject: false,
-        scriptLoading: "module",
         template: path.resolve(__dirname, "public/index.html"), //we put the file that we created in public folder
         favicon: path.resolve(__dirname, "public/favicon.ico"),
       }),
+      // new PurgecssPlugin({
+      //   paths: glob.sync(path.join(__dirname, "src/*.js"), { nodir: true }),
+      // }),
+      // new webpack.container.ModuleFederationPlugin({
+      //   name: package.name,
+      //   library: { type: "var", name: package.name },
+      //   filename: entryFile,
+      //   exposes: {
+      //     // expose each component
+      //     "./App": "./App",
+      //     "./widget": "./widget",
+      //   },
+      //   shared: ["react", "react-dom", "juno-ui-components", "communicator"],
+      // }),
 
       //Allows update react components in real time
       isDevelopment && new ReactRefreshWebpackPlugin(),
@@ -173,8 +183,10 @@ module.exports = (_, argv) => {
       },
       port: process.env.PORT,
       host: "0.0.0.0",
+
       historyApiFallback: true,
       allowedHosts: "all",
+      client: false,
       // Enable hot reloading server. It will provide WDS_SOCKET_PATH endpoint
       // for the WebpackDevServer client so it can learn when the files were
       // updated. The WebpackDevServer client is included as an entry point
@@ -185,9 +197,6 @@ module.exports = (_, argv) => {
       // Use 'ws' instead of 'sockjs-node' on server since we're using native
       // websockets in `webpackHotDevClient`.
       webSocketServer: "ws",
-      client: {
-        webSocketURL: "ws://0.0.0.0:80/ws",
-      },
     },
   }
 }
