@@ -7,6 +7,7 @@ import NewRequest from "./components/New"
 import { ClientProvider } from "./lib/clientProvider"
 import { PolicyProvider } from "./lib/policyProvider"
 import StateProvider from "./lib/stateProvider"
+import styles from "./styles.css"
 
 import {
   Router,
@@ -22,7 +23,7 @@ const Test = () => {
   return <div>{JSON.stringify(routeParams)}</div>
 }
 
-export default ({ stateID }) => {
+const App = ({ stateID }) => {
   const [auth, setAuth] = React.useState()
   const endpoint = "https://mercury.juno.qa-de-1.cloud.sap"
   const region = "qa-de-1"
@@ -80,3 +81,24 @@ export default ({ stateID }) => {
     </StateProvider>
   )
 }
+
+const StyledApp = (props) => {
+  // default props
+  props = {
+    stateID: "requests",
+    ...props,
+  }
+
+  return (
+    <StyleProvider
+      stylesWrapper="shadowRoot"
+      theme={`${props.theme ? props.theme : "theme-dark"}`}
+    >
+      {/* load styles inside the shadow dom */}
+      <style>{styles.toString()}</style>
+      <App {...props} />
+    </StyleProvider>
+  )
+}
+
+export default StyledApp

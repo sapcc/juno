@@ -9,7 +9,6 @@
     <meta name="theme-color" content="#000000" />
 
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-
     <style>
       html {
         height: 100vh;
@@ -29,15 +28,12 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
     <script type="module">
-      import("./widget.js").then((app) => {
-        app.mount(document.getElementById("root"))
-      })
-    </script>
+      const mainFilename = "<%= MAIN_FILENAME %>"
 
-    <!-- <script
-      src="https://auth.ap.ws2.eu-nl-1.cloud.sap/index.js"
-      data-url="https://juno.ap.ws2.eu-nl-1.cloud.sap/widget.js"
-    ></script> -->
+      import(`./${mainFilename}`).then((app) =>
+        app.mount(document.getElementById("root"))
+      )
+    </script>
 
     <div id="root"></div>
   </body>

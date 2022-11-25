@@ -1,25 +1,19 @@
 {
   "name": "widget-loader",
   "version": "1.0.0",
-  "private": true,
-  "devDependencies": {
-    "@babel/core": "^7.17.0",
-    "@babel/preset-env": "^7.16.11",
-    "babel-loader": "^8.2.3",
-    "bundle-loader": "^0.5.6",
-    "clean-webpack-plugin": "^4.0.0",
-    "html-webpack-plugin": "^5.4.0",
-    "jest": "^27.4.7",
-    "regenerator-runtime": "^0.13.9",
-    "serve": "^11.3.2",
-    "webpack": "^5.68.0",
-    "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.7.4"
-  },
+  "description": "This app presets the juno environment on the host and loads other apps",
+  "source": "src/index.js",
+  "main": "build/index.js",
+  "module": "build/index.js",
   "scripts": {
-    "start": "PORT=$APP_PORT webpack serve --mode development",
-    "build": "webpack --mode production",
-    "test": "jest"
+    "build": "NODE_ENV=production rollup -c",
+    "start": "serve -l tcp://0.0.0.0:${WIDGET_LOADER_PORT:-APP_PORT} -s src"
+  },
+  "devDependencies": {
+    "rollup": "^3.4.0",
+    "rollup-plugin-analyzer": "^4.0.0",
+    "rollup-plugin-babel-minify": "^10.0.0",
+    "rollup-plugin-delete": "^2.0.0"
   },
   "jest": {
     "testEnvironment": "jsdom",

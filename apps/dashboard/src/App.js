@@ -7,14 +7,6 @@ import StyleProvider from "juno-ui-components"
 import useStore from "./store"
 
 const App = (props) => {
-  // default props
-  props = {
-    region: process.env.PRESELECTED_REGION,
-    domain: process.env.PRESELECTED_DOMAIN,
-    prodmode: process.env.PROD_MODE,
-    ...props,
-  }
-
   const loginOverlayVisible = useStore(
     useCallback((state) => state.loginOverlayVisible)
   )
@@ -40,26 +32,41 @@ const App = (props) => {
   }, [props.region, props.domain, props.prodmode])
 
   return (
+    // use custom style cache to avoid conflicts with other apps
+    <div
+      className={`flex flex-col h-full ${
+        loginOverlayVisible ? "overflow-hidden h-full" : ""
+      }`}
+    >
+      <div className="flex flex-col grow">
+        <PageHead />
+
+        <Home />
+        <PageFooter />
+      </div>
+    </div>
+  )
+}
+
+const StyledApp = ({ props }) => {
+  // default props
+  props = {
+    region: process.env.PRESELECTED_REGION,
+    domain: process.env.PRESELECTED_DOMAIN,
+    prodmode: process.env.PROD_MODE,
+    ...props,
+  }
+
+  return (
     <StyleProvider
       stylesWrapper="shadowRoot"
       theme={`${props.theme ? props.theme : "theme-dark"}`}
     >
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
-      {/* use custom style cache to avoid conflicts with other apps */}
-      <div
-        className={`flex flex-col h-full ${
-          loginOverlayVisible ? "overflow-hidden h-full" : ""
-        }`}
-      >
-        <div className="flex flex-col grow">
-          <PageHead />
-          <Home />
-          <PageFooter />
-        </div>
-      </div>
+      <App {...props} />
     </StyleProvider>
   )
 }
 
-export default App
+export default StyledApp

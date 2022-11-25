@@ -2,7 +2,6 @@ const path = require("path")
 const Dotenv = require("dotenv-webpack")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin")
-const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const webpack = require("webpack")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const pkg = require("./package.json")
@@ -34,9 +33,13 @@ module.exports = (_, argv) => {
     //Where we put the production code
     output: {
       path: path.resolve(__dirname, buildDir),
-      filename: (pathData) =>
-        pathData.chunk.name === "main" ? filename : "[contenthash].bundle.js",
+      // main file
+      filename,
+      // async chunks which are imported asynchronous "import('...').then(...)"
+      chunkFilename: "[contenthash].js",
+      // result as esm
       library: { type: "module" },
+      // expose files imported asynchronous as chunks
       asyncChunks: true,
       clean: true,
     },
@@ -136,7 +139,6 @@ module.exports = (_, argv) => {
       },
     },
     optimization: {
-      splitChunks: { chunks: "all" },
       // Minimize just in production.
       minimize: !isDevelopment,
       // Default minimizer for JAVASCRIPT is also included, no need to define a new one BUT do NOT REMOVE `...` to
@@ -156,10 +158,14 @@ module.exports = (_, argv) => {
 
       //Allows to create an index.html in our build folder
       new HtmlWebpackPlugin({
-        // inject: false,
-        scriptLoading: "module",
+        inject: false,
+        // scriptLoading: "module",
         template: path.resolve(__dirname, "public/index.html"), //we put the file that we created in public folder
         favicon: path.resolve(__dirname, "public/favicon.ico"),
+        templateParameters: {
+          // provide output filename to the template
+          MAIN_FILENAME: filename,
+        },
       }),
 
       //Allows update react components in real time
