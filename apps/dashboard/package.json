@@ -1,6 +1,6 @@
 {
   "name": "dashboard",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "main": "build/widget.js",
   "module": "build/widget.js",
   "private": true,
