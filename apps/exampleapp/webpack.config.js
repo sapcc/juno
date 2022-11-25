@@ -6,6 +6,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const webpack = require("webpack")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const package = require("./package.json")
+const peaksData = require("./public/peaks.json")
 
 const mainPath = (package.main || package.module || "build/index.js").split("/")
 const entryFile = mainPath.pop()
@@ -188,6 +189,13 @@ module.exports = (_, argv) => {
     // },
     //Config for webpack-dev-server module version 4.x
     devServer: {
+      // This option onBeforeSetupMiddleware allows us to serve a test json to see
+      // how the react-query lib reacts
+      onBeforeSetupMiddleware: function (devServer) {
+        devServer.app.get("/peaks.json", function (req, res) {
+          res.json(peaksData)
+        })
+      },
       static: {
         directory: path.resolve(__dirname, "dist"),
       },

@@ -1,15 +1,18 @@
-import React, { useCallback } from "react"
+import React, { useState } from "react"
 import useStore from "../store"
+import { currentState, addOnChangeListener } from "url-state-provider"
 import LogInModal from "./LogInModal"
 import NewItemModal from "./NewItemModal"
 
+const ModalManager = ({}) => {
+  const urlStateKey = useStore((state) => state.urlStateKey)
+  const [currentModal, setCurrentModal] = useState("")
 
-const ModalManager = ({
+  // this listener reacts on any change on the url state
+  addOnChangeListener(urlStateKey, (newState) => {
+    setCurrentModal(newState?.currentModal)
+  })
 
-}) => {
-  
-  const currentModal = useStore((state) => state.currentModal)
-  
   switch (currentModal) {
     case "LogIn":
       return <LogInModal />

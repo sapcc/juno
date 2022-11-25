@@ -24,22 +24,24 @@ const checkStatus = (response) => {
     return response.text().then((message) => {
       var error = new HTTPError(response.status, message || response.statusText)
       error.statusCode = response.status
-      // throw error
       return Promise.reject(error)
     })
   }
 }
 
 // Example fetch call. Adjust as needed for your API
-export const exampleFetch = (input, options) => {
-  return fetch(
-    `${ENDPOINT}/query?input=${input}${encodeUrlParamsFromObject(options)}`,
-    {
-      method: "GET",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  ).then(checkStatus)
+export const fetchPeaks = ({ queryKey }) => {
+  const [_key, endpoint, options] = queryKey
+  const query = encodeUrlParamsFromObject(options)
+  return fetch(`${endpoint}/peaks.json?${query}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  })
+    .then(checkStatus)
+    .then((response) => {
+      return response.json()
+    })
 }
