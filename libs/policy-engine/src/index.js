@@ -1,4 +1,4 @@
-const PolicyEngine = require("./engine")
+import PolicyEngine from "./engine"
 
-const engineModule = (module.exports = (config) => new PolicyEngine(config))
-engineModule.PolicyEngine = PolicyEngine
+export { PolicyEngine }
+export default (config) => new PolicyEngine(config)

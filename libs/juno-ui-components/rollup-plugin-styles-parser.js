@@ -8,7 +8,7 @@ const regex = {
  * @param {Object} options
  * @returns {Object} plugin data
  */
-export default function myExample({ stylesFileName, theme }) {
+module.exports = function myExample({ stylesFileName, theme }) {
   return {
     name: "styles-parser", // this name will show up in warnings and errors
     generateBundle: (_options, bundle) => {
@@ -17,7 +17,8 @@ export default function myExample({ stylesFileName, theme }) {
         key.startsWith(stylesFileName)
       )
       // get css string
-      let styles = stylesKey && bundle[stylesKey].source.toString().replace(/`/g, "'")
+      let styles =
+        stylesKey && bundle[stylesKey].source.toString().replace(/`/g, "'")
 
       // find all bundles which match placeholders %STYLES% and %THEME%
       for (let bundleName in bundle) {

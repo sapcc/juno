@@ -1,8 +1,8 @@
 // Policy engine inspired by openstack
-const { tokenize } = require("./lexer")
-const { parse } = require("./parser")
-const { evaluate } = require("./evaluator")
-const createDebugTrace = require("./debugTrace")
+import { tokenize } from "./lexer"
+import { parse } from "./parser"
+import { evaluate } from "./evaluator"
+import createDebugTrace from "./debugTrace"
 
 const isObject = (v) => v && typeof v === "object" && v.constructor === Object
 
@@ -98,4 +98,4 @@ class PolicyEngine {
   }
 }
 
-module.exports = PolicyEngine
+export default PolicyEngine

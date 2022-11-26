@@ -1,25 +1,45 @@
-import babel from "@rollup/plugin-babel"
-import del from "rollup-plugin-delete"
-import pkg from "./package.json"
-import minify from "rollup-plugin-babel-minify"
-import analyze from "rollup-plugin-analyzer"
+const del = require("rollup-plugin-delete")
+const pkg = require("./package.json")
+const analyze = require("rollup-plugin-analyzer")
+const terser = require("@rollup/plugin-terser")
+const babel = require("@rollup/plugin-babel")
+const fs = require("fs")
 
 if (!/.+\/.+\.js/.test(pkg.module))
   throw new Error(
     "module value is incorrect, use DIR/FILE.js like build/index.js"
   )
-const buildDir = pkg.module.slice(0, pkg.module.lastIndexOf("/"))
+
+const dirFileRegex = /(.+)\/([^/]+)/
+
+if (!dirFileRegex.test(pkg.module))
+  throw new Error(
+    'package.json: module not found or its format does not match "DIR/FILE.js"'
+  )
+
+const [_, srcDir, entryFilename] = pkg.source.match(dirFileRegex)
+const [__, buildDir, filename] = pkg.module.match(dirFileRegex)
+
+const input = {}
+
+// bundle every Component in separate file
+// it allows to import single components
+fs.readdirSync(`./${srcDir}/`).forEach((file) => {
+  // map source file to output file
+  let name = file === entryFilename ? filename : file
+  name = name.slice(0, name.indexOf("."))
+  console.log(file, name)
+  input[name] = `./${srcDir}/${file}`
+})
 
 const config = [
   {
-    input: pkg.source,
+    input,
     output: [
       {
-        file: pkg.module,
+        dir: buildDir,
         format: "esm",
-        preserveModules: false,
         compact: true,
-        sourcemap: true,
       },
     ],
     plugins: [
@@ -28,11 +48,11 @@ const config = [
         babelHelpers: "bundled",
       }),
       del({ targets: [`${buildDir}/**/*`] }),
-      minify({ comments: false }),
-      analyze(),
+      terser(),
+      analyze({ limit: 0, summaryOnly: true }),
     ],
     external: Object.keys(pkg.peerDependencies || {}),
   },
 ]
 
-export default config
+module.exports = config
