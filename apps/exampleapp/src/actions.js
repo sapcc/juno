@@ -33,7 +33,22 @@ const checkStatus = (response) => {
 export const fetchPeaks = ({ queryKey }) => {
   const [_key, endpoint, options] = queryKey
   const query = encodeUrlParamsFromObject(options)
-  return fetch(`${endpoint}/peaks.json?${query}`, {
+  return fetch(`${endpoint}/peaks?${query}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  })
+    .then(checkStatus)
+    .then((response) => {
+      return response.json()
+    })
+}
+
+export const fetchPeak = ({ queryKey }) => {
+  const [_key, endpoint, id] = queryKey
+  return fetch(`${endpoint}/peaks/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -51,6 +66,23 @@ export const createPeak = (endpoint, formState) => {
   const sendBody = JSON.stringify(formState)
   return fetch(`${endpoint}/peaks`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: sendBody,
+  })
+    .then(checkStatus)
+    .then((response) => {
+      return response.json()
+    })
+}
+
+export const updatePeak = (endpoint, id, formState) => {
+  // Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
+  const sendBody = JSON.stringify(formState)
+  return fetch(`${endpoint}/peaks/${id}`, {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",

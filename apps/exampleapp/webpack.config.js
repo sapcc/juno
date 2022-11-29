@@ -193,12 +193,29 @@ module.exports = (_, argv) => {
       // This option onBeforeSetupMiddleware allows us to serve a test json to see
       // how the react-query lib reacts
       onBeforeSetupMiddleware: function (devServer) {
-        devServer.app.get("/peaks.json", function (req, res) {
+        devServer.app.get("/peaks", function (req, res) {
           res.json(peaksData)
+        })
+        devServer.app.get("/peaks/:id", function (req, res) {
+          const index = peaksData.findIndex((item) => item.id == req.params.id)
+          if (index !== -1) {
+            return res.json(peaksData[index])
+          }
+          res.status(404)
+          res.json({ error: "404" })
         })
         devServer.app.post("/peaks", bodyParser.json(), function (req, res) {
           peaksData.push({ ...req.body, id: peaksData.pop()?.id + 1 || 1 })
           res.send(req.body)
+        })
+        devServer.app.put("/peaks/:id", bodyParser.json(), function (req, res) {
+          const index = peaksData.findIndex((item) => item.id == req.params.id)
+          if (index !== -1) {
+            peaksData[index] = req.body
+            return res.json(peaksData[index])
+          }
+          res.status(404)
+          res.json({ error: "404" })
         })
         devServer.app.delete("/peaks/:id", function (req, res) {
           const index = peaksData.findIndex((item) => item.id == req.params.id)

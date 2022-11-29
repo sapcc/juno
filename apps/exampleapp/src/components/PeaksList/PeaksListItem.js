@@ -10,18 +10,17 @@ const PeaksListItem = ({ peak }) => {
   const endpoint = useStore((state) => state.endpoint)
   const queryClient = useQueryClient()
 
-  const countries = useMemo(() => {
-    if (!peak.countries) return []
-    return peak.countries
-  }, [peak.countries])
-
   const { isLoading, isError, error, data, isSuccess, mutate } = useMutation(
     ({ endpoint, id }) => deletePeak(endpoint, id)
   )
 
   const handleEditPeakClick = () => {
     const urlState = currentState(urlStateKey)
-    push(urlStateKey, { ...urlState, currentModal: "EditPeaksItem" })
+    push(urlStateKey, {
+      ...urlState,
+      currentPanel: "EditPeaksItem",
+      peakId: peak.id,
+    })
   }
 
   const handleDeletePeakClick = () => {
@@ -50,9 +49,7 @@ const PeaksListItem = ({ peak }) => {
       <DataGridCell>{peak.height}</DataGridCell>
       <DataGridCell>{peak.mainrange}</DataGridCell>
       <DataGridCell>{peak.region}</DataGridCell>
-      <DataGridCell>
-        {countries.map((c, i) => c + (i < countries.length - 1 ? ", " : ""))}
-      </DataGridCell>
+      <DataGridCell>{peak.countries}</DataGridCell>
       <DataGridCell>
         {/* Use <Stack> to align and space elements: */}
         <Stack gap="1.5">

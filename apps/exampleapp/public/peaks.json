@@ -5,7 +5,7 @@
     "height": "4737m",
     "region": "Svanetsia",
     "mainrange": "Caucasus",
-    "countries": ["Georgia"],
+    "countries": "Georgia",
     "url": "https://en.wikipedia.org/wiki/Ushba"
   },
   {
@@ -14,7 +14,7 @@
     "height": "6814m",
     "region": "Khumbu",
     "mainrange": "Himalayas",
-    "countries": ["Nepal"],
+    "countries": "Nepal",
     "url": "https://en.wikipedia.org/wiki/Ama_Dablam"
   },
   {
@@ -23,7 +23,7 @@
     "height": "8516m",
     "region": "Khumbu",
     "mainrange": "Himalayas",
-    "countries": ["China", "Nepal"],
+    "countries": "China, Nepal",
     "url": "https://en.wikipedia.org/wiki/Lhotse"
   },
   {
@@ -32,7 +32,7 @@
     "height": "7861m",
     "region": "Khumbu",
     "mainrange": "Himalayas",
-    "countries": ["Nepal"],
+    "countries": "Nepal",
     "url": "https://en.wikipedia.org/wiki/Nuptse"
   },
   {
@@ -41,7 +41,7 @@
     "height": "4506m",
     "region": "Valais",
     "mainrange": "Swiss Alps",
-    "countries": ["Switzerland"],
+    "countries": "Switzerland",
     "url": "https://en.wikipedia.org/wiki/Weisshorn"
   },
   {
@@ -50,7 +50,7 @@
     "height": "4221m",
     "region": "Valais",
     "mainrange": "Swiss Alps",
-    "countries": ["Switzerland"],
+    "countries": "Switzerland",
     "url": "https://en.wikipedia.org/wiki/Zinalrothorn"
   }
 ]

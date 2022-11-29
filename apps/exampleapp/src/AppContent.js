@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,14 +11,18 @@ import {
   TabPanel,
 } from "juno-ui-components"
 import useStore from "./store"
+import { currentState, addOnChangeListener } from "url-state-provider"
 import ModalManager from "./components/ModalManager"
-import EditItemPanel from "./components/EditItemPanel"
+import PanelManager from "./components/PanelManager"
 import { useQuery } from "react-query"
 import { fetchPeaks } from "./actions"
 import PeaksList from "./components/PeaksList/PeaksList"
 
 const AppContent = (props) => {
   const endpoint = useStore((state) => state.endpoint)
+  const urlStateKey = useStore((state) => state.urlStateKey)
+  const [currentPanel, setCurrentPanel] = useState(null)
+  const [currentModal, setCurrentModal] = useState(null)
 
   const { isLoading, isError, data, error } = useQuery(
     ["peaks", endpoint, {}],
@@ -34,6 +38,20 @@ const AppContent = (props) => {
       // https://tanstack.com/query/v4/docs/guides/queries
     }
   )
+
+  // wait until the global state is set to fetch the url state
+  useEffect(() => {
+    const urlState = currentState(urlStateKey)
+    setCurrentPanel(urlState?.currentPanel)
+    setCurrentModal(urlState?.currentModal)
+  }, [urlStateKey])
+
+  // this listener reacts on any change on the url state
+  addOnChangeListener(urlStateKey, (newState) => {
+    console.log("addOnChangeListener: ", newState)
+    setCurrentPanel(newState?.currentPanel)
+    setCurrentModal(newState?.currentModal)
+  })
 
   return (
     <>
@@ -64,8 +82,7 @@ const AppContent = (props) => {
             {/* Loading indicator for page content */}
             {isLoading && <Spinner variant="primary" />}
 
-            {/* Edit an Item using a panel. TODO: show data for selected peak in panel, save changes to state(?) */}
-            <EditItemPanel />
+            <PanelManager currentPanel={currentPanel} />
 
             {/* Render List of Peaks: */}
             <PeaksList peaks={data} />
@@ -78,7 +95,7 @@ const AppContent = (props) => {
           </Container>
         </TabPanel>
       </MainTabs>
-      <ModalManager />
+      <ModalManager currentModal={currentModal} />
     </>
   )
 }
