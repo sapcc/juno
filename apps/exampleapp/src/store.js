@@ -11,16 +11,6 @@ const useStore = create(
     urlStateKey: "",
     setUrlStateKey: (newUrlStateKey) =>
       set((state) => ({ urlStateKey: newUrlStateKey })),
-
-    // Panels and Modals:
-    currentModal: null,
-    setCurrentModal: (modal) => set((state) => ({ currentModal: modal })),
-    closeModal: () => set((state) => ({ currentModal: null })),
-
-    // OLD Panel:
-    editItemPanelOpened: false, // state of the edit panel
-    openEditItemPanel: () => set((state) => ({ editItemPanelOpened: true })),
-    closeEditItemPanel: () => set((state) => ({ editItemPanelOpened: false })),
   }))
 )
 

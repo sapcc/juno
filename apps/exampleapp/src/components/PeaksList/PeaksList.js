@@ -18,10 +18,7 @@ const PeaksList = ({ peaks }) => {
     return peaks
   }, [peaks])
 
-  // const openNewItemModal = useStore((state) => state.setCurrentModal)
   const handleNewPeakClick = () => {
-    // openNewItemModal("NewPeaksItem")
-
     const urlState = currentState(urlStateKey)
     push(urlStateKey, { ...urlState, currentModal: "NewPeaksItem" })
   }

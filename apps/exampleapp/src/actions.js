@@ -45,3 +45,20 @@ export const fetchPeaks = ({ queryKey }) => {
       return response.json()
     })
 }
+
+export const createPeak = (endpoint, formState) => {
+  // Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
+  const sendBody = JSON.stringify(formState)
+  return fetch(`${endpoint}/peaks`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: sendBody,
+  })
+    .then(checkStatus)
+    .then((response) => {
+      return response.json()
+    })
+}

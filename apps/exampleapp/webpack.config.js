@@ -6,7 +6,8 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 const webpack = require("webpack")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const package = require("./package.json")
-const peaksData = require("./public/peaks.json")
+let peaksData = require("./public/peaks.json")
+const bodyParser = require("body-parser")
 
 const mainPath = (package.main || package.module || "build/index.js").split("/")
 const entryFile = mainPath.pop()
@@ -194,6 +195,10 @@ module.exports = (_, argv) => {
       onBeforeSetupMiddleware: function (devServer) {
         devServer.app.get("/peaks.json", function (req, res) {
           res.json(peaksData)
+        })
+        devServer.app.post("/peaks", bodyParser.json(), function (req, res) {
+          peaksData.push(req.body)
+          res.send(req.body)
         })
       },
       static: {

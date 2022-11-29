@@ -1,6 +1,7 @@
-import React, { useCallback } from "react"
+import React, { useMemo } from "react"
 import { DataGridCell, DataGridRow, Icon, Stack } from "juno-ui-components"
 import useStore from "../../store"
+import { currentState, push } from "url-state-provider"
 
 const PeaksListItem = ({
   name,
@@ -11,13 +12,17 @@ const PeaksListItem = ({
   url,
   ...props
 }) => {
-  const handleEditClick = () => {
-    openEditPanel()
-  }
+  const urlStateKey = useStore((state) => state.urlStateKey)
 
-  const openEditPanel = useStore(
-    useCallback((state) => state.openEditItemPanel)
-  )
+  countries = useMemo(() => {
+    if (!countries) return []
+    return countries
+  }, [countries])
+
+  const handleEditPeakClick = () => {
+    const urlState = currentState(urlStateKey)
+    push(urlStateKey, { ...urlState, currentModal: "EditPeaksItem" })
+  }
 
   return (
     <DataGridRow {...props}>
@@ -37,7 +42,7 @@ const PeaksListItem = ({
             icon="edit"
             size="18"
             className="leading-none"
-            onClick={handleEditClick}
+            onClick={handleEditPeakClick}
           />
           <Icon icon="deleteForever" size="18" className="leading-none" />
           <Icon

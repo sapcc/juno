@@ -29,7 +29,7 @@ const AppContent = (props) => {
       // enabled: !!endpoint,
       // If set to Infinity, the data will never be considered stale
       //  until a browser reload is triggered
-      staleTime: Infinity,
+      // staleTime: Infinity,
       // refer to this documentation to see more options
       // https://tanstack.com/query/v4/docs/guides/queries
     }
