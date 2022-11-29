@@ -205,7 +205,8 @@ module.exports = (_, argv) => {
           res.json({ error: "404" })
         })
         devServer.app.post("/peaks", bodyParser.json(), function (req, res) {
-          peaksData.push({ ...req.body, id: peaksData.pop()?.id + 1 || 1 })
+          const lastItemId = peaksData[peaksData.length - 1]?.id + 1 || 1
+          peaksData.push({ ...req.body, id: lastItemId })
           res.send(req.body)
         })
         devServer.app.put("/peaks/:id", bodyParser.json(), function (req, res) {

@@ -32,8 +32,9 @@ const PeaksList = ({ peaks }) => {
           label="Add a Peak"
         />
       </ContentAreaToolbar>
-      <DataGrid columns={6}>
+      <DataGrid columns={7}>
         <DataGridRow>
+          <DataGridHeadCell>#</DataGridHeadCell>
           <DataGridHeadCell>Name</DataGridHeadCell>
           <DataGridHeadCell>Height</DataGridHeadCell>
           <DataGridHeadCell>Main Range</DataGridHeadCell>
