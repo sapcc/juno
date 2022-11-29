@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeToggle } from './index.js';
+import { StyleProvider } from "../StyleProvider/index"
 import useTheme from "../../hooks/useTheme.js"
 
 export default {
@@ -35,7 +36,7 @@ const CustomTemplate = ({theme, ...args}) => {
 
 
 const HookTemplate = ({theme, ...args}) => {
-  const [currentTheme, toggleCurrentTheme] = useTheme()
+  const [currentTheme, toggleCurrentTheme] = useTheme("auto")
   return (
     <div className={"custom-container theme-" + currentTheme + customContainerStyles}>
       <ThemeToggle theme={currentTheme} onClick={toggleCurrentTheme} />
@@ -45,7 +46,11 @@ const HookTemplate = ({theme, ...args}) => {
 
 const StyleProviderTemplate = ({theme, ...args}) => {
   return (
-    <ThemeToggle />
+    <StyleProvider>
+      <div className={`${customContainerStyles}`} >
+        <ThemeToggle />
+      </div>
+    </StyleProvider>
   )
 }
 
@@ -83,7 +88,7 @@ WithHookInCustomContainer.parameters = {
       story: "A `<ThemeToggle/>` component inside a custom container that use the `useTheme` hook from Juno. This hook provides acces to `currentTheme` and a `toggleTheme` method. This hook will also store the currently selected theme in localStorage so it will persist across reloads. It can also be used to apply the current user system stetting when passed `theme={'auto'}`."
     },
     source: {
-      code: 'import useTheme from "juno-ui-components"\n\n const MyApp({ theme, ...props }) => {\n  const [ currentTheme, toggleCurrentTheme ] = useTheme("dark")\n\n  <div className={"container theme-" + currentTheme}\n    <ThemeToggle theme={currentTheme} onClick={toggleCurrentTheme} />\n  </div>\n\n}',
+      code: 'import useTheme from "juno-ui-components"\n\n const MyApp({ theme, ...props }) => {\n  const [ currentTheme, toggleCurrentTheme ] = useTheme("auto")\n\n  <div className={"container theme-" + currentTheme}\n    <ThemeToggle theme={currentTheme} onClick={toggleCurrentTheme} />\n  </div>\n\n}',
       language: "jsx",
       type: "code",
     }
@@ -91,13 +96,18 @@ WithHookInCustomContainer.parameters = {
 }
 
 export const WithStyleProvider = StyleProviderTemplate.bind({})
-WithStyleProvider.storyName = "With StyleProvider (Recommended)"
+WithStyleProvider.storyName = "WIP: With StyleProvider (Recommended)"
 WithStyleProvider.args = {}
 WithStyleProvider.parameters = {
   docs: {
     description: {
-      story: "WIP"
+      story: "WIP, not implemented yet"
     },
+    source: {
+      code: 'import { StyleProvider } from "juno-ui-components"\n\n  <StyleProvider theme={"auto"} >\n    <ThemeToggle />\n  </StyleProvider>',
+      language: "jsx",
+      type: "code",
+    }
   },
 }
 

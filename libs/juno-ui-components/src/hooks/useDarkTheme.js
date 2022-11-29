@@ -12,8 +12,7 @@ import React, { useState, useEffect } from 'react'
  * }
 */
 
-
-export const useDarkTheme = () => {
+export default function useDarkTheme() {
   const getUserTheme = () => window.matchMedia("(prefers-color-scheme: dark)").matches
   const [ isDarkTheme, setIsDarkTheme ] = useState(getUserTheme())
   
