@@ -1,7 +1,7 @@
-import del from "rollup-plugin-delete"
-import pkg from "./package.json"
-import minify from "rollup-plugin-babel-minify"
-import analyze from "rollup-plugin-analyzer"
+const del = require("rollup-plugin-delete")
+const pkg = require("./package.json")
+const minify = require("rollup-plugin-babel-minify")
+const analyze = require("rollup-plugin-analyzer")
 
 if (!/.+\/.+\.js/.test(pkg.module))
   throw new Error(
@@ -27,4 +27,4 @@ const config = [
   },
 ]
 
-export default config
+module.exports = config
