@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "name": "Ushba",
     "height": "4737m",
     "region": "Svanetsia",
@@ -8,6 +9,7 @@
     "url": "https://en.wikipedia.org/wiki/Ushba"
   },
   {
+    "id": 2,
     "name": "Ama Dablam",
     "height": "6814m",
     "region": "Khumbu",
@@ -16,6 +18,7 @@
     "url": "https://en.wikipedia.org/wiki/Ama_Dablam"
   },
   {
+    "id": 3,
     "name": "Lhotse",
     "height": "8516m",
     "region": "Khumbu",
@@ -24,6 +27,7 @@
     "url": "https://en.wikipedia.org/wiki/Lhotse"
   },
   {
+    "id": 4,
     "name": "Nuptse",
     "height": "7861m",
     "region": "Khumbu",
@@ -32,6 +36,7 @@
     "url": "https://en.wikipedia.org/wiki/Nuptse"
   },
   {
+    "id": 5,
     "name": "Weisshorn",
     "height": "4506m",
     "region": "Valais",
@@ -40,6 +45,7 @@
     "url": "https://en.wikipedia.org/wiki/Weisshorn"
   },
   {
+    "id": 6,
     "name": "Zinalrothorn",
     "height": "4221m",
     "region": "Valais",

@@ -44,16 +44,8 @@ const PeaksList = ({ peaks }) => {
 
         {/* Render items: */}
 
-        {peaks.map((peak, p) => (
-          <PeaksListItem
-            name={peak.name}
-            height={peak.height}
-            mainrange={peak.mainrange}
-            region={peak.region}
-            countries={peak.countries}
-            url={peak.url}
-            key={p}
-          />
+        {peaks.map((peak, index) => (
+          <PeaksListItem key={index} peak={peak} />
         ))}
       </DataGrid>
     </>

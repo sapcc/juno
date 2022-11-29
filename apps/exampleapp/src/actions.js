@@ -62,3 +62,17 @@ export const createPeak = (endpoint, formState) => {
       return response.json()
     })
 }
+
+export const deletePeak = (endpoint, id) => {
+  return fetch(`${endpoint}/peaks/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  })
+    .then(checkStatus)
+    .then((response) => {
+      return response.json()
+    })
+}

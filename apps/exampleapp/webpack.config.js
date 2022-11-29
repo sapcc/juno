@@ -197,8 +197,15 @@ module.exports = (_, argv) => {
           res.json(peaksData)
         })
         devServer.app.post("/peaks", bodyParser.json(), function (req, res) {
-          peaksData.push(req.body)
+          peaksData.push({ ...req.body, id: peaksData.pop()?.id + 1 || 1 })
           res.send(req.body)
+        })
+        devServer.app.delete("/peaks/:id", function (req, res) {
+          const index = peaksData.findIndex((item) => item.id == req.params.id)
+          if (index !== -1) {
+            peaksData.splice(index, 1)
+          }
+          res.send({ info: `DELETED element with id ${req.params.id}` })
         })
       },
       static: {
