@@ -120,7 +120,7 @@ describe("FilterInput", () => {
       { label: "Time Zone", value: "byTimezone" },
     ]
     render(<FilterInput options={filters} />)
-    userEvent.selectOptions(
+    await userEvent.selectOptions(
       screen.getByRole("combobox"),
       screen.getByRole("option", { name: "Time Zone" })
     )
@@ -137,7 +137,7 @@ describe("FilterInput", () => {
     ]
     render(<FilterInput options={filters} filterValue="MacOS" />)
     expect(screen.getByRole("textbox")).toHaveValue("MacOS")
-    userEvent.selectOptions(
+    await userEvent.selectOptions(
       screen.getByRole("combobox"),
       screen.getByRole("option", { name: "Region" })
     )
@@ -159,7 +159,7 @@ describe("FilterInput", () => {
       />
     )
     expect(screen.getByRole("option", { name: "Region" }).selected).toBe(true)
-    userEvent.selectOptions(
+    await userEvent.selectOptions(
       screen.getByRole("combobox"),
       screen.getByRole("option", { name: "OS" })
     )
@@ -189,7 +189,7 @@ describe("FilterInput", () => {
         onFilterValueChange={handleFilterValueChange}
       />
     )
-    userEvent.type(screen.getByRole("textbox"), "987")
+    await userEvent.type(screen.getByRole("textbox"), "987")
     expect(handleFilterValueChange).toHaveBeenCalledTimes(3)
   })
 
@@ -198,7 +198,7 @@ describe("FilterInput", () => {
     render(<FilterInput options={opts} filterValue="abc" />)
     expect(screen.getByTitle("Clear")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveValue("abc")
-    userEvent.click(screen.getByTitle("Clear"))
+    await userEvent.click(screen.getByTitle("Clear"))
     expect(screen.getByRole("textbox")).toHaveValue("")
   })
 
@@ -208,7 +208,7 @@ describe("FilterInput", () => {
     render(
       <FilterInput options={opts} filterValue="abc" onFilter={handleFilter} />
     )
-    userEvent.click(screen.getByTitle("Filter"))
+    await userEvent.click(screen.getByTitle("Filter"))
     expect(handleFilter).toHaveBeenCalledTimes(1)
     expect(handleFilter).toHaveBeenCalledWith("abc")
   })
@@ -219,7 +219,7 @@ describe("FilterInput", () => {
     render(
       <FilterInput options={opts} filterValue="abc" onFilter={handleFilter} />
     )
-    userEvent.type(screen.getByRole("textbox"), "{enter}")
+    await userEvent.type(screen.getByRole("textbox"), "{enter}")
     expect(handleFilter).toHaveBeenCalledTimes(1)
     expect(handleFilter).toHaveBeenCalledWith("abc")
   })

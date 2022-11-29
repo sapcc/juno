@@ -22,25 +22,33 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.4.3",
+    "babel-jest": "^29.3.1",
     "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
     "jest-esm-transformer": "^1.0.0",
-    "prop-types": "*",
+    "jsdom": "^18.0.0",
+    "lz-string": "^1.4.4",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-test-renderer": "^18.2.0",
     "rollup": "^3.4.0",
     "rollup-plugin-analyzer": "^4.0.0",
-    "rollup-plugin-babel-minify": "^10.0.0",
     "rollup-plugin-delete": "^2.0.0",
     "url-state-provider": "workspace:*"
   },
   "scripts": {
-    "build": "NODE_ENV=production rollup -c",
-    "test": "NODE_ENV=test yarn jest --watchAll"
+    "test": "jest",
+    "build": "NODE_ENV=production rollup -c"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
   },
   "jest": {
+    "verbose": true,
     "transform": {
-      "\\.m?jsx?$": "jest-esm-transformer"
+      "\\.[jt]sx?$": "babel-jest"
     }
   }
 }
