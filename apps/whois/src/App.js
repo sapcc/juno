@@ -9,6 +9,9 @@ import SearchingIndicator from "./img/Loading_Animation.svg"
 
 import { Button, Message, PageHeader, Stack } from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
+import styles from "./styles.scss"
+import StyleProvider from "juno-ui-components"
+
 const URL_STATE_KEY = "whois"
 
 const contentClasses = ({ resultsShown }) => {
@@ -163,4 +166,17 @@ const App = (props) => {
   )
 }
 
-export default App
+const StyledApp = (props) => {
+  return (
+    <StyleProvider
+      stylesWrapper="shadowRoot"
+      theme={`${props.theme ? props.theme : "theme-dark"}`}
+    >
+      {/* load styles inside the shadow dom */}
+      <style>{styles.toString()}</style>
+      <App {...props} />
+    </StyleProvider>
+  )
+}
+
+export default StyledApp

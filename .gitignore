@@ -16,6 +16,7 @@ node_modules
 /coverage
 
 # production
+build
 /build
 /ci/pipeline.yaml
 # yarn.lock

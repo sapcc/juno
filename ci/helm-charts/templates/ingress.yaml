@@ -8,6 +8,8 @@ metadata:
     # disable the idle http timeout check
     # https://operations.global.cloud.sap/docs/support/playbook/kubernetes/idle_http_keep_alive_timeout.html
     cloud.sap/no-http-keep-alive-monitor: "true"
+    ingress.kubernetes.io/cors-allow-origin: '*'
+    ingress.kubernetes.io/enable-cors: "true"
   # labels:
   #   app: juno
   name: juno

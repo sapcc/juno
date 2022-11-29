@@ -1,23 +1,32 @@
-import babel from "@rollup/plugin-babel"
-import del from "rollup-plugin-delete"
-import postcss from "rollup-plugin-postcss"
-import pkg from "./package.json"
+const babel = require("@rollup/plugin-babel")
+const del = require("rollup-plugin-delete")
+const postcss = require("rollup-plugin-postcss")
+const pkg = require("./package.json")
 const fs = require("fs")
-import minify from "rollup-plugin-babel-minify"
-import analyze from "rollup-plugin-analyzer"
-import { nodeResolve } from "@rollup/plugin-node-resolve"
-import svgr from "@svgr/rollup"
+const minify = require("rollup-plugin-babel-minify")
+const analyze = require("rollup-plugin-analyzer")
+const { nodeResolve } = require("@rollup/plugin-node-resolve")
+const svgr = require("@svgr/rollup")
 
-import parseStyles from "./rollup-plugin-styles-parser"
+const parseStyles = require("./rollup-plugin-styles-parser")
+
+// IMPORTANT!
+// package.json is single source of truth policy
 
 if (!/.+\/.+\.js/.test(pkg.module))
   throw new Error(
     "module value is incorrect, use DIR/FILE.js like build/index.js"
   )
 const buildDir = pkg.module.slice(0, pkg.module.lastIndexOf("/"))
+// filename is extracted from module key in package.json
+// because of single source of truth policy
+const filename = pkg.module.slice(
+  pkg.module.lastIndexOf("/") + 1,
+  pkg.module.lastIndexOf(".")
+)
 
 const input = {
-  index: pkg.source,
+  [filename]: pkg.source,
 }
 
 fs.readdirSync("./src/components").forEach((file) => {
@@ -61,10 +70,13 @@ const config = [
         theme: require("./tailwind.config").theme,
       }),
       minify({ comments: false }),
-      analyze({ skipFormatted: process.env.NODE_ENV === "production" }),
+      analyze({
+        summaryOnly: true,
+        limit: 0,
+      }),
     ],
     external: Object.keys(pkg.peerDependencies || {}),
   },
 ]
 
-export default config
+module.exports = config

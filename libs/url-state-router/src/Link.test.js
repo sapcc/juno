@@ -6,7 +6,7 @@ import React from "react"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { renderHook } from "@testing-library/react-hooks"
-import { useRouter } from "."
+import { useRouter } from "./RouterContext"
 import Router from "./Router"
 import Link from "./Link"
 
@@ -26,11 +26,13 @@ describe("Link", () => {
     }).not.toThrow()
   })
 
-  it("navigate on click", () => {
+  it("navigate on click", async () => {
     const wrapper = ({ children }) => <Router stateID="app">{children}</Router>
     const { result } = renderHook(() => useRouter(), { wrapper })
 
-    userEvent.click(screen.getByText("My Link"))
+    const link = await screen.getByText("My Link")
+    await userEvent.click(link)
+
     expect(result.current.currentPath).toEqual("/items/10")
   })
 })

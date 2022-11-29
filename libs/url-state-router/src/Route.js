@@ -1,7 +1,6 @@
 import React from "react"
 import { useMemo, createElement } from "react"
-import { useRouter } from "."
-import { RouterContext } from "./RouterContext"
+import { useRouter, RouterContext } from "./RouterContext"
 import routeMatcher from "./routeMatcher"
 import PropTypes from "prop-types"
 

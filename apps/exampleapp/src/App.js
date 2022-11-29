@@ -5,30 +5,32 @@ import ModalManager from "./components/ModalManager"
 import EditItemPanel from "./components/EditItemPanel"
 import PeaksList from "./components/PeaksList/PeaksList"
 
-import { 
-  AppShell, 
-  Breadcrumb, 
-  BreadcrumbItem, 
-  Button, 
-  ContentAreaToolbar, 
-  Container, 
+import {
+  AppShell,
+  Breadcrumb,
+  BreadcrumbItem,
+  Button,
+  ContentAreaToolbar,
+  Container,
   DataGrid,
   DataGridCell,
   DataGridHeadCell,
   DataGridRow,
   DataGridToolbar,
   Icon,
-  IntroBox, 
-  Message, 
-  Spinner, 
-  MainTabs, 
+  IntroBox,
+  Message,
+  Spinner,
+  MainTabs,
   Modal,
   Stack,
-  Tab, 
-  TabList, 
-  TabPanel, 
-} 
-from "juno-ui-components"
+  Tab,
+  TabList,
+  TabPanel,
+} from "juno-ui-components"
+
+import styles from "./styles.scss"
+import StyleProvider from "juno-ui-components"
 
 import { currentState, push } from "url-state-provider"
 /* IMPORTANT: Replace this with your app's name */
@@ -99,14 +101,14 @@ const App = (props) => {
       <Breadcrumb>
         <BreadcrumbItem icon="home" label="Example App Home" />
       </Breadcrumb>
-      
+
       {/* Modularize? -> create views/pages?*/}
       <MainTabs>
         <TabList>
           <Tab>Peaks</Tab>
           <Tab>Tab Two</Tab>
         </TabList>
-        
+
         <TabPanel>
           {/* You'll normally want to use a Container as a wrapper for your content because it has padding that makes everything look nice */}
           <Container py>
@@ -118,30 +120,50 @@ const App = (props) => {
             {error && (
               <Message variant="danger">
                 {error}
-                {statusCode === 404 && <>Custom error message for status code 404</>}
+                {statusCode === 404 && (
+                  <>Custom error message for status code 404</>
+                )}
               </Message>
             )}
             {/* Loading indicator for page content */}
             {processing && <Spinner variant="primary" />}
-            
+
             {/* Edit an Item using a panel. TODO: show data for selected peak in panel, save changes to state(?) */}
             <EditItemPanel />
-            
+
             {/* Render List of Peaks: */}
             <PeaksList />
-            
           </Container>
         </TabPanel>
         <TabPanel>
           <Container py>
-            Content Panel two. Normally you will probably want to put the TabPanel content into separate components.
+            Content Panel two. Normally you will probably want to put the
+            TabPanel content into separate components.
           </Container>
         </TabPanel>
-
       </MainTabs>
       <ModalManager />
     </AppShell>
   )
 }
 
-export default App
+const StyledApp = (props) => {
+  // default props
+  props = {
+    endpoint: process.env.ENDPOINT,
+    theme: process.env.THEME,
+    embedded: process.env.EMBEDDED,
+    ...props,
+  }
+  return (
+    <StyleProvider
+      stylesWrapper="shadowRoot"
+      theme={`${props.theme ? props.theme : "theme-dark"}`}
+    >
+      {/* load styles inside the shadow dom */}
+      <style>{styles.toString()}</style>
+      <App {...props} />
+    </StyleProvider>
+  )
+}
+export default StyledApp

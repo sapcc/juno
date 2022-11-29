@@ -10,6 +10,8 @@ import {
   useMessagesDispatch,
 } from "./components/MessagesProvider"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import styles from "./styles.scss"
+import StyleProvider from "juno-ui-components"
 
 const App = (props) => {
   const dispatch = useDispatch()
@@ -55,10 +57,29 @@ const App = (props) => {
   )
 }
 
-export default (props) => (
-  <StateProvider reducers={reducers}>
-    <MessagesStateProvider>
-      <App {...props} />
-    </MessagesStateProvider>
-  </StateProvider>
-)
+const StyledApp = (props) => {
+  // default props
+  props = {
+    issuerurl: process.env.OIDC_ISSUER_URL,
+    clientid: process.env.OIDC_CLIENTID,
+    endpoint: process.env.ENDPOINT,
+    ...props,
+  }
+
+  return (
+    <StyleProvider
+      stylesWrapper="shadowRoot"
+      theme={`${props.theme ? props.theme : "theme-dark"}`}
+    >
+      {/* load styles inside the shadow dom */}
+      <style>{styles.toString()}</style>
+      <StateProvider reducers={reducers}>
+        <MessagesStateProvider>
+          <App {...props} />
+        </MessagesStateProvider>
+      </StateProvider>
+    </StyleProvider>
+  )
+}
+
+export default StyledApp

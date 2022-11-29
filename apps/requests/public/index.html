@@ -1,14 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" href="favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
     <title>Requests Dev</title>
+    <style>
+      html {
+        height: 100vh;
+      }
+      body {
+        height: 100vh;
+        margin: 0;
+        background: rgb(13, 20, 28);
+      }
+      #root {
+        height: 100vh;
+      }
+    </style>
   </head>
   <body>
-    <div id="dev"></div>
-    <div style="display: flex">
-      <div style="flex-grow: 1" id="root"></div>
-      <div style="flex-grow: 0" id="root2"></div>
-    </div>
+    <script type="module">
+      const mainFilename = "<%= MAIN_FILENAME %>"
+
+      import(`./${mainFilename}`).then((app) =>
+        app.mount(document.getElementById("root"))
+      )
+    </script>
+
+    <div id="root"></div>
   </body>
 </html>

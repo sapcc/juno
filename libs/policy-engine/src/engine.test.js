@@ -1,4 +1,4 @@
-const PolicyEngine = require("./engine")
+import PolicyEngine from "./engine.js"
 
 const policyConfig = {
   project_parent: "not null:%(target.project.parent_id)s",
@@ -98,7 +98,7 @@ describe("policy engine", () => {
   })
 
   describe("policy check", () => {
-    let policy
+    let policy, engine
     beforeEach(() => {
       engine = new PolicyEngine(policyConfig)
       policy = engine.policy(tokenPayload)
@@ -273,7 +273,7 @@ describe("policy engine", () => {
 
   describe("debug", () => {
     console.log = jest.fn()
-    let policy
+    let policy, engine
     beforeEach(() => {
       engine = new PolicyEngine(policyConfig)
       policy = engine.policy(tokenPayload, { debug: true })

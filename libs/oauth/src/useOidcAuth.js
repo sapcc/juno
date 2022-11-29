@@ -219,7 +219,7 @@ const useOidcAuth = (options) => {
   if (!clientID || !issuerURL) {
     const error =
       "clientID or issuerURL are undefined. Please provide a clientID and issuerURL."
-    console.warn(error)
+    //console.warn(error)
     result.error = error
   }
 
