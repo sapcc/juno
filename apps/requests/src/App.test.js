@@ -1,9 +1,12 @@
 import React from "react"
-import { render, screen } from "@testing-library/react"
+import { render } from "@testing-library/react"
+// support shadow dom queries
+// https://reactjsexample.com/an-extension-of-dom-testing-library-to-provide-hooks-into-the-shadow-dom/
+import { screen } from "shadow-dom-testing-library"
 import App from "./App"
 
-test("renders learn react link", () => {
+test("renders app", () => {
   render(<App />)
-  const greetings = screen.getByText(/Designate/i)
-  expect(greetings).toBeInTheDocument()
+  const loginTitle = screen.queryAllByShadowText(/Requests/i)
+  expect(loginTitle.length > 0).toBe(true)
 })

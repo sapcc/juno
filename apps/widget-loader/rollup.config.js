@@ -16,9 +16,6 @@ const config = [
       {
         file: pkg.module,
         format: "esm",
-        preserveModules: false,
-        compact: true,
-        sourcemap: true,
       },
     ],
     plugins: [

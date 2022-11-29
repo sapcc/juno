@@ -22,7 +22,7 @@ const App = (props) => {
   })
 
   useEffect(() => {
-    if (!auth) return null
+    if (!auth) return
     if (auth?.error) {
       setMessage({
         variant: "error",

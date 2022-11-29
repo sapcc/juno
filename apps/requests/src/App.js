@@ -7,6 +7,7 @@ import NewRequest from "./components/New"
 import { ClientProvider } from "./lib/clientProvider"
 import { PolicyProvider } from "./lib/policyProvider"
 import StateProvider from "./lib/stateProvider"
+import StyleProvider from "juno-ui-components"
 import styles from "./styles.css"
 
 import {

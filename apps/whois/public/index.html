@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Whois</title>
-    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" href="favicon.ico" sizes="any" />
     <style>
       html {
         height: 100vh;
@@ -19,7 +19,14 @@
     </style>
   </head>
   <body>
+    <script type="module">
+      const mainFilename = "<%= MAIN_FILENAME %>"
+
+      import(`./${mainFilename}`).then((app) =>
+        app.mount(document.getElementById("root"))
+      )
+    </script>
+
     <div id="root"></div>
-    <div id="dev"></div>
   </body>
 </html>

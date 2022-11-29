@@ -1,61 +1,21 @@
-const loader = require("./loader")
+import "./index.js"
 
-describe("load", () => {
-  test("loader is defined", () => {
-    expect(loader).toBeDefined()
-  })
+const script = document.createElement("script")
+script.setAttribute("data-url", "https://localhost")
+script.src = "https://test.com"
 
-  test("loader.load is defined", () => {
-    expect(loader.load).toBeDefined()
-  })
+delete document.currentScript
+Object.defineProperty(document, "currentScript", {
+  value: script,
+})
+// const warn = jest.spyOn(global.console, "warn")
+global.console.warn = jest.fn()
 
-  describe("add widget script tag", () => {
-    let currentScript
-    beforeEach(() => {
-      jest.clearAllMocks()
-      document.getElementsByTagName("html")[0].innerHTML = ""
-      currentScript = document.createElement("script")
-      currentScript.defer = true
-      currentScript.src = "/app.js"
-      currentScript.setAttribute("data-url", "/auth/0_0_1/remoteEntry.js")
-      currentScript.setAttribute("data-name", "auth/widget")
-      document.body.appendChild(currentScript)
-    })
-
-    test("wrapper has been called", () => {
-      const spy = jest.spyOn(document, "createElement")
-      loader.load(currentScript)
-      expect(spy).toHaveBeenCalledWith("div")
-    })
-
-    test("document contains added widget script", () => {
-      const scripts = document.getElementsByTagName("script")
-      let script
-      for (let i = 0; i < scripts.length; i++) {
-        if (scripts[i].src === "http://localhost/app.js") script = scripts[i]
-      }
-      expect(script).toBeDefined()
-    })
-
-    test("widget script was replaced with wrapper", () => {
-      loader.load(currentScript)
-      const scripts = document.getElementsByTagName("script")
-      let script
-      for (let i = 0; i < scripts.length; i++) {
-        if (scripts[i].src === "http://localhost/app.js") script = scripts[i]
-      }
-      expect(script).not.toBeDefined()
-    })
-
-    test("app script was added", () => {
-      loader.load(currentScript)
-      const scripts = document.getElementsByTagName("script")
-      let script
-      for (let i = 0; i < scripts.length; i++) {
-        if (scripts[i].src === "http://localhost/auth/0_0_1/remoteEntry.js")
-          script = scripts[i]
-      }
-      expect(script).toBeDefined()
-    })
+describe("window.__junoWidgetLoader", () => {
+  test("window.__junoWidgetLoader is defined", async () => {
+    expect(window.__junoWidgetLoader).toBeDefined()
+    expect(console.warn).toHaveBeenCalledWith(
+      expect.stringContaining("Cannot find module 'https://localhost")
+    )
   })
 })

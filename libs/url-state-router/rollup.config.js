@@ -24,13 +24,15 @@ const input = {}
 
 // bundle every Component in separate file
 // it allows to import single components
-fs.readdirSync(`./${srcDir}/`).forEach((file) => {
-  // map source file to output file
-  let name = file === entryFilename ? filename : file
-  name = name.slice(0, name.indexOf("."))
-  console.log(file, name)
-  input[name] = `./${srcDir}/${file}`
-})
+fs.readdirSync(`./${srcDir}/`)
+  .filter((f) => !/.*\.test\..*/.test(f))
+  .forEach((file) => {
+    // map source file to output file
+    let name = file === entryFilename ? filename : file
+    name = name.slice(0, name.indexOf("."))
+    console.log(file, name)
+    input[name] = `./${srcDir}/${file}`
+  })
 
 const config = [
   {

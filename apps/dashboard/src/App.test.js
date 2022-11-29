@@ -1,5 +1,8 @@
 import React from "react"
-import { render, screen } from "@testing-library/react"
+import { render } from "@testing-library/react"
+// support shadow dom queries
+// https://reactjsexample.com/an-extension-of-dom-testing-library-to-provide-hooks-into-the-shadow-dom/
+import { screen } from "shadow-dom-testing-library"
 import App from "./App"
 
 jest.mock("./lib/pages-loader", () => ({
@@ -15,8 +18,9 @@ jest.mock("./lib/pages-loader", () => ({
 }))
 
 test("renders Converged Cloud heading", async () => {
-  render(<App />)
-  console.log(screen)
-  const text = await screen.getByAltText(/Converged Cloud/i)
+  const { debug } = render(<App />)
+  // debug()
+
+  const text = await screen.getByShadowAltText(/Converged Cloud/i)
   expect(text).toBeInTheDocument()
 })

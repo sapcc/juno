@@ -7,18 +7,30 @@
   "module": "build/index.js",
   "scripts": {
     "build": "NODE_ENV=production rollup -c",
-    "start": "serve -l tcp://0.0.0.0:${WIDGET_LOADER_PORT:-APP_PORT} -s src"
+    "start": "serve -l tcp://0.0.0.0:${WIDGET_LOADER_PORT:-APP_PORT} -s src",
+    "test": "jest"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
+    "babel-jest": "^29.3.1",
+    "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
     "rollup": "^3.4.0",
     "rollup-plugin-analyzer": "^4.0.0",
     "rollup-plugin-babel-minify": "^10.0.0",
     "rollup-plugin-delete": "^2.0.0"
   },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "setupFiles": [
-      "./setupTests.js"
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
     ]
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "jsdom",
+    "transform": {
+      "\\.[jt]sx?$": "babel-jest"
+    }
   }
 }

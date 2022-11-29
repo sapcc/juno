@@ -75,7 +75,7 @@ window.__junoWidgetLoader =
         const mount = app.mount || app.default
         mount(appWrapper, { props: appProps })
       })
-      .catch((error) => console.log(error))
+      .catch((error) => console.warn(error.message))
     currentScript.replaceWith(appWrapper)
   }
 
