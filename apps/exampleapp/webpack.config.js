@@ -5,6 +5,7 @@ const webpack = require("webpack")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const pkg = require("./package.json")
 const outputRegex = /(.+)\/([^/]+)/
+const apiServer = require("./apiserver.config")
 
 if (!pkg.source)
   throw new Error(
@@ -166,6 +167,7 @@ module.exports = (_, argv) => {
 
     //Config for webpack-dev-server module version 4.x
     devServer: {
+      onBeforeSetupMiddleware: apiServer.getHandlers(),
       static: {
         directory: path.resolve(__dirname, "dist"),
       },

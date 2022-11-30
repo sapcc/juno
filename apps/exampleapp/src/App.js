@@ -1,31 +1,11 @@
 import React from "react"
 
-import {
-  AppShell,
-  Breadcrumb,
-  BreadcrumbItem,
-  Button,
-  ContentAreaToolbar,
-  Container,
-  DataGrid,
-  DataGridCell,
-  DataGridHeadCell,
-  DataGridRow,
-  DataGridToolbar,
-  Icon,
-  IntroBox,
-  Message,
-  Spinner,
-  MainTabs,
-  Modal,
-  Stack,
-  Tab,
-  TabList,
-  TabPanel,
-} from "juno-ui-components"
-
+import useStore from "./store"
+import { AppShell } from "juno-ui-components"
+import { QueryClient, QueryClientProvider } from "react-query"
 import styles from "./styles.scss"
 import StyleProvider from "juno-ui-components"
+import AppContent from "./AppContent"
 
 // IMPORTANT: Replace this with your app's name
 const URL_STATE_KEY = "exampleapp"
@@ -46,58 +26,15 @@ const App = (props) => {
   }, [])
 
   return (
-    <AppShell
-      pageHeader="Converged Cloud | Example App"
-      contentHeading="Example App"
-      embedded={embedded === "true"}
-    >
-      {/* TODO: use routes, create another page */}
-      <Breadcrumb>
-        <BreadcrumbItem icon="home" label="Example App Home" />
-      </Breadcrumb>
-
-      {/* Modularize? -> create views/pages?*/}
-      <MainTabs>
-        <TabList>
-          <Tab>Peaks</Tab>
-          <Tab>Tab Two</Tab>
-        </TabList>
-
-        <TabPanel>
-          {/* You'll normally want to use a Container as a wrapper for your content because it has padding that makes everything look nice */}
-          <Container py>
-            {/* Set the background graphic using tailwind background image syntax as below. The image must exist at the specified location in your app */}
-            {/*<IntroBox variant="hero" heroImage="bg-[url('img/app_bg_example.svg')]">
-              This is the fancy introbox variant for apps that have some app specific flavor branding with a special background graphic.
-            </IntroBox> */}
-            {/* Messages always at the top of the content area or if there is a hero introbox directly underneath that */}
-            {error && (
-              <Message variant="danger">
-                {error}
-                {statusCode === 404 && (
-                  <>Custom error message for status code 404</>
-                )}
-              </Message>
-            )}
-            {/* Loading indicator for page content */}
-            {processing && <Spinner variant="primary" />}
-
-            {/* Edit an Item using a panel. TODO: show data for selected peak in panel, save changes to state(?) */}
-            <EditItemPanel />
-
-            {/* Render List of Peaks: */}
-            <PeaksList />
-          </Container>
-        </TabPanel>
-        <TabPanel>
-          <Container py>
-            Content Panel two. Normally you will probably want to put the
-            TabPanel content into separate components.
-          </Container>
-        </TabPanel>
-      </MainTabs>
-      <ModalManager />
-    </AppShell>
+    <QueryClientProvider client={queryClient}>
+      <AppShell
+        pageHeader="Converged Cloud | Example App"
+        contentHeading="Example App"
+        embedded={embedded === "true"}
+      >
+        <AppContent props={props} />
+      </AppShell>
+    </QueryClientProvider>
   )
 }
 

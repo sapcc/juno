@@ -18,6 +18,7 @@
     "babel-jest": "^29.3.1",
     "babel-loader": "^8.2.3",
     "babel-plugin-macros": "^3.1.0",
+    "body-parser": "^1.20.1",
     "buffer": "^6.0.3",
     "bundle-loader": "^0.5.6",
     "clean-webpack-plugin": "^4.0.0",
@@ -43,6 +44,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-json-view": "^1.21.3",
+    "react-query": "3.39.2",
     "react-refresh": "^0.10.0",
     "react-test-renderer": "^18.2.0",
     "sass-loader": "^12.4.0",
@@ -70,6 +72,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-json-view": "^1.21.3",
+    "react-query": "3.39.2",
     "url-state-provider": "*",
     "zustand": "^4.1.1"
   }
