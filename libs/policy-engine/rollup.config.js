@@ -1,7 +1,11 @@
-import del from "rollup-plugin-delete"
-import pkg from "./package.json"
-import minify from "rollup-plugin-babel-minify"
-import analyze from "rollup-plugin-analyzer"
+const terser = require("@rollup/plugin-terser")
+const del = require("rollup-plugin-delete")
+const analyze = require("rollup-plugin-analyzer")
+const fs = require("fs")
+let pkg = JSON.parse(fs.readFileSync("./package.json"))
+
+// IMPORTANT!
+// package.json is single source of truth policy
 
 if (!/.+\/.+\.js/.test(pkg.main))
   throw new Error(
@@ -22,24 +26,21 @@ const config = [
         file: pkg.main,
         name: pkg.name,
         format: "cjs",
-        sourcemap: true,
         compact: true,
       },
       {
         file: pkg.module,
         format: "esm",
-        preserveModules: false,
         compact: true,
-        sourcemap: true,
       },
     ],
     plugins: [
-      del({ targets: [`${mainBuildDir}/**/*`, `${moduleBuildDir}/**/*`] }),
-      minify({ comments: false }),
-      analyze(),
+      terser(),
+      del({ targets: [moduleBuildDir, mainBuildDir] }),
+      analyze({ summaryOnly: true, limit: 0 }),
     ],
     external: Object.keys(pkg.peerDependencies || {}),
   },
 ]
 
-export default config
+module.exports = config

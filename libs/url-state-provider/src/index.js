@@ -1,4 +1,4 @@
-var LZString = require("lz-string")
+import LZString from "lz-string"
 
 var SEARCH_KEY = "__s"
 var STATE_KEY = "__url_state_provider"
@@ -231,7 +231,7 @@ function registerConsumer(stateID) {
   }
 }
 
-module.exports = {
+export {
   currentState,
   push,
   replace,

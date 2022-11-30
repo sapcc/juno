@@ -13,6 +13,9 @@ import {
   Message,
   Spinner,
 } from "juno-ui-components"
+import styles from "./styles.scss"
+import StyleProvider from "juno-ui-components"
+
 import { currentState, push } from "url-state-provider"
 /* IMPORTANT: Replace this with your app's name */
 const URL_STATE_KEY = "keymanager"
@@ -85,15 +88,17 @@ const App = (props) => {
       <Container>
         {/* Set the background graphic using tailwind background image syntax as below. The image must exist at the specified location in your app */}
         <IntroBox variant="hero" heroImage="bg-[url('img/app_bg_example.svg')]">
-          This is the fancy introbox variant for apps that have some app specific
-          flavor branding with a special background graphic.
+          This is the fancy introbox variant for apps that have some app
+          specific flavor branding with a special background graphic.
         </IntroBox>
         {/* Messages always at the top of the content area or if there is a hero introbox directly underneath that */}
         <Message>Welcome to the example app</Message>
         {error && (
           <Message variant="danger">
             {error}
-            {statusCode === 404 && <>Custom error message for status code 404</>}
+            {statusCode === 404 && (
+              <>Custom error message for status code 404</>
+            )}
           </Message>
         )}
         {/* Loading indicator for page content */}
@@ -122,4 +127,26 @@ const App = (props) => {
   )
 }
 
-export default App
+const StyledApp = (props) => {
+  // default props
+  props = {
+    endpoint: process.env.ENDPOINT,
+    theme: process.env.THEME,
+    embedded: process.env.EMBEDDED,
+    authToken: "TEST",
+    ...props,
+  }
+
+  return (
+    <StyleProvider
+      stylesWrapper="shadowRoot"
+      theme={`${props.theme ? props.theme : "theme-dark"}`}
+    >
+      {/* load styles inside the shadow dom */}
+      <style>{styles.toString()}</style>
+      <App {...props} />
+    </StyleProvider>
+  )
+}
+
+export default StyledApp

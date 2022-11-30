@@ -4,9 +4,9 @@
 
 import React from "react"
 import { renderHook } from "@testing-library/react-hooks"
-import { useRouter } from "."
-import Router from "./Router"
-import Redirect from "./Redirect"
+import { useRouter } from "./RouterContext"
+import Router from "./Router.js"
+import Redirect from "./Redirect.js"
 
 describe("Redirect", () => {
   it("redirects", () => {

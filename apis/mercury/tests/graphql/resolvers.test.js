@@ -1,6 +1,6 @@
 const db = require("../../src/db/models")
 const resolvers = require("../../src/graphql/resolvers")
-const policyEngine = require("policy-engine")(
+const policyEngine = require("policy-engine").default(
   require("../../config/policy.json")
 )
 

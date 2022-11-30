@@ -1,4 +1,4 @@
-const { tokenize } = require("./lexer")
+import { tokenize } from "./lexer"
 
 describe("lexer tokenize", () => {
   let result

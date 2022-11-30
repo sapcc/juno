@@ -76,8 +76,6 @@ const Home = () => {
     setUsersPaginationOptions({ ...usersPaginationOptions, offset: offset })
   }
 
-  console.log("HOME: ", services)
-
   return (
     <Container px={false}>
       <div className={DetailSection}>

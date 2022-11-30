@@ -1,4 +1,4 @@
-const { evaluate } = require("./evaluator")
+import { evaluate } from "./evaluator"
 const rules = { admin: () => true }
 const getRule = (n) => rules[n]
 
