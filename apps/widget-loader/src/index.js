@@ -48,12 +48,12 @@ window.__junoWidgetLoader =
 
     // TODO: fetch manifest from assets server to get the right path
     const currentURL = new URL(currentScript.src)
-
+    // console.log("==================", currentURL)
     const { name, version, url, debug, ...props } = currentScript.dataset
 
     const appURL = url
       ? new URL(url)
-      : new URL(window.location.origin + `/${name}/${version}/index.js`)
+      : new URL(currentURL.origin + `/${name}/${version}/index.js`)
 
     if (debug) {
       console.log("===WIDGET LOADER")
