@@ -188,13 +188,13 @@ export const TextInputRow = ({
     if (onChange) onChange(event)
   }
 
-  const handleFocus = () => {
+  const handleFocus = (event) => {
     setFocus(true)
-    if (onFocus) onFocus()
+    if (onFocus) onFocus(event)
   }
-  const handleBlur = () => {
+  const handleBlur = (event) => {
     setFocus(false)
-    if (onBlur) onBlur()
+    if (onBlur) onBlur(event)
   }
 
   /* check whether the label is minimized (either has focus and / or has a value) */
