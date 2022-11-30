@@ -11,7 +11,7 @@ import {
   TabPanel,
 } from "juno-ui-components"
 import useStore from "./store"
-import { currentState, addOnChangeListener } from "url-state-provider"
+import { currentState, push, addOnChangeListener } from "url-state-provider"
 import ModalManager from "./components/ModalManager"
 import PanelManager from "./components/PanelManager"
 import { useQuery } from "react-query"
@@ -23,6 +23,7 @@ const AppContent = (props) => {
   const urlStateKey = useStore((state) => state.urlStateKey)
   const [currentPanel, setCurrentPanel] = useState(null)
   const [currentModal, setCurrentModal] = useState(null)
+  const [tabIndex, setTabIndex] = useState(0)
 
   const { isLoading, isError, data, error } = useQuery(
     ["peaks", endpoint, {}],
@@ -44,14 +45,20 @@ const AppContent = (props) => {
     const urlState = currentState(urlStateKey)
     setCurrentPanel(urlState?.currentPanel)
     setCurrentModal(urlState?.currentModal)
+    if (urlState?.tabIndex) setTabIndex(urlState?.tabIndex)
   }, [urlStateKey])
 
   // this listener reacts on any change on the url state
   addOnChangeListener(urlStateKey, (newState) => {
-    console.log("addOnChangeListener: ", newState)
     setCurrentPanel(newState?.currentPanel)
     setCurrentModal(newState?.currentModal)
   })
+
+  const onTabSelected = (index) => {
+    setTabIndex(index)
+    const urlState = currentState(urlStateKey)
+    push(urlStateKey, { ...urlState, tabIndex: index })
+  }
 
   return (
     <>
@@ -60,7 +67,7 @@ const AppContent = (props) => {
       </Breadcrumb>
 
       {/* Modularize? -> create views/pages?*/}
-      <MainTabs>
+      <MainTabs selectedIndex={tabIndex} onSelect={onTabSelected}>
         <TabList>
           <Tab>Peaks</Tab>
           <Tab>Tab Two</Tab>
