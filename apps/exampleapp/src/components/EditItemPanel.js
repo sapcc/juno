@@ -1,58 +1,100 @@
-import React, { useCallback } from "react"
-import { 
-  Button, 
+import React, { useState, useEffect } from "react"
+import {
+  Button,
   Form,
-  Panel, 
-  PanelBody, 
+  PanelBody,
   PanelFooter,
-  TextInputRow, 
+  TextInputRow,
 } from "juno-ui-components"
 import useStore from "../store"
+import { currentState, push } from "url-state-provider"
+import { useMutation, useQueryClient, useQuery } from "react-query"
+import { fetchPeak, updatePeak } from "../actions"
 
-const EditItemPanelFooter = () => {
-  
-  const handleCloseClick = () => {
-    closeEditPanel()
-  }
-  
-  const handleSaveClick = () => {
-    saveEditPanel()
-  }
-  
-  const closeEditPanel = useStore(
-    useCallback((state) => state.closeEditItemPanel)
-  )
-  
-  const saveEditPanel = () => { 
-    console.log("Changes saved.") 
-  }
-  
-  return (
-    <PanelFooter>
-      <Button label="Cancel" variant="subdued" onClick={handleCloseClick}/>
-      <Button label="Save" variant="primary" onClick={handleSaveClick}/>
-    </PanelFooter>
-  )
-}
+const EditItemPanel = ({ closeCallback }) => {
+  const urlStateKey = useStore((state) => state.urlStateKey)
+  const endpoint = useStore((state) => state.endpoint)
+  const urlState = currentState(urlStateKey)
+  const queryClient = useQueryClient()
+  const [formState, setFormState] = useState({})
 
-const EditItemPanel = (
-  title
-) => {
-  
-  const panelOpened = useStore((state) => state.editItemPanelOpened)
-  
+  const peakFeach = useQuery(["peaks", endpoint, urlState.peakId], fetchPeak, {
+    // refer to this documentation to see more options
+    // https://tanstack.com/query/v4/docs/guides/queries
+  })
+
+  const peakMutation = useMutation(({ endpoint, id, formState }) =>
+    updatePeak(endpoint, id, formState)
+  )
+
+  useEffect(() => {
+    if (peakFeach.isSuccess) {
+      setFormState(peakFeach.data)
+    }
+  }, [peakFeach.isSuccess])
+
+  const onSubmit = () => {
+    // TODO form validation
+    peakMutation.mutate(
+      {
+        endpoint: endpoint,
+        id: urlState.peakId,
+        formState: formState,
+      },
+      {
+        onSuccess: (data, variables, context) => {
+          closeCallback()
+          // refetch peaks
+          queryClient.invalidateQueries("peaks")
+        },
+        onError: (error, variables, context) => {
+          // TODO display error
+        },
+      }
+    )
+  }
+
+  const onAttrChanged = (key, value) => {
+    setFormState({ ...formState, [key]: value })
+  }
+
   return (
-    <Panel heading={"Edit Peak"} opened={panelOpened}>
-      <PanelBody footer={<EditItemPanelFooter />}>
-        <Form>
-          <TextInputRow label="Name"/>
-          <TextInputRow label="Height"/>
-          <TextInputRow label="Main Range"/>
-          <TextInputRow label="Region"/>
-          <TextInputRow label="Country"/>
-        </Form>
-      </PanelBody>
-    </Panel>
+    <PanelBody
+      footer={
+        <PanelFooter>
+          <Button label="Cancel" variant="subdued" onClick={closeCallback} />
+          <Button label="Save" variant="primary" onClick={onSubmit} />
+        </PanelFooter>
+      }
+    >
+      <Form>
+        <TextInputRow
+          label="Name"
+          value={formState?.name}
+          onChange={(e) => onAttrChanged("name", e.target.value)}
+        />
+        <TextInputRow
+          label="Height"
+          value={formState?.height}
+          onChange={(e) => onAttrChanged("height", e.target.value)}
+        />
+        <TextInputRow
+          label="Main Range"
+          value={formState?.mainrange}
+          onChange={(e) => onAttrChanged("mainrange", e.target.value)}
+        />
+        <TextInputRow
+          label="Region"
+          value={formState?.region}
+          onChange={(e) => onAttrChanged("region", e.target.value)}
+        />
+        <TextInputRow
+          label="Country"
+          value={formState?.countries}
+          onChange={(e) => onAttrChanged("countries", e.target.value)}
+        />
+      </Form>
+    </PanelBody>
   )
 }
 
