@@ -105,14 +105,16 @@ export const Pagination = ({
     <div className={`juno-pagination juno-pagination-${ variant || "default"} ${paginationStyles} ${className}`} {...props}>
       <Button 
         icon="chevronLeft" 
-        disabled={isFirstPage || currentPage === 1 } 
+        disabled={isFirstPage} 
         onClick={ handlePrevClick} 
+        title="Previous Page"
       />
         { variant ? renderPaginationInnards(variant, currentPage, pages, handleSelectChange, handleKeyPress) : null }
       <Button 
         icon="chevronRight" 
-        disabled={isLastPage || currentPage === pages } 
+        disabled={isLastPage} 
         onClick={handleNextClick} 
+        title="Next Page"
       />
     </div>
   )
