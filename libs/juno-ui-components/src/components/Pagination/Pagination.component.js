@@ -20,7 +20,7 @@ const inputStyles = `
   jn-w-[3.125rem]
 `
 
-const selectOptions = (pages, currentPage) => {
+const selectOptions = (pages) => {
   let opts = []
   if ( pages ) {
     for (let i = 0; i < pages; i++) {
@@ -41,7 +41,7 @@ const renderPaginationInnards = (variant, currentPage, pages) => {
     case "select":
       return (
         <Select name="pages" defaultValue={currentPage}>
-          { selectOptions(pages, currentPage) }
+          { selectOptions(pages) }
         </Select>
       )
       break
@@ -64,29 +64,35 @@ const renderPaginationInnards = (variant, currentPage, pages) => {
 export const Pagination = ({
   currentPage,
   pages,
+  isFirstPage,
+  isLastPage,
   variant,
   className,
   ...props
 }) => {
   return (
     <div className={`juno-pagination ${paginationStyles} ${className}`}>
-      <Button icon="chevronLeft" />
+      <Button icon="chevronLeft" disabled={isFirstPage}/>
       { variant ? renderPaginationInnards(variant, currentPage, pages) : null}
-      <Button icon="chevronRight" />
+      <Button icon="chevronRight" disabled={isLastPage} />
     </div>
   )
 }
 
 Pagination.propTypes = {
-  className: PropTypes.string,
+  variant: PropTypes.oneOf(["", "number", "select", "input"]),
   currentPage: PropTypes.number,
   pages: PropTypes.number,
-  variant: PropTypes.oneOf(["", "number", "select", "input"]),
+  isFirstPage: PropTypes.bool,
+  isLastPage: PropTypes.bool,
+  className: PropTypes.string,
 }
 
 Pagination.defaultProps = {
-  className: "",
+  variant: "",
   currentPage: null,
   pages: null,
-  variant: "",
+  isFirstPage: false,
+  isLastPage: false,
+  className: "",
 }
