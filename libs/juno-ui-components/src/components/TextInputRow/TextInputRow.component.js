@@ -149,6 +149,8 @@ export const TextInputRow = ({
   className,
   disabled,
   onChange,
+  onFocus,
+  onBlur,
   ...props
 }) => {
   const [val, setValue] = useState("")
@@ -183,7 +185,16 @@ export const TextInputRow = ({
 
   const handleChange = (event) => {
     setValue(event.target.value)
-    onChange(event)
+    if (onChange) onChange(event)
+  }
+
+  const handleFocus = (event) => {
+    setFocus(true)
+    if (onFocus) onFocus(event)
+  }
+  const handleBlur = (event) => {
+    setFocus(false)
+    if (onBlur) onBlur(event)
   }
 
   /* check whether the label is minimized (either has focus and / or has a value) */
@@ -216,9 +227,9 @@ export const TextInputRow = ({
       return ""
     }
   }
-  
+
   const inputrightpadding = () => {
-    if ( isValid || isInvalid ) {
+    if (isValid || isInvalid) {
       return iconpadding
     } else {
       return ""
@@ -258,8 +269,8 @@ export const TextInputRow = ({
           valid={isValid}
           autoFocus={autoFocus}
           onChange={handleChange}
-          onFocus={() => setFocus(true)}
-          onBlur={() => setFocus(false)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           className={`${getInputStyles(
             variant,
             minimizedLabel(variant, val, focus)
@@ -313,6 +324,10 @@ TextInputRow.propTypes = {
   disabled: PropTypes.bool,
   /** Pass a handler to the input element */
   onChange: PropTypes.func,
+  /** Pass a handler to the input element */
+  onFocus: PropTypes.func,
+  /** Pass a handler to the input element */
+  onBlur: PropTypes.func,
 }
 
 TextInputRow.defaultProps = {
@@ -333,4 +348,6 @@ TextInputRow.defaultProps = {
   className: "",
   disabled: null,
   onChange: undefined,
+  onFocus: undefined,
+  onBlur: undefined,
 }

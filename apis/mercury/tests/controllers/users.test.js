@@ -1,6 +1,6 @@
 const db = require("../../src/db/models")
 const UsersController = require("../../src/controllers/users")
-const policyEngine = require("policy-engine")(
+const policyEngine = require("policy-engine").default(
   require("../../config/policy.json")
 )
 

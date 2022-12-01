@@ -85,7 +85,7 @@ describe("TextInputRow", () => {
     render(<TextInputRow helptext="Helptext goes here" />)
     expect(screen.getByText("Helptext goes here")).toBeInTheDocument()
   })
-  
+
   test("renders a helpt text with a link as passed", async () => {
     render(<TextInputRow helptext={<a href="#">Link</a>} />)
     expect(screen.getByRole("link")).toBeInTheDocument()
@@ -110,14 +110,14 @@ describe("TextInputRow", () => {
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toBeDisabled()
   })
-  
+
   test("renders an invalid text input group as passed", async () => {
     render(<TextInputRow invalid />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-invalid")
     expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
   })
-  
+
   test("renders an invalid text input group with an error text as passed", async () => {
     render(<TextInputRow errortext="This is an error text" />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
@@ -125,14 +125,14 @@ describe("TextInputRow", () => {
     expect(screen.getByText("This is an error text")).toBeInTheDocument()
     expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
   })
-  
+
   test("renders a valid text input group as passed", async () => {
     render(<TextInputRow valid />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-valid")
     expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
-  
+
   test("renders a valid text input group with a success text as passed", async () => {
     render(<TextInputRow successtext="This is a success text" />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
@@ -140,23 +140,27 @@ describe("TextInputRow", () => {
     expect(screen.getByText("This is a success text")).toBeInTheDocument()
     expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
-  
+
   test("renders a focussed text input as passed", async () => {
     render(<TextInputRow autoFocus />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveFocus()
   })
-  
+
   test("renders a floating variant textinput-row by default", async () => {
     render(<TextInputRow data-testid="textinput-row" />)
     expect(screen.getByTestId("textinput-row")).toBeInTheDocument()
-    expect(screen.getByTestId("textinput-row")).toHaveClass("juno-textinput-row-floating")
+    expect(screen.getByTestId("textinput-row")).toHaveClass(
+      "juno-textinput-row-floating"
+    )
   })
-  
+
   test("renders a stacked variant textinput-row as passed", async () => {
     render(<TextInputRow data-testid="textinput-row" variant="stacked" />)
     expect(screen.getByTestId("textinput-row")).toBeInTheDocument()
-    expect(screen.getByTestId("textinput-row")).toHaveClass("juno-textinput-row-stacked")
+    expect(screen.getByTestId("textinput-row")).toHaveClass(
+      "juno-textinput-row-stacked"
+    )
   })
 
   test("renders all props to the row as passed", async () => {
@@ -167,7 +171,7 @@ describe("TextInputRow", () => {
     )
   })
 
-  test("fires onChange handler as passed", async () => {
+  test("fires onChange handler as passed when set", async () => {
     const handleChange = jest.fn()
     render(<TextInputRow onChange={handleChange} />)
     const input = screen.getByRole("textbox")
@@ -182,5 +186,32 @@ describe("TextInputRow", () => {
         type: "change",
       })
     )
+  })
+
+  test("fires onFocus handler as passed when set", async () => {
+    const handleFocus = jest.fn()
+    render(<TextInputRow onFocus={handleFocus} />)
+    const input = screen.getByRole("textbox")
+    fireEvent.focus(input)
+    expect(handleFocus).toHaveBeenCalledTimes(1)
+  })
+
+  test("fires onBlur handler as passed when set", async () => {
+    const handleBlur = jest.fn()
+    render(<TextInputRow onBlur={handleBlur} />)
+    const input = screen.getByRole("textbox")
+    fireEvent.focusOut(input)
+    expect(handleBlur).toHaveBeenCalledTimes(1)
+  })
+
+  test("onChange, onFocus, onBlur handlers not required", async () => {
+    render(<TextInputRow data-testid="text-input-row" />)
+    const input = screen.getByRole("textbox")
+    fireEvent.focus(input)
+    expect(screen.getByTestId("text-input-row")).toBeInTheDocument()
+    fireEvent.change(input, { target: { value: "test value a" } })
+    expect(screen.getByTestId("text-input-row")).toBeInTheDocument()
+    fireEvent.focusOut(input)
+    expect(screen.getByTestId("text-input-row")).toBeInTheDocument()
   })
 })

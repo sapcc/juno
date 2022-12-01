@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { useRouter } from "."
+import { useRouter } from "./RouterContext"
 
 /**
  * This component renders a link in which the onClick function uses
@@ -17,7 +17,7 @@ const Link = ({ to, children, options, ...props }) => {
       href="#"
       onClick={(e) => {
         e.preventDefault()
-        navigateTo(to, options)
+        navigateTo && navigateTo(to, options)
       }}
     >
       {children}

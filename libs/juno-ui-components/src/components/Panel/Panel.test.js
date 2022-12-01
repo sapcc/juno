@@ -29,7 +29,7 @@ describe("Panel", () => {
     expect(screen.getByRole("dialog")).toBeInTheDocument()
     expect(screen.getByRole("dialog")).toHaveTextContent("My heading")
   })
-  
+
   test("renders a panel with close button by default", async () => {
     render(<Panel />)
     expect(screen.getByRole("dialog")).toBeInTheDocument()
@@ -47,31 +47,29 @@ describe("Panel", () => {
   })
 
   test("renders a custom classname", async () => {
-		render(<Panel className="my-custom-classname"/>)
-		expect(screen.getByRole("dialog")).toBeInTheDocument()
-		expect(screen.getByRole("dialog")).toHaveClass("my-custom-classname")
-	})
-	
-	test("renders all props as passed", async () => {
-		render(<Panel data-xyz={true}/>)
-		expect(screen.getByRole("dialog")).toBeInTheDocument()
-		expect(screen.getByRole("dialog")).toHaveAttribute('data-xyz')
-	})
+    render(<Panel className="my-custom-classname" />)
+    expect(screen.getByRole("dialog")).toBeInTheDocument()
+    expect(screen.getByRole("dialog")).toHaveClass("my-custom-classname")
+  })
+
+  test("renders all props as passed", async () => {
+    render(<Panel data-xyz={true} />)
+    expect(screen.getByRole("dialog")).toBeInTheDocument()
+    expect(screen.getByRole("dialog")).toHaveAttribute("data-xyz")
+  })
 
   // EVENTS
 
   test("on click on close button closes panel", async () => {
     render(<Panel />)
-    userEvent.click(screen.getByRole("button"))
+    await userEvent.click(screen.getByRole("button"))
     expect(screen.getByRole("dialog")).toHaveClass(closedClass)
   })
 
   test("on click on close button fires onClose handler as passed", async () => {
     const handleClose = jest.fn()
     render(<Panel onClose={handleClose} />)
-    userEvent.click(screen.getByRole("button"))
+    await userEvent.click(screen.getByRole("button"))
     expect(handleClose).toHaveBeenCalledTimes(1)
   })
-
-
 })

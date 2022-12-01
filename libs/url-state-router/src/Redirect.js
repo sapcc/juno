@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import PropTypes from "prop-types"
-import { useRouter } from "."
+import { useRouter } from "./RouterContext"
 
 /**
  * Redirect uses the redirectTo from the router context and

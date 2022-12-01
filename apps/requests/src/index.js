@@ -1,4 +1,12 @@
-Promise.all([import("./bootstrap"), import("./DevEnv")]).then(([app]) => {
-  app.init(document.getElementById("root"), { stateID: "requests1" })
-  // app.init(document.getElementById("root2"), { stateID: "requests2" })
-})
+import { createRoot } from "react-dom/client"
+import React from "react"
+
+// export mount and unmount functions
+export const mount = (container, options = {}) => {
+  import("./App").then((App) => {
+    mount.root = createRoot(container)
+    mount.root.render(React.createElement(App.default, options?.props))
+  })
+}
+
+export const unmount = () => mount.root && mount.root.unmount()

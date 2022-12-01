@@ -4,10 +4,10 @@
 
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import Router from "./Router"
-import Route from "./Route"
-import Redirect from "./Redirect"
-import { useRouter } from "."
+import Router from "./Router.js"
+import Route from "./Route.js"
+import Redirect from "./Redirect.js"
+import { useRouter } from "./RouterContext.js"
 
 const TestRoute = () => {
   const { routeParams } = useRouter()
