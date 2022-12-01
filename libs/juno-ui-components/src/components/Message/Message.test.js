@@ -26,7 +26,7 @@ describe("Message", () => {
     // not checking specifically for the close button here. So if there is more than one button in the message this test will fail
     // The reason is that it's hard to find specifically the close button because any classes added to a clickable Icon go to the image element, not the surrounding button
     expect(screen.getByRole("button")).toBeInTheDocument()
-    userEvent.click(screen.getByRole("button"))
+    await userEvent.click(screen.getByRole("button"))
     await waitFor(() => {
       expect(screen.queryByTestId("my-message")).not.toBeInTheDocument()
     })
@@ -44,7 +44,7 @@ describe("Message", () => {
     // not checking specifically for the close button here. So if there is more than one button in the message this test will fail
     // The reason is that it's hard to find specifically the close button because any classes added to a clickable Icon go to the image element, not the surrounding button
     expect(screen.getByRole("button")).toBeInTheDocument()
-    userEvent.click(screen.getByRole("button"))
+    await userEvent.click(screen.getByRole("button"))
     await waitFor(() => {
       expect(screen.queryByTestId("my-message")).not.toBeInTheDocument()
       expect(handleDismiss).toHaveBeenCalledTimes(1)

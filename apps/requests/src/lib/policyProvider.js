@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react"
+import React, { createContext, useContext, useState, useEffect } from "react"
 import { useClient } from "./clientProvider"
 import { PolicyEngine } from "policy-engine"
 
@@ -12,7 +12,7 @@ const PolicyProvider = ({ children, token }) => {
   const [policy, setPolicy] = useState(dummyPolicy)
 
   useEffect(() => {
-    if (!client || !token) return null
+    if (!client || !token) return
 
     client.getPolicyRules().then((rules) => {
       const engine = new PolicyEngine(rules)
