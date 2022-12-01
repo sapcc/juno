@@ -69,6 +69,7 @@ window.__junoWidgetLoader =
     // import(appURL).then((app) => console.log("==APP", app))
     const appWrapper = document.createElement("div")
     appWrapper.setAttribute("data-juno-app", name || appURL)
+    appWrapper.setAttribute("style", "height: 100vh;")
 
     import(appURL.href + "?" + Date.now()) //importShim(appURL + "?" + Date.now())
       .then((app) => {
