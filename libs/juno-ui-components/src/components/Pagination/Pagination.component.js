@@ -102,7 +102,7 @@ export const Pagination = ({
   }
   
   return (
-    <div className={`juno-pagination ${paginationStyles} ${className}`} {...props}>
+    <div className={`juno-pagination juno-pagination-${ variant || "default"} ${paginationStyles} ${className}`} {...props}>
       <Button 
         icon="chevronLeft" 
         disabled={isFirstPage || currentPage === 1 } 
