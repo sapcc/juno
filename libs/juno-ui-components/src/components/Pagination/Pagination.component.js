@@ -31,7 +31,13 @@ const selectOptions = (pages) => {
   return opts
 }
 
-const renderPaginationInnards = (variant, currentPage, pages) => {
+const renderPaginationInnards = (
+  variant, 
+  currentPage, 
+  pages,
+  handleSelectChange, 
+  handleKeyPress
+) => {
   switch (variant) {
     case "number":
         return (
@@ -40,7 +46,7 @@ const renderPaginationInnards = (variant, currentPage, pages) => {
       break
     case "select":
       return (
-        <Select name="pages" defaultValue={currentPage}>
+        <Select name="pages" defaultValue={currentPage} onChange={handleSelectChange}>
           { selectOptions(pages) }
         </Select>
       )
@@ -50,6 +56,7 @@ const renderPaginationInnards = (variant, currentPage, pages) => {
         <span>
           <TextInput 
             value={ currentPage || null }
+            onKeyPress={handleKeyPress}
             className={`${inputStyles}`}
           />
           <span className="jn-ml-1" >of {pages || "0"}</span>
@@ -61,20 +68,44 @@ const renderPaginationInnards = (variant, currentPage, pages) => {
   }
 }
 
+/** A basic, uncontrolled Pagination component. Renders '<' and '>' buttons as a minimun/default. */
 export const Pagination = ({
+  variant,
   currentPage,
   pages,
   isFirstPage,
   isLastPage,
-  variant,
+  onPressPrevious,
+  onPressNext,
+  onSelectChange,
+  onKeyPress,
   className,
   ...props
 }) => {
+  
+  const handlePrevClick = (event) => {
+    onPressPrevious && onPressPrevious(event)
+  }
+  
+  const handleNextClick = (event) => {
+    onPressNext && onPressNext(event)
+  }
+  
+  const handleSelectChange = (event) => {
+    onSelectChange && onSelectChange(event)
+  }
+  
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      onKeyPress && onKeyPress(event)
+    }
+  }
+  
   return (
-    <div className={`juno-pagination ${paginationStyles} ${className}`}>
-      <Button icon="chevronLeft" disabled={isFirstPage}/>
-      { variant ? renderPaginationInnards(variant, currentPage, pages) : null}
-      <Button icon="chevronRight" disabled={isLastPage} />
+    <div className={`juno-pagination ${paginationStyles} ${className}`} {...props}>
+      <Button icon="chevronLeft" disabled={isFirstPage} onClick={handlePrevClick} />
+      { variant ? renderPaginationInnards(variant, currentPage, pages, handleSelectChange, handleKeyPress) : null }
+      <Button icon="chevronRight" disabled={isLastPage} onClick={handleNextClick} />
     </div>
   )
 }
@@ -85,6 +116,10 @@ Pagination.propTypes = {
   pages: PropTypes.number,
   isFirstPage: PropTypes.bool,
   isLastPage: PropTypes.bool,
+  onPressPrevious: PropTypes.func,
+  onPressNext: PropTypes.func,
+  onSelectChange: PropTypes.func,
+  onKeyPress: PropTypes.func,
   className: PropTypes.string,
 }
 
@@ -94,5 +129,9 @@ Pagination.defaultProps = {
   pages: null,
   isFirstPage: false,
   isLastPage: false,
+  onPressPrevious: undefined,
+  onPressNext: undefined,
+  onSelectChange: undefined,
+  onKeyPress: undefined,
   className: "",
 }
