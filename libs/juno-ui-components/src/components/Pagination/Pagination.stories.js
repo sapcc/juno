@@ -4,7 +4,12 @@ import { Pagination } from "./index.js"
 export default {
   title: "WiP/Pagination",
   component: Pagination,
-  argTypes: {},
+  argTypes: {
+    variant: {
+      options: ["\"\" (default)", "number", "select", "input"],
+      control: { type: 'select' }
+    }
+  },
 }
 
 const Template = (args) => <Pagination {...args} />
