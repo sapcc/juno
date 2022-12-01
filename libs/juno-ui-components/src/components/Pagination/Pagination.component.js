@@ -103,9 +103,17 @@ export const Pagination = ({
   
   return (
     <div className={`juno-pagination ${paginationStyles} ${className}`} {...props}>
-      <Button icon="chevronLeft" disabled={isFirstPage} onClick={handlePrevClick} />
-      { variant ? renderPaginationInnards(variant, currentPage, pages, handleSelectChange, handleKeyPress) : null }
-      <Button icon="chevronRight" disabled={isLastPage} onClick={handleNextClick} />
+      <Button 
+        icon="chevronLeft" 
+        disabled={isFirstPage || currentPage === 1 } 
+        onClick={ handlePrevClick} 
+      />
+        { variant ? renderPaginationInnards(variant, currentPage, pages, handleSelectChange, handleKeyPress) : null }
+      <Button 
+        icon="chevronRight" 
+        disabled={isLastPage || currentPage === pages } 
+        onClick={handleNextClick} 
+      />
     </div>
   )
 }
