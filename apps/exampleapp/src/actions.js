@@ -29,7 +29,22 @@ const checkStatus = (response) => {
   }
 }
 
-// Example fetch call. Adjust as needed for your API
+export const fetchSecretOptions = ({ queryKey }) => {
+  const [_key, endpoint, options] = queryKey
+  const query = encodeUrlParamsFromObject(options)
+  return fetch(`${endpoint}/secrets?${query}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  })
+    .then(checkStatus)
+    .then((response) => {
+      return response.json()
+    })
+}
+
 export const fetchPeaks = ({ queryKey }) => {
   const [_key, endpoint, options] = queryKey
   const query = encodeUrlParamsFromObject(options)

@@ -12,11 +12,15 @@ const apiServer = require("./apiserver.config")
 */
 
 let peaksData = require("./public/peaks.json")
+let secretOptions = require("./public/secretOptions.json")
 const bodyParser = require("body-parser")
 
 module.exports = {
   getHandlers: () => {
     return (devServer) => {
+      devServer.app.get("/secrets", function (req, res) {
+        res.json(secretOptions)
+      })
       devServer.app.get("/peaks", function (req, res) {
         res.json(peaksData)
       })
