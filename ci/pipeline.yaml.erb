@@ -157,7 +157,7 @@ jobs:
           build_args: 
             ASSET_NAME: "<%= name %>" 
             ASSET_PATH: "<%= details[:path] %>"
-            BUILD_DIR: "<%= details[:build] || 'build'%>"
+            BUILD_DIR: "<%= details[:build] %>"
           dockerfile: <%=details[:type]%>-<%= name %>.git/ci/Dockerfile.asset
         get_params:
           skip_download: true  

@@ -21,7 +21,7 @@ RUN \
   done
 
 RUN \
-  cd /juno/ && npm install && \
+  cd /juno/ ; \
   node ./scripts/generate_importmaps.mjs \
   --src=/tmp/latest \
   --base-url="%BASE_URL%" \
