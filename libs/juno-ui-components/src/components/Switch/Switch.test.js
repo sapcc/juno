@@ -1,5 +1,6 @@
 import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
+import { act } from 'react-dom/test-utils'
 import { Switch } from "./index"
 
 describe("Switch", () => {
@@ -22,19 +23,25 @@ describe("Switch", () => {
   })
   
   test("renders a disabled switch as passed", async () => {
-    render(<Switch disabled />)
+    act(() => {
+      render(<Switch disabled />)
+    })
     expect(screen.getByRole("switch")).toBeInTheDocument()
     expect(screen.getByRole("switch")).toBeDisabled()
   })
   
   test("renders an invalid Switch as passed", async () => {
-    render(<Switch invalid />)
+    act(() => {
+      render(<Switch invalid />)
+    })
     expect(screen.getByRole("switch")).toBeInTheDocument()
     expect(screen.getByRole("switch")).toHaveClass("juno-switch-invalid")
   })
   
   test("renders a valid Switch as passed", async () => {
-    render(<Switch valid />)
+    act(() => {
+      render(<Switch valid />)
+    })
     expect(screen.getByRole("switch")).toBeInTheDocument()
     expect(screen.getByRole("switch")).toHaveClass("juno-switch-valid")
   })
@@ -58,7 +65,9 @@ describe("Switch", () => {
   })
   
   test("renders an aria-checked switch as passed", async () => {
-    render(<Switch on />)
+    act(() => {
+      render(<Switch on />)
+    })
     expect(screen.getByRole("switch")).toBeInTheDocument()
     expect(screen.getByRole("switch")).toHaveAttribute('aria-checked')
   })
@@ -85,14 +94,18 @@ describe("Switch", () => {
   test("executes custom handler on change as passed", async () => {	
     const onChangeSpy = jest.fn();
     render(<Switch onChange={onChangeSpy} />);
-    screen.getByRole('switch').click();
+    act(() => {
+      screen.getByRole('switch').click();
+    })
     expect(onChangeSpy).toHaveBeenCalled();	
   })
   
   test("does not executes custom handler on change when disabled", async () => {	
       const onChangeSpy = jest.fn();
       render(<Switch onChange={onChangeSpy} disabled/>);
-      screen.getByRole('switch').click();
+      act(() => {
+        screen.getByRole('switch').click();
+      })
       expect(onChangeSpy).not.toHaveBeenCalled();	
     })
 

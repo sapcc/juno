@@ -1,5 +1,6 @@
 import * as React from "react"
 import { render, screen } from "@testing-library/react"
+import { act } from 'react-dom/test-utils'
 import { CheckboxRow } from "./index"
 
 describe("CheckboxRow", () => {
@@ -11,7 +12,9 @@ describe("CheckboxRow", () => {
 	})
 	
 	test("renders a checked checkbox as passed", async () => {
-		render(<CheckboxRow checked />)
+		act(() => {
+			render(<CheckboxRow checked />)
+		})
 		expect(screen.getByRole("checkbox")).toBeChecked()
 	})
 	
@@ -55,12 +58,16 @@ describe("CheckboxRow", () => {
 	})
 	
 	test("renders a disabled Checkbox as passed", async () => {
-		render(<CheckboxRow disabled />)
+		act(() => {
+			render(<CheckboxRow disabled />)
+		})
 		expect(screen.getByRole("checkbox")).toBeDisabled()
 	})
 	
 	test("renders an invalid CheckboxRow as passed", async () => {
-		render(<CheckboxRow invalid />)
+		act(() => {
+			render(<CheckboxRow invalid />)
+		})
 		expect(screen.getByRole("checkbox")).toBeInTheDocument()
 		expect(screen.getByRole("checkbox")).toHaveClass("juno-checkbox-invalid")
 		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
@@ -75,7 +82,9 @@ describe("CheckboxRow", () => {
 	})
 	
 	test("renders a valid CheckboxRow as passed", async () => {
-		render(<CheckboxRow valid />)
+		act(() => {
+			render(<CheckboxRow valid />)
+		})
 		expect(screen.getByRole("checkbox")).toBeInTheDocument()
 		expect(screen.getByRole("checkbox")).toHaveClass("juno-checkbox-valid")
 		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
@@ -94,7 +103,9 @@ describe("CheckboxRow", () => {
 	test("fire handler on change as passed", async () => {
 		const onChangeSpy = jest.fn();
 		render(<CheckboxRow onChange={onChangeSpy} />);
-		screen.getByRole('checkbox').click();
+		act(() => {
+			screen.getByRole('checkbox').click();
+		})
 		expect(onChangeSpy).toHaveBeenCalled();
 	})
 	

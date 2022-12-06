@@ -1,5 +1,6 @@
 import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
+import { act } from 'react-dom/test-utils'
 import { RadioRow } from "./index"
 
 describe("RadioRow", () => {
@@ -90,7 +91,9 @@ describe("RadioRow", () => {
 	test("fire handler on change as passed", async () => {
 		const onChangeSpy = jest.fn();
 		render(<RadioRow onChange={onChangeSpy} />);
-		screen.getByRole('radio').click();
+		act(() => {
+			screen.getByRole('radio').click();
+		})
 		expect(onChangeSpy).toHaveBeenCalled();
 	})
 	
