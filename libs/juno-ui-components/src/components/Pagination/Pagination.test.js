@@ -51,14 +51,14 @@ describe("Pagination", () => {
   test("fires onPressPrevious handler as passed when Prev button is clicked", async () => {
     const handlePressPrev = jest.fn()
     render(<Pagination onPressPrevious={handlePressPrev} />)
-    userEvent.click(screen.getByRole("button", {name: 'Previous Page'}))
+    await userEvent.click(screen.getByRole("button", {name: 'Previous Page'}))
     expect(handlePressPrev).toHaveBeenCalledTimes(1)
   })
   
   test("fires onPressNext handler as passed when Next button is clicked", async () => {
     const handlePressNext = jest.fn()
     render(<Pagination onPressNext={handlePressNext} />)
-    userEvent.click(screen.getByRole("button", {name: 'Next Page'}))
+    await userEvent.click(screen.getByRole("button", {name: 'Next Page'}))
     expect(handlePressNext).toHaveBeenCalledTimes(1)
   })
   
@@ -75,7 +75,7 @@ describe("Pagination", () => {
   test("fires onKeyPress handler on Enter as passed for input variant", async () => {
     const handleKeyPress = jest.fn()
     render(<Pagination variant="input" onKeyPress={handleKeyPress} />)
-    userEvent.type(screen.getByRole("textbox"), '{enter}')
+    await userEvent.type(screen.getByRole("textbox"), '{enter}')
     expect(handleKeyPress).toHaveBeenCalledTimes(1)
   })
   
