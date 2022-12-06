@@ -39,11 +39,11 @@ RUN \
   if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR=$(jq -r .main /juno/$ASSET_PATH/package.json); fi ; \
   if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR="build"; else BUILD_DIR="$(dirname $BUILD_DIR)"; fi ; \
   mkdir -p "/tmp/$ASSET_PATH" ; \
-  cp -r "/juno/$ASSET_PATH/$BUILD_DIR" "/tmp/$ASSET_PATH/build" ; \
+  cp -r "/juno/$ASSET_PATH/$BUILD_DIR" "/tmp/$ASSET_PATH/$BUILD_DIR" ; \
   cp "/juno/$ASSET_PATH/package.json" "/tmp/$ASSET_PATH/package.json" ; \
   cp "/juno/$ASSET_PATH/README.md" "/tmp/$ASSET_PATH/README.md"  2>/dev/null || :
 
-RUN ls -la "/tmp/$ASSET_PATH/build"
+RUN ls -la "/tmp/$ASSET_PATH/$BUILD_DIR"
 
 # asset layer
 FROM scratch as asset 
@@ -54,5 +54,5 @@ LABEL source_repository="https://github.com/sapcc/juno/$ASSET_PATH"
 WORKDIR /
 
 # copy build results from base image to dist
-COPY --from=build "/tmp/$ASSET_PATH/build" /dist
+COPY --from=build "/tmp/$ASSET_PATH" /dist
 
