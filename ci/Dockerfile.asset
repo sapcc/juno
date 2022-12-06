@@ -35,8 +35,9 @@ RUN \
   [[ "$ASSET_BUILD_SCRIPT" == "false" ]] || CI=false NODE_ENV=production yarn workspace $ASSET_NAME build 1>/dev/null
 
 RUN \
-  if [ -z "$BUILD_DIR" ]; then BUILD_DIR=$(jq -r .buildDir /juno/$ASSET_PATH/package.json); fi ; \
-  if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR="build"; fi ; \
+  if [ -z "$BUILD_DIR" ]; then BUILD_DIR=$(jq -r .module /juno/$ASSET_PATH/package.json); fi ; \
+  if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR=$(jq -r .main /juno/$ASSET_PATH/package.json); fi ; \
+  if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR="build"; else BUILD_DIR="$(dirname $BUILD_DIR)"; fi ; \
   mkdir -p "/tmp/$ASSET_PATH" ; \
   cp -r "/juno/$ASSET_PATH/$BUILD_DIR" "/tmp/$ASSET_PATH/build" ; \
   cp "/juno/$ASSET_PATH/package.json" "/tmp/$ASSET_PATH/build/package.json"
