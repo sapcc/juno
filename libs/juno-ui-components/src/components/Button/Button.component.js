@@ -145,13 +145,17 @@ export const Button = ({
 
   const buttonLabel =
     progress && progressLabel ? progressLabel : label || children
+    
+  const handleClick = (event) => {
+    onClick && onClick(event)
+  }
 
   const button = (
     <button
       type="button"
       className={`juno-button juno-button-${variant} juno-button-${size}-size ${btnBase} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
       disabled={disabled}
-      onClick={onClick}
+      onClick={handleClick}
       title={titleValue}
       {...props}
     >
