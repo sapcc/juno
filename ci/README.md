@@ -52,13 +52,13 @@ Importmap is generated using generator from https://jspm.org. Where internal lib
 ```json
 {
   "imports": {
-    "@juno/juno-ui-components@latest/": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/build/",
-    "@juno/juno-ui-components@latest": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/build/index.js"
+    "@juno/juno-ui-components@latest/": "ASSETS_SERVER_ENDPOINT/libs/juno-ui-components@latest/build/",
+    "@juno/juno-ui-components@latest": "ASSETS_SERVER_ENDPOINT/libs/juno-ui-components@latest/build/index.js"
   },
   "scopes": {
-    "https://assets.juno.global.cloud.sap/apps/whois@latest/": {
-      "juno-ui-components@latest/": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/build/",
-      "juno-ui-components@latest": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/build/index.js"
+    "ASSETS_SERVER_ENDPOINT/apps/whois@latest/": {
+      "juno-ui-components@latest/": "ASSETS_SERVER_ENDPOINT/libs/juno-ui-components@latest/build/",
+      "juno-ui-components@latest": "ASSETS_SERVER_ENDPOINT/libs/juno-ui-components@latest/build/index.js"
     }
   }
 }
@@ -72,7 +72,7 @@ It has the following structure:
 
 ```json
 {
-  "juno-ui-components@1.0.0": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.0.0/build/index.js",
-  "whois@latest": "https://assets.juno.global.cloud.sap/apps/whois@latest/build/index.js"
+  "juno-ui-components@1.0.0": "ASSETS_SERVER_ENDPOINT/libs/juno-ui-components@1.0.0/build/index.js",
+  "whois@latest": "ASSETS_SERVER_ENDPOINT/apps/whois@latest/build/index.js"
 }
 ```

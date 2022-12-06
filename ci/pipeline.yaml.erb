@@ -1,14 +1,13 @@
 # prettier-ignore
 <%
   ASSETS = {
-    #"auth": { type: "app", path: "apps/auth" },
-    #"dashboard": { type: "app", path: "apps/dashboard"},
-    #"designate": { type: "app", path: "apps/designate"},
-    #"widget-loader": { type: "app", path: "apps/widget-loader"},
+    "auth": { type: "app", path: "apps/auth" },
+    "dashboard": { type: "app", path: "apps/dashboard"},
+    "widget-loader": { type: "app", path: "apps/widget-loader"},
     "whois": { type: "app", path: "apps/whois"},
-    #"volta": { type: "app", path: "apps/volta"},
-    #"heureka": { type: "app", path: "apps/heureka"},
-    #"maintenance": { type: "app", path: "apps/maintenance"},
+    "volta": { type: "app", path: "apps/volta"},
+    "heureka": { type: "app", path: "apps/heureka"},
+    "maintenance": { type: "app", path: "apps/maintenance"},
 
     "juno-ui-components": { type: "lib", path: "libs/juno-ui-components", build: "lib"},
     "communicator": { type: "lib", path: "libs/communicator", build: "/"},
@@ -30,7 +29,7 @@ resources:
     type: git
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: importmaps
+      branch: importmaps-v2
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))      
 
@@ -53,7 +52,7 @@ resources:
     type: git
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: importmaps
+      branch: importmaps-v2
       paths: ["<%=details[:path]%>","package.json","ci/Dockerfile.asset","e2e", ".yarn","ci/pipeline.yaml", "ci.V2/Dockerfile.asset","ci/helm-charts"]
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))

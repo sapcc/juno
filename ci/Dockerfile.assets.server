@@ -21,14 +21,14 @@ RUN \
   done
 
 RUN \
-  cd /juno/ci.V2/importmaps && npm install && \
-  node ./assets_server_importmaps.mjs \
+  cd /juno/ && npm install && \
+  node ./scripts/generate_importmaps.mjs \
   --src=/tmp/latest \
   --base-url="%BASE_URL%" \
   --output=/tmp/latest/importmap.json ; \
   --verbose ; \
   \
-  node ./assets_server_manifest.mjs \
+  node ./scripts/generate_manifest.mjs \
   --src=/tmp/latest \
   --output=/tmp/latest/manifest.json \
   --verbose ;
