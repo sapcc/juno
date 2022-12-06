@@ -52,15 +52,16 @@ const manifest = {}
 files.sort().forEach(async (file) => {
   const pkg = JSON.parse(fs.readFileSync(file))
   const path = file.match(pathRegex)[1]
+  const type = PACKAGES_PATHS.find((p) => path.indexOf(p) >= 0)
   const entryFile = pkg.module || pkg.main
   const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/"))
   const meta = fs.statSync(`${rootPath}/${path}`)
 
   manifest[pkg.name] = manifest[pkg.name] || {}
   manifest[pkg.name][pkg.version] = {
-    path,
-    entryFile: path + "/" + entryFile,
-    entryDir: path + "/" + entryDir,
+    type,
+    entryFile: "/" + path + "/" + entryFile,
+    entryDir: "/" + path + "/" + entryDir,
     createdAt: meta.birthtime,
     updatedAt: meta.mtime,
     size: meta.size,
