@@ -61,7 +61,7 @@ export const Textarea = ({
 	  
 	const handleInputChange = (event) => {
 		setValue(event.target.value)
-		onChange(event)
+		onChange && onChange(event)
 	 }
 	
 	return (

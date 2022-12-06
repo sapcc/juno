@@ -185,7 +185,7 @@ export const TextInputRow = ({
 
   const handleChange = (event) => {
     setValue(event.target.value)
-    if (onChange) onChange(event)
+    onChange && onChange(event)
   }
 
   const handleFocus = (event) => {
