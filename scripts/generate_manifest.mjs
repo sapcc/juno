@@ -1,5 +1,8 @@
+import { execSync } from "node:child_process"
+const root = execSync("npm root -g").toString().trim()
+
+const glob = await import(`${root}/glob/glob.js`).then((m) => m.default)
 import * as fs from "fs"
-import glob from "glob"
 import path from "path"
 import url from "url"
 import { readdir } from "fs/promises"
@@ -37,40 +40,36 @@ if (options.help || options.h) {
   console.log("Usage: " + availableArgs.join(" "))
 }
 
-const PACKAGES_PATHS = {
-  apps: path.resolve(options.src, "./apps"),
-}
-
-// // https://www.tabnine.com/code/javascript/modules/glob
-// const libs = glob.sync(`${path.resolve(options.src, "./libs")}/*`, {
-//   ignore: ["./node_modules/**", "./**/node_modules/**"],
-// })
-
-const getFiles = async (source, options = {}) =>
-  (await readdir(source, { withFileTypes: true }))
-    .filter((dirent) =>
-      options.onlyDirs ? dirent.isDirectory() : dirent.isFile()
-    )
-    .map((dirent) => dirent.name)
+const PACKAGES_PATHS = ["apps", "libs"]
+const rootPath = path.resolve(options.src)
+const globPattern = `${rootPath}/@(${PACKAGES_PATHS.join("|")})/**/package.json`
+const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
+const files = glob.sync(globPattern, { ignore: [`node_modules/**`] })
 
 const manifest = {}
-// LIBS
-const libs = await getFiles(`${path.resolve(options.src, "./libs")}`, {
-  onlyDirs: true,
+
+// console.log(files)
+files.sort().forEach(async (file) => {
+  const pkg = JSON.parse(fs.readFileSync(file))
+  const path = file.match(pathRegex)[1]
+  const entryFile = pkg.module || pkg.main
+  const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/"))
+  const meta = fs.statSync(path)
+
+  manifest[pkg.name] = manifest[pkg.name] || {}
+  manifest[pkg.name][pkg.version] = {
+    path,
+    entryFile: path + "/" + entryFile,
+    entryDir: path + "/" + entryDir,
+    createdAt: meta.birthtime,
+    updatedAt: meta.mtime,
+    size: meta.size,
+  }
+
+  if (path.indexOf("@latest") > 0)
+    manifest[pkg.name]["latest"] = manifest[pkg.name][pkg.version]
+  // console.log(path + "/" + entryDir, meta)
 })
-
-// APPS
-const apps = await getFiles(`${path.resolve(options.src, "./apps")}`, {
-  onlyDirs: true,
-})
-
-// const assets = glob
-//   .sync(`${path.resolve(options.src, "./assets")}/**/*`)
-//   .map((file) => file.match(/^.*assets\/(.*)/)[1])
-
-if (libs && libs.length > 0) manifest["libs"] = libs.sort()
-if (apps && apps.length > 0) manifest["apps"] = apps.sort()
-// if (assets) manifest["assets"] = assets
 
 if (options.verbose || options.v) {
   console.log("==============MANIFEST==============")

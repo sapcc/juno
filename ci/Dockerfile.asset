@@ -40,7 +40,8 @@ RUN \
   if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR="build"; else BUILD_DIR="$(dirname $BUILD_DIR)"; fi ; \
   mkdir -p "/tmp/$ASSET_PATH" ; \
   cp -r "/juno/$ASSET_PATH/$BUILD_DIR" "/tmp/$ASSET_PATH/build" ; \
-  cp "/juno/$ASSET_PATH/package.json" "/tmp/$ASSET_PATH/build/package.json"
+  cp "/juno/$ASSET_PATH/package.json" "/tmp/$ASSET_PATH/build/package.json" ; \
+  cp "/juno/$ASSET_PATH/README.md" "/tmp/$ASSET_PATH/build/README.md"  2>/dev/null || :
 
 RUN ls -la "/tmp/$ASSET_PATH/build"
 

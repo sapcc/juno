@@ -72,7 +72,15 @@ It has the following structure:
 
 ```json
 {
-  "juno-ui-components@1.0.0": "ASSETS_SERVER_ENDPOINT/libs/juno-ui-components@1.0.0/build/index.js",
-  "whois@latest": "ASSETS_SERVER_ENDPOINT/apps/whois@latest/build/index.js"
+  "juno-ui-components@1.0.0": {
+    "type": "lib",
+    "url": "ASSETS_SERVER_ENDPOINT/libs/juno-ui-components@1.0.0",
+    "updatedAt": Date.now()
+  },
+  "whois@latest": {
+    "type": "app",
+    "url": "ASSETS_SERVER_ENDPOINT/apps/whois@latest/build/index.js",
+    "updatedAt": Date.now()
+  }
 }
 ```

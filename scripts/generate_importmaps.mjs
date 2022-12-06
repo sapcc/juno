@@ -2,6 +2,8 @@
 /**
  * This module generates importmap to be used in browser to share libs between juno apps.
  */
+
+// glob and @jspm are installed globally! (see ci/Dockerfile.base)
 // get root folder of global node modules
 import { execSync } from "node:child_process"
 const root = execSync("npm root -g").toString().trim()
@@ -11,11 +13,6 @@ const { Generator } = await import(`${root}/@jspm/generator/dist/generator.js`)
 import * as fs from "fs"
 import path from "path"
 import url from "url"
-
-// import glob from "glob"
-// import { Generator } from "@jspm/generator"
-// import path from "path"
-// import url from "url"
 
 const normalizeVersion = (version) => {
   if (!version) return "latest"
@@ -83,7 +80,7 @@ for (let file of files) {
   let packageJson = JSON.parse(rawdata)
 
   const entryFile = packageJson.module || packageJson.main || "index.js"
-  const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/")) || "lib"
+  const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/")) || ""
   const path = file.replace(pathRegex, "$1")
   // console.log("===================", entryFile)
   // console.log(":::::::::::::::::", entryFile.slice(0, entryFile.lastIndexOf("/")))
@@ -116,7 +113,7 @@ const findRegisteredPackage = (name, version) => {
 // console.log("================packageRegistry", packageRegistry)
 
 // create importMap hash
-const importMap = { scopes: {} }
+const importMap = { scopes: {}, imports: {} }
 const generator = new Generator({ env: ["browser"] })
 
 for (let name in packageRegistry) {
@@ -130,6 +127,13 @@ for (let name in packageRegistry) {
     // create generator
     // initialize scopes of packageName
     const packageScopePath = `${options.baseUrl}/${packageData.path}/`
+
+    // add package to imports of the importmap
+    importMap.imports[`@juno/${name}@${version}`] =
+      packageScopePath + packageData.entryFile
+    importMap.imports[`@juno/${name}@${version}/`] =
+      packageScopePath + packageData.entryDir + "/"
+
     importMap.scopes[packageScopePath] =
       importMap.scopes[packageScopePath] || {}
 
@@ -152,15 +156,6 @@ for (let name in packageRegistry) {
         ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryDir}/`
         importMap.scopes[packageScopePath][
           dependencyName
-        ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryFile}`
-
-        // add @juno imports
-        importMap.imports = importMap.imports || {}
-        importMap.imports[
-          `@juno/${dependencyName}@${dependencyVersion}/`
-        ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryDir}/`
-        importMap.imports[
-          `@juno/${dependencyName}@${dependencyVersion}`
         ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryFile}`
       } else {
         // EXTERNAL PACKAGE
