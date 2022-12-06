@@ -5,7 +5,6 @@ const glob = await import(`${root}/glob/glob.js`).then((m) => m.default)
 import * as fs from "fs"
 import path from "path"
 import url from "url"
-import { readdir } from "fs/promises"
 
 const availableArgs = [
   "--src=DIR_PATH",
@@ -58,9 +57,10 @@ files.sort().forEach(async (file) => {
   const entryFile = pkg.module || pkg.main
   const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/"))
   const meta = fs.statSync(`${rootPath}/${path}`)
+  let version = path.indexOf("@latest") > 0 ? "latest" : pkg.version
 
   manifest[pkg.name] = manifest[pkg.name] || {}
-  manifest[pkg.name][pkg.version] = {
+  manifest[pkg.name][version] = {
     type,
     entryFile: "/" + path + "/" + entryFile,
     entryDir: "/" + path + "/" + entryDir,
@@ -68,8 +68,6 @@ files.sort().forEach(async (file) => {
     size: meta.size,
   }
 
-  if (path.indexOf("@latest") > 0)
-    manifest[pkg.name]["latest"] = { ...manifest[pkg.name][pkg.version] }
   // console.log(path + "/" + entryDir, meta)
 })
 
