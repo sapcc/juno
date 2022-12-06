@@ -138,8 +138,8 @@ export const Button = ({
   ) : icon ? (
     <Icon
       icon={icon}
-      className={`juno-button-icon ${iconClasses(size)}`}
-      size={size ? iconSize(size) : null}
+      className={`juno-button-icon ${ label || children ? iconClasses(size) : null } `}
+      size={size ? iconSize(size) : null }
     />
   ) : null
 

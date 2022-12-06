@@ -1,5 +1,6 @@
 import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
+import { act } from 'react-dom/test-utils'
 import { Radio } from "./index"
 
 
@@ -30,14 +31,18 @@ describe("Radio", () => {
 	})
 	
 	test("renders a checked radio as passed", async () => {
-		render(<Radio checked={true} />)
+		act(() => {
+			render(<Radio checked={true} />)
+		})
 		const radio = screen.getByRole('radio')
 		expect(radio).toBeInTheDocument()
 		expect(radio).toBeChecked()
 	})
 	
 	test("renders no checked attribute if false", async () => {
-		render(<Radio checked={false} />)
+		act(() => {
+			render(<Radio checked={false} />)
+		})
 		const radio = screen.getByRole('radio')
 		expect(radio).toBeInTheDocument()
 		expect(radio).not.toBeChecked()
@@ -79,15 +84,18 @@ describe("Radio", () => {
 	test("fire handler on change as passed", async () => {
 		const onChangeSpy = jest.fn();
 		render(<Radio onChange={onChangeSpy} />);
-		screen.getByRole('radio').click();
+		act(() => {
+			screen.getByRole('radio').click();
+		})
 		expect(onChangeSpy).toHaveBeenCalled();
 	})
 	
 	test("does not fire onChange handler when disabled", async () => {
 		const onChangeSpy = jest.fn()
 		render(<Radio onChange={onChangeSpy} disabled />)
-		const radio = screen.getByRole('radio')
-		radio.click();
+		act(() => {
+			screen.getByRole('radio').click();
+		})
 		expect(onChangeSpy).not.toHaveBeenCalled()
 	})
 })
