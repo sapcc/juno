@@ -52,7 +52,8 @@ const manifest = {}
 files.sort().forEach(async (file) => {
   const pkg = JSON.parse(fs.readFileSync(file))
   const path = file.match(pathRegex)[1]
-  const type = PACKAGES_PATHS.find((p) => path.indexOf(p) >= 0)
+  let type = PACKAGES_PATHS.find((p) => path.indexOf(p) >= 0)
+  type = type && type.slice(0, -1)
   const entryFile = pkg.module || pkg.main
   const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/"))
   const meta = fs.statSync(`${rootPath}/${path}`)
@@ -68,7 +69,7 @@ files.sort().forEach(async (file) => {
   }
 
   if (path.indexOf("@latest") > 0)
-    manifest[pkg.name]["latest"] = manifest[pkg.name][pkg.version]
+    manifest[pkg.name]["latest"] = { ...manifest[pkg.name][pkg.version] }
   // console.log(path + "/" + entryDir, meta)
 })
 
