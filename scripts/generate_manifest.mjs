@@ -54,7 +54,7 @@ files.sort().forEach(async (file) => {
   const path = file.match(pathRegex)[1]
   const entryFile = pkg.module || pkg.main
   const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/"))
-  const meta = fs.statSync(`${rootPath}/path`)
+  const meta = fs.statSync(`${rootPath}/${path}`)
 
   manifest[pkg.name] = manifest[pkg.name] || {}
   manifest[pkg.name][pkg.version] = {
