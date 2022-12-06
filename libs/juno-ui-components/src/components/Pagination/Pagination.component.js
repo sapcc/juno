@@ -55,7 +55,7 @@ const renderPaginationInnards = (
       return (
         <span>
           <TextInput 
-            value={ currentPage || null }
+            value={ currentPage || "" }
             onKeyPress={handleKeyPress}
             className={`${inputStyles}`}
           />
