@@ -15,8 +15,8 @@ RUN \
   DIR=$(dirname $PACKAGE); \
   cp -r $DIR "$DIR@latest"; \
   mv $DIR "$DIR@$VERSION"; \
-  ls -la ./** ; \ 
-  done
+  done ; \
+  ls -la ./**  
 
 RUN \
   cd /juno/ ; \
