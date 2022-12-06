@@ -1,0 +1,56 @@
+# Juno is a monorepo containing apps and libs. The packages are managed using yarn 3. 
+# Yarn 3 caches all packges and simulates the node_modules folder.
+#
+# The build idea:
+# we get the entire monorepo and build the required app in the base layer. 
+# Then we create a new layer and copy the build results into the target directory. 
+# That means the finished image contains only the app bundle and the package.json file.
+ARG ASSET_PATH=""
+ARG BUILD_DIR=""
+
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-base:latest AS build 
+ARG ASSET_PATH
+ARG BUILD_DIR
+
+RUN mkdir -p /tmp/src
+ADD . /tmp/src
+
+WORKDIR /juno
+
+RUN rsync -avu --delete "/tmp/src/" "/juno" 1>/dev/null ; 
+
+
+# install and build libs 
+# TODO: remove following 2 lines after switch to importmaps. 
+# With importmaps there is no need to use libs from repo 
+RUN yarn install 1>/dev/null ; yarn build-libs 1>/dev/null
+
+# test and build asset
+RUN \
+  ASSET_NAME=$(jq -r .name /juno/$ASSET_PATH/package.json) ; \ 
+  ASSET_TEST_SCRIPT=$(jq -r '.scripts | has("test")' /juno/$ASSET_PATH/package.json) ; \
+  ASSET_BUILD_SCRIPT=$(jq -r '.scripts | has("build")' /juno/$ASSET_PATH/package.json) ; \ 
+  echo $ASSET_NAME $ASSET_TEST_SCRIPT $ASSET_BUILD_SCRIPT ; \
+  [[ "$ASSET_TEST_SCRIPT" == "false" ]]  || CI=true yarn workspace $ASSET_NAME test ;\
+  [[ "$ASSET_BUILD_SCRIPT" == "false" ]] || CI=false NODE_ENV=production yarn workspace $ASSET_NAME build 1>/dev/null
+
+RUN \
+  if [ -z "$BUILD_DIR" ]; then BUILD_DIR=$(jq -r .buildDir /juno/$ASSET_PATH/package.json); fi ; \
+  if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR="build"; fi ; \
+  mkdir -p "/tmp/$ASSET_PATH" ; \
+  cp -r "/juno/$ASSET_PATH/$BUILD_DIR" "/tmp/$ASSET_PATH/build" ; \
+  cp "/juno/$ASSET_PATH/package.json" "/tmp/$ASSET_PATH/build/package.json"
+
+RUN ls -la "/tmp/$ASSET_PATH/build"
+
+# asset layer
+FROM scratch as asset 
+ARG ASSET_PATH
+
+LABEL source_repository="https://github.com/sapcc/juno/$ASSET_PATH"
+
+WORKDIR /
+
+# copy build results from base image to dist
+COPY --from=build "/tmp/$ASSET_PATH/build" /dist
+

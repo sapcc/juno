@@ -1,0 +1,78 @@
+ARG CURRENT_VERSION="v2"
+
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-base:latest AS base 
+RUN mkdir -p /tmp/latest
+
+# copy all app and lib builds (from dist) to tmp/latest  
+
+# -> /apps/whois/build, package.json
+# -> /apps/volta/build, package.json
+# -> /libs/juno-ui-components/build, package.json
+ADD . /tmp/latest
+WORKDIR /tmp/latest
+
+RUN \
+  for PACKAGE in ./**/*/package.json; do \
+  VERSION=$(jq -r .version $PACKAGE); \
+  DIR=$(dirname $PACKAGE); \
+  cp -r $DIR "$DIR@latest"; \
+  mv $DIR "$DIR@$VERSION"; \
+  ls -la ./** ; \ 
+  done
+
+RUN \
+  cd /juno/ci.V2/importmaps && npm install && \
+  node ./assets_server_importmaps.mjs \
+  --src=/tmp/latest \
+  --base-url="%BASE_URL%" \
+  --output=/tmp/latest/importmap.json ; \
+  --verbose ; \
+  \
+  node ./assets_server_manifest.mjs \
+  --src=/tmp/latest \
+  --output=/tmp/latest/manifest.json \
+  --verbose ;
+
+
+# RESULTS
+# /tmp/latest/apps/whois@version/files
+# /tmp/latest/apps/volta/files
+# /tmp/latest/libs/juno-ui-components/files
+# /tmp/latest/assets/static files
+# /tmp/latest/importmap.json
+# /tmp/latest/manifest.json
+
+#FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server:latest AS lastbuild
+
+# final image layer
+FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/nginx:alpine AS server
+LABEL source_repository="https://github.com/sapcc/juno"
+ARG CURRENT_VERSION
+ENV BASE_URL=""
+
+RUN apk --no-cache add rsync
+
+# copy old versions to current layer
+#COPY --from=lastbuild /usr/share/nginx/html/* /usr/share/nginx/html/
+# copy new version 
+COPY --from=base /tmp/latest "/tmp/latest"
+# sync new versions over old
+RUN rsync -avu --delete "/tmp/latest/" "/usr/share/nginx/html/$CURRENT_VERSION" 1>/dev/null ; 
+RUN rm -rf /tmp/latest
+
+# ENTRYPOINT
+# we check the presence of BASE_URL env
+# replace placeholder for base url in importmaps.json file
+# and run the given command 
+RUN echo -e '#!/bin/sh\n\n\
+  set -e \n\
+  if [ -z "$BASE_URL" ]; then echo 'Environment variable BASE_URL must be specified. Exiting.'; exit 1; fi \n\
+  sed -i "s,%BASE_URL%,$BASE_URL/v2,g" /usr/share/nginx/html/v2/importmap.json \n\
+  exec "$@" ' >> /usr/local/bin/entrypoint && chmod +x /usr/local/bin/entrypoint
+
+# preset manifest.json as default index file
+RUN sed -i 's,index  index.html index.htm;,index  manifest.json index.html index.htm;,g' /etc/nginx/conf.d/default.conf 
+
+ENTRYPOINT ["/usr/local/bin/entrypoint"]
+# default command is nginx
+CMD nginx -g "daemon off;"
