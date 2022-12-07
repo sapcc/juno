@@ -23,6 +23,7 @@ const config = [
         compact: true,
       },
     ],
+    external: Object.keys(pkg.peerDependencies),
     plugins: [
       babel({
         exclude: "node_modules/**",

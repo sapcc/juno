@@ -45,6 +45,11 @@ module.exports = (_, argv) => {
       asyncChunks: true,
       clean: true,
     },
+    externalsType: "module",
+    externals: Object.keys(pkg.peerDependencies).reduce((map, key) => {
+      map[key] = key
+      return map
+    }, {}),
     // This says to webpack that we are in development mode and write the code in webpack file in different way
     mode: "development",
     module: {

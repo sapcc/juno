@@ -34,6 +34,7 @@ const config = [
         compact: true,
       },
     ],
+    external: Object.keys(pkg.peerDependencies),
     plugins: [
       terser(),
       del({ targets: [moduleBuildDir, mainBuildDir] }),

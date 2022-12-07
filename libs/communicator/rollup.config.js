@@ -22,6 +22,7 @@ const config = [
         compact: true,
       },
     ],
+    external: Object.keys(pkg.peerDependencies),
     plugins: [
       del({ targets: [`${buildDir}/**/*`] }),
       minify({ comments: false }),
