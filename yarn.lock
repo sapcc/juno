@@ -2930,7 +2930,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pmmmwh/react-refresh-webpack-plugin@npm:^0.5.1, @pmmmwh/react-refresh-webpack-plugin@npm:^0.5.3":
+"@pmmmwh/react-refresh-webpack-plugin@npm:^0.5.3":
   version: 0.5.10
   resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.10"
   dependencies:
@@ -4706,7 +4706,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint-scope@npm:^3.7.3":
+"@types/eslint-scope@npm:^3.7.0, @types/eslint-scope@npm:^3.7.3":
   version: 3.7.4
   resolution: "@types/eslint-scope@npm:3.7.4"
   dependencies:
@@ -4737,6 +4737,13 @@ __metadata:
   version: 0.0.39
   resolution: "@types/estree@npm:0.0.39"
   checksum: 412fb5b9868f2c418126451821833414189b75cc6bf84361156feed733e3d92ec220b9d74a89e52722e03d5e241b2932732711b7497374a404fad49087adc248
+  languageName: node
+  linkType: hard
+
+"@types/estree@npm:^0.0.50":
+  version: 0.0.50
+  resolution: "@types/estree@npm:0.0.50"
+  checksum: 9a2b6a4a8c117f34d08fbda5e8f69b1dfb109f7d149b60b00fd7a9fb6ac545c078bc590aa4ec2f0a256d680cf72c88b3b28b60c326ee38a7bc8ee1ee95624922
   languageName: node
   linkType: hard
 
@@ -5782,7 +5789,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.1.0, acorn@npm:^8.5.0, acorn@npm:^8.7.1, acorn@npm:^8.8.1":
+"acorn@npm:^8.1.0, acorn@npm:^8.4.1, acorn@npm:^8.5.0, acorn@npm:^8.7.1, acorn@npm:^8.8.1":
   version: 8.8.1
   resolution: "acorn@npm:8.8.1"
   bin:
@@ -8801,7 +8808,6 @@ __metadata:
     "@babel/core": ^7.20.2
     "@babel/preset-env": ^7.20.2
     "@babel/preset-react": ^7.18.6
-    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.1
     "@svgr/webpack": ^6.2.1
     "@testing-library/dom": ^8.19.0
     "@testing-library/jest-dom": ^5.16.5
@@ -9545,7 +9551,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enhanced-resolve@npm:^5.10.0":
+"enhanced-resolve@npm:^5.10.0, enhanced-resolve@npm:^5.8.3":
   version: 5.12.0
   resolution: "enhanced-resolve@npm:5.12.0"
   dependencies:
@@ -10039,7 +10045,7 @@ __metadata:
     tailwindcss: ^3.0.24
     url-state-provider: "workspace:*"
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
     zustand: ^4.1.1
@@ -11694,7 +11700,7 @@ __metadata:
     tailwindcss: ^3.0.24
     url-state-router: "workspace:*"
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
     zustand: ^4.1.1
@@ -14500,7 +14506,7 @@ __metadata:
     tailwindcss: ^3.0.24
     url-state-provider: "workspace:*"
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
     zustand: ^4.1.1
@@ -18371,7 +18377,7 @@ __metadata:
     url-state-provider: "workspace:libs/url-state-provider"
     url-state-router: "workspace:*"
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
   peerDependencies:
@@ -20301,7 +20307,7 @@ __metadata:
     tailwindcss: ^3.0.24
     url-state-provider: "workspace:*"
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
     zustand: ^4.1.1
@@ -21542,7 +21548,7 @@ __metadata:
     shadow-dom-testing-library: ^1.7.1
     tailwindcss: ^3.0.24
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
   peerDependencies:
@@ -21624,7 +21630,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"watchpack@npm:^2.2.0, watchpack@npm:^2.4.0":
+"watchpack@npm:^2.2.0, watchpack@npm:^2.3.1, watchpack@npm:^2.4.0":
   version: 2.4.0
   resolution: "watchpack@npm:2.4.0"
   dependencies:
@@ -21898,7 +21904,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:>=4.43.0 <6.0.0, webpack@npm:^5.4.0, webpack@npm:^5.68.0, webpack@npm:^5.75.0, webpack@npm:^5.9.0":
+"webpack@npm:>=4.43.0 <6.0.0, webpack@npm:^5.75.0":
   version: 5.75.0
   resolution: "webpack@npm:5.75.0"
   dependencies:
@@ -21932,6 +21938,43 @@ __metadata:
   bin:
     webpack: bin/webpack.js
   checksum: 2bcc5f3c195f375944e8af2f00bf2feea39cb9fda5f763b0d1b00077f1c51783db25c94d3fae96a07dead9fa085e6ae7474417e5ab31719c9776ea5969ceb83a
+  languageName: node
+  linkType: hard
+
+"webpack@npm:^5.4.0, webpack@npm:^5.9.0":
+  version: 5.68.0
+  resolution: "webpack@npm:5.68.0"
+  dependencies:
+    "@types/eslint-scope": ^3.7.0
+    "@types/estree": ^0.0.50
+    "@webassemblyjs/ast": 1.11.1
+    "@webassemblyjs/wasm-edit": 1.11.1
+    "@webassemblyjs/wasm-parser": 1.11.1
+    acorn: ^8.4.1
+    acorn-import-assertions: ^1.7.6
+    browserslist: ^4.14.5
+    chrome-trace-event: ^1.0.2
+    enhanced-resolve: ^5.8.3
+    es-module-lexer: ^0.9.0
+    eslint-scope: 5.1.1
+    events: ^3.2.0
+    glob-to-regexp: ^0.4.1
+    graceful-fs: ^4.2.9
+    json-parse-better-errors: ^1.0.2
+    loader-runner: ^4.2.0
+    mime-types: ^2.1.27
+    neo-async: ^2.6.2
+    schema-utils: ^3.1.0
+    tapable: ^2.1.1
+    terser-webpack-plugin: ^5.1.3
+    watchpack: ^2.3.1
+    webpack-sources: ^3.2.3
+  peerDependenciesMeta:
+    webpack-cli:
+      optional: true
+  bin:
+    webpack: bin/webpack.js
+  checksum: ac6efd861a0bfb35d8a467fba0d87f905ef6e1a9a9f7e3db42ea459cf191268094cedd025d3eb36a1464e2208a0c193f3f4a92531ba58850246f3c6b8f210b03
   languageName: node
   linkType: hard
 
@@ -22117,7 +22160,7 @@ __metadata:
     tailwindcss: ^3.0.24
     url-state-provider: "workspace:*"
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
   peerDependencies:

@@ -18,6 +18,8 @@ if (!outputRegex.test(pkg.module))
   )
 
 const [_, buildDir, filename] = pkg.module.match(outputRegex)
+const externals = {}
+for (let key in pkg.peerDependencies) externals[key] = key
 
 module.exports = (_, argv) => {
   const mode = argv.mode
@@ -45,10 +47,7 @@ module.exports = (_, argv) => {
       clean: true,
     },
     externalsType: "module",
-    externals: Object.keys(pkg.peerDependencies).reduce((map, key) => {
-      map[key] = key
-      return map
-    }, {}),
+    externals: isDevelopment ? {} : externals,
     // This says to webpack that we are in development mode and write the code in webpack file in different way
     mode: "development",
     module: {
