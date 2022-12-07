@@ -12,6 +12,7 @@ if (!/.+\/.+\.js/.test(pkg.module))
     "module value is incorrect, use DIR/FILE.js like build/index.js"
   )
 const buildDir = pkg.module.slice(0, pkg.module.lastIndexOf("/"))
+const isProduction = process.env.NODE_ENV === "production"
 
 const config = [
   {
@@ -23,7 +24,6 @@ const config = [
         compact: true,
       },
     ],
-    external: Object.keys(pkg.peerDependencies),
     plugins: [
       babel({
         exclude: "node_modules/**",
@@ -33,7 +33,7 @@ const config = [
       minify({ comments: false }),
       analyze({ summaryOnly: true, limit: 0 }),
     ],
-    external: Object.keys(pkg.peerDependencies || {}),
+    external: isProduction ? Object.keys(pkg.peerDependencies || {}) : [],
   },
 ]
 

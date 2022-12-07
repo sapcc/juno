@@ -33,6 +33,8 @@ fs.readdirSync("./src/components").forEach((file) => {
   input[file] = `src/components/${file}/index.js`
 })
 
+const isProduction = process.env.NODE_ENV === "production"
+
 const config = [
   {
     input,
@@ -45,7 +47,7 @@ const config = [
         compact: true,
       },
     ],
-    external: Object.keys(pkg.peerDependencies),
+    external: Object.keys(pkg.peerDependencies || {}),
 
     plugins: [
       babel({
@@ -77,7 +79,7 @@ const config = [
         limit: 0,
       }),
     ],
-    external: Object.keys(pkg.peerDependencies || {}),
+    external: isProduction ? Object.keys(pkg.peerDependencies || {}) : [],
   },
 ]
 

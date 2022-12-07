@@ -38,7 +38,7 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "NODE_ENV=production rollup -c"
+    "build": "rollup -c"
   },
   "babel": {
     "presets": [

@@ -14,6 +14,8 @@ if (!/.+\/.+\.js/.test(pkg.module))
 const mainBuildDir = pkg.main.slice(0, pkg.module.lastIndexOf("/"))
 const moduleBuildDir = pkg.module.slice(0, pkg.module.lastIndexOf("/"))
 
+const isProduction = process.env.NODE_ENV === "production"
+
 const config = [
   {
     input: pkg.source,
@@ -30,7 +32,7 @@ const config = [
       },
     ],
     plugins: [terser(), del({ targets: [mainBuildDir, moduleBuildDir] })],
-    external: Object.keys(pkg.peerDependencies || {}),
+    external: isProduction ? Object.keys(pkg.peerDependencies || {}) : [],
   },
 ]
 

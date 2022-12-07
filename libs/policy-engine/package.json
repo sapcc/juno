@@ -16,7 +16,7 @@
     "rollup-plugin-delete": "^2.0.0"
   },
   "scripts": {
-    "build": "NODE_ENV=production rollup -c",
+    "build": "rollup -c",
     "start": "PORT=$APP_PORT yarn nodemon ./src/index.js",
     "test": "jest"
   },
