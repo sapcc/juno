@@ -1,0 +1,17 @@
+{
+  "name": "communicator",
+  "version": "1.0.0",
+  "description": "Send and receive custom events",
+  "source": "src/index.js",
+  "main": "build/index.js",
+  "module": "build/index.js",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "devDependencies": {
+    "rollup": "^3.4.0",
+    "rollup-plugin-analyzer": "^4.0.0",
+    "rollup-plugin-babel-minify": "^10.0.0",
+    "rollup-plugin-delete": "^2.0.0"
+  }
+}

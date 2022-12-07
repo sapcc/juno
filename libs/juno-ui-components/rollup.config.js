@@ -1,4 +1,4 @@
-const babel = require("@rollup/plugin-babel")
+const { babel } = require("@rollup/plugin-babel")
 const del = require("rollup-plugin-delete")
 const postcss = require("rollup-plugin-postcss")
 const pkg = require("./package.json")
@@ -47,15 +47,13 @@ const config = [
         compact: true,
       },
     ],
-    external: Object.keys(pkg.peerDependencies || {}),
 
     plugins: [
+      nodeResolve(),
       babel({
-        exclude: "node_modules/**",
         babelHelpers: "bundled",
       }),
       del({ targets: [`${buildDir}/**/*`] }),
-      nodeResolve(),
       svgr({
         svgo: false,
         titleProp: true,
@@ -79,7 +77,10 @@ const config = [
         limit: 0,
       }),
     ],
-    external: isProduction ? Object.keys(pkg.peerDependencies || {}) : [],
+
+    external: ["react", "react-dom", "prop-types"].concat(
+      isProduction ? Object.keys(pkg.peerDependencies || {}) : []
+    ),
   },
 ]
 

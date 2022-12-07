@@ -21,8 +21,11 @@ RUN rsync -avu --delete "/tmp/src/" "/juno" 1>/dev/null ;
 
 
 # install and build libs 
-# TODO: remove following 2 lines after switch to importmaps. 
-# With importmaps there is no need to use libs from repo 
+# IMPORTANT!
+# some assets have dependencies to libs
+# to test the asset we need to build the libs which includes all dependencies
+# build-libs script set the NODE_ENV to development which includes all 
+# dependencies in the builds defined in peer dependencies.
 RUN yarn install 1>/dev/null ; yarn build-libs 1>/dev/null
 
 # test and build asset
