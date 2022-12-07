@@ -44,7 +44,7 @@ module.exports = (_, argv) => {
       clean: true,
     },
     externalsType: "module",
-    externals: Object.keys(package.peerDependencies).reduce((map, key) => {
+    externals: Object.keys(pkg.peerDependencies).reduce((map, key) => {
       map[key] = key
       return map
     }, {}),
