@@ -100,7 +100,16 @@ describe("Switch", () => {
     expect(onChangeSpy).toHaveBeenCalled();	
   })
   
-  test("does not executes custom handler on change when disabled", async () => {	
+  test("executes handler on click as passed", async () => {	
+    const onClickSpy = jest.fn();
+    render(<Switch onClick={onClickSpy} />);
+    act(() => {
+      screen.getByRole('switch').click();
+    })
+    expect(onClickSpy).toHaveBeenCalled();	
+  })
+  
+  test("does not execute handler on change when disabled", async () => {	
       const onChangeSpy = jest.fn();
       render(<Switch onChange={onChangeSpy} disabled/>);
       act(() => {
@@ -108,5 +117,14 @@ describe("Switch", () => {
       })
       expect(onChangeSpy).not.toHaveBeenCalled();	
     })
+    
+  test("does not execute handler on click when disabled", async () => {	
+    const onClickSpy = jest.fn();
+    render(<Switch onClick={onClickSpy} disabled/>);
+    act(() => {
+      screen.getByRole('switch').click();
+    })
+    expect(onClickSpy).not.toHaveBeenCalled();	
+  })
 
 })

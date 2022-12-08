@@ -82,8 +82,6 @@ export const Panel = ({
 
   const handleClose = (event) => {
     setIsOpen(false)
-
-    // call passed onClose event handler (if any)
     onClose && onClose(event)
   }
 

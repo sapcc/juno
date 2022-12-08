@@ -323,6 +323,13 @@ describe("Icon", () => {
     screen.getByRole("button").click()
     expect(handleClick).toHaveBeenCalled()
   })
+  
+  test("does not execute onClick handler when disabled", async () => {
+    const handleClick = jest.fn()
+    render(<Icon onClick={handleClick} disabled />)
+    screen.getByRole("button").click()
+    expect(handleClick).not.toHaveBeenCalled()
+  })
 
   test("renders an <a> element and ignore onClick handler if both href and onClick handler are passed", async () => {
     const handleClick = jest.fn()
