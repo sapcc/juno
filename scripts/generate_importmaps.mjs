@@ -86,11 +86,14 @@ for (let file of files) {
   // console.log(":::::::::::::::::", entryFile.slice(0, entryFile.lastIndexOf("/")))
 
   packageRegistry[packageJson.name] = packageRegistry[packageJson.name] || {}
-  packageRegistry[packageJson.name][packageJson.version || "latest"] = {
+  packageRegistry[packageJson.name][packageJson.version] = {
     path,
     entryFile,
     entryDir,
     peerDependencies: packageJson.peerDependencies,
+  }
+  packageRegistry[packageJson.name]["latest"] = {
+    ...packageRegistry[packageJson.name][packageJson.version],
   }
 }
 
@@ -114,7 +117,7 @@ const findRegisteredPackage = (name, version) => {
 
 // create importMap hash
 const importMap = { scopes: {}, imports: {} }
-const generator = new Generator({ env: ["browser"] })
+// const generator = new Generator({ env: ["browser"] })
 
 for (let name in packageRegistry) {
   for (let version in packageRegistry[name]) {
@@ -137,6 +140,7 @@ for (let name in packageRegistry) {
     importMap.scopes[packageScopePath] =
       importMap.scopes[packageScopePath] || {}
 
+    const generator = new Generator({ env: ["browser"] })
     for (let dependencyName in packageData.peerDependencies) {
       let dependencyVersion = packageData.peerDependencies[dependencyName]
       // ownPackage = juno lib
@@ -165,18 +169,19 @@ for (let name in packageRegistry) {
         // build resolution
         await generator.install(`${dependencyName}@${dependencyVersion}`)
         // console.log(JSON.stringify(generator.getMap(), null, 2))
-
-        // build importMap with scopes
-        const map = generator.getMap()
-        importMap.scopes = {
-          ...importMap.scopes,
-          ...map.scopes,
-          [`${options.baseUrl}/${packageData.path}/`]: {
-            ...importMap.scopes[`${options.baseUrl}/${packageData.path}/`],
-            ...map.imports,
-          },
-        }
       }
+    }
+    // build importMap with scopes
+    const map = generator.getMap()
+    // console.log("=============================im")
+    // console.log(map)
+    importMap.scopes = {
+      ...importMap.scopes,
+      ...map.scopes,
+      [`${options.baseUrl}/${packageData.path}/`]: {
+        ...importMap.scopes[`${options.baseUrl}/${packageData.path}/`],
+        ...map.imports,
+      },
     }
   }
 }

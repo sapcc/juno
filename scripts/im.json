@@ -1,0 +1,222 @@
+{
+  "scopes": {
+    "%BASE_URL%/apps/dashboard/": {
+      "juno-ui-components/": "%BASE_URL%/libs/juno-ui-components/build/",
+      "juno-ui-components": "%BASE_URL%/libs/juno-ui-components/build/index.js",
+      "custom-event-polyfill": "https://ga.jspm.io/npm:custom-event-polyfill@1.0.7/polyfill.js",
+      "express": "https://ga.jspm.io/npm:express@4.18.2/index.js",
+      "luxon": "https://ga.jspm.io/npm:luxon@2.5.0/src/luxon.js",
+      "prop-types": "https://ga.jspm.io/npm:prop-types@15.8.1/index.js",
+      "react": "https://ga.jspm.io/npm:react@18.2.0/index.js",
+      "react-dom": "https://ga.jspm.io/npm:react-dom@18.2.0/index.js",
+      "zustand": "https://ga.jspm.io/npm:zustand@4.1.5/esm/index.mjs"
+    },
+    "https://ga.jspm.io/": {
+      "process": "https://ga.jspm.io/npm:@jspm/core@2.0.0-beta.27/nodelibs/browser/process.js",
+      "scheduler": "https://ga.jspm.io/npm:scheduler@0.23.0/index.js"
+    },
+    "https://ga.jspm.io/npm:send@0.18.0/": {
+      "ms": "https://ga.jspm.io/npm:ms@2.1.3/index.js"
+    },
+    "%BASE_URL%/apps/exampleapp/": {
+      "juno-ui-components/": "%BASE_URL%/libs/juno-ui-components/build/",
+      "juno-ui-components": "%BASE_URL%/libs/juno-ui-components/build/index.js",
+      "url-state-provider/": "%BASE_URL%/libs/url-state-provider/build/esm/",
+      "url-state-provider": "%BASE_URL%/libs/url-state-provider/build/esm/index.js",
+      "custom-event-polyfill": "https://ga.jspm.io/npm:custom-event-polyfill@1.0.7/polyfill.js",
+      "luxon": "https://ga.jspm.io/npm:luxon@2.5.0/src/luxon.js",
+      "prop-types": "https://ga.jspm.io/npm:prop-types@15.8.1/index.js",
+      "react": "https://ga.jspm.io/npm:react@18.2.0/index.js",
+      "react-dom": "https://ga.jspm.io/npm:react-dom@18.2.0/index.js",
+      "react-json-view": "https://ga.jspm.io/npm:react-json-view@1.21.3/dist/main.js",
+      "react-query": "https://ga.jspm.io/npm:react-query@3.39.2/lib/index.js",
+      "zustand": "https://ga.jspm.io/npm:zustand@4.1.5/esm/index.mjs"
+    },
+    "https://ga.jspm.io/npm:react-query@3.39.2/_/7f5068c7.js": {
+      "@babel/runtime/helpers/extends": "https://ga.jspm.io/npm:@babel/runtime@7.20.6/helpers/esm/extends.js",
+      "@babel/runtime/helpers/interopRequireDefault": "https://ga.jspm.io/npm:@babel/runtime@7.20.6/helpers/esm/interopRequireDefault.js"
+    },
+    "https://ga.jspm.io/npm:react-query@3.39.2/_/af3d0bc3.js": {
+      "@babel/runtime/helpers/extends": "https://ga.jspm.io/npm:@babel/runtime@7.20.6/helpers/esm/extends.js",
+      "@babel/runtime/helpers/inheritsLoose": "https://ga.jspm.io/npm:@babel/runtime@7.20.6/helpers/esm/inheritsLoose.js",
+      "@babel/runtime/helpers/interopRequireDefault": "https://ga.jspm.io/npm:@babel/runtime@7.20.6/helpers/esm/interopRequireDefault.js"
+    },
+    "%BASE_URL%/apps/heureka/": {
+      "juno-ui-components/": "%BASE_URL%/libs/juno-ui-components/build/",
+      "juno-ui-components": "%BASE_URL%/libs/juno-ui-components/build/index.js",
+      "oauth/": "%BASE_URL%/libs/oauth/build/",
+      "oauth": "%BASE_URL%/libs/oauth/build/index.js",
+      "url-state-router/": "%BASE_URL%/libs/url-state-router/build/",
+      "url-state-router": "%BASE_URL%/libs/url-state-router/build/index.js",
+      "custom-event-polyfill": "https://ga.jspm.io/npm:custom-event-polyfill@1.0.7/polyfill.js",
+      "lodash.uniqueid": "https://ga.jspm.io/npm:lodash.uniqueid@4.0.1/index.js",
+      "luxon": "https://ga.jspm.io/npm:luxon@2.5.0/src/luxon.js",
+      "prop-types": "https://ga.jspm.io/npm:prop-types@15.8.1/index.js",
+      "react": "https://ga.jspm.io/npm:react@18.2.0/index.js",
+      "react-dom": "https://ga.jspm.io/npm:react-dom@18.2.0/index.js",
+      "react-json-view": "https://ga.jspm.io/npm:react-json-view@1.21.3/dist/main.js",
+      "react-query": "https://ga.jspm.io/npm:react-query@3.39.2/lib/index.js",
+      "zustand": "https://ga.jspm.io/npm:zustand@4.1.5/esm/index.mjs"
+    },
+    "%BASE_URL%/apps/maintenance/": {
+      "communicator/": "%BASE_URL%/libs/communicator/build/",
+      "communicator": "%BASE_URL%/libs/communicator/build/index.js",
+      "juno-ui-components/": "%BASE_URL%/libs/juno-ui-components/build/",
+      "juno-ui-components": "%BASE_URL%/libs/juno-ui-components/build/index.js",
+      "url-state-provider/": "%BASE_URL%/libs/url-state-provider/build/esm/",
+      "url-state-provider": "%BASE_URL%/libs/url-state-provider/build/esm/index.js",
+      "custom-event-polyfill": "https://ga.jspm.io/npm:custom-event-polyfill@1.0.7/polyfill.js",
+      "luxon": "https://ga.jspm.io/npm:luxon@2.5.0/src/luxon.js",
+      "prop-types": "https://ga.jspm.io/npm:prop-types@15.8.1/index.js",
+      "react": "https://ga.jspm.io/npm:react@18.2.0/index.js",
+      "react-dom": "https://ga.jspm.io/npm:react-dom@18.2.0/index.js",
+      "react-json-view": "https://ga.jspm.io/npm:react-json-view@1.21.3/dist/main.js",
+      "zustand": "https://ga.jspm.io/npm:zustand@4.1.5/esm/index.mjs"
+    },
+    "%BASE_URL%/apps/requests/": {
+      "juno-ui-components/": "%BASE_URL%/libs/juno-ui-components/build/",
+      "juno-ui-components": "%BASE_URL%/libs/juno-ui-components/build/index.js",
+      "policy-engine/": "%BASE_URL%/libs/policy-engine/build/esm/",
+      "policy-engine": "%BASE_URL%/libs/policy-engine/build/esm/index.js",
+      "url-state-provider/": "%BASE_URL%/libs/url-state-provider/build/esm/",
+      "url-state-provider": "%BASE_URL%/libs/url-state-provider/build/esm/index.js",
+      "@apollo/client": "https://ga.jspm.io/npm:@apollo/client@3.7.2/main.cjs",
+      "assert": "https://ga.jspm.io/npm:assert@2.0.0/build/assert.js",
+      "buffer": "https://ga.jspm.io/npm:buffer@6.0.3/index.js",
+      "dotenv": "https://ga.jspm.io/npm:dotenv@8.6.0/lib/main.js",
+      "graphql": "https://ga.jspm.io/npm:graphql@15.8.0/index.js",
+      "lz-string": "https://ga.jspm.io/npm:lz-string@1.4.4/libs/lz-string.js",
+      "os-browserify": "https://ga.jspm.io/npm:os-browserify@0.3.0/browser.js",
+      "path-browserify": "https://ga.jspm.io/npm:path-browserify@1.0.1/index.js",
+      "process": "https://ga.jspm.io/npm:process@0.11.10/browser.js",
+      "react": "https://ga.jspm.io/npm:react@18.2.0/index.js",
+      "react-dom": "https://ga.jspm.io/npm:react-dom@18.2.0/index.js",
+      "react-router-dom": "https://ga.jspm.io/npm:react-router-dom@5.3.4/index.js",
+      "util": "https://ga.jspm.io/npm:util@0.12.4/util.js"
+    },
+    "https://ga.jspm.io/npm:optimism@0.16.1/": {
+      "@wry/context": "https://ga.jspm.io/npm:@wry/context@0.6.1/lib/context.js"
+    },
+    "%BASE_URL%/apps/template/": {
+      "communicator/": "%BASE_URL%/libs/communicator/build/",
+      "communicator": "%BASE_URL%/libs/communicator/build/index.js",
+      "juno-ui-components/": "%BASE_URL%/libs/juno-ui-components/build/",
+      "juno-ui-components": "%BASE_URL%/libs/juno-ui-components/build/index.js",
+      "url-state-provider/": "%BASE_URL%/libs/url-state-provider/build/esm/",
+      "url-state-provider": "%BASE_URL%/libs/url-state-provider/build/esm/index.js",
+      "custom-event-polyfill": "https://ga.jspm.io/npm:custom-event-polyfill@1.0.7/polyfill.js",
+      "luxon": "https://ga.jspm.io/npm:luxon@2.5.0/src/luxon.js",
+      "prop-types": "https://ga.jspm.io/npm:prop-types@15.8.1/index.js",
+      "react": "https://ga.jspm.io/npm:react@18.2.0/index.js",
+      "react-dom": "https://ga.jspm.io/npm:react-dom@18.2.0/index.js",
+      "react-json-view": "https://ga.jspm.io/npm:react-json-view@1.21.3/dist/main.js",
+      "react-query": "https://ga.jspm.io/npm:react-query@3.39.2/lib/index.js",
+      "zustand": "https://ga.jspm.io/npm:zustand@4.1.5/esm/index.mjs"
+    },
+    "%BASE_URL%/apps/volta/": {
+      "communicator/": "%BASE_URL%/libs/communicator/build/",
+      "communicator": "%BASE_URL%/libs/communicator/build/index.js",
+      "juno-ui-components/": "%BASE_URL%/libs/juno-ui-components/build/",
+      "juno-ui-components": "%BASE_URL%/libs/juno-ui-components/build/index.js",
+      "oauth/": "%BASE_URL%/libs/oauth/build/",
+      "oauth": "%BASE_URL%/libs/oauth/build/index.js",
+      "@peculiar/x509": "https://ga.jspm.io/npm:@peculiar/x509@1.9.2/build/x509.cjs.js",
+      "custom-event-polyfill": "https://ga.jspm.io/npm:custom-event-polyfill@1.0.7/polyfill.js",
+      "lodash.uniqueid": "https://ga.jspm.io/npm:lodash.uniqueid@4.0.1/index.js",
+      "luxon": "https://ga.jspm.io/npm:luxon@2.5.0/src/luxon.js",
+      "prop-types": "https://ga.jspm.io/npm:prop-types@15.8.1/index.js",
+      "react": "https://ga.jspm.io/npm:react@18.2.0/index.js",
+      "react-dom": "https://ga.jspm.io/npm:react-dom@18.2.0/index.js",
+      "react-json-view": "https://ga.jspm.io/npm:react-json-view@1.21.3/dist/main.js",
+      "react-query": "https://ga.jspm.io/npm:react-query@3.39.2/lib/index.js",
+      "react-router-dom": "https://ga.jspm.io/npm:react-router-dom@6.4.4/dist/main.js"
+    },
+    "https://ga.jspm.io/npm:tsyringe@4.7.0/": {
+      "tslib": "https://ga.jspm.io/npm:tslib@1.14.1/tslib.js"
+    },
+    "%BASE_URL%/apps/whois/": {
+      "communicator/": "%BASE_URL%/libs/communicator/build/",
+      "communicator": "%BASE_URL%/libs/communicator/build/index.js",
+      "juno-ui-components/": "%BASE_URL%/libs/juno-ui-components/build/",
+      "juno-ui-components": "%BASE_URL%/libs/juno-ui-components/build/index.js",
+      "url-state-provider/": "%BASE_URL%/libs/url-state-provider/build/esm/",
+      "url-state-provider": "%BASE_URL%/libs/url-state-provider/build/esm/index.js",
+      "cidr-regex": "https://ga.jspm.io/npm:cidr-regex@3.1.1/index.js",
+      "custom-event-polyfill": "https://ga.jspm.io/npm:custom-event-polyfill@1.0.7/polyfill.js",
+      "ip-regex": "https://ga.jspm.io/npm:ip-regex@5.0.0/index.js",
+      "luxon": "https://ga.jspm.io/npm:luxon@2.5.0/src/luxon.js",
+      "prop-types": "https://ga.jspm.io/npm:prop-types@15.8.1/index.js",
+      "react": "https://ga.jspm.io/npm:react@18.2.0/index.js",
+      "react-dom": "https://ga.jspm.io/npm:react-dom@18.2.0/index.js",
+      "react-json-view": "https://ga.jspm.io/npm:react-json-view@1.21.3/dist/main.js"
+    },
+    "%BASE_URL%/libs/juno-ui-components/": {
+      "prop-types": "https://ga.jspm.io/npm:prop-types@15.8.1/index.js",
+      "react": "https://ga.jspm.io/npm:react@18.2.0/index.js",
+      "react-dom": "https://ga.jspm.io/npm:react-dom@18.2.0/index.js"
+    },
+    "%BASE_URL%/libs/oauth/": {
+      "prop-types": "https://ga.jspm.io/npm:prop-types@15.8.1/index.js",
+      "react": "https://ga.jspm.io/npm:react@18.2.0/index.js"
+    },
+    "%BASE_URL%/libs/url-state-provider/": {
+      "lz-string": "https://ga.jspm.io/npm:lz-string@1.4.4/libs/lz-string.js"
+    },
+    "%BASE_URL%/libs/url-state-router/": {
+      "url-state-provider/": "%BASE_URL%/libs/url-state-provider/build/esm/",
+      "url-state-provider": "%BASE_URL%/libs/url-state-provider/build/esm/index.js",
+      "prop-types": "https://ga.jspm.io/npm:prop-types@15.8.1/index.js",
+      "react": "https://ga.jspm.io/npm:react@18.2.0/index.js"
+    }
+  },
+  "imports": {
+    "@juno/dashboard@1.0.0": "%BASE_URL%/apps/dashboard/build/index.js",
+    "@juno/dashboard@1.0.0/": "%BASE_URL%/apps/dashboard/build/",
+    "@juno/dashboard@latest": "%BASE_URL%/apps/dashboard/build/index.js",
+    "@juno/dashboard@latest/": "%BASE_URL%/apps/dashboard/build/",
+    "@juno/exampleapp@1.0.0": "%BASE_URL%/apps/exampleapp/build/widget.js",
+    "@juno/exampleapp@1.0.0/": "%BASE_URL%/apps/exampleapp/build/",
+    "@juno/exampleapp@latest": "%BASE_URL%/apps/exampleapp/build/widget.js",
+    "@juno/exampleapp@latest/": "%BASE_URL%/apps/exampleapp/build/",
+    "@juno/heureka@1.0.0": "%BASE_URL%/apps/heureka/build/index.js",
+    "@juno/heureka@1.0.0/": "%BASE_URL%/apps/heureka/build/",
+    "@juno/heureka@latest": "%BASE_URL%/apps/heureka/build/index.js",
+    "@juno/heureka@latest/": "%BASE_URL%/apps/heureka/build/",
+    "@juno/maintenance@1.0.0": "%BASE_URL%/apps/maintenance/build/index.js",
+    "@juno/maintenance@1.0.0/": "%BASE_URL%/apps/maintenance/build/",
+    "@juno/maintenance@latest": "%BASE_URL%/apps/maintenance/build/index.js",
+    "@juno/maintenance@latest/": "%BASE_URL%/apps/maintenance/build/",
+    "@juno/requests@1.0.0": "%BASE_URL%/apps/requests/build/index.js",
+    "@juno/requests@1.0.0/": "%BASE_URL%/apps/requests/build/",
+    "@juno/requests@latest": "%BASE_URL%/apps/requests/build/index.js",
+    "@juno/requests@latest/": "%BASE_URL%/apps/requests/build/",
+    "@juno/template@1.0.0": "%BASE_URL%/apps/template/build/index.js",
+    "@juno/template@1.0.0/": "%BASE_URL%/apps/template/build/",
+    "@juno/template@latest": "%BASE_URL%/apps/template/build/index.js",
+    "@juno/template@latest/": "%BASE_URL%/apps/template/build/",
+    "@juno/volta@1.0.1": "%BASE_URL%/apps/volta/build/index.js",
+    "@juno/volta@1.0.1/": "%BASE_URL%/apps/volta/build/",
+    "@juno/volta@latest": "%BASE_URL%/apps/volta/build/index.js",
+    "@juno/volta@latest/": "%BASE_URL%/apps/volta/build/",
+    "@juno/whois@1.0.0": "%BASE_URL%/apps/whois/build/index.js",
+    "@juno/whois@1.0.0/": "%BASE_URL%/apps/whois/build/",
+    "@juno/whois@latest": "%BASE_URL%/apps/whois/build/index.js",
+    "@juno/whois@latest/": "%BASE_URL%/apps/whois/build/",
+    "@juno/juno-ui-components@1.0.3": "%BASE_URL%/libs/juno-ui-components/build/index.js",
+    "@juno/juno-ui-components@1.0.3/": "%BASE_URL%/libs/juno-ui-components/build/",
+    "@juno/juno-ui-components@latest": "%BASE_URL%/libs/juno-ui-components/build/index.js",
+    "@juno/juno-ui-components@latest/": "%BASE_URL%/libs/juno-ui-components/build/",
+    "@juno/oauth@0.1.1": "%BASE_URL%/libs/oauth/build/index.js",
+    "@juno/oauth@0.1.1/": "%BASE_URL%/libs/oauth/build/",
+    "@juno/oauth@latest": "%BASE_URL%/libs/oauth/build/index.js",
+    "@juno/oauth@latest/": "%BASE_URL%/libs/oauth/build/",
+    "@juno/url-state-provider@1.0.0": "%BASE_URL%/libs/url-state-provider/build/esm/index.js",
+    "@juno/url-state-provider@1.0.0/": "%BASE_URL%/libs/url-state-provider/build/esm/",
+    "@juno/url-state-provider@latest": "%BASE_URL%/libs/url-state-provider/build/esm/index.js",
+    "@juno/url-state-provider@latest/": "%BASE_URL%/libs/url-state-provider/build/esm/",
+    "@juno/url-state-router@1.0.0": "%BASE_URL%/libs/url-state-router/build/index.js",
+    "@juno/url-state-router@1.0.0/": "%BASE_URL%/libs/url-state-router/build/",
+    "@juno/url-state-router@latest": "%BASE_URL%/libs/url-state-router/build/index.js",
+    "@juno/url-state-router@latest/": "%BASE_URL%/libs/url-state-router/build/"
+  }
+}
