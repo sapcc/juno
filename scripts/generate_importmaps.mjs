@@ -129,13 +129,19 @@ for (let name in packageRegistry) {
       )
 
       if (ownPackage) {
+        const dVersion =
+          dependencyVersion === "*" ? "latest" : dependencyVersion
         // OWN PACKAGE
         console.log(
           `(-) ${name} install internal dependency ${dependencyName}@${dependencyVersion} from ${ownPackage.path}`
         )
 
-        importMap.scopes[pkgPath][dependencyName + "/"] = pkgImportName + "/"
-        importMap.scopes[pkgPath][dependencyName] = pkgImportName
+        importMap.scopes[pkgPath][
+          dependencyName + "/"
+        ] = `@juno/${dependencyName}@${dVersion}/`
+        importMap.scopes[pkgPath][
+          dependencyName
+        ] = `@juno/${dependencyName}@${dVersion}`
       } else {
         externalPackages.push({
           target: `${dependencyName}@${dependencyVersion}`,
@@ -171,24 +177,8 @@ for (let name in packageRegistry) {
             }
           }
         }
-        // importMap.scopes = {
-        //   ...importMap.scopes,
-        //   ...map.scopes,
-        //   [pkgPath]: { ...importMap.scopes[pkgPath], ...map.imports },
-        // }
       }
     }
-    // const generator = new Generator({ env: ["production", "browser"] })
-    // console.log(`${pkgImportName}`)
-    // await generator.install(externalPackages)
-
-    // const map = generator.getMap()
-    // console.log(map)
-    // importMap.scopes = {
-    //   ...importMap.scopes,
-    //   ...map.scopes,
-    //   [pkgPath]: map.imports,
-    // }
   }
 }
 
