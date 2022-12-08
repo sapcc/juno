@@ -43,7 +43,7 @@ const checkStatus = (response) => {
 
 export const services = ({ queryKey }) => {
   const [_key, bearerToken, endpoint, options] = queryKey
-  return fetchFromAPI(bearerToken, endpoint, "/servicess", options)
+  return fetchFromAPI(bearerToken, endpoint, "/services", options)
 }
 
 export const service = ({ queryKey }) => {
