@@ -139,10 +139,10 @@ module.exports = (_, argv) => {
     },
     optimization: {
       // Minimize just in production.
-      minimize: !isDevelopment,
+      //minimize: !isDevelopment,
       // Default minimizer for JAVASCRIPT is also included, no need to define a new one BUT do NOT REMOVE `...` to
       // not override default minimizers
-      minimizer: [`...`, new CssMinimizerPlugin()],
+      //minimizer: [`...`, new CssMinimizerPlugin()],
     },
     plugins: [
       new Dotenv({

@@ -2,10 +2,20 @@
   <head>
     <meta charset="UTF-8" />
     <title>Mfe-Shell</title>
+    <script type="importmap-shim">
+      {
+        "imports": {
+          "react": "https://ga.jspm.io/npm:react@18.2.0/index.js"
+        }
+      }
+    </script>
   </head>
   <body>
     Widget Loader Dev
-
+    <script type="module-shim">
+      import React,{useState} from "react"
+      console.log(useState)
+    </script>
     <!-- <script
       src="./index.js?2"
       data-url="https://cdn.ap.ws2.eu-nl-1.cloud.sap/apps/dashboard@latest/build/index.js"
@@ -28,9 +38,8 @@
 
     <script
     defer
-    src="https://cdn.ap.ws2.eu-nl-1.cloud.sap/apps/widget-loader@latest/build/app.js"
-    data-name="dashboard"
-    data-version="latest"
+    src="./index.js"
+    data-url="https://cdn.ap.ws2.eu-nl-1.cloud.sap/apps/dashboard@latest/build/index.js"
   ></script>
   <!-- <script
   defer
