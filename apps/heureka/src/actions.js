@@ -148,5 +148,6 @@ const fetchFromAPI = (bearerToken, endpoint, path, options) => {
         )
         return Promise.reject(error)
       }
+      return response.json()
     })
 }
