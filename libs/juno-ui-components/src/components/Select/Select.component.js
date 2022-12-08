@@ -78,7 +78,7 @@ const defaultpaddingright = `
 	jn-pr-9
 `
 
-/*+ A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
+/** A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
 export const Select = ({
 	name,
 	id,

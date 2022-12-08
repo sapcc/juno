@@ -1,5 +1,6 @@
 import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
+import { act } from 'react-dom/test-utils'
 import { SwitchRow } from "./index"
 
 describe("SwitchRow", () => {
@@ -96,7 +97,9 @@ describe("SwitchRow", () => {
 	test("executes custom handler on change as passed", async () => {	
 		const onChangeSpy = jest.fn();
 		render(<SwitchRow onChange={onChangeSpy} />);
-		screen.getByRole('switch').click();
+		act(() => {
+			screen.getByRole('switch').click();
+		})
 		expect(onChangeSpy).toHaveBeenCalled();	
 	  })
 	
