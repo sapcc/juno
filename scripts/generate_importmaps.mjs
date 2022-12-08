@@ -14,21 +14,6 @@ import * as fs from "fs"
 import path from "path"
 import url from "url"
 
-const normalizeVersion = (version) => {
-  if (!version) return "latest"
-  const newVersion = version
-    .split(" ")[0]
-    .replace(">", "")
-    .replace(">=", "")
-    .replace("<", "")
-    .replace("<=", "")
-    .replace("~", "")
-    .replace("^", "")
-    .replace("*", "latest")
-  // console.log(".....", version, newVersion)
-  return newVersion
-}
-
 const availableArgs = [
   "--src=DIR_PATH",
   "--output=FILE_PATH",
@@ -117,30 +102,24 @@ const findRegisteredPackage = (name, version) => {
 
 // create importMap hash
 const importMap = { scopes: {}, imports: {} }
-// const generator = new Generator({ env: ["browser"] })
+// const generator = new Generator({ env: ["production", "browser"] })
 
 for (let name in packageRegistry) {
   for (let version in packageRegistry[name]) {
     const packageData = findRegisteredPackage(name, version)
 
+    const pkgImportName = `@juno/${name}@${version}`
+    const pkgPath = `${options.baseUrl}/${packageData.path}/`
+    importMap.imports[pkgImportName] = pkgPath + packageData.entryFile
+    importMap.imports[pkgImportName + "/"] =
+      pkgPath + packageData.entryDir + "/"
+
     // move to the next item unless peer dependencies exist
     if (!packageData.peerDependencies) continue
 
-    // PEER DEPENDENCIES EXIST
-    // create generator
-    // initialize scopes of packageName
-    const packageScopePath = `${options.baseUrl}/${packageData.path}/`
+    importMap.scopes[pkgPath] = importMap.scopes[pkgPath] || {}
 
-    // add package to imports of the importmap
-    importMap.imports[`@juno/${name}@${version}`] =
-      packageScopePath + packageData.entryFile
-    importMap.imports[`@juno/${name}@${version}/`] =
-      packageScopePath + packageData.entryDir + "/"
-
-    importMap.scopes[packageScopePath] =
-      importMap.scopes[packageScopePath] || {}
-
-    const generator = new Generator({ env: ["browser"] })
+    const externalPackages = []
     for (let dependencyName in packageData.peerDependencies) {
       let dependencyVersion = packageData.peerDependencies[dependencyName]
       // ownPackage = juno lib
@@ -155,34 +134,61 @@ for (let name in packageRegistry) {
           `(-) ${name} install internal dependency ${dependencyName}@${dependencyVersion} from ${ownPackage.path}`
         )
 
-        importMap.scopes[packageScopePath][
-          dependencyName + "/"
-        ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryDir}/`
-        importMap.scopes[packageScopePath][
-          dependencyName
-        ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryFile}`
+        importMap.scopes[pkgPath][dependencyName + "/"] = pkgImportName + "/"
+        importMap.scopes[pkgPath][dependencyName] = pkgImportName
       } else {
-        // EXTERNAL PACKAGE
-        console.log(
-          `(+) ${name} install external dependency ${dependencyName}@${dependencyVersion}`
-        )
-        // build resolution
+        externalPackages.push({
+          target: `${dependencyName}@${dependencyVersion}`,
+        })
+
+        const generator = new Generator({ env: ["production", "browser"] })
         await generator.install(`${dependencyName}@${dependencyVersion}`)
-        // console.log(JSON.stringify(generator.getMap(), null, 2))
+
+        // console.log(staticDeps, dynamicDeps)
+        const map = generator.getMap()
+
+        if (JSON.stringify(map).indexOf("17.2.0") >= 0 || name === "volta")
+          console.log(map)
+
+        importMap.scopes[pkgPath] = {
+          ...importMap.scopes[pkgPath],
+          ...map.imports,
+        }
+        for (let key in map.imports) {
+          const path = map.imports[key]
+          for (let scopeKey in map.scopes) {
+            if (path.indexOf(scopeKey) === 0) {
+              const pkgScope = path.slice(0, path.lastIndexOf("/") + 1)
+              importMap.scopes[pkgScope] = {
+                ...importMap.scopes[pkgScope],
+                ...map.scopes[scopeKey],
+              }
+            } else {
+              importMap.scopes[pkgPath] = {
+                ...importMap.scopes[pkgPath],
+                ...map.scopes[scopeKey],
+              }
+            }
+          }
+        }
+        // importMap.scopes = {
+        //   ...importMap.scopes,
+        //   ...map.scopes,
+        //   [pkgPath]: { ...importMap.scopes[pkgPath], ...map.imports },
+        // }
       }
     }
-    // build importMap with scopes
-    const map = generator.getMap()
-    // console.log("=============================im")
+    // const generator = new Generator({ env: ["production", "browser"] })
+    // console.log(`${pkgImportName}`)
+    // await generator.install(externalPackages)
+
+    // const map = generator.getMap()
     // console.log(map)
-    importMap.scopes = {
-      ...importMap.scopes,
-      ...map.scopes,
-      [`${options.baseUrl}/${packageData.path}/`]: {
-        ...importMap.scopes[`${options.baseUrl}/${packageData.path}/`],
-        ...map.imports,
-      },
-    }
+    // importMap.scopes = {
+    //   ...importMap.scopes,
+    //   ...map.scopes,
+    //   [pkgPath]: map.imports,
+    // }
   }
 }
 
