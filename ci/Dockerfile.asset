@@ -37,15 +37,20 @@ RUN \
   [[ "$ASSET_TEST_SCRIPT" == "false" ]]  || CI=true yarn workspace $ASSET_NAME test ;\
   [[ "$ASSET_BUILD_SCRIPT" == "false" ]] || CI=false NODE_ENV=production yarn workspace $ASSET_NAME build 1>/dev/null
 
+# get BUILD_DIR from package.json
+# strip `leading` slash from BUILD_DIR and split by / and use first part
+# Example: package.json#module = build/esm/index.js
+# echo build/esm/index.js | sed -e 's/^\///' | cut -d/ -f1
+# Result: build
 RUN \
   if [ -z "$BUILD_DIR" ]; then BUILD_DIR=$(jq -r .module /juno/$ASSET_PATH/package.json); fi ; \
   if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR=$(jq -r .main /juno/$ASSET_PATH/package.json); fi ; \
-  if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR="build"; else BUILD_DIR="$(dirname $BUILD_DIR)"; fi ; \
+  if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR="build"; else BUILD_DIR="$(echo $BUILD_DIR | sed -e 's/^\///' | cut -d/ -f1)"; fi ; \ 
   echo "===${BUILD_DIR}" ; \
   mkdir -p "/tmp/$ASSET_PATH" ; \
-  cp -r "/juno/$ASSET_PATH/$BUILD_DIR" "/tmp/$ASSET_PATH/$BUILD_DIR" ; \
+  cp -r "/juno/$ASSET_PATH/$BUILD_DIR" "/tmp/$ASSET_PATH/" ; \
   cp "/juno/$ASSET_PATH/package.json" "/tmp/$ASSET_PATH/package.json" ; \
-  cp "/juno/$ASSET_PATH/README.md" "/tmp/$ASSET_PATH/README.md"  2>/dev/null || :
+  cp "/juno/$ASSET_PATH/README.md" "/tmp/$ASSET_PATH/README.md"  2>/dev/null || : #ignore errors
 
 RUN ls -la "/tmp/$ASSET_PATH/$BUILD_DIR"
 
