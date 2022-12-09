@@ -24,12 +24,12 @@ RUN \
   --src=/tmp/latest \
   --base-url="%BASE_URL%" \
   --output=/tmp/latest/importmap.json ; \
-  --verbose ; \
+  --verbose=true ; \
   \
   node ./scripts/generate_manifest.mjs \
   --src=/tmp/latest \
   --output=/tmp/latest/manifest.json \
-  --verbose ;
+  --verbose=true ;
 
 
 # RESULTS
