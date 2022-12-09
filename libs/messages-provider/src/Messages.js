@@ -11,7 +11,7 @@ const shouldAutoDismiss = (variant) => {
 }
 
 const Messages = () => {
-  const messages = useStore(useCallback((state) => state.items))
+  const messages = useStore(useCallback((state) => state.messages))
   const removeMessage = useStore((state) => state.removeMessage)
 
   const onDismiss = (id) => {
