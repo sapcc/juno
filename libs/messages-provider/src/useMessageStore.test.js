@@ -39,4 +39,40 @@ describe("useMessageStore", () => {
       act(() => result.current.setMessage("miau", "this is an error"))
     }).toThrow(/variant not known/)
   })
+
+  it("remove a message correctly", () => {
+    const wrapper = ({ children }) => (
+      <MessagesProvider>{children}</MessagesProvider>
+    )
+    const { result } = renderHook(() => useStore(), { wrapper })
+
+    act(() => result.current.setMessage("error", "this is an error"))
+    act(() => result.current.setMessage("info", "this is an info message"))
+
+    waitFor(() => {
+      expect(result.current.messages.length).toBe(2)
+    })
+    act(() => result.current.removeMessage(result.current.messages[1].id))
+    waitFor(() => {
+      expect(result.current.messages.length).toBe(1)
+    })
+  })
+
+  it("reset messages store", () => {
+    const wrapper = ({ children }) => (
+      <MessagesProvider>{children}</MessagesProvider>
+    )
+    const { result } = renderHook(() => useStore(), { wrapper })
+
+    act(() => result.current.setMessage("error", "this is an error"))
+    act(() => result.current.setMessage("info", "this is an info message"))
+
+    waitFor(() => {
+      expect(result.current.messages.length).toBe(2)
+    })
+    act(() => result.current.resetMessages())
+    waitFor(() => {
+      expect(result.current.messages.length).toBe(0)
+    })
+  })
 })

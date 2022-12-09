@@ -39,7 +39,7 @@ const initialStore = () =>
 
           let items = state.messages.slice()
           items.push({ variant: variant, text: text, id: uniqueId("message-") })
-          return { ...state, items: items }
+          return { ...state, messages: items }
         }),
       removeMessage: (id) =>
         set((state) => {
@@ -50,7 +50,11 @@ const initialStore = () =>
           }
           let newItems = state.messages.slice()
           newItems.splice(index, 1)
-          return { ...state, items: newItems }
+          return { ...state, messages: newItems }
+        }),
+      resetMessages: () =>
+        set((state) => {
+          return { ...state, messages: [] }
         }),
     }))
   )
