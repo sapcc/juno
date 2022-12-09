@@ -1,6 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+const codeStyles = `
+  jn-text-sm
+`
+
 /** A basic inline <code> component.
 *   Accepts "content" prop or renders children as passed.
 */
@@ -11,7 +15,7 @@ export const Code = ({
   ...props
 }) => {
   return (
-    <code className={`juno-code ${className}`} {...props}>
+    <code className={`juno-code ${codeStyles} ${className}`} {...props}>
       { content || children }
     </code>
   )
