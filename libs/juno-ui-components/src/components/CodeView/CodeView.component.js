@@ -7,6 +7,13 @@ import { TabList } from "../TabList/TabList.component.js"
 import { Tab } from "../Tab/Tab.component.js"
 import { TabPanel } from "../TabPanel/TabPanel.component.js"
 
+/*
+TODO:
+render tabs
+render children
+render heading
+propTypes and default props: accept string, array of strings, component or array of components
+*/
 export const CodeView = ({
   content,
   children,
