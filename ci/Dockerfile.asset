@@ -28,7 +28,7 @@ RUN rsync -avu --delete "/tmp/src/" "/juno" 1>/dev/null ;
 # dependencies in the builds defined in peer dependencies.
 RUN yarn install 1>/dev/null ; yarn build-libs 1>/dev/null
 
-# test and build asset
+# TEST AND BUILD ASSET
 RUN \
   ASSET_NAME=$(jq -r .name /juno/$ASSET_PATH/package.json) ; \ 
   ASSET_TEST_SCRIPT=$(jq -r '.scripts | has("test")' /juno/$ASSET_PATH/package.json) ; \
@@ -36,6 +36,9 @@ RUN \
   echo $ASSET_NAME $ASSET_TEST_SCRIPT $ASSET_BUILD_SCRIPT ; \
   [[ "$ASSET_TEST_SCRIPT" == "false" ]]  || CI=true yarn workspace $ASSET_NAME test ;\
   [[ "$ASSET_BUILD_SCRIPT" == "false" ]] || CI=false NODE_ENV=production yarn workspace $ASSET_NAME build 1>/dev/null
+
+
+# COPY RESULTS OF THE BUILD TO /tmp
 
 # get BUILD_DIR from package.json
 # strip `leading` slash from BUILD_DIR and split by / and use first part
@@ -55,6 +58,7 @@ RUN \
 RUN ls -la "/tmp/$ASSET_PATH/$BUILD_DIR"
 
 # asset layer
+# COPY RESULT INTO FINAL IMAGE under /dist
 FROM scratch as asset 
 ARG ASSET_PATH
 

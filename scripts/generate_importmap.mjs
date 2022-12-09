@@ -1,0 +1,315 @@
+/** @module ImportMap */
+/**
+ * This module generates importmap to be used in browser to share libs between juno apps.
+ */
+
+// glob and @jspm are installed globally! (see ci/Dockerfile.base)
+// get root folder of global node modules
+import { execSync } from "node:child_process"
+const root = execSync("npm root -g").toString().trim()
+
+const glob = await import(`${root}/glob/glob.js`).then((m) => m.default)
+const { Generator } = await import(`${root}/@jspm/generator/dist/generator.js`)
+import * as fs from "fs"
+import path from "path"
+import url from "url"
+import { exit } from "node:process"
+
+const availableArgs = [
+  "--src=DIR_PATH",
+  "--output=FILE_PATH",
+  "--base-url=URL_OF_ASSETS_SERVER",
+  "--verbose|-v",
+  "--help|-h",
+]
+
+// default argument values
+const options = {
+  src: path.dirname(url.fileURLToPath(import.meta.url)),
+  baseUrl: "%BASE_URL%",
+  output: "./importmap.json",
+  verbose: false,
+  v: false,
+}
+
+const args = process.argv.slice(2)
+
+// PARSE ARGS
+for (let arg of args) {
+  const match = arg.match(/^-{1,2}([^=]+)=?(.*)/)
+  if (match) {
+    let key = match[1].replace(/\W+(.)/g, function (match, chr) {
+      console.log(match, chr)
+      return chr.toUpperCase()
+    })
+
+    options[key] = match[2] ? match[2] : true
+    continue
+  }
+}
+if (options.help || options.h) {
+  console.log("Usage: " + availableArgs.join(" "))
+}
+
+const PACKAGES_PATHS = ["apps", "libs"]
+const rootPath = path.resolve(options.src)
+const globPattern = `${rootPath}/@(${PACKAGES_PATHS.join("|")})/**/package.json`
+const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
+const files = glob.sync(globPattern, { ignore: [`node_modules/**`] })
+
+// build package registry based on juno packages
+const packageRegistry = {}
+
+for (let file of files) {
+  // load and parse package.json
+  let pkg = JSON.parse(fs.readFileSync(file))
+
+  const entryFile = pkg.module || pkg.main || "index.js"
+  const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/") + 1) || "/"
+  const path = file.replace(pathRegex, "$1")
+  const version = path.indexOf("@latest") > 0 ? "latest" : pkg.version
+
+  packageRegistry[pkg.name] = { ...packageRegistry[pkg.name] }
+
+  packageRegistry[pkg.name][version] = {
+    name: pkg.name,
+    version,
+    path,
+    entryFile,
+    entryDir,
+    peerDependencies: pkg.peerDependencies,
+  }
+}
+
+// console.log(packageRegistry)
+// process.exit(0)
+
+// find registered package
+// version can be a "*". If it is a "*" it will be mapped to "latest"
+const findRegisteredPackage = (name, version) =>
+  (packageRegistry[name] || {})[version === "*" ? "latest" : version]
+
+// console.log("================packageRegistry", packageRegistry)
+
+// create importMap hash
+const importMap = { scopes: {}, imports: {} }
+
+const mergePkgImportMaps = (pkgPath, pkgImportMaps) => {
+  // do nothing unless pkgImportMaps contains any data
+  if (!pkgImportMaps || pkgImportMaps.length === 0) return
+
+  // ensure package scope is created
+  importMap.scopes[pkgPath] = { ...importMap.scopes[pkgPath] }
+
+  /*
+    pkgImportMaps looks like:
+    [
+      {
+        "imports": {
+          "react": "URL"
+        }, 
+        "scopes": {
+          "scope1": {
+            "pkg1": "URL",
+            "pk2": "URL",
+            ...
+          },
+          "scope2": {
+            ...
+          }
+        }
+      }
+    ]
+    The "imports" map contains exact one package
+  */
+  for (let pkgImportMap of pkgImportMaps) {
+    // get name of the imported package
+    const depPkgName = Object.keys(pkgImportMap.imports)[0]
+    // the url or path to that package
+    const depPkgPath = pkgImportMap.imports[depPkgName]
+
+    if (
+      importMap.scopes[pkgPath][depPkgName] &&
+      importMap.scopes[pkgPath][depPkgName] !== depPkgPath
+    ) {
+      // SHOULD NEVER HAPPEN
+      console.log("===IMPORT CONFLICT", pkgPath, depPkgName)
+    }
+    // add imported package to the main package scope
+    importMap.scopes[pkgPath][depPkgName] = depPkgPath
+
+    // merge scopes
+    for (let depScopeName in pkgImportMap.scopes) {
+      importMap.scopes[depScopeName] = { ...importMap.scopes[depScopeName] }
+      for (let depScopePkgName in pkgImportMap.scopes[depScopeName]) {
+        // console.log(depScopePkgName)
+        const depScopePkgPath =
+          pkgImportMap.scopes[depScopeName][depScopePkgName]
+
+        // Detect conflicts
+        // Conflict exists if a scope with same package name
+        // already exists in the importMap
+        if (
+          importMap.scopes[depScopeName][depScopePkgName] &&
+          importMap.scopes[depScopeName][depScopePkgName] !== depScopePkgPath
+        ) {
+          console.log(
+            "\x1b[31m%s\x1b[0m",
+            `=== SCOPE CONFLICT: ${depScopePkgName} with different version already registered in ${depScopeName}`
+          )
+          // fix this conflict by creating a new scope based on
+          // the path of the imported package
+          const newDepScopeName = depPkgPath.slice(
+            0,
+            depPkgPath.lastIndexOf("/") + 1
+          )
+
+          importMap.scopes[newDepScopeName] = {
+            [depScopePkgName]: depScopePkgPath,
+          }
+          console.log(
+            "\x1b[32m%s\x1b[0m",
+            `    RESOLVED: add ${depScopePkgName} to ${newDepScopeName}`
+          )
+        } else {
+          importMap.scopes[depScopeName][depScopePkgName] = depScopePkgPath
+        }
+      }
+    }
+  }
+}
+
+for (let name in packageRegistry) {
+  for (let version in packageRegistry[name]) {
+    // registered package data
+    const regPkg = findRegisteredPackage(name, version)
+
+    // scope for juno packages
+    // Example: %BASE_URL%/apps/dashboard@latest/
+    const pkgPath = `${options.baseUrl}/${regPkg.path}/`
+    // import name e.g. @juno/PACKAGE_NAME@VERSION
+    const pkgImportName = `@juno/${name}@${version}`
+
+    // add packages to imports under @juno prefix
+    importMap.imports[pkgImportName] = pkgPath + regPkg.entryFile
+    importMap.imports[pkgImportName + "/"] = pkgPath + regPkg.entryDir
+
+    // move to the next item unless peer dependencies exist
+    if (!regPkg.peerDependencies) continue
+
+    // create scope for current package path
+    importMap.scopes[pkgPath] = { ...importMap.scopes[pkgPath] }
+
+    // container ro collect all dependency importmaps
+    const pkgImportMaps = []
+
+    for (let depName in regPkg.peerDependencies) {
+      let depVersion = regPkg.peerDependencies[depName]
+      // ownPackage = juno lib
+      const ownPackage = findRegisteredPackage(depName, depVersion)
+
+      if (ownPackage) {
+        /* OWN PACKAGE -> add it to the package dependencies
+          Example: {
+            "%BASE_URL%/apps/dashboard/": {
+              "juno-ui-components": "%BASE_URL%/libs/juno-ui-components/build/index.js"
+            }
+          }
+         */
+        console.log(
+          "\x1b[33m%s\x1b[0m",
+          `(-) ${name} install internal dependency ${ownPackage.name}@${ownPackage.version} from ${ownPackage.path}`
+        )
+
+        importMap.scopes[pkgPath][
+          `${ownPackage.name}/`
+        ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryDir}`
+        importMap.scopes[pkgPath][
+          ownPackage.name
+        ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryFile}`
+      } else {
+        // EXTERNAL PACKAGE -> use generator to get all dependencies
+        console.log(
+          "\x1b[36m%s\x1b[0m",
+          `(+) ${name} install external dependency ${depName}@${depVersion}`
+        )
+        // create generator
+        const generator = new Generator({ env: ["production", "browser"] })
+        // get the importmap for current dependency
+        await generator.install(`${depName}@${depVersion}`)
+        // save importmap
+        pkgImportMaps.push(generator.getMap())
+      }
+    }
+
+    mergePkgImportMaps(pkgPath, pkgImportMaps)
+    //tmpImportMaps.push({ pkfPath: pkgPath, pkgImportMaps })
+  }
+}
+
+// merge scopes
+/*
+for (let tmpImportMap of tmpImportMaps) {
+  const pkgPath = tmpImportMap.pkfPath
+  const pkgImportMaps = tmpImportMap.pkgImportMaps
+  importMap.scopes[pkgPath] = { ...importMap.scopes[pkgPath] }
+
+  for (let pkgImportMap of pkgImportMaps) {
+    const depPkgName = Object.keys(pkgImportMap.imports)[0]
+    const depPkgPath = pkgImportMap.imports[depPkgName]
+    // console.log(depPkgName)
+    // console.log(depPkgPath)
+    // console.log(pkgImportMap.scopes)
+    // console.log("===================")
+
+    if (
+      importMap.scopes[pkgPath][depPkgName] &&
+      importMap.scopes[pkgPath][depPkgName] !== depPkgPath
+    ) {
+      console.log("===IMPORT CONFLICT", pkgPath, depPkgName)
+    }
+    importMap.scopes[pkgPath][depPkgName] = depPkgPath
+    for (let depScopeName in pkgImportMap.scopes) {
+      importMap.scopes[depScopeName] = { ...importMap.scopes[depScopeName] }
+      for (let depScopePkgName in pkgImportMap.scopes[depScopeName]) {
+        // console.log(depScopePkgName)
+        const depScopePkgPath =
+          pkgImportMap.scopes[depScopeName][depScopePkgName]
+        if (
+          importMap.scopes[depScopeName][depScopePkgName] &&
+          importMap.scopes[depScopeName][depScopePkgName] !== depScopePkgPath
+        ) {
+          console.log(
+            "===SCOPE CONFLICT",
+            pkgPath,
+            depScopeName,
+            depScopePkgName
+          )
+          const newDepScopeName = depPkgPath.slice(
+            0,
+            depPkgPath.lastIndexOf("/") + 1
+          )
+
+          importMap.scopes[newDepScopeName] = {
+            [depScopePkgName]: depScopePkgPath,
+          }
+          console.log(
+            "===RESOLVE CONFLICT BY ADDING NEW SCOPE",
+            pkgPath,
+            newDepScopeName,
+            depScopeName,
+            depScopePkgName
+          )
+        } else {
+          importMap.scopes[depScopeName][depScopePkgName] = depScopePkgPath
+        }
+      }
+    }
+  }
+  */
+
+if (options.verbose || options.v) {
+  console.log("==============IMPORTMAP==============")
+  console.log(JSON.stringify(importMap, null, 2))
+}
+fs.writeFileSync(options.output, JSON.stringify(importMap, null, 2))

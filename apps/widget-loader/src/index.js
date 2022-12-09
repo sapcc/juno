@@ -9,10 +9,7 @@ window.__junoBootstrap =
       currentScript = scripts[scripts.length - 1]
     }
 
-    const currentURL = new URL(
-      "https://cdn.ap.ws2.eu-nl-1.cloud.sap/apps/widget-loader@latest/build/app.js"
-    )
-    // const currentURL = new URL(currentScript.src)
+    const currentURL = new URL(currentScript.src)
 
     window.process = { env: { NODE_ENV: "production" } }
     window.esmsInitOptions = {

@@ -20,7 +20,7 @@ RUN \
 
 RUN \
   cd /juno/ ; \
-  node ./scripts/generate_importmaps.mjs \
+  node ./scripts/generate_importmap.mjs \
   --src=/tmp/latest \
   --base-url="%BASE_URL%" \
   --output=/tmp/latest/importmap.json ; \
