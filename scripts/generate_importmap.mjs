@@ -179,6 +179,7 @@ const mergePkgImportMaps = (pkgPath, pkgImportMaps) => {
   }
 }
 
+console.log("CREATE IMPORTMAP")
 for (let name in packageRegistry) {
   for (let version in packageRegistry[name]) {
     // registered package data
@@ -250,4 +251,5 @@ if (options.verbose || options.v) {
   console.log("==============IMPORTMAP==============")
   console.log(JSON.stringify(importMap, null, 2))
 }
+console.log("Write importmap to ", options.output)
 fs.writeFileSync(options.output, JSON.stringify(importMap, null, 2))
