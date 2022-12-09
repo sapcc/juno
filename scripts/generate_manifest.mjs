@@ -49,7 +49,7 @@ const manifest = {}
 
 // console.log(files)
 files.sort().forEach(async (file) => {
-  console.log("====", file)
+  // console.log("====", file)
   const pkg = JSON.parse(fs.readFileSync(file))
   const path = file.match(pathRegex)[1]
   let type = PACKAGES_PATHS.find((p) => path.indexOf(p) >= 0)

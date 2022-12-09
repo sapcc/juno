@@ -243,70 +243,8 @@ for (let name in packageRegistry) {
     }
 
     mergePkgImportMaps(pkgPath, pkgImportMaps)
-    //tmpImportMaps.push({ pkfPath: pkgPath, pkgImportMaps })
   }
 }
-
-// merge scopes
-/*
-for (let tmpImportMap of tmpImportMaps) {
-  const pkgPath = tmpImportMap.pkfPath
-  const pkgImportMaps = tmpImportMap.pkgImportMaps
-  importMap.scopes[pkgPath] = { ...importMap.scopes[pkgPath] }
-
-  for (let pkgImportMap of pkgImportMaps) {
-    const depPkgName = Object.keys(pkgImportMap.imports)[0]
-    const depPkgPath = pkgImportMap.imports[depPkgName]
-    // console.log(depPkgName)
-    // console.log(depPkgPath)
-    // console.log(pkgImportMap.scopes)
-    // console.log("===================")
-
-    if (
-      importMap.scopes[pkgPath][depPkgName] &&
-      importMap.scopes[pkgPath][depPkgName] !== depPkgPath
-    ) {
-      console.log("===IMPORT CONFLICT", pkgPath, depPkgName)
-    }
-    importMap.scopes[pkgPath][depPkgName] = depPkgPath
-    for (let depScopeName in pkgImportMap.scopes) {
-      importMap.scopes[depScopeName] = { ...importMap.scopes[depScopeName] }
-      for (let depScopePkgName in pkgImportMap.scopes[depScopeName]) {
-        // console.log(depScopePkgName)
-        const depScopePkgPath =
-          pkgImportMap.scopes[depScopeName][depScopePkgName]
-        if (
-          importMap.scopes[depScopeName][depScopePkgName] &&
-          importMap.scopes[depScopeName][depScopePkgName] !== depScopePkgPath
-        ) {
-          console.log(
-            "===SCOPE CONFLICT",
-            pkgPath,
-            depScopeName,
-            depScopePkgName
-          )
-          const newDepScopeName = depPkgPath.slice(
-            0,
-            depPkgPath.lastIndexOf("/") + 1
-          )
-
-          importMap.scopes[newDepScopeName] = {
-            [depScopePkgName]: depScopePkgPath,
-          }
-          console.log(
-            "===RESOLVE CONFLICT BY ADDING NEW SCOPE",
-            pkgPath,
-            newDepScopeName,
-            depScopeName,
-            depScopePkgName
-          )
-        } else {
-          importMap.scopes[depScopeName][depScopePkgName] = depScopePkgPath
-        }
-      }
-    }
-  }
-  */
 
 if (options.verbose || options.v) {
   console.log("==============IMPORTMAP==============")
