@@ -75,9 +75,7 @@ Promise.all([loadShim, loadImportmap]).then(async () => {
   if (!url && !window.__junoWidgetLoader[origin]) {
     await fetch(`${origin}/manifest.json`)
       .then((res) => res.json())
-      .then(
-        (manifest) => (window.__junoWidgetLoader[origin].manifest = manifest)
-      )
+      .then((manifest) => (window.__junoWidgetLoader[origin] = { manifest }))
   }
 
   let appURL =
