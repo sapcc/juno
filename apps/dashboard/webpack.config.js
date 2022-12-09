@@ -166,9 +166,6 @@ module.exports = (_, argv) => {
           MAIN_FILENAME: filename,
         },
       }),
-
-      //Allows update react components in real time
-      isDevelopment && new ReactRefreshWebpackPlugin(),
     ].filter(Boolean),
 
     //Config for webpack-dev-server module version 4.x

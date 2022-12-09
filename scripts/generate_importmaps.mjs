@@ -144,10 +144,12 @@ for (let name in packageRegistry) {
           `(-) ${name} install internal dependency ${dependencyName}@${dVersion} from ${ownPackage.path}`
         )
 
-        importMap.scopes[pkgPath][dependencyName + "/"] =
-          "./" + junoImportKey(dependencyName, dVersion) + "/"
-        importMap.scopes[pkgPath][dependencyName] =
-          "./" + junoImportKey(dependencyName, dVersion)
+        importMap.scopes[pkgPath][
+          dependencyName + "/"
+        ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryDir}/`
+        importMap.scopes[pkgPath][
+          dependencyName
+        ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryFile}`
       } else {
         externalPackages.push({
           target: `${dependencyName}@${dependencyVersion}`,

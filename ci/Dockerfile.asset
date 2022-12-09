@@ -41,6 +41,7 @@ RUN \
   if [ -z "$BUILD_DIR" ]; then BUILD_DIR=$(jq -r .module /juno/$ASSET_PATH/package.json); fi ; \
   if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR=$(jq -r .main /juno/$ASSET_PATH/package.json); fi ; \
   if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR="build"; else BUILD_DIR="$(dirname $BUILD_DIR)"; fi ; \
+  echo "===${BUILD_DIR}" ; \
   mkdir -p "/tmp/$ASSET_PATH" ; \
   cp -r "/juno/$ASSET_PATH/$BUILD_DIR" "/tmp/$ASSET_PATH/$BUILD_DIR" ; \
   cp "/juno/$ASSET_PATH/package.json" "/tmp/$ASSET_PATH/package.json" ; \
