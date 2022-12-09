@@ -98,17 +98,22 @@ const findRegisteredPackage = (name, version) => {
   return null
 }
 
+const junoImportKey = (name, version) => `@juno/${name}@${version}`
+
 // console.log("================packageRegistry", packageRegistry)
 
 // create importMap hash
 const importMap = { scopes: {}, imports: {} }
 // const generator = new Generator({ env: ["production", "browser"] })
+const tmpScopes = []
+
+const tmpImportMaps = []
 
 for (let name in packageRegistry) {
   for (let version in packageRegistry[name]) {
     const packageData = findRegisteredPackage(name, version)
 
-    const pkgImportName = `@juno/${name}@${version}`
+    const pkgImportName = junoImportKey(name, version)
     const pkgPath = `${options.baseUrl}/${packageData.path}/`
     importMap.imports[pkgImportName] = pkgPath + packageData.entryFile
     importMap.imports[pkgImportName + "/"] =
@@ -118,8 +123,11 @@ for (let name in packageRegistry) {
     if (!packageData.peerDependencies) continue
 
     importMap.scopes[pkgPath] = importMap.scopes[pkgPath] || {}
+    // const generator = new Generator({ env: ["production", "browser"] })
 
     const externalPackages = []
+
+    const pkgImportMaps = []
     for (let dependencyName in packageData.peerDependencies) {
       let dependencyVersion = packageData.peerDependencies[dependencyName]
       // ownPackage = juno lib
@@ -133,57 +141,133 @@ for (let name in packageRegistry) {
           dependencyVersion === "*" ? "latest" : dependencyVersion
         // OWN PACKAGE
         console.log(
-          `(-) ${name} install internal dependency ${dependencyName}@${dependencyVersion} from ${ownPackage.path}`
+          `(-) ${name} install internal dependency ${dependencyName}@${dVersion} from ${ownPackage.path}`
         )
 
-        importMap.scopes[pkgPath][
-          dependencyName + "/"
-        ] = `@juno/${dependencyName}@${dVersion}/`
-        importMap.scopes[pkgPath][
-          dependencyName
-        ] = `@juno/${dependencyName}@${dVersion}`
+        importMap.scopes[pkgPath][dependencyName + "/"] =
+          "./" + junoImportKey(dependencyName, dVersion) + "/"
+        importMap.scopes[pkgPath][dependencyName] =
+          "./" + junoImportKey(dependencyName, dVersion)
       } else {
         externalPackages.push({
           target: `${dependencyName}@${dependencyVersion}`,
         })
-
+        console.log(
+          `(+) ${name} install external dependency ${dependencyName}@${dependencyVersion}`
+        )
         const generator = new Generator({ env: ["production", "browser"] })
         await generator.install(`${dependencyName}@${dependencyVersion}`)
+        pkgImportMaps.push(generator.getMap())
+      }
+    }
 
-        // console.log(staticDeps, dynamicDeps)
-        const map = generator.getMap()
+    tmpImportMaps.push({ pkfPath: pkgPath, pkgImportMaps })
+    // await generator.install(externalPackages)
+    // let map = generator.getMap()
+    // importMap.scopes[pkgPath] = { ...importMap.scopes[pkgPath], ...map.imports }
+    // tmpScopes.push({ [pkgPath]: map.scopes })
+    // tmpImportMaps.push(map)
+  }
+}
 
-        if (JSON.stringify(map).indexOf("17.2.0") >= 0 || name === "volta")
-          console.log(map)
+// merge scopes
 
-        importMap.scopes[pkgPath] = {
-          ...importMap.scopes[pkgPath],
-          ...map.imports,
-        }
-        for (let key in map.imports) {
-          const path = map.imports[key]
-          for (let scopeKey in map.scopes) {
-            if (path.indexOf(scopeKey) === 0) {
-              const pkgScope = path.slice(0, path.lastIndexOf("/") + 1)
-              importMap.scopes[pkgScope] = {
-                ...importMap.scopes[pkgScope],
-                ...map.scopes[scopeKey],
-              }
-            } else {
-              importMap.scopes[pkgPath] = {
-                ...importMap.scopes[pkgPath],
-                ...map.scopes[scopeKey],
-              }
-            }
+for (let tmpImportMap of tmpImportMaps) {
+  const pkgPath = tmpImportMap.pkfPath
+  const pkgImportMaps = tmpImportMap.pkgImportMaps
+  importMap.scopes[pkgPath] = { ...importMap.scopes[pkgPath] }
+
+  for (let pkgImportMap of pkgImportMaps) {
+    const depPkgName = Object.keys(pkgImportMap.imports)[0]
+    const depPkgPath = pkgImportMap.imports[depPkgName]
+    // console.log(depPkgName)
+    // console.log(depPkgPath)
+    // console.log(pkgImportMap.scopes)
+    // console.log("===================")
+
+    if (
+      importMap.scopes[pkgPath][depPkgName] &&
+      importMap.scopes[pkgPath][depPkgName] !== depPkgPath
+    ) {
+      console.log("===IMPORT CONFLICT", pkgPath, depPkgName)
+    }
+    importMap.scopes[pkgPath][depPkgName] = depPkgPath
+    for (let depScopeName in pkgImportMap.scopes) {
+      importMap.scopes[depScopeName] = { ...importMap.scopes[depScopeName] }
+      for (let depScopePkgName in pkgImportMap.scopes[depScopeName]) {
+        // console.log(depScopePkgName)
+        const depScopePkgPath =
+          pkgImportMap.scopes[depScopeName][depScopePkgName]
+        if (
+          importMap.scopes[depScopeName][depScopePkgName] &&
+          importMap.scopes[depScopeName][depScopePkgName] !== depScopePkgPath
+        ) {
+          console.log(
+            "===SCOPE CONFLICT",
+            pkgPath,
+            depScopeName,
+            depScopePkgName
+          )
+          const newDepScopeName = depPkgPath.slice(
+            0,
+            depPkgPath.lastIndexOf("/") + 1
+          )
+
+          importMap.scopes[newDepScopeName] = {
+            [depScopePkgName]: depScopePkgPath,
           }
+          console.log(
+            "===RESOLVE CONFLICT BY ADDING NEW SCOPE",
+            pkgPath,
+            newDepScopeName,
+            depScopeName,
+            depScopePkgName
+          )
+        } else {
+          importMap.scopes[depScopeName][depScopePkgName] = depScopePkgPath
         }
       }
     }
   }
+
+  // // console.log(scopes)
+  // for (let tmpScopeKey in scopes) {
+  //   for (let scopePkgName in scopes[tmpScopeKey]) {
+  //     importMap.scopes[tmpScopeKey] = { ...importMap.scopes[tmpScopeKey] }
+
+  //     if (!importMap.scopes[tmpScopeKey][scopePkgName]) {
+  //       importMap.scopes[tmpScopeKey][scopePkgName] =
+  //         scopes[tmpScopeKey][scopePkgName]
+  //     } else if (
+  //       importMap.scopes[tmpScopeKey][scopePkgName] !==
+  //       scopes[tmpScopeKey][scopePkgName]
+  //     ) {
+  //       console.log(
+  //         "==============CONFLICT",
+  //         importMap.scopes[tmpScopeKey][scopePkgName],
+  //         scopes[tmpScopeKey][scopePkgName]
+  //       )
+  //       // const path = scopes[tmpScopeKey][scopePkgName]
+  //       // const newScopeKey = path.slice(0, path.lastIndexOf("/"))
+  //       // importMap.scopes[newScopeKey] = {
+  //       //   ...importMap.scopes[newScopeKey],
+  //       //   [scopePkgName]: path,
+  //       // }
+  //     } else continue
+  //   }
+  // }
 }
 
 if (options.verbose || options.v) {
   console.log("==============IMPORTMAP==============")
   console.log(JSON.stringify(importMap, null, 2))
 }
-fs.writeFileSync(options.output, JSON.stringify(importMap, null, 2))
+fs.writeFileSync(
+  options.output,
+  JSON.stringify(importMap, null, 2)
+  // +
+  //   "\n================\n" +
+  //   JSON.stringify(tmpScopes, null, 2) +
+  //   "\n================\n" +
+  //   JSON.stringify(tmpImportMaps, null, 2)
+)
