@@ -38,7 +38,7 @@ spec:
               containerPort: 80
           env: 
             - name: BASE_URL
-              value: "assets.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"    
+              value: "https://assets.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"    
 
           livenessProbe:
             httpGet:
