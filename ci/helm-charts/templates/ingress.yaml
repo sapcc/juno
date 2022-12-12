@@ -12,54 +12,10 @@ metadata:
     ingress.kubernetes.io/enable-cors: "true"
   # labels:
   #   app: juno
-  name: juno
+  name: juno-v2
   namespace: juno
 spec:
   rules:
-    - host: "juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service: 
-                name: juno-dashboard
-                port: 
-                  number: 3000
-
-    - host: "ccloud.{{ .Values.global.region }}.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service: 
-                name: juno-dashboard
-                port: 
-                  number: 3000              
-
-    - host: "convergedcloud.{{ .Values.global.region }}.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service: 
-                name: juno-dashboard
-                port: 
-                  number: 3000
-
-    - host: "cdn.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service: 
-                name: juno-cdn
-                port: 
-                  number: 8888
-
     - host: "assets.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
@@ -70,108 +26,25 @@ spec:
                 name: juno-assets-server
                 port: 
                   number: 8888
-
-    - host: "ui.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix                 
-            backend:
-              service: 
-                name: juno-ui-components
-                port: 
-                  number: 3000
-
-    - host: "mercury.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix                 
-            backend:
-              service: 
-                name: juno-mercury
-                port: 
-                  number: 5000              
                     
 {{- if eq .Values.global.region "eu-nl-1" }}
-    - host: "juno.global.{{ .Values.global.tld }}"
+    - host: "assets.juno.global.{{ .Values.global.tld }}"
       http:
         paths:
           - path: /
             pathType: Prefix 
             backend:
               service: 
-                name: juno-dashboard
-                port: 
-                  number: 3000
-
-    - host: "ccloud.global.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service: 
-                name: juno-dashboard
-                port: 
-                  number: 3000              
-
-    - host: "convergedcloud.global.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service: 
-                name: juno-dashboard
-                port: 
-                  number: 3000
-
-    - host: "cdn.juno.global.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service: 
-                name: juno-cdn
+                name: juno-assets-server
                 port: 
                   number: 8888
-
-    - host: "ui.juno.global.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix                 
-            backend:
-              service: 
-                name: juno-ui-components
-                port: 
-                  number: 3000
-
-    - host: "mercury.juno.global.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix                 
-            backend:
-              service: 
-                name: juno-mercury
-                port: 
-                  number: 5000               
 
 {{- end }} 
 
   tls:
     - hosts: 
-        - "juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
-        - "ccloud.{{ .Values.global.region }}.{{ .Values.global.tld }}"
-        - "convergedcloud.{{ .Values.global.region }}.{{ .Values.global.tld }}"
         - "*.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
 {{- if eq .Values.global.region "eu-nl-1" }}      
-        - "juno.global.{{ .Values.global.tld }}"
-        - "ccloud.global.{{ .Values.global.tld }}"
-        - "convergedcloud.global.{{ .Values.global.tld }}"
         - "*.juno.global.{{ .Values.global.tld }}"
 {{- end }}        
       secretName: "tls-juno-{{ .Values.global.region }}-cloud-sap"
