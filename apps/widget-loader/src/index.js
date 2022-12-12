@@ -112,6 +112,8 @@ Promise.all([loadShim, loadImportmap])
         window.__junoWidgetLoader[origin].manifest[name][version].entryFile,
         origin
       ).href
+
+      if (debug) console.log("base: ", origin, appURL)
     }
 
     // get app props from the data-props-* arguments
