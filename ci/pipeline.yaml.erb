@@ -70,7 +70,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: importmaps-v2
-      paths: ["<%=details[:path]%>","package.json","ci/Dockerfile.asset","e2e", ".yarn","ci/pipeline.yaml.erb","ci/helm-charts"]
+      paths: ["<%=details[:path]%>","package.json","ci/Dockerfile.asset","e2e", ".yarn"]
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
       
