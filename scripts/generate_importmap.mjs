@@ -49,7 +49,9 @@ for (let arg of args) {
     })
 
     options[key] = match[2] ? match[2] : true
+
     if (options[key] === "true") options[key] = true
+    if (options[key] === "false") options[key] = false
     continue
   }
 }
