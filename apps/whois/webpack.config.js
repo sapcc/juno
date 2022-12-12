@@ -46,7 +46,7 @@ module.exports = (_, argv) => {
       clean: true,
     },
     externalsType: "module",
-    externals: isDevelopment ? {} : externals,
+    externals: process.env.IGNORE_EXTERNALS || isDevelopment ? {} : externals,
     // This says to webpack that we are in development mode and write the code in webpack file in different way
     mode: "development",
     module: {

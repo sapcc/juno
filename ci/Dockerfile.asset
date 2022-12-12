@@ -29,13 +29,15 @@ RUN rsync -avu --delete "/tmp/src/" "/juno" 1>/dev/null ;
 RUN yarn install 1>/dev/null ; yarn build-libs 1>/dev/null
 
 # TEST AND BUILD ASSET
+# IGNORE_EXTERNALS=true will results in a bundle which includes all dependencies. 
+# This is the case if the jspm cdn is unreachable!!! 
 RUN \
   ASSET_NAME=$(jq -r .name /juno/$ASSET_PATH/package.json) ; \ 
   ASSET_TEST_SCRIPT=$(jq -r '.scripts | has("test")' /juno/$ASSET_PATH/package.json) ; \
   ASSET_BUILD_SCRIPT=$(jq -r '.scripts | has("build")' /juno/$ASSET_PATH/package.json) ; \ 
   echo $ASSET_NAME $ASSET_TEST_SCRIPT $ASSET_BUILD_SCRIPT ; \
   [[ "$ASSET_TEST_SCRIPT" == "false" ]]  || CI=true yarn workspace $ASSET_NAME test ;\
-  [[ "$ASSET_BUILD_SCRIPT" == "false" ]] || CI=false NODE_ENV=production yarn workspace $ASSET_NAME build 1>/dev/null
+  [[ "$ASSET_BUILD_SCRIPT" == "false" ]] || CI=false NODE_ENV=production IGNORE_EXTERNALS=false yarn workspace $ASSET_NAME build 1>/dev/null
 
 
 # COPY RESULTS OF THE BUILD TO /tmp

@@ -41,7 +41,10 @@ const config = [
       del({ targets: [moduleBuildDir, mainBuildDir] }),
       analyze({ summaryOnly: true, limit: 0 }),
     ],
-    external: isProduction ? Object.keys(pkg.peerDependencies || {}) : [],
+    external:
+      isProduction && !process.env.IGNORE_EXTERNALS
+        ? Object.keys(pkg.peerDependencies || {})
+        : [],
   },
 ]
 

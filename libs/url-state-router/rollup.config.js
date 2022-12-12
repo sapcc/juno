@@ -55,7 +55,10 @@ const config = [
       terser(),
       analyze({ limit: 0, summaryOnly: true }),
     ],
-    external: isProduction ? Object.keys(pkg.peerDependencies || {}) : [],
+    external:
+      isProduction && !process.env.IGNORE_EXTERNALS
+        ? Object.keys(pkg.peerDependencies || {})
+        : [],
   },
 ]
 

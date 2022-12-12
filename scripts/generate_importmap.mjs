@@ -15,9 +15,13 @@ import path from "path"
 import url from "url"
 import { exit } from "node:process"
 
+// ignore-externals allows us to bundle all libs into one final file.
+// For the case the CDN with the external libs is unreachable, this flag must be set to true.
+// This will include all dependencies in the final bundle.
 const availableArgs = [
   "--src=DIR_PATH",
   "--output=FILE_PATH",
+  "--ignore-externals=true|false",
   "--base-url=URL_OF_ASSETS_SERVER",
   "--verbose|-v",
   "--help|-h",
@@ -28,6 +32,7 @@ const options = {
   src: path.dirname(url.fileURLToPath(import.meta.url)),
   baseUrl: "%BASE_URL%",
   output: "./importmap.json",
+  ignoreExternals: false,
   verbose: false,
   v: false,
 }
@@ -77,7 +82,7 @@ for (let file of files) {
     path,
     entryFile,
     entryDir,
-    peerDependencies: pkg.peerDependencies,
+    peerDependencies: options.ignoreExternals ? false : pkg.peerDependencies,
   }
 }
 

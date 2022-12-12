@@ -23,6 +23,7 @@ RUN \
   node ./scripts/generate_importmap.mjs \
   --src=/tmp/latest \
   --base-url="%BASE_URL%" \
+  --ignore-externals=false \
   --output=/tmp/latest/importmap.json ; \
   --verbose=true ; \
   \

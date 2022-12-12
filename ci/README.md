@@ -64,6 +64,14 @@ Importmap is generated using generator from https://jspm.org. Where internal lib
 }
 ```
 
+### Ignore external dependencies
+
+In the case that the CDN server is not reachable, the generation of the importmap should not include dependencies from that CDN.
+There are two places where using the external CDN libs is turned off.
+
+ci/Dockerfile.asset -> IGNORE_EXTERNALS=true
+ci/Dockerfile.assets.server -> --ignore-externals=true
+
 ## Manifest
 
 Manifest serves mainly as input for the widget-loader and secondarily as an overview of the available libs and apps.

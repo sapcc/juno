@@ -23,7 +23,9 @@ const config = [
       minify({ comments: false }),
       analyze(),
     ],
-    external: Object.keys(pkg.peerDependencies || {}),
+    external: process.env.IGNORE_EXTERNALS
+      ? []
+      : Object.keys(pkg.peerDependencies || {}),
   },
 ]
 
