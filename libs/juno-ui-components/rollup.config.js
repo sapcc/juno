@@ -34,6 +34,7 @@ fs.readdirSync("./src/components").forEach((file) => {
 })
 
 const isProduction = process.env.NODE_ENV === "production"
+const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
 
 const config = [
   {
@@ -79,7 +80,9 @@ const config = [
     ],
 
     external: ["react", "react-dom", "prop-types"].concat(
-      isProduction ? Object.keys(pkg.peerDependencies || {}) : []
+      isProduction && !IGNORE_EXTERNALS
+        ? Object.keys(pkg.peerDependencies || {})
+        : []
     ),
   },
 ]

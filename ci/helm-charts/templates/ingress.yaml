@@ -60,6 +60,17 @@ spec:
                 port: 
                   number: 8888
 
+    - host: "assets.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix 
+            backend:
+              service: 
+                name: juno-assets-server
+                port: 
+                  number: 8888
+
     - host: "ui.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:

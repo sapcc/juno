@@ -19,6 +19,15 @@
 %>
 
 resources:
+  - name: secrets.git
+    type: git-proxy
+    webhook_token: lfkhslkfhs
+    check_every: 6h
+    source:
+      uri: git@github.wdf.sap.corp:cc/secrets.git
+      branch: "master"
+      private_key: ((github-private-key/cc-secrets))
+      
   <%# BASE IMAGE %>
   - name: base.image
     type: docker-image
@@ -228,3 +237,64 @@ jobs:
           tag: assets-server.version/version
         get_params:
           skip_download: true   
+
+
+  - name: deploy-to-s-qa-de-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: assets-server.version
+            trigger: true
+            passed: ["assets-server"]
+          - get: juno.git
+          - get: secrets.git
+            params:
+              depth: 100 
+
+      - task: generate-additional-tags-values.yaml
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: 
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+              tag: "latest"
+          inputs: 
+            - name: cdn.version 
+            - name: juno-ui-components.version
+            - name: mercury.version
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                printf "cdn: {image_tag: \"$(cat cdn.version/version)\"}\njuno_ui_components: {image_tag: \"$(cat juno-ui-components.version/version)\"}\nmercury: {image_tag: \"$(cat mercury.version/version)\"}" > ./extra-values/values.yaml
+                cat ./extra-values/values.yaml
+          outputs:
+            - name: extra-values
+
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          # we deploy dashboard image with the last created version tag (ImagePullPolicy IfNotPresent)
+          # cdn uses latest with ImagePullPolicy Always
+          app.version: dashboard.version
+          helm-charts.git: ci.git
+          extra-values.git: extra-values
+
+        params:
+          HELM_MAJOR_VERSION: '3'
+          CHART_PATH: ci/helm-charts
+          RELEASE: juno
+          NAMESPACE: juno
+          REGION: qa-de-1
+          CONTEXT: s-qa-de-1
+          TAG_VARIABLE: dashboard.image_tag
+          VALUES: local:globals s-local:juno extra:values.yaml
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))
+
+    ensure:
+      put: qa-de-1.release          

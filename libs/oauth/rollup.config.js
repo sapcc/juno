@@ -13,6 +13,7 @@ if (!/.+\/.+\.js/.test(pkg.module))
   )
 const buildDir = pkg.module.slice(0, pkg.module.lastIndexOf("/"))
 const isProduction = process.env.NODE_ENV === "production"
+const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
 
 const config = [
   {
@@ -34,7 +35,7 @@ const config = [
       analyze({ summaryOnly: true, limit: 0 }),
     ],
     external:
-      isProduction && !process.env.IGNORE_EXTERNALS
+      isProduction && !IGNORE_EXTERNALS
         ? Object.keys(pkg.peerDependencies || {})
         : [],
   },

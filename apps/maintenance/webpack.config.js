@@ -25,6 +25,7 @@ for (let key in pkg.peerDependencies) externals[key] = key
 module.exports = (_, argv) => {
   const mode = argv.mode
   const isDevelopment = mode === "development"
+  const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
 
   return {
     experiments: {
@@ -48,7 +49,7 @@ module.exports = (_, argv) => {
       clean: true,
     },
     externalsType: "module",
-    externals: process.env.IGNORE_EXTERNALS || isDevelopment ? {} : externals,
+    externals: IGNORE_EXTERNALS || isDevelopment ? {} : externals,
     // This says to webpack that we are in development mode and write the code in webpack file in different way
     mode: "development",
     module: {
