@@ -254,7 +254,6 @@ jobs:
             trigger: true
             passed: ["assets-server"]
           - get: juno.git
-            passed: ["assets-server"]
           - get: secrets.git
             params:
               depth: 100 

@@ -36,7 +36,7 @@ spec:
           ports:
             - name: http
               containerPort: 80
-          envs: 
+          env: 
             - name: BASE_URL
               value: "assets.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"    
 
