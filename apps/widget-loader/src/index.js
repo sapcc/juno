@@ -117,8 +117,13 @@ Promise.all([loadShim, loadImportmap])
     // get app props from the data-props-* arguments
     let appProps = { currentHost: url || origin }
     for (let key in props) {
-      if (key.indexOf("props") === 0)
-        appProps[key.replace("props", "").toLowerCase()] = props[key]
+      if (key.indexOf("props") === 0) {
+        let newKey = key.replace("props", "")
+        newKey[0] = newKey[0].toLowerCase()
+        appProps[newKey] = props[key]
+        // support old format -> the whole key to lowercase
+        appProps[newKey.toLowerCase()] = props[key]
+      }
     }
 
     // create a wrapper for the app

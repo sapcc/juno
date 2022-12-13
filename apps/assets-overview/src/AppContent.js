@@ -25,9 +25,10 @@ const AppContent = (props) => {
   const urlStateKey = useStore((state) => state.urlStateKey)
 
   const { isLoading, isError, data, error } = useQuery(
-    ["assets", manifestUrl, {}],
+    manifestUrl,
     fetchAssetsManifest,
     {
+      enabled: !!manifestUrl,
       // enable the query also if the endpoint is set. For fetching local
       // data is not necessary since it should be empty
       // enabled: !!endpoint,
@@ -49,6 +50,7 @@ const AppContent = (props) => {
     return (
       <Message variant="danger">{`${error.statusCode}, ${error.message}`}</Message>
     )
+  if (!data) return null
 
   return (
     <DataGrid columns={6}>

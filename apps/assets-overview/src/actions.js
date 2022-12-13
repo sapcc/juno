@@ -31,9 +31,8 @@ const checkStatus = (response) => {
 
 // Example fetch call. Adjust as needed for your API
 export const fetchAssetsManifest = ({ queryKey }) => {
-  const [_key, manifestUrl, options] = queryKey
-  const query = encodeUrlParamsFromObject(options)
-  return fetch(`${manifestUrl}?${query}`, {
+  const [manifestUrl] = queryKey
+  return fetch(manifestUrl, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
