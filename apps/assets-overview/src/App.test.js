@@ -5,6 +5,10 @@ import { render, act, waitFor } from "@testing-library/react"
 import { screen } from "shadow-dom-testing-library"
 import App from "./App"
 
+import * as actions from "./actions"
+jest.mock("./actions.js")
+actions.fetchAssetsManifest = jest.fn().mockResolvedValue({})
+
 test("renders app", async () => {
   await act(() => render(<App />))
 
