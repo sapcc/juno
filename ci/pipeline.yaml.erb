@@ -230,6 +230,8 @@ jobs:
                 ls -all ./dist/<%=details[:type]%>s/<%= name %>/
                 echo "====================="
                 <% end %>
+                echo "add static assets to cdn folder ./dist/assets"
+                cp -r ./juno.git/assets ./dist
           outputs:
             - name: dist
       # to serve our js, css and stattic assets this step will add all the created data 
