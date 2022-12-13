@@ -71,6 +71,8 @@ RUN echo -e '#!/bin/sh\n\n\
 # preset manifest.json as default index file
 RUN sed -i 's,index  index.html index.htm;,index  manifest.json index.html index.htm;,g' /etc/nginx/conf.d/default.conf 
 
+RUN echo -e '<html>\n<html>\n\t<body>\n\t\t<script src="/apps/widget-loader@latest/build/app.js" data-name="assets-overview" data-props-manifest-url="/manifest.json"></script>\n\t</body>\n</html>' > /usr/share/nginx/html/index.html
+
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
 # default command is nginx
 CMD nginx -g "daemon off;"
