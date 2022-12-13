@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <title>App Template</title>
+    <style>
+      html {
+        height: 100vh;
+      }
+      body {
+        height: 100vh;
+        margin: 0;
+        background: rgb(13, 20, 28);
+      }
+      #root {
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      const mainFilename = "<%= MAIN_FILENAME %>"
+
+      import(`./${mainFilename}`).then((app) =>
+        app.mount(document.getElementById("root"))
+      )
+    </script>
+
+    <div id="root"></div>
+
+    <!-- <script
+      src="https://assets.juno.qa-de-1.cloud.sap/apps/widget-loader@latest/build/app.js"
+      data-url="./index.js"
+      data-props-manifest-url="https://assets.juno.qa-de-1.cloud.sap/manifest.json"
+    ></script> -->
+  </body>
+</html>
