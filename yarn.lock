@@ -15181,6 +15181,7 @@ __metadata:
     babel-jest: ^27.4.6
     babel-loader: ^8.2.3
     css-loader: ^6.6.0
+    dedent: ^0.7.0
     jest: ^27.4.7
     postcss: ^8.4.6
     postcss-loader: ^6.2.1
@@ -15188,6 +15189,7 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     react-jss: ^10.8.1
+    react-merge-refs: ^2.0.1
     react-tabs: ^4.2.1
     regenerator-runtime: ^0.13.9
     rollup: ^2.67.0
@@ -19336,6 +19338,13 @@ __metadata:
   version: 3.0.4
   resolution: "react-lifecycles-compat@npm:3.0.4"
   checksum: a904b0fc0a8eeb15a148c9feb7bc17cec7ef96e71188280061fc340043fd6d8ee3ff233381f0e8f95c1cf926210b2c4a31f38182c8f35ac55057e453d6df204f
+  languageName: node
+  linkType: hard
+
+"react-merge-refs@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "react-merge-refs@npm:2.0.1"
+  checksum: c0b6fdb384a92e9b2bb7d56128244a2db97b9343c0dcae70f172352c3732312266c078495902707e45f523625afcba78996a22edea3a8e7b2b17fe97347059fe
   languageName: node
   linkType: hard
 
