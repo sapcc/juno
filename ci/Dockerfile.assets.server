@@ -68,7 +68,7 @@ RUN echo -e '#!/bin/sh\n\n\
   sed -i "s,%BASE_URL%,$BASE_URL,g" /usr/share/nginx/html/importmap.json \n\
   exec "$@" ' >> /usr/local/bin/entrypoint && chmod +x /usr/local/bin/entrypoint
 
-RUN echo -e '<!DOCTYPE html><html>\n<head><title>Juno Assets</title></head>\n\t<body>\n\t\t<script src="/apps/widget-loader@latest/build/app.js" data-name="assets-overview" data-props-manifest-url="/manifest.json"></script>\n\t</body>\n</html>' > /usr/share/nginx/html/index.html
+RUN echo -e '<!DOCTYPE html><html style="height: 100%;">\n<head><title>Juno Assets</title></head>\n\t<body style="height: 100%;">\n\t\t<script src="/apps/widget-loader@latest/build/app.js" data-name="assets-overview" data-props-manifest-url="/manifest.json"></script>\n\t</body>\n</html>' > /usr/share/nginx/html/index.html
 
 ENTRYPOINT ["/usr/local/bin/entrypoint"]
 # default command is nginx

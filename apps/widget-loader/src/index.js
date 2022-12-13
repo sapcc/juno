@@ -9,12 +9,21 @@ if (!currentScript) {
 }
 
 const currentURL = new URL(currentScript.src)
-let { name, version, url, origin, importmapOnly, debug, ...props } =
-  currentScript.dataset
+let {
+  name,
+  version,
+  url,
+  origin,
+  importmapOnly,
+  importmapUrl,
+  debug,
+  ...props
+} = currentScript.dataset
 
 origin = origin || currentURL.origin
 version = version || "latest"
 debug = debug === "true"
+importmapUrl = importmapUrl || `${origin}/importmap.json`
 
 if (debug) {
   console.log(
@@ -29,6 +38,8 @@ if (debug) {
     origin,
     ", importmapOnly: ",
     importmapOnly,
+    ", importmapUrl: ",
+    importmapUrl,
     ", props: ",
     props
   )
@@ -59,7 +70,7 @@ let loadImportmap = new Promise((resolve, reject) => {
   if (document.querySelector(`script[data-juno-importmap="${origin}"]`))
     return resolve(true)
 
-  fetch(`${origin}/importmap.json`)
+  fetch(importmapUrl)
     .then((r) => r.json())
     .then((importmap) => {
       const script = document.createElement("script")
@@ -119,7 +130,7 @@ Promise.all([loadShim, loadImportmap])
     for (let key in props) {
       if (key.indexOf("props") === 0) {
         let newKey = key.replace("props", "")
-        newKey[0] = newKey[0].toLowerCase()
+        newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1)
         appProps[newKey] = props[key]
         // support old format -> the whole key to lowercase
         appProps[newKey.toLowerCase()] = props[key]

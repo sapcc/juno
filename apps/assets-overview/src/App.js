@@ -40,6 +40,7 @@ const App = (props) => {
 }
 
 const StyledApp = (props) => {
+  // console.log(":::::::::::::::::1", props)
   // default props
   props = {
     manifestUrl: process.env.MANIFEST_URL,
@@ -48,6 +49,7 @@ const StyledApp = (props) => {
     ...props,
   }
 
+  // console.log(":::::::::::::::::2", props)
   return (
     <StyleProvider
       stylesWrapper="shadowRoot"
