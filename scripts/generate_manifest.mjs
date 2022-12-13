@@ -57,6 +57,16 @@ files.sort().forEach(async (file) => {
   const entryFile = pkg.module || pkg.main
   const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/"))
   const meta = fs.statSync(`${rootPath}/${path}`)
+
+  let totalSize, totalSizeHuman
+  try {
+    totalSize = execSync(`du -bs ${rootPath}/${path}`).toString().split("\t")[0]
+    totalSizeHuman = execSync(`du -bhs ${rootPath}/${path}`)
+      .toString()
+      .split("\t")[0]
+  } catch (e) {
+    console.log(e)
+  }
   let version = path.indexOf("@latest") > 0 ? "latest" : pkg.version
 
   manifest[pkg.name] = manifest[pkg.name] || {}
@@ -65,7 +75,8 @@ files.sort().forEach(async (file) => {
     entryFile: "/" + path + "/" + entryFile,
     entryDir: "/" + path + "/" + entryDir,
     updatedAt: meta.mtime,
-    size: meta.size,
+    size: totalSize,
+    sizeHuman: totalSizeHuman,
   }
 
   // console.log(path + "/" + entryDir, meta)

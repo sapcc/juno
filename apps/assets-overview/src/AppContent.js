@@ -53,13 +53,14 @@ const AppContent = (props) => {
   if (!data) return null
 
   return (
-    <DataGrid columns={6}>
+    <DataGrid columns={7}>
       <DataGridRow>
         <DataGridHeadCell>Name</DataGridHeadCell>
         <DataGridHeadCell>Type</DataGridHeadCell>
         <DataGridHeadCell>Version</DataGridHeadCell>
         <DataGridHeadCell>Entry File</DataGridHeadCell>
         <DataGridHeadCell>Entry Dir</DataGridHeadCell>
+        <DataGridHeadCell>Size</DataGridHeadCell>
         <DataGridHeadCell>Updated At</DataGridHeadCell>
       </DataGridRow>
       {Object.keys(data)
@@ -79,6 +80,9 @@ const AppContent = (props) => {
                 </DataGridCell>
                 <DataGridCell>
                   {data[assetName][version]["entryDir"]}
+                </DataGridCell>
+                <DataGridCell>
+                  {data[assetName][version]["sizeHuman"]}
                 </DataGridCell>
                 <DataGridCell>
                   {data[assetName][version]["updatedAt"]}
