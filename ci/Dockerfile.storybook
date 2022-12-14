@@ -1,0 +1,27 @@
+ARG KEPPEL_HOSTNAME
+FROM $KEPPEL_HOSTNAME/ccloud-dockerhub-mirror/library/node:14-alpine
+
+LABEL source_repository="https://github.com/sapcc/juno/libs/juno-ui-components"
+
+RUN apk --no-cache add git ca-certificates make
+
+# create tmp folder
+RUN mkdir -p /tmp/repo
+# copy the whole repo to /tmp/repo
+ADD . /tmp/repo
+
+# install node modules, build libs and app
+RUN cd /tmp/repo/ && \
+  yarn workspace juno-ui-components install 1>/dev/null && \
+  yarn workspace juno-ui-components build 1>/dev/null && \
+  yarn workspace juno-ui-components build-storybook -o ./build 1>/dev/null
+
+# create working dir
+RUN mkdir -p /app
+WORKDIR /app
+
+# copy app build to working dir
+RUN cp -r /tmp/repo/libs/juno-ui-components/* /app/ ; cd /app
+
+# run app
+CMD npx http-server --port 3000 build

@@ -1,17 +1,37 @@
 # prettier-ignore
 <%
-  # hosting: {page_name: "optional (key as default)", name: "optional (key as default)", version: "latest as default", props: {"key", "value"} }
+  # hosting: {
+  #  subdomain: "optional keys as default", 
+  #  page_name: "optional (key as default)", 
+  #  name: "optional (key as default)", 
+  #  version: "latest as default", 
+  #  props: {"key", "value"} 
+  # }
+  # SUBDOMAIN.juno.REGION.cloud.sap, 
+  #  e.g subdomain: false -> juno.REGION.cloud.sap
+  #  e.g subdomain: "bla" -> bla.juno.REGION.cloud.sap
   ASSETS = {
     "requests": { type: "app", path: "apps/requests" },
-    "dashboard": { type: "app", path: "apps/dashboard", hosting: { version: "latest", props: {region: "eu-de-1", domain: "monsoon3", propdmode: true}} },
+    "dashboard": { type: "app", path: "apps/dashboard", 
+      hosting: { 
+        subdomain: false, 
+        version: "latest", 
+        props: {
+          region: "eu-de-1", 
+          domain: "monsoon3", 
+          propdmode: true
+        }
+      } 
+    },
     "widget-loader": { type: "app", path: "apps/widget-loader"},
     "whois": { type: "app", path: "apps/whois"},
     "volta": { type: "app", path: "apps/volta"},
     "heureka": { type: "app", path: "apps/heureka"},
     "maintenance": { type: "app", path: "apps/maintenance"},
     "assets-overview": { type: "app", path: "apps/assets-overview"},
-    "exampleapp": { type: "app", path: "apps/exampleapp", hosting: {version: "latest" }},
-
+    "exampleapp": { type: "app", path: "apps/exampleapp", 
+      hosting: { version: "latest" }
+    },
     "juno-ui-components": { type: "lib", path: "libs/juno-ui-components"},
     "policy-engine": { type: "lib", path: "libs/policy-engine"},
     "oauth": { type: "lib", path: "libs/oauth"},
