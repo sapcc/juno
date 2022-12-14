@@ -1,0 +1,49 @@
+FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/nginx:alpine AS server
+LABEL source_repository="https://github.com/sapcc/juno"
+
+ENV PAGE_TITLE="app"
+ENV FAVICON_URL="/assets/favicon.ico"
+ENV NAME="exampleapp"
+ENV VERSION="latest"
+ENV ASSETS_HOST=""
+ENV PROPS="{}"
+
+RUN apk --no-cache add jq
+
+# HTML TEMPLATE
+RUN echo -e \
+  $'<!DOCTYPE html> \n\
+  <html style="height: 100vh; background: rgb(13, 20, 28);">\n\
+  \t <head>\n\
+  \t\t <title>###PAGE_TITLE###</title> \n\
+  \t\t <link rel="icon" href="###FAVICON_URL###"/> \n\
+  \t </head>\n\
+  \t <body style="height: 100vh;">\n\
+  \t\t <script \n\
+  \t\t\t src="###ASSETS_HOST###/apps/widget-loader@latest/build/app.js" \n\ 
+  \t\t\t data-name="###NAME###" \n\
+  \t\t\t data-version="###VERSION###" \n\
+  \t\t\t ###DATA_PROPS###></script>\n\
+  \t </body>\n\
+  </html>' > /tmp/index_template.html
+
+# Convert json app props to data-props-* attributes
+# use jq to crate data atributes like data-props-name=%%test%%
+# PROPS looks like {"region": "eu-de-1", "domain": "monsoon3" }
+# And the result DATA_PROPS looks like data-props-region="eu-de-1" data-props-domain="monsoon3"
+RUN echo -e \
+  $'#!/bin/sh\n\n\
+  set -e \n\
+  DATA_PROPS=$(echo $PROPS| jq -r \'to_entries[] | "data-props-\(.key)=###\(.value)###" \' | sed -r \'s/###/"/g\') \n\
+  DATA_PROPS=$(echo $DATA_PROPS | tr "\n" " ") \n\
+  sed -i "s/###PAGE_TITLE###/$PAGE_TITLE/g" /tmp/index_template.html \n\
+  sed -i "s%###FAVICON_URL###%$FAVICON_URL%g" /tmp/index_template.html \n\
+  sed -i "s/###ASSETS_HOST###/$ASSETS_HOST/g" /tmp/index_template.html \n\
+  sed -i "s/###NAME###/$NAME/g" /tmp/index_template.html \n\
+  sed -i "s/###VERSION###/$VERSION/g" /tmp/index_template.html \n\
+  sed -i "s/###DATA_PROPS###/$DATA_PROPS/g" /tmp/index_template.html \n\
+  cat /tmp/index_template.html \n\
+  cp /tmp/index_template.html /usr/share/nginx/html/index.html \n\
+  exec "$@" ' >> /usr/local/bin/entrypoint && chmod +x /usr/local/bin/entrypoint
+
+ENTRYPOINT [ "/usr/local/bin/entrypoint" ]

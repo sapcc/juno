@@ -1,14 +1,16 @@
 # prettier-ignore
 <%
+  # hosting: {page_name: "optional (key as default)", name: "optional (key as default)", version: "latest as default", props: {"key", "value"} }
   ASSETS = {
     "requests": { type: "app", path: "apps/requests" },
-    "dashboard": { type: "app", path: "apps/dashboard"},
+    "dashboard": { type: "app", path: "apps/dashboard", hosting: { version: "latest", props: {region: "eu-de-1", domain: "monsoon3", propdmode: true}} },
     "widget-loader": { type: "app", path: "apps/widget-loader"},
     "whois": { type: "app", path: "apps/whois"},
     "volta": { type: "app", path: "apps/volta"},
     "heureka": { type: "app", path: "apps/heureka"},
     "maintenance": { type: "app", path: "apps/maintenance"},
     "assets-overview": { type: "app", path: "apps/assets-overview"},
+    "exampleapp": { type: "app", path: "apps/exampleapp", hosting: {version: "latest" }},
 
     "juno-ui-components": { type: "lib", path: "libs/juno-ui-components"},
     "policy-engine": { type: "lib", path: "libs/policy-engine"},
@@ -121,8 +123,11 @@ groups:
       - <%=details[:type]%>-<%=name%> 
       <% end %>
       - assets-server
-      - deploy-s-qa-de-1
-  - name: websites
+      - deploy-assets-server-s-qa-de-1
+  - name: hosting
+    jobs:
+      - deploy-ui-s-qa-de-1
+      - deploy-apps-s-qa-de-1
 
 jobs:
   <%# for info only %>
@@ -249,7 +254,7 @@ jobs:
           skip_download: true   
 
 
-  - name: deploy-s-qa-de-1
+  - name: deploy-assets-server-s-qa-de-1
     serial: true
     plan:
       - in_parallel:
@@ -283,3 +288,73 @@ jobs:
 
     ensure:
       put: qa-de-1.release          
+
+  - name: deploy-ui-s-qa-de-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: assets-server.version
+            trigger: true
+            passed: ["assets-server"]
+          - get: juno.git
+          - get: secrets.git
+            params:
+              depth: 100 
+
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          app.version: assets-server.version
+          helm-charts.git: juno.git
+
+        params:
+          HELM_MAJOR_VERSION: '3'
+          CHART_PATH: ci/helm-charts
+          RELEASE: juno-v2
+          NAMESPACE: juno
+          REGION: qa-de-1
+          CONTEXT: s-qa-de-1
+          TAG_VARIABLE: assets-server.image_tag
+          VALUES: local:globals s-local:juno 
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))
+
+    ensure:
+      put: qa-de-1.release      
+
+  - name: deploy-apps-s-qa-de-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: assets-server.version
+            trigger: true
+            passed: ["assets-server"]
+          - get: juno.git
+          - get: secrets.git
+            params:
+              depth: 100 
+
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          app.version: assets-server.version
+          helm-charts.git: juno.git
+
+        params:
+          HELM_MAJOR_VERSION: '3'
+          CHART_PATH: ci/helm-charts
+          RELEASE: juno-v2
+          NAMESPACE: juno
+          REGION: qa-de-1
+          CONTEXT: s-qa-de-1
+          TAG_VARIABLE: assets-server.image_tag
+          VALUES: local:globals s-local:juno 
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))
+
+    ensure:
+      put: qa-de-1.release       
