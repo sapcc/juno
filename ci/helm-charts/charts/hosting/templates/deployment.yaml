@@ -31,19 +31,19 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: {{ 3000+$i }}
+              containerPort: {{ add 3000 $i }}
 
           livenessProbe:
             httpGet:
               path: /
-              port: {{ 3000+$i }}
+              port: {{ add 3000 $i }}
             timeoutSeconds: 10
             periodSeconds: 60
             initialDelaySeconds: 60
           readinessProbe:
             httpGet:
               path: /
-              port: {{ 3000+$i }}
+              port: {{ add 3000 $i }}
             timeoutSeconds: 5
             periodSeconds: 5
           resources:
