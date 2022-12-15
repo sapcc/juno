@@ -34,7 +34,7 @@ const sizeStyles = (size) => {
   }
 }
 
-/**  */
+/**  A basic CodeBlock component. Accepts a content prop or children. Will render a pre-wrapped code element. */
 export const CodeBlock = ({
   content,
   children,

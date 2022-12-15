@@ -24,3 +24,22 @@ Default.args = {
   content: "Simple code view"
 }
 
+export const SimpleWithChildren = Template.bind({})
+SimpleWithChildren.parameters = {
+  docs: {
+    description: {
+      story: "Simple CodeView with children"
+    }
+  }
+}
+SimpleWithChildren.args = {
+  children: `<html lang="en">
+    <head>
+      <title="Multi-line Html" />
+    </head>
+      <body>
+        <main>
+        </main>
+      </body>
+  </html>`
+}

@@ -26,7 +26,7 @@ export const CodeView = ({
       { content ? 
         <CodeBlock content={content} />
         :
-        null
+        <CodeBlock>{ children }</CodeBlock>
       }
     </div>
   )
