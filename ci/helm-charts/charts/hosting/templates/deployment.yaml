@@ -30,7 +30,7 @@ spec:
           image: "{{ $.Values.global.registry }}/juno-v2-hosting:{{ $.Values.image_tag }}"
           imagePullPolicy: IfNotPresent
           ports:
-            - name: http
+            - name: hosting-{{ $app.name }}
               containerPort: {{ add 3000 $i }}
 
           livenessProbe:

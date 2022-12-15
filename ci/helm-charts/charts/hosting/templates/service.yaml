@@ -3,12 +3,15 @@ apiVersion: v1
 
 metadata:
   namespace: juno
-  name: ui-storybook
+  name: hosting
 
 spec:
   selector:
-    app: ui-storybook
+    app: hosting
   ports:
-    - name: ui-storybook
-      port: 3000
+  {{- range $i, $app := .Values.apps  }}  
+    - name: hosting-{{ $app.name }}
+      port: 80
       protocol: TCP
+      targetPort: hosting-{{ $app.name }}
+  {{ end }}    
