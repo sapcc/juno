@@ -231,8 +231,7 @@ jobs:
         trigger: true 
         passed: [build-<%= details[:type] %>-<%= name %>]
       <% end %>
-      - get: juno.git  
-        trigger: true          
+      - get: juno.git        
         passed: [build-base-image]
       - put: assets-server.version  
 
