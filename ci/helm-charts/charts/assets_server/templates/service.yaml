@@ -3,13 +3,13 @@ apiVersion: v1
 
 metadata:
   namespace: juno
-  name: juno-assets-server
+  name: assets-server
 
 spec:
   selector:
-    app: juno-assets-server
+    app: assets-server
   ports:
-    - name: juno-assets-server
+    - name: assets-server
       port: 8888
       targetPort: 80
       protocol: TCP

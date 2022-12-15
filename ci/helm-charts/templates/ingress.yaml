@@ -10,9 +10,8 @@ metadata:
     cloud.sap/no-http-keep-alive-monitor: "true"
     ingress.kubernetes.io/cors-allow-origin: '*'
     ingress.kubernetes.io/enable-cors: "true"
-  # labels:
-  #   app: juno
-  name: juno-v2
+
+  name: reverse-proxy
   namespace: juno
 spec:
   rules:
@@ -23,9 +22,20 @@ spec:
             pathType: Prefix 
             backend:
               service: 
-                name: juno-assets-server
+                name: assets-server
                 port: 
                   number: 8888
+
+    - host: "ui.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix                 
+            backend:
+              service: 
+                name: ui-storybook
+                port: 
+                  number: 3000                  
                     
 {{- if eq .Values.global.region "eu-nl-1" }}
     - host: "assets.juno.global.{{ .Values.global.tld }}"
@@ -38,6 +48,17 @@ spec:
                 name: juno-assets-server
                 port: 
                   number: 8888
+
+    - host: "ui.juno.global.{{ .Values.global.tld }}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix                 
+            backend:
+              service: 
+                name: juno-ui-components
+                port: 
+                  number: 3000                  
 
 {{- end }} 
 

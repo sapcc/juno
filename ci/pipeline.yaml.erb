@@ -86,6 +86,28 @@ resources:
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server
 
+  <%# UI COMPONENTS STORYBOOK%>
+  - name: ui-storybook.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: importmaps-v2
+      paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.ui.storybook","e2e", ".yarn"]
+      username: sapcc-bot
+      password: ((github-access-token/sapcc-bot))
+  
+  - name: ui-storybook.version
+    type: time-version-resource
+    check_every: 525600h
+    source: { key: juno-ui-storybook-version } # disambiguate from other time-version resources
+
+  - name: ui-storybook.image
+    type: docker-image
+    source:
+      username: ((registry-user/keppel-ccloud.username))
+      password: ((registry-user/keppel-ccloud.password))
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v2-ui-storybook
+
   <%# ASSETS SOURCE GIT %>
   <% ASSETS.each do |name,details| %>
   - name: <%=details[:type]%>-<%= name %>.git
@@ -134,21 +156,6 @@ resource_types:
       repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-github-release-resource  
 
 
-groups:
-  - name: assets
-    jobs:
-      - readme
-      - base-image
-      <% ASSETS.each do |name,details| %>
-      - <%=details[:type]%>-<%=name%> 
-      <% end %>
-      - assets-server
-      - deploy-assets-server-s-qa-de-1
-  - name: hosting
-    jobs:
-      - deploy-ui-s-qa-de-1
-      - deploy-apps-s-qa-de-1
-
 jobs:
   <%# for info only %>
   - name: readme
@@ -170,7 +177,7 @@ jobs:
               - '\tManage Juno images: https://keppel.eu-de-1.cloud.sap/ccloud/juno\n'
 
   <%# BUILD BASE IMAGE %>
-  - name: base-image
+  - name: build-base-image
     public: true
     plan:
       - get: juno.git
@@ -186,7 +193,7 @@ jobs:
 
   <%# run unit tests for each asset and build %>
   <% ASSETS.each do |name,details| %>
-  - name: <%= details[:type] %>-<%= name %>
+  - name: build-<%= details[:type] %>-<%= name %>
     public: true
     plan:
       - get: <%=details[:type]%>-<%= name %>.git
@@ -214,7 +221,7 @@ jobs:
   # into /usr/share/nginx/html/
   # this image will be deployed as CDN server 
   %>
-  - name: assets-server
+  - name: build-assets-server
     public: true
     plan:
       <% ASSETS.each do |name, details|%>
@@ -222,11 +229,11 @@ jobs:
         params: 
           rootfs: true # mount image contents under /rootfs.tar
         trigger: true 
-        passed: [<%= details[:type] %>-<%= name %>]
+        passed: [build-<%= details[:type] %>-<%= name %>]
       <% end %>
       - get: juno.git  
         trigger: true          
-        passed: [base-image]
+        passed: [build-base-image]
       - put: assets-server.version  
 
       <%# COPY ALL BUILDS TO dist %>
@@ -273,18 +280,69 @@ jobs:
         get_params:
           skip_download: true   
 
+  <%# build ui components storybook image and push it to keppel%>
+  - name: build-ui-storybook
+    serial: true
+    plan:
+      - in_parallel:
+          - get: ui-storybook.git
+            trigger: true
+          - put: ui-storybook.version
+      - in_parallel:
+          - put: ui-storybook.image
+            params:
+              tag_as_latest: true
+              # cache: true
+              cache_tag: "latest"
+              build: ui-storybook.git
+              build_args: 
+                KEPPEL_HOSTNAME: keppel.eu-de-1.cloud.sap
+              dockerfile: ui-storybook.git/ci/Dockerfile.ui.storybook
+              tag: ui-storybook.version/version
+            # get_params:
+            #   skip_download: true
 
-  - name: deploy-assets-server-s-qa-de-1
+  <%# DEPLOY ASSETS SERVER%>
+  - name: deploy-to-s-qa-de-1
     serial: true
     plan:
       - in_parallel:
           - get: assets-server.version
             trigger: true
-            passed: ["assets-server"]
+            passed: ["build-assets-server"]
+          - get: ui-storybook.version
+            trigger: true
+            passed: ["build-ui-storybook"]            
           - get: juno.git
           - get: secrets.git
             params:
               depth: 100 
+
+      - task: generate-additional-values.yaml
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: 
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+              tag: "latest"
+          inputs: 
+            - name: assets-server.version 
+            - name: ui-storybook.version
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                echo "build json with tags for every image"
+                printf " \
+                assets_server: {image_tag: \"$(cat assets-server.version/version)\"}\n\
+                ui_storybook: {image_tag: \"$(cat ui-storybook.version/version)\"}\n\
+                " > ./extra-values/values.yaml
+
+                cat ./extra-values/values.yaml
+          outputs:
+            - name: extra-values
 
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
@@ -299,8 +357,7 @@ jobs:
           NAMESPACE: juno
           REGION: qa-de-1
           CONTEXT: s-qa-de-1
-          TAG_VARIABLE: assets-server.image_tag
-          VALUES: local:globals s-local:juno 
+          VALUES: local:globals s-local:juno extra:values.yaml
           KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))
@@ -309,72 +366,6 @@ jobs:
     ensure:
       put: qa-de-1.release          
 
-  - name: deploy-ui-s-qa-de-1
-    serial: true
-    plan:
-      - in_parallel:
-          - get: assets-server.version
-            trigger: true
-            passed: ["assets-server"]
-          - get: juno.git
-          - get: secrets.git
-            params:
-              depth: 100 
 
-      - task: deploy
-        file: secrets.git/ci/shared/task-helm-upgrade.yaml
-        input_mapping:
-          app.version: assets-server.version
-          helm-charts.git: juno.git
 
-        params:
-          HELM_MAJOR_VERSION: '3'
-          CHART_PATH: ci/helm-charts
-          RELEASE: juno-v2
-          NAMESPACE: juno
-          REGION: qa-de-1
-          CONTEXT: s-qa-de-1
-          TAG_VARIABLE: assets-server.image_tag
-          VALUES: local:globals s-local:juno 
-          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
-          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
-          VAULT_ROLE_ID:      ((auth.role_id))
-          VAULT_SECRET_ID:    ((auth.secret_id))
 
-    ensure:
-      put: qa-de-1.release      
-
-  - name: deploy-apps-s-qa-de-1
-    serial: true
-    plan:
-      - in_parallel:
-          - get: assets-server.version
-            trigger: true
-            passed: ["assets-server"]
-          - get: juno.git
-          - get: secrets.git
-            params:
-              depth: 100 
-
-      - task: deploy
-        file: secrets.git/ci/shared/task-helm-upgrade.yaml
-        input_mapping:
-          app.version: assets-server.version
-          helm-charts.git: juno.git
-
-        params:
-          HELM_MAJOR_VERSION: '3'
-          CHART_PATH: ci/helm-charts
-          RELEASE: juno-v2
-          NAMESPACE: juno
-          REGION: qa-de-1
-          CONTEXT: s-qa-de-1
-          TAG_VARIABLE: assets-server.image_tag
-          VALUES: local:globals s-local:juno 
-          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
-          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
-          VAULT_ROLE_ID:      ((auth.role_id))
-          VAULT_SECRET_ID:    ((auth.secret_id))
-
-    ensure:
-      put: qa-de-1.release       
