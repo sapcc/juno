@@ -1,3 +1,4 @@
+---
 {{- range - range $app := .Values.hosting.apps  }}
 kind: Deployment
 apiVersion: apps/v1
@@ -57,3 +58,4 @@ spec:
               exec:
                 #Give the ingress some time to reload its config
                 command: ["/bin/sh", "-c", "sleep 30"]
+{{- end }}
