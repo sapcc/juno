@@ -10,8 +10,8 @@ spec:
     app: hosting
   ports:
   {{- range $i, $app := .Values.apps  }}  
-    - name: hosting-{{ $app.name }}
+    - name: hosting-{{ $i }}
       port: 80
       protocol: TCP
-      targetPort: hosting-{{ $app.name }}
+      targetPort: hosting-{{ $i }}
   {{ end }}    
