@@ -14,7 +14,7 @@
     "requests": { type: "app", path: "apps/requests" },
     "dashboard": { type: "app", path: "apps/dashboard", 
       hosting: { 
-        subdomain: false, 
+        subdomain: ["","ccloud","converged","convergedcloud"], 
         version: "latest", 
         props: {
           region: "eu-de-1", 
@@ -39,6 +39,18 @@
     "url-state-provider": { type: "lib", path: "libs/url-state-provider"},
     "url-state-router": { type: "lib", path: "libs/url-state-router"},
   }
+
+  require 'json'
+  HOSTING_DATA = ASSETS.select{|k,v| v[:hosting] != false && !v[:hosting].nil?}.map do |k,v|
+    v[:hosting] = {} unless v[:hosting].is_a?(Hash) 
+    v[:hosting][:subdomain] ||= k 
+    v[:hosting][:page_name] ||= k
+    v[:hosting][:name] ||= k
+    v[:hosting][:version] ||= "latest"
+    v[:hosting].to_json
+  end
+
+  # pp HOSTING_DATA
 %>
 
 resources:
@@ -107,6 +119,28 @@ resources:
       username: ((registry-user/keppel-ccloud.username))
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v2-ui-storybook
+
+  <%# HOSTING %>
+  - name: hosting.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: importmaps-v2
+      paths: ["ci/pipeline.yaml.erb"]
+      username: sapcc-bot
+      password: ((github-access-token/sapcc-bot))
+  
+  - name: hosting.version
+    type: time-version-resource
+    check_every: 525600h
+    source: { key: juno-hosting-version } # disambiguate from other time-version resources
+
+  - name: hosting.image
+    type: docker-image
+    source:
+      username: ((registry-user/keppel-ccloud.username))
+      password: ((registry-user/keppel-ccloud.password))
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v2-hosting
 
   <%# ASSETS SOURCE GIT %>
   <% ASSETS.each do |name,details| %>
@@ -301,6 +335,28 @@ jobs:
             # get_params:
             #   skip_download: true
 
+  <%# BUILD HOSTING %>
+  - name: build-hosting
+    serial: true
+    plan:
+      - in_parallel:
+          - get: hosting.git
+            trigger: true
+          - put: hosting.version
+      - in_parallel:
+          - put: hosting.image
+            params:
+              tag_as_latest: true
+              # cache: true
+              cache_tag: "latest"
+              build: hosting.git
+              build_args: 
+                KEPPEL_HOSTNAME: keppel.eu-de-1.cloud.sap
+              dockerfile: hosting.git/ci/Dockerfile.hosting
+              tag: hosting.version/version
+            # get_params:
+            #   skip_download: true
+
   <%# DEPLOY ASSETS SERVER%>
   - name: deploy-to-s-qa-de-1
     serial: true
@@ -312,6 +368,9 @@ jobs:
           - get: ui-storybook.version
             trigger: true
             passed: ["build-ui-storybook"]            
+          - get: hosting.version
+            trigger: true
+            passed: ["build-hosting"]            
           - get: juno.git
           - get: secrets.git
             params:
@@ -328,6 +387,7 @@ jobs:
           inputs: 
             - name: assets-server.version 
             - name: ui-storybook.version
+            - name: hosting.version
           run:
             path: /bin/sh
             args:
@@ -337,6 +397,7 @@ jobs:
                 printf "\
                 assets_server: {image_tag: \"$(cat assets-server.version/version)\"}\n\
                 ui_storybook: {image_tag: \"$(cat ui-storybook.version/version)\"}\n\
+                hosting: {image_tag: \"$(cat hosting.version/version)\", apps: <%=HOSTING_DATA%>}\n\
                 " > ./extra-values/values.yaml
 
                 cat ./extra-values/values.yaml
