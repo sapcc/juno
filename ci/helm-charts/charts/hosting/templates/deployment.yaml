@@ -27,7 +27,7 @@ spec:
         
       {{- range $i, $app := .Values.apps  }}
         - name: hosting-{{ $app.name }}
-          image: "{{ .Values.global.registry }}/juno-v2-hosting:{{ .Values.image_tag }}"
+          image: "{{ $.Values.global.registry }}/juno-v2-hosting:{{ $.Values.image_tag }}"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
