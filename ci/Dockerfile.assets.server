@@ -68,17 +68,19 @@ RUN echo -e '#!/bin/sh\n\n\
   sed -i "s,%BASE_URL%,$BASE_URL,g" /usr/share/nginx/html/importmap.json \n\
   exec "$@" ' >> /usr/local/bin/entrypoint && chmod +x /usr/local/bin/entrypoint
 
-RUN echo -e '<!DOCTYPE html> \
-  <html style="height: 100vh; background: rgb(13, 20, 28);">\n \
-  <head><title>Juno Assets</title> \n \
-  <link rel="icon" href="/assets/favicon.ico"/> \n\
-  </head>\n\t \
-  <body style="height: 100vh;">\n\t\t \
-  <script \n \
-  src="/apps/widget-loader@latest/build/app.js" \ 
-  data-name="assets-overview" \
-  data-props-manifest-url="/manifest.json"></script>\n\t \
-  </body>\n \
+RUN echo -e $'\
+  <!DOCTYPE html> \n\
+  <html style="height: 100vh; background: rgb(13, 20, 28);">\n\
+  \t<head>\n\
+  \t\t<title>Juno Assets</title> \n \
+  \t\t<link rel="icon" href="/assets/favicon.ico"/> \n\
+  \t</head>\n\
+  \t<body style="height: 100vh;">\n \
+  \t\t<script \n\
+  \t\t\tsrc="/apps/widget-loader@latest/build/app.js" \n\ 
+  \t\t\tdata-name="assets-overview" \n\
+  \t\t\tdata-props-manifest-url="/manifest.json"></script>\n\
+  \t</body>\n\
   </html>' > /usr/share/nginx/html/index.html
 
 ENTRYPOINT ["/usr/local/bin/entrypoint"]

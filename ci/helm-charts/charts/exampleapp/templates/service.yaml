@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  namespace: juno
+  name: hosting
+
+spec:
+  selector:
+    app: hosting
+  ports:
+  {{- range $i, $app := .Values.apps  }}  
+    - name: hosting-{{ $app.name }}
+      port: 80
+      protocol: TCP
+      targetPort: hosting-{{ $app.name }}
+  {{ end }}    
