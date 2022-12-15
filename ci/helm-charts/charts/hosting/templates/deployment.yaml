@@ -1,5 +1,5 @@
 ---
-{{- range $app := .Values.hosting.apps  }}
+{{- range $app := .Values.apps  }}
 kind: Deployment
 apiVersion: apps/v1
 
