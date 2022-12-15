@@ -4,19 +4,23 @@ RUN \
   cd /juno ; \
   yarn workspace juno-ui-components install 1>/dev/null && \
   yarn workspace juno-ui-components build 1>/dev/null && \
-  yarn workspace juno-ui-components build-storybook -o ./build 1>/dev/null
+  yarn workspace juno-ui-components build-storybook -o ./build 1>/dev/null && \
+  ls -la ; \
+  ls -la libs/juno-ui-components/
 
 
 FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:14-alpine
 LABEL source_repository="https://github.com/sapcc/juno/libs/juno-ui-components"
 
-RUN apk --no-cache add ca-certificates
+RUN apk --no-cache add ca-certificates && npm install -g http-server
 
 # create working dir
 RUN mkdir -p /app
 WORKDIR /app
 
-COPY --from=base /juno/libs/juno-ui-components/* "/app/"
+RUN ls -la /app/
+
+COPY --from=base /juno/libs/juno-ui-components/build/* "/app/"
 
 # run app
-CMD npx http-server --port 3000 build
+CMD npx http-server --port 3000 .

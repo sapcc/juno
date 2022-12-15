@@ -335,7 +335,7 @@ jobs:
               - -c
               - |
                 echo "build json with tags for every image"
-                printf " \
+                printf "\
                 assets_server: {image_tag: \"$(cat assets-server.version/version)\"}\n\
                 ui_storybook: {image_tag: \"$(cat ui-storybook.version/version)\"}\n\
                 " > ./extra-values/values.yaml
@@ -347,7 +347,6 @@ jobs:
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
         input_mapping:
-          app.version: assets-server.version
           helm-charts.git: juno.git
           extra-values.git: extra-values
 
