@@ -2,9 +2,27 @@ import * as React from "react"
 import { renderHook, act, waitFor } from "@testing-library/react"
 import { useStore, MessagesProvider } from "./useMessageStore"
 
+const originalConsoleError = global.console.error
+
+beforeEach(() => {
+  global.console.error = (...args) => {
+    const propTypeFailures = [/Failed prop type/, /Warning: Received/]
+
+    if (propTypeFailures.some((p) => p.test(args[0]))) {
+      throw new Error(args[0])
+    }
+
+    originalConsoleError(...args)
+  }
+})
+
+// https://github.com/testing-library/react-hooks-testing-library/blob/chore/migration-guide/MIGRATION_GUIDE.md
 // https://react-hooks-testing-library.com/usage/advanced-hooks
-// https://github.com/testing-library/react-hooks-testing-library/issues/654
-// https://github.com/testing-library/react-testing-library/pull/991 ==> jtbandes commented on Aug 6
+// React 17 @testing-library/react-hooks issue with React 18
+//   https://github.com/testing-library/react-hooks-testing-library/issues/654
+// React 17 @testing-library/react-hooks vs React 18 @testing-library/react
+//   https://github.com/testing-library/react-testing-library/pull/991#issuecomment-1207138334
+// catch consol warns: https://www.jackfranklin.co.uk/blog/failing-tests-on-react-proptypes/
 describe("useMessageStore", () => {
   it("return no messages on initialize", () => {
     const wrapper = ({ children }) => (
@@ -20,7 +38,7 @@ describe("useMessageStore", () => {
     )
     const { result } = renderHook(() => useStore(), { wrapper })
 
-    act(() => result.current.setMessage("error", "this is an error"))
+    act(() => result.current.addMessage("error", "this is an error"))
 
     waitFor(() => {
       expect(result.current.messages.length).toBe(1)
@@ -29,15 +47,26 @@ describe("useMessageStore", () => {
     })
   })
 
-  it("allows knowing variants", () => {
+  it("test proptype for addMessage text", () => {
     const wrapper = ({ children }) => (
       <MessagesProvider>{children}</MessagesProvider>
     )
     const { result } = renderHook(() => useStore(), { wrapper })
 
     expect(() => {
-      act(() => result.current.setMessage("miau", "this is an error"))
-    }).toThrow(/variant not known/)
+      act(() => result.current.addMessage("error"))
+    }).toThrow(/Failed prop type: The prop `text`/)
+  })
+
+  it("test proptype for addMessage variant", () => {
+    const wrapper = ({ children }) => (
+      <MessagesProvider>{children}</MessagesProvider>
+    )
+    const { result } = renderHook(() => useStore(), { wrapper })
+
+    expect(() => {
+      act(() => result.current.addMessage("miau", "this is an error"))
+    }).toThrow(/Failed prop type: Invalid prop `variant`/)
   })
 
   it("remove a message correctly", () => {
@@ -46,8 +75,8 @@ describe("useMessageStore", () => {
     )
     const { result } = renderHook(() => useStore(), { wrapper })
 
-    act(() => result.current.setMessage("error", "this is an error"))
-    act(() => result.current.setMessage("info", "this is an info message"))
+    act(() => result.current.addMessage("error", "this is an error"))
+    act(() => result.current.addMessage("info", "this is an info message"))
 
     waitFor(() => {
       expect(result.current.messages.length).toBe(2)
@@ -58,14 +87,25 @@ describe("useMessageStore", () => {
     })
   })
 
+  it("test proptype for removeMessage id", () => {
+    const wrapper = ({ children }) => (
+      <MessagesProvider>{children}</MessagesProvider>
+    )
+    const { result } = renderHook(() => useStore(), { wrapper })
+
+    expect(() => {
+      act(() => result.current.removeMessage())
+    }).toThrow(/Failed prop type: The prop `id`/)
+  })
+
   it("reset messages store", () => {
     const wrapper = ({ children }) => (
       <MessagesProvider>{children}</MessagesProvider>
     )
     const { result } = renderHook(() => useStore(), { wrapper })
 
-    act(() => result.current.setMessage("error", "this is an error"))
-    act(() => result.current.setMessage("info", "this is an info message"))
+    act(() => result.current.addMessage("error", "this is an error"))
+    act(() => result.current.addMessage("info", "this is an info message"))
 
     waitFor(() => {
       expect(result.current.messages.length).toBe(2)

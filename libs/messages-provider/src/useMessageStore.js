@@ -3,31 +3,53 @@ import create from "zustand"
 import createContext from "zustand/context"
 import { devtools } from "zustand/middleware"
 import uniqueId from "lodash.uniqueid"
+import PropTypes from "prop-types"
 
-const VARIANTS = ["info", "success", "warning", "danger", "error"]
-const validateMessage = (variant) => {
-  if (!VARIANTS.includes(variant)) {
-    throw new Error(
-      `variant not known. Please choose one of these: ${JSON.stringify(
-        VARIANTS
-      )}`
-    )
-  }
+const addMessageValidation = (props) => {
+  PropTypes.checkPropTypes(
+    {
+      text: PropTypes.string.isRequired,
+      variant: PropTypes.oneOf([
+        "info",
+        "warning",
+        "danger",
+        "error",
+        "success",
+      ]),
+    },
+    props,
+    "prop",
+    "MessageProvider.addMessage"
+  )
+  return props
 }
 
-// See how this works here: https://github.com/pmndrs/zustand
-// good example: https://codesandbox.io/s/ivanyur4enk0-zustand-createcontext-issue-forked-x7m2f?file=/src/TestContext.js:377-389
-// https://github.com/testing-library/react-hooks-testing-library/blob/chore/migration-guide/MIGRATION_GUIDE.md
+const removeMessageValidation = (props) => {
+  PropTypes.checkPropTypes(
+    {
+      id: PropTypes.string.isRequired,
+    },
+    props,
+    "prop",
+    "MessageProvider.removeMessage"
+  )
+  return props
+}
+
+const addMessageSlice = (set) => ({})
+
+// General zustand docu: https://github.com/pmndrs/zustand
+// Zustand context example: https://codesandbox.io/s/ivanyur4enk0-zustand-createcontext-issue-forked-x7m2f?file=/src/TestContext.js:377-389
+// Zustand with typescript: https://docs.pmnd.rs/zustand/guides/typescript#slices-pattern
 const { Provider, useStore } = createContext()
 
 const initialStore = () =>
   create(
     devtools((set) => ({
       messages: [], // this is the messages state
-      setMessage: (variant, text) =>
-        set((state) => {
-          // validate message
-          validateMessage(variant)
+      addMessage: (variant, text) => {
+        addMessageValidation({ variant: variant, text: text })
+        return set((state) => {
           // check if a message with the same text and variant exists
           const index = state.messages.findIndex((item) => {
             return (
@@ -38,11 +60,17 @@ const initialStore = () =>
           if (index >= 0) return state
 
           let items = state.messages.slice()
-          items.push({ variant: variant, text: text, id: uniqueId("message-") })
+          items.push({
+            variant: variant,
+            text: text,
+            id: uniqueId("message-"),
+          })
           return { ...state, messages: items }
-        }),
-      removeMessage: (id) =>
-        set((state) => {
+        })
+      },
+      removeMessage: (id) => {
+        removeMessageValidation({ id: id })
+        return set((state) => {
           // find the message with id
           const index = state.messages.findIndex((item) => item.id == id)
           if (index < 0) {
@@ -51,7 +79,8 @@ const initialStore = () =>
           let newItems = state.messages.slice()
           newItems.splice(index, 1)
           return { ...state, messages: newItems }
-        }),
+        })
+      },
       resetMessages: () =>
         set((state) => {
           return { ...state, messages: [] }
