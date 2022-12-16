@@ -38,7 +38,7 @@ RUN echo -e \
   DATA_PROPS=$(echo $DATA_PROPS | tr "\n" " ") \n\
   sed -i "s/###PAGE_TITLE###/$PAGE_TITLE/g" /tmp/index_template.html \n\
   sed -i "s%###FAVICON_URL###%$FAVICON_URL%g" /tmp/index_template.html \n\
-  sed -i "s/###ASSETS_HOST###/$ASSETS_HOST/g" /tmp/index_template.html \n\
+  sed -i "s%###ASSETS_HOST###%$ASSETS_HOST%g" /tmp/index_template.html \n\
   sed -i "s/###NAME###/$NAME/g" /tmp/index_template.html \n\
   sed -i "s/###VERSION###/$VERSION/g" /tmp/index_template.html \n\
   sed -i "s/###DATA_PROPS###/$DATA_PROPS/g" /tmp/index_template.html \n\
