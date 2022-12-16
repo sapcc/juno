@@ -2,6 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 
 const codeStyles = `
+  jn-bg-theme-code-block
   jn-text-sm
 `
 

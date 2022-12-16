@@ -26,15 +26,15 @@ Default.args = {
   content: "Some code goes here"
 }
 
-export const WithChildren = Template.bind({})
-WithChildren.parameters = {
+export const DefaultWithChildren = Template.bind({})
+DefaultWithChildren.parameters = {
   docs: {
     description: {
       story: "Code Block with children",
     },
   },
 }
-WithChildren.args = {
+DefaultWithChildren.args = {
   lang: "html",
   children: `<html lang="en">
     <head>
@@ -45,5 +45,37 @@ WithChildren.args = {
         </main>
       </body>
   </html>`
+}
+
+export const DefaultWithHeading = Template.bind({})
+DefaultWithHeading.parameters = {
+  docs: {
+    description: {
+      story: "Code Block with Heading"
+    }
+  }
+}
+DefaultWithHeading.args = {
+  children: `<CodeBlock>"<p>some code here</p></CodeBlock>`,
+  title: "CodeBlock.jsx"
+}
+
+export const JSONView = Template.bind({})
+JSONView.parameters = {
+  docs: {
+    description: {
+      story: "Json View"
+    }
+  }
+}
+JSONView.args = {
+  lang: "json",
+  content: {
+    someKey: "some value",
+    someOtherKey: "some other value",
+    nestedKeys: {
+      firstNestedKey: "first nested value"
+    }
+  }
 }
 

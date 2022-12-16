@@ -31,20 +31,30 @@ describe("CodeBlock", () => {
     render(<CodeBlock data-testid="codeblock" />)
     expect(screen.getByTestId("codeblock")).toBeInTheDocument()
     expect(screen.getByTestId("codeblock")).toHaveClass("juno-code-block")
-    expect(screen.getByTestId("codeblock")).toHaveClass("jn-break-words")
-    expect(screen.getByTestId("codeblock")).toHaveClass("jn-break-all")
-    expect(screen.getByTestId("codeblock")).toHaveClass("jn-whitespace-pre-wrap")
-    expect(screen.getByTestId("codeblock")).not.toHaveClass("jn-overflow-x-auto")
+    expect(document.querySelector("pre")).toHaveClass("jn-break-words")
+    expect(document.querySelector("pre")).toHaveClass("jn-break-all")
+    expect(document.querySelector("pre")).toHaveClass("jn-whitespace-pre-wrap")
+    expect(document.querySelector("pre")).not.toHaveClass("jn-overflow-x-auto")
   })
   
   test("renders a non-wrapping CodeBlock as passed", async () => {
     render(<CodeBlock data-testid="codeblock" wrap={false} />)
     expect(screen.getByTestId("codeblock")).toBeInTheDocument()
     expect(screen.getByTestId("codeblock")).toHaveClass("juno-code-block")
-    expect(screen.getByTestId("codeblock")).not.toHaveClass("jn-break-words")
-    expect(screen.getByTestId("codeblock")).not.toHaveClass("jn-break-all")
-    expect(screen.getByTestId("codeblock")).not.toHaveClass("jn-whitespace-pre-wrap")
-    expect(screen.getByTestId("codeblock")).toHaveClass("jn-overflow-x-auto")
+    expect(document.querySelector("pre")).not.toHaveClass("jn-break-words")
+    expect(document.querySelector("pre")).not.toHaveClass("jn-break-all")
+    expect(document.querySelector("pre")).not.toHaveClass("jn-whitespace-pre-wrap")
+    expect(document.querySelector("pre")).toHaveClass("jn-overflow-x-auto")
+  })
+  
+  test("renders a JSONView as passed", async () => {
+    const tJson = {
+      "someKey": "some value"
+    }
+    render(<CodeBlock data-testid="codeblock" lang="json" content={tJson} />)
+    expect(screen.getByTestId("codeblock")).toBeInTheDocument()
+    expect(screen.getByTestId("codeblock")).toHaveClass("juno-code-block")
+    expect(screen.getByTestId("codeblock")).toHaveAttribute("data-lang", "json")
   })
   
   test("renders a CodeBlock with className as passed", async () => {

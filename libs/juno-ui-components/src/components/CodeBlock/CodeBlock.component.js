@@ -1,12 +1,16 @@
-import React from "react"
+import React, { useState, useEffect, useRef } from "react"
 import PropTypes from "prop-types"
+import ReactJson from "react-json-view"
 import { Code } from "../Code/index.js"
 import { Icon } from "../Icon/index.js"
 
+const wrapperStyles = `
+  jn-bg-theme-code-block
+  jn-rounded
+`
+
 const preStyles = (wrap) => {
   return `
-    jn-bg-theme-code-block
-    jn-rounded
     jn-p-6
     ${wrap ? "jn-break-words jn-break-all jn-whitespace-pre-wrap" : "jn-overflow-x-auto"}
   `
@@ -34,33 +38,132 @@ const sizeStyles = (size) => {
   }
 }
 
+const codeStyles = `
+  jn-bg-theme-code-block
+  jn-text-sm
+`
+
+const bottomBarStyles = `
+  jn-flex 
+  jn-justify-end 
+  jn-px-3
+  jn-py-2 
+  jn-border-t-[1px]
+  jn-border-theme-codeblock-bar
+`
+
+const copyTextStyles = `
+  jn-font-bold 
+  jn-text-sm 
+  jn-mr-4 
+  jn-mt-1
+`
+
+const jsonStyles = `
+  jn-bg-theme-code-block
+`
+
+const jsonViewStyles = {
+  fontFamily: "IBM Plex Mono",
+  fontSize: "0.875rem"
+}
+
+const jsonTheme = {
+  base00: "var(--color-syntax-highlight-base00)", //bg
+  base01: "var(--color-syntax-highlight-base01)", //?
+  base02: "var(--color-syntax-highlight-base02)", //lines and boxes
+  base03: "var(--color-syntax-highlight-base03)",
+  base04: "var(--color-syntax-highlight-base04)",
+  base05: "var(--color-syntax-highlight-base05)",
+  base06: "var(--color-syntax-highlight-base06)",
+  base07: "var(--color-syntax-highlight-base07)",
+  base08: "var(--color-syntax-highlight-base08)", // NULL
+  base09: "var(--color-syntax-highlight-base09)", // String value
+  base0A: "var(--color-syntax-highlight-base0A)", // NaN
+  base0B: "var(--color-syntax-highlight-base0B)", // float value
+  base0C: "var(--color-syntax-highlight-base0C)", // index
+  base0D: "var(--color-syntax-highlight-base0D)", // expanded icon
+  base0E: "var(--color-syntax-highlight-base0E)", // bool + collapsed icon
+  base0F: "var(--color-syntax-highlight-base0F)", // integer value
+}
+
+// TODO: build tabs
 /**  A basic CodeBlock component. Accepts a content prop or children. Will render a pre-wrapped code element. */
 export const CodeBlock = ({
   content,
   children,
+  heading,
+  tabs,
   wrap,
   size,
-  copy, // TODO
-  lang, // TODO: JSON View
+  copy, 
+  lang,
   className,
   ...props
 }) => {
+  const [isCopied, setIsCopied] = useState(false)
+  const timeoutRef = React.useRef(null)
+    
+  React.useEffect(() => {
+    return () => clearTimeout(timeoutRef.current) // clear when component is unmounted
+  }, [])
+  
+  const theCode = useRef(null)
+  
+  const handleCopyClick = () => {
+    const textToCopy = ( lang === "json" ? JSON.stringify(content || children) : theCode.current.textContent )
+    navigator.clipboard.writeText(textToCopy)
+    setIsCopied(true)
+    clearTimeout(timeoutRef.current) // clear any possibly existing Refs
+    timeoutRef.current = setTimeout(() => setIsCopied(false), 1000)
+  }
+
+
   return (
-    <pre 
-      className={`juno-code-block ${ lang ? `juno-code-block-lang-${lang}` : "" } ${preStyles(wrap)} ${sizeStyles(size)} ${className}`}
-      data-lang={lang}
+    <div 
+      className={`juno-code-block ${wrapperStyles} ${ lang ? `juno-code-block-lang-${lang}` : "" } ${className}`}
+      data-lang={lang || null}
       {...props}
     >
-      <Code>
-        { content || children }
-      </Code>
-    </pre>
+      { lang === "json" ? 
+      
+        <ReactJson
+            src={content}
+            iconStyle="square"
+            collapsed={3}
+            theme={jsonTheme}
+            style={jsonViewStyles}
+          />
+        
+        :
+        
+        <pre className={`juno-code-block-pre ${preStyles(wrap)} ${sizeStyles(size)}`}>
+          <code className={`${codeStyles}`} ref={theCode}>
+            { content || children }
+          </code>
+        </pre>
+        
+        }
+
+      
+      { copy ?
+          <div className={`juno-codeblock-bottombar ${bottomBarStyles}`}>
+            <span className={`${copyTextStyles}`} >{ isCopied ? "Copied!" : "" }</span>
+            <Icon icon="contentCopy" onClick={handleCopyClick} />
+          </div> 
+        :
+          ""
+      }
+      
+    </div>
   )
 }
 
 CodeBlock.propTypes = {
-  content: PropTypes.string,
+  content: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   children: PropTypes.node,
+  heading: PropTypes.string,
+  tabs: PropTypes.arrayOf(PropTypes.string),
   wrap: PropTypes.bool,
   size: PropTypes.oneOf(["auto", "small", "medium", "large"]),
   copy: PropTypes.bool,
@@ -71,6 +174,8 @@ CodeBlock.propTypes = {
 CodeBlock.defaultProps = {
   content: "",
   children: null,
+  heading: "",
+  tabs: [],
   wrap: true,
   size: "auto",
   copy: true,
