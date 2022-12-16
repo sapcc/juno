@@ -11,7 +11,7 @@ metadata:
     ingress.kubernetes.io/cors-allow-origin: '*'
     ingress.kubernetes.io/enable-cors: "true"
 
-  name: reverse-proxy
+  name: ingress-main
   namespace: juno
 spec:
   rules:

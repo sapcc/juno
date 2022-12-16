@@ -1,15 +1,5 @@
 # prettier-ignore
 <%
-  # hosting: {
-  #  subdomain: "optional keys as default", 
-  #  page_name: "optional (key as default)", 
-  #  name: "optional (key as default)", 
-  #  version: "latest as default", 
-  #  props: {"key", "value"} 
-  # }
-  # SUBDOMAIN.juno.REGION.cloud.sap, 
-  #  e.g subdomain: false -> juno.REGION.cloud.sap
-  #  e.g subdomain: "bla" -> bla.juno.REGION.cloud.sap
   ASSETS = {
     "requests": { type: "app", path: "apps/requests" },
     "dashboard": { type: "app", path: "apps/dashboard"}
@@ -27,18 +17,6 @@
     "url-state-provider": { type: "lib", path: "libs/url-state-provider"},
     "url-state-router": { type: "lib", path: "libs/url-state-router"},
   }
-
-  require 'json'
-  HOSTING_DATA = ASSETS.select{|k,v| v[:hosting] != false && !v[:hosting].nil?}.map do |k,v|
-    v[:hosting] = {} unless v[:hosting].is_a?(Hash) 
-    v[:hosting][:subdomain] ||= k 
-    v[:hosting][:page_name] ||= k
-    v[:hosting][:name] ||= k
-    v[:hosting][:version] ||= "latest"
-    v[:hosting].to_json
-  end
-
-  # pp HOSTING_DATA
 %>
 
 resources:
@@ -385,7 +363,7 @@ jobs:
                 printf "\
                 assets_server: {image_tag: \"$(cat assets-server.version/version)\"}\n\
                 ui_storybook: {image_tag: \"$(cat ui-storybook.version/version)\"}\n\
-                hosting: {image_tag: \"$(cat hosting.version/version)\", apps: <%=HOSTING_DATA%>}\n\
+                hosting: {image_tag: \"$(cat hosting.version/version)\"}\n\
                 " > ./extra-values/values.yaml
 
                 cat ./extra-values/values.yaml

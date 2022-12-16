@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  namespace: juno
+  name: hosting-###NAME###
+
+spec:
+  selector:
+    app: hosting-###NAME###
+  ports:
+    - name: web
+      port: 80
+      protocol: TCP
+      targetPort: web

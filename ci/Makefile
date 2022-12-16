@@ -10,3 +10,11 @@ ci-clean:
 
 ci-create:
 	docker run --rm -v "${CURDIR}":/myapp -w /myapp keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/ruby:3-alpine erb pipeline.yaml.erb > pipeline.yaml 
+
+PROPS ?= "{}"
+generate-hosting:
+ifndef NAME
+$(error NAME is not set)
+endif
+	echo $(NAME)
+	echo $(PROPS)
