@@ -15,7 +15,7 @@ ci-create:
 # Usage: make generate-hosting NAME=dashboard PROPS='{"region": "eu-de-1"}'
 # NAME is the name of the asset to be hosted
 # PROPS is a json which will be passed to the asset script tag via data-props-*
-PROPS ?= '{}'
+PROPS ?= ''
 generate-hosting: ensure-name
 	echo generate helm charts for hosting $(NAME) with PROPS $(PROPS)
 	@echo "\033[92m * generate helm charts for hosting $(NAME) with PROPS $(PROPS)\033[0m"

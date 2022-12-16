@@ -361,9 +361,10 @@ jobs:
               - |
                 echo "build json with tags for every image"
                 printf "\
-                assets_server: {image_tag: \"$(cat assets-server.version/version)\"}\n\
-                ui_storybook: {image_tag: \"$(cat ui-storybook.version/version)\"}\n\
-                dashboard: {image_tag: \"$(cat hosting.version/version)\"}\n\
+                global: \n
+                  assets_server_image_tag: \"$(cat assets-server.version/version)\"\n\
+                  ui_storybook_image_tag: \"$(cat ui-storybook.version/version)\"\n\
+                  hosting_image_tag: \"$(cat hosting.version/version)\"\n\
                 " > ./extra-values/values.yaml
 
                 cat ./extra-values/values.yaml
