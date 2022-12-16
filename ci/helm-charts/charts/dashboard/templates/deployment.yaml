@@ -42,7 +42,7 @@ spec:
             - name: ASSETS_HOST
               value: https://assets.juno.{{ $.Values.global.registry }}.cloud.sap
             - name: PROPS
-              value: ""
+              value: "{}"
 
           livenessProbe:
             httpGet:
