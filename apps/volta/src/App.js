@@ -5,17 +5,14 @@ import { StateProvider, useDispatch } from "./components/StateProvider"
 import reducers from "./reducers"
 import CA from "./components/CA"
 import WellcomeView from "./components/WellcomeView"
-import {
-  MessagesStateProvider,
-  useMessagesDispatch,
-} from "./components/MessagesProvider"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import styles from "./styles.scss"
 import StyleProvider from "juno-ui-components"
+import { MessagesProvider, useMessageStore } from "messages-provider"
 
 const App = (props) => {
   const dispatch = useDispatch()
-  const dispatchMessage = useMessagesDispatch()
+  const setMessage = useMessageStore((state) => state.setMessage)
 
   const oidc = useOidcAuth({
     issuerURL: props.issuerurl,
@@ -25,10 +22,7 @@ const App = (props) => {
 
   useEffect(() => {
     if (oidc?.auth?.error) {
-      dispatchMessage({
-        type: "SET_MESSAGE",
-        msg: { variant: "error", text: oidc?.auth?.error },
-      })
+      setMessage("error", oidc?.auth?.error)
     }
     dispatch({ type: "SET_OIDC", oidc: oidc })
     dispatch({ type: "SET_ENDPOINT", endpoint: props.endpoint })
@@ -74,9 +68,9 @@ const StyledApp = (props) => {
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <StateProvider reducers={reducers}>
-        <MessagesStateProvider>
+        <MessagesProvider>
           <App {...props} />
-        </MessagesStateProvider>
+        </MessagesProvider>
       </StateProvider>
     </StyleProvider>
   )

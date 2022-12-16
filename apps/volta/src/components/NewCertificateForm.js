@@ -23,7 +23,8 @@ import { newCertificateMutation } from "../queries"
 import { useFormState, useFormDispatch } from "./FormState"
 import { useGlobalState } from "./StateProvider"
 import { parseError } from "../helpers"
-import { useMessagesDispatch } from "./MessagesProvider"
+// import { useMessagesDispatch } from "./MessagesProvider"
+import { useMessageStore } from "messages-provider"
 import { useQueryClient } from "react-query"
 
 const ALGORITHM_KEY = "RSA-2048"
@@ -59,7 +60,9 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
   const formState = useFormState()
   const oidc = useGlobalState().auth.oidc
   const endpoint = useGlobalState().globals.endpoint
-  const dispatchMessage = useMessagesDispatch()
+  // const dispatchMessage = useMessagesDispatch()
+  const setMessage = useMessageStore((state) => state.setMessage)
+  const resetMessages = useMessageStore((state) => state.resetMessages)
   const queryClient = useQueryClient()
 
   const [pemPrivateKey, setPemPrivateKey] = useState(null)
@@ -92,13 +95,17 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
   }, [])
 
   const onGenerateCSRError = () => {
-    dispatchMessage({
-      type: "SET_MESSAGE",
-      msg: {
-        variant: "error",
-        text: "Error generating certificate signing request. Please check the console for details.",
-      },
-    })
+    // dispatchMessage({
+    //   type: "SET_MESSAGE",
+    //   msg: {
+    //     variant: "error",
+    //     text: "Error generating certificate signing request. Please check the console for details.",
+    //   },
+    // })
+    setMessage(
+      "error",
+      "Error generating certificate signing request. Please check the console for details."
+    )
   }
 
   const generateCSR = () => {
@@ -133,9 +140,10 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
   useImperativeHandle(ref, () => ({
     submit() {
       // reset panel messages
-      dispatchMessage({
-        type: "RESET_MESSAGE",
-      })
+      // dispatchMessage({
+      //   type: "RESET_MESSAGE",
+      // })
+      resetMessages()
       // check validaton
       const validation = validateForm(formState)
       setFormValidation(validation)
@@ -151,13 +159,14 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
         },
         {
           onSuccess: (data, variables, context) => {
-            dispatchMessage({
-              type: "SET_MESSAGE",
-              msg: {
-                variant: "success",
-                text: <span>Successfully create SSO cert</span>,
-              },
-            })
+            // dispatchMessage({
+            //   type: "SET_MESSAGE",
+            //   msg: {
+            //     variant: "success",
+            //     text: <span>Successfully create SSO cert</span>,
+            //   },
+            // })
+            setMessage("error", <span>Successfully create SSO cert</span>)
             // return response to the parent
             if (onFormSuccess) {
               onFormSuccess(pemPrivateKey, data?.certificate)
@@ -166,13 +175,14 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
             queryClient.invalidateQueries("certificates")
           },
           onError: (error, variables, context) => {
-            dispatchMessage({
-              type: "SET_MESSAGE",
-              msg: {
-                variant: "error",
-                text: parseError(error),
-              },
-            })
+            // dispatchMessage({
+            //   type: "SET_MESSAGE",
+            //   msg: {
+            //     variant: "error",
+            //     text: parseError(error),
+            //   },
+            // })
+            setMessage("error", parseError(error))
           },
         }
       )

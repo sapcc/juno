@@ -6,7 +6,8 @@ import {
   TopNavigation,
   TopNavigationItem,
 } from "juno-ui-components"
-import Messages from "./Messages"
+// import Messages from "./Messages"
+import { Messages } from "messages-provider"
 import { useGlobalState } from "./StateProvider"
 import HeaderUser from "./HeaderUser"
 import { useNavigate } from "react-router-dom"
@@ -38,7 +39,9 @@ const CustomAppShell = ({ children }) => {
   return (
     <AppShell pageHeader={pageHeader} topNavigation={topBar}>
       <Container>
-        <Messages />
+        <div className="mt-6">
+          <Messages />
+        </div>
         {children}
       </Container>
     </AppShell>

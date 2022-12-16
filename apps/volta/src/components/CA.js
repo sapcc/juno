@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { getCAs } from "../queries"
 import { useGlobalState } from "./StateProvider"
-import { useMessagesDispatch } from "./MessagesProvider"
+// import { useMessagesDispatch } from "./MessagesProvider"
+import { useMessageStore } from "messages-provider"
 import { useSearchParams } from "react-router-dom"
 import { Spinner, Stack } from "juno-ui-components"
 import CertificateList from "./CertificateList"
@@ -12,7 +13,8 @@ import { parseError } from "../helpers"
 import CustomAppShell from "./CustomAppShell"
 
 const CA = () => {
-  const dispatchMessage = useMessagesDispatch()
+  // const dispatchMessage = useMessagesDispatch()
+  const setMessage = useMessageStore((state) => state.setMessage)
   const oidc = useGlobalState().auth.oidc
   const endpoint = useGlobalState().globals.endpoint
   const [selectedCA, setSelectedCA] = useState(null)
@@ -27,10 +29,7 @@ const CA = () => {
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
     if (error) {
-      dispatchMessage({
-        type: "SET_MESSAGE",
-        msg: { variant: "error", text: parseError(error) },
-      })
+      setMessage("error", parseError(error))
     }
   }, [error])
 

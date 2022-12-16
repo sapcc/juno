@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { getCertificates } from "../queries"
 import { useGlobalState, useDispatch } from "./StateProvider"
-import { useMessagesDispatch } from "./MessagesProvider"
+// import { useMessagesDispatch } from "./MessagesProvider"
+import { useMessageStore } from "messages-provider"
 import {
   DataGrid,
   DataGridRow,
@@ -24,7 +25,8 @@ jn-pb-2
 
 const CertificateList = ({ ca }) => {
   const [enableCreateSSO, setEnableCreateSSO] = useState(false)
-  const dispatchMessage = useMessagesDispatch()
+  // const dispatchMessage = useMessagesDispatch()
+  const setMessage = useMessageStore((state) => state.setMessage)
   const dispatchGlobals = useDispatch()
   const oidc = useGlobalState().auth.oidc
   const endpoint = useGlobalState().globals.endpoint
@@ -58,10 +60,7 @@ const CertificateList = ({ ca }) => {
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
     if (error) {
-      dispatchMessage({
-        type: "SET_MESSAGE",
-        msg: { variant: "error", text: parseError(error) },
-      })
+      setMessage("error", parseError(error))
     }
   }, [error])
 

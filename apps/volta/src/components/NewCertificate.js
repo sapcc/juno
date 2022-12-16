@@ -4,8 +4,9 @@ import { useGlobalState, useDispatch } from "./StateProvider"
 import { FormStateProvider } from "./FormState"
 import NewCertificateForm from "./NewCertificateForm"
 import NewCertificateResutls from "./NewCertificateResults"
-import { MessagesStateProvider } from "./MessagesProvider"
-import Messages from "./Messages"
+// import { MessagesStateProvider } from "./MessagesProvider"
+// import Messages from "./Messages"
+import { MessagesProvider, Messages } from "messages-provider"
 
 const NewCertificate = ({ ca }) => {
   const showPanel = useGlobalState().globals.showNewSSO
@@ -89,7 +90,7 @@ const NewCertificate = ({ ca }) => {
       closeable={false}
     >
       {showPanel && (
-        <MessagesStateProvider>
+        <MessagesProvider>
           {ssoCert ? (
             <PanelBody footer={resultsPanelFooter}>
               <Messages />
@@ -112,7 +113,7 @@ const NewCertificate = ({ ca }) => {
               </FormStateProvider>
             </PanelBody>
           )}
-        </MessagesStateProvider>
+        </MessagesProvider>
       )}
     </Panel>
   )
