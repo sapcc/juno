@@ -2,20 +2,20 @@
 <%
   ASSETS = {
     "requests": { type: "app", path: "apps/requests" },
-    "dashboard": { type: "app", path: "apps/dashboard"}
+    "dashboard": { type: "app", path: "apps/dashboard"},
     "widget-loader": { type: "app", path: "apps/widget-loader"},
     "whois": { type: "app", path: "apps/whois"},
     "volta": { type: "app", path: "apps/volta"},
     "heureka": { type: "app", path: "apps/heureka"},
     "maintenance": { type: "app", path: "apps/maintenance"},
     "assets-overview": { type: "app", path: "apps/assets-overview"},
-    "exampleapp": { type: "app", path: "apps/exampleapp"}
+    "exampleapp": { type: "app", path: "apps/exampleapp"},
     "juno-ui-components": { type: "lib", path: "libs/juno-ui-components"},
     "policy-engine": { type: "lib", path: "libs/policy-engine"},
     "oauth": { type: "lib", path: "libs/oauth"},
     "communicator": { type: "lib", path: "libs/communicator"},
     "url-state-provider": { type: "lib", path: "libs/url-state-provider"},
-    "url-state-router": { type: "lib", path: "libs/url-state-router"},
+    "url-state-router": { type: "lib", path: "libs/url-state-router"}
   }
 %>
 
@@ -363,7 +363,7 @@ jobs:
                 printf "\
                 assets_server: {image_tag: \"$(cat assets-server.version/version)\"}\n\
                 ui_storybook: {image_tag: \"$(cat ui-storybook.version/version)\"}\n\
-                hosting: {image_tag: \"$(cat hosting.version/version)\"}\n\
+                dashboard: {image_tag: \"$(cat hosting.version/version)\"}\n\
                 " > ./extra-values/values.yaml
 
                 cat ./extra-values/values.yaml
