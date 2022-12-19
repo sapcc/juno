@@ -65,7 +65,8 @@ const jsonStyles = `
 
 const jsonViewStyles = {
   fontFamily: "IBM Plex Mono",
-  fontSize: "0.875rem"
+  fontSize: "0.875rem",
+  padding: "1.5rem"
 }
 
 const jsonTheme = {
@@ -160,14 +161,23 @@ export const CodeBlock = ({
 }
 
 CodeBlock.propTypes = {
-  content: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  /** The content to render. Will override children if passed. */
+  content: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.arrayOf(PropTypes.string)]),
+  /** The children to render. Will be overridden by content prop if passed as well.  */
   children: PropTypes.node,
+  /** Pass at title to render. Will look like a single tab. */
   heading: PropTypes.string,
+  /** Pass an array of titles to render tabs */
   tabs: PropTypes.arrayOf(PropTypes.string),
+  /** Set whether the code should wrap or not. Default is true. */
   wrap: PropTypes.bool,
+  /** Set the size of the CodeBlock. Default is "auto" */
   size: PropTypes.oneOf(["auto", "small", "medium", "large"]),
+  /** Render a button to copy the code to the clipboard. Defaults to true */
   copy: PropTypes.bool,
+  /** Pass a lang prop. Passing "json" will render a fully-featured JsonView. Will also add a data-lang-attribute to the codeblock */
   lang: PropTypes.string,
+  /** Add a custom className to the wrapper of the CodeBlock */
   className: PropTypes.string,
 }
 
