@@ -91,4 +91,4 @@ spec:
         - "ccloud.juno.global.{{ .Values.global.tld }}"
         - "convergedcloud.juno.global.{{ .Values.global.tld }}"
 {{- end }}        
-      secretName: "tls-dashboard-juno-{{ .Values.global.region }}-cloud-sap"
+      secretName: "tls-juno-dashboard"

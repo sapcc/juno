@@ -45,4 +45,4 @@ spec:
 {{- if eq .Values.global.region "eu-nl-1" }}    
         - "###NAME###.juno.global.{{ .Values.global.tld }}"  
 {{- end }}        
-      secretName: "tls-###NAME###-juno-{{ .Values.global.region }}-cloud-sap"
+      secretName: "tls-juno-###NAME###"

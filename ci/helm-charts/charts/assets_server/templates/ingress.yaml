@@ -46,4 +46,4 @@ spec:
 {{- if eq .Values.global.region "eu-nl-1" }}    
         - "assets.juno.global.{{ .Values.global.tld }}"  
 {{- end }}        
-      secretName: "tls-assets-juno-{{ .Values.global.region }}-cloud-sap"
+      secretName: "tls-juno-assets-server"
