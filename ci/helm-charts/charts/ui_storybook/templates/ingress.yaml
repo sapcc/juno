@@ -9,7 +9,7 @@ metadata:
     # https://operations.global.cloud.sap/docs/support/playbook/kubernetes/idle_http_keep_alive_timeout.html
     cloud.sap/no-http-keep-alive-monitor: "true"
 
-  name: ingress-main
+  name: ingress-ui-storybook
   namespace: juno
 spec:
   rules:
@@ -40,8 +40,8 @@ spec:
 
   tls:
     - hosts: 
-        - "ui.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+        - "*.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
 {{- if eq .Values.global.region "eu-nl-1" }}      
-        - "ui.juno.global.{{ .Values.global.tld }}"
+        - "*.juno.global.{{ .Values.global.tld }}"
 {{- end }}        
       secretName: "tls-juno-{{ .Values.global.region }}-cloud-sap"
