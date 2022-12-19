@@ -40,7 +40,7 @@ spec:
             - name: VERSION
               value: latest
             - name: ASSETS_HOST
-              value: https://assets.juno.{{ $.Values.global.registry }}.cloud.sap
+              value: https://assets.juno.{{ $.Values.global.region }}.cloud.sap
             - name: PROPS
               value: "{}"
 
