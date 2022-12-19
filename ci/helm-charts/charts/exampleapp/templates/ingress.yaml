@@ -41,7 +41,7 @@ spec:
 
   tls:
     - hosts: 
-        - "exampleapp.juno.global.{{ .Values.global.tld }}"
+        - "exampleapp.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
 {{- if eq .Values.global.region "eu-nl-1" }}    
         - "exampleapp.juno.global.{{ .Values.global.tld }}"  
 {{- end }}        

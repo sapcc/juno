@@ -83,7 +83,7 @@ spec:
 
   tls:
     - hosts: 
-        - "juno.global.{{ .Values.global.tld }}"
+        - "juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
         - "ccloud.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
         - "convergedcloud.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
 {{- if eq .Values.global.region "eu-nl-1" }}    
