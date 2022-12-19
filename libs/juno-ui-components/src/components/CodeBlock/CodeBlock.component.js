@@ -162,7 +162,7 @@ export const CodeBlock = ({
 
 CodeBlock.propTypes = {
   /** The content to render. Will override children if passed. */
-  content: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.arrayOf(PropTypes.string)]),
+  content: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   /** The children to render. Will be overridden by content prop if passed as well.  */
   children: PropTypes.node,
   /** Pass at title to render. Will look like a single tab. */

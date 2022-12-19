@@ -1,5 +1,10 @@
 import React from "react"
 import { CodeBlock } from "./index.js"
+import { Tabs } from "../Tabs/index.js"
+import { TabList } from "../TabList/index.js"
+import { Tab } from "../Tab/index.js"
+import { Default as TabStory } from "../Tab/Tab.stories.js"
+import { TabPanel } from "../TabPanel/index.js"
 
 export default {
   title: "Components/CodeBlock",
@@ -13,6 +18,21 @@ export default {
 }
 
 const Template = (args) => <CodeBlock {...args} />
+
+const TabsTemplate = ({tabs, codeBlocks, ...args}) => (
+  <Tabs variant="codeblocks">
+    <TabList>
+      {tabs.map((tab, t) => (
+        <Tab {...tab} key={`t-${t}`} ></Tab>
+      ))}
+    </TabList>
+    {codeBlocks.map((codeBlock, c) => (
+      <TabPanel>
+        <CodeBlock {...codeBlock} key={`c-${c}`}/>
+      </TabPanel>
+    ))}
+  </Tabs>
+)
 
 export const Default = Template.bind({})
 Default.parameters = {
@@ -37,26 +57,28 @@ DefaultWithChildren.parameters = {
 DefaultWithChildren.args = {
   lang: "html",
   children: `<html lang="en">
-    <head>
-      <title="Multi-line Html" />
-    </head>
-      <body>
-        <main>
-        </main>
-      </body>
-  </html>`
+  <head>
+    <title="Multi-line Html" />
+  </head>
+  <body>
+    <main>
+    </main>
+  </body>
+</html>`
 }
 
 export const DefaultWithHeading = Template.bind({})
 DefaultWithHeading.parameters = {
   docs: {
     description: {
-      story: "Code Block with Heading"
+      story: "Code Block with Heading WIP"
     }
   }
 }
 DefaultWithHeading.args = {
-  children: `<CodeBlock>"<p>some code here</p></CodeBlock>`,
+  children: `<CodeBlock>
+  <p>some code here</p>
+</CodeBlock>`,
   title: "CodeBlock.jsx"
 }
 
@@ -78,4 +100,35 @@ JSONView.args = {
     }
   }
 }
+
+export const CodeBlocksWithTabs = TabsTemplate.bind({})
+CodeBlocksWithTabs.parameters = {
+  docs: {
+    description: {
+      story: "For a tabbed Codeblock, use the `<Tabs>`, `<Tab>`, `<TabList>`, and `<TabPanel>` components."
+    }
+  }
+}
+CodeBlocksWithTabs.args = {
+  tabs: [
+    { ...TabStory.args, children: "UserData.jsx"},
+    { ...TabStory.args, children: "data.json"},
+    { ...TabStory.args, children: "UserData.html"},
+  ],
+  codeBlocks: [
+    { content: "<UserData name='User' data={data.json} />"},
+    { lang:"json", content: {firstName: "Joan", lastName: "Clarke", placeOfBirth: "West Norwood, London, England"}},
+    { content: `<div>
+  <dl>
+    <dt>First Name</dt>
+    <dd>Joan</dd>
+    <dt>Last Name</dt>
+    <dd>Clarke</dd>
+    <dt>Place of Birth</dt>
+    <dd>West Norwood, London, England</dd>
+  </dl>
+</div>`},
+  ]
+}
+
 

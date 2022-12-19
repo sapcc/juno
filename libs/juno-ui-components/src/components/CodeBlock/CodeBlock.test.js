@@ -48,10 +48,10 @@ describe("CodeBlock", () => {
   })
   
   test("renders a JSONView as passed", async () => {
-    const tJson = {
+    const testJson = {
       "someKey": "some value"
     }
-    render(<CodeBlock data-testid="codeblock" lang="json" content={tJson} />)
+    render(<CodeBlock data-testid="codeblock" lang="json" content={testJson} />)
     expect(screen.getByTestId("codeblock")).toBeInTheDocument()
     expect(screen.getByTestId("codeblock")).toHaveClass("juno-code-block")
     expect(screen.getByTestId("codeblock")).toHaveAttribute("data-lang", "json")
