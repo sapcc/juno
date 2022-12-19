@@ -79,7 +79,7 @@ DefaultWithHeading.args = {
   children: `<CodeBlock>
   <p>some code here</p>
 </CodeBlock>`,
-  title: "CodeBlock.jsx"
+  heading: "CodeBlock.jsx"
 }
 
 export const JSONView = Template.bind({})
@@ -92,6 +92,7 @@ JSONView.parameters = {
 }
 JSONView.args = {
   lang: "json",
+  heading: "Json CodeBlock",
   content: {
     someKey: "some value",
     someOtherKey: "some other value",
@@ -105,7 +106,7 @@ export const CodeBlocksWithTabs = TabsTemplate.bind({})
 CodeBlocksWithTabs.parameters = {
   docs: {
     description: {
-      story: "For a tabbed Codeblock, use the `<Tabs>`, `<Tab>`, `<TabList>`, and `<TabPanel>` components."
+      story: "Tabbed CodeBlocks can be composed using the `<Tabs>`, `<Tab>`, `<TabList>`, and `<TabPanel>` components. Make sure to pass `variant='codeblocks' to the `<Tabs>` component."
     }
   }
 }

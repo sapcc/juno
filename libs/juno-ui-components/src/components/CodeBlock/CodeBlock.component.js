@@ -43,6 +43,21 @@ const codeStyles = `
   jn-text-sm
 `
 
+const headingStyles = `
+  jn-text-sm
+  jn-border-b-[1px]
+  jn-border-theme-codeblock-bar 
+  jn-h-[3.4375rem]
+  jn-flex
+`
+
+const headingInnerStyles = `
+  jn-flex
+  jn-font-bold
+  jn-px-[1.5625rem]
+  jn-items-center
+`
+
 const bottomBarStyles = `
   jn-flex 
   jn-justify-end 
@@ -126,6 +141,13 @@ export const CodeBlock = ({
       data-lang={lang || null}
       {...props}
     >
+      { heading && heading.length ? 
+          <div className={`${headingStyles}`}>
+            <span className={`${headingInnerStyles}`}>{heading}</span>
+          </div>
+        :
+          ""
+      }
       { lang === "json" ? 
       
         <ReactJson
