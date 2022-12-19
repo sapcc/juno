@@ -3,7 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from '@testing-library/user-event';
 import { composeStories } from '@storybook/testing-react'
 
-import * as stories from './Tooltip.stories'
+import * as stories from './TooltipTrigger.stories'
 
 const { Default, AsChildTooltipTrigger } = composeStories(stories)
 
@@ -76,16 +76,10 @@ describe("Tooltip", () => {
 	// 	});
 	//   });
 	
-	// test("renders a tooltip with a className as passed", async () => {
-	// 	render(<Default text="My simple Tooltip" className="my-custom-class" />)
+	// test("renders a tooltip trigger with a className as passed", async () => {
+	// 	render(<Default className="my-custom-class" />)
 	// 	expect(screen.getByRole("button")).toBeInTheDocument()
 	// 	expect(screen.getByRole("button")).toHaveClass("my-custom-class")				
-	// })
-	
-	// test("renders a disabled tooltip as passed", async () => {
-	// 	render(<Default text="My disabled Tooltip" disabled />)
-	// 	expect(screen.getByRole("button")).toBeInTheDocument()
-	// 	expect(screen.getByRole("button")).toBeDisabled()
 	// })
 	
 })
