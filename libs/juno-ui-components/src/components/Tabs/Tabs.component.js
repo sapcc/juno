@@ -61,7 +61,7 @@ Tabs.propTypes = {
 	/** Handler required in "Controlled Mode" */
 	onSelect: PropTypes.func,
 	/** Switch on Main Tab styles and context if needed */
-	variant: PropTypes.oneOf(["main", "content"]),
+	variant: PropTypes.oneOf(["main", "content", "codeblocks"]),
 	/** Add a custom className to the whole Tabs construct */
 	className: PropTypes.string,
 }
