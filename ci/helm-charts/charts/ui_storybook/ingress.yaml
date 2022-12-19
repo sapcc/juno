@@ -8,24 +8,11 @@ metadata:
     # disable the idle http timeout check
     # https://operations.global.cloud.sap/docs/support/playbook/kubernetes/idle_http_keep_alive_timeout.html
     cloud.sap/no-http-keep-alive-monitor: "true"
-    ingress.kubernetes.io/cors-allow-origin: '*'
-    ingress.kubernetes.io/enable-cors: "true"
 
   name: ingress-main
   namespace: juno
 spec:
   rules:
-    - host: "assets.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service: 
-                name: assets-server
-                port: 
-                  number: 8888
-
     - host: "ui.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
@@ -38,17 +25,6 @@ spec:
                   number: 3000                  
                     
 {{- if eq .Values.global.region "eu-nl-1" }}
-    - host: "assets.juno.global.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service: 
-                name: juno-assets-server
-                port: 
-                  number: 8888
-
     - host: "ui.juno.global.{{ .Values.global.tld }}"
       http:
         paths:
@@ -64,8 +40,8 @@ spec:
 
   tls:
     - hosts: 
-        - "*.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+        - "ui.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
 {{- if eq .Values.global.region "eu-nl-1" }}      
-        - "*.juno.global.{{ .Values.global.tld }}"
+        - "ui.juno.global.{{ .Values.global.tld }}"
 {{- end }}        
       secretName: "tls-juno-{{ .Values.global.region }}-cloud-sap"
