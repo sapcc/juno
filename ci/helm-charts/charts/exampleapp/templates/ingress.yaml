@@ -41,10 +41,8 @@ spec:
 
   tls:
     - hosts: 
-        - "juno.global.{{ .Values.global.tld }}"
-        - "*.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+        - "exampleapp.juno.global.{{ .Values.global.tld }}"
 {{- if eq .Values.global.region "eu-nl-1" }}    
-        - "juno.global.{{ .Values.global.tld }}"  
-        - "*.juno.global.{{ .Values.global.tld }}"
+        - "exampleapp.juno.global.{{ .Values.global.tld }}"  
 {{- end }}        
-      secretName: "tls-juno-{{ .Values.global.region }}-cloud-sap"
+      secretName: "tls-exampleapp-juno-{{ .Values.global.region }}-cloud-sap"
