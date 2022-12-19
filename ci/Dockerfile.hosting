@@ -47,3 +47,6 @@ RUN echo -e \
   exec "$@" ' >> /usr/local/bin/entrypoint && chmod +x /usr/local/bin/entrypoint
 
 ENTRYPOINT [ "/usr/local/bin/entrypoint" ]
+
+# default command is nginx
+CMD nginx -g "daemon off;"
