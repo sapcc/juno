@@ -11,39 +11,38 @@ metadata:
     ingress.kubernetes.io/cors-allow-origin: '*'
     ingress.kubernetes.io/enable-cors: "true"
 
-  name: ingress-assets-server
+  name: ingress-exampleapp
   namespace: juno
 spec:
   rules:
-    - host: "assets.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+    - host: "exampleapp.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
           - path: /
             pathType: Prefix 
             backend:
               service: 
-                name: assets-server
+                name: hosting-exampleapp
                 port: 
-                  number: 8888
-
+                  number: 80           
+                    
 {{- if eq .Values.global.region "eu-nl-1" }}
-    - host: "assets.juno.global.{{ .Values.global.tld }}"
+    - host: "exampleapp.juno.global.{{ .Values.global.tld }}"
       http:
         paths:
           - path: /
             pathType: Prefix 
             backend:
               service: 
-                name: assets-server
+                name: hosting-exampleapp
                 port: 
-                  number: 8888               
-
+                  number: 80               
 {{- end }} 
 
   tls:
     - hosts: 
-        - "assets.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+        - "exampleapp.{{ .Values.global.region }}.{{ .Values.global.tld }}"
 {{- if eq .Values.global.region "eu-nl-1" }}      
-        - "assets.juno.global.{{ .Values.global.tld }}"
+        - "exampleapp.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
 {{- end }}        
       secretName: "tls-juno-{{ .Values.global.region }}-cloud-sap"

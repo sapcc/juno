@@ -32,7 +32,7 @@ spec:
             pathType: Prefix                 
             backend:
               service: 
-                name: juno-ui-components
+                name: ui-storybook
                 port: 
                   number: 3000                  
 

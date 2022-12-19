@@ -34,13 +34,13 @@ spec:
             - name: PAGE_TITLE
               value: ###NAME###
             - name: FAVICON_URL
-              value: /assets/favicon.ico
+              value: https://assets.juno.{{ $.Values.global.region }}.cloud.sap/assets/favicon.ico
             - name: NAME
               value: ###NAME###
             - name: VERSION
               value: latest
             - name: ASSETS_HOST
-              value: https://assets.juno.{{ $.Values.global.registry }}.cloud.sap
+              value: https://assets.juno.{{ $.Values.global.region }}.cloud.sap
             - name: PROPS
               value: "###PROPS###"
 
