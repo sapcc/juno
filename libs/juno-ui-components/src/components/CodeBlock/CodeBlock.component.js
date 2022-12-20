@@ -151,7 +151,7 @@ export const CodeBlock = ({
       { lang === "json" ? 
       
         <ReactJson
-            src={content}
+            src={content || children}
             iconStyle="square"
             collapsed={3}
             theme={jsonTheme}
@@ -186,7 +186,7 @@ CodeBlock.propTypes = {
   /** The content to render. Will override children if passed. */
   content: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   /** The children to render. Will be overridden by content prop if passed as well.  */
-  children: PropTypes.node,
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
   /** Pass at title to render. Will look like a single tab. */
   heading: PropTypes.string,
   /** Pass an array of titles to render tabs */

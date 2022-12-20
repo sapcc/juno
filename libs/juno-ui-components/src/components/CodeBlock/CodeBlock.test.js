@@ -49,12 +49,30 @@ describe("CodeBlock", () => {
   
   test("renders a JSONView as passed", async () => {
     const testJson = {
-      "someKey": "some value"
+      "someKey": "some value",
+      "someOtherKey": 12
     }
     render(<CodeBlock data-testid="codeblock" lang="json" content={testJson} />)
     expect(screen.getByTestId("codeblock")).toBeInTheDocument()
     expect(screen.getByTestId("codeblock")).toHaveClass("juno-code-block")
     expect(screen.getByTestId("codeblock")).toHaveAttribute("data-lang", "json")
+    expect(document.querySelector(".react-json-view")).toBeInTheDocument()
+  })
+  
+  test("renders a JSONView as passed with children", async () => {
+    const testObj = {
+      "someKey": "some value",
+      "someOtherKey": 12,
+    }
+    render(
+      <CodeBlock data-testid="codeblock" lang="json">
+        {testObj}
+      </CodeBlock>
+    )
+    expect(screen.getByTestId("codeblock")).toBeInTheDocument()
+    expect(screen.getByTestId("codeblock")).toHaveClass("juno-code-block")
+    expect(screen.getByTestId("codeblock")).toHaveAttribute("data-lang", "json")
+    expect(document.querySelector(".react-json-view")).toBeInTheDocument()
   })
   
   test("renders a CodeBlock with className as passed", async () => {
