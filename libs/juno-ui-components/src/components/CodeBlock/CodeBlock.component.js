@@ -20,16 +20,19 @@ const sizeStyles = (size) => {
   switch(size) {
     case "small":
       return `
+        juno-codeblock-pre-small
         jn-max-h-64
         jn-overflow-y-auto
       `
     case "medium":
       return `
+        juno-codeblock-pre-medium
         jn-max-h-[32rem]
         jn-overflow-y-auto
       `
     case "large":
       return `
+        juno-codeblock-pre-large
         jn-max-h-[56rem]
         jn-overflow-y-auto
       `
@@ -109,7 +112,6 @@ export const CodeBlock = ({
   content,
   children,
   heading,
-  tabs,
   wrap,
   size,
   copy, 
@@ -142,7 +144,7 @@ export const CodeBlock = ({
       {...props}
     >
       { heading && heading.length ? 
-          <div className={`${headingStyles}`}>
+          <div className={`juno-codeblock-heading ${headingStyles}`}>
             <span className={`${headingInnerStyles}`}>{heading}</span>
           </div>
         :
@@ -189,8 +191,6 @@ CodeBlock.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
   /** Pass at title to render. Will look like a single tab. */
   heading: PropTypes.string,
-  /** Pass an array of titles to render tabs */
-  tabs: PropTypes.arrayOf(PropTypes.string),
   /** Set whether the code should wrap or not. Default is true. */
   wrap: PropTypes.bool,
   /** Set the size of the CodeBlock. Default is "auto" */
@@ -206,8 +206,6 @@ CodeBlock.propTypes = {
 CodeBlock.defaultProps = {
   content: "",
   children: null,
-  heading: "",
-  tabs: [],
   wrap: true,
   size: "auto",
   copy: true,
