@@ -106,7 +106,7 @@ const jsonTheme = {
   base0F: "var(--color-syntax-highlight-base0F)", // integer value
 }
 
-// TODO: build tabs
+
 /**  A basic CodeBlock component. Accepts a content prop or children. Will render a pre-wrapped code element. */
 export const CodeBlock = ({
   content,
