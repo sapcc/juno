@@ -23,9 +23,7 @@ import {
 
 const optionsContainer = `
   smart-select-options-container
-  max-h-64
   overflow-y-scroll
-  outline-none
   rounded-3px
   ring-2
   ring-theme-focus
@@ -36,6 +34,12 @@ const optionFilter = `
   smart-select-options-filter
   p-3 
   bg-theme-background-lvl-2
+  sticky
+  top-0
+`
+
+const optionsGrid = `
+
 `
 
 const optionsRow = `
@@ -82,19 +86,17 @@ const SmartSelectInput = ({ options }) => {
 
   useEffect(() => {
     if (options) {
-      // remove choosen options
+      // compute difference between the given options and the selected so
+      // the same option can't be selected more then one time
       const difference = options.filter(
         ({ value: id1 }) =>
           !selectedOptions.some(({ value: id2 }) => id2 === id1)
       )
-      // filter
+      // filter the difference with the filter string given by the user
       const regex = new RegExp(regexString(searchTerm.trim()), "i")
       const filteredOptions = difference.filter(
         (i) => `${i.label}`.search(regex) >= 0
       )
-
-      console.log("filteredOptions ", filteredOptions)
-
       setDisplayOptions(filteredOptions)
     }
   }, [selectedOptions, options, searchTerm])
@@ -193,26 +195,28 @@ const SmartSelectInput = ({ options }) => {
                 onChange={onSearchTermChanges}
               />
             </div>
-            <DataGrid id={headingId} columns={1}>
-              {displayOptions.length > 0 && (
-                <>
-                  {displayOptions.map((option, i) => (
-                    <DataGridRow
-                      key={i}
-                      onClick={() => onOptionClicked(option)}
-                      className={optionsRow}
-                    >
-                      <DataGridCell>{option.value}</DataGridCell>
-                    </DataGridRow>
-                  ))}
-                </>
-              )}
-              {displayOptions.length === 0 && searchTerm && (
-                <DataGridRow className={optionsRow}>
-                  <DataGridCell>No options found</DataGridCell>
-                </DataGridRow>
-              )}
-            </DataGrid>
+            <div className={optionsGrid}>
+              <DataGrid id={headingId} columns={1}>
+                {displayOptions.length > 0 && (
+                  <>
+                    {displayOptions.map((option, i) => (
+                      <DataGridRow
+                        key={i}
+                        onClick={() => onOptionClicked(option)}
+                        className={optionsRow}
+                      >
+                        <DataGridCell>{option.value}</DataGridCell>
+                      </DataGridRow>
+                    ))}
+                  </>
+                )}
+                {displayOptions.length === 0 && searchTerm && (
+                  <DataGridRow className={optionsRow}>
+                    <DataGridCell>No options found</DataGridCell>
+                  </DataGridRow>
+                )}
+              </DataGrid>
+            </div>
           </div>
         </FloatingFocusManager>
       )}
