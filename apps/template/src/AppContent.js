@@ -96,7 +96,7 @@ const AppContent = (props) => {
             Shown below is the response data from a fetch request against the
             local server using react-query
           </p>
-          <CodeBlock>{data && JSON.stringify(data)}</CodeBlock>
+          <CodeBlock lang="json">{data && JSON.stringify(data)}</CodeBlock>
 
           <Container px={false} py></Container>
         </Container>
