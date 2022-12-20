@@ -3,7 +3,6 @@ import {
   useFloating,
   autoUpdate,
   offset,
-  flip,
   shift,
   useDismiss,
   useRole,
@@ -14,49 +13,66 @@ import {
 } from "@floating-ui/react"
 import {
   TextInputRow,
+  TextInput,
   DataGrid,
   DataGridRow,
   DataGridCell,
   Badge,
 } from "juno-ui-components"
 
-const optionsContainer = (isOpen) => {
+const optionsContainer = `
+  smart-select-options-container
+  max-h-64
+  overflow-y-scroll
+  outline-none
+  rounded-3px
+  ring-2
+  ring-theme-focus
+  bg-theme-textinput
+  `
+
+const optionFilter = `
+  smart-select-options-filter
+  p-3 
+  bg-theme-background-lvl-2
+`
+
+const optionsRow = `
+  smart-select-options-row
+  hover:text-theme-accent
+`
+
+const fakeInputText = (isOpen) => {
   return `
-    max-h-64
-    overflow-y-scroll
-    outline-none
-    ring-2
-    ring-theme-focus
+    smart-select-input
+    text-theme-textinput
     bg-theme-textinput
-		`
+    min-h-[2.5rem]
+    rounded-3px
+    p-2
+    ${isOpen && `ring-2 ring-theme-focus`}
+    `
     .replace(/\n/g, " ")
     .replace(/\s+/g, " ")
 }
 
-const optionsRow = `
-  hover:text-theme-accent
-`
-
-const fakeInputText = `
-  text-theme-textinput
-  bg-theme-textinput
-  min-h-[2.5rem]
-  rounded-3px
-  p-2
-`
-
 const fakeInputTextPlaceholder = `
+  smart-select-input-placeholder
   opacity-50
 `
 
 const fakeInputTextOptions = `
+  smart-select-input-selected-option
   mr-1
 `
+
+const regexString = (string) => string.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&")
 
 const SmartSelectInput = ({ options }) => {
   const [open, setOpen] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState([])
   const [displayOptions, setDisplayOptions] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("")
 
   options = useMemo(() => {
     if (!options) return []
@@ -65,19 +81,28 @@ const SmartSelectInput = ({ options }) => {
 
   useEffect(() => {
     if (options) {
+      // remove choosen options
       const difference = options.filter(
         ({ value: id1 }) =>
           !selectedOptions.some(({ value: id2 }) => id2 === id1)
       )
-      setDisplayOptions(difference)
+      // filter
+      const regex = new RegExp(regexString(searchTerm.trim()), "i")
+      const filteredOptions = difference.filter(
+        (i) => `${i.label}`.search(regex) >= 0
+      )
+
+      console.log("filteredOptions ", filteredOptions)
+
+      setDisplayOptions(filteredOptions)
     }
-  }, [selectedOptions, options])
+  }, [selectedOptions, options, searchTerm])
 
   const { x, y, reference, floating, strategy, context } = useFloating({
     open,
     placement: "bottom-start",
     onOpenChange: setOpen,
-    middleware: [offset(5), shift()],
+    middleware: [offset(8), shift()],
     whileElementsMounted: autoUpdate,
   })
 
@@ -93,14 +118,7 @@ const SmartSelectInput = ({ options }) => {
 
   const headingId = useId()
 
-  // ===============
-
-  const onChange = (event) => {
-    setOpen(true)
-  }
-
   const onOptionClicked = (option) => {
-    console.log("onOptionClicked: ", option)
     setSelectedOptions([...selectedOptions, option])
   }
 
@@ -116,18 +134,14 @@ const SmartSelectInput = ({ options }) => {
     setSelectedOptions(newOptions)
   }
 
-  console.log("selectedOptions: ", selectedOptions)
+  const onSearchTermChanges = (event) => {
+    setSearchTerm(event.target.value)
+  }
 
   return (
     <div>
       <div ref={reference} {...getReferenceProps()}>
-        {/* <TextInputRow
-          label="Smart Select"
-          onChange={onChange}
-          // onFocus={onFocus}
-          onBlur={onBlur}
-        /> */}
-        <div className={fakeInputText}>
+        <div className={fakeInputText(open)}>
           {selectedOptions.length > 0 ? (
             <>
               {selectedOptions.map((item, index) => (
@@ -150,7 +164,7 @@ const SmartSelectInput = ({ options }) => {
         <FloatingFocusManager context={context} modal={false}>
           <div
             ref={floating}
-            className={`options-container ${optionsContainer(open)}`}
+            className={optionsContainer}
             style={{
               position: strategy,
               top: y ?? 0,
@@ -159,6 +173,13 @@ const SmartSelectInput = ({ options }) => {
             aria-labelledby={headingId}
             {...getFloatingProps()}
           >
+            <div className={optionFilter}>
+              <TextInputRow
+                label="Filter"
+                value={searchTerm}
+                onChange={onSearchTermChanges}
+              />
+            </div>
             <DataGrid id={headingId} columns={1}>
               {displayOptions.length > 0 && (
                 <>
@@ -172,6 +193,11 @@ const SmartSelectInput = ({ options }) => {
                     </DataGridRow>
                   ))}
                 </>
+              )}
+              {displayOptions.length === 0 && searchTerm && (
+                <DataGridRow className={optionsRow}>
+                  <DataGridCell>No options found</DataGridCell>
+                </DataGridRow>
               )}
             </DataGrid>
           </div>
