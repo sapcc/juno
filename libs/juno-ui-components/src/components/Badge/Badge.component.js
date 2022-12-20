@@ -64,6 +64,7 @@ export const Badge = ({
   text,
   className,
   children,
+  onIconClicked,
   ...props
 }) => {
   const getIcon = (icon, variant) => {
@@ -100,6 +101,7 @@ export const Badge = ({
           size="1.125rem"
           className={`${iconStyles}`}
           color={getIconColor(icon, variant)}
+          onClick={(event) => onIconClicked && onIconClicked(event)}
         />
       ) : null}
       {children ? children : text}
@@ -113,6 +115,7 @@ Badge.propTypes = {
   text: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.node,
+  onIconClicked: PropTypes.func,
 }
 
 Badge.defaultProps = {
@@ -121,4 +124,5 @@ Badge.defaultProps = {
   text: "",
   className: "",
   children: null,
+  onIconClicked: undefined,
 }

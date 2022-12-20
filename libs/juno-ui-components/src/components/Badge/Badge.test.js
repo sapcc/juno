@@ -1,5 +1,5 @@
 import * as React from "react"
-import { render, screen } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import { Badge } from "./index"
 
 describe("Badge", () => {
@@ -73,5 +73,18 @@ describe("Badge", () => {
     render(<Badge data-testid="badge" data-lolol={true} />)
     expect(screen.getByTestId("badge")).toBeInTheDocument()
     expect(screen.getByTestId("badge")).toHaveAttribute("data-lolol")
+  })
+
+  test("fires onClickedIcon handler when icon clicked as passed when set", async () => {
+    const handleIconClicked = jest.fn()
+    render(
+      <Badge
+        data-testid="badge"
+        icon="insertComment"
+        onIconClicked={handleIconClicked}
+      />
+    )
+    fireEvent.click(screen.getByRole("img"))
+    expect(handleIconClicked).toHaveBeenCalledTimes(1)
   })
 })
