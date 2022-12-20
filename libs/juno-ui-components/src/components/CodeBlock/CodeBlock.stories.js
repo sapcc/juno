@@ -151,7 +151,7 @@ export const CodeBlocksWithTabs = TabsTemplate.bind({})
 CodeBlocksWithTabs.parameters = {
   docs: {
     description: {
-      story: "Tabbed CodeBlocks can be composed using the `<Tabs>`, `<Tab>`, `<TabList>`, and `<TabPanel>` components. Make sure to pass `variant='codeblocks' to the `<Tabs>` component."
+      story: "Tabbed CodeBlocks can be composed using the `<Tabs>`, `<Tab>`, `<TabList>`, and `<TabPanel>` components. Make sure to pass `variant='codeblocks'` to the `<Tabs>` component."
     }
   }
 }
