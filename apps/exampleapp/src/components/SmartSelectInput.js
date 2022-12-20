@@ -10,6 +10,7 @@ import {
   useInteractions,
   FloatingFocusManager,
   useId,
+  size,
 } from "@floating-ui/react"
 import {
   TextInputRow,
@@ -102,7 +103,19 @@ const SmartSelectInput = ({ options }) => {
     open,
     placement: "bottom-start",
     onOpenChange: setOpen,
-    middleware: [offset(8), shift()],
+    middleware: [
+      offset(8),
+      shift(),
+      size({
+        apply({ rects, elements, availableHeight }) {
+          Object.assign(elements.floating.style, {
+            maxHeight: `${availableHeight}px`,
+            width: `${rects.reference.width}px`,
+          })
+        },
+        padding: 10,
+      }),
+    ],
     whileElementsMounted: autoUpdate,
   })
 
