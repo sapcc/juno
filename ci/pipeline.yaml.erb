@@ -276,6 +276,9 @@ jobs:
           build: dist
           dockerfile: juno.git/ci/Dockerfile.assets.server
           tag: assets-server.version/version
+          build_args: 
+            PROVIDERS: "jspm unpkg jsdelivr"
+            DEFAULT_PROVIDER: "jsdelivr"
         get_params:
           skip_download: true   
 

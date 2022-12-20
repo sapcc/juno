@@ -19,6 +19,8 @@ import { exit } from "node:process"
 // For the case the CDN with the external libs is unreachable, this flag must be set to true.
 // This will include all dependencies in the final bundle.
 const availableArgs = [
+  "--provider=[jspm|skypack|jsdelivr|unpkg|deno|denoland]",
+  "--exit-on-error=[true|false]",
   "--src=DIR_PATH",
   "--output=FILE_PATH",
   "--ignore-externals=true|false",
@@ -29,6 +31,8 @@ const availableArgs = [
 
 // default argument values
 const options = {
+  provider: "jspm",
+  exitOnError: "true",
   src: path.dirname(url.fileURLToPath(import.meta.url)),
   baseUrl: "%BASE_URL%",
   output: "./importmap.json",
@@ -56,7 +60,7 @@ for (let arg of args) {
   }
 }
 if (options.help || options.h) {
-  console.log("Usage: " + availableArgs.join(" "))
+  console.log(`Usage: node ${process.argv[1]} ` + availableArgs.join(" "))
 }
 
 const PACKAGES_PATHS = ["apps", "libs"]
@@ -243,9 +247,16 @@ for (let name in packageRegistry) {
           `(+) ${name} install external dependency ${depName}@${depVersion}`
         )
         // create generator
-        const generator = new Generator({ env: ["production", "browser"] })
+        const generator = new Generator({
+          env: ["production", "browser"],
+          defaultProvider: options.provider,
+        })
         // get the importmap for current dependency
-        await generator.install(`${depName}@${depVersion}`)
+        await generator.install(`${depName}@${depVersion}`).catch((error) => {
+          console.log(error)
+          if (options.exitOnError) process.exit(1)
+        })
+
         // save importmap
         pkgImportMaps.push(generator.getMap())
       }

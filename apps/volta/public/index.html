@@ -23,7 +23,7 @@
       const mainFilename = "<%= MAIN_FILENAME %>"
 
       import(`./${mainFilename}`).then((app) =>
-        app.mount(document.getElementById("root"))
+        app.mount(document.getElementById("root"),{endpint:ENDPOINT})
       )
     </script>
 

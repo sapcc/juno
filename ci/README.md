@@ -47,6 +47,12 @@ Based on the example above, the following file structure is generated using the 
 
 ## Importmap
 
+Generate test data
+
+```js
+node scripts/generate_test_data.js
+```
+
 Importmap is generated using generator from https://jspm.org. Where internal libs like juno-ui-components are properly linked to the assets server. In addition, internal libs are linked under imports @juno. Example:
 
 ```json
