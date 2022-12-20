@@ -20,14 +20,15 @@ const modalcontainerstyles = `
 	jn-inset-0
 	jn-flex
 	jn-items-center
-	jn-bg-theme-modal-backdrop/60
+	jn-bg-theme-modal-backdrop
 	jn-backdrop-blur-[2px]
 	jn-z-[9999]
 `
 
 const modalstyles = `
-	jn-bg-theme-background-lvl-2
+	jn-bg-theme-background-lvl-0
 	jn-relative
+	jn-rounded
 	jn-m-auto
 	jn-overflow-y-auto
 	jn-max-h-[90%]

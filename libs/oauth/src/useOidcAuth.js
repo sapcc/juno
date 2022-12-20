@@ -77,7 +77,8 @@ function handleOIDCResponse() {
 
     return {
       id_token,
-      login_name: tokenData.login_name || tokenData.sub,
+      subject: tokenData.sub,
+      login_name: tokenData.login_name,
       first_name: tokenData.first_name,
       last_name: tokenData.last_name,
       full_name: `${tokenData.first_name} ${tokenData.last_name}`,
@@ -219,7 +220,7 @@ const useOidcAuth = (options) => {
   if (!clientID || !issuerURL) {
     const error =
       "clientID or issuerURL are undefined. Please provide a clientID and issuerURL."
-    console.warn(error)
+    //console.warn(error)
     result.error = error
   }
 

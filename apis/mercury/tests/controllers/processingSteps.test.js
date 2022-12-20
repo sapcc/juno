@@ -1,6 +1,6 @@
 const db = require("../../src/db/models")
 const ProcessingStepsController = require("../../src/controllers/processingSteps")
-const policyEngine = require("policy-engine")(
+const policyEngine = require("policy-engine").default(
   require("../../config/policy.json")
 )
 

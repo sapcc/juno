@@ -522,7 +522,7 @@
   --color-filter-pill-border: var(--color-background-lvl-4-raw);
   --color-filter-pill-key-bg: var(--color-background-lvl-3-raw);
   // LT Modal
-  --color-modal-backdrop-bg: var(--color-sap-white-raw);
+  --color-modal-backdrop-bg: rgba(0, 0, 0, 0.2);
   // LT Navigation
   --color-navigation-active: var(--color-black);
   // LT Box
@@ -762,7 +762,7 @@
   --color-filter-pill-border: var(--color-background-lvl-4-raw);
   --color-filter-pill-key-bg: var(--color-background-lvl-4-raw);
   // DT Modal
-  --color-modal-backdrop-bg: 13, 20, 28;
+  --color-modal-backdrop-bg: rgba(60, 70, 75, 0.6);
   // DT Navigation
   --color-navigation-active: var(--color-white);
   // DT Box

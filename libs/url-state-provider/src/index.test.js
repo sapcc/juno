@@ -3,7 +3,7 @@
  * which emulates the browser
  * @jest-environment jsdom
  */
-var LZString = require("lz-string")
+import LZString from "lz-string"
 
 Object.defineProperty(window, "location", {
   value: {
@@ -235,7 +235,7 @@ describe("replace", () => {
 })
 
 describe("addOnChangeListener", () => {
-  var listener
+  var listener, provider
   beforeAll(() => {
     jest.resetModules()
     provider = require("./index")
@@ -251,7 +251,7 @@ describe("addOnChangeListener", () => {
 })
 
 describe("removeOnChangeListener", () => {
-  var listener
+  var listener, provider
   beforeAll(() => {
     jest.resetModules()
     provider = require("./index")

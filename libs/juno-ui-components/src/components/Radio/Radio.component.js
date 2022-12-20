@@ -60,6 +60,7 @@ export const Radio = ({
 	invalid,
 	valid,
 	onChange,
+	onClick,
 	...props
 }) => {
 	const [isChecked, setIsChecked] = useState(false)
@@ -81,7 +82,7 @@ export const Radio = ({
 	
 	const handleChange = (event) => {
 		setIsChecked(!isChecked)
-		onChange(event)
+		onChange && onChange(event)
 	}
 	
 	const handleFocus = () => {
@@ -90,6 +91,10 @@ export const Radio = ({
 	
 	const handleBlur = () => {
 		setHasFocus(false)
+	}
+	
+	const handleClick = (event) => {
+		onClick && onClick(event)
 	}
 	
 	return (
@@ -106,6 +111,7 @@ export const Radio = ({
 				className={`${inputstyles} ${isInvalid ? "juno-radio-invalid" : ""} ${ isValid ? "juno-radio-valid" : ""}`}
 				disabled={disabled}
 				onChange={handleChange}
+				onClick={handleClick}
 				onFocus={handleFocus}
 				onBlur={handleBlur}
 			/>
@@ -135,8 +141,10 @@ Radio.propTypes = {
 	invalid: PropTypes.bool,
 	/** Whether the Radio is valid */
 	valid: PropTypes.bool,
-	/** Pass a handler */
+	/** Pass a change handler */
 	onChange: PropTypes.func,
+	/** Pass a click handler */
+	onClick: PropTypes.func,
 }
 
 Radio.defaultProps = {
@@ -148,4 +156,5 @@ Radio.defaultProps = {
 	invalid: false,
 	valid: false,
 	onChange: undefined,
+	onClick: undefined,
 }

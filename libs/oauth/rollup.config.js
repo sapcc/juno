@@ -1,26 +1,26 @@
-import babel from "@rollup/plugin-babel"
-import del from "rollup-plugin-delete"
-import pkg from "./package.json"
-import minify from "rollup-plugin-babel-minify"
-import analyze from "rollup-plugin-analyzer"
+const babel = require("@rollup/plugin-babel")
+const del = require("rollup-plugin-delete")
+const pkg = require("./package.json")
+const minify = require("rollup-plugin-babel-minify")
+const analyze = require("rollup-plugin-analyzer")
+
+// IMPORTANT!
+// package.json is single source of truth policy
+
+if (!/.+\/.+\.js/.test(pkg.module))
+  throw new Error(
+    "module value is incorrect, use DIR/FILE.js like build/index.js"
+  )
+const buildDir = pkg.module.slice(0, pkg.module.lastIndexOf("/"))
 
 const config = [
   {
-    input: "src/index.js",
+    input: pkg.source,
     output: [
-      {
-        file: pkg.main,
-        name: "oidc-auth",
-        format: "cjs",
-        sourcemap: true,
-        compact: true,
-      },
       {
         file: pkg.module,
         format: "esm",
-        preserveModules: false,
         compact: true,
-        sourcemap: true,
       },
     ],
     plugins: [
@@ -28,12 +28,12 @@ const config = [
         exclude: "node_modules/**",
         babelHelpers: "bundled",
       }),
-      del({ targets: ["lib/**/*"] }),
+      del({ targets: [`${buildDir}/**/*`] }),
       minify({ comments: false }),
-      analyze(),
+      analyze({ summaryOnly: true, limit: 0 }),
     ],
     external: Object.keys(pkg.peerDependencies || {}),
   },
 ]
 
-export default config
+module.exports = config

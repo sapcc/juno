@@ -1,5 +1,6 @@
 import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
+import { act } from 'react-dom/test-utils'
 import { SwitchRow } from "./index"
 
 describe("SwitchRow", () => {
@@ -93,11 +94,40 @@ describe("SwitchRow", () => {
 		expect(screen.getByRole("switch")).toHaveAttribute("aria-checked", 'true')
 	})
 		
-	test("executes custom handler on change as passed", async () => {	
+	test("executes handler on change as passed", async () => {	
 		const onChangeSpy = jest.fn();
 		render(<SwitchRow onChange={onChangeSpy} />);
-		screen.getByRole('switch').click();
+		act(() => {
+			screen.getByRole('switch').click();
+		})
 		expect(onChangeSpy).toHaveBeenCalled();	
-	  })
+	})
+	
+	test("executes handler on click as passed", async () => {	
+		const onClickSpy = jest.fn();
+		render(<SwitchRow onClick={onClickSpy} />);
+		act(() => {
+			screen.getByRole('switch').click();
+		})
+		expect(onClickSpy).toHaveBeenCalled();	
+	})
+	
+	test("does not execute handler on change as passed when disabled", async () => {	
+		const onChangeSpy = jest.fn();
+		render(<SwitchRow onChange={onChangeSpy} disabled />);
+		act(() => {
+			screen.getByRole('switch').click();
+		})
+		expect(onChangeSpy).not.toHaveBeenCalled();	
+	})
+	
+	test("does not execute handler on click as passed when disabled", async () => {	
+		const onClickSpy = jest.fn();
+		render(<SwitchRow onClick={onClickSpy} disabled />);
+		act(() => {
+			screen.getByRole('switch').click();
+		})
+		expect(onClickSpy).not.toHaveBeenCalled();	
+	})
 	
 })

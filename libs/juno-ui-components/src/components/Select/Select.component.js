@@ -10,7 +10,6 @@ const selectstyles = `
 	jn-appearance-none
 	jn-text-base
 	jn-pl-4
-	jn-pr-9
 	jn-h-[2.375rem]
 	jn-rounded-3px
 	jn-bg-icon-arrow-down
@@ -71,7 +70,15 @@ const loadingSpinnerStyles = `
 	jn-mr-auto
 `
 
-/*+ A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
+const iconpaddingright = `
+	jn-pr-[3.75rem]
+`
+
+const defaultpaddingright = `
+	jn-pr-9
+`
+
+/** A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
 export const Select = ({
 	name,
 	id,
@@ -80,8 +87,9 @@ export const Select = ({
 	disabled,
 	invalid,
 	valid,
-	onChange,
 	loading,
+	onChange,
+	onClick,
 	...props
 }) => {
 	const [isLoading, setIsLoading] = useState(false)
@@ -99,6 +107,14 @@ export const Select = ({
 	useEffect(() => {
 		setIsValid(valid)
 	}, [valid])
+	
+	const handleChange = (event) => {
+		onChange && onChange(event)
+	}
+	
+	const handleClick = (event) => {
+		onClick && onClick(event)
+	}
 	
 	const SelectIcons = ({
 		disabled
@@ -120,13 +136,22 @@ export const Select = ({
 		}
 	}
 	
+	const selectPadding = () => {
+		if (isValid || isInvalid ) {
+			return iconpaddingright
+		} else {
+			return defaultpaddingright
+		}
+	}
+	
 	return (
 		<div className={`juno-select-wrapper ${wrapperstyles}`}>
 			<select 
 				name={name || "Unnamed Select"}
 				id={id}
-				className={`juno-select ${selectstyles} ${ isInvalid ? "juno-select-invalid " + errorstyles : "" } ${ isValid ? "juno-select-valid " + successstyles : "" } ${className}`}
-				onChange={onChange}
+				className={`juno-select ${selectstyles} ${ isInvalid ? "juno-select-invalid " + errorstyles : "" } ${ isValid ? "juno-select-valid " + successstyles : "" } ${selectPadding()} ${className}`}
+				onChange={handleChange}
+				onClick={handleClick}
 				disabled={disabled || isLoading}
 				{...props}
 			>
@@ -152,10 +177,13 @@ Select.propTypes = {
 	invalid: PropTypes.bool,
 	/** Whether the Select is valid */
 	valid: PropTypes.bool,
-	/** Pass a handler */
-	onChange: PropTypes.func,
 	/** Whether the select is currently loading */
 	loading: PropTypes.bool,
+	/** Pass a change handler */
+	onChange: PropTypes.func,
+	/** Pass a click handler */
+	onClick: PropTypes.func,
+	
 }
 
 Select.defaultProps = {
@@ -165,6 +193,7 @@ Select.defaultProps = {
 	disabled: null,
 	invalid: false,
 	valid: false,
-	onChange: undefined,
 	loading: false,
+	onChange: undefined,
+	onClick: undefined,
 }

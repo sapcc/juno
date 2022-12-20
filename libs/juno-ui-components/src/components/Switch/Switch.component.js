@@ -50,7 +50,6 @@ const defaultborderstyles = `
 	jn-border-theme-switch-default
 `
 
-
 const invalidbasestyles = `
 	jn-border-theme-error
 `
@@ -70,13 +69,14 @@ const handleoffstyles = `
 export const Switch = ({
 	name,
 	id,
-	onChange,
 	size,
 	on,
 	disabled,
 	invalid,
 	valid,
 	className,
+	onChange,
+	onClick,
 	...props
 }) => {
 	const [isOn, setIsOn] = useState(on)
@@ -95,25 +95,28 @@ export const Switch = ({
 		setIsValid(valid)
 	}, [valid])
 	
-	const handleChange = (event) => {
+	const handleClick = (event) => {
 		setIsOn(!isOn)
-		onChange(event)
+		onClick && onClick(event)
+		onChange && onChange(event)
 	}
 	
 	return (
-		<button 
-			type="button"
-			role="switch"
-			name={name}
-			id={id}
-			aria-checked={isOn}
-			disabled={disabled}
-			onClick={handleChange}
-			className={`juno-switch juno-switch-${size} ${switchbasestyles} ${switchsizestyles(size)} ${ isInvalid ? "juno-switch-invalid " + invalidbasestyles : "" } ${ isValid ? "juno-switch-valid " + validbasestyles : "" } ${ isValid || isInvalid ? "" : defaultborderstyles } ${className}`}
-			{...props}
-		>
-			<span className={`juno-switch-handle ${handlebasestyles} ${handlesizestyles(size)} ${ isOn ? handleonstyles : handleoffstyles}`} ></span>
-		</button>
+		<>
+			<button 
+				type="button"
+				role="switch"
+				name={name}
+				id={id}
+				aria-checked={isOn}
+				disabled={disabled}
+				onClick={handleClick}
+				className={`juno-switch juno-switch-${size} ${switchbasestyles} ${switchsizestyles(size)} ${ isInvalid ? "juno-switch-invalid " + invalidbasestyles : "" } ${ isValid ? "juno-switch-valid " + validbasestyles : "" } ${ isValid || isInvalid ? "" : defaultborderstyles } ${className}`}
+				{...props}
+			>
+				<span className={`juno-switch-handle ${handlebasestyles} ${handlesizestyles(size)} ${ isOn ? handleonstyles : handleoffstyles}`} ></span>
+			</button>
+		</>
 	)
 }
 
@@ -134,8 +137,10 @@ Switch.propTypes = {
 	valid: PropTypes.bool,
 	/** Pass a className */
 	className: PropTypes.string,
-	/** Pass a handler */
+	/** Pass a change handler */
 	onChange: PropTypes.func,
+	/** Pass a click handler */
+	onClick: PropTypes.func,
 }
 
 Switch.defaultProps = {
@@ -148,4 +153,5 @@ Switch.defaultProps = {
 	valid: false,
 	className: "",
 	onChange: undefined,
+	onClick: undefined,
 }

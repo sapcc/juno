@@ -16,7 +16,8 @@ const schema = require("./graphql/schema")
 const { verifyAuthToken } = require("./lib/identityProvider")
 
 // Policy engine
-const policyEngine = require("policy-engine")(require("../config/policy.json"))
+const config = require("../config/policy.json")
+const policyEngine = require("policy-engine").default(config)
 
 // User
 const { User } = require("./db/models")

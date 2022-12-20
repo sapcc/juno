@@ -11,13 +11,15 @@ class HTTPError extends Error {
 
 const encodeUrlParamsFromObject = (options) => {
   if (!options) return ""
-  let encodedOptions = Object.keys(options).map(k => `${encodeURIComponent(k)}=${encodeURIComponent(options[k])}`).join('&')
+  let encodedOptions = Object.keys(options)
+    .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(options[k])}`)
+    .join("&")
   return `&${encodedOptions}`
 }
 
 // Check response status
 const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
+  if (response.status < 400) {
     return response
   } else {
     return response.text().then((message) => {
@@ -30,12 +32,14 @@ const checkStatus = (response) => {
 }
 
 export const search = (input, options) => {
-  return fetch(`${ENDPOINT}/query?input=${input}${encodeUrlParamsFromObject(options)}`, {
-    method: "GET",
-    credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then(checkStatus)
+  return fetch(
+    `${ENDPOINT}/query?input=${input}${encodeUrlParamsFromObject(options)}`,
+    {
+      method: "GET",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  ).then(checkStatus)
 }

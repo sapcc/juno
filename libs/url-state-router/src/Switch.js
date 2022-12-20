@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
 import routeMatcher from "./routeMatcher"
-import { useRouter } from "."
+import { useRouter } from "./RouterContext"
 
 /**
  * Switch is used when multiple routes with similar paths match the current path.

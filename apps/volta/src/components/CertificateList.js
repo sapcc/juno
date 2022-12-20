@@ -85,7 +85,7 @@ const CertificateList = ({ ca }) => {
               </DataGridToolbar>
               <DataGrid gridColumnTemplate="2fr 2.25fr 0.75fr min-content 1.5fr min-content">
                 <DataGridRow>
-                  <DataGridHeadCell wrap={false}>Name / ID</DataGridHeadCell>
+                  <DataGridHeadCell nowrap={true}>Name / ID</DataGridHeadCell>
                   <DataGridHeadCell>Description</DataGridHeadCell>
                   <DataGridHeadCell>User name / ID</DataGridHeadCell>
                   <DataGridHeadCell>State</DataGridHeadCell>

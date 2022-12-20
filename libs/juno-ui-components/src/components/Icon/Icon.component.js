@@ -657,10 +657,14 @@ export const Icon = forwardRef(({
     iconClassName,
     ...iconProps,
   })
+  
+  const handleClick = (event) => {
+    onClick && onClick(event)
+  }
 
   const button = (
     <button
-      onClick={onClick}
+      onClick={handleClick}
       className={`juno-icon-button ${buttonIconStyles} ${className}`}
       aria-label={title || icon}
       ref={ref}

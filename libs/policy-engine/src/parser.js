@@ -271,11 +271,11 @@ function parse(tokens, expressionNode, level = 0) {
   return tree
 }
 
-module.exports = {
-  parse: (tokens) => {
-    tokens = validateTokens(tokens.slice())
-    tokens = bracketsToArrays(tokens)
-    tokens = notOperatorsToArrays(tokens)
-    return parse(tokens)
-  },
+const validateAndParse = (tokens) => {
+  tokens = validateTokens(tokens.slice())
+  tokens = bracketsToArrays(tokens)
+  tokens = notOperatorsToArrays(tokens)
+  return parse(tokens)
 }
+
+export { validateAndParse as parse }

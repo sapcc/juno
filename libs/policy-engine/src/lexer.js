@@ -29,4 +29,4 @@ function tokenize(rule) {
   return tokens
 }
 
-module.exports = { tokenize }
+export { tokenize }

@@ -7,6 +7,8 @@ import AppRouter from "./components/AppRouter"
 import { MessagesStateProvider } from "./messageStore"
 import { AppShell, PageHeader } from "juno-ui-components"
 import HeaderUser from "./components/HeaderUser"
+import styles from "./styles.scss"
+import StyleProvider from "juno-ui-components"
 
 const App = (props) => {
   const setMessage = useMessageStore((state) => state.setMessage)
@@ -20,7 +22,7 @@ const App = (props) => {
   })
 
   useEffect(() => {
-    if (!auth) return null
+    if (!auth) return
     if (auth?.error) {
       setMessage({
         variant: "error",
@@ -54,10 +56,27 @@ const App = (props) => {
   )
 }
 
-// export default App
+const StyledApp = (props) => {
+  // default props
+  props = {
+    issuerurl: process.env.OIDC_ISSUER_URL,
+    clientid: process.env.OIDC_CLIENTID,
+    endpoint: process.env.ENDPOINT,
+    ...props,
+  }
 
-export default (props) => (
-  <MessagesStateProvider>
-    <App {...props} />
-  </MessagesStateProvider>
-)
+  return (
+    <StyleProvider
+      stylesWrapper="shadowRoot"
+      theme={`${props.theme ? props.theme : "theme-dark"}`}
+    >
+      {/* load styles inside the shadow dom */}
+      <style>{styles.toString()}</style>
+      <MessagesStateProvider>
+        <App {...props} />
+      </MessagesStateProvider>
+    </StyleProvider>
+  )
+}
+
+export default StyledApp

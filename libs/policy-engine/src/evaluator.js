@@ -162,6 +162,4 @@ function evaluate(expressionNode) {
   }
 }
 
-module.exports = {
-  evaluate,
-}
+export { evaluate }

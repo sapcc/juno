@@ -31,6 +31,7 @@ const floatinglabelcontainerstyles = (minimizedLabel) => {
     jn-transition-all 
     jn-duration-100 
     jn-ease-in-out
+    jn-z-10
 
     ${
       minimizedLabel &&
@@ -64,6 +65,10 @@ const floatinginputstyles = (minimizedLabel) => {
   `
 }
 
+const inputcontainerstyles = `
+  jn-relative
+`
+
 const helptextstyles = `
 	jn-text-xs
 	jn-text-theme-light
@@ -95,6 +100,10 @@ const disablediconstyles = `
 
 const stackedinputstyles = `
 	jn-w-full
+`
+
+const iconpadding = `
+  jn-pr-10
 `
 
 const getContainerStyles = (variant) => {
@@ -140,6 +149,8 @@ export const TextInputRow = ({
   className,
   disabled,
   onChange,
+  onFocus,
+  onBlur,
   ...props
 }) => {
   const [val, setValue] = useState("")
@@ -174,7 +185,16 @@ export const TextInputRow = ({
 
   const handleChange = (event) => {
     setValue(event.target.value)
-    onChange(event)
+    onChange && onChange(event)
+  }
+
+  const handleFocus = (event) => {
+    setFocus(true)
+    if (onFocus) onFocus(event)
+  }
+  const handleBlur = (event) => {
+    setFocus(false)
+    if (onBlur) onBlur(event)
   }
 
   /* check whether the label is minimized (either has focus and / or has a value) */
@@ -208,6 +228,14 @@ export const TextInputRow = ({
     }
   }
 
+  const inputrightpadding = () => {
+    if (isValid || isInvalid) {
+      return iconpadding
+    } else {
+      return ""
+    }
+  }
+
   return (
     <div
       className={`juno-textinput-row juno-textinput-row-${variant} ${getContainerStyles(
@@ -229,7 +257,7 @@ export const TextInputRow = ({
           disabled={variant === "stacked" && disabled ? disabled : false}
         />
       </div>
-      <div className={`juno-input-container`}>
+      <div className={`juno-input-container ${inputcontainerstyles}`}>
         <TextInput
           type={type}
           value={val}
@@ -241,12 +269,12 @@ export const TextInputRow = ({
           valid={isValid}
           autoFocus={autoFocus}
           onChange={handleChange}
-          onFocus={() => setFocus(true)}
-          onBlur={() => setFocus(false)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           className={`${getInputStyles(
             variant,
             minimizedLabel(variant, val, focus)
-          )}`}
+          )} ${inputrightpadding()}`}
         />
         <Icons disabled={disabled} />
         {errortext && errortext.length ? (
@@ -296,6 +324,10 @@ TextInputRow.propTypes = {
   disabled: PropTypes.bool,
   /** Pass a handler to the input element */
   onChange: PropTypes.func,
+  /** Pass a handler to the input element */
+  onFocus: PropTypes.func,
+  /** Pass a handler to the input element */
+  onBlur: PropTypes.func,
 }
 
 TextInputRow.defaultProps = {
@@ -316,4 +348,6 @@ TextInputRow.defaultProps = {
   className: "",
   disabled: null,
   onChange: undefined,
+  onFocus: undefined,
+  onBlur: undefined,
 }

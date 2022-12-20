@@ -15,9 +15,13 @@ const CustomAppShell = ({ children }) => {
   const oidc = useGlobalState().auth.oidc
   const navigate = useNavigate()
 
+  const backToRootPath = () => {
+    navigate("/")
+  }
+
   const pageHeader = React.useMemo(() => {
     return (
-      <PageHeader heading="Converged Cloud | Volta">
+      <PageHeader heading="Converged Cloud | Volta" onClick={backToRootPath}>
         {oidc?.loggedIn && (
           <HeaderUser auth={oidc?.auth} logout={oidc?.logout} />
         )}
@@ -27,13 +31,7 @@ const CustomAppShell = ({ children }) => {
 
   const topBar = (
     <TopNavigation>
-      <TopNavigationItem
-        icon="home"
-        label="Home"
-        onClick={() => {
-          navigate("/")
-        }}
-      />
+      <TopNavigationItem icon="home" label="Home" onClick={backToRootPath} />
     </TopNavigation>
   )
 

@@ -1,4 +1,5 @@
-const { parse } = require("./parser")
+// const { parse } = require("./parser")
+import { parse } from "./parser"
 
 describe("parse", () => {
   it("returns parsed object", () => {

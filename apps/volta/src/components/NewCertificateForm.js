@@ -79,11 +79,14 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
 
   // on form init set the identity attributes
   useEffect(() => {
-    if (oidc?.auth?.login_name) {
+    const userId = (
+      oidc?.auth?.subject || oidc?.auth?.login_name
+    )?.toUpperCase()
+    if (userId) {
       dispatch({
         type: "SET_ATTR",
         key: "identity",
-        value: oidc?.auth?.login_name,
+        value: userId,
       })
     }
   }, [])
@@ -236,7 +239,7 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
         label="User"
         value={formState.identity}
         onChange={(e) => {
-          onAttrChanged("identity", e.target.value)
+          onAttrChanged("identity", e.target.value?.toUpperCase())
         }}
         helptext={
           formValidation["identity"]

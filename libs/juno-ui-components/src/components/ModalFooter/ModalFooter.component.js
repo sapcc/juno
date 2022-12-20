@@ -7,7 +7,6 @@ import { knownIcons } from "../Icon/Icon.component.js"
 const modalfooterstyles = `
 	jn-flex
 	jn-flex-row
-	jn-bg-theme-background-lvl-2
 	jn-border-t
 	jn-border-theme-background-lvl-4
 	jn-py-2

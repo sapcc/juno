@@ -55,6 +55,7 @@ export const SwitchRow = ({
   successtext,
   className,
   onChange,
+  onClick,
   ...props
 }) => {
   const [isOn, setIsOn] = useState(on)
@@ -84,7 +85,7 @@ export const SwitchRow = ({
 
   const handleChange = (event) => {
     setIsOn(!isOn)
-    onChange(event)
+    onChange && onChange(event)
   }
 
   return (
@@ -93,6 +94,7 @@ export const SwitchRow = ({
         <Switch
           name={name}
           onChange={handleChange}
+          onClick={onClick}
           id={id}
           on={on}
           disabled={disabled}
@@ -160,8 +162,10 @@ SwitchRow.propTypes = {
   successtext: PropTypes.string,
   /** Pass a className */
   className: PropTypes.string,
-  /** Pass a handler to the checkbox element */
+  /** Pass a change handler to the Switch */
   onChange: PropTypes.func,
+  /** Pass a click handler to the Switch */
+  onClick: PropTypes.func,
 }
 
 SwitchRow.defaultProps = {
@@ -178,4 +182,5 @@ SwitchRow.defaultProps = {
   successtext: "",
   className: "",
   onChange: undefined,
+  onClick: undefined,
 }
