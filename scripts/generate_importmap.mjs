@@ -137,6 +137,7 @@ const mergePkgImportMaps = (pkgPath, pkgImportMaps) => {
     The "imports" map contains exact one package
   */
   for (let pkgImportMap of pkgImportMaps) {
+    if (!pkgImportMap.imports) continue
     // get name of the imported package
     const depPkgName = Object.keys(pkgImportMap.imports)[0]
     // the url or path to that package
@@ -250,7 +251,7 @@ for (let name in packageRegistry) {
         )
         // create generator
         const generator = new Generator({
-          env: [options.env, "browser", "module"],
+          env: [options.env, "browser"],
           defaultProvider: options.provider,
         })
         // get the importmap for current dependency
