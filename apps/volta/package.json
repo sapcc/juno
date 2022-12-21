@@ -48,7 +48,7 @@
     "react-json-view": "^1.21.3",
     "react-query": "^3.39.2",
     "react-refresh": "^0.10.0",
-    "react-router-dom": "6.3.0",
+    "react-router-dom": "6.4.5",
     "react-test-renderer": "^18.2.0",
     "regenerator-runtime": "^0.13.9",
     "sass-loader": "^12.4.0",
@@ -76,6 +76,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.2",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "6.4.5"
   }
 }
