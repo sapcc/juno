@@ -65,7 +65,7 @@ RUN \
 # /tmp/latest/importmap.json
 # /tmp/latest/manifest.json
 
-#FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server:latest AS lastbuild
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server:latest AS lastbuild
 
 # final image layer
 FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/nginx:alpine AS server
@@ -75,7 +75,8 @@ ENV BASE_URL=""
 RUN apk --no-cache add rsync
 
 # copy old versions to current layer
-#COPY --from=lastbuild /usr/share/nginx/html/* /usr/share/nginx/html/
+COPY --from=lastbuild /usr/share/nginx/html/* /usr/share/nginx/html/
+
 # copy new version 
 COPY --from=base /tmp/latest "/tmp/latest"
 # sync new versions over old

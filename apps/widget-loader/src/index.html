@@ -5,7 +5,8 @@
   </head>
   <body>
     Widget Loader Dev
-    <!-- <script type="module-shim">
+    <!--
+    <script type="module-shim">
       window.process = {env: {NODE_ENV: "production"}}
 
       console.log("==========================1")
@@ -28,30 +29,32 @@
       data-importmap-only="false"
     ></script> -->
 
-    <script
+    <!-- <script
     defer
     src="https://assets.juno.qa-de-1.cloud.sap/apps/widget-loader@latest/build/app.js"
     data-importmap-url="https://assets.juno.qa-de-1.cloud.sap/importmap.unpkg.dev.json"
     data-name="dashboard"
     data-version="latest"
-    ></script>
+    ></script> -->
 
     <div style="display: flex">
-<!-- 
+ 
       <div style="flex: 50%;">
         <script
         defer
         src="https://assets.juno.qa-de-1.cloud.sap/apps/widget-loader@latest/build/app.js"
-        data-name="whois"
+        data-name="assets-overview"
         data-version="latest"
+        data-props-manifest-url="https://assets.juno.qa-de-1.cloud.sap/manifest.json"
         ></script>
       </div>
       <div style="flex: 50%;">
         <script
         defer
         src="https://assets.juno.qa-de-1.cloud.sap/apps/widget-loader@latest/build/app.js"
-        data-name="dashboard"
+        data-name="assets-overview"
         data-version="latest"
+        data-props-manifest-url="https://assets.juno.qa-de-1.cloud.sap/manifest.json"
         ></script>
       </div>
     </div>
@@ -66,6 +69,6 @@
         data-props-manifest-url="https://assets.juno.qa-de-1.cloud.sap/manifest.json"
         ></script>
       </div>
-    </div> -->
-  </body>
+    </div> 
+  </body> 
 </html>
