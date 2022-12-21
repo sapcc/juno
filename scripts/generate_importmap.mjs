@@ -248,7 +248,7 @@ for (let name in packageRegistry) {
         )
         // create generator
         const generator = new Generator({
-          env: ["production", "browser"],
+          env: ["production", "browser", "module"],
           defaultProvider: options.provider,
         })
         // get the importmap for current dependency
