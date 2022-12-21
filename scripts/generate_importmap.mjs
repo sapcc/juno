@@ -26,6 +26,7 @@ const availableArgs = [
   "--ignore-externals=true|false",
   "--base-url=URL_OF_ASSETS_SERVER",
   "--verbose|-v",
+  "--env=[production|development]",
   "--help|-h",
 ]
 
@@ -39,6 +40,7 @@ const options = {
   ignoreExternals: false,
   verbose: false,
   v: false,
+  env: "production",
 }
 
 const args = process.argv.slice(2)
@@ -248,7 +250,7 @@ for (let name in packageRegistry) {
         )
         // create generator
         const generator = new Generator({
-          env: ["production", "browser", "module"],
+          env: [options.env, "browser", "module"],
           defaultProvider: options.provider,
         })
         // get the importmap for current dependency

@@ -35,9 +35,21 @@ RUN \
   --ignore-externals=false \
   --output=/tmp/latest/importmap.$provider.json  \
   --verbose=$VERBOSE ; \
+  \
+  # DEV\
+  node ./scripts/generate_importmap.mjs \
+  --provider=$provider \
+  --env=development \
+  --exit-on-error=$EXIT_ON_ERROR \
+  --src=/tmp/latest \
+  --base-url="%BASE_URL%" \
+  --ignore-externals=false \
+  --output=/tmp/latest/importmap.$provider.dev.json  \
+  --verbose=$VERBOSE ; \
   done ; \
   \
   cp /tmp/latest/importmap.$DEFAULT_PROVIDER.json /tmp/latest/importmap.json ; \
+  cp /tmp/latest/importmap.$DEFAULT_PROVIDER.dev.json /tmp/latest/importmap.dev.json ; \
   \
   node ./scripts/generate_manifest.mjs \
   --src=/tmp/latest \
