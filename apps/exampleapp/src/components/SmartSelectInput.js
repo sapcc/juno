@@ -121,8 +121,13 @@ const SmartSelectInput = ({ options }) => {
     whileElementsMounted: autoUpdate,
   })
 
-  const click = useClick(context)
-  const dismiss = useDismiss(context)
+  const click = useClick(context, {
+    toggle: true,
+    event: "mousedown",
+  })
+  const dismiss = useDismiss(context, {
+    referencePress: true,
+  })
   const role = useRole(context)
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
@@ -155,26 +160,29 @@ const SmartSelectInput = ({ options }) => {
 
   return (
     <div>
-      <div ref={reference} {...getReferenceProps()}>
-        <div className={fakeInputText(open)}>
-          {selectedOptions.length > 0 ? (
-            <>
-              {selectedOptions.map((item, index) => (
-                <Badge
-                  className={fakeInputTextOptions}
-                  key={index}
-                  icon="deleteForever"
-                  text={item.label}
-                  variant="info"
-                  onClick={() => onOptionDeselected(item)}
-                />
-              ))}
-            </>
-          ) : (
-            <div className={fakeInputTextPlaceholder}>Select...</div>
-          )}
-        </div>
+      <div
+        className={fakeInputText(open)}
+        ref={reference}
+        {...getReferenceProps()}
+      >
+        {selectedOptions.length > 0 ? (
+          <>
+            {selectedOptions.map((item, index) => (
+              <Badge
+                className={fakeInputTextOptions}
+                key={index}
+                icon="deleteForever"
+                text={item.label}
+                variant="info"
+                onClick={() => onOptionDeselected(item)}
+              />
+            ))}
+          </>
+        ) : (
+          <div className={fakeInputTextPlaceholder}>Select...</div>
+        )}
       </div>
+
       {open && (
         <FloatingFocusManager context={context} modal={false}>
           <div
