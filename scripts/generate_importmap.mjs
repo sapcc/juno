@@ -33,7 +33,7 @@ const availableArgs = [
 // default argument values
 const options = {
   provider: "jspm",
-  exitOnError: "true",
+  exitOnError: true,
   src: path.dirname(url.fileURLToPath(import.meta.url)),
   baseUrl: "%BASE_URL%",
   output: "./importmap.json",

@@ -2969,6 +2969,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@remix-run/router@npm:1.0.5":
+  version: 1.0.5
+  resolution: "@remix-run/router@npm:1.0.5"
+  checksum: 5d66750b7defc10c80d9748fa003fcfe2af9ef82de3c06be88c926ede36a15b9e971ed2222981db843494e2f77c3de14470efe6dc877530cea774dc31162ec6f
+  languageName: node
+  linkType: hard
+
 "@rollup/plugin-babel@npm:^6.0.3":
   version: 6.0.3
   resolution: "@rollup/plugin-babel@npm:6.0.3"
@@ -6366,7 +6373,6 @@ __metadata:
     purgecss-webpack-plugin: ^4.1.3
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     react-query: ^3.39.2
     react-refresh: ^0.10.0
     react-test-renderer: ^18.2.0
@@ -6386,7 +6392,6 @@ __metadata:
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     react-query: ^3.39.2
     url-state-provider: "*"
     zustand: ^4.1.1
@@ -10115,7 +10120,6 @@ __metadata:
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     react-query: 3.39.2
     url-state-provider: "*"
     zustand: ^4.1.1
@@ -11772,7 +11776,6 @@ __metadata:
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     react-query: ^3.39.2
     url-state-router: "*"
     zustand: ^4.1.1
@@ -11790,15 +11793,6 @@ __metadata:
     tiny-warning: ^1.0.0
     value-equal: ^1.0.1
   checksum: addd84bc4683929bae4400419b5af132ff4e4e9b311a0d4e224579ea8e184a6b80d7f72c55927e4fa117f69076a9e47ce082d8d0b422f1a9ddac7991490ca1d0
-  languageName: node
-  linkType: hard
-
-"history@npm:^5.2.0":
-  version: 5.3.0
-  resolution: "history@npm:5.3.0"
-  dependencies:
-    "@babel/runtime": ^7.7.6
-  checksum: d73c35df49d19ac172f9547d30a21a26793e83f16a78386d99583b5bf1429cc980799fcf1827eb215d31816a6600684fba9686ce78104e23bd89ec239e7c726f
   languageName: node
   linkType: hard
 
@@ -14586,7 +14580,6 @@ __metadata:
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     url-state-provider: "*"
     zustand: ^4.1.1
   languageName: unknown
@@ -17900,16 +17893,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:6.3.0":
-  version: 6.3.0
-  resolution: "react-router-dom@npm:6.3.0"
+"react-router-dom@npm:6.4.5":
+  version: 6.4.5
+  resolution: "react-router-dom@npm:6.4.5"
   dependencies:
-    history: ^5.2.0
-    react-router: 6.3.0
+    "@remix-run/router": 1.0.5
+    react-router: 6.4.5
   peerDependencies:
     react: ">=16.8"
     react-dom: ">=16.8"
-  checksum: 77603a654f8a8dc7f65535a2e5917a65f8d9ffcb06546d28dd297e52adcc4b8a84377e0115f48dca330b080af2da3e78f29d590c89307094d36927d2b1751ec3
+  checksum: 09d7841dd52efd2c60947171f95d9d1860cabd7540ac74dede86a6c36a2dd26a645e4928cbc8aa4e1c9d1f906f2ef144ba6da5ac69243590df855a6df8cfe1aa
   languageName: node
   linkType: hard
 
@@ -17949,14 +17942,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:6.3.0":
-  version: 6.3.0
-  resolution: "react-router@npm:6.3.0"
+"react-router@npm:6.4.5":
+  version: 6.4.5
+  resolution: "react-router@npm:6.4.5"
   dependencies:
-    history: ^5.2.0
+    "@remix-run/router": 1.0.5
   peerDependencies:
     react: ">=16.8"
-  checksum: 7be673f5e72104be01e6ab274516bdb932efd93305243170690f6560e3bd1035dd1df3d3c9ce1e0f452638a2529f43a1e77dcf0934fc8031c4783da657be13ca
+  checksum: 0d471df39f0487224240f9910c2f2939519f3e9909a7b19f72767aeea2caf1c9fa4e8ea9a51b17c20051ec252db0fcc34a7a0b3068b338dd9d8eb656ffd489c1
   languageName: node
   linkType: hard
 
@@ -20382,7 +20375,6 @@ __metadata:
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     react-query: ^3.39.2
     url-state-provider: "*"
     zustand: ^4.1.1
@@ -21604,7 +21596,7 @@ __metadata:
     react-json-view: ^1.21.3
     react-query: ^3.39.2
     react-refresh: ^0.10.0
-    react-router-dom: 6.3.0
+    react-router-dom: 6.4.5
     react-test-renderer: ^18.2.0
     regenerator-runtime: ^0.13.9
     sass-loader: ^12.4.0
@@ -21624,9 +21616,8 @@ __metadata:
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     react-query: ^3.39.2
-    react-router-dom: 6.3.0
+    react-router-dom: 6.4.5
   languageName: unknown
   linkType: soft
 
@@ -22235,7 +22226,6 @@ __metadata:
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     url-state-provider: "*"
   languageName: unknown
   linkType: soft
