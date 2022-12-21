@@ -37,24 +37,22 @@
     data-version="latest"
     ></script> -->
 
-    <div style="display: flex">
+    <!-- <div style="display: flex">
  
       <div style="flex: 50%;">
         <script
         defer
         src="https://assets.juno.qa-de-1.cloud.sap/apps/widget-loader@latest/build/app.js"
-        data-name="assets-overview"
+        data-name="whois"
         data-version="latest"
-        data-props-manifest-url="https://assets.juno.qa-de-1.cloud.sap/manifest.json"
         ></script>
       </div>
       <div style="flex: 50%;">
         <script
         defer
         src="https://assets.juno.qa-de-1.cloud.sap/apps/widget-loader@latest/build/app.js"
-        data-name="assets-overview"
+        data-name="dashboard"
         data-version="latest"
-        data-props-manifest-url="https://assets.juno.qa-de-1.cloud.sap/manifest.json"
         ></script>
       </div>
     </div>
@@ -69,6 +67,45 @@
         data-props-manifest-url="https://assets.juno.qa-de-1.cloud.sap/manifest.json"
         ></script>
       </div>
-    </div> 
+    </div>  -->
+
+    <!-- <script
+      src="https://assets.juno.qa-de-1.cloud.sap/apps/widget-loader@latest/build/app.js"
+      data-importmap-only="true"
+    ></script> -->
+
+    <script
+    src="/index.js"
+    data-importmap-url="https://assets.juno.qa-de-1.cloud.sap/importmap.json"
+    data-importmap-only="true"
+  ></script>
+
+    <script type="module" defer>
+      const container = document.createElement("div")
+      container.style = "display: flex; "
+      const dashboardWrapper = document.createElement("div")
+      dashboardWrapper.style = "flex: 50%; border: 1px solid #ddd"
+      dashboardWrapper.textContent = "Loading..."
+      const overviewWrapper = document.createElement("div")
+      overviewWrapper.style = "flex: 50%; border: 1px solid #ddd"
+      overviewWrapper.textContent = "Loading..."
+      container.append(dashboardWrapper,overviewWrapper)
+      const whoisWrapper = document.createElement("div")
+      whoisWrapper.style="border: 1px solid #ddd;"
+      whoisWrapper.textContent = "Loading..."
+    
+      document.body.append(container,whoisWrapper) 
+
+      window.addEventListener("junoImportmapLoaded",(e) => {
+        console.log("==========IMPORTMAP LOADED", e)
+
+        importShim("@juno/dashboard@latest").then((app) => app.mount(dashboardWrapper))
+        importShim("@juno/whois@latest").then((app) => app.mount(whoisWrapper))
+        importShim("@juno/assets-overview@latest").then((app) => app.mount(overviewWrapper,{props: {
+          manifestUrl:"https://assets.juno.qa-de-1.cloud.sap/manifest.json"
+      }}))
+      })
+
+    </script>
   </body> 
 </html>

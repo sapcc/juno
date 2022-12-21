@@ -93,6 +93,12 @@ window.__junoWidgetLoader =
       }
 
       loadImportmap({ origin, importmapUrl }).then(async () => {
+        const loadedEvent = new CustomEvent("junoImportmapLoaded", {
+          detail: { origin: importmapUrl },
+        })
+
+        window.dispatchEvent(loadedEvent)
+
         //return here if only the importmap was requested
         if (importmapOnly === "true") return
 
