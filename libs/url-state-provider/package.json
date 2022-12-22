@@ -14,7 +14,7 @@
     "test": "NODE_ENV=test yarn jest "
   },
   "devDependencies": {
-    "@babel/core": "^7.20.2",
+    "@babel/core": "7.20.7",
     "@babel/preset-env": "^7.20.2",
     "@rollup/plugin-terser": "^0.1.0",
     "babel-jest": "^29.3.1",
