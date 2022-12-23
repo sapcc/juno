@@ -1,5 +1,8 @@
 # Pipeline
 
+![assets_build](./assets_build.png)
+Overview how the assets are build
+
 ## Base image
 
 We use the base image to run scripts such as the as script to generate the importmap and to cache node modules. This image is created on every change in juno repo. It contains important libs like rsync and jq and npms like the jspm generator.
