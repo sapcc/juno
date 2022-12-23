@@ -243,6 +243,10 @@ jobs:
             type: registry-image
             source: { repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox }
           inputs: 
+            <%# this is important we mount the image here as 
+                input that we can untar it in the run below  
+                to combine all together in the dist output
+                that we can use in the assets-server image build%> 
             <% ASSETS.each do |name,details| %>
             - name: <%=details[:type]%>-<%= name %>.image
             <% end %>
@@ -256,7 +260,9 @@ jobs:
                 echo "add <%=details[:type]%>-<%= name %> to ./dist/<%=details[:type]%>s/<%= name %>"
                 mkdir -p ./dist/<%=details[:type]%>s/<%= name %> 
                 mkdir -p /tmp/<%=details[:type]%>-<%= name %>
+                # Important! here we untar the asset image that we defined as input in the task 
                 tar -xf ./<%=details[:type]%>-<%= name %>.image/rootfs.tar -C /tmp/<%=details[:type]%>-<%= name %>
+                # Copy the build over to ./dist/app or ./dist/lib related to the type
                 cp -r /tmp/<%=details[:type]%>-<%= name %>/dist/* ./dist/<%=details[:type]%>s/<%= name %>/
                 ls -all ./dist/<%=details[:type]%>s/<%= name %>/
                 echo "====================="

@@ -11,7 +11,7 @@ This image is used as the basis for creating images for individual apps and libs
 
 ## Asset image
 
-The asset image uses base image to build the assets. Finally, the finished build is placed under /dist/build. You can also find package.json under /dist. package.json is used according to the **Single source of truth - policy** when building the assets server image for generating the importmap and the manifest.
+The asset image uses base image to build the assets. Finally, the finished build is placed under `/dist/build`. You can also find `package.json` under `/dist`. The `package.json` is used according to the **Single source of truth - policy** when building the assets server image for generating the importmap and the manifest.
 
 | :exclamation: This is very important |
 | ------------------------------------ |
