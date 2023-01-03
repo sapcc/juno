@@ -4210,6 +4210,45 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pmmmwh/react-refresh-webpack-plugin@npm:^0.5.4":
+  version: 0.5.10
+  resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.10"
+  dependencies:
+    ansi-html-community: ^0.0.8
+    common-path-prefix: ^3.0.0
+    core-js-pure: ^3.23.3
+    error-stack-parser: ^2.0.6
+    find-up: ^5.0.0
+    html-entities: ^2.1.0
+    loader-utils: ^2.0.4
+    schema-utils: ^3.0.0
+    source-map: ^0.7.3
+  peerDependencies:
+    "@types/webpack": 4.x || 5.x
+    react-refresh: ">=0.10.0 <1.0.0"
+    sockjs-client: ^1.4.0
+    type-fest: ">=0.17.0 <4.0.0"
+    webpack: ">=4.43.0 <6.0.0"
+    webpack-dev-server: 3.x || 4.x
+    webpack-hot-middleware: 2.x
+    webpack-plugin-serve: 0.x || 1.x
+  peerDependenciesMeta:
+    "@types/webpack":
+      optional: true
+    sockjs-client:
+      optional: true
+    type-fest:
+      optional: true
+    webpack-dev-server:
+      optional: true
+    webpack-hot-middleware:
+      optional: true
+    webpack-plugin-serve:
+      optional: true
+  checksum: c45beded9c56fbbdc7213a2c36131ace5db360ed704d462cc39d6678f980173a91c9a3f691e6bd3a026f25486644cd0027e8a12a0a4eced8e8b886a0472e7d34
+  languageName: node
+  linkType: hard
+
 "@popperjs/core@npm:^2.5.4, @popperjs/core@npm:^2.6.0":
   version: 2.11.2
   resolution: "@popperjs/core@npm:2.11.2"
@@ -10294,6 +10333,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js-pure@npm:^3.23.3":
+  version: 3.27.1
+  resolution: "core-js-pure@npm:3.27.1"
+  checksum: 571ff8ffc00cba7c1937e70b502a382317d450ef3a38835b0dc4a6a9645ce9853c10a90f71a2027901fb52690a7ba702396f29e125d1b9d6ae3e277db1bcdf57
+  languageName: node
+  linkType: hard
+
 "core-js-pure@npm:^3.8.1, core-js-pure@npm:^3.8.2":
   version: 3.21.0
   resolution: "core-js-pure@npm:3.21.0"
@@ -10901,7 +10947,7 @@ __metadata:
     "@babel/core": ^7.20.2
     "@babel/preset-env": ^7.20.2
     "@babel/preset-react": ^7.18.6
-    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.1
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.4
     "@svgr/webpack": ^6.2.1
     "@testing-library/dom": ^8.19.0
     "@testing-library/jest-dom": ^5.16.5
@@ -16848,6 +16894,17 @@ __metadata:
     emojis-list: ^3.0.0
     json5: ^2.1.2
   checksum: 9078d1ed47cadc57f4c6ddbdb2add324ee7da544cea41de3b7f1128e8108fcd41cd3443a85b7ee8d7d8ac439148aa221922774efe4cf87506d4fb054d5889303
+  languageName: node
+  linkType: hard
+
+"loader-utils@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "loader-utils@npm:2.0.4"
+  dependencies:
+    big.js: ^5.2.2
+    emojis-list: ^3.0.0
+    json5: ^2.1.2
+  checksum: a5281f5fff1eaa310ad5e1164095689443630f3411e927f95031ab4fb83b4a98f388185bb1fe949e8ab8d4247004336a625e9255c22122b815bb9a4c5d8fc3b7
   languageName: node
   linkType: hard
 
