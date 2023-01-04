@@ -1,110 +1,92 @@
-import React, { useState } from "react"
-import ReactDOM from "react-dom";
+import React from "react"
 import PropTypes from "prop-types"
-import { Icon } from "../Icon/index.js"
+import { useTooltip } from "./useTooltip"
 
-/* Styles */
-const popoverStyles = `
-	jn-bg-theme-background-lvl-1
-	jn-text-theme-high 
-	jn-inline-flex	
-	jn-items-start
-	jn-p-2
-	jn-rounded
-`
+export const tooltipPlacementOptions = [
+  "top",
+  "top-start",
+  "top-end",
+  "right",
+  "right-start",
+  "right-end",
+  "bottom",
+  "bottom-start",
+  "bottom-end",
+  "left",
+  "left-start",
+  "left-end",
+]
 
-const popoverTextStyles = `
-	jn-mx-4
-	jn-max-w-full
-`
+export const tooltipVariants = ["info", "warning", "danger", "error", "success"]
 
-const popoverIconStyles = `
-	jn-shrink-0
-`
+const TooltipContext = React.createContext(null)
 
-const getIcon = (variant) => {
-	switch (variant) {
-		case "error":
-			return "dangerous"
-		default:
-			return variant
-	}
+/**
+ * This hook holds the TooltipContext.
+ * 
+ * @returns TooltipContext
+ */
+export const useTooltipState = () => {
+  const context = React.useContext(TooltipContext)
+
+  if (context == null) {
+    throw new Error("Tooltip components must be wrapped in <Tooltip />")
+  }
+
+  return context
 }
 
 /**
-A ToolTip component. Renders a non-semantic version by default, and can render 'Info', 'Warning', 'Error', 'Danger', and 'Success' semantic variants.
-*/
-
-export const Tooltip = ({
-	variant,
-	children,
-	text,
-	className,
-	disabled,
-	open,
-	onClick,
-	...props
-}) => {
-	const [isOpen, setIsOpen] = useState(false)
-	
-	React.useEffect(() => {
-		setIsOpen(open)
-	}, [open])
-	
-	const handleClick = (event) => {
-		setIsOpen(!isOpen)
-		onClick && onClick(event)
-	}
-	
-	return (		
-		<span className={`juno-tooltip`} {...props}>
-			<Icon 
-				onClick={handleClick} 
-				className={`${className}`} 
-				disabled={disabled}
-			/>
-			{ isOpen ?
-				<div className={`juno-tooltip-popover juno-tooltip-popover-${variant} ${popoverStyles}`}>
-					{ variant ? 
-						<Icon 
-							icon={getIcon(variant)}
-							color={"jn-text-theme-" + variant}
-							className={`juno-tooltip-popover-icon ${popoverIconStyles}`}
-						/>
-					:
-						null
-					}
-					<p className={`${popoverTextStyles}`}>
-						{ children || text }
-					</p>
-				</div>
-			:
-				null
-			}
-		</span>
-	)
+ * A tooltip component that optionally comes in the various semantic flavors (e.g. info, warning, ...). It can be used as an uncontrolled component where
+ * you configure the event type that should open the tooltip (click or hover) or alternatively you can use it as a controlled component where you set the
+ * open state and handle the events that open/close the tooltip yourself. 
+ */
+export function Tooltip({ 
+  initialOpen,
+  placement,
+  variant,
+  open,
+  triggerEvent,
+  disabled,
+  children, 
+  ...props }) {
+  // This can accept any floating ui props as options, e.g. `placement`,
+  // or other positioning options.
+  const tooltip = useTooltip({initialOpen, placement, variant, open, triggerEvent, disabled, props})
+  return (
+    <TooltipContext.Provider value={tooltip}>
+      {children}
+    </TooltipContext.Provider>
+  )
 }
 
+// /** tooltip state from useTooltipState hook, needs to be passed to both anchor and tooltip itself */
+// state: PropTypes.object,
+
 Tooltip.propTypes = {
-	/** The semantic variant of the tooltip, or `plain` */
-	variant: PropTypes.oneOf(["info", "warning", "danger", "error", "success"]),
-	/** Pass child nodes to display in the tooltip */
-	children: PropTypes.node,
-	/** Text to display in the tooltip */
-	text: PropTypes.node,
-	/** Pass a className to render to the icon button*/
-	className: PropTypes.string,
-	/** Disable the tooltip */
-	disabled: PropTypes.bool,
-	/** Whether the Tooltip is open */
-	open: PropTypes.bool,
+  // /** The semantic variant of the tooltip, or `plain` */
+  variant: PropTypes.oneOf(tooltipVariants),
+  /** Uncontrolled Tooltip: Choose which event should trigger the opening of the tooltip (click or hover) */
+  triggerEvent: PropTypes.oneOf(["click", "hover"]),
+  /** Tooltip placement in relation to trigger, default is top */
+  placement: PropTypes.oneOf(tooltipPlacementOptions),
+  /** Disable the tooltip. If this is true, the uncontrolled tooltip can't be opened anymore and the cursor hovered over the trigger will be the default cursor instead of the pointer cursor */
+  disabled: PropTypes.bool,
+  /** Set whether tooltip should be initially rendered opened or closed. This is only evaluated if Tooltip is in uncontrolled mode */
+  initialOpen: PropTypes.bool,
+  /** Whether the Tooltip is open. By passing this prop you turn the Tooltip into a controlled component, which means 
+   * you also have to take care of opening and closing it. In this case the triggerEvent prop is ignored since you're handling the trigger yourself */
+  open: PropTypes.bool,
+  /** Pass the TooltipTrigger and TooltipContent elements as children */
+  children: PropTypes.node,
 }
 
 Tooltip.defaultProps = {
-	variant: null,
-	children: null,
-	text: "",
-	className: "",
-	disabled: null,
-	open: false,
+  variant: undefined,
+  triggerEvent: "click",
+  placement: "top",
+  disabled: false,
+  initialOpen: false,
+  open: undefined,
+  children: null,
 }

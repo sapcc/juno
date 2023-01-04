@@ -1,4 +1,4 @@
-import React from "react"
+import React, { forwardRef} from "react"
 import PropTypes from "prop-types"
 
 /* Import Icons here. The icon svgs in the icons folder correspond to the respective "xyz_24px.svg" from material-ui icons.
@@ -634,7 +634,7 @@ const getColoredSizedIcon = ({
   }
 }
 
-export const Icon = ({
+export const Icon = forwardRef(({
   icon,
   color,
   size,
@@ -643,7 +643,7 @@ export const Icon = ({
   href,
   onClick,
   ...props
-}) => {
+}, ref) => {
   // if href or onClick was passed, then we want to add the passed classes and passed arbitrary props to the button or anchor
   // otherwise add the passed classes/props to the icon itself
   const iconClassName = href || onClick ? "" : className
@@ -667,6 +667,7 @@ export const Icon = ({
       onClick={handleClick}
       className={`juno-icon-button ${buttonIconStyles} ${className}`}
       aria-label={title || icon}
+      ref={ref}
       {...props}
     >
       {icn}
@@ -678,6 +679,7 @@ export const Icon = ({
       href={href}
       className={`juno-icon-link ${anchorIconStyles} ${className}`}
       aria-label={title || icon}
+      ref={ref}
       {...props}
     >
       {icn}
@@ -685,8 +687,9 @@ export const Icon = ({
   )
 
   /* render an <a> if href was passed, otherwise render button if onClick was passes, otherwise render plain icon: */
-  return href ? anchor : onClick ? button : icn
-}
+  /* if plain icon, add ref to the icon. In the other cases the ref goes on the anchor or button */
+  return href ? anchor : onClick ? button : <span ref={ref}>{icn}</span>
+})
 
 Icon.propTypes = {
   /** The icon to display */

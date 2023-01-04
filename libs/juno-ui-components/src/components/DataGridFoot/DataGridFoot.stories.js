@@ -8,6 +8,13 @@ export default {
   component: DataGridFoot,
   argTypes: {},
   decorators: [(story) => <table>{story()}</table>],
+  parameters: {
+    docs: {
+      source: {
+        excludeDecorators: false,
+      },
+    },
+  }
 }
 
 const Template = ({ items, ...args }) => (
