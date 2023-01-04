@@ -479,7 +479,7 @@
   // LT Spinner
   --color-spinner-primary: var(--color-accent-raw);
   // LT Syntax Highlighting
-  --color-syntax-highlight-base00: var(--color-juno-grey-light-3); // bg
+  --color-syntax-highlight-base00: var(--color-codeblock-bg); // bg
   --color-syntax-highlight-base01: var(--color-juno-grey-light-3); // ?
   --color-syntax-highlight-base02: var(--color-sap-grey-3); // lines and boxes
   --color-syntax-highlight-base03: var(--color-sap-grey-3);
@@ -718,7 +718,7 @@
   // DT Spinner
   --color-spinner-primary: var(--color-accent-raw);
   // DT Syntax Highlighting
-  --color-syntax-highlight-base00: var(--color-juno-grey-blue-8); // bg
+  --color-syntax-highlight-base00: var(--color-codeblock-bg); // bg
   --color-syntax-highlight-base01: var(--color-juno-grey-blue-3); // ?
   --color-syntax-highlight-base02: #bbb; // lines and boxes
   --color-syntax-highlight-base03: var(--color-sap-grey-3);
@@ -745,7 +745,7 @@
   --color-datalistrow-selected: var(--color-accent-raw);
   // DT CodeBlock
   --color-codeblock-bg: var(--color-background-lvl-2-raw);
-  --color-codeblock-bar-border: var(--color-background-lvl-0-raw);
+  --color-codeblock-bar-border: var(--color-background-lvl-4-raw);
   // DT Panel
   --color-panel-bg: rgba(var(--color-juno-grey-blue-11-raw), 0.6);
   --color-panel-border-raw: var(--color-juno-grey-blue-11-raw);

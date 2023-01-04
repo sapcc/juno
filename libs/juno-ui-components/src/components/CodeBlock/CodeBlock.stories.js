@@ -1,78 +1,85 @@
 import React from "react"
-
 import { CodeBlock } from "./index.js"
+import { Tabs } from "../Tabs/index.js"
+import { TabList } from "../TabList/index.js"
+import { Tab } from "../Tab/index.js"
+import { Default as TabStory } from "../Tab/Tab.stories.js"
+import { TabPanel } from "../TabPanel/index.js"
 
 export default {
   title: "Components/CodeBlock",
   component: CodeBlock,
-  argTypes: {},
+  argTypes: {
+    size: {
+      options: ["auto", "small", "medium", "large"],
+      control: {type: "select"}
+    }
+  },
 }
 
 const Template = (args) => <CodeBlock {...args} />
+
+const TabsTemplate = ({tabs, codeBlocks, ...args}) => (
+  <Tabs variant="codeblocks">
+    <TabList>
+      {tabs.map((tab, t) => (
+        <Tab {...tab} key={`t-${t}`} ></Tab>
+      ))}
+    </TabList>
+    {codeBlocks.map((codeBlock, c) => (
+      <TabPanel>
+        <CodeBlock {...codeBlock} key={`c-${c}`}/>
+      </TabPanel>
+    ))}
+  </Tabs>
+)
 
 export const Default = Template.bind({})
 Default.parameters = {
   docs: {
     description: {
-      story: "Default CodeBlock",
+      story: "Default code block",
     },
   },
 }
 Default.args = {
-  children: "Some code goes here",
+  content: "Some code goes here"
 }
 
-export const WithHeading = Template.bind({})
-WithHeading.parameters = {
+export const DefaultWithChildren = Template.bind({})
+DefaultWithChildren.parameters = {
   docs: {
     description: {
-      story: "Default CodeBlock, no heading",
+      story: "Code Block with children",
     },
   },
 }
-WithHeading.args = {
-  children: "Some code goes here",
-  heading: "My code",
+DefaultWithChildren.args = {
+  lang: "html",
+  children: `<html lang="en">
+  <head>
+    <title="Multi-line Html" />
+  </head>
+  <body>
+    <main>
+    </main>
+  </body>
+</html>`
 }
 
-export const WithTabs = Template.bind({})
-WithTabs.parameters = {
+export const DefaultWithHeading = Template.bind({})
+DefaultWithHeading.parameters = {
   docs: {
     description: {
-      story: "Tabbed Codeblock"
+      story: "Code Block with Heading WIP"
     }
   }
 }
-WithTabs.args = {
-  tabs: ["React.js", "Vue.js", "Svelte.js", "html"],
-  contents: [
-    "<ReactComponent />",
-    "<VueComponent />",
-    "<SvelteComponent />",
-    "<div>Component</div>",
-  ]
-}
-
-export const MultiLineWithHeading = Template.bind({})
-MultiLineWithHeading.parameters = {
-  docs: {
-    description: {
-      story: "Multiline CodeBlock",
-    },
-  },
-}
-MultiLineWithHeading.args = {
-  heading: "index.html",
-  children: `<html lang="en">
-<head>
-	<title="Multi-line Html" />
-</head>
-<body>
-	<main>
-	</main>
-</body>
-</html>
-`,
+DefaultWithHeading.args = {
+  children: `<CodeBlock>
+  <p>some code here</p>
+</CodeBlock>`,
+  heading: "CodeBlock.jsx"
 }
 
 export const FixedSize = Template.bind({})
@@ -85,20 +92,89 @@ FixedSize.parameters = {
 }
 FixedSize.args = {
   size: "small",
-  children:
-    "-------- BEGIN CERTIFICATE -------- \n30818902818100C4A06B7B52F8D17DC1CCB47362C64AB799AAE19E245A7559E9CEEC7D8AA4DF07CB0B21FDFD763C63A313A668FE9D764ED913C51A676788DB62AF624F422C2F112C1316922AA5D37823CD9F43D1FC54513D14B2-9E36991F08A042C42EAAEEE5FE8E2CB10167174A359CEBF6FACC2C9CA933AD403137EE2C3F4CBED9460129C72B02030100030818902818100C4A06B7B52F8D17DC1CCB47362C64AB799AAE19E245A7559E9CEEC7D8AA4DF07CB0B21FDFD763C63A313A668FE9D764ED913C51A676788DB62AF624F422C2F112C1316922AA5D37823CD9F43D1FC54513D14B2-9E36991F08A042C42EAAEEE5FE8E2CB10167174A359CEBF6FACC2C9CA933AD403137E2C3F4CBED9460129C72B020301000 \n-------- END CERTIFICATE --------",
+  content: ` -------- BEGIN CERTIFICATE -------- 
+  30818902818100C4A06B7B52F8D17DC1C0
+  B47362C64AB799AAE19E245A7559E9CEEC
+  7D8AA4DF07CB0B21FDFD763C63A313A668
+  FE9D764ED913C51A676788DB62AF624F42
+  2C2F112C1316922AA5D37823CD9F43D1FC
+  54513D14B2-9E36991F08A042C42EAAEEE
+  5FE8E2CB10167174A359CEBF6FACC2C9CA
+  933AD403137EE2C3F4CBED9460129C72B0
+  030100030818902818100C4A06B7B52F8D
+  17DC1CCB47362C64AB799AAE19E245A755
+  9E9CEEC7D8AA4DF07CB0B21FDFD763C63A
+  313A668FE9D764ED913C51A676788DB62A
+  F624F422C2F112C1316922AA5D37823CD9
+  F43D1FC54513D14B2-9E36991F08A042C4
+  2EAAEEE5FE8E2CB10167174A359CEBF6FA
+  CC2C9CA933AD403137E2C3F4CBED946012
+  9C72B020301000
+  -------- END CERTIFICATE -------- `,
 }
 
-export const noWrap = Template.bind({})
-noWrap.parameters = {
+export const NonWrappingCodeBlock = Template.bind({})
+NonWrappingCodeBlock.parameters = {
   docs: {
     description: {
-      story: "Non-wrapping CodeBlock",
-    },
-  },
+      story: "Pass `wrap={false}` to disable line-wrapping"
+    }
+  }
 }
-noWrap.args = {
+NonWrappingCodeBlock.args = {
   wrap: false,
   children:
-    "-------- BEGIN CERTIFICATE -------- 30818902818100C4A06B7B52F8D17DC1CCB47362C64AB799AAE19E245A7559E9CEEC7D8AA4DF07CB0B21FDFD763C63A313A668FE9D764ED913C51A676788DB62AF624F422C2F112C1316922AA5D37823CD9F43D1FC54513D14B2-9E36991F08A042C42EAAEEE5FE8E2CB10167174A359CEBF6FACC2C9CA933AD403137EE2C3F4CBED9460129C72B02030100030818902818100C4A06B7B52F8D17DC1CCB47362C64AB799AAE19E245A7559E9CEEC7D8AA4DF07CB0B21FDFD763C63A313A668FE9D764ED913C51A676788DB62AF624F422C2F112C1316922AA5D37823CD9F43D1FC54513D14B2-9E36991F08A042C42EAAEEE5FE8E2CB10167174A359CEBF6FACC2C9CA933AD403137E2C3F4CBED9460129C72B020301000 -------- END CERTIFICATE --------",
+  "-------- BEGIN CERTIFICATE -------- 30818902818100C4A06B7B52F8D17DC1CCB47362C64AB799AAE19E245A7559E9CEEC7D8AA4DF07CB0B21FDFD763C63A313A668FE9D764ED913C51A676788DB62AF624F422C2F112C1316922AA5D37823CD9F43D1FC54513D14B2-9E36991F08A042C42EAAEEE5FE8E2CB10167174A359CEBF6FACC2C9CA933AD403137EE2C3F4CBED9460129C72B02030100030818902818100C4A06B7B52F8D17DC1CCB47362C64AB799AAE19E245A7559E9CEEC7D8AA4DF07CB0B21FDFD763C63A313A668FE9D764ED913C51A676788DB62AF624F422C2F112C1316922AA5D37823CD9F43D1FC54513D14B2-9E36991F08A042C42EAAEEE5FE8E2CB10167174A359CEBF6FACC2C9CA933AD403137E2C3F4CBED9460129C72B020301000 -------- END CERTIFICATE --------",
 }
+
+export const JSONView = Template.bind({})
+JSONView.parameters = {
+  docs: {
+    description: {
+      story: "Json View"
+    }
+  }
+}
+JSONView.args = {
+  lang: "json",
+  heading: "Json CodeBlock",
+  content: {
+    someKey: "some value",
+    someOtherKey: "some other value",
+    nestedKeys: {
+      firstNestedKey: "first nested value"
+    }
+  }
+}
+
+export const CodeBlocksWithTabs = TabsTemplate.bind({})
+CodeBlocksWithTabs.parameters = {
+  docs: {
+    description: {
+      story: "Tabbed CodeBlocks can be composed using the `<Tabs>`, `<Tab>`, `<TabList>`, and `<TabPanel>` components. Make sure to pass `variant='codeblocks'` to the `<Tabs>` component."
+    }
+  }
+}
+CodeBlocksWithTabs.args = {
+  tabs: [
+    { ...TabStory.args, children: "UserData.jsx"},
+    { ...TabStory.args, children: "data.json"},
+    { ...TabStory.args, children: "UserData.html"},
+  ],
+  codeBlocks: [
+    { content: "<UserData name='User' data={data.json} />"},
+    { lang:"json", content: {firstName: "Joan", lastName: "Clarke", placeOfBirth: "West Norwood, London, England"}},
+    { content: `<div>
+  <dl>
+    <dt>First Name</dt>
+    <dd>Joan</dd>
+    <dt>Last Name</dt>
+    <dd>Clarke</dd>
+    <dt>Place of Birth</dt>
+    <dd>West Norwood, London, England</dd>
+  </dl>
+</div>`},
+  ]
+}
+
+
