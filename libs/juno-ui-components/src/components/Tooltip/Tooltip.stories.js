@@ -6,7 +6,7 @@ import { Icon } from "../Icon/index.js"
 import { Button } from "../Button/index.js"
 
 export default {
-  title: "WiP/Tooltip/Tooltip",
+  title: "Components/Tooltip/Tooltip",
   component: Tooltip,
   argTypes: {},
   decorators: [

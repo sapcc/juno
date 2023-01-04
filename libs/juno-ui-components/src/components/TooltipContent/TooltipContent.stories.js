@@ -5,7 +5,7 @@ import { TooltipTrigger } from "../TooltipTrigger/index.js"
 
 
 export default {
-  title: "WiP/Tooltip/TooltipContent",
+  title: "Components/Tooltip/TooltipContent",
   component: TooltipContent,
   argTypes: {},
   decorators: [

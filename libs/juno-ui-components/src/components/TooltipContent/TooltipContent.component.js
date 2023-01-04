@@ -10,7 +10,7 @@ const popoverStyles = `
 	jn-bg-theme-background-lvl-1
 	jn-text-theme-high 
 	jn-inline-flex	
-	jn-items-start
+  jn-items-center
 	jn-p-2
 	jn-rounded
 	jn-drop-shadow-[0_0_4px_rgba(0,0,0,0.15)]
