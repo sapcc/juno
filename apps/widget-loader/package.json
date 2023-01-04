@@ -7,7 +7,7 @@
   "module": "build/app.js",
   "scripts": {
     "build": "NODE_ENV=production rollup -c",
-    "start": "serve -l tcp://0.0.0.0:${WIDGET_LOADER_PORT:-APP_PORT} -s src",
+    "start": "serve -l tcp://0.0.0.0:${WIDGET-LOADER_PORT:-APP_PORT} -s src",
     "test": "jest"
   },
   "devDependencies": {

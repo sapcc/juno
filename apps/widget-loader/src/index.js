@@ -2,6 +2,8 @@
 window.__junoWidgetLoader =
   window.__junoWidgetLoader ||
   (function () {
+    const shimUrl =
+      "https://ga.jspm.io/npm:es-module-shims@1.6.2/dist/es-module-shims.js"
     // console.log("=============DEFINE============")
 
     window.process = { env: { NODE_ENV: "production" } }
@@ -14,12 +16,11 @@ window.__junoWidgetLoader =
     const importmapLoaders = {}
 
     const loadShim = new Promise((resolve, reject) => {
-      const url =
-        "https://ga.jspm.io/npm:es-module-shims@1.6.2/dist/es-module-shims.js"
-      if (document.querySelector(`script[src="${url}"]`)) return resolve(true)
+      if (document.querySelector(`script[src="${shimUrl}"]`))
+        return resolve(true)
       const shimScriptTag = document.createElement("script")
       shimScriptTag.setAttribute("async", true)
-      shimScriptTag.setAttribute("src", url)
+      shimScriptTag.setAttribute("src", shimUrl)
       shimScriptTag.onload = (e) => {
         resolve(true)
       }
@@ -58,38 +59,33 @@ window.__junoWidgetLoader =
         currentScript = scripts[scripts.length - 1]
       }
       let currentURL = new URL(currentScript.src)
+
       let {
         name,
-        version,
+        version = "latest",
         url,
-        origin,
+        origin = currentURL.origin,
         importmapOnly,
-        importmapUrl,
+        importmapUrl = `${origin}/importmap.json`,
+        showLoading,
         debug,
         ...props
       } = currentScript.dataset
-      origin = origin || currentURL.origin
-      version = version || "latest"
       debug = debug === "true"
-      importmapUrl = importmapUrl || `${origin}/importmap.json`
+      showLoading = showLoading === "true"
+
       if (debug) {
-        console.log(
-          "===WIDGET LOADER: ",
-          "name:",
+        console.log("===WIDGET LOADER", {
           name,
-          ", version: ",
           version,
-          ", url:",
           url,
-          ", origin: ",
           origin,
-          ", importmapOnly: ",
           importmapOnly,
-          ", importmapUrl: ",
           importmapUrl,
-          ", props: ",
-          props
-        )
+          showLoading,
+          debug,
+          props,
+        })
       }
 
       loadImportmap({ origin, importmapUrl }).then(async () => {
@@ -154,6 +150,7 @@ window.__junoWidgetLoader =
         const appWrapper = document.createElement("div")
         appWrapper.setAttribute("data-juno-app", name || url)
         appWrapper.setAttribute("style", "height: 100%;")
+        if (showLoading) appWrapper.textContent = "Loading..."
 
         // load the app via importShim
         if (debug) console.log(`===WIDGET LOADER: load ${appURL}`)
