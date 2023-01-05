@@ -6,6 +6,7 @@ const fs = require("fs")
 const minify = require("rollup-plugin-babel-minify")
 const analyze = require("rollup-plugin-analyzer")
 const { nodeResolve } = require("@rollup/plugin-node-resolve")
+const commonjs = require("@rollup/plugin-commonjs")
 const svgr = require("@svgr/rollup")
 
 const parseStyles = require("./rollup-plugin-styles-parser")
@@ -72,6 +73,7 @@ const config = [
         stylesFileName: "styles",
         theme: require("./tailwind.config").theme,
       }),
+      commonjs(),
       minify({ comments: false }),
       analyze({
         summaryOnly: true,
