@@ -63,7 +63,7 @@ const iconSize = (size) => {
 }
 
 const btnIconSmall = `
-  jn-mr-1.5
+  jn-mr-2
 `
 
 const btnIconLarge = `
@@ -71,7 +71,7 @@ const btnIconLarge = `
 `
 
 const btnIconDefault = `
-  jn-mr-2.5
+  jn-mr-2
 `
 
 const iconClasses = (size) => {
@@ -113,76 +113,87 @@ const spinnerColorClass = (variant, disabled) => {
 /**
  * The basic button component. Use this for `onClick` interactions.
  */
-export const Button = React.forwardRef(({
-  label,
-  title,
-  variant,
-  size,
-  disabled,
-  href,
-  icon,
-  className,
-  onClick,
-  children,
-  progress,
-  progressLabel,
-  ...props
-}, ref) => {
-  const titleValue = title || label || ""
+export const Button = React.forwardRef(
+  (
+    {
+      label,
+      title,
+      variant,
+      size,
+      disabled,
+      href,
+      icon,
+      className,
+      onClick,
+      children,
+      progress,
+      progressLabel,
+      ...props
+    },
+    ref
+  ) => {
+    const titleValue = title || label || ""
 
-  const buttonIcon = progress ? (
-    <Spinner
-      size={spinnerSize(size)}
-      color={`${spinnerColorClass(variant, disabled)}`}
-    />
-  ) : icon ? (
-    <Icon
-      icon={icon}
-      className={`juno-button-icon ${ label || children ? iconClasses(size) : null } `}
-      size={size ? iconSize(size) : null }
-    />
-  ) : null
+    const buttonIcon = progress ? (
+      <Spinner
+        size={spinnerSize(size)}
+        color={`${spinnerColorClass(variant, disabled)}`}
+      />
+    ) : icon ? (
+      <Icon
+        icon={icon}
+        className={`juno-button-icon ${
+          label || children ? iconClasses(size) : null
+        } `}
+        size={size ? iconSize(size) : null}
+      />
+    ) : null
 
-  const buttonLabel =
-    progress && progressLabel ? progressLabel : label || children
-    
-  const handleClick = (event) => {
-    onClick && onClick(event)
+    const buttonLabel =
+      progress && progressLabel ? progressLabel : label || children
+
+    const handleClick = (event) => {
+      onClick && onClick(event)
+    }
+
+    const button = (
+      <button
+        type="button"
+        className={`juno-button juno-button-${variant} juno-button-${size}-size ${btnBase} ${sizeClass(
+          size
+        )} ${progressClass(progress)} ${className}`}
+        disabled={disabled}
+        onClick={handleClick}
+        title={titleValue}
+        ref={ref}
+        {...props}
+      >
+        {buttonIcon}
+        {buttonLabel}
+      </button>
+    )
+
+    const anchor = (
+      <a
+        href={href}
+        role="button"
+        className={`juno-button juno-button-${variant} juno-button-${size}-size ${btnBase} ${sizeClass(
+          size
+        )} ${progressClass(progress)} ${className}`}
+        disabled={disabled}
+        onClick={onClick}
+        title={titleValue}
+        ref={ref}
+        {...props}
+      >
+        {buttonIcon}
+        {buttonLabel}
+      </a>
+    )
+
+    return href ? anchor : button
   }
-
-  const button = (
-    <button
-      type="button"
-      className={`juno-button juno-button-${variant} juno-button-${size}-size ${btnBase} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
-      disabled={disabled}
-      onClick={handleClick}
-      title={titleValue}
-      ref={ref}
-      {...props}
-    >
-      {buttonIcon}
-      {buttonLabel}
-    </button>
-  )
-
-  const anchor = (
-    <a
-      href={href}
-      role="button"
-      className={`juno-button juno-button-${variant} juno-button-${size}-size ${btnBase} ${sizeClass(size)} ${progressClass(progress)} ${className}`}
-      disabled={disabled}
-      onClick={onClick}
-      title={titleValue}
-      ref={ref}
-      {...props}
-    >
-      {buttonIcon}
-      {buttonLabel}
-    </a>
-  )
-
-  return href ? anchor : button
-})
+)
 
 Button.propTypes = {
   /** Choose a variant for your purpose. May leave empty to get default button. */
