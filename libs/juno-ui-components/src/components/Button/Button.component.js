@@ -7,7 +7,6 @@ import { Spinner } from "../Spinner/index.js"
 
 const btnBase = `
   jn-font-bold
-  jn-leading-6
   jn-inline-flex 
   jn-justify-center 
   jn-rounded
@@ -31,8 +30,9 @@ const btnSmall = `
 
 const btnDefaultSize = `
   jn-text-base
+  jn-leading-6
   jn-px-[0.5625rem] 
-  jn-py-[0.375rem]
+  jn-py-[0.3125rem]
 `
 
 const btnLarge = `
