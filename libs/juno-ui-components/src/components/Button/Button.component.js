@@ -7,11 +7,12 @@ import { Spinner } from "../Spinner/index.js"
 
 const btnBase = `
   jn-font-bold
+  jn-leading-6
   jn-inline-flex 
   jn-justify-center 
   jn-rounded
   jn-shadow-sm 
-  jn-w-auto 
+  jn-w-auto
   focus:jn-outline-none 
   focus-visible:jn-ring-2
   focus-visible:jn-ring-theme-focus
@@ -23,6 +24,7 @@ const btnBase = `
 
 const btnSmall = `
   jn-text-sm
+  jn-leading-5
   jn-px-[0.4375rem]
   jn-py-[0.25rem]
 `
