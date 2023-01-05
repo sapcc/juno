@@ -73,7 +73,7 @@ const config = [
         stylesFileName: "styles",
         theme: require("./tailwind.config").theme,
       }),
-      commonjs(),
+      //commonjs(),
       minify({ comments: false }),
       analyze({
         summaryOnly: true,
