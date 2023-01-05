@@ -9,7 +9,7 @@ const btnBase = `
   jn-font-bold
   jn-inline-flex 
   jn-justify-center 
-  jn-rounded-md
+  jn-rounded
   jn-shadow-sm 
   jn-w-auto 
   focus:jn-outline-none 
@@ -23,14 +23,14 @@ const btnBase = `
 
 const btnSmall = `
   jn-text-sm
-  jn-px-sm
-  jn-py-[0.3125rem]
+  jn-px-[0.4375rem]
+  jn-py-[0.25rem]
 `
 
 const btnDefaultSize = `
   jn-text-base
-  jn-px-[0.625rem] 
-  jn-py-[0.4375rem]
+  jn-px-[0.5625rem] 
+  jn-py-[0.375rem]
 `
 
 const btnLarge = `
