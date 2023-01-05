@@ -13,7 +13,7 @@ const { Generator } = await import(`${root}/@jspm/generator/dist/generator.js`)
 import * as fs from "fs"
 import path from "path"
 import url from "url"
-import { exit } from "node:process"
+// import { exit } from "node:process"
 
 // ignore-externals allows us to bundle all libs into one final file.
 // For the case the CDN with the external libs is unreachable, this flag must be set to true.
@@ -74,6 +74,9 @@ const files = glob.sync(globPattern, { ignore: [`node_modules/**`] })
 // build package registry based on juno packages
 const packageRegistry = {}
 
+// this timestamp will be added to the index.js files for own libs
+const timestamp = Date.now()
+
 for (let file of files) {
   // load and parse package.json
   let pkg = JSON.parse(fs.readFileSync(file))
@@ -89,7 +92,7 @@ for (let file of files) {
     name: pkg.name,
     version,
     path,
-    entryFile,
+    entryFile: entryFile + "?" + timestamp,
     entryDir,
     peerDependencies: options.ignoreExternals ? false : pkg.peerDependencies,
   }

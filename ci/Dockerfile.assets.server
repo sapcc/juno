@@ -80,7 +80,7 @@ COPY --from=lastbuild /usr/share/nginx/html/* /usr/share/nginx/html/
 # copy new version 
 COPY --from=base /tmp/latest "/tmp/latest"
 # sync new versions over old
-RUN rsync -avu --delete "/tmp/latest/" "/usr/share/nginx/html" 1>/dev/null ; 
+RUN rsync -avu "/tmp/latest/" "/usr/share/nginx/html" 1>/dev/null ; 
 RUN rm -rf /tmp/latest
 
 # ENTRYPOINT
