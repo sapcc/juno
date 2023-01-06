@@ -402,6 +402,48 @@ jobs:
     ensure:
       put: qa-de-1.release          
 
+  - name: e2e-s-qa-de-1
+    serial: true
+    plan:
+      - get: juno.git
+        trigger: true
+        passed: ["deploy-to-s-qa-de-1"]
 
+      - task: cypress
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud/cypress-client
+              tag: "latest"
+          inputs:
+            - name: juno.git
+              path: /app/juno
+          params:
+            CYPRESS_API_URL: "https://director.cypress.qa-de-1.cloud.sap"
+            CYPRESS_BROWSER: chrome
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd /app/juno/e2e
+                CI_BUID_ID="$(date) - CI - dashboard-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/dashboard/*" && \
+                CI_BUID_ID="$(date) - CI - cdn-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://cdn.juno.qa-de-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/cdn/*" && \
+                CI_BUID_ID="$(date) - CI - assets-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://assets.juno.qa-de-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/assets-server/*" && \
+                CI_BUID_ID="$(date) - CI - ui-components-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/ui-storybook/*" && \
+                CI_BUID_ID="$(date) - CI - exampleapp-components-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://exampleapp.juno.qa-de-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/exampleapp/*"
 
 
