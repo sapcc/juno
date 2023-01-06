@@ -12,6 +12,8 @@ if (!/.+\/.+\.js/.test(pkg.module))
     "module value is incorrect, use DIR/FILE.js like build/index.js"
   )
 const buildDir = pkg.module.slice(0, pkg.module.lastIndexOf("/"))
+const isProduction = process.env.NODE_ENV === "production"
+const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
 
 const config = [
   {
@@ -32,7 +34,10 @@ const config = [
       minify({ comments: false }),
       analyze({ summaryOnly: true, limit: 0 }),
     ],
-    external: Object.keys(pkg.peerDependencies || {}),
+    external:
+      isProduction && !IGNORE_EXTERNALS
+        ? Object.keys(pkg.peerDependencies || {})
+        : [],
   },
 ]
 

@@ -51,7 +51,7 @@
     "tailwindcss": "^3.0.24",
     "url-state-provider": "workspace:*",
     "util": "^0.12.4",
-    "webpack": "^5.68.0",
+    "webpack": "^5.75.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.4",
     "zustand": "^4.1.1"
@@ -65,13 +65,11 @@
   "peerDependencies": {
     "communicator": "*",
     "custom-event-polyfill": "^1.0.7",
-    "dotenv-webpack": "^7.1.0",
     "juno-ui-components": "*",
     "luxon": "^2.3.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-json-view": "^1.21.3",
     "react-query": "^3.39.2",
     "url-state-provider": "*",
     "zustand": "^4.1.1"

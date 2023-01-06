@@ -10,7 +10,7 @@
   "scripts": {
     "dashboard": "yarn workspace dashboard start",
     "ui-components": "yarn workspace juno-ui-components storybook",
-    "build-libs": "yarn workspaces foreach -p --include communicator --include policy-engine --include juno-ui-components --include url-state-provider --include url-state-router --include oauth run build",
+    "build-libs": "NODE_ENV=development yarn workspaces foreach -p --include communicator --include policy-engine --include juno-ui-components --include url-state-provider --include url-state-router --include oauth run build",
     "build": "yarn build-libs"
   },
   "dependenciesMeta": {

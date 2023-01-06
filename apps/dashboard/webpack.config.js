@@ -1,7 +1,6 @@
 const path = require("path")
 const Dotenv = require("dotenv-webpack")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin")
 const webpack = require("webpack")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const pkg = require("./package.json")
@@ -18,10 +17,13 @@ if (!outputRegex.test(pkg.module))
   )
 
 const [_, buildDir, filename] = pkg.module.match(outputRegex)
+const externals = {}
+Object.keys(pkg.peerDependencies).forEach((key) => (externals[key] = key))
 
 module.exports = (_, argv) => {
-  const mode = argv.mode
+  const mode = argv.mode || "development"
   const isDevelopment = mode === "development"
+  const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
 
   return {
     experiments: {
@@ -39,12 +41,15 @@ module.exports = (_, argv) => {
       chunkFilename: "[contenthash].js",
       // result as esm
       library: { type: "module" },
+
       // expose files imported asynchronous as chunks
       asyncChunks: true,
       clean: true,
     },
+    externalsType: "module",
+    externals: IGNORE_EXTERNALS || isDevelopment ? {} : externals,
     // This says to webpack that we are in development mode and write the code in webpack file in different way
-    mode: "development",
+    mode,
     module: {
       rules: [
         //Allows use javascript
@@ -54,11 +59,6 @@ module.exports = (_, argv) => {
           exclude: /node_modules/,
           use: {
             loader: "babel-loader",
-            options: {
-              plugins: [
-                isDevelopment && require.resolve("react-refresh/babel"),
-              ].filter(Boolean),
-            },
           },
         },
         {
@@ -167,9 +167,6 @@ module.exports = (_, argv) => {
           MAIN_FILENAME: filename,
         },
       }),
-
-      //Allows update react components in real time
-      isDevelopment && new ReactRefreshWebpackPlugin(),
     ].filter(Boolean),
 
     //Config for webpack-dev-server module version 4.x
