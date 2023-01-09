@@ -102,7 +102,7 @@ RUN echo -e $'\
   \t</head>\n\
   \t<body style="height: 100vh;">\n \
   \t\t<script \n\
-  \t\t\tsrc="/apps/widget-loader@latest/build/app.js" \n\ 
+  \t\t\tsrc="$BASE_URL/apps/widget-loader@latest/build/app.js" \n\ 
   \t\t\tdata-name="assets-overview" \n\
   \t\t\tdata-props-manifest-url="/manifest.json"></script>\n\
   \t</body>\n\
