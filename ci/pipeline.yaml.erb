@@ -26,6 +26,12 @@ resources:
     source: { region: qa-de-1, tenso_password: ((keystone-user-password/tenso-prod)) }
     expose_build_created_by: true
 
+  - name: eu-nl-1.release
+    type: release
+    check_every: never 
+    source: { region: eu-nl-1, tenso_password: ((keystone-user-password/tenso-prod)) }
+    expose_build_created_by: true    
+
   - name: secrets.git
     type: git-proxy
     webhook_token: lfkhslkfhs
@@ -446,4 +452,117 @@ jobs:
                 echo $CI_BUID_ID && \
                 CYPRESS_BASE_URL=https://exampleapp.juno.qa-de-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/exampleapp/*"
 
+
+  <%# DEPLOY ASSETS SERVER%>
+  - name: deploy-to-s-eu-nl-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: assets-server.version
+            passed: ["build-assets-server"]
+          - get: ui-storybook.version
+            passed: ["build-ui-storybook"]            
+          - get: hosting.version
+            passed: ["build-hosting"]            
+          - get: juno.git
+            passed: ["e2e-s-qa-de-1"]
+            trigger: true
+          - get: secrets.git
+            params:
+              depth: 100 
+
+      - task: generate-additional-values.yaml
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: 
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+              tag: "latest"
+          inputs: 
+            - name: assets-server.version 
+            - name: ui-storybook.version
+            - name: hosting.version
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                echo "build json with tags for every image"
+                printf "\
+                global: \n
+                  assets_server_image_tag: \"$(cat assets-server.version/version)\"\n\
+                  ui_storybook_image_tag: \"$(cat ui-storybook.version/version)\"\n\
+                  hosting_image_tag: \"$(cat hosting.version/version)\"\n\
+                " > ./extra-values/values.yaml
+
+                cat ./extra-values/values.yaml
+          outputs:
+            - name: extra-values
+
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          helm-charts.git: juno.git
+          extra-values.git: extra-values
+
+        params:
+          HELM_MAJOR_VERSION: '3'
+          CHART_PATH: ci/helm-charts
+          RELEASE: juno-v2
+          NAMESPACE: juno
+          REGION: eu-nl-1
+          CONTEXT: s-eu-nl-1
+          VALUES: local:globals s-local:juno extra:values.yaml
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))
+
+    ensure:
+      put: eu-nl-1.release          
+
+  - name: e2e-s-eu-nl-1
+    serial: true
+    plan:
+      - get: juno.git
+        trigger: true
+        passed: ["deploy-to-s-eu-nl-1"]
+
+      - task: cypress
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud/cypress-client
+              tag: "latest"
+          inputs:
+            - name: juno.git
+              path: /app/juno
+          params:
+            CYPRESS_API_URL: "https://director.cypress.qa-de-1.cloud.sap"
+            CYPRESS_BROWSER: chrome
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd /app/juno/e2e
+                CI_BUID_ID="$(date) - CI - dashboard-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://juno.eu-nl-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/dashboard/*" && \
+                CI_BUID_ID="$(date) - CI - cdn-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://cdn.juno.eu-nl-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/cdn/*" && \
+                CI_BUID_ID="$(date) - CI - assets-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://assets.juno.eu-nl-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/assets-server/*" && \
+                CI_BUID_ID="$(date) - CI - ui-components-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://ui.juno.eu-nl-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/ui-storybook/*" && \
+                CI_BUID_ID="$(date) - CI - exampleapp-components-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://exampleapp.juno.eu-nl-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/exampleapp/*"
 

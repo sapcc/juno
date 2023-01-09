@@ -27,7 +27,7 @@ spec:
                   number: 8888
 
 {{- if eq .Values.global.region "eu-nl-1" }}
-    - host: "assets.juno.global.{{ .Values.global.tld }}"
+    - host: "cdn.juno.global.{{ .Values.global.tld }}"
       http:
         paths:
           - path: /
