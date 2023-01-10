@@ -1,4 +1,4 @@
-import React, { forwardRef} from "react"
+import React, { forwardRef } from "react"
 import PropTypes from "prop-types"
 
 /* Import Icons here. The icon svgs in the icons folder correspond to the respective "xyz_24px.svg" from material-ui icons.
@@ -71,6 +71,10 @@ const buttonIconStyles = `
   focus-visible:jn-ring-offset-theme-focus
 	disabled:jn-opacity-50
 	disabled:jn-cursor-not-allowed
+`
+
+const wrapperStyles = `
+  jn-leading-none
 `
 // export all known icons as an array of their names to be used with PropTypes here and from other components:
 export const knownIcons = [
@@ -201,7 +205,7 @@ const getColoredSizedIcon = ({
       )
     case "checkCircle":
       return (
-        <CheckCircle 
+        <CheckCircle
           width={size}
           height={size}
           className={iconClass}
@@ -417,7 +421,7 @@ const getColoredSizedIcon = ({
       )
     case "home":
       return (
-        <Home 
+        <Home
           width={size}
           height={size}
           className={iconClass}
@@ -465,7 +469,7 @@ const getColoredSizedIcon = ({
       )
     case "moreVert":
       return (
-        <MoreVert 
+        <MoreVert
           width={size}
           height={size}
           className={iconClass}
@@ -634,62 +638,63 @@ const getColoredSizedIcon = ({
   }
 }
 
-export const Icon = forwardRef(({
-  icon,
-  color,
-  size,
-  title,
-  className,
-  href,
-  onClick,
-  ...props
-}, ref) => {
-  // if href or onClick was passed, then we want to add the passed classes and passed arbitrary props to the button or anchor
-  // otherwise add the passed classes/props to the icon itself
-  const iconClassName = href || onClick ? "" : className
-  const iconProps = href || onClick ? {} : props
+export const Icon = forwardRef(
+  ({ icon, color, size, title, className, href, onClick, ...props }, ref) => {
+    // if href or onClick was passed, then we want to add the passed classes and passed arbitrary props to the button or anchor
+    // otherwise add the passed classes/props to the icon itself
+    const iconClassName = href || onClick ? "" : className
+    const iconProps = href || onClick ? {} : props
 
-  const icn = getColoredSizedIcon({
-    icon,
-    color,
-    size,
-    title,
-    iconClassName,
-    ...iconProps,
-  })
-  
-  const handleClick = (event) => {
-    onClick && onClick(event)
+    const icn = getColoredSizedIcon({
+      icon,
+      color,
+      size,
+      title,
+      iconClassName,
+      ...iconProps,
+    })
+
+    const handleClick = (event) => {
+      onClick && onClick(event)
+    }
+
+    const button = (
+      <button
+        onClick={handleClick}
+        className={`juno-icon-button ${buttonIconStyles} ${className}`}
+        aria-label={title || icon}
+        ref={ref}
+        {...props}
+      >
+        {icn}
+      </button>
+    )
+
+    const anchor = (
+      <a
+        href={href}
+        className={`juno-icon-link ${anchorIconStyles} ${className}`}
+        aria-label={title || icon}
+        ref={ref}
+        {...props}
+      >
+        {icn}
+      </a>
+    )
+
+    /* render an <a> if href was passed, otherwise render button if onClick was passes, otherwise render plain icon: */
+    /* if plain icon, add ref to the icon. In the other cases the ref goes on the anchor or button */
+    return href ? (
+      anchor
+    ) : onClick ? (
+      button
+    ) : (
+      <span className={`${wrapperStyles}`} ref={ref}>
+        {icn}
+      </span>
+    )
   }
-
-  const button = (
-    <button
-      onClick={handleClick}
-      className={`juno-icon-button ${buttonIconStyles} ${className}`}
-      aria-label={title || icon}
-      ref={ref}
-      {...props}
-    >
-      {icn}
-    </button>
-  )
-
-  const anchor = (
-    <a
-      href={href}
-      className={`juno-icon-link ${anchorIconStyles} ${className}`}
-      aria-label={title || icon}
-      ref={ref}
-      {...props}
-    >
-      {icn}
-    </a>
-  )
-
-  /* render an <a> if href was passed, otherwise render button if onClick was passes, otherwise render plain icon: */
-  /* if plain icon, add ref to the icon. In the other cases the ref goes on the anchor or button */
-  return href ? anchor : onClick ? button : <span ref={ref}>{icn}</span>
-})
+)
 
 Icon.propTypes = {
   /** The icon to display */
