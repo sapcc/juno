@@ -1,0 +1,210 @@
+{
+  "dashboard": {
+    "1.0.0": {
+      "type": "app",
+      "entryFile": "/apps/dashboard@1.0.0/build/index.js",
+      "entryDir": "/apps/dashboard@1.0.0/build",
+      "updatedAt": "2022-12-12T15:44:25.000Z",
+      "size": 4096
+    },
+    "latest": {
+      "type": "app",
+      "entryFile": "/apps/dashboard@latest/build/index.js",
+      "entryDir": "/apps/dashboard@latest/build",
+      "updatedAt": "2022-12-12T15:45:32.000Z",
+      "size": 4096
+    }
+  },
+  "heureka": {
+    "1.0.0": {
+      "type": "app",
+      "entryFile": "/apps/heureka@1.0.0/build/index.js",
+      "entryDir": "/apps/heureka@1.0.0/build",
+      "updatedAt": "2022-12-12T15:44:25.000Z",
+      "size": 4096
+    },
+    "latest": {
+      "type": "app",
+      "entryFile": "/apps/heureka@latest/build/index.js",
+      "entryDir": "/apps/heureka@latest/build",
+      "updatedAt": "2022-12-12T15:45:32.000Z",
+      "size": 4096
+    }
+  },
+  "maintenance": {
+    "1.0.0": {
+      "type": "app",
+      "entryFile": "/apps/maintenance@1.0.0/build/index.js",
+      "entryDir": "/apps/maintenance@1.0.0/build",
+      "updatedAt": "2022-12-12T15:44:25.000Z",
+      "size": 4096
+    },
+    "latest": {
+      "type": "app",
+      "entryFile": "/apps/maintenance@latest/build/index.js",
+      "entryDir": "/apps/maintenance@latest/build",
+      "updatedAt": "2022-12-12T15:45:32.000Z",
+      "size": 4096
+    }
+  },
+  "requests": {
+    "1.0.0": {
+      "type": "app",
+      "entryFile": "/apps/requests@1.0.0/build/index.js",
+      "entryDir": "/apps/requests@1.0.0/build",
+      "updatedAt": "2022-12-12T15:44:25.000Z",
+      "size": 4096
+    },
+    "latest": {
+      "type": "app",
+      "entryFile": "/apps/requests@latest/build/index.js",
+      "entryDir": "/apps/requests@latest/build",
+      "updatedAt": "2022-12-12T15:45:32.000Z",
+      "size": 4096
+    }
+  },
+  "volta": {
+    "1.0.1": {
+      "type": "app",
+      "entryFile": "/apps/volta@1.0.1/build/index.js",
+      "entryDir": "/apps/volta@1.0.1/build",
+      "updatedAt": "2022-12-12T15:44:25.000Z",
+      "size": 4096
+    },
+    "latest": {
+      "type": "app",
+      "entryFile": "/apps/volta@latest/build/index.js",
+      "entryDir": "/apps/volta@latest/build",
+      "updatedAt": "2022-12-12T15:45:32.000Z",
+      "size": 4096
+    }
+  },
+  "whois": {
+    "1.0.0": {
+      "type": "app",
+      "entryFile": "/apps/whois@1.0.0/build/index.js",
+      "entryDir": "/apps/whois@1.0.0/build",
+      "updatedAt": "2022-12-12T15:44:25.000Z",
+      "size": 4096
+    },
+    "latest": {
+      "type": "app",
+      "entryFile": "/apps/whois@latest/build/index.js",
+      "entryDir": "/apps/whois@latest/build",
+      "updatedAt": "2022-12-12T15:45:32.000Z",
+      "size": 4096
+    }
+  },
+  "widget-loader": {
+    "1.1.0": {
+      "type": "app",
+      "entryFile": "/apps/widget-loader@1.1.0/build/app.js",
+      "entryDir": "/apps/widget-loader@1.1.0/build",
+      "updatedAt": "2022-12-12T15:44:25.000Z",
+      "size": 4096
+    },
+    "latest": {
+      "type": "app",
+      "entryFile": "/apps/widget-loader@latest/build/app.js",
+      "entryDir": "/apps/widget-loader@latest/build",
+      "updatedAt": "2022-12-12T15:45:32.000Z",
+      "size": 4096
+    }
+  },
+  "communicator": {
+    "1.0.0": {
+      "type": "lib",
+      "entryFile": "/libs/communicator@1.0.0/build/index.js",
+      "entryDir": "/libs/communicator@1.0.0/build",
+      "updatedAt": "2022-12-12T15:44:25.000Z",
+      "size": 4096
+    },
+    "latest": {
+      "type": "lib",
+      "entryFile": "/libs/communicator@latest/build/index.js",
+      "entryDir": "/libs/communicator@latest/build",
+      "updatedAt": "2022-12-12T15:45:32.000Z",
+      "size": 4096
+    }
+  },
+  "juno-ui-components": {
+    "1.0.4": {
+      "type": "lib",
+      "entryFile": "/libs/juno-ui-components@1.0.4/build/index.js",
+      "entryDir": "/libs/juno-ui-components@1.0.4/build",
+      "updatedAt": "2022-12-12T15:44:25.000Z",
+      "size": 4096
+    },
+    "latest": {
+      "type": "lib",
+      "entryFile": "/libs/juno-ui-components@latest/build/index.js",
+      "entryDir": "/libs/juno-ui-components@latest/build",
+      "updatedAt": "2022-12-12T15:45:32.000Z",
+      "size": 4096
+    }
+  },
+  "oauth": {
+    "0.1.1": {
+      "type": "lib",
+      "entryFile": "/libs/oauth@0.1.1/build/index.js",
+      "entryDir": "/libs/oauth@0.1.1/build",
+      "updatedAt": "2022-12-12T15:44:25.000Z",
+      "size": 4096
+    },
+    "latest": {
+      "type": "lib",
+      "entryFile": "/libs/oauth@latest/build/index.js",
+      "entryDir": "/libs/oauth@latest/build",
+      "updatedAt": "2022-12-12T15:45:32.000Z",
+      "size": 4096
+    }
+  },
+  "policy-engine": {
+    "2.0.0": {
+      "type": "lib",
+      "entryFile": "/libs/policy-engine@2.0.0/build/esm/index.js",
+      "entryDir": "/libs/policy-engine@2.0.0/build/esm",
+      "updatedAt": "2022-12-12T15:44:25.000Z",
+      "size": 4096
+    },
+    "latest": {
+      "type": "lib",
+      "entryFile": "/libs/policy-engine@latest/build/esm/index.js",
+      "entryDir": "/libs/policy-engine@latest/build/esm",
+      "updatedAt": "2022-12-12T15:45:32.000Z",
+      "size": 4096
+    }
+  },
+  "url-state-provider": {
+    "1.0.0": {
+      "type": "lib",
+      "entryFile": "/libs/url-state-provider@1.0.0/build/esm/index.js",
+      "entryDir": "/libs/url-state-provider@1.0.0/build/esm",
+      "updatedAt": "2022-12-12T15:44:25.000Z",
+      "size": 4096
+    },
+    "latest": {
+      "type": "lib",
+      "entryFile": "/libs/url-state-provider@latest/build/esm/index.js",
+      "entryDir": "/libs/url-state-provider@latest/build/esm",
+      "updatedAt": "2022-12-12T15:45:33.000Z",
+      "size": 4096
+    }
+  },
+  "url-state-router": {
+    "1.0.0": {
+      "type": "lib",
+      "entryFile": "/libs/url-state-router@1.0.0/build/index.js",
+      "entryDir": "/libs/url-state-router@1.0.0/build",
+      "updatedAt": "2022-12-12T15:44:25.000Z",
+      "size": 4096
+    },
+    "latest": {
+      "type": "lib",
+      "entryFile": "/libs/url-state-router@latest/build/index.js",
+      "entryDir": "/libs/url-state-router@latest/build",
+      "updatedAt": "2022-12-12T15:45:33.000Z",
+      "size": 4096
+    }
+  }
+}

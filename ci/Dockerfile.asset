@@ -1,0 +1,73 @@
+# Juno is a monorepo containing apps and libs. The packages are managed using yarn 3. 
+# Yarn 3 caches all packges and simulates the node_modules folder.
+#
+# The build idea:
+# we get the entire monorepo and build the required app in the base layer. 
+# Then we create a new layer and copy the build results into the target directory. 
+# That means the finished image contains only the app bundle and the package.json file.
+ARG ASSET_PATH=""
+ARG BUILD_DIR=""
+
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-base:latest AS build 
+ARG ASSET_PATH
+ARG BUILD_DIR
+
+RUN mkdir -p /tmp/src
+ADD . /tmp/src
+
+WORKDIR /juno
+
+RUN rsync -avu --delete "/tmp/src/" "/juno" > /dev/null ; 
+
+
+# install and build libs 
+# IMPORTANT!
+# some assets have dependencies to libs
+# to test the asset we need to build the libs which includes all dependencies
+# build-libs script set the NODE_ENV to development which includes all 
+# dependencies in the builds defined in peer dependencies.
+RUN yarn install 1>/dev/null ; yarn build-libs > /dev/null
+
+# TEST AND BUILD ASSET
+# IGNORE_EXTERNALS=true will results in a bundle which includes all dependencies. 
+# This is the case if the jspm cdn is unreachable!!! 
+RUN \
+  ASSET_NAME=$(jq -r .name /juno/$ASSET_PATH/package.json) ; \ 
+  ASSET_TEST_SCRIPT=$(jq -r '.scripts | has("test")' /juno/$ASSET_PATH/package.json) ; \
+  ASSET_BUILD_SCRIPT=$(jq -r '.scripts | has("build")' /juno/$ASSET_PATH/package.json) ; \ 
+  echo $ASSET_NAME $ASSET_TEST_SCRIPT $ASSET_BUILD_SCRIPT ; \
+  [[ "$ASSET_TEST_SCRIPT" == "false" ]]  || CI=true yarn workspace $ASSET_NAME test ;\
+  [[ "$ASSET_BUILD_SCRIPT" == "false" ]] || CI=false NODE_ENV=production IGNORE_EXTERNALS=false yarn workspace $ASSET_NAME build 1>/dev/null
+
+
+# COPY RESULTS OF THE BUILD TO /tmp
+
+# get BUILD_DIR from package.json
+# strip `leading` slash from BUILD_DIR and split by / and use first part
+# Example: package.json#module = build/esm/index.js
+# echo build/esm/index.js | sed -e 's/^\///' | cut -d/ -f1
+# Result: build
+RUN \
+  if [ -z "$BUILD_DIR" ]; then BUILD_DIR=$(jq -r .module /juno/$ASSET_PATH/package.json); fi ; \
+  if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR=$(jq -r .main /juno/$ASSET_PATH/package.json); fi ; \
+  if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR="build"; else BUILD_DIR="$(echo $BUILD_DIR | sed -e 's/^\///' | cut -d/ -f1)"; fi ; \ 
+  echo "===${BUILD_DIR}" ; \
+  mkdir -p "/tmp/$ASSET_PATH" ; \
+  cp -r "/juno/$ASSET_PATH/$BUILD_DIR" "/tmp/$ASSET_PATH/" ; \
+  cp "/juno/$ASSET_PATH/package.json" "/tmp/$ASSET_PATH/package.json" ; \
+  cp "/juno/$ASSET_PATH/README.md" "/tmp/$ASSET_PATH/README.md"  > /dev/null || : #ignore errors
+
+RUN ls -la "/tmp/$ASSET_PATH/$BUILD_DIR"
+
+# asset layer
+# COPY RESULT INTO FINAL IMAGE under /dist
+FROM scratch as asset 
+ARG ASSET_PATH
+
+LABEL source_repository="https://github.com/sapcc/juno/$ASSET_PATH"
+
+WORKDIR /
+
+# copy build results from base image to dist
+COPY --from=build "/tmp/$ASSET_PATH" /dist
+
