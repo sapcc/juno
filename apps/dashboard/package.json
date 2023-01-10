@@ -25,7 +25,6 @@
     "css-loader": "^6.6.0",
     "css-minimizer-webpack-plugin": "^3.4.1",
     "custom-event-polyfill": "^1.0.7",
-    "dotenv-webpack": "^8.0.1",
     "express": "^4.17.3",
     "glob": "^7.2.0",
     "html-webpack-plugin": "^5.4.0",
@@ -68,5 +67,23 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "zustand": "^4.1.1"
+  },
+  "appProps": {
+    "theme": {
+      "value": "theme-dark",
+      "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+    },
+    "region": {
+      "value": "qa-de-1",
+      "description": "Default region"
+    },
+    "domain": {
+      "value": "monsoon3",
+      "description": "Default domain"
+    },
+    "prodmode": {
+      "value": "true",
+      "description": "Production mode"
+    }
   }
 }

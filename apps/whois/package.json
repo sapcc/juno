@@ -72,5 +72,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "url-state-provider": "*"
+  },
+  "appProps": {
+    "theme": {
+      "value": "theme-dark",
+      "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+    }
   }
 }

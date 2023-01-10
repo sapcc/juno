@@ -21,9 +21,9 @@
   <body>
     <script type="module">
       const mainFilename = "<%= MAIN_FILENAME %>"
-
+      console.log('<%=PROPS%>')
       import(`./${mainFilename}`).then((app) =>
-        app.mount(document.getElementById("root"))
+        app.mount(document.getElementById("root"),{props: JSON.parse('<%=PROPS%>')})
       )
     </script>
 

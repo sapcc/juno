@@ -25,7 +25,6 @@
     "css-loader": "^6.6.0",
     "css-minimizer-webpack-plugin": "^3.4.1",
     "custom-event-polyfill": "^1.0.7",
-    "dotenv-webpack": "^7.1.0",
     "glob": "^7.2.0",
     "html-webpack-plugin": "^5.4.0",
     "jest": "^29.3.1",
@@ -72,5 +71,15 @@
     "react-dom": "^18.2.0",
     "url-state-provider": "*",
     "zustand": "^4.1.1"
+  },
+  "appProps": {
+    "theme": {
+      "value": "theme-dark",
+      "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+    },
+    "service": {
+      "value": "compute",
+      "description": "Name of the service being maintained"
+    }
   }
 }
