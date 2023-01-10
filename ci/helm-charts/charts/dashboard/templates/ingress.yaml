@@ -58,7 +58,7 @@ spec:
                 port: 
                   number: 80     
 
-    - host: "ccloud.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+    - host: "ccloud.global.{{ .Values.global.tld }}"
       http:
         paths:
           - path: /
@@ -69,7 +69,7 @@ spec:
                 port: 
                   number: 80   
 
-    - host: "convergedcloud.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+    - host: "convergedcloud.global.{{ .Values.global.tld }}"
       http:
         paths:
           - path: /
@@ -88,7 +88,7 @@ spec:
         - "convergedcloud.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
 {{- if eq .Values.global.region "eu-nl-1" }}    
         - "juno.global.{{ .Values.global.tld }}"  
-        - "ccloud.juno.global.{{ .Values.global.tld }}"
-        - "convergedcloud.juno.global.{{ .Values.global.tld }}"
+        - "ccloud.global.{{ .Values.global.tld }}"
+        - "convergedcloud.global.{{ .Values.global.tld }}"
 {{- end }}        
       secretName: "tls-juno-dashboard"
