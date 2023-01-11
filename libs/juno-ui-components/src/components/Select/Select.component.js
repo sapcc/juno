@@ -78,7 +78,7 @@ const defaultpaddingright = `
 	jn-pr-9
 `
 
-/*+ A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
+/** A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
 export const Select = ({
 	name,
 	id,
@@ -87,8 +87,9 @@ export const Select = ({
 	disabled,
 	invalid,
 	valid,
-	onChange,
 	loading,
+	onChange,
+	onClick,
 	...props
 }) => {
 	const [isLoading, setIsLoading] = useState(false)
@@ -106,6 +107,14 @@ export const Select = ({
 	useEffect(() => {
 		setIsValid(valid)
 	}, [valid])
+	
+	const handleChange = (event) => {
+		onChange && onChange(event)
+	}
+	
+	const handleClick = (event) => {
+		onClick && onClick(event)
+	}
 	
 	const SelectIcons = ({
 		disabled
@@ -141,7 +150,8 @@ export const Select = ({
 				name={name || "Unnamed Select"}
 				id={id}
 				className={`juno-select ${selectstyles} ${ isInvalid ? "juno-select-invalid " + errorstyles : "" } ${ isValid ? "juno-select-valid " + successstyles : "" } ${selectPadding()} ${className}`}
-				onChange={onChange}
+				onChange={handleChange}
+				onClick={handleClick}
 				disabled={disabled || isLoading}
 				{...props}
 			>
@@ -167,10 +177,13 @@ Select.propTypes = {
 	invalid: PropTypes.bool,
 	/** Whether the Select is valid */
 	valid: PropTypes.bool,
-	/** Pass a handler */
-	onChange: PropTypes.func,
 	/** Whether the select is currently loading */
 	loading: PropTypes.bool,
+	/** Pass a change handler */
+	onChange: PropTypes.func,
+	/** Pass a click handler */
+	onClick: PropTypes.func,
+	
 }
 
 Select.defaultProps = {
@@ -180,6 +193,7 @@ Select.defaultProps = {
 	disabled: null,
 	invalid: false,
 	valid: false,
-	onChange: undefined,
 	loading: false,
+	onChange: undefined,
+	onClick: undefined,
 }

@@ -30,9 +30,9 @@ const checkStatus = (response) => {
     return response
   } else {
     return response.text().then((message) => {
-      var error = new Error(message || response.statusText || response.status)
+      var error = new HTTPError(response.status, message || response.statusText)
       error.statusCode = response.status
-      throw error
+      return Promise.reject(error)
     })
   }
 }
@@ -138,6 +138,16 @@ const fetchFromAPI = (bearerToken, endpoint, path, options) => {
   })
     .then(checkStatus)
     .then((response) => {
+      let isJSON = response.headers
+        .get("content-type")
+        .includes("application/json")
+      if (!isJSON) {
+        var error = new HTTPError(
+          400,
+          "The response is not a valid JSON response"
+        )
+        return Promise.reject(error)
+      }
       return response.json()
     })
 }

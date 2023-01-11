@@ -67,7 +67,7 @@ export const TextInput = ({
 	  
 	const handleInputChange = (event) => {
 		setValue(event.target.value)
-		onChange(event)
+		onChange && onChange(event)
 	 }
 	
 	return (
@@ -92,7 +92,7 @@ TextInput.propTypes = {
 	/** Pass a name attribute */
 	name: PropTypes.string,
 	/** Pass a value */
-	value: PropTypes.string,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	/** Pass an id */
 	id: PropTypes.string,
 	/** Pass a placeholder */

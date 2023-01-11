@@ -201,7 +201,7 @@ export const TextareaRow = ({
 
   const handleChange = (event) => {
     setValue(event.target.value)
-    onChange(event)
+    onChange && onChange(event)
   }
 
   /* check whether the label is minimized (either has focus and / or has a value) */

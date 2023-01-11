@@ -48,7 +48,7 @@ const App = (props) => {
   )
 }
 
-const StyledApp = ({ props }) => {
+const StyledApp = (props = {}) => {
   // default props
   props = {
     region: process.env.PRESELECTED_REGION,

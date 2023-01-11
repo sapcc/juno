@@ -65,6 +65,13 @@ export const parameters = {
         <Stories includePrimary={true} title="" />
       </>
     ),
+    // ensure that decorators aren't rendered for dynamic code display in stories
+    // if decorators should be rendered for a story or component add the below to the component's config under parameters: { docs: { source: ...} }
+    // and set excludeDecorators to false
+    source: {
+      type: 'dynamic',
+      excludeDecorators: true,
+    },
   },
   controls: {
     expanded: true,

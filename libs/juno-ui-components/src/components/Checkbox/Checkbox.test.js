@@ -1,5 +1,6 @@
 import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
+import { act } from 'react-dom/test-utils';
 import { Checkbox } from "./index"
 
 
@@ -30,14 +31,18 @@ describe("Checkbox", () => {
 	})
 	
 	test("renders a checked checkbox as passed", async () => {
-		render(<Checkbox checked={true} />)
+		act(() => {
+			render(<Checkbox checked={true} />)
+		})
 		const checkbox = screen.getByRole('checkbox')
 		expect(checkbox).toBeInTheDocument()
 		expect(checkbox).toBeChecked()
 	})
 	
 	test("renders no checked attribute if false", async () => {
-		render(<Checkbox checked={false} />)
+		act(() => {
+			render(<Checkbox checked={false} />)
+		})
 		const checkbox = screen.getByRole('checkbox')
 		expect(checkbox).toBeInTheDocument()
 		expect(checkbox).not.toBeChecked()
@@ -77,15 +82,37 @@ describe("Checkbox", () => {
 	test("fires handler on change as passed", async () => {	
 		const onChangeSpy = jest.fn();
 		render(<Checkbox onChange={onChangeSpy} />);
-		screen.getByRole('checkbox').click();
+		act(() => {
+			screen.getByRole('checkbox').click();
+		})
 		expect(onChangeSpy).toHaveBeenCalled();	
+	})
+	
+	test("fires handler on click as passed", async () => {	
+		const onClickSpy = jest.fn();
+		render(<Checkbox onClick={onClickSpy} />);
+		act(() => {
+			screen.getByRole('checkbox').click();
+		})
+		expect(onClickSpy).toHaveBeenCalled();	
 	})
 	
 	test("does not fire a handler on change when disabled", async () => {	
 		const onChangeSpy = jest.fn();
 		render(<Checkbox onChange={onChangeSpy} disabled />);
-		screen.getByRole('checkbox').click();
+		act(() => {
+			screen.getByRole('checkbox').click();
+		})
 		expect(onChangeSpy).not.toHaveBeenCalled();	
+	})
+	
+	test("does not fire a handler on click when disabled", async () => {	
+		const onClickSpy = jest.fn();
+		render(<Checkbox onClick={onClickSpy} disabled />);
+		act(() => {
+			screen.getByRole('checkbox').click();
+		})
+		expect(onClickSpy).not.toHaveBeenCalled();	
 	})
 
 })

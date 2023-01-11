@@ -3129,7 +3129,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom@npm:^1.0.1":
+"@floating-ui/react-dom-interactions@npm:^0.10.1":
+  version: 0.10.3
+  resolution: "@floating-ui/react-dom-interactions@npm:0.10.3"
+  dependencies:
+    "@floating-ui/react-dom": ^1.0.0
+    aria-hidden: ^1.1.3
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 8f3dbe9ab8b59edec825209a488c6e25b18e1019691c6d0cfa3ada0b83226efc76f4d06bfdd3cc12a27813cff197e1988917d371204d119ba67bd4e3c3c3a3c8
+  languageName: node
+  linkType: hard
+
+"@floating-ui/react-dom@npm:^1.0.0":
   version: 1.0.1
   resolution: "@floating-ui/react-dom@npm:1.0.1"
   dependencies:
@@ -3138,20 +3151,6 @@ __metadata:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
   checksum: 74b80fd46f2f301f444af458e5bbdb0ef0321786aca15dd892c45ce4077a500dfc84c117cb1669360ecc1378346eff77886f1b0dd9b1adbb30e72f894fe27dfb
-  languageName: node
-  linkType: hard
-
-"@floating-ui/react@npm:^0.14.0":
-  version: 0.14.0
-  resolution: "@floating-ui/react@npm:0.14.0"
-  dependencies:
-    "@floating-ui/react-dom": ^1.0.1
-    aria-hidden: ^1.1.3
-    tabbable: ^6.0.1
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: b6d7f575059a4cf3aad593335dac0a6dc4f19d8a06390454b5a87933205c195310c10f50b7c33a31ccb0b617250b0d238dfa370749c93e2e31c8fba2a94cd54f
   languageName: node
   linkType: hard
 
@@ -3914,7 +3913,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/sourcemap-codec@npm:1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.10":
+"@jridgewell/sourcemap-codec@npm:1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.13":
   version: 1.4.14
   resolution: "@jridgewell/sourcemap-codec@npm:1.4.14"
   checksum: 61100637b6d173d3ba786a5dff019e1a74b1f394f323c1fee337ff390239f053b87266c7a948777f4b1ee68c01a8ad0ab61e5ff4abb5a012a0b091bec391ab97
@@ -4259,6 +4258,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@remix-run/router@npm:1.0.5":
+  version: 1.0.5
+  resolution: "@remix-run/router@npm:1.0.5"
+  checksum: 5d66750b7defc10c80d9748fa003fcfe2af9ef82de3c06be88c926ede36a15b9e971ed2222981db843494e2f77c3de14470efe6dc877530cea774dc31162ec6f
+  languageName: node
+  linkType: hard
+
 "@rollup/plugin-babel@npm:^6.0.3":
   version: 6.0.3
   resolution: "@rollup/plugin-babel@npm:6.0.3"
@@ -4275,6 +4281,25 @@ __metadata:
     rollup:
       optional: true
   checksum: 412c1c3bb5dd029cbf0b37315ad54b51ef378b8d2fd91d1ec44d73cade723cec8718b5affa2ce8a8b06660710d11765056fac4068521f18737ce26142506a8b1
+  languageName: node
+  linkType: hard
+
+"@rollup/plugin-commonjs@npm:^24.0.0":
+  version: 24.0.0
+  resolution: "@rollup/plugin-commonjs@npm:24.0.0"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.1
+    commondir: ^1.0.1
+    estree-walker: ^2.0.2
+    glob: ^8.0.3
+    is-reference: 1.2.1
+    magic-string: ^0.27.0
+  peerDependencies:
+    rollup: ^2.68.0||^3.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: e2a1bf295bbb45ab56747f7ce636d4b94046bfecc758a64c7276823b80271e0ba1196642c232aa61d1b1a98abeaddad45486c7227ec19a97d19d16f7661d49a6
   languageName: node
   linkType: hard
 
@@ -8168,6 +8193,71 @@ __metadata:
   languageName: node
   linkType: hard
 
+"assets-overview@workspace:apps/assets-overview":
+  version: 0.0.0-use.local
+  resolution: "assets-overview@workspace:apps/assets-overview"
+  dependencies:
+    "@babel/core": ^7.20.2
+    "@babel/preset-env": ^7.20.2
+    "@babel/preset-react": ^7.18.6
+    "@svgr/webpack": ^6.2.1
+    "@testing-library/dom": ^8.19.0
+    "@testing-library/jest-dom": ^5.16.5
+    "@testing-library/react": ^13.4.0
+    "@testing-library/user-event": ^14.4.3
+    assert: ^2.0.0
+    autoprefixer: ^10.4.2
+    babel-jest: ^29.3.1
+    babel-loader: ^8.2.3
+    babel-plugin-macros: ^3.1.0
+    buffer: ^6.0.3
+    bundle-loader: ^0.5.6
+    clean-webpack-plugin: ^4.0.0
+    css-loader: ^6.6.0
+    css-minimizer-webpack-plugin: ^3.4.1
+    custom-event-polyfill: ^1.0.7
+    dotenv-webpack: ^7.1.0
+    glob: ^7.2.0
+    html-webpack-plugin: ^5.4.0
+    jest: ^29.3.1
+    jest-environment-jsdom: ^29.3.1
+    juno-ui-components: "workspace:*"
+    luxon: ^2.3.0
+    mini-css-extract-plugin: ^2.5.3
+    os-browserify: ^0.3.0
+    path-browserify: ^1.0.1
+    postcss: ^8.4.6
+    postcss-loader: ^6.2.1
+    process: ^0.11.10
+    prop-types: ^15.8.1
+    purgecss-webpack-plugin: ^4.1.3
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-query: ^3.39.2
+    react-refresh: ^0.10.0
+    react-test-renderer: ^18.2.0
+    sass-loader: ^12.4.0
+    shadow-dom-testing-library: ^1.7.1
+    tailwindcss: ^3.0.24
+    url-state-provider: "workspace:*"
+    util: ^0.12.4
+    webpack: ^5.75.0
+    webpack-cli: ^4.9.2
+    webpack-dev-server: ^4.7.4
+    zustand: ^4.1.1
+  peerDependencies:
+    custom-event-polyfill: ^1.0.7
+    juno-ui-components: "*"
+    luxon: ^2.3.0
+    prop-types: ^15.8.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-query: ^3.39.2
+    url-state-provider: "*"
+    zustand: ^4.1.1
+  languageName: unknown
+  linkType: soft
+
 "assign-symbols@npm:^1.0.0":
   version: 1.0.0
   resolution: "assign-symbols@npm:1.0.0"
@@ -9148,6 +9238,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"brace-expansion@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "brace-expansion@npm:2.0.1"
+  dependencies:
+    balanced-match: ^1.0.0
+  checksum: a61e7cd2e8a8505e9f0036b3b6108ba5e926b4b55089eeb5550cd04a471fe216c96d4fe7e4c7f995c728c554ae20ddfc4244cad10aef255e72b62930afd233d1
+  languageName: node
+  linkType: hard
+
 "braces@npm:^2.3.1, braces@npm:^2.3.2":
   version: 2.3.2
   resolution: "braces@npm:2.3.2"
@@ -9589,17 +9688,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001109, caniuse-lite@npm:^1.0.30001286, caniuse-lite@npm:^1.0.30001297":
-  version: 1.0.30001306
-  resolution: "caniuse-lite@npm:1.0.30001306"
-  checksum: 6e80988025b7f770479cea1331f608c9430aa097254c1a0c4a904dbcd46002934489ae00d60b87c14fe14f945d0ee1cd6703c2e1e7725e32a380301ac96a4730
-  languageName: node
-  linkType: hard
-
-"caniuse-lite@npm:^1.0.30001400":
-  version: 1.0.30001434
-  resolution: "caniuse-lite@npm:1.0.30001434"
-  checksum: 7c9d2641e8e8f3ddf9af14c4ce47266a9d8fd1fc0243626049ff1b2eca4bf02938ff440813cc3feae3fa8d851ec8d1b9718044340c8d09bb4372d92d4f6b519c
+"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30001109, caniuse-lite@npm:^1.0.30001286, caniuse-lite@npm:^1.0.30001297, caniuse-lite@npm:^1.0.30001400":
+  version: 1.0.30001439
+  resolution: "caniuse-lite@npm:1.0.30001439"
+  checksum: 3912dd536c9735713ca85e47721988bbcefb881ddb4886b0b9923fa984247fd22cba032cf268e57d158af0e8a2ae2eae042ae01942a1d6d7849fa9fa5d62fb82
   languageName: node
   linkType: hard
 
@@ -10965,7 +11057,6 @@ __metadata:
     "@babel/core": ^7.20.2
     "@babel/preset-env": ^7.20.2
     "@babel/preset-react": ^7.18.6
-    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.1
     "@svgr/webpack": ^6.2.1
     "@testing-library/dom": ^8.19.0
     "@testing-library/jest-dom": ^5.16.5
@@ -11013,7 +11104,6 @@ __metadata:
     zustand: ^4.1.1
   peerDependencies:
     custom-event-polyfill: ^1.0.7
-    express: ^4.17.3
     juno-ui-components: "*"
     luxon: ^2.3.0
     prop-types: ^15.8.1
@@ -12328,19 +12418,17 @@ __metadata:
     tailwindcss: ^3.0.24
     url-state-provider: "workspace:*"
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
     zustand: ^4.1.1
   peerDependencies:
     custom-event-polyfill: ^1.0.7
-    dotenv-webpack: ^7.1.0
     juno-ui-components: "*"
     luxon: ^2.3.0
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     react-query: 3.39.2
     url-state-provider: "*"
     zustand: ^4.1.1
@@ -13577,6 +13665,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"glob@npm:^8.0.3":
+  version: 8.0.3
+  resolution: "glob@npm:8.0.3"
+  dependencies:
+    fs.realpath: ^1.0.0
+    inflight: ^1.0.4
+    inherits: 2
+    minimatch: ^5.0.1
+    once: ^1.3.0
+  checksum: 50bcdea19d8e79d8de5f460b1939ffc2b3299eac28deb502093fdca22a78efebc03e66bf54f0abc3d3d07d8134d19a32850288b7440d77e072aa55f9d33b18c5
+  languageName: node
+  linkType: hard
+
 "global-dirs@npm:^3.0.0":
   version: 3.0.0
   resolution: "global-dirs@npm:3.0.0"
@@ -14130,13 +14231,12 @@ __metadata:
     tailwindcss: ^3.0.24
     url-state-router: "workspace:*"
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
     zustand: ^4.1.1
   peerDependencies:
     custom-event-polyfill: ^1.0.7
-    dotenv-webpack: ^7.1.0
     juno-ui-components: "*"
     lodash.uniqueid: ^4.0.1
     luxon: ^2.3.0
@@ -14144,7 +14244,6 @@ __metadata:
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     react-query: ^3.39.2
     url-state-router: "*"
     zustand: ^4.1.1
@@ -15300,6 +15399,15 @@ __metadata:
   version: 1.0.2
   resolution: "is-property@npm:1.0.2"
   checksum: 33b661a3690bcc88f7e47bb0a21b9e3187e76a317541ea7ec5e8096d954f441b77a46d8930c785f7fbf4ef8dfd624c25495221e026e50f74c9048fe501773be5
+  languageName: node
+  linkType: hard
+
+"is-reference@npm:1.2.1":
+  version: 1.2.1
+  resolution: "is-reference@npm:1.2.1"
+  dependencies:
+    "@types/estree": "*"
+  checksum: e7b48149f8abda2c10849ea51965904d6a714193d68942ad74e30522231045acf06cbfae5a4be2702fede5d232e61bf50b3183acdc056e6e3afe07fcf4f4b2bc
   languageName: node
   linkType: hard
 
@@ -16605,8 +16713,10 @@ __metadata:
     "@babel/core": ^7.20.2
     "@babel/preset-env": ^7.20.2
     "@babel/preset-react": ^7.18.6
+    "@floating-ui/react-dom-interactions": ^0.10.1
     "@mdx-js/react": ^1.6.22
     "@rollup/plugin-babel": ^6.0.3
+    "@rollup/plugin-commonjs": ^24.0.0
     "@rollup/plugin-node-resolve": ^13.1.3
     "@storybook/addon-actions": ^6.4.22
     "@storybook/addon-controls": ^6.4.22
@@ -16639,7 +16749,9 @@ __metadata:
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
+    react-json-view: ^1.21.3
     react-jss: ^10.8.1
+    react-merge-refs: ^2.0.1
     react-tabs: ^4.2.1
     regenerator-runtime: ^0.13.9
     rollup: ^3.4.0
@@ -16656,75 +16768,8 @@ __metadata:
     tailwindcss: ^3.0.24
   peerDependencies:
     prop-types: ^15.8.1
-    react: ^17.0.2
-    react-dom: ^17.0.2
-  languageName: unknown
-  linkType: soft
-
-"keymanager@workspace:apps/keymanager":
-  version: 0.0.0-use.local
-  resolution: "keymanager@workspace:apps/keymanager"
-  dependencies:
-    "@babel/core": ^7.20.2
-    "@babel/preset-env": ^7.20.2
-    "@babel/preset-react": ^7.18.6
-    "@svgr/webpack": ^6.2.1
-    "@testing-library/dom": ^8.19.0
-    "@testing-library/jest-dom": ^5.16.5
-    "@testing-library/react": ^13.4.0
-    "@testing-library/user-event": ^14.4.3
-    assert: ^2.0.0
-    autoprefixer: ^10.4.2
-    babel-jest: ^29.3.1
-    babel-loader: ^8.2.3
-    babel-plugin-macros: ^3.1.0
-    buffer: ^6.0.3
-    bundle-loader: ^0.5.6
-    clean-webpack-plugin: ^4.0.0
-    communicator: "workspace:*"
-    css-loader: ^6.6.0
-    css-minimizer-webpack-plugin: ^3.4.1
-    custom-event-polyfill: ^1.0.7
-    dotenv-webpack: ^7.1.0
-    glob: ^7.2.0
-    html-webpack-plugin: ^5.4.0
-    jest: ^29.3.1
-    jest-environment-jsdom: ^29.3.1
-    juno-ui-components: "workspace:*"
-    luxon: ^2.3.0
-    mini-css-extract-plugin: ^2.5.3
-    os-browserify: ^0.3.0
-    path-browserify: ^1.0.1
-    postcss: ^8.4.6
-    postcss-loader: ^6.2.1
-    process: ^0.11.10
-    prop-types: ^15.8.1
-    purgecss-webpack-plugin: ^4.1.3
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
-    react-refresh: ^0.10.0
-    react-test-renderer: ^18.2.0
-    sass-loader: ^12.4.0
-    shadow-dom-testing-library: ^1.7.1
-    tailwindcss: ^3.0.24
-    url-state-provider: "workspace:*"
-    util: ^0.12.4
-    webpack: ^5.68.0
-    webpack-cli: ^4.9.2
-    webpack-dev-server: ^4.7.4
-    zustand: ^4.1.1
-  peerDependencies:
-    custom-event-polyfill: ^1.0.7
-    dotenv-webpack: ^7.1.0
-    juno-ui-components: "*"
-    luxon: ^2.3.0
-    prop-types: ^15.8.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    react-json-view: ^1.21.3
-    url-state-provider: "*"
-    zustand: ^4.1.1
   languageName: unknown
   linkType: soft
 
@@ -17116,6 +17161,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"magic-string@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "magic-string@npm:0.27.0"
+  dependencies:
+    "@jridgewell/sourcemap-codec": ^1.4.13
+  checksum: 273faaa50baadb7a2df6e442eac34ad611304fc08fe16e24fe2e472fd944bfcb73ffb50d2dc972dc04e92784222002af46868cb9698b1be181c81830fd95a13e
+  languageName: node
+  linkType: hard
+
 "maintenance@workspace:apps/maintenance":
   version: 0.0.0-use.local
   resolution: "maintenance@workspace:apps/maintenance"
@@ -17166,20 +17220,18 @@ __metadata:
     tailwindcss: ^3.0.24
     url-state-provider: "workspace:*"
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
     zustand: ^4.1.1
   peerDependencies:
     communicator: "*"
     custom-event-polyfill: ^1.0.7
-    dotenv-webpack: ^7.1.0
     juno-ui-components: "*"
     luxon: ^2.3.0
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     url-state-provider: "*"
     zustand: ^4.1.1
   languageName: unknown
@@ -17691,6 +17743,15 @@ __metadata:
   dependencies:
     brace-expansion: ^1.1.7
   checksum: 66ac295f8a7b59788000ea3749938b0970344c841750abd96694f80269b926ebcafad3deeb3f1da2522978b119e6ae3a5869b63b13a7859a456b3408bd18a078
+  languageName: node
+  linkType: hard
+
+"minimatch@npm:^5.0.1":
+  version: 5.1.2
+  resolution: "minimatch@npm:5.1.2"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: 32ffda25b9fb8270a1c1beafdb7489dc0e411af553495136509a945691f63c9b6b000eeeaaf8bffe3efa609c1d6d3bc0f5a106f6c3443b5c05da649100ded964
   languageName: node
   linkType: hard
 
@@ -21100,6 +21161,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-merge-refs@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "react-merge-refs@npm:2.0.1"
+  checksum: c0b6fdb384a92e9b2bb7d56128244a2db97b9343c0dcae70f172352c3732312266c078495902707e45f523625afcba78996a22edea3a8e7b2b17fe97347059fe
+  languageName: node
+  linkType: hard
+
 "react-popper-tooltip@npm:^3.1.1":
   version: 3.1.1
   resolution: "react-popper-tooltip@npm:3.1.1"
@@ -21159,6 +21227,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-router-dom@npm:6.4.5":
+  version: 6.4.5
+  resolution: "react-router-dom@npm:6.4.5"
+  dependencies:
+    "@remix-run/router": 1.0.5
+    react-router: 6.4.5
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 09d7841dd52efd2c60947171f95d9d1860cabd7540ac74dede86a6c36a2dd26a645e4928cbc8aa4e1c9d1f906f2ef144ba6da5ac69243590df855a6df8cfe1aa
+  languageName: node
+  linkType: hard
+
 "react-router-dom@npm:^5.3.0":
   version: 5.3.0
   resolution: "react-router-dom@npm:5.3.0"
@@ -21186,19 +21267,6 @@ __metadata:
     react: ">=16.8"
     react-dom: ">=16.8"
   checksum: fa0edc69fddf0cb1313bcb3dbd5eb2b2ff24a75ee03ba928995e16a6a251585750f91d966612e868eb68a5aebc4a5240be40fd96c4acf1d8d48d33f54ad3f4e2
-  languageName: node
-  linkType: hard
-
-"react-router-dom@npm:^6.3.0":
-  version: 6.3.0
-  resolution: "react-router-dom@npm:6.3.0"
-  dependencies:
-    history: ^5.2.0
-    react-router: 6.3.0
-  peerDependencies:
-    react: ">=16.8"
-    react-dom: ">=16.8"
-  checksum: 77603a654f8a8dc7f65535a2e5917a65f8d9ffcb06546d28dd297e52adcc4b8a84377e0115f48dca330b080af2da3e78f29d590c89307094d36927d2b1751ec3
   languageName: node
   linkType: hard
 
@@ -21233,14 +21301,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router@npm:6.3.0":
-  version: 6.3.0
-  resolution: "react-router@npm:6.3.0"
+"react-router@npm:6.4.5":
+  version: 6.4.5
+  resolution: "react-router@npm:6.4.5"
   dependencies:
-    history: ^5.2.0
+    "@remix-run/router": 1.0.5
   peerDependencies:
     react: ">=16.8"
-  checksum: 7be673f5e72104be01e6ab274516bdb932efd93305243170690f6560e3bd1035dd1df3d3c9ce1e0f452638a2529f43a1e77dcf0934fc8031c4783da657be13ca
+  checksum: 0d471df39f0487224240f9910c2f2939519f3e9909a7b19f72767aeea2caf1c9fa4e8ea9a51b17c20051ec252db0fcc34a7a0b3068b338dd9d8eb656ffd489c1
   languageName: node
   linkType: hard
 
@@ -21842,21 +21910,16 @@ __metadata:
     url-state-provider: "workspace:libs/url-state-provider"
     url-state-router: "workspace:*"
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
   peerDependencies:
     "@apollo/client": ^3.3.21
     assert: ^2.0.0
     buffer: ^6.0.3
-    dotenv: ^8.2.0
     graphql: ^15.5.1
     juno-ui-components: "*"
-    lz-string: ^1.4.4
-    os-browserify: ^0.3.0
-    path-browserify: ^1.0.1
     policy-engine: "*"
-    process: ^0.11.10
     react: ^18.2.0
     react-dom: ^18.2.0
     react-router-dom: ^5.3.0
@@ -23849,20 +23912,18 @@ __metadata:
     tailwindcss: ^3.0.24
     url-state-provider: "workspace:*"
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
     zustand: ^4.1.1
   peerDependencies:
     communicator: "*"
     custom-event-polyfill: ^1.0.7
-    dotenv-webpack: ^7.1.0
     juno-ui-components: "*"
     luxon: ^2.3.0
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     react-query: ^3.39.2
     url-state-provider: "*"
     zustand: ^4.1.1
@@ -25182,21 +25243,19 @@ __metadata:
     purgecss-webpack-plugin: ^4.1.3
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     react-query: ^3.39.2
     react-refresh: ^0.10.0
-    react-router-dom: ^6.3.0
+    react-router-dom: 6.4.5
     react-test-renderer: ^18.2.0
     regenerator-runtime: ^0.13.9
     sass-loader: ^12.4.0
     shadow-dom-testing-library: ^1.7.1
     tailwindcss: ^3.0.24
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
   peerDependencies:
-    "@peculiar/x509": ^1.6.1
     communicator: "*"
     custom-event-polyfill: ^1.0.7
     juno-ui-components: "*"
@@ -25206,9 +25265,8 @@ __metadata:
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     react-query: ^3.39.2
-    react-router-dom: ^6.3.0
+    react-router-dom: 6.4.5
   languageName: unknown
   linkType: soft
 
@@ -25569,7 +25627,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.4.0, webpack@npm:^5.68.0, webpack@npm:^5.9.0":
+"webpack@npm:^5.4.0, webpack@npm:^5.9.0":
   version: 5.68.0
   resolution: "webpack@npm:5.68.0"
   dependencies:
@@ -25813,7 +25871,7 @@ __metadata:
     tailwindcss: ^3.0.24
     url-state-provider: "workspace:*"
     util: ^0.12.4
-    webpack: ^5.68.0
+    webpack: ^5.75.0
     webpack-cli: ^4.9.2
     webpack-dev-server: ^4.7.4
   peerDependencies:
@@ -25826,7 +25884,6 @@ __metadata:
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-json-view: ^1.21.3
     url-state-provider: "*"
   languageName: unknown
   linkType: soft

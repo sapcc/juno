@@ -23,9 +23,9 @@ export const SelectOption = ({
 
 SelectOption.propTypes = {
 	/** Pass a visible label */
-	label: PropTypes.string,
+	label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	/** Pass a value the option should represent */
-	value: PropTypes.string,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	/** Whether the option is disabled */
 	disabled: PropTypes.bool,
 	/** Add a class name to the option */

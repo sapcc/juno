@@ -12,6 +12,10 @@ node_modules
 !.yarn/versions
 .pnp.*
 
+scripts/test_data
+scripts/im.json
+scripts/manifest.json
+
 # testing
 /coverage
 

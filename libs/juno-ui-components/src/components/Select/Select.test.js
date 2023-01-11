@@ -47,15 +47,21 @@ describe("Select", () => {
 		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
 	})
 	
-
-	
 	test("renders children as passed", async () => {
 		render(<Select><option data-testid="option">Option</option></Select>)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
 		expect(screen.getByTestId("option")).toBeInTheDocument()
 	})
 	
-	test("fires onChange handler as passed", async () => {
+	test("executes onClick handler as passed", async () => {
+		const onClickSpy = jest.fn()
+		render(<Select onClick={onClickSpy} />)
+		const select = screen.getByRole('combobox')
+		select.click();
+		expect(onClickSpy).toHaveBeenCalled()
+	})
+	
+	test("executes onChange handler as passed", async () => {
 		const handleChange = jest.fn()
 		const { container } = render(
 			<Select onChange={handleChange} />
@@ -65,11 +71,17 @@ describe("Select", () => {
 		expect(handleChange).toHaveBeenCalledTimes(1)
 	})
 	
-	test("does not fire onChange handler when disabled", async () => {
+	test("does not execute onClick handler when disabled", async () => {
+		const onClickSpy = jest.fn()
+		render(<Select onClick={onClickSpy} disabled />)
+		screen.getByRole('combobox').click();
+		expect(onClickSpy).not.toHaveBeenCalled()
+	})
+	
+	test("does not execute onChange handler when disabled", async () => {
 		const onChangeSpy = jest.fn()
 		render(<Select onChange={onChangeSpy} disabled />)
-		const select = screen.getByRole('combobox')
-		select.click();
+		screen.getByRole('combobox').click();
 		expect(onChangeSpy).not.toHaveBeenCalled()
 	})
 	

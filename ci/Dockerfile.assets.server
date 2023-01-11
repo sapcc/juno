@@ -1,0 +1,113 @@
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-base:latest AS base 
+RUN mkdir -p /tmp/latest
+
+# copy all app and lib builds (from dist) to tmp/latest  
+
+# -> /apps/whois/build, package.json
+# -> /apps/volta/build, package.json
+# -> /libs/juno-ui-components/build, package.json
+ADD . /tmp/latest
+WORKDIR /tmp/latest
+
+ARG PROVIDERS="jspm unpkg jsdelivr"
+ARG DEFAULT_PROVIDER="jspm"
+ARG VERBOSE="false"
+
+RUN \
+  for PACKAGE in ./**/*/package.json; do \
+  VERSION=$(jq -r .version $PACKAGE); \
+  DIR=$(dirname $PACKAGE); \
+  cp -r $DIR "$DIR@latest"; \
+  mv $DIR "$DIR@$VERSION"; \
+  done ; \
+  ls -la ./**  
+
+RUN \
+  cd /juno/ ; \
+  for provider in $PROVIDERS; do \
+  echo "===$provider" ; \
+  if [ "$DEFAULT_PROVIDER" = "$provider" ]; then  EXIT_ON_ERROR="true"; else EXIT_ON_ERROR="false";  fi; \
+  node ./scripts/generate_importmap.mjs \
+  --provider=$provider \
+  --exit-on-error=$EXIT_ON_ERROR \
+  --src=/tmp/latest \
+  --base-url="%BASE_URL%" \
+  --ignore-externals=false \
+  --output=/tmp/latest/importmap.$provider.json  \
+  --verbose=$VERBOSE ; \
+  \
+  # DEV\
+  node ./scripts/generate_importmap.mjs \
+  --provider=$provider \
+  --env=development \
+  --exit-on-error=$EXIT_ON_ERROR \
+  --src=/tmp/latest \
+  --base-url="%BASE_URL%" \
+  --ignore-externals=false \
+  --output=/tmp/latest/importmap.$provider.dev.json  \
+  --verbose=$VERBOSE ; \
+  done || exit 1; \
+  \
+  cp /tmp/latest/importmap.$DEFAULT_PROVIDER.json /tmp/latest/importmap.json ; \
+  cp /tmp/latest/importmap.$DEFAULT_PROVIDER.dev.json /tmp/latest/importmap.dev.json ; \
+  \
+  node ./scripts/generate_manifest.mjs \
+  --src=/tmp/latest \
+  --output=/tmp/latest/manifest.json \
+  --verbose=$VERBOSE ;
+
+
+# RESULTS
+# /tmp/latest/apps/whois@version/files
+# /tmp/latest/apps/volta/files
+# /tmp/latest/libs/juno-ui-components/files
+# /tmp/latest/assets/static files
+# /tmp/latest/importmap.json
+# /tmp/latest/manifest.json
+
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server:latest AS lastbuild
+
+# final image layer
+FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/nginx:alpine AS server
+LABEL source_repository="https://github.com/sapcc/juno"
+ENV BASE_URL=""
+
+RUN apk --no-cache add rsync
+
+# copy old versions to current layer
+COPY --from=lastbuild /usr/share/nginx/html/* /usr/share/nginx/html/
+
+# copy new version 
+COPY --from=base /tmp/latest "/tmp/latest"
+# sync new versions over old
+RUN rsync -avu "/tmp/latest/" "/usr/share/nginx/html" 1>/dev/null ; 
+RUN rm -rf /tmp/latest
+
+# ENTRYPOINT
+# we check the presence of BASE_URL env
+# replace placeholder for base url in importmaps.json file
+# and run the given command 
+RUN echo -e '#!/bin/sh\n\n\
+  set -e \n\
+  if [ -z "$BASE_URL" ]; then echo 'Environment variable BASE_URL must be specified. Exiting.'; exit 1; fi \n\
+  sed -i "s,%BASE_URL%,$BASE_URL,g" /usr/share/nginx/html/importmap*.json \n\
+  exec "$@" ' >> /usr/local/bin/entrypoint && chmod +x /usr/local/bin/entrypoint
+
+RUN echo -e $'\
+  <!DOCTYPE html> \n\
+  <html style="height: 100vh; background: rgb(13, 20, 28);">\n\
+  \t<head>\n\
+  \t\t<title>Juno Assets</title> \n \
+  \t\t<link rel="icon" href="/assets/favicon.ico"/> \n\
+  \t</head>\n\
+  \t<body style="height: 100vh;">\n \
+  \t\t<script \n\
+  \t\t\tsrc="$BASE_URL/apps/widget-loader@latest/build/app.js" \n\ 
+  \t\t\tdata-name="assets-overview" \n\
+  \t\t\tdata-props-manifest-url="/manifest.json"></script>\n\
+  \t</body>\n\
+  </html>' > /usr/share/nginx/html/index.html
+
+ENTRYPOINT ["/usr/local/bin/entrypoint"]
+# default command is nginx
+CMD nginx -g "daemon off;"

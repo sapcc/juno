@@ -8,31 +8,27 @@ const breadcrumbstyles = `
 
 `
 /** Generic breadcrumb component. Use this to Wrap `Breadcrumb` items or custom children in a breadcrumb. */
-export const Breadcrumb = ({
-  children,
-  className,
-  ...props
-}) => {
-  
+export const Breadcrumb = ({ children, className, ...props }) => {
   const breadcrumbArray = Children.toArray(children)
   const breadcrumbArrayWithSeparators = []
-  
-  breadcrumbArray.forEach( (child, i) => {
+
+  breadcrumbArray.forEach((child, i) => {
     breadcrumbArrayWithSeparators.push(
-      <>
-        <BreadcrumbItem {...child.props} key={i} />
-        { i < breadcrumbArray.length - 1 ?
-            <Icon icon="chevronRight" />
-          :
-            null
-        }
-      </>
+      <React.Fragment key={i}>
+        <BreadcrumbItem {...child.props} />
+        {i < breadcrumbArray.length - 1 ? <Icon icon="chevronRight" /> : null}
+      </React.Fragment>
     )
   })
-  
+
   return (
-    <Stack className={`juno-breadcrumb ${breadcrumbstyles} ${className}`} gap="1" {...props} >
-      { breadcrumbArrayWithSeparators }
+    <Stack
+      className={`juno-breadcrumb ${breadcrumbstyles} ${className}`}
+      gap="1"
+      key="stck"
+      {...props}
+    >
+      {breadcrumbArrayWithSeparators}
     </Stack>
   )
 }
