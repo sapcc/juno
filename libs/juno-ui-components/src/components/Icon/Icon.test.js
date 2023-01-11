@@ -68,7 +68,7 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "account")
   })
-  
+
   test("renders an addCircle icon", async () => {
     render(<Icon icon="addCircle" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
@@ -95,13 +95,13 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "bolt")
   })
-  
+
   test("renders a cancel icon", async () => {
     render(<Icon icon="cancel" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "cancel")
   })
-  
+
   test("renders a checkCircle icon", async () => {
     render(<Icon icon="checkCircle" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
@@ -113,7 +113,7 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "chevronLeft")
   })
-  
+
   test("renders a chevronRight icon", async () => {
     render(<Icon icon="chevronRight" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
@@ -167,11 +167,17 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "edit")
   })
-  
+
   test("renders an error icon", async () => {
     render(<Icon icon="error" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "error")
+  })
+
+  test("renders an outlined error icon", async () => {
+    render(<Icon icon="errorOutline" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "error outline")
   })
 
   test("renders an exitToApp icon", async () => {
@@ -191,7 +197,7 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "expand more")
   })
-  
+
   test("renders an filterAlt icon", async () => {
     render(<Icon icon="filterAlt" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
@@ -209,7 +215,7 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "help")
   })
-  
+
   test("renders a Home icon", async () => {
     render(<Icon icon="home" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
@@ -317,13 +323,20 @@ describe("Icon", () => {
     expect(screen.getByRole("button")).toHaveAttribute("aria-label", "warning")
   })
 
+  test("renders a disabled button element as passed", async () => {
+    const handleClick = jest.fn()
+    render(<Icon onClick={handleClick} disabled />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toBeDisabled()
+  })
+
   test("an onClick handler is called as passed", () => {
     const handleClick = jest.fn()
     render(<Icon onClick={handleClick} />)
     screen.getByRole("button").click()
     expect(handleClick).toHaveBeenCalled()
   })
-  
+
   test("does not execute onClick handler when disabled", async () => {
     const handleClick = jest.fn()
     render(<Icon onClick={handleClick} disabled />)
