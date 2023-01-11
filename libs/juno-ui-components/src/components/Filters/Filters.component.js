@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { FilterInput } from "../FilterInput/FilterInput.component"
 
@@ -55,11 +55,6 @@ export const Filters = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [hasError, setHasError] = useState(false)
-
-  // const errorState = useMemo(
-  //   () => error || (errortext && errortext.length ? true : false),
-  //   [error, errortext]
-  // )
 
   useEffect(() => {
     setHasError(error || (errortext && errortext.length > 0))
