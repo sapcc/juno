@@ -184,6 +184,12 @@ Error.args = {
   icon: "dangerous",
 }
 
+export const Error_Outline = Template.bind({})
+Error_Outline.args = {
+  ...Default.args,
+  icon: "errorOutline",
+}
+
 export const Exit_To_App = Template.bind({})
 Exit_To_App.args = {
   ...Default.args,

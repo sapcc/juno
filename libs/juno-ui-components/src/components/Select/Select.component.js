@@ -65,7 +65,30 @@ const loadingStyles = `
 	jn-cursor-not-allowed
 `
 
+const errorStyles = `
+	jn-absolute
+	jn-top-0
+	jn-right-0
+	jn-bottom-0
+	jn-left-0
+	jn-text-center
+	jn-bg-theme-select
+	jn-text-theme-high
+	jn-text-base
+	jn-rounded-3px
+	jn-flex
+	jn-flex-col
+	jn-justify-center
+	jn-select-none
+	jn-cursor-not-allowed
+`
+
 const loadingSpinnerStyles = `
+	jn-ml-auto
+	jn-mr-auto
+`
+
+const errorIconStyles = `
 	jn-ml-auto
 	jn-mr-auto
 `
@@ -80,120 +103,144 @@ const defaultpaddingright = `
 
 /** A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
 export const Select = ({
-	name,
-	id,
-	children,
-	className,
-	disabled,
-	invalid,
-	valid,
-	loading,
-	onChange,
-	onClick,
-	...props
+  name,
+  id,
+  children,
+  className,
+  disabled,
+  invalid,
+  valid,
+  loading,
+  error,
+  onChange,
+  onClick,
+  ...props
 }) => {
-	const [isLoading, setIsLoading] = useState(false)
-	const [isInvalid, setIsInvalid] = useState(false)
-	const [isValid, setIsValid] = useState(false)
-	
-	useEffect(() => {
-		setIsLoading(loading)
-	}, [loading])
-	
-	useEffect(() => {
-		setIsInvalid(invalid)
-	}, [invalid])
-	
-	useEffect(() => {
-		setIsValid(valid)
-	}, [valid])
-	
-	const handleChange = (event) => {
-		onChange && onChange(event)
-	}
-	
-	const handleClick = (event) => {
-		onClick && onClick(event)
-	}
-	
-	const SelectIcons = ({
-		disabled
-	}) => {
-		if (isLoading) {
-			return (
-				<div className={`juno-select-loading ${loadingStyles}`} >
-					<Spinner className={`${loadingSpinnerStyles}`} />
-				</div>
-			)
-		} else {
-			return (
-				<div className={`${iconstyles} ${ disabled ? disablediconstyles : "" } `}>
-					{ isInvalid ? <Icon icon="dangerous" color="jn-text-theme-error" /> : null }
-					{ isValid ? <Icon icon="checkCircle" color="jn-text-theme-success" /> : null }
-					<Icon icon={"expandMore"} />
-				</div>
-			)
-		}
-	}
-	
-	const selectPadding = () => {
-		if (isValid || isInvalid ) {
-			return iconpaddingright
-		} else {
-			return defaultpaddingright
-		}
-	}
-	
-	return (
-		<div className={`juno-select-wrapper ${wrapperstyles}`}>
-			<select 
-				name={name || "Unnamed Select"}
-				id={id}
-				className={`juno-select ${selectstyles} ${ isInvalid ? "juno-select-invalid " + errorstyles : "" } ${ isValid ? "juno-select-valid " + successstyles : "" } ${selectPadding()} ${className}`}
-				onChange={handleChange}
-				onClick={handleClick}
-				disabled={disabled || isLoading}
-				{...props}
-			>
-				{children}
-			</select>
-			<SelectIcons disabled={disabled} />
-		</div>
-	)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isInvalid, setIsInvalid] = useState(false)
+  const [isValid, setIsValid] = useState(false)
+  const [hasError, setHasError] = useState(false)
+
+  useEffect(() => {
+    setIsLoading(loading)
+  }, [loading])
+
+  useEffect(() => {
+    setIsInvalid(invalid)
+  }, [invalid])
+
+  useEffect(() => {
+    setIsValid(valid)
+  }, [valid])
+
+  useEffect(() => {
+    setHasError(error)
+  }, [error])
+
+  const handleChange = (event) => {
+    onChange && onChange(event)
+  }
+
+  const handleClick = (event) => {
+    onClick && onClick(event)
+  }
+
+  const SelectIcons = ({ disabled }) => {
+    if (isLoading) {
+      return (
+        <div className={`juno-select-loading ${loadingStyles}`}>
+          <Spinner className={`${loadingSpinnerStyles}`} />
+        </div>
+      )
+    } else if (hasError) {
+      return (
+        <div className={`juno-select-errortext ${errorStyles}`}>
+          <Icon
+            icon="errorOutline"
+            color="jn-text-theme-error"
+            className={`${errorIconStyles}`}
+          />
+        </div>
+      )
+    } else {
+      return (
+        <div className={`${iconstyles} ${disabled ? disablediconstyles : ""} `}>
+          {isInvalid ? (
+            <Icon icon="dangerous" color="jn-text-theme-error" />
+          ) : null}
+          {isValid ? (
+            <Icon icon="checkCircle" color="jn-text-theme-success" />
+          ) : null}
+          <Icon icon={"expandMore"} />
+        </div>
+      )
+    }
+  }
+
+  const selectPadding = () => {
+    if (isValid || isInvalid) {
+      return iconpaddingright
+    } else {
+      return defaultpaddingright
+    }
+  }
+
+  return (
+    <div className={`juno-select-wrapper ${wrapperstyles}`}>
+      <select
+        name={name || "Unnamed Select"}
+        id={id}
+        className={`juno-select ${selectstyles} ${
+          isInvalid ? "juno-select-invalid " + errorstyles : ""
+        } ${isValid ? "juno-select-valid " + successstyles : ""} ${
+          hasError ? "juno-select-error " : ""
+        } ${selectPadding()} ${className}`}
+        onChange={handleChange}
+        onClick={handleClick}
+        disabled={disabled || isLoading || hasError}
+        {...props}
+      >
+        {children}
+      </select>
+      <SelectIcons disabled={disabled} />
+    </div>
+  )
 }
 
 Select.propTypes = {
-	/** Pass a name. */
-	name: PropTypes.string,
-	/** The id of the select */
-	id: PropTypes.string,
-	/** Pass a classname */
-	className: PropTypes.string,
-	/** Pass SelectOption and SelectOptionGroup as children. */
-	children: PropTypes.node,
-	/** Disable the select */
-	disabled: PropTypes.bool,
-	/** Whether the Select is invalid */
-	invalid: PropTypes.bool,
-	/** Whether the Select is valid */
-	valid: PropTypes.bool,
-	/** Whether the select is currently loading */
-	loading: PropTypes.bool,
-	/** Pass a change handler */
-	onChange: PropTypes.func,
-	/** Pass a click handler */
-	onClick: PropTypes.func,
-	
+  /** Pass a name. */
+  name: PropTypes.string,
+  /** The id of the select */
+  id: PropTypes.string,
+  /** Pass a classname */
+  className: PropTypes.string,
+  /** Pass SelectOption and SelectOptionGroup as children. */
+  children: PropTypes.node,
+  /** Disable the select */
+  disabled: PropTypes.bool,
+  /** Whether the Select is invalid */
+  invalid: PropTypes.bool,
+  /** Whether the Select is valid */
+  valid: PropTypes.bool,
+  /** Whether the select is currently loading */
+  loading: PropTypes.bool,
+  /** Whether the select has an error. Don't use this to show the user selection is invalid. Use to show when there was an error fetching data. */
+  error: PropTypes.bool,
+  /** Pass a change handler */
+  onChange: PropTypes.func,
+  /** Pass a click handler */
+  onClick: PropTypes.func,
 }
 
 Select.defaultProps = {
-	name: null,
-	id: "",
-	className: "",
-	disabled: null,
-	invalid: false,
-	valid: false,
-	loading: false,
-	onChange: undefined,
-	onClick: undefined,
+  name: null,
+  id: "",
+  className: "",
+  disabled: null,
+  invalid: false,
+  valid: false,
+  loading: false,
+  error: false,
+  onChange: undefined,
+  onClick: undefined,
 }

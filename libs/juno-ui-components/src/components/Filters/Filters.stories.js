@@ -58,6 +58,18 @@ WithPills.args = {
   },
 }
 
+export const ErrorWithPills = PillsTemplate.bind({})
+ErrorWithPills.args = {
+  filters: {
+    options: [
+      { key: "filter-01", label: "Filter 1" },
+      { key: "filter-02", label: "Filter 2" },
+      { key: "filter-03", label: "Filter 3" },
+    ],
+  },
+  error: true,
+}
+
 export const PreseletedWithSearch = Template.bind({})
 PreseletedWithSearch.args = {
   selectedFilterKey: "filter-2",
