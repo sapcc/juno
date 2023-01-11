@@ -73,6 +73,10 @@ const buttonIconStyles = `
 	disabled:jn-opacity-50
 	disabled:jn-cursor-not-allowed
 `
+
+const wrapperStyles = `
+  jn-leading-none
+`
 // export all known icons as an array of their names to be used with PropTypes here and from other components:
 export const knownIcons = [
   "accountCircle",

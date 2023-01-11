@@ -88,6 +88,6 @@ FilterPill.defaultProps = {
   filterKeyLabel: "",
   filterValue: "",
   filterValueLabel: "",
-  onClose: "",
+  onClose: undefined,
   className: "",
 }
