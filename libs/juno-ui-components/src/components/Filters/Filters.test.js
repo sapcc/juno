@@ -161,7 +161,7 @@ describe("Filters", () => {
     expect(screen.getByRole("button")).toBeDisabled()
   })
 
-  test("renders Filters with an errortext as passed", async () => {
+  test("renders Filters with error and an errortext as passed", async () => {
     const filters = {
       label: "Filter",
       options: [{ label: "option 1", value: "option-1" }],
@@ -171,7 +171,6 @@ describe("Filters", () => {
         data-testid="my-filters"
         filters={filters}
         errortext="These Filters have an error"
-        error
       />
     )
     expect(screen.getByRole("combobox")).toBeDisabled()

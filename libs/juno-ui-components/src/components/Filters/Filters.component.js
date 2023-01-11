@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { FilterInput } from "../FilterInput/FilterInput.component"
 
@@ -53,10 +53,26 @@ export const Filters = ({
   errortext,
   ...props
 }) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasError, setHasError] = useState(false)
+
+  // const errorState = useMemo(
+  //   () => error || (errortext && errortext.length ? true : false),
+  //   [error, errortext]
+  // )
+
+  useEffect(() => {
+    setHasError(error || (errortext && errortext.length > 0))
+  }, [error, errortext])
+
+  useEffect(() => {
+    setIsLoading(loading)
+  }, [loading])
+
   return (
     <div
       className={`juno-filters ${
-        error ? "juno-filters-error " : ""
+        hasError ? "juno-filters-error " : ""
       } ${filterStyles} ${className}`}
       {...props}
     >
@@ -73,15 +89,15 @@ export const Filters = ({
             onFilterValueChange={onFilterValueChange}
             onFilter={onFilter}
             onClear={onFilterClear}
-            loading={loading}
-            error={error}
+            loading={isLoading}
+            error={hasError}
           />
         ) : null}
         {search ? (
           <div className={`${searchWrapperStyles}`}>{search}</div>
         ) : null}
       </div>
-      {errortext ? (
+      {hasError && errortext ? (
         <div className={`juno-filters-errortext ${errortextStyles}`}>
           {errortext}
         </div>

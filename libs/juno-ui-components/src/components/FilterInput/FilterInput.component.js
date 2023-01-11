@@ -77,16 +77,17 @@ export const FilterInput = ({
 
   // Reset the (text input) value whenever the component is loading:
   useEffect(() => {
-    if (error) {
-      setHasError(true)
-      setIsLoading(false)
-    } else if (options.length < 1 || loading) {
+    if (options.length < 1 || loading) {
       setIsLoading(true)
       setValue("")
     } else {
       setIsLoading(false)
     }
-  }, [options, loading, error])
+  }, [options, loading])
+
+  useEffect(() => {
+    setHasError(error)
+  }, [error])
 
   // Reset the (text input) value whenever the selected Filter key changes:
   const handleSelectedFilterChange = (event) => {
