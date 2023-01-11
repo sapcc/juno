@@ -12,7 +12,14 @@ const wrapperStyles = `
 	jn-border
 	jn-rounded
 	jn-bg-theme-filter-input
-	jn-border-theme-filter-input
+`
+
+const defaultWrapperStyles = `
+  jn-border-theme-filter-input
+`
+
+const errorWrapperStyles = `
+  jn-border-theme-error
 `
 
 const selectStyles = `
@@ -52,11 +59,13 @@ export const FilterInput = ({
   onKeyPress,
   onFilter,
   loading,
+  error,
   ...props
 }) => {
   const [selectedFilter, setSelectedFilter] = useState(selectedFilterKey)
   const [value, setValue] = useState(filterValue)
   const [isLoading, setIsLoading] = useState(options.length < 1 || loading)
+  const [hasError, setHasError] = useState(error)
 
   useEffect(() => {
     setValue(filterValue)
@@ -68,13 +77,16 @@ export const FilterInput = ({
 
   // Reset the (text input) value whenever the component is loading:
   useEffect(() => {
-    if (options.length < 1 || loading) {
+    if (error) {
+      setHasError(true)
+      setIsLoading(false)
+    } else if (options.length < 1 || loading) {
       setIsLoading(true)
       setValue("")
     } else {
       setIsLoading(false)
     }
-  }, [options, loading])
+  }, [options, loading, error])
 
   // Reset the (text input) value whenever the selected Filter key changes:
   const handleSelectedFilterChange = (event) => {
@@ -106,7 +118,11 @@ export const FilterInput = ({
 
   return (
     <div
-      className={`juno-filter-input ${wrapperStyles} ${className}`}
+      className={`juno-filter-input ${wrapperStyles} ${
+        isLoading ? "juno-filter-input-loading " : ""
+      } ${hasError ? "juno-filter-input-error " : ""} ${
+        hasError ? errorWrapperStyles : defaultWrapperStyles
+      } ${className}`}
       {...props}
     >
       <div>
@@ -116,6 +132,7 @@ export const FilterInput = ({
           value={selectedFilter}
           onChange={handleSelectedFilterChange}
           loading={isLoading}
+          error={hasError}
         >
           // First "Placeholder" option:
           <SelectOption label={keyLabel || "Select Filter"} value="" />
@@ -136,7 +153,7 @@ export const FilterInput = ({
         aria-label={valueLabel}
         onChange={handleFilterValueChange}
         onKeyPress={handleKeyPress}
-        disabled={isLoading}
+        disabled={isLoading || hasError}
         placeholder={isLoading ? "Loading Filter Options…" : valuePlaceholder}
       />
       <div className={`${iconWrapperStyles}`}>
@@ -149,7 +166,12 @@ export const FilterInput = ({
             onClick={handleClearClick}
           />
         ) : null}
-        <Icon icon="filterAlt" title="Filter" onClick={handleFilterClick} />
+        <Icon
+          icon="filterAlt"
+          title="Filter"
+          disabled={isLoading || hasError}
+          onClick={handleFilterClick}
+        />
       </div>
     </div>
   )
@@ -182,6 +204,8 @@ FilterInput.propTypes = {
   className: PropTypes.string,
   /** Pass a handler to execute when the Filter Value Filter button is clicked */
   onFilter: PropTypes.func,
+  /** Whether the FilterInput has an error */
+  error: PropTypes.bool,
 }
 
 FilterInput.defaultProps = {
@@ -197,4 +221,5 @@ FilterInput.defaultProps = {
   onFilter: undefined,
   loading: false,
   className: "",
+  error: false,
 }

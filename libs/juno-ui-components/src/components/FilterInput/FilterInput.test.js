@@ -237,6 +237,7 @@ describe("FilterInput", () => {
     expect(screen.getByRole("combobox")).toBeDisabled()
     expect(screen.getByRole("textbox")).toBeDisabled()
     expect(screen.getByRole("progressbar")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toBeDisabled()
   })
 
   test("renders loading filter as passed even if options are present and not empty", async () => {
@@ -245,6 +246,15 @@ describe("FilterInput", () => {
     expect(screen.getByRole("combobox")).toBeDisabled()
     expect(screen.getByRole("textbox")).toBeDisabled()
     expect(screen.getByRole("progressbar")).toBeInTheDocument()
+  })
+
+  test("renders a filter input with an error as passed", async () => {
+    const opts = [{ label: "A Filter", key: "a-filter" }]
+    render(<FilterInput options={opts} error />)
+    expect(screen.getByRole("combobox")).toBeDisabled()
+    expect(screen.getByRole("textbox")).toBeDisabled()
+    expect(screen.getByTitle("Error")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toBeDisabled()
   })
 
   test("renders a custom class to the row as passed", async () => {
