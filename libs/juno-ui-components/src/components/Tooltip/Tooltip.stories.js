@@ -26,12 +26,13 @@ const Template = ({
   triggerEvent,
   disabled,
   text,
+  triggerText,
   ...args
 }) => {
 
   return (
     <Tooltip initialOpen={initialOpen} placement={placement} variant={variant} open={open} triggerEvent={triggerEvent} disabled={disabled}>
-      <TooltipTrigger>clickMe</TooltipTrigger>
+      <TooltipTrigger>{triggerText}</TooltipTrigger>
       <TooltipContent {...args}>{text}</TooltipContent>
     </Tooltip>
   )
@@ -72,7 +73,7 @@ const TemplateButtonAsChildAnchor = ({
   return (
     <Tooltip initialOpen={initialOpen} placement={placement} variant={variant} open={open} triggerEvent={triggerEvent} disabled={disabled}>
       <TooltipTrigger asChild={true}>
-        <Button />
+        <Button label="hover me" />
       </TooltipTrigger>
       <TooltipContent {...args}>{text}</TooltipContent>
     </Tooltip>
@@ -82,14 +83,21 @@ const TemplateButtonAsChildAnchor = ({
 export const Default = Template.bind({})
 Default.args = {
   text: "A default tooltip",
+  triggerText: "click me",
   initialOpen: true
+}
+
+export const Hover = Template.bind({})
+Hover.args = {
+  text: "A default tooltip opened on hover",
+  triggerText: "hover me",
+  triggerEvent: "hover"
 }
 
 
 export const AsChildTooltipTrigger = TemplateAsChildAnchor.bind({})
 AsChildTooltipTrigger.args = {
   text: "A Tooltip with asChild Icon trigger",
-  initialOpen: true
 }
 AsChildTooltipTrigger.parameters = {
   docs: {
@@ -99,8 +107,8 @@ AsChildTooltipTrigger.parameters = {
 
 export const ButtonAsChildTooltipTrigger = TemplateButtonAsChildAnchor.bind({})
 ButtonAsChildTooltipTrigger.args = {
-  text: "A Tooltip with asChild Icon trigger",
-  initialOpen: true
+  text: "A Tooltip with asChild Button trigger",
+  triggerEvent: "hover"
 }
 ButtonAsChildTooltipTrigger.parameters = {
   docs: {
