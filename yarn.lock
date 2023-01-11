@@ -8352,7 +8352,7 @@ __metadata:
     jest: ^29.3.1
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
@@ -8377,7 +8377,7 @@ __metadata:
   peerDependencies:
     custom-event-polyfill: ^1.0.7
     juno-ui-components: "*"
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -11206,7 +11206,7 @@ __metadata:
     jest: ^29.3.1
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
@@ -11228,7 +11228,7 @@ __metadata:
   peerDependencies:
     custom-event-polyfill: ^1.0.7
     juno-ui-components: "*"
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -12487,7 +12487,7 @@ __metadata:
     jest: ^29.3.1
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.4.6
@@ -12512,7 +12512,7 @@ __metadata:
   peerDependencies:
     custom-event-polyfill: ^1.0.7
     juno-ui-components: "*"
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -14294,7 +14294,7 @@ __metadata:
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
     lodash.uniqueid: ^4.0.1
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     mini-css-extract-plugin: ^2.5.3
     oauth: "workspace:*"
     os-browserify: ^0.3.0
@@ -14322,7 +14322,7 @@ __metadata:
     custom-event-polyfill: ^1.0.7
     juno-ui-components: "*"
     lodash.uniqueid: ^4.0.1
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     oauth: "*"
     prop-types: ^15.8.1
     react: ^18.2.0
@@ -17237,10 +17237,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "luxon@npm:2.3.0"
-  checksum: 3d00e1b812a31082cf0d97e844d7354c93891fbd14795756f396ee5656387e21d2c862edb841516114eb391f8314a6cf3848799acc6d59cf9560c88c909b91f0
+"luxon@npm:^2.5.2":
+  version: 2.5.2
+  resolution: "luxon@npm:2.5.2"
+  checksum: d8b671ffd2ff0b438af862ac11082a81b3aedd9f8b6a4ca636f944224f8dd381125cd4d274ca0a8aedcaf2cfca0fc2ca96fe4cc1b16a28b7af701afb95c0bff8
   languageName: node
   linkType: hard
 
@@ -17289,7 +17289,7 @@ __metadata:
     jest: ^29.3.1
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
@@ -17315,7 +17315,7 @@ __metadata:
   peerDependencies:
     custom-event-polyfill: ^1.0.7
     juno-ui-components: "*"
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -23961,7 +23961,7 @@ __metadata:
     jest: ^29.3.1
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.4.6
@@ -23986,7 +23986,7 @@ __metadata:
   peerDependencies:
     custom-event-polyfill: ^1.0.7
     juno-ui-components: "*"
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -25295,7 +25295,7 @@ __metadata:
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
     lodash.uniqueid: ^4.0.1
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     oauth: "workspace:*"
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
@@ -25322,7 +25322,7 @@ __metadata:
     custom-event-polyfill: ^1.0.7
     juno-ui-components: "*"
     lodash.uniqueid: ^4.0.1
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     oauth: "*"
     prop-types: ^15.8.1
     react: ^18.2.0
@@ -25913,7 +25913,7 @@ __metadata:
     jest: ^29.3.1
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.4.6
@@ -25939,7 +25939,7 @@ __metadata:
     custom-event-polyfill: ^1.0.7
     ip-regex: ^5.0.0
     juno-ui-components: "*"
-    luxon: ^2.3.0
+    luxon: ^2.5.2
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
