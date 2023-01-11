@@ -34,12 +34,6 @@ const App = (props) => {
   )
 }
 const StyledApp = (props) => {
-  // default props
-  props = {
-    service: process.env.SERVICE_NAME,
-    ...props,
-  }
-
   return (
     <StyleProvider
       stylesWrapper="shadowRoot"

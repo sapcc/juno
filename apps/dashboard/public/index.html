@@ -28,10 +28,8 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
     <script type="module">
-      const mainFilename = "<%= MAIN_FILENAME %>"
-
-      import(`./${mainFilename}`).then((app) =>
-        app.mount(document.getElementById("root"))
+      import("./<%= MAIN_FILENAME %>").then((app) =>
+        app.mount(document.getElementById("root"),{props: JSON.parse('<%=PROPS%>')})
       )
     </script>
 

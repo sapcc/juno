@@ -20,10 +20,8 @@
   </head>
   <body>
     <script type="module">
-      const mainFilename = "<%= MAIN_FILENAME %>"
-
-      import(`./${mainFilename}`).then((app) =>
-        app.mount(document.getElementById("root"))
+      import("./<%= MAIN_FILENAME %>").then((app) =>
+        app.mount(document.getElementById("root"),{props: JSON.parse('<%=PROPS%>')})
       )
     </script>
 

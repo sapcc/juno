@@ -1,4 +1,3 @@
-const Dotenv = require("dotenv-webpack")
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const webpack = require("webpack")
@@ -6,6 +5,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const pkg = require("./package.json")
 const testData = require("./public/colors.json")
 const outputRegex = /(.+)\/([^/]+)/
+const appProps = require("../../helpers/appProps")
 
 if (!pkg.source)
   throw new Error(
@@ -151,11 +151,6 @@ module.exports = (_, argv) => {
       minimizer: [`...`, new CssMinimizerPlugin()],
     },
     plugins: [
-      new Dotenv({
-        path: "./.env.local",
-        safe: true,
-      }),
-
       new webpack.ProvidePlugin({
         process: require.resolve("process/browser"),
         Buffer: require.resolve("buffer/"),
@@ -170,6 +165,10 @@ module.exports = (_, argv) => {
         templateParameters: {
           // provide output filename to the template
           MAIN_FILENAME: filename,
+          // merge props from package.json and secretProps.json
+          // package.json -> appProps contains metadata like value and description
+          // to get only the value we use the reduce function on keys array
+          PROPS: JSON.stringify(appProps()),
         },
       }),
     ].filter(Boolean),
@@ -183,6 +182,7 @@ module.exports = (_, argv) => {
           res.json(testData)
         })
       },
+
       static: {
         directory: path.resolve(__dirname, "dist"),
       },

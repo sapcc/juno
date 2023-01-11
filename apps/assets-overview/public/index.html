@@ -25,19 +25,11 @@
   </head>
   <body>
     <script type="module">
-      const mainFilename = "<%= MAIN_FILENAME %>"
-
-      import(`./${mainFilename}`).then((app) =>
-        app.mount(document.getElementById("root"))
+      import("./<%= MAIN_FILENAME %>").then((app) =>
+        app.mount(document.getElementById("root"),{props: JSON.parse('<%=PROPS%>')})
       )
     </script>
 
     <div id="root"></div>
-
-    <!-- <script
-      src="https://assets.juno.qa-de-1.cloud.sap/apps/widget-loader@latest/build/app.js"
-      data-url="./index.js"
-      data-props-manifest-url="https://assets.juno.qa-de-1.cloud.sap/manifest.json"
-    ></script> -->
   </body>
 </html>

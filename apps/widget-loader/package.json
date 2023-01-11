@@ -32,5 +32,31 @@
     "transform": {
       "\\.[jt]sx?$": "babel-jest"
     }
+  },
+  "appProps": {
+    "importmap-url": {
+      "value": "https://assets.juno.qa-de-1.cloud.sap/importmap.json",
+      "description": "URL where the importmap is located"
+    },
+    "url": {
+      "value": "https://assets.juno.qa-de-1.cloud.sap/apps/dashboard@latest/build/index.js",
+      "description": "URL of the app entry file"
+    },
+    "name": {
+      "value": "dashboard",
+      "description": "name of the app that you want to to load (ignored if url is given)"
+    },
+    "version":{
+      "value": "latest",
+      "description": "version of the app (default is latest, ignored if url is given)"
+    },
+    "debug": {
+      "value":"true",
+      "description":"if true check the console log for details"
+    },
+    "importmap-only": {
+      "value": "false",
+      "description": "if true then only the importmap is loaded, all other props except importmap-url and debug are ignored!"
+    }
   }
 }

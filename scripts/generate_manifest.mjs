@@ -77,6 +77,7 @@ files.sort().forEach(async (file) => {
     updatedAt: meta.mtime,
     size: totalSize,
     sizeHuman: totalSizeHuman,
+    appProps: pkg.appProps || {},
   }
 
   // console.log(path + "/" + entryDir, meta)

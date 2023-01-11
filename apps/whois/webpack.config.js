@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const webpack = require("webpack")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const pkg = require("./package.json")
+const appProps = require("../../helpers/appProps")
 
 const outputRegex = /(.+)\/([^/]+)/
 
@@ -159,6 +160,10 @@ module.exports = (_, argv) => {
         templateParameters: {
           // provide output filename to the template
           MAIN_FILENAME: filename,
+          // merge props from package.json and secretProps.json
+          // package.json -> appProps contains metadata like value and description
+          // to get only the value we use the reduce function on keys array
+          PROPS: JSON.stringify(appProps()),
         },
       }),
     ].filter(Boolean),

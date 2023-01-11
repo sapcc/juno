@@ -8,7 +8,7 @@ import styles from "./styles.scss"
 import StyleProvider from "juno-ui-components"
 
 /* IMPORTANT: Replace this with your app's name */
-const URL_STATE_KEY = "template"
+const URL_STATE_KEY = "assets-overview"
 /* --------------------------- */
 
 const App = (props) => {
@@ -40,16 +40,6 @@ const App = (props) => {
 }
 
 const StyledApp = (props) => {
-  // console.log(":::::::::::::::::1", props)
-  // default props
-  props = {
-    manifestUrl: process.env.MANIFEST_URL,
-    theme: process.env.THEME,
-    embedded: process.env.EMBEDDED,
-    ...props,
-  }
-
-  // console.log(":::::::::::::::::2", props)
   return (
     <StyleProvider
       stylesWrapper="shadowRoot"

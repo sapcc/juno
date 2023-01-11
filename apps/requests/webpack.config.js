@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const webpack = require("webpack")
 const pkg = require("./package.json")
+const appProps = require("../../helpers/appProps")
 const outputRegex = /(.+)\/([^/]+)/
 
 if (!pkg.source)
@@ -120,6 +121,7 @@ module.exports = (_, argv) => {
         templateParameters: {
           // provide output filename to the template
           MAIN_FILENAME: filename,
+          PROPS: JSON.stringify(appProps()),
         },
       }),
     ],

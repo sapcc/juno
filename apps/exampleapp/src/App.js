@@ -39,13 +39,6 @@ const App = (props) => {
 }
 
 const StyledApp = (props) => {
-  // default props
-  props = {
-    endpoint: process.env.ENDPOINT,
-    theme: process.env.THEME,
-    embedded: process.env.EMBEDDED,
-    ...props,
-  }
   return (
     <StyleProvider
       stylesWrapper="shadowRoot"
