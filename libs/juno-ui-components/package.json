@@ -5,7 +5,7 @@
   "module": "build/index.js",
   "source": "src/index.js",
   "style": "lib/esm/styles.css",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "files": [
     "src",
     "lib",
