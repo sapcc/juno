@@ -53,7 +53,7 @@ or just run `npm run ui-components`
 if you run storybook on a headless system like `workspaces` than run it with the `--ci` flag. This prevent opening a browser by default
 
 ```bash
-yarn workspace juno-ui-components storybook --ci
+yarn workspace juno-ui-components storybook-no-browser
 ```
 
 or just run `npm run ui-components-no-browser`

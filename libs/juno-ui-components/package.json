@@ -76,6 +76,7 @@
   },
   "scripts": {
     "storybook": "start-storybook -p $APP_PORT",
+    "storybook-no-browser": "start-storybook -p $APP_PORT --ci",
     "build-storybook": "build-storybook",
     "build": "rollup -c",
     "test": "jest",
