@@ -3,12 +3,13 @@ apiVersion: v1
 
 metadata:
   namespace: juno
-  name: juno-dashboard
+  name: hosting-dashboard
 
 spec:
   selector:
-    app: juno-dashboard
+    app: hosting-dashboard
   ports:
-    - name: juno-dashboard
-      port: 3000
+    - name: web
+      port: 80
       protocol: TCP
+      targetPort: web

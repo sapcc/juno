@@ -57,14 +57,6 @@ const App = (props) => {
 }
 
 const StyledApp = (props) => {
-  // default props
-  props = {
-    issuerurl: process.env.OIDC_ISSUER_URL,
-    clientid: process.env.OIDC_CLIENTID,
-    endpoint: process.env.ENDPOINT,
-    ...props,
-  }
-
   return (
     <StyleProvider
       stylesWrapper="shadowRoot"

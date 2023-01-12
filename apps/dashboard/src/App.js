@@ -48,15 +48,7 @@ const App = (props) => {
   )
 }
 
-const StyledApp = ({ props }) => {
-  // default props
-  props = {
-    region: process.env.PRESELECTED_REGION,
-    domain: process.env.PRESELECTED_DOMAIN,
-    prodmode: process.env.PROD_MODE,
-    ...props,
-  }
-
+const StyledApp = (props = {}) => {
   return (
     <StyleProvider
       stylesWrapper="shadowRoot"

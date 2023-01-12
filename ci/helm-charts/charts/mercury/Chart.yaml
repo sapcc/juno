@@ -1,4 +1,0 @@
-apiVersion: v1
-description: A Helm chart for installing the Juno Mercury
-name: mercury
-version: 0.1.0

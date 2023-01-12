@@ -149,6 +149,42 @@ describe("Filters", () => {
     expect(screen.getByRole("progressbar")).toBeInTheDocument()
   })
 
+  test("renders Filters with an error as passed", async () => {
+    const filters = {
+      label: "Filter",
+      options: [{ label: "option 1", value: "option-1" }],
+    }
+    render(<Filters data-testid="my-filters" filters={filters} error />)
+    expect(screen.getByRole("combobox")).toBeDisabled()
+    expect(screen.getByTestId("my-filters")).toBeInTheDocument()
+    expect(screen.getByTestId("my-filters")).toHaveClass("juno-filters-error")
+    expect(screen.getByRole("button")).toBeDisabled()
+  })
+
+  test("renders Filters with error and an errortext as passed", async () => {
+    const filters = {
+      label: "Filter",
+      options: [{ label: "option 1", value: "option-1" }],
+    }
+    render(
+      <Filters
+        data-testid="my-filters"
+        filters={filters}
+        errortext="These Filters have an error"
+      />
+    )
+    expect(screen.getByRole("combobox")).toBeDisabled()
+    expect(screen.getByTestId("my-filters")).toBeInTheDocument()
+    expect(screen.getByTestId("my-filters")).toHaveClass("juno-filters-error")
+    expect(
+      document.querySelector(".juno-filters-errortext")
+    ).toBeInTheDocument()
+    expect(document.querySelector(".juno-filters-errortext")).toHaveTextContent(
+      "These Filters have an error"
+    )
+    expect(screen.getByRole("button")).toBeDisabled()
+  })
+
   test("renders a custom className", async () => {
     render(<Filters data-testid="my-filters" className="my-custom-class" />)
     expect(screen.getByTestId("my-filters")).toBeInTheDocument()

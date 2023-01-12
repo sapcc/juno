@@ -1,9 +1,9 @@
-const Dotenv = require("dotenv-webpack")
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const webpack = require("webpack")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const pkg = require("./package.json")
+const appProps = require("../../helpers/appProps")
 const outputRegex = /(.+)\/([^/]+)/
 
 if (!pkg.source)
@@ -17,10 +17,13 @@ if (!outputRegex.test(pkg.module))
   )
 
 const [_, buildDir, filename] = pkg.module.match(outputRegex)
+const externals = {}
+for (let key in pkg.peerDependencies) externals[key] = key
 
 module.exports = (_, argv) => {
   const mode = argv.mode
   const isDevelopment = mode === "development"
+  const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
 
   return {
     experiments: {
@@ -43,6 +46,8 @@ module.exports = (_, argv) => {
       asyncChunks: true,
       clean: true,
     },
+    externalsType: "module",
+    externals: IGNORE_EXTERNALS || isDevelopment ? {} : externals,
     // This says to webpack that we are in development mode and write the code in webpack file in different way
     mode: "development",
     module: {
@@ -142,11 +147,6 @@ module.exports = (_, argv) => {
       minimizer: [`...`, new CssMinimizerPlugin()],
     },
     plugins: [
-      new Dotenv({
-        path: "./.env.local",
-        safe: true,
-      }),
-
       new webpack.ProvidePlugin({
         process: require.resolve("process/browser"),
         Buffer: ["buffer", "Buffer"],
@@ -161,6 +161,7 @@ module.exports = (_, argv) => {
         templateParameters: {
           // provide output filename to the template
           MAIN_FILENAME: filename,
+          PROPS: JSON.stringify(appProps()),
         },
       }),
     ].filter(Boolean),

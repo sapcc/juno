@@ -76,6 +76,7 @@ export const Checkbox = ({
 	invalid,
 	valid,
 	onChange,
+	onClick,
 	...props
 }) => {
 	const [isChecked, setIsChecked] = useState(false)
@@ -102,7 +103,11 @@ export const Checkbox = ({
 	
 	const handleChange = (event) => {
 		setIsChecked(!isChecked)
-		onChange(event)
+		onChange && onChange(event)
+	}
+	
+	const handleClick = (event) => {
+		onClick && onClick(event)
 	}
 	
 	const handleFocus = () => {
@@ -137,6 +142,7 @@ export const Checkbox = ({
 				className={`${inputstyles} ${ isInvalid ? "juno-checkbox-invalid" : ""} ${ isValid ? "juno-checkbox-valid" : ""} `}
 				disabled={disabled}
 				onChange={handleChange}
+				onClick={handleClick}
 				onFocus={handleFocus}
 				onBlur={handleBlur}
 			/>
@@ -166,8 +172,10 @@ Checkbox.propTypes = {
 	valid: PropTypes.bool,
 	/** Pass a className */
 	className: PropTypes.string,
-	/** Pass a handler */
+	/** Pass a change handler */
 	onChange: PropTypes.func,
+	/** Pass a click handler */
+	onClick: PropTypes.func,
 }
 
 Checkbox.defaultProps = {
@@ -179,4 +187,5 @@ Checkbox.defaultProps = {
 	invalid: false,
 	valid: false,
 	onChange: undefined,
+	onClick: undefined,
 }

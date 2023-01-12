@@ -41,19 +41,27 @@ const GroupedSelectTemplate = ({ groups, ...args }) => (
 export const SimpleSelect = SelectTemplate.bind({})
 SimpleSelect.args = {
   name: "Simple-Select",
-  options: [DefaultSelectOption.args, DisabledSelectOption.args],
+  options: [
+    DefaultSelectOption.args,
+    DefaultSelectOption.args,
+    DisabledSelectOption.args,
+  ],
 }
 
 export const DisabledSimpleSelect = SelectTemplate.bind({})
 DisabledSimpleSelect.args = {
   name: "Disabled-Simple-Select",
-  options: [DefaultSelectOption.args, DisabledSelectOption.args],
+  options: [
+    DefaultSelectOption.args,
+    DefaultSelectOption.args,
+    DisabledSelectOption.args,
+  ],
   disabled: true,
 }
 
 export const InvalidSelect = SelectTemplate.bind({})
 InvalidSelect.args = {
-  invalid: true, 
+  invalid: true,
   options: [DefaultSelectOption.args, DisabledSelectOption.args],
 }
 
@@ -83,4 +91,11 @@ LoadingSelect.args = {
   name: "Loading Select",
   options: [],
   loading: true,
+}
+
+export const SelectWithError = SelectTemplate.bind({})
+SelectWithError.args = {
+  name: "Select with Error",
+  options: [],
+  error: true,
 }

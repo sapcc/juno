@@ -81,13 +81,22 @@ describe("Radio", () => {
 		expect(radio).toHaveClass("juno-radio-valid")
 	})
 	
-	test("fire handler on change as passed", async () => {
+	test("fires handler on change as passed", async () => {
 		const onChangeSpy = jest.fn();
 		render(<Radio onChange={onChangeSpy} />);
 		act(() => {
 			screen.getByRole('radio').click();
 		})
 		expect(onChangeSpy).toHaveBeenCalled();
+	})
+	
+	test("fires handler on click as passed", async () => {
+		const onClickSpy = jest.fn();
+		render(<Radio onClick={onClickSpy} />);
+		act(() => {
+			screen.getByRole('radio').click();
+		})
+		expect(onClickSpy).toHaveBeenCalled();
 	})
 	
 	test("does not fire onChange handler when disabled", async () => {
@@ -98,4 +107,14 @@ describe("Radio", () => {
 		})
 		expect(onChangeSpy).not.toHaveBeenCalled()
 	})
+	
+	test("does not fire onClick handler when disabled", async () => {
+		const onClickSpy = jest.fn()
+		render(<Radio onClick={onClickSpy} disabled />)
+		act(() => {
+			screen.getByRole('radio').click();
+		})
+		expect(onClickSpy).not.toHaveBeenCalled()
+	})
+	
 })

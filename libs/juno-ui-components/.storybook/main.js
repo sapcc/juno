@@ -7,8 +7,15 @@ module.exports = {
   stories: ["../src/**/*.stories.js"],
   addons: [
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-docs",
+    // "@storybook/addon-essentials",
+    // "@storybook/addon-docs",
+    // Since storybook 6.5.* there is an issue that the 'Docs' tab isn't visible anymore, See: https://github.com/storybookjs/storybook/issues/18876
+    // the proposed workaround in the ticket is to include the 'addon-docs' addon as below (also need to set docs: false on 'addon-essentials')
+    {
+      name: path.dirname(require.resolve('@storybook/addon-docs/package.json')),
+      options: { transcludeMarkdown: true },
+    },
+    { name: '@storybook/addon-essentials', options: { docs: false } },
     "@storybook/addon-controls",
     // "@storybook/theming",
     "storybook-dark-mode",

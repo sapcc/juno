@@ -1,4 +1,4 @@
-import React from "react"
+import React, { forwardRef } from "react"
 import PropTypes from "prop-types"
 
 /* Import Icons here. The icon svgs in the icons folder correspond to the respective "xyz_24px.svg" from material-ui icons.
@@ -21,6 +21,7 @@ import Description from "./icons/description.svg"
 import DNS from "./icons/dns.svg"
 import Edit from "./icons/edit.svg"
 import Error from "./icons/dangerous.svg"
+import ErrorOutline from "./icons/error_outline.svg"
 import ExitToApp from "./icons/exit_to_app.svg"
 import ExpandLess from "./icons/expand_less.svg"
 import ExpandMore from "./icons/expand_more.svg"
@@ -72,6 +73,10 @@ const buttonIconStyles = `
 	disabled:jn-opacity-50
 	disabled:jn-cursor-not-allowed
 `
+
+const wrapperStyles = `
+  jn-leading-none
+`
 // export all known icons as an array of their names to be used with PropTypes here and from other components:
 export const knownIcons = [
   "accountCircle",
@@ -93,6 +98,7 @@ export const knownIcons = [
   "dns",
   "edit",
   "error",
+  "errorOutline",
   "exitToApp",
   "expandLess",
   "expandMore",
@@ -201,7 +207,7 @@ const getColoredSizedIcon = ({
       )
     case "checkCircle":
       return (
-        <CheckCircle 
+        <CheckCircle
           width={size}
           height={size}
           className={iconClass}
@@ -343,6 +349,18 @@ const getColoredSizedIcon = ({
           {...iconProps}
         />
       )
+    case "errorOutline":
+      return (
+        <ErrorOutline
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="error outline"
+          title={title ? title : "Error"}
+          role="img"
+          {...iconProps}
+        />
+      )
     case "exitToApp":
       return (
         <ExitToApp
@@ -417,7 +435,7 @@ const getColoredSizedIcon = ({
       )
     case "home":
       return (
-        <Home 
+        <Home
           width={size}
           height={size}
           className={iconClass}
@@ -465,7 +483,7 @@ const getColoredSizedIcon = ({
       )
     case "moreVert":
       return (
-        <MoreVert 
+        <MoreVert
           width={size}
           height={size}
           className={iconClass}
@@ -634,55 +652,59 @@ const getColoredSizedIcon = ({
   }
 }
 
-export const Icon = ({
-  icon,
-  color,
-  size,
-  title,
-  className,
-  href,
-  onClick,
-  ...props
-}) => {
-  // if href or onClick was passed, then we want to add the passed classes and passed arbitrary props to the button or anchor
-  // otherwise add the passed classes/props to the icon itself
-  const iconClassName = href || onClick ? "" : className
-  const iconProps = href || onClick ? {} : props
+export const Icon = forwardRef(
+  (
+    { icon, color, size, title, className, href, disabled, onClick, ...props },
+    ref
+  ) => {
+    // if href or onClick was passed, then we want to add the passed classes and passed arbitrary props to the button or anchor
+    // otherwise add the passed classes/props to the icon itself
+    const iconClassName = href || onClick ? "" : className
+    const iconProps = href || onClick ? {} : props
 
-  const icn = getColoredSizedIcon({
-    icon,
-    color,
-    size,
-    title,
-    iconClassName,
-    ...iconProps,
-  })
+    const icn = getColoredSizedIcon({
+      icon,
+      color,
+      size,
+      title,
+      iconClassName,
+      ...iconProps,
+    })
 
-  const button = (
-    <button
-      onClick={onClick}
-      className={`juno-icon-button ${buttonIconStyles} ${className}`}
-      aria-label={title || icon}
-      {...props}
-    >
-      {icn}
-    </button>
-  )
+    const handleClick = (event) => {
+      onClick && onClick(event)
+    }
 
-  const anchor = (
-    <a
-      href={href}
-      className={`juno-icon-link ${anchorIconStyles} ${className}`}
-      aria-label={title || icon}
-      {...props}
-    >
-      {icn}
-    </a>
-  )
+    const button = (
+      <button
+        onClick={handleClick}
+        className={`juno-icon-button ${buttonIconStyles} ${className}`}
+        aria-label={title || icon}
+        disabled={disabled}
+        ref={ref}
+        {...props}
+      >
+        {icn}
+      </button>
+    )
 
-  /* render an <a> if href was passed, otherwise render button if onClick was passes, otherwise render plain icon: */
-  return href ? anchor : onClick ? button : icn
-}
+    const anchor = (
+      <a
+        href={href}
+        className={`juno-icon-link ${anchorIconStyles} ${className}`}
+        aria-label={title || icon}
+        ref={ref}
+        {...props}
+      >
+        {icn}
+      </a>
+    )
+
+    /* render an <a> if href was passed, otherwise render button if onClick was passes, otherwise render plain icon: */
+    /* if plain icon, add ref to the icon. In the other cases the ref goes on the anchor or button */
+    return href ? anchor : onClick ? button : <span ref={ref}>{icn}</span>
+  }
+)
 
 Icon.propTypes = {
   /** The icon to display */
@@ -697,6 +719,8 @@ Icon.propTypes = {
   className: PropTypes.string,
   /** Optionally specify an href. This will render the Icon inside an <code><a></code> element with the given url. */
   href: PropTypes.string,
+  /** Disable the Icon. Only applicable when rendering as a button by passing an onClick handler, too. */
+  disabled: PropTypes.bool,
   /** Optionally specify a click handler. This will render the icon inside a <code><button></code> with the given handler.  */
   onClick: PropTypes.func,
 }
@@ -708,5 +732,6 @@ Icon.defaultProps = {
   title: "",
   className: "",
   href: "",
+  disabled: false,
   onClick: undefined,
 }
