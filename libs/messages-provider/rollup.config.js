@@ -3,6 +3,7 @@ const del = require("rollup-plugin-delete")
 const pkg = require("./package.json")
 const minify = require("rollup-plugin-babel-minify")
 const analyze = require("rollup-plugin-analyzer")
+const commonjs = require("@rollup/plugin-commonjs")
 
 // IMPORTANT!
 // package.json is single source of truth policy
@@ -31,6 +32,7 @@ const config = [
       del({ targets: [`${buildDir}/**/*`] }),
       minify({ comments: false }),
       analyze({ summaryOnly: true, limit: 0 }),
+      commonjs(),
     ],
     external: Object.keys(pkg.peerDependencies || {}),
   },
