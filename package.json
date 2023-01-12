@@ -19,6 +19,7 @@
     }
   },
   "dependencies": {
+    "@babel/core": "^7.20.12",
     "@ibm/plex": "^5.1.3"
   }
 }
