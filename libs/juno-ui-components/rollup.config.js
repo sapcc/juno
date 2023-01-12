@@ -1,4 +1,4 @@
-const babel = require("@rollup/plugin-babel")
+const { babel } = require("@rollup/plugin-babel")
 const del = require("rollup-plugin-delete")
 const postcss = require("rollup-plugin-postcss")
 const pkg = require("./package.json")
@@ -6,6 +6,7 @@ const fs = require("fs")
 const minify = require("rollup-plugin-babel-minify")
 const analyze = require("rollup-plugin-analyzer")
 const { nodeResolve } = require("@rollup/plugin-node-resolve")
+const commonjs = require("@rollup/plugin-commonjs")
 const svgr = require("@svgr/rollup")
 
 const parseStyles = require("./rollup-plugin-styles-parser")
@@ -33,6 +34,9 @@ fs.readdirSync("./src/components").forEach((file) => {
   input[file] = `src/components/${file}/index.js`
 })
 
+const isProduction = process.env.NODE_ENV === "production"
+const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
+
 const config = [
   {
     input,
@@ -45,13 +49,13 @@ const config = [
         compact: true,
       },
     ],
+
     plugins: [
+      nodeResolve(),
       babel({
-        exclude: "node_modules/**",
         babelHelpers: "bundled",
       }),
       del({ targets: [`${buildDir}/**/*`] }),
-      nodeResolve(),
       svgr({
         svgo: false,
         titleProp: true,
@@ -69,13 +73,19 @@ const config = [
         stylesFileName: "styles",
         theme: require("./tailwind.config").theme,
       }),
+      commonjs(),
       minify({ comments: false }),
       analyze({
         summaryOnly: true,
         limit: 0,
       }),
     ],
-    external: Object.keys(pkg.peerDependencies || {}),
+
+    external: ["react", "react-dom", "prop-types"].concat(
+      isProduction && !IGNORE_EXTERNALS
+        ? Object.keys(pkg.peerDependencies || {})
+        : []
+    ),
   },
 ]
 

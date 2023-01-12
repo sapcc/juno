@@ -24,6 +24,7 @@ yarn install
 ```
 
 ## Working With Tailwind
+
 Juno comes with [Tailwind](https://tailwindcss.com/) included, so when using Juno you automatically can use tailwind in your project.
 
 To be able to make full use of the predefined colors and other custom properties from the Juno UI components library you will need to include the ui components tailwind config into your application's tailwind config like this:
@@ -40,11 +41,14 @@ module.exports = {
 Doing this lets you use Tailwind classnames from the Juno UI Components library.
 
 ## Development
-In order to work ON (NOT WITH) the Juno Design System and its components run storybook from the root directory of this repository:
+
+In order to work ON (NOT WITH) the Juno Design System and its components run storybook with:
 
 ```bash
 yarn workspace juno-ui-components storybook
 ```
+
+or just run from the root directory of this repository `npm run ui-components`
 
 Run the test suite:
 

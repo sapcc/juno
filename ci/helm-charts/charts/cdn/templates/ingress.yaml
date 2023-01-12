@@ -1,0 +1,49 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    dns-manager: "true"
+    dns-manager/zone-name: "{{ .Values.global.region }}.{{ .Values.global.tld }}"
+    kubernetes.io/tls-acme: "true"
+    # disable the idle http timeout check
+    # https://operations.global.cloud.sap/docs/support/playbook/kubernetes/idle_http_keep_alive_timeout.html
+    cloud.sap/no-http-keep-alive-monitor: "true"
+    ingress.kubernetes.io/cors-allow-origin: '*'
+    ingress.kubernetes.io/enable-cors: "true"
+
+  name: ingress-cdn
+  namespace: juno
+spec:
+  rules:
+    - host: "cdn.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix 
+            backend:
+              service: 
+                name: cdn
+                port: 
+                  number: 8888
+
+{{- if eq .Values.global.region "eu-nl-1" }}
+    - host: "cdn.juno.global.{{ .Values.global.tld }}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix 
+            backend:
+              service: 
+                name: cdn
+                port: 
+                  number: 8888               
+
+{{- end }} 
+
+  tls:
+    - hosts: 
+        - "cdn.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
+{{- if eq .Values.global.region "eu-nl-1" }}    
+        - "cdn.juno.global.{{ .Values.global.tld }}"  
+{{- end }}        
+      secretName: "tls-juno-cdn"

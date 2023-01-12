@@ -17,6 +17,13 @@ export default {
       </DataGrid>
     ),
   ],
+  parameters: {
+    docs: {
+      source: {
+        excludeDecorators: false,
+      },
+    },
+  }
 }
 
 const Template = ({ items, ...args }) => (

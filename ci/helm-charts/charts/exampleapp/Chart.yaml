@@ -1,0 +1,4 @@
+apiVersion: v1
+description: A Helm chart for hosting an asset
+name: exampleapp
+version: 0.1.0

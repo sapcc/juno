@@ -1,4 +1,3 @@
-const Dotenv = require("dotenv-webpack")
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const webpack = require("webpack")
@@ -6,6 +5,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const pkg = require("./package.json")
 const outputRegex = /(.+)\/([^/]+)/
 const apiServer = require("./apiserver.config")
+const appProps = require("../../helpers/appProps")
 
 if (!pkg.source)
   throw new Error(
@@ -18,10 +18,13 @@ if (!outputRegex.test(pkg.module))
   )
 
 const [_, buildDir, filename] = pkg.module.match(outputRegex)
+const externals = {}
+for (let key in pkg.peerDependencies) externals[key] = key
 
 module.exports = (_, argv) => {
-  const mode = argv.mode
+  const mode = argv.mode || "development"
   const isDevelopment = mode === "development"
+  const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
 
   return {
     experiments: {
@@ -40,12 +43,15 @@ module.exports = (_, argv) => {
       chunkFilename: "[contenthash].js",
       // result as esm
       library: { type: "module" },
+
       // expose files imported asynchronous as chunks
       asyncChunks: true,
       clean: true,
     },
+    externalsType: "module",
+    externals: IGNORE_EXTERNALS || isDevelopment ? {} : externals,
     // This says to webpack that we are in development mode and write the code in webpack file in different way
-    mode: "development",
+    mode,
     module: {
       rules: [
         //Allows use javascript
@@ -142,11 +148,6 @@ module.exports = (_, argv) => {
       minimizer: [`...`, new CssMinimizerPlugin()],
     },
     plugins: [
-      new Dotenv({
-        path: "./.env.local",
-        safe: true,
-      }),
-
       new webpack.ProvidePlugin({
         process: require.resolve("process/browser"),
         Buffer: require.resolve("buffer/"),
@@ -161,6 +162,7 @@ module.exports = (_, argv) => {
         templateParameters: {
           // provide output filename to the template
           MAIN_FILENAME: filename,
+          PROPS: JSON.stringify(appProps()),
         },
       }),
     ].filter(Boolean),

@@ -15,6 +15,13 @@ const getVariantStyles = (variant) => {
 	switch (variant) {
 		case "main": 
 			return `jn-bg-theme-tab-navigation-top`
+		case "codeblocks":
+			return `
+				jn-text-sm
+				jn-bg-theme-code-block
+				jn-border-b-[1px]
+				jn-border-theme-codeblock-bar 
+			`
 		default: 
 			return `
 				jn-border-b-[1px] 
@@ -47,7 +54,7 @@ TabList.tabsRole = 'TabList'
 
 TabList.propTypes = {
 	/** Pick the TabList style */
-	variant: PropTypes.oneOf(["main", "content"]),
+	variant: PropTypes.oneOf(["main", "content", "codeblocks"]),
 	/** The individual child Tabs to render */
 	children: PropTypes.node,
 }

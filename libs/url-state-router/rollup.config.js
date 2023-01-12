@@ -34,6 +34,9 @@ fs.readdirSync(`./${srcDir}/`)
     input[name] = `./${srcDir}/${file}`
   })
 
+const isProduction = process.env.NODE_ENV === "production"
+const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
+
 const config = [
   {
     input,
@@ -53,7 +56,10 @@ const config = [
       terser(),
       analyze({ limit: 0, summaryOnly: true }),
     ],
-    external: Object.keys(pkg.peerDependencies || {}),
+    external:
+      isProduction && !IGNORE_EXTERNALS
+        ? Object.keys(pkg.peerDependencies || {})
+        : [],
   },
 ]
 

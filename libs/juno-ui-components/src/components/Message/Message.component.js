@@ -5,7 +5,6 @@ import { Icon } from "../Icon/index.js"
 const message = `
 	jn-text-theme-high
 	jn-flex
-	jn-mb-8
 	jn-rounded
 	jn-leading-5
 	jn-overflow-hidden
@@ -113,7 +112,7 @@ const variantClass = (variant) => {
   }
 }
 
-// get the appropriate icon for messasge tyope by MUI name:
+// get the appropriate icon for message type by MUI name:
 const getMuiIcon = (messageType) => {
   switch (messageType) {
     case "error":

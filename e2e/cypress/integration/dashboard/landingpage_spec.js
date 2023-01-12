@@ -6,18 +6,14 @@ describe("Landing page", () => {
   it("loads content", () => {
     // content is loaded if children of root element exists.
     // children are built by
-    cy.get("#root").shadow().children().should("exist")
+    cy.get('[data-juno-app="dashboard"]').shadow().children().should("exist")
   })
 
-  // it("contains login button", () => {
-  //   cy.get("button").contains("Login").should("exist")
-  // })
+  it("contains login button", () => {
+    cy.contains("button", "Log in")
+  })
 
-  // it("contains regions title", () => {
-  //   cy.contains("Converged Cloud Regions").should("exist")
-  // })
-
-  // it("contains the world map", () => {
-  //   cy.get("#world-c").should("exist")
-  // })
+  it("contains regions title", () => {
+    cy.contains("Converged Cloud")
+  })
 })

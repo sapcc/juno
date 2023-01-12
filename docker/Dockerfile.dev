@@ -1,3 +1,3 @@
 FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:14-alpine 
 
-RUN npm add -g serve
+RUN npm install -g serve glob @jspm/generator depcheck

@@ -83,11 +83,11 @@ FilterPill.propTypes = {
 }
 
 FilterPill.defaultProps = {
-  uid: undefined,
-  filterKey: undefined,
-  filterKeyLabel: undefined,
-  filterValue: undefined,
-  filterValueLabel: undefined,
+  uid: "",
+  filterKey: "",
+  filterKeyLabel: "",
+  filterValue: "",
+  filterValueLabel: "",
   onClose: undefined,
   className: "",
 }

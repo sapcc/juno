@@ -12,6 +12,9 @@ if (!/.+\/.+\.js/.test(pkg.module))
   )
 const buildDir = pkg.module.slice(0, pkg.module.lastIndexOf("/"))
 
+const isProduction = process.env.NODE_ENV === "production"
+const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
+
 const config = [
   {
     input: pkg.source,
@@ -22,12 +25,16 @@ const config = [
         compact: true,
       },
     ],
+    external: Object.keys(pkg.peerDependencies || {}),
     plugins: [
       del({ targets: [`${buildDir}/**/*`] }),
       minify({ comments: false }),
       analyze({ summaryOnly: true, limit: 0 }),
     ],
-    external: Object.keys(pkg.peerDependencies || {}),
+    external:
+      isProduction && !IGNORE_EXTERNALS
+        ? Object.keys(pkg.peerDependencies || {})
+        : [],
   },
 ]
 
