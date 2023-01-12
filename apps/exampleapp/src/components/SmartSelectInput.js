@@ -14,11 +14,15 @@ import {
 } from "@floating-ui/react"
 import {
   TextInputRow,
-  TextInput,
   DataGrid,
   DataGridRow,
   DataGridCell,
   Badge,
+  LoadingIndicator,
+  Stack,
+  Message,
+  Button,
+  Spinner,
 } from "juno-ui-components"
 
 const optionsContainer = `
@@ -37,9 +41,8 @@ const optionFilter = `
   sticky
   top-0
 `
-
-const optionsGrid = `
-
+const optionFilterInput = `
+  w-full
 `
 
 const optionsRow = `
@@ -73,34 +76,43 @@ const fakeInputTextOptions = `
 
 const regexString = (string) => string.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&")
 
-const SmartSelectInput = ({ options }) => {
+const SmartSelectInput = ({
+  options,
+  isLoading,
+  error,
+  fetchPromise,
+  isFetching,
+  fetchStatus,
+  fetchButton,
+  onOptionClick,
+  onOptionRemove,
+  selectedOptions,
+  searchTerm,
+  onSearchTermChange,
+}) => {
   const [open, setOpen] = useState(false)
-  const [selectedOptions, setSelectedOptions] = useState([])
-  const [displayOptions, setDisplayOptions] = useState(false)
-  const [searchTerm, setSearchTerm] = useState("")
 
+  // set default to empty string if not given
   options = useMemo(() => {
     if (!options) return []
     return options
   }, [options])
 
-  useEffect(() => {
-    if (options) {
-      // compute difference between the given options and the selected so
-      // the same option can't be selected more then one time
-      const difference = options.filter(
-        ({ value: id1 }) =>
-          !selectedOptions.some(({ value: id2 }) => id2 === id1)
-      )
-      // filter the difference with the filter string given by the user
-      const regex = new RegExp(regexString(searchTerm.trim()), "i")
-      const filteredOptions = difference.filter(
-        (i) => `${i.label}`.search(regex) >= 0
-      )
-      setDisplayOptions(filteredOptions)
-    }
-  }, [selectedOptions, options, searchTerm])
+  // set default to empty string if not given
+  searchTerm = useMemo(() => {
+    if (!searchTerm) return ""
+    return searchTerm
+  }, [searchTerm])
 
+  // set default to empty array if not given
+  selectedOptions = useMemo(() => {
+    if (!selectedOptions) return []
+    return selectedOptions
+  }, [selectedOptions])
+
+  //
+  // Set up Floating ui
+  //
   const { x, y, reference, floating, strategy, context } = useFloating({
     open,
     placement: "bottom-start",
@@ -138,24 +150,15 @@ const SmartSelectInput = ({ options }) => {
 
   const headingId = useId()
 
+  //
+  // Callbacks
+  //
   const onOptionClicked = (option) => {
-    setSelectedOptions([...selectedOptions, option])
+    if (onOptionClick) onOptionClick(option)
   }
 
   const onOptionDeselected = (option) => {
-    const index = selectedOptions.findIndex(
-      (item) => item.value == option.value
-    )
-    if (index < 0) {
-      return
-    }
-    let newOptions = selectedOptions.slice()
-    newOptions.splice(index, 1)
-    setSelectedOptions(newOptions)
-  }
-
-  const onSearchTermChanges = (event) => {
-    setSearchTerm(event.target.value)
+    if (onOptionRemove) onOptionRemove(option)
   }
 
   return (
@@ -197,34 +200,69 @@ const SmartSelectInput = ({ options }) => {
             {...getFloatingProps()}
           >
             <div className={optionFilter}>
-              <TextInputRow
-                label="Filter"
-                value={searchTerm}
-                onChange={onSearchTermChanges}
-              />
-            </div>
-            <div className={optionsGrid}>
-              <DataGrid id={headingId} columns={1}>
-                {displayOptions.length > 0 && (
-                  <>
-                    {displayOptions.map((option, i) => (
-                      <DataGridRow
-                        key={i}
-                        onClick={() => onOptionClicked(option)}
-                        className={optionsRow}
-                      >
-                        <DataGridCell>{option.value}</DataGridCell>
-                      </DataGridRow>
-                    ))}
-                  </>
+              <Stack alignment="center">
+                <TextInputRow
+                  className={optionFilterInput}
+                  label="Filter"
+                  value={searchTerm}
+                  onChange={onSearchTermChange}
+                  // disabled={!options || options.length === 0}
+                />
+                {searchTerm && fetchPromise && (
+                  <Stack alignment="center" className={optionFilterActions}>
+                    {fetchStatus && (
+                      <span className={optionsNotFoundStatus}>
+                        {fetchStatus}
+                      </span>
+                    )}
+                    {isFetching && <Spinner variant="primary" />}
+                    {fetchButton && fetchButton}
+                  </Stack>
                 )}
-                {displayOptions.length === 0 && searchTerm && (
-                  <DataGridRow className={optionsRow}>
-                    <DataGridCell>No options found</DataGridCell>
-                  </DataGridRow>
-                )}
-              </DataGrid>
+              </Stack>
             </div>
+            <DataGrid id={headingId} columns={1}>
+              {error && (
+                <DataGridRow>
+                  <DataGridCell>
+                    <Message text={error} variant="error" />
+                  </DataGridCell>
+                </DataGridRow>
+              )}
+
+              {isLoading && (
+                <DataGridRow>
+                  <DataGridCell>
+                    <Stack alignment="center">
+                      <LoadingIndicator color="jn-text-theme-info" size="40" />
+                      <span>Loading Options...</span>
+                    </Stack>
+                  </DataGridCell>
+                </DataGridRow>
+              )}
+
+              {options.length > 0 && (
+                <>
+                  {options.map((option, i) => (
+                    <DataGridRow
+                      key={i}
+                      onClick={() => onOptionClicked(option)}
+                      className={optionsRow}
+                    >
+                      <DataGridCell>{option.label}</DataGridCell>
+                    </DataGridRow>
+                  ))}
+                </>
+              )}
+
+              {(!options || options.length === 0) && (
+                <DataGridRow>
+                  <DataGridCell>
+                    <span>No options available</span>
+                  </DataGridCell>
+                </DataGridRow>
+              )}
+            </DataGrid>
           </div>
         </FloatingFocusManager>
       )}
