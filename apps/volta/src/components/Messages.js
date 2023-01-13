@@ -22,7 +22,7 @@ const Messages = () => {
   }
 
   return (
-    <div className="mt-6">
+    <div className="messages-container">
       {messagesState?.items && (
         <>
           {messagesState?.items.map((item) => (

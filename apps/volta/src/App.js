@@ -32,6 +32,11 @@ const App = (props) => {
     }
     dispatch({ type: "SET_OIDC", oidc: oidc })
     dispatch({ type: "SET_ENDPOINT", endpoint: props.endpoint })
+    dispatch({ type: "SET_DISABLED_CAS", cas: props.disabledcas })
+    dispatch({
+      type: "SET_DOCUMENTATION_LINKS",
+      links: props.documentationlinks,
+    })
   }, [oidc])
 
   // Create a client
@@ -45,7 +50,7 @@ const App = (props) => {
             path="/"
             element={
               oidc?.loggedIn ? (
-                <CA />
+                <CA {...props} />
               ) : (
                 <WellcomeView loginCallback={oidc?.login} />
               )

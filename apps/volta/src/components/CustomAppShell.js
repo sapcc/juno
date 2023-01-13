@@ -37,7 +37,7 @@ const CustomAppShell = ({ children }) => {
 
   return (
     <AppShell pageHeader={pageHeader} topNavigation={topBar}>
-      <Container>
+      <Container py>
         <Messages />
         {children}
       </Container>

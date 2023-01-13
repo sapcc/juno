@@ -15,6 +15,8 @@ const CA = () => {
   const dispatchMessage = useMessagesDispatch()
   const oidc = useGlobalState().auth.oidc
   const endpoint = useGlobalState().globals.endpoint
+  const disabledCAs = useGlobalState().globals.disabledCAs
+  const [displayCAs, setDisplayCAs] = useState([])
   const [selectedCA, setSelectedCA] = useState(null)
   let [searchParams, setSearchParams] = useSearchParams()
 
@@ -34,18 +36,28 @@ const CA = () => {
     }
   }, [error])
 
+  // filter out disabled CAs
+  useEffect(() => {
+    if (!data) return
+    const difference = data.filter(
+      (ca) => !disabledCAs.some((caName) => ca.name === caName)
+    )
+    setDisplayCAs(difference)
+  }, [data])
+
   // read current url state and call main fetch method if state is presented
   React.useEffect(() => {
-    // && searchParams.get("ca")
-    if (data && data.length > 0) {
+    if (displayCAs && displayCAs.length > 0) {
       // find and save ca given per param in the url
-      const index = data.findIndex((e) => e.name == searchParams.get("ca"))
+      const index = displayCAs.findIndex(
+        (e) => e.name == searchParams.get("ca")
+      )
       if (index >= 0) {
-        return setSelectedCA(data[index])
+        return setSelectedCA(displayCAs[index])
       }
       return setSelectedCA(null)
     }
-  }, [data, searchParams.get("ca")])
+  }, [displayCAs, searchParams.get("ca")])
 
   return (
     <CustomAppShell>
@@ -63,7 +75,7 @@ const CA = () => {
               <CertificateList ca={selectedCA} />
             </>
           ) : (
-            <CAsList cas={data} />
+            <CAsList cas={displayCAs} />
           )}
         </>
       )}

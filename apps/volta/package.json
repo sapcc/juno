@@ -76,19 +76,33 @@
   "appProps": {
     "theme": {
       "value": "theme-dark",
-      "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+      "type": "optional",
+      "description": "Override the default theme (optional). Possible values are theme-light or theme-dark (default)"
     },
     "endpoint": {
       "value": "https://the_endpoint/api/v1",
-      "description": "Endpoint URL of the API"
+      "type": "required",
+      "description": "Endpoint URL of the API (required)"
     },
     "issuerurl": {
-      "value": "https://tbd.com",
-      "description": "Endpoint URL of Open ID provider"
+      "value": "https://endpoint_url_of_the_openid_provider.com",
+      "type": "required",
+      "description": "Endpoint URL of the OpenID provider (required)"
     },
     "clientid": {
       "value": "tbd",
-      "description": "OIDC client id"
+      "type": "optional",
+      "description": "OIDC client id (required)"
+    },
+    "disabledcas": {
+      "value": "",
+      "type": "optional",
+      "description": "Coma separated strings containing the CA names which should not be displayed (optional). Ex: 'galvani-pki,mutual_tls-pki'"
+    },
+    "documentationlinks": {
+      "value": "",
+      "type": "optional",
+      "description": "Key value pairs separated by '=' and each pair separated by ',' (optional). Ex: '2fa-pki=https://doculink.com,mutual_tls-pki=https://doculink.com'"
     }
   }
 }
