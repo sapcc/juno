@@ -1,0 +1,49 @@
+  <!doctype html>
+  <html>
+    <head>
+      <title>Our Funky HTML Page</title>
+      <meta name="description" content="Our first page">
+      <meta name="keywords" content="html tutorial template">
+    </head>
+    <body>
+      <script type="module">
+
+        console.log("READY!")
+        const myEventBus = document.createComment('my-event-bus');
+
+        myEventBus.addEventListener('event-name', ({ detail }) => {
+          console.log(detail); // => event-data
+        });
+
+        myEventBus.dispatchEvent(
+          new CustomEvent('event-name', { 
+            detail: 'event-data'
+          })
+        );
+      </script>
+
+      <!-- <div style="display: grid; grid-template-columns: 1fr 1fr;">
+
+        <div >
+          <script
+            defer
+            src="https://assets.juno.qa-de-1.cloud.sap/apps/widget-loader@latest/build/app.js"
+            data-name="dashboard"
+            data-version="latest"
+            data-props-region="qa-de-1"
+            data-props-domain="monsoon3"
+          ></script>
+        </div>
+        <div >
+          <script
+            defer
+            src="https://assets.juno.qa-de-1.cloud.sap/apps/widget-loader@latest/build/app.js"
+            data-name="assets-overview"
+            data-version="latest"
+            data-props-appHeight="full"
+            data-props-manifest-url="https://assets.juno.qa-de-1.cloud.sap/manifest.json"
+          ></script>
+        </div>
+      </div> -->
+    </body>
+  </html>
