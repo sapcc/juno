@@ -17,6 +17,7 @@ import PanelManager from "./components/PanelManager"
 import { useQuery } from "react-query"
 import { fetchPeaks } from "./actions"
 import PeaksList from "./components/PeaksList/PeaksList"
+import TabPanelTwo from "./components/TabPanelTwo"
 
 const AppContent = (props) => {
   const endpoint = useStore((state) => state.endpoint)
@@ -99,6 +100,7 @@ const AppContent = (props) => {
           <Container py>
             Content Panel two. Normally you will probably want to put the
             TabPanel content into separate components.
+            <TabPanelTwo />
           </Container>
         </TabPanel>
       </MainTabs>
