@@ -27,7 +27,7 @@ RUN rsync -avu --delete "/tmp/src/" "/juno" > /dev/null ;
 # build-libs script set the NODE_ENV to development which includes all 
 # dependencies in the builds defined in peer dependencies.
 # RUN yarn install >/dev/null ; yarn build-libs > /dev/null
-RUN yarn install ; yarn build-libs 
+RUN yarn install | grep "error" ; yarn build-libs | grep "error"
 
 # TEST AND BUILD ASSET
 # IGNORE_EXTERNALS=true will results in a bundle which includes all dependencies. 
