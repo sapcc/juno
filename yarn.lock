@@ -17900,7 +17900,7 @@ __metadata:
     rollup-plugin-delete: ^2.0.0
     zustand: ^4.1.5
   peerDependencies:
-    juno-ui-components: "workspace:*"
+    juno-ui-components: "*"
     lodash.uniqueid: ^4.0.1
     prop-types: ^15.8.1
     react: ^18.2.0

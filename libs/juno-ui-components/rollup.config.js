@@ -87,6 +87,28 @@ const config = [
         : []
     ),
   },
+  {
+    input: "lib/variables.scss",
+    output: {
+      file: `${buildDir}/lib/variables.css`,
+    },
+    plugins: [
+      postcss({
+        config: {
+          path: "./postcss.config.js",
+        },
+        extract: true,
+        minimize: true,
+        inject: false,
+      }),
+    ],
+  },
+  {
+    input: "tailwind.config.js",
+    output: {
+      file: `${buildDir}/lib/tailwind.config.js`,
+    },
+  },
 ]
 
 module.exports = config
