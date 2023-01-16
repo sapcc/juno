@@ -21,7 +21,6 @@ const App = (props) => {
   // on app initial load save Endpoint and URL_STATE_KEY so it can be
   // used from overall in the application
   React.useEffect(() => {
-    // set to empty string to fetch local test data in dev mode
     setManifestUrl(props.manifestUrl)
     setUrlStateKey(URL_STATE_KEY)
   }, [])

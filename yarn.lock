@@ -8395,6 +8395,7 @@ __metadata:
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
     luxon: ^2.3.0
+    messages-provider: "workspace:*"
     mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
@@ -8420,6 +8421,7 @@ __metadata:
     custom-event-polyfill: ^1.0.7
     juno-ui-components: "*"
     luxon: ^2.3.0
+    messages-provider: "*"
     prop-types: ^15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -17873,7 +17875,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"messages-provider@workspace:libs/messages-provider":
+"messages-provider@workspace:*, messages-provider@workspace:libs/messages-provider":
   version: 0.0.0-use.local
   resolution: "messages-provider@workspace:libs/messages-provider"
   dependencies:
@@ -17900,7 +17902,7 @@ __metadata:
     rollup-plugin-delete: ^2.0.0
     zustand: ^4.1.5
   peerDependencies:
-    juno-ui-components: "workspace:*"
+    juno-ui-components: "*"
     lodash.uniqueid: ^4.0.1
     prop-types: ^15.8.1
     react: ^18.2.0
