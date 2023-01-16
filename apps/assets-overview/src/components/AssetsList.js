@@ -37,12 +37,13 @@ const AssetsList = ({ assets, isLoading, error }) => {
           Loading assets...
         </Stack>
       ) : (
-        <DataGrid columns={4}>
+        <DataGrid columns={5}>
           <DataGridRow>
             <DataGridHeadCell>Name</DataGridHeadCell>
             <DataGridHeadCell>Version</DataGridHeadCell>
             <DataGridHeadCell>Updated At</DataGridHeadCell>
             <DataGridHeadCell>Size</DataGridHeadCell>
+            <DataGridHeadCell></DataGridHeadCell>
           </DataGridRow>
           {length > 0 ? (
             <>
@@ -56,7 +57,7 @@ const AssetsList = ({ assets, isLoading, error }) => {
             </>
           ) : (
             <DataGridRow>
-              <DataGridCell colSpan={4}>
+              <DataGridCell colSpan={5}>
                 <Stack
                   alignment="center"
                   distribution="center"

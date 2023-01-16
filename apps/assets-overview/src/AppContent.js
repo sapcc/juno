@@ -1,22 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react"
-import {
-  Container,
-  IntroBox,
-  Message,
-  Spinner,
-  TabPanel,
-  MainTabs,
-  TabList,
-  Tab,
-} from "juno-ui-components"
+import { TabPanel, MainTabs, TabList, Tab } from "juno-ui-components"
 import useStore from "./store"
-import NewItemForm from "./components/NewItemForm"
-import heroImage from "./img/app_bg_example.svg?url"
 import { useQuery } from "react-query"
 import { fetchAssetsManifest } from "./actions"
 import { currentState, push } from "url-state-provider"
 import TabContainer from "./components/TabContainer"
 import AssetsList from "./components/AssetsList"
+import AssetDetails from "./components/AssetDetails"
 
 const APP = "app"
 const LIB = "lib"
@@ -94,22 +84,25 @@ const AppContent = (props) => {
   }
 
   return (
-    <MainTabs selectedIndex={tabIndex} onSelect={onTabSelected}>
-      <TabList>
-        <Tab>Apps</Tab>
-        <Tab>Libs</Tab>
-      </TabList>
-      <TabPanel>
-        <TabContainer>
-          <AssetsList isLoading={isLoading} assets={apps} error={error} />
-        </TabContainer>
-      </TabPanel>
-      <TabPanel>
-        <TabContainer>
-          <AssetsList isLoading={isLoading} assets={libs} error={error} />
-        </TabContainer>
-      </TabPanel>
-    </MainTabs>
+    <>
+      <AssetDetails />
+      <MainTabs selectedIndex={tabIndex} onSelect={onTabSelected}>
+        <TabList>
+          <Tab>Apps</Tab>
+          <Tab>Libs</Tab>
+        </TabList>
+        <TabPanel>
+          <TabContainer>
+            <AssetsList isLoading={isLoading} assets={apps} error={error} />
+          </TabContainer>
+        </TabPanel>
+        <TabPanel>
+          <TabContainer>
+            <AssetsList isLoading={isLoading} assets={libs} error={error} />
+          </TabContainer>
+        </TabPanel>
+      </MainTabs>
+    </>
   )
 }
 
