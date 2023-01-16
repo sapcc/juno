@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useMemo } from "react"
-import { Button, Panel, PanelBody, PanelFooter } from "juno-ui-components"
+import {
+  Button,
+  Panel,
+  PanelBody,
+  PanelFooter,
+  CodeBlock,
+} from "juno-ui-components"
 import useStore from "../store"
 import { currentState, push, addOnChangeListener } from "url-state-provider"
 import { useQuery } from "react-query"
@@ -33,21 +39,22 @@ const AssetDetails = () => {
   )
 
   const asset = useMemo(() => {
-    if (!data) return {}
+    if (!data) return null
+    if (!assetName || !assetVersion) return null
 
-    // Object.keys(data)
-    //   .filter((key) => obj[key] instanceof Object)
-    //   .map((key) => objectDeepKeys(obj[key]).map((k) => `${key}.${k}`))
-    //   .reduce((x, y) => x.concat(y), Object.keys(obj))
-
-    // Object.keys(data).forEach((name) => {
-    //   Object.keys(data[name]).forEach((version) => {
-    //     })
-    //   })
-    // })
-
-    return {}
-  }, [data])
+    // TODO find a cheaper way to find the asset
+    let result = {}
+    Object.keys(data).forEach((name) => {
+      if (name === assetName) {
+        Object.keys(data[name]).forEach((version) => {
+          if (version === assetVersion) {
+            result = { ...data[name][version], name: name, version: version }
+          }
+        })
+      }
+    })
+    return result
+  }, [data, assetName, assetVersion])
 
   // wait until the global state is set to fetch the url state
   useEffect(() => {
@@ -68,6 +75,7 @@ const AssetDetails = () => {
     setAssetVersion(newState?.assetDetailsVersion)
   })
 
+  // TODO: if asset is just {} display not found
   return (
     <Panel
       heading={`${assetName} - ${assetVersion}`}
@@ -75,7 +83,11 @@ const AssetDetails = () => {
       onClose={onClose}
     >
       <PanelBody footer={<AssetDetailsFooter onCancelCallback={onClose} />}>
-        <div>Panel Content here</div>
+        <CodeBlock
+          content={asset || {}}
+          heading="Asset properties"
+          lang="json"
+        />
       </PanelBody>
     </Panel>
   )
