@@ -54,11 +54,11 @@ const AppContent = (props) => {
           version: version,
           name: name,
         }
-        if (assetItem?.type && assetItem?.type === APP) {
+        if (assetItem?.type === APP) {
           if (!apps[name]) apps[name] = []
           apps[name].push(assetItem)
         }
-        if (assetItem?.type && assetItem?.type === LIB) {
+        if (assetItem?.type === LIB) {
           if (!libs[name]) libs[name] = []
           libs[name].push(assetItem)
         }
@@ -71,7 +71,7 @@ const AppContent = (props) => {
         return obj
       }, {})
 
-    libs = Object.keys(apps)
+    libs = Object.keys(libs)
       .sort()
       .reduce((obj, key) => {
         obj[key] = libs[key]
@@ -81,10 +81,16 @@ const AppContent = (props) => {
     return [apps, libs]
   }, [data])
 
+  // wait until the global state is set to fetch the url state
+  useEffect(() => {
+    const urlState = currentState(urlStateKey)
+    if (urlState?.tabIndex) setTabIndex(urlState?.tabIndex)
+  }, [urlStateKey])
+
   const onTabSelected = (index) => {
     setTabIndex(index)
-    // const urlState = currentState(urlStateKey)
-    // push(urlStateKey, { ...urlState, tabIndex: index })
+    const urlState = currentState(urlStateKey)
+    push(urlStateKey, { ...urlState, tabIndex: index })
   }
 
   return (
@@ -93,23 +99,15 @@ const AppContent = (props) => {
         <Tab>Apps</Tab>
         <Tab>Libs</Tab>
       </TabList>
-
       <TabPanel>
         <TabContainer>
           <AssetsList isLoading={isLoading} assets={apps} error={error} />
         </TabContainer>
-
-        {/* <Container py>
-          {isError && (
-            <Message variant="danger">
-              {`${error.statusCode}, ${error.message}`}
-            </Message>
-          )}
-          {isLoading && <Spinner variant="primary" />}
-        </Container> */}
       </TabPanel>
       <TabPanel>
-        <Container py></Container>
+        <TabContainer>
+          <AssetsList isLoading={isLoading} assets={libs} error={error} />
+        </TabContainer>
       </TabPanel>
     </MainTabs>
   )
