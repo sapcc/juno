@@ -38,7 +38,9 @@ describe("useMessageStore", () => {
     )
     const { result } = renderHook(() => useStore(), { wrapper })
 
-    act(() => result.current.addMessage("error", "this is an error"))
+    act(() =>
+      result.current.addMessage({ variant: "error", text: "this is an error" })
+    )
 
     waitFor(() => {
       expect(result.current.messages.length).toBe(1)
@@ -54,7 +56,7 @@ describe("useMessageStore", () => {
     const { result } = renderHook(() => useStore(), { wrapper })
 
     expect(() => {
-      act(() => result.current.addMessage("error"))
+      act(() => result.current.addMessage({ variant: "error" }))
     }).toThrow(/Failed prop type: The prop `text`/)
   })
 
@@ -65,7 +67,9 @@ describe("useMessageStore", () => {
     const { result } = renderHook(() => useStore(), { wrapper })
 
     expect(() => {
-      act(() => result.current.addMessage("miau", "this is an error"))
+      act(() =>
+        result.current.addMessage({ variant: "miau", text: "this is an error" })
+      )
     }).toThrow(/Failed prop type: Invalid prop `variant`/)
   })
 
@@ -75,8 +79,15 @@ describe("useMessageStore", () => {
     )
     const { result } = renderHook(() => useStore(), { wrapper })
 
-    act(() => result.current.addMessage("error", "this is an error"))
-    act(() => result.current.addMessage("info", "this is an info message"))
+    act(() =>
+      result.current.addMessage({ variant: "error", text: "this is an error" })
+    )
+    act(() =>
+      result.current.addMessage({
+        variant: "info",
+        text: "this is an info message",
+      })
+    )
 
     waitFor(() => {
       expect(result.current.messages.length).toBe(2)
@@ -104,8 +115,15 @@ describe("useMessageStore", () => {
     )
     const { result } = renderHook(() => useStore(), { wrapper })
 
-    act(() => result.current.addMessage("error", "this is an error"))
-    act(() => result.current.addMessage("info", "this is an info message"))
+    act(() =>
+      result.current.addMessage({ variant: "error", text: "this is an error" })
+    )
+    act(() =>
+      result.current.addMessage({
+        variant: "info",
+        text: "this is an info message",
+      })
+    )
 
     waitFor(() => {
       expect(result.current.messages.length).toBe(2)

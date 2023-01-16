@@ -36,8 +36,6 @@ const removeMessageValidation = (props) => {
   return props
 }
 
-const addMessageSlice = (set) => ({})
-
 // General zustand docu: https://github.com/pmndrs/zustand
 // Zustand context example: https://codesandbox.io/s/ivanyur4enk0-zustand-createcontext-issue-forked-x7m2f?file=/src/TestContext.js:377-389
 // Zustand with typescript: https://docs.pmnd.rs/zustand/guides/typescript#slices-pattern
@@ -47,7 +45,7 @@ const initialStore = () =>
   create(
     devtools((set) => ({
       messages: [], // this is the messages state
-      addMessage: (variant, text) => {
+      addMessage: ({ variant, text }) => {
         addMessageValidation({ variant: variant, text: text })
         return set((state) => {
           // check if a message with the same text and variant exists
