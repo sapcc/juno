@@ -26,7 +26,7 @@ RUN rsync -avu --delete "/tmp/src/" "/juno" > /dev/null ;
 # to test the asset we need to build the libs which includes all dependencies
 # build-libs script set the NODE_ENV to development which includes all 
 # dependencies in the builds defined in peer dependencies.
-RUN yarn install 1>/dev/null ; yarn build-libs > /dev/null
+RUN yarn install >/dev/null ; yarn build-libs > /dev/null
 
 # TEST AND BUILD ASSET
 # IGNORE_EXTERNALS=true will results in a bundle which includes all dependencies. 
