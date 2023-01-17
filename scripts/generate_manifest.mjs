@@ -80,6 +80,10 @@ files.sort().forEach(async (file) => {
     appProps: pkg.appProps || {},
   }
 
+  if (fs.existsSync(`${entryDir}/README.md`)) {
+    manifest[pkg.name][version]["README"] = `${entryDir}/README.md`
+  }
+
   // console.log(path + "/" + entryDir, meta)
 })
 

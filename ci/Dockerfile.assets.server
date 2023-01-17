@@ -84,19 +84,18 @@ RUN rm -rf /usr/share/nginx/html
 # copy old versions to current layer
 COPY --from=lastbuild /usr/share/nginx/html /usr/share/nginx/html
 
-
 # CLEANUP
-RUN rm -rf /tmp/html && mv /usr/share/nginx/html /tmp/html 
+# RUN rm -rf /tmp/html && mv /usr/share/nginx/html /tmp/html 
 
-RUN mkdir -p /usr/share/nginx/html && \
-  cp /tmp/html/manifest* /usr/share/nginx/html/ && \
-  cp /tmp/html/importmap* /usr/share/nginx/html/ && \
-  cp /tmp/html/index.html /usr/share/nginx/html/ && \
-  cp -r /tmp/html/libs /usr/share/nginx/html/ && \
-  cp -r /tmp/html/apps /usr/share/nginx/html/ && \
-  cp -r /tmp/html/assets /usr/share/nginx/html/ 
+# RUN mkdir -p /usr/share/nginx/html && \
+#   cp /tmp/html/manifest* /usr/share/nginx/html/ && \
+#   cp /tmp/html/importmap* /usr/share/nginx/html/ && \
+#   cp /tmp/html/index.html /usr/share/nginx/html/ && \
+#   cp -r /tmp/html/libs /usr/share/nginx/html/ && \
+#   cp -r /tmp/html/apps /usr/share/nginx/html/ && \
+#   cp -r /tmp/html/assets /usr/share/nginx/html/ 
 
-RUN ls -la /usr/share/nginx/html/
+# RUN ls -la /usr/share/nginx/html/
 # END CLEANUP
 
 
@@ -105,6 +104,9 @@ COPY --from=base /tmp/latest "/tmp/latest"
 # sync new versions over old
 RUN rsync -avu "/tmp/latest/" "/usr/share/nginx/html" 1>/dev/null ; 
 RUN rm -rf /tmp/latest
+
+COPY --from=base /juno/scripts/check_file_integrity.sh "/tmp/check"
+RUN chmod +x /tmp/check && cd /usr/share/nginx/html && /tmp/check apps libs assets index.html manifest* importmap*
 
 RUN echo -e $'\
   <!DOCTYPE html> \n\
