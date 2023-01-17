@@ -51,10 +51,10 @@ RUN \
   node /juno/scripts/generate_importmap.mjs \
   --provider=$provider \
   --exit-on-error=$EXIT_ON_ERROR \
-  --src=/tmp/latest \
+  --src=/tmp/final \
   --base-url="%BASE_URL%" \
   --ignore-externals=false \
-  --output=/tmp/latest/importmap.$provider.json  \
+  --output=/tmp/final/importmap.$provider.json  \
   --verbose=$VERBOSE ; \
   \
   # DEV\
@@ -62,19 +62,19 @@ RUN \
   --provider=$provider \
   --env=development \
   --exit-on-error=$EXIT_ON_ERROR \
-  --src=/tmp/latest \
+  --src=/tmp/final \
   --base-url="%BASE_URL%" \
   --ignore-externals=false \
-  --output=/tmp/latest/importmap.$provider.dev.json  \
+  --output=/tmp/final/importmap.$provider.dev.json  \
   --verbose=$VERBOSE ; \
   done || exit 1; \
   \
-  cp /tmp/latest/importmap.$DEFAULT_PROVIDER.json /tmp/latest/importmap.json ; \
-  cp /tmp/latest/importmap.$DEFAULT_PROVIDER.dev.json /tmp/latest/importmap.dev.json ; \
+  cp /tmp/final/importmap.$DEFAULT_PROVIDER.json /tmp/final/importmap.json ; \
+  cp /tmp/final/importmap.$DEFAULT_PROVIDER.dev.json /tmp/final/importmap.dev.json ; \
   \
   node /juno/scripts/generate_manifest.mjs \
-  --src=/tmp/latest \
-  --output=/tmp/latest/manifest.json \
+  --src=/tmp/final \
+  --output=/tmp/final/manifest.json \
   --verbose=$VERBOSE ;
 
 # RESULTS
