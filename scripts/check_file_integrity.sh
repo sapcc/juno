@@ -9,16 +9,18 @@ done
 
 for f in *; do
   found=0
-  echo "===: $f"
+  # echo "===: $f"
   for g in "$@"; do
-    echo "::: $g"
+    # echo "::: $g"
     [ "$f" = "$g" ] && found=1
   done
   [ "$found" = 0 ] && echo "$f: in directory but not listed" && ok=0
 done
 
 if [ "$ok" = 1 ]; then
+  echo "File structure integrity check is successful"
   exit 0
 else
+  echo "File structure integrity check failed!"
   exit 1
 fi

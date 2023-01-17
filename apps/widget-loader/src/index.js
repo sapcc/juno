@@ -48,6 +48,7 @@ window.__junoWidgetLoader =
           })
           .catch((error) => reject(error))
 
+      console.log(".............")
       return importmapLoaders[origin]
     }
 
@@ -155,7 +156,6 @@ window.__junoWidgetLoader =
         // load the app via importShim
         if (debug) console.log(`===WIDGET LOADER: load ${appURL}`)
 
-        console.log("=====================", appURL)
         importShim(appURL + "?" + Date.now())
           .then((app) => {
             const mount = app.mount || app.default
