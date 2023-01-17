@@ -8,8 +8,11 @@ import TabContainer from "./components/TabContainer"
 import AssetsList from "./components/AssetsList"
 import AssetDetails from "./components/AssetDetails"
 import { APP, LIB } from "./helpers"
+import { useMessageStore } from "messages-provider"
+import { parseError } from "./helpers"
 
 const AppContent = (props) => {
+  const addMessage = useMessageStore((state) => state.addMessage)
   const manifestUrl = useStore((state) => state.manifestUrl)
   const urlStateKey = useStore((state) => state.urlStateKey)
   const [tabIndex, setTabIndex] = useState(0)
@@ -19,16 +22,19 @@ const AppContent = (props) => {
     fetchAssetsManifest,
     {
       enabled: !!manifestUrl,
-      // enable the query also if the endpoint is set. For fetching local
-      // data is not necessary since it should be empty
-      // enabled: !!endpoint,
-      // If set to Infinity, the data will never be considered stale
-      //  until a browser reload is triggered
       staleTime: Infinity,
-      // refer to this documentation to see more options
-      // https://tanstack.com/query/v4/docs/guides/queries
     }
   )
+
+  // if error send error to the message store
+  useEffect(() => {
+    if (error) {
+      addMessage({
+        variant: "error",
+        text: parseError(error),
+      })
+    }
+  }, [error])
 
   const [apps, libs] = useMemo(() => {
     if (!data) return [null, null]

@@ -7,23 +7,9 @@ import {
   Stack,
   Spinner,
 } from "juno-ui-components"
-import { useMessageStore } from "messages-provider"
 import AssetsListCollection from "./AssetsListCollection"
-import { parseError } from "../helpers"
 
 const AssetsList = ({ assets, isLoading, error }) => {
-  const addMessage = useMessageStore((state) => state.addMessage)
-
-  // if error send error to the message store
-  useEffect(() => {
-    if (error) {
-      addMessage({
-        variant: "error",
-        text: parseError(error),
-      })
-    }
-  }, [error])
-
   const length = useMemo(() => {
     if (!assets) return 0
     return Object.keys(assets).length

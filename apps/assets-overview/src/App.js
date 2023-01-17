@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "react-query"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
 import StyleProvider from "juno-ui-components"
+import { MessagesProvider } from "messages-provider"
 
 /* IMPORTANT: Replace this with your app's name */
 const URL_STATE_KEY = "assets-overview"
@@ -32,7 +33,9 @@ const App = (props) => {
         contentHeading=""
         embedded={embedded === "true"}
       >
-        <AppContent props={props} />
+        <MessagesProvider>
+          <AppContent props={props} />
+        </MessagesProvider>
       </AppShell>
     </QueryClientProvider>
   )
