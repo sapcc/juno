@@ -1,3 +1,6 @@
+export const APP = "app"
+export const LIB = "lib"
+
 export const parseError = (error) => {
   let errMsg = JSON.stringify(error)
   if (error?.message) {

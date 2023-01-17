@@ -7,9 +7,7 @@ import { currentState, push } from "url-state-provider"
 import TabContainer from "./components/TabContainer"
 import AssetsList from "./components/AssetsList"
 import AssetDetails from "./components/AssetDetails"
-
-const APP = "app"
-const LIB = "lib"
+import { APP, LIB } from "./helpers"
 
 const AppContent = (props) => {
   const manifestUrl = useStore((state) => state.manifestUrl)

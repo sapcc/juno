@@ -8437,7 +8437,7 @@ __metadata:
     jest: ^29.3.1
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
-    luxon: ^2.3.0
+    luxon: ^3.2.1
     messages-provider: "workspace:*"
     mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
@@ -11341,7 +11341,7 @@ __metadata:
     jest: ^29.3.1
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
-    luxon: ^2.3.0
+    luxon: ^3.2.1
     mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
@@ -12644,7 +12644,7 @@ __metadata:
     jest: ^29.3.1
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
-    luxon: ^2.3.0
+    luxon: ^3.2.1
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.4.6
@@ -14475,7 +14475,7 @@ __metadata:
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
     lodash.uniqueid: ^4.0.1
-    luxon: ^2.3.0
+    luxon: ^3.2.1
     mini-css-extract-plugin: ^2.5.3
     oauth: "workspace:*"
     os-browserify: ^0.3.0
@@ -17480,10 +17480,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "luxon@npm:2.3.0"
-  checksum: 3d00e1b812a31082cf0d97e844d7354c93891fbd14795756f396ee5656387e21d2c862edb841516114eb391f8314a6cf3848799acc6d59cf9560c88c909b91f0
+"luxon@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "luxon@npm:3.2.1"
+  checksum: 3fa3def2c5f5d3032b4c46220c4da8aeb467ac979888fc9d2557adcd22195f93516b4ad5909a75862bec8dc6ddc0953b0f38e6d2f4a8ab8450ddc531a83cf20d
   languageName: node
   linkType: hard
 
@@ -17532,7 +17532,7 @@ __metadata:
     jest: ^29.3.1
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
-    luxon: ^2.3.0
+    luxon: ^3.2.1
     mini-css-extract-plugin: ^2.5.3
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
@@ -24408,7 +24408,7 @@ __metadata:
     jest: ^29.3.1
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
-    luxon: ^2.3.0
+    luxon: ^3.2.1
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.4.6
@@ -25758,7 +25758,7 @@ __metadata:
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
     lodash.uniqueid: ^4.0.1
-    luxon: ^2.3.0
+    luxon: ^3.2.1
     oauth: "workspace:*"
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
@@ -26376,7 +26376,7 @@ __metadata:
     jest: ^29.3.1
     jest-environment-jsdom: ^29.3.1
     juno-ui-components: "workspace:*"
-    luxon: ^2.3.0
+    luxon: ^3.2.1
     os-browserify: ^0.3.0
     path-browserify: ^1.0.1
     postcss: ^8.4.6
