@@ -1,7 +1,12 @@
+# Latest assets server image
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server:latest AS lastbuild
+
+# Base image
 FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-base:latest AS base 
 RUN mkdir -p /tmp/latest
 
 # copy all app and lib builds (from dist) to tmp/latest  
+# input cames from the pipeline
 
 # -> /apps/whois/build, package.json
 # -> /apps/volta/build, package.json
@@ -28,6 +33,17 @@ RUN \
 # libs/juno-ui-components@1.1.5  
 # libs/juno-ui-components@latest  
 
+# create folder in tmp for merged assets
+RUN mkdir -p /tmp/final 
+# copy old versions of assets to current layer
+COPY --from=lastbuild /usr/share/nginx/html /tmp/final
+
+# merge latest assets over the old assets 
+RUN rsync -avu "/tmp/latest/" "/tmp/final" 1>/dev/null ; 
+
+WORKDIR /tmp/final 
+
+# Create importmaps and manifest
 RUN \
   for provider in $PROVIDERS; do \
   echo "===$provider" ; \
@@ -62,17 +78,20 @@ RUN \
   --verbose=$VERBOSE ;
 
 # RESULTS
-# /tmp/latest/apps/whois@version/files
-# /tmp/latest/apps/volta/files
-# /tmp/latest/libs/juno-ui-components/files
-# /tmp/latest/assets/static files
-# /tmp/latest/importmap.json
-# /tmp/latest/importmap.dev.json
-# /tmp/latest/manifest.json
+# /tmp/final/apps/whois@version/files
+# /tmp/final/apps/volta/files
+# /tmp/final/libs/juno-ui-components/files
+# /tmp/final/assets/static files
+# /tmp/final/importmap.json
+# /tmp/final/importmap.dev.json
+# /tmp/final/manifest.json
 
-FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server:latest AS lastbuild
+# Check the integrity of the file structure
+RUN chmod +x /juno/scripts/check_file_integrity.sh && \
+  /juno/scripts/check_file_integrity.sh apps libs assets index.html manifest* importmap*
 
-# final image layer
+
+############### FINAL IMAGE! ###################
 FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/nginx:alpine AS server
 LABEL source_repository="https://github.com/sapcc/juno"
 ENV BASE_URL=""
@@ -81,33 +100,10 @@ RUN apk --no-cache add rsync
 
 # delete default html files of nginx
 RUN rm -rf /usr/share/nginx/html
-# copy old versions to current layer
-COPY --from=lastbuild /usr/share/nginx/html /usr/share/nginx/html
-
-# CLEANUP
-# RUN rm -rf /tmp/html && mv /usr/share/nginx/html /tmp/html 
-
-# RUN mkdir -p /usr/share/nginx/html && \
-#   cp /tmp/html/manifest* /usr/share/nginx/html/ && \
-#   cp /tmp/html/importmap* /usr/share/nginx/html/ && \
-#   cp /tmp/html/index.html /usr/share/nginx/html/ && \
-#   cp -r /tmp/html/libs /usr/share/nginx/html/ && \
-#   cp -r /tmp/html/apps /usr/share/nginx/html/ && \
-#   cp -r /tmp/html/assets /usr/share/nginx/html/ 
-
-# RUN ls -la /usr/share/nginx/html/
-# END CLEANUP
-
-
 # copy new version 
-COPY --from=base /tmp/latest "/tmp/latest"
-# sync new versions over old
-RUN rsync -avu "/tmp/latest/" "/usr/share/nginx/html" 1>/dev/null ; 
-RUN rm -rf /tmp/latest
+COPY --from=base /tmp/final "/usr/share/nginx/html"
 
-COPY --from=base /juno/scripts/check_file_integrity.sh "/tmp/check"
-RUN chmod +x /tmp/check && cd /usr/share/nginx/html && /tmp/check apps libs assets index.html manifest* importmap*
-
+# Create the index.html with the assets-overview micro frontend app
 RUN echo -e $'\
   <!DOCTYPE html> \n\
   <html style="height: 100vh; background: rgb(13, 20, 28);">\n\
