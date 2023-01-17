@@ -6,8 +6,9 @@ Is a collection of Micro Frontends (MFE)
 
 - [Dashboard](https://github.com/sapcc/juno/tree/main/apps/dashboard)
 - [Widget Loader](https://github.com/sapcc/juno/tree/main/apps/widget-loader)
-- [Auth](https://github.com/sapcc/juno/tree/main/apps/auth)
-- [Designate](https://github.com/sapcc/juno/tree/main/apps/designate)
+- [Volta](https://github.com/sapcc/juno/tree/main/apps/volta)
+- [Heureka](https://github.com/sapcc/juno/tree/main/apps/heureka)
+- [Whois](https://github.com/sapcc/juno/tree/main/apps/whois)
 
 ## Libs
 
@@ -16,10 +17,36 @@ Is a collection of Micro Frontends (MFE)
 - [Policy Engine](https://github.com/sapcc/juno/tree/main/libs/policy-engine)
 - [URL State Provider](./libs/url-state-provider)
 - [URL State Router](./libs/url-state-router)
+- [OAuth](./libs/oauth)
 
 ## APIs
 
 - [Mercury](https://github.com/sapcc/juno/tree/main/apis/mercury)
+
+# Usage
+
+use juno css styles in external projects
+
+import variables.css from assets server
+
+```html
+<link
+  rel="stylesheet"
+  href="https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/build/lib/variables.css"
+/>
+```
+
+or as part of sass
+
+```sass
+@import "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/build/lib/variables.css";
+```
+
+and preset tailwind config with juno-ui-components config
+
+```js
+// tailwindcss.config.js
+```
 
 # Development
 
