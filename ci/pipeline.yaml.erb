@@ -235,7 +235,7 @@ jobs:
         params: 
           rootfs: true # mount image contents under /rootfs.tar
         trigger: true 
-        passed: [build-<%= details[:type] %>-<%= name %>]
+        # passed: [build-<%= details[:type] %>-<%= name %>]
       <% end %>
       - get: juno.git        
         passed: [build-base-image]
