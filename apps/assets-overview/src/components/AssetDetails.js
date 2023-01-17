@@ -4,18 +4,21 @@ import {
   Panel,
   PanelBody,
   PanelFooter,
-  CodeBlock,
-  DataGrid,
-  DataGridRow,
-  DataGridHeadCell,
-  DataGridCell,
+  Spinner,
   Stack,
+  MainTabs,
+  TabList,
+  Tab,
+  TabPanel,
 } from "juno-ui-components"
 import useStore from "../store"
 import { currentState, push, addOnChangeListener } from "url-state-provider"
 import { useQuery } from "react-query"
 import { fetchAssetsManifest } from "../actions"
 import { APP } from "../helpers"
+import AssetDetailsReadme from "./AssetDetailsReadme"
+import AssetDetailsScripttag from "./AssetDetailsScripttag"
+import AssetDetailsAdvanced from "./AssetDetailsAdvanced"
 
 const sectionCss = `
 mt-6
@@ -104,7 +107,11 @@ const AssetDetails = () => {
     setAssetVersion(newState?.assetDetailsVersion)
   })
 
-  // TODO: if asset is just {} display not found
+  const length = useMemo(() => {
+    if (!asset) return 0
+    return Object.keys(asset).length
+  }, [asset])
+
   return (
     <Panel
       heading={`${assetName} - ${assetVersion}`}
@@ -112,56 +119,37 @@ const AssetDetails = () => {
       onClose={onClose}
     >
       <PanelBody footer={<AssetDetailsFooter onCancelCallback={onClose} />}>
-        {asset?.type === APP && (
+        {isLoading && !asset ? (
+          <Stack className="pt-2" alignment="center">
+            <Spinner variant="primary" />
+            Loading asset...
+          </Stack>
+        ) : (
           <>
-            <h1 className="font-bold text-xl">Data props</h1>
-            <DataGrid className={sectionCss} columns={2}>
-              <DataGridRow>
-                <DataGridHeadCell>Name</DataGridHeadCell>
-                <DataGridHeadCell>Description</DataGridHeadCell>
-              </DataGridRow>
-              {asset?.appProps && Object.keys(asset?.appProps).length > 0 ? (
-                <>
-                  {Object.keys(asset?.appProps || {}).map((key, index) => (
-                    <DataGridRow key={index}>
-                      <DataGridCell>{key}</DataGridCell>
-                      <DataGridCell>
-                        {asset?.appProps[key]?.description}
-                      </DataGridCell>
-                    </DataGridRow>
-                  ))}
-                </>
-              ) : (
-                <DataGridRow>
-                  <DataGridCell colSpan={2}>
-                    <Stack
-                      alignment="center"
-                      distribution="center"
-                      direction="vertical"
-                      className="h-full"
-                    >
-                      <span>No props found</span>
-                    </Stack>
-                  </DataGridCell>
-                </DataGridRow>
-              )}
-            </DataGrid>
-
-            <CodeBlock className={sectionCss} heading="Script tag" lang="html">
-              {scriptTag({
-                name: assetName,
-                version: assetVersion,
-                appProps: asset?.appProps,
-              })}
-            </CodeBlock>
+            {length > 0 ? (
+              <MainTabs>
+                <TabList>
+                  <Tab>Readme</Tab>
+                  {asset?.type === APP && <Tab>Script tag</Tab>}
+                  <Tab>Advance</Tab>
+                </TabList>
+                <TabPanel>
+                  <AssetDetailsReadme />
+                </TabPanel>
+                {asset?.type === APP && (
+                  <TabPanel>
+                    <AssetDetailsScripttag asset={asset} />
+                  </TabPanel>
+                )}
+                <TabPanel>
+                  <AssetDetailsAdvanced asset={asset} />
+                </TabPanel>
+              </MainTabs>
+            ) : (
+              <span>No asset found</span>
+            )}
           </>
         )}
-        <CodeBlock
-          className={sectionCss}
-          content={asset || {}}
-          heading="Asset attributes"
-          lang="json"
-        />
       </PanelBody>
     </Panel>
   )

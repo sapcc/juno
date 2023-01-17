@@ -14,6 +14,7 @@ const collectionCellCss = (isLastRow) => {
 
 const collectionRowCss = `
   hover:text-theme-accent
+  cursor-pointer
 `
 
 const AssetsListCollectionItem = ({ asset, isLastItem }) => {
