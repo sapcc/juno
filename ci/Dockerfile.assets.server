@@ -75,7 +75,7 @@ ENV BASE_URL=""
 RUN apk --no-cache add rsync
 
 # copy old versions to current layer
-COPY --from=lastbuild /usr/share/nginx/html/* /usr/share/nginx/html/
+COPY --from=lastbuild /usr/share/nginx/html/ /usr/share/nginx/html
 
 # copy new version 
 COPY --from=base /tmp/latest "/tmp/latest"
