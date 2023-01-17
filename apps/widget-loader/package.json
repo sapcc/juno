@@ -54,6 +54,14 @@
       "value": "true",
       "description": "if true check the console log for details"
     },
+    "origin": {
+      "value": "URL",
+      "description": "URL of the assets host"
+    },
+    "show-loading": {
+      "value": "false",
+      "description": "show Loading... while content is being loaded"
+    },
     "importmap-only": {
       "value": "false",
       "description": "if true then only the importmap is loaded, all other props except importmap-url and debug are ignored!"
