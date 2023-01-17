@@ -154,6 +154,8 @@ window.__junoWidgetLoader =
 
         // load the app via importShim
         if (debug) console.log(`===WIDGET LOADER: load ${appURL}`)
+
+        console.log("=====================", appURL)
         importShim(appURL + "?" + Date.now())
           .then((app) => {
             const mount = app.mount || app.default

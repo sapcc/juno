@@ -7,7 +7,7 @@ const shouldAutoDismiss = (variant) => {
   return false
 }
 
-const Messages = () => {
+const Messages = ({ className }) => {
   const messages = useStore(useCallback((state) => state.messages))
   const removeMessage = useStore((state) => state.removeMessage)
 
@@ -18,7 +18,7 @@ const Messages = () => {
   return (
     <>
       {messages && messages.length > 0 && (
-        <>
+        <div className={`juno-message-provider ${className}`}>
           {messages.map((item) => (
             <Message
               key={item.id}
@@ -30,7 +30,7 @@ const Messages = () => {
               {item.text}
             </Message>
           ))}
-        </>
+        </div>
       )}
     </>
   )
