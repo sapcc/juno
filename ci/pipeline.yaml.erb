@@ -273,7 +273,7 @@ jobs:
                 ls -all ./dist/<%=details[:type]%>s/<%= name %>/
                 echo "====================="
                 <% end %>
-                echo "add static assets to cdn folder ./dist/assets"
+                echo "add static assets ./dist/assets"
                 cp -r ./juno.git/assets ./dist
           outputs:
             - name: dist
