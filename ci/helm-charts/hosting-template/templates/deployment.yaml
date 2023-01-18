@@ -43,7 +43,14 @@ spec:
               value: https://assets.juno.{{ $.Values.global.region }}.cloud.sap
             - name: PROPS
               value: "###PROPS###"
-
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256M"
+            limits:
+              cpu: "100m"
+              memory: "256M"
+              
           livenessProbe:
             httpGet:
               path: /

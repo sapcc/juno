@@ -30,7 +30,14 @@ spec:
           ports:
             - name: http
               containerPort: 3000
-
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256M"
+            limits:
+              cpu: "100m"
+              memory: "256M"
+              
           livenessProbe:
             httpGet:
               path: /
