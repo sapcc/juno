@@ -115,7 +115,7 @@ RUN echo -e $'\
   \t\t<script \n\
   \t\t\tsrc="%BASE_URL%/apps/widget-loader@latest/build/app.js" \n\ 
   \t\t\tdata-name="assets-overview" \n\
-  \t\t\tdata-props-manifest-url="/manifest.json"></script>\n\
+  \t\t\tdata-props-manifest-url="%BASE_URL%/manifest.json"></script>\n\
   \t</body>\n\
   </html>' > /usr/share/nginx/html/index.html 
 
