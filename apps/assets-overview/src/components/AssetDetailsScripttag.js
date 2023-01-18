@@ -29,6 +29,7 @@ ${newAppProps}>
 </script>`
 }
 
+// TODO display data props type (optional and required)
 const AssetDetailsScripttag = ({ asset }) => {
   const region = useStore((state) => state.region)
 

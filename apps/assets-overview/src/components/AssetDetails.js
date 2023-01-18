@@ -57,6 +57,7 @@ const AssetDetails = () => {
   const [assetName, setAssetName] = useState(null)
   const [assetVersion, setAssetVersion] = useState(null)
 
+  // TODO display error
   const { isLoading, isError, data, error } = useQuery(
     manifestUrl,
     fetchAssetsManifest,
@@ -108,6 +109,7 @@ const AssetDetails = () => {
     return Object.keys(asset).length
   }, [asset])
 
+  // TODO save state of the tabs
   return (
     <Panel
       heading={`${assetName} - ${assetVersion}`}

@@ -9,6 +9,7 @@ import useStore from "../store"
 const AssetDetailsReadme = ({ asset }) => {
   const origin = useStore((state) => state.origin)
 
+  // TODO display error and loading
   const { isLoading, isError, data, error } = useQuery(
     `${origin}${asset?.README}`,
     fetchAssetReadme,

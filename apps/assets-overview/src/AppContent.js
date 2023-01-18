@@ -36,6 +36,7 @@ const AppContent = (props) => {
     }
   }, [error])
 
+  // TODO sort the asset versions
   const [apps, libs] = useMemo(() => {
     if (!data) return [null, null]
     let apps = {}
