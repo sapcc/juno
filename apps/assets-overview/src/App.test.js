@@ -9,6 +9,15 @@ import * as actions from "./actions"
 jest.mock("./actions.js")
 actions.fetchAssetsManifest = jest.fn().mockResolvedValue({})
 
+import * as reactQuery from "react-query"
+
+reactQuery.useQuery = jest.fn(() => ({
+  isLoading: false,
+  isError: false,
+  data: {},
+  error: null,
+}))
+
 test("renders app", async () => {
   await act(
     async () =>
