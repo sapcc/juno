@@ -20,10 +20,6 @@ import AssetDetailsReadme from "./AssetDetailsReadme"
 import AssetDetailsScripttag from "./AssetDetailsScripttag"
 import AssetDetailsAdvanced from "./AssetDetailsAdvanced"
 
-const sectionCss = `
-mt-6
-`
-
 const AssetDetailsFooter = ({ onCancelCallback }) => {
   return (
     <PanelFooter>
@@ -134,7 +130,7 @@ const AssetDetails = () => {
                   <Tab>Advance</Tab>
                 </TabList>
                 <TabPanel>
-                  <AssetDetailsReadme />
+                  <AssetDetailsReadme asset={asset} />
                 </TabPanel>
                 {asset?.type === APP && (
                   <TabPanel>
