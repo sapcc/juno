@@ -24,6 +24,7 @@
     </style>
   </head>
   <body>
+    <!-- prettier-ignore -->
     <script type="module">
       import("./<%= MAIN_FILENAME %>").then((app) =>
         app.mount(document.getElementById("root"),{props: JSON.parse('<%=PROPS%>')})

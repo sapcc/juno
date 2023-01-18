@@ -29,7 +29,6 @@ const checkStatus = (response) => {
   }
 }
 
-// Example fetch call. Adjust as needed for your API
 export const fetchAssetsManifest = ({ queryKey }) => {
   const [manifestUrl] = queryKey
   return fetch(manifestUrl, {
@@ -42,5 +41,17 @@ export const fetchAssetsManifest = ({ queryKey }) => {
     .then(checkStatus)
     .then((response) => {
       return response.json()
+    })
+}
+
+export const fetchAssetReadme = ({ queryKey }) => {
+  const [readmeUrl] = queryKey
+  return fetch(readmeUrl, {
+    method: "GET",
+    headers: {},
+  })
+    .then(checkStatus)
+    .then((response) => {
+      return response.text()
     })
 }
