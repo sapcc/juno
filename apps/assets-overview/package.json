@@ -83,7 +83,7 @@
       "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
     },
     "manifestUrl": {
-      "value": "./test-data.json",
+      "value": "https://assets.juno.qa-de-1.cloud.sap/manifest.json",
       "description": "Endpoint URL of the assets manifest"
     },
     "embeded": {
