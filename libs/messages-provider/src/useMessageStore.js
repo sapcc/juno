@@ -35,9 +35,11 @@ const removeMessageValidation = (props) => {
 }
 
 // General zustand docu: https://github.com/pmndrs/zustand
+// v3
 // Zustand context example: https://codesandbox.io/s/ivanyur4enk0-zustand-createcontext-issue-forked-x7m2f?file=/src/TestContext.js:377-389
 // Zustand with typescript: https://docs.pmnd.rs/zustand/guides/typescript#slices-pattern
-// const { Provider, useStore } = createContext()
+// v4
+// https://github.com/pmndrs/zustand/blob/55d0c3aec9fbca9d56432f39abba08f7b90e7edb/docs/previous-versions/zustand-v3-create-context.md
 const StoreContext = createContext()
 
 const store = createStore((set) => ({
@@ -86,7 +88,6 @@ export const MessagesProvider = ({ children }) => {
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
 }
 
-// export { useStore }
 const useMessagesStore = (selector) =>
   useStore(useContext(StoreContext), selector)
 export { useMessagesStore as useStore }
