@@ -62,15 +62,15 @@ RUN cd "/tmp/$ASSET_PATH" && tar -czf package.tgz .
 
 RUN ls -la "/tmp/$ASSET_PATH/$BUILD_DIR"
 
-# # asset layer
-# # COPY RESULT INTO FINAL IMAGE under /dist
-# FROM scratch as asset 
-# ARG ASSET_PATH
+# asset layer
+# COPY RESULT INTO FINAL IMAGE under /dist
+FROM scratch as asset 
+ARG ASSET_PATH
 
-# LABEL source_repository="https://github.com/sapcc/juno/$ASSET_PATH"
+LABEL source_repository="https://github.com/sapcc/juno/$ASSET_PATH"
 
-# WORKDIR /
+WORKDIR /
 
-# # copy build results from base image to dist
-# COPY --from=build "/tmp/$ASSET_PATH" /dist
+# copy build results from base image to dist
+COPY --from=build "/tmp/$ASSET_PATH" /dist
 
