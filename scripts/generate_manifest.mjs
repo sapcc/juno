@@ -52,7 +52,7 @@ const manifest = {
 }
 
 if (fs.existsSync(`${rootPath}/global/README.md`)) {
-  manifest["_global"]["README"] = `${rootPath}/global/README.md`
+  manifest["_global"]["README"] = "global/README.md"
 }
 
 // console.log(files)
