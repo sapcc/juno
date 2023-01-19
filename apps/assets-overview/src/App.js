@@ -10,6 +10,7 @@ import { MessagesProvider } from "messages-provider"
 import markdown from "github-markdown-css/github-markdown.css"
 import markdownDark from "github-markdown-css/github-markdown-dark.css"
 import markdownLight from "github-markdown-css/github-markdown-light.css"
+import CustomPageHeader from "./components/CustomPageHeader"
 
 const URL_STATE_KEY = "assets-overview"
 
@@ -44,11 +45,7 @@ const App = (props) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AppShell
-        pageHeader="Converged Cloud | Juno Assets Overview"
-        contentHeading=""
-        embedded={embedded === "true"}
-      >
+      <AppShell pageHeader={CustomPageHeader} embedded={embedded === "true"}>
         <MessagesProvider>
           <AppContent props={props} />
         </MessagesProvider>
