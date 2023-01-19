@@ -45,7 +45,16 @@ const AssetDetailsScripttag = ({ asset }) => {
           <>
             {Object.keys(asset?.appProps || {}).map((key, index) => (
               <DataGridRow key={index}>
-                <DataGridCell>{key}</DataGridCell>
+                <DataGridCell>
+                  <Stack direction="vertical" className="h-full">
+                    <span>{key}</span>
+                    {asset?.appProps[key]?.type && (
+                      <span>
+                        <small>({asset?.appProps[key].type})</small>
+                      </span>
+                    )}
+                  </Stack>
+                </DataGridCell>
                 <DataGridCell>{asset?.appProps[key]?.description}</DataGridCell>
               </DataGridRow>
             ))}
@@ -65,6 +74,11 @@ const AssetDetailsScripttag = ({ asset }) => {
           </DataGridRow>
         )}
       </DataGrid>
+
+      <p className={panelSectionCss}>
+        Please copy following scritp tag, set the region of the src attribute to{" "}
+        <b>qa-de-1</b> for QA and <b>eu-nl-1</b> for production environment:
+      </p>
 
       <CodeBlock className={panelSectionCss} heading="Script tag" lang="html">
         {scriptTag({
