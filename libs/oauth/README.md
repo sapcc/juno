@@ -1,9 +1,11 @@
-# OpenID Connect Hook
+# OpenID Connect (oauth) Lib
+
+This lib implements a hook to get the authentication token via OpenID Connect. It handles the redirect to the OpenID provider as well as processing the response from the same.
+
+It follows the implicit flow of the OIDC specification. The hook expects two parameters "issuerURL" and "clientID". Calling the "login" functions redirects the user to the Open ID Provider and after a successful login, the user ends up back at the last visited URL. Calling the "logout" functions resets the current session.
 
 React ONLY!!!
 Web ONLY!!!
-
-The oauth hook implements the "id token" flow of the OIDC specification. The hook expects two parameters "issuerURL" and "clientID". Calling the "login" functions redirects the user to the Open ID Provider and after a successful login, the user ends up back at the last visited URL. Calling the "logout" functions resets the current session.
 
 ## Usage
 
@@ -79,6 +81,20 @@ add oauth to dependencies in package.json
 
 ```
 
+or via widget-loader
+
+```html
+<script
+  src="https://assets.juno.eu-nl-1.cloud.sap/apps/widget-loader@latest/build/app.js"
+  data-importmap-only="true"
+></script>
+
+<script type="module">
+  const { useOidcAuth } = await import("@juno/oauth")
+  // ...
+</script>
+```
+
 ## useOidcAuth
 
 Executes the id token flow against the issuerURL with the clientID.
@@ -99,10 +115,3 @@ Executes the id token flow against the issuerURL with the clientID.
   - **expiresAtDate**, Date object
 - login, function
 - logout, function(resetOIDCSession:bool). If resetOIDCSession is true then the user is redirected to the OIDC logout page
-
-# Development
-
-```bash
-yarn test
-yarn build
-```

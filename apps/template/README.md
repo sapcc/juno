@@ -3,10 +3,10 @@
 This is the standard app template for microfrontends. Use this as a basis for new juno microfrontend apps.
 
 ## Instructions
+
 1. Copy the `template` folder, rename to name of your app
 2. Change the name in `package.json` from "template" to your app's name
 3. Change `URL_STATE_KEY` in `App.js` to your app's name
-
 
 ## Usage
 
@@ -15,12 +15,13 @@ This is the standard app template for microfrontends. Use this as a basis for ne
 ```js
 <script
   defer
-  src="https://JUNO_CDN_HOSTNAME/widget-loader/VERSION/app.js"
+  src="https://JUNO_ASSETS_HOSTNAME/apps/widget-loader@VERSION/build/app.js"
   data-name="YOUR_APP_NAME"
   data-version="MFE_VERSION"
 ></script>
 ```
-Most of the time using `latest` as `VERSION` and `data-version` is what you want to do. Alternatively you can see all published versions at `https://JUNO_CDN_HOSTNAME/manifest.json`. 
+
+Most of the time using `latest` as `VERSION` and `data-version` is what you want to do. Alternatively you can see all published versions at `https://JUNO_CDN_HOSTNAME/manifest.json`.
 
 `YOUR_APP_NAME` must be the name you specified in your `package.json` (see above)
 
@@ -31,7 +32,7 @@ Example:
 ```js
 <script
   defer
-  src="https://cdn.juno.global.cloud.sap/widget-loader/latest/app.js"
+  src="https://assets.juno.global.cloud.sap/apps/widget-loader@latest/build/app.js"
   data-name="myapp"
   data-version="latest"
   data-props-myprop="Passing a custom prop to my app"
@@ -39,5 +40,3 @@ Example:
 ```
 
 More information about options [here](https://github.com/sapcc/juno/blob/main/apps/widget-loader/README.md)
-
-
