@@ -19,6 +19,7 @@ import { APP } from "../helpers"
 import AssetDetailsReadme from "./AssetDetailsReadme"
 import AssetDetailsScripttag from "./AssetDetailsScripttag"
 import AssetDetailsAdvanced from "./AssetDetailsAdvanced"
+import { MessagesProvider } from "messages-provider"
 
 const AssetDetailsFooter = ({ onCancelCallback }) => {
   return (
@@ -131,7 +132,9 @@ const AssetDetails = () => {
                   <Tab>Advance</Tab>
                 </TabList>
                 <TabPanel>
-                  <AssetDetailsReadme asset={asset} />
+                  <MessagesProvider>
+                    <AssetDetailsReadme asset={asset} />
+                  </MessagesProvider>
                 </TabPanel>
                 {asset?.type === APP && (
                   <TabPanel>
