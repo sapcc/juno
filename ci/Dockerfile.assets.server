@@ -41,6 +41,8 @@ COPY --from=lastbuild /usr/share/nginx/html /tmp/final
 # merge latest assets over the old assets 
 RUN rsync -avu "/tmp/latest/" "/tmp/final" 1>/dev/null ; 
 
+RUN mkdir -p /tmp/final/global && cp /juno/README.md /tmp/final/global/
+
 WORKDIR /tmp/final 
 
 # Create importmaps and manifest

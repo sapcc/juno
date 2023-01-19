@@ -7,6 +7,7 @@ import path from "path"
 import url from "url"
 
 const availableArgs = [
+  "--widget-loader-name=NAME",
   "--src=DIR_PATH",
   "--output=FILE_PATH",
   "--verbose|-v",
@@ -14,6 +15,7 @@ const availableArgs = [
 ]
 
 const options = {
+  widgetLoaderName: "widget-loader",
   src: path.dirname(url.fileURLToPath(import.meta.url)),
   output: "./manifest.json",
   verbose: false,
@@ -45,7 +47,13 @@ const globPattern = `${rootPath}/@(${PACKAGES_PATHS.join("|")})/**/package.json`
 const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
 const files = glob.sync(globPattern, { ignore: [`node_modules/**`] })
 
-const manifest = {}
+const manifest = {
+  _global: {},
+}
+
+if (fs.existsSync(`${rootPath}/global/README.md`)) {
+  manifest["_global"]["README"] = `${rootPath}/global/README.md`
+}
 
 // console.log(files)
 files.sort().forEach(async (file) => {
@@ -87,9 +95,15 @@ files.sort().forEach(async (file) => {
   if (fs.existsSync(`${rootPath}/${path}/package.tgz`)) {
     manifest[pkg.name][version]["tarball"] = "/" + path + "/package.tgz"
   }
-
   // console.log(path + "/" + entryDir, meta)
 })
+
+if (manifest[options.widgetLoaderName]) {
+  manifest["_global"]["widget-loader"] = {
+    ...manifest[options.widgetLoaderName],
+  }
+  delete manifest[options.widgetLoaderName]
+}
 
 if (options.verbose || options.v) {
   console.log("==============MANIFEST==============")
