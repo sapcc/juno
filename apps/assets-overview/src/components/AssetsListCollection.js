@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useMemo } from "react"
 import { DataGridRow, DataGridCell } from "juno-ui-components"
 import { useFloating, useHover, useInteractions } from "@floating-ui/react"
 import AssetsListCollectionItem from "./AssetsListCollectionItem"
@@ -13,6 +13,11 @@ const assetCellCss = (hightlight) => {
 
 const AssetsListCollection = ({ name, collection }) => {
   const [hightlight, setHightlight] = useState(false)
+
+  collection = useMemo(() => {
+    if (!collection) return
+    return collection.sort((a, b) => (a?.version < b?.version ? 1 : -1))
+  }, [collection])
 
   const { reference, context } = useFloating({
     onOpenChange: setHightlight,
