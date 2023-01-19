@@ -37,9 +37,9 @@ const AssetsListCollectionItem = ({ asset, isLastItem }) => {
     const urlState = currentState(urlStateKey)
     push(urlStateKey, {
       ...urlState,
-      assetDetailsOpened: true,
-      assetDetailsName: asset?.name,
-      assetDetailsVersion: asset?.version,
+      panelOpened: true,
+      assetName: asset?.name,
+      assetVersion: asset?.version,
     })
   }
 

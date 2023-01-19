@@ -37,6 +37,7 @@ const AssetDetails = () => {
   const [opened, setOpened] = useState(false)
   const [assetName, setAssetName] = useState(null)
   const [assetVersion, setAssetVersion] = useState(null)
+  const [tabIndex, setTabIndex] = useState(0)
 
   // TODO display error
   const { isLoading, isError, data, error } = useQuery(
@@ -66,23 +67,35 @@ const AssetDetails = () => {
     return result
   }, [data, assetName, assetVersion])
 
+  const updatePanelStateFromURL = (newState) => {
+    setOpened(newState?.panelOpened)
+    setAssetName(newState?.assetName)
+    setAssetVersion(newState?.assetVersion)
+    if (newState?.panelTabIndex) setTabIndex(newState?.panelTabIndex)
+  }
+
   // wait until the global state is set to fetch the url state
   useEffect(() => {
-    setOpened(urlState?.assetDetailsOpened)
-    setAssetName(urlState?.assetDetailsName)
-    setAssetVersion(urlState?.assetDetailsVersion)
+    updatePanelStateFromURL(urlState)
   }, [urlStateKey])
 
   // call close reducer from url store
   const onClose = () => {
-    push(urlStateKey, { ...urlState, assetDetailsOpened: false })
+    // remove assetName,assetVersion and panelTabIndex
+    // key from object
+    const { assetName, assetVersion, panelTabIndex, ...restOfKeys } = urlState
+
+    push(urlStateKey, {
+      ...restOfKeys,
+      panelOpened: false,
+    })
+    // since the panel is cached reset following values
+    setTabIndex(0)
   }
 
   // this listener reacts on any change on the url state
   addOnChangeListener(urlStateKey, (newState) => {
-    setOpened(newState?.assetDetailsOpened)
-    setAssetName(newState?.assetDetailsName)
-    setAssetVersion(newState?.assetDetailsVersion)
+    updatePanelStateFromURL(newState)
   })
 
   const length = useMemo(() => {
@@ -90,7 +103,12 @@ const AssetDetails = () => {
     return Object.keys(asset).length
   }, [asset])
 
-  // TODO save state of the tabs
+  const onTabSelected = (index) => {
+    setTabIndex(index)
+    const urlState = currentState(urlStateKey)
+    push(urlStateKey, { ...urlState, panelTabIndex: index })
+  }
+
   return (
     <Panel
       heading={`${assetName} - ${assetVersion}`}
@@ -106,7 +124,7 @@ const AssetDetails = () => {
         ) : (
           <>
             {length > 0 ? (
-              <MainTabs>
+              <MainTabs selectedIndex={tabIndex} onSelect={onTabSelected}>
                 <TabList>
                   <Tab>Readme</Tab>
                   {asset?.type === APP && <Tab>Script tag</Tab>}
