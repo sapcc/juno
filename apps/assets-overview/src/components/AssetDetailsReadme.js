@@ -12,7 +12,6 @@ const AssetDetailsReadme = ({ asset }) => {
   const origin = useStore((state) => state.origin)
   const addMessage = useMessageStore((state) => state.addMessage)
 
-  // TODO display error and loading
   const { isLoading, isError, data, error } = useQuery(
     `${origin}${asset?.README}`,
     fetchAssetReadme,
