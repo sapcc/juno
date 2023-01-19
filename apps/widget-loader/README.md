@@ -1,6 +1,8 @@
 # Widget Loader
 
-The Widget Loader enables every Micro Frontend (MFE) provided by Juno to be loaded. External MFEs can also be embeded with the help of this loader if they implement the corresponding interface (see below).
+Widget Loader is a special app used to load other apps. Before the widget loader fetches the desired app, it creates an environment (shell) in which all the libs the widget depends on are available.
+
+So that all dependencies are available at runtime and several apps can share libs, we first load the es-module-shim (https://ga.jspm.io/npm:es-module-shims@1.6.2/dist/ es-module-shims.js). This shim supports import map which is simply a key value map. Where key is the name of the package and value is the URL to the package sources. Such a map is loaded in the second step and finally the app itself. With the help of the import map, the browser knows from where the packages are loaded. Furthermore, packages that are used by several apps are only loaded once and the browser cache ensures that packages are not fetched with every page load.
 
 ## Usage
 
