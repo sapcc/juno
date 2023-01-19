@@ -7,6 +7,7 @@ import AppContent from "./AppContent"
 import styles from "./styles.scss"
 import StyleProvider from "juno-ui-components"
 import { MessagesProvider } from "messages-provider"
+import markdown from "github-markdown-css/github-markdown.css"
 import markdownDark from "github-markdown-css/github-markdown-dark.css"
 import markdownLight from "github-markdown-css/github-markdown-light.css"
 
@@ -54,6 +55,7 @@ const StyledApp = (props) => {
     <StyleProvider stylesWrapper="shadowRoot" theme={theme}>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
+      <style>{markdown.toString()}</style>
       <style>
         {theme === "theme-dark"
           ? markdownDark.toString()
