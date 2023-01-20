@@ -128,7 +128,8 @@ RUN echo -e $'\
 RUN echo -e '#!/bin/sh\n\n\
   set -e \n\
   if [ -z "$BASE_URL" ]; then echo 'Environment variable BASE_URL must be specified. Exiting.'; exit 1; fi \n\
-  sed -i "s,%BASE_URL%,$BASE_URL,g" /usr/share/nginx/html/importmap*.json \n\
+  # let widget-loader replace the BASE_URL
+  # sed -i "s,%BASE_URL%,$BASE_URL,g" /usr/share/nginx/html/importmap*.json \n\
   sed -i "s,%BASE_URL%,$BASE_URL,g" /usr/share/nginx/html/index.html  \n\
   exec "$@" ' >> /usr/local/bin/entrypoint && chmod +x /usr/local/bin/entrypoint
 
