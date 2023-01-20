@@ -43,14 +43,18 @@ window.__junoWidgetLoader =
             // first load of the importmap, replace BASE_URL placeholder
             // in importmap with origin
             const importmapOrigin = new URL(importmapUrl).origin
-            importmap = importmap.replace("%BASE_URL%", importmapOrigin)
+            importmap = JSON.parse(
+              JSON.stringify(importmap).replaceAll(
+                "%BASE_URL%",
+                importmapOrigin
+              )
+            )
             const script = document.createElement("script")
             script.setAttribute("type", "importmap-shim")
             script.setAttribute("data-juno-importmap", origin)
             script.text = JSON.stringify(importmap)
             document.head.append(script)
           })
-          .catch((error) => reject(error))
 
       // console.log(".............")
       return importmapLoaders[origin]
