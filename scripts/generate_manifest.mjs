@@ -93,6 +93,7 @@ files.sort().forEach(async (file) => {
   manifest[pkg.name] = manifest[pkg.name] || {}
   manifest[pkg.name][version] = {
     type,
+    version,
     entryFile: "/" + path + "/" + entryFile,
     entryDir: "/" + path + "/" + entryDir,
     updatedAt: meta.mtime,
