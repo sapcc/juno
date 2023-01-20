@@ -21,7 +21,6 @@ describe("manifest", () => {
         "requests",
         "volta",
         "whois",
-        "widget-loader",
       ],
       lib: [
         "communicator",
@@ -61,5 +60,46 @@ describe("manifest", () => {
         })
       }
     }
+
+    describe("_global", () => {
+      it(`contains _global scope`, () => {
+        cy.request("manifest.json").then((response) => {
+          expect(response.body).to.have.property("_global")
+        })
+      })
+
+      it(`scope contains README`, () => {
+        cy.request("manifest.json").then((response) => {
+          expect(response.body["_global"]).to.have.property("README")
+        })
+      })
+
+      it(`global README is reachable`, () => {
+        cy.request("manifest.json").then((response) => {
+          const json = response.body["_global"]
+          const readmeFile = json["README"]
+          cy.request(readmeFile).should((response) => {
+            expect(response.status).to.eq(200)
+          })
+        })
+      })
+
+      it(`contains widget-loader@latest`, () => {
+        cy.request("manifest.json").then((response) => {
+          expect(response.body["_global"])
+            .to.have.property("widget-loader")
+            .to.have.property("latest")
+        })
+      })
+      it(`entry file is reachable`, () => {
+        cy.request("manifest.json").then((response) => {
+          const json = response.body["_global"]
+          const entryFile = json["widget-loader"]["latest"]["entryFile"]
+          cy.request(entryFile).should((response) => {
+            expect(response.status).to.eq(200)
+          })
+        })
+      })
+    })
   })
 })

@@ -1,8 +1,12 @@
+ARG BASE_URL_PLACEHOLDER="%BASE_URL%"
+
 # Latest assets server image
 FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server:latest AS lastbuild
 
 # Base image
 FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-base:latest AS base 
+ARG BASE_URL_PLACEHOLDER
+
 RUN mkdir -p /tmp/latest
 
 # copy all app and lib builds (from dist) to tmp/latest  
@@ -41,6 +45,8 @@ COPY --from=lastbuild /usr/share/nginx/html /tmp/final
 # merge latest assets over the old assets 
 RUN rsync -avu "/tmp/latest/" "/tmp/final" 1>/dev/null ; 
 
+RUN mkdir -p /tmp/final/global && cp /juno/README.md /tmp/final/global/
+
 WORKDIR /tmp/final 
 
 # Create importmaps and manifest
@@ -52,7 +58,7 @@ RUN \
   --provider=$provider \
   --exit-on-error=$EXIT_ON_ERROR \
   --src=/tmp/final \
-  --base-url="%BASE_URL%" \
+  --base-url=$BASE_URL_PLACEHOLDER \
   --ignore-externals=false \
   --output=/tmp/final/importmap.$provider.json  \
   --verbose=$VERBOSE ; \
@@ -63,7 +69,7 @@ RUN \
   --env=development \
   --exit-on-error=$EXIT_ON_ERROR \
   --src=/tmp/final \
-  --base-url="%BASE_URL%" \
+  --base-url=$BASE_URL_PLACEHOLDER \
   --ignore-externals=false \
   --output=/tmp/final/importmap.$provider.dev.json  \
   --verbose=$VERBOSE ; \
@@ -75,6 +81,7 @@ RUN \
   node /juno/scripts/generate_manifest.mjs \
   --src=/tmp/final \
   --output=/tmp/final/manifest.json \
+  --base-url=$BASE_URL_PLACEHOLDER \
   --verbose=$VERBOSE ;
 
 # RESULTS
@@ -88,13 +95,14 @@ RUN \
 
 # Check the integrity of the file structure
 RUN chmod +x /juno/scripts/check_file_integrity.sh && \
-  /juno/scripts/check_file_integrity.sh apps libs assets index.html manifest* importmap*
+  /juno/scripts/check_file_integrity.sh global apps libs assets index.html manifest* importmap*
 
 
 ############### FINAL IMAGE! ###################
 FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/nginx:alpine AS server
+ARG BASE_URL_PLACEHOLDER
+
 LABEL source_repository="https://github.com/sapcc/juno"
-ENV BASE_URL=""
 
 RUN apk --no-cache add rsync
 
@@ -102,6 +110,41 @@ RUN apk --no-cache add rsync
 RUN rm -rf /usr/share/nginx/html
 # copy new version 
 COPY --from=base /tmp/final "/usr/share/nginx/html"
+
+# Replace default nginx config
+RUN rm -rf /etc/nginx/conf.d/default.conf && echo -e $'\
+  server { \n \
+  \tlisten       80; \n \
+  \tserver_name  localhost; \n \
+  \n \
+  \tlocation / { \n \
+  \t\troot   /usr/share/nginx/html; \n \
+  \t\tindex  index.html index.htm; \n \
+  \t} \n \
+  \n \
+  \tlocation ~* (importmap|manifest).*\.json$ { \n \
+  \t\troot  /usr/share/nginx/html; \n \
+  \t\tsub_filter '$BASE_URL_PLACEHOLDER$' "https://$host"; \n \
+  \t\tsub_filter_types *; \n \
+  \t\tsub_filter_once off; \n \
+  \t\tadd_header Cache-Control "no-store, no-cache"; \n \
+  \t} \n \
+  \n \
+  \tlocation ~* .*widget-loader@.*\.js$ { \n \
+  \t\troot /usr/share/nginx/html; \n \
+  \t\tadd_header Cache-Control "no-store, no-cache"; \n \
+  \t}\n \
+  \n \
+  \t#error_page  404              /404.html; \n \
+  \n \
+  \t# redirect server error pages to the static page /50x.html \n \
+  \terror_page   500 502 503 504  /50x.html; \n \
+  \n \
+  \tlocation = /50x.html { \n \
+  \t\troot   /usr/share/nginx/html; \n \
+  \t} \n \
+  } \n \
+  ' > /etc/nginx/conf.d/default.conf
 
 # Create the index.html with the assets-overview micro frontend app
 RUN echo -e $'\
@@ -113,23 +156,11 @@ RUN echo -e $'\
   \t</head>\n\
   \t<body style="height: 100vh;">\n \
   \t\t<script \n\
-  \t\t\tsrc="%BASE_URL%/apps/widget-loader@latest/build/app.js" \n\ 
+  \t\t\tsrc="/apps/widget-loader@latest/build/app.js" \n\ 
   \t\t\tdata-name="assets-overview" \n\
-  \t\t\tdata-props-manifest-url="%BASE_URL%/manifest.json"></script>\n\
+  \t\t\tdata-props-manifest-url="/manifest.json"></script>\n\
   \t</body>\n\
-  </html>' > /usr/share/nginx/html/index.html 
+  </html>' > /usr/share/nginx/html/index.html   
 
-# ENTRYPOINT
-# we check the presence of BASE_URL env
-# replace placeholder for base url in importmaps.json file
-# and run the given command 
-RUN echo -e '#!/bin/sh\n\n\
-  set -e \n\
-  if [ -z "$BASE_URL" ]; then echo 'Environment variable BASE_URL must be specified. Exiting.'; exit 1; fi \n\
-  sed -i "s,%BASE_URL%,$BASE_URL,g" /usr/share/nginx/html/importmap*.json \n\
-  sed -i "s,%BASE_URL%,$BASE_URL,g" /usr/share/nginx/html/index.html  \n\
-  exec "$@" ' >> /usr/local/bin/entrypoint && chmod +x /usr/local/bin/entrypoint
-
-ENTRYPOINT ["/usr/local/bin/entrypoint"]
 # default command is nginx
-CMD nginx -g "daemon off;"
+# CMD nginx -g "daemon off;"

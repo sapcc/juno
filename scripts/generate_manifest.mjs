@@ -7,6 +7,8 @@ import path from "path"
 import url from "url"
 
 const availableArgs = [
+  "--base-url=URL_OF_ASSETS_SERVER",
+  "--widget-loader-name=NAME",
   "--src=DIR_PATH",
   "--output=FILE_PATH",
   "--verbose|-v",
@@ -14,6 +16,8 @@ const availableArgs = [
 ]
 
 const options = {
+  baseUrl: "%BASE_URL%",
+  widgetLoaderName: "widget-loader",
   src: path.dirname(url.fileURLToPath(import.meta.url)),
   output: "./manifest.json",
   verbose: false,
@@ -45,7 +49,24 @@ const globPattern = `${rootPath}/@(${PACKAGES_PATHS.join("|")})/**/package.json`
 const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
 const files = glob.sync(globPattern, { ignore: [`node_modules/**`] })
 
-const manifest = {}
+const manifest = {
+  _global: {
+    baseUrl: options.baseUrl,
+    importMap: {},
+  },
+}
+
+if (fs.existsSync(`${rootPath}/importmap.json`)) {
+  manifest["_global"]["importMap"]["prod"] = `/importmap.json`
+}
+
+if (fs.existsSync(`${rootPath}/importmap.dev.json`)) {
+  manifest["_global"]["importMap"]["dev"] = `/importmap.dev.json`
+}
+
+if (fs.existsSync(`${rootPath}/global/README.md`)) {
+  manifest["_global"]["readme"] = "global/README.md"
+}
 
 // console.log(files)
 files.sort().forEach(async (file) => {
@@ -81,15 +102,21 @@ files.sort().forEach(async (file) => {
   }
 
   if (fs.existsSync(`${rootPath}/${path}/README.md`)) {
-    manifest[pkg.name][version]["README"] = "/" + path + "/README.md"
+    manifest[pkg.name][version]["readme"] = "/" + path + "/README.md"
   }
 
   if (fs.existsSync(`${rootPath}/${path}/package.tgz`)) {
     manifest[pkg.name][version]["tarball"] = "/" + path + "/package.tgz"
   }
-
   // console.log(path + "/" + entryDir, meta)
 })
+
+if (manifest[options.widgetLoaderName]) {
+  manifest["_global"]["widget-loader"] = {
+    ...manifest[options.widgetLoaderName],
+  }
+  delete manifest[options.widgetLoaderName]
+}
 
 if (options.verbose || options.v) {
   console.log("==============MANIFEST==============")
