@@ -60,7 +60,7 @@ const AssetDetails = () => {
       if (name === assetName) {
         Object.keys(data[name]).forEach((version) => {
           if (version === assetVersion) {
-            result = { ...data[name][version], name: name, version: version }
+            result = { ...data[name][version], name: name }
           }
         })
       }
