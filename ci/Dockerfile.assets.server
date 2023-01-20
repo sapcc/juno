@@ -96,7 +96,6 @@ RUN chmod +x /juno/scripts/check_file_integrity.sh && \
 ############### FINAL IMAGE! ###################
 FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/nginx:alpine AS server
 LABEL source_repository="https://github.com/sapcc/juno"
-ENV BASE_URL=""
 
 RUN apk --no-cache add rsync
 
@@ -115,24 +114,11 @@ RUN echo -e $'\
   \t</head>\n\
   \t<body style="height: 100vh;">\n \
   \t\t<script \n\
-  \t\t\tsrc="%BASE_URL%/apps/widget-loader@latest/build/app.js" \n\ 
+  \t\t\tsrc="/apps/widget-loader@latest/build/app.js" \n\ 
   \t\t\tdata-name="assets-overview" \n\
-  \t\t\tdata-props-manifest-url="%BASE_URL%/manifest.json"></script>\n\
+  \t\t\tdata-props-manifest-url="/manifest.json"></script>\n\
   \t</body>\n\
-  </html>' > /usr/share/nginx/html/index.html 
+  </html>' > /usr/share/nginx/html/index.html   
 
-# ENTRYPOINT
-# we check the presence of BASE_URL env
-# replace placeholder for base url in importmaps.json file
-# and run the given command 
-RUN echo -e '#!/bin/sh\n\n\
-  set -e \n\
-  if [ -z "$BASE_URL" ]; then echo 'Environment variable BASE_URL must be specified. Exiting.'; exit 1; fi \n\
-  # let widget-loader replace the BASE_URL
-  # sed -i "s,%BASE_URL%,$BASE_URL,g" /usr/share/nginx/html/importmap*.json \n\
-  sed -i "s,%BASE_URL%,$BASE_URL,g" /usr/share/nginx/html/index.html  \n\
-  exec "$@" ' >> /usr/local/bin/entrypoint && chmod +x /usr/local/bin/entrypoint
-
-ENTRYPOINT ["/usr/local/bin/entrypoint"]
 # default command is nginx
-CMD nginx -g "daemon off;"
+# CMD nginx -g "daemon off;"

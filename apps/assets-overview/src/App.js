@@ -26,11 +26,19 @@ const App = (props) => {
   // on app initial load save Endpoint and URL_STATE_KEY so it can be
   // used from overall in the application
   React.useEffect(() => {
+    // default is /manifest.json
+    let manifestUrl = props.manifestUrl || "/manifest.json"
+    // if manifestUrl does not start with http use current origin as prefix
+    if (manifestUrl.indexOf("http") < 0) {
+      // ensure first char is a "/"
+      if (manifestUrl[0] !== "/") manifestUrl = "/" + manifestUrl
+      manifestUrl = window.location.origin + manifestUrl
+    }
     // extract origin and region from the manifest url
-    const url = new URL(props.manifestUrl)
+    const url = new URL(manifestUrl)
     setOrigin(url.origin)
     setRegion(url.origin.match(/.*\.(.+)\..+\..+$/)[1])
-    setManifestUrl(props.manifestUrl)
+    setManifestUrl(manifestUrl)
     setUrlStateKey(URL_STATE_KEY)
   }, [])
 
