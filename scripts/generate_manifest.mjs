@@ -51,21 +51,21 @@ const files = glob.sync(globPattern, { ignore: [`node_modules/**`] })
 
 const manifest = {
   _global: {
-    BASE_URL: options.baseUrl,
+    baseUrl: options.baseUrl,
     importMap: {},
   },
 }
 
 if (fs.existsSync(`${rootPath}/importmap.json`)) {
-  manifest["_global"]["importMap"]["prod"] = `${rootPath}/importmap.json`
+  manifest["_global"]["importMap"]["prod"] = `/importmap.json`
 }
 
 if (fs.existsSync(`${rootPath}/importmap.dev.json`)) {
-  manifest["_global"]["importMap"]["dev"] = `${rootPath}/importmap.dev.json`
+  manifest["_global"]["importMap"]["dev"] = `/importmap.dev.json`
 }
 
 if (fs.existsSync(`${rootPath}/global/README.md`)) {
-  manifest["_global"]["README"] = "global/README.md"
+  manifest["_global"]["readme"] = "global/README.md"
 }
 
 // console.log(files)
@@ -102,7 +102,7 @@ files.sort().forEach(async (file) => {
   }
 
   if (fs.existsSync(`${rootPath}/${path}/README.md`)) {
-    manifest[pkg.name][version]["README"] = "/" + path + "/README.md"
+    manifest[pkg.name][version]["readme"] = "/" + path + "/README.md"
   }
 
   if (fs.existsSync(`${rootPath}/${path}/package.tgz`)) {
