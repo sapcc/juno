@@ -1,51 +1,21 @@
-import React, { useEffect } from "react"
-import { Container, Stack, Spinner } from "juno-ui-components"
-import { useQuery } from "react-query"
-import { fetchAssetReadme } from "../actions"
-import ReactMarkdown from "react-markdown"
-import remarkGfm from "remark-gfm"
+import React from "react"
+import { Container } from "juno-ui-components"
 import useStore from "../store"
-import { Messages, useMessageStore } from "messages-provider"
-import { parseError } from "../helpers"
+import Markdown from "./Markdown"
 
 const AssetDetailsReadme = ({ asset }) => {
   const origin = useStore((state) => state.origin)
-  const addMessage = useMessageStore((state) => state.addMessage)
 
-  const { isLoading, isError, data, error } = useQuery(
-    `${origin}${asset?.README}`,
-    fetchAssetReadme,
-    {
-      enabled: !!asset?.README,
-      staleTime: Infinity,
+  const path = React.useMemo(() => {
+    if (asset?.readme && origin) {
+      return `${origin}${asset?.readme}`
     }
-  )
-
-  // if error send error to the message store
-  useEffect(() => {
-    if (error) {
-      addMessage({
-        variant: "error",
-        text: parseError(error),
-      })
-    }
-  }, [error])
+    return null
+  }, [asset?.readme, origin])
 
   return (
     <Container py px={false}>
-      <Messages className="pb-6" />
-      {isLoading && !data ? (
-        <Stack className="pt-2" alignment="center">
-          <Spinner variant="primary" />
-          Loading ...
-        </Stack>
-      ) : (
-        <article className="markdown-body">
-          {data && (
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{data}</ReactMarkdown>
-          )}
-        </article>
-      )}
+      {path && <Markdown path={path} />}
     </Container>
   )
 }

@@ -16,8 +16,6 @@ const URL_STATE_KEY = "assets-overview"
 
 const App = (props) => {
   const setManifestUrl = useStore((state) => state.setManifestUrl)
-  const setOrigin = useStore((state) => state.setOrigin)
-  const setRegion = useStore((state) => state.setRegion)
   const setUrlStateKey = useStore((state) => state.setUrlStateKey)
   const { embedded } = props
 
@@ -27,10 +25,6 @@ const App = (props) => {
   // on app initial load save Endpoint and URL_STATE_KEY so it can be
   // used from overall in the application
   React.useEffect(() => {
-    // extract origin and region from the manifest url
-    const url = new URL(props.manifestUrl)
-    setOrigin(url.origin)
-    setRegion(url.origin.match(/.*\.(.+)\..+\..+$/)[1])
     setManifestUrl(props.manifestUrl)
     setUrlStateKey(URL_STATE_KEY)
   }, [])

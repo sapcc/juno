@@ -6,8 +6,6 @@ const useStore = create((set) => ({
   setManifestUrl: (newUrl) => set((state) => ({ manifestUrl: newUrl })),
   origin: "",
   setOrigin: (newOrigin) => set((state) => ({ origin: newOrigin })),
-  region: "",
-  setRegion: (newRegion) => set((state) => ({ region: newRegion })),
   urlStateKey: "",
   setUrlStateKey: (newUrlStateKey) =>
     set((state) => ({ urlStateKey: newUrlStateKey })),
