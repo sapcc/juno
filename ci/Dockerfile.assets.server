@@ -1,8 +1,12 @@
+ARG BASE_URL_PLACEHOLDER="%BASE_URL%"
+
 # Latest assets server image
 FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server:latest AS lastbuild
 
 # Base image
 FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-base:latest AS base 
+ARG BASE_URL_PLACEHOLDER
+
 RUN mkdir -p /tmp/latest
 
 # copy all app and lib builds (from dist) to tmp/latest  
@@ -54,7 +58,7 @@ RUN \
   --provider=$provider \
   --exit-on-error=$EXIT_ON_ERROR \
   --src=/tmp/final \
-  --base-url="%BASE_URL%" \
+  --base-url=$BASE_URL_PLACEHOLDER \
   --ignore-externals=false \
   --output=/tmp/final/importmap.$provider.json  \
   --verbose=$VERBOSE ; \
@@ -65,7 +69,7 @@ RUN \
   --env=development \
   --exit-on-error=$EXIT_ON_ERROR \
   --src=/tmp/final \
-  --base-url="%BASE_URL%" \
+  --base-url=$BASE_URL_PLACEHOLDER \
   --ignore-externals=false \
   --output=/tmp/final/importmap.$provider.dev.json  \
   --verbose=$VERBOSE ; \
@@ -77,6 +81,7 @@ RUN \
   node /juno/scripts/generate_manifest.mjs \
   --src=/tmp/final \
   --output=/tmp/final/manifest.json \
+  --base-url=$BASE_URL_PLACEHOLDER \
   --verbose=$VERBOSE ;
 
 # RESULTS
@@ -95,6 +100,8 @@ RUN chmod +x /juno/scripts/check_file_integrity.sh && \
 
 ############### FINAL IMAGE! ###################
 FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/nginx:alpine AS server
+ARG BASE_URL_PLACEHOLDER
+
 LABEL source_repository="https://github.com/sapcc/juno"
 
 RUN apk --no-cache add rsync
@@ -103,6 +110,41 @@ RUN apk --no-cache add rsync
 RUN rm -rf /usr/share/nginx/html
 # copy new version 
 COPY --from=base /tmp/final "/usr/share/nginx/html"
+
+# Replace default nginx config
+RUN rm -rf /etc/nginx/conf.d/default.conf && echo -e $'\
+  server { \n \
+  \tlisten       80; \n \
+  \tserver_name  localhost; \n \
+  \n \
+  \tlocation / { \n \
+  \t\troot   /usr/share/nginx/html; \n \
+  \t\tindex  index.html index.htm; \n \
+  \t} \n \
+  \n \
+  \tlocation ~* (importmap|manifest).*\.json$ { \n \
+  \t\troot  /usr/share/nginx/html; \n \
+  \t\tsub_filter '$BASE_URL_PLACEHOLDER$' "https://$host"; \n \
+  \t\tsub_filter_types *; \n \
+  \t\tsub_filter_once off; \n \
+  \t\tadd_header Cache-Control "no-store, no-cache"; \n \
+  \t} \n \
+  \n \
+  \tlocation ~* .*widget-loader@.*\.js$ { \n \
+  \t\troot /usr/share/nginx/html; \n \
+  \t\tadd_header Cache-Control "no-store, no-cache"; \n \
+  \t}\n \
+  \n \
+  \t#error_page  404              /404.html; \n \
+  \n \
+  \t# redirect server error pages to the static page /50x.html \n \
+  \terror_page   500 502 503 504  /50x.html; \n \
+  \n \
+  \tlocation = /50x.html { \n \
+  \t\troot   /usr/share/nginx/html; \n \
+  \t} \n \
+  } \n \
+  ' > /etc/nginx/conf.d/default.conf
 
 # Create the index.html with the assets-overview micro frontend app
 RUN echo -e $'\

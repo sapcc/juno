@@ -7,6 +7,7 @@ import path from "path"
 import url from "url"
 
 const availableArgs = [
+  "--base-url=URL_OF_ASSETS_SERVER",
   "--widget-loader-name=NAME",
   "--src=DIR_PATH",
   "--output=FILE_PATH",
@@ -15,6 +16,7 @@ const availableArgs = [
 ]
 
 const options = {
+  baseUrl: "%BASE_URL%",
   widgetLoaderName: "widget-loader",
   src: path.dirname(url.fileURLToPath(import.meta.url)),
   output: "./manifest.json",
@@ -52,7 +54,7 @@ const manifest = {
 }
 
 if (fs.existsSync(`${rootPath}/global/README.md`)) {
-  manifest["_global"]["README"] = "global/README.md"
+  manifest["_global"]["README"] = options.baseUrl + "/global/README.md"
 }
 
 // console.log(files)
@@ -65,6 +67,8 @@ files.sort().forEach(async (file) => {
   const entryFile = pkg.module || pkg.main
   const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/"))
   const meta = fs.statSync(`${rootPath}/${path}`)
+
+  const assetUrl = options.baseUrl + "/" + path + "/"
 
   let totalSize, totalSizeHuman
   try {
@@ -80,8 +84,8 @@ files.sort().forEach(async (file) => {
   manifest[pkg.name] = manifest[pkg.name] || {}
   manifest[pkg.name][version] = {
     type,
-    entryFile: "/" + path + "/" + entryFile,
-    entryDir: "/" + path + "/" + entryDir,
+    entryFile: assetUrl + entryFile,
+    entryDir: assetUrl + entryDir,
     updatedAt: meta.mtime,
     size: totalSize,
     sizeHuman: totalSizeHuman,
@@ -89,11 +93,11 @@ files.sort().forEach(async (file) => {
   }
 
   if (fs.existsSync(`${rootPath}/${path}/README.md`)) {
-    manifest[pkg.name][version]["README"] = "/" + path + "/README.md"
+    manifest[pkg.name][version]["README"] = assetUrl + "/README.md"
   }
 
   if (fs.existsSync(`${rootPath}/${path}/package.tgz`)) {
-    manifest[pkg.name][version]["tarball"] = "/" + path + "/package.tgz"
+    manifest[pkg.name][version]["tarball"] = assetUrl + "/package.tgz"
   }
   // console.log(path + "/" + entryDir, meta)
 })
