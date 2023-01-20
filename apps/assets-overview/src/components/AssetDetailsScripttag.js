@@ -9,20 +9,19 @@ import {
   CodeBlock,
 } from "juno-ui-components"
 import { panelSectionCss } from "../styles"
-import useStore from "../store"
 
-const scriptTag = ({ region, name, version, appProps }) => {
+const scriptTag = ({ name, version, appProps }) => {
   let newAppProps = ""
   if (appProps && typeof appProps === "object") {
     Object.keys(appProps).forEach((key, index) => {
       newAppProps = `${newAppProps}${
         index ? "\n" : ""
-      }  data-props-${key}="<FILL_ME>"`
+      }  data-props-${key}="REPLACE_ME"`
     })
   }
   return `<script
   defer
-  src="https://assets.juno.<FILL_ME>.cloud.sap/apps/widget-loader@latest/build/app.js" 
+  src="https://assets.juno.eu-nl-1.cloud.sap/apps/widget-loader@latest/build/app.js" 
   data-name="${name}"
   data-version="${version || "latest"}"
 ${newAppProps}>
@@ -31,8 +30,6 @@ ${newAppProps}>
 
 // TODO display data props type (optional and required)
 const AssetDetailsScripttag = ({ asset }) => {
-  const region = useStore((state) => state.region)
-
   return (
     <Container py px={false}>
       <h1 className="font-bold text-xl">Data props</h1>
@@ -75,17 +72,11 @@ const AssetDetailsScripttag = ({ asset }) => {
         )}
       </DataGrid>
 
-      <p className={panelSectionCss}>
-        Please copy following scritp tag, set the region of the src attribute to{" "}
-        <b>qa-de-1</b> for QA and <b>eu-nl-1</b> for production environment:
-      </p>
-
       <CodeBlock className={panelSectionCss} heading="Script tag" lang="html">
         {scriptTag({
           name: asset?.name,
           version: asset?.version,
           appProps: asset?.appProps,
-          region: region,
         })}
       </CodeBlock>
     </Container>

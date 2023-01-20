@@ -10,13 +10,12 @@ import { MessagesProvider } from "messages-provider"
 import markdown from "github-markdown-css/github-markdown.css"
 import markdownDark from "github-markdown-css/github-markdown-dark.css"
 import markdownLight from "github-markdown-css/github-markdown-light.css"
+import CustomPageHeader from "./components/CustomPageHeader"
 
 const URL_STATE_KEY = "assets-overview"
 
 const App = (props) => {
   const setManifestUrl = useStore((state) => state.setManifestUrl)
-  const setOrigin = useStore((state) => state.setOrigin)
-  const setRegion = useStore((state) => state.setRegion)
   const setUrlStateKey = useStore((state) => state.setUrlStateKey)
   const { embedded } = props
 
@@ -34,21 +33,13 @@ const App = (props) => {
       if (manifestUrl[0] !== "/") manifestUrl = "/" + manifestUrl
       manifestUrl = window.location.origin + manifestUrl
     }
-    // extract origin and region from the manifest url
-    const url = new URL(manifestUrl)
-    setOrigin(url.origin)
-    setRegion(url.origin.match(/.*\.(.+)\..+\..+$/)[1])
     setManifestUrl(manifestUrl)
     setUrlStateKey(URL_STATE_KEY)
   }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AppShell
-        pageHeader="Converged Cloud | Juno Assets Overview"
-        contentHeading=""
-        embedded={embedded === "true"}
-      >
+      <AppShell pageHeader={CustomPageHeader} embedded={embedded === "true"}>
         <MessagesProvider>
           <AppContent props={props} />
         </MessagesProvider>

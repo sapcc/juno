@@ -10,11 +10,13 @@ import AssetDetails from "./components/AssetDetails"
 import { APP, LIB } from "./helpers"
 import { useMessageStore } from "messages-provider"
 import { parseError } from "./helpers"
+import Documentation from "./components/Documentation"
 
 const AppContent = (props) => {
   const addMessage = useMessageStore((state) => state.addMessage)
   const manifestUrl = useStore((state) => state.manifestUrl)
   const urlStateKey = useStore((state) => state.urlStateKey)
+  const setOrigin = useStore((state) => state.setOrigin)
   const [tabIndex, setTabIndex] = useState(0)
 
   const { isLoading, isError, data, error } = useQuery(
@@ -36,11 +38,24 @@ const AppContent = (props) => {
     }
   }, [error])
 
-  // TODO sort the asset versions
-  const [apps, libs] = useMemo(() => {
-    if (!data) return [null, null]
+  // save the root path to use for fetching
+  useEffect(() => {
+    if (data) {
+      setOrigin(data?._global?.baseUrl)
+    }
+  }, [data])
+
+  const [apps, libs, globals] = useMemo(() => {
+    if (!data) return [null, null, null]
     let apps = {}
     let libs = {}
+    let globals = {}
+    // get the globals
+
+    if (data.globals) {
+      globals = data.globals
+    }
+
     // sort apps and libs and add name and version to the object
     Object.keys(data).forEach((name) => {
       Object.keys(data[name]).forEach((version) => {
@@ -73,7 +88,7 @@ const AppContent = (props) => {
         return obj
       }, {})
 
-    return [apps, libs]
+    return [apps, libs, globals]
   }, [data])
 
   // wait until the global state is set to fetch the url state
@@ -95,6 +110,7 @@ const AppContent = (props) => {
         <TabList>
           <Tab>Apps</Tab>
           <Tab>Libs</Tab>
+          <Tab>Documentation</Tab>
         </TabList>
         <TabPanel>
           <TabContainer>
@@ -104,6 +120,11 @@ const AppContent = (props) => {
         <TabPanel>
           <TabContainer>
             <AssetsList isLoading={isLoading} assets={libs} error={error} />
+          </TabContainer>
+        </TabPanel>
+        <TabPanel>
+          <TabContainer>
+            <Documentation data={globals} />
           </TabContainer>
         </TabPanel>
       </MainTabs>
