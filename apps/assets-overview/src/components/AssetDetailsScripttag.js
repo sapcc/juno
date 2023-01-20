@@ -17,12 +17,12 @@ const scriptTag = ({ region, name, version, appProps }) => {
     Object.keys(appProps).forEach((key, index) => {
       newAppProps = `${newAppProps}${
         index ? "\n" : ""
-      }  data-props-${key}="<FILL_ME>"`
+      }  data-props-${key}="REPLACE_ME"`
     })
   }
   return `<script
   defer
-  src="https://assets.juno.<FILL_ME>.cloud.sap/apps/widget-loader@latest/build/app.js" 
+  src="https://assets.juno.eu-nl-1.cloud.sap/apps/widget-loader@latest/build/app.js" 
   data-name="${name}"
   data-version="${version || "latest"}"
 ${newAppProps}>
@@ -74,11 +74,6 @@ const AssetDetailsScripttag = ({ asset }) => {
           </DataGridRow>
         )}
       </DataGrid>
-
-      <p className={panelSectionCss}>
-        Please copy following scritp tag, set the region of the src attribute to{" "}
-        <b>qa-de-1</b> for QA and <b>eu-nl-1</b> for production environment:
-      </p>
 
       <CodeBlock className={panelSectionCss} heading="Script tag" lang="html">
         {scriptTag({

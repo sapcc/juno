@@ -10,6 +10,7 @@ import AssetDetails from "./components/AssetDetails"
 import { APP, LIB } from "./helpers"
 import { useMessageStore } from "messages-provider"
 import { parseError } from "./helpers"
+import Documentation from "./components/Documentation"
 
 const AppContent = (props) => {
   const addMessage = useMessageStore((state) => state.addMessage)
@@ -95,6 +96,7 @@ const AppContent = (props) => {
         <TabList>
           <Tab>Apps</Tab>
           <Tab>Libs</Tab>
+          <Tab>Documentation</Tab>
         </TabList>
         <TabPanel>
           <TabContainer>
@@ -104,6 +106,11 @@ const AppContent = (props) => {
         <TabPanel>
           <TabContainer>
             <AssetsList isLoading={isLoading} assets={libs} error={error} />
+          </TabContainer>
+        </TabPanel>
+        <TabPanel>
+          <TabContainer>
+            <Documentation />
           </TabContainer>
         </TabPanel>
       </MainTabs>
