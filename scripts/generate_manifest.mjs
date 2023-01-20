@@ -50,11 +50,22 @@ const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
 const files = glob.sync(globPattern, { ignore: [`node_modules/**`] })
 
 const manifest = {
-  _global: {},
+  _global: {
+    BASE_URL: options.baseUrl,
+    importMap: {},
+  },
+}
+
+if (fs.existsSync(`${rootPath}/importmap.json`)) {
+  manifest["_global"]["importMap"]["prod"] = `${rootPath}/importmap.json`
+}
+
+if (fs.existsSync(`${rootPath}/importmap.dev.json`)) {
+  manifest["_global"]["importMap"]["dev"] = `${rootPath}/importmap.dev.json`
 }
 
 if (fs.existsSync(`${rootPath}/global/README.md`)) {
-  manifest["_global"]["README"] = options.baseUrl + "/global/README.md"
+  manifest["_global"]["README"] = "global/README.md"
 }
 
 // console.log(files)
@@ -67,8 +78,6 @@ files.sort().forEach(async (file) => {
   const entryFile = pkg.module || pkg.main
   const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/"))
   const meta = fs.statSync(`${rootPath}/${path}`)
-
-  const assetUrl = options.baseUrl + "/" + path + "/"
 
   let totalSize, totalSizeHuman
   try {
@@ -84,8 +93,8 @@ files.sort().forEach(async (file) => {
   manifest[pkg.name] = manifest[pkg.name] || {}
   manifest[pkg.name][version] = {
     type,
-    entryFile: assetUrl + entryFile,
-    entryDir: assetUrl + entryDir,
+    entryFile: "/" + path + "/" + entryFile,
+    entryDir: "/" + path + "/" + entryDir,
     updatedAt: meta.mtime,
     size: totalSize,
     sizeHuman: totalSizeHuman,
@@ -93,11 +102,11 @@ files.sort().forEach(async (file) => {
   }
 
   if (fs.existsSync(`${rootPath}/${path}/README.md`)) {
-    manifest[pkg.name][version]["README"] = assetUrl + "/README.md"
+    manifest[pkg.name][version]["README"] = "/" + path + "/README.md"
   }
 
   if (fs.existsSync(`${rootPath}/${path}/package.tgz`)) {
-    manifest[pkg.name][version]["tarball"] = assetUrl + "/package.tgz"
+    manifest[pkg.name][version]["tarball"] = "/" + path + "/package.tgz"
   }
   // console.log(path + "/" + entryDir, meta)
 })
