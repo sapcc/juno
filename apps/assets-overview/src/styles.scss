@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* If necessary, app styles can be added below */
-
-
+.markdown-body {
+  background-color: transparent !important;
+}

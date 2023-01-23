@@ -42,7 +42,7 @@ const AssetDetails = () => {
 
   // TODO display error
   const { isLoading, isError, data, error } = useQuery(
-    manifestUrl,
+    ["manifest", manifestUrl],
     fetchAssetsManifest,
     {
       enabled: !!manifestUrl,

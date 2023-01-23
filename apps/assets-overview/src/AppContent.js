@@ -20,7 +20,7 @@ const AppContent = (props) => {
   const [tabIndex, setTabIndex] = useState(0)
 
   const { isLoading, isError, data, error } = useQuery(
-    manifestUrl,
+    ["manifest", manifestUrl],
     fetchAssetsManifest,
     {
       enabled: !!manifestUrl,
@@ -52,8 +52,8 @@ const AppContent = (props) => {
     let globals = {}
     // get the globals
 
-    if (data.globals) {
-      globals = data.globals
+    if (data._global) {
+      globals = data._global
     }
 
     // sort apps and libs and add name and version to the object
@@ -97,10 +97,11 @@ const AppContent = (props) => {
     if (urlState?.tabIndex) setTabIndex(urlState?.tabIndex)
   }, [urlStateKey])
 
+  // when switching tags reset the navItem
   const onTabSelected = (index) => {
     setTabIndex(index)
     const urlState = currentState(urlStateKey)
-    push(urlStateKey, { ...urlState, tabIndex: index })
+    push(urlStateKey, { ...urlState, tabIndex: index, navItem: "" })
   }
 
   return (
@@ -124,7 +125,7 @@ const AppContent = (props) => {
         </TabPanel>
         <TabPanel>
           <TabContainer>
-            <Documentation data={globals} />
+            <Documentation isLoading={isLoading} data={globals} error={error} />
           </TabContainer>
         </TabPanel>
       </MainTabs>

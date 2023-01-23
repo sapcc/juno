@@ -30,7 +30,7 @@ const checkStatus = (response) => {
 }
 
 export const fetchAssetsManifest = ({ queryKey }) => {
-  const [manifestUrl] = queryKey
+  const [_key, manifestUrl] = queryKey
   return fetch(manifestUrl, {
     method: "GET",
     headers: {
@@ -44,9 +44,9 @@ export const fetchAssetsManifest = ({ queryKey }) => {
     })
 }
 
-export const fetchAssetReadme = ({ queryKey }) => {
-  const [readmeUrl] = queryKey
-  return fetch(readmeUrl, {
+export const fetchMarkdown = ({ queryKey }) => {
+  const [_key, path] = queryKey
+  return fetch(path, {
     method: "GET",
     headers: {},
   })

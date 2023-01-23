@@ -2,6 +2,7 @@ import React from "react"
 import { Container } from "juno-ui-components"
 import useStore from "../store"
 import Markdown from "./Markdown"
+import { Messages } from "messages-provider"
 
 const AssetDetailsReadme = ({ asset }) => {
   const origin = useStore((state) => state.origin)
@@ -15,7 +16,12 @@ const AssetDetailsReadme = ({ asset }) => {
 
   return (
     <Container py px={false}>
-      {path && <Markdown path={path} />}
+      {path && (
+        <>
+          <Messages className="pb-6" />
+          <Markdown path={path} />
+        </>
+      )}
     </Container>
   )
 }
