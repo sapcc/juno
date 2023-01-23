@@ -65,7 +65,7 @@ if (fs.existsSync(`${rootPath}/importmap.dev.json`)) {
 }
 
 if (fs.existsSync(`${rootPath}/global/README.md`)) {
-  manifest["_global"]["readme"] = "global/README.md"
+  manifest["_global"]["readme"] = "/global/README.md"
 }
 
 // console.log(files)
