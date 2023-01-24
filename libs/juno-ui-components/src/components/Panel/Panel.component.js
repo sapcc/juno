@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon"
 
-const panelClasses = (isOpen, isTransitioning) => {
+const panelClasses = (isOpen, isTransitioning, size) => {
   return `
       jn-absolute
       jn-right-0
@@ -16,8 +16,8 @@ const panelClasses = (isOpen, isTransitioning) => {
       jn-bg-theme-panel
       jn-backdrop-blur
       jn-backdrop-saturate-150     
-      jn-w-[45%]
       jn-shadow-md
+      ${size === "large" ? `jn-w-[80%]` : `jn-w-[50%]`}
 			${!isOpen ? `jn-translate-x-[100%]` : ""}
 			${!isOpen && !isTransitioning ? `jn-invisible` : ""}
 		`
@@ -41,6 +41,7 @@ const panelTitleClasses = `
 /** A slide-in panel for the Content Area.  */
 export const Panel = ({
   heading,
+  size,
   className,
   opened,
   closeable,
@@ -89,7 +90,8 @@ export const Panel = ({
     <div
       className={`juno-panel ${panelClasses(
         isOpen,
-        isTransitioning
+        isTransitioning,
+        size
       )} ${className}`}
       role="dialog"
       aria-labelledby="juno-panel-title"
@@ -118,9 +120,11 @@ export const Panel = ({
 Panel.propTypes = {
   /** Pass a Panel heading/title. */
   heading: PropTypes.node,
+  /** Size of the opened panel. If unspecified, default size is used. */
+  size: PropTypes.oneOf(["default", "large"]),
   /**  Pass open state  */
   opened: PropTypes.bool,
-  /**  Pass whethe panel should be closeable via a close button or not. If false, the close button will not be rendered. The panel can still be closed by setting "opened" to false.  */
+  /**  Pass whether panel should be closeable via a close button or not. If false, the close button will not be rendered. The panel can still be closed by setting "opened" to false.  */
   closeable: PropTypes.bool,
   /** Pass a handler that will be called when the close button is clicked */
   onClose: PropTypes.func,
@@ -132,6 +136,7 @@ Panel.propTypes = {
 
 Panel.defaultProps = {
   heading: "",
+  size: undefined,
   opened: false,
   closeable: true,
   onClose: undefined,
