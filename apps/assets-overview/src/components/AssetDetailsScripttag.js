@@ -21,7 +21,7 @@ const scriptTag = ({ name, version, appProps }) => {
   }
   return `<script
   defer
-  src="https://assets.juno.eu-nl-1.cloud.sap/apps/widget-loader@latest/build/app.js" 
+  src="https://assets.juno.global.cloud.sap/apps/widget-loader@latest/build/app.js" 
   data-name="${name}"
   data-version="${version || "latest"}"
 ${newAppProps}>

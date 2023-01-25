@@ -4,6 +4,8 @@ import {
   SideNavigation,
   SideNavigationItem,
   Stack,
+  SelectRow,
+  SelectOption,
   Spinner,
 } from "juno-ui-components"
 import useStore from "../store"
@@ -15,6 +17,7 @@ const Documentation = ({ data }) => {
   const urlStateKey = useStore((state) => state.urlStateKey)
   const urlState = currentState(urlStateKey)
   const [activeNavItem, setActiveNavItem] = useState("about")
+  const [widgetLoaderVersion, setWidgetLoaderVersion] = useState()
 
   const nav = useMemo(() => {
     if (!data?.readme || !origin) return
@@ -32,13 +35,50 @@ const Documentation = ({ data }) => {
 
   useEffect(() => {
     if (urlState?.navItem) setActiveNavItem(urlState?.navItem)
+    if (urlState?.widgetLoaderVersion)
+      setWidgetLoaderVersion(urlState?.widgetLoaderVersion)
   }, [urlState])
 
   const onNavItemClicked = (value) => {
     const urlState = currentState(urlStateKey)
-    push(urlStateKey, { ...urlState, navItem: value })
+    push(urlStateKey, {
+      ...urlState,
+      navItem: value,
+      // reset widget loader version to latest
+      widgetLoaderVersion: widgetLoaderVersions[0].value,
+    })
     setActiveNavItem(value)
   }
+
+  // ################ VERSIONS ####################
+  const widgetLoaderVersions = React.useMemo(() => {
+    if (!data?.["widget-loader"]) return null
+
+    const versionMap = Object.keys(data["widget-loader"]).reduce(
+      (map, version) => {
+        map[data["widget-loader"][version]?.version] =
+          version === "latest"
+            ? `latest (${data["widget-loader"][version]?.version})`
+            : version
+        return map
+      },
+      {}
+    )
+    return Object.keys(versionMap)
+      .sort((a, b) => (a > b ? -1 : b < a ? 1 : 0))
+      .map((version) => ({ value: version, label: versionMap[version] }))
+  }, [data?.["widget-loader"]])
+
+  const changeVersion = React.useCallback(
+    (version) => {
+      setWidgetLoaderVersion(version)
+      const urlState = currentState(urlStateKey)
+      push(urlStateKey, { ...urlState, widgetLoaderVersion: version })
+    },
+    [urlStateKey, currentState]
+  )
+
+  //############### END ###################
 
   return useMemo(() => {
     return (
@@ -62,6 +102,24 @@ const Documentation = ({ data }) => {
               ))}
             </SideNavigation>
             <Container>
+              {activeNavItem === "wigetLoader" && widgetLoaderVersions && (
+                <Stack distribution="end">
+                  <SelectRow
+                    label="version"
+                    variant="floating"
+                    onChange={(e) => changeVersion(e.target.value)}
+                  >
+                    {widgetLoaderVersions.map((version, i) => (
+                      <SelectOption
+                        key={i}
+                        selected={widgetLoaderVersion === version.value}
+                        label={version.label}
+                        value={version.value}
+                      />
+                    ))}
+                  </SelectRow>
+                </Stack>
+              )}
               <Markdown path={nav?.[activeNavItem]?.path} />
             </Container>
           </Stack>
