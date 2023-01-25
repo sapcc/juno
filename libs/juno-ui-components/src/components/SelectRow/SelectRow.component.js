@@ -122,7 +122,6 @@ export const SelectRow = ({
           disabled={disabled}
           invalid={isInvalid}
           valid={isValid}
-          values={value}
         >
           {children}
         </Select>

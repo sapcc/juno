@@ -160,6 +160,7 @@ const AssetDetails = () => {
               </Stack>
             )}
 
+            {/* TODO: use MessagesProvider instead */}
             {isError && (
               <Message
                 dismissible
