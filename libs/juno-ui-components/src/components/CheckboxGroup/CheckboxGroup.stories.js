@@ -7,7 +7,13 @@ import { Default as CheckboxRowStory } from "../CheckboxRow/CheckboxRow.stories"
 export default {
   title: "Forms/Checkbox/CheckboxGroup",
   component: CheckboxGroup,
-  argTypes: {},
+  argTypes: {
+    items: {
+      table: {
+        disable: true
+      }
+    }
+  }
 }
 
 const Template = ({ items, ...args }) => (

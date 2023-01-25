@@ -12,7 +12,13 @@ import { GridFitted as GridFittedDataListRowStory } from "../DataListRow/DataLis
 export default {
   title: "Deprecated/DataList/DataList",
   component: DataList,
-  argTypes: {},
+  argTypes: {
+    items: {
+      table: {
+        disable: true
+      }
+    }
+  },
   parameters: {
     docs: {
       description: {

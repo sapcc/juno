@@ -9,7 +9,13 @@ import {
 export default {
   title: "Forms/Radio/RadioGroup",
   component: RadioGroup,
-  argTypes: {},
+  argTypes: {
+    items: {
+      table: {
+        disable: true
+      }
+    }
+  }
 }
 
 const Template = ({ items, ...args }) => (

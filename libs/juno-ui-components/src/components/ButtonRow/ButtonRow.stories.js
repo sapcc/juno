@@ -7,7 +7,13 @@ import { Default as ButtonStory } from "../Button/Button.stories"
 export default {
   title: "Forms/ButtonRow",
   component: ButtonRow,
-  argTypes: {},
+  argTypes: {
+    items: {
+      table: {
+        disable: true
+      }
+    }
+  }
 }
 
 const Template = ({ items, ...args }) => (

@@ -6,7 +6,13 @@ import { Default as DefaultTextInputRowStory } from "../TextInputRow/TextInputRo
 export default {
   title: "Forms/FormSection",
   component: FormSection,
-  argTypes: {},
+  argTypes: {
+    items: {
+      table: {
+        disable: true
+      }
+    }
+  }
 }
 
 const Template = ({ items, ...args }) => (

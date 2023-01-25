@@ -6,7 +6,13 @@ import { Default as TopNavigationItemStory } from "../TopNavigationItem/TopNavig
 export default {
   title: "Layout/TopNavigation/TopNavigation",
   component: TopNavigation,
-  argTypes: {},
+  argTypes: {
+    items: {
+      table: {
+        disable: true
+      }
+    }
+  }
 }
 
 const Template = ({items, ...args}) => (

@@ -6,7 +6,13 @@ import { Default as SideNavigationItemStory } from "../SideNavigationItem/SideNa
 export default {
   title: "Layout/SideNavigation/SideNavigation",
   component: SideNavigation,
-  argTypes: {},
+  argTypes: {
+    items: {
+      table: {
+        disable: true
+      }
+    }
+  }
 }
 
 const Template = ({items, ...args}) => (

@@ -8,7 +8,13 @@ import { Default as DataListCheckboxCellStory } from "../DataListCheckboxCell/Da
 export default {
   title: "Deprecated/DataList/DataListRow",
   component: DataListRow,
-  argTypes: {},
+  argTypes: {
+    items: {
+      table: {
+        disable: true
+      }
+    }
+  },
   parameters: {
     docs: {
       description: {

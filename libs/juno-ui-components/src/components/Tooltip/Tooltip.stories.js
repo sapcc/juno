@@ -8,7 +8,18 @@ import { Button } from "../Button/index.js"
 export default {
   title: "Components/Tooltip/Tooltip",
   component: Tooltip,
-  argTypes: {},
+  argTypes: {
+    text: {
+      table: {
+        disable: true
+      }
+    },
+    triggerText: {
+      table: {
+        disable: true
+      }
+    }
+  },
   decorators: [
     (Story) => (
       <div className="jn-my-6 jn-flex jn-justify-center">

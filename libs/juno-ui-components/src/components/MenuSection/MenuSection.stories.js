@@ -7,7 +7,13 @@ import { Default as MenuItemDefaultStory } from "../MenuItem/MenuItem.stories.js
 export default {
   title: "WiP/Menu/MenuSection",
   component: MenuSection,
-  argTypes: {},
+  argTypes: {
+    items: {
+      table: {
+        disable: true
+      }
+    }
+  }
 }
 
 const Template = ({items, ...args}) => (

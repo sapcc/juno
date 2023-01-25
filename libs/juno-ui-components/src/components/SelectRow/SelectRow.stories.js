@@ -6,7 +6,13 @@ import { Default as DefaultSelectOptionStory } from "../SelectOption/SelectOptio
 export default {
   title: "Forms/Select/SelectRow",
   component: SelectRow,
-  argTypes: {},
+  argTypes: {
+    items: {
+      table: {
+        disable: true
+      }
+    }
+  }
 }
 
 const Template = ({ items, ...args }) => (
@@ -53,6 +59,16 @@ Required.args = {
   items: [
     { ...DefaultSelectOptionStory.args, value: "d-1", label: "Option 1" },
     { ...DefaultSelectOptionStory.args, value: "d-2", label: "Option 2" },
+  ],
+}
+
+export const WithSelectedOption = Template.bind({})
+WithSelectedOption.args = {
+  label: "Select Row with selected option",
+  required: true,
+  items: [
+    { ...DefaultSelectOptionStory.args, value: "d-1", label: "Option 1" },
+    { ...DefaultSelectOptionStory.args, value: "d-2", label: "Option 2 is selected", selected: true },
   ],
 }
 
