@@ -122,6 +122,7 @@ export const SelectRow = ({
           disabled={disabled}
           invalid={isInvalid}
           valid={isValid}
+          {...props}
         >
           {children}
         </Select>

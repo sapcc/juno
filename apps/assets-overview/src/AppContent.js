@@ -45,50 +45,20 @@ const AppContent = (props) => {
     }
   }, [data])
 
-  const [apps, libs, globals] = useMemo(() => {
+  const [globals, apps, libs] = useMemo(() => {
     if (!data) return [null, null, null]
-    let apps = {}
-    let libs = {}
-    let globals = {}
-    // get the globals
 
-    if (data._global) {
-      globals = data._global
+    let { _global, ...assets } = data
+    const apps = {}
+    const libs = {}
+
+    for (const [name, versions] of Object.entries(assets)) {
+      const type = versions["latest"]?.type
+      if (type === "app") apps[name] = assets[name]
+      else if (type === "lib") libs[name] = assets[name]
     }
 
-    // sort apps and libs and add name and version to the object
-    Object.keys(data).forEach((name) => {
-      Object.keys(data[name]).forEach((version) => {
-        const assetItem = {
-          ...data[name][version],
-          version: version,
-          name: name,
-        }
-        if (assetItem?.type === APP) {
-          if (!apps[name]) apps[name] = []
-          apps[name].push(assetItem)
-        }
-        if (assetItem?.type === LIB) {
-          if (!libs[name]) libs[name] = []
-          libs[name].push(assetItem)
-        }
-      })
-    })
-    apps = Object.keys(apps)
-      .sort()
-      .reduce((obj, key) => {
-        obj[key] = apps[key]
-        return obj
-      }, {})
-
-    libs = Object.keys(libs)
-      .sort()
-      .reduce((obj, key) => {
-        obj[key] = libs[key]
-        return obj
-      }, {})
-
-    return [apps, libs, globals]
+    return [_global, apps, libs]
   }, [data])
 
   // wait until the global state is set to fetch the url state

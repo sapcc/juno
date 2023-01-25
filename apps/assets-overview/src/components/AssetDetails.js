@@ -7,12 +7,20 @@ import {
   Spinner,
   Stack,
   MainTabs,
+  Message,
   TabList,
   Tab,
   TabPanel,
+  SelectRow,
+  SelectOption,
 } from "juno-ui-components"
 import useStore from "../store"
-import { currentState, push, addOnChangeListener } from "url-state-provider"
+import {
+  currentState,
+  push,
+  addOnChangeListener,
+  removeOnChangeListener,
+} from "url-state-provider"
 import { useQuery } from "react-query"
 import { fetchAssetsManifest } from "../actions"
 import { APP } from "../helpers"
@@ -40,7 +48,6 @@ const AssetDetails = () => {
   const [assetVersion, setAssetVersion] = useState(null)
   const [tabIndex, setTabIndex] = useState(0)
 
-  // TODO display error
   const { isLoading, isError, data, error } = useQuery(
     ["manifest", manifestUrl],
     fetchAssetsManifest,
@@ -54,30 +61,23 @@ const AssetDetails = () => {
     if (!data) return null
     if (!assetName || !assetVersion) return null
 
-    // TODO find a cheaper way to find the asset
-    let result = {}
-    Object.keys(data).forEach((name) => {
-      if (name === assetName) {
-        Object.keys(data[name]).forEach((version) => {
-          if (version === assetVersion) {
-            result = { ...data[name][version], name: name }
-          }
-        })
-      }
-    })
-    return result
+    return data[assetName][assetVersion]
   }, [data, assetName, assetVersion])
-
-  const updatePanelStateFromURL = (newState) => {
-    setOpened(newState?.panelOpened)
-    setAssetName(newState?.assetName)
-    setAssetVersion(newState?.assetVersion)
-    if (newState?.panelTabIndex) setTabIndex(newState?.panelTabIndex)
-  }
 
   // wait until the global state is set to fetch the url state
   useEffect(() => {
+    const updatePanelStateFromURL = (newState) => {
+      setOpened(newState?.panelOpened)
+      setAssetName(newState?.assetName)
+      setAssetVersion(newState?.assetVersion)
+      if (newState?.panelTabIndex) setTabIndex(newState?.panelTabIndex)
+    }
     updatePanelStateFromURL(urlState)
+    // this listener reacts on any change on the url state
+    addOnChangeListener(urlStateKey, (newState) => {
+      updatePanelStateFromURL(newState)
+    })
+    return () => removeOnChangeListener(urlStateKey)
   }, [urlStateKey])
 
   // call close reducer from url store
@@ -94,11 +94,6 @@ const AssetDetails = () => {
     setTabIndex(0)
   }
 
-  // this listener reacts on any change on the url state
-  addOnChangeListener(urlStateKey, (newState) => {
-    updatePanelStateFromURL(newState)
-  })
-
   const length = useMemo(() => {
     if (!asset) return 0
     return Object.keys(asset).length
@@ -110,12 +105,34 @@ const AssetDetails = () => {
     push(urlStateKey, { ...urlState, panelTabIndex: index })
   }
 
+  // ############### VERSION HANDLING #################
+  const versions = React.useMemo(() => {
+    if (!data || !assetName) return null
+
+    const versionMap = Object.keys(data[assetName]).reduce((map, version) => {
+      map[data[assetName][version]?.version] =
+        version === "latest"
+          ? `latest (${data[assetName][version]?.version})`
+          : version
+      return map
+    }, {})
+    return Object.keys(versionMap)
+      .sort((a, b) => (a > b ? -1 : b < a ? 1 : 0))
+      .map((version) => ({ value: version, label: versionMap[version] }))
+  }, [data, assetName])
+
+  const changeVersion = React.useCallback(
+    (version) => {
+      setAssetVersion(version)
+      const urlState = currentState(urlStateKey)
+      push(urlStateKey, { ...urlState, assetVersion: version })
+    },
+    [urlStateKey, currentState]
+  )
+  //########### END ##############
+
   return (
-    <Panel
-      heading={`${assetName} - ${assetVersion}`}
-      opened={opened}
-      onClose={onClose}
-    >
+    <Panel heading={assetName} opened={opened} onClose={onClose} size="large">
       <PanelBody footer={<AssetDetailsFooter onCancelCallback={onClose} />}>
         {isLoading && !asset ? (
           <Stack className="pt-2" alignment="center">
@@ -124,6 +141,33 @@ const AssetDetails = () => {
           </Stack>
         ) : (
           <>
+            {versions && (
+              <Stack distribution="end">
+                <SelectRow
+                  label="version"
+                  variant="floating"
+                  value={asset?.version}
+                  onChange={(e) => changeVersion(e.target.value)}
+                >
+                  {versions.map((version, i) => (
+                    <SelectOption
+                      key={i}
+                      label={version.label}
+                      value={version.value}
+                    />
+                  ))}
+                </SelectRow>
+              </Stack>
+            )}
+
+            {isError && (
+              <Message
+                dismissible
+                text={error && error.toString()}
+                variant="error"
+              />
+            )}
+
             {length > 0 ? (
               <MainTabs selectedIndex={tabIndex} onSelect={onTabSelected}>
                 <TabList>
