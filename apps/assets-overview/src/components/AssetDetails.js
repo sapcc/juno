@@ -146,12 +146,12 @@ const AssetDetails = () => {
                 <SelectRow
                   label="version"
                   variant="floating"
-                  value={asset?.version}
                   onChange={(e) => changeVersion(e.target.value)}
                 >
                   {versions.map((version, i) => (
                     <SelectOption
                       key={i}
+                      selected={asset?.version === version.value}
                       label={version.label}
                       value={version.value}
                     />
