@@ -71,7 +71,12 @@ const AppContent = (props) => {
   const onTabSelected = (index) => {
     setTabIndex(index)
     const urlState = currentState(urlStateKey)
-    push(urlStateKey, { ...urlState, tabIndex: index, navItem: "" })
+    push(urlStateKey, {
+      ...urlState,
+      tabIndex: index,
+      navItem: "",
+      panelOpened: false,
+    })
   }
 
   return (

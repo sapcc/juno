@@ -28,10 +28,12 @@ const Documentation = ({ data }) => {
       },
       wigetLoader: {
         label: "Widget Loader",
-        path: `${origin}${data["widget-loader"]?.latest?.readme}`,
+        path: `${origin}${
+          data["widget-loader"]?.[widgetLoaderVersion || "latest"]?.readme
+        }`,
       },
     }
-  }, [data, origin])
+  }, [data, origin, widgetLoaderVersion])
 
   useEffect(() => {
     if (urlState?.navItem) setActiveNavItem(urlState?.navItem)
