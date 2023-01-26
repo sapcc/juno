@@ -61,7 +61,7 @@ const AssetDetails = () => {
     if (!data) return null
     if (!assetName || !assetVersion) return null
 
-    return data[assetName][assetVersion]
+    return { ...data[assetName][assetVersion], name: assetName }
   }, [data, assetName, assetVersion])
 
   // wait until the global state is set to fetch the url state

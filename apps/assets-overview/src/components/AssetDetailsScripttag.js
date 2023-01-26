@@ -19,6 +19,7 @@ const scriptTag = ({ name, version, appProps }) => {
       }  data-props-${key}="REPLACE_ME"`
     })
   }
+
   return `<script
   defer
   src="https://assets.juno.global.cloud.sap/apps/widget-loader@latest/build/app.js" 

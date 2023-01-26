@@ -94,7 +94,9 @@ export const ShadowRoot = ({
       shadowRoot
     )
   ) : (
-    <span ref={placeholder}></span>
+    <div style={{ height: "100%" }}>
+      <span ref={placeholder}></span>
+    </div>
   )
 }
 
