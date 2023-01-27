@@ -9,8 +9,6 @@ const { nodeResolve } = require("@rollup/plugin-node-resolve")
 const commonjs = require("@rollup/plugin-commonjs")
 const svgr = require("@svgr/rollup")
 
-const parseStyles = require("./rollup-plugin-styles-parser")
-
 // IMPORTANT!
 // package.json is single source of truth policy
 
@@ -64,14 +62,10 @@ const config = [
         config: {
           path: "./postcss.config.js",
         },
-        extract: "styles.css",
+        extract: false,
         minimize: true,
         inject: false,
         extensions: [".scss", ".css"],
-      }),
-      parseStyles({
-        stylesFileName: "styles",
-        theme: require("./tailwind.config").theme,
       }),
       commonjs(),
       minify({ comments: false }),

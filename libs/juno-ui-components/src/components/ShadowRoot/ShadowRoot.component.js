@@ -11,20 +11,26 @@ import ReactDOM from "react-dom"
 import React from "react"
 import PropTypes from "prop-types"
 
-// check if constructable styles are supported by browser.
-const constructableStylesheetsSupported =
-  window &&
-  window.ShadowRoot &&
-  window.ShadowRoot.prototype.hasOwnProperty("adoptedStyleSheets") &&
-  window.CSSStyleSheet &&
-  window.CSSStyleSheet.prototype.hasOwnProperty("replace")
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// TODO: deactivating constructed stylesheets for now because of the decision of the authors to always include constructed stylesheets last
+// which means for us that users of the ui component lib can't override styles in their own stylesheet because the constructed stylesheet always wins
+// See discussion here: https://github.com/WICG/construct-stylesheets/issues/93
+// One solution might be that we provide a capability to users of this lib to add their styles as a constructed stylesheet (one of the proposed solutions in the the above thread)
 
-// function to convert styles string to CSSStyleSheet
-const toStyleSheet = (styles) => {
-  const sheet = new CSSStyleSheet()
-  sheet.replaceSync(styles)
-  return [sheet]
-}
+// // check if constructable styles are supported by browser.
+// const constructableStylesheetsSupported =
+//   window &&
+//   window.ShadowRoot &&
+//   window.ShadowRoot.prototype.hasOwnProperty("adoptedStyleSheets") &&
+//   window.CSSStyleSheet &&
+//   window.CSSStyleSheet.prototype.hasOwnProperty("replace")
+
+// // function to convert styles string to CSSStyleSheet
+// const toStyleSheet = (styles) => {
+//   const sheet = new CSSStyleSheet()
+//   sheet.replaceSync(styles)
+//   return [sheet]
+// }
 
 /**
  * Functional component which creates and inserts a shadow dom element
@@ -58,43 +64,41 @@ export const ShadowRoot = ({
     // wait until the reference element is rendered!
     if (!placeholder.current) return
     // create the shadow dom element
-    const shadowRootElement = placeholder.current.parentNode.attachShadow({
+    const shadowRoot = placeholder.current.attachShadow({
       delegatesFocus,
       mode,
     })
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // TODO: deactivating constructed stylesheets for now because of the decision of the authors to always include constructed stylesheets last
-    // which means for us that users of the ui component lib can't override styles in their own stylesheet because the constructed stylesheet always wins
-    // See discussion here: https://github.com/WICG/construct-stylesheets/issues/93
-    // One solution might be that we provide a capability to users of this lib to add their styles as a constructed stylesheet (one of the proposed solutions in the the above thread)
-
+    // deactivating constructed stylesheets, see above!
     // apply styles if given
     // if (stylesWithFont && constructableStylesheetsSupported) {
     //   shadowRootElement.adoptedStyleSheets = toStyleSheet(stylesWithFont)
     // }
 
     // save shadow element in the state
-    setShadowRoot(shadowRootElement)
-  }, [placeholder.current, stylesWithFont])
+    setShadowRoot(shadowRoot)
+  }, [])
 
   // if shadow element is available place children and styles iside it and return.
   // otherwise render the reference element
-  return shadowRoot ? (
-    ReactDOM.createPortal(
-      <>
-        {/* Include styles in a style tag for now until we have found a solution to the constructed stylesheet problem. See above */}
-        {/* {!constructableStylesheetsSupported && <style>{stylesWithFont}</style>} */}
-        <style>{stylesWithFont}</style>
+  return (
+    <div ref={placeholder} style={{ height: "100%" }}>
+      {shadowRoot &&
+        ReactDOM.createPortal(
+          <>
+            {/* Include styles in a style tag for now until we have found a solution to the constructed stylesheet problem. See above */}
+            {/* {!constructableStylesheetsSupported && <style>{stylesWithFont}</style>} */}
+            <style>{stylesWithFont}</style>
 
-        <div className={`shadow-body ${themeClass} ${customCssClasses || ""}`}>
-          {children}
-        </div>
-      </>,
-      shadowRoot
-    )
-  ) : (
-    <span ref={placeholder}></span>
+            <div
+              className={`shadow-body ${themeClass} ${customCssClasses || ""}`}
+            >
+              {children}
+            </div>
+          </>,
+          shadowRoot
+        )}
+    </div>
   )
 }
 

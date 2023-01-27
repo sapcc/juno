@@ -17,7 +17,6 @@ const AssetsListItem = ({ name, versions }) => {
     return keys.sort()
   }, [latest, otherVersions])
 
-  console.log("====", name)
   //
   // custom vars
   //
