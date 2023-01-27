@@ -64,7 +64,9 @@ export const SelectRow = ({
   valid,
   successtext,
   children,
+  value,
   onChange,
+  defaultValue,
   ...props
 }) => {
   const [isInvalid, setIsInvalid] = useState(false)
@@ -122,6 +124,8 @@ export const SelectRow = ({
           disabled={disabled}
           invalid={isInvalid}
           valid={isValid}
+          value={value}
+          defaultValue={defaultValue}
         >
           {children}
         </Select>
@@ -161,8 +165,12 @@ SelectRow.propTypes = {
   errortext: PropTypes.string,
   /** Children to render */
   children: PropTypes.node,
+  /** Passing a value turns the select into a controlled component. If you pass a value you must also specify an onChange handler to deal with value changes */
+  value: PropTypes.string,
   /** Pass a handler to the Select element */
   onChange: PropTypes.func,
+  /** Pass a default Value that should be selected initially. Use this if you want to use the select as an uncontrolled component. */
+  defaultValue: PropTypes.string
 }
 
 SelectRow.defaultProps = {
@@ -176,5 +184,7 @@ SelectRow.defaultProps = {
   disabled: null,
   invalid: false,
   errortext: "",
+  value: undefined,
   onChange: undefined,
+  defaultValue: undefined
 }

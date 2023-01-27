@@ -1,6 +1,8 @@
 import * as React from "react"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { SelectRow } from "./index"
+import { SelectOption } from "../SelectOption/index"
 
 
 describe("SelectRow", () => {
@@ -94,10 +96,59 @@ describe("SelectRow", () => {
 	
 	test("fires onChange handler as passed", async () => {
 		const handleChange = jest.fn()
-		render(<SelectRow onChange={handleChange} />)
-		const slct = screen.getByRole("combobox")
-		fireEvent.change(slct, { target: { value: 'a' } })
+		render(
+			<SelectRow onChange={handleChange}>
+				<SelectOption value="v-1" label="Value 1" />
+				<SelectOption value="v-2" label="Value 2"/>
+			</SelectRow>
+		)
+		await userEvent.selectOptions(
+			// Find the select element
+			screen.getByRole('combobox'),
+			// Find and select the Value 2 option
+			screen.getByRole('option', {name: 'Value 2'}),
+		)
 		expect(handleChange).toHaveBeenCalledTimes(1)
 	})
+
+	test('allows user to change options', async () => {
+		render(
+			<SelectRow>
+				<SelectOption value="v-1" label="Value 1" />
+				<SelectOption value="v-2" label="Value 2"/>
+			</SelectRow>
+		)
+		await userEvent.selectOptions(
+			// Find the select element
+			screen.getByRole('combobox'),
+			// Find and select the Value 2 option
+			screen.getByRole('option', {name: 'Value 2'}),
+		)
+		expect(screen.getByRole('option', {name: 'Value 2'}).selected).toBe(true)
+	})
+
+	test('correctly sets uncontrolled default option', () => {
+		render(
+			<SelectRow defaultValue="v-2">
+				<SelectOption value="v-1" label="Value 1" />
+				<SelectOption value="v-2" label="Value 2"/>
+			</SelectRow>
+		)
+		expect(screen.getByRole('option', {name: 'Value 1'}).selected).toBe(false)
+		expect(screen.getByRole('option', {name: 'Value 2'}).selected).toBe(true)
+	})
+
+	test('correctly sets controlled default option', () => {
+		render(
+			<SelectRow value="v-2">
+				<SelectOption value="v-1" label="Value 1" />
+				<SelectOption value="v-2" label="Value 2"/>
+			</SelectRow>
+		)
+		expect(screen.getByRole('option', {name: 'Value 1'}).selected).toBe(false)
+		expect(screen.getByRole('option', {name: 'Value 2'}).selected).toBe(true)
+	})
+
+
 	
 })

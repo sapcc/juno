@@ -66,9 +66,11 @@ export const WithSelectedOption = Template.bind({})
 WithSelectedOption.args = {
   label: "Select Row with selected option",
   required: true,
+  value: "d-2",
   items: [
     { ...DefaultSelectOptionStory.args, value: "d-1", label: "Option 1" },
-    { ...DefaultSelectOptionStory.args, value: "d-2", label: "Option 2 is selected", selected: true },
+    { ...DefaultSelectOptionStory.args, value: "d-2", label: "Option 2 is selected" },
+    { ...DefaultSelectOptionStory.args, value: "d-3", label: "Option 3" },
   ],
 }
 
