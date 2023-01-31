@@ -102,7 +102,7 @@ const defaultpaddingright = `
 `
 
 /** A basic, uncontrolled Select. Takes SelectOption and SelectOptionGroup as children. */
-export const Select = ({
+export const NSelect = ({
   name,
   id,
   children,
@@ -207,7 +207,7 @@ export const Select = ({
   )
 }
 
-Select.propTypes = {
+NSelect.propTypes = {
   /** Pass a name. */
   name: PropTypes.string,
   /** The id of the select */
@@ -232,7 +232,7 @@ Select.propTypes = {
   onClick: PropTypes.func,
 }
 
-Select.defaultProps = {
+NSelect.defaultProps = {
   name: null,
   id: "",
   className: "",

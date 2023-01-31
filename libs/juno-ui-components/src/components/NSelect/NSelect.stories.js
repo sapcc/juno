@@ -1,5 +1,5 @@
 import React from "react"
-import { Select } from "./index.js"
+import { NSelect } from "./index.js"
 import { SelectOption } from "../SelectOption/index.js"
 import { SelectOptionGroup } from "../SelectOptionGroup/index.js"
 
@@ -13,21 +13,21 @@ import {
 } from "../SelectOptionGroup/SelectOptionGroup.stories"
 
 export default {
-  title: "Forms/Base Elements/Select",
-  component: Select,
+  title: "Forms/Base Elements/NSelect",
+  component: NSelect,
   argTypes: {},
 }
 
 const SelectTemplate = ({ options, ...args }) => (
-  <Select {...args}>
+  <NSelect {...args}>
     {options.map((option, i) => (
       <SelectOption {...option} key={`option-${i}`} />
     ))}
-  </Select>
+  </NSelect>
 )
 
 const GroupedSelectTemplate = ({ groups, ...args }) => (
-  <Select {...args}>
+  <NSelect {...args}>
     {groups.map((group, i) => (
       <SelectOptionGroup {...group} key={`group-${i}`}>
         {group.options.map((option, i) => (
@@ -35,7 +35,7 @@ const GroupedSelectTemplate = ({ groups, ...args }) => (
         ))}
       </SelectOptionGroup>
     ))}
-  </Select>
+  </NSelect>
 )
 
 export const SimpleSelect = SelectTemplate.bind({})
