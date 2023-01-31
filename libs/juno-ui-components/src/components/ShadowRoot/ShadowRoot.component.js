@@ -82,7 +82,7 @@ export const ShadowRoot = ({
   // if shadow element is available place children and styles iside it and return.
   // otherwise render the reference element
   return (
-    <div ref={placeholder} style={{ height: "100%" }}>
+    <div ref={placeholder} data-shadow-host="true" style={{ height: "100%" }}>
       {shadowRoot &&
         ReactDOM.createPortal(
           <>
