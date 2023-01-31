@@ -8,7 +8,8 @@ const analyze = require("rollup-plugin-analyzer")
 const { nodeResolve } = require("@rollup/plugin-node-resolve")
 const commonjs = require("@rollup/plugin-commonjs")
 const svgr = require("@svgr/rollup")
-
+const glob = require("glob")
+const path = require("path")
 // IMPORTANT!
 // package.json is single source of truth policy
 
@@ -63,9 +64,29 @@ const config = [
           path: "./postcss.config.js",
         },
         extract: false,
-        minimize: true,
+        minimize: false, //true,
         inject: false,
         extensions: [".scss", ".css"],
+        use: ["sass", "glob-imports"],
+        loaders: [
+          // custom loader!!! to load all scss files in globals.scss
+          {
+            name: "glob-imports",
+            test: /\.(sass|scss)$/,
+            process({ code }) {
+              // handle glob import
+              return new Promise((resolve, reject) => {
+                const match = [...code.matchAll(/@import\s+(.*\*+.*);/g)]
+                match.forEach((m) => {
+                  const files = glob.sync("./src/" + m[1].replace(/"|'/g, ""))
+                  let result = files.map((f) => `@import "${f}";`).join("\n")
+                  code = code.replace(m[0], result)
+                })
+                resolve({ code })
+              })
+            },
+          },
+        ],
       }),
       commonjs(),
       minify({ comments: false }),

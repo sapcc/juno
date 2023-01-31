@@ -1,4 +1,5 @@
 const path = require("path")
+const globImporter = require("node-sass-glob-importer")
 
 module.exports = {
   core: {
@@ -80,7 +81,14 @@ module.exports = {
             implementation: require("postcss"),
           },
         },
-        "sass-loader",
+        {
+          loader: "sass-loader",
+          options: {
+            sassOptions: {
+              importer: globImporter(),
+            },
+          },
+        },
       ],
       include: path.resolve(__dirname, "../src"),
     })

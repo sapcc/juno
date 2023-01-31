@@ -38,3 +38,8 @@
     flex-basis: auto;
   }
 }
+
+// this is parsed by webpack and rollup
+// in rollup we use custom loader based on glob. 
+// You must not use glob imports multiple times.
+@import './components/**/*.scss';
