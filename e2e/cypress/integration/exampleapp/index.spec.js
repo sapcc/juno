@@ -9,6 +9,10 @@ describe("mercury", () => {
     // content is loaded if children of root element exists.
     // children are built by
     cy.visit("/")
-    cy.get('[data-juno-app="exampleapp"]').shadow().children().should("exist")
+    cy.get('[data-juno-app="exampleapp"]')
+      .get('[data-shadow-host="true"]')
+      .shadow()
+      .children()
+      .should("exist")
   })
 })

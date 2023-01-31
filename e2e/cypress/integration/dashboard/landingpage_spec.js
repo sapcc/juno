@@ -8,7 +8,7 @@ describe("Landing page", () => {
     // children are built by
     cy.get('[data-juno-app="dashboard"]')
       .get('[data-shadow-host="true"]')
-      .shadow("div")
+      .shadow()
       .children()
       .should("exist")
   })
