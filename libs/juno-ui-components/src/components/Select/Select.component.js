@@ -54,6 +54,7 @@ const displayNone = `
 
 export const Select = ({
   value,
+  defaultValue,
   className,
   children,
   disabled,
@@ -129,8 +130,10 @@ export const Select = ({
 }
 
 Select.propTypes = {
-  /** The current value of the Select, i.e. the value of the selected option */
+  /** The current value of the Select, i.e. the value of the selected option. Using value will result in a controlled Select . */
   value: PropTypes.string,
+  /** The current value of the Select, i.e. the value of the selected option. Using defaultValue will result in an uncontrolled Select. */
+  defaultValue: PropTypes.string,
   /** Pass a custom className */
   className: PropTypes.string,
   /** Placeholder to show when no option is selected */
@@ -151,6 +154,7 @@ Select.propTypes = {
 
 Select.defaultProps = {
   value: "",
+  defaultValue: "",
   className: "",
   placeholder: "Select…",
   loading: false,
