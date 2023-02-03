@@ -27,7 +27,7 @@ const App = (props) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ShellLayout>Greenhouse wupdidu</ShellLayout>
+      <ShellLayout>Supernova wupdidu</ShellLayout>
       {/* <AppShell
         pageHeader="Converged Cloud | App Template"
         contentHeading="App template page title"
