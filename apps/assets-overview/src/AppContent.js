@@ -84,10 +84,15 @@ const AppContent = (props) => {
       <AssetDetails />
       <MainTabs selectedIndex={tabIndex} onSelect={onTabSelected}>
         <TabList>
+          <Tab>Documentation</Tab>
           <Tab>Apps</Tab>
           <Tab>Libs</Tab>
-          <Tab>Documentation</Tab>
         </TabList>
+        <TabPanel>
+          <TabContainer>
+            <Documentation isLoading={isLoading} data={globals} error={error} />
+          </TabContainer>
+        </TabPanel>
         <TabPanel>
           <TabContainer>
             <AssetsList isLoading={isLoading} assets={apps} error={error} />
@@ -96,11 +101,6 @@ const AppContent = (props) => {
         <TabPanel>
           <TabContainer>
             <AssetsList isLoading={isLoading} assets={libs} error={error} />
-          </TabContainer>
-        </TabPanel>
-        <TabPanel>
-          <TabContainer>
-            <Documentation isLoading={isLoading} data={globals} error={error} />
           </TabContainer>
         </TabPanel>
       </MainTabs>
