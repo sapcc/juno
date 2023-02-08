@@ -22,14 +22,6 @@ const triggerStyles = `
   disabled:jn-cursor-not-allowed
 `
 
-const justifyCenter = `
-  jn-justify-center
-`
-
-const justifyBetween = `
-  jn-justify-between
-`
-
 const triggerErrorStyles = `
   jn-border
   jn-border-theme-error
@@ -40,94 +32,115 @@ const triggerValidStyles = `
   jn-border-theme-success
 `
 
-const noPointerEvents = `
-  jn-pointer-events-none
+const contentStyles = `
+  jn-flex
+  jn-flex-col
+  jn-rounded
+  jn-bg-theme-background-lvl-1
+  jn-z-50
 `
 
-const reduceOpacity = `
-  jn-opacity-50
-`
-
-const displayNone = `
-  jn-display-none
-`
-
-export const Select = ({
-  value,
-  defaultValue,
-  className,
-  children,
-  disabled,
-  placeholder,
-  ariaLabel,
-  valid,
-  invalid,
-  loading,
-  error,
-  portal,
-  onChange,
-  onClick,
-  ...props
-}) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [hasError, setHasError] = useState(false)
-  const [isValid, setIsValid] = useState(false)
-  const [isInvalid, setIsInvalid] = useState(false)
-  
-  useEffect(() => {
-    setIsLoading(loading)
-  }, [loading])
-  
-  useEffect(() => {
-    setHasError(error)
-  }, [error])
-  
-  useEffect(() => {
-    setIsValid(valid)
-  }, [valid])
-  
-  useEffect(() => {
-    setIsInvalid(invalid)
-  }, [invalid])
-  
-  const TriggerIcons = () => {
-    if (isLoading) {
-      return (<Spinner />)
-    } else if (hasError){
-      return (<Icon icon="errorOutline" color="jn-text-theme-error" />)
-    } else if (isValid) {
-      return (<><Icon icon="checkCircle" color="jn-text-theme-success" className={`${noPointerEvents}`}/><Icon icon="expandMore"/></>)
-    } else if (isInvalid) {
-      return (<><Icon icon="dangerous" color="jn-text-theme-error" className={`${noPointerEvents}`}/><Icon icon="expandMore"/></>)
-    } else {
-      return (<Icon icon="expandMore" />)
+/** A Select component that can be used controlled or uncontrolled */
+export const Select = React.forwardRef(
+  ({ 
+    children,
+    placeholder,
+    loading,
+    error,
+    valid,
+    invalid,
+    disabled,
+    open,
+    defaultOpen,
+    value,
+    defaultValue,
+    ...props
+    }, 
+  forwardedRef) => {
+    const [isLoading, setIsLoading] = useState(false)
+    const [hasError, setHasError] = useState(false)
+    const [isValid, setIsValid] = useState(false)
+    const [isInvalid, setIsInvalid] = useState(false)
+    
+    useEffect(() => {
+      setIsLoading(loading)
+    }, [loading])
+    
+    useEffect(() => {
+      setHasError(error)
+    }, [error])
+    
+    useEffect(() => {
+      setIsValid(valid)
+    }, [valid])
+    
+    useEffect(() => {
+      setIsInvalid(invalid)
+    }, [invalid])
+    
+    const TriggerIcons = () => {
+      if (isLoading) {
+        return (<Spinner className="jn-mr-0"/>)
+      } else if (hasError){
+        return (<Icon icon="errorOutline" color="jn-text-theme-error" />)
+      } else if (isValid) {
+        return (<><Icon icon="checkCircle" color="jn-text-theme-success" className="jn-pointer-events-none"/><Icon icon="expandMore"/></>)
+      } else if (isInvalid) {
+        return (<><Icon icon="dangerous" color="jn-text-theme-error" className="jn-pointer-events-none"/><Icon icon="expandMore"/></>)
+      } else {
+        return (<Icon icon="expandMore" />)
+      }
     }
+    
+    return (
+      <RadixSelect.Root
+        disabled={disabled}
+        open={open}
+        defaultOpen={defaultOpen}
+        value={value}
+        defaultValue={defaultValue}
+      >
+        <RadixSelect.Trigger 
+          ref={forwardedRef}
+          className={
+            `
+              juno-select-trigger 
+              ${triggerStyles}
+              ${ hasError || isInvalid ? triggerErrorStyles : "" } 
+              ${ isValid ? triggerValidStyles : "" } 
+              ${ disabled ? "jn-opacity-50" : "" } 
+              ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
+            `
+          } 
+        >
+          {
+            isLoading || hasError ?
+              ""
+            :
+              <RadixSelect.Value placeholder={placeholder} />
+          }
+          <RadixSelect.Icon>
+            <TriggerIcons />
+          </RadixSelect.Icon>
+        </RadixSelect.Trigger>
+        <RadixSelect.Portal>
+          <RadixSelect.Content className={`juno-select-content ${contentStyles}`}>
+            <RadixSelect.ScrollUpButton>
+              <Icon icon="expandLess"/>
+            </RadixSelect.ScrollUpButton>
+            <RadixSelect.Viewport>
+              { children }
+            </RadixSelect.Viewport>
+            <RadixSelect.ScrollDownButton>
+              <Icon icon="expandMore"/>
+            </RadixSelect.ScrollDownButton>
+          </RadixSelect.Content>
+        </RadixSelect.Portal>
+      </RadixSelect.Root>
+    )
   }
-  
-  return (
-    <RadixSelect.Root disabled={ disabled || isLoading || hasError} {...props} >
-      <RadixSelect.Trigger className={`juno-select-trigger ${triggerStyles} ${ hasError || isInvalid ? triggerErrorStyles : "" } ${ isValid ? triggerValidStyles : "" } ${ disabled ? reduceOpacity : "" } ${ isLoading || hasError ? justifyCenter : justifyBetween }`} aria-label={ariaLabel}>
-        { isLoading || hasError ?
-          ""
-          :
-          <RadixSelect.Value placeholder={placeholder} />
-        }
-        <RadixSelect.Icon>
-          <TriggerIcons />
-        </RadixSelect.Icon>
-      </RadixSelect.Trigger>
-      <RadixSelect.Content>
-        <RadixSelect.ScrollUpButton>
-          <Icon icon="expandLess"/>
-        </RadixSelect.ScrollUpButton>
-        Menu goes here
-        <RadixSelect.ScrollUpButton>
-          <Icon icon="expandMore"/>
-        </RadixSelect.ScrollUpButton>
-      </RadixSelect.Content>
-    </RadixSelect.Root>
-  )
-}
+)
+
 
 Select.propTypes = {
   /** The current value of the Select, i.e. the value of the selected option. Using value will result in a controlled Select . */
@@ -150,6 +163,14 @@ Select.propTypes = {
   disabled: PropTypes.bool,
   /** The aria-label of the Select */
   ariaLabel: PropTypes.string,
+  /** Whether the Select is open (Controlled) */
+  open: PropTypes.bool,
+  /** Whether the Select is open (Uncontrolled) */
+  defaultOpen: PropTypes.bool,
+  /** An onChange handler to execute when the selected value changes. mandatory when using as a controlled component. */
+  onValueChange: PropTypes.func,
+  /** A handler to execute when the selects open state changes. Must be used in conjunction with value. */
+  onOpenChange: PropTypes.func,
 }
 
 Select.defaultProps = {
@@ -163,6 +184,10 @@ Select.defaultProps = {
   invalid: false,
   disabled: false,
   ariaLabel: "",
+  open: false,
+  defaultOpen: false,
+  onValueChange: undefined,
+  onOpenChange: undefined,
 }
 
 
