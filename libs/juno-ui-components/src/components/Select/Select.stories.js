@@ -76,3 +76,13 @@ Disabled.args = {
     <SelectOption value="3">3</SelectOption>
   ]
 }
+
+export const Popper = Template.bind({})
+Popper.args = {
+  position: "popper",
+  children: [
+      <SelectOption value="1">1</SelectOption>,
+      <SelectOption value="2">2</SelectOption>,
+      <SelectOption value="3">3</SelectOption>
+    ]
+}

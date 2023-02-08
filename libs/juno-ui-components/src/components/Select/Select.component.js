@@ -54,6 +54,7 @@ export const Select = React.forwardRef(
     defaultOpen,
     value,
     defaultValue,
+    position,
     ...props
     }, 
   forwardedRef) => {
@@ -124,7 +125,7 @@ export const Select = React.forwardRef(
           </RadixSelect.Icon>
         </RadixSelect.Trigger>
         <RadixSelect.Portal>
-          <RadixSelect.Content className={`juno-select-content ${contentStyles}`}>
+          <RadixSelect.Content className={`juno-select-content ${contentStyles}`} position={position}>
             <RadixSelect.ScrollUpButton>
               <Icon icon="expandLess"/>
             </RadixSelect.ScrollUpButton>
@@ -167,6 +168,8 @@ Select.propTypes = {
   open: PropTypes.bool,
   /** Whether the Select is open (Uncontrolled) */
   defaultOpen: PropTypes.bool,
+  /** Change position mode to popper. Default is item-aligned */
+  position: PropTypes.oneOf(["popper", "item-aligned", ""]),
   /** An onChange handler to execute when the selected value changes. mandatory when using as a controlled component. */
   onValueChange: PropTypes.func,
   /** A handler to execute when the selects open state changes. Must be used in conjunction with value. */
@@ -186,6 +189,7 @@ Select.defaultProps = {
   ariaLabel: "",
   open: false,
   defaultOpen: false,
+  position: null,
   onValueChange: undefined,
   onOpenChange: undefined,
 }
