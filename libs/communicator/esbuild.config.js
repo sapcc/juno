@@ -20,7 +20,6 @@ esbuild
     minify: isProduction,
     target: ["es2020"],
     format: "esm",
-    //plugins: [esbuildPlugin({ ts: true, target: "auto" })],
     external:
       isProduction && !IGNORE_EXTERNALS
         ? Object.keys(pkg.peerDependencies || {})
