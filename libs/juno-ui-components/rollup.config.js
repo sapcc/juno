@@ -9,7 +9,7 @@ const { nodeResolve } = require("@rollup/plugin-node-resolve")
 const commonjs = require("@rollup/plugin-commonjs")
 const svgr = require("@svgr/rollup")
 const glob = require("glob")
-const path = require("path")
+
 // IMPORTANT!
 // package.json is single source of truth policy
 

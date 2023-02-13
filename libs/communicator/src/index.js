@@ -1,39 +1,92 @@
-const COMMUNICATOR_NODE = window
+import Storage from "./storage"
+
+const ID = "JUNO_COMMUNICATOR:"
+const { get: getStoredMessage, set: storeMessage } = Storage(ID)
 
 /**
- * responds to an event.
- * @param {string} eventName
- * @param {function} callback
- * @returns {function} remove listener
- * @example on("AUTH_UPDATE_TOKEN", ({authToken,token}) => console.log(token))
- * @example on("AUTH_GET_TOKEN", ({receiveResponse}) => receiveResponse("TOKEN"))
+ *
+ * @returns epoch timestamp (count of seconds since 1970)
  */
-function on(eventName, callback) {
-  const handler = (e) => {
-    console.info("COMMUNICATOR ON: ", eventName)
-    const receiveResponse =
-      (e.detail && e.detail.receiveResponse) || (() => null)
-    callback({ ...e.detail, receiveResponse })
+const timeStamp = () => Math.floor(Date.now() / 1000)
+
+const log = (...params) =>
+  console.log("Communicator Debug [" + ID + "]:", ...params)
+const warn = (...params) => console.warn("Communicator Warning:", ...params)
+const error = (...params) => console.error("Communicator Error:", ...params)
+
+/**
+ *
+ * @param {string} name
+ * @param {any} data
+ * @param {object} options allowed options are debug:undefined|boolean and expires:undefined|number
+ * @returns void
+ */
+const send = (name, data, options) => {
+  try {
+    if (typeof name !== "string")
+      throw new Error("(send) the message name must be given.")
+    if (data == undefined)
+      throw new Error(
+        "(send) the message data must be given (null is allowed)."
+      )
+    const { expires, debug } = options || {}
+    if (expires != undefined && typeof expires !== "number")
+      warn("(send) expires must be a number (epoch timestamp)")
+    const bc = new BroadcastChannel(ID + name)
+    if (debug) log(`send message ${name} with data `, data)
+
+    // broadcast message
+    bc.postMessage(data)
+
+    // store message
+    storeMessage(name, { data, expires, updatedAt: timeStamp() }, { debug })
+  } catch (e) {
+    error(e.message)
   }
-
-  COMMUNICATOR_NODE.addEventListener(eventName, handler)
-  return () => COMMUNICATOR_NODE.removeEventListener(eventName, handler)
 }
 
 /**
- * sends an event (broadcast)
- * @param {string} eventName
- * @param {object} payload
- * @example send("AUTH_UPDATE_TOKEN", {token: "NEW_TOKEN"})
- * @example send("AUTH_GET_TOKEN", {receiveResponse: ({token}) => console.log(token)})
+ *
+ * @param {string} name
+ * @param {function} callback:(data) => void
+ * @param {object} options
+ * @returns {function} unregister:()=>void, a function to stop listening
  */
-function send(eventName, payload) {
-  console.info("COMMUNICATOR SEND: ", eventName, payload)
-  const event = new CustomEvent(eventName, {
-    detail: payload,
-  })
+const listen = (name, callback, options) => {
+  try {
+    if (typeof name !== "string")
+      throw new Error("(listen) the message name must be given.")
+    if (typeof callback !== "function")
+      throw new Error("(listen) the callback parameter must be a function.")
 
-  COMMUNICATOR_NODE.dispatchEvent(event)
+    const { youngerThan, debug, ...otherOptions } = options || {}
+
+    if (otherOptions && Object.keys(otherOptions).length > 0)
+      warn(`(listen) unknown options: ${Object.keys(otherOptions)}`)
+    if (youngerThan != undefined && typeof youngerThan !== "number")
+      warn("(listen) youngerThan option must be a boolean or number")
+
+    const bc = new BroadcastChannel(ID + name)
+
+    const message = getStoredMessage(name, { debug })
+    if (message) {
+      const { data, expires, updatedAt } = message
+      const now = timeStamp()
+      // send last stored message until expired or too old
+      if (
+        (!expires || expires > now) &&
+        (!youngerThan || now - updatedAt <= youngerThan)
+      ) {
+        if (debug) log("(listen): receive last stored message")
+        callback(data)
+      }
+    }
+
+    bc.onmessage = (e) => callback(e.data)
+    return () => bc.close()
+  } catch (e) {
+    error(e.message)
+  }
 }
 
-module.exports = { send, on }
+export { send, listen }
