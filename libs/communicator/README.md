@@ -34,6 +34,6 @@ listen(
 
 - messageName: (string) the name of the message
 - callback: (function) a function to proceed the received data
-- options: (object) allowed properties are expires and debug
+- options: (object) allowed properties are youngerThan and debug
 
 Returns a function to unregister the listener
