@@ -7,15 +7,17 @@ import {
   TopNavigationItem,
 } from "juno-ui-components"
 import Messages from "./Messages"
-import { useGlobalState } from "./StateProvider"
+import { useGlobalState, useDispatch } from "./StateProvider"
 import HeaderUser from "./HeaderUser"
 import { useNavigate } from "react-router-dom"
 
 const CustomAppShell = ({ children }) => {
+  const dispatch = useDispatch()
   const oidc = useGlobalState().auth.oidc
   const navigate = useNavigate()
 
   const backToRootPath = () => {
+    dispatch({ type: "SHOW_NEW_SSO", show: false })
     navigate("/")
   }
 
