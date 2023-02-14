@@ -8,12 +8,13 @@ import {
   DataGridHeadCell,
   DataGridToolbar,
   ButtonRow,
-  Spinner,
+  Container,
   Stack,
 } from "juno-ui-components"
 import CertificateListItem from "./CertificateListItem"
 import AddNewSSOButton from "./AddNewSSOButton"
 import { parseError } from "../helpers"
+import HintLoading from "./HintLoading"
 
 const Heading = `
 jn-font-bold
@@ -76,15 +77,12 @@ const CertificateList = ({ ca }) => {
         </a>
       )}
 
-      <div className="mt-6">
+      <Container px={false} py>
         {isLoading && !data ? (
-          <Stack className="pt-2" alignment="center">
-            <Spinner variant="primary" />
-            Loading certificates...
-          </Stack>
+          <HintLoading text="Loading certificates..." />
         ) : (
           <>
-            {data && data.length > 0 ? (
+            {data && data.length > 0 && (
               <>
                 <DataGridToolbar>
                   <ButtonRow>
@@ -105,7 +103,8 @@ const CertificateList = ({ ca }) => {
                   ))}
                 </DataGrid>
               </>
-            ) : (
+            )}
+            {data && data.length === 0 && (
               <Stack
                 alignment="center"
                 distribution="center"
@@ -122,7 +121,7 @@ const CertificateList = ({ ca }) => {
             )}
           </>
         )}
-      </div>
+      </Container>
     </>
   )
 }

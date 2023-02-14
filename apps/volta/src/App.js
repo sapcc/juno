@@ -3,8 +3,6 @@ import { useOidcAuth } from "oauth"
 import { QueryClient, QueryClientProvider } from "react-query"
 import { StateProvider, useDispatch } from "./components/StateProvider"
 import reducers from "./reducers"
-import CA from "./components/CA"
-import WellcomeView from "./components/WellcomeView"
 import {
   MessagesStateProvider,
   useMessagesDispatch,
@@ -12,6 +10,7 @@ import {
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import styles from "./styles.scss"
 import StyleProvider from "juno-ui-components"
+import AppContent from "./AppContent"
 
 const App = (props) => {
   const dispatch = useDispatch()
@@ -23,6 +22,7 @@ const App = (props) => {
     initialLogin: true,
   })
 
+  // on load application save the props to be used in oder components
   useEffect(() => {
     if (oidc?.auth?.error) {
       dispatchMessage({
@@ -39,23 +39,14 @@ const App = (props) => {
     })
   }, [oidc])
 
-  // Create a client
   const queryClient = new QueryClient()
 
+  // the router is being used just to make easy use of the url parameters
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={
-              oidc?.loggedIn ? (
-                <CA {...props} />
-              ) : (
-                <WellcomeView loginCallback={oidc?.login} />
-              )
-            }
-          />
+          <Route path="/" element={<AppContent />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
@@ -68,7 +59,6 @@ const StyledApp = (props) => {
       stylesWrapper="shadowRoot"
       theme={`${props.theme ? props.theme : "theme-dark"}`}
     >
-      {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <StateProvider reducers={reducers}>
         <MessagesStateProvider>
