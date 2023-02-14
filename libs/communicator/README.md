@@ -9,7 +9,7 @@ This lib makes it possible to exchange messages across contexts (e.g. several ta
 //...
 "dependencies": {
   // ...
-  "communicator": "https://assets.juno.global.cloud.sap/libs/communicator@latest/build/.index.js"
+  "communicator": "https://assets.juno.global.cloud.sap/libs/communicator@latest/package.tgz"
 },
 //...
 ```
@@ -20,7 +20,7 @@ or via import
 import {
   send,
   listen,
-} from "https://assets.juno.global.cloud.sap/libs/communicator@latest/package.tgz"
+} from "https://assets.juno.global.cloud.sap/libs/communicator@latest/build/.index.js"
 ```
 
 or via importmap
