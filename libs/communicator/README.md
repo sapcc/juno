@@ -2,6 +2,47 @@
 
 This lib makes it possible to exchange messages across contexts (e.g. several tabs on the same origin) using events. Depending on the options, the last message is saved in such a way that a new listener immediately receives the last message. The notification itself is done with the help of BroadcastChannel, the storage of the messages is done with LocalStoare.
 
+# Install
+
+```json
+// package.json
+//...
+"dependencies": {
+  // ...
+  "communicator": "https://assets.juno.global.cloud.sap/libs/communicator@latest/package.tgz"
+},
+//...
+```
+
+or via import
+
+```js
+import {
+  send,
+  listen,
+} from "https://assets.juno.global.cloud.sap/libs/communicator@latest/package.tgz"
+```
+
+or via importmap
+
+```js
+<script
+ defer
+ src="https://assets.juno.global.cloud.sap/apps/widget-loader@latest/build/app.js"
+ data-importmap-only="true"
+></script>
+
+<script type="module">
+ import { send, listen } from "@juno/communicator@latest"
+</script>
+
+```
+
+# Usage
+
+````js
+import
+
 ## send(name, data, options) ⇒ <code>void</code>
 
 Send messages via BroadcastChannel across contexts (e.g. several tabs on the same origin). The last message is stored by default. However, it is possible to influence the storage period using the expire option.
@@ -17,6 +58,8 @@ Send messages via BroadcastChannel across contexts (e.g. several tabs on the sam
 example:
 
 ```js
+import { send } from "communicator"
+
 send(
   "AUTH_TOKEN_UPDATED",
   { token: "TOKEN" },
@@ -25,7 +68,7 @@ send(
     debug: true,
   }
 )
-```
+````
 
 ## listen(name, callback, options) ⇒ <code>function</code>
 
@@ -42,6 +85,8 @@ Register a listener for a specific message. Messages are observed across context
 example:
 
 ```js
+import { listen } from "communicator"
+
 const unregister = listen(
   "AUTH_TOKEN_UPDATED",
   (data) => {
