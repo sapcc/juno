@@ -8,7 +8,8 @@ if (!/.+\/.+\.js/.test(pkg.module))
 
 const isProduction = process.env.NODE_ENV === "production"
 const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
-const outfile = isProduction ? pkg.module : "dev/build.js"
+const DEV_FOLDER = "dev"
+const outfile = isProduction ? pkg.module : `${DEV_FOLDER}/build.js`
 const args = process.argv.slice(2)
 const watch = args.indexOf("--watch") >= 0
 
@@ -25,7 +26,7 @@ esbuild
         ? Object.keys(pkg.peerDependencies || {})
         : [],
   })
-  .then((ctx) => {
+  .then(async (ctx) => {
     if (watch) {
       ctx.watch()
       console.log("watching...")
@@ -33,8 +34,12 @@ esbuild
         .serve({
           host: "0.0.0.0",
           port: parseInt(process.env.APP_PORT),
-          servedir: "dev",
+          servedir: DEV_FOLDER,
         })
         .then(({ host, port }) => console.log("serve on", `${host}:${port}`))
+    } else {
+      await ctx.rebuild()
+      await ctx.dispose()
     }
   })
+  .catch((error) => console.error(error))

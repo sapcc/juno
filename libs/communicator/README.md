@@ -1,6 +1,6 @@
 # Communicator
 
-This lib makes it possible to exchange messages across tabs using events. Depending on the options, the last message is saved in such a way that a new listener immediately receives the last message. The notification itself is done with the help of BroadcastChannel, the storage of the messages is done with LocalStoare.
+This lib makes it possible to exchange messages across contexts (e.g. several tabs on the same origin) using events. Depending on the options, the last message is saved in such a way that a new listener immediately receives the last message. The notification itself is done with the help of BroadcastChannel, the storage of the messages is done with LocalStoare.
 
 ## send(name, data, options) ⇒ <code>void</code>
 
