@@ -15,10 +15,12 @@ const warn = (...params) => console.warn("Communicator Warning:", ...params)
 const error = (...params) => console.error("Communicator Error:", ...params)
 
 /**
- *
+ * Send messages via BroadcastChannel across contexts (e.g. several tabs on
+ * the same origin). The last message is stored by default. However, it
+ * is possible to influence the storage period using the expire option.
  * @param {string} name
  * @param {any} data
- * @param {object} options allowed options are debug:undefined|boolean and expires:undefined|number
+ * @param {object} options (optional) allowed options are debug:undefined|boolean and expires:undefined|number
  * @returns void
  */
 const send = (name, data, options) => {
@@ -46,7 +48,13 @@ const send = (name, data, options) => {
 }
 
 /**
- *
+ * Register a listener for a specific message. Messages are observed
+ * across contexts (e.g. several tabs on the same origin).
+ * If a current saved message already exists for the name,
+ * then the listener is executed immediately with this message.
+ * The expires option set by the "send" method has an effect here.
+ * In addition, the age of the listened messages can be determined
+ * with the youngerThan option.
  * @param {string} name
  * @param {function} callback:(data) => void
  * @param {object} options
