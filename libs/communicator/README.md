@@ -4,7 +4,7 @@ This lib makes it possible to exchange messages across contexts (e.g. several ta
 
 # Install
 
-```json
+```js
 // package.json
 //...
 "dependencies": {
@@ -40,8 +40,9 @@ or via importmap
 
 # Usage
 
-````js
-import
+```js
+import { send, listen } from "communicator"
+```
 
 ## send(name, data, options) ⇒ <code>void</code>
 
@@ -68,7 +69,7 @@ send(
     debug: true,
   }
 )
-````
+```
 
 ## listen(name, callback, options) ⇒ <code>function</code>
 
