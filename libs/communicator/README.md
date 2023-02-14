@@ -20,7 +20,7 @@ or via import
 import {
   send,
   listen,
-} from "https://assets.juno.global.cloud.sap/libs/communicator@latest/build/.index.js"
+} from "https://assets.juno.global.cloud.sap/libs/communicator@latest/build/index.js"
 ```
 
 or via importmap
