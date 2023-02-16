@@ -84,10 +84,10 @@ export const parameters = {
 
 export const decorators = [
   (Story) => {
-    const themeClass = useDarkMode() ? "theme-dark" : "theme-light"
+    const theme = useDarkMode() ? "dark" : "light"
 
     return (
-      <StyleProvider stylesWrapper="head" theme={themeClass}>
+      <StyleProvider stylesWrapper="head" theme={theme}>
         <ContentArea>
           <Container px py>
             <Story />

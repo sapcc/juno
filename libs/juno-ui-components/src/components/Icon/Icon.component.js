@@ -16,6 +16,7 @@ import Close from "./icons/close.svg"
 import ContentCopy from "./icons/content_copy.svg"
 import Danger from "./icons/juno-danger.svg"
 import Dangerous from "./icons/dangerous.svg"
+import DarkMode from "./icons/dark_mode.svg"
 import DeleteForever from "./icons/delete_forever.svg"
 import Description from "./icons/description.svg"
 import DNS from "./icons/dns.svg"
@@ -31,6 +32,7 @@ import Help from "./icons/help.svg"
 import Home from "./icons/home_sharp.svg"
 import Info from "./icons/info.svg"
 import InsertComment from "./icons/insert_comment.svg"
+import LightMode from "./icons/light_mode.svg"
 import ManageAccounts from "./icons/manage_accounts.svg"
 import MoreVert from "./icons/more_vert.svg"
 import OpenInBrowser from "./icons/open_in_browser.svg"
@@ -92,6 +94,7 @@ export const knownIcons = [
   "contentCopy",
   "danger",
   "dangerous",
+  "darkMode",
   "default",
   "deleteForever",
   "description",
@@ -108,6 +111,7 @@ export const knownIcons = [
   "home",
   "info",
   "insertComment",
+  "lightMode",
   "manageAccounts",
   "moreVert",
   "openInBrowser",
@@ -285,6 +289,18 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="dangerous"
           title={title ? title : "Dangerous"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "darkMode":
+      return (
+        <DarkMode 
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="dark mode"
+          title={title ? title : "Dark Mode"}
           role="img"
           {...iconProps}
         />
@@ -469,6 +485,18 @@ const getColoredSizedIcon = ({
           {...iconProps}
         />
       )
+    case "lightMode":
+    return (
+      <LightMode 
+        width={size}
+        height={size}
+        className={iconClass}
+        alt="light mode"
+        title={title ? title : "Light Mode"}
+        role="img"
+        {...iconProps}
+      />
+    )
     case "manageAccounts":
       return (
         <ManageAccounts
