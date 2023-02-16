@@ -40,13 +40,13 @@ const removeMessageValidation = (props) => {
 // Zustand with typescript: https://docs.pmnd.rs/zustand/guides/typescript#slices-pattern
 // v4
 // https://github.com/pmndrs/zustand/blob/55d0c3aec9fbca9d56432f39abba08f7b90e7edb/docs/previous-versions/zustand-v3-create-context.md
-const StoreContext = createContext()
-
-const store = createStore((set) => ({
+const createMessagesSlice = (set) => ({
+  storeId: uniqueId("store-"),
   messages: [], // this is the messages state
   addMessage: ({ variant, text }) => {
     addMessageValidation({ variant: variant, text: text })
     return set((state) => {
+      console.log("STORE: ", state.storeId)
       // check if a message with the same text and variant exists
       const index = state.messages.findIndex((item) => {
         return (
@@ -82,10 +82,18 @@ const store = createStore((set) => ({
     set((state) => {
       return { ...state, messages: [] }
     }),
-}))
+})
+
+const StoreContext = createContext()
 
 export const MessagesProvider = ({ children }) => {
-  return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
+  return (
+    <StoreContext.Provider
+      value={createStore((set) => createMessagesSlice(set))}
+    >
+      {children}
+    </StoreContext.Provider>
+  )
 }
 
 const useMessagesStore = (selector) =>
