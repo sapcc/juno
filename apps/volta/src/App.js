@@ -3,18 +3,15 @@ import { useOidcAuth } from "oauth"
 import { QueryClient, QueryClientProvider } from "react-query"
 import { StateProvider, useDispatch } from "./components/StateProvider"
 import reducers from "./reducers"
-import {
-  MessagesStateProvider,
-  useMessagesDispatch,
-} from "./components/MessagesProvider"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import styles from "./styles.scss"
 import StyleProvider from "juno-ui-components"
 import AppContent from "./AppContent"
+import { useMessageStore, MessagesProvider } from "messages-provider"
 
 const App = (props) => {
   const dispatch = useDispatch()
-  const dispatchMessage = useMessagesDispatch()
+  const addMessage = useMessageStore((state) => state.addMessage)
 
   const oidc = useOidcAuth({
     issuerURL: props.issuerurl,
@@ -25,9 +22,9 @@ const App = (props) => {
   // on load application save the props to be used in oder components
   useEffect(() => {
     if (oidc?.auth?.error) {
-      dispatchMessage({
-        type: "SET_MESSAGE",
-        msg: { variant: "error", text: oidc?.auth?.error },
+      addMessage({
+        variant: "error",
+        text: oidc?.auth?.error,
       })
     }
     dispatch({ type: "SET_OIDC", oidc: oidc })
@@ -60,11 +57,11 @@ const StyledApp = (props) => {
       theme={`${props.theme ? props.theme : "theme-dark"}`}
     >
       <style>{styles.toString()}</style>
-      <StateProvider reducers={reducers}>
-        <MessagesStateProvider>
+      <MessagesProvider>
+        <StateProvider reducers={reducers}>
           <App {...props} />
-        </MessagesStateProvider>
-      </StateProvider>
+        </StateProvider>
+      </MessagesProvider>
     </StyleProvider>
   )
 }

@@ -6,7 +6,7 @@ import {
   TopNavigation,
   TopNavigationItem,
 } from "juno-ui-components"
-import Messages from "./Messages"
+import { Messages } from "messages-provider"
 import { useGlobalState, useDispatch } from "./StateProvider"
 import HeaderUser from "./HeaderUser"
 import { useNavigate } from "react-router-dom"

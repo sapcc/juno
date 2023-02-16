@@ -7,11 +7,11 @@ import { useSearchParams } from "react-router-dom"
 import NewCertificate from "./components/NewCertificate"
 import CAsList from "./components/CAsList"
 import CertificateList from "./components/CertificateList"
-import { useMessagesDispatch } from "./components/MessagesProvider"
+import { useMessageStore } from "messages-provider"
 import { parseError } from "./helpers"
 
 const AppContent = () => {
-  const dispatchMessage = useMessagesDispatch()
+  const addMessage = useMessageStore((state) => state.addMessage)
   const oidc = useGlobalState().auth.oidc
   const disabledCAs = useGlobalState().globals.disabledCAs
   const endpoint = useGlobalState().globals.endpoint
@@ -23,9 +23,9 @@ const AppContent = () => {
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
     if (cas?.error) {
-      dispatchMessage({
-        type: "SET_MESSAGE",
-        msg: { variant: "error", text: parseError(cas?.error) },
+      addMessage({
+        variant: "error",
+        text: parseError(cas?.error),
       })
     }
   }, [cas?.error])

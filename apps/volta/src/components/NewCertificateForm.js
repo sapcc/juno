@@ -7,7 +7,6 @@ import React, {
 } from "react"
 import {
   Button,
-  Spinner,
   Stack,
   TextInputRow,
   TextareaRow,
@@ -23,8 +22,8 @@ import { newCertificateMutation } from "../queries"
 import { useFormState, useFormDispatch } from "./FormState"
 import { useGlobalState } from "./StateProvider"
 import { parseError } from "../helpers"
-import { useMessagesDispatch } from "./MessagesProvider"
 import { useQueryClient } from "react-query"
+import { useMessageStore } from "messages-provider"
 
 const ALGORITHM_KEY = "RSA-2048"
 
@@ -55,11 +54,12 @@ export const validateForm = ({ name, description, csr }) => {
 }
 
 const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
+  const addMessage = useMessageStore((state) => state.addMessage)
+  const resetMessages = useMessageStore((state) => state.resetMessages)
   const dispatch = useFormDispatch()
   const formState = useFormState()
   const oidc = useGlobalState().auth.oidc
   const endpoint = useGlobalState().globals.endpoint
-  const dispatchMessage = useMessagesDispatch()
   const queryClient = useQueryClient()
 
   const [pemPrivateKey, setPemPrivateKey] = useState(null)
@@ -92,12 +92,9 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
   }, [])
 
   const onGenerateCSRError = () => {
-    dispatchMessage({
-      type: "SET_MESSAGE",
-      msg: {
-        variant: "error",
-        text: "Error generating certificate signing request. Please check the console for details.",
-      },
+    addMessage({
+      variant: "error",
+      text: "Error generating certificate signing request. Please check the console for details.",
     })
   }
 
@@ -133,9 +130,7 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
   useImperativeHandle(ref, () => ({
     submit() {
       // reset panel messages
-      dispatchMessage({
-        type: "RESET_MESSAGE",
-      })
+      resetMessages()
       // check validaton
       const validation = validateForm(formState)
       setFormValidation(validation)
@@ -151,12 +146,9 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
         },
         {
           onSuccess: (data, variables, context) => {
-            dispatchMessage({
-              type: "SET_MESSAGE",
-              msg: {
-                variant: "success",
-                text: <span>Successfully create SSO cert</span>,
-              },
+            addMessage({
+              variant: "success",
+              text: <span>Successfully create SSO cert</span>,
             })
             // return response to the parent
             if (onFormSuccess) {
@@ -166,12 +158,9 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
             queryClient.invalidateQueries("certificates")
           },
           onError: (error, variables, context) => {
-            dispatchMessage({
-              type: "SET_MESSAGE",
-              msg: {
-                variant: "error",
-                text: parseError(error),
-              },
+            addMessage({
+              variant: "error",
+              text: parseError(error),
             })
           },
         }
@@ -249,6 +238,16 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
         className={formValidation["identity"] && "text-theme-danger border-2"}
       />
       <Stack alignment="center" className="mb-2" distribution="end">
+        <Button
+          label="test"
+          size="small"
+          onClick={() =>
+            addMessage({
+              variant: "info",
+              text: "test",
+            })
+          }
+        />
         <Button label="Generate CSR" size="small" onClick={generateCSR} />
       </Stack>
       <TextareaRow

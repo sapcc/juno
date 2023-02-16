@@ -3,10 +3,10 @@ import { DataGridRow, DataGridCell, Icon, Badge } from "juno-ui-components"
 import InlineConfirmRemove from "./InlineConfirmRemove"
 import { revokeCertificateMutation } from "../queries"
 import { useGlobalState } from "./StateProvider"
-import { useMessagesDispatch } from "./MessagesProvider"
 import { useQueryClient } from "react-query"
 import { parseError } from "../helpers"
 import { DateTime } from "luxon"
+import { useMessageStore } from "messages-provider"
 
 // if remove row shows
 // - remove cell bottom border so the 2 cells belongs together
@@ -45,9 +45,10 @@ whitespace-nowrap
 `
 
 const CertificateListItem = ({ item, ca }) => {
+  const addMessage = useMessageStore((state) => state.addMessage)
   const oidc = useGlobalState().auth.oidc
   const endpoint = useGlobalState().globals.endpoint
-  const dispatchMessage = useMessagesDispatch()
+
   const queryClient = useQueryClient()
   const [showConfirm, setShowConfirm] = useState(false)
 
@@ -94,27 +95,21 @@ const CertificateListItem = ({ item, ca }) => {
       },
       {
         onSuccess: (data, variables, context) => {
-          dispatchMessage({
-            type: "SET_MESSAGE",
-            msg: {
-              variant: "success",
-              text: (
-                <span>
-                  Successfully revoked cert with serial <b>{item.serial}</b>
-                </span>
-              ),
-            },
+          addMessage({
+            variant: "success",
+            text: (
+              <span>
+                Successfully revoked cert with serial <b>{item.serial}</b>
+              </span>
+            ),
           })
           // refetch cert list
           queryClient.invalidateQueries("certificates")
         },
         onError: (error, variables, context) => {
-          dispatchMessage({
-            type: "SET_MESSAGE",
-            msg: {
-              variant: "error",
-              text: parseError(error),
-            },
+          addMessage({
+            variant: "error",
+            text: parseError(error),
           })
         },
       }
