@@ -1,8 +1,8 @@
 import { execSync } from "node:child_process"
-const root = execSync("npm root -g").toString().trim()
 
-const glob = await import(`${root}/glob/glob.js`).then((m) => m.default)
-import * as fs from "fs"
+// const glob = await import(`${root}/glob/glob.js`).then((m) => m.default)
+import glob from "glob"
+import fs from "fs"
 import path from "path"
 import url from "url"
 

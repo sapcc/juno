@@ -76,7 +76,7 @@ add oauth to dependencies in package.json
 ```json
 
   "dependencies": {
-    "oauth": "workspace:*"
+    "oauth": ">= 0"
   },
 
 ```

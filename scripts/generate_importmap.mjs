@@ -3,14 +3,9 @@
  * This module generates importmap to be used in browser to share libs between juno apps.
  */
 
-// glob and @jspm are installed globally! (see ci/Dockerfile.base)
-// get root folder of global node modules
-import { execSync } from "node:child_process"
-const root = execSync("npm root -g").toString().trim()
-
-const glob = await import(`${root}/glob/glob.js`).then((m) => m.default)
-const { Generator } = await import(`${root}/@jspm/generator/dist/generator.js`)
-import * as fs from "fs"
+import glob from "glob"
+import { Generator } from "@jspm/generator"
+import fs from "fs"
 import path from "path"
 import url from "url"
 // import { exit } from "node:process"

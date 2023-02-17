@@ -1,8 +1,7 @@
 const { execSync } = require("node:child_process")
-const root = execSync("npm root -g").toString().trim()
 const fs = require("fs")
 const path = require("path")
-const glob = require(`${root}/glob/glob.js`)
+const glob = require("glob")
 
 const rootPath = path.resolve(__dirname, "../")
 
