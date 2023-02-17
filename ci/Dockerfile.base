@@ -5,7 +5,7 @@
 # The reason is the caching of node_modules!
 
 # base layer
-FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:14-alpine AS base
+FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:18-alpine AS base
 
 LABEL source_repository="https://github.com/sapcc/juno"
 
