@@ -5,6 +5,13 @@ import { render } from "@testing-library/react"
 import { screen } from "shadow-dom-testing-library"
 import App from "./App"
 
+//  mock communicator
+import "communicator"
+jest.mock("communicator", () => ({
+  send: jest.fn(),
+  listen: jest.fn(),
+}))
+
 test("renders app", () => {
   render(<App />)
   const loginTitle = screen.queryAllByShadowText(/Requests/i)

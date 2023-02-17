@@ -1,5 +1,5 @@
 import React from "react"
-import { send, on } from "communicator"
+import { send, listen } from "communicator"
 // import { BrowserRouter, Route, Redirect } from "react-router-dom"
 import Requests from "./components/Requests"
 import ShowRequest from "./components/Show"
@@ -30,7 +30,7 @@ const App = ({ stateID }) => {
   const region = "qa-de-1"
 
   React.useEffect(() => {
-    return on("AUTH_UPDATE_TOKEN", ({ token, authToken }) => {
+    return listen("AUTH_UPDATE_TOKEN", ({ token, authToken }) => {
       setAuth(token && authToken ? { token, authToken } : null)
     })
   }, [])

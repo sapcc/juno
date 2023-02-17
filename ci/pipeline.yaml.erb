@@ -596,7 +596,8 @@ jobs:
           CHART_PATH: ci/greenhouse-helm-charts
           RELEASE: greenhouse-ui
           NAMESPACE: greenhouse
-          TAG_VARIABLE: hosting_image_tag
+          # greenhouse-ui is a sub-chart, so we need to use the name as prefix
+          TAG_VARIABLE: greenhouse-ui.hosting_image_tag
           REGION: eu-nl-1
           CONTEXT: greenhouse-qa
           VALUES: local:globals
