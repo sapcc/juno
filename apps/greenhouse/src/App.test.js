@@ -8,6 +8,6 @@ import App from "./App"
 test("renders app", async () => {
   await act(() => render(<App />))
 
-  let loginTitle = await screen.queryAllByShadowText(/Converged Cloud/i)
+  let loginTitle = await screen.queryAllByShadowText(/Green/i)
   expect(loginTitle.length > 0).toBe(true)
 })
