@@ -39,7 +39,7 @@ const send = (name, data, options) => {
 
     // broadcast message
     bc.postMessage(data)
-    bc.close() 
+    bc.close()
     // store message
     storeMessage(name, { data, expires, updatedAt: timeStamp() }, { debug })
   } catch (e) {
