@@ -12,6 +12,7 @@ globalThis.console.warn = jest.fn()
 const bc = {
   postMessage: jest.fn(),
   onmessage: jest.fn(),
+  close: jest.fn(),
 }
 
 globalThis.BroadcastChannel = jest.fn().mockImplementation(() => bc)
