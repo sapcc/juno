@@ -1,4 +1,5 @@
 const esbuild = require("esbuild")
+
 const pkg = require("./package.json")
 
 if (!/.+\/.+\.js/.test(pkg.main))
