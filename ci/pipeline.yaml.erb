@@ -23,12 +23,6 @@
 %>
 
 resources:
-  - name: greenhouse-qa.release
-    type: release
-    check_every: never 
-    source: { region: eu-nl-1, tenso_password: ((keystone-user-password/tenso-prod)) }
-    expose_build_created_by: true
-
   - name: qa-de-1.release
     type: release
     check_every: never 
@@ -583,9 +577,9 @@ jobs:
     plan:
       - in_parallel:      
           - get: hosting.version
-            passed: ["build-hosting"]            
+            passed: ["build-hosting"]  
+            trigger: true          
           - get: juno.git
-            passed: ["e2e-s-qa-de-1"]
             trigger: false
           - get: secrets.git
             params:
@@ -629,11 +623,8 @@ jobs:
           NAMESPACE: greenhouse
           REGION: eu-nl-1
           CONTEXT: greenhouse-qa
-          VALUES: local:globals local:greenhouse-ui extra:values.yaml
+          VALUES: local:globals extra:values.yaml
           KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))
           VAULT_SECRET_ID:    ((auth.secret_id))
-
-    ensure:
-      put: greenhouse-qa.release  
