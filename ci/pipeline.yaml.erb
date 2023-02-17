@@ -2,6 +2,7 @@
 <%
   ASSETS = {
     "auth": { type: "app", path: "apps/auth" },
+    "greenhouse": { type: "app", path: "apps/greenhouse" },
     "requests": { type: "app", path: "apps/requests" },
     "dashboard": { type: "app", path: "apps/dashboard"},
     "widget-loader": { type: "app", path: "apps/widget-loader"},
@@ -22,6 +23,12 @@
 %>
 
 resources:
+  - name: greenhouse-qa.release
+    type: release
+    check_every: never 
+    source: { region: eu-nl-1, tenso_password: ((keystone-user-password/tenso-prod)) }
+    expose_build_created_by: true
+
   - name: qa-de-1.release
     type: release
     check_every: never 
@@ -568,3 +575,65 @@ jobs:
                 echo $CI_BUID_ID && \
                 CYPRESS_BASE_URL=https://exampleapp.juno.eu-nl-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/exampleapp/*"
 
+
+
+  <%# DEPLOY GREENHOUSE %>
+  - name: deploy-to-greenhouse-qa
+    serial: true
+    plan:
+      - in_parallel:      
+          - get: hosting.version
+            passed: ["build-hosting"]            
+          - get: juno.git
+            passed: ["e2e-s-qa-de-1"]
+            trigger: false
+          - get: secrets.git
+            params:
+              depth: 100 
+
+      - task: generate-additional-values.yaml
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: 
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
+              tag: "latest"
+          inputs: 
+            - name: hosting.version
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                echo "build json with tags for every image"
+                printf "\
+                global: \n
+                  hosting_image_tag: \"$(cat hosting.version/version)\"\n\
+                " > ./extra-values/values.yaml
+
+                cat ./extra-values/values.yaml
+          outputs:
+            - name: extra-values
+
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          helm-charts.git: juno.git
+          extra-values.git: extra-values
+
+        params:
+          HELM_MAJOR_VERSION: '3'
+          CHART_PATH: ci/helm-charts
+          RELEASE: greenhouse-ui
+          NAMESPACE: greenhouse
+          REGION: eu-nl-1
+          CONTEXT: greenhouse-qa
+          VALUES: local:globals local:greenhouse-ui extra:values.yaml
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))
+
+    ensure:
+      put: greenhouse-qa.release  
