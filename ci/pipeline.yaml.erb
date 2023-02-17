@@ -588,7 +588,7 @@ jobs:
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
         input_mapping:
-          app.version: version
+          app.version: hosting.version
           helm-charts.git: juno.git
 
         params:
