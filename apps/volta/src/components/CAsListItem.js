@@ -14,6 +14,8 @@ card
 bg-theme-background-lvl-1
 rounded
 p-8
+h-full
+w-full
 `
 
 const CAsListItem = ({ ca }) => {
@@ -27,29 +29,34 @@ const CAsListItem = ({ ca }) => {
 
   return (
     <div className={cardCss}>
-      <div className={cardHeaderCss}>{ca.display_name || ca.name}</div>
-      <div className="mt-4">{ca.description}</div>
-      {docuLinks[ca.name] && (
-        <a href={docuLinks[ca.name]} target="_blank">
-          Read more...
-        </a>
-      )}
-      {/* TODO push the content to the bottom of the container so all boxes looks the same */}
-      <Stack alignment="center" className="mt-12">
-        <div className="w-full">
-          <Button
-            label="Show"
-            icon="description"
-            onClick={() => onCASelected(ca.name)}
-          />
+      <Stack direction="vertical" alignment="start" className="h-full w-full">
+        <div className={cardHeaderCss}>{ca.display_name || ca.name}</div>
+        <div className="mt-4">{ca.description}</div>
+        <div className="mb-12">
+          {docuLinks[ca.name] && (
+            <a href={docuLinks[ca.name]} target="_blank">
+              Read more...
+            </a>
+          )}
         </div>
-        <IconCertificateAuthority
-          width={150}
-          className="fill-current text-theme-background-lvl-0"
-          alt="Certificate Authority"
-          title="Icon certificate authority"
-          role="img"
-        />
+        <div className="mt-auto w-full">
+          <Stack alignment="center">
+            <div className="w-full">
+              <Button
+                label="Show"
+                icon="description"
+                onClick={() => onCASelected(ca.name)}
+              />
+            </div>
+            <IconCertificateAuthority
+              width={150}
+              className="fill-current text-theme-background-lvl-0"
+              alt="Certificate Authority"
+              title="Icon certificate authority"
+              role="img"
+            />
+          </Stack>
+        </div>
       </Stack>
     </div>
   )
