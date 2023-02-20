@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useImperativeHandle,
   forwardRef,
+  useCallback,
 } from "react"
 import {
   Button,
@@ -20,7 +21,7 @@ import {
 } from "../lib/csrUtils"
 import { newCertificateMutation } from "../queries"
 import { useFormState, useFormDispatch } from "./FormState"
-import { useGlobalState } from "./StateProvider"
+import useStore from "../store"
 import { parseError } from "../helpers"
 import { useQueryClient } from "react-query"
 import { useMessageStore } from "messages-provider"
@@ -58,8 +59,8 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
   const resetMessages = useMessageStore((state) => state.resetMessages)
   const dispatch = useFormDispatch()
   const formState = useFormState()
-  const oidc = useGlobalState().auth.oidc
-  const endpoint = useGlobalState().globals.endpoint
+  const oidc = useStore(useCallback((state) => state.oidc))
+  const endpoint = useStore(useCallback((state) => state.endpoint))
   const queryClient = useQueryClient()
 
   const [pemPrivateKey, setPemPrivateKey] = useState(null)
@@ -238,16 +239,6 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
         className={formValidation["identity"] && "text-theme-danger border-2"}
       />
       <Stack alignment="center" className="mb-2" distribution="end">
-        <Button
-          label="test"
-          size="small"
-          onClick={() =>
-            addMessage({
-              variant: "info",
-              text: "test",
-            })
-          }
-        />
         <Button label="Generate CSR" size="small" onClick={generateCSR} />
       </Stack>
       <TextareaRow

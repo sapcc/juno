@@ -1,8 +1,8 @@
-import React, { useState, useMemo } from "react"
+import React, { useState, useMemo, useCallback } from "react"
 import { DataGridRow, DataGridCell, Icon, Badge } from "juno-ui-components"
 import InlineConfirmRemove from "./InlineConfirmRemove"
 import { revokeCertificateMutation } from "../queries"
-import { useGlobalState } from "./StateProvider"
+import useStore from "../store"
 import { useQueryClient } from "react-query"
 import { parseError } from "../helpers"
 import { DateTime } from "luxon"
@@ -46,8 +46,8 @@ whitespace-nowrap
 
 const CertificateListItem = ({ item, ca }) => {
   const addMessage = useMessageStore((state) => state.addMessage)
-  const oidc = useGlobalState().auth.oidc
-  const endpoint = useGlobalState().globals.endpoint
+  const oidc = useStore(useCallback((state) => state.oidc))
+  const endpoint = useStore(useCallback((state) => state.endpoint))
 
   const queryClient = useQueryClient()
   const [showConfirm, setShowConfirm] = useState(false)

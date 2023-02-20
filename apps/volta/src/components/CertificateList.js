@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import { getCertificates } from "../queries"
-import { useGlobalState, useDispatch } from "./StateProvider"
 import { useMessageStore } from "messages-provider"
+import useStore from "../store"
+import { parseError } from "../helpers"
 import {
   DataGrid,
   DataGridRow,
@@ -13,7 +14,6 @@ import {
 } from "juno-ui-components"
 import CertificateListItem from "./CertificateListItem"
 import AddNewSSOButton from "./AddNewSSOButton"
-import { parseError } from "../helpers"
 import HintLoading from "./HintLoading"
 
 const Heading = `
@@ -25,11 +25,11 @@ jn-pb-2
 
 const CertificateList = ({ ca }) => {
   const addMessage = useMessageStore((state) => state.addMessage)
-  const [enableCreateSSO, setEnableCreateSSO] = useState(false)
-  const dispatchGlobals = useDispatch()
-  const oidc = useGlobalState().auth.oidc
-  const endpoint = useGlobalState().globals.endpoint
-  const docuLinks = useGlobalState().globals.documentationLinks
+  const showPanel = useStore(useCallback((state) => state.showNewSSO))
+  const setShowNewSSO = useStore(useCallback((state) => state.setShowNewSSO))
+  const oidc = useStore(useCallback((state) => state.oidc))
+  const endpoint = useStore(useCallback((state) => state.endpoint))
+  const docuLinks = useStore(useCallback((state) => state.documentationLinks))
 
   // fetch the certificates
   const { isLoading, isError, data, error } = getCertificates(
@@ -37,25 +37,6 @@ const CertificateList = ({ ca }) => {
     endpoint,
     ca?.name
   )
-
-  // wait until we get the cert list to enable create new sso certs
-  // getCertificates query waits until the id_token exists
-  // once the data appears the create new sso button will be enabled
-  useEffect(() => {
-    if (data) {
-      setEnableCreateSSO(true)
-    }
-  }, [data])
-
-  // just set the state once
-  useEffect(() => {
-    if (enableCreateSSO) {
-      dispatchGlobals({
-        type: "UPDATE_NEW_SSO_ENABLED",
-        enabled: true,
-      })
-    }
-  }, [enableCreateSSO])
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
@@ -66,6 +47,10 @@ const CertificateList = ({ ca }) => {
       })
     }
   }, [error])
+
+  const onAddClicked = () => {
+    setShowNewSSO(true)
+  }
 
   return (
     <>
@@ -86,7 +71,10 @@ const CertificateList = ({ ca }) => {
               <>
                 <DataGridToolbar>
                   <ButtonRow>
-                    <AddNewSSOButton />
+                    <AddNewSSOButton
+                      disabled={!data || showPanel}
+                      onClick={onAddClicked}
+                    />
                   </ButtonRow>
                 </DataGridToolbar>
                 <DataGrid gridColumnTemplate="2fr 2.25fr 0.75fr min-content 1.5fr min-content">

@@ -1,22 +1,25 @@
-import React, { useRef, useState, useMemo } from "react"
-import { Button, Panel, PanelBody, PanelFooter } from "juno-ui-components"
-import { useGlobalState, useDispatch } from "./StateProvider"
+import React, { useRef, useState, useMemo, useCallback } from "react"
+import { Button, Panel, PanelFooter } from "juno-ui-components"
 import { FormStateProvider } from "./FormState"
 import NewCertificateForm from "./NewCertificateForm"
 import NewCertificateResutls from "./NewCertificateResults"
-import { MessagesProvider, Messages } from "messages-provider"
+import CustomPanelBody from "./CustomPanelBody"
+import useStore from "../store"
+import { useMessageStore } from "messages-provider"
 
 const NewCertificate = ({ ca }) => {
-  const showPanel = useGlobalState().globals.showNewSSO
-  const dispatch = useDispatch()
-
+  const showPanel = useStore(useCallback((state) => state.showNewSSO))
+  const setShowNewSSO = useStore(useCallback((state) => state.setShowNewSSO))
+  const resetMessages = useMessageStore((state) => state.resetMessages)
   const [pk, setPk] = useState(null)
   const [ssoCert, setSsoCert] = useState(null)
   const [formResutlsCopied, setFormResutlsCopied] = useState(false)
   const [isFormLoading, setIsFormLoading] = useState(false)
 
   const onPanelClose = () => {
-    dispatch({ type: "SHOW_NEW_SSO", show: false })
+    setShowNewSSO(false)
+    // reset messages
+    resetMessages()
     // reset form results
     setPk(null)
     setSsoCert(null)
@@ -88,19 +91,17 @@ const NewCertificate = ({ ca }) => {
       closeable={false}
     >
       {showPanel && (
-        <MessagesProvider>
+        <>
           {ssoCert ? (
-            <PanelBody footer={resultsPanelFooter}>
-              <Messages />
+            <CustomPanelBody footer={resultsPanelFooter}>
               <NewCertificateResutls
                 pk={pk}
                 ssoCert={ssoCert}
                 onCopied={onFormResutlsCopied}
               />
-            </PanelBody>
+            </CustomPanelBody>
           ) : (
-            <PanelBody footer={formPanelFooter}>
-              <Messages />
+            <CustomPanelBody footer={formPanelFooter}>
               <FormStateProvider>
                 <NewCertificateForm
                   ref={formRef}
@@ -109,9 +110,9 @@ const NewCertificate = ({ ca }) => {
                   onFormLoading={onFormLoading}
                 />
               </FormStateProvider>
-            </PanelBody>
+            </CustomPanelBody>
           )}
-        </MessagesProvider>
+        </>
       )}
     </Panel>
   )

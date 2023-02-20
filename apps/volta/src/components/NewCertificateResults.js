@@ -21,6 +21,7 @@ const NewCertificateResutls = ({ pk, ssoCert, onCopied }) => {
       {pk && (
         <>
           <Message
+            className="mb-6"
             text="Please make sure to copy the private key below used to create the SSO certificate and store it in a safe place, you won’t be able to see it again! This key was used to create the SSO certificate and it is not store anywhere!"
             variant="warning"
           />

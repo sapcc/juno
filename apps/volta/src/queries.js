@@ -7,8 +7,8 @@ import {
 } from "./actions"
 
 // get all CAs
-export const getCAs = (bearerToken, endpoint) => {
-  return useQuery(["cas", bearerToken, endpoint], cas, {
+export const getCAs = (bearerToken, endpoint, disabledCAs) => {
+  return useQuery(["cas", bearerToken, endpoint, disabledCAs], cas, {
     // The query will not execute until the bearerToken exists
     enabled: !!bearerToken,
   })

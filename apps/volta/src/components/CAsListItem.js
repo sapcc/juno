@@ -1,8 +1,8 @@
-import React from "react"
+import React, { useCallback } from "react"
 import { useSearchParams } from "react-router-dom"
 import { Stack, Button } from "juno-ui-components"
 import IconCertificateAuthority from "../img/Icon_Certificate_Authority.svg"
-import { useGlobalState } from "./StateProvider"
+import useStore from "../store"
 
 export const cardHeaderCss = `
 font-bold
@@ -17,8 +17,8 @@ p-8
 `
 
 const CAsListItem = ({ ca }) => {
-  let [searchParams, setSearchParams] = useSearchParams()
-  const docuLinks = useGlobalState().globals.documentationLinks
+  let [_, setSearchParams] = useSearchParams()
+  const docuLinks = useStore(useCallback((state) => state.documentationLinks))
 
   const onCASelected = (caName) => {
     // update URL state
@@ -34,6 +34,7 @@ const CAsListItem = ({ ca }) => {
           Read more...
         </a>
       )}
+      {/* TODO push the content to the bottom of the container so all boxes looks the same */}
       <Stack alignment="center" className="mt-12">
         <div className="w-full">
           <Button
