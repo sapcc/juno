@@ -1,239 +1,264 @@
-import Storage from "./storage"
-import { send, listen } from "./index"
-
-jest.mock("./storage", () => {
-  const Storage = { get: jest.fn(), set: jest.fn() }
-  return jest.fn(() => Storage)
-})
-
 globalThis.console.error = jest.fn()
 globalThis.console.warn = jest.fn()
+globalThis.console.error = jest.fn()
 
 const bc = {
   postMessage: jest.fn(),
-  onmessage: jest.fn(),
-  close: jest.fn(),
+  close: jest.fn(() => true),
 }
 
-globalThis.BroadcastChannel = jest.fn().mockImplementation(() => bc)
+globalThis.BroadcastChannel = jest.fn().mockImplementation(() => {
+  return bc
+})
+
+const { broadcast, watch, get, onGet } = require("./index")
 
 describe("Communicator", () => {
   afterEach(() => {
     jest.clearAllMocks()
   })
 
-  describe("send", () => {
-    test("throw error on missing name", () => {
-      send()
+  // ################ BROADCAST #####################
+  describe("broadcast", () => {
+    test("log error on missing name", () => {
+      broadcast()
       expect(globalThis.console.error).toHaveBeenCalledWith(
         "Communicator Error:",
-        "(send) the message name must be given."
+        "(broadcast) the message name must be given."
       )
     })
-    test("throw error on missing data", () => {
-      send("TEST")
+    test("log warning on missing data", () => {
+      broadcast("TEST")
       expect(globalThis.console.error).toHaveBeenCalledWith(
         "Communicator Error:",
-        "(send) the message data must be given (null is allowed)."
+        "(broadcast) the message data must be given (null is allowed)."
+      )
+    })
+
+    test("unknown options", () => {
+      broadcast("TEST", { test: "test" }, { unknownOption: true })
+      expect(globalThis.console.warn).toHaveBeenCalledWith(
+        "Communicator Warning:",
+        "(broadcast) unknown options: unknownOption"
+      )
+    })
+
+    test("create new broadcast channel", () => {
+      broadcast("TEST_12345", { name: "test" })
+      expect(BroadcastChannel).toHaveBeenCalledWith(
+        expect.stringContaining("TEST_12345")
       )
     })
 
     test("include options in message payload", () => {
-      const expires = Math.floor(Date.now() / 1000) + 60
-      send("TEST", { name: "test" }, { expires: expires })
-      expect(Storage().set).toHaveBeenCalledWith(
-        "TEST",
-        {
-          data: { name: "test" },
-          expires: expires,
-          updatedAt: expect.anything(),
-        },
-        { debug: undefined }
-      )
+      broadcast("TEST", { name: "test" }, { debug: true })
       expect(bc.postMessage).toHaveBeenCalledWith({ name: "test" })
     })
 
-    test("without options", () => {
-      const expires = Math.floor(Date.now() / 1000) + 60
-      send("TEST", { name: "test" })
-      expect(Storage().set).toHaveBeenCalledWith(
-        "TEST",
-        {
-          data: { name: "test" },
-          updatedAt: expect.anything(),
-        },
-        { debug: undefined }
+    test("log error if wrong debug value", () => {
+      broadcast("TEST", { name: "test" }, { debug: "true" })
+
+      expect(globalThis.console.warn).toHaveBeenCalledWith(
+        "Communicator Warning:",
+        "(broadcast) debug must be a boolean"
       )
-      expect(bc.postMessage).toHaveBeenCalledWith({ name: "test" })
+    })
+
+    test("close channel after broadcast", () => {
+      broadcast("TEST", { name: "test" }, { debug: "true" })
+
+      expect(bc.close).toHaveBeenCalled()
     })
   })
 
-  describe("listen", () => {
+  // ################## WATCH ###################
+  describe("watch", () => {
     test("log error on missing name", () => {
-      listen()
+      watch()
       expect(globalThis.console.error).toHaveBeenCalledWith(
         "Communicator Error:",
-        "(listen) the message name must be given."
+        "(watch) the message name must be given."
       )
     })
-    test("log error callback must be a function", () => {
-      listen("TEST")
+    test("log error on missing callback", () => {
+      watch("TEST")
       expect(globalThis.console.error).toHaveBeenCalledWith(
         "Communicator Error:",
-        "(listen) the callback parameter must be a function."
+        "(watch) the callback parameter must be a function."
       )
     })
 
-    test("log warning if unknown option", () => {
-      listen("TEST", () => null, {
-        youngerThan: 12345,
-        debug: false,
-        blabla: "test",
-      })
+    test("log error if callback is not a function", () => {
+      watch("TEST", "callback")
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(watch) the callback parameter must be a function."
+      )
+    })
+
+    test("unknown options", () => {
+      watch("TEST", () => null, { unknownOption: true })
       expect(globalThis.console.warn).toHaveBeenCalledWith(
         "Communicator Warning:",
-        "(listen) unknown options: blabla"
+        "(watch) unknown options: unknownOption"
       )
     })
 
-    test("accept null options", () => {
-      listen("TEST", () => null)
-
-      expect(globalThis.console.warn).not.toHaveBeenCalled()
+    test("create new broadcast channel", () => {
+      watch("TEST_12345", () => null)
+      expect(BroadcastChannel).toHaveBeenCalledWith(
+        expect.stringContaining("TEST_12345")
+      )
     })
 
-    test("log warning if youngerThan is not a number", () => {
-      listen("TEST", () => null, {
-        youngerThan: "test",
-      })
+    test("set onmessage", () => {
+      const callback = () => null
+      bc.onmessage = undefined
+      watch("TEST", callback)
+      expect(bc.onmessage).not.toBeUndefined()
+    })
+
+    test("do not call close on channel", () => {
+      watch("TEST_12345", () => null)
+      expect(bc.close).not.toHaveBeenCalled()
+    })
+
+    test("call close", () => {
+      const unregister = watch("TEST", () => null)
+      unregister()
+      expect(bc.close).toHaveBeenCalled()
+    })
+  })
+
+  // ############### GET ##################
+  describe("get", () => {
+    test("log error on missing name", () => {
+      get()
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(get) the message name must be given."
+      )
+    })
+    test("log error on missing callback", () => {
+      get("TEST")
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(get) the callback parameter must be a function."
+      )
+    })
+
+    test("log error if callback is not a function", () => {
+      get("TEST", "callback")
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(get) the callback parameter must be a function."
+      )
+    })
+
+    test("unknown options", () => {
+      get("TEST", () => null, { unknownOption: true })
       expect(globalThis.console.warn).toHaveBeenCalledWith(
         "Communicator Warning:",
-        "(listen) youngerThan option must be a boolean or number"
+        "(get) unknown options: unknownOption"
       )
     })
 
-    test("execute the callback with data of last message", () => {
-      const callback = jest.fn(() => null)
-      Storage().get.mockImplementation(() => ({
-        data: "TEST",
-      }))
-      listen("TEST", callback)
-      expect(Storage().get).toHaveBeenCalledWith("TEST", expect.anything())
-      expect(callback).toHaveBeenCalledWith("TEST")
+    test("create two broadcast channels", () => {
+      get("TEST_12345", () => null)
+      expect(BroadcastChannel).toHaveBeenCalledTimes(2)
     })
 
-    test("call the callback with last message if youngerThan 5 seconds and not expired", () => {
-      const callback = jest.fn(() => null)
-      const updatedAt = Math.floor(Date.now() / 1000) - 200
-      Storage().get.mockImplementation(() => ({
-        data: "TEST",
-        updatedAt,
-        expires: updatedAt + 500,
-      }))
-      listen("TEST", callback, { youngerThan: 300 })
-      expect(Storage().get).toHaveBeenCalledWith("TEST", expect.anything())
-      expect(callback).toHaveBeenCalledWith("TEST")
+    test("create request broadcast channel", () => {
+      get("TEST_12345", () => null)
+      expect(BroadcastChannel).toHaveBeenCalledWith(
+        expect.stringMatching(/#GET:TEST_12345$/)
+      )
     })
 
-    test("do call the callback if youngerThan 5 seconds but expired", () => {
-      const callback = jest.fn(() => null)
-      const updatedAt = Math.floor(Date.now() / 1000) - 200
-      Storage().get.mockImplementation(() => ({
-        data: "TEST",
-        updatedAt,
-        expires: updatedAt + 100,
-      }))
-      listen("TEST", callback, { youngerThan: 300 })
-      expect(Storage().get).toHaveBeenCalledWith("TEST", expect.anything())
-      expect(callback).not.toHaveBeenCalled()
+    test("create response broadcast channel", () => {
+      get("TEST_12345", () => null)
+      expect(BroadcastChannel).toHaveBeenCalledWith(
+        expect.stringMatching(/#GET:TEST_12345:RESPONSE:\d/)
+      )
     })
 
-    test("do call the callback if too old but not expired", () => {
-      const callback = jest.fn(() => null)
-      const updatedAt = Math.floor(Date.now() / 1000) - 200
-      Storage().get.mockImplementation(() => ({
-        data: "TEST",
-        updatedAt,
-        expires: updatedAt + 300,
-      }))
-      listen("TEST", callback, { youngerThan: 100 })
-      expect(Storage().get).toHaveBeenCalledWith("TEST", expect.anything())
-      expect(callback).not.toHaveBeenCalled()
+    test("broadcast get message on request channel", () => {
+      get("TEST", () => null)
+      expect(bc.postMessage).toHaveBeenCalledWith(
+        expect.objectContaining({
+          receiverID: expect.anything(),
+        })
+      )
     })
 
-    describe("expires", () => {
-      test("do not call the callback with last message if expired", () => {
-        const callback = jest.fn(() => null)
-        const expires = Math.floor(Date.now() / 1000) - 100
-        Storage().get.mockImplementation(() => ({
-          data: "TEST",
-          expires,
-        }))
-        listen("TEST", callback)
-        expect(Storage().get).toHaveBeenCalledWith("TEST", expect.anything())
-        expect(callback).not.toHaveBeenCalled()
-      })
+    test("returns a function", () => {
+      const cancel = get("TEST", () => null)
+      expect(typeof cancel).toEqual("function")
+    })
+  })
 
-      test("call the callback with last message if not expired", () => {
-        const callback = jest.fn(() => null)
-        const expires = Math.floor(Date.now() / 1000) + 100
-        Storage().get.mockImplementation(() => ({
-          data: "TEST",
-          expires,
-        }))
-        listen("TEST", callback)
-        expect(Storage().get).toHaveBeenCalledWith("TEST", expect.anything())
-        expect(callback).toHaveBeenCalledWith("TEST")
-      })
-
-      test("call the callback with last message if no expires option", () => {
-        const callback = jest.fn(() => null)
-        Storage().get.mockImplementation(() => ({
-          data: "TEST",
-          expires: undefined,
-        }))
-        listen("TEST", callback)
-        expect(Storage().get).toHaveBeenCalledWith("TEST", expect.anything())
-        expect(callback).toHaveBeenCalledWith("TEST")
-      })
+  // ############### ON GET ##################
+  describe("onGet", () => {
+    test("log error on missing name", () => {
+      onGet()
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(onGet) the message name must be given."
+      )
     })
 
-    describe("youngerThan", () => {
-      test("do not call the callback with last message if too old", () => {
-        const callback = jest.fn(() => null)
-        const updatedAt = Math.floor(Date.now() / 1000) - 400
-        Storage().get.mockImplementation(() => ({
-          data: "TEST",
-          updatedAt,
-        }))
-        listen("TEST", callback, { youngerThan: 300 })
-        expect(Storage().get).toHaveBeenCalledWith("TEST", expect.anything())
-        expect(callback).not.toHaveBeenCalled()
-      })
+    test("log error on missing callback", () => {
+      onGet("TEST")
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(onGet) the callback parameter must be a function."
+      )
+    })
+    test("log error if callback is not a function", () => {
+      onGet("TEST", "callback")
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(onGet) the callback parameter must be a function."
+      )
+    })
+    test("unknown options", () => {
+      onGet("TEST", () => null, { unknownOption: true })
+      expect(globalThis.console.warn).toHaveBeenCalledWith(
+        "Communicator Warning:",
+        "(onGet) unknown options: unknownOption"
+      )
+    })
+    test("create one broadcast channel", () => {
+      onGet("TEST_12345", () => null)
+      expect(BroadcastChannel).toHaveBeenCalledTimes(1)
+    })
 
-      test("call the callback with last message if youngerThan 5 seconds", () => {
-        const callback = jest.fn(() => null)
-        const updatedAt = Math.floor(Date.now() / 1000)
-        Storage().get.mockImplementation(() => ({
-          data: "TEST",
-          updatedAt,
-        }))
-        listen("TEST", callback, { youngerThan: 300 })
-        expect(Storage().get).toHaveBeenCalledWith("TEST", expect.anything())
-        expect(callback).toHaveBeenCalledWith("TEST")
-      })
+    test("create request broadcast channel", () => {
+      onGet("TEST_12345", () => null)
+      expect(BroadcastChannel).toHaveBeenCalledWith(
+        expect.stringMatching(/#GET:TEST_12345$/)
+      )
+    })
 
-      test("call the callback with last message if no youngerThan option", () => {
-        const callback = jest.fn(() => null)
-        const updatedAt = Math.floor(Date.now() / 1000)
-        Storage().get.mockImplementation(() => ({
-          data: "TEST",
-          updatedAt,
-        }))
-        listen("TEST", callback)
-        expect(Storage().get).toHaveBeenCalledWith("TEST", expect.anything())
-        expect(callback).toHaveBeenCalledWith("TEST")
-      })
+    test("create response broadcast channel", () => {
+      get("TEST_12345", () => null)
+      expect(BroadcastChannel).toHaveBeenCalledWith(
+        expect.stringMatching(/#GET:TEST_12345:RESPONSE:\d/)
+      )
+    })
+
+    test("broadcast get message on request channel", () => {
+      get("TEST", () => null)
+      expect(bc.postMessage).toHaveBeenCalledWith(
+        expect.objectContaining({
+          receiverID: expect.anything(),
+        })
+      )
+    })
+
+    test("returns a function", () => {
+      const cancel = get("TEST", () => null)
+      expect(typeof cancel).toEqual("function")
     })
   })
 })

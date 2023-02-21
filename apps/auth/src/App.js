@@ -1,6 +1,25 @@
 import React from "react"
 import { useOidcAuth } from "oauth"
-import { send, listen } from "communicator"
+import { broadcast, watch, onGet, get } from "communicator"
+
+window.broadcast = broadcast
+window.watch = watch
+window.get = get
+window.onGet = onGet
+
+const normalizeAuthData = (auth) =>
+  !auth
+    ? {}
+    : {
+        email: auth.email,
+        expiresAt: auth.expiresAt,
+        firstName: auth.first_name,
+        lastName: auth.last_name,
+        fullName: auth.full_name,
+        idToken: auth.id_token,
+        userId: auth.login_name || auth.subject,
+        subject: auth.subject,
+      }
 
 const App = (props) => {
   const oidc = useOidcAuth({
@@ -10,61 +29,55 @@ const App = (props) => {
   })
 
   React.useEffect(() => {
-    console.log("AUTH UPDATE", oidc)
-  }, [oidc?.loggedIn])
+    console.log("===props", props)
+    if (oidc?.loggedIn) {
+      broadcast(
+        "AUTH_UPDATE",
+        { auth: normalizeAuthData(oidc.auth) },
+        { debug: true }
+      )
+    } else {
+      broadcast(
+        "AUTH_UPDATE",
+        { auth: null, error: oidc.error },
+        { debug: true }
+      )
+    }
 
-  //loggedIn/loggedOut
-  //login
-  //logout
+    const unwatchGet = onGet("AUTH_DATA", () => normalizeAuthData(oidc?.auth))
 
-  // React.useEffect(() => {
-  //   console.log("props", props)
+    return unwatchGet
+  }, [oidc?.loggedIn, oidc.auth, oidc.error])
 
-  //   if (props.debug !== "false") console.log("Auth app mounted")
+  React.useEffect(() => {
+    const unwatchLogin = watch("AUTH_LOGIN", (info) => {
+      if (!oidc.loggedIn) oidc.login()
+    })
 
-  //   if (oidc.loggedIn) {
-  //     const data = {
-  //       email: oidc.auth.email,
-  //       expiresAt: oidc.auth.expiresAt,
-  //       firstName: oidc.auth.first_name,
-  //       lastName: oidc.auth.last_name,
-  //       fullName: oidc.auth.full_name,
-  //       idToken: oidc.auth.id_token,
-  //       userId: oidc.auth.login_name || oidc.auth.subject,
-  //       subject: oidc.auth.subject
-  //     }
+    const unwatchLogout = watch("AUTH_LOGOUT", (info) => {
+      if (oidc.loggedIn) oidc.logout()
+    })
 
-  //     if (props.debug !== "false") {
-  //       console.log(
-  //         JSON.stringify(
-  //           {
-  //             ...data,
-  //             expiresDate: new Date(data.expiresAt).toLocaleString(),
-  //           },
-  //           null,
-  //           2
-  //         )
-  //       )
-  //     }
-  //     send("AUTH_UPDATE", data, {
-  //       expires: Math.floor(parseInt(oidc.auth.expiresAt) / 1000),
-  //       debug: props.debug,
-  //     })
+    return () => {
+      unwatchLogin()
+      unwatchLogout()
+    }
+  }, [oidc.loggedIn, oidc.login, oidc.logout])
 
-  //     unregister = listen("AUTH_LOGOUT", () =>
-  //       oidc.logout({ resetOIDCSession: true, silent: true })
-  //     )
-  //   } else {
-  //     oidc.login()
-  //   }
-
-  //   return () => {
-  //     if (props.debug !== "false") console.log("Auth app unmounted")
-  //     if (unregister) unregister()
-  //   }
-  // }, [oidc])
-
-  return null
+  return (
+    <div>
+      {oidc.loggedIn ? (
+        <div>
+          <code style={{ backgroundColor: "white" }}>
+            {JSON.stringify(oidc.auth, null, 2)}
+          </code>
+          <button onClick={() => oidc.logout()}>Logout</button>
+        </div>
+      ) : (
+        <button onClick={() => oidc.login()}>Login</button>
+      )}
+    </div>
+  )
 }
 
 export default App

@@ -1,6 +1,6 @@
 {
   "name": "communicator",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Send and receive across tabs",
   "source": "src/index.js",
   "main": "build/index.js",
@@ -22,6 +22,7 @@
     ]
   },
   "jest": {
+    "testEnvironment": "jsdom",
     "verbose": true,
     "transform": {
       "\\.js$": "babel-jest"

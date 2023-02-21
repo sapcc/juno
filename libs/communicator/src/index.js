@@ -1,16 +1,13 @@
-import Storage from "./storage"
-
-const ID = "JUNO_COMMUNICATOR:"
-const { get: getStoredMessage, set: storeMessage } = Storage(ID)
+const CHANNEL_PREFIX = "JUNO_COMMUNICATOR#"
 
 /**
  *
  * @returns epoch timestamp (count of seconds since 1970)
  */
-const timeStamp = () => Math.floor(Date.now() / 1000)
+const uniqString = () => Date.now() + ":" + Math.floor(Math.random() * 1000)
 
 const log = (...params) =>
-  console.log("Communicator Debug [" + ID + "]:", ...params)
+  console.log("Communicator Debug [" + CHANNEL_PREFIX + "]:", ...params)
 const warn = (...params) => console.warn("Communicator Warning:", ...params)
 const error = (...params) => console.error("Communicator Error:", ...params)
 
@@ -23,25 +20,26 @@ const error = (...params) => console.error("Communicator Error:", ...params)
  * @param {object} options (optional) allowed options are debug:undefined|boolean and expires:undefined|number
  * @returns void
  */
-const send = (name, data, options) => {
+const broadcast = (name, data, options) => {
   try {
     if (typeof name !== "string")
-      throw new Error("(send) the message name must be given.")
+      throw new Error("(broadcast) the message name must be given.")
     if (data == undefined)
       throw new Error(
-        "(send) the message data must be given (null is allowed)."
+        "(broadcast) the message data must be given (null is allowed)."
       )
-    const { expires, debug } = options || {}
-    if (expires != undefined && typeof expires !== "number")
-      warn("(send) expires must be a number (epoch timestamp)")
-    const bc = new BroadcastChannel(ID + name)
-    if (debug) log(`send message ${name} with data `, data)
+    const { debug, ...unknownOptions } = options || {}
+    const unknownOptionsKeys = Object.keys(unknownOptions)
+    if (unknownOptionsKeys.length > 0)
+      warn(`(broadcast) unknown options: ${unknownOptionsKeys.join(", ")}`)
+    if (debug != undefined && typeof debug !== "boolean")
+      warn("(broadcast) debug must be a boolean")
+    const bc = new BroadcastChannel(CHANNEL_PREFIX + name)
+    if (debug) log(`broadcast message ${name} with data `, data)
 
     // broadcast message
     bc.postMessage(data)
     bc.close()
-    // store message
-    storeMessage(name, { data, expires, updatedAt: timeStamp() }, { debug })
   } catch (e) {
     error(e.message)
   }
@@ -60,35 +58,20 @@ const send = (name, data, options) => {
  * @param {object} options
  * @returns {function} unregister:()=>void, a function to stop listening
  */
-const listen = (name, callback, options) => {
+const watch = (name, callback, options) => {
   try {
     if (typeof name !== "string")
-      throw new Error("(listen) the message name must be given.")
+      throw new Error("(watch) the message name must be given.")
     if (typeof callback !== "function")
-      throw new Error("(listen) the callback parameter must be a function.")
+      throw new Error("(watch) the callback parameter must be a function.")
 
-    const { youngerThan, debug, ...otherOptions } = options || {}
+    const { debug, ...unknownOptions } = options || {}
+    const unknownOptionsKeys = Object.keys(unknownOptions)
+    if (unknownOptionsKeys.length > 0)
+      warn(`(watch) unknown options: ${unknownOptionsKeys.join(", ")}`)
 
-    if (otherOptions && Object.keys(otherOptions).length > 0)
-      warn(`(listen) unknown options: ${Object.keys(otherOptions)}`)
-    if (youngerThan != undefined && typeof youngerThan !== "number")
-      warn("(listen) youngerThan option must be a boolean or number")
-
-    const bc = new BroadcastChannel(ID + name)
-
-    const message = getStoredMessage(name, { debug })
-    if (message) {
-      const { data, expires, updatedAt } = message
-      const now = timeStamp()
-      // send last stored message until expired or too old
-      if (
-        (!expires || expires > now) &&
-        (!youngerThan || now - updatedAt <= youngerThan)
-      ) {
-        if (debug) log("(listen): receive last stored message")
-        callback(data)
-      }
-    }
+    const bc = new BroadcastChannel(CHANNEL_PREFIX + name)
+    if (debug) log(`watch for message ${name}`)
 
     bc.onmessage = (e) => callback(e.data)
     return () => bc.close()
@@ -97,4 +80,170 @@ const listen = (name, callback, options) => {
   }
 }
 
-export { send, listen }
+// /**
+//  * This function implements a 1:1 communication
+//  * @param {string} name
+//  * @param {function} callback
+//  * @param {object} options
+//  * @returns cancel function
+//  */
+// const get = (name, callback, options) => {
+//   try {
+//     if (typeof name !== "string")
+//       throw new Error("(get) the message name must be given.")
+//     if (typeof callback !== "function")
+//       throw new Error("(get) the callback parameter must be a function.")
+
+//     const { debug, ...unknownOptions } = options || {}
+//     const unknownOptionsKeys = Object.keys(unknownOptions)
+//     if (unknownOptionsKeys.length > 0)
+//       warn(`(get) unknown options: ${unknownOptionsKeys.join(", ")}`)
+
+//     if (debug) log(`get data for message ${name}`)
+
+//     // requst channel id
+//     const requestChannelID = CHANNEL_PREFIX + "GET:" + name
+//     // create an ID for response channel
+//     const responseChannelID =
+//       CHANNEL_PREFIX + "GET:" + name + ":RESPONSE:" + uniqString()
+
+//     // request channel
+//     const requestChannel = new BroadcastChannel(requestChannelID)
+//     // create a response channel to listen to the answer from request channel
+//     const responseChannel = new BroadcastChannel(responseChannelID)
+
+//     // handle answer from request channel
+//     responseChannel.onmessage = (e) => {
+//       // execute callback
+//       callback(e.data)
+//       // close response channel
+//       responseChannel.close()
+//     }
+
+//     // request data with the new created response channel ID
+//     requestChannel.postMessage({ responseChannelID, action: "GET" })
+//     requestChannel.close()
+
+//     return () => {
+//       if (responseChannel?.close) responseChannel.close()
+//     }
+//   } catch (e) {
+//     error(e.message)
+//   }
+// }
+
+// /**
+//  * Listen to get messages
+//  * @param {string} name
+//  * @param {function} callback
+//  * @param {object} options
+//  * @returns cancel function
+//  */
+//  const onGet = (name, callback, options = {}) => {
+//   try {
+//     if (typeof name !== "string")
+//       throw new Error("(onGet) the message name must be given.")
+//     if (typeof callback !== "function")
+//       throw new Error("(onGet) the callback parameter must be a function.")
+
+//     const { debug, ...unknownOptions } = options || {}
+//     const unknownOptionsKeys = Object.keys(unknownOptions)
+//     if (unknownOptionsKeys.length > 0)
+//       warn(`(onGet) unknown options: ${unknownOptionsKeys.join(", ")}`)
+
+//     if (debug) log(`send data for message ${name}`)
+
+//     // connect to the channel for the message name
+//     const requestChannel = new BroadcastChannel(CHANNEL_PREFIX + "GET:" + name)
+
+//     // listen to requests
+//     requestChannel.onmessage = (e) => {
+//       // data should contain the GET action and the response channel ID
+//       if (!e?.data?.action === "GET" || !e?.data?.responseChannelID) return
+
+//       // connect to the response channel
+//       const responseChannel = new BroadcastChannel(e.data.responseChannelID)
+//       // get response data
+//       const data = callback()
+
+//       console.log("===send data", data, "to ", responseChannel.name)
+//       // send response
+//       setTimeout(responseChannel.postMessage(data))
+//       //responseChannel.close()
+//     }
+
+//     return () => requestChannel.close()
+//   } catch (e) {
+//     error(e.message)
+//   }
+// }
+
+/**
+ * This function implements a 1:1 communication
+ * @param {string} name
+ * @param {function} callback
+ * @param {object} options
+ * @returns cancel function
+ */
+const get = (name, callback, options) => {
+  try {
+    if (typeof name !== "string")
+      throw new Error("(get) the message name must be given.")
+    if (typeof callback !== "function")
+      throw new Error("(get) the callback parameter must be a function.")
+
+    const { debug, getOptions, ...unknownOptions } = options || {}
+    const unknownOptionsKeys = Object.keys(unknownOptions)
+    if (unknownOptionsKeys.length > 0)
+      warn(`(get) unknown options: ${unknownOptionsKeys.join(", ")}`)
+
+    if (debug) log(`get data for message ${name}`)
+
+    const requesterID = "GET:" + name
+    const receiverID = requesterID + ":RESPONSE:" + uniqString()
+
+    let unwatch = watch(receiverID, (data) => {
+      callback(data)
+      unwatch()
+    })
+    broadcast(requesterID, { receiverID, getOptions })
+    return unwatch
+  } catch (e) {
+    error(e.message)
+  }
+}
+
+/**
+ * Listen to get messages
+ * @param {string} name
+ * @param {function} callback
+ * @param {object} options
+ * @returns cancel function
+ */
+const onGet = (name, callback, options = {}) => {
+  try {
+    if (typeof name !== "string")
+      throw new Error("(onGet) the message name must be given.")
+    if (typeof callback !== "function")
+      throw new Error("(onGet) the callback parameter must be a function.")
+
+    const { debug, ...unknownOptions } = options || {}
+    const unknownOptionsKeys = Object.keys(unknownOptions)
+    if (unknownOptionsKeys.length > 0)
+      warn(`(onGet) unknown options: ${unknownOptionsKeys.join(", ")}`)
+
+    if (debug) log(`send data for message ${name}`)
+
+    const requesterID = "GET:" + name
+    const unwatch = watch(requesterID, (data) => {
+      if (!data?.receiverID) return
+      broadcast(data.receiverID, callback())
+    })
+
+    return unwatch
+  } catch (e) {
+    error(e.message)
+  }
+}
+
+export { broadcast, watch, get, onGet }

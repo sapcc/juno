@@ -462,11 +462,11 @@ jobs:
     plan:
       - in_parallel:
           - get: assets-server.version
-            passed: ["build-assets-server"]
+            passed: ["deploy-to-s-qa-de-1"]
           - get: ui-storybook.version
-            passed: ["build-ui-storybook"]            
+            passed: ["deploy-to-s-qa-de-1"]            
           - get: hosting.version
-            passed: ["build-hosting"]            
+            passed: ["deploy-to-s-qa-de-1"]            
           - get: juno.git
             passed: ["e2e-s-qa-de-1"]
             trigger: false
