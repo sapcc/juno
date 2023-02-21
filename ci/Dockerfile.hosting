@@ -3,6 +3,8 @@ LABEL source_repository="https://github.com/sapcc/juno"
 
 ENV PAGE_TITLE="app"
 ENV FAVICON_URL="/assets/favicon.ico"
+ENV FAVICON_16X16_URL="/assets/favicon-16x16.png"
+ENV FAVICON_32X32_URL="/assets/favicon-32x32.png"
 ENV NAME="exampleapp"
 ENV VERSION="latest"
 ENV ASSETS_HOST=""
@@ -16,7 +18,9 @@ RUN echo -e \
   <html style="height: 100vh; background: rgb(13, 20, 28);">\n\
   \t <head>\n\
   \t\t <title>###PAGE_TITLE###</title> \n\
-  \t\t <link rel="icon" href="###FAVICON_URL###"/> \n\
+  \t\t <link rel="icon" sizes="any" href="###FAVICON_URL###"/> \n\
+  \t\t <link rel="icon" type="image/png" sizes="16x16"href="###FAVICON_16X16_URL###"/> \n\
+  \t\t <link rel="icon" type="image/png" sizes="32x32"href="###FAVICON_32X32_URL###"/> \n\
   \t </head>\n\
   \t <body style="height: 100vh;">\n\
   \t\t <script \n\
@@ -38,6 +42,8 @@ RUN echo -e \
   DATA_PROPS=$(echo $DATA_PROPS | tr "\n" " ") \n\
   sed -i "s/###PAGE_TITLE###/$PAGE_TITLE/g" /tmp/index_template.html \n\
   sed -i "s%###FAVICON_URL###%$FAVICON_URL%g" /tmp/index_template.html \n\
+  sed -i "s%###FAVICON_16X16_URL###%$FAVICON_16X16_URL%g" /tmp/index_template.html \n\
+  sed -i "s%###FAVICON_32X32_URL###%$FAVICON_32X32_URL%g" /tmp/index_template.html \n\
   sed -i "s%###ASSETS_HOST###%$ASSETS_HOST%g" /tmp/index_template.html \n\
   sed -i "s/###NAME###/$NAME/g" /tmp/index_template.html \n\
   sed -i "s/###VERSION###/$VERSION/g" /tmp/index_template.html \n\
