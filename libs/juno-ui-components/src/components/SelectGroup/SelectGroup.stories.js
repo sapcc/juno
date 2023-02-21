@@ -20,9 +20,9 @@ const Template = ({children, ...args}) => {
 export const Default = Template.bind({})
 Default.args = {
   children: [
-    <SelectOption value="1">1</SelectOption>,
-    <SelectOption value="2">2</SelectOption>,
-    <SelectOption value="3">3</SelectOption>
+    <SelectOption value="1" key="1">1</SelectOption>,
+    <SelectOption value="2" key="2">2</SelectOption>,
+    <SelectOption value="3" key="3">3</SelectOption>
   ]
 }
 
@@ -30,8 +30,8 @@ export const Labelled = Template.bind({})
 Labelled.args = {
   label: "Labelled Group",
   children: [
-    <SelectOption value="1">1</SelectOption>,
-    <SelectOption value="2">2</SelectOption>,
-    <SelectOption value="3">3</SelectOption>
+    <SelectOption value="1" key="1">1</SelectOption>,
+    <SelectOption value="2" key="2">2</SelectOption>,
+    <SelectOption value="3" key="3">3</SelectOption>
   ]
 }
