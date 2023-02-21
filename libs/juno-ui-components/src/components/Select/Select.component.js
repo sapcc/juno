@@ -19,7 +19,6 @@ const triggerStyles = `
   focus:jn-outline-none
   focus:jn-ring-2
   focus:jn-ring-theme-focus
-  disabled:jn-cursor-not-allowed
 `
 
 const triggerErrorStyles = `
@@ -38,6 +37,7 @@ const contentStyles = `
   jn-rounded
   jn-bg-theme-background-lvl-1
   jn-z-50
+  jn-w-[var(--radix-select-trigger-width)]
 `
 
 /** A Select component that can be used controlled or uncontrolled. Based on Radix Select. */
@@ -50,10 +50,13 @@ export const Select = React.forwardRef(
     valid,
     invalid,
     disabled,
+    name,
     open,
+    onOpenChange,
     defaultOpen,
     value,
     defaultValue,
+    onValueChange,
     position,
     ...props
     }, 
@@ -100,6 +103,9 @@ export const Select = React.forwardRef(
         defaultOpen={defaultOpen}
         value={value}
         defaultValue={defaultValue}
+        onOpenChange={onOpenChange}
+        onValueChange={onValueChange}
+        {...props}
       >
         <RadixSelect.Trigger 
           ref={forwardedRef}
@@ -109,7 +115,7 @@ export const Select = React.forwardRef(
               ${triggerStyles}
               ${ hasError || isInvalid ? triggerErrorStyles : "" } 
               ${ isValid ? triggerValidStyles : "" } 
-              ${ disabled ? "jn-opacity-50" : "" } 
+              ${ disabled ? "jn-opacity-50 jn-cursor-not-allowed" : "" } 
               ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
             `
           } 
@@ -125,7 +131,7 @@ export const Select = React.forwardRef(
           </RadixSelect.Icon>
         </RadixSelect.Trigger>
         <RadixSelect.Portal>
-          <RadixSelect.Content className={`juno-select-content ${contentStyles}`} position={position}>
+          <RadixSelect.Content className={`juno-select-content ${contentStyles}`} position={position} sideOffset={2}>
             <RadixSelect.ScrollUpButton>
               <Icon icon="expandLess"/>
             </RadixSelect.ScrollUpButton>
@@ -162,17 +168,21 @@ Select.propTypes = {
   invalid: PropTypes.bool,
   /** Whether the Select is disabled */
   disabled: PropTypes.bool,
+  /** The name of the Select */
+  name: PropTypes.string,
   /** The aria-label of the Select */
   ariaLabel: PropTypes.string,
-  /** Whether the Select is open (Controlled) */
+  /** Whether the Select is open (triggers Controlled mode, needs to be used in conjunction with onOpenChange) */
   open: PropTypes.bool,
+  /** Handler to execute when open state changes (controlled mode) */
+  onOpenChange: PropTypes.func,
   /** Whether the Select is open (Uncontrolled) */
   defaultOpen: PropTypes.bool,
   /** Change position mode to popper. Default is item-aligned */
-  position: PropTypes.oneOf(["popper", "item-aligned", ""]),
-  /** An onChange handler to execute when the selected value changes. mandatory when using as a controlled component. */
+  position: PropTypes.oneOf(["popper", "item-aligned"]),
+  /** A handler to execute when the selected value changes. Mandatory when using as a controlled component. */
   onValueChange: PropTypes.func,
-  /** A handler to execute when the selects open state changes. Must be used in conjunction with value. */
+  /** A handler to execute when the selects open state changes. */
   onOpenChange: PropTypes.func,
 }
 
@@ -186,10 +196,12 @@ Select.defaultProps = {
   valid: false,
   invalid: false,
   disabled: false,
+  name: "",
   ariaLabel: "",
   open: false,
+  onOpenChange: undefined,
   defaultOpen: false,
-  position: null,
+  position: "item-aligned",
   onValueChange: undefined,
   onOpenChange: undefined,
 }
