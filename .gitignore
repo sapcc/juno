@@ -25,6 +25,8 @@ build
 /ci/pipeline.yaml
 # yarn.lock
 
+scripts/test_data
+
 # misc
 .DS_Store
 .env.local

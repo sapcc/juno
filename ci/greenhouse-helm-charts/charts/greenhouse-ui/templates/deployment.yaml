@@ -25,7 +25,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
         - name: web
-          image: "{{ .Values.global.registry }}/juno-v2-hosting:{{ .Values.global.hosting_image_tag }}"
+          image: "{{ .Values.global.registry }}/juno-v2-hosting:{{ .Values.hosting_image_tag }}"
           imagePullPolicy: IfNotPresent
           ports:
             - name: web
@@ -40,7 +40,7 @@ spec:
             - name: VERSION
               value: latest
             - name: ASSETS_HOST
-              value: https://assets.juno.{{ $.Values.global.region }}.cloud.sap
+              value: https://assets.juno.qa-de-1.cloud.sap
             - name: PROPS
               value: ""
           resources:

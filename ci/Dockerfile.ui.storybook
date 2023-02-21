@@ -6,7 +6,7 @@ RUN \
   yarn workspace juno-ui-components build 1>/dev/null && \
   yarn workspace juno-ui-components build-storybook -o ./build 1>/dev/null 
 
-FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:14-alpine
+FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:18-alpine
 LABEL source_repository="https://github.com/sapcc/juno/libs/juno-ui-components"
 
 RUN apk --no-cache add ca-certificates && npm install -g http-server

@@ -585,45 +585,22 @@ jobs:
             params:
               depth: 100 
 
-      - task: generate-additional-values.yaml
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: 
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/busybox
-              tag: "latest"
-          inputs: 
-            - name: hosting.version
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                echo "build json with tags for every image"
-                printf "\
-                global: \n
-                  hosting_image_tag: \"$(cat hosting.version/version)\"\n\
-                " > ./extra-values/values.yaml
-
-                cat ./extra-values/values.yaml
-          outputs:
-            - name: extra-values
-
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
         input_mapping:
+          app.version: hosting.version
           helm-charts.git: juno.git
-          extra-values.git: extra-values
 
         params:
           HELM_MAJOR_VERSION: '3'
           CHART_PATH: ci/greenhouse-helm-charts
           RELEASE: greenhouse-ui
           NAMESPACE: greenhouse
+          # greenhouse-ui is a sub-chart, so we need to use the name as prefix
+          TAG_VARIABLE: greenhouse-ui.hosting_image_tag
           REGION: eu-nl-1
           CONTEXT: greenhouse-qa
-          VALUES: local:globals extra:values.yaml
+          VALUES: local:globals
           KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))

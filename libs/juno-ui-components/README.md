@@ -14,7 +14,7 @@ yarn add --dev juno-ui-components
 // package.json
 "devDependencies": {
   ...
-  "juno-ui-components": "workspace:*"
+  "juno-ui-components": ">= 0"
   ...
 }
 ```
