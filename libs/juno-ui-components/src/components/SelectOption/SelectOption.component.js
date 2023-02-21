@@ -10,8 +10,9 @@ const optionStyles = `
   jn-pt-[0.6875rem]
   jn-pb-[0.5rem]
   jn-px-[0.875rem]
-  cursor-pointer
-  bg-clip-padding
+  jn-cursor-pointer
+  jn-select-none
+  jn-bg-clip-padding
   jn-truncate
   jn-text-left
   jn-bg-theme-background-lvl-1
