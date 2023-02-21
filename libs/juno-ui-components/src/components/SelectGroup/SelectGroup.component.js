@@ -9,6 +9,7 @@ const labelStyles = `
   jn-px-3.5
 `
 
+/** A group of SelectOptions, can take an optional label. To render a visual border between SelectOptions or SelectGroups, use SelectDivider. */
 export const SelectGroup = React.forwardRef(
   ({children, label, ...props}, forwardedRef) => {
     return (

@@ -40,7 +40,7 @@ const contentStyles = `
   jn-z-50
 `
 
-/** A Select component that can be used controlled or uncontrolled */
+/** A Select component that can be used controlled or uncontrolled. Based on Radix Select. */
 export const Select = React.forwardRef(
   ({ 
     children,

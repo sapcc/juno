@@ -8,6 +8,7 @@ const dividerStyles = `
   jn-bg-theme-background-lvl-3
 `
 
+/** A visual border/divider between SelectOptions or SelectGroups */
 export const SelectDivider = React.forwardRef(
   ({className, ...props}, forwardedRef) => {
     return (
