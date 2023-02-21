@@ -1,6 +1,6 @@
 import React, { useRef, useState, useMemo, useCallback } from "react"
 import { Button, Panel, PanelFooter } from "juno-ui-components"
-import { FormStateProvider } from "./FormState"
+import { CertStateProvider } from "../hooks/useCertState"
 import NewCertificateForm from "./NewCertificateForm"
 import NewCertificateResutls from "./NewCertificateResults"
 import CustomPanelBody from "./CustomPanelBody"
@@ -102,14 +102,14 @@ const NewCertificate = ({ ca }) => {
             </CustomPanelBody>
           ) : (
             <CustomPanelBody footer={formPanelFooter}>
-              <FormStateProvider>
+              <CertStateProvider>
                 <NewCertificateForm
                   ref={formRef}
                   ca={ca}
                   onFormSuccess={onFormSuccess}
                   onFormLoading={onFormLoading}
                 />
-              </FormStateProvider>
+              </CertStateProvider>
             </CustomPanelBody>
           )}
         </>

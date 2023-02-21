@@ -20,7 +20,7 @@ import {
   getAlgorithm,
 } from "../lib/csrUtils"
 import { newCertificateMutation } from "../queries"
-import { useFormState, useFormDispatch } from "./FormState"
+import { useCertState } from "../hooks/useCertState"
 import useStore from "../store"
 import { parseError } from "../helpers"
 import { useQueryClient } from "react-query"
@@ -28,43 +28,24 @@ import { useMessageStore } from "messages-provider"
 
 const ALGORITHM_KEY = "RSA-2048"
 
-export const validateForm = ({ name, description, csr }) => {
-  const invalidItems = {}
-
-  if (!name || name.length === 0) {
-    if (!invalidItems["name"]) invalidItems["name"] = []
-    invalidItems["name"].push(`Name can't be blank`)
-  }
-
-  if (name && name.length > 30) {
-    if (!invalidItems["name"]) invalidItems["name"] = []
-    invalidItems["name"].push(`30 characters is the maximum allowed`)
-  }
-
-  if (description && description.length > 100) {
-    if (!invalidItems["description"]) invalidItems["description"] = []
-    invalidItems["description"].push(`100 characters is the maximum allowed`)
-  }
-
-  if (!csr || csr.length === 0) {
-    if (!invalidItems["csr"]) invalidItems["csr"] = []
-    invalidItems["csr"].push(`Certificate signing request can't be blank`)
-  }
-
-  return invalidItems
-}
-
 const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
   const addMessage = useMessageStore((state) => state.addMessage)
   const resetMessages = useMessageStore((state) => state.resetMessages)
-  const dispatch = useFormDispatch()
-  const formState = useFormState()
+
+  // the form state is being handeled in a zustand context store. Since the complexity
+  // in this form is very low could be removed from here.
+  const formState = useCertState(useCallback((state) => state.formState))
+  const setAttribute = useCertState(useCallback((state) => state.setAttribute))
+  const formValidation = useCertState(
+    useCallback((state) => state.formValidation)
+  )
+
   const oidc = useStore(useCallback((state) => state.oidc))
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const queryClient = useQueryClient()
 
   const [pemPrivateKey, setPemPrivateKey] = useState(null)
-  const [formValidation, setFormValidation] = useState({})
+  const [showValidation, setShowValidation] = useState({})
 
   const algorithm = useMemo(() => getAlgorithm(ALGORITHM_KEY), [ALGORITHM_KEY])
 
@@ -80,17 +61,14 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
 
   // on form init set the identity attributes
   useEffect(() => {
+    if (!setAttribute) return
     const userId = (
       oidc?.auth?.subject || oidc?.auth?.login_name
     )?.toUpperCase()
     if (userId) {
-      dispatch({
-        type: "SET_ATTR",
-        key: "identity",
-        value: userId,
-      })
+      setAttribute({ key: "identity", value: userId })
     }
-  }, [])
+  }, [setAttribute])
 
   const onGenerateCSRError = () => {
     addMessage({
@@ -101,11 +79,7 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
 
   const generateCSR = () => {
     setPemPrivateKey(null)
-    dispatch({
-      type: "SET_ATTR",
-      key: "csr",
-      value: "",
-    })
+    setAttribute({ key: "csr", value: "" })
     // get the keys first
     generateKeys(algorithm).then((newKeys) => {
       // encode private key
@@ -133,11 +107,8 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
       // reset panel messages
       resetMessages()
       // check validaton
-      const validation = validateForm(formState)
-      setFormValidation(validation)
-      if (Object.keys(validation).length > 0) {
-        return
-      }
+      setShowValidation(formValidation)
+      if (Object.keys(formValidation).length > 0) return
       mutate(
         {
           endpoint: endpoint,
@@ -196,7 +167,7 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
   }
 
   const onAttrChanged = (key, value) => {
-    dispatch({ type: "SET_ATTR", key: key, value: value })
+    setAttribute({ key: key, value: value })
   }
 
   return (
@@ -208,9 +179,9 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
           onAttrChanged("name", e.target.value)
         }}
         helptext={
-          formValidation["name"] && errorHelpText(formValidation["name"])
+          showValidation["name"] && errorHelpText(showValidation["name"])
         }
-        className={formValidation["name"] && "text-theme-danger border-2"}
+        className={showValidation["name"] && "text-theme-danger border-2"}
       />
       <TextInputRow
         label="Description"
@@ -218,11 +189,11 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
           onAttrChanged("description", e.target.value)
         }}
         helptext={
-          formValidation["description"] &&
-          errorHelpText(formValidation["description"])
+          showValidation["description"] &&
+          errorHelpText(showValidation["description"])
         }
         className={
-          formValidation["description"] && "text-theme-danger border-2"
+          showValidation["description"] && "text-theme-danger border-2"
         }
       />
       <TextInputRow
@@ -232,11 +203,11 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
           onAttrChanged("identity", e.target.value?.toUpperCase())
         }}
         helptext={
-          formValidation["identity"]
-            ? errorHelpText(formValidation["identity"])
+          showValidation["identity"]
+            ? errorHelpText(showValidation["identity"])
             : "Owner for whom the certificate will be issued. Owner can be also a technical user or technical team user which belongs to the user who is creating the SSO certificate."
         }
-        className={formValidation["identity"] && "text-theme-danger border-2"}
+        className={showValidation["identity"] && "text-theme-danger border-2"}
       />
       <Stack alignment="center" className="mb-2" distribution="end">
         <Button label="Generate CSR" size="small" onClick={generateCSR} />
@@ -250,11 +221,11 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
           onAttrChanged("csr", e.target.value)
         }}
         helptext={
-          formValidation["csr"]
-            ? errorHelpText(formValidation["csr"])
+          showValidation["csr"]
+            ? errorHelpText(showValidation["csr"])
             : textAreaHelpText()
         }
-        className={formValidation["csr"] && "text-theme-danger border-2"}
+        className={showValidation["csr"] && "text-theme-danger border-2"}
       />
     </Form>
   )
