@@ -30,7 +30,7 @@ const checkStatus = (response) => {
 }
 
 export const cas = ({ queryKey }) => {
-  const [_key, bearerToken, endpoint] = queryKey
+  const [_key, bearerToken, endpoint, disabledCAs] = queryKey
   return fetch(`${endpoint}/cas`, {
     method: "GET",
     headers: {
@@ -45,6 +45,14 @@ export const cas = ({ queryKey }) => {
         // sort entries by name
         return jsonResp.sort((a, b) => a?.name.localeCompare(b?.name))
       })
+    })
+    .then((data) => {
+      if (!Array.isArray(data)) return data
+      if (!Array.isArray(disabledCAs)) return data
+      // return just the CAs that should be displayed
+      return data?.filter(
+        (ca) => !disabledCAs.some((caName) => ca.name === caName)
+      )
     })
 }
 

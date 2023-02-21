@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import { getCertificates } from "../queries"
-import { useGlobalState, useDispatch } from "./StateProvider"
-import { useMessagesDispatch } from "./MessagesProvider"
+import { useMessageStore } from "messages-provider"
+import useStore from "../store"
+import { parseError } from "../helpers"
 import {
   DataGrid,
   DataGridRow,
   DataGridHeadCell,
   DataGridToolbar,
   ButtonRow,
-  Spinner,
+  Container,
   Stack,
 } from "juno-ui-components"
 import CertificateListItem from "./CertificateListItem"
 import AddNewSSOButton from "./AddNewSSOButton"
-import { parseError } from "../helpers"
+import HintLoading from "./HintLoading"
 
 const Heading = `
 jn-font-bold
@@ -23,12 +24,12 @@ jn-pb-2
  `
 
 const CertificateList = ({ ca }) => {
-  const [enableCreateSSO, setEnableCreateSSO] = useState(false)
-  const dispatchMessage = useMessagesDispatch()
-  const dispatchGlobals = useDispatch()
-  const oidc = useGlobalState().auth.oidc
-  const endpoint = useGlobalState().globals.endpoint
-  const docuLinks = useGlobalState().globals.documentationLinks
+  const addMessage = useMessageStore((state) => state.addMessage)
+  const showPanel = useStore(useCallback((state) => state.showNewSSO))
+  const setShowNewSSO = useStore(useCallback((state) => state.setShowNewSSO))
+  const oidc = useStore(useCallback((state) => state.oidc))
+  const endpoint = useStore(useCallback((state) => state.endpoint))
+  const docuLinks = useStore(useCallback((state) => state.documentationLinks))
 
   // fetch the certificates
   const { isLoading, isError, data, error } = getCertificates(
@@ -37,34 +38,19 @@ const CertificateList = ({ ca }) => {
     ca?.name
   )
 
-  // wait until we get the cert list to enable create new sso certs
-  // getCertificates query waits until the id_token exists
-  // once the data appears the create new sso button will be enabled
-  useEffect(() => {
-    if (data) {
-      setEnableCreateSSO(true)
-    }
-  }, [data])
-
-  // just set the state once
-  useEffect(() => {
-    if (enableCreateSSO) {
-      dispatchGlobals({
-        type: "UPDATE_NEW_SSO_ENABLED",
-        enabled: true,
-      })
-    }
-  }, [enableCreateSSO])
-
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
     if (error) {
-      dispatchMessage({
-        type: "SET_MESSAGE",
-        msg: { variant: "error", text: parseError(error) },
+      addMessage({
+        variant: "error",
+        text: parseError(error),
       })
     }
   }, [error])
+
+  const onAddClicked = () => {
+    setShowNewSSO(true)
+  }
 
   return (
     <>
@@ -76,19 +62,19 @@ const CertificateList = ({ ca }) => {
         </a>
       )}
 
-      <div className="mt-6">
+      <Container px={false} py>
         {isLoading && !data ? (
-          <Stack className="pt-2" alignment="center">
-            <Spinner variant="primary" />
-            Loading certificates...
-          </Stack>
+          <HintLoading text="Loading certificates..." />
         ) : (
           <>
-            {data && data.length > 0 ? (
+            {data && data.length > 0 && (
               <>
                 <DataGridToolbar>
                   <ButtonRow>
-                    <AddNewSSOButton />
+                    <AddNewSSOButton
+                      disabled={!data || showPanel}
+                      onClick={onAddClicked}
+                    />
                   </ButtonRow>
                 </DataGridToolbar>
                 <DataGrid gridColumnTemplate="2fr 2.25fr 0.75fr min-content 1.5fr min-content">
@@ -105,7 +91,8 @@ const CertificateList = ({ ca }) => {
                   ))}
                 </DataGrid>
               </>
-            ) : (
+            )}
+            {data && data.length === 0 && (
               <Stack
                 alignment="center"
                 distribution="center"
@@ -122,7 +109,7 @@ const CertificateList = ({ ca }) => {
             )}
           </>
         )}
-      </div>
+      </Container>
     </>
   )
 }

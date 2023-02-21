@@ -1,21 +1,12 @@
 import React from "react"
-import { useGlobalState, useDispatch } from "./StateProvider"
 import { Button } from "juno-ui-components"
 
-const AddNewSSOButton = ({ className, label }) => {
-  const isNewSSOEnabled = useGlobalState().globals.isNewSSOEnabled
-  const isPanelShown = useGlobalState().globals.showNewSSO
-  const dispatch = useDispatch()
-
-  const onAddClicked = () => {
-    dispatch({ type: "SHOW_NEW_SSO", show: true })
-  }
-
+const AddNewSSOButton = ({ className, label, disabled, onClick }) => {
   return (
     <Button
       icon="addCircle"
-      disabled={!isNewSSOEnabled || isPanelShown}
-      onClick={onAddClicked}
+      disabled={disabled}
+      onClick={onClick}
       className={className}
     >
       {label || "Add SSO cert"}

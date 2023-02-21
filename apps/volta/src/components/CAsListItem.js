@@ -1,8 +1,8 @@
-import React from "react"
+import React, { useCallback } from "react"
 import { useSearchParams } from "react-router-dom"
 import { Stack, Button } from "juno-ui-components"
 import IconCertificateAuthority from "../img/Icon_Certificate_Authority.svg"
-import { useGlobalState } from "./StateProvider"
+import useStore from "../store"
 
 export const cardHeaderCss = `
 font-bold
@@ -14,11 +14,13 @@ card
 bg-theme-background-lvl-1
 rounded
 p-8
+h-full
+w-full
 `
 
 const CAsListItem = ({ ca }) => {
-  let [searchParams, setSearchParams] = useSearchParams()
-  const docuLinks = useGlobalState().globals.documentationLinks
+  let [_, setSearchParams] = useSearchParams()
+  const docuLinks = useStore(useCallback((state) => state.documentationLinks))
 
   const onCASelected = (caName) => {
     // update URL state
@@ -27,28 +29,34 @@ const CAsListItem = ({ ca }) => {
 
   return (
     <div className={cardCss}>
-      <div className={cardHeaderCss}>{ca.display_name || ca.name}</div>
-      <div className="mt-4">{ca.description}</div>
-      {docuLinks[ca.name] && (
-        <a href={docuLinks[ca.name]} target="_blank">
-          Read more...
-        </a>
-      )}
-      <Stack alignment="center" className="mt-12">
-        <div className="w-full">
-          <Button
-            label="Show"
-            icon="description"
-            onClick={() => onCASelected(ca.name)}
-          />
+      <Stack direction="vertical" alignment="start" className="h-full w-full">
+        <div className={cardHeaderCss}>{ca.display_name || ca.name}</div>
+        <div className="mt-4">{ca.description}</div>
+        <div className="mb-12">
+          {docuLinks[ca.name] && (
+            <a href={docuLinks[ca.name]} target="_blank">
+              Read more...
+            </a>
+          )}
         </div>
-        <IconCertificateAuthority
-          width={150}
-          className="fill-current text-theme-background-lvl-0"
-          alt="Certificate Authority"
-          title="Icon certificate authority"
-          role="img"
-        />
+        <div className="mt-auto w-full">
+          <Stack alignment="center">
+            <div className="w-full">
+              <Button
+                label="Show"
+                icon="description"
+                onClick={() => onCASelected(ca.name)}
+              />
+            </div>
+            <IconCertificateAuthority
+              width={150}
+              className="fill-current text-theme-background-lvl-0"
+              alt="Certificate Authority"
+              title="Icon certificate authority"
+              role="img"
+            />
+          </Stack>
+        </div>
       </Stack>
     </div>
   )

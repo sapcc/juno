@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 import {
   AppShell,
   Container,
@@ -6,16 +6,18 @@ import {
   TopNavigation,
   TopNavigationItem,
 } from "juno-ui-components"
-import Messages from "./Messages"
-import { useGlobalState } from "./StateProvider"
-import HeaderUser from "./HeaderUser"
+import { Messages } from "messages-provider"
+import useStore from "../store"
 import { useNavigate } from "react-router-dom"
+import HeaderUser from "./HeaderUser"
 
 const CustomAppShell = ({ children }) => {
-  const oidc = useGlobalState().auth.oidc
+  const setShowNewSSO = useStore(useCallback((state) => state.setShowNewSSO))
+  const oidc = useStore(useCallback((state) => state.oidc))
   const navigate = useNavigate()
 
   const backToRootPath = () => {
+    setShowNewSSO(false)
     navigate("/")
   }
 
@@ -38,7 +40,7 @@ const CustomAppShell = ({ children }) => {
   return (
     <AppShell pageHeader={pageHeader} topNavigation={topBar}>
       <Container py>
-        <Messages />
+        <Messages className="mb-6" />
         {children}
       </Container>
     </AppShell>
