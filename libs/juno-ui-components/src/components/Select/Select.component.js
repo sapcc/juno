@@ -7,7 +7,8 @@ import PropTypes from "prop-types"
 /** A Select component for selecting a single item. Can be used controlled or uncontrolled. */
 export const Select = React.forwardRef(
   ({
-    children, 
+    children,
+    placeholder, 
     position,
     ...props
   }, 
@@ -15,7 +16,7 @@ export const Select = React.forwardRef(
     return (
       <RadixSelect.Root {...props}>
         <RadixSelect.Trigger ref={forwardedRef}>
-          <RadixSelect.Value placeholder="Select…"/>
+          <RadixSelect.Value placeholder={placeholder}/>
         </RadixSelect.Trigger>
         <RadixSelect.Portal>
           <RadixSelect.Content position={position}>
@@ -37,11 +38,13 @@ export const Select = React.forwardRef(
 
 Select.propTypes = {
   children: PropTypes.node,
+  placeholder: PropTypes.string,
   position: PropTypes.oneOf(["popper", "align-items"])
 }
 
 Select.defaultProps = {
   children: null,
+  placeholder: "Select…",
   position: "popper",
 }
 
