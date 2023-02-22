@@ -21,19 +21,45 @@ const Template = ({children, ...args}) => {
 export const Default = Template.bind({})
 Default.args = {
   children: [
-      <SelectOption value="1" key="1">1</SelectOption>,
-      <SelectOption value="2" key="2">2</SelectOption>,
-      <SelectOption value="3" key="3">3</SelectOption>
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}
+
+export const Uncontrolled = Template.bind({})
+Uncontrolled.args = {
+  placeholder: "Uncontrolled Select",
+  defaultOpen: false,
+  defaultValue: "2",
+  onValueChange: () => { console.log("value changed") },
+  children: [
+      <SelectOption value="1" key="1">Value 1</SelectOption>,
+      <SelectOption value="2" key="2">Value 2</SelectOption>,
+      <SelectOption value="3" key="3">Value 3</SelectOption>
     ]
+}
+
+export const Controlled = Template.bind({})
+Controlled.args = {
+  placeholder: "Controlled Select",
+  value: "2",
+  onValueChange: () => { console.log("value changed") },
+  onOpenChange: () => { console.log("open changed") },
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
 }
 
 export const Loading = Template.bind({})
 Loading.args = {
   loading: true,
   children: [
-    <SelectOption value="1" key="1">1</SelectOption>,
-    <SelectOption value="2" key="2">2</SelectOption>,
-    <SelectOption value="3" key="3">3</SelectOption>
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
   ]
 }
 
@@ -41,9 +67,9 @@ export const Error = Template.bind({})
 Error.args = {
   error: true,
   children: [
-    <SelectOption value="1" key="1">1</SelectOption>,
-    <SelectOption value="2" key="2">2</SelectOption>,
-    <SelectOption value="3" key="3">3</SelectOption>
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
   ]
 }
 
@@ -51,9 +77,9 @@ export const Valid = Template.bind({})
 Valid.args = {
   valid: true,
   children: [
-    <SelectOption value="1" key="1">1</SelectOption>,
-    <SelectOption value="2" key="2">2</SelectOption>,
-    <SelectOption value="3" key="3">3</SelectOption>
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
   ]
 }
 
@@ -61,9 +87,9 @@ export const Invalid = Template.bind({})
 Invalid.args = {
   invalid: true,
   children: [
-    <SelectOption value="1" key="1">1</SelectOption>,
-    <SelectOption value="2" key="2">2</SelectOption>,
-    <SelectOption value="3" key="3">3</SelectOption>
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
   ]
 }
 
@@ -71,19 +97,8 @@ export const Disabled = Template.bind({})
 Disabled.args = {
   disabled: true,
   children: [
-    <SelectOption value="1" key="1">1</SelectOption>,
-    <SelectOption value="2" key="2">2</SelectOption>,
-    <SelectOption value="3" key="3">3</SelectOption>
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
   ]
-}
-
-export const Popper = Template.bind({})
-Popper.args = {
-  position: "popper",
-  open: true,
-  children: [
-      <SelectOption value="1" key="1">1</SelectOption>,
-      <SelectOption value="2" key="2">2</SelectOption>,
-      <SelectOption value="3" key="3">3</SelectOption>
-    ]
 }
