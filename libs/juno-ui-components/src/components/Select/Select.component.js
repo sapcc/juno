@@ -4,18 +4,33 @@ import { Icon } from "../Icon/index.js"
 import { Spinner } from "../Spinner/index.js"
 import PropTypes from "prop-types"
 
-/** A Select component for selecting a single item. Can be used controlled or uncontrolled. */
+/** A Select component for selecting a single item. Can be used controlled or uncontrolled. 
+    Used in Pagination, Filters, SelectRow.
+    Based on Radix Select.    
+*/
 export const Select = React.forwardRef(
   ({
+    ariaLabel,
     children,
+    disabled,
     placeholder, 
     position,
     ...props
   }, 
   forwardedRef ) => {
     return (
-      <RadixSelect.Root {...props}>
-        <RadixSelect.Trigger ref={forwardedRef}>
+      <RadixSelect.Root 
+        disabled={disabled} 
+        {...props}
+      >
+        <RadixSelect.Trigger 
+          aria-label={ariaLabel}
+          className={`
+            juno-select-trigger
+            ${ disabled ? "jn-opacity-50 jn-cursor-not-allowed" : "" }
+          `}
+          ref={forwardedRef}
+        >
           <RadixSelect.Value placeholder={placeholder}/>
         </RadixSelect.Trigger>
         <RadixSelect.Portal>
@@ -37,13 +52,17 @@ export const Select = React.forwardRef(
 )
 
 Select.propTypes = {
+  ariaLabel: PropTypes.string,
   children: PropTypes.node,
+  disabled: PropTypes.bool,
   placeholder: PropTypes.string,
   position: PropTypes.oneOf(["popper", "align-items"])
 }
 
 Select.defaultProps = {
+  ariaLabel: "",
   children: null,
+  disabled: false,
   placeholder: "Select…",
   position: "popper",
 }

@@ -10,6 +10,19 @@ describe("Select", () => {
     render(<Select />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveAttribute('type', "button")
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select-trigger")
+  })
+  
+  test("renders an aria-label as passed", async () => {
+    render(<Select ariaLabel="my-select" />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveAttribute('aria-label', "my-select")
+  })
+  
+  test("renders a disabled Select as passed", async () => {
+    render(<Select disabled />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toBeDisabled()
   })
   
 })
