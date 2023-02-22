@@ -18,9 +18,9 @@ const optionStyles = `
   jn-bg-theme-background-lvl-1
   focus:jn-outline-none
   focus:jn-ring-2
+  focus:jn-ring-inset
   focus:jn-ring-theme-focus
   hover:jn-bg-theme-background-lvl-3
-  disabled:jn-cursor-not-allowed
 `
 
 /** An individual select option. Use as child of Select. */
@@ -35,7 +35,7 @@ export const SelectOption = React.forwardRef(
     ...props}, 
   forwardedRef) => {
     return (
-      <RadixSelect.Item className={`juno-select-option ${optionStyles} ${className}`} ref={forwardedRef} value={value} disabled={disabled} {...props} >
+      <RadixSelect.Item className={`juno-select-option ${optionStyles} ${disabled ? "jn-opacity-50 jn-cursor-not-allowed" : ""} ${className}`} ref={forwardedRef} value={value} disabled={disabled} {...props} >
         <RadixSelect.ItemText>
           {children || label || value }
         </RadixSelect.ItemText>
