@@ -19,10 +19,22 @@ describe("Select", () => {
     expect(screen.getByRole("combobox")).toHaveAttribute('aria-label', "my-select")
   })
   
+  test("renders a custom className to the Select trigger", async () => {
+    render(<Select className="my-class" />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveClass("my-class")
+  })
+  
   test("renders a disabled Select as passed", async () => {
     render(<Select disabled />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toBeDisabled()
+  })
+  
+  test("renders a placeholder as passed", async () => {
+    render(<Select placeholder="my-placeholder" />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveTextContent("my-placeholder")
   })
   
 })
