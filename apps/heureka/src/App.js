@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useOidcAuth } from "oauth"
-import { QueryClient, QueryClientProvider } from "react-query"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import useStore from "./store"
 import { useStore as useMessageStore } from "./messageStore"
 import AppRouter from "./components/AppRouter"
