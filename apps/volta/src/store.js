@@ -1,5 +1,5 @@
 import React from "react"
-import create from "zustand"
+import { create } from "zustand"
 
 // global zustand store. See how this works here: https://github.com/pmndrs/zustand
 const useStore = create((set) => ({
