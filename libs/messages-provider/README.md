@@ -69,46 +69,46 @@ export default SomeOtherComponent
 ## Availabe actions
 
 - **messages**: return all messages int the store
-  ```javascript
-  import { useMessageStore } from "messages-provider"
-  ...
-  const messages = useMessageStore((state) => state.messages)
-  ...
-  ```
+```javascript
+import { useMessageStore } from "messages-provider"
+...
+const messages = useMessageStore((state) => state.messages)
+...
+```
 - **addMessage**: adds a message to the store
   Accepts an object containing:
   - variant (string). Variants are defined below.
   - text (string)
-  ```javascript
-  import { useMessageStore } from "messages-provider"
-  ...
-  const addMessage = useMessageStore((state) => state.addMessage)
-  ...
-  addMessage({
-    variant: "info",
-    text: "Hello world!",
-  })
-  ...
-  ```
+```javascript
+import { useMessageStore } from "messages-provider"
+...
+const addMessage = useMessageStore((state) => state.addMessage)
+...
+addMessage({
+  variant: "info",
+  text: "Hello world!",
+})
+...
+```
 - **removeMessage**: removes the message with the given id from the store
   Accepts a paremeter containing the id as string from the message to remove.
-  ```javascript
-  import { useMessageStore } from "messages-provider"
-  ...
-  const removeMessage = useMessageStore((state) => state.removeMessage)
-  ...
-  removeMessage("message_ID")
-  ...
-  ```
+```javascript
+import { useMessageStore } from "messages-provider"
+...
+const removeMessage = useMessageStore((state) => state.removeMessage)
+...
+removeMessage("message_ID")
+...
+```
 - **resetMessages**: removes all messages in the store
-  ```javascript
-  import { useMessageStore } from "messages-provider"
-  ...
-  const resetMessages = useMessageStore((state) => state.resetMessages)
-  ...
-  resetMessages()
-  ...
-  ```
+```javascript
+import { useMessageStore } from "messages-provider"
+...
+const resetMessages = useMessageStore((state) => state.resetMessages)
+...
+resetMessages()
+...
+```
 
 ## Variants
 
