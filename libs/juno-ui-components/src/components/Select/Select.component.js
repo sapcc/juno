@@ -12,7 +12,9 @@ export const Select = React.forwardRef(
   ({
     ariaLabel,
     children,
+    className,
     disabled,
+    name,
     placeholder, 
     position,
     ...props
@@ -21,13 +23,15 @@ export const Select = React.forwardRef(
     return (
       <RadixSelect.Root 
         disabled={disabled} 
+        name={name}
         {...props}
       >
         <RadixSelect.Trigger 
           aria-label={ariaLabel}
           className={`
             juno-select-trigger
-            ${ disabled ? "jn-opacity-50 jn-cursor-not-allowed" : "" }
+            ${ disabled ? "juno-select-trigger-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
+            ${ className }
           `}
           ref={forwardedRef}
         >
@@ -52,17 +56,28 @@ export const Select = React.forwardRef(
 )
 
 Select.propTypes = {
+  /** Pass an aria-label to the Select trigger */
   ariaLabel: PropTypes.string,
+  /** Pass a custom className */
+  className: PropTypes.string,
+  /** The children to render in the Menu. Should be SelectOption, SelectGroup, or SelectDivider. */
   children: PropTypes.node,
+  /** Disbale the Select */
   disabled: PropTypes.bool,
+  /** The name of the Select. When a form is submitted, this will be posted as name:value. */
+  name: PropTypes.string,
+  /** Placeholder to display when no option is selected */
   placeholder: PropTypes.string,
+  /** The positioning mode of the Select menu. Defaults to 'popper' (below the trigger).  */
   position: PropTypes.oneOf(["popper", "align-items"])
 }
 
 Select.defaultProps = {
   ariaLabel: "",
+  className: "",
   children: null,
   disabled: false,
+  name: "",
   placeholder: "Select…",
   position: "popper",
 }
