@@ -5,6 +5,20 @@ import { render, act, waitFor } from "@testing-library/react"
 import { screen } from "shadow-dom-testing-library"
 import App from "./App"
 
+// const bc = {
+//   close: jest.fn(),
+//   postMessage: jest.fn(),
+// }
+// globalThis.BroadcastChannel = jest.fn().mockImplementation(() => bc)
+
+jest.mock("communicator", () => {
+  return {
+    broadcast: jest.fn(),
+    watch: jest.fn(() => () => null),
+    get: jest.fn(),
+    onGet: jest.fn(),
+  }
+})
 // mock window location
 Object.defineProperty(window, "location", {
   value: {

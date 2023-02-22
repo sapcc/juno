@@ -64,20 +64,7 @@ const App = (props) => {
     }
   }, [oidc.loggedIn, oidc.login, oidc.logout])
 
-  return (
-    <div>
-      {oidc.loggedIn ? (
-        <div>
-          <code style={{ backgroundColor: "white" }}>
-            {JSON.stringify(oidc.auth, null, 2)}
-          </code>
-          <button onClick={() => oidc.logout()}>Logout</button>
-        </div>
-      ) : (
-        <button onClick={() => oidc.login()}>Login</button>
-      )}
-    </div>
-  )
+  return null
 }
 
 export default App
