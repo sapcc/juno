@@ -23,6 +23,7 @@ spec:
       labels:
         app: assets-server
       annotations:
+        checksum/nginx-cm: {{ include (print $.Template.BasePath "/nginx-cm.yaml") . | sha256sum }}
         # we use timestamp to pull latest image without downtime
         # https://github.com/helm/helm/issues/5218
         # timestamp: "{{ now | date "20060102150405" }}"
@@ -34,19 +35,19 @@ spec:
           image: "{{ .Values.global.registry }}/juno-v2-assets-server:{{ .Values.global.assets_server_image_tag }}"
           imagePullPolicy: IfNotPresent
           ports:
-            - name: http
-              containerPort: 80
+            - name: https
+              containerPort: 443
           livenessProbe:
             httpGet:
               path: /manifest.json
-              port: 80
+              port: 443
             timeoutSeconds: 10
             periodSeconds: 60
             initialDelaySeconds: 60
           readinessProbe:
             httpGet:
               path: /manifest.json
-              port: 80
+              port: 443
             timeoutSeconds: 5
             periodSeconds: 
           resources:
@@ -61,3 +62,20 @@ spec:
               exec:
                 #Give the ingress some time to reload its config
                 command: ["/bin/sh", "-c", "sleep 30"]
+          volumeMounts:
+            - mountPath: /tls-secret
+              name: tls-secret
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d/assets.conf
+              subPath: nginx.conf              
+      volumes:
+        - name: tls-secret
+          secret:
+            secretName: tls-asset-manager
+        - name: nginx-conf
+          configMap:
+            defaultMode: 420
+            name: nginx-conf
+            items:
+              - key: nginx.conf
+                path: nginx.conf

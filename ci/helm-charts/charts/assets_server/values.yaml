@@ -1,0 +1,8 @@
+global:
+  region: qa-de-1
+  tld: cloud.sap
+  registry: keppel.eu-de-1.cloud.sap/ccloud
+  assets_server_image_tag: latest
+endpoint_host: assets
+public_ip: 10.46.101.218
+# public_ip: 147.204.35.158

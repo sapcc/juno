@@ -9,7 +9,9 @@ spec:
   selector:
     app: assets-server
   ports:
-    - name: assets-server
-      port: 8888
-      targetPort: 80
+    - name: assets-server-https
+      port: 443
+      targetPort: 443
       protocol: TCP
+  externalIPs: 
+  - {{ .Values.public_ip}}

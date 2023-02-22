@@ -1,49 +1,28 @@
-apiVersion: networking.k8s.io/v1
 kind: Ingress
+apiVersion: networking.k8s.io/v1
+
 metadata:
-  annotations:
-    dns-manager: "true"
-    dns-manager/zone-name: "{{ .Values.global.region }}.{{ .Values.global.tld }}"
-    kubernetes.io/tls-acme: "true"
-    # disable the idle http timeout check
-    # https://operations.global.cloud.sap/docs/support/playbook/kubernetes/idle_http_keep_alive_timeout.html
-    cloud.sap/no-http-keep-alive-monitor: "true"
-    ingress.kubernetes.io/cors-allow-origin: '*'
-    ingress.kubernetes.io/enable-cors: "true"
-
-  name: ingress-assets-server
+  name: ingress-assets-server-noop
   namespace: juno
+  annotations:
+    # ingress controller only creates certs as secret
+    kubernetes.io/ingress.class: "noop.cert-manager"
+    # enable cert-manager
+    kubernetes.io/tls-acme: "true"
 spec:
-  rules:
-    - host: "assets.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service: 
-                name: assets-server
-                port: 
-                  number: 8888
-
-{{- if eq .Values.global.region "eu-nl-1" }}
-    - host: "assets.juno.global.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service: 
-                name: assets-server
-                port: 
-                  number: 8888               
-
-{{- end }} 
-
   tls:
-    - hosts: 
-        - "assets.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
-{{- if eq .Values.global.region "eu-nl-1" }}    
-        - "assets.juno.global.{{ .Values.global.tld }}"  
-{{- end }}        
-      secretName: "tls-juno-assets-server"
+     - secretName: tls-asset-manager
+       hosts: 
+         - {{ .Values.endpoint_host }}.{{ .Values.global.region }}.{{ .Values.global.tld }}
+  # the following is mandatory in an ingress resource, but will be ignored by the vice-president
+  rules:
+    - host: {{ .Values.endpoint_host }}.{{ .Values.global.region }}.{{ .Values.global.tld }}
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: assets-server
+              port: 
+                number: 443
