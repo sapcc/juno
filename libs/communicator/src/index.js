@@ -24,7 +24,7 @@ const broadcast = (name, data, options) => {
   try {
     if (typeof name !== "string")
       throw new Error("(broadcast) the message name must be given.")
-    if (data == undefined)
+    if (data === undefined)
       throw new Error(
         "(broadcast) the message data must be given (null is allowed)."
       )
@@ -79,104 +79,6 @@ const watch = (name, callback, options) => {
     error(e.message)
   }
 }
-
-// /**
-//  * This function implements a 1:1 communication
-//  * @param {string} name
-//  * @param {function} callback
-//  * @param {object} options
-//  * @returns cancel function
-//  */
-// const get = (name, callback, options) => {
-//   try {
-//     if (typeof name !== "string")
-//       throw new Error("(get) the message name must be given.")
-//     if (typeof callback !== "function")
-//       throw new Error("(get) the callback parameter must be a function.")
-
-//     const { debug, ...unknownOptions } = options || {}
-//     const unknownOptionsKeys = Object.keys(unknownOptions)
-//     if (unknownOptionsKeys.length > 0)
-//       warn(`(get) unknown options: ${unknownOptionsKeys.join(", ")}`)
-
-//     if (debug) log(`get data for message ${name}`)
-
-//     // requst channel id
-//     const requestChannelID = CHANNEL_PREFIX + "GET:" + name
-//     // create an ID for response channel
-//     const responseChannelID =
-//       CHANNEL_PREFIX + "GET:" + name + ":RESPONSE:" + uniqString()
-
-//     // request channel
-//     const requestChannel = new BroadcastChannel(requestChannelID)
-//     // create a response channel to listen to the answer from request channel
-//     const responseChannel = new BroadcastChannel(responseChannelID)
-
-//     // handle answer from request channel
-//     responseChannel.onmessage = (e) => {
-//       // execute callback
-//       callback(e.data)
-//       // close response channel
-//       responseChannel.close()
-//     }
-
-//     // request data with the new created response channel ID
-//     requestChannel.postMessage({ responseChannelID, action: "GET" })
-//     requestChannel.close()
-
-//     return () => {
-//       if (responseChannel?.close) responseChannel.close()
-//     }
-//   } catch (e) {
-//     error(e.message)
-//   }
-// }
-
-// /**
-//  * Listen to get messages
-//  * @param {string} name
-//  * @param {function} callback
-//  * @param {object} options
-//  * @returns cancel function
-//  */
-//  const onGet = (name, callback, options = {}) => {
-//   try {
-//     if (typeof name !== "string")
-//       throw new Error("(onGet) the message name must be given.")
-//     if (typeof callback !== "function")
-//       throw new Error("(onGet) the callback parameter must be a function.")
-
-//     const { debug, ...unknownOptions } = options || {}
-//     const unknownOptionsKeys = Object.keys(unknownOptions)
-//     if (unknownOptionsKeys.length > 0)
-//       warn(`(onGet) unknown options: ${unknownOptionsKeys.join(", ")}`)
-
-//     if (debug) log(`send data for message ${name}`)
-
-//     // connect to the channel for the message name
-//     const requestChannel = new BroadcastChannel(CHANNEL_PREFIX + "GET:" + name)
-
-//     // listen to requests
-//     requestChannel.onmessage = (e) => {
-//       // data should contain the GET action and the response channel ID
-//       if (!e?.data?.action === "GET" || !e?.data?.responseChannelID) return
-
-//       // connect to the response channel
-//       const responseChannel = new BroadcastChannel(e.data.responseChannelID)
-//       // get response data
-//       const data = callback()
-
-//       console.log("===send data", data, "to ", responseChannel.name)
-//       // send response
-//       setTimeout(responseChannel.postMessage(data))
-//       //responseChannel.close()
-//     }
-
-//     return () => requestChannel.close()
-//   } catch (e) {
-//     error(e.message)
-//   }
-// }
 
 /**
  * This function implements a 1:1 communication

@@ -29,6 +29,8 @@ RUN rsync -avu --delete "/tmp/src/" "/juno" > /dev/null ;
 # RUN yarn install >/dev/null ; yarn build-libs > /dev/null
 RUN yarn install > /dev/null ; yarn build-libs
 
+RUN node scripts/generate_communication_readme.mjs
+
 # TEST AND BUILD ASSET
 # IGNORE_EXTERNALS=true will results in a bundle which includes all dependencies. 
 # This is the case if the jspm cdn is unreachable!!! 
@@ -56,6 +58,7 @@ RUN \
   mkdir -p "/tmp/$ASSET_PATH" ; \
   cp -r "/juno/$ASSET_PATH/$BUILD_DIR" "/tmp/$ASSET_PATH/" ; \
   cp "/juno/$ASSET_PATH/package.json" "/tmp/$ASSET_PATH/package.json" ; \
+  cp "/juno/$ASSET_PATH/COMMUNICATOR.md" "/tmp/$ASSET_PATH/COMMUNICATOR.md" ; \
   cp "/juno/$ASSET_PATH/README.md" "/tmp/$ASSET_PATH/README.md"  > /dev/null || : #ignore errors
 
 RUN cd "/tmp/$ASSET_PATH" && tar -czf package.tgz . 

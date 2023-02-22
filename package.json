@@ -24,6 +24,7 @@
   "devDependencies": {
     "@jspm/generator": "^1.0.2",
     "glob": "^8.1.0",
-    "google-protobuf": "^3.14.0"
+    "google-protobuf": "^3.14.0",
+    "json2md": "^2.0.0"
   }
 }

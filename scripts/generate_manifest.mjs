@@ -109,6 +109,11 @@ files.sort().forEach(async (file) => {
   if (fs.existsSync(`${rootPath}/${path}/package.tgz`)) {
     manifest[pkg.name][version]["tarball"] = "/" + path + "/package.tgz"
   }
+
+  if (fs.existsSync(`${rootPath}/${path}/COMMUNICATOR.md`)) {
+    manifest[pkg.name][version]["communicator"] =
+      "/" + path + "/COMMUNICATOR.md"
+  }
   // console.log(path + "/" + entryDir, meta)
 })
 

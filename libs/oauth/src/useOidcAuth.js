@@ -144,16 +144,17 @@ function oidcRequest({ issuerURL, clientID, silent }) {
 
 // This function removes cached token from storage.
 function oidcLogout(issuerURL, { silent }) {
+  let url = new URL("/oauth2/logout", issuerURL)
   if (silent) {
     // refresh token using iframe and postMessage API
     const iframe = document.createElement("iframe")
-    issuerURL += "&prompt=none"
-    iframe.setAttribute("src", `${issuerURL}/oauth2/logout`)
+    url.search = "prompt=none"
+    iframe.setAttribute("src", url.href)
     iframe.setAttribute("width", 0)
     iframe.setAttribute("height", 0)
     document.body.append(iframe)
   } else {
-    window.location.replace(`${issuerURL}/oauth2/logout`)
+    window.location.replace(url.href)
   }
 }
 
@@ -176,9 +177,9 @@ const useOidcAuth = (options) => {
 
   const logout = useCallback(
     (options) => {
+      setAuth(null)
       if (options?.resetOIDCSession)
         oidcLogout(issuerURL, { silent: options?.silent === true })
-      else setAuth(null)
     },
     [setAuth]
   )
