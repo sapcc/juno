@@ -8,7 +8,7 @@ import {
 } from "juno-ui-components"
 import useStore from "../store"
 import { currentState, push } from "url-state-provider"
-import { useMutation, useQueryClient, useQuery } from "react-query"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { fetchPeak, updatePeak } from "../actions"
 
 const EditItemPanel = ({ closeCallback }) => {
