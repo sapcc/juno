@@ -2,6 +2,7 @@ import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { act } from 'react-dom/test-utils'
 import { Select } from "./index"
+import { SelectOption } from "../SelectOption/index"
 
 
 describe("Select", () => {
@@ -29,6 +30,14 @@ describe("Select", () => {
     render(<Select disabled />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toBeDisabled()
+  })
+  
+  test("renders an open Select as passed", async () => {
+    render(<Select open>
+      <SelectOption value="1"></SelectOption>
+    </Select>)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
   })
   
   test("renders a placeholder as passed", async () => {

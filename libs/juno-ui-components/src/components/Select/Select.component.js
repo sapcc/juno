@@ -15,8 +15,11 @@ export const Select = React.forwardRef(
     className,
     disabled,
     name,
+    onOpenChange,
+    open,
     placeholder, 
     position,
+    value,
     ...props
   }, 
   forwardedRef ) => {
@@ -24,6 +27,8 @@ export const Select = React.forwardRef(
       <RadixSelect.Root 
         disabled={disabled} 
         name={name}
+        onOpenChange={onOpenChange}
+        value={value}
         {...props}
       >
         <RadixSelect.Trigger 
@@ -62,14 +67,20 @@ Select.propTypes = {
   className: PropTypes.string,
   /** The children to render in the Menu. Should be SelectOption, SelectGroup, or SelectDivider. */
   children: PropTypes.node,
-  /** Disbale the Select */
+  /** Disable the Select */
   disabled: PropTypes.bool,
   /** The name of the Select. When a form is submitted, this will be posted as name:value. */
   name: PropTypes.string,
+  /** Handler to be executed when the open state a controlled Select changes */
+  onOpenChange: PropTypes.func,
+  /** Whether the Select is open. Triggers controlled mode, to be used with onOpenChange. */
+  open: PropTypes.bool,
   /** Placeholder to display when no option is selected */
   placeholder: PropTypes.string,
   /** The positioning mode of the Select menu. Defaults to 'popper' (below the trigger).  */
-  position: PropTypes.oneOf(["popper", "align-items"])
+  position: PropTypes.oneOf(["popper", "align-items"]),
+  /** The value of the Select (controlled mode) */
+  value: PropTypes.string,
 }
 
 Select.defaultProps = {
@@ -78,8 +89,10 @@ Select.defaultProps = {
   children: null,
   disabled: false,
   name: "",
+  open: false,
   placeholder: "Select…",
   position: "popper",
+  value: undefined,
 }
 
 

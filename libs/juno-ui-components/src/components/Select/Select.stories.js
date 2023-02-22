@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { Select } from "./index.js"
 import { SelectOption } from "../SelectOption/index.js"
 import { Default as SelectOptionDefaultStory } from "../SelectOption/SelectOption.stories.js"
@@ -18,6 +18,26 @@ const Template = ({children, ...args}) => {
   )
 }
 
+const ControlledTemplate = ({open, value, children, ...args}) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [val, setVal] = useState(undefined)
+  
+  useEffect(() => {
+    setIsOpen(open)
+  }, [open])
+  
+  useEffect(() => {
+    setVal(value)
+  }, [value])
+  
+  return (
+    <Select value={val} {...args} >
+      { children }
+    </Select>
+  )
+  
+}
+
 export const Default = Template.bind({})
 Default.args = {
   children: [
@@ -27,25 +47,11 @@ Default.args = {
   ]
 }
 
-export const Uncontrolled = Template.bind({})
-Uncontrolled.args = {
-  placeholder: "Uncontrolled Select",
-  defaultOpen: false,
-  defaultValue: "2",
-  onValueChange: () => { console.log("value changed") },
-  children: [
-      <SelectOption value="1" key="1">Value 1</SelectOption>,
-      <SelectOption value="2" key="2">Value 2</SelectOption>,
-      <SelectOption value="3" key="3">Value 3</SelectOption>
-    ]
-}
 
-export const Controlled = Template.bind({})
+export const Controlled = ControlledTemplate.bind({})
 Controlled.args = {
   placeholder: "Controlled Select",
-  value: "2",
-  onValueChange: () => { console.log("value changed") },
-  onOpenChange: () => { console.log("open changed") },
+  open: true,
   children: [
     <SelectOption value="1" key="1">Value 1</SelectOption>,
     <SelectOption value="2" key="2">Value 2</SelectOption>,
