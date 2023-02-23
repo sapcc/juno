@@ -21,7 +21,7 @@ import {
   addOnChangeListener,
   removeOnChangeListener,
 } from "url-state-provider"
-import { useQuery } from "react-query"
+import { useQuery } from "@tanstack/react-query"
 import { fetchAssetsManifest } from "../actions"
 import { APP } from "../helpers"
 import AssetDetailsMarkdown from "./AssetDetailsMarkdown"
@@ -48,14 +48,12 @@ const AssetDetails = () => {
   const [assetVersion, setAssetVersion] = useState(null)
   const [tabIndex, setTabIndex] = useState(0)
 
-  const { isLoading, isError, data, error } = useQuery(
-    ["manifest", manifestUrl],
-    fetchAssetsManifest,
-    {
-      enabled: !!manifestUrl,
-      staleTime: Infinity,
-    }
-  )
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ["manifest", manifestUrl],
+    queryFn: fetchAssetsManifest,
+    enabled: !!manifestUrl,
+    staleTime: Infinity,
+  })
 
   const asset = useMemo(() => {
     if (!data) return null
