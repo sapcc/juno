@@ -25,20 +25,18 @@ const AppContent = (props) => {
   const [currentModal, setCurrentModal] = useState(null)
   const [tabIndex, setTabIndex] = useState(0)
 
-  const { isLoading, isError, data, error } = useQuery(
-    ["peaks", endpoint, {}],
-    fetchPeaks,
-    {
-      // enable the query also if the endpoint is set. For fetching local
-      // data is not necessary since it should be empty
-      // enabled: !!endpoint,
-      // If set to Infinity, the data will never be considered stale
-      //  until a browser reload is triggered
-      // staleTime: Infinity,
-      // refer to this documentation to see more options
-      // https://tanstack.com/query/v4/docs/guides/queries
-    }
-  )
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ["peaks", endpoint, {}],
+    queryFn: fetchPeaks,
+    // enable the query also if the endpoint is set. For fetching local
+    // data is not necessary since it should be empty
+    // enabled: !!endpoint,
+    // If set to Infinity, the data will never be considered stale
+    //  until a browser reload is triggered
+    // staleTime: Infinity,
+    // refer to this documentation to see more options
+    // https://tanstack.com/query/v4/docs/guides/queries
+  })
 
   // wait until the global state is set to fetch the url state
   useEffect(() => {

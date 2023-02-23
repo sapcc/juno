@@ -10,9 +10,9 @@ const PeaksListItem = ({ peak }) => {
   const endpoint = useStore((state) => state.endpoint)
   const queryClient = useQueryClient()
 
-  const { isLoading, isError, error, data, isSuccess, mutate } = useMutation(
-    ({ endpoint, id }) => deletePeak(endpoint, id)
-  )
+  const { isLoading, isError, error, data, isSuccess, mutate } = useMutation({
+    mutationFn: ({ endpoint, id }) => deletePeak(endpoint, id),
+  })
 
   const handleEditPeakClick = () => {
     const urlState = currentState(urlStateKey)
