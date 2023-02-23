@@ -58,6 +58,7 @@
     "production": "PORT=$APP_PORT webpack serve --mode production"
   },
   "peerDependencies": {
+    "@tanstack/react-query": "^4.24.10",
     "custom-event-polyfill": "^1.0.7",
     "juno-ui-components": "*",
     "luxon": "^2.3.0",
