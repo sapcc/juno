@@ -16,7 +16,9 @@ import {
 
 // get all services
 export const getServices = (bearerToken, endpoint, options) => {
-  return useQuery(["services", bearerToken, endpoint, options], services, {
+  return useQuery({
+    queryKey: ["services", bearerToken, endpoint, options],
+    queryFn: services,
     // The query will not execute until the bearerToken exists
     enabled: !!bearerToken,
     // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
@@ -27,21 +29,19 @@ export const getServices = (bearerToken, endpoint, options) => {
 }
 
 export const getServiceFilters = (bearerToken, endpoint, options) => {
-  return useQuery(
-    ["serviceFilters", bearerToken, endpoint, options],
-    serviceFilters,
-    {
-      // The query will not execute until the bearerToken exists
-      enabled: !!bearerToken,
-      // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
-      // When the new data arrives, the previous data is seamlessly swapped to show the new data.
-      // isPreviousData is made available to know what data the query is currently providing you
-      keepPreviousData: true,
-      // If a user leaves your application and returns to stale data, React Query automatically requests fresh data for you in the background.
-      // You can disable this globally or per-query using the refetchOnWindowFocus option
-      refetchOnWindowFocus: false,
-    }
-  )
+  return useQuery({
+    queryKey: ["serviceFilters", bearerToken, endpoint, options],
+    queryFn: serviceFilters,
+    // The query will not execute until the bearerToken exists
+    enabled: !!bearerToken,
+    // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
+    // When the new data arrives, the previous data is seamlessly swapped to show the new data.
+    // isPreviousData is made available to know what data the query is currently providing you
+    keepPreviousData: true,
+    // If a user leaves your application and returns to stale data, React Query automatically requests fresh data for you in the background.
+    // You can disable this globally or per-query using the refetchOnWindowFocus option
+    refetchOnWindowFocus: false,
+  })
 }
 
 export const getService = (
@@ -50,7 +50,9 @@ export const getService = (
   serviceId,
   placeholderData
 ) => {
-  return useQuery(["service", bearerToken, endpoint, serviceId], service, {
+  return useQuery({
+    queryKey: ["service", bearerToken, endpoint, serviceId],
+    queryFn: service,
     // The query will not execute until the bearerToken exists
     enabled: !!bearerToken,
     // Placeholder data allows a query to behave as if it already has data, similar to the initialData option,
@@ -62,7 +64,9 @@ export const getService = (
 
 // get all components
 export const getComponents = (bearerToken, endpoint, options) => {
-  return useQuery(["components", bearerToken, endpoint, options], components, {
+  return useQuery({
+    queryKey: ["components", bearerToken, endpoint, options],
+    queryFn: components,
     // The query will not execute until the bearerToken exists
     enabled: !!bearerToken,
     // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
@@ -73,21 +77,19 @@ export const getComponents = (bearerToken, endpoint, options) => {
 }
 
 export const getComponentFilters = (bearerToken, endpoint, options) => {
-  return useQuery(
-    ["componentFilters", bearerToken, endpoint, options],
-    componentFilters,
-    {
-      // The query will not execute until the bearerToken exists
-      enabled: !!bearerToken,
-      // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
-      // When the new data arrives, the previous data is seamlessly swapped to show the new data.
-      // isPreviousData is made available to know what data the query is currently providing you
-      keepPreviousData: true,
-      // If a user leaves your application and returns to stale data, React Query automatically requests fresh data for you in the background.
-      // You can disable this globally or per-query using the refetchOnWindowFocus option
-      refetchOnWindowFocus: false,
-    }
-  )
+  return useQuery({
+    queryKey: ["componentFilters", bearerToken, endpoint, options],
+    queryFn: componentFilters,
+    // The query will not execute until the bearerToken exists
+    enabled: !!bearerToken,
+    // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
+    // When the new data arrives, the previous data is seamlessly swapped to show the new data.
+    // isPreviousData is made available to know what data the query is currently providing you
+    keepPreviousData: true,
+    // If a user leaves your application and returns to stale data, React Query automatically requests fresh data for you in the background.
+    // You can disable this globally or per-query using the refetchOnWindowFocus option
+    refetchOnWindowFocus: false,
+  })
 }
 
 export const getComponent = (
@@ -96,33 +98,29 @@ export const getComponent = (
   componentId,
   placeholderData
 ) => {
-  return useQuery(
-    ["component", bearerToken, endpoint, componentId],
-    component,
-    {
-      // The query will not execute until the bearerToken exists
-      enabled: !!bearerToken,
-      // Placeholder data allows a query to behave as if it already has data, similar to the initialData option,
-      // but the data is not persisted to the cache. This comes in handy for situations where you have enough partial (or fake)
-      // data to render the query successfully while the actual data is fetched in the background.
-      placeholderData: placeholderData,
-    }
-  )
+  return useQuery({
+    queryKey: ["component", bearerToken, endpoint, componentId],
+    queryFn: component,
+    // The query will not execute until the bearerToken exists
+    enabled: !!bearerToken,
+    // Placeholder data allows a query to behave as if it already has data, similar to the initialData option,
+    // but the data is not persisted to the cache. This comes in handy for situations where you have enough partial (or fake)
+    // data to render the query successfully while the actual data is fetched in the background.
+    placeholderData: placeholderData,
+  })
 }
 
 export const getVulnerabilities = (bearerToken, endpoint, options) => {
-  return useQuery(
-    ["vulnerabilities", bearerToken, endpoint, options],
-    vulnerabilities,
-    {
-      // The query will not execute until the bearerToken exists
-      enabled: !!bearerToken,
-      // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
-      // When the new data arrives, the previous data is seamlessly swapped to show the new data.
-      // isPreviousData is made available to know what data the query is currently providing you
-      keepPreviousData: true,
-    }
-  )
+  return useQuery({
+    queryKey: ["vulnerabilities", bearerToken, endpoint, options],
+    queryFn: vulnerabilities,
+    // The query will not execute until the bearerToken exists
+    enabled: !!bearerToken,
+    // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
+    // When the new data arrives, the previous data is seamlessly swapped to show the new data.
+    // isPreviousData is made available to know what data the query is currently providing you
+    keepPreviousData: true,
+  })
 }
 
 export const getVulnerability = (
@@ -131,40 +129,38 @@ export const getVulnerability = (
   vulnerabilityId,
   placeholderData
 ) => {
-  return useQuery(
-    ["user", bearerToken, endpoint, vulnerabilityId],
-    vulnerability,
-    {
-      // The query will not execute until the bearerToken exists
-      enabled: !!bearerToken,
-      // Placeholder data allows a query to behave as if it already has data, similar to the initialData option,
-      // but the data is not persisted to the cache. This comes in handy for situations where you have enough partial (or fake)
-      // data to render the query successfully while the actual data is fetched in the background.
-      placeholderData: placeholderData,
-    }
-  )
+  return useQuery({
+    queryKey: ["user", bearerToken, endpoint, vulnerabilityId],
+    queryFn: vulnerability,
+    // The query will not execute until the bearerToken exists
+    enabled: !!bearerToken,
+    // Placeholder data allows a query to behave as if it already has data, similar to the initialData option,
+    // but the data is not persisted to the cache. This comes in handy for situations where you have enough partial (or fake)
+    // data to render the query successfully while the actual data is fetched in the background.
+    placeholderData: placeholderData,
+  })
 }
 
 export const getVulnerabilityFilters = (bearerToken, endpoint, options) => {
-  return useQuery(
-    ["vulnerabilityFilters", bearerToken, endpoint, options],
-    vulnerabilityFilters,
-    {
-      // The query will not execute until the bearerToken exists
-      enabled: !!bearerToken,
-      // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
-      // When the new data arrives, the previous data is seamlessly swapped to show the new data.
-      // isPreviousData is made available to know what data the query is currently providing you
-      keepPreviousData: true,
-      // If a user leaves your application and returns to stale data, React Query automatically requests fresh data for you in the background.
-      // You can disable this globally or per-query using the refetchOnWindowFocus option
-      refetchOnWindowFocus: false,
-    }
-  )
+  return useQuery({
+    queryKey: ["vulnerabilityFilters", bearerToken, endpoint, options],
+    queryFn: vulnerabilityFilters,
+    // The query will not execute until the bearerToken exists
+    enabled: !!bearerToken,
+    // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
+    // When the new data arrives, the previous data is seamlessly swapped to show the new data.
+    // isPreviousData is made available to know what data the query is currently providing you
+    keepPreviousData: true,
+    // If a user leaves your application and returns to stale data, React Query automatically requests fresh data for you in the background.
+    // You can disable this globally or per-query using the refetchOnWindowFocus option
+    refetchOnWindowFocus: false,
+  })
 }
 
 export const getUsers = (bearerToken, endpoint, options) => {
-  return useQuery(["users", bearerToken, endpoint, options], users, {
+  return useQuery({
+    queryKey: ["users", bearerToken, endpoint, options],
+    queryFn: users,
     // The query will not execute until the bearerToken exists
     enabled: !!bearerToken,
     // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
@@ -175,7 +171,9 @@ export const getUsers = (bearerToken, endpoint, options) => {
 }
 
 export const getUser = (bearerToken, endpoint, userId, placeholderData) => {
-  return useQuery(["user", bearerToken, endpoint, userId], user, {
+  return useQuery({
+    queryKey: ["user", bearerToken, endpoint, userId],
+    queryFn: user,
     // The query will not execute until the bearerToken exists
     enabled: !!bearerToken,
     // Placeholder data allows a query to behave as if it already has data, similar to the initialData option,
@@ -186,7 +184,9 @@ export const getUser = (bearerToken, endpoint, userId, placeholderData) => {
 }
 
 export const getUserFilters = (bearerToken, endpoint, options) => {
-  return useQuery(["userFilters", endpoint, options], userFilters, {
+  return useQuery({
+    queryKey: ["userFilters", endpoint, options],
+    queryFn: userFilters,
     // The query will not execute until the bearerToken exists
     enabled: !!bearerToken,
     // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
