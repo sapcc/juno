@@ -107,7 +107,7 @@ export const Select = React.forwardRef(
     return (
       <RadixSelect.Root 
         defaultOpen={defaultOpen}
-        disabled={disabled || hasError} 
+        disabled={disabled || hasError || isLoading} 
         name={name}
         onOpenChange={onOpenChange}
         onValueChange={onValueChange}
@@ -125,7 +125,7 @@ export const Select = React.forwardRef(
             ${ isValid ? "juno-select-trigger-valid " + triggerValidStyles : "" } 
             ${ disabled ? "juno-select-trigger-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
             ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
-            ${ isLoading ? "juno-select-trigger-loading" : "" }
+            ${ isLoading ? "juno-select-trigger-loading jn-cursor-not-allowed" : "" }
             ${ isInvalid ? "juno-select-trigger-invalid" : "" }
             ${ className }
           `}
