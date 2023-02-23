@@ -21,10 +21,32 @@ const triggerStyles = `
   focus:jn-ring-theme-focus
 `
 
+const triggerErrorStyles = `
+  jn-border
+  jn-border-theme-error
+`
+
+const triggerValidStyles = `
+  jn-border
+  jn-border-theme-success
+`
+
+const contentStyles = `
+  jn-rounded
+  jn-bg-theme-background-lvl-1
+  jn-w-[var(--radix-select-trigger-width)]
+  jn-max-h-[var(radix-select-content-available-height)]
+`
+
+const scrollButtonStyles = `
+  jn-text-center
+  jn-py-1
+`
+
 
 /** A Select component for selecting a single item. Can be used controlled or uncontrolled. 
     Used in Pagination, Filters, SelectRow.  
-    TODO: menu theming, Many options / align-items mode, tests
+    TODO: trigger active state styles (invert chevron?), menu theming, z-index, iframe / shadow dom, menu scrolling in popper mode -> make align-items default?, tests
 */
 export const Select = React.forwardRef(
   ({
@@ -33,20 +55,59 @@ export const Select = React.forwardRef(
     className,
     defaultOpen,
     disabled,
+    error,
+    invalid,
+    loading,
     name,
     onOpenChange,
     onValueChange,
     open,
     placeholder, 
     position,
+    valid,
     value,
     ...props
   }, 
   forwardedRef ) => {
+    const [hasError, setHasError] = useState(false)
+    const [isInvalid, setIsInvalid] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [isValid, setIsValid] = useState(false)
+    
+    useEffect(() => {
+      setHasError(error)
+    }, [error])
+    
+    useEffect(() => {
+      setIsInvalid(invalid)
+    }, [invalid])
+    
+    useEffect(() => {
+      setIsLoading(loading)
+    }, [loading])
+    
+    useEffect(() => {
+      setIsValid(valid)
+    }, [valid])
+    
+    const TriggerIcons = () => {
+      if (isLoading) {
+        return (<Spinner className="jn-mr-0"/>)
+      } else if (hasError){
+        return (<Icon icon="errorOutline" color="jn-text-theme-error" />)
+      } else if (isValid) {
+        return (<><Icon icon="checkCircle" color="jn-text-theme-success" className="jn-pointer-events-none"/><Icon icon="expandMore"/></>)
+      } else if (isInvalid) {
+        return (<><Icon icon="dangerous" color="jn-text-theme-error" className="jn-pointer-events-none"/><Icon icon="expandMore"/></>)
+      } else {
+        return (<Icon icon="expandMore" />)
+      }
+    }
+    
     return (
       <RadixSelect.Root 
         defaultOpen={defaultOpen}
-        disabled={disabled} 
+        disabled={disabled || hasError} 
         name={name}
         onOpenChange={onOpenChange}
         onValueChange={onValueChange}
@@ -59,22 +120,36 @@ export const Select = React.forwardRef(
           className={`
             juno-select-trigger
             ${ triggerStyles }
+            ${ hasError || isInvalid ? triggerErrorStyles : "" }
+            ${ hasError ? "juno-select-trigger-error jn-cursor-not-allowed" : "" }
+            ${ isValid ? "juno-select-trigger-valid " + triggerValidStyles : "" } 
             ${ disabled ? "juno-select-trigger-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
+            ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
+            ${ isLoading ? "juno-select-trigger-loading" : "" }
+            ${ isInvalid ? "juno-select-trigger-invalid" : "" }
             ${ className }
           `}
           ref={forwardedRef}
         >
-          <RadixSelect.Value placeholder={placeholder}/>
+          { 
+            isLoading || hasError ?
+              ""
+            :
+              <RadixSelect.Value placeholder={placeholder}/> 
+          }
+          <RadixSelect.Icon>
+            <TriggerIcons />
+          </RadixSelect.Icon>
         </RadixSelect.Trigger>
         <RadixSelect.Portal>
-          <RadixSelect.Content position={position} sideOffset={2}>
-            <RadixSelect.ScrollUpButton>
+          <RadixSelect.Content className={`juno-select-content ${contentStyles}`} position={position} sideOffset={2}>
+            <RadixSelect.ScrollUpButton className={`${scrollButtonStyles}`}>
               <Icon icon="expandLess"/>
             </RadixSelect.ScrollUpButton>
             <RadixSelect.Viewport>
               { children }
             </RadixSelect.Viewport>
-            <RadixSelect.ScrollDownButton>
+            <RadixSelect.ScrollDownButton className={`${scrollButtonStyles}`}>
               <Icon icon="expandMore"/>
             </RadixSelect.ScrollDownButton>
           </RadixSelect.Content>
@@ -95,6 +170,12 @@ Select.propTypes = {
   defaultOpen: PropTypes.bool,
   /** Disable the Select */
   disabled: PropTypes.bool,
+  /** Whether the Select has an error, e.g. when loading necessary option data failed. When the Select has been negatively validated, use `invalid` instead. */
+  error: PropTypes.bool,
+  /** Whether the Select has been negatively validated */
+  invalid: PropTypes.bool,
+  /** Whether the Select is currently busy loading options. Will display a Spinner Icon. */
+  loading: PropTypes.bool,
   /** The name of the Select. When a form is submitted, this will be posted as name:value. */
   name: PropTypes.string,
   /** Handler to be executed when the open state a controlled Select changes */
@@ -107,6 +188,8 @@ Select.propTypes = {
   placeholder: PropTypes.string,
   /** The positioning mode of the Select menu. Defaults to 'popper' (below the trigger).  */
   position: PropTypes.oneOf(["popper", "align-items"]),
+  /** Whether the Select has been positively validated */
+  valid: PropTypes.bool,
   /** The value of the Select (controlled mode) */
   value: PropTypes.string,
 }
@@ -117,16 +200,15 @@ Select.defaultProps = {
   children: null,
   defaultOpen: undefined,
   disabled: false,
+  error: false,
+  invalid: false,
+  loading: false,
   name: "",
   onOpenChange: undefined,
   onValueChange: undefined,
   open: undefined,
   placeholder: "Select…",
   position: "popper",
+  valid: false,
   value: undefined,
 }
-
-
-
-
-

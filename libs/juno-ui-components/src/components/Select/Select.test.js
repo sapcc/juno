@@ -12,6 +12,7 @@ Testing user interactions with radix and jest seems hard and requires some mocki
 Otherwise tests will fail with "ResizeObserver is not defined".
 
 https://github.com/radix-ui/primitives/issues/856
+https://github.com/radix-ui/primitives/issues/1822
 https://github.com/ZeeCoder/use-resize-observer/issues/40
 https://stackoverflow.com/questions/64558062/how-to-mock-resizeobserver-to-work-in-unit-tests-using-react-testing-library
 
@@ -49,6 +50,32 @@ describe("Select", () => {
     render(<Select disabled />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toBeDisabled()
+  })
+  
+  test("renders a valid Select as passed", async () => {
+    render(<Select valid />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select-trigger-valid")
+  })
+  
+  test("renders an invalid Select as passed", async () => {
+    render(<Select invalid />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select-trigger-invalid")
+  })
+  
+  test("renders loading Select with a Spinner as passed", async () => {
+    render(<Select loading />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select-trigger-loading")
+    // query the DOM directly as Radix-ui add aria-hidden to the icons in the select:
+    expect(document.querySelector(".juno-spinner")).toBeInTheDocument()
+  })
+  
+  test("renders a Select in error state as passed", async () => {
+    render(<Select error />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select-trigger-error")
   })
   
   test("renders an open Select as passed", async () => {
