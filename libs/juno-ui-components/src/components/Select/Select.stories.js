@@ -31,7 +31,7 @@ const ControlledTemplate = ({open, value, children, ...args}) => {
   }, [value])
   
   return (
-    <Select value={val} {...args} >
+    <Select value={val} open={isOpen} onOpenChange={ () => {} } {...args} >
       { children }
     </Select>
   )
@@ -47,17 +47,61 @@ Default.args = {
   ]
 }
 
-
-export const Controlled = ControlledTemplate.bind({})
-Controlled.args = {
-  placeholder: "Controlled Select",
-  open: true,
+export const UncontrolledWithValueSet = Template.bind({})
+UncontrolledWithValueSet.args = {
+  defaultValue: "2",
   children: [
     <SelectOption value="1" key="1">Value 1</SelectOption>,
     <SelectOption value="2" key="2">Value 2</SelectOption>,
     <SelectOption value="3" key="3">Value 3</SelectOption>
   ]
 }
+
+export const Controlled = ControlledTemplate.bind({})
+Controlled.args = {
+  placeholder: "Controlled Select",
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}
+
+// export const ManyOptions = Template.bind({})
+// ManyOptions.parameters = {
+//   docs: {
+//     description: {
+//       story: "Use `position='align-items'` to show the menu overlaying the Select trigger."
+//     }
+//   }
+// }
+// ManyOptions.args = {
+//   placeholder: "Select with many options…",
+//   position: "align-items",
+//   children: [
+//     <SelectOption value="1" key="1">Value 1</SelectOption>,
+//     <SelectOption value="2" key="2">Value 2</SelectOption>,
+//     <SelectOption value="3" key="3">Value 3</SelectOption>,
+//     <SelectOption value="1" key="4">Value 4</SelectOption>,
+//     <SelectOption value="2" key="5">Value 5</SelectOption>,
+//     <SelectOption value="3" key="6">Value 6</SelectOption>,
+//     <SelectOption value="1" key="7">Value 7</SelectOption>,
+//     <SelectOption value="2" key="8">Value 8</SelectOption>,
+//     <SelectOption value="3" key="9">Value 9</SelectOption>,
+//     <SelectOption value="1" key="10">Value 10</SelectOption>,
+//     <SelectOption value="2" key="11">Value 11</SelectOption>,
+//     <SelectOption value="3" key="12">Value 12</SelectOption>,
+//     <SelectOption value="1" key="13">Value 13</SelectOption>,
+//     <SelectOption value="2" key="14">Value 14</SelectOption>,
+//     <SelectOption value="3" key="15">Value 15</SelectOption>,
+//     <SelectOption value="1" key="16">Value 16</SelectOption>,
+//     <SelectOption value="2" key="17">Value 17</SelectOption>,
+//     <SelectOption value="3" key="18">Value 18</SelectOption>,
+//     <SelectOption value="1" key="19">Value 19</SelectOption>,
+//     <SelectOption value="2" key="20">Value 20</SelectOption>,
+//     <SelectOption value="3" key="21">Value 21</SelectOption>,
+//   ]
+// }
 
 export const Loading = Template.bind({})
 Loading.args = {
