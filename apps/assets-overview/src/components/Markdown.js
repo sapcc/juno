@@ -4,7 +4,7 @@ import { useQuery } from "react-query"
 import { fetchMarkdown } from "../actions"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
-
+import rehypeFormat from "https://esm.sh/rehype-format@4"
 import { useMessageStore } from "messages-provider"
 import { parseError } from "../helpers"
 
@@ -40,7 +40,12 @@ const Markdown = ({ path }) => {
       ) : (
         <article className="markdown-body">
           {data && (
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{data}</ReactMarkdown>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeFormat]}
+            >
+              {data}
+            </ReactMarkdown>
           )}
         </article>
       )}

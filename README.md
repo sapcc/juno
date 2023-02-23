@@ -2,26 +2,7 @@
 
 Is a collection of Micro Frontends (MFE)
 
-## Apps
-
-- [Dashboard](https://github.com/sapcc/juno/tree/main/apps/dashboard)
-- [Widget Loader](https://github.com/sapcc/juno/tree/main/apps/widget-loader)
-- [Volta](https://github.com/sapcc/juno/tree/main/apps/volta)
-- [Heureka](https://github.com/sapcc/juno/tree/main/apps/heureka)
-- [Whois](https://github.com/sapcc/juno/tree/main/apps/whois)
-
-## Libs
-
-- [UI Components](https://github.com/sapcc/juno/tree/main/libs/juno-ui-components)
-- [Communicator](https://github.com/sapcc/juno/tree/main/libs/communicator)
-- [Policy Engine](https://github.com/sapcc/juno/tree/main/libs/policy-engine)
-- [URL State Provider](./libs/url-state-provider)
-- [URL State Router](./libs/url-state-router)
-- [OAuth](./libs/oauth)
-
-## APIs
-
-- [Mercury](https://github.com/sapcc/juno/tree/main/apis/mercury)
+- [Overview](https://assets.juno.global.cloud.sap)
 
 # Usage
 

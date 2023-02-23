@@ -36,11 +36,4 @@ This app implements the OIDC flow to login the user.
 </script>
 ```
 
-Once the app is loaded, it tries to login the user via oidc. After a successful login, it fires an ==AUTH_UPDATE== event. Other apps that rely on authentication should use the ==communicator== lib to subscribe to it via ==listen("AUTH_UPDATE",(data) => void)==.
-
-### events
-
-- AUTH_UPDATE
-  - data: {token, expires}
-- AUTH_FAILED
-  - data: {error}
+Once the app is loaded, it tries to login the user via oidc. After a successful login, it fires an **AUTH_UPDATE** event. Other apps that rely on authentication should use the **communicator** lib to subscribe to it via **listen("AUTH_UPDATE",(data) => void)**.

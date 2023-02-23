@@ -173,7 +173,7 @@ const AssetDetails = () => {
               <MainTabs selectedIndex={tabIndex} onSelect={onTabSelected}>
                 <TabList>
                   <Tab>Readme</Tab>
-                  {asset?.communicator && <Tab>Communication</Tab>}
+                  {asset?.communicatorReadme && <Tab>Communication</Tab>}
                   {asset?.type === APP && <Tab>Script tag</Tab>}
                   <Tab>Advance</Tab>
                 </TabList>

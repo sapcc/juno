@@ -49,25 +49,25 @@ const readmeIntroduction = [
   },
   {
     ul: [
-      "==broadcast==, send a message to the whole world",
-      "==watch==, listen for a message",
-      "==get==, request a message and wait for the reply (one to one communication)",
-      "==onGet==, listen for and reply to get messages",
+      "**broadcast**, send a message to the whole world",
+      "**watch**, listen for a message",
+      "**get**, request a message and wait for the reply (one to one communication)",
+      "**onGet**, listen for and reply to get messages",
     ],
   },
 
   {
     p:
       "These methods are always to be considered in pairs as opponents.<br/>" +
-      "==broadcast <-> watch==<br/>" +
-      "==get <-> onGet==",
+      "**broadcast <-> watch**<br/>" +
+      "**get <-> onGet**",
   },
 
   {
     p:
-      "For example, if an app sends a message with ==broadcast==, then this " +
-      "message can be received with ==watch==. And correspondingly, ==get== " +
-      "requests are answered with ==onGet==. Where ==get== is answered directly " +
+      "For example, if an app sends a message with **broadcast**, then this " +
+      "message can be received with **watch**. And correspondingly, **get** " +
+      "requests are answered with **onGet**. Where **get** is answered directly " +
       "(one to one).",
   },
   { p: "All messages sent or consumed by this app are listed here" },
