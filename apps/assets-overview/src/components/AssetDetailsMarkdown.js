@@ -1,29 +1,26 @@
 import React from "react"
 import { Container } from "juno-ui-components"
-import useStore from "../store"
 import Markdown from "./Markdown"
 import { Messages } from "messages-provider"
+import useStore from "../store"
 
-const AssetDetailsReadme = ({ asset }) => {
+const AssetDetailsCommunicationReadme = ({ path }) => {
   const origin = useStore((state) => state.origin)
-
-  const path = React.useMemo(() => {
-    if (asset?.readme && origin) {
-      return `${origin}${asset?.readme}`
-    }
-    return null
-  }, [asset?.readme, origin])
+  const url = React.useMemo(() => {
+    if (!origin || !path) return null
+    return `${origin}/${path}`
+  }, [origin, path])
 
   return (
     <Container py px={false}>
-      {path && (
+      {url && (
         <>
           <Messages className="pb-6" />
-          <Markdown path={path} />
+          <Markdown path={url} />
         </>
       )}
     </Container>
   )
 }
 
-export default AssetDetailsReadme
+export default AssetDetailsCommunicationReadme

@@ -5,6 +5,38 @@ import json2md from "json2md"
 
 const DIRNAME = path.dirname(process.argv[1])
 
+const availableArgs = [
+  "--path=ASSET_PATH",
+  "--output=FILE_PATH",
+  "--verbose|-v",
+  "--help|-h",
+]
+
+const options = {
+  outputFile: "COMMUNICATOR.md",
+  verbose: false,
+  v: false,
+}
+
+const args = process.argv.slice(2)
+
+// PARSE ARGS
+for (let arg of args) {
+  const match = arg.match(/^-{1,2}([^=]+)=?(.*)/)
+  if (match) {
+    let key = match[1].replace(/\W+(.)/g, function (match, chr) {
+      console.log(match, chr)
+      return chr.toUpperCase()
+    })
+
+    options[key] = match[2] ? match[2] : true
+    continue
+  }
+}
+if (options.help || options.h) {
+  console.log("Usage: " + availableArgs.join(" "))
+}
+
 const uniq = (value, index, array) => array.indexOf(value) === index
 
 const readmeIntroduction = [
@@ -17,25 +49,25 @@ const readmeIntroduction = [
   },
   {
     ul: [
-      "<code>broadcast</code>, send a message to the whole world",
-      "<code>watch</code>, listen for a message",
-      "<code>get</code>, request a message and wait for the reply (one to one communication)",
-      "<code>onGet</code>, listen for and reply to get messages",
+      "==broadcast==, send a message to the whole world",
+      "==watch==, listen for a message",
+      "==get==, request a message and wait for the reply (one to one communication)",
+      "==onGet==, listen for and reply to get messages",
     ],
   },
 
   {
     p:
       "These methods are always to be considered in pairs as opponents.<br/>" +
-      "<code>broadcast <-> watch</code><br/>" +
-      "<code>get <-> onGet</code>",
+      "==broadcast <-> watch==<br/>" +
+      "==get <-> onGet==",
   },
 
   {
     p:
-      "For example, if an app sends a message with <code>broadcast</code>, then this " +
-      "message can be received with <code>watch</code>. And correspondingly, <code>get</code> " +
-      "requests are answered with <code>onGet</code>. Where <code>get</code> is answered directly " +
+      "For example, if an app sends a message with ==broadcast==, then this " +
+      "message can be received with ==watch==. And correspondingly, ==get== " +
+      "requests are answered with ==onGet==. Where ==get== is answered directly " +
       "(one to one).",
   },
   { p: "All messages sent or consumed by this app are listed here" },
@@ -54,12 +86,18 @@ const howToUse = (method, message) => {
   }
 }
 
-const files = glob.sync(`${DIRNAME}/../+(libs|apps)/**/*.+(j|t)s?(x)`, {
+const pattern = options.path
+  ? `${DIRNAME}/../${options.path}/**/*.+(j|t)s?(x)`
+  : `${DIRNAME}/../+(libs|apps)/**/*.+(j|t)s?(x)`
+console.log("look for", pattern)
+
+const files = glob.sync(pattern, {
   ignore: [
     "**/node_modules/**",
-    "**/*.test.js",
-    "**/*.config.js",
     "**/__mocks__/**",
+    "**/*.config.+(j|t)s",
+    "**/*.test.+(j|t)s",
+    "**/build/**",
   ],
 })
 
@@ -80,8 +118,8 @@ files.forEach((file) => {
     const messages = matches.map((match) => match[1]).filter(uniq)
 
     if (messages.length > 0) {
-      console.log(assetName, messages)
-      console.log(file)
+      // console.log(assetName, messages)
+      // console.log(file)
       if (!readmes[assetName]) {
         readmes[assetName] = {
           assetName,
@@ -116,5 +154,5 @@ for (let key in readmes) {
   ]
 
   console.log(assetPath)
-  fs.writeFileSync(path.join(assetPath, "COMMUNICATOR.md"), json2md(readme))
+  fs.writeFileSync(path.join(assetPath, options.outputFile), json2md(readme))
 }

@@ -109,12 +109,12 @@ const Documentation = ({ data }) => {
                   <SelectRow
                     label="version"
                     variant="floating"
+                    value={widgetLoaderVersion}
                     onChange={(e) => changeVersion(e.target.value)}
                   >
                     {widgetLoaderVersions.map((version, i) => (
                       <SelectOption
                         key={i}
-                        selected={widgetLoaderVersion === version.value}
                         label={version.label}
                         value={version.value}
                       />

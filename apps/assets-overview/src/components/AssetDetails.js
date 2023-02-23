@@ -24,7 +24,7 @@ import {
 import { useQuery } from "react-query"
 import { fetchAssetsManifest } from "../actions"
 import { APP } from "../helpers"
-import AssetDetailsReadme from "./AssetDetailsReadme"
+import AssetDetailsMarkdown from "./AssetDetailsMarkdown"
 import AssetDetailsScripttag from "./AssetDetailsScripttag"
 import AssetDetailsAdvanced from "./AssetDetailsAdvanced"
 import { MessagesProvider } from "messages-provider"
@@ -146,12 +146,12 @@ const AssetDetails = () => {
                 <SelectRow
                   label="version"
                   variant="floating"
+                  value={asset?.version}
                   onChange={(e) => changeVersion(e.target.value)}
                 >
                   {versions.map((version, i) => (
                     <SelectOption
                       key={i}
-                      selected={asset?.version === version.value}
                       label={version.label}
                       value={version.value}
                     />
@@ -173,14 +173,20 @@ const AssetDetails = () => {
               <MainTabs selectedIndex={tabIndex} onSelect={onTabSelected}>
                 <TabList>
                   <Tab>Readme</Tab>
+                  {asset?.communicator && <Tab>Communication</Tab>}
                   {asset?.type === APP && <Tab>Script tag</Tab>}
                   <Tab>Advance</Tab>
                 </TabList>
                 <TabPanel>
                   <MessagesProvider>
-                    <AssetDetailsReadme asset={asset} />
+                    <AssetDetailsMarkdown path={asset?.readme} />
                   </MessagesProvider>
                 </TabPanel>
+                {asset?.communicatorReadme && (
+                  <TabPanel>
+                    <AssetDetailsMarkdown path={asset?.communicatorReadme} />
+                  </TabPanel>
+                )}
                 {asset?.type === APP && (
                   <TabPanel>
                     <AssetDetailsScripttag asset={asset} />

@@ -29,7 +29,7 @@ RUN rsync -avu --delete "/tmp/src/" "/juno" > /dev/null ;
 # RUN yarn install >/dev/null ; yarn build-libs > /dev/null
 RUN yarn install > /dev/null ; yarn build-libs
 
-RUN node scripts/generate_communication_readme.mjs
+RUN node scripts/generate_communication_readme.mjs --path=/juno/$ASSET_PATH
 
 # TEST AND BUILD ASSET
 # IGNORE_EXTERNALS=true will results in a bundle which includes all dependencies. 
