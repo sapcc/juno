@@ -15,7 +15,7 @@ import {
 import useStore from "./store"
 import NewItemForm from "./components/NewItemForm"
 import heroImage from "./img/app_bg_example.svg?url"
-import { useQuery } from "react-query"
+import { useQuery } from "@tanstack/react-query"
 import { exampleFetch as fetchStuff } from "./actions"
 import { currentState, push } from "url-state-provider"
 
@@ -23,20 +23,18 @@ const AppContent = (props) => {
   const endpoint = useStore((state) => state.endpoint)
   const urlStateKey = useStore((state) => state.urlStateKey)
 
-  const { isLoading, isError, data, error } = useQuery(
-    ["colors", endpoint, {}],
-    fetchStuff,
-    {
-      // enable the query also if the endpoint is set. For fetching local
-      // data is not necessary since it should be empty
-      // enabled: !!endpoint,
-      // If set to Infinity, the data will never be considered stale
-      //  until a browser reload is triggered
-      staleTime: Infinity,
-      // refer to this documentation to see more options
-      // https://tanstack.com/query/v4/docs/guides/queries
-    }
-  )
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ["colors", endpoint, {}],
+    queryFn: fetchStuff,
+    // enable the query also if the endpoint is set. For fetching local
+    // data is not necessary since it should be empty
+    // enabled: !!endpoint,
+    // If set to Infinity, the data will never be considered stale
+    //  until a browser reload is triggered
+    staleTime: Infinity,
+    // refer to this documentation to see more options
+    // https://tanstack.com/query/v4/docs/guides/queries
+  })
 
   const openNewItemForm = () => {
     const urlState = currentState(urlStateKey)
