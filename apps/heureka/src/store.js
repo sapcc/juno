@@ -1,15 +1,23 @@
 import React from "react"
-import create from "zustand"
-import { devtools } from "zustand/middleware"
+import { create } from "zustand"
 
-// global zustand store. See how this works here: https://github.com/pmndrs/zustand
-const useStore = create(
-  devtools((set) => ({
-    endpoint: "", // this is the state
-    setEndpoint: (endpoint) => set((state) => ({ endpoint: endpoint })),
-    auth: null,
-    setAuth: (auth) => set((state) => ({ auth: auth })),
-  }))
-)
+const createOidcSlice = (set) => ({
+  auth: null,
+  setAuth: (auth) => set((state) => ({ auth: auth })),
+  loggedIn: false,
+  setLoggedIn: (loggedIn) => set((state) => ({ loggedIn: loggedIn })),
+  logout: null,
+  setLoggedOut: (logout) => set((state) => ({ logout: logout })),
+})
+
+const creatGlobalsSlice = (set) => ({
+  endpoint: "",
+  setEndpoint: (endpoint) => set((state) => ({ endpoint: endpoint })),
+})
+
+const useStore = create((...a) => ({
+  ...createOidcSlice(...a),
+  ...creatGlobalsSlice(...a),
+}))
 
 export default useStore

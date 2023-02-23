@@ -14,16 +14,18 @@ const App = (props) => {
   const setMessage = useMessageStore((state) => state.setMessage)
   const setEndpoint = useStore((state) => state.setEndpoint)
   const setAuth = useStore((state) => state.setAuth)
+  const setLoggedIn = useStore((state) => state.setLoggedIn)
+  const setLoggedOut = useStore((state) => state.setLoggedOut)
 
-  const { auth, loggedIn, logout, login } = useOidcAuth({
+  const { auth, loggedIn, logout } = useOidcAuth({
     issuerURL: props.issuerurl,
     clientID: props.clientid,
     initialLogin: true,
   })
 
   useEffect(() => {
-    if (!auth) return
     if (auth?.error) {
+      // display error message
       setMessage({
         variant: "error",
         text: auth?.error,
@@ -31,10 +33,15 @@ const App = (props) => {
     }
 
     setAuth(auth)
+    setLoggedIn(loggedIn)
+    setLoggedOut(logout)
+  }, [auth, loggedIn, logout])
+
+  useEffect(() => {
     if (props.endpoint) {
       setEndpoint(props.endpoint)
     }
-  }, [auth])
+  }, [props])
 
   const customPageHeader = React.useMemo(() => {
     return (
