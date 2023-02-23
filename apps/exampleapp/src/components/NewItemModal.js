@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 
 import useStore from "../store"
-import { useMutation, useQueryClient } from "react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { createPeak } from "../actions"
 import { Modal, TextInputRow } from "juno-ui-components"
 import { currentState, push } from "url-state-provider"

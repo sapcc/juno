@@ -14,7 +14,7 @@ import useStore from "./store"
 import { currentState, push, addOnChangeListener } from "url-state-provider"
 import ModalManager from "./components/ModalManager"
 import PanelManager from "./components/PanelManager"
-import { useQuery } from "react-query"
+import { useQuery } from "@tanstack/react-query"
 import { fetchPeaks } from "./actions"
 import PeaksList from "./components/PeaksList/PeaksList"
 
