@@ -12,9 +12,9 @@ const NewItemModal = () => {
   const queryClient = useQueryClient()
   const [formState, setFormState] = useState({})
 
-  const { isLoading, isError, error, data, isSuccess, mutate } = useMutation(
-    ({ endpoint, formState }) => createPeak(endpoint, formState)
-  )
+  const { isLoading, isError, error, data, isSuccess, mutate } = useMutation({
+    mutationFn: ({ endpoint, formState }) => createPeak(endpoint, formState),
+  })
 
   const closeNewItemModal = () => {
     const urlState = currentState(urlStateKey)

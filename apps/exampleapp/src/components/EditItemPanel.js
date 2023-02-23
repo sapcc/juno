@@ -18,14 +18,17 @@ const EditItemPanel = ({ closeCallback }) => {
   const queryClient = useQueryClient()
   const [formState, setFormState] = useState({})
 
-  const peakFeach = useQuery(["peaks", endpoint, urlState.peakId], fetchPeak, {
+  const peakFeach = useQuery({
+    queryKey: ["peaks", endpoint, urlState.peakId],
+    queryFn: fetchPeak,
     // refer to this documentation to see more options
     // https://tanstack.com/query/v4/docs/guides/queries
   })
 
-  const peakMutation = useMutation(({ endpoint, id, formState }) =>
-    updatePeak(endpoint, id, formState)
-  )
+  const peakMutation = useMutation({
+    mutationFn: ({ endpoint, id, formState }) =>
+      updatePeak(endpoint, id, formState),
+  })
 
   useEffect(() => {
     if (peakFeach.isSuccess) {
