@@ -39,7 +39,9 @@ const Markdown = ({ path }) => {
       ) : (
         <article className="markdown-body">
           {data && (
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{data}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {"`TEST` TEST"}
+            </ReactMarkdown>
           )}
         </article>
       )}
