@@ -23,7 +23,7 @@ import { newCertificateMutation } from "../queries"
 import { useCertState } from "../hooks/useCertState"
 import useStore from "../store"
 import { parseError } from "../helpers"
-import { useQueryClient } from "react-query"
+import { useQueryClient } from "@tanstack/react-query"
 import { useMessageStore } from "messages-provider"
 
 const ALGORITHM_KEY = "RSA-2048"
