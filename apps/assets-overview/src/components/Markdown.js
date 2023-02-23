@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { Stack, Spinner } from "juno-ui-components"
-import { useQuery } from "react-query"
+import { useQuery } from "@tanstack/react-query"
 import { fetchMarkdown } from "../actions"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
@@ -10,14 +10,12 @@ import { parseError } from "../helpers"
 const Markdown = ({ path }) => {
   const addMessage = useMessageStore((state) => state.addMessage)
 
-  const { isLoading, isError, data, error } = useQuery(
-    ["markdown", path],
-    fetchMarkdown,
-    {
-      enabled: !!path,
-      staleTime: Infinity,
-    }
-  )
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ["markdown", path],
+    queryFn: fetchMarkdown,
+    enabled: !!path,
+    staleTime: Infinity,
+  })
 
   // if error send error to the message store
   useEffect(() => {

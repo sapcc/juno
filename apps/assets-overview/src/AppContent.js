@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react"
 import { TabPanel, MainTabs, TabList, Tab } from "juno-ui-components"
 import useStore from "./store"
-import { useQuery } from "react-query"
+import { useQuery } from "@tanstack/react-query"
 import { fetchAssetsManifest } from "./actions"
 import { currentState, push } from "url-state-provider"
 import TabContainer from "./components/TabContainer"
@@ -19,14 +19,12 @@ const AppContent = (props) => {
   const setOrigin = useStore((state) => state.setOrigin)
   const [tabIndex, setTabIndex] = useState(0)
 
-  const { isLoading, isError, data, error } = useQuery(
-    ["manifest", manifestUrl],
-    fetchAssetsManifest,
-    {
-      enabled: !!manifestUrl,
-      staleTime: Infinity,
-    }
-  )
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ["manifest", manifestUrl],
+    queryFn: fetchAssetsManifest,
+    enabled: !!manifestUrl,
+    staleTime: Infinity,
+  })
 
   // if error send error to the message store
   useEffect(() => {
