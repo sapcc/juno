@@ -25,9 +25,12 @@
   </head>
   <body>
     <script type="module">
-      import("./<%= MAIN_FILENAME %>").then((app) =>
-        app.mount(document.getElementById("root"),{props: JSON.parse('<%=PROPS%>')})
-      )
+      import("./<%= MAIN_FILENAME %>").then((app) => {
+        /* prettier-ignore */
+        app.mount(document.getElementById("root"), {
+          props: JSON.parse('<%=PROPS%>'),
+        })
+      })
     </script>
 
     <div id="root"></div>

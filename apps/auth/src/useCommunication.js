@@ -6,17 +6,19 @@ window.watch = watch
 window.get = get
 window.onGet = onGet
 
-const normalizeAuthData = (auth) => {
-  if (!auth) return null
+const normalizeAuthData = (oidc) => {
+  if (!oidc) return null
   return {
-    email: auth.email,
-    expiresAt: auth.expiresAt,
-    firstName: auth.first_name,
-    lastName: auth.last_name,
-    fullName: auth.full_name,
-    idToken: auth.id_token,
-    userId: auth.login_name || auth.subject,
-    subject: auth.subject,
+    isProcessing: oidc.isProcessing,
+    loggedIn: oidc.loggedIn,
+    email: oidc.auth?.email,
+    expiresAt: oidc.auth?.expiresAt,
+    firstName: oidc.auth?.first_name,
+    lastName: oidc.auth?.last_name,
+    fullName: oidc.auth?.full_name,
+    idToken: oidc.auth?.id_token,
+    userId: oidc.auth?.login_name || oidc.auth?.subject,
+    subject: oidc.auth?.subject,
   }
 }
 
@@ -25,12 +27,12 @@ const useCommunication = (oidc, { resetOIDCSession }) => {
 
   useEffect(() => {
     if (loggedIn) {
-      broadcast("AUTH_UPDATE_DATA", { auth: normalizeAuthData(auth) })
+      broadcast("AUTH_UPDATE_DATA", { auth: normalizeAuthData(oidc) })
     } else {
       broadcast("AUTH_UPDATE_DATA", { auth: null, error })
     }
 
-    const unwatchGet = onGet("AUTH_GET_DATA", () => normalizeAuthData(auth))
+    const unwatchGet = onGet("AUTH_GET_DATA", () => normalizeAuthData(oidc))
 
     return unwatchGet
   }, [loggedIn, auth, error])
