@@ -27,7 +27,10 @@ const AppContainer = ({ tabsConfig, component, children }) => {
   return (
     <>
       {auth?.error || !loggedIn ? (
-        <WellcomeView loginCallback={login} />
+        <>
+          <Messages />
+          <WellcomeView loginCallback={login} />
+        </>
       ) : (
         <>
           <MainTabs selectedIndex={tabIndex}>
