@@ -14,10 +14,9 @@ import CustomPageHeader from "./components/CustomPageHeader"
 
 const URL_STATE_KEY = "assets-overview"
 
-const App = (props) => {
+const App = (props = {}) => {
   const setManifestUrl = useStore((state) => state.setManifestUrl)
   const setUrlStateKey = useStore((state) => state.setUrlStateKey)
-  const { embedded } = props
 
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
@@ -39,7 +38,7 @@ const App = (props) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AppShell pageHeader={CustomPageHeader} embedded={embedded === "true"}>
+      <AppShell pageHeader={CustomPageHeader} embedded={props.embedded}>
         <MessagesProvider>
           <AppContent props={props} />
         </MessagesProvider>

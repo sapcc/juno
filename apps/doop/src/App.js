@@ -9,10 +9,9 @@ import styles from "./styles.scss"
 const URL_STATE_KEY = "doop"
 /* --------------------------- */
 
-const App = (props) => {
+const App = (props = {}) => {
   const setEndpoint = useStore((state) => state.setEndpoint)
   const setUrlStateKey = useStore((state) => state.setUrlStateKey)
-  const { embedded } = props
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
 
@@ -29,7 +28,7 @@ const App = (props) => {
       <AppShell
         pageHeader="Converged Cloud | Doop"
         contentHeading="Doop"
-        embedded={embedded === "true"}
+        embedded={props.embedded === true}
       >
         Doop Content
       </AppShell>

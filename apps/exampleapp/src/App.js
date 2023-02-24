@@ -10,10 +10,9 @@ import AppContent from "./AppContent"
 // IMPORTANT: Replace this with your app's name
 const URL_STATE_KEY = "exampleapp"
 
-const App = (props) => {
+const App = (props = {}) => {
   const setEndpoint = useStore((state) => state.setEndpoint)
   const setUrlStateKey = useStore((state) => state.setUrlStateKey)
-  const { embedded } = props
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
 
@@ -30,7 +29,7 @@ const App = (props) => {
       <AppShell
         pageHeader="Converged Cloud | Example App"
         contentHeading="Example App"
-        embedded={embedded === "true"}
+        embedded={props.embedded === true}
       >
         <AppContent props={props} />
       </AppShell>

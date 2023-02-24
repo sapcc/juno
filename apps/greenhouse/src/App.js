@@ -12,10 +12,9 @@ import useAppLoader from "./useAppLoader"
 const URL_STATE_KEY = "greenhouse"
 /* --------------------------- */
 
-const App = (props) => {
+const App = (props = {}) => {
   const setEndpoint = useStore((state) => state.setEndpoint)
   const setUrlStateKey = useStore((state) => state.setUrlStateKey)
-  const { embedded } = props
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
   const appContentRef = React.createRef()
@@ -94,7 +93,7 @@ const App = (props) => {
       {/* <AppShell
         pageHeader="Converged Cloud | App Template"
         contentHeading="App template page title"
-        embedded={embedded === "true"}
+        embedded={props.embedded === true}
       >
         <AppContent props={props} />
       </AppShell> */}

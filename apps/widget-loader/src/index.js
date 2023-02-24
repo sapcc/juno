@@ -2,6 +2,7 @@
 window.__junoWidgetLoader =
   window.__junoWidgetLoader ||
   (function () {
+    const JUNO_IMPORTMAP_LOADED = "JUNO_IMPORTMAP_LOADED"
     // shim we use to support importmap in all browsers
     const shimUrl =
       "https://ga.jspm.io/npm:es-module-shims@1.6.2/dist/es-module-shims.js"
@@ -144,7 +145,7 @@ window.__junoWidgetLoader =
       // load importmap
       await loadImportmap(importmapUrl)
 
-      const loadedEvent = new CustomEvent("junoImportmapLoaded", {
+      const loadedEvent = new CustomEvent(JUNO_IMPORTMAP_LOADED, {
         detail: { origin: importmapUrl },
       })
 
@@ -175,7 +176,11 @@ window.__junoWidgetLoader =
         if (key.indexOf("props") === 0) {
           let newKey = key.replace("props", "")
           newKey = newKey.charAt(0).toLowerCase() + newKey.slice(1)
-          appProps[newKey] = props[key]
+          let value = props[key]
+          // parse boolean values
+          if (value === "true") value = true
+          if (value === "false") value = false
+          appProps[newKey] = value
           // support old format -> the whole key to lowercase
           appProps[newKey.toLowerCase()] = props[key]
         }

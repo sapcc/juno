@@ -11,10 +11,9 @@ import StyleProvider from "juno-ui-components"
 const URL_STATE_KEY = "template"
 /* --------------------------- */
 
-const App = (props) => {
+const App = (props = {}) => {
   const setEndpoint = useStore((state) => state.setEndpoint)
   const setUrlStateKey = useStore((state) => state.setUrlStateKey)
-  const { embedded } = props
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
 
@@ -31,7 +30,7 @@ const App = (props) => {
       <AppShell
         pageHeader="Converged Cloud | App Template"
         contentHeading="App template page title"
-        embedded={embedded === "true"}
+        embedded={props.embedded === true}
       >
         <AppContent props={props} />
       </AppShell>
