@@ -85,6 +85,7 @@ function handleOIDCResponse() {
       email: tokenData.mail,
       expiresAt: tokenData.exp * 1000,
       expiresAtDate: new Date(tokenData.exp * 1000),
+      groups: tokenData.groups,
     }
   })()
 

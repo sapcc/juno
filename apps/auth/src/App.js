@@ -15,6 +15,7 @@ const App = (props) => {
     initialLogin: props.initialLogin,
   })
 
+  console.log(oidc)
   useCommunication(oidc, { resetOIDCSession: props.resetOidcSession })
 
   return null
