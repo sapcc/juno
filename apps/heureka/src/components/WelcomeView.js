@@ -1,7 +1,7 @@
 import React from "react"
 import { Stack, Button } from "juno-ui-components"
 
-const WellcomeView = ({ loginCallback }) => {
+const WelcomeView = ({ loginCallback }) => {
   return (
     <Stack
       alignment="center"
@@ -10,7 +10,7 @@ const WellcomeView = ({ loginCallback }) => {
       className="mt-[10vh]"
     >
       <p className="text-xl">
-        Wellcome to the Converged Cloud Patch Management System
+        Welcome to the Converged Cloud Patch Management System
       </p>
       <p className="text-xl">Login to maintain & track vulnerabilities</p>
       <Button
@@ -23,4 +23,4 @@ const WellcomeView = ({ loginCallback }) => {
   )
 }
 
-export default WellcomeView
+export default WelcomeView

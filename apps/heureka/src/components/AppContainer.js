@@ -11,7 +11,7 @@ import { useRouter } from "url-state-router"
 import Breadcrumb from "./Breadcrumb"
 import Messages from "./Messages"
 import useStore from "../store"
-import WellcomeView from "./WellcomeView"
+import WelcomeView from "./WelcomeView"
 
 const AppContainer = ({ tabsConfig, component, children }) => {
   const { navigateTo, currentPath } = useRouter()
@@ -29,7 +29,7 @@ const AppContainer = ({ tabsConfig, component, children }) => {
       {auth?.error || !loggedIn ? (
         <>
           <Messages />
-          <WellcomeView loginCallback={login} />
+          <WelcomeView loginCallback={login} />
         </>
       ) : (
         <>
