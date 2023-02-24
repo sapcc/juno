@@ -105,7 +105,7 @@ const Documentation = ({ data }) => {
             </SideNavigation>
             <Container>
               {activeNavItem === "wigetLoader" && widgetLoaderVersions && (
-                <Stack distribution="end">
+                <Stack distribution="end" className="w-full">
                   <SelectRow
                     label="version"
                     variant="floating"

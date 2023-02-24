@@ -4,7 +4,9 @@ import useStore from "./store"
 import { QueryClient, QueryClientProvider } from "react-query"
 import ShellLayout from "./components/layout/ShellLayout"
 import styles from "./styles.scss"
-import StyleProvider from "juno-ui-components"
+import StyleProvider, { Button, Spinner } from "juno-ui-components"
+import useCommunication from "./useCommunication"
+import useAppLoader from "./useAppLoader"
 
 /* IMPORTANT: Replace this with your app's name */
 const URL_STATE_KEY = "greenhouse"
@@ -16,6 +18,47 @@ const App = (props) => {
   const { embedded } = props
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
+  const appContentRef = React.createRef()
+
+  const { authData, login, logout } = useCommunication()
+  const { mount } = useAppLoader()
+
+  React.useEffect(() => {
+    if (!mount || !appContentRef.current) return
+
+    const authContainer = document.createElement("div")
+    const exampleappContainer = document.createElement("div")
+    const dashboardContainer = document.createElement("div")
+
+    appContentRef.current.append(authContainer)
+    appContentRef.current.append(exampleappContainer)
+    appContentRef.current.append(dashboardContainer)
+
+    mount(authContainer, {
+      name: "auth",
+      version: "latest",
+      props: {
+        issuerurl: props.issuerurl,
+        clientid: props.clientid,
+        initialLogin: true,
+      },
+    })
+    // mount(exampleappContainer, {
+    //   name: "exampleapp",
+    //   version: "latest",
+    //   props: {
+    //     embedded: "true",
+    //   },
+    // })
+    mount(dashboardContainer, {
+      name: "assets-overview",
+      version: "latest",
+      props: {
+        embedded: "true",
+        manifestUrl: "https://elektra.ap.ws2.eu-nl-1.cloud.sap/manifest.json",
+      },
+    })
+  }, [mount])
 
   // on app initial load save Endpoint and URL_STATE_KEY so it can be
   // used from overall in the application
@@ -25,9 +68,29 @@ const App = (props) => {
     setUrlStateKey(URL_STATE_KEY)
   }, [])
 
+  console.log(authData)
+
   return (
     <QueryClientProvider client={queryClient}>
-      <ShellLayout>Supernova wupdidu</ShellLayout>
+      <ShellLayout>
+        <div ref={appContentRef}></div>
+
+        {authData?.isProcessing ? (
+          <Spinner />
+        ) : (
+          <div>
+            {authData?.auth ? (
+              <>
+                <div>{JSON.stringify(authData.auth, null, 2)}</div>
+                <Button onClick={logout}>logout</Button>
+              </>
+            ) : (
+              <Button onClick={login}>Login</Button>
+            )}
+          </div>
+        )}
+      </ShellLayout>
+
       {/* <AppShell
         pageHeader="Converged Cloud | App Template"
         contentHeading="App template page title"

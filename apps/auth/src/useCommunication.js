@@ -1,11 +1,6 @@
 import { useEffect } from "react"
 import { broadcast, watch, onGet, get } from "communicator"
 
-window.broadcast = broadcast
-window.watch = watch
-window.get = get
-window.onGet = onGet
-
 const normalizeAuthData = (oidc) => {
   if (!oidc) return null
   return {
