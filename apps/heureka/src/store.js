@@ -8,6 +8,8 @@ const createOidcSlice = (set) => ({
   setLoggedIn: (loggedIn) => set((state) => ({ loggedIn: loggedIn })),
   logout: null,
   setLoggedOut: (logout) => set((state) => ({ logout: logout })),
+  login: null,
+  setLogin: (login) => set((state) => ({ login: login })),
 })
 
 const creatGlobalsSlice = (set) => ({

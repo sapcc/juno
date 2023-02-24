@@ -16,8 +16,9 @@ const App = (props) => {
   const setAuth = useStore((state) => state.setAuth)
   const setLoggedIn = useStore((state) => state.setLoggedIn)
   const setLoggedOut = useStore((state) => state.setLoggedOut)
+  const setLogin = useStore((state) => state.setLogin)
 
-  const { auth, loggedIn, logout } = useOidcAuth({
+  const { auth, loggedIn, logout, login } = useOidcAuth({
     issuerURL: props.issuerurl,
     clientID: props.clientid,
     initialLogin: true,
@@ -34,6 +35,7 @@ const App = (props) => {
 
     setAuth(auth)
     setLoggedIn(loggedIn)
+    setLogin(login)
     setLoggedOut(logout)
   }, [auth, loggedIn, logout])
 
