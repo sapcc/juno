@@ -8,7 +8,7 @@ window.watch = watch
 window.get = get
 window.onGet = onGet
 
-const App = (props) => {
+const App = (props = {}) => {
   const oidc = useOidcAuth({
     issuerURL: props.issuerurl,
     clientID: props.clientid,
@@ -16,7 +16,10 @@ const App = (props) => {
   })
 
   console.log(oidc)
-  useCommunication(oidc, { resetOIDCSession: props.resetOidcSession })
+  useCommunication(oidc, {
+    resetOIDCSession: props.resetOidcSession,
+    debug: props.debug,
+  })
 
   return null
 }

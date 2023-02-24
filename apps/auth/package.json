@@ -63,14 +63,6 @@
     "react-dom": "^18.2.0"
   },
   "appProps": {
-    "theme": {
-      "value": "theme-dark",
-      "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
-    },
-    "embedded": {
-      "value": "false",
-      "description": "Set to true if app is to be embedded in another existing app or page, like e.g. Elektra.  If set to true the app won't render a page header/footer and instead render only the content"
-    },
     "issuerurl": {
       "value": "https://endpoint_url_of_the_openid_provider.com",
       "type": "required",

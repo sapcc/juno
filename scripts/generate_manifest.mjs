@@ -100,6 +100,7 @@ files.sort().forEach(async (file) => {
     size: totalSize,
     sizeHuman: totalSizeHuman,
     appProps: pkg.appProps || {},
+    appDependencies: pkg.appDependencies,
   }
 
   if (fs.existsSync(`${rootPath}/${path}/README.md`)) {

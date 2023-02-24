@@ -30,7 +30,7 @@ ${newAppProps}>
 }
 
 // TODO display data props type (optional and required)
-const AssetDetailsScripttag = ({ asset }) => {
+const AssetDetailsScripttag = ({ asset, dependencies }) => {
   return (
     <Container py px={false}>
       <h1 className="font-bold text-xl">Data props</h1>
@@ -79,6 +79,18 @@ const AssetDetailsScripttag = ({ asset }) => {
           version: asset?.version,
           appProps: asset?.appProps,
         })}
+        {dependencies?.length > 0 && (
+          <>
+            {"\n\n// Please add following assets to run this app \n"}
+            {dependencies.map((app) =>
+              scriptTag({
+                name: app?.name,
+                version: app?.version,
+                appProps: app?.appProps,
+              })
+            )}
+          </>
+        )}
       </CodeBlock>
     </Container>
   )

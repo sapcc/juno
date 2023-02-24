@@ -62,6 +62,22 @@ const AssetDetails = () => {
     return { ...data[assetName][assetVersion], name: assetName }
   }, [data, assetName, assetVersion])
 
+  // assets that this asset depends on
+  const dependencies = React.useMemo(() => {
+    if (!asset?.appDependencies) return []
+
+    asset.appDependencies = { auth: "latest" }
+
+    const deps = []
+    for (let name in asset.appDependencies) {
+      const version = asset.appDependencies[name]
+      const app = data[name]?.[version]
+      if (app) deps.push(app)
+    }
+
+    return deps
+  }, [asset?.appDependencies])
+
   // wait until the global state is set to fetch the url state
   useEffect(() => {
     const updatePanelStateFromURL = (newState) => {
@@ -187,7 +203,10 @@ const AssetDetails = () => {
                 )}
                 {asset?.type === APP && (
                   <TabPanel>
-                    <AssetDetailsScripttag asset={asset} />
+                    <AssetDetailsScripttag
+                      asset={asset}
+                      dependencies={dependencies}
+                    />
                   </TabPanel>
                 )}
                 <TabPanel>
