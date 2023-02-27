@@ -189,7 +189,7 @@ window.__junoWidgetLoader =
       // create a wrapper for the app
       const appWrapper = document.createElement("div")
       appWrapper.setAttribute("data-juno-app", name || url)
-      appWrapper.setAttribute("style", "height: 100%;")
+      // appWrapper.setAttribute("style", "height: 100%;")
       if (showLoading) appWrapper.textContent = "Loading..."
 
       // load the app via importShim
