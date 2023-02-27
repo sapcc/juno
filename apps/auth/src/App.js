@@ -1,5 +1,5 @@
 import React from "react"
-import { useOidcAuth } from "oauth"
+import { useOidcAuth } from "oauth/src"
 import { broadcast, watch, onGet, get } from "communicator"
 import useCommunication from "./useCommunication"
 
@@ -12,10 +12,10 @@ const App = (props = {}) => {
   const oidc = useOidcAuth({
     issuerURL: props.issuerurl,
     clientID: props.clientid,
-    initialLogin: props.initialLogin,
+    initialLogin: props.initialLogin === true,
   })
 
-  console.log(oidc)
+  if (props.debug) console.log(oidc)
   useCommunication(oidc, {
     resetOIDCSession: props.resetOidcSession,
     debug: props.debug,

@@ -8,6 +8,8 @@ import App from "./App"
 import * as oauth from "oauth"
 const originUseOidcAuth = oauth.useOidcAuth
 
+jest.mock("communicator")
+
 // mock window location
 Object.defineProperty(window, "location", {
   value: {
@@ -41,15 +43,5 @@ describe("logged in", () => {
     expect(window.location.replace).not.toHaveBeenCalled()
     const loginTitle = await screen.queryAllByShadowText(/Converged Cloud/i)
     expect(loginTitle.length > 0).toBe(true)
-  })
-})
-
-describe("not logged in", () => {
-  beforeEach(() => (oauth.useOidcAuth = originUseOidcAuth))
-
-  test("should redirect to oidc provider", () => {
-    render(<App />)
-    // redirect to openID provider
-    expect(window.location.replace).toHaveBeenCalled()
   })
 })

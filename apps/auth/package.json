@@ -74,9 +74,14 @@
       "description": "OIDC client id"
     },
     "debug": {
-      "value": "true",
+      "value": true,
       "type": "optional",
       "description": "log debug info"
+    },
+    "initialLogin": {
+      "value": true,
+      "type": "optional",
+      "description": "trigger login process in load"
     }
   }
 }
