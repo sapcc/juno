@@ -1,11 +1,30 @@
 import { useEffect } from "react"
 import { broadcast, watch, onGet } from "communicator"
 
+const enrichAuthData = (auth) => {
+  if (!auth) return auth
+
+  const enrichedAuth = { ...auth }
+  const userId = auth.login_name || auth.subject
+
+  if (enrichedAuth) {
+    enrichedAuth["avatarUrl"] = {
+      small: `https://avatars.wdf.sap.corp/avatar/${userId}?size=24x24`,
+    }
+  }
+  return enrichedAuth
+}
+
 const useCommunication = (oidc, { resetOIDCSession, debug }) => {
   const { loggedIn, isProcessing, auth, error, login, logout } = oidc || {}
 
   useEffect(() => {
-    const authData = { loggedIn, isProcessing, auth, error }
+    const authData = {
+      loggedIn,
+      isProcessing,
+      auth: enrichAuthData(auth),
+      error,
+    }
     // send auth data
     broadcast("AUTH_UPDATE_DATA", authData, { debug })
     // listen to on get events
