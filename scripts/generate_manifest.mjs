@@ -98,6 +98,7 @@ files.sort().forEach(async (file) => {
     entryDir: "/" + path + "/" + entryDir,
     updatedAt: meta.mtime,
     size: totalSize,
+    name: pkg.name,
     sizeHuman: totalSizeHuman,
     appProps: pkg.appProps || {},
     appDependencies: pkg.appDependencies,
