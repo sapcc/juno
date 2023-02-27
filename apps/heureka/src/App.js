@@ -1,5 +1,4 @@
 import React, { useEffect } from "react"
-import { useOidcAuth } from "oauth"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import useStore from "./store"
 import { useStore as useMessageStore } from "./messageStore"
@@ -9,35 +8,22 @@ import { AppShell, PageHeader } from "juno-ui-components"
 import HeaderUser from "./components/HeaderUser"
 import styles from "./styles.scss"
 import StyleProvider from "juno-ui-components"
+import useCommunication from "./hooks/useCommunication"
+
+const CustomPageHeader = () => {
+  const auth = useStore((state) => state.auth)
+  const logout = useStore((state) => state.logout)
+  const loggedIn = useStore((state) => state.loggedIn)
+  return (
+    <PageHeader heading="Converged Cloud | Heureka">
+      {loggedIn && <HeaderUser auth={auth} logout={logout} />}
+    </PageHeader>
+  )
+}
 
 const App = (props) => {
-  const setMessage = useMessageStore((state) => state.setMessage)
   const setEndpoint = useStore((state) => state.setEndpoint)
-  const setAuth = useStore((state) => state.setAuth)
-  const setLoggedIn = useStore((state) => state.setLoggedIn)
-  const setLoggedOut = useStore((state) => state.setLoggedOut)
-  const setLogin = useStore((state) => state.setLogin)
-
-  const { auth, loggedIn, logout, login } = useOidcAuth({
-    issuerURL: props.issuerurl,
-    clientID: props.clientid,
-    initialLogin: true,
-  })
-
-  useEffect(() => {
-    if (auth?.error) {
-      // display error message
-      setMessage({
-        variant: "error",
-        text: auth?.error,
-      })
-    }
-
-    setAuth(auth)
-    setLoggedIn(loggedIn)
-    setLogin(login)
-    setLoggedOut(logout)
-  }, [auth, loggedIn, logout])
+  useCommunication()
 
   useEffect(() => {
     if (props.endpoint) {
@@ -45,20 +31,12 @@ const App = (props) => {
     }
   }, [props])
 
-  const customPageHeader = React.useMemo(() => {
-    return (
-      <PageHeader heading="Converged Cloud | Heureka">
-        {loggedIn && <HeaderUser auth={auth} logout={logout} />}
-      </PageHeader>
-    )
-  }, [loggedIn, logout, auth])
-
   // Create a client
   const queryClient = new QueryClient()
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AppShell pageHeader={customPageHeader}>
+      <AppShell pageHeader={<CustomPageHeader />}>
         <AppRouter props={props} />
       </AppShell>
     </QueryClientProvider>
