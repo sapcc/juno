@@ -87,7 +87,7 @@ const howToUse = (method, message) => {
 }
 
 const pattern = options.path
-  ? `${DIRNAME}/../${options.path}/**/*.+(j|t)s?(x)`
+  ? `${options.path}/**/*.+(j|t)s?(x)`
   : `${DIRNAME}/../+(libs|apps)/**/*.+(j|t)s?(x)`
 console.log("look for", pattern)
 
