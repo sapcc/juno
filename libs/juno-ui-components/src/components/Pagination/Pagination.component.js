@@ -46,7 +46,7 @@ const renderPaginationInnards = (
       break
     case "select":
       return (
-        <Select name="pages" width="auto" defaultValue={currentPage} onChange={handleSelectChange}>
+        <Select name="pages" width="auto" defaultValue={currentPage} onValueChange={handleSelectChange}>
           { selectOptions(pages) }
         </Select>
       )
