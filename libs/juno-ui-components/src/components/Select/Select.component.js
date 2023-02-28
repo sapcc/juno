@@ -55,6 +55,7 @@ export const Select = React.forwardRef(
     defaultOpen,
     disabled,
     error,
+    id,
     invalid,
     labelClassName,
     loading,
@@ -117,18 +118,20 @@ export const Select = React.forwardRef(
         {...props}
       >
         <RadixSelect.Trigger 
+          id={id}
           aria-label={ariaLabel}
           className={`
+            juno-select
             juno-select-trigger
             ${ triggerStyles }
             ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
             ${ hasError || isInvalid ? triggerErrorStyles : "" }
-            ${ hasError ? "juno-select-trigger-error jn-cursor-not-allowed" : "" }
-            ${ isValid ? "juno-select-trigger-valid " + triggerValidStyles : "" } 
-            ${ disabled ? "juno-select-trigger-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
+            ${ hasError ? "juno-select-error jn-cursor-not-allowed" : "" }
+            ${ isValid ? "juno-select-valid " + triggerValidStyles : "" } 
+            ${ disabled ? "juno-select-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
             ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
-            ${ isLoading ? "juno-select-trigger-loading jn-cursor-not-allowed" : "" }
-            ${ isInvalid ? "juno-select-trigger-invalid" : "" }
+            ${ isLoading ? "juno-select-loading jn-cursor-not-allowed" : "" }
+            ${ isInvalid ? "juno-select-invalid" : "" }
             ${ className }
           `}
           ref={forwardedRef}
@@ -176,6 +179,8 @@ Select.propTypes = {
   disabled: PropTypes.bool,
   /** Whether the Select has an error, e.g. when loading necessary option data failed. When the Select has been negatively validated, use `invalid` instead. */
   error: PropTypes.bool,
+  /** Pass an id to the Select */
+  id: PropTypes.string,
   /** Whether the Select has been negatively validated */
   invalid: PropTypes.bool,
   /** Pass custom classNames to the Select label and placeholder */
@@ -209,6 +214,7 @@ Select.defaultProps = {
   defaultOpen: undefined,
   disabled: false,
   error: false,
+  id: "",
   invalid: false,
   labelClassName: "",
   loading: false,

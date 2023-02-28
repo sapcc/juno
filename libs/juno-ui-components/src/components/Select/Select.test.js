@@ -31,7 +31,7 @@ describe("Select", () => {
     render(<Select />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveAttribute('type', "button")
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select-trigger")
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select")
   })
   
   test("renders an aria-label as passed", async () => {
@@ -55,19 +55,19 @@ describe("Select", () => {
   test("renders a valid Select as passed", async () => {
     render(<Select valid />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select-trigger-valid")
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select-valid")
   })
   
   test("renders an invalid Select as passed", async () => {
     render(<Select invalid />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select-trigger-invalid")
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select-invalid")
   })
   
   test("renders loading Select with a Spinner as passed", async () => {
     render(<Select loading />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select-trigger-loading")
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select-loading")
     // query the DOM directly as Radix-ui add aria-hidden to the icons in the select:
     expect(document.querySelector(".juno-spinner")).toBeInTheDocument()
   })
@@ -75,7 +75,7 @@ describe("Select", () => {
   test("renders a Select in error state as passed", async () => {
     render(<Select error />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select-trigger-error")
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select-error")
   })
   
   test("renders an open Select as passed", async () => {
@@ -119,7 +119,7 @@ describe("Select", () => {
     expect(screen.getByRole("combobox")).not.toHaveTextContent("Option 3")    
   })
   
-  test.skip("allows user to open a Select by clicking the select trigger", async () => {
+  test.skip("allows user to open a Select by clicking", async () => {
     render(
       <Select>
         <SelectOption value="1">Option 1</SelectOption>
@@ -130,7 +130,7 @@ describe("Select", () => {
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument()
     await userEvent.click(screen.getByRole("combobox"))
-    // Test does not find an element with role="listbox"
+    // Test does not find an element with role="listbox"?
     expect(screen.getByRole("listbox")).toBeInTheDocument()
   })
   
