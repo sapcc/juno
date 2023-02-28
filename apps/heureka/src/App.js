@@ -38,7 +38,7 @@ const App = (props) => {
     <QueryClientProvider client={queryClient}>
       <AppShell
         pageHeader={<CustomPageHeader />}
-        embedded={props.embedded === true}
+        embedded={props.embedded === true || props.embedded === "true"}
       >
         <AppRouter props={props} />
       </AppShell>
