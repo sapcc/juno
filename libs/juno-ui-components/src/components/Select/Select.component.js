@@ -56,6 +56,7 @@ export const Select = React.forwardRef(
     disabled,
     error,
     invalid,
+    labelClassName,
     loading,
     name,
     onOpenChange,
@@ -136,7 +137,9 @@ export const Select = React.forwardRef(
             isLoading || hasError ?
               ""
             :
+            <span className={`${labelClassName}`}>
               <RadixSelect.Value placeholder={placeholder}/> 
+            </span>
           }
           <RadixSelect.Icon>
             <TriggerIcons />
@@ -175,6 +178,8 @@ Select.propTypes = {
   error: PropTypes.bool,
   /** Whether the Select has been negatively validated */
   invalid: PropTypes.bool,
+  /** Pass custom classNames to the Select label and placeholder */
+  labelClassName: PropTypes.string,
   /** Whether the Select is currently busy loading options. Will display a Spinner Icon. */
   loading: PropTypes.bool,
   /** The name of the Select. When a form is submitted, this will be posted as name:value. */
@@ -205,6 +210,7 @@ Select.defaultProps = {
   disabled: false,
   error: false,
   invalid: false,
+  labelClassName: "",
   loading: false,
   name: "",
   onOpenChange: undefined,
