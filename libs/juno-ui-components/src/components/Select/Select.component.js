@@ -15,7 +15,6 @@ const triggerStyles = `
   jn-select-none
   jn-text-theme-high
   jn-text-base
-  jn-w-full
   focus:jn-outline-none
   focus:jn-ring-2
   focus:jn-ring-theme-focus
@@ -66,6 +65,7 @@ export const Select = React.forwardRef(
     position,
     valid,
     value,
+    width,
     ...props
   }, 
   forwardedRef ) => {
@@ -120,6 +120,7 @@ export const Select = React.forwardRef(
           className={`
             juno-select-trigger
             ${ triggerStyles }
+            ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
             ${ hasError || isInvalid ? triggerErrorStyles : "" }
             ${ hasError ? "juno-select-trigger-error jn-cursor-not-allowed" : "" }
             ${ isValid ? "juno-select-trigger-valid " + triggerValidStyles : "" } 
@@ -192,6 +193,8 @@ Select.propTypes = {
   valid: PropTypes.bool,
   /** The value of the Select (controlled mode) */
   value: PropTypes.string,
+  /** The width of the select. Either 'full' (default) or 'auto'. */
+  width: PropTypes.oneOf(["full", "auto"]),
 }
 
 Select.defaultProps = {
@@ -211,4 +214,5 @@ Select.defaultProps = {
   position: "popper",
   valid: false,
   value: undefined,
+  width: "full",
 }
