@@ -9,8 +9,7 @@ const HeaderUser = ({ auth, logout }) => {
   }, [auth])
 
   const sapID = useMemo(() => {
-    if (!auth?.login_name) return ""
-    return auth.login_name
+    return auth?.subject || auth?.login_name || ""
   }, [auth])
 
   return (
