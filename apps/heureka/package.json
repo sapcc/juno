@@ -85,16 +85,6 @@
       "value": "https://the_endpoint/api/v1",
       "type": "required",
       "description": "Endpoint URL of the API"
-    },
-    "issuerurl": {
-      "value": "https://tbd.com",
-      "type": "required",
-      "description": "Endpoint URL of Open ID provider"
-    },
-    "clientid": {
-      "value": "tbd",
-      "type": "required",
-      "description": "OIDC client id"
     }
   },
   "appDependencies": {
