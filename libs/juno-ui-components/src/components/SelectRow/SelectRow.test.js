@@ -51,7 +51,7 @@ describe("SelectRow", () => {
 	test("renders an invalid SelectRow as passed", async () => {
 		render(<SelectRow invalid />)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
-		expect(screen.getByRole("combobox")).toHaveClass("juno-select-invalid")
+		expect(screen.getByRole("combobox")).toHaveClass("juno-select-trigger-invalid")
 		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
 	})
 	
