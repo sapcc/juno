@@ -19,6 +19,12 @@ const useCommunication = (oidc, { resetOIDCSession, debug }) => {
   const { loggedIn, isProcessing, auth, error, login, logout } = oidc || {}
 
   useEffect(() => {
+    // inform that the auth app has been loaded!
+    broadcast("AUTH_APP_LOADED", true)
+    onGet("AUTH_APP_LOADED", () => true)
+  }, [])
+
+  useEffect(() => {
     const authData = {
       loggedIn,
       isProcessing,
