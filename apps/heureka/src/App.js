@@ -36,7 +36,10 @@ const App = (props) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AppShell pageHeader={<CustomPageHeader />}>
+      <AppShell
+        pageHeader={<CustomPageHeader />}
+        embedded={props.embedded === true}
+      >
         <AppRouter props={props} />
       </AppShell>
     </QueryClientProvider>
