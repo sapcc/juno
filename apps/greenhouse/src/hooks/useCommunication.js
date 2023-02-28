@@ -24,8 +24,8 @@ const useCommunication = () => {
     const unwatchUpdate = watch("AUTH_UPDATE_DATA", auth.setData)
 
     return () => {
-      unwatchLoaded()
-      unwatchUpdate()
+      if (unwatchLoaded) unwatchLoaded()
+      if (unwatchUpdate) unwatchUpdate()
     }
   }, [auth?.setData, auth?.setAppLoaded])
 }
