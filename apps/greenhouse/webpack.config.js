@@ -132,7 +132,7 @@ module.exports = (_, argv) => {
       ],
     },
     resolve: {
-      extensions: [".js", ".json"],
+      extensions: [".js", ".json", ".jsx"],
       fallback: {
         path: require.resolve("path-browserify"),
         os: require.resolve("os-browserify/browser"),

@@ -90,6 +90,11 @@
     "embedded": {
       "value": "false",
       "description": "Set to true if app is to be embedded in another existing app or page, like e.g. Elektra.  If set to true the app won't render a page header/footer and instead render only the content"
+    },
+    "currentHost": {
+      "value": "URL TO ASSETS SERVER",
+      "type": "required",
+      "description": "This value is usually set by the Widget Loader. However, if this app is loaded via import or importShim, then this props parameter should be set."
     }
   }
 }
