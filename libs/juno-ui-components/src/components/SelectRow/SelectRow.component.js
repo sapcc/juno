@@ -33,10 +33,6 @@ const floatinglabelcontainerstyles = `
   jn-opacity-75
 `
 
-const floatingselectstyles = `
-  jn-pt-[0.8125rem]
-`
-
 const errortextstyles = `
   jn-text-xs
   jn-text-theme-error
@@ -115,9 +111,8 @@ export const SelectRow = ({
       {variant !== "floating" ? labelContainer : null}
       <div>
         <Select
-          className={`${selectstyles} ${
-            variant === "floating" ? floatingselectstyles : ""
-          }`}
+          className={`${selectstyles}`}
+          labelClassName={ variant === "floating" ? "jn-pt-[0.8125rem]" : "" }
           name={name}
           id={id}
           onChange={onChange}
