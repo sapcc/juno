@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react"
-import PropTypes from "prop-types"
 import { Select } from "../Select/Select.component"
 import { SelectOption } from "../SelectOption/SelectOption.component"
 import { TextInput } from "../TextInput/TextInput.component"
 import { Icon } from "../Icon/Icon.component"
+import PropTypes from "prop-types"
 
 const wrapperStyles = `
 	jn-flex
@@ -42,11 +42,18 @@ const iconWrapperStyles = `
 	jn-z-50
 `
 
+const selectWrapperStyles = `
+  jn-min-w-[25%]
+  jn-max-w-[50%]
+`
+
 /** 
 A special Input to select key and value of a filter.
 */
 export const FilterInput = ({
+  keyPlaceholder,
   keyLabel,
+  open,
   options,
   valueLabel,
   className,
@@ -62,24 +69,23 @@ export const FilterInput = ({
   error,
   ...props
 }) => {
-  const [selectedFilter, setSelectedFilter] = useState(selectedFilterKey)
-  const [value, setValue] = useState(filterValue)
-  const [isLoading, setIsLoading] = useState(options.length < 1 || loading)
-  const [hasError, setHasError] = useState(error)
-
-  useEffect(() => {
-    setValue(filterValue)
-  }, [filterValue])
-
+  const [selectedFilter, setSelectedFilter] = useState("")
+  const [value, setValue] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasError, setHasError] = useState(false)
+  
   useEffect(() => {
     setSelectedFilter(selectedFilterKey)
   }, [selectedFilterKey])
 
-  // Reset the (text input) value whenever the component is loading:
   useEffect(() => {
-    if (options.length < 1 || loading) {
-      setIsLoading(true)
-      setValue("")
+    setValue(filterValue)
+  }, [filterValue])
+  
+  useEffect(() => {
+    if (!hasError && options.length < 1 || isLoading) {
+      setIsLoading(loading)
+      setValue("") // reset the text input value when component is loading data
     } else {
       setIsLoading(false)
     }
@@ -89,6 +95,7 @@ export const FilterInput = ({
     setHasError(error)
   }, [error])
 
+  // TODO: make work with new Select -> how to get new value from Select?
   // Reset the (text input) value whenever the selected Filter key changes:
   const handleSelectedFilterChange = (event) => {
     setSelectedFilter(event.target.value)
@@ -126,18 +133,18 @@ export const FilterInput = ({
       } ${className}`}
       {...props}
     >
-      <div>
+      {/* <div>
+      
+      
         <Select
-          className={`juno-filter-input-select ${selectStyles}`}
+          className={`juno-filter-input-select ${selectStyles} ${ hasError ? "jn-border-none" : "" }`}
           aria-label={keyLabel}
           value={selectedFilter}
           onChange={handleSelectedFilterChange}
           loading={isLoading}
           error={hasError}
+          placeholder={keyLabel}
         >
-          // First "Placeholder" option:
-          <SelectOption label={keyLabel || "Select Filter"} value="" />
-          // Options representing actual filter key values:
           {options.map((option, i) => (
             <SelectOption
               label={option.label}
@@ -147,14 +154,36 @@ export const FilterInput = ({
             />
           ))}
         </Select>
+      </div> */}
+      
+      <div className={`${selectWrapperStyles}`}>
+        <Select
+          className={`juno-filter-input-select ${selectStyles} ${ hasError ? "jn-border-none" : "" }`}
+          placeholder={ keyPlaceholder || keyLabel }
+          aria-label={ keyPlaceholder || keyLabel }
+          loading={isLoading}
+          error={hasError}
+        >
+          {options.map((option, i) => {
+            //console.log(option)
+            return (<SelectOption
+              label={i || option.label}
+              value={i || option.key}
+              key={`${i}`}
+              {...option}
+            />)
+          })}
+        </Select>
       </div>
+      
+      
       <TextInput
         value={value}
         className={`${textInputStyles}`}
         aria-label={valueLabel}
         onChange={handleFilterValueChange}
         onKeyPress={handleKeyPress}
-        disabled={isLoading || hasError}
+        disabled={ isLoading || hasError }
         placeholder={isLoading ? "Loading Filter Options…" : valuePlaceholder}
       />
       <div className={`${iconWrapperStyles}`}>
@@ -179,8 +208,12 @@ export const FilterInput = ({
 }
 
 FilterInput.propTypes = {
-  /** The label to display on the Filter Key Select */
+  /** A Placeholder to display in the Filter Key Select if none is selected. Defaults to "Select Filter…". */
+  keyPlaceholder: PropTypes.string,
+  /** Legacy: The label to display on the Filter Key Select. If possible, use 'placeholder' instead. */
   keyLabel: PropTypes.string,
+  /** Whether the Filter Key Select is open. */
+  open: PropTypes.bool,
   /** The options for the Filter Select: `[{Label: "Filter 1", key: "filter-1"}, {...}]`
 	The array MUST have a length in order for the component to render.
 	*/
@@ -210,7 +243,9 @@ FilterInput.propTypes = {
 }
 
 FilterInput.defaultProps = {
+  placeholder: "Select Filter…",
   keyLabel: "Select Filter",
+  open: false,
   options: [],
   selectedFilterKey: "",
   onSelectedFilterKeyChange: undefined,
