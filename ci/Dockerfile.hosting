@@ -38,8 +38,10 @@ RUN echo -e \
 RUN echo -e \
   $'#!/bin/sh\n\n\
   set -e \n\
+  echo $PROPS \n\
   DATA_PROPS=$(echo $PROPS| jq -r \'to_entries[] | "data-props-\(.key)=###\(.value)###" \' | sed -r \'s/###/"/g\') \n\
   DATA_PROPS=$(echo $DATA_PROPS | tr "\n" " ") \n\
+  echo $DATA_PROPS \n\
   sed -i "s/###PAGE_TITLE###/$PAGE_TITLE/g" /tmp/index_template.html \n\
   sed -i "s%###FAVICON_URL###%$FAVICON_URL%g" /tmp/index_template.html \n\
   sed -i "s%###FAVICON_16X16_URL###%$FAVICON_16X16_URL%g" /tmp/index_template.html \n\
@@ -47,7 +49,7 @@ RUN echo -e \
   sed -i "s%###ASSETS_HOST###%$ASSETS_HOST%g" /tmp/index_template.html \n\
   sed -i "s/###NAME###/$NAME/g" /tmp/index_template.html \n\
   sed -i "s/###VERSION###/$VERSION/g" /tmp/index_template.html \n\
-  sed -i "s/###DATA_PROPS###/$DATA_PROPS/g" /tmp/index_template.html \n\
+  sed -i "s^###DATA_PROPS###^$DATA_PROPS^g" /tmp/index_template.html \n\
   cat /tmp/index_template.html \n\
   cp /tmp/index_template.html /usr/share/nginx/html/index.html \n\
   exec "$@" ' >> /usr/local/bin/entrypoint && chmod +x /usr/local/bin/entrypoint
