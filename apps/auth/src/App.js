@@ -12,7 +12,7 @@ const App = (props = {}) => {
   const oidc = useOidcAuth({
     issuerURL: props.issuerurl,
     clientID: props.clientid,
-    initialLogin: props.initialLogin === true,
+    initialLogin: props.initialLogin === "true" || props.initialLogin === true,
   })
 
   if (props.debug) console.log(oidc)
