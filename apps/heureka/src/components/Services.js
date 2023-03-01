@@ -54,7 +54,6 @@ const Services = ({}) => {
   }
 
   return useMemo(() => {
-    console.log("RENDER services")
     return (
       <Container px={false}>
         {services.isLoading && !services.data ? (

@@ -10,8 +10,6 @@ const PackagesList = ({ packages }) => {
     return packages
   }, [packages])
 
-  console.log("packages list: ", packages)
-
   return (
     <DataGrid columns={3}>
       <DataGridRow>

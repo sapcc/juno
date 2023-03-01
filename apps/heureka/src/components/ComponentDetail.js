@@ -71,8 +71,6 @@ const ComponentDetail = () => {
     return usersListToString(data.Operators)
   }, [data?.Operators])
 
-  console.log("Component Details: ", data)
-
   return (
     <Container px={false}>
       {isLoading && !data ? (

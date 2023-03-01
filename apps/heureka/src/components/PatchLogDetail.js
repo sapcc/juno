@@ -48,8 +48,6 @@ const PatchLogDetail = ({}) => {
     navigateTo(`${SERVICES_PATH}/${serviceId}`)
   }
 
-  console.log("PATH: ", patch)
-
   return (
     <Panel heading="Patch log details" opened={true} onClose={onPanelClose}>
       <PanelBody>

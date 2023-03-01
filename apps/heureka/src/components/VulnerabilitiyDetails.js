@@ -60,8 +60,6 @@ const VulnerabilitiyDetails = () => {
     }
   }, [data?.Scn?.CveLastModified])
 
-  console.log("Vulnerability Details: ", data)
-
   return (
     <Container px={false}>
       {isLoading && !data ? (

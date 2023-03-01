@@ -53,8 +53,6 @@ const Vulnerabilities = ({}) => {
     setSearchOptions(options)
   }
 
-  console.log("Vulnerabilities: ", vulnerabilities.data)
-
   return (
     <Container px={false}>
       {vulnerabilities.isLoading && !vulnerabilities.data ? (

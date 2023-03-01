@@ -53,8 +53,6 @@ const Users = ({}) => {
     setSearchOptions(options)
   }
 
-  console.log("users: ", users)
-
   return (
     <Container px={false}>
       {users.isLoading && !users.data ? (

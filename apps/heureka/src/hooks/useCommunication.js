@@ -14,7 +14,6 @@ const useCommunication = () => {
     get(
       "AUTH_GET_DATA",
       (data) => {
-        console.log("==receive auth data from get", data)
         setAuth(data.auth)
         setLoggedIn(data.loggedIn)
       },
@@ -25,7 +24,6 @@ const useCommunication = () => {
     const unwatch = watch(
       "AUTH_UPDATE_DATA",
       (data) => {
-        console.log("===receive auth data from update", data)
         setAuth(data.auth)
         setLoggedIn(data.loggedIn)
       },
@@ -35,7 +33,6 @@ const useCommunication = () => {
   }, [setAuth, setLoggedIn])
 
   setLogin(() => {
-    console.log("LOGIN")
     broadcast("AUTH_LOGIN", "heureka", { debug: true })
   })
 

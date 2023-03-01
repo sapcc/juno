@@ -96,8 +96,6 @@ const ServiceDetail = () => {
     return []
   }, [data])
 
-  console.log("Service Details: ", data)
-
   return (
     <Container px={false}>
       {isLoading && !data ? (

@@ -46,8 +46,6 @@ const UserDetail = ({}) => {
     }
   }, [error])
 
-  console.log("User Details: ", data)
-
   return (
     <Container px={false}>
       {isLoading && !data ? (
