@@ -15,6 +15,7 @@ const textinputstyles = `
 	focus:jn-ring-2
 	focus:jn-ring-theme-focus
 	disabled:jn-opacity-50
+	disabled:jn-cursor-not-allowed
 `
 
 const defaultborderstyles = `
