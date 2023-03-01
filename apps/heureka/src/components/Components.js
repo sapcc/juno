@@ -54,8 +54,6 @@ const Components = () => {
     setSearchOptions(options)
   }
 
-  console.log("components DATA: ", components.data)
-
   return (
     <Container px={false}>
       {components.isLoading && !components.data ? (
