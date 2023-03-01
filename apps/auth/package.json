@@ -81,7 +81,7 @@
     "initialLogin": {
       "value": true,
       "type": "optional",
-      "description": "trigger login process in load"
+      "description": "trigger login process automatically on load press. Possible values are 'true' or 'false' (default)"
     }
   }
 }
