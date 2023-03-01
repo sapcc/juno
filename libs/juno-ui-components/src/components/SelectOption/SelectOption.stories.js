@@ -19,7 +19,7 @@ const Template = ({children, ...args}) => {
 export const Default = Template.bind({})
 Default.args = {
   value: "option",
-  children: "Option"
+  label: "Option"
 }
 
 export const Disabled = Template.bind({})
