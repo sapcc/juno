@@ -105,10 +105,6 @@ function handleOIDCResponse() {
 // This function makes the oidc id_token flow
 // silent option is used to refresh id_token in the background (silently) using iframe.
 function oidcRequest({ issuerURL, clientID, silent }) {
-  if (!issuerURL || !clientID) {
-    console.error("useOidcAuth: issuerURL or clientID are undefined!")
-    return
-  }
   // generate a random string and extend it with silent prop
   let state = randomString()
   // add silent flag to state to inform response handler about the silence mode.
@@ -225,8 +221,16 @@ const useOidcAuth = (options) => {
     login,
     logout,
     isProcessing,
+    error: auth?.error,
     loggedIn: !!auth?.id_token,
   }
 }
 
-export default useOidcAuth
+export default (options) => {
+  const { clientID, issuerURL, initialLogin, refresh } = options || {}
+  if (!issuerURL || !clientID) {
+    console.error("useOidcAuth: issuerURL or clientID are undefined!")
+    return {}
+  }
+  return useOidcAuth({ clientID, issuerURL, initialLogin, refresh })
+}
