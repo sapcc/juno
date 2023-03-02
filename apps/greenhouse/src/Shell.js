@@ -8,7 +8,7 @@ import App from "./components/App"
 import styles from "./styles.scss"
 import StyleProvider from "juno-ui-components"
 import useCommunication from "./hooks/useCommunication"
-import useAppLoader from "./hooks/useAppLoader"
+import { registerConsumer, currentState } from "url-state-provider"
 
 /* IMPORTANT: Replace this with your app's name */
 const URL_STATE_KEY = "greenhouse"
@@ -44,6 +44,25 @@ const appsConfig = {
   },
 }
 
+document.head.appendChild(document.createElement("script")).text =
+  "(" +
+  function () {
+    // injected DOM script is not a content script anymore,
+    // it can modify objects and functions of the page
+    var _pushState = history.pushState
+    var _replaceState = history.replaceState
+    history.pushState = function (state, title, url) {
+      _pushState.call(this, state, title, url)
+      window.dispatchEvent(new CustomEvent("popstate", { state }))
+    }
+    history.replaceState = function (state, title, url) {
+      _replaceState.call(this, state, title, url)
+      window.dispatchEvent(new CustomEvent("popstate", { state }))
+    }
+    // repeat the above for replaceState too
+  } +
+  ")(); document.currentScript.remove();" // remove the DOM script element
+
 const Shell = (props = {}) => {
   const setEndpoint = useStore((state) => state.setEndpoint)
   const setUrlStateKey = useStore((state) => state.setUrlStateKey)
@@ -51,6 +70,8 @@ const Shell = (props = {}) => {
   const setActive = useStore((state) => state.apps.setActive)
   const setAssetsHost = useStore((state) => state.setAssetsHost)
   const activeApps = useStore((state) => state.apps.active)
+
+  const loggedIn = useStore((state) => state.auth.loggedIn)
 
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
@@ -87,10 +108,33 @@ const Shell = (props = {}) => {
       },
     })
 
-    setActive(["heureka"])
+    // setActive(["heureka"])
 
     setAssetsHost(props.currentHost)
   }, [setEndpoint, setUrlStateKey, setAppsConfig, setActive, setAssetsHost])
+
+  const loaded = React.useMemo(
+    () => loggedIn && window.location.href.indexOf("__s") >= 0,
+    [loggedIn, window.location.href]
+  )
+
+  React.useEffect(() => {
+    if (!loggedIn) return
+    const greenhouseUrlState = registerConsumer(URL_STATE_KEY)
+    console.log(
+      "========================URL STATE",
+      greenhouseUrlState.currentState(),
+      window.location.href
+    )
+    const active = greenhouseUrlState.currentState()?.a
+    if (active) setActive(active.split(","))
+  }, [loggedIn])
+
+  React.useEffect(() => {
+    if (!loggedIn) return
+    const greenhouseUrlState = registerConsumer(URL_STATE_KEY)
+    greenhouseUrlState.push({ a: activeApps.join(",") })
+  }, [loggedIn, activeApps])
 
   return (
     <QueryClientProvider client={queryClient}>

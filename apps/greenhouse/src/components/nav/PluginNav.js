@@ -67,6 +67,7 @@ const PluginNav = () => {
   const auth = useStore((state) => state.auth)
   const setActive = useStore((state) => state.apps.setActive)
   const config = useStore((state) => state.apps.config)
+  const active = useStore((state) => state.apps.active)
 
   return (
     <Stack
@@ -93,7 +94,9 @@ const PluginNav = () => {
             key={i}
             direction="vertical"
             alignment="center"
-            className={`greenhouse-nav-item ${navItem(true)}`}
+            className={`greenhouse-nav-item ${navItem(
+              active.indexOf(appConf.name) >= 0
+            )}`}
             role="button"
             tabIndex="0"
             onClick={() => setActive([appConf.name])}
