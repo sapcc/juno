@@ -118,18 +118,21 @@ const Shell = (props = {}) => {
     [loggedIn, window.location.href]
   )
 
+  // Initial state from URL
   React.useEffect(() => {
     if (!loggedIn) return
     const greenhouseUrlState = registerConsumer(URL_STATE_KEY)
-    console.log(
-      "========================URL STATE",
-      greenhouseUrlState.currentState(),
-      window.location.href
-    )
+    // console.log(
+    //   "========================URL STATE",
+    //   greenhouseUrlState.currentState(),
+    //   window.location.href
+    // )
     const active = greenhouseUrlState.currentState()?.a
     if (active) setActive(active.split(","))
+    else setActive(Object.keys(appsConfig)?.[0])
   }, [loggedIn])
 
+  // sync URL state
   React.useEffect(() => {
     if (!loggedIn) return
     const greenhouseUrlState = registerConsumer(URL_STATE_KEY)
@@ -137,9 +140,9 @@ const Shell = (props = {}) => {
   }, [loggedIn, activeApps])
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ShellLayout>
-        <Auth>
+    <Auth>
+      <QueryClientProvider client={queryClient}>
+        <ShellLayout>
           {Object.keys(appsConfig).map((appName, i) => (
             <App
               name={appName}
@@ -147,12 +150,9 @@ const Shell = (props = {}) => {
               active={activeApps.indexOf(appName) >= 0}
             />
           ))}
-          {/* {activeApps.map((appName, i) => (
-            <App name={appName} key={i} />
-          ))} */}
-        </Auth>
-      </ShellLayout>
-    </QueryClientProvider>
+        </ShellLayout>
+      </QueryClientProvider>
+    </Auth>
   )
 }
 
