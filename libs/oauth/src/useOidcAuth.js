@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 
 /**
  * This hook implements the implicit flow of the oidc specification.
@@ -105,6 +105,10 @@ function handleOIDCResponse() {
 // This function makes the oidc id_token flow
 // silent option is used to refresh id_token in the background (silently) using iframe.
 function oidcRequest({ issuerURL, clientID, silent }) {
+  if (!issuerURL || !clientID) {
+    console.error("useOidcAuth: issuerURL or clientID are undefined!")
+    return
+  }
   // generate a random string and extend it with silent prop
   let state = randomString()
   // add silent flag to state to inform response handler about the silence mode.
@@ -171,9 +175,12 @@ function oidcLogout(issuerURL, { silent }) {
 const useOidcAuth = (options) => {
   const { clientID, issuerURL, initialLogin, refresh } = options || {}
   const [auth, setAuth] = useState(handleOIDCResponse())
+  const [isProcessing, setIsProcessing] = React.useState(false)
 
   const login = useCallback(() => {
-    oidcRequest({ issuerURL, clientID, silent: false })
+    const silent = false
+    if (!silent) setIsProcessing(true)
+    oidcRequest({ issuerURL, clientID, silent })
   }, [clientID, issuerURL])
 
   const logout = useCallback(
@@ -206,27 +213,20 @@ const useOidcAuth = (options) => {
     return () => clearTimeout(timer)
   }, [setAuth, auth])
 
-  let result = {
+  React.useEffect(() => {
+    if (auth || initialized || !initialLogin) return
+
+    setIsProcessing(true)
+    oidcRequest({ issuerURL, clientID, silent: false })
+  }, [auth, initialized, initialLogin])
+
+  return {
     auth,
     login,
     logout,
+    isProcessing,
     loggedIn: !!auth?.id_token,
-    isProcessing: false,
   }
-
-  if (!auth && !initialized && initialLogin) {
-    result.isProcessing = true
-    oidcRequest({ issuerURL, clientID, silent: false })
-  }
-
-  if (!clientID || !issuerURL) {
-    const error =
-      "clientID or issuerURL are undefined. Please provide a clientID and issuerURL."
-    //console.warn(error)
-    result.error = error
-  }
-
-  return result
 }
 
 export default useOidcAuth
