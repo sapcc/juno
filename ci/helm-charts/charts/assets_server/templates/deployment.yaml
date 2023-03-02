@@ -39,6 +39,7 @@ spec:
               containerPort: 443
           livenessProbe:
             httpGet:
+              scheme: "HTTPS"
               path: /manifest.json
               port: 443
             timeoutSeconds: 10
@@ -46,6 +47,7 @@ spec:
             initialDelaySeconds: 60
           readinessProbe:
             httpGet:
+              scheme: "HTTPS"
               path: /manifest.json
               port: 443
             timeoutSeconds: 5

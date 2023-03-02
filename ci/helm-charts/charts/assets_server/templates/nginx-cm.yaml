@@ -6,7 +6,7 @@ metadata:
 data:
   nginx.conf: |
     server { 
-        listen       443; 
+        listen       443 ssl default_server; 
         server_name  {{ .Values.endpoint_host }}.{{ .Values.global.region }}.{{ .Values.global.tld }}; 
         ssl_certificate     /tls-secret/tls.crt;
         ssl_certificate_key /tls-secret/tls.key;
