@@ -1,5 +1,7 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Router, Route, Redirect, Switch } from "url-state-router"
+import { useStore as useMessageStore } from "../messageStore"
+
 import AppContainer from "./AppContainer"
 import Services from "./Services"
 import ServiceDetail from "./ServiceDetail"
@@ -15,6 +17,8 @@ import UserDetail from "./UserDetail"
 import SupportGroups from "./SupportGroups"
 import Home from "./Home"
 import useStore from "../hooks/useStore"
+import Messages from "./Messages"
+import WelcomeView from "./WelcomeView"
 
 export const HOME_PATH = "/home"
 export const SUPPORT_GROUP_PATH = "/support_group"
@@ -41,65 +45,92 @@ export const TABS_CONFIG = [
 
 const AppRouter = (props) => {
   const urlStateKey = useStore((state) => state.urlStateKey)
+  const auth = useStore((state) => state.auth)
+  const loggedIn = useStore((state) => state.loggedIn)
+  const login = useStore((state) => state.login)
+  const setMessage = useMessageStore((state) => state.setMessage)
+
+  useEffect(() => {
+    if (auth?.error) {
+      setMessage({
+        variant: "error",
+        text: parseError(auth?.error),
+      })
+    }
+  }, [auth?.error])
 
   return (
     <>
-      {/* wait util the urlStateKey is stored and retrieved to avoid to initialized the Router with nil stateID*/}
-      {urlStateKey && (
-        <Router stateID={urlStateKey}>
-          <Route exact path="/">
-            <Redirect to={HOME_PATH} />
-          </Route>
+      {/* wait util the user is logged in to avoid that url-state-router processes the wrong URL do tue Redirects in the login process*/}
+      {loggedIn && !auth?.error ? (
+        <>
+          {/* wait util the urlStateKey is stored and retrieved to avoid to initialized the Router with nil stateID*/}
+          {urlStateKey && (
+            <Router stateID={urlStateKey}>
+              <Route exact path="/">
+                <Redirect to={HOME_PATH} />
+              </Route>
 
-          <AppContainer tabsConfig={TABS_CONFIG}>
-            <Route exact path={HOME_PATH} component={Home} />
-            <Route exact path={SERVICES_PATH} component={Services} />
-            <Route
-              path={`${SERVICES_PATH}/:serviceId`}
-              component={ServiceDetail}
-            />
-            <Switch>
-              <Route
-                exact
-                path={`${SERVICES_PATH}/:serviceId/changeLog/:changeLogId`}
-                component={ChangesLogDetail}
-              />
-              <Route
-                exact
-                path={`${SERVICES_PATH}/:serviceId/patchLog/new`}
-                component={PatchLogNew}
-              />
-              <Route
-                exact
-                path={`${SERVICES_PATH}/:serviceId/patchLog/:patchLogId`}
-                component={PatchLogDetail}
-              />
-            </Switch>
-            <Route exact path={COMPONENTS_PATH} component={Components} />
-            <Route
-              exact
-              path={`${COMPONENTS_PATH}/:componentId`}
-              component={ComponentDetail}
-            />
-            <Route
-              exact
-              path={VULNERABILITIES_PATH}
-              component={Vulnerabilities}
-            />
-            <Route
-              exact
-              path={`${VULNERABILITIES_PATH}/:vulnerabilityId`}
-              component={VulnerabilitiyDetails}
-            />
-            <Route exact path={SUPPORT_GROUP_PATH} component={SupportGroups} />
-            <Route exact path={USERS_PATH} component={Users} />
-            <Route
-              exact
-              path={`${USERS_PATH}/:userId`}
-              component={UserDetail}
-            />
-          </AppContainer>
-        </Router>
+              <AppContainer tabsConfig={TABS_CONFIG}>
+                <Route exact path={HOME_PATH} component={Home} />
+                <Route exact path={SERVICES_PATH} component={Services} />
+                <Route
+                  path={`${SERVICES_PATH}/:serviceId`}
+                  component={ServiceDetail}
+                />
+                <Switch>
+                  <Route
+                    exact
+                    path={`${SERVICES_PATH}/:serviceId/changeLog/:changeLogId`}
+                    component={ChangesLogDetail}
+                  />
+                  <Route
+                    exact
+                    path={`${SERVICES_PATH}/:serviceId/patchLog/new`}
+                    component={PatchLogNew}
+                  />
+                  <Route
+                    exact
+                    path={`${SERVICES_PATH}/:serviceId/patchLog/:patchLogId`}
+                    component={PatchLogDetail}
+                  />
+                </Switch>
+                <Route exact path={COMPONENTS_PATH} component={Components} />
+                <Route
+                  exact
+                  path={`${COMPONENTS_PATH}/:componentId`}
+                  component={ComponentDetail}
+                />
+                <Route
+                  exact
+                  path={VULNERABILITIES_PATH}
+                  component={Vulnerabilities}
+                />
+                <Route
+                  exact
+                  path={`${VULNERABILITIES_PATH}/:vulnerabilityId`}
+                  component={VulnerabilitiyDetails}
+                />
+                <Route
+                  exact
+                  path={SUPPORT_GROUP_PATH}
+                  component={SupportGroups}
+                />
+                <Route exact path={USERS_PATH} component={Users} />
+                <Route
+                  exact
+                  path={`${USERS_PATH}/:userId`}
+                  component={UserDetail}
+                />
+              </AppContainer>
+            </Router>
+          )}
+        </>
+      ) : (
+        <>
+          <Messages />
+          <WelcomeView loginCallback={login} />
+        </>
       )}
     </>
   )
