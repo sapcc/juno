@@ -9,7 +9,7 @@ import {
 import { useRouter } from "url-state-router"
 import { getComponent } from "../queries"
 import { useStore as useMessageStore } from "../messageStore"
-import useStore from "../store"
+import useStore from "../hooks/useStore"
 import {
   usersListToString,
   componentDetailsByType,

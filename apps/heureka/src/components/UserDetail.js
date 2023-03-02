@@ -12,7 +12,7 @@ import {
 import { useRouter } from "url-state-router"
 import { getUser } from "../queries"
 import { useStore as useMessageStore } from "../messageStore"
-import useStore from "../store"
+import useStore from "../hooks/useStore"
 import {
   DetailSection,
   DetailSectionBox,

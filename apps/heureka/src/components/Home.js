@@ -13,7 +13,7 @@ import {
   DetailSectionHeader,
 } from "../styles"
 import { getServices, getUsers } from "../queries"
-import useStore from "../store"
+import useStore from "../hooks/useStore"
 import { useStore as useMessageStore } from "../messageStore"
 import ServicesList from "./ServicesList"
 import HintLoading from "./HintLoading"

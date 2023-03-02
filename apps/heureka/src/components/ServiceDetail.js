@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from "react"
 import { getService } from "../queries"
-import useStore from "../store"
+import useStore from "../hooks/useStore"
 import { useStore as useMessageStore } from "../messageStore"
 import { useRouter } from "url-state-router"
 import {

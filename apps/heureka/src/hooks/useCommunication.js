@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect, useCallback } from "react"
 import { broadcast, get, watch } from "communicator"
-import useStore from "../store"
+import useStore from "./useStore"
 
 const useCommunication = () => {
   const setAuth = useStore((state) => state.setAuth)

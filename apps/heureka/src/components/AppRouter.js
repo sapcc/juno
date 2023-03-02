@@ -14,6 +14,7 @@ import Users from "./Users"
 import UserDetail from "./UserDetail"
 import SupportGroups from "./SupportGroups"
 import Home from "./Home"
+import useStore from "../hooks/useStore"
 
 export const HOME_PATH = "/home"
 export const SUPPORT_GROUP_PATH = "/support_group"
@@ -39,50 +40,68 @@ export const TABS_CONFIG = [
 ]
 
 const AppRouter = (props) => {
-  return (
-    <Router stateID="heurekaApp">
-      <Route exact path="/">
-        <Redirect to={HOME_PATH} />
-      </Route>
+  const urlStateKey = useStore((state) => state.urlStateKey)
 
-      <AppContainer tabsConfig={TABS_CONFIG}>
-        <Route exact path={HOME_PATH} component={Home} />
-        <Route exact path={SERVICES_PATH} component={Services} />
-        <Route path={`${SERVICES_PATH}/:serviceId`} component={ServiceDetail} />
-        <Switch>
-          <Route
-            exact
-            path={`${SERVICES_PATH}/:serviceId/changeLog/:changeLogId`}
-            component={ChangesLogDetail}
-          />
-          <Route
-            exact
-            path={`${SERVICES_PATH}/:serviceId/patchLog/new`}
-            component={PatchLogNew}
-          />
-          <Route
-            exact
-            path={`${SERVICES_PATH}/:serviceId/patchLog/:patchLogId`}
-            component={PatchLogDetail}
-          />
-        </Switch>
-        <Route exact path={COMPONENTS_PATH} component={Components} />
-        <Route
-          exact
-          path={`${COMPONENTS_PATH}/:componentId`}
-          component={ComponentDetail}
-        />
-        <Route exact path={VULNERABILITIES_PATH} component={Vulnerabilities} />
-        <Route
-          exact
-          path={`${VULNERABILITIES_PATH}/:vulnerabilityId`}
-          component={VulnerabilitiyDetails}
-        />
-        <Route exact path={SUPPORT_GROUP_PATH} component={SupportGroups} />
-        <Route exact path={USERS_PATH} component={Users} />
-        <Route exact path={`${USERS_PATH}/:userId`} component={UserDetail} />
-      </AppContainer>
-    </Router>
+  return (
+    <>
+      {/* wait util the urlStateKey is stored and retrieved to avoid to initialized the Router with nil stateID*/}
+      {urlStateKey && (
+        <Router stateID={urlStateKey}>
+          <Route exact path="/">
+            <Redirect to={HOME_PATH} />
+          </Route>
+
+          <AppContainer tabsConfig={TABS_CONFIG}>
+            <Route exact path={HOME_PATH} component={Home} />
+            <Route exact path={SERVICES_PATH} component={Services} />
+            <Route
+              path={`${SERVICES_PATH}/:serviceId`}
+              component={ServiceDetail}
+            />
+            <Switch>
+              <Route
+                exact
+                path={`${SERVICES_PATH}/:serviceId/changeLog/:changeLogId`}
+                component={ChangesLogDetail}
+              />
+              <Route
+                exact
+                path={`${SERVICES_PATH}/:serviceId/patchLog/new`}
+                component={PatchLogNew}
+              />
+              <Route
+                exact
+                path={`${SERVICES_PATH}/:serviceId/patchLog/:patchLogId`}
+                component={PatchLogDetail}
+              />
+            </Switch>
+            <Route exact path={COMPONENTS_PATH} component={Components} />
+            <Route
+              exact
+              path={`${COMPONENTS_PATH}/:componentId`}
+              component={ComponentDetail}
+            />
+            <Route
+              exact
+              path={VULNERABILITIES_PATH}
+              component={Vulnerabilities}
+            />
+            <Route
+              exact
+              path={`${VULNERABILITIES_PATH}/:vulnerabilityId`}
+              component={VulnerabilitiyDetails}
+            />
+            <Route exact path={SUPPORT_GROUP_PATH} component={SupportGroups} />
+            <Route exact path={USERS_PATH} component={Users} />
+            <Route
+              exact
+              path={`${USERS_PATH}/:userId`}
+              component={UserDetail}
+            />
+          </AppContainer>
+        </Router>
+      )}
+    </>
   )
 }
 

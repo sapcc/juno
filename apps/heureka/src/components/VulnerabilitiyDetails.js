@@ -7,7 +7,7 @@ import {
   Container,
 } from "juno-ui-components"
 import { getVulnerability } from "../queries"
-import useStore from "../store"
+import useStore from "../hooks/useStore"
 import { useStore as useMessageStore } from "../messageStore"
 import { useRouter } from "url-state-router"
 import { parseError } from "../helpers"

@@ -10,7 +10,7 @@ import {
 import { useRouter } from "url-state-router"
 import Breadcrumb from "./Breadcrumb"
 import Messages from "./Messages"
-import useStore from "../store"
+import useStore from "../hooks/useStore"
 import WelcomeView from "./WelcomeView"
 
 const AppContainer = ({ tabsConfig, component, children }) => {

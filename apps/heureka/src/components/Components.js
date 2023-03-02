@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useState } from "react"
 import { getComponents, getComponentFilters } from "../queries"
-import useStore from "../store"
+import useStore from "../hooks/useStore"
 import { useStore as useMessageStore } from "../messageStore"
 import { parseError } from "../helpers"
 import { Stack, Spinner, Container } from "juno-ui-components"

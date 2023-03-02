@@ -1,28 +1,20 @@
 import React, { useEffect } from "react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import useStore from "./store"
+import useStore from "./hooks/useStore"
 import { useStore as useMessageStore } from "./messageStore"
 import AppRouter from "./components/AppRouter"
 import { MessagesStateProvider } from "./messageStore"
-import { AppShell, PageHeader } from "juno-ui-components"
-import HeaderUser from "./components/HeaderUser"
+import { AppShell } from "juno-ui-components"
 import styles from "./styles.scss"
 import StyleProvider from "juno-ui-components"
 import useCommunication from "./hooks/useCommunication"
+import CustomPageHeader from "./components/CustomPageHeader"
 
-const CustomPageHeader = () => {
-  const auth = useStore((state) => state.auth)
-  const logout = useStore((state) => state.logout)
-  const loggedIn = useStore((state) => state.loggedIn)
-  return (
-    <PageHeader heading="Converged Cloud | Heureka">
-      {loggedIn && <HeaderUser auth={auth} logout={logout} />}
-    </PageHeader>
-  )
-}
+const URL_STATE_KEY = "heureka"
 
 const App = (props) => {
   const setEndpoint = useStore((state) => state.setEndpoint)
+  const setUrlStateKey = useStore((state) => state.setUrlStateKey)
   useCommunication()
 
   useEffect(() => {
@@ -30,6 +22,10 @@ const App = (props) => {
       setEndpoint(props.endpoint)
     }
   }, [props])
+
+  useEffect(() => {
+    setUrlStateKey(URL_STATE_KEY)
+  }, [])
 
   // Create a client
   const queryClient = new QueryClient()

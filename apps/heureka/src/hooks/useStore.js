@@ -14,6 +14,9 @@ const createOidcSlice = (set) => ({
 const creatGlobalsSlice = (set) => ({
   endpoint: "",
   setEndpoint: (endpoint) => set((state) => ({ endpoint: endpoint })),
+  urlStateKey: "",
+  setUrlStateKey: (newUrlStateKey) =>
+    set((state) => ({ urlStateKey: newUrlStateKey })),
 })
 
 const useStore = create((...a) => ({
