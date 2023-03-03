@@ -14,7 +14,7 @@
     "nodemon": "^2.0.7",
     "pg": "^8.6.0",
     "policy-engine": ">= 0",
-    "sequelize": "^6.6.2"
+    "sequelize": "^6.29.0"
   },
   "devDependencies": {
     "dotenv": "^10.0.0",
@@ -28,7 +28,7 @@
     "nodemon": "^2.0.7",
     "pg": "^8.6.0",
     "policy-engine": ">= 0",
-    "sequelize": "^6.6.2",
+    "sequelize": "^6.29.0",
     "sequelize-cli": "^6.2.0",
     "sqlite3": "^5.0.2"
   },
