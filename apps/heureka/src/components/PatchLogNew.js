@@ -9,7 +9,7 @@ import {
 } from "juno-ui-components"
 import { useRouter } from "url-state-router"
 import { getService } from "../queries"
-import useStore from "../store"
+import useStore from "../hooks/useStore"
 import ChangesLogList from "./ChangesLogList"
 import { SERVICES_PATH } from "./AppRouter"
 import { changeLogExample1, changeLogExample2 } from "../helpers"

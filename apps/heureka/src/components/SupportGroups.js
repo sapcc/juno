@@ -12,7 +12,7 @@ import {
   DetailContentHeading,
   DetailSectionHeader,
 } from "../styles"
-import useStore from "../store"
+import useStore from "../hooks/useStore"
 import { useStore as useMessageStore } from "../messageStore"
 import HintLoading from "./HintLoading"
 import ServerGroupsList from "./SupportGroupsList"

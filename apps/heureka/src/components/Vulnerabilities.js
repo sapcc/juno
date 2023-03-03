@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react"
-import useStore from "../store"
+import useStore from "../hooks/useStore"
 import { useStore as useMessageStore } from "../messageStore"
 import { Stack, Spinner, Container } from "juno-ui-components"
 import { getVulnerabilities, getVulnerabilityFilters } from "../queries"
@@ -52,8 +52,6 @@ const Vulnerabilities = ({}) => {
   const onSearchTerm = (options) => {
     setSearchOptions(options)
   }
-
-  console.log("Vulnerabilities: ", vulnerabilities.data)
 
   return (
     <Container px={false}>

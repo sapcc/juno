@@ -25,8 +25,6 @@ const VulnerabilitiesList = ({ vulnerabilities, sortBy, minimized }) => {
     return vulnerabilities
   }, [vulnerabilities])
 
-  console.log("vulnerabilities: ", vulnerabilities)
-
   return (
     <DataGrid columns={minimized ? 4 : 5}>
       <DataGridRow>

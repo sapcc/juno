@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react"
-import useStore from "../store"
+import useStore from "../hooks/useStore"
 import { useStore as useMessageStore } from "../messageStore"
 import { Stack, Spinner, Container } from "juno-ui-components"
 import { getServices, getServiceFilters } from "../queries"
@@ -54,7 +54,6 @@ const Services = ({}) => {
   }
 
   return useMemo(() => {
-    console.log("RENDER services")
     return (
       <Container px={false}>
         {services.isLoading && !services.data ? (

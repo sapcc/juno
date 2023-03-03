@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react"
-import useStore from "../store"
+import useStore from "../hooks/useStore"
 import { useStore as useMessageStore } from "../messageStore"
 import { Container } from "juno-ui-components"
 import { getUsers, getUserFilters } from "../queries"
@@ -52,8 +52,6 @@ const Users = ({}) => {
   const onSearchTerm = (options) => {
     setSearchOptions(options)
   }
-
-  console.log("users: ", users)
 
   return (
     <Container px={false}>

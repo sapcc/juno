@@ -49,8 +49,6 @@ const ChangesLogDetail = ({}) => {
     navigateTo(`${SERVICES_PATH}/${serviceId}`)
   }
 
-  console.log("CHANGE DETAIL: ", change)
-
   return (
     <Panel heading="Change log details" opened={true} onClose={onPanelClose}>
       <PanelBody>

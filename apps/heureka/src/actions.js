@@ -127,7 +127,6 @@ export const userFilters = ({ queryKey }) => {
 //
 
 const fetchFromAPI = (bearerToken, endpoint, path, options) => {
-  console.log("OPTIONS: ", options)
   const query = encodeUrlParamsFromObject(options)
   return fetch(`${endpoint}${path}?${query}`, {
     method: "GET",
