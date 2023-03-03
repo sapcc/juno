@@ -17,6 +17,7 @@ const enrichAuthData = (auth) => {
 
 const useCommunication = (oidc, { resetOIDCSession, debug }) => {
   const { loggedIn, isProcessing, auth, error, login, logout } = oidc || {}
+  debug = debug === "true" || debug === true
 
   useEffect(() => {
     // inform that the auth app has been loaded!

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import useStore from "./hooks/useStore"
-import { useStore as useMessageStore } from "./messageStore"
 import AppRouter from "./components/AppRouter"
 import { MessagesStateProvider } from "./messageStore"
 import { AppShell } from "juno-ui-components"
@@ -15,6 +14,7 @@ const URL_STATE_KEY = "heureka"
 const App = (props) => {
   const setEndpoint = useStore((state) => state.setEndpoint)
   const setUrlStateKey = useStore((state) => state.setUrlStateKey)
+  const setEmbedded = useStore((state) => state.setEmbedded)
 
   useCommunication()
 

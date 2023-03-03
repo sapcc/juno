@@ -57,7 +57,14 @@ export const Filters = ({
   const [hasError, setHasError] = useState(false)
 
   useEffect(() => {
-    setHasError(error || (errortext && errortext.length > 0))
+    // AP: empty string and boolean results in empty string
+    // "" && true => ""
+    // This causes hasError to become a string. Further down, hasError is
+    // passed on to the TextInput, whose type check logs a warning
+    // To prevet that check the type of errortext instead!
+    setHasError(
+      error || (typeof errortext === "string" && errortext.length > 0)
+    )
   }, [error, errortext])
 
   useEffect(() => {
