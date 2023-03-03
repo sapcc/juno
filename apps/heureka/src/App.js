@@ -15,12 +15,14 @@ const URL_STATE_KEY = "heureka"
 const App = (props) => {
   const setEndpoint = useStore((state) => state.setEndpoint)
   const setUrlStateKey = useStore((state) => state.setUrlStateKey)
+
   useCommunication()
 
   useEffect(() => {
     if (props.endpoint) {
       setEndpoint(props.endpoint)
     }
+    setEmbedded(props?.embedded === true || props?.embedded === "true")
   }, [props])
 
   useEffect(() => {

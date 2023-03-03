@@ -49,6 +49,7 @@ const AppRouter = (props) => {
   const loggedIn = useStore((state) => state.loggedIn)
   const login = useStore((state) => state.login)
   const setMessage = useMessageStore((state) => state.setMessage)
+  const embedded = useStore((state) => state.embedded)
 
   useEffect(() => {
     if (auth?.error) {
@@ -126,6 +127,8 @@ const AppRouter = (props) => {
             </Router>
           )}
         </>
+      ) : embedded ? (
+        "Authentication required!"
       ) : (
         <>
           <Messages />

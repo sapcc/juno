@@ -12,6 +12,8 @@ const createOidcSlice = (set) => ({
 })
 
 const creatGlobalsSlice = (set) => ({
+  embedded: false,
+  setEmbedded: (embedded) => set(() => ({ embedded })),
   endpoint: "",
   setEndpoint: (endpoint) => set((state) => ({ endpoint: endpoint })),
   urlStateKey: "",

@@ -2,15 +2,7 @@ import React from "react"
 import { Button, LoadingIndicator, Spinner } from "juno-ui-components"
 import useStore from "../hooks/useStore"
 import useAppLoader from "../hooks/useAppLoader"
-
-const Loading = () => {
-  const [Component, setComponent] = React.useState(Spinner)
-  React.useEffect(() => {
-    const timer = setTimeout(() => setComponent(LoadingIndicator), 5000) // switch Loading indicator when loading longer than 5 Seconds
-  })
-
-  return <Component />
-}
+import { Transition } from "@tailwindui/react"
 
 const Auth = ({ children }) => {
   const auth = useStore((state) => state.auth)
@@ -18,62 +10,80 @@ const Auth = ({ children }) => {
   const { mount } = useAppLoader()
   const config = useStore((state) => state.apps.config)
   const [loading, setLoading] = React.useState(false)
+  const [longLoading, setLongLoading] = React.useState(false)
 
   React.useEffect(() => {
     if (!mount || !ref.current || !config["auth"]) return
     mount(ref.current, config["auth"])
   }, [mount, ref.current, config["auth"]])
 
+  // timeout for waiting for auth
   React.useEffect(() => {
-    setLoading(auth?.appLoaded && auth?.isProcessing)
+    setLoading(!auth?.appLoaded)
 
-    let timer
+    // set timeout for waiting for auth app
+    let loadingTimer
     if (!auth?.appLoaded) {
-      timer = setTimeout(() => {
+      loadingTimer = setTimeout(() => {
         if (!auth?.appLoaded) setLoading(false)
       }, 30000) // 30 seconds
     }
 
-    return () => timer && clearTimeout(timer)
-  }, [auth?.isProcessing, auth?.appLoaded])
+    return () => loadingTimer && clearTimeout(loadingTimer)
+  }, [auth?.appLoaded])
 
-  const statusMessage = React.useMemo(
-    () =>
-      auth?.error
-        ? JSON.stringify(auth.error)
-        : auth?.isProcessing
-        ? "Signing on..."
-        : loading
-        ? "Loading"
-        : !auth?.appLoaded
-        ? "Authentication required"
-        : null,
-    [auth?.error, auth?.isProcessing, auth?.appLoaded, loading]
-  )
+  // set long loading
+  React.useEffect(() => {
+    let longLoadingTimer = setTimeout(() => setLongLoading(true), 5000) // long loading if longer than 5 seconds
+    return () => longLoadingTimer && clearTimeout(longLoadingTimer)
+  }, [])
 
   return (
     <>
       <div data-name="greenhouse-auth" ref={ref} />
 
-      {auth?.loggedIn ? (
-        children
-      ) : (
-        <div className="grid h-screen place-items-center">
-          <div>
-            {loading ? (
+      <Transition
+        show={auth?.loggedIn}
+        enter="transition-opacity duration-1000"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-100"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+        {children}
+      </Transition>
+
+      {!auth?.loggedIn && (
+        <div className="flex h-screen items-center justify-center">
+          <div className="text-center">
+            {auth?.error && JSON.stringify(error)}
+
+            {loading || auth?.isProcessing ? (
               <>
-                {/* <LoadingIndicator color="jn-text-theme-info" /> {statusMessage} */}
-                <Spinner className="mx-6 mb-3" />
-                {/* <Loading /> */}
-                {statusMessage}
+                {longLoading ? (
+                  <LoadingIndicator className="jn-text-theme-info" />
+                ) : (
+                  <Spinner
+                    className="mx-6 mb-3"
+                    variant="primary"
+                    size="1.5rem"
+                  />
+                )}
+
+                {loading ? "Loading..." : "Signing on..."}
               </>
             ) : (
-              auth?.appLoaded && (
-                <>
-                  You are not logged in!{" "}
-                  <Button onClick={() => auth?.login()}>Login</Button>
-                </>
-              )
+              <>
+                Authentication required. <br />
+                {auth?.appLoaded ? (
+                  <Button onClick={() => auth?.login()} className="mt-3 w-full">
+                    Sign in
+                  </Button>
+                ) : (
+                  "Looks like the auth app is missing!"
+                )}
+              </>
             )}
           </div>
         </div>
