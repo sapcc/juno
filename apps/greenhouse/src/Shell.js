@@ -82,13 +82,7 @@ const Shell = (props = {}) => {
   // on app initial load save Endpoint and URL_STATE_KEY so it can be
   // used from overall in the application
   useEffect(() => {
-    if (
-      !setAppsConfig ||
-      !setUrlStateKey ||
-      !setAppsConfig ||
-      !setActive ||
-      !setAssetsHost
-    )
+    if (!setAppsConfig || !setUrlStateKey || !setAppsConfig || !setAssetsHost)
       return
     // set to empty string to fetch local test data in dev mode
     setEndpoint(props.endpoint || props.currentHost || "")
@@ -108,15 +102,8 @@ const Shell = (props = {}) => {
       },
     })
 
-    // setActive(["heureka"])
-
     setAssetsHost(props.currentHost)
-  }, [setEndpoint, setUrlStateKey, setAppsConfig, setActive, setAssetsHost])
-
-  const loaded = React.useMemo(
-    () => loggedIn && window.location.href.indexOf("__s") >= 0,
-    [loggedIn, window.location.href]
-  )
+  }, [setEndpoint, setUrlStateKey, setAppsConfig, setAssetsHost])
 
   // Initial state from URL
   React.useEffect(() => {
@@ -127,9 +114,9 @@ const Shell = (props = {}) => {
     //   greenhouseUrlState.currentState(),
     //   window.location.href
     // )
-    const active = greenhouseUrlState.currentState()?.a
+    let active = greenhouseUrlState.currentState()?.a
     if (active) setActive(active.split(","))
-    else setActive(Object.keys(appsConfig)?.[0])
+    else setActive([Object.keys(appsConfig)?.[0]])
   }, [loggedIn])
 
   // sync URL state
