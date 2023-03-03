@@ -58,18 +58,20 @@ const Alert = ({ alert }) => {
       </DataGridCell>
       <DataGridCell>{alert.labels?.service}</DataGridCell>
       <DataGridCell>
-        <span className="text-theme-high">{alert.annotations?.summary}</span>
-        <br />
-        <Markup
-          content={descriptionParsed(
-            alert.annotations?.description?.replace(
-              /`([^`]+)`/g,
-              "<code class='inline-code'>$1</code>"
-            )
-          )}
-          tagName="span"
-          className="text-sm"
-        />
+        <div className="overflow-y-scroll max-h-12">
+          <span className="text-theme-high">{alert.annotations?.summary}</span>
+          <br />
+          <Markup
+            content={descriptionParsed(
+              alert.annotations?.description?.replace(
+                /`([^`]+)`/g,
+                "<code class='inline-code'>$1</code>"
+              )
+            )}
+            tagName="span"
+            className="text-sm"
+          />
+        </div>
       </DataGridCell>
       <DataGridCell>
         <Stack alignment="end" gap="2">
