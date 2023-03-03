@@ -14,7 +14,12 @@ const App = ({ name, active }) => {
     const app = mount(ref.current, config[name])
     if (app) app.then(() => setMounted(true))
   }, [active, mounted, setMounted, mount, config[name]])
-  return <div ref={ref} style={{ display: active ? "block" : "none" }}></div>
+  return (
+    <div
+      ref={ref}
+      style={{ display: active ? "block" : "none", height: "100%" }}
+    ></div>
+  )
 }
 
 export default App
