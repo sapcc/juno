@@ -14,19 +14,21 @@ Default.args = {
   keyPlaceholder: "Select a Filter…",
   valuePlaceholder: "Enter a value",
   options: [
-    { label: "Filter 1", key: "filter-1" },
-    { label: "Filter 2", key: "filter-2" },
-    { label: "Filter 3", key: "filter-3" },
+    { label: "Filter 1", key: "1" },
+    { label: "Filter 2", key: "2" },
+    { label: "Filter 3", key: "3" },
+    { label: "Filter 4", key: "4" },
+    { label: "Filter 5", key: "5" },
   ],
 }
 
 export const Preselected = Template.bind({})
 Preselected.args = {
-  selectedFilterKey: "filter-2",
+  filterKey: "Filter 3",
   options: [
-    { label: "Filter 1", key: "filter-1" },
-    { label: "Filter 2", key: "filter-2" },
-    { label: "Filter 3", key: "filter-3" },
+    { label: "Filter 1", key: "1" },
+    { label: "Filter 2", key: "2" },
+    { label: "Filter 3", key: "3" },
   ],
 }
 
@@ -41,3 +43,4 @@ WithError.args = {
   options: [],
   error: true,
 }
+

@@ -49,6 +49,14 @@ const selectWrapperStyles = `
 
 /** 
 A special Input to select key and value of a filter.
+  Renamed:
+  
+  * selectedFilterKey -> filterKey
+  * onSelectedFilterKeyChange -> onFilterKeyChange
+  * filterValue,
+  * onFilterValueChange,
+  * [theFilterKey, setTheFilterKey]
+  * [theFilterValue, setTheFilterValue]
 */
 export const FilterInput = ({
   keyPlaceholder,
@@ -57,11 +65,11 @@ export const FilterInput = ({
   options,
   valueLabel,
   className,
-  selectedFilterKey,
-  onSelectedFilterKeyChange,
+  filterKey,
+  onFilterKeyChange,
   filterValue,
-  valuePlaceholder,
   onFilterValueChange,
+  valuePlaceholder,
   onClear,
   onKeyPress,
   onFilter,
@@ -69,23 +77,29 @@ export const FilterInput = ({
   error,
   ...props
 }) => {
-  const [selectedFilter, setSelectedFilter] = useState("")
-  const [value, setValue] = useState("")
+  const [isOpen, setIsOpen] = useState(false)
+  const [theFilterKey, setTheFilterKey] = useState("")
+  const [theFilterValue, setTheFilterValue] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [hasError, setHasError] = useState(false)
   
   useEffect(() => {
-    setSelectedFilter(selectedFilterKey)
-  }, [selectedFilterKey])
+    setIsOpen(open)
+  }, [open])
+  
+  useEffect(() => {
+    setTheFilterKey(filterKey)
+  }, [filterKey])
 
   useEffect(() => {
-    setValue(filterValue)
+    setTheFilterValue(filterValue)
   }, [filterValue])
   
   useEffect(() => {
     if (!hasError && options.length < 1 || isLoading) {
       setIsLoading(loading)
-      setValue("") // reset the text input value when component is loading data
+      // reset the text input value when component is loading data:
+      setTheFilterValue("") 
     } else {
       setIsLoading(false)
     }
@@ -94,22 +108,28 @@ export const FilterInput = ({
   useEffect(() => {
     setHasError(error)
   }, [error])
+  
+  const handleOpenChange = () => {
+    setIsOpen(!isOpen)
+  }
 
   // TODO: make work with new Select -> how to get new value from Select?
-  // Reset the (text input) value whenever the selected Filter key changes:
-  const handleSelectedFilterChange = (event) => {
-    setSelectedFilter(event.target.value)
-    setValue("")
-    onSelectedFilterKeyChange && onSelectedFilterKeyChange(event)
+  const handleFilterKeyChange = (fKey) => {
+    console.log(fKey)
+    setTheFilterKey(fKey)
+    // Reset the (text input) value whenever the selected Filter key changes:
+    setTheFilterValue("")
+    onFilterKeyChange && onFilterKeyChange(event)
   }
 
   const handleFilterValueChange = (event) => {
-    setValue(event.target.value)
+    console.log(event)
+    setTheFilterValue(event.target.value)
     onFilterValueChange && onFilterValueChange(event)
   }
 
   const handleClearClick = (event) => {
-    setValue("")
+    setTheFilterValue("")
     onClear && onClear(event)
   }
 
@@ -133,28 +153,6 @@ export const FilterInput = ({
       } ${className}`}
       {...props}
     >
-      {/* <div>
-      
-      
-        <Select
-          className={`juno-filter-input-select ${selectStyles} ${ hasError ? "jn-border-none" : "" }`}
-          aria-label={keyLabel}
-          value={selectedFilter}
-          onChange={handleSelectedFilterChange}
-          loading={isLoading}
-          error={hasError}
-          placeholder={keyLabel}
-        >
-          {options.map((option, i) => (
-            <SelectOption
-              label={option.label}
-              value={option.key}
-              key={`${i}`}
-              {...option}
-            />
-          ))}
-        </Select>
-      </div> */}
       
       <div className={`${selectWrapperStyles}`}>
         <Select
@@ -163,9 +161,13 @@ export const FilterInput = ({
           aria-label={ keyPlaceholder || keyLabel }
           loading={isLoading}
           error={hasError}
+          open={isOpen}
+          value={theFilterKey}
+          onValueChange={handleFilterKeyChange}
+          onOpenChange={handleOpenChange}
         >
           {options.map((option, i) => {
-            //console.log(option)
+            // console.log(option.key)
             return (<SelectOption
               label={i || option.label}
               value={i || option.key}
@@ -176,9 +178,8 @@ export const FilterInput = ({
         </Select>
       </div>
       
-      
       <TextInput
-        value={value}
+        value={theFilterValue}
         className={`${textInputStyles}`}
         aria-label={valueLabel}
         onChange={handleFilterValueChange}
@@ -187,7 +188,7 @@ export const FilterInput = ({
         placeholder={isLoading ? "Loading Filter Options…" : valuePlaceholder}
       />
       <div className={`${iconWrapperStyles}`}>
-        {value && value.length ? (
+        {theFilterValue && theFilterValue.length ? (
           <Icon
             icon="close"
             title="Clear"
@@ -210,20 +211,20 @@ export const FilterInput = ({
 FilterInput.propTypes = {
   /** A Placeholder to display in the Filter Key Select if none is selected. Defaults to "Select Filter…". */
   keyPlaceholder: PropTypes.string,
-  /** Legacy: The label to display on the Filter Key Select. If possible, use 'placeholder' instead. */
+  /** Legacy: The label to display on the Filter Key Select. For new implementations, use 'placeholder' instead. */
   keyLabel: PropTypes.string,
   /** Whether the Filter Key Select is open. */
   open: PropTypes.bool,
   /** The options for the Filter Select: `[{Label: "Filter 1", key: "filter-1"}, {...}]`
-	The array MUST have a length in order for the component to render.
+	The array MUST exist in order for the component to render, but can be empty `[]`.
 	*/
   options: PropTypes.arrayOf(PropTypes.object),
   /** The key of the current filter */
-  selectedFilterKey: PropTypes.string,
+  filterKey: PropTypes.string,
   /** Pass a handler to be executed when the filter key changes */
-  onSelectedFilterKeyChange: PropTypes.func,
+  onFilterKeyChange: PropTypes.func,
   /** The aria-label of the Filter Value Text Input */
-  valueLabel: PropTypes.string, // TODO -> valueLabel
+  valueLabel: PropTypes.string,
   /** The current value of the Filter Input */
   filterValue: PropTypes.string,
   /** Optional: pass a placeholder for the filter value text input */
@@ -243,15 +244,15 @@ FilterInput.propTypes = {
 }
 
 FilterInput.defaultProps = {
-  placeholder: "Select Filter…",
+  keyPlaceholder: "Select Filter…",
   keyLabel: "Select Filter",
   open: false,
   options: [],
-  selectedFilterKey: "",
-  onSelectedFilterKeyChange: undefined,
+  filterKey: undefined,
+  onFilterKeyChange: undefined,
   valueLabel: "Filter by Value",
-  filterValue: "",
-  valuePlaceholder: "",
+  filterValue: undefined,
+  valuePlaceholder: "Enter Value…",
   onFilterValueChange: undefined,
   onClear: undefined,
   onFilter: undefined,
