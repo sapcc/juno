@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const webpack = require("webpack")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const pkg = require("./package.json")
-const testData = require("./public/colors.json")
 const outputRegex = /(.+)\/([^/]+)/
 const appProps = require("../../helpers/appProps")
 
@@ -175,14 +174,6 @@ module.exports = (_, argv) => {
 
     //Config for webpack-dev-server module version 4.x
     devServer: {
-      // This option onBeforeSetupMiddleware allows us to serve a test json to see
-      // how the react-query lib reacts
-      onBeforeSetupMiddleware: function (devServer) {
-        devServer.app.get("/colors.json", function (req, res) {
-          res.json(testData)
-        })
-      },
-
       static: {
         directory: path.resolve(__dirname, "dist"),
       },
