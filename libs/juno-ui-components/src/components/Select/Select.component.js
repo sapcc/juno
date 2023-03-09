@@ -71,10 +71,15 @@ export const Select = React.forwardRef(
     ...props
   }, 
   forwardedRef ) => {
+    const [isOpen, setIsOpen] = useState(false)
     const [hasError, setHasError] = useState(false)
     const [isInvalid, setIsInvalid] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isValid, setIsValid] = useState(false)
+    
+    useEffect(() => {
+      setIsOpen(open)
+    }, [open])
     
     useEffect(() => {
       setHasError(error)
@@ -92,17 +97,28 @@ export const Select = React.forwardRef(
       setIsValid(valid)
     }, [valid])
     
+    const handleOpenChange = (event) => {
+      setIsOpen(!isOpen)
+      onOpenChange && onOpenChange(event)
+    }
+    
     const TriggerIcons = () => {
       if (isLoading) {
         return (<Spinner className="jn-mr-0"/>)
       } else if (hasError){
         return (<Icon icon="errorOutline" color="jn-text-theme-error" />)
       } else if (isValid) {
-        return (<><Icon icon="checkCircle" color="jn-text-theme-success" className="jn-pointer-events-none"/><Icon icon="expandMore"/></>)
+        return (<>
+          <Icon icon="checkCircle" color="jn-text-theme-success" className="jn-pointer-events-none"/>
+          { isOpen ? <Icon icon="expandLess" /> : <Icon icon="expandMore" /> }
+        </>)
       } else if (isInvalid) {
-        return (<><Icon icon="dangerous" color="jn-text-theme-error" className="jn-pointer-events-none"/><Icon icon="expandMore"/></>)
+        return (<>
+          <Icon icon="dangerous" color="jn-text-theme-error" className="jn-pointer-events-none"/>
+          { isOpen ? <Icon icon="expandLess" /> : <Icon icon="expandMore" /> }
+        </>)
       } else {
-        return (<Icon icon="expandMore" />)
+        return (isOpen ? <Icon icon="expandLess" /> : <Icon icon="expandMore" />)
       }
     }
     
@@ -111,7 +127,7 @@ export const Select = React.forwardRef(
         defaultOpen={defaultOpen}
         disabled={disabled || hasError || isLoading} 
         name={name}
-        onOpenChange={onOpenChange}
+        onOpenChange={handleOpenChange}
         onValueChange={onValueChange}
         value={value}
         open={open}

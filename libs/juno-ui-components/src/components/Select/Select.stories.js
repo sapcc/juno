@@ -33,7 +33,7 @@ const ControlledTemplate = ({open, value, children, ...args}) => {
   }, [value])
   
   return (
-    <Select value={val} open={isOpen} onOpenChange={ () => {} } {...args} >
+    <Select value={val} open={isOpen} onOpenChange={ () => {} } onValueChange={ () => {} } {...args} >
       { children }
     </Select>
   )
@@ -84,6 +84,34 @@ UncontrolledWithValueSet.args = {
 export const Controlled = ControlledTemplate.bind({})
 Controlled.args = {
   placeholder: "Controlled Select",
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}
+
+export const ControlledWithValueSet = Template.bind({})
+ControlledWithValueSet.args = {
+  value: "2",
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}
+
+export const NonPopperPosition = Template.bind({})
+NonPopperPosition.parameters = {
+  docs: {
+    description: {
+      story: "Use `position='align-items'` to show the menu overlaying the Select trigger."
+    }
+  }
+}
+NonPopperPosition.args = {
+  placeholder: "Non-popper aligned Select…",
+  position: "align-items",
   children: [
     <SelectOption value="1" key="1">Value 1</SelectOption>,
     <SelectOption value="2" key="2">Value 2</SelectOption>,
