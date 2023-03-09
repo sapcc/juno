@@ -136,12 +136,13 @@ export const Button = React.forwardRef(
     },
     ref
   ) => {
+    const theVariant = variant || "default"
     const titleValue = title || label || ""
 
     const buttonIcon = progress ? (
       <Spinner
         size={spinnerSize(size)}
-        color={`${spinnerColorClass(variant, disabled)}`}
+        color={`${spinnerColorClass(theVariant, disabled)}`}
       />
     ) : icon ? (
       <Icon
@@ -163,7 +164,7 @@ export const Button = React.forwardRef(
     const button = (
       <button
         type="button"
-        className={`juno-button juno-button-${variant} juno-button-${size}-size ${btnBase} ${sizeClass(
+        className={`juno-button juno-button-${theVariant} juno-button-${size}-size ${btnBase} ${sizeClass(
           size
         )} ${progressClass(progress)} ${className}`}
         disabled={disabled}
@@ -181,7 +182,7 @@ export const Button = React.forwardRef(
       <a
         href={href}
         role="button"
-        className={`juno-button juno-button-${variant} juno-button-${size}-size ${btnBase} ${sizeClass(
+        className={`juno-button juno-button-${theVariant} juno-button-${size}-size ${btnBase} ${sizeClass(
           size
         )} ${progressClass(progress)} ${className}`}
         disabled={disabled}
@@ -227,7 +228,7 @@ Button.propTypes = {
 }
 
 Button.defaultProps = {
-  variant: "default",
+  variant: undefined,
   size: "default",
   disabled: null,
   icon: null,
