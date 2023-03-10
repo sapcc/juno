@@ -50,7 +50,7 @@ describe("not logged in", () => {
   beforeEach(() => (oauth.useOidcAuth = originUseOidcAuth))
 
   test("should redirect to oidc provider", () => {
-    render(<App />)
+    render(<App issuerurl={"https://sap.com"} clientid={"000000"} />)
     // redirect to openID provider
     expect(window.location.replace).toHaveBeenCalled()
   })
