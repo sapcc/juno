@@ -11,7 +11,7 @@ const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
 const files = glob.sync(globPattern, { ignore: [`node_modules/**`] })
 
 // delete test data
-fs.rmdirSync(path.resolve(__dirname, "test_data"), { recursive: true })
+fs.rmSync(path.resolve(__dirname, "test_data"), { recursive: true })
 
 for (let file of files) {
   const assetPath = file.match(pathRegex)[1]
