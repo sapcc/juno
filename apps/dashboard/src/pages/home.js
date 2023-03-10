@@ -1,7 +1,7 @@
 import React, { useCallback } from "react"
 
 import useStore from "../store"
-import CCLogo from "../assets/images/CCplus_logo.svg"
+import CCLogo from "../assets/images/CCloud_Logo_light.svg"
 import WorldMap from "../assets/images/map.svg"
 import backgroundTop from "../assets/images/background_header.png"
 
@@ -54,7 +54,7 @@ const Home = () => {
     <div className="flex flex-col grow">
       <LoginOverlay />
       <div className="max-w-[1280px] w-full mx-auto pt-8">
-        <CCLogo className="-ml-5 mb-4 w-[200px] h-auto" alt="Converged Cloud" />
+        <CCLogo className="mb-4 w-[240px] h-auto" alt="Converged Cloud" />
 
         <Stack alignment="center">
           <div className="text-xl w-3/5 mr-auto">
