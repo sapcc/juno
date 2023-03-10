@@ -189,7 +189,7 @@ window.__junoWidgetLoader =
       // create a wrapper for the app
       const appWrapper = document.createElement("div")
       appWrapper.setAttribute("data-juno-app", name || url)
-      appWrapper.setAttribute("style", "display: inline;")
+      appWrapper.setAttribute("style", "display: inline; flex: 1;")
       if (showLoading) appWrapper.textContent = "Loading..."
 
       // load the app via importShim
