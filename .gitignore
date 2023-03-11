@@ -15,6 +15,7 @@ node_modules
 scripts/test_data
 scripts/im.json
 scripts/manifest.json
+scripts/importmap.json
 
 # testing
 /coverage

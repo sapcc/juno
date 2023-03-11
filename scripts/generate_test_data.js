@@ -8,7 +8,7 @@ const rootPath = path.resolve(__dirname, "../")
 const PACKAGES_PATHS = ["apps", "libs"]
 const globPattern = `${rootPath}/@(${PACKAGES_PATHS.join("|")})/**/package.json`
 const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
-const files = glob.sync(globPattern, { ignore: [`node_modules/**`] })
+const files = glob.sync(globPattern, { ignore: [`**/node_modules/**`] })
 
 // delete test data
 fs.rmSync(path.resolve(__dirname, "test_data"), { recursive: true })

@@ -232,7 +232,7 @@ for (let name in packageRegistry) {
          */
         console.log(
           "\x1b[33m%s\x1b[0m",
-          `(-) ${name} install internal dependency ${ownPackage.name}@${ownPackage.version} from ${ownPackage.path}`
+          `(-) ${name}@${version} install internal dependency ${ownPackage.name}@${ownPackage.version} from ${ownPackage.path}`
         )
 
         importMap.scopes[pkgPath][
@@ -245,20 +245,38 @@ for (let name in packageRegistry) {
         // EXTERNAL PACKAGE -> use generator to get all dependencies
         console.log(
           "\x1b[36m%s\x1b[0m",
-          `(+) ${name} install external dependency ${depName}@${depVersion}`
+          `(+) ${name}@${version} install external dependency ${depName}@${depVersion}`
         )
         // create generator
-        const generator = new Generator({
+        let generator = new Generator({
           env: [options.env, "browser"],
           defaultProvider: options.provider,
         })
-        // get the importmap for current dependency
-        await generator.install(`${depName}@${depVersion}`).catch((error) => {
+
+        try {
+          // get the importmap for current dependency
+          await generator.install(`${depName}@${depVersion}`)
+          // save importmap
+          pkgImportMaps.push(generator.getMap())
+
+          // Fix react-dom/client dependency
+          if (depName === "react-dom" && depVersion >= "18.2") {
+            console.log(
+              "\x1b[33m%s\x1b[0m",
+              `(!) ${name}@${version} FIX react-dom, add react-dom/client`
+            )
+            generator = new Generator({
+              env: [options.env, "browser"],
+              defaultProvider: options.provider,
+            })
+            await generator.install(`react-dom@${depVersion}/client`)
+            pkgImportMaps.push(generator.getMap())
+          }
+        } catch (error) {
           console.log(error)
           if (options.exitOnError) process.exit(1)
-        })
+        }
 
-        // save importmap
         pkgImportMaps.push(generator.getMap())
       }
     }
