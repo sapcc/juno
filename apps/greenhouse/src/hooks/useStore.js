@@ -5,6 +5,15 @@ const ACTIONS = {
   SIGN_OUT: "signOut",
 }
 
+const createActivityDataSlice = (set, get) => ({
+  activity: {
+    timeout: null,
+    setTimeout: (timeout) => {
+      set((state) => ({ activity: { ...state.activity, timeout } }))
+    },
+  },
+})
+
 const createAuthDataSlice = (set, get) => ({
   auth: {
     data: null,
@@ -70,6 +79,7 @@ const createAppsDataSlice = (set, get) => ({
 const useStore = create((set, get) => ({
   ...createAuthDataSlice(set, get),
   ...createAppsDataSlice(set, get),
+  ...createActivityDataSlice(set, get),
   endpoint: "",
   urlStateKey: "",
   assetsHost: "",
