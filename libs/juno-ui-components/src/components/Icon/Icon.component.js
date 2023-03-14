@@ -32,6 +32,7 @@ import Home from "./icons/home_sharp.svg"
 import Info from "./icons/info.svg"
 import InsertComment from "./icons/insert_comment.svg"
 import ManageAccounts from "./icons/manage_accounts.svg"
+import MonitorHeart from '@material-design-icons/svg/outlined/monitor_heart.svg'
 import MoreVert from "./icons/more_vert.svg"
 import OpenInBrowser from "./icons/open_in_browser.svg"
 import OpenInNew from "./icons/open_in_new.svg"
@@ -109,6 +110,7 @@ export const knownIcons = [
   "info",
   "insertComment",
   "manageAccounts",
+  "monitorHeart",
   "moreVert",
   "openInBrowser",
   "openInNew",
@@ -477,6 +479,18 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="user account configuration"
           title={title ? title : "User account configuration"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "monitorHeart":
+      return (
+        <MonitorHeart
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="heart monitor"
+          title={title ? title : "Heart monitor"}
           role="img"
           {...iconProps}
         />

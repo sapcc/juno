@@ -35,7 +35,9 @@ const navItem = (active) => {
   ${
     active &&
     `
-      bg-theme-global-bg
+      bg-theme-global-bg  
+      border-text-theme-light
+      border-l-4
       text-white
       hover:text-white
     `
@@ -106,20 +108,17 @@ const PluginNav = () => {
           </Stack>
         ))}
 
-      <Stack alignment="center">
-        {auth?.loggedIn && (
-          <Avatar
-            url={auth.data?.avatarUrl.small}
-            userID={auth.data?.login_name || auth.data?.subject}
-          />
-        )}
-      </Stack>
-
-      <Stack className="py-2">
+      <Stack direction="vertical" gap="3" alignment="center" className="mt-4 py-4 border-theme-background-lvl-1 border-t-2">
         {auth?.loggedIn ? (
-          <Button size="small" onClick={() => auth?.logout()}>
-            logout
-          </Button>
+          <>
+            <Avatar
+              url={auth.data?.avatarUrl.small}
+              userID={auth.data?.login_name || auth.data?.subject}
+            />
+            <Button variant="subdued" size="small" onClick={() => auth?.logout()}>
+              logout
+            </Button>
+          </>
         ) : (
           <Button size="small" onClick={() => auth?.login()}>
             Login
