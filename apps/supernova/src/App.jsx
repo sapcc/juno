@@ -1,9 +1,8 @@
 import React, { useMemo } from "react"
 
-import useStore from "./hooks/useStore"
 import { AppShell } from "juno-ui-components"
 import AppContent from "./AppContent"
-import styles from "./styles.scss"
+import styles from "./styles.inline.scss"
 import StyleProvider from "juno-ui-components"
 import useAlertmanagerAPI from "./hooks/useAlertmanagerAPI"
 

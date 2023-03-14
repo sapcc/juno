@@ -5,6 +5,7 @@ const mainClasses = `
   jn-flex
   jn-flex-col
   jn-grow
+  jn-bg-theme-global-bg
 `
 
 /**
