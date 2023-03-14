@@ -9,15 +9,13 @@ import useStore from "./hooks/useStore"
 import useCommunication from "./hooks/useCommunication"
 
 const App = (props = {}) => {
-  const isUserActive = useStore((state) => state.userActivity.isActive)
-
   const embedded = useMemo(
     () => props.embedded === "true" || props.embedded === true,
     [props.embedded]
   )
 
   useCommunication()
-  useAlertmanagerAPI(props.endpoint, isUserActive)
+  useAlertmanagerAPI(props.endpoint)
 
   return (
     <AppShell

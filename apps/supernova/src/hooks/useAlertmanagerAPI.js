@@ -12,10 +12,11 @@ const loadWorker = async () => {
     })
 }
 
-const useAlertmanagerAPI = (apiEndpoint, isUserActive) => {
+const useAlertmanagerAPI = (apiEndpoint) => {
   const setAlerts = useStore((state) => state.alerts.setItems)
   const setIsLoading = useStore((state) => state.alerts.setIsLoading)
   const setIsUpdating = useStore((state) => state.alerts.setIsUpdating)
+  const isUserActive = useStore((state) => state.userActivity.isActive)
 
   loadWorker()
 
