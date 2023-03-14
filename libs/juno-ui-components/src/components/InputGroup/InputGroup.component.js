@@ -26,7 +26,7 @@ export const InputGroup = ({
   }
   
   return (
-    <Stack className={`juno-input-group juno-input-group-${variant} ${ disabled ? "juno-input-group-disabled" : "" }`}>
+    <Stack className={`juno-input-group juno-input-group-${variant} ${ disabled ? "juno-input-group-disabled" : "" } ${className}`} {...props}>
       { modifiedChildren() }
     </Stack>
   )
