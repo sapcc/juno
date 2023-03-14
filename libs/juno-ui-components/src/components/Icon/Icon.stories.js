@@ -250,6 +250,12 @@ Manage_Accounts.args = {
   icon: "manageAccounts",
 }
 
+export const Monitor_Heart = Template.bind({})
+Monitor_Heart.args = {
+  ...Default.args,
+  icon: "monitorHeart",
+}
+
 export const More_Vert = Template.bind({})
 More_Vert.args = {
   ...Default.args,
