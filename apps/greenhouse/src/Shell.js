@@ -78,6 +78,7 @@ const Shell = (props = {}) => {
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
   useCommunication()
+  useIdleTimer({ timeout: 5 })
 
   // INIT
   // on app initial load save Endpoint and URL_STATE_KEY so it can be
@@ -130,7 +131,7 @@ const Shell = (props = {}) => {
   return (
     <Auth>
       <QueryClientProvider client={queryClient}>
-        <IdleTimerProvider timeout={5}>
+        <IdleTimerProvider>
           <ShellLayout>
             {Object.keys(appsConfig).map((appName, i) => (
               <App

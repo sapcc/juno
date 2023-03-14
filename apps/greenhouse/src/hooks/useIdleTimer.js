@@ -1,8 +1,11 @@
 import { useEffect, useState, useMemo } from "react"
+import useStore from "./useStore"
 
 const DEFAULT_TIMEOUT = 1800 // 30 min
 
+// TODO: should we return the counter?
 const useIdleTimer = ({ timeout, onTimeout, onActive }) => {
+  const userActivity = useStore((state) => state.userActivity)
   const [intervalChecker, setIntervalChecker] = useState(null)
   const [counter, setCounter] = useState(0)
   const [isActive, setIsActive] = useState(true) // default to true so it is not starting inactive
@@ -20,15 +23,19 @@ const useIdleTimer = ({ timeout, onTimeout, onActive }) => {
     return () => cleanUp()
   }, [timeout])
 
+  // dispatch callbacks and save state into the store
   useEffect(() => {
+    // save into the store
+    userActivity?.setIsActive(isActive)
+    // send callbacks
     if (isActive) {
       if (onActive) onActive()
-      console.log("Active")
     } else {
-      if (onTimeout) onTimeout
-      console.log("NOT active")
+      if (onTimeout) onTimeout()
     }
   }, [isActive])
+
+  console.log("IDLETIMMER HOOK: ", isActive, counter)
 
   // track user activity by adding event listeners
   const trackActivity = () => {
@@ -69,8 +76,6 @@ const useIdleTimer = ({ timeout, onTimeout, onActive }) => {
       }, 1000)
     )
   }
-
-  console.log("test: ", timeout, isActive, counter)
 
   return { isActive: isActive, inActiveSince: counter }
 }

@@ -1,35 +1,29 @@
 import React, { useState, useEffect } from "react"
-import useIdleTimer from "../hooks/useIdleTimer"
 import { Modal } from "juno-ui-components"
-import { broadcast, watch, onGet } from "communicator"
+import useStore from "../hooks/useStore"
 
-const IdleTimerProvider = ({ timeout, onTimeout, onActive, children }) => {
-  const { isActive, inActiveSince } = useIdleTimer({ timeout })
-  const [isUserInactive, setIsUserInactive] = useState(false)
-
-  console.log("IdleTimerProvider: ", timeout, isActive, inActiveSince)
+const IdleTimerProvider = ({ children }) => {
+  const userActivity = useStore((state) => state.userActivity)
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
-    if (!isActive) {
-      setIsUserInactive(true)
+    if (!userActivity?.isActive) {
+      setShowModal(true)
     }
-  }, [isActive])
+  }, [userActivity?.isActive])
 
   useEffect(() => {
-    if (isUserInactive) {
-      broadcast("USER_INACTIVE", "greenhouse", { debug: true })
-    } else {
-      broadcast("USER_ACTIVE", "greenhouse", { debug: true })
-    }
-  }, [isUserInactive])
+    console.log("SHOW MODAL: ", showModal)
+    userActivity?.setInactiveModal(showModal)
+  }, [showModal])
 
   return (
     <>
-      {isUserInactive && (
+      {showModal && (
         <Modal
           open={true}
           onCancel={() => {
-            setIsUserInactive(false)
+            setShowModal(false)
           }}
           cancelButtonLabel="Continue"
         >
