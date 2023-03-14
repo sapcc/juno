@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 
 
 
-/** A component to visually group Buttons, TextInputs, and Select elements. */
+/** A component to visually group Buttons, TextInput, and Select elements. */
 export const InputGroup = ({
   children,
   className,

@@ -17,7 +17,7 @@ describe("InputGroup", () => {
     render(
       <InputGroup>
         <Button label="A Button" />
-        <TextInput />
+        <TextInput value="some value"/>
         <Select>
           <SelectOption label="A Select Option" value="sel-opt-1" />
           <SelectOption label="Another Select Option" value="sel-opt-2" />
@@ -26,9 +26,62 @@ describe("InputGroup", () => {
     )
     expect(document.querySelector(".juno-input-group")).toBeInTheDocument()
     expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveTextContent("A Button")
     expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("some value")
     expect(screen.getByRole("combobox")).toBeInTheDocument() // use listbox for radix-based select
-    // TODO …
+  })
+  
+  test("renders child button variants as passed to parent", async () => {
+    render(
+      <InputGroup variant="primary-danger">
+        <Button label="first" />
+        <Button label="second" />
+        <Button label="third" /> 
+      </InputGroup>
+    )
+    expect(screen.getByRole("button", { name: "first" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "first" })).toHaveClass("juno-button-primary-danger")
+    expect(screen.getByRole("button", { name: "second" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "second" })).toHaveClass("juno-button-primary-danger")
+    expect(screen.getByRole("button", { name: "third" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "third" })).toHaveClass("juno-button-primary-danger")
+  })
+  
+  test("allows child button variant to override variant passed to parent", async () => {
+    render(
+      <InputGroup variant="primary-danger">
+        <Button label="first" />
+        <Button label="second" variant="primary"/>
+        <Button label="third" /> 
+      </InputGroup>
+    )
+    expect(screen.getByRole("button", { name: "first" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "first" })).toHaveClass("juno-button-primary-danger")
+    expect(screen.getByRole("button", { name: "second" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "second" })).not.toHaveClass("juno-button-primary-danger")
+    expect(screen.getByRole("button", { name: "second" })).toHaveClass("juno-button-primary")
+    expect(screen.getByRole("button", { name: "third" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "third" })).toHaveClass("juno-button-primary-danger")
+  })
+  
+  test("disables all child elements as passed to parent", async () => {
+    render(
+      <InputGroup disabled>
+        <Button />
+        <TextInput />
+        <Select>
+          <SelectOption label="A Select Option" value="sel-opt-1" />
+          <SelectOption label="Another Select Option" value="sel-opt-2" />
+        </Select> 
+      </InputGroup>
+    )
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toBeDisabled()
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toBeDisabled()
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toBeDisabled()
   })
   
   test("renders a className a spassed", async () => {
