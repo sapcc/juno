@@ -223,6 +223,7 @@ module.exports = {
         theme: {
           high: withOpacity("--color-text-high-raw"),
           default: withOpacity("--color-text-default-raw"),
+          light: withOpacity("--color-text-light-raw"),
           disabled: withOpacity("--color-text-disabled-raw"),
           link: withOpacity("--color-text-link-raw"),
           "on-danger": withOpacity("--color-button-danger-text"),

@@ -17,15 +17,6 @@ const URL_STATE_KEY = "greenhouse"
 /* --------------------------- */
 
 const appsConfig = {
-  heureka: {
-    name: "heureka",
-    version: "latest",
-    navigable: true,
-    props: {
-      endpoint: "https://heureka-staging.scaleout.ap-jp-2.cloud.sap/api/v1",
-    },
-  },
-
   supernova: {
     name: "supernova",
     version: "latest",
@@ -35,6 +26,17 @@ const appsConfig = {
         "https://alertmanager-internal.scaleout.eu-nl-1.cloud.sap/api/v2",
     },
   },
+
+  
+  heureka: {
+    name: "heureka",
+    version: "latest",
+    navigable: true,
+    props: {
+      endpoint: "https://heureka-staging.scaleout.ap-jp-2.cloud.sap/api/v1",
+    },
+  },
+
 
   doop: {
     name: "doop",
