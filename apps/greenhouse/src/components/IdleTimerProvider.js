@@ -14,7 +14,7 @@ const IdleTimerProvider = ({ children }) => {
 
   useEffect(() => {
     console.log("SHOW MODAL: ", showModal)
-    userActivity?.setInactiveModal(showModal)
+    userActivity?.setShowInactiveModal(showModal)
   }, [showModal])
 
   return (

@@ -40,6 +40,7 @@ const useIdleTimer = ({ timeout, onTimeout, onActive }) => {
   // track user activity by adding event listeners
   const trackActivity = () => {
     window.addEventListener("mousemove", activity)
+    window.addEventListener("click", activity)
     window.addEventListener("scroll", activity)
     window.addEventListener("keydown", activity)
     window.addEventListener("keydown", focus)
@@ -49,6 +50,7 @@ const useIdleTimer = ({ timeout, onTimeout, onActive }) => {
   const cleanUp = () => {
     clearInterval(intervalChecker)
     window.removeEventListener("mousemove", activity)
+    window.removeEventListener("click", activity)
     window.removeEventListener("scroll", activity)
     window.removeEventListener("keydown", activity)
     window.removeEventListener("focus", activity)

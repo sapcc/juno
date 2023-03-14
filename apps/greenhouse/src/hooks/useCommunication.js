@@ -32,14 +32,14 @@ const useCommunication = () => {
 
   useEffect(() => {
     // check against undefined since this is a boolean
-    if (userActivity?.inactiveModal === undefined) return
+    if (userActivity?.showInactiveModal === undefined) return
 
     broadcast(
       "GREENHOUSE_USER_ACTIVITY",
-      { isUserInactive: userActivity?.inactiveModal },
+      { isActive: !userActivity?.showInactiveModal },
       { debug: true }
     )
-  }, [userActivity?.inactiveModal])
+  }, [userActivity?.showInactiveModal])
 }
 
 export default useCommunication

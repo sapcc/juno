@@ -15,10 +15,10 @@ const createUserActivitySlice = (set, get) => ({
       }))
     },
     //this state tracks
-    inactiveModal: false,
-    setInactiveModal: (activity) => {
+    showInactiveModal: false,
+    setShowInactiveModal: (activity) => {
       set((state) => ({
-        userActivity: { ...state.userActivity, inactiveModal: activity },
+        userActivity: { ...state.userActivity, showInactiveModal: activity },
       }))
     },
   },
