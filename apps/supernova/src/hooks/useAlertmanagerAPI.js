@@ -7,8 +7,15 @@ const loadWorker = fetch(workerUrl)
   .then((r) => r.blob())
   .then((blob) => {
     var blobUrl = window.URL.createObjectURL(blob)
-    return new Worker(blobUrl, { type: "module" })
+    return new SharedWorker(blobUrl, { type: "module" })
   })
+
+// const loadWorker = fetch(workerUrl)
+//   .then((r) => r.blob())
+//   .then((blob) => {
+//     var blobUrl = window.URL.createObjectURL(blob)
+//     return new Worker(blobUrl, { type: "module" })
+//   })
 
 const useAlertmanagerAPI = (apiEndpoint) => {
   const setAlerts = useStore((state) => state.alerts.setItems)
@@ -46,7 +53,7 @@ const useAlertmanagerAPI = (apiEndpoint) => {
         apiEndpoint,
         limit: false,
         watch: true,
-        watchInterval: 5000, // 5 min
+        watchInterval: 300000, // 5 min
         initialFetch: true,
       })
 
