@@ -12,7 +12,7 @@ const loadWorker = async () => {
     })
 }
 
-const useAlertmanagerAPI = (apiEndpoint) => {
+const useAlertmanagerAPI = (apiEndpoint, isUserActive) => {
   const setAlerts = useStore((state) => state.alerts.setItems)
   const setIsLoading = useStore((state) => state.alerts.setIsLoading)
   const setIsUpdating = useStore((state) => state.alerts.setIsUpdating)
@@ -22,7 +22,7 @@ const useAlertmanagerAPI = (apiEndpoint) => {
   let cleanup
   // Create a web worker to get updates from the alert manager api
   useEffect(() => {
-    if (!apiEndpoint) return
+    if (!apiEndpoint || isUserActive === undefined) return
     // set alerts state to loading
     setIsLoading(true)
 
@@ -47,7 +47,7 @@ const useAlertmanagerAPI = (apiEndpoint) => {
         action: "ALERTS_CONFIGURE",
         apiEndpoint,
         limit: false,
-        watch: true,
+        watch: isUserActive,
         watchInterval: 300000, // 5 min
         initialFetch: true,
       })
@@ -56,7 +56,7 @@ const useAlertmanagerAPI = (apiEndpoint) => {
     })
 
     return () => cleanup && cleanup()
-  }, [apiEndpoint])
+  }, [apiEndpoint, isUserActive])
 }
 
 export default useAlertmanagerAPI

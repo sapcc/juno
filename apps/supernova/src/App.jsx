@@ -5,14 +5,19 @@ import AppContent from "./AppContent"
 import styles from "./styles.inline.scss"
 import StyleProvider from "juno-ui-components"
 import useAlertmanagerAPI from "./hooks/useAlertmanagerAPI"
+import useStore from "./hooks/useStore"
+import useCommunication from "./hooks/useCommunication"
 
 const App = (props = {}) => {
+  const isUserActive = useStore((state) => state.userActivity.isActive)
+
   const embedded = useMemo(
     () => props.embedded === "true" || props.embedded === true,
     [props.embedded]
   )
 
-  useAlertmanagerAPI(props.endpoint)
+  useCommunication()
+  useAlertmanagerAPI(props.endpoint, isUserActive)
 
   return (
     <AppShell
