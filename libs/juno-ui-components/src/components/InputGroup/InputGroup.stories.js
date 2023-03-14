@@ -110,6 +110,19 @@ SelectWithTextInput.args = {
   ]
 }
 
+export const TextInputWithButtonAndOptions = Template.bind({})
+// The placeholder below will render once implemented in Select:
+TextInputWithButtonAndOptions.args = {
+  children: [
+    <TextInput placeholder="Enter Value…" />,
+    <Button label="Submit" />,
+    <Select placeholder="Other Actions…"> 
+      <SelectOption value="1" label="Save"/>
+      <SelectOption value="2" label="Delete"/>
+    </Select>
+  ]
+}
+
 export const SelectWithSelect = Template.bind({})
 SelectWithSelect.args = {
   children: [
