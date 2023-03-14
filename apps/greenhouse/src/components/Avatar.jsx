@@ -6,7 +6,6 @@ h-8
 w-8
 bg-theme-background-lvl-2
 rounded-full
-mr-2
 bg-cover 
 `
 
