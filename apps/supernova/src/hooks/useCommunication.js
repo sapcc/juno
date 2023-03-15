@@ -10,9 +10,9 @@ const useCommunication = () => {
     // watch for user activity updates messages
     // with the watcher we get the user activity object when this app is loaded before the Auth app
     const unwatch = watch(
-      "GREENHOUSE_USER_ACTIVITY",
+      "USERACTIVITY_UPDATE_DATA",
       (data) => {
-        console.log("got message GREENHOUSE_USER_ACTIVITY: ", data)
+        console.log("got message USERACTIVITY_UPDATE_DATA: ", data)
         setIsActive(data?.isActive)
       },
       { debug: true }
