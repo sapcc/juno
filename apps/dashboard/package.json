@@ -66,6 +66,7 @@
   "appProps": {
     "theme": {
       "value": "theme-dark",
+      "type": "optional",
       "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
     },
     "region": {
