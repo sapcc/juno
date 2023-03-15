@@ -3,6 +3,7 @@
   // remove border-radius where necessary
   .juno-button,
   .juno-textinput,
+  // this is weird for selects as is since these are inside a wrapper each and thus all qualify as first child, and potentially harder for radix-ui based selects, as we would need to select the Select button child?:
   .juno-select {
     &:not(:first-child, :last-child) {
       border-radius: 0;
