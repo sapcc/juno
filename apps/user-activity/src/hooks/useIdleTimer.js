@@ -1,15 +1,14 @@
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState, useMemo, useCallback } from "react"
 
 const DEFAULT_TIMEOUT = 1800 // 30 min
 const DEFAULT_EVENTS = ["mousemove", "click", "scroll", "keydown", "focus"]
 
 // TODO: should we return the counter?
 const useIdleTimer = ({ timeout, events, onTimeout, onActive, debug }) => {
-  const [intervalChecker, setIntervalChecker] = useState(null)
   const [counter, setCounter] = useState(0)
   const [isActive, setIsActive] = useState(true) // default to true so it is not starting inactive
 
-  if (debug === true)
+  if (debug === true || debug === "true")
     console.log(
       "useIdleTimmer hook. isActive: ",
       isActive,
@@ -32,10 +31,18 @@ const useIdleTimer = ({ timeout, events, onTimeout, onActive, debug }) => {
 
   // on load bind events and reset on timeout changes
   useEffect(() => {
-    trackActivity()
-    startInterval()
-    return () => cleanUp()
-  }, [timeout])
+    if (!timeout || !events) return
+    // track user activity by adding event listeners
+    events.forEach((e) => window.addEventListener(e, activity))
+    // init interval to check the timeout
+    const interval = startInterval()
+    return () => {
+      // cleanup all events
+      events.forEach((e) => window.removeEventListener(e, activity))
+      // clear the interval
+      clearInterval(interval)
+    }
+  }, [timeout, events])
 
   // dispatch callbacks and save state into the store
   useEffect(() => {
@@ -47,41 +54,27 @@ const useIdleTimer = ({ timeout, events, onTimeout, onActive, debug }) => {
     }
   }, [isActive])
 
-  // track user activity by adding event listeners
-  const trackActivity = () => {
-    events.forEach((e) => window.addEventListener(e, activity))
-  }
-
-  // cleanup all events
-  const cleanUp = () => {
-    clearInterval(intervalChecker)
-    events.forEach((e) => window.removeEventListener(e, activity))
-  }
-
   // set the expire time by reducing noise
   const activity = () => {
     setIsActive(true)
     setCounter(0)
   }
 
-  // check in regular periods if we still active
   const startInterval = () => {
-    setIntervalChecker(
-      setInterval(() => {
-        // use functional updates since interval will be created once
-        // but we need to read the updated counter
-        setCounter((prevCounter) => {
-          const newCount = prevCounter + 1
-          if (newCount > timeout) {
-            setIsActive(false)
-          }
-          return newCount
-        })
-      }, 1000)
-    )
+    return setInterval(() => {
+      // use functional updates since interval will be created once
+      // but we need to read the updated counter
+      setCounter((prevCounter) => {
+        const newCount = prevCounter + 1
+        if (newCount > timeout) {
+          setIsActive(false)
+        }
+        return newCount
+      })
+    }, 1000)
   }
 
-  return { isActive: isActive }
+  return { isActive }
 }
 
 export default useIdleTimer
