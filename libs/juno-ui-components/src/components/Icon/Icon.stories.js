@@ -310,6 +310,12 @@ SeverityCritical.args = {
   icon: "severityCritical",
 }
 
+export const Success = Template.bind({})
+Success.args = {
+  ...Default.args,
+  icon: "success",
+}
+
 export const Warning = Template.bind({})
 Warning.args = {
   ...Default.args,
