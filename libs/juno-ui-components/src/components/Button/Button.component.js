@@ -33,7 +33,7 @@ const btnDefaultSize = `
   jn-text-base
   jn-leading-6
   jn-pl-[0.5625rem]  
-  jn-pr-[0.625rem]
+  jn-pr-[0.5625rem]
   jn-py-[0.375rem]
 `
 
@@ -148,9 +148,9 @@ export const Button = React.forwardRef(
       <Icon
         icon={icon}
         className={`juno-button-icon ${
-          label || children ? iconClasses(size) : null
+          label || children ? iconClasses(size) : ""
         } `}
-        size={size ? iconSize(size) : null}
+        size={size ? iconSize(size) : ""}
       />
     ) : null
 
