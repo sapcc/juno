@@ -94,7 +94,7 @@ const PageFooter = () => {
               <Button
                 label="Contact our support"
                 href="https://documentation.global.cloud.sap/docs/customer/docs/support/contact-us/"
-                icon="insertComment"
+                icon="comment"
                 size="small"
                 target="_blank"
                 variant="subdued"
