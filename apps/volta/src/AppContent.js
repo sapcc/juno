@@ -29,8 +29,7 @@ const AppContent = () => {
   }, [oidc?.error])
 
   // fetch the CAs
-  // pass disabled cas to just fetch the ones that should be displayed
-  const cas = getCAs(oidc?.auth?.id_token, endpoint, disabledCAs)
+  const cas = getCAs(oidc?.auth?.id_token, endpoint, [])
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   // TODO think about to add the message error with an onError callback directly on getCAs
@@ -43,7 +42,7 @@ const AppContent = () => {
     }
   }, [cas?.error])
 
-  // find ca given per param in the url and match with the cas displayed
+  // find ca given per param in the url
   const selectedCA = useMemo(() => {
     if (cas?.data?.length > 0) {
       const index = cas?.data.findIndex((e) => e.name == searchParams.get("ca"))
@@ -53,6 +52,15 @@ const AppContent = () => {
     }
     return null
   }, [cas, searchParams.get("ca")])
+
+  const displayCAs = useMemo(() => {
+    if (!cas?.data) return []
+    if (!Array.isArray(disabledCAs)) return cas
+    // return just the CAs that should be displayed
+    return cas?.data?.filter(
+      (ca) => !disabledCAs.some((caName) => ca.name === caName)
+    )
+  }, [cas?.data, disabledCAs])
 
   return (
     <CustomAppShell>
@@ -69,7 +77,7 @@ const AppContent = () => {
               <CertificateList ca={selectedCA} />
             </>
           ) : (
-            <CAsList cas={cas?.data} isLoading={cas?.isLoading} />
+            <CAsList cas={displayCAs} isLoading={cas?.isLoading} />
           )}
         </>
       )}
