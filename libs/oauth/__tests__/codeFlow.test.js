@@ -1,5 +1,5 @@
-import { getOidcConfig } from "./oidcConfig"
-import { handleResponse } from "./codeFlow"
+import { getOidcConfig } from "../src/oidcConfig"
+import { handleResponse } from "../src/codeFlow"
 
 const testConfig = {
   issuer: "https://issuer.com",

@@ -1,28 +1,27 @@
 import { decodeIDToken } from "./tokenHelpers"
 import { getOidcConfig } from "./oidcConfig"
-import { randomString } from "./utils"
+import { searchParams } from "./oidcState"
 
-const buildRequestUrl = async ({ issuerURL, clientId }) => {
+const buildRequestUrl = async ({ issuerURL, clientID, oidcState }) => {
   const config = await getOidcConfig(issuerURL)
-  const state = {
-    key: randomString(),
-    nonce: randomString(),
-  }
   let url = config.authorization_endpoint
   url += "?response_type=id_token"
-  url += `&client_id=${clientId}`
+  url += `&client_id=${clientID}`
   url += `&redirect_uri=${window.location.origin}`
   url += "&scope=openid"
-  url += `&state=${state.key}`
-  url += `&nonce=${state.nonce}`
-  return { url, state }
+  url += `&state=${oidcState.key}`
+  url += `&nonce=${oidcState.nonce}`
+  return url
 }
+
 /**
  * Handle the implicit flow response (id token flow)
  * @param {object} params
  * @returns {Promise} resolves to token data
  */
-const handleResponse = async ({ searchParams }) => {
+const handleResponse = async () => {
+  if (!searchParams) return null
+
   const idToken = searchParams.get("id_token")
   const error = searchParams.get("error")
 

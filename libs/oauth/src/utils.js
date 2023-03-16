@@ -2,12 +2,18 @@
  * This function generates a random string based on Math.random
  * @returns {string} random string
  */
-export function randomString() {
-  return (
-    Math.random().toString(36).substring(2, 15) +
-    Math.random().toString(36).substring(2, 15) +
-    Date.now()
-  )
+export function randomString(length) {
+  if (!length) length = 60
+  let result = ""
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+  const charactersLength = characters.length
+  let counter = 0
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength))
+    counter += 1
+  }
+  return result
 }
 
 /**
@@ -15,16 +21,17 @@ export function randomString() {
  * @param {object} props
  * @returns base64 encoded json string
  */
-export const encode = (props) => btoa(JSON.stringify({ ...props }))
+export const encodeBase64Json = (props) =>
+  window.btoa(JSON.stringify({ ...props }))
 
 /**
  *
  * @param {string} string, base64 encoded json string
  * @returns {object} json
  */
-export const decode = (string) => {
+export const decodeBase64Json = (string) => {
   try {
-    return JSON.parse(atob(string))
+    return JSON.parse(window.atob(string))
   } catch (e) {
     return null
   }

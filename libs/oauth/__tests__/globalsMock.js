@@ -1,5 +1,6 @@
 globalThis.console.error = jest.fn()
 globalThis.console.warn = jest.fn()
+globalThis.console.info = jest.fn()
 
 delete global.window.location
 global.window = Object.create(window)

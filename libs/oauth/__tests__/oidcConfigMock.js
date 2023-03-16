@@ -34,6 +34,6 @@ const testConfig = {
   ],
 }
 
-jest.mock("./oidcConfig.js", () => ({
+jest.mock("../src/oidcConfig.js", () => ({
   getOidcConfig: jest.fn().mockResolvedValue(testConfig),
 }))

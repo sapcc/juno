@@ -1,4 +1,4 @@
-import { parseIdTokenData, decodeIDToken } from "./tokenHelpers"
+import { parseIdTokenData, decodeIDToken } from "../src/tokenHelpers"
 
 const idToken =
   "test_header." +

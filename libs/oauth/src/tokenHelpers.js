@@ -1,4 +1,4 @@
-import { decode } from "./utils"
+import { decodeBase64Json } from "./utils"
 /**
  * Extract auth data from id_token
  * @param {string} idToken JWT
@@ -6,22 +6,27 @@ import { decode } from "./utils"
  */
 export function decodeIDToken(idToken) {
   const [_head, tokenData, _signature] = idToken.split(".")
-  return decode(tokenData)
+  return decodeBase64Json(tokenData)
 }
 
+const capitalize = (str) =>
+  str ? str.charAt(0).toUpperCase() + str.slice(1) : ""
 /**
  *
  * @param {object} tokenData
  * @returns {object} parsed data
  */
 export function parseIdTokenData(tokenData) {
+  const email = tokenData.mail || tokenData.email || ""
+  let [_, first, last] = email.match(/^([^\.]+)\.([^\.]+)@.*/)
+  let firstName = tokenData.first_name || capitalize(first)
+  let lastName = tokenData.last_name || capitalize(last)
   return {
-    subject: tokenData.sub,
-    login_name: tokenData.login_name,
-    first_name: tokenData.first_name,
-    last_name: tokenData.last_name,
-    full_name: `${tokenData.first_name} ${tokenData.last_name}`,
-    email: tokenData.mail,
+    loginName: tokenData.login_name || tokenData.name,
+    email,
+    firstName,
+    lastName,
+    fullName: `${firstName} ${lastName}`,
     expiresAt: tokenData.exp * 1000,
     expiresAtDate: new Date(tokenData.exp * 1000),
     groups: tokenData.groups,

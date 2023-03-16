@@ -1,4 +1,4 @@
-import { handleResponse } from "./implicitFlow"
+import { handleResponse } from "../src/implicitFlow"
 
 const testIdToken =
   "test_header." +

@@ -14,7 +14,8 @@
     "@babel/preset-env": "^7.20.2",
     "babel-jest": "^29.4.2",
     "esbuild": "^0.17.6",
-    "jest": "^29.4.2"
+    "jest": "^29.4.2",
+    "oauth-pkce": "^0.0.6"
   },
   "scripts": {
     "test": "NODE_ENV=test yarn jest",

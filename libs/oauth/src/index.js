@@ -1,1 +1,2 @@
-export { oidcSession } from "./oidcSession"
+import oidcSession from "./oidcSession"
+export { oidcSession }
