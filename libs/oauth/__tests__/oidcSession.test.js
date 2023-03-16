@@ -1,4 +1,4 @@
-import "./globalsMock"
+import "./__utils__/globalsMock"
 
 import oidcSession from "../src/oidcSession"
 

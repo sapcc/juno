@@ -24,34 +24,13 @@ const oidcFlowHandler = (flowType) => {
   throw new Error("no flow handler for " + oidcState.flowType)
 }
 
-const createIFrame = (url) => {
-  const currentScript = document.querySelector(
-    `iframe[id="__oauth_silent_mode"]`
-  )
-  if (currentScript) currentScript.remove()
-  // refresh token using iframe and postMessage API
-  const iframe = document.createElement("iframe")
-  iframe.setAttribute("id", "__oauth_silent_mode")
-  iframe.setAttribute("src", url + "&prompt=none")
-  iframe.setAttribute("width", 0)
-  iframe.setAttribute("height", 0)
-  document.body.append(iframe)
-}
-
-const removeIFrame = () => {
-  const currentScript = document.querySelector(
-    `iframe[id="__oauth_silent_mode"]`
-  )
-  if (currentScript) currentScript.remove()
-}
-
 //############################## REQUEST #################################
 // This function makes the oidc id_token flow
 // silent option is used to refresh id_token in the background (silently) using iframe.
-const createOidcRequest = async ({ issuerURL, clientID, flowType, silent }) => {
+const createOidcRequest = async ({ issuerURL, clientID, flowType }) => {
   try {
     const oidcState = await createRequestState(
-      { flowType, silent },
+      { flowType },
       { pkce: flowType === FLOW_TYPE.CODE }
     )
     const handler = oidcFlowHandler(flowType)
@@ -62,12 +41,8 @@ const createOidcRequest = async ({ issuerURL, clientID, flowType, silent }) => {
       oidcState,
     })
 
-    if (silent) {
-      createIFrame(url)
-    } else {
-      // redirect to this URL
-      window.location.replace(url)
-    }
+    // redirect to this URL
+    window.location.replace(url)
   } catch (error) {
     throw new Error("(OAUTH) " + error.message)
   }
@@ -84,7 +59,7 @@ const handleOidcResponse = async ({ issuerURL, clientID }) => {
 
   try {
     const handler = oidcFlowHandler(oidcState.flowType)
-    const { tokenData, idToken } = await handler.handleResponse({
+    const { tokenData, idToken, refreshToken } = await handler.handleResponse({
       issuerURL,
       clientID,
       oidcState,
@@ -96,23 +71,48 @@ const handleOidcResponse = async ({ issuerURL, clientID }) => {
     const authData = {
       JWT: idToken,
       raw: tokenData,
+      refreshToken,
       parsed: parseIdTokenData(tokenData),
     }
 
-    // silent means the response came within an iframe, it is the refresh mode.
-    // In this case use the postMessage API to inform the parent window.
-    if (oidcState.silent) {
-      window.parent.postMessage(
-        { action: "SILENT_AUTH_UPDATE", auth: authData },
-        window.location.origin
-      )
-    } else if (oidcState.lastUrl) {
+    if (oidcState.lastUrl) {
       // Return to the URL before the redirect.
       window.history.replaceState("", "", oidcState.lastUrl || "/")
     }
     return authData
   } catch (error) {
     throw new Error("(OAUTH) " + error.message)
+  }
+}
+
+const refreshOidcToken = async ({
+  issuerURL,
+  clientID,
+  flowType,
+  refreshToken,
+  idToken,
+}) => {
+  if (!flowType === FLOW_TYPE.CODE) return null
+  try {
+    const {
+      tokenData,
+      idToken,
+      refreshToken: newRefreshToken,
+    } = await codeFlowHandler.refreshToken({
+      issuerURL,
+      clientID,
+      refreshToken,
+      idToken,
+    })
+
+    return {
+      JWT: idToken,
+      raw: tokenData,
+      refreshToken: newRefreshToken,
+      parsed: parseIdTokenData(tokenData),
+    }
+  } catch (error) {
+    throw new Error("(OAUTH) refresh token, " + error.message)
   }
 }
 
@@ -179,85 +179,91 @@ const oidcSession = (params) => {
   let state = { auth: null, error: null, isProcessing: false, loggedIn: false }
 
   let refreshTimer
+  const updateRefresher = () => {
+    // clear refresh timer every time the auth date gets updated
+    clearTimeout(refreshTimer)
+
+    if (!state?.auth?.refreshToken) return
+    if (state?.auth?.refreshToken) {
+      const expiresAt = state.auth.raw?.exp
+      if (expiresAt) {
+        const expiresIn = expiresAt * 1000 - Date.now()
+        console.info(
+          "(OAUTH) refresh token in",
+          Math.floor(expiresIn / 1000),
+          "seconds"
+        )
+        // start timer for refresh
+        refreshTimer = setTimeout(refreshAuth, expiresIn)
+      }
+    }
+  }
 
   // define update method which updates the state and calls the callback function
   const update = (newState) => {
     state = { ...state, ...newState }
     if (onUpdate) onUpdate({ ...state })
 
-    clearTimeout(refreshTimer)
-    if (refresh && state.auth.expiresAt) {
-      // refresh token 10 seconds before expiration
-      refreshTimer = setTimeout(
-        () =>
-          createOidcRequest({ issuerURL, clientID, flowType, silent: true }),
-        state.auth.expiresAt - Date.now() - 10000
+    if (!refresh) return
+    updateRefresher()
+  }
+
+  const receiveNewData = async (promise) => {
+    try {
+      const data = await promise
+      update({ auth: data, error: null, loggedIn: !!data, isProcessing: false })
+    } catch (error) {
+      update({
+        auth: null,
+        error: error.toString(),
+        loggedIn: false,
+        isProcessing: false,
+      })
+    }
+  }
+
+  const refreshAuth = () => {
+    const refreshToken = state?.auth?.refreshToken
+    if (refreshToken) {
+      console.info("(OAUTH) refresh token now")
+      receiveNewData(
+        refreshOidcToken({ issuerURL, clientID, flowType, refreshToken })
       )
     }
   }
 
-  // listen to updates from iframe
-  window.addEventListener(
-    "message",
-    (event) => {
-      if (
-        event?.origin !== window.origin ||
-        event?.data?.action !== "SILENT_AUTH_UPDATE"
-      )
-        return
-      update({
-        auth: event.data.auth,
-        error: null,
-        loggedIn: !!event.data.auth,
-        isProcessing: false,
-      })
-      removeIFrame()
-    },
-    false
-  )
-
-  // if oidc is present, then the current page load is a oidc response!
-  // handle the oidc response if odicState is present
-  if (isOidcResponse) {
-    console.log("===OAUTH: handle oidc response")
-    update({ isProcessing: true })
-    // try to get auth infos from the URL if current page load is a redirect from ID Provider
-    // Initial auth state!
-    handleOidcResponse({ issuerURL, clientID })
-      .then((data) => {
-        update({
-          auth: data,
-          error: null,
-          loggedIn: !!data,
-          isProcessing: false,
-        })
-      })
-      .catch((error) =>
-        update({
-          auth: null,
-          error: error.toString(),
-          loggedIn: false,
-          isProcessing: false,
-        })
-      )
-  }
-
   const login = () => {
     update({ isProcessing: true })
-    createOidcRequest({ issuerURL, clientID, flowType, silent: false })
+    createOidcRequest({ issuerURL, clientID, flowType })
   }
 
   const logout = (options) => {
+    console.info("(OAUTH) logout")
     update({ auth: null, error: null, loggedIn: false, isProcessing: false })
     if (options?.resetOIDCSession)
       oidcLogout({ issuerURL, silent: options?.silent === true })
   }
 
-  if (!isOidcResponse && initialLogin) login()
+  //############### HANDLE OIDC RESPONSE ################
+  // if oidc is present, then the current page load is a oidc response!
+  // handle the oidc response if odicState is present
+  if (isOidcResponse) {
+    console.info("(OAUTH) handle oidc response")
+    update({ isProcessing: true })
+    // try to get auth infos from the URL if current page load is a redirect from ID Provider
+    // Initial auth state!
+    receiveNewData(handleOidcResponse({ issuerURL, clientID }))
+  }
 
+  //############### START OIDC ################
+  if (!isOidcResponse && initialLogin) {
+    console.info("(OAUTH) login")
+    login()
+  }
   return {
     login,
     logout,
+    refresh: refreshAuth,
     currentState: () => ({ ...state }),
   }
 }

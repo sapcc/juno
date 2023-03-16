@@ -35,6 +35,10 @@
     "watchPathIgnorePatterns": [
       "<rootDir>/dev/",
       "<rootDir>/build/"
+    ],
+    "testPathIgnorePatterns": [
+      "/__fixtures__/",
+      "/__utils__/"
     ]
   }
 }

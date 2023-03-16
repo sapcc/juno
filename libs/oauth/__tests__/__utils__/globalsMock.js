@@ -21,3 +21,9 @@ global.window.location = {
   reload: null,
   replace: null,
 }
+
+global.fetch = jest.fn(() =>
+  Promise.resolve({
+    json: () => Promise.resolve({}),
+  })
+)

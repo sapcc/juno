@@ -36,3 +36,9 @@ export const decodeBase64Json = (string) => {
     return null
   }
 }
+
+export const paramsToUrl = (params = {}) => {
+  const urlParams = new URLSearchParams()
+  Object.keys(params).forEach((k) => urlParams.set(k, params[k]))
+  return urlParams.toString()
+}

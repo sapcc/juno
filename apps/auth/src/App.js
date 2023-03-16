@@ -1,38 +1,38 @@
-import { oidcSession } from "oauth/src"
-// import { useOidcAuth } from "oauth/src"
-import { broadcast, watch, onGet, get } from "communicator"
-import useCommunication from "./useCommunication"
 import React from "react"
-
-window.broadcast = broadcast
-window.watch = watch
-window.get = get
-window.onGet = onGet
+import useCommunication from "./useCommunication"
 
 const App = (props = {}) => {
-  React.useEffect(() => {
-    oidcSession({
-      issuerURL: props.issuerurl,
-      clientID: props.clientid,
-      initialLogin: true,
-      flowType: "code",
-      onUpdate: (state) => console.log("===========OIDC SESSION UPDATE", state),
-    })
-  }, [])
-  // const oidc = useOidcAuth({
-  //   issuerURL: props.issuerurl,
-  //   clientID: props.clientid,
-  //   initialLogin: props.initialLogin === "true" || props.initialLogin === true,
-  //   flowType: "pkce",
-  // })
+  const state = useCommunication(props)
 
-  // if (props.debug) console.log(oidc)
-  // useCommunication(oidc, {
-  //   resetOIDCSession: props.resetOidcSession,
-  //   debug: props.debug,
-  // })
+  if (state?.loggedIn)
+    return (
+      <>
+        <table>
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <td>
+                {state?.auth?.parsed?.avatarUrl?.small && (
+                  <img src={state.auth.parsed.avatarUrl.small} />
+                )}{" "}
+                {state?.auth?.parsed?.fullName}
+              </td>
+            </tr>
+            <tr>
+              <th>E-Mail</th>
+              <td>{state?.auth?.parsed?.email}</td>
+            </tr>
+            <tr>
+              <th>Groups</th>
+              <td>{state?.auth?.parsed?.groups}</td>
+            </tr>
+          </tbody>
+        </table>
+        {/* <code>{JSON.stringify(state?.auth?.parsed, null, 2)}</code> */}
+      </>
+    )
 
-  return null
+  return "Loading..."
 }
 
 export default App

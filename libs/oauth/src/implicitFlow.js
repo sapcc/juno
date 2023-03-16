@@ -1,17 +1,28 @@
 import { decodeIDToken } from "./tokenHelpers"
 import { getOidcConfig } from "./oidcConfig"
 import { searchParams } from "./oidcState"
+import { paramsToUrl } from "./utils"
 
-const buildRequestUrl = async ({ issuerURL, clientID, oidcState }) => {
+const buildRequestUrl = async ({
+  issuerURL,
+  clientID,
+  oidcState,
+  callbackURL,
+  params,
+}) => {
   const config = await getOidcConfig(issuerURL)
-  let url = config.authorization_endpoint
-  url += "?response_type=id_token"
-  url += `&client_id=${clientID}`
-  url += `&redirect_uri=${window.location.origin}`
-  url += "&scope=openid"
-  url += `&state=${oidcState.key}`
-  url += `&nonce=${oidcState.nonce}`
-  return url
+
+  const urlParams = paramsToUrl({
+    response_type: "id_token",
+    client_id: clientID,
+    redirect_uri: callbackURL || window.location.origin,
+    scope: "openid",
+    state: oidcState.key,
+    nonce: oidcState.nonce,
+    ...params,
+  })
+
+  return config.authorization_endpoint + "?" + urlParams
 }
 
 /**

@@ -1,67 +1,67 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { broadcast, watch, onGet } from "communicator"
+import { oidcSession } from "oauth/src"
 
-const enrichAuthData = (auth) => {
-  if (!auth) return auth
+const enrichAuthData = (data) => {
+  if (!data) return data
 
-  const enrichedAuth = { ...auth }
-  const userId = auth.login_name || auth.subject
+  const enrichedAuth = { ...data }
+  const userId = data.auth?.parsed?.loginName
 
-  if (enrichedAuth) {
-    enrichedAuth["avatarUrl"] = {
+  console.log("===============LOGIN NAME", userId)
+  if (userId) {
+    enrichedAuth.auth.parsed["avatarUrl"] = {
       small: `https://avatars.wdf.sap.corp/avatar/${userId}?size=24x24`,
     }
   }
   return enrichedAuth
 }
 
-const useCommunication = (oidc, { resetOIDCSession, debug }) => {
-  const { loggedIn, isProcessing, auth, error, login, logout } = oidc || {}
-  debug = debug === "true" || debug === true
+const useCommunication = (props = {}) => {
+  const debug = props.debug === "true" || props.debug === true
+  const [state, setState] = useState()
 
   useEffect(() => {
     // inform that the auth app has been loaded!
     broadcast("AUTH_APP_LOADED", true)
     onGet("AUTH_APP_LOADED", () => true)
-  }, [])
 
-  useEffect(() => {
-    const authData = {
-      loggedIn,
-      isProcessing,
-      auth: enrichAuthData(auth),
-      error,
-    }
-    // send auth data
-    broadcast("AUTH_UPDATE_DATA", authData, { debug })
-    // listen to on get events
-    const unwatchGet = onGet("AUTH_GET_DATA", () => authData, { debug })
-    // unregister on get listener when unmounting
-    return unwatchGet
-  }, [loggedIn, isProcessing, auth, error])
-
-  useEffect(() => {
-    const unwatchLogin = watch(
-      "AUTH_LOGIN",
-      (info) => {
-        if (!loggedIn) login()
+    const session = oidcSession({
+      issuerURL: props.issuerurl,
+      clientID: props.clientid,
+      initialLogin: props.initialLogin,
+      refresh: true,
+      flowType: "code",
+      onUpdate: (authData) => {
+        let data = enrichAuthData(authData)
+        setState(data)
+        broadcast("AUTH_UPDATE_DATA", data, { debug })
       },
-      { debug }
-    )
+    })
 
+    const unwatchGet = onGet("AUTH_GET_DATA", () => session.currentState, {
+      debug,
+    })
+
+    const unwatchLogin = watch("AUTH_LOGIN", session.login, { debug })
     const unwatchLogout = watch(
       "AUTH_LOGOUT",
-      (info) => {
-        if (loggedIn) logout({ resetOIDCSession, silent: true })
-      },
+      () =>
+        session.logout({
+          resetOIDCSession: props.resetOIDCSession,
+          silent: true,
+        }),
       { debug }
     )
-
+    // unregister on get listener when unmounting
     return () => {
+      unwatchGet()
       unwatchLogin()
       unwatchLogout()
     }
-  }, [loggedIn, login, logout, resetOIDCSession])
+  }, [])
+
+  return state
 }
 
 export default useCommunication

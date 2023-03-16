@@ -1,67 +1,117 @@
-import { handleResponse } from "../src/implicitFlow"
+import "./__utils__/globalsMock"
+import config from "./__utils__/oidcConfigMock"
+import { testIdToken, testTokenData } from "./__utils__/idTokenMock"
 
-const testIdToken =
-  "test_header." +
-  btoa(
-    JSON.stringify({
-      aud: "12a34b5c-6d78-9e1f-g345-67h89ijkl123",
-      sub: "P123456",
-      mail: "dona.moore@example.com",
-      iss: "https://my-tenant.accounts.ondemand.com",
-      last_name: "Moore",
-      sap_uid: "123456abc7de8-fghi-9123-j456-78912kl34m56",
-      exp: Math.floor((Date.now() + 8 * 60 * 60 * 1000) / 1000),
-      iat: Math.floor(Date.now() / 1000),
-      first_name: "Dona",
-      jti: "38e42330-de7a-4130-a3a1-b582b528da98",
-      nonce: "12345",
+import { buildRequestUrl, handleResponse } from "../src/implicitFlow"
+
+const oidcState = require("../src/oidcState")
+
+jest.mock("../src/oidcConfig.js", () => {
+  const testConfig = require("./__utils__/oidcConfigMock").default
+  return {
+    getOidcConfig: jest.fn().mockResolvedValue(testConfig),
+  }
+})
+
+describe("buildRequestUrl", () => {
+  test("should be a function", () => {
+    expect(typeof buildRequestUrl).toEqual("function")
+  })
+
+  test("should return a promise", () => {
+    expect(
+      buildRequestUrl({
+        issuerURL: "http://issuer.com",
+        clientID: "12345",
+        oidcState: {},
+      }).then
+    ).toBeDefined()
+  })
+
+  test("should build url for implicit flow", () => {
+    buildRequestUrl({
+      issuerURL: "http://issuer.com",
+      clientID: "12345",
+      oidcState: { nonce: "test", key: "123456" },
+    }).then((url) => {
+      expect(url).toEqual(
+        `${
+          config.authorization_endpoint
+        }?response_type=id_token&client_id=12345&redirect_uri=${encodeURIComponent(
+          "http://dummy.com"
+        )}&scope=openid&state=123456&nonce=test`
+      )
     })
-  ) +
-  ".test_signature"
+  })
+
+  test("include additional request params", () => {
+    buildRequestUrl({
+      issuerURL: "http://issuer.com",
+      clientID: "12345",
+      params: { origanization: "test", project: "test" },
+      oidcState: {
+        nonce: "test",
+        key: "123456",
+      },
+    }).then((url) => {
+      expect(url).toEqual(
+        `${
+          config.authorization_endpoint
+        }?response_type=id_token&client_id=12345&redirect_uri=${encodeURIComponent(
+          "http://dummy.com"
+        )}&scope=openid&state=123456&nonce=test&origanization=test&project=test`
+      )
+    })
+  })
+
+  test("use given callbackURL", () => {
+    buildRequestUrl({
+      issuerURL: "http://issuer.com",
+      clientID: "12345",
+      callbackURL: "http://another-issuer.com",
+      params: { origanization: "test", project: "test" },
+      oidcState: {
+        nonce: "test",
+        key: "123456",
+      },
+    }).then((url) => {
+      expect(url).toEqual(
+        `${
+          config.authorization_endpoint
+        }?response_type=id_token&client_id=12345&redirect_uri=${encodeURIComponent(
+          "http://another-issuer.com"
+        )}&scope=openid&state=123456&nonce=test&origanization=test&project=test`
+      )
+    })
+  })
+})
 
 describe("handleResponse", () => {
   test("url does not contain id_token and error", async () => {
-    const searchParams = new URLSearchParams("")
-
-    await expect(handleResponse({ searchParams })).rejects.toThrow(
+    oidcState.searchParams = new URLSearchParams()
+    await expect(handleResponse()).rejects.toThrow(
       "bad response, missing id_token"
     )
   })
 
   test("url contains error", async () => {
-    const searchParams = new URLSearchParams("error=unsupported_response_type")
-
-    await expect(handleResponse({ searchParams })).rejects.toThrow(
-      "unsupported_response_type"
+    oidcState.searchParams = new URLSearchParams(
+      "error=unsupported_response_type"
     )
+    await expect(handleResponse()).rejects.toThrow("unsupported_response_type")
   })
 
   test("id_token has bad format", async () => {
-    const searchParams = new URLSearchParams("id_token=test")
+    oidcState.searchParams = new URLSearchParams("id_token=test")
 
-    await expect(handleResponse({ searchParams })).rejects.toThrow(
-      "bad format of id_token"
-    )
+    await expect(handleResponse()).rejects.toThrow("bad format of id_token")
   })
 
   test("should return token data", async () => {
-    const searchParams = new URLSearchParams("id_token=" + testIdToken)
+    oidcState.searchParams = new URLSearchParams("id_token=" + testIdToken)
 
-    handleResponse({ searchParams }).then(({ tokenData, idToken }) => {
-      expect(tokenData).toEqual(
-        expect.objectContaining({
-          aud: "12a34b5c-6d78-9e1f-g345-67h89ijkl123",
-          sub: "P123456",
-          mail: "dona.moore@example.com",
-          iss: "https://my-tenant.accounts.ondemand.com",
-          last_name: "Moore",
-          sap_uid: "123456abc7de8-fghi-9123-j456-78912kl34m56",
-          first_name: "Dona",
-          jti: "38e42330-de7a-4130-a3a1-b582b528da98",
-          nonce: "12345",
-        })
-      )
-
+    handleResponse().then(({ tokenData, idToken }) => {
+      expect(tokenData).toEqual(expect.objectContaining(testTokenData))
       expect(idToken).toEqual(testIdToken)
     })
   })

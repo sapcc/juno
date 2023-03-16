@@ -1,4 +1,4 @@
-const testConfig = {
+const config = {
   issuer: "https://issuer.com",
   authorization_endpoint: "https://issuer.com/auth",
   token_endpoint: "https://issuer.com/token",
@@ -34,6 +34,4 @@ const testConfig = {
   ],
 }
 
-jest.mock("../src/oidcConfig.js", () => ({
-  getOidcConfig: jest.fn().mockResolvedValue(testConfig),
-}))
+export default config
