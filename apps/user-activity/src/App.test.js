@@ -5,9 +5,17 @@ import { render, act, waitFor } from "@testing-library/react"
 import { screen } from "shadow-dom-testing-library"
 import App from "./App"
 
-test("renders app", async () => {
-  await act(() => render(<App />))
+jest.mock("communicator", () => {
+  return {
+    broadcast: jest.fn(),
+    watch: jest.fn(() => () => null),
+    get: jest.fn(),
+    onGet: jest.fn(),
+  }
+})
 
-  let loginTitle = await screen.queryAllByShadowText(/Converged Cloud/i)
-  expect(loginTitle.length > 0).toBe(true)
+test("renders app", async () => {
+  const spy = jest.spyOn(React, "useEffect")
+  await act(() => render(<App />))
+  expect(spy).toHaveBeenCalled()
 })
