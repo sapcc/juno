@@ -241,7 +241,7 @@ Info.args = {
 export const Insert_Comment = Template.bind({})
 Insert_Comment.args = {
   ...Default.args,
-  icon: "insertComment",
+  icon: "comment",
 }
 
 export const Manage_Accounts = Template.bind({})

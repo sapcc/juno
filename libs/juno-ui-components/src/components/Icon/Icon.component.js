@@ -134,6 +134,7 @@ const getColoredSizedIcon = ({
   ...iconProps
 }) => {
   const iconClass = `juno-icon juno-icon-${icon} jn-inline-block jn-fill-current ${color} ${iconClassName}`
+
   switch (icon) {
     case "accountCircle":
       return (

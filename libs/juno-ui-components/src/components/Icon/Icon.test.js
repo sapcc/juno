@@ -228,10 +228,10 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toHaveAttribute("alt", "info")
   })
 
-  test("renders an insertComment icon", async () => {
-    render(<Icon icon="insertComment" />)
+  test("renders a comment icon", async () => {
+    render(<Icon icon="comment" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
-    expect(screen.getByRole("img")).toHaveAttribute("alt", "insert comment")
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "comment")
   })
 
   test("renders a manageAccounts icon", async () => {
