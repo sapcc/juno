@@ -32,18 +32,4 @@ Please visit the section **scrip tag** to see all available **props** and their 
 
 ## Events
 
-In this section will be describe the events used to notify other application.
-
-- **USER_ACTIVITY_APP_LOADED** (broadcast): notifies automatically when the application user-activity is up and running.
-- **USER_ACTIVITY_APP_LOADED** (get): use to check manually if the application user-activity is up and running.
-- **USER_ACTIVITY_UPDATE_DATA** (broadcast): notifies automatically when the active state has changed. Data will be in the following form `{ isActive: true or false }`
-
-Other apps wants to listen to this events should use the **communicator** lib. Please see the documentation of this lib by navigation to the libs section and choosing the **communicator** lib.
-
-Following is an example how to subscribe to `USER_ACTIVITY_APP_LOADED` events using the communicator lib:
-
-```js
-watch("USER_ACTIVITY_UPDATE_DATA", (data) => {
-  /* handle data */
-})
-```
+Please visit the section **communication** to see all available **events** and instructions to listen to them.
