@@ -22,7 +22,7 @@ const useIdleTimer = ({ timeout, events, onTimeout, onActive, debug }) => {
 
   // set a default timeout
   timeout = useMemo(() => {
-    if (!timeout) timeout = DEFAULT_TIMEOUT
+    if (isNaN(parseInt(timeout, 10))) timeout = DEFAULT_TIMEOUT
     if (debug)
       console.log("USER_ACTIVITY useIdleTimmer hook. timneout: ", timeout)
     return timeout
@@ -61,22 +61,26 @@ const useIdleTimer = ({ timeout, events, onTimeout, onActive, debug }) => {
     }
   }, [isActive])
 
+  // manage the active state
+  useEffect(() => {
+    if (counter >= timeout && isActive !== false) {
+      setIsActive(false)
+    }
+  }, [counter])
+
   // set the expire time by reducing noise
   const activity = () => {
     setIsActive(true)
     setCounter(0)
   }
 
+  // check the time elapsed
   const startInterval = () => {
     return setInterval(() => {
       // use functional updates since interval will be created once
       // but we need to read the updated counter
       setCounter((prevCounter) => {
-        const newCount = prevCounter + 1
-        if (newCount > timeout) {
-          setIsActive(false)
-        }
-        return newCount
+        return prevCounter + 1
       })
     }, 1000)
   }

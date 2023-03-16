@@ -9,7 +9,7 @@ const App = (props = {}) => {
   }, [props.events])
 
   const { isActive } = useIdleTimer({
-    timeout: 5,
+    timeout: props.timeout,
     events: propEvents,
     debug: props.debug,
   })
