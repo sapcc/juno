@@ -1,9 +1,20 @@
+import { useMemo } from "react"
 import useIdleTimer from "./hooks/useIdleTimer"
+import useCommunication from "./hooks/useCommunication"
 
 const App = (props = {}) => {
-  const { isActive } = useIdleTimer({ timeout: 5, debug: props.debug })
+  const propEvents = useMemo(() => {
+    if (!props.events || typeof props.events !== "string") return
+    return props.events.split(",")
+  }, [props.events])
 
-  console.log("app loaded: ", isActive)
+  const { isActive } = useIdleTimer({
+    timeout: 5,
+    events: propEvents,
+    debug: props.debug,
+  })
+
+  useCommunication(isActive, { debug: props.debug })
   return null
 }
 

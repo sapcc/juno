@@ -3,14 +3,18 @@ import { useEffect, useState, useMemo, useCallback } from "react"
 const DEFAULT_TIMEOUT = 1800 // 30 min
 const DEFAULT_EVENTS = ["mousemove", "click", "scroll", "keydown", "focus"]
 
-// TODO: should we return the counter?
 const useIdleTimer = ({ timeout, events, onTimeout, onActive, debug }) => {
   const [counter, setCounter] = useState(0)
   const [isActive, setIsActive] = useState(true) // default to true so it is not starting inactive
 
-  if (debug === true || debug === "true")
+  debug = useMemo(() => {
+    if (debug === true || debug === "true") return true
+    return false
+  }, [debug])
+
+  if (debug)
     console.log(
-      "useIdleTimmer hook. isActive: ",
+      " USER_ACTIVITY useIdleTimmer hook. isActive: ",
       isActive,
       " Counter: ",
       counter
@@ -18,7 +22,9 @@ const useIdleTimer = ({ timeout, events, onTimeout, onActive, debug }) => {
 
   // set a default timeout
   timeout = useMemo(() => {
-    if (!timeout) return DEFAULT_TIMEOUT
+    if (!timeout) timeout = DEFAULT_TIMEOUT
+    if (debug)
+      console.log("USER_ACTIVITY useIdleTimmer hook. timneout: ", timeout)
     return timeout
   }, [timeout])
 
@@ -26,6 +32,7 @@ const useIdleTimer = ({ timeout, events, onTimeout, onActive, debug }) => {
   events = useMemo(() => {
     if (!events) return DEFAULT_EVENTS
     if (!Array.isArray(events)) events = [events]
+    if (debug) console.log("USER_ACTIVITY useIdleTimmer hook. Events: ", events)
     return events
   }, [events])
 
