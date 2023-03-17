@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { useOidcAuth } from "oauth"
+import { oidcSession } from "oauth"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import styles from "./styles.scss"
@@ -10,26 +10,37 @@ import useStore from "./store"
 
 const App = (props) => {
   const setEndpoint = useStore((state) => state.setEndpoint)
-  const setOidc = useStore((state) => state.setOidc)
+  const setAuthData = useStore((state) => state.setAuthData)
   const setDocumentationLinks = useStore((state) => state.setDocumentationLinks)
   const setDisabledCAs = useStore((state) => state.setDisabledCAs)
-
+  const setLogin = useStore((state) => state.setLogin)
+  const setLogout = useStore((state) => state.setLogout)
   // fetch the auth token and save the object globally
   // keep it in the app so the issuerurl and clientid have not to be saved on the state
-  const oidc = useOidcAuth({
-    issuerURL: props.issuerurl,
-    clientID: props.clientid,
-    initialLogin: true,
-  })
+  const oidc = React.useMemo(
+    () =>
+      oidcSession({
+        issuerURL: props.issuerurl,
+        clientID: props.clientid,
+        initialLogin: true,
+        refresh: true,
+        flowType: "code",
+        onUpdate: (authData) => {
+          setAuthData(authData)
+        },
+      }),
+    [setAuthData]
+  )
+  setLogin(oidc.login)
+  setLogout(oidc.logout)
 
   // on load application save the props to be used in oder components
   useEffect(() => {
-    setOidc(oidc)
     if (props.endpoint) setEndpoint(props.endpoint)
     if (props.disabledcas) setDisabledCAs(props.disabledcas)
     if (props.documentationlinks)
       setDocumentationLinks(props.documentationlinks)
-  }, [oidc])
+  }, [])
 
   const queryClient = new QueryClient()
 

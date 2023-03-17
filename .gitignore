@@ -36,6 +36,7 @@ scripts/test_data
 .env.production.local
 
 secretProps.json
+secretProps.js
 
 npm-debug.log*
 yarn-debug.log*

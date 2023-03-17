@@ -40,7 +40,7 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
     useCallback((state) => state.formValidation)
   )
 
-  const oidc = useStore(useCallback((state) => state.oidc))
+  const authData = useStore(useCallback((state) => state.authData))
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const queryClient = useQueryClient()
 
@@ -62,9 +62,7 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
   // on form init set the identity attributes
   useEffect(() => {
     if (!setAttribute) return
-    const userId = (
-      oidc?.auth?.subject || oidc?.auth?.login_name
-    )?.toUpperCase()
+    const userId = authData?.auth?.parsed.loginName?.toUpperCase()
     if (userId) {
       setAttribute({ key: "identity", value: userId })
     }
@@ -113,7 +111,7 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
         {
           endpoint: endpoint,
           ca: ca,
-          bearerToken: oidc?.auth?.id_token,
+          bearerToken: authData?.auth?.JWT,
           formState: formState,
         },
         {

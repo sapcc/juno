@@ -14,22 +14,24 @@ import CertificateList from "./components/CertificateList"
 const AppContent = () => {
   const addMessage = useMessageStore((state) => state.addMessage)
   const endpoint = useStore(useCallback((state) => state.endpoint))
-  const oidc = useStore(useCallback((state) => state.oidc))
+  const authData = useStore(useCallback((state) => state.authData))
+  const login = useStore(useCallback((state) => state.login))
   const disabledCAs = useStore(useCallback((state) => state.disabledCAs))
   let [searchParams] = useSearchParams()
 
   // set an error message when oidc fails
   useEffect(() => {
-    if (oidc?.error) {
+    if (authData?.error) {
       addMessage({
         variant: "error",
-        text: parseError(oidc?.error),
+        text: parseError(authData?.error),
       })
     }
-  }, [oidc?.error])
+  }, [authData?.error])
 
   // fetch the CAs
-  const cas = getCAs(oidc?.auth?.id_token, endpoint, [])
+  // pass disabled cas to just fetch the ones that should be displayed
+  const cas = getCAs(authData?.auth?.JWT, endpoint, disabledCAs)
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   // TODO think about to add the message error with an onError callback directly on getCAs
@@ -64,8 +66,11 @@ const AppContent = () => {
 
   return (
     <CustomAppShell>
-      {oidc?.auth?.error || !oidc?.loggedIn ? (
-        <WellcomeView loginCallback={oidc?.login} />
+      {authData?.auth?.error || !authData?.loggedIn ? (
+        <WellcomeView
+          loginCallback={login}
+          isProcessing={authData.isProcessing}
+        />
       ) : (
         <>
           {selectedCA ? (

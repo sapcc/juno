@@ -27,13 +27,13 @@ const CertificateList = ({ ca }) => {
   const addMessage = useMessageStore((state) => state.addMessage)
   const showPanel = useStore(useCallback((state) => state.showNewSSO))
   const setShowNewSSO = useStore(useCallback((state) => state.setShowNewSSO))
-  const oidc = useStore(useCallback((state) => state.oidc))
+  const authData = useStore(useCallback((state) => state.authData))
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const docuLinks = useStore(useCallback((state) => state.documentationLinks))
 
   // fetch the certificates
   const { isLoading, isError, data, error } = getCertificates(
-    oidc?.auth?.id_token,
+    authData?.auth?.JWT,
     endpoint,
     ca?.name
   )

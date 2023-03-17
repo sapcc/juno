@@ -13,7 +13,8 @@ import HeaderUser from "./HeaderUser"
 
 const CustomAppShell = ({ children }) => {
   const setShowNewSSO = useStore(useCallback((state) => state.setShowNewSSO))
-  const oidc = useStore(useCallback((state) => state.oidc))
+  const authData = useStore(useCallback((state) => state.authData))
+  const logout = useStore(useCallback((state) => state.logout))
   const navigate = useNavigate()
 
   const backToRootPath = () => {
@@ -24,12 +25,12 @@ const CustomAppShell = ({ children }) => {
   const pageHeader = React.useMemo(() => {
     return (
       <PageHeader heading="Converged Cloud | Volta" onClick={backToRootPath}>
-        {oidc?.loggedIn && (
-          <HeaderUser auth={oidc?.auth} logout={oidc?.logout} />
+        {authData?.loggedIn && (
+          <HeaderUser auth={authData?.auth} logout={logout} />
         )}
       </PageHeader>
     )
-  }, [oidc])
+  }, [authData])
 
   const topBar = (
     <TopNavigation>

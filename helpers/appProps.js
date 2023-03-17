@@ -1,10 +1,15 @@
 const path = require("path")
+const fs = require("fs")
 
 module.exports = ({ appPath = "" } = {}) => {
   const pkg = require(path.resolve(appPath, "package.json"))
   let secrets
   try {
-    secrets = require(path.resolve(appPath, "secretProps.json"))
+    if (fs.existsSync(path.resolve(appPath, "secretProps.js"))) {
+      secrets = require(path.resolve(appPath, "secretProps.js"))
+    } else {
+      secrets = require(path.resolve(appPath, "secretProps.json"))
+    }
   } catch (e) {
     secrets = {}
   }
