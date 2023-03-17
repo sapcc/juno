@@ -12,9 +12,7 @@ const pillStyles = `
 	jn-p-px
 	jn-border
 	jn-rounded
-	jn-mr-2
 	jn-border-theme-filter-pill
-	last:jn-mr-0
 `
 
 const pillKeyStyles = `
