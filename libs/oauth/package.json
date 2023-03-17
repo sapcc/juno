@@ -1,6 +1,6 @@
 {
   "name": "oauth",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Authenticates user via OIDC",
   "source": "src/index.js",
   "main": "build/index.js",

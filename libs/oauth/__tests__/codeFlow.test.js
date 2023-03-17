@@ -204,7 +204,7 @@ describe("refreshToken", () => {
       expect.objectContaining({
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         method: "POST",
-        body: "grant_type=refresh_token&refresh_token=123456",
+        body: "grant_type=refresh_token&refresh_token=123456&client_id=test",
       })
     )
   })

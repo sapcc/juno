@@ -1,66 +1,31 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { broadcast, watch, onGet } from "communicator"
-import { oidcSession } from "oauth/src"
 
-const enrichAuthData = (data) => {
-  if (!data) return data
-
-  const enrichedAuth = { ...data }
-  const userId = data.auth?.parsed?.loginName
-
-  if (userId) {
-    enrichedAuth.auth.parsed["avatarUrl"] = {
-      small: `https://avatars.wdf.sap.corp/avatar/${userId}?size=24x24`,
-    }
-  }
-  return enrichedAuth
-}
-
-const useCommunication = (props = {}) => {
-  const debug = props.debug === "true" || props.debug === true
-  const [state, setState] = useState()
-
+const useCommunication = ({ authData, login, logout, debug }) => {
   useEffect(() => {
     // inform that the auth app has been loaded!
     broadcast("AUTH_APP_LOADED", true)
     onGet("AUTH_APP_LOADED", () => true)
+  }, [])
 
-    const session = oidcSession({
-      issuerURL: props.issuerurl,
-      clientID: props.clientid,
-      initialLogin: props.initialLogin,
-      refresh: true,
-      flowType: "code",
-      onUpdate: (authData) => {
-        let data = enrichAuthData(authData)
-        setState(data)
-        broadcast("AUTH_UPDATE_DATA", data, { debug })
-      },
-    })
-
-    const unwatchGet = onGet("AUTH_GET_DATA", () => session.currentState, {
+  useEffect(() => {
+    broadcast("AUTH_UPDATE_DATA", authData, { debug })
+    const unwatchGet = onGet("AUTH_GET_DATA", () => authData, {
       debug,
     })
 
-    const unwatchLogin = watch("AUTH_LOGIN", session.login, { debug })
-    const unwatchLogout = watch(
-      "AUTH_LOGOUT",
-      () =>
-        session.logout({
-          resetOIDCSession: props.resetOIDCSession,
-          silent: true,
-        }),
-      { debug }
-    )
+    return unwatchGet
+  }, [authData])
+
+  useEffect(() => {
+    const unwatchLogin = watch("AUTH_LOGIN", login, { debug })
+    const unwatchLogout = watch("AUTH_LOGOUT", logout, { debug })
     // unregister on get listener when unmounting
     return () => {
-      unwatchGet()
       unwatchLogin()
       unwatchLogout()
     }
-  }, [])
-
-  return state
+  }, [login, logout])
 }
 
 export default useCommunication

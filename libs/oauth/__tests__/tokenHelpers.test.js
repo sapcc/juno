@@ -25,7 +25,7 @@ describe("parseIdTokenData", () => {
     })
     expect(data).toEqual(
       expect.objectContaining({
-        loginName: undefined,
+        loginName: "P123456",
         firstName: "Dona",
         lastName: "Moore",
         fullName: "Dona Moore",
@@ -52,7 +52,7 @@ describe("parseIdTokenData", () => {
     })
     expect(data).toEqual(
       expect.objectContaining({
-        loginName: undefined,
+        loginName: "P123456",
         firstName: "Dona",
         lastName: "Moore",
         fullName: "Dona Moore",

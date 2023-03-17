@@ -9,15 +9,16 @@ import {
 } from "./oidcState"
 import { getOidcConfig } from "./oidcConfig"
 
+// define flow types
 export const FLOW_TYPE = {
   IMPLICIT: "implicit",
   CODE: "code",
 }
 
+// the state is determined when the lib is loaded
 const isOidcResponse = hasValidState()
 
-// Proof Key for Code Exchange
-
+// returns the correct flow handler
 const oidcFlowHandler = (flowType) => {
   if (flowType === FLOW_TYPE.IMPLICIT) return implicitFlowHandler
   else if (flowType === FLOW_TYPE.CODE) return codeFlowHandler
@@ -25,16 +26,19 @@ const oidcFlowHandler = (flowType) => {
 }
 
 //############################## REQUEST #################################
-// This function makes the oidc id_token flow
-// silent option is used to refresh id_token in the background (silently) using iframe.
+// This function initiates the oidc flow
 const createOidcRequest = async ({ issuerURL, clientID, flowType }) => {
   try {
+    // create state props and store them in the SessionStorage
+    // to use them after the redirect back from the ID provider
+    // for code flow we use pkce and without secret!
     const oidcState = await createRequestState(
       { flowType },
       { pkce: flowType === FLOW_TYPE.CODE }
     )
     const handler = oidcFlowHandler(flowType)
 
+    // make the actual request
     const url = await handler.buildRequestUrl({
       issuerURL,
       clientID,
@@ -49,9 +53,10 @@ const createOidcRequest = async ({ issuerURL, clientID, flowType }) => {
 }
 
 //################################ RESPONSE #################################
+// handle the response from ID provider
 const handleOidcResponse = async ({ issuerURL, clientID }) => {
-  // no oidc state presented or it does not match the stored one -> return null
   const oidcState = getResponseState()
+  // no oidc state presented or it does not match the stored one -> return null
   if (!oidcState) {
     console.warn("(OAUTH) url state does not match stored state, ignore it!")
     return null
@@ -85,12 +90,12 @@ const handleOidcResponse = async ({ issuerURL, clientID }) => {
   }
 }
 
+// Refresh token works only for the code flow!
 const refreshOidcToken = async ({
   issuerURL,
   clientID,
   flowType,
   refreshToken,
-  idToken,
 }) => {
   if (!flowType === FLOW_TYPE.CODE) return null
   try {
@@ -102,7 +107,6 @@ const refreshOidcToken = async ({
       issuerURL,
       clientID,
       refreshToken,
-      idToken,
     })
 
     return {
@@ -117,6 +121,8 @@ const refreshOidcToken = async ({
 }
 
 // This function removes cached token from storage.
+// We use iframe for ending oidc session in id provider
+// if we don't want user to leave current page
 function oidcLogout({ issuerURL, silent }) {
   getOidcConfig(issuerURL).then((config) => {
     if (!config.end_session_endpoint) {
@@ -144,6 +150,11 @@ function oidcLogout({ issuerURL, silent }) {
   })
 }
 
+/**
+ *
+ * @param {object} params
+ * @returns {object} contains login, logout, refresh, currentState
+ */
 const oidcSession = (params) => {
   let {
     issuerURL,
@@ -176,26 +187,27 @@ const oidcSession = (params) => {
   }
 
   // initialize state
+  // this state is updated on every change on the auth status
   let state = { auth: null, error: null, isProcessing: false, loggedIn: false }
 
   let refreshTimer
+  // this function re-creates a refresh timer if a refreshToken is presented
   const updateRefresher = () => {
     // clear refresh timer every time the auth date gets updated
     clearTimeout(refreshTimer)
 
     if (!state?.auth?.refreshToken) return
-    if (state?.auth?.refreshToken) {
-      const expiresAt = state.auth.raw?.exp
-      if (expiresAt) {
-        const expiresIn = expiresAt * 1000 - Date.now()
-        console.info(
-          "(OAUTH) refresh token in",
-          Math.floor(expiresIn / 1000),
-          "seconds"
-        )
-        // start timer for refresh
-        refreshTimer = setTimeout(refreshAuth, expiresIn)
-      }
+
+    const expiresAt = state.auth.raw?.exp
+    if (expiresAt) {
+      const expiresIn = expiresAt * 1000 - Date.now()
+      console.info(
+        "(OAUTH) refresh token in",
+        Math.floor(expiresIn / 1000),
+        "seconds"
+      )
+      // start timer for refresh
+      refreshTimer = setTimeout(refreshAuth, expiresIn)
     }
   }
 
@@ -208,6 +220,7 @@ const oidcSession = (params) => {
     updateRefresher()
   }
 
+  // handle new data from odic response
   const receiveNewData = async (promise) => {
     try {
       const data = await promise
@@ -222,7 +235,9 @@ const oidcSession = (params) => {
     }
   }
 
+  // refresh function
   const refreshAuth = () => {
+    if (!refresh) return
     const refreshToken = state?.auth?.refreshToken
     if (refreshToken) {
       console.info("(OAUTH) refresh token now")

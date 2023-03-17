@@ -22,7 +22,7 @@ export function parseIdTokenData(tokenData) {
   let firstName = tokenData.first_name || capitalize(first)
   let lastName = tokenData.last_name || capitalize(last)
   return {
-    loginName: tokenData.login_name || tokenData.name,
+    loginName: tokenData.login_name || tokenData.name || tokenData.sub,
     email,
     firstName,
     lastName,
