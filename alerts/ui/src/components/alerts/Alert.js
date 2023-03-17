@@ -13,6 +13,8 @@ import {
   TooltipTrigger,
 } from "juno-ui-components"
 
+import AlertLabels from "./AlertLabels"
+
 const cellSeverityClasses = (severity) => {
   let borderColor = "border-text-theme-default"
   switch (severity) {
@@ -77,14 +79,13 @@ const Alert = ({ alert }, ref) => {
         {alert.labels?.region !== alert.labels?.cluster && (
           <>
             <br />
-            <span className="text-theme-disabled">{alert.labels?.cluster}</span>
+            <span className="text-theme-light">{alert.labels?.cluster}</span>
           </>
         )}
       </DataGridCell>
       <DataGridCell>{alert.labels?.service}</DataGridCell>
       <DataGridCell>
-        <span className="text-theme-high">{alert.annotations?.summary}</span>
-        <br />
+        <div>{alert.annotations?.summary}</div>
         <Markup
           content={descriptionParsed(
             alert.annotations?.description?.replace(
@@ -92,9 +93,10 @@ const Alert = ({ alert }, ref) => {
               "<code class='inline-code'>$1</code>"
             )
           )}
-          tagName="span"
-          className="text-sm"
+          tagName="div"
+          className="text-sm text-theme-light mb-4"
         />
+        <AlertLabels alert={alert} />
       </DataGridCell>
       <DataGridCell>
         <Stack alignment="end" gap="2">
