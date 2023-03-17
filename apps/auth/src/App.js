@@ -1,6 +1,6 @@
 import React from "react"
 import useCommunication from "./useCommunication"
-import { oidcSession } from "oauth/src"
+import { oidcSession } from "oauth"
 
 const enrichAuthData = (data) => {
   if (!data) return data

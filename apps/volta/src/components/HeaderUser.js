@@ -4,11 +4,11 @@ import Avatar from "./Avatar"
 
 const HeaderUser = ({ auth, logout }) => {
   const name = useMemo(() => {
-    if (!auth?.full_name) return ""
-    return auth.full_name
+    if (!auth?.parsed?.fullName) return ""
+    return auth.parsed.fullName
   }, [auth])
 
-  const sapID = useMemo(() => auth?.login_name || auth?.subject || "", [auth])
+  const sapID = useMemo(() => auth?.parsed?.loginName || "", [auth])
 
   return (
     <Stack alignment="center" className="ml-auto" distribution="end">
