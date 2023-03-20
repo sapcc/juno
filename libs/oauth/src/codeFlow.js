@@ -71,8 +71,8 @@ const handleResponse = async ({ issuerURL, clientID, oidcState }) => {
     verifier: oidcState.verifier,
     clientID,
   })
-  if (data.error) throw new Error(error)
-  if (!data.id_token) throw new Error("bad response, missing id_token")
+  if (data?.error) throw new Error(error)
+  if (!data?.id_token) throw new Error("bad response, missing id_token")
 
   const tokenData = decodeIDToken(data.id_token)
   if (!tokenData) throw new Error("bad format of id_token")
@@ -108,8 +108,8 @@ const refreshToken = async ({ issuerURL, clientID, idToken, refreshToken }) => {
     body: formBody,
   }).then((r) => r.json())
 
-  if (data.error) throw new Error(error)
-  if (!data.id_token) throw new Error("bad response, missing id_token")
+  if (data?.error) throw new Error(error)
+  if (!data?.id_token) throw new Error("bad response, missing id_token")
 
   const tokenData = decodeIDToken(data.id_token)
   if (!tokenData) throw new Error("bad format of id_token")
