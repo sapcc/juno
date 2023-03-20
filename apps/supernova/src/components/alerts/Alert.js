@@ -82,7 +82,7 @@ const Alert = ({ alert }, ref) => {
               )
             )}
             tagName="div"
-            className="text-sm text-theme-light"
+            className="text-theme-light"
           />
           <AlertLinks alert={alert} className="mb-4 mt-1" />
         </div>
