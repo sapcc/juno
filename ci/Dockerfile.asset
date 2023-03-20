@@ -19,7 +19,7 @@ WORKDIR /juno
 
 RUN node scripts/generate_communication_readme.mjs --path=/juno/$ASSET_PATH
 
-RUN rsync -avu --delete --exclude 'node_moduels' "/tmp/src/$ASSET_PATH/" "/juno/$ASSET_PATH"
+RUN rsync -avu --delete --exclude 'node_modules' "/tmp/src/$ASSET_PATH/" "/juno/$ASSET_PATH"
 
 # TEST AND BUILD ASSET
 # IGNORE_EXTERNALS=true will results in a bundle which includes all dependencies. 
