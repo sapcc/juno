@@ -4,18 +4,6 @@
   "version": "0.1.0",
   "license": "Apache-2.0",
   "main": "src/index.js",
-  "dependencies": {
-    "dotenv": "^10.0.0",
-    "fastify": "^3.18.0",
-    "fastify-cors": "^6.0.1",
-    "graphql": "^15.5.0",
-    "graphql-tools": "^7.0.5",
-    "mercurius": "^7.9.1",
-    "nodemon": "^2.0.7",
-    "pg": "^8.6.0",
-    "policy-engine": ">= 0",
-    "sequelize": "^6.6.2"
-  },
   "devDependencies": {
     "dotenv": "^10.0.0",
     "fastify": "^3.18.0",
@@ -27,7 +15,7 @@
     "mercurius": "^7.9.1",
     "nodemon": "^2.0.7",
     "pg": "^8.6.0",
-    "policy-engine": ">= 0",
+    "policy-engine": "https://assets.juno.global.cloud.sap/libs/policy-engine@latest/package.tgz",
     "sequelize": "^6.6.2",
     "sequelize-cli": "^6.2.0",
     "sqlite3": "^5.0.2"
