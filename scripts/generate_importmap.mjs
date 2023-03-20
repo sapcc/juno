@@ -90,6 +90,7 @@ for (let file of files) {
     entryFile: entryFile + "?" + timestamp,
     entryDir,
     peerDependencies: options.ignoreExternals ? false : pkg.peerDependencies,
+    importmapExtras: pkg.importmapExtras || {},
   }
 }
 
@@ -272,24 +273,28 @@ for (let name in packageRegistry) {
             await generator.install(`react-dom@${depVersion}/client`)
             pkgImportMaps.push(generator.getMap())
           }
-          // Fix zustand/middleware dependency
-          if (depName === "zustand") {
-            console.log(
-              "\x1b[33m%s\x1b[0m",
-              `(!) ${name}@${version} FIX zustand, add zustand/middleware`
-            )
-            generator = new Generator({
-              env: [options.env, "browser"],
-              defaultProvider: options.provider,
-            })
-            await generator.install(`zustand@${depVersion}/middleware`)
-            pkgImportMaps.push(generator.getMap())
-          }
         } catch (error) {
           console.log(error)
           if (options.exitOnError) process.exit(1)
         }
 
+        pkgImportMaps.push(generator.getMap())
+      }
+    }
+
+    if (regPkg.importmapExtras) {
+      for (let dep in regPkg.importmapExtras) {
+        const version = regPkg.importmapExtras[dep]
+        const [_, name, subPath] = dep.match(/^(.+)\/([^\/]+)$/)
+        console.log(
+          "\x1b[33m%s\x1b[0m",
+          `(!) ${regPkg.name}@${regPkg.version} install extra package: ${name}@${version}/${subPath}`
+        )
+        let generator = new Generator({
+          env: [options.env, "browser"],
+          defaultProvider: options.provider,
+        })
+        await generator.install(`${name}@${version}/${subPath}`)
         pkgImportMaps.push(generator.getMap())
       }
     }
