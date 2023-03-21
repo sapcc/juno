@@ -1,3 +1,2 @@
-import useOidcAuth from "./useOidcAuth"
-
-export { useOidcAuth }
+import oidcSession from "./oidcSession"
+export { oidcSession }

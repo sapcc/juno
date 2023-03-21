@@ -17,25 +17,16 @@ ADD . /tmp/src
 
 WORKDIR /juno
 
-RUN rsync -avu --delete "/tmp/src/" "/juno" > /dev/null ; 
-
-
-# install and build libs 
-# IMPORTANT!
-# some assets have dependencies to libs
-# to test the asset we need to build the libs which includes all dependencies
-# build-libs script set the NODE_ENV to development which includes all 
-# dependencies in the builds defined in peer dependencies.
-# RUN yarn install >/dev/null ; yarn build-libs > /dev/null
-RUN yarn install > /dev/null ; yarn build-libs
-
 RUN node scripts/generate_communication_readme.mjs --path=/juno/$ASSET_PATH
+
+RUN rsync -avu --delete --exclude 'node_modules' "/tmp/src/$ASSET_PATH/" "/juno/$ASSET_PATH"
 
 # TEST AND BUILD ASSET
 # IGNORE_EXTERNALS=true will results in a bundle which includes all dependencies. 
 # This is the case if the jspm cdn is unreachable!!! 
 RUN \
   ASSET_NAME=$(jq -r .name /juno/$ASSET_PATH/package.json) ; \ 
+  yarn workspace $ASSET_NAME install ; \ 
   ASSET_TEST_SCRIPT=$(jq -r '.scripts | has("test")' /juno/$ASSET_PATH/package.json) ; \
   ASSET_BUILD_SCRIPT=$(jq -r '.scripts | has("build")' /juno/$ASSET_PATH/package.json) ; \ 
   echo $ASSET_NAME "test script: $ASSET_TEST_SCRIPT, build script: $ASSET_BUILD_SCRIPT" ; \

@@ -7,8 +7,13 @@ const useStore = create((set) => ({
   setEndpoint: (endpoint) => set((state) => ({ endpoint: endpoint })),
   showNewSSO: false,
   setShowNewSSO: (show) => set((state) => ({ showNewSSO: show })),
-  oidc: null,
-  setOidc: (oidc) => set((state) => ({ oidc: oidc })),
+  authData: null,
+  setAuthData: (authData) => set((state) => ({ authData })),
+  login: null,
+  setLogin: (func) => set(() => ({ login: func })),
+  logout: null,
+  setLogout: (func) => set(() => ({ logout: func })),
+
   disabledCAs: [],
   setDisabledCAs: (cas) =>
     set((state) => {

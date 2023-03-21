@@ -3,48 +3,48 @@ import PropTypes from "prop-types"
 
 /* Import Icons here. The icon svgs in the icons folder correspond to the respective "xyz_24px.svg" from material-ui icons.
  */
-import AccountCircle from "./icons/account_circle.svg"
-import AddCircle from "./icons/add_circle.svg"
-import AutoAwesomeMosaic from "./icons/auto_awesome_mosaic.svg"
-import AutoAwesomeMotion from "./icons/auto_awesome_motion.svg"
-import Bolt from "./icons/bolt.svg"
-import Cancel from "./icons/cancel.svg"
-import CheckCircle from "./icons/check_circle.svg"
-import ChevronLeft from "./icons/chevron_left.svg"
-import ChevronRight from "./icons/chevron_right.svg"
-import Close from "./icons/close.svg"
-import ContentCopy from "./icons/content_copy.svg"
+import AccountCircle from "@material-design-icons/svg/filled/account_circle.svg"
+import AddCircle from "@material-design-icons/svg/filled/add_circle.svg"
+import AutoAwesomeMosaic from "@material-design-icons/svg/filled/auto_awesome_mosaic.svg"
+import AutoAwesomeMotion from "@material-design-icons/svg/filled/auto_awesome_motion.svg"
+import Bolt from "@material-design-icons/svg/filled/bolt.svg"
+import Cancel from "@material-design-icons/svg/filled/cancel.svg"
+import CheckCircle from "@material-design-icons/svg/filled/check_circle.svg"
+import ChevronLeft from "@material-design-icons/svg/outlined/chevron_left.svg"
+import ChevronRight from "@material-design-icons/svg/outlined/chevron_right.svg"
+import Close from "@material-design-icons/svg/filled/close.svg"
+import ContentCopy from "@material-design-icons/svg/outlined/content_copy.svg"
 import Danger from "./icons/juno-danger.svg"
-import Dangerous from "./icons/dangerous.svg"
-import DeleteForever from "./icons/delete_forever.svg"
-import Description from "./icons/description.svg"
-import DNS from "./icons/dns.svg"
-import Edit from "./icons/edit.svg"
-import Error from "./icons/dangerous.svg"
-import ErrorOutline from "./icons/error_outline.svg"
-import ExitToApp from "./icons/exit_to_app.svg"
-import ExpandLess from "./icons/expand_less.svg"
-import ExpandMore from "./icons/expand_more.svg"
-import FilterAlt from "./icons/filter_alt.svg"
-import Forum from "./icons/forum.svg"
-import Help from "./icons/help.svg"
+import Dangerous from "@material-design-icons/svg/filled/dangerous.svg"
+import DeleteForever from "@material-design-icons/svg/filled/delete_forever.svg"
+import Description from "@material-design-icons/svg/filled/description.svg"
+import DNS from "@material-design-icons/svg/filled/dns.svg"
+import Edit from "@material-design-icons/svg/filled/edit.svg"
+import Error from "@material-design-icons/svg/filled/dangerous.svg"
+import ErrorOutline from "@material-design-icons/svg/outlined/error_outline.svg"
+import ExitToApp from "@material-design-icons/svg/outlined/exit_to_app.svg"
+import ExpandLess from "@material-design-icons/svg/outlined/expand_less.svg"
+import ExpandMore from "@material-design-icons/svg/outlined/expand_more.svg"
+import FilterAlt from "@material-design-icons/svg/filled/filter_alt.svg"
+import Forum from "@material-design-icons/svg/filled/forum.svg"
+import Help from "@material-design-icons/svg/filled/help.svg"
 import Home from "./icons/home_sharp.svg"
-import Info from "./icons/info.svg"
-import InsertComment from "./icons/insert_comment.svg"
-import ManageAccounts from "./icons/manage_accounts.svg"
+import Info from "@material-design-icons/svg/filled/info.svg"
+import Comment from "@material-design-icons/svg/filled/comment.svg"
+import ManageAccounts from "@material-design-icons/svg/filled/manage_accounts.svg"
 import MonitorHeart from '@material-design-icons/svg/outlined/monitor_heart.svg'
-import MoreVert from "./icons/more_vert.svg"
-import OpenInBrowser from "./icons/open_in_browser.svg"
-import OpenInNew from "./icons/open_in_new.svg"
+import MoreVert from "@material-design-icons/svg/outlined/more_vert.svg"
+import OpenInBrowser from "@material-design-icons/svg/outlined/open_in_browser.svg"
+import OpenInNew from "@material-design-icons/svg/outlined/open_in_new.svg"
 import Place from "./icons/place.svg"
-import Success from "./icons/check_box.svg"
-import Search from "./icons/search.svg"
+import Success from "@material-design-icons/svg/filled/check_box.svg"
+import Search from "@material-design-icons/svg/outlined/search.svg"
 import SeverityLow from "./icons/juno_severity_low.svg"
 import SeverityMedium from "./icons/juno_severity_medium.svg"
 import SeverityHigh from "./icons/juno_severity_high.svg"
 import SeverityCritical from "./icons/juno_severity_critical.svg"
-import Warning from "./icons/warning.svg"
-import Widgets from "./icons/widgets.svg"
+import Warning from "@material-design-icons/svg/filled/warning.svg"
+import Widgets from "@material-design-icons/svg/filled/widgets.svg"
 
 /**
 Generic Icon component.
@@ -90,6 +90,7 @@ export const knownIcons = [
   "chevronLeft",
   "chevronRight",
   "close",
+  "comment",
   "contentCopy",
   "danger",
   "dangerous",
@@ -108,7 +109,6 @@ export const knownIcons = [
   "help",
   "home",
   "info",
-  "insertComment",
   "manageAccounts",
   "monitorHeart",
   "moreVert",
@@ -134,6 +134,7 @@ const getColoredSizedIcon = ({
   ...iconProps
 }) => {
   const iconClass = `juno-icon juno-icon-${icon} jn-inline-block jn-fill-current ${color} ${iconClassName}`
+
   switch (icon) {
     case "accountCircle":
       return (
@@ -255,6 +256,18 @@ const getColoredSizedIcon = ({
           {...iconProps}
         />
       )
+      case "comment":
+        return (
+          <Comment
+            width={size}
+            height={size}
+            className={iconClass}
+            alt="comment"
+            title={title ? title : "Comment"}
+            role="img"
+            {...iconProps}
+          />
+        )
     case "contentCopy":
       return (
         <ContentCopy
@@ -455,18 +468,6 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="info"
           title={title ? title : "Info"}
-          role="img"
-          {...iconProps}
-        />
-      )
-    case "insertComment":
-      return (
-        <InsertComment
-          width={size}
-          height={size}
-          className={iconClass}
-          alt="insert comment"
-          title={title ? title : "Insert comment"}
           role="img"
           {...iconProps}
         />

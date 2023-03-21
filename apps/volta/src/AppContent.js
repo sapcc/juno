@@ -14,23 +14,24 @@ import CertificateList from "./components/CertificateList"
 const AppContent = () => {
   const addMessage = useMessageStore((state) => state.addMessage)
   const endpoint = useStore(useCallback((state) => state.endpoint))
-  const oidc = useStore(useCallback((state) => state.oidc))
+  const authData = useStore(useCallback((state) => state.authData))
+  const login = useStore(useCallback((state) => state.login))
   const disabledCAs = useStore(useCallback((state) => state.disabledCAs))
   let [searchParams] = useSearchParams()
 
   // set an error message when oidc fails
   useEffect(() => {
-    if (oidc?.error) {
+    if (authData?.error) {
       addMessage({
         variant: "error",
-        text: parseError(oidc?.error),
+        text: parseError(authData?.error),
       })
     }
-  }, [oidc?.error])
+  }, [authData?.error])
 
   // fetch the CAs
   // pass disabled cas to just fetch the ones that should be displayed
-  const cas = getCAs(oidc?.auth?.id_token, endpoint, disabledCAs)
+  const cas = getCAs(authData?.auth?.JWT, endpoint, disabledCAs)
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   // TODO think about to add the message error with an onError callback directly on getCAs
@@ -43,7 +44,7 @@ const AppContent = () => {
     }
   }, [cas?.error])
 
-  // find ca given per param in the url and match with the cas displayed
+  // find ca given per param in the url
   const selectedCA = useMemo(() => {
     if (cas?.data?.length > 0) {
       const index = cas?.data.findIndex((e) => e.name == searchParams.get("ca"))
@@ -54,10 +55,22 @@ const AppContent = () => {
     return null
   }, [cas, searchParams.get("ca")])
 
+  const displayCAs = useMemo(() => {
+    if (!cas?.data) return []
+    if (!Array.isArray(disabledCAs)) return cas
+    // return just the CAs that should be displayed
+    return cas?.data?.filter(
+      (ca) => !disabledCAs.some((caName) => ca.name === caName)
+    )
+  }, [cas?.data, disabledCAs])
+
   return (
     <CustomAppShell>
-      {oidc?.auth?.error || !oidc?.loggedIn ? (
-        <WellcomeView loginCallback={oidc?.login} />
+      {authData?.auth?.error || !authData?.loggedIn ? (
+        <WellcomeView
+          loginCallback={login}
+          isProcessing={authData.isProcessing}
+        />
       ) : (
         <>
           {selectedCA ? (
@@ -69,7 +82,7 @@ const AppContent = () => {
               <CertificateList ca={selectedCA} />
             </>
           ) : (
-            <CAsList cas={cas?.data} isLoading={cas?.isLoading} />
+            <CAsList cas={displayCAs} isLoading={cas?.isLoading} />
           )}
         </>
       )}

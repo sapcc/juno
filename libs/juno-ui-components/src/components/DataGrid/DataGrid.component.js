@@ -36,17 +36,21 @@ const DataGridContext = React.createContext()
 export const useDataGridContext = () => React.useContext(DataGridContext)
 
 // TODO: allow for passing in props addItems, addItemsLabel, search, etc.:
+/** The DataGrid component is the main way to display lists of items that have a bunch of metadata that you want to display.
+ */
 export const DataGrid = ({
 	columns,
 	columnMaxSize,
 	columnMinSize,
 	minContentColumns,
 	gridColumnTemplate,
+	cellVerticalAlignment,
 	className,
 	children,
 	...props
 }) => {
 	const dataGridConf = {
+		cellVerticalAlignment: cellVerticalAlignment
 		// selectable: selectable
 	}
 	return (
@@ -73,6 +77,9 @@ DataGrid.propTypes = {
 	minContentColumns: PropTypes.arrayOf(PropTypes.number),
 	/** Set the grid column template in CSS grid 'grid-template-columns' notation. If this prop is passed, all other template props (columns, columnMaxSize, columnMinSize, minContentColumns) are ignored */
 	gridColumnTemplate: PropTypes.string,
+	/** Set the vertical alignment for all GridCells. Default: center. PLEASE NOTE: the center alignment is achieved by using a flexbox column layout, 
+	 * which means that all child elements of the cell will be stacked vertically. To avoid this, wrap the elements in their own div */
+	cellVerticalAlignment: PropTypes.oneOf(["center", "top"]),
 	/** Children to render in the DataGrid */
 	children: PropTypes.node,
 	/** Add a class name */
@@ -85,6 +92,7 @@ DataGrid.defaultProps = {
 	columnMinSize: "0px",
 	minContentColumns: undefined,
 	gridColumnTemplate: undefined,
+	cellVerticalAlignment: "center",
 	className: "",
 	children: null,
 }

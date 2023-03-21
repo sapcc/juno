@@ -1,4 +1,16 @@
 import { create } from "zustand"
+import { devtools } from 'zustand/middleware'
+
+const createUserActivitySlice = (set, get) => ({
+  userActivity: {
+    isActive: true,
+    setIsActive: (activity) => {
+      set((state) => ({
+        userActivity: { ...state.userActivity, isActive: activity },
+      }))
+    },
+  },
+})
 
 const createAlertsSlice = (set, get) => ({
   alerts: {
@@ -29,11 +41,29 @@ const createAlertsSlice = (set, get) => ({
       set((state) => ({ alerts: { ...state.alerts, isUpdating: value } })),
   },
 })
-// global zustand store. See how this works here: https://github.com/pmndrs/zustand
-const useStore = create((set, get) => ({
-  ...createAlertsSlice(set, get),
 
+const createFiltersSlice = (set, get) => ({
+  filters: {
+    keys: [],
+    activeFilters: [],
+
+    setKeys: (keys) =>
+      set((state) => {
+        return {
+          filters: {
+            ...state.filters,
+            keys
+          },
+        }
+      }),
+  },
+})
+
+const useStore = create(devtools((set, get) => ({
+  ...createAlertsSlice(set, get),
+  ...createUserActivitySlice(set, get),
+  ...createFiltersSlice(set, get),
   urlStateKey: "supernova",
-}))
+})))
 
 export default useStore

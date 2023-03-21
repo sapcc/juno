@@ -4,12 +4,20 @@ import { render, act, waitFor } from "@testing-library/react"
 // https://reactjsexample.com/an-extension-of-dom-testing-library-to-provide-hooks-into-the-shadow-dom/
 import { screen } from "shadow-dom-testing-library"
 import App from "./App"
+import { oidcSession } from "oauth"
 
-// const bc = {
-//   close: jest.fn(),
-//   postMessage: jest.fn(),
-// }
-// globalThis.BroadcastChannel = jest.fn().mockImplementation(() => bc)
+jest.mock("oauth")
+oidcSession.mockImplementation((props = {}) => {
+  if (props?.onUpdate) {
+    props.onUpdate({
+      isProcessing: false,
+      loggedIn: true,
+      auth: { JWT: "ID_TOKEN", raw: {}, parsed: {} },
+      error: null,
+    })
+  }
+  return { login: jest.fn(), logout: jest.fn() }
+})
 
 jest.mock("communicator", () => {
   return {
@@ -41,4 +49,5 @@ test("renders app", async () => {
   await act(() => render(<App />))
 
   expect(spy).toHaveBeenCalled()
+  expect(oidcSession).toHaveBeenCalled()
 })

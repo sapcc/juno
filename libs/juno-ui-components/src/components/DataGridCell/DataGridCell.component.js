@@ -1,16 +1,24 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const cellBaseStyles = `
-	jn-px-5
-	jn-py-3
-	jn-border-b
-	jn-border-theme-background-lvl-2
-	jn-flex
-	jn-flex-col
-	jn-justify-center
-	jn-h-full
-`
+import { useDataGridContext } from "../DataGrid/DataGrid.component.js"
+
+const cellBaseStyles = (nowrap, cellVerticalAlignment) => {
+	return `
+		${nowrap ? 'jn-whitespace-nowrap' : '' }
+		${cellVerticalAlignment === 'center' ? `
+				jn-justify-center
+				jn-flex
+				jn-flex-col		
+			` : '' 
+		}
+		jn-px-5
+		jn-py-3
+		jn-border-b
+		jn-border-theme-background-lvl-2
+		jn-h-full
+	`
+}
 
 const cellCustomStyles = (colSpan) => {
 	let styles
@@ -20,12 +28,6 @@ const cellCustomStyles = (colSpan) => {
 	return styles
 }
 
-const innerWrapperStyles = (nowrap) => {
-	return `
-		${nowrap ? 'jn-whitespace-nowrap' : '' }
-	`
-}
-
 export const DataGridCell = ({
 	colSpan,
 	nowrap,
@@ -33,16 +35,17 @@ export const DataGridCell = ({
 	children,
 	...props
 }) => {
+
+	const dataGridContext = useDataGridContext() || {}
+	const cellVerticalAlignment = dataGridContext.cellVerticalAlignment
+
 	return (
 		<div 
-			className={`juno-datagrid-cell ${cellBaseStyles} ${className}`} 
+			className={`juno-datagrid-cell ${cellBaseStyles(nowrap, cellVerticalAlignment)} ${className}`} 
 			style={cellCustomStyles(colSpan)}
 			role="gridcell"
 			{...props}>
-			{/* The div wrapper is important, otherwise the flexbox layout of the cell causes unexpected behaviour if you don't know about it. With the cell content behaves as expected */}
-			<div className={`juno-datagrid-cell-inner-wrapper ${innerWrapperStyles(nowrap)}`}>
 				{children}
-			</div>
 		</div>
 	)
 }

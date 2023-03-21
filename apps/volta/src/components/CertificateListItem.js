@@ -46,7 +46,7 @@ whitespace-nowrap
 
 const CertificateListItem = ({ item, ca }) => {
   const addMessage = useMessageStore((state) => state.addMessage)
-  const oidc = useStore(useCallback((state) => state.oidc))
+  const authData = useStore(useCallback((state) => state.authData))
   const endpoint = useStore(useCallback((state) => state.endpoint))
 
   const queryClient = useQueryClient()
@@ -90,7 +90,7 @@ const CertificateListItem = ({ item, ca }) => {
       {
         endpoint: endpoint,
         ca: ca.name,
-        bearerToken: oidc?.auth?.id_token,
+        bearerToken: authData?.auth?.JWT,
         serial: item.serial,
       },
       {

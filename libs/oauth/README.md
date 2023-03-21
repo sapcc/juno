@@ -1,68 +1,72 @@
-# OpenID Connect (oauth) Lib
+# OpenID Connect Lib (oauth)
 
-This lib implements a hook to get the authentication token via OpenID Connect. It handles the redirect to the OpenID provider as well as processing the response from the same.
+The principle of this lib is as follows. Immediately after loading this lib, it evaluates the URL. It looks for state param in the hash or search. If state is found, then the value of this parameter is used as a key to find the corresponding stored state properties in sessionStorage. If the saved state exists, then it is the answer (oidc response) from the ID provider to the previously made request (oidc request), and the lib tries to evaluate the result.
 
-It follows the implicit flow of the OIDC specification. The hook expects two parameters "issuerURL" and "clientID". Calling the "login" functions redirects the user to the Open ID Provider and after a successful login, the user ends up back at the last visited URL. Calling the "logout" functions resets the current session.
+## Evaluation of the response
 
-React ONLY!!!
-Web ONLY!!!
+The response contains either the `id_token` (in the hash of the URL) directly in the case of **implicit flow** or the `code` (in the search of the URL) in the case of **code flow**. Both flows return the previously created state. If a saved state is found for the state parameter, the URL is evaluated. In the case of the implicit flow, the `id_token` parameter already contains all the data and only needs to be decoded. In the case of the code flow, another POST call must be made using the **PKCE** method to the token endpoint of the ID provider, which, if successful, sends back the id_token and the refresh_token. This refresh_token is used to automatically refresh the id_token if refresh is set to true.
+
+## Redirect to the ID provider
+
+The request to the ID provider proceeds as follows. Before the actual request is made, the Lib creates state properties and saves them in the session storage under a hash as a key. This state contains all the necessary information that is required for the request to the ID provider and the evaluation of the response. The hash key is sent as the value of the state parameter in the request to the ID provider. Next, the lib constructs the request URL and redirects the user. After successful login, the ID provider redirects the user (the response contains the state key). Since the response is a redirect, the website is reloaded and with it this lib and the process as described in **Evaluation of the response** is triggered.
 
 ## Usage
 
-Explicit
+Vanilla
 
 ```js
-import { useOidcAuth } from "oauth"
+import { oidcSession } from "oauth"
 
-const App = () => {
-  const { auth, login, logout, error, isProcessing, loggedIn } = useOidcAuth({
-    issuerURL: "ISSUER_URL",
-    clientID: "CLIENT_ID",
-  })
-
-  return (
-    <div>
-      {loggedIn ? (
-        <div>
-          <h1>Hi {auth.first_name}</h1>
-          <p>{auth.full_name}</p>
-          <p>{auth.expiresAt}</p>
-          <pre>{auth.id_token}</pre>
-          <button onClick={logout}>Logout</button>
-        </div>
-      ) : (
-        <button onClick={login}>Login</button>
-      )}
-    </div>
-  )
-}
+const oidc = oidcSession({
+  issuerURL: props.issuerURL,
+  clientID: props.clientID,
+  initialLogin: props.initialLogin,
+  refresh: true,
+  flowType: "code",
+  onUpdate: (authData) => {
+    const { auth, isProcessing, loggedIn, error } = authData
+    console.log("auth data updated", { auth, isProcessing, loggedIn, error })
+  },
+})
+const { login, logout, refresh, currentState } = oidc
 ```
 
-Implicit
+React
 
 ```js
-import { useOidcAuth } from "oauth"
+import { oidcSession } from "oauth"
 
-const App = () => {
-  const { auth, logout, login, isProcessing, error, loggedIn } = useOidcAuth({
-    issuerURL: "ISSUER_URL",
-    clientID: "CLIENT_ID",
-    initialLogin: true,
-  })
+const App = (props = {}) => {
+  const [authData, setAuthData] = React.useState()
+
+  const oidc = React.useMemo(
+    () =>
+      oidcSession({
+        issuerURL: props.issuerURL,
+        clientID: props.clientID,
+        initialLogin: props.initialLogin,
+        refresh: true,
+        flowType: "code",
+        onUpdate: (authData) => {
+          setAuthData(authData)
+        },
+      }),
+    [setAuthData]
+  )
 
   return (
     <div>
-      {loggedIn ? (
+      {authData.loggedIn ? (
         <div>
-          <h1>Hi {auth.full_name}</h1>
-          <Button onClick={() => logout({ resetOIDCSession: true })}>
-            Logout
-          </Button>
+          <p>{authData.auth?.parsed?.fullName}</p>
+          <pre>{authData.auth?.JWT}</pre>
+          <pre>{authData.auth?.refreshToken}</pre>
+          <pre>{authData.auth?.raw}</pre>
+          <pre>{authData.auth?.parsed}</pre>
+          <button onClick={oidc.logout}>Logout</button>
         </div>
-      ) : isProcessing ? (
-        <span>Sign in...</span>
       ) : (
-        <Button onClick={login}>Login</Button>
+        <button onClick={oidc.login}>Login</button>
       )}
     </div>
   )
@@ -73,6 +77,8 @@ const App = () => {
 
 add oauth to dependencies in package.json
 
+in juno monorepo
+
 ```json
 
   "dependencies": {
@@ -81,37 +87,70 @@ add oauth to dependencies in package.json
 
 ```
 
-or via widget-loader
+outside juno
 
-```html
-<script
-  src="https://assets.juno.eu-nl-1.cloud.sap/apps/widget-loader@latest/build/app.js"
-  data-importmap-only="true"
-></script>
+```json
 
-<script type="module">
-  const { useOidcAuth } = await import("@juno/oauth")
-  // ...
-</script>
+  "dependencies": {
+    "oauth": "https://assets.juno.eu-nl-1.cloud.sap/libs/oauth@latest/package.tgz"
+  },
+
 ```
 
-## useOidcAuth
+## oidcSession(options) ⇒ <code>object</code>
 
-Executes the id token flow against the issuerURL with the clientID.
+Create a oidc session object
 
-- clientID, this information is stored in the OpenID provider.
-- issuerURL, This URL can usually be found at the endpoint https://PROVIDER_HOST/.well-known/openid-configuration.
-- initialLogin, boolean. If true, then the oidc flow is executed immediately.
+**Kind**: module function
 
-### Returns
+**options**
+| Param | Type | Description |
+| -------------------------------- | ------------------- | ---------------------------- |
+| issuerURL (required) | <code>string</code> | URL of the ID Provider |
+| clientID (required) | <code>string</code> | client id configured in ID Provider |
+| flowType (optional) | <code>string</code> | implicit or code (default) |
+| refresh (optional) | <code>boolean</code> | true or false (default) |
+| requestParams (optional) | <code>object</code> | additional parameters that are initially sent to the ID provider (oidc redirect) |
+| callbackURL (optional) | <code>string</code> | default callback URL is `window.location.origin` |
+| onUpdate (optional) | <code>function</code> | onUpdate should be specified. Otherwise you won't get the notification about login, logout or refresh |
 
-- auth, object which contains
-  - **id_token**, the bearer token to be used in API calls
-  - **first_name**
-  - **last_name**
-  - **full_name**
-  - **email**
-  - **expiresAt**, milliseconds since Epoch
-  - **expiresAtDate**, Date object
-- login, function
-- logout, function(resetOIDCSession:bool). If resetOIDCSession is true then the user is redirected to the OIDC logout page
+**returns**
+
+#### login() ⇒ <code>void</code>
+
+#### logout(options) ⇒ <code>void</code>
+
+**options**
+| Param | Type | Description |
+| -------------------------------- | ------------------- | ---------------------------- |
+| resetOIDCSession (optional) | <code>boolean</code> | resets the oidc session on ID provider |
+| silent | <code>boolean</code> | if true it uses a iframe to call the end_session_endpoint on ID Provider|
+
+#### refresh() ⇒ <code>void</code>
+
+#### currentState() ⇒ <code>object</code>
+
+## Auth Data
+
+```js
+{
+  auth: {
+    JWT: "ID_TOKEN",
+    refreshToken: "REFRESH_TOKEN", //only for code flow
+    raw: {/*...*/}, // decoded id_token
+    parsed: {
+      loginName: "USER_ID",
+      email: "EMAIL",
+      firstName: "USER_FIRST_NAME",
+      lastName: "USER_LAST_NAME,
+      fullName: "USER_FULL_NAME",
+      expiresAt: 1234567890, // javascript timestamp (epoch*1000),
+      expiresAtDate: Date, // javascript date object
+      groups: [/*...*/],
+    }
+  },
+  isProcessing: false, // true if oidc request started
+  loggedIn: true, // false if auth is null
+  error: null // not null if odic failed
+}
+```

@@ -64,9 +64,9 @@ describe("Badge", () => {
   })
 
   test("renders any available icon as passed", async () => {
-    render(<Badge icon="insertComment" />)
+    render(<Badge icon="comment" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
-    expect(screen.getByRole("img")).toHaveClass("juno-icon-insertComment")
+    expect(screen.getByRole("img")).toHaveClass("juno-icon-comment")
   })
 
   test("renders all props as passed", async () => {

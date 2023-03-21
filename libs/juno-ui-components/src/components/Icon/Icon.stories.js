@@ -241,7 +241,7 @@ Info.args = {
 export const Insert_Comment = Template.bind({})
 Insert_Comment.args = {
   ...Default.args,
-  icon: "insertComment",
+  icon: "comment",
 }
 
 export const Manage_Accounts = Template.bind({})
@@ -308,6 +308,12 @@ export const SeverityCritical = Template.bind({})
 SeverityCritical.args = {
   ...Default.args,
   icon: "severityCritical",
+}
+
+export const Success = Template.bind({})
+Success.args = {
+  ...Default.args,
+  icon: "success",
 }
 
 export const Warning = Template.bind({})

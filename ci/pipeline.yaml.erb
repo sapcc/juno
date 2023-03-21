@@ -18,6 +18,7 @@
     "supernova": { type: "app", path: "apps/supernova"},
     "url-state-provider": { type: "lib", path: "libs/url-state-provider"},
     "url-state-router": { type: "lib", path: "libs/url-state-router"},
+    "user-activity": { type: "app", path: "apps/user-activity"},
     "volta": { type: "app", path: "apps/volta"},
     "whois": { type: "app", path: "apps/whois"},
     "widget-loader": { type: "app", path: "apps/widget-loader"}
@@ -45,6 +46,16 @@ resources:
       uri: git@github.wdf.sap.corp:cc/secrets.git
       branch: "master"
       private_key: ((github-private-key/cc-secrets))
+
+  - name: greenhouse.git
+    type: git-proxy
+    webhook_token: bleep-bloop
+    check_every: 6h
+    source:
+      uri: https://github.wdf.sap.corp/cc/greenhouse.git
+      username: ((github-access-token/ccee-bot))
+      password: x-oauth-basic
+      branch: main
 
   <%# BASE IMAGE %>
   - name: base.image
@@ -409,6 +420,7 @@ jobs:
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))
           VAULT_SECRET_ID:    ((auth.secret_id))
+          
 
     ensure:
       put: qa-de-1.release          
@@ -586,9 +598,11 @@ jobs:
           - get: secrets.git
             params:
               depth: 100 
+          - get: greenhouse.git
+            trigger: true
 
       - task: deploy
-        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        file:  greenhouse.git/ci/tasks/helm-upgrade.yaml
         input_mapping:
           app.version: hosting.version
           helm-charts.git: juno.git
@@ -603,7 +617,6 @@ jobs:
           REGION: eu-nl-1
           CONTEXT: greenhouse-qa
           VALUES: local:globals
-          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
-          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))
           VAULT_SECRET_ID:    ((auth.secret_id))
+          KUBELOGON_TOKEN: ((greenhouse-qa/serviceaccount.token))

@@ -108,14 +108,23 @@ const PluginNav = () => {
           </Stack>
         ))}
 
-      <Stack direction="vertical" gap="3" alignment="center" className="mt-4 py-4 border-theme-background-lvl-1 border-t-2">
+      <Stack
+        direction="vertical"
+        gap="3"
+        alignment="center"
+        className="mt-4 py-4 border-theme-background-lvl-1 border-t-2"
+      >
         {auth?.loggedIn ? (
           <>
             <Avatar
-              url={auth.data?.avatarUrl.small}
-              userID={auth.data?.login_name || auth.data?.subject}
+              url={auth.data?.parsed?.avatarUrl.small}
+              userID={auth.data?.parsed?.loginName}
             />
-            <Button variant="subdued" size="small" onClick={() => auth?.logout()}>
+            <Button
+              variant="subdued"
+              size="small"
+              onClick={() => auth?.logout()}
+            >
               logout
             </Button>
           </>

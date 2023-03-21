@@ -3,10 +3,24 @@ import { render } from "@testing-library/react"
 // support shadow dom queries
 // https://reactjsexample.com/an-extension-of-dom-testing-library-to-provide-hooks-into-the-shadow-dom/
 import { screen } from "shadow-dom-testing-library"
-import App from "./App"
+import { oidcSession } from "oauth"
 
-import * as oauth from "oauth"
-const originUseOidcAuth = oauth.useOidcAuth
+jest.mock("oauth", () => {
+  return {
+    oidcSession: jest.fn((props = {}) => {
+      if (props?.onUpdate) {
+        props.onUpdate({
+          isProcessing: false,
+          loggedIn: false,
+          auth: null,
+          error: null,
+        })
+      }
+      return { login: jest.fn(), logout: jest.fn() }
+    }),
+  }
+})
+const App = require("./App").default
 
 // mock window location
 Object.defineProperty(window, "location", {
@@ -27,31 +41,50 @@ Object.defineProperty(window, "location", {
 
 describe("logged in", () => {
   beforeEach(() => {
-    oauth.useOidcAuth = jest.fn(() => ({
-      auth: null,
-      login: jest.fn(),
-      logout: jest.fn(),
-      loggedIn: true,
-      isProcessing: false,
-    }))
+    oidcSession.mockImplementation((props = {}) => {
+      if (props?.onUpdate) {
+        props.onUpdate({
+          isProcessing: false,
+          loggedIn: true,
+          auth: { JWT: "ID_TOKEN", raw: {}, parsed: {} },
+          error: null,
+        })
+      }
+      return { login: jest.fn(), logout: jest.fn() }
+    })
   })
 
-  test("renders app", async () => {
-    const { debug } = render(<App />)
-    // debug()
-    // do not redirect to openID provider
-    expect(window.location.replace).not.toHaveBeenCalled()
-    const text = await screen.queryAllByShadowText(/Converged Cloud/i)
-    expect(text.length > 0).toBe(true)
+  test("do not show welcome page", async () => {
+    await render(<App issuerurl={"https://sap.com"} clientid={"000000"} />)
+
+    let welcome = await screen.queryAllByShadowText(
+      /Wellcome to the Converged Cloud /i
+    )
+    expect(welcome.length > 0).toBe(false)
   })
 })
 
 describe("not logged in", () => {
-  beforeEach(() => (oauth.useOidcAuth = originUseOidcAuth))
+  beforeEach(() => {
+    oidcSession.mockImplementation((props = {}) => {
+      if (props?.onUpdate) {
+        props.onUpdate({
+          isProcessing: false,
+          loggedIn: false,
+          auth: null,
+          error: null,
+        })
+      }
+      return { login: jest.fn(), logout: jest.fn() }
+    })
+  })
 
-  test("should redirect to oidc provider", () => {
-    render(<App issuerurl={"https://sap.com"} clientid={"000000"} />)
-    // redirect to openID provider
-    expect(window.location.replace).toHaveBeenCalled()
+  test("should show welcome page", async () => {
+    await render(<App issuerurl={"https://sap.com"} clientid={"000000"} />)
+
+    let welcome = await screen.queryAllByShadowText(
+      /Wellcome to the Converged Cloud /i
+    )
+    expect(welcome.length > 0).toBe(true)
   })
 })
