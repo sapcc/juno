@@ -17,7 +17,7 @@
     "babel-jest": "^29.3.1",
     "communicator": "https://assets.juno.global.cloud.sap/libs/communicator@2.1.0/package.tgz",
     "custom-event-polyfill": "^1.0.7",
-    "esbuild": "^0.17.11",
+    "esbuild": "^0.17.12",
     "esbuild-sass-plugin": "^2.6.0",
     "interweave": "^13.0.0",
     "postcss-minify": "^1.1.0",
@@ -69,8 +69,5 @@
       "type": "optional",
       "description": "trigger login process automatically on load press. Possible values are 'true' or 'false' (default)"
     }
-  },
-  "dependencies": {
-    "esbuild": "^0.17.12"
   }
 }
