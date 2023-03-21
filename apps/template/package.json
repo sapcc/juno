@@ -9,7 +9,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@svgr/webpack": "^6.2.1",
-    "@tanstack/react-query": "^4.24.10",
+    "@tanstack/react-query": "^4.28.0",
     "@testing-library/dom": "^8.19.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -58,7 +58,7 @@
     "production": "PORT=$APP_PORT webpack serve --mode production"
   },
   "peerDependencies": {
-    "@tanstack/react-query": "^4.24.10",
+    "@tanstack/react-query": "^4.28.0",
     "custom-event-polyfill": "^1.0.7",
     "juno-ui-components": "1.2.3",
     "luxon": "^2.3.0",
