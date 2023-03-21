@@ -228,7 +228,7 @@ const oidcSession = (params) => {
     } catch (error) {
       update({
         auth: null,
-        error: error?.toString(),
+        error: error.toString(),
         loggedIn: false,
         isProcessing: false,
       })

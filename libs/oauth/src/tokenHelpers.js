@@ -9,8 +9,13 @@ export function decodeIDToken(idToken) {
   return decodeBase64Json(tokenData)
 }
 
-const capitalize = (str) =>
-  str ? str.charAt(0).toUpperCase() + str.slice(1) : ""
+const capitalize = (str) => {  
+  if(!str || str.length===0) return ""
+
+  let result = str.charAt(0).toUpperCase()
+  if(str.length>1) result += str.slice(1)
+  return result
+}
 /**
  *
  * @param {object} tokenData
@@ -18,9 +23,22 @@ const capitalize = (str) =>
  */
 export function parseIdTokenData(tokenData) {
   const email = tokenData.mail || tokenData.email || ""
-  let [_, first, last] = email.match(/^([^\.]+)\.([^\.]+)@.*/)
-  let firstName = tokenData.first_name || capitalize(first)
-  let lastName = tokenData.last_name || capitalize(last)
+  let firstName = tokenData.first_name
+  let lastName = tokenData.last_name
+  
+  try{
+    if(!firstName && !lastName) {
+      const [_,emailName] = email.match(/^(.+)@.*$/)
+      const emailParts = emailName.split(".")
+      const first = emailParts.shift()
+      firstName = capitalize(first)
+      lastName = emailParts.map((t) => capitalize(t)).join(" ")
+
+
+    }
+  }catch(e) {
+    console.info("(OAUTH) could not determine first and last names")
+  }
   return {
     loginName: tokenData.login_name || tokenData.name || tokenData.sub,
     email,

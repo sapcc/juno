@@ -28,7 +28,7 @@ const green = "\x1b[32m%s\x1b[0m"
 const yellow = "\x1b[33m%s\x1b[0m"
 
 const build = async () => {
-  // delete build folder
+  // delete build folder and re-create it as an empty folder
   await fs.rm(outdir, { recursive: true, force: true })
   await fs.mkdir(outdir, { recursive: true })
 
@@ -42,17 +42,24 @@ const build = async () => {
     platform: "browser",
     // built-in loaders: js, jsx, ts, tsx, css, json, text, base64, dataurl, file, binary
     loader: { ".js": "jsx" },
-    //sourcemap: false,
     sourcemap: !isProduction,
+    // here we exclude package from bundle which are defined in peerDependencies
+    // our importmap generator uses also the peerDependencies to create the importmap
+    // it means all packages defined in peerDependencies are in browser available via the importmap 
     external:
       isProduction && !IGNORE_EXTERNALS
         ? Object.keys(pkg.peerDependencies || {})
         : [],
     entryPoints: [pkg.source],
     outdir,
+    // this step is important for performance reason. 
+    // the main file (index.js) contains minimal code needed to 
+    // load the app via dynamic import (splitting: true)
     splitting: true,
+    // we suport only esm!
     format: "esm",
     plugins: [
+      // minimal plugin to log the recompiling process.
       {
         name: "start/end",
         setup(build) {
@@ -60,8 +67,8 @@ const build = async () => {
           build.onEnd((result) => console.log(green, "Done!"))
         },
       },
-      // for all sass, scss and css files starting with .inline use the css-text type
-      // This means that all .inline.(s)css files are loaded as text
+      // for all sass, scss and css files the css-text type
+      // This means that all .(s)css files are loaded as text
       sassPlugin({
         filter: /.*\.(s[ac]ss|css)$/,
         type: "css-text",
@@ -76,6 +83,7 @@ const build = async () => {
     ],
   })
 
+  // watch and serve
   if (watch || serve) {
     if (watch) await ctx.watch()
     if (serve) {
