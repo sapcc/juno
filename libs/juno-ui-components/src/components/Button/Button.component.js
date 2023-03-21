@@ -33,7 +33,7 @@ const btnDefaultSize = `
   jn-text-base
   jn-leading-6
   jn-pl-[0.5625rem]  
-  jn-pr-[0.625rem]
+  jn-pr-[0.5625rem]
   jn-py-[0.375rem]
 `
 
@@ -136,20 +136,21 @@ export const Button = React.forwardRef(
     },
     ref
   ) => {
+    const theVariant = variant || "default"
     const titleValue = title || label || ""
 
     const buttonIcon = progress ? (
       <Spinner
         size={spinnerSize(size)}
-        color={`${spinnerColorClass(variant, disabled)}`}
+        color={`${spinnerColorClass(theVariant, disabled)}`}
       />
     ) : icon ? (
       <Icon
         icon={icon}
         className={`juno-button-icon ${
-          label || children ? iconClasses(size) : null
+          label || children ? iconClasses(size) : ""
         } `}
-        size={size ? iconSize(size) : null}
+        size={size ? iconSize(size) : ""}
       />
     ) : null
 
@@ -163,7 +164,7 @@ export const Button = React.forwardRef(
     const button = (
       <button
         type="button"
-        className={`juno-button juno-button-${variant} juno-button-${size}-size ${btnBase} ${sizeClass(
+        className={`juno-button juno-button-${theVariant} juno-button-${size}-size ${btnBase} ${sizeClass(
           size
         )} ${progressClass(progress)} ${className}`}
         disabled={disabled}
@@ -181,7 +182,7 @@ export const Button = React.forwardRef(
       <a
         href={href}
         role="button"
-        className={`juno-button juno-button-${variant} juno-button-${size}-size ${btnBase} ${sizeClass(
+        className={`juno-button juno-button-${theVariant} juno-button-${size}-size ${btnBase} ${sizeClass(
           size
         )} ${progressClass(progress)} ${className}`}
         disabled={disabled}
@@ -227,7 +228,7 @@ Button.propTypes = {
 }
 
 Button.defaultProps = {
-  variant: "default",
+  variant: undefined,
   size: "default",
   disabled: null,
   icon: null,
