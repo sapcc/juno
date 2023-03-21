@@ -27,23 +27,6 @@ if (isProduction) postcssPlugins.push(require("postcss-minify"))
 const green = "\x1b[32m%s\x1b[0m"
 const yellow = "\x1b[33m%s\x1b[0m"
 
-// shared config
-const config = {
-  bundle: true,
-  minify: isProduction,
-  // target: ["es2020"],
-  target: ["es2020"], //["chrome64", "firefox67", "safari11.1", "edge79"],
-  format: "esm",
-  platform: "browser",
-  // built-in loaders: js, jsx, ts, tsx, css, json, text, base64, dataurl, file, binary
-  loader: { ".js": "jsx" },
-  sourcemap: isProduction ? false : "both",
-  external:
-    isProduction && !IGNORE_EXTERNALS
-      ? Object.keys(pkg.peerDependencies || {})
-      : [],
-}
-
 const build = async () => {
   // delete build folder
   try {
@@ -53,23 +36,21 @@ const build = async () => {
     console.log("WARNING: EMPTY OUTPUT DIR", e.message)
   }
 
-  // build web workers
-  try {
-    const workerFiles = fs.readdirSync("src/workers")
-    for (let f of workerFiles) {
-      await esbuild.build({
-        ...config,
-        entryPoints: [`src/workers/${f}`],
-        outfile: `${outdir}/workers/${f}`,
-      })
-    }
-  } catch (e) {
-    console.log("WARNING: BUILD WEB WORKERS", e.message)
-  }
-
   // build app
   let ctx = await esbuild.context({
-    ...config,
+    bundle: true,
+    minify: isProduction,
+    // target: ["es2020"],
+    target: ["es2020"], //["chrome64", "firefox67", "safari11.1", "edge79"],
+    format: "esm",
+    platform: "browser",
+    // built-in loaders: js, jsx, ts, tsx, css, json, text, base64, dataurl, file, binary
+    loader: { ".js": "jsx" },
+    sourcemap: isProduction ? false : "both",
+    external:
+      isProduction && !IGNORE_EXTERNALS
+        ? Object.keys(pkg.peerDependencies || {})
+        : [],
     entryPoints: [pkg.source],
     outdir,
     splitting: true,
@@ -99,7 +80,7 @@ const build = async () => {
   })
 
   if (watch) await ctx.watch()
-  else ctx.rebuild()
+  else await ctx.rebuild()
 
   if (serve) {
     // generate app props based on package.json and secretProps.json

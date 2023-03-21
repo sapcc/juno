@@ -5894,7 +5894,6 @@ commondir@^1.0.1:
 
 "communicator@https://assets.juno.global.cloud.sap/libs/communicator@2.1.0/package.tgz":
   version "2.1.0"
-  uid cbd0eba8968024de0d2b44ca4985ba80acc4dbed
   resolved "https://assets.juno.global.cloud.sap/libs/communicator@2.1.0/package.tgz#cbd0eba8968024de0d2b44ca4985ba80acc4dbed"
 
 component-emitter@^1.2.1:
@@ -7086,7 +7085,7 @@ esbuild-sass-plugin@^2.6.0:
     resolve "^1.22.1"
     sass "^1.59.3"
 
-esbuild@^0.17.11, esbuild@^0.17.6, esbuild@^0.17.8:
+esbuild@^0.17.11, esbuild@^0.17.12, esbuild@^0.17.6, esbuild@^0.17.8:
   version "0.17.12"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.17.12.tgz#2ad7523bf1bc01881e9d904bc04e693bd3bdcf2f"
   integrity sha512-bX/zHl7Gn2CpQwcMtRogTTBf9l1nl+H6R8nUbjk+RuKqAE3+8FDulLA+pHvX7aA7Xe07Iwa+CWvy9I8Y2qqPKQ==
@@ -10271,7 +10270,6 @@ junk@^3.1.0:
 
 "juno-ui-components@https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.2.3/package.tgz":
   version "1.2.3"
-  uid "07d8c8c022ff67fb7daf8d6831415735e78bfe6f"
   resolved "https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.2.3/package.tgz#07d8c8c022ff67fb7daf8d6831415735e78bfe6f"
 
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
@@ -10904,7 +10902,6 @@ merge2@^1.2.3, merge2@^1.3.0, merge2@^1.4.1:
 
 "messages-provider@https://assets.juno.global.cloud.sap/libs/messages-provider@0.1.4/package.tgz":
   version "0.1.4"
-  uid "6169a66df7eec80aced464514089e4945f620ea6"
   resolved "https://assets.juno.global.cloud.sap/libs/messages-provider@0.1.4/package.tgz#6169a66df7eec80aced464514089e4945f620ea6"
 
 methods@~1.1.2:
@@ -11716,7 +11713,6 @@ oauth-pkce@^0.0.6:
 
 "oauth@https://assets.juno.global.cloud.sap/libs/oauth@1.0.0/package.tgz":
   version "1.0.0"
-  uid cdb17af8ba6e75930891dde7a2546032c4313122
   resolved "https://assets.juno.global.cloud.sap/libs/oauth@1.0.0/package.tgz#cdb17af8ba6e75930891dde7a2546032c4313122"
 
 object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
@@ -15551,7 +15547,6 @@ url-parse@^1.5.3:
 
 "url-state-provider@https://assets.juno.global.cloud.sap/libs/url-state-provider@1.0.0/package.tgz":
   version "1.0.0"
-  uid "1b6563c9cc9f27f55c358c8a86f389c1b053aef2"
   resolved "https://assets.juno.global.cloud.sap/libs/url-state-provider@1.0.0/package.tgz#1b6563c9cc9f27f55c358c8a86f389c1b053aef2"
 
 "url-state-router@https://assets.juno.global.cloud.sap/libs/url-state-router@1.0.0/package.tgz":
