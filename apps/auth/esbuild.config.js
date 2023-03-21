@@ -76,7 +76,10 @@ const build = async () => {
   })
 
   if (watch) await ctx.watch()
-  else await ctx.rebuild()
+  else {
+    await ctx.rebuild()
+    await ctx.dispose()
+  }
 
   if (serve) {
     // generate app props based on package.json and secretProps.json
