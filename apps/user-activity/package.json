@@ -44,7 +44,8 @@
     "util": "^0.12.4",
     "webpack": "^5.75.0",
     "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.7.4"
+    "webpack-dev-server": "^4.7.4",
+    "communicator": "https://assets.juno.global.cloud.sap/libs/communicator@2.1.0/package.tgz"
   },
   "scripts": {
     "start": "PORT=$APP_PORT webpack serve --mode development --hot",
@@ -53,6 +54,7 @@
     "production": "PORT=$APP_PORT webpack serve --mode production"
   },
   "peerDependencies": {
+    "communicator": "2.1.0",
     "custom-event-polyfill": "^1.0.7",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

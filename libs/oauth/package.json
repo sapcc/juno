@@ -7,8 +7,7 @@
   "module": "build/index.js",
   "license": "Apache-2.0",
   "peerDependencies": {
-    "prop-types": "*",
-    "react": "*"
+    "oauth-pkce": "^0.0.6"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",

@@ -6492,10 +6492,10 @@ commondir@^1.0.1:
   resolved "https://registry.yarnpkg.com/commondir/-/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
   integrity sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==
 
-"communicator@https://assets.juno.global.cloud.sap/libs/communicator@latest/package.tgz":
+"communicator@https://assets.juno.global.cloud.sap/libs/communicator@2.1.0/package.tgz":
   version "2.1.0"
-  uid "8ef6b25f0f94923ebfbb6587150bd5cea55076a0"
-  resolved "https://assets.juno.global.cloud.sap/libs/communicator@latest/package.tgz#8ef6b25f0f94923ebfbb6587150bd5cea55076a0"
+  uid cbd0eba8968024de0d2b44ca4985ba80acc4dbed
+  resolved "https://assets.juno.global.cloud.sap/libs/communicator@2.1.0/package.tgz#cbd0eba8968024de0d2b44ca4985ba80acc4dbed"
 
 component-emitter@^1.2.1:
   version "1.3.0"
@@ -11358,10 +11358,10 @@ junk@^3.1.0:
   resolved "https://registry.yarnpkg.com/junk/-/junk-3.1.0.tgz#31499098d902b7e98c5d9b9c80f43457a88abfa1"
   integrity sha512-pBxcB3LFc8QVgdggvZWyeys+hnrNWg4OcZIU/1X59k5jQdLBlCsYGRQaz234SqoRLTCgMH00fY0xRJH+F9METQ==
 
-"juno-ui-components@https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz":
-  version "1.1.9"
-  uid "99a74136c69bf86636a56a579cb9abd2c2e24cb4"
-  resolved "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz#99a74136c69bf86636a56a579cb9abd2c2e24cb4"
+"juno-ui-components@https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.2.3/package.tgz":
+  version "1.2.3"
+  uid "07d8c8c022ff67fb7daf8d6831415735e78bfe6f"
+  resolved "https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.2.3/package.tgz#07d8c8c022ff67fb7daf8d6831415735e78bfe6f"
 
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
   version "3.2.2"
@@ -12083,10 +12083,10 @@ meros@1.1.4:
   resolved "https://registry.yarnpkg.com/meros/-/meros-1.1.4.tgz#c17994d3133db8b23807f62bec7f0cb276cfd948"
   integrity sha512-E9ZXfK9iQfG9s73ars9qvvvbSIkJZF5yOo9j4tcwM5tN8mUKfj/EKN5PzOr3ZH0y5wL7dLAHw3RVEfpQV9Q7VQ==
 
-"messages-provider@https://assets.juno.global.cloud.sap/libs/messages-provider@latest/package.tgz":
+"messages-provider@https://assets.juno.global.cloud.sap/libs/messages-provider@0.1.4/package.tgz":
   version "0.1.4"
-  uid "22687acd34d902954ecbb78027bf56caf58fdb98"
-  resolved "https://assets.juno.global.cloud.sap/libs/messages-provider@latest/package.tgz#22687acd34d902954ecbb78027bf56caf58fdb98"
+  uid "69934808db9f33725e198064276f24dc3766e583"
+  resolved "https://assets.juno.global.cloud.sap/libs/messages-provider@0.1.4/package.tgz#69934808db9f33725e198064276f24dc3766e583"
 
 methods@~1.1.2:
   version "1.1.2"
@@ -12998,10 +12998,10 @@ oauth-pkce@^0.0.6:
   resolved "https://registry.yarnpkg.com/oauth-pkce/-/oauth-pkce-0.0.6.tgz#9ac452bc7357c755bc7946ebb0e81ba76dc56b2a"
   integrity sha512-hLLZvwJBAo1QHzPOvsM/QtDj/b9MBgQx/TH4kA/LPqFgWtICo4m7gtZUZARBiQ0I8lSKQRN8BhGTclVv8D45gg==
 
-"oauth@https://assets.juno.global.cloud.sap/libs/oauth@latest/package.tgz":
-  version "0.1.1"
-  uid "856ac87007277ad996bf2d7dc22ed13bf2ad9f91"
-  resolved "https://assets.juno.global.cloud.sap/libs/oauth@latest/package.tgz#856ac87007277ad996bf2d7dc22ed13bf2ad9f91"
+"oauth@https://assets.juno.global.cloud.sap/libs/oauth@1.0.0/package.tgz":
+  version "1.0.0"
+  uid dff3c8bb2b9134119e9a509fb02c658210f86ff3
+  resolved "https://assets.juno.global.cloud.sap/libs/oauth@1.0.0/package.tgz#dff3c8bb2b9134119e9a509fb02c658210f86ff3"
 
 object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
@@ -13726,10 +13726,10 @@ pnp-webpack-plugin@1.6.4:
   dependencies:
     ts-pnp "^1.1.6"
 
-"policy-engine@https://assets.juno.global.cloud.sap/libs/policy-engine@latest/package.tgz":
+"policy-engine@https://assets.juno.global.cloud.sap/libs/policy-engine@2.0.0/package.tgz":
   version "2.0.0"
-  uid "6141e847610e01a4cc0ac219229f75bc555a36ab"
-  resolved "https://assets.juno.global.cloud.sap/libs/policy-engine@latest/package.tgz#6141e847610e01a4cc0ac219229f75bc555a36ab"
+  uid aad9918c9421fc1c43ed6f94686237ae3e4911fc
+  resolved "https://assets.juno.global.cloud.sap/libs/policy-engine@2.0.0/package.tgz#aad9918c9421fc1c43ed6f94686237ae3e4911fc"
 
 polished@^4.2.2:
   version "4.2.2"
@@ -17324,15 +17324,15 @@ url-parse@^1.5.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-"url-state-provider@https://assets.juno.global.cloud.sap/libs/url-state-provider@latest/package.tgz":
+"url-state-provider@https://assets.juno.global.cloud.sap/libs/url-state-provider@1.0.0/package.tgz":
   version "1.0.0"
-  uid "58c601f03edc5e7d6e022ae57d245d7d9d6c2f01"
-  resolved "https://assets.juno.global.cloud.sap/libs/url-state-provider@latest/package.tgz#58c601f03edc5e7d6e022ae57d245d7d9d6c2f01"
+  uid "1b6563c9cc9f27f55c358c8a86f389c1b053aef2"
+  resolved "https://assets.juno.global.cloud.sap/libs/url-state-provider@1.0.0/package.tgz#1b6563c9cc9f27f55c358c8a86f389c1b053aef2"
 
-"url-state-router@https://assets.juno.global.cloud.sap/libs/url-state-router@latest/package.tgz":
+"url-state-router@https://assets.juno.global.cloud.sap/libs/url-state-router@1.0.0/package.tgz":
   version "1.0.0"
-  uid c7c06dc23986b20c057d3472e0833eb8e2d15913
-  resolved "https://assets.juno.global.cloud.sap/libs/url-state-router@latest/package.tgz#c7c06dc23986b20c057d3472e0833eb8e2d15913"
+  uid "50d41947c144949b63a40e71f2e7d0443905b5fa"
+  resolved "https://assets.juno.global.cloud.sap/libs/url-state-router@1.0.0/package.tgz#50d41947c144949b63a40e71f2e7d0443905b5fa"
 
 url@^0.11.0:
   version "0.11.0"

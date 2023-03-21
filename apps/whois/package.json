@@ -22,7 +22,7 @@
     "bundle-loader": "^0.5.6",
     "cidr-regex": "^3.1.1",
     "clean-webpack-plugin": "^4.0.0",
-    "communicator": "https://assets.juno.global.cloud.sap/libs/communicator@latest/package.tgz",
+    "communicator": "https://assets.juno.global.cloud.sap/libs/communicator@2.1.0/package.tgz",
     "css-loader": "^6.6.0",
     "css-minimizer-webpack-plugin": "^3.4.1",
     "custom-event-polyfill": "^1.0.7",
@@ -30,7 +30,7 @@
     "ip-regex": "^5.0.0",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
-    "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz",
+    "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.2.3/package.tgz",
     "luxon": "^2.3.0",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
@@ -46,7 +46,7 @@
     "sass-loader": "^12.4.0",
     "shadow-dom-testing-library": "^1.8.0",
     "tailwindcss": "^3.0.24",
-    "url-state-provider": "https://assets.juno.global.cloud.sap/libs/url-state-provider@latest/package.tgz",
+    "url-state-provider": "https://assets.juno.global.cloud.sap/libs/url-state-provider@1.0.0/package.tgz",
     "util": "^0.12.4",
     "webpack": "^5.75.0",
     "webpack-cli": "^4.9.2",
@@ -60,15 +60,15 @@
   },
   "peerDependencies": {
     "cidr-regex": "^3.1.1",
-    "communicator": "*",
+    "communicator": "2.1.0",
     "custom-event-polyfill": "^1.0.7",
     "ip-regex": "^5.0.0",
-    "juno-ui-components": "*",
+    "juno-ui-components": "1.2.3",
     "luxon": "^2.3.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "url-state-provider": "*"
+    "url-state-provider": "1.0.0"
   },
   "appProps": {
     "theme": {
