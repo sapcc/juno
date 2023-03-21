@@ -6,7 +6,7 @@ import { SelectOption } from "../SelectOption/index"
 import { TextInput } from "../TextInput/index"
 
 export default {
-  title: "Components/InputGroup",
+  title: "WiP/InputGroup",
   component: InputGroup,
   argTypes: {},
 }
