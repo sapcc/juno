@@ -1,5 +1,6 @@
 import React from "react"
 import { Button } from "./index"
+import { Icon } from "../Icon/index.js"
 import { knownIcons } from "../Icon/Icon.component.js"
 import { ContentArea } from "../ContentArea/index"
 import { Container } from "../Container/index"
@@ -194,6 +195,27 @@ LargeWithIcon.args = {
   ...Large.args,
   icon: "warning",
 }
+
+export const IconOnlyButton = Template.bind({})
+IconOnlyButton.docs = {
+  description: {
+    story: "A button with a Icon but no label. The icon name can be passed as a prop.",
+  },
+},
+IconOnlyButton.args = {
+  icon: "warning",
+}
+
+export const IconOnlyAsChild = Template.bind({})
+IconOnlyAsChild.docs = {
+  description: {
+    story: "A button with a Icon but no label, an Icon can also be passed as a child. Hover, active, etc. states of the icon ave to be handled manually when passing an icon as a child though.",
+  },
+},
+IconOnlyAsChild.args = {
+  children: <Icon />,
+}
+
 
 export const LinkAsButton = Template.bind({})
 LinkAsButton.parameters = {
