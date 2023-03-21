@@ -32,8 +32,7 @@ const btnSmall = `
 const btnDefaultSize = `
   jn-text-base
   jn-leading-6
-  jn-pl-[0.5625rem]  
-  jn-pr-[0.5625rem]
+  jn-px-[0.5625rem]  
   jn-py-[0.375rem]
 `
 
