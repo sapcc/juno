@@ -7077,7 +7077,7 @@ es6-shim@^0.35.5:
   resolved "https://registry.yarnpkg.com/es6-shim/-/es6-shim-0.35.7.tgz#db00f1cbb7d4de70b50dcafa45b157e9ba28f5d2"
   integrity sha512-baZkUfTDSx7X69+NA8imbvGrsPfqH0MX7ADdIDjqwsI8lkTgLIiD2QWrUCSGsUQ0YMnSCA/4pNgSyXdnLHWf3A==
 
-esbuild-sass-plugin@^2.6.0:
+esbuild-sass-plugin@^2.6.0, esbuild-sass-plugin@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/esbuild-sass-plugin/-/esbuild-sass-plugin-2.7.0.tgz#dfcb4ccf6e841349bae26d09f3bd51073fadc735"
   integrity sha512-scvyHqeQ/fCfJljh5fKktN3CoQvq+PIUfDmJ/OQ6bNncSL/V5Y7NvzFiaQcGNOKYrfdLslYi4HwSRD8pIs5MYg==
