@@ -30,7 +30,7 @@ const yellow = "\x1b[33m%s\x1b[0m"
 const build = async () => {
   // delete build folder
   await fs.rm(outdir, { recursive: true, force: true })
-  await fs.mkdir(outdir)
+  await fs.mkdir(outdir, { recursive: true })
 
   // build app
   let ctx = await esbuild.context({
@@ -42,7 +42,7 @@ const build = async () => {
     platform: "browser",
     // built-in loaders: js, jsx, ts, tsx, css, json, text, base64, dataurl, file, binary
     loader: { ".js": "jsx" },
-    sourcemap: isProduction ? false : "both",
+    sourcemap: !isProduction,
     external:
       isProduction && !IGNORE_EXTERNALS
         ? Object.keys(pkg.peerDependencies || {})
@@ -75,25 +75,25 @@ const build = async () => {
     ],
   })
 
-  if (watch) await ctx.watch()
-  else {
+  if (watch || serve) {
+    if (watch) await ctx.watch()
+    if (serve) {
+      // generate app props based on package.json and secretProps.json
+      await fs.writeFile(
+        `./${outdir}/appProps.js`,
+        `export default ${JSON.stringify(appProps())}`
+      )
+
+      let { host, port } = await ctx.serve({
+        host: "0.0.0.0",
+        port: parseInt(process.env.PORT),
+        servedir: "public",
+      })
+      console.log("serve on", `${host}:${port}`)
+    }
+  } else {
     await ctx.rebuild()
     await ctx.dispose()
-  }
-
-  if (serve) {
-    // generate app props based on package.json and secretProps.json
-    await fs.writeFile(
-      `./${outdir}/appProps.js`,
-      `export default ${JSON.stringify(appProps())}`
-    )
-
-    let { host, port } = await ctx.serve({
-      host: "0.0.0.0",
-      port: parseInt(process.env.PORT),
-      servedir: "public",
-    })
-    console.log("serve on", `${host}:${port}`)
   }
 }
 
