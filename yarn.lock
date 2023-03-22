@@ -11711,13 +11711,8 @@ oauth-pkce@^0.0.6:
   resolved "https://registry.yarnpkg.com/oauth-pkce/-/oauth-pkce-0.0.6.tgz#9ac452bc7357c755bc7946ebb0e81ba76dc56b2a"
   integrity sha512-hLLZvwJBAo1QHzPOvsM/QtDj/b9MBgQx/TH4kA/LPqFgWtICo4m7gtZUZARBiQ0I8lSKQRN8BhGTclVv8D45gg==
 
-"oauth@https://assets.juno.global.cloud.sap/libs/oauth@1.0.0/package.tgz":
-  version "1.0.0"
-  resolved "https://assets.juno.global.cloud.sap/libs/oauth@1.0.0/package.tgz#cdb17af8ba6e75930891dde7a2546032c4313122"
-
 "oauth@https://assets.juno.global.cloud.sap/libs/oauth@1.1.0/package.tgz":
   version "1.1.0"
-  uid a1790676972e5c766695f1a383afe1ad55c36fe38937bcd8e77c413aaf7c60e85d02a1630d1fa96b6ea6235effe4a978e9c06884522e17636e31662424a03199
   resolved "https://assets.juno.global.cloud.sap/libs/oauth@1.1.0/package.tgz#a1790676972e5c766695f1a383afe1ad55c36fe38937bcd8e77c413aaf7c60e85d02a1630d1fa96b6ea6235effe4a978e9c06884522e17636e31662424a03199"
 
 object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
