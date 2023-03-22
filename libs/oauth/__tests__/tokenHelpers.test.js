@@ -62,4 +62,94 @@ describe("parseIdTokenData", () => {
       })
     )
   })
+
+  test("should accept mail property for email", () => {
+    const data = parseIdTokenData({
+      mail: "dona.moore@example.com",
+    })
+    expect(data).toEqual(
+      expect.objectContaining({
+        email: "dona.moore@example.com",
+      })
+    )
+  })
+
+  test("should accept email property for email", () => {
+    const data = parseIdTokenData({
+      email: "dona.moore@example.com",
+    })
+    expect(data).toEqual(
+      expect.objectContaining({
+        email: "dona.moore@example.com",
+      })
+    )
+  })
+
+  describe("user name from email", () => {
+    test("email contains one first name and one last name", () => {
+      const data = parseIdTokenData({
+        email: "dona.moore@example.com",
+      })
+      expect(data).toEqual(
+        expect.objectContaining({
+          firstName: "Dona",
+          lastName: "Moore",
+          fullName: "Dona Moore",
+          email: "dona.moore@example.com",
+        })
+      )
+    })
+
+    test("email contains double first name and one last name", () => {
+      const data = parseIdTokenData({
+        email: "dona-anna.moore@example.com",
+      })
+      expect(data).toEqual(
+        expect.objectContaining({
+          firstName: "Dona-Anna",
+          lastName: "Moore",
+          fullName: "Dona-Anna Moore",
+        })
+      )
+    })
+
+    test("email contains multiple first names and one last name", () => {
+      const data = parseIdTokenData({
+        email: "dona-anna-maria.moore@example.com",
+      })
+      expect(data).toEqual(
+        expect.objectContaining({
+          firstName: "Dona-Anna-Maria",
+          lastName: "Moore",
+          fullName: "Dona-Anna-Maria Moore",
+        })
+      )
+    })
+
+    test("email contains double last name and one first name", () => {
+      const data = parseIdTokenData({
+        email: "dona.moore.mile@example.com",
+      })
+      expect(data).toEqual(
+        expect.objectContaining({
+          firstName: "Dona",
+          lastName: "Moore Mile",
+          fullName: "Dona Moore Mile",
+        })
+      )
+    })
+
+    test("email contains multiple last and first names", () => {
+      const data = parseIdTokenData({
+        email: "dona-maria.moore.mile@example.com",
+      })
+      expect(data).toEqual(
+        expect.objectContaining({
+          firstName: "Dona-Maria",
+          lastName: "Moore Mile",
+          fullName: "Dona-Maria Moore Mile",
+        })
+      )
+    })
+  })
 })

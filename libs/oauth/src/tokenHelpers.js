@@ -9,12 +9,35 @@ export function decodeIDToken(idToken) {
   return decodeBase64Json(tokenData)
 }
 
-const capitalize = (str) => {  
-  if(!str || str.length===0) return ""
+const capitalize = (str) => {
+  if (!str || str.length === 0) return ""
 
   let result = str.charAt(0).toUpperCase()
-  if(str.length>1) result += str.slice(1)
+  if (str.length > 1) result += str.slice(1)
   return result
+}
+
+const extractNameFromEmail = (email) => {
+  if (!email) return null
+  try {
+    const match = email.match(/^(.+)@.*$/)
+    if (!match) return null
+    const emailName = match[1]
+    const index = emailName.indexOf(".")
+    let firstName = emailName.slice(0, index)
+    let lastName = emailName.substring(index + 1)
+    firstName = firstName
+      .split("-")
+      .map((t) => capitalize(t))
+      .join("-")
+    lastName = lastName
+      .split(".")
+      .map((t) => capitalize(t))
+      .join(" ")
+    return { firstName, lastName }
+  } catch (e) {
+    console.info("(OAUTH) could not determine first and last names")
+  }
 }
 /**
  *
@@ -23,24 +46,22 @@ const capitalize = (str) => {
  */
 export function parseIdTokenData(tokenData) {
   const email = tokenData.mail || tokenData.email || ""
+  const loginName =
+    tokenData.login_name ||
+    tokenData.name ||
+    tokenData.subject ||
+    tokenData.sub ||
+    ""
   let firstName = tokenData.first_name
   let lastName = tokenData.last_name
-  
-  try{
-    if(!firstName && !lastName) {
-      const [_,emailName] = email.match(/^(.+)@.*$/)
-      const emailParts = emailName.split(".")
-      const first = emailParts.shift()
-      firstName = capitalize(first)
-      lastName = emailParts.map((t) => capitalize(t)).join(" ")
-
-
-    }
-  }catch(e) {
-    console.info("(OAUTH) could not determine first and last names")
+  if (!firstName && !lastName) {
+    const userName = extractNameFromEmail(email)
+    firstName = firstName || userName?.firstName
+    lastName = lastName || userName?.lastName
   }
+
   return {
-    loginName: tokenData.login_name || tokenData.name || tokenData.sub,
+    loginName,
     email,
     firstName,
     lastName,
