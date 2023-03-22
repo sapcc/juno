@@ -9,6 +9,7 @@ import styles from "./styles.scss"
 import StyleProvider from "juno-ui-components"
 import useCommunication from "./hooks/useCommunication"
 import { registerConsumer, currentState } from "url-state-provider"
+import useApiClient from "./hooks/useApiClient"
 
 /* IMPORTANT: Replace this with your app's name */
 const URL_STATE_KEY = "greenhouse"
@@ -109,6 +110,8 @@ const Shell = (props = {}) => {
     if (!loggedIn) return
     // set the api client
     console.log("AUTH_DATA: ", authData)
+    if (authData?.JWT && props.endpoint)
+      useApiClient(props.endpoint, authData?.JWT)
 
     // Set active app from URL state
     // if no active set take the first
@@ -116,6 +119,7 @@ const Shell = (props = {}) => {
     let active = greenhouseUrlState.currentState()?.a
     if (active) setActive(active.split(","))
     else setActive([Object.keys(appsConfig)?.[0]])
+    // TODO: check if the active app exists in the manifest
   }, [loggedIn])
 
   // sync URL state
