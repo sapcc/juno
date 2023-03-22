@@ -25,7 +25,6 @@ const appsConfig = {
     },
   },
 
-  
   heureka: {
     name: "heureka",
     version: "latest",
@@ -34,7 +33,6 @@ const appsConfig = {
       endpoint: "https://heureka-staging.scaleout.ap-jp-2.cloud.sap/api/v1",
     },
   },
-
 
   doop: {
     name: "doop",
@@ -72,24 +70,24 @@ const Shell = (props = {}) => {
   const setActive = useStore((state) => state.apps.setActive)
   const setAssetsHost = useStore((state) => state.setAssetsHost)
   const activeApps = useStore((state) => state.apps.active)
-
   const loggedIn = useStore((state) => state.auth.loggedIn)
+  const authData = useStore((state) => state.auth.data)
 
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
 
+  // Initialiazing events watching
   useCommunication()
 
-  // INIT
-  // on app initial load save Endpoint and URL_STATE_KEY so it can be
+  // APP INIT
+  // on app initial load save Endpoint and URL_STATE_KEY and oder props so it can be
   // used from overall in the application
   useEffect(() => {
-    if (!setAppsConfig || !setUrlStateKey || !setAppsConfig || !setAssetsHost)
+    if (!setEndpoint || !setUrlStateKey || !setAppsConfig || !setAssetsHost)
       return
     // set to empty string to fetch local test data in dev mode
     setEndpoint(props.endpoint || props.currentHost || "")
     setUrlStateKey(URL_STATE_KEY)
-
     setAppsConfig({
       ...appsConfig,
       auth: {
@@ -103,19 +101,18 @@ const Shell = (props = {}) => {
         },
       },
     })
-
     setAssetsHost(props.currentHost)
   }, [setEndpoint, setUrlStateKey, setAppsConfig, setAssetsHost])
 
-  // Initial state from URL
+  // ON_LOGIN
   React.useEffect(() => {
     if (!loggedIn) return
+    // set the api client
+    console.log("AUTH_DATA: ", authData)
+
+    // Set active app from URL state
+    // if no active set take the first
     const greenhouseUrlState = registerConsumer(URL_STATE_KEY)
-    // console.log(
-    //   "========================URL STATE",
-    //   greenhouseUrlState.currentState(),
-    //   window.location.href
-    // )
     let active = greenhouseUrlState.currentState()?.a
     if (active) setActive(active.split(","))
     else setActive([Object.keys(appsConfig)?.[0]])

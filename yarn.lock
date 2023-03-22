@@ -13899,6 +13899,14 @@ sane@^4.0.3:
     minimist "^1.1.1"
     walker "~1.0.5"
 
+sapcc-k8sclient@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/sapcc-k8sclient/-/sapcc-k8sclient-1.0.2.tgz#b51f4e3357947962297f1b1fbf1e2ab0349b7a1a"
+  integrity sha512-IFmZL0YxT9mP4IEI0p8Z/AUnG0D/NQRne1yo5BdgGrqOYniiUjXVcgxkx19hhJkWKIz2bVB3WJuM+3vPmPxKFA==
+  dependencies:
+    regenerator-runtime "^0.13.7"
+    text-encoding "^0.7.0"
+
 sass-loader@^12.4.0:
   version "12.6.0"
   resolved "https://registry.yarnpkg.com/sass-loader/-/sass-loader-12.6.0.tgz#5148362c8e2cdd4b950f3c63ac5d16dbfed37bcb"
@@ -14964,6 +14972,11 @@ test-exclude@^6.0.0:
     "@istanbuljs/schema" "^0.1.2"
     glob "^7.1.4"
     minimatch "^3.0.4"
+
+text-encoding@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/text-encoding/-/text-encoding-0.7.0.tgz#f895e836e45990624086601798ea98e8f36ee643"
+  integrity sha512-oJQ3f1hrOnbRLOcwKz0Liq2IcrvDeZRHXhd9RgLrsT+DjWY/nty1Hi7v3dtkaEYbPYe0mUoOfzRrMwfXXwgPUA==
 
 theming@^3.3.0:
   version "3.3.0"
