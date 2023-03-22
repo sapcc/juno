@@ -9,6 +9,8 @@ import styles from "./styles.scss"
 import StyleProvider from "juno-ui-components"
 import useCommunication from "./hooks/useCommunication"
 import { registerConsumer, currentState } from "url-state-provider"
+import useIdleTimer from "./hooks/useIdleTimer"
+import IdleTimerProvider from "./components/IdleTimerProvider"
 
 /* IMPORTANT: Replace this with your app's name */
 const URL_STATE_KEY = "greenhouse"
@@ -77,8 +79,8 @@ const Shell = (props = {}) => {
 
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
-
   useCommunication()
+  useIdleTimer({ timeout: 5 })
 
   // INIT
   // on app initial load save Endpoint and URL_STATE_KEY so it can be
@@ -131,15 +133,17 @@ const Shell = (props = {}) => {
   return (
     <Auth>
       <QueryClientProvider client={queryClient}>
-        <ShellLayout>
-          {Object.keys(appsConfig).map((appName, i) => (
-            <App
-              name={appName}
-              key={i}
-              active={activeApps.indexOf(appName) >= 0}
-            />
-          ))}
-        </ShellLayout>
+        <IdleTimerProvider>
+          <ShellLayout>
+            {Object.keys(appsConfig).map((appName, i) => (
+              <App
+                name={appName}
+                key={i}
+                active={activeApps.indexOf(appName) >= 0}
+              />
+            ))}
+          </ShellLayout>
+        </IdleTimerProvider>
       </QueryClientProvider>
     </Auth>
   )

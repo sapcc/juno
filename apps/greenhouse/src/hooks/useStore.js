@@ -5,6 +5,25 @@ const ACTIONS = {
   SIGN_OUT: "signOut",
 }
 
+const createUserActivitySlice = (set, get) => ({
+  userActivity: {
+    // this state tracks the user activity
+    isActive: true,
+    setIsActive: (activity) => {
+      set((state) => ({
+        userActivity: { ...state.userActivity, isActive: activity },
+      }))
+    },
+    //this state tracks
+    showInactiveModal: false,
+    setShowInactiveModal: (activity) => {
+      set((state) => ({
+        userActivity: { ...state.userActivity, showInactiveModal: activity },
+      }))
+    },
+  },
+})
+
 const createAuthDataSlice = (set, get) => ({
   auth: {
     data: null,
@@ -70,6 +89,7 @@ const createAppsDataSlice = (set, get) => ({
 const useStore = create((set, get) => ({
   ...createAuthDataSlice(set, get),
   ...createAppsDataSlice(set, get),
+  ...createUserActivitySlice(set, get),
   endpoint: "",
   urlStateKey: "",
   assetsHost: "",
