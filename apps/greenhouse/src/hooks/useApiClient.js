@@ -6,18 +6,17 @@ import { createClient } from "sapcc-k8sclient"
  * @param {string} idToken
  * @returns {object} a api client
  */
-const useApiClient = (apiEndpoint, idToken) => {
+const useApiClient = (idToken) => {
   // console.log(idToken)
   const [apiClient, setApiClient] = useState()
 
   useEffect(() => {
     if (!idToken) return
     if (!apiClient) {
-      console.log(
-        "[K_API_CLIENT]: setting up client with: ",
-        apiEndpoint,
-        idToken
-      )
+      let apiEndpoint =
+        process.env.REACT_APP_API_ENDPOINT ||
+        window.location.href.replace("dashboard", "api")
+      apiEndpoint = apiEndpoint.replace(/(\?.*)/, "")
       // create
       setApiClient(
         createClient({
@@ -29,7 +28,7 @@ const useApiClient = (apiEndpoint, idToken) => {
       // refresh token
       apiClient.refreshToken(idToken)
     }
-  }, [apiClient, apiEndpoint, idToken])
+  }, [apiClient, idToken])
 
   return apiClient
 }

@@ -1756,10 +1756,10 @@
     multiformats "^10.0.0"
     uint8arrays "^4.0.2"
 
-"@material-design-icons/svg@^0.14.3":
-  version "0.14.3"
-  resolved "https://registry.yarnpkg.com/@material-design-icons/svg/-/svg-0.14.3.tgz#b7e815c7a2faff233e5f5abad994d135d38aeb8d"
-  integrity sha512-kozh4B9vg9TRAfNu7zOuL58N52DDlrp/M2fH/RNDRyJM4Y0ToHmnt1lW9WDeTmJBHRhxWxWJX8f7Lgx3iJjFWA==
+"@material-design-icons/svg@^0.14.4":
+  version "0.14.4"
+  resolved "https://registry.yarnpkg.com/@material-design-icons/svg/-/svg-0.14.4.tgz#9f1b4451571b1c21e16b522d0a08b4c48a99075a"
+  integrity sha512-mfRvqG5ifBIrWChn/uq4r5TI90yxVKKPbhtk9MfvFPvxihhOUz+t+fYpq6EdR4OcwVlV2+kvYnXHHSOGpJMDWw==
 
 "@mdx-js/mdx@^1.6.22":
   version "1.6.22"

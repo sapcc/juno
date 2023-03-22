@@ -110,6 +110,7 @@ const Shell = (props = {}) => {
     if (!loggedIn) return
     // set the api client
     console.log("AUTH_DATA: ", authData)
+
     if (authData?.JWT && props.endpoint)
       useApiClient(props.endpoint, authData?.JWT)
 

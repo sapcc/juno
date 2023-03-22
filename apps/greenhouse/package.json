@@ -33,6 +33,7 @@
     "react-test-renderer": "^18.2.0",
     "sapcc-k8sclient": "^1.0.2",
     "sass": "^1.60.0",
+    "sapcc-k8sclient": "^1.0.2",
     "shadow-dom-testing-library": "^1.7.1",
     "tailwindcss": "^3.0.24",
     "url-state-provider": "https://assets.juno.global.cloud.sap/libs/url-state-provider@1.0.0/package.tgz",
