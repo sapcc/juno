@@ -1,13 +1,13 @@
 import React from "react"
-import { SelectOption } from "./index.js"
+import { NativeSelectOption } from "./index.js"
 
 export default {
-  title: "Forms/Select/SelectOption",
-  component: SelectOption,
+  title: "Forms/NativeSelect/NativeSelectOption",
+  component: NativeSelectOption,
   argTypes: {},
 }
 
-const Template = (args) => <SelectOption {...args} />
+const Template = (args) => <NativeSelectOption {...args} />
 
 export const Default = Template.bind({})
 Default.args = {

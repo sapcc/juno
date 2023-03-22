@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 
 /** A SelectOptionGroup (<optgroup>). Can only be used inside a Select. */
-export const SelectOptionGroup = ({
+export const NativeSelectOptionGroup = ({
 	label,
 	disabled,
 	className,
@@ -21,7 +21,7 @@ export const SelectOptionGroup = ({
 	)
 }
 
-SelectOptionGroup.propTypes = {
+NativeSelectOptionGroup.propTypes = {
 	/** The visible label of the group of options */
 	label: PropTypes.string,
 	/** Disable the option group */
@@ -32,7 +32,7 @@ SelectOptionGroup.propTypes = {
 	children: PropTypes.node,
 }
 
-SelectOptionGroup.defaultProps = {
+NativeSelectOptionGroup.defaultProps = {
 	label: null,
 	disabled: false,
 	className: "",

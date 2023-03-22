@@ -1,53 +1,53 @@
 import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
-import { Select } from "./index"
+import { NativeSelect } from "./index"
 
-describe("Select", () => {
-  test("renders a select element", async () => {
-    render(<Select />)
+describe("NativeSelect", () => {
+  test("renders a native html select element", async () => {
+    render(<NativeSelect />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
   })
 
   test("renders a select element with a name as passed", async () => {
-    render(<Select name="my-select" />)
+    render(<NativeSelect name="my-select" />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveAttribute("name", "my-select")
   })
 
   test("renders a select element with an id as passed", async () => {
-    render(<Select id="my-select" />)
+    render(<NativeSelect id="my-select" />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveAttribute("id", "my-select")
   })
 
   test("renders a custom className", async () => {
-    render(<Select className="my-custom-class" />)
+    render(<NativeSelect className="my-custom-class" />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveClass("my-custom-class")
   })
 
   test("renders a disabled select as passed", async () => {
-    render(<Select disabled />)
+    render(<NativeSelect disabled />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toBeDisabled()
   })
 
   test("renders an invalid Select as passed", async () => {
-    render(<Select invalid />)
+    render(<NativeSelect invalid />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveClass("juno-select-invalid")
     expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
   })
 
   test("renders a valid Select as passed", async () => {
-    render(<Select valid />)
+    render(<NativeSelect valid />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveClass("juno-select-valid")
     expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
 
   test("renders a Select with an error as passed", async () => {
-    render(<Select error />)
+    render(<NativeSelect error />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toBeDisabled()
     expect(screen.getByRole("combobox")).toHaveClass("juno-select-error")
@@ -56,9 +56,9 @@ describe("Select", () => {
 
   test("renders children as passed", async () => {
     render(
-      <Select>
+      <NativeSelect>
         <option data-testid="option">Option</option>
-      </Select>
+      </NativeSelect>
     )
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByTestId("option")).toBeInTheDocument()
@@ -66,7 +66,7 @@ describe("Select", () => {
 
   test("executes onClick handler as passed", async () => {
     const onClickSpy = jest.fn()
-    render(<Select onClick={onClickSpy} />)
+    render(<NativeSelect onClick={onClickSpy} />)
     const select = screen.getByRole("combobox")
     select.click()
     expect(onClickSpy).toHaveBeenCalled()
@@ -74,7 +74,7 @@ describe("Select", () => {
 
   test("executes onChange handler as passed", async () => {
     const handleChange = jest.fn()
-    const { container } = render(<Select onChange={handleChange} />)
+    const { container } = render(<NativeSelect onChange={handleChange} />)
     const select = screen.getByRole("combobox")
     fireEvent.change(select, { target: { value: "a" } })
     expect(handleChange).toHaveBeenCalledTimes(1)
@@ -82,33 +82,33 @@ describe("Select", () => {
 
   test("does not execute onClick handler when disabled", async () => {
     const onClickSpy = jest.fn()
-    render(<Select onClick={onClickSpy} disabled />)
+    render(<NativeSelect onClick={onClickSpy} disabled />)
     screen.getByRole("combobox").click()
     expect(onClickSpy).not.toHaveBeenCalled()
   })
 
   test("does not execute onChange handler when disabled", async () => {
     const onChangeSpy = jest.fn()
-    render(<Select onChange={onChangeSpy} disabled />)
+    render(<NativeSelect onChange={onChangeSpy} disabled />)
     screen.getByRole("combobox").click()
     expect(onChangeSpy).not.toHaveBeenCalled()
   })
 
   test("renders a loading Select as passed", async () => {
-    render(<Select loading />)
+    render(<NativeSelect loading />)
     expect(screen.getByRole("combobox")).toBeDisabled()
     expect(screen.getByRole("progressbar")).toBeInTheDocument()
   })
 
   test("can not be clicked when loading", async () => {
     const onClickSpy = jest.fn()
-    render(<Select loading onClick={onClickSpy} />)
+    render(<NativeSelect loading onClick={onClickSpy} />)
     screen.getByRole("combobox").click()
     expect(onClickSpy).not.toHaveBeenCalled()
   })
 
   test("renders all props as passed", async () => {
-    render(<Select data-lolol="some-random-prop" />)
+    render(<NativeSelect data-lolol="some-random-prop" />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveAttribute(
       "data-lolol",

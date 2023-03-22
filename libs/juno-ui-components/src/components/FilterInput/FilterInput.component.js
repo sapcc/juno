@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
-import { Select } from "../Select/Select.component"
-import { SelectOption } from "../SelectOption/SelectOption.component"
+import { NativeSelect } from "../NativeSelect/NativeSelect.component"
+import { NativeSelectOption } from "../NativeSelectOption/NativeSelectOption.component"
 import { TextInput } from "../TextInput/TextInput.component"
 import { Icon } from "../Icon/Icon.component"
 
@@ -127,7 +127,7 @@ export const FilterInput = ({
       {...props}
     >
       <div>
-        <Select
+        <NativeSelect
           className={`juno-filter-input-select ${selectStyles}`}
           aria-label={keyLabel}
           value={selectedFilter}
@@ -136,17 +136,17 @@ export const FilterInput = ({
           error={hasError}
         >
           // First "Placeholder" option:
-          <SelectOption label={keyLabel || "Select Filter"} value="" />
+          <NativeSelectOption label={keyLabel || "Select Filter"} value="" />
           // Options representing actual filter key values:
           {options.map((option, i) => (
-            <SelectOption
+            <NativeSelectOption
               label={option.label}
               value={option.key}
               key={`${i}`}
               {...option}
             />
           ))}
-        </Select>
+        </NativeSelect>
       </div>
       <TextInput
         value={value}

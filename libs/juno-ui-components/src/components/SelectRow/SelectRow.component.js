@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
-import { Select } from "../Select/index.js"
+import { NativeSelect } from "../NativeSelect/index.js"
 import { Label } from "../Label/index.js"
 
 const selectrow = `
@@ -114,7 +114,7 @@ export const SelectRow = ({
     >
       {variant !== "floating" ? labelContainer : null}
       <div>
-        <Select
+        <NativeSelect
           className={`${selectstyles} ${
             variant === "floating" ? floatingselectstyles : ""
           }`}
@@ -128,7 +128,7 @@ export const SelectRow = ({
           defaultValue={defaultValue}
         >
           {children}
-        </Select>
+        </NativeSelect>
         {variant === "floating" ? labelContainer : null}
         {errortext && errortext.length ? (
           <p className={`${errortextstyles}`}>{errortext}</p>

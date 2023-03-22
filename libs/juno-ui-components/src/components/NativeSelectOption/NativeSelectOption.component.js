@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 
 /** A basic SelectOption. Can only be used inside a Select. */
-export const SelectOption = ({
+export const NativeSelectOption = ({
 	value,
 	label,
 	disabled,
@@ -21,7 +21,7 @@ export const SelectOption = ({
 	)
 }
 
-SelectOption.propTypes = {
+NativeSelectOption.propTypes = {
 	/** Pass a visible label */
 	label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	/** Pass a value the option should represent */
@@ -32,7 +32,7 @@ SelectOption.propTypes = {
 	className: PropTypes.string,
 }
 
-SelectOption.defaultProps = {
+NativeSelectOption.defaultProps = {
 	value: null,
 	label: null,
 	disabled: false,

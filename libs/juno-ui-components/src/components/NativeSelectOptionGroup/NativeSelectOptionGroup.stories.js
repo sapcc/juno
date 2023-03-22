@@ -1,24 +1,24 @@
 import React from "react"
-import { SelectOptionGroup } from "./index.js"
-import { SelectOption } from "../SelectOption/index.js"
+import { NativeSelectOptionGroup } from "./index.js"
+import { NativeSelectOption } from "../NativeSelectOption/index.js"
 
 import {
   Default as DefaultSelectOption,
   Disabled as DisabledSelectOption,
-} from "../SelectOption/SelectOption.stories"
+} from "../NativeSelectOption/NativeSelectOption.stories"
 
 export default {
-  title: "Forms/Select/SelectOptionGroup",
-  component: SelectOptionGroup,
+  title: "Forms/NativeSelect/NativeSelectOptionGroup",
+  component: NativeSelectOptionGroup,
   argTypes: {},
 }
 
 const Template = ({ options, ...args }) => (
-  <SelectOptionGroup {...args}>
+  <NativeSelectOptionGroup {...args}>
     {options.map((option, i) => (
-      <SelectOption {...option} key={`option-${i}`} />
+      <NativeSelectOption {...option} key={`option-${i}`} />
     ))}
-  </SelectOptionGroup>
+  </NativeSelectOptionGroup>
 )
 
 export const Default = Template.bind({})
