@@ -48,7 +48,7 @@ const createOidcRequest = async ({ issuerURL, clientID, flowType }) => {
     // redirect to this URL
     window.location.replace(url)
   } catch (error) {
-    throw new Error("(OAUTH) " + error.message)
+    throw new Error("(OAUTH) " + error.message, { cause: error })
   }
 }
 
@@ -86,7 +86,7 @@ const handleOidcResponse = async ({ issuerURL, clientID }) => {
     }
     return authData
   } catch (error) {
-    throw new Error("(OAUTH) " + error.message)
+    throw new Error("(OAUTH) " + error.message, { cause: error })
   }
 }
 
@@ -198,9 +198,9 @@ const oidcSession = (params) => {
 
     if (!state?.auth?.refreshToken) return
 
-    const expiresAt = state.auth.raw?.exp
+    const expiresAt = state.auth.parsed?.expiresAt
     if (expiresAt) {
-      const expiresIn = expiresAt * 1000 - Date.now()
+      const expiresIn = expiresAt - Date.now() - 5000
       console.info(
         "(OAUTH) refresh token in",
         Math.floor(expiresIn / 1000),
@@ -211,13 +211,27 @@ const oidcSession = (params) => {
     }
   }
 
+  let expirationTimer
+  const updateExpirationTimer=()=>{
+    clearTimeout(expirationTimer)
+    if(state?.auth?.parsed?.expiresAt) {
+      const expiresIn = expiresAt - Date.now() - 5000
+      console.info(
+        "(OAUTH) logout token in",
+        Math.floor(expiresIn / 1000),
+        "seconds"
+      )
+      expirationTimer = setTimeout(logout,expiresIn)
+    }
+  }
+
   // define update method which updates the state and calls the callback function
   const update = (newState) => {
     state = { ...state, ...newState }
     if (onUpdate) onUpdate({ ...state })
 
-    if (!refresh) return
-    updateRefresher()
+    if (refresh && state?.auth?.refreshToken) updateRefresher()
+    else if (state?.auth?.parsed?.expiresAt) updateExpirationTimer()
   }
 
   // handle new data from odic response
