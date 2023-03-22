@@ -17,5 +17,5 @@ ADD . /juno
 
 WORKDIR /juno 
 
-RUN yarn install 1>/dev/null 
+RUN yarn install --silent
 RUN npx browserslist@latest --update-db
