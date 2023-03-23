@@ -1,6 +1,6 @@
 {
   "name": "auth",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "source": "src/index.js",
   "module": "build/index.js",
   "private": true,
@@ -18,9 +18,7 @@
     "communicator": "https://assets.juno.global.cloud.sap/libs/communicator@2.1.0/package.tgz",
     "custom-event-polyfill": "^1.0.7",
     "esbuild": "^0.17.12",
-    "esbuild-sass-plugin": "^2.6.0",
     "interweave": "^13.0.0",
-    "postcss-minify": "^1.1.0",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
     "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.2.3/package.tgz",
@@ -30,6 +28,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-test-renderer": "^18.2.0",
+    "sass": "^1.59.3",
     "shadow-dom-testing-library": "^1.7.1",
     "tailwindcss": "^3.0.24",
     "util": "^0.12.4"
@@ -40,10 +39,10 @@
     "build": "NODE_ENV=production node esbuild.config.js"
   },
   "peerDependencies": {
-    "oauth": "1.1.0",
     "communicator": "2.1.0",
     "custom-event-polyfill": "^1.0.7",
     "juno-ui-components": "1.2.3",
+    "oauth": "1.1.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
