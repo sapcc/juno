@@ -7077,10 +7077,18 @@ es6-shim@^0.35.5:
   resolved "https://registry.yarnpkg.com/es6-shim/-/es6-shim-0.35.7.tgz#db00f1cbb7d4de70b50dcafa45b157e9ba28f5d2"
   integrity sha512-baZkUfTDSx7X69+NA8imbvGrsPfqH0MX7ADdIDjqwsI8lkTgLIiD2QWrUCSGsUQ0YMnSCA/4pNgSyXdnLHWf3A==
 
-esbuild-sass-plugin@^2.6.0, esbuild-sass-plugin@^2.7.0:
+esbuild-sass-plugin@^2.6.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/esbuild-sass-plugin/-/esbuild-sass-plugin-2.7.0.tgz#dfcb4ccf6e841349bae26d09f3bd51073fadc735"
   integrity sha512-scvyHqeQ/fCfJljh5fKktN3CoQvq+PIUfDmJ/OQ6bNncSL/V5Y7NvzFiaQcGNOKYrfdLslYi4HwSRD8pIs5MYg==
+  dependencies:
+    resolve "^1.22.1"
+    sass "^1.59.3"
+
+esbuild-sass-plugin@^2.7.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/esbuild-sass-plugin/-/esbuild-sass-plugin-2.8.0.tgz#e719f5782fca44a0a6bf38e92e7bb0b11abc666f"
+  integrity sha512-PYDw/r+0lAOBjP4CDjkRRrYDtSta4kO0+p2Ofm4n15hbyhAsxa7hQpY8fY6Ja6VAzzC//VA9F1ki5L99apjLCA==
   dependencies:
     resolve "^1.22.1"
     sass "^1.59.3"
