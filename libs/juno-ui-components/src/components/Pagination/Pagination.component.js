@@ -2,8 +2,8 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Button } from "../Button/"
 import { Icon } from "../Icon/"
-import { NativeSelect } from "../NativeSelect/"
-import { NativeSelectOption } from "../NativeSelectOption/"
+import { Select } from "../Select/"
+import { SelectOption } from "../SelectOption/"
 import { TextInput } from "../TextInput"
 
 const paginationStyles = `
@@ -25,7 +25,7 @@ const selectOptions = (pages) => {
   if ( pages ) {
     for (let i = 0; i < pages; i++) {
       const p = i + 1
-      opts.push(<NativeSelectOption value={p} label={p} key={p} />)
+      opts.push(<SelectOption value={p} label={p} key={p} />)
     }
   }
   return opts
@@ -46,9 +46,9 @@ const renderPaginationInnards = (
       break
     case "select":
       return (
-        <NativeSelect name="pages" defaultValue={currentPage} onChange={handleSelectChange}>
+        <Select name="pages" width="auto" defaultValue={currentPage} onValueChange={handleSelectChange}>
           { selectOptions(pages) }
-        </NativeSelect>
+        </Select>
       )
       break
     case "input":

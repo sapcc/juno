@@ -1,7 +1,7 @@
 import React from "react"
 import { SelectRow } from "./index.js"
-import { NativeSelectOption } from "../NativeSelectOption/"
-import { Default as DefaultSelectOptionStory } from "../NativeSelectOption/NativeSelectOption.stories"
+import { SelectOption } from "../SelectOption/"
+import { Default as DefaultSelectOptionStory } from "../SelectOption/SelectOption.stories"
 
 export default {
   title: "Forms/Select/SelectRow",
