@@ -2,7 +2,7 @@ const esbuild = require("esbuild")
 const fs = require("node:fs/promises")
 const pkg = require("./package.json")
 const postcss = require("postcss")
-const { sassPlugin } = require("esbuild-sass-plugin")
+const sass = require("sass")
 // this function generates app props based on package.json and propSecrets.json
 const appProps = require("../../helpers/appProps")
 
@@ -21,12 +21,9 @@ const args = process.argv.slice(2)
 const watch = args.indexOf("--watch") >= 0
 const serve = args.indexOf("--serve") >= 0
 
-const postcssPlugins = [require("tailwindcss"), require("autoprefixer")]
-if (isProduction) postcssPlugins.push(require("postcss-minify"))
-
 const green = "\x1b[32m%s\x1b[0m"
 const yellow = "\x1b[33m%s\x1b[0m"
-const clear = '\033c'
+const clear = "\033c"
 
 const build = async () => {
   // delete build folder and re-create it as an empty folder
@@ -46,15 +43,15 @@ const build = async () => {
     sourcemap: !isProduction,
     // here we exclude package from bundle which are defined in peerDependencies
     // our importmap generator uses also the peerDependencies to create the importmap
-    // it means all packages defined in peerDependencies are in browser available via the importmap 
+    // it means all packages defined in peerDependencies are in browser available via the importmap
     external:
       isProduction && !IGNORE_EXTERNALS
         ? Object.keys(pkg.peerDependencies || {})
         : [],
     entryPoints: [pkg.source],
     outdir,
-    // this step is important for performance reason. 
-    // the main file (index.js) contains minimal code needed to 
+    // this step is important for performance reason.
+    // the main file (index.js) contains minimal code needed to
     // load the app via dynamic import (splitting: true)
     splitting: true,
     // we suport only esm!
@@ -68,22 +65,49 @@ const build = async () => {
             console.log(clear)
             console.log(yellow, "Compiling...")
           })
-          build.onEnd((result) => console.log(green, "Done!"))
+          build.onEnd(() => console.log(green, "Done!"))
         },
       },
-      // for all sass, scss and css files the css-text type
-      // This means that all .(s)css files are loaded as text
-      sassPlugin({
-        filter: /.*\.(s[ac]ss|css)$/,
-        type: "css-text",
-        cache: false,
-        async transform(source, _resolveDir) {
-          const { css } = await postcss(postcssPlugins).process(source, {
-            from: undefined,
-          })
-          return css
+
+      // {
+      //   name: "sass",
+      //   setup(build) {
+      //     build.onLoad(
+      //       { filter: /.\.(scss)$/, namespace: "file" },
+      //       async (args) => {
+      //         var result = sass.renderSync({ file: args.path })
+      //         return { contents: result.toString(), loader: "text" }
+      //       }
+      //     )
+      //   },
+      // },
+      {
+        name: "parse-styles",
+        setup(build) {
+          build.onLoad(
+            { filter: /.\.(css|scss)$/, namespace: "file" },
+            async (args) => {
+              let content
+              // handle scss, convert to css
+              if (args.path.endsWith(".scss")) {
+                const result = sass.renderSync({ file: args.path })
+                content = result.css
+              } else {
+                // read file content
+                content = await fs.readFile(args.path)
+              }
+              const plugins = [require("tailwindcss"), require("autoprefixer")]
+              //if (isProduction) plugins.push(require("postcss-minify"))
+
+              const { css } = await postcss(plugins).process(content, {
+                from: undefined,
+              })
+
+              return { contents: css, loader: "text" }
+            }
+          )
         },
-      }),
+      },
     ],
   })
 
