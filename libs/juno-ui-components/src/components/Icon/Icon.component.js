@@ -16,6 +16,7 @@ import Close from "@material-design-icons/svg/filled/close.svg"
 import ContentCopy from "@material-design-icons/svg/outlined/content_copy.svg"
 import Danger from "./icons/juno-danger.svg"
 import Dangerous from "@material-design-icons/svg/filled/dangerous.svg"
+import Download from "@material-design-icons/svg/filled/download.svg"
 import DeleteForever from "@material-design-icons/svg/filled/delete_forever.svg"
 import Description from "@material-design-icons/svg/filled/description.svg"
 import DNS from "@material-design-icons/svg/filled/dns.svg"
@@ -34,6 +35,7 @@ import Comment from "@material-design-icons/svg/filled/comment.svg"
 import ManageAccounts from "@material-design-icons/svg/filled/manage_accounts.svg"
 import MonitorHeart from '@material-design-icons/svg/outlined/monitor_heart.svg'
 import MoreVert from "@material-design-icons/svg/outlined/more_vert.svg"
+import NotificationsOff from "@material-design-icons/svg/outlined/notifications_off.svg"
 import OpenInBrowser from "@material-design-icons/svg/outlined/open_in_browser.svg"
 import OpenInNew from "@material-design-icons/svg/outlined/open_in_new.svg"
 import Place from "./icons/place.svg"
@@ -98,6 +100,7 @@ export const knownIcons = [
   "deleteForever",
   "description",
   "dns",
+  "download",
   "edit",
   "error",
   "errorOutline",
@@ -112,6 +115,7 @@ export const knownIcons = [
   "manageAccounts",
   "monitorHeart",
   "moreVert",
+  "notificationsOff",
   "openInBrowser",
   "openInNew",
   "place",
@@ -256,18 +260,18 @@ const getColoredSizedIcon = ({
           {...iconProps}
         />
       )
-      case "comment":
-        return (
-          <Comment
-            width={size}
-            height={size}
-            className={iconClass}
-            alt="comment"
-            title={title ? title : "Comment"}
-            role="img"
-            {...iconProps}
-          />
-        )
+    case "comment":
+      return (
+        <Comment
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="comment"
+          title={title ? title : "Comment"}
+          role="img"
+          {...iconProps}
+        />
+      )
     case "contentCopy":
       return (
         <ContentCopy
@@ -336,6 +340,18 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="service"
           title={title ? title : "Service"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "download":
+      return (
+        <Download
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="download"
+          title={title ? title : "download"}
           role="img"
           {...iconProps}
         />
@@ -504,6 +520,18 @@ const getColoredSizedIcon = ({
           className={iconClass}
           alt="more"
           title={title ? title : "More"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "notificationsOff":
+      return (
+        <NotificationsOff
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="notifications off"
+          title={title ? title : "Notifications off"}
           role="img"
           {...iconProps}
         />

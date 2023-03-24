@@ -119,11 +119,6 @@ Cancel.args = {
   icon: "cancel",
 }
 
-export const Close = Template.bind({})
-Close.args = {
-  icon: "close",
-}
-
 export const CheckCircle = Template.bind({})
 CheckCircle.args = {
   icon: "checkCircle",
@@ -137,6 +132,17 @@ ChevronLeft.args = {
 export const ChevronRight = Template.bind({})
 ChevronRight.args = {
   icon: "chevronRight",
+}
+
+export const Close = Template.bind({})
+Close.args = {
+  icon: "close",
+}
+
+export const Comment = Template.bind({})
+Comment.args = {
+  ...Default.args,
+  icon: "comment",
 }
 
 export const ContentCopy = Template.bind({})
@@ -170,6 +176,11 @@ export const DNS = Template.bind({})
 DNS.args = {
   ...Default.args,
   icon: "dns",
+}
+
+export const Download = Template.bind({})
+Download.args = {
+  icon: "download",
 }
 
 export const Edit = Template.bind({})
@@ -238,12 +249,6 @@ Info.args = {
   icon: "info",
 }
 
-export const Insert_Comment = Template.bind({})
-Insert_Comment.args = {
-  ...Default.args,
-  icon: "comment",
-}
-
 export const Manage_Accounts = Template.bind({})
 Manage_Accounts.args = {
   ...Default.args,
@@ -260,6 +265,12 @@ export const More_Vert = Template.bind({})
 More_Vert.args = {
   ...Default.args,
   icon: "moreVert",
+}
+
+export const Notifications_Off = Template.bind({})
+Notifications_Off.args = {
+  ...Default.args,
+  icon: "notificationsOff",
 }
 
 export const Open_In_Browser = Template.bind({})
