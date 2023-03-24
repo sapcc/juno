@@ -13,7 +13,7 @@ import { currentState, push } from "url-state-provider"
 const PeaksList = ({ peaks }) => {
   const urlStateKey = useStore((state) => state.urlStateKey)
 
-  peaks = useMemo(() => {
+  const items = useMemo(() => {
     if (!peaks) return []
     return peaks
   }, [peaks])
@@ -23,7 +23,7 @@ const PeaksList = ({ peaks }) => {
     push(urlStateKey, { ...urlState, currentModal: "NewPeaksItem" })
   }
 
-  return peaks.length > 0 ? (
+  return items.length > 0 ? (
     <>
       <ContentAreaToolbar>
         <Button
@@ -45,7 +45,7 @@ const PeaksList = ({ peaks }) => {
 
         {/* Render items: */}
 
-        {peaks.map((peak, index) => (
+        {items.map((peak, index) => (
           <PeaksListItem key={index} peak={peak} />
         ))}
       </DataGrid>
