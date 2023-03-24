@@ -17,6 +17,7 @@
     "assert": "^2.0.0",
     "autoprefixer": "^10.4.2",
     "babel-jest": "^29.3.1",
+    "babel-plugin-transform-import-meta": "^2.2.0",
     "cidr-regex": "^3.1.1",
     "communicator": "https://assets.juno.global.cloud.sap/libs/communicator@2.1.0/package.tgz",
     "ip-regex": "^5.0.0",
