@@ -53,10 +53,11 @@
     "webpack-dev-server": "^4.7.4"
   },
   "scripts": {
-    "start": "PORT=$APP_PORT webpack serve --mode development --hot",
+    "start_org": "PORT=$APP_PORT webpack serve --mode development --hot",
     "test": "jest",
-    "build": "webpack --mode production",
-    "production": "PORT=$APP_PORT webpack serve --mode production"
+    "build_org": "webpack --mode production",
+    "start": "PORT=$APP_PORT NODE_ENV=development node esbuild.config.js --serve --watch",
+    "build": "NODE_ENV=production node esbuild.config.js"
   },
   "peerDependencies": {
     "cidr-regex": "^3.1.1",
