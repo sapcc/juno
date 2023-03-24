@@ -14,6 +14,9 @@ if (!/.+\/.+\.js/.test(pkg.module))
   )
 
 const isProduction = process.env.NODE_ENV === "production"
+// If the jspm server fails and we cannot use external packages
+// in our import map then IGNORE_EXTERNALS (global env variable)
+// should be set to true
 const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
 // in dev environment we prefix output file with public
 let outfile = `${isProduction ? "" : "public/"}${pkg.main || pkg.module}`
@@ -23,54 +26,44 @@ const args = process.argv.slice(2)
 const watch = args.indexOf("--watch") >= 0
 const serve = args.indexOf("--serve") >= 0
 
+// helpers for console log
 const green = "\x1b[32m%s\x1b[0m"
 const yellow = "\x1b[33m%s\x1b[0m"
 const clear = "\033c"
 
-// shared config
-const config = {
-  bundle: true,
-  minify: isProduction,
-  // target: ["es2020"],
-  target: ["es2020"], //["chrome64", "firefox67", "safari11.1", "edge79"],
-  format: "esm",
-  platform: "browser",
-  // built-in loaders: js, jsx, ts, tsx, css, json, text, base64, dataurl, file, binary
-  loader: { ".js": "jsx" },
-  sourcemap: isProduction ? false : "both",
-  external:
-    isProduction && !IGNORE_EXTERNALS
-      ? Object.keys(pkg.peerDependencies || {})
-      : [],
-}
-
 const build = async () => {
-  // delete build folder
+  // delete build folder and re-create it as an empty folder
   await fs.rm(outdir, { recursive: true, force: true })
   await fs.mkdir(outdir, { recursive: true })
 
-  // build web workers
-  try {
-    const workerFiles = await fs.readdir("src/workers")
-    for (let f of workerFiles) {
-      await esbuild.build({
-        ...config,
-        entryPoints: [`src/workers/${f}`],
-        outfile: `${outdir}/workers/${f}`,
-      })
-    }
-  } catch (e) {
-    console.log("WARNING: BUILD WEB WORKERS", e.message)
-  }
-
   // build app
   let ctx = await esbuild.context({
-    ...config,
+    bundle: true,
+    minify: isProduction,
+    // target: ["es2020"],
+    target: ["es2020"], //["chrome64", "firefox67", "safari11.1", "edge79"],
+    format: "esm",
+    platform: "browser",
+    // built-in loaders: js, jsx, ts, tsx, css, json, text, base64, dataurl, file, binary
+    loader: { ".js": "jsx" },
+    sourcemap: !isProduction,
+    // here we exclude package from bundle which are defined in peerDependencies
+    // our importmap generator uses also the peerDependencies to create the importmap
+    // it means all packages defined in peerDependencies are in browser available via the importmap
+    external:
+      isProduction && !IGNORE_EXTERNALS
+        ? Object.keys(pkg.peerDependencies || {})
+        : [],
     entryPoints: [pkg.source],
     outdir,
+    // this step is important for performance reason.
+    // the main file (index.js) contains minimal code needed to
+    // load the app via dynamic import (splitting: true)
     splitting: true,
+    // we suport only esm!
     format: "esm",
     plugins: [
+      // minimal plugin to log the recompiling process.
       {
         name: "start/end",
         setup(build) {
@@ -78,9 +71,10 @@ const build = async () => {
             console.log(clear)
             console.log(yellow, "Compiling...")
           })
-          build.onEnd((result) => console.log(green, "Done!"))
+          build.onEnd(() => console.log(green, "Done!"))
         },
       },
+
       // this custom plugin rewrites SVG imports to
       // dataurls, paths or react components based on the
       // search param and size
@@ -183,6 +177,7 @@ const build = async () => {
     ],
   })
 
+  // watch and serve
   if (watch || serve) {
     if (watch) await ctx.watch()
     if (serve) {
