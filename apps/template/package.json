@@ -37,12 +37,9 @@
     "zustand": "^4.1.1"
   },
   "scripts": {
-    "start": "PORT=$APP_PORT webpack serve --mode development --hot",
-    "build": "webpack --mode production",
     "test": "jest",
-    "start2": "PORT=$APP_PORT NODE_ENV=development node esbuild.config.js --serve --watch",
-    "start3": "PORT=3006 NODE_ENV=development node esbuild.config.js --serve --watch",
-    "build2": "NODE_ENV=production node esbuild.config.js"
+    "start": "PORT=$APP_PORT NODE_ENV=development node esbuild.config.js --serve --watch",
+    "build": "NODE_ENV=production node esbuild.config.js"
   },
   "peerDependencies": {
     "@tanstack/react-query": "^4.28.0",
