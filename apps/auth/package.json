@@ -17,6 +17,7 @@
     "assert": "^2.0.0",
     "autoprefixer": "^10.4.2",
     "babel-jest": "^29.3.1",
+    "babel-plugin-transform-import-meta": "^2.2.0",
     "communicator": "https://assets.juno.global.cloud.sap/libs/communicator@2.1.0/package.tgz",
     "custom-event-polyfill": "^1.0.7",
     "esbuild": "^0.17.12",

@@ -1,5 +1,5 @@
 #!/bin/bash
-PACKAGES="@svgr/core @svgr/plugin-jsx sass postcss postcss-url"
+PACKAGES="babel-plugin-transform-import-meta"
 wb yarn workspace assets-overview add -D $PACKAGES
 wb yarn workspace auth add -D $PACKAGES
 wb yarn workspace dashboard add -D $PACKAGES
