@@ -2,8 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Converged Cloud Volta | Certificates</title>
     <link rel="icon" href="favicon.ico" sizes="any" />
+
+    <title>Volta Dev</title>
     <style>
       html {
         display: flex;
@@ -24,14 +25,21 @@
         flex: 1;
       }
     </style>
+    <script>
+      // automatically reload on build changes
+      new EventSource("/esbuild").addEventListener("change", () =>
+        location.reload()
+      )
+    </script>
   </head>
   <body>
     <script type="module">
-      import("./<%= MAIN_FILENAME %>").then((app) =>
-        app.mount(document.getElementById("root"),{props: JSON.parse('<%=PROPS%>')})
-      )
+      // appProps are generated in development env and added to the build
+      import appProps from "./build/appProps.js"
+      import("./build/index.js").then((app) => {
+        app.mount(document.getElementById("root"), { props: appProps })
+      })
     </script>
-
     <div id="root"></div>
   </body>
 </html>

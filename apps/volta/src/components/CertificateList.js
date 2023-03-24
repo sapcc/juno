@@ -104,7 +104,11 @@ const CertificateList = ({ ca }) => {
                   certificates have been created yet.
                 </p>
                 <p className="text-xl">Do you want to create a new one?</p>
-                <AddNewSSOButton className="mt-4" label={`Add new cert`} />
+                <AddNewSSOButton
+                  className="mt-4"
+                  label={`Add new cert`}
+                  onClick={onAddClicked}
+                />
               </Stack>
             )}
           </>
