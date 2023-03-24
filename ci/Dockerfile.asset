@@ -65,4 +65,3 @@ WORKDIR /
 
 # copy build results from base image to dist
 COPY --from=build "/tmp/$ASSET_PATH" /dist
-

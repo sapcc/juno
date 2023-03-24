@@ -1,32 +1,63 @@
-#!/bin/sh
+#!/bin/bash
 
 # exit on error
 set -e
 
 if [ ! -f "CODEOWNERS" ]; then
-  echo "This script must run from root of juno"
+  echo "This script must run from root of juno repo"
   exit
 fi
+
+function help() {
+  echo "Usage: build_assets.sh --asset-path||-ap --asset-name||-sn --root-path||-rp
+    Example: ./ci/scripts/build_asset.sh --asset-path apps/ --asset-name assets-overview --root-path /app
+    --root-path is optional default is /juno"
+  exit
+}
 
 if [[ "$1" == "--help" ]]; then
-  echo "Usage: build_assets.sh ASSET_NAME ASSET_PATH ROOT_PATH*"
-  echo "       ROOT_PATH is optional default is /juno"
-  exit
+  help
 fi
 
-ASSET_NAME=$1
+ROOT_PATH="/juno"
+while [[ $# -gt 0 ]]; do
+  case $1 in
+  --asset-name | -an)
+    ASSET_NAME="$2"
+    shift # past argument
+    shift # past value
+    ;;
+  --asset-path | -ap)
+    ASSET_PATH="$2"
+    shift # past argument
+    shift # past value
+    ;;
+  --root-path | -rp)
+    ROOT_PATH="$2"
+    shift # past argument
+    shift # past value
+    ;;
+  --help)
+    help
+    ;;
+  *)
+    echo "$1 unkown option!"
+    exit
+    ;;
+  esac
+done
+
 if [[ -z "$ASSET_NAME" ]]; then
   echo "No ASSET_NAME path found 😐"
   exit
 fi
 
-ASSET_PATH=$2
 if [[ -z "$ASSET_PATH" ]]; then
   echo "No ASSET_PATH path found 😐"
   exit
 fi
 
-ROOT_PATH=${3-"/juno"}
+ASSET_PATH="$ASSET_PATH$ASSET_NAME"
 
 echo "use ROOT_PATH  = $ROOT_PATH"
 echo "use ASSET_NAME = $ASSET_NAME"
@@ -107,4 +138,5 @@ fi
 cp "$ROOT_PATH/$ASSET_PATH/README.md" "/tmp/$ASSET_PATH/README.md"
 
 echo "create /tmp/$ASSET_PATH/package.tgz"
-cd "/tmp/$ASSET_PATH" && tar --exclude="package.tgz" -czf package.tgz .
+cd "/tmp/$ASSET_PATH"
+tar --exclude="package.tgz" -czf package.tgz .

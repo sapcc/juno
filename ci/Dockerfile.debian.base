@@ -1,0 +1,28 @@
+# This Dockerfile builds the base image that stores the entire juno repo 
+# and runs yarn install on every change.
+
+# This image is finally used to build the apps, libs and the assets server. 
+# The reason is the caching of node_modules!
+
+# base layer
+FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:18-bullseye-slim AS base
+
+LABEL source_repository="https://github.com/sapcc/juno"
+
+#RUN apk --no-cache add git ca-certificates rsync jq py3-pip build-base python3-dev py3-netifaces
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install --yes git ca-certificates rsync jq python3-pip 
+
+ARG SWIFT_CLIENT_VERSION="3.9.0"
+RUN pip3 --no-cache-dir install python-swiftclient==${SWIFT_CLIENT_VERSION} python-keystoneclient
+
+RUN npm i -g glob @jspm/generator
+
+RUN mkdir -p "/juno"
+ADD . /juno 
+
+WORKDIR /juno 
+
+RUN yarn install --update-checksums --silent ; \
+  if [ $? -ne 0 ]; then yarn install --update-checksums --silent; fi
+RUN npx browserslist@latest --update-db

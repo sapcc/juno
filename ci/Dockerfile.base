@@ -4,12 +4,13 @@
 # This image is finally used to build the apps, libs and the assets server. 
 # The reason is the caching of node_modules!
 
-# base layer
-FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:18-alpine AS base
+# docker run --rm -it --name juno -v /workspace/juno:/juno -v /workspace/temp/:/tmp juno:latest /bin/bash 
+
+FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:18-alpine
 
 LABEL source_repository="https://github.com/sapcc/juno"
 
-RUN apk --no-cache add git ca-certificates rsync jq
+RUN apk --no-cache add git ca-certificates rsync jq bash
 RUN npm i -g glob @jspm/generator
 
 RUN mkdir -p "/juno"
