@@ -3,7 +3,6 @@ import {
   Icon,
   DataGrid,
   DataGridRow,
-  DataGridColumn,
   DataGridCell,
   Stack,
   Spinner,
