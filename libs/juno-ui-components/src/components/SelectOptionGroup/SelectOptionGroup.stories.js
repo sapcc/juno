@@ -1,18 +1,18 @@
 import React from "react"
 import { Select } from "../Select/index.js"
-import { SelectGroup } from "./index.js"
+import { SelectOptionGroup } from "./index.js"
 import { SelectOption } from "../SelectOption/index.js"
 
 export default {
-  title: "Forms/Select/SelectGroup",
-  component: SelectGroup,
+  title: "Forms/Select/SelectOptionGroup",
+  component: SelectOptionGroup,
   argTypes: {},
 }
 
 const Template = ({children, ...args}) => {
   return (
     <Select open>
-      <SelectGroup {...args}>{children}</SelectGroup>
+      <SelectOptionGroup {...args}>{children}</SelectOptionGroup>
     </Select>
   )
 }

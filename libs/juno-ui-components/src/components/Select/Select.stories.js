@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Select } from "./index.js"
 import { SelectOption } from "../SelectOption/index.js"
-import { SelectGroup } from "../SelectGroup/index.js"
+import { SelectOptionGroup } from "../SelectOptionGroup/index.js"
 import { SelectDivider } from "../SelectDivider/index.js"
 import { Default as SelectOptionDefaultStory } from "../SelectOption/SelectOption.stories.js"
 
@@ -59,15 +59,15 @@ WithGroupAndDividers.parameters = {
 }
 WithGroupAndDividers.args = {
   children: [
-    <SelectGroup label="Group 1" key="1">
+    <SelectOptionGroup label="Group 1" key="1">
       <SelectOption value="1-1" key="1-1">Group 1 Value 1</SelectOption>
       <SelectOption value="1-2" key="1-2">Group 1 Value 2</SelectOption>
-    </SelectGroup>,
+    </SelectOptionGroup>,
     <SelectDivider key="2"/>,
-    <SelectGroup label="Group 2" key="3">
+    <SelectOptionGroup label="Group 2" key="3">
       <SelectOption value="2-1" key="2-1">Group 2 Value 1</SelectOption>
       <SelectOption value="2-2" key="2-2">Group 2 Value 2</SelectOption>
-    </SelectGroup>,
+    </SelectOptionGroup>,
   ]
 }
 
