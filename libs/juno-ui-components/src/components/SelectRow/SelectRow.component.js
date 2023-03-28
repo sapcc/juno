@@ -61,6 +61,7 @@ export const SelectRow = ({
   successtext,
   children,
   value,
+  onValueChange,
   onChange,
   onOpenChange,
   defaultValue,
@@ -116,7 +117,7 @@ export const SelectRow = ({
           labelClassName={ variant === "floating" ? "jn-pt-[0.8125rem]" : "" }
           name={name}
           id={id}
-          onValueChange={onChange}
+          onValueChange={onValueChange || onChange}
           onOpenChange={onOpenChange}
           disabled={disabled}
           invalid={isInvalid}
@@ -165,6 +166,8 @@ SelectRow.propTypes = {
   /** Passing a value turns the select into a controlled component. If you pass a value you must also specify an onChange handler to deal with value changes */
   value: PropTypes.string,
   /** Pass a handler to the Select element to execute once the value changes */
+  onValueChange: PropTypes.func,
+  /** Deprecated: Use `onValueChange` instead. */
   onChange: PropTypes.func,
   /** Pass handler to execute once the Selects open state changes */
   onOpenChange: PropTypes.func,
@@ -184,6 +187,7 @@ SelectRow.defaultProps = {
   invalid: false,
   errortext: "",
   value: undefined,
+  onValueChange: undefined,
   onChange: undefined,
   onOpenChange: undefined,
   defaultValue: undefined
