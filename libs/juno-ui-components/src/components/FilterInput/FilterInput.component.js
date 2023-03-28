@@ -43,6 +43,7 @@ const iconWrapperStyles = `
 `
 
 /** 
+-- Deprectated. For new implementations, use InputGroup and combine/compose input components as you need them. --
 A special Input to select key and value of a filter.
 */
 export const FilterInput = ({

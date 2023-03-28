@@ -33,6 +33,7 @@ const errortextStyles = `
 	jn-mb-1.5
 `
 /**
+-- Deprecated. For new implementations, combine and compose Input Group, Inputs and Pills as needed. --
 A component to hold a FilterInput, resulting FilterPills, and optional SearchBar for any filter-able content.
 */
 
