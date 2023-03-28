@@ -23,6 +23,34 @@ describe("SelectOption", () => {
     expect(screen.getByRole("option")).toBeInTheDocument()
   })
   
+  test.skip("renders a value as passed", async () => {
+    
+  })
+  
+  test.skip("renders a label as passed", async () => {
+    
+  })
+  
+  test.skip("renders children instead of label if both children and label are being passed", async () => {
+    
+  })
+  
+  test.skip("renders the value as a fallback label if neither children nor label are being passed", async () => {
+    
+  })
+  
+  test.skip("renders all children as passed", async () => {
+    
+  })
+  
+  test.skip("renders a className as passed", async () => {
+    
+  })
+  
+  test.skip("renders all props as passed", async () => {
+    
+  })
+  
 
   
 })
