@@ -11,9 +11,9 @@ const labelStyles = `
 
 /** A group of SelectOptions, can take an optional label. To render a visual border between SelectOptions or SelectGroups, use SelectDivider. */
 export const SelectOptionGroup = React.forwardRef(
-  ({children, label, ...props}, forwardedRef) => {
+  ({children, label, className, ...props}, forwardedRef) => {
     return (
-      <RadixSelect.Group {...props}>
+      <RadixSelect.Group className={`juno-select-option-group ${className}`} {...props}>
         { label ? 
             <RadixSelect.Label className={`juno-select-group-label ${labelStyles}`}>{label}</RadixSelect.Label>
           :
@@ -30,9 +30,12 @@ SelectOptionGroup.propTypes = {
   label: PropTypes.string,
   /** The child SelectOption elements to render in the group */
   children: PropTypes.node,
+  /** Pass a custom className */
+  className: PropTypes.string,
 }
 
 SelectOptionGroup.defaultProps = {
   children: null,
   label: "",
+  className: "",
 }
