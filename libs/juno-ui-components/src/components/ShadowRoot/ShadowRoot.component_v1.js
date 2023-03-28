@@ -8,7 +8,7 @@
  * @module ShadowRoot
  */
 import ReactDOM from "react-dom"
-import React, { useRef, useState } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,24 +39,65 @@ import PropTypes from "prop-types"
  * @param {Object} props
  * @returns {function} component
  */
-export const ShadowRoot = ({ mode, delegatesFocus, children }) => {
+export const ShadowRoot = ({
+  mode,
+  delegatesFocus,
+  styles,
+  themeClass,
+  customCssClasses,
+  children,
+}) => {
   // reference element which is replaced by the shadow dom element
-  const ref = useRef()
+  const placeholder = React.useRef()
   // hold shadow element in the state
-  const [shadowRoot, setShadowRoot] = useState()
+  const [shadowRoot, setShadowRoot] = React.useState()
+
+  const stylesWithFont = React.useMemo(() => {
+    // add import for font to styles
+    return (
+      "@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&family=IBM+Plex+Sans+Condensed:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&family=IBM+Plex+Serif:ital@0;1&display=swap'); " +
+      styles
+    )
+  }, [styles])
 
   React.useEffect(() => {
     // wait until the reference element is rendered!
-    if (!ref.current) return
+    if (!placeholder.current) return
     // create the shadow dom element
-    setShadowRoot(ref.current.attachShadow({ delegatesFocus, mode }))
+    const shadowRoot = placeholder.current.attachShadow({
+      delegatesFocus,
+      mode,
+    })
+
+    // deactivating constructed stylesheets, see above!
+    // apply styles if given
+    // if (stylesWithFont && constructableStylesheetsSupported) {
+    //   shadowRootElement.adoptedStyleSheets = toStyleSheet(stylesWithFont)
+    // }
+
+    // save shadow element in the state
+    setShadowRoot(shadowRoot)
   }, [])
 
   // if shadow element is available place children and styles iside it and return.
   // otherwise render the reference element
   return (
-    <div ref={ref} data-shadow-host="true" style={{ height: "100%" }}>
-      {shadowRoot && ReactDOM.createPortal(children, shadowRoot)}
+    <div ref={placeholder} data-shadow-host="true" style={{ height: "100%" }}>
+      {shadowRoot &&
+        ReactDOM.createPortal(
+          <>
+            {/* Include styles in a style tag for now until we have found a solution to the constructed stylesheet problem. See above */}
+            {/* {!constructableStylesheetsSupported && <style>{stylesWithFont}</style>} */}
+            <style>{stylesWithFont}</style>
+
+            <div
+              className={`shadow-body ${themeClass} ${customCssClasses || ""}`}
+            >
+              {children}
+            </div>
+          </>,
+          shadowRoot
+        )}
     </div>
   )
 }
@@ -65,6 +106,7 @@ export const ShadowRoot = ({ mode, delegatesFocus, children }) => {
 ShadowRoot.propTypes = {
   mode: PropTypes.oneOf(["open", "closed"]),
   delegatesFocus: PropTypes.bool,
+  styles: PropTypes.string,
 }
 
 // default values for properties
