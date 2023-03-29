@@ -28,6 +28,7 @@ import AssetDetailsMarkdown from "./AssetDetailsMarkdown"
 import AssetDetailsScripttag from "./AssetDetailsScripttag"
 import AssetDetailsAdvanced from "./AssetDetailsAdvanced"
 import { MessagesProvider } from "messages-provider"
+import { compareVersions } from "../helpers"
 
 const AssetDetailsFooter = ({ onCancelCallback }) => {
   return (
@@ -130,8 +131,10 @@ const AssetDetails = () => {
           : version
       return map
     }, {})
+
     return Object.keys(versionMap)
-      .sort((a, b) => (a > b ? -1 : b < a ? 1 : 0))
+      .sort(compareVersions())
+      .reverse()
       .map((version) => ({ value: version, label: versionMap[version] }))
   }, [data, assetName])
 
