@@ -12,11 +12,11 @@ const pillStyles = `
 	jn-p-px
 	jn-border
 	jn-rounded
-	jn-border-theme-filter-pill
+	jn-border-theme-background-lvl-4
 `
 
 const pillKeyStyles = `
-	jn-bg-theme-filter-pill-key
+	jn-bg-theme-background-lvl-3
 	jn-px-1
 	jn-py-0.5
 	jn-rounded-sm

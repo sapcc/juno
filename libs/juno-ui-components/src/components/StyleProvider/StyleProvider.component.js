@@ -4,21 +4,35 @@
  * to place the ui-components styles.
  * @module StyleProvider
  */
-import React from "react"
+import React, { useCallback, useEffect, useRef } from "react"
 import PropTypes from "prop-types"
 import { ShadowRoot } from "../ShadowRoot"
-import globalCss from "../../global.scss"
 import theme from "../../../tailwind.config"
-const styles = globalCss.toString()
+import Fonts from "./Fonts"
+import GlobalStyles, { styles } from "./GlobalStyles"
 
 // create the context for values to be provided to the nested components.
 const StylesContext = React.createContext()
 
+const APP_BODY_CSS_CLASS_NAME = "juno-app-body"
 /**
  * Functional component wich inserts the ui styles. It also creates a
  * shadow dom element with styes inside it if 'stylesWrapper' is equal
  * to "shadowRoot".
  * Accepted values for 'stylesWrapper' are 'head', 'inline' and 'shadowRoot'.
+ * New since 29.03.2023
+ * We have completely reworked this component. Both this component and ShadowRoot
+ * can be used independently. The stylesWrapper parameter is set to "inline" by default.
+ * If you want to use StyleProvider without inline styles, then the value of this
+ * parameter should be changed to "head".
+ * Examples:
+ * Standalone:
+ * * <StyleProvider stylesWrapper="head">Content</StyleProvider>
+ *   styles and fonts are added to the document.head
+ * * <StyleProvider>Content</StyleProvider>
+ *   styles and fonts are added inline
+ * ShadowRoot:
+ *   <ShadowRoot><StyleProvider>Content</StyleProvider></ShadowRoot>
  * @param {object} props
  * @returns
  */
@@ -30,77 +44,43 @@ export const StyleProvider = ({
 }) => {
   // theme class default to theme-dark
   const themeClass = themeClassName || "theme-dark"
+
   // manage custom css classes (useStyles)
-  const [customCssClasses, setCustomCssClasses] = React.useState("")
+  const customCssClasses = useRef(APP_BODY_CSS_CLASS_NAME + " " + themeClass)
+  const container = useRef()
 
-  React.useEffect(() => {
-    if (!document.querySelector(`[data-juno-style-provider-fonts="true"]`)) {
-      // Add font links to head (Plex font from google CDN)
-      const link1 = document.createElement("link")
-      link1.rel = "preconnect"
-      link1.href = "https://fonts.googleapis.com"
+  // Deprecated!
+  // Only necessary in case the stylesWrapper is set to shadowRoot.
+  // This functionality exists to provide backwards compatibility.
+  // Should be removed in perspective
+  const Wrapper = React.useCallback(
+    ({ children }) => {
+      if (stylesWrapper === "shadowRoot")
+        return <ShadowRoot mode={shadowRootMode}>{children}</ShadowRoot>
+      return children
+    },
+    [stylesWrapper, shadowRootMode]
+  )
 
-      const link2 = document.createElement("link")
-      link2.rel = "preconnect"
-      link2.href = "https://fonts.gstatic.com"
-      link2.crossOrigin = "anonymous"
-
-      const link3 = document.createElement("link")
-      link3.rel = "stylesheet"
-      link3.href =
-        "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&family=IBM+Plex+Sans+Condensed:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&family=IBM+Plex+Serif:ital@0;1&display=swap"
-      link3.setAttribute("data-juno-style-provider-fonts", "true")
-
-      document.head.appendChild(link1)
-      document.head.appendChild(link2)
-      document.head.appendChild(link3)
-    }
-
-    // undefined or inline are handled by renderer or already added
-    if (
-      !stylesWrapper ||
-      stylesWrapper === "inline" ||
-      stylesWrapper === "shadowRoot" ||
-      document.querySelector(`[data-style-provider="${stylesWrapper}"]`)
-    )
-      return
-    // did not return yet -> stylesWrapper is head
-    let wrapper = document.head
-
-    // create and add style element to head
-    const style = document.createElement("style")
-    style.setAttribute("data-style-provider", stylesWrapper)
-    if (style.styleSheet) {
-      // This is required for IE8 and below.
-      style.styleSheet.cssText = styles
-    } else {
-      style.appendChild(document.createTextNode(styles))
-    }
-    wrapper.prepend(style)
+  // this function makes it possible to change container css class on the fly
+  const setCustomCssClasses = useCallback((value) => {
+    if (!container.current || typeof value !== "string") return
+    container.current.className = `${APP_BODY_CSS_CLASS_NAME} ${themeClass} ${value}`
   }, [])
 
   return (
-    <StylesContext.Provider value={{ styles, theme, setCustomCssClasses }}>
-      {/* handle shadowRoot -> create shadow element and insert 
-          styles and children into it */}
-      {stylesWrapper === "shadowRoot" ? (
-        <ShadowRoot
-          mode={shadowRootMode}
-          styles={styles}
-          themeClass={themeClass}
-          customCssClasses={customCssClasses}
+    <Wrapper>
+      <Fonts inline={stylesWrapper !== "head"} />
+      <GlobalStyles inline={stylesWrapper !== "head"} />
+      <StylesContext.Provider value={{ styles, theme, setCustomCssClasses }}>
+        <div
+          className={`juno-app-body ${customCssClasses.current}`}
+          ref={container}
         >
           {children}
-        </ShadowRoot>
-      ) : (
-        <div className={`${themeClass} ${customCssClasses || ""}`}>
-          {stylesWrapper === "inline" && (
-            <style data-style-provider="inline">{styles}</style>
-          )}
-          {children}
         </div>
-      )}
-    </StylesContext.Provider>
+      </StylesContext.Provider>
+    </Wrapper>
   )
 }
 
@@ -114,7 +94,7 @@ StyleProvider.propTypes = {
 
 // define default values
 StyleProvider.defaultProps = {
-  stylesWrapper: undefined,
+  stylesWrapper: "inline",
   theme: undefined,
 }
 

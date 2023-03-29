@@ -22,7 +22,7 @@ RUN echo -e \
   \t\t <link rel="icon" type="image/png" sizes="16x16"href="###FAVICON_16X16_URL###"/> \n\
   \t\t <link rel="icon" type="image/png" sizes="32x32"href="###FAVICON_32X32_URL###"/> \n\
   \t </head>\n\
-  \t <body style="height: 100vh; display: flex; flex-direction: column; flex-grow: 1; margin: 0; padding: 0;">\n\
+  \t <body style="height: 100vh; flex-grow: 1; margin: 0; padding: 0;">\n\
   \t\t <script \n\
   \t\t\t src="###ASSETS_HOST###/apps/widget-loader@latest/build/app.js" \n\ 
   \t\t\t data-name="###NAME###" \n\

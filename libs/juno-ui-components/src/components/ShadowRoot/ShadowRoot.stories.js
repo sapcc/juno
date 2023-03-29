@@ -15,5 +15,4 @@ export default {
 export const EncapsulateStyles = Template.bind({})
 EncapsulateStyles.args = {
   mode: "closed",
-  styles: "h1 {color: orange;}",
 }

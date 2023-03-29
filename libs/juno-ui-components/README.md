@@ -32,7 +32,7 @@ To be able to make full use of the predefined colors and other custom properties
 ```js
 module.exports = {
   presets: [
-    require('juno-ui-components/tailwind.config')
+    require("juno-ui-components/build/lib/tailwind.config")
   ],
  ...
 }

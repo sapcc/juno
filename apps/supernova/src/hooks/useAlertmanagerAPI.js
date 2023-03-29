@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import useStore from "./useStore"
-
 let workerUrl = new URL("workers/api.js", import.meta.url)
 
 const loadWorker = fetch(workerUrl)
@@ -11,39 +10,10 @@ const loadWorker = fetch(workerUrl)
   })
 
 const useAlertmanagerAPI = (apiEndpoint) => {
-  const setAlerts = useStore((state) => state.alerts.setItems)
-  const setSeverityCountsPerRegion = useStore((state) => state.alerts.setSeverityCountsPerRegion)
-  const setTotalCounts = useStore((state) => state.alerts.setTotalCounts)
+  const setAlertsData = useStore((state) => state.alerts.setAlertsData)
   const setIsLoading = useStore((state) => state.alerts.setIsLoading)
   const setIsUpdating = useStore((state) => state.alerts.setIsUpdating)
   const isUserActive = useStore((state) => state.userActivity.isActive)
-
-  /** Counts total items and total severities */
-  const countTotalSeverities = (items) => {
-      let total = items.length
-      let critical = items.reduce((acc, current) => current.labels?.severity === "critical" ? ++acc : acc, 0)
-      let warning = items.reduce((acc, current) => current.labels?.severity === "warning" ? ++acc : acc, 0)
-      let info = items.reduce((acc, current) => current.labels?.severity === "info" ? ++acc : acc, 0)
-      
-      return {total, critical, warning, info}
-  }
-  
-  /** Counts severities per region */
-  const countSeveritiesPerRegion = (items) => {
-    let severityCountsPerRegion = {}
-    // find all regions (deduplicate by using Map), sort by region name
-    const regions = [...new Map(items.map(item => [item.labels?.region, item.labels?.region]).sort()).keys()]
-
-    regions.forEach((region) => {
-      let critical = items.reduce((acc, current) => current.labels?.region === region && current.labels?.severity === "critical" ? ++acc : acc, 0)
-      let warning = items.reduce((acc, current) => current.labels?.region === region && current.labels?.severity === "warning" ? ++acc : acc, 0)
-      let info = items.reduce((acc, current) => current.labels?.region === region && current.labels?.severity === "info" ? ++acc : acc, 0)
-      
-      severityCountsPerRegion[region] = {critical, warning, info}
-    })
-  
-    return severityCountsPerRegion
-  }
 
   // Create a web worker to get updates from the alert manager api
   useEffect(() => {
@@ -59,9 +29,7 @@ const useAlertmanagerAPI = (apiEndpoint) => {
         const action = e.data.action
         switch (action) {
           case "ALERTS_UPDATE":
-            setAlerts(e.data.items)
-            setSeverityCountsPerRegion(countSeveritiesPerRegion(e.data.items))
-            setTotalCounts(countTotalSeverities(e.data.items))
+            setAlertsData({ items: e.data.alerts, counts: e.data.counts })
             break
           case "ALERTS_FETCH_START":
             setIsUpdating(true)

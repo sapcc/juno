@@ -1,5 +1,5 @@
 import React from "react"
-import create from "zustand"
+import { create } from "zustand"
 import { devtools } from "zustand/middleware"
 
 import FlagAustralia from "./assets/images/flag_australia.svg"

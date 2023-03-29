@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { devtools } from 'zustand/middleware'
+import { devtools } from "zustand/middleware"
 
 const createUserActivitySlice = (set, get) => ({
   userActivity: {
@@ -20,42 +20,21 @@ const createAlertsSlice = (set, get) => ({
     isLoading: false,
     updatedAt: null,
 
-    setItems: (items) =>
-      set((state) => {
-        return {
-          alerts: {
-            ...state.alerts,
-            items,
-            isLoading: false,
-            isUpdating: false,
-            updatedAt: Date.now(),
-          },
-        }
-      }),
-    setSeverityCountsPerRegion: (severityCountsPerRegion) =>
-      set((state) => {
-        return {
-          alerts: {
-            ...state.alerts,
-            severityCountsPerRegion
-          }
-        }
-      }),
-    setTotalCounts: (totalCounts) =>
-      set((state) => {
-        return {
-          alerts: {
-            ...state.alerts,
-            totalCounts
-          }
-        }
-      }),
+    setAlertsData: ({ items, counts }) =>
+      set((state) => ({
+        alerts: {
+          ...state.alerts,
+          items,
+          totalCounts: counts?.global,
+          severityCountsPerRegion: counts?.regions,
+          isLoading: false,
+          isUpdating: false,
+          updatedAt: Date.now(),
+        },
+      })),
+
     setIsLoading: (value) =>
-      set((state) => {
-        return {
-          alerts: { ...state.alerts, isLoading: value },
-        }
-      }),
+      set((state) => ({ alerts: { ...state.alerts, isLoading: value } })),
     setIsUpdating: (value) =>
       set((state) => ({ alerts: { ...state.alerts, isUpdating: value } })),
   },
@@ -71,18 +50,20 @@ const createFiltersSlice = (set, get) => ({
         return {
           filters: {
             ...state.filters,
-            keys
+            keys,
           },
         }
       }),
   },
 })
 
-const useStore = create(devtools((set, get) => ({
-  ...createAlertsSlice(set, get),
-  ...createUserActivitySlice(set, get),
-  ...createFiltersSlice(set, get),
-  urlStateKey: "supernova",
-})))
+const useStore = create(
+  devtools((set, get) => ({
+    ...createAlertsSlice(set, get),
+    ...createUserActivitySlice(set, get),
+    ...createFiltersSlice(set, get),
+    urlStateKey: "supernova",
+  }))
+)
 
 export default useStore

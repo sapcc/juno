@@ -21,6 +21,8 @@ const App = (props = {}) => {
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
 
+  const embedded = props.embedded === "true" || props.embedded === true
+
   // on app initial load save Endpoint and URL_STATE_KEY so it can be
   // used from overall in the application
   React.useEffect(() => {
@@ -38,7 +40,7 @@ const App = (props = {}) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AppShell pageHeader={CustomPageHeader} embedded={props.embedded}>
+      <AppShell pageHeader={CustomPageHeader} embedded={embedded}>
         <MessagesProvider>
           <AppContent props={props} />
         </MessagesProvider>

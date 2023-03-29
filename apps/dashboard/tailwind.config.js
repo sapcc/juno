@@ -12,23 +12,20 @@ function withOpacity(variableName) {
 }
 
 module.exports = {
-  presets: [
-    require('juno-ui-components/tailwind.config')
-  ],
-  prefix: '', // important, do not change
+  presets: [require("juno-ui-components/build/lib/tailwind.config")],
+  prefix: "", // important, do not change
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
     extend: {
       backgroundImage: (theme) => ({
-        'earth-top': "url('/assets/images/background_header.png')"
+        "earth-top": "url('/assets/images/background_header.png')",
       }),
       backgroundColor: {
-        theme: {
-        },
+        theme: {},
       },
       transitionProperty: {
-        'max-height': 'max-height'
-      }
+        "max-height": "max-height",
+      },
     },
   },
   corePlugins: {

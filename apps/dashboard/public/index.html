@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="favicon.ico" />
-    <!-- <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" /> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta charset="UTF-8" />
+    <link rel="icon" href="favicon.ico" sizes="any" />
 
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <title>Dashboard Dev</title>
     <style>
       html {
         display: flex;
@@ -17,8 +13,6 @@
         padding: 0;
       }
       body {
-        display: flex;
-        flex-direction: column;
         flex-grow: 1;
         height: 100vh;
         margin: 0;
@@ -26,20 +20,23 @@
       }
       #root {
         display: inline;
-        flex: 1;
       }
     </style>
-    <title>Converged Cloud</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-
-    <script type="module">
-      import("./<%= MAIN_FILENAME %>").then((app) =>
-        app.mount(document.getElementById("root"),{props: JSON.parse('<%=PROPS%>')})
+    <script>
+      // automatically reload on build changes
+      new EventSource("/esbuild").addEventListener("change", () =>
+        location.reload()
       )
     </script>
-
+  </head>
+  <body>
+    <script type="module">
+      // appProps are generated in development env and added to the build
+      import appProps from "./build/appProps.js"
+      import("./build/index.js").then((app) => {
+        app.mount(document.getElementById("root"), { props: appProps })
+      })
+    </script>
     <div id="root"></div>
   </body>
 </html>
