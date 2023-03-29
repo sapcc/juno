@@ -6,11 +6,11 @@
 import React, { useInsertionEffect } from "react"
 
 const CSS_FONTS_URL =
-  "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&family=IBM+Plex+Sans+Condensed:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&family=IBM+Plex+Serif:ital@0;1&display=swap"
+  "https://assets.juno.qa-de-1.cloud.sap/assets/fonts/plex/css/ibm-plex.min.css"
 
 const STYLE_ID = "juno-style-provider-golbal-fonts"
 const Fonts = ({ inline }) => {
-  // add fonts to HEAD
+  // add fonts to document.head
   useInsertionEffect(() => {
     // add necessary prerequisites to HEAD to use google fonts
     if (!document.querySelector(`[id="${STYLE_ID}"]`)) {
@@ -36,6 +36,8 @@ const Fonts = ({ inline }) => {
   }, [])
 
   if (!inline) return null
+
+  // add fonts inline
   return (
     <style
       {...{ [`data-${STYLE_ID}`]: "" }}

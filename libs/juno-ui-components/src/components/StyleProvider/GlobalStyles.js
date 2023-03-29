@@ -10,7 +10,7 @@ const styles = globalCss.toString()
 const GLOBAL_STYLE_ID = "juno-style-provider-global-styles"
 
 const GlobalStyles = ({ inline }) => {
-  // add to HEAD
+  // add to document.head
   useInsertionEffect(() => {
     // do nothing if inline or already presented
     if (inline || document.querySelector(`[id="${GLOBAL_STYLE_ID}"]`)) return
@@ -22,6 +22,8 @@ const GlobalStyles = ({ inline }) => {
 
     document.head.append(style)
   }, [])
+
+  // add styles inline
   if (!inline) return null
   return <style {...{ [`data-${GLOBAL_STYLE_ID}`]: "" }}>{styles}</style>
 }
