@@ -1,33 +1,19 @@
 import * as React from "react"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { cleanup, render, screen, fireEvent } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { act } from 'react-dom/test-utils'
 import { Select } from "./index"
 import { SelectOption } from "../SelectOption/index"
 
-/** 
-Testing user interactions
----
-Testing user interactions with radix and jest seems hard and requires some mocking / polyfilling fpr ResizeObserver as per the below issues.
-Otherwise tests will fail with "ResizeObserver is not defined".
-
-https://github.com/radix-ui/primitives/issues/856
-https://github.com/radix-ui/primitives/issues/1822
-https://github.com/ZeeCoder/use-resize-observer/issues/40
-https://stackoverflow.com/questions/64558062/how-to-mock-resizeobserver-to-work-in-unit-tests-using-react-testing-library
-
-Below, ResizeObserver seems to work, the rest has not been looked into yet. Affected tests are being skipped for the time being.
-
-*/
-
-// Mock ResizeObserver
-class ResizeObserver {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-}
+const mockOnValueChange = jest.fn()
+const mockOnOpenChange = jest.fn()
 
 describe("Select", () => {
+  
+  afterEach(() => {
+    cleanup()
+    jest.clearAllMocks()
+  })
   
   test("renders a Select", async () => {
     render(<Select />)
@@ -81,8 +67,6 @@ describe("Select", () => {
   })
   
   test("renders an open Select as passed", async () => {
-    // Using the cheap mock above:
-    window.ResizeObserver = ResizeObserver;
     render(<Select open onOpenChange={ () => {} }>
       <SelectOption value="1"></SelectOption>
     </Select>)
@@ -121,9 +105,9 @@ describe("Select", () => {
     expect(screen.getByRole("combobox")).not.toHaveTextContent("Option 3")    
   })
   
-  test.skip("allows user to open a Select by clicking", async () => {
+  test("allows user to open a Select by clicking on it", async () => {
     render(
-      <Select>
+      <Select onOpenChange={mockOnOpenChange}>
         <SelectOption value="1">Option 1</SelectOption>
         <SelectOption value="2">Option 2</SelectOption>
         <SelectOption value="3">Option 3</SelectOption>
@@ -132,24 +116,69 @@ describe("Select", () => {
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument()
     await userEvent.click(screen.getByRole("combobox"))
-    // Test does not find an element with role="listbox"?
     expect(screen.getByRole("listbox")).toBeInTheDocument()
+    expect(mockOnOpenChange).toHaveBeenCalled()
   })
   
-  test.skip("allows user to select a value on an uncontrolled Select", async () => {
-    
-  })
-  
-  test.skip("allows user to select a value on a controlled Select", async () => {
-    
-  })
-  
-  test.skip("allows user to change a value on an uncontrolled Select", async () => {
-    
+  test("allows user to change a value on an uncontrolled Select", async () => {
+    render(
+      <Select defaultValue="val-1" onValueChange={mockOnValueChange}>
+        <SelectOption value="val-1">Option 1</SelectOption>
+        <SelectOption value="val-2">Option 2</SelectOption>
+        <SelectOption value="val-3">Option 3</SelectOption>
+      </Select>
+    )
+    const select = screen.getByRole("combobox")
+    expect(select).toBeInTheDocument()
+    expect(select).toHaveTextContent("Option 1")
+    await userEvent.click(select)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    await userEvent.click(screen.getByRole("option", { name: "Option 2" }))
+    expect(select).toHaveTextContent("Option 2")
+    expect(mockOnValueChange).toHaveBeenCalledWith("val-2")
   })
   
   test.skip("allows user to change a value on a controlled Select", async () => {
-    
+    render(
+      <Select value="val-2" onValueChange={mockOnValueChange}>
+        <SelectOption value="val-1">Option 1</SelectOption>
+        <SelectOption value="val-2">Option 2</SelectOption>
+        <SelectOption value="val-3">Option 3</SelectOption>
+      </Select>
+    )
+    const select = screen.getByRole("combobox")
+    expect(select).toBeInTheDocument()
+    expect(select).toHaveTextContent("Option 2")
+    await userEvent.click(select)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    await userEvent.click(screen.getByRole("option", { name: "Option 3" }))
+    expect(select).toHaveTextContent("Option 3")
+    expect(mockOnValueChange).toHaveBeenCalledWith("val-3")
+  })
+  
+  test("renders a className to thecontrolled Select trigger button as passed", async () => {
+    render(
+      <Select className="my-select-class">
+        <SelectOption value="1">Option 1</SelectOption>
+        <SelectOption value="2">Option 2</SelectOption>
+        <SelectOption value="3">Option 3</SelectOption>
+      </Select>
+    )
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveClass("my-select-class")
+  })
+  
+  // Skip until we have a decision whether we want to pass props to the trigger?
+  test("renders all props as passed", async () => {
+    render(
+      <Select data-lolol="123">
+        <SelectOption value="1">Option 1</SelectOption>
+        <SelectOption value="2">Option 2</SelectOption>
+        <SelectOption value="3">Option 3</SelectOption>
+      </Select>
+    )
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveAttribute("data-lolol", "123")
   })
   
 })

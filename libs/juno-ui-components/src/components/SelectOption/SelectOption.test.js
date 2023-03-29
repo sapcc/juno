@@ -1,25 +1,17 @@
 import * as React from "react"
-import { render, screen } from "@testing-library/react"
+import { cleanup, render, screen } from "@testing-library/react"
 import { Select } from "../Select/index"
 import { SelectOption } from "../SelectOption/index"
 
-// Mock ResizeObserver
-class ResizeObserver {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-}
 
 describe("SelectOption", () => {
   
-  /* Skip for now, as ResizeObserver seems to cause errors here. Nothing to do with SelectOption but with the necessity to 1. render the option into a Select, and 
-  2) render the Select open, otherwise SelectOptions would not be rendered.
+  afterEach(() => {
+    cleanup();
+    jest.clearAllMocks();
+  });
   
-  For some reason, ResizeObserver Mock does not work as it does in Select.test.js
-  
-  */
-  test.skip("renders a SelectOptionGroup", async () => {
-    window.ResizeObserver = ResizeObserver;
+  test("renders a SelectOptionGroup", async () => {
     render(
       <Select open>
         <SelectOption />
@@ -28,34 +20,57 @@ describe("SelectOption", () => {
     expect(screen.getByRole("option")).toBeInTheDocument()
   })
   
-  test.skip("renders a value as passed", async () => {
-    
+  test("renders a label as passed", async () => {
+    render(
+      <Select open>
+        <SelectOption label="my-option"/>
+      </Select>
+    )
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveTextContent("my-option")
   })
   
-  test.skip("renders a label as passed", async () => {
-    
+  test("renders children as passed", async () => {
+    const child = "my-child-label"
+    render(
+      <Select open>
+        <SelectOption>{child}</SelectOption>
+      </Select>
+    )
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveTextContent("my-child-label")
   })
   
-  test.skip("renders children instead of label if both children and label are being passed", async () => {
-    
+  test("renders children instead of label if both children and label are being passed", async () => {
+    const child = "my-child-label"
+    render(
+      <Select open>
+        <SelectOption label="my-label">{child}</SelectOption>
+      </Select>
+    )
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveTextContent("my-child-label")
+    expect(screen.getByRole("option")).not.toHaveTextContent("my-label")
   })
   
-  test.skip("renders the value as a fallback label if neither children nor label are being passed", async () => {
-    
+  test("renders a className as passed", async () => {
+    render(
+      <Select open>
+        <SelectOption className="my-fancy-class"/>
+      </Select>
+    )
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveClass("my-fancy-class")
   })
   
-  test.skip("renders all children as passed", async () => {
-    
+  test("renders all props as passed", async () => {
+    render(
+      <Select open>
+        <SelectOption data-lolol="123"/>
+      </Select>
+    )
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveAttribute("data-lolol", "123")
   })
-  
-  test.skip("renders a className as passed", async () => {
-    
-  })
-  
-  test.skip("renders all props as passed", async () => {
-    
-  })
-  
-
   
 })

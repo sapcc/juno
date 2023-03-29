@@ -53,6 +53,7 @@ export const Select = React.forwardRef(
     children,
     className,
     defaultOpen,
+    defaultValue,
     disabled,
     error,
     id,
@@ -131,7 +132,7 @@ export const Select = React.forwardRef(
         onValueChange={onValueChange}
         value={value}
         open={open}
-        {...props}
+        defaultValue={defaultValue}
       >
         <RadixSelect.Trigger 
           id={id}
@@ -151,6 +152,7 @@ export const Select = React.forwardRef(
             ${ className }
           `}
           ref={forwardedRef}
+          {...props}
         >
           { 
             isLoading || hasError ?
@@ -217,6 +219,8 @@ Select.propTypes = {
   position: PropTypes.oneOf(["popper", "align-items"]),
   /** Whether the Select has been positively validated */
   valid: PropTypes.bool,
+  /** The default value of the uncontrolled Select */
+  defaultValue: PropTypes.string,
   /** The value of the Select (controlled mode) */
   value: PropTypes.string,
   /** The width of the select. Either 'full' (default) or 'auto'. */
@@ -241,6 +245,7 @@ Select.defaultProps = {
   placeholder: "Select…",
   position: "popper",
   valid: false,
+  defaultValue: undefined,
   value: undefined,
   width: "full",
 }
