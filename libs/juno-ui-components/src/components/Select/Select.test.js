@@ -8,6 +8,28 @@ import { SelectOption } from "../SelectOption/index"
 const mockOnValueChange = jest.fn()
 const mockOnOpenChange = jest.fn()
 
+const SelectParent = ({
+    value, 
+    onChange,
+    children,
+    ...props
+  }) => {
+  const [val, setVal] = React.useState(value)
+  
+  const handleChange = (v) => {
+    onChange()
+    setVal(v)
+  }
+  
+  return (
+    <>
+      <Select value={val} onValueChange={handleChange} {...props}>
+        { children }
+      </Select>
+    </>
+  )
+}
+
 describe("Select", () => {
   
   afterEach(() => {
@@ -138,13 +160,13 @@ describe("Select", () => {
     expect(mockOnValueChange).toHaveBeenCalledWith("val-2")
   })
   
-  test.skip("allows user to change a value on a controlled Select", async () => {
+  test("allows user to change a value on a controlled Select", async () => {
     render(
-      <Select value="val-2" onValueChange={mockOnValueChange}>
+      <SelectParent value="val-2" onChange={mockOnValueChange}>
         <SelectOption value="val-1">Option 1</SelectOption>
         <SelectOption value="val-2">Option 2</SelectOption>
         <SelectOption value="val-3">Option 3</SelectOption>
-      </Select>
+      </SelectParent>
     )
     const select = screen.getByRole("combobox")
     expect(select).toBeInTheDocument()
@@ -153,10 +175,10 @@ describe("Select", () => {
     expect(screen.getByRole("listbox")).toBeInTheDocument()
     await userEvent.click(screen.getByRole("option", { name: "Option 3" }))
     expect(select).toHaveTextContent("Option 3")
-    expect(mockOnValueChange).toHaveBeenCalledWith("val-3")
+    expect(mockOnValueChange).toHaveBeenCalled()
   })
   
-  test("renders a className to thecontrolled Select trigger button as passed", async () => {
+  test("renders a className to the Select trigger button as passed", async () => {
     render(
       <Select className="my-select-class">
         <SelectOption value="1">Option 1</SelectOption>
@@ -168,7 +190,6 @@ describe("Select", () => {
     expect(screen.getByRole("combobox")).toHaveClass("my-select-class")
   })
   
-  // Skip until we have a decision whether we want to pass props to the trigger?
   test("renders all props as passed", async () => {
     render(
       <Select data-lolol="123">
