@@ -24,7 +24,7 @@
     "interweave": "^13.0.0",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
-    "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.2.3/package.tgz",
+    "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz",
     "oauth": "https://assets.juno.global.cloud.sap/libs/oauth@1.1.0/package.tgz",
     "postcss": "^8.4.21",
     "postcss-url": "^10.1.3",
@@ -45,7 +45,7 @@
   "peerDependencies": {
     "communicator": "2.1.0",
     "custom-event-polyfill": "^1.0.7",
-    "juno-ui-components": "1.2.3",
+    "juno-ui-components": "latest",
     "oauth": "1.1.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
