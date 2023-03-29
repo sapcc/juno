@@ -12,6 +12,7 @@ const ShellLayout = ({children}) => {
   const mainStyles = `
     py-4
     pl-4
+    bg-theme-global-bg
   `
 
 
