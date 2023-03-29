@@ -94,6 +94,12 @@ describe("SelectRow", () => {
 		expect(screen.getByTestId("select-row")).toHaveAttribute("data-lolol", 'some-prop')
 	})
 	
+	/*
+	
+	Below tests for user interactions are being skipped for now, as Radix-UI-select as we use in Select can not be tested the convenient, react-testing way. For more info, see ../Select/Select.test.js.
+	
+	*/
+	
 	test.skip("fires onChange handler as passed", async () => {
 		const handleChange = jest.fn()
 		render(

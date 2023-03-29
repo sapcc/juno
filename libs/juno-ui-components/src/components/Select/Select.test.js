@@ -16,6 +16,8 @@ https://github.com/radix-ui/primitives/issues/1822
 https://github.com/ZeeCoder/use-resize-observer/issues/40
 https://stackoverflow.com/questions/64558062/how-to-mock-resizeobserver-to-work-in-unit-tests-using-react-testing-library
 
+Below, ResizeObserver seems to work, the rest has not been looked into yet. Affected tests are being skipped for the time being.
+
 */
 
 // Mock ResizeObserver

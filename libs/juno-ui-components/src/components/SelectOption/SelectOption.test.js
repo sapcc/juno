@@ -12,7 +12,12 @@ class ResizeObserver {
 
 describe("SelectOption", () => {
   
-  // Skip for now, as ResizeObserver seems to cause errors here. Nothing to do with SelectOption but with the necessity to 1. render the option into a Select, and 2) render the Select open, otherwise SelectOptions woul not be rendered:
+  /* Skip for now, as ResizeObserver seems to cause errors here. Nothing to do with SelectOption but with the necessity to 1. render the option into a Select, and 
+  2) render the Select open, otherwise SelectOptions would not be rendered.
+  
+  For some reason, ResizeObserver Mock does not work as it does in Select.test.js
+  
+  */
   test.skip("renders a SelectOptionGroup", async () => {
     window.ResizeObserver = ResizeObserver;
     render(
