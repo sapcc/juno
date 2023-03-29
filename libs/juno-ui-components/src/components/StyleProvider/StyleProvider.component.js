@@ -73,10 +73,7 @@ export const StyleProvider = ({
       <Fonts inline={stylesWrapper !== "head"} />
       <GlobalStyles inline={stylesWrapper !== "head"} />
       <StylesContext.Provider value={{ styles, theme, setCustomCssClasses }}>
-        <div
-          className={`juno-app-body ${customCssClasses.current}`}
-          ref={container}
-        >
+        <div className={customCssClasses.current} ref={container}>
           {children}
         </div>
       </StylesContext.Provider>
