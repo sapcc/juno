@@ -23,7 +23,7 @@ const APP_BODY_CSS_CLASS_NAME = "juno-app-body"
  * New since 29.03.2023
  * We have completely reworked this component. Both this component and ShadowRoot
  * can be used independently. The stylesWrapper parameter is set to "inline" by default.
- * If you want to use StyleProvider without shadowRoot, then the value of this
+ * If you want to use StyleProvider without inline styles, then the value of this
  * parameter should be changed to "head".
  * Examples:
  * Standalone:
