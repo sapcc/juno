@@ -1,11 +1,38 @@
 import * as React from "react"
-import { render, screen } from "@testing-library/react"
+import { cleanup, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { SelectRow } from "./index"
 import { SelectOption } from "../SelectOption/index"
 
+const mockOnValueChange = jest.fn()
+const mockOnOpenChange = jest.fn()
+
+const SelectRowParent = ({
+	value,
+	onValueChange,
+	children,
+	...props
+}) => {
+	const [val, setVal] = React.useState(value)
+	
+	const handleChange = (v) => {
+		onValueChange()
+		setVal(v)
+	}
+	
+	return (
+		<SelectRow value={value} onValueChange={handleChange} {...props}>
+			{ children }
+		</SelectRow>
+	)
+}
 
 describe("SelectRow", () => {
+	
+	afterEach(() => {
+		cleanup()
+		jest.clearAllMocks()
+	})
 	
 	test("renders a select row", async () => {
 		render(<SelectRow data-testid="select-row" />)
@@ -94,67 +121,96 @@ describe("SelectRow", () => {
 		expect(screen.getByTestId("select-row")).toHaveAttribute("data-lolol", 'some-prop')
 	})
 	
-	/*
-	
-	Below tests for user interactions are being skipped for now, as Radix-UI-select as we use in Select can not be tested the convenient, react-testing way. For more info, see ../Select/Select.test.js.
-	
-	*/
-	
-	test.skip("fires onChange handler as passed", async () => {
-		const handleChange = jest.fn()
+	test("renders an open Select as passed", async () => {
 		render(
-			<SelectRow onChange={handleChange}>
+			<SelectRow open>
 				<SelectOption value="v-1" label="Value 1" />
 				<SelectOption value="v-2" label="Value 2"/>
 			</SelectRow>
 		)
-		await userEvent.selectOptions(
-			// Find the select element
-			screen.getByRole('combobox'),
-			// Find and select the Value 2 option
-			screen.getByRole('option', {name: 'Value 2'}),
-		)
-		expect(handleChange).toHaveBeenCalledTimes(1)
+		expect(screen.getByRole("listbox")).toBeInTheDocument()
+		expect(screen.getByRole("option", {name: "Value 1"})).toBeInTheDocument()
+		expect(screen.getByRole("option", {name: "Value 2"})).toBeInTheDocument()
 	})
-
-	test.skip('allows user to change options', async () => {
-		render(
-			<SelectRow>
-				<SelectOption value="v-1" label="Value 1" />
-				<SelectOption value="v-2" label="Value 2"/>
-			</SelectRow>
-		)
-		await userEvent.selectOptions(
-			// Find the select element
-			screen.getByRole('combobox'),
-			// Find and select the Value 2 option
-			screen.getByRole('option', {name: 'Value 2'}),
-		)
-		expect(screen.getByRole('option', {name: 'Value 2'}).selected).toBe(true)
-	})
-
-	test.skip('correctly sets uncontrolled default option', () => {
+	
+	test("sets selected option for an uncontrolled Select as passed", () => {
 		render(
 			<SelectRow defaultValue="v-2">
 				<SelectOption value="v-1" label="Value 1" />
 				<SelectOption value="v-2" label="Value 2"/>
 			</SelectRow>
 		)
-		expect(screen.getByRole('option', {name: 'Value 1'}).selected).toBe(false)
-		expect(screen.getByRole('option', {name: 'Value 2'}).selected).toBe(true)
+		expect(screen.getByRole("combobox")).toHaveTextContent("Value 2")
+		expect(screen.getByRole("combobox")).not.toHaveTextContent("Value 1")
 	})
-
-	test.skip('correctly sets controlled default option', () => {
+	
+	test("sets selected option for a controlled Select as passed", () => {
 		render(
 			<SelectRow value="v-2">
 				<SelectOption value="v-1" label="Value 1" />
 				<SelectOption value="v-2" label="Value 2"/>
 			</SelectRow>
 		)
-		expect(screen.getByRole('option', {name: 'Value 1'}).selected).toBe(false)
-		expect(screen.getByRole('option', {name: 'Value 2'}).selected).toBe(true)
+		expect(screen.getByRole("combobox")).toHaveTextContent("Value 2")
+		expect(screen.getByRole("combobox")).not.toHaveTextContent("Value 1")
 	})
-
-
+	
+	test("allows user to open a Select in a SelectRow by clicking on it, showing all children rendered as passed", async () => {
+		render(
+			<SelectRow onOpenChange={mockOnOpenChange}>
+				<SelectOption value="1">Option 1</SelectOption>
+				<SelectOption value="2">Option 2</SelectOption>
+				<SelectOption value="3">Option 3</SelectOption>
+			</SelectRow>
+		)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.queryByRole("listbox")).not.toBeInTheDocument()
+		await userEvent.click(screen.getByRole("combobox"))
+		expect(screen.getByRole("listbox")).toBeInTheDocument()
+		expect(screen.getByRole("option", {name: "Option 1"})).toBeInTheDocument()
+		expect(screen.getByRole("option", {name: "Option 2"})).toBeInTheDocument()
+		expect(screen.getByRole("option", {name: "Option 3"})).toBeInTheDocument()
+		expect(mockOnOpenChange).toHaveBeenCalled()
+	})
+	
+	test("allows user to change a value on an uncontrolled SelectRow", async () => {
+		render(
+			<SelectRow defaultValue="val-1" onValueChange={mockOnValueChange}>
+				<SelectOption value="val-1">Option 1</SelectOption>
+				<SelectOption value="val-2">Option 2</SelectOption>
+				<SelectOption value="val-3">Option 3</SelectOption>
+			</SelectRow>
+		)
+		const select = screen.getByRole("combobox")
+		expect(select).toBeInTheDocument()
+		expect(select).toHaveTextContent("Option 1")
+		await userEvent.click(select)
+		expect(screen.getByRole("listbox")).toBeInTheDocument()
+		await userEvent.click(screen.getByRole("option", { name: "Option 2" }))
+		expect(select).toHaveTextContent("Option 2")
+		expect(mockOnValueChange).toHaveBeenCalledWith("val-2")
+	})
+	
+	test.skip("allows user to change a value on a controlled SelectRow", async () => {
+		render(
+			<SelectRowParent value="v-1" onValueChange={mockOnValueChange}>
+				<SelectOption value="v-1" label="Option 1"/>
+				<SelectOption value="v-2" label="Option 2"/>
+				<SelectOption value="v-3" label="Option 3"/>
+			</SelectRowParent>
+		)
+		const select = screen.getByRole("combobox")
+		expect(select).toBeInTheDocument()
+		expect(select).toHaveTextContent("Option 1")
+		await userEvent.click(select)
+		expect(screen.getByRole("listbox")).toBeInTheDocument()
+		expect(screen.getByRole("option", {name: "Option 1"})).toBeInTheDocument()
+		expect(screen.getByRole("option", {name: "Option 2"})).toBeInTheDocument()
+		expect(screen.getByRole("option", {name: "Option 3"})).toBeInTheDocument()
+		await userEvent.click(screen.getByRole("option", { name: "Option 2" }))
+		expect(select).toHaveTextContent("Option 2")
+		expect(mockOnValueChange).toHaveBeenCalled()
+	})
+	
 	
 })
