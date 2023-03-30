@@ -140,3 +140,33 @@ WithSuccessText.parameters = {
     },
   },
 }
+
+export const Loading = Template.bind({})
+Loading.args = {
+  loading: true,
+  label: "Loading options…",
+  items: []
+}
+Loading.parameters = {
+  docs: {
+    description: {
+      story:
+        "Set a SelectRow to `loading` when a Select is busy loading the optiins to display",
+    },
+  },
+}
+
+export const Error = Template.bind({})
+Error.args = {
+  error: true,
+  label: "Loading options failed",
+  items: [],
+}
+Error.parameters = {
+  docs: {
+    description: {
+      story:
+        "Set a SelectRow to `error` when a loading options, e.g. from a remote API, failed. When the Select has been negatively validated, use `invalid` instead.",
+    },
+  },
+}
