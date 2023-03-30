@@ -9,19 +9,19 @@ const mockOnOpenChange = jest.fn()
 
 const SelectRowParent = ({
 	value,
-	onValueChange,
+	onChange,
 	children,
 	...props
 }) => {
 	const [val, setVal] = React.useState(value)
 	
 	const handleChange = (v) => {
-		onValueChange()
+		onChange()
 		setVal(v)
 	}
 	
 	return (
-		<SelectRow value={value} onValueChange={handleChange} {...props}>
+		<SelectRow defaultValue={val} onValueChange={handleChange} {...props}>
 			{ children }
 		</SelectRow>
 	)
@@ -203,7 +203,7 @@ describe("SelectRow", () => {
 		expect(mockOnValueChange).toHaveBeenCalledWith("val-2")
 	})
 	
-	test.skip("allows user to change a value on a controlled SelectRow", async () => {
+	test("allows user to change a value on a controlled SelectRow", async () => {
 		render(
 			<SelectRowParent value="v-1" onValueChange={mockOnValueChange}>
 				<SelectOption value="v-1" label="Option 1"/>
