@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "start": "PORT=$APP_PORT yarn nodemon ./src/index.js",
+    "start": "PORT=$APP_PORT nodemon ./src/index.js",
     "test": "jest"
   },
   "babel": {

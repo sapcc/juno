@@ -113,5 +113,5 @@ policy.check("admin_or_owner", { user_id: SOME_ID })
 ## Development
 
 ```bash
-yarn test
+npm run test
 ```
