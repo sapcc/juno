@@ -10,7 +10,6 @@ node_modules
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
-.pnp.*
 
 scripts/test_data
 scripts/im.json
