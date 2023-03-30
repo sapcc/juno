@@ -4,14 +4,8 @@
 node_modules
 
 # YARN We're not using Zero-Installs
-.yarn/*
-!.yarn/patches
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-
-scripts/test_data
+.npm/*
+/test_data
 scripts/im.json
 scripts/manifest.json
 scripts/importmap.json
