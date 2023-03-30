@@ -9,18 +9,17 @@ const Auth = ({ children }) => {
   const ref = React.createRef()
   const { mount } = useAppLoader()
   const config = useStore((state) => state.apps.config)
-  const [loading, setLoading] = React.useState(false)
+  const [loading, setLoading] = React.useState(!auth?.appLoaded)
   const [longLoading, setLongLoading] = React.useState(false)
 
   React.useEffect(() => {
-    if (!mount || !ref.current || !config["auth"]) return
+    if (!mount || !config["auth"]) return
     mount(ref.current, config["auth"])
-  }, [mount, ref.current, config["auth"]])
+  }, [mount, config["auth"]])
 
   // timeout for waiting for auth
   React.useEffect(() => {
-    setLoading(!auth?.appLoaded)
-
+    if (auth?.appLoaded) return
     // set timeout for waiting for auth app
     let loadingTimer
     if (!auth?.appLoaded) {
@@ -38,9 +37,16 @@ const Auth = ({ children }) => {
     return () => longLoadingTimer && clearTimeout(longLoadingTimer)
   }, [])
 
+  // console.log(
+  //   "===================auth",
+  //   "loggedIn",auth?.loggedIn,
+  //   "isProcessing",auth?.isProcessing,
+  //   "loading",loading,
+  //   "appLoaded", auth?.appLoaded
+  // )
   return (
     <>
-      <div data-name="greenhouse-auth" ref={ref} />
+      <div data-app="greenhouse-auth" ref={ref} />
 
       <Transition
         show={auth?.loggedIn}
@@ -53,6 +59,7 @@ const Auth = ({ children }) => {
       >
         {children}
       </Transition>
+      {console.log("====", auth.loggedIn, auth)}
 
       {!auth?.loggedIn && (
         <Stack
