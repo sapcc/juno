@@ -59,7 +59,6 @@ const Auth = ({ children }) => {
       >
         {children}
       </Transition>
-      {console.log("====", auth.loggedIn, auth)}
 
       {!auth?.loggedIn && (
         <Stack

@@ -29,7 +29,7 @@ if (state) {
   // return if state exists
   // decode catches parse errors and returns null
   state = decodeBase64Json(state)
-  window.sessionStorage.removeItem(state)
+  window.sessionStorage.removeItem(state?.key)
 }
 
 export const hasValidState = () => !!state

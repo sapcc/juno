@@ -19,7 +19,6 @@ const App = ({ name, active }) => {
         const a = mount(app.current, config[name])
         if (!a) resolve(false)
         else a.then(() => (mounted.current = true)).then(() => resolve(true))
-        console.log("::::name", name, a)
       }),
     [mount]
   )
