@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { SelectRow } from "./index.js"
 import { SelectOption } from "../SelectOption/"
 import { Default as DefaultSelectOptionStory } from "../SelectOption/SelectOption.stories"
@@ -23,6 +23,26 @@ const Template = ({ items, ...args }) => (
   </SelectRow>
 )
 
+const ControlledTemplate = ({open, value, children, ...args}) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [val, setVal] = useState(undefined)
+  
+  useEffect(() => {
+    setIsOpen(open)
+  }, [open])
+  
+  useEffect(() => {
+    setVal(value)
+  }, [value])
+  
+  return (
+    <SelectRow value={val} open={isOpen} onOpenChange={ () => {} } onValueChange={ () => {} } {...args} >
+      { children }
+    </SelectRow>
+  )
+  
+}
+
 export const Default = Template.bind({})
 Default.args = {
   label: "Select Row",
@@ -30,6 +50,16 @@ Default.args = {
     { ...DefaultSelectOptionStory.args, value: "d-1", label: "Option 1" },
     { ...DefaultSelectOptionStory.args, value: "d-2", label: "Option 2" },
   ],
+}
+
+export const Controlled = ControlledTemplate.bind({})
+Controlled.args = {
+  label: "Controlled SelectRow",
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
 }
 
 export const WithHelpText = Template.bind({})
