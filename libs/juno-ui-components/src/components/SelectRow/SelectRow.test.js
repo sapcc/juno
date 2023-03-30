@@ -103,6 +103,18 @@ describe("SelectRow", () => {
 		expect(screen.getByText("This is a success text")).toBeInTheDocument()
 	})
 	
+	test("renders a loading SelectRow as passed", async () => {
+		render(<SelectRow loading />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.getByRole("combobox")).toHaveClass("juno-select-loading")
+	})
+	
+	test("renders a SelectRow with an error Select as passed", async () => {
+		render(<SelectRow error />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.getByRole("combobox")).toHaveClass("juno-select-error")
+	})
+	
 	test("renders a floating variant select row by default", async () => {
 		render(<SelectRow data-testid="select-row" />)
 		expect(screen.getByTestId("select-row")).toBeInTheDocument()
