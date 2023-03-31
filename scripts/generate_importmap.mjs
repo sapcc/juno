@@ -220,6 +220,14 @@ for (let name in packageRegistry) {
 
     for (let depName in regPkg.peerDependencies) {
       let depVersion = regPkg.peerDependencies[depName]
+
+      // in peer dependencies could our libs contain a url as version.
+      // in this case we try to extract the version from url.
+      // Example: "oauth": "https://assets.juno.global.cloud.sap/libs/oauth@1.0.0/package.tgz" -> "libs/oauth@1.0.0/build/index.js" 
+      if(depVersion.startsWith("http")) {
+        const versionMatch = depVersion.match(/^http.*@([^/]+).*$/)
+        if(versionMatch) depVersion = versionMatch[1]
+      }
       // ownPackage = juno lib
       const ownPackage = findRegisteredPackage(depName, depVersion)
 
@@ -227,7 +235,7 @@ for (let name in packageRegistry) {
         /* OWN PACKAGE -> add it to the package dependencies
           Example: {
             "%BASE_URL%/apps/dashboard/": {
-              "juno-ui-components": "%BASE_URL%/libs/juno-ui-components/build/index.js"
+              "juno-ui-components": "%BASE_URL%/libs/juno-ui-components@VERSION/build/index.js"
             }
           }
          */

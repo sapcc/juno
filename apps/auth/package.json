@@ -18,7 +18,7 @@
     "autoprefixer": "^10.4.2",
     "babel-jest": "^29.3.1",
     "babel-plugin-transform-import-meta": "^2.2.0",
-    "communicator": "https://assets.juno.global.cloud.sap/libs/communicator@2.1.0/package.tgz",
+    "communicator": "https://assets.juno.global.cloud.sap/libs/communicator@latest/package.tgz",
     "custom-event-polyfill": "^1.0.7",
     "esbuild": "^0.17.12",
     "interweave": "^13.0.0",
@@ -43,10 +43,9 @@
     "build": "NODE_ENV=production node esbuild.config.js"
   },
   "peerDependencies": {
-    "communicator": "2.1.0",
     "custom-event-polyfill": "^1.0.7",
     "juno-ui-components": "latest",
-    "oauth": "*",
+    "oauth": "https://assets.juno.global.cloud.sap/libs/oauth@latest/package.tgz",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

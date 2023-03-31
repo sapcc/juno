@@ -41,7 +41,7 @@
   },
   "peerDependencies": {
     "custom-event-polyfill": "^1.0.7",
-    "juno-ui-components": "*",
+    "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz",
     "luxon": "^2.3.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
