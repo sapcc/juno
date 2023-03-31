@@ -1,6 +1,6 @@
 {
   "name": "messages-provider",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Messages provider",
   "source": "src/index.js",
   "main": "build/index.js",
@@ -8,8 +8,6 @@
   "license": "Apache-2.0",
   "peerDependencies": {
     "juno-ui-components": "*",
-    "lodash.uniqueid": "^4.0.1",
-    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "zustand": "^4.1.5"
   },
