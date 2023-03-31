@@ -90,7 +90,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.ui.storybook","e2e"]
+      paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.ui.storybook","e2e", ".yarn"]
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
   
@@ -135,7 +135,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["<%=details[:path]%>","package.json","ci/Dockerfile.asset","e2e"]
+      paths: ["<%=details[:path]%>","package.json","ci/Dockerfile.asset","e2e", ".yarn"]
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
       

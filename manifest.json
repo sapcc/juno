@@ -1,0 +1,991 @@
+{
+  "_global": {
+    "baseUrl": "%BASE_URL%",
+    "importMap": {},
+    "widget-loader": {
+      "1.1.4": {
+        "type": "app",
+        "version": "1.1.4",
+        "entryFile": "/apps/widget-loader/build/app.js",
+        "entryDir": "/apps/widget-loader/build",
+        "updatedAt": "2023-02-17T17:08:39.563Z",
+        "size": "65839",
+        "sizeHuman": "64.3K",
+        "appProps": {
+          "importmap-url": {
+            "value": "https://assets.juno.qa-de-1.cloud.sap/importmap.json",
+            "description": "URL where the importmap is located"
+          },
+          "url": {
+            "value": "https://assets.juno.qa-de-1.cloud.sap/apps/dashboard@latest/build/index.js",
+            "description": "URL of the app entry file"
+          },
+          "name": {
+            "value": "dashboard",
+            "description": "name of the app that you want to to load (ignored if url is given)"
+          },
+          "version": {
+            "value": "latest",
+            "description": "version of the app (default is latest, ignored if url is given)"
+          },
+          "debug": {
+            "value": "true",
+            "description": "if true check the console log for details"
+          },
+          "origin": {
+            "value": "URL",
+            "description": "URL of the assets host"
+          },
+          "show-loading": {
+            "value": "false",
+            "description": "show Loading... while content is being loaded"
+          },
+          "importmap-only": {
+            "value": "false",
+            "description": "if true then only the importmap is loaded, all other props except importmap-url and debug are ignored!"
+          }
+        },
+        "readme": "/apps/widget-loader/README.md"
+      }
+    }
+  },
+  "luxon": {
+    "3.2.1": {
+      "type": "app",
+      "version": "3.2.1",
+      "entryFile": "/apps/assets-overview/node_modules/luxon/src/luxon.js",
+      "entryDir": "/apps/assets-overview/node_modules/luxon/src",
+      "updatedAt": "2023-02-23T10:07:30.544Z",
+      "size": "4032224",
+      "sizeHuman": "3.8M",
+      "appProps": {},
+      "readme": "/apps/assets-overview/node_modules/luxon/README.md"
+    }
+  },
+  "assets-overview": {
+    "1.0.0": {
+      "type": "app",
+      "version": "1.0.0",
+      "entryFile": "/apps/assets-overview/build/index.js",
+      "entryDir": "/apps/assets-overview/build",
+      "updatedAt": "2023-02-23T09:59:44.878Z",
+      "size": "4179126",
+      "sizeHuman": "4.0M",
+      "appProps": {
+        "theme": {
+          "value": "theme-dark",
+          "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+        },
+        "manifestUrl": {
+          "value": "https://assets.juno.qa-de-1.cloud.sap/manifest.json",
+          "description": "Endpoint URL of the assets manifest"
+        },
+        "embeded": {
+          "value": "false",
+          "description": "Set to true if app is to be embedded in another existing app or page, like e.g. Elektra.  If set to true the app won't render a page header/footer and instead render only the content"
+        }
+      },
+      "readme": "/apps/assets-overview/README.md"
+    }
+  },
+  "auth": {
+    "1.0.0": {
+      "type": "app",
+      "version": "1.0.0",
+      "entryFile": "/apps/auth/build/index.js",
+      "entryDir": "/apps/auth/build",
+      "updatedAt": "2023-02-23T07:53:31.046Z",
+      "size": "918664",
+      "sizeHuman": "897.1K",
+      "appProps": {
+        "theme": {
+          "value": "theme-dark",
+          "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+        },
+        "embedded": {
+          "value": "false",
+          "description": "Set to true if app is to be embedded in another existing app or page, like e.g. Elektra.  If set to true the app won't render a page header/footer and instead render only the content"
+        },
+        "issuerurl": {
+          "value": "https://endpoint_url_of_the_openid_provider.com",
+          "type": "required",
+          "description": "Endpoint URL of the OpenID provider"
+        },
+        "clientid": {
+          "value": "tbd",
+          "type": "required",
+          "description": "OIDC client id"
+        },
+        "debug": {
+          "value": "true",
+          "type": "optional",
+          "description": "log debug info"
+        }
+      },
+      "readme": "/apps/auth/README.md",
+      "communicatorReadme": "/apps/auth/COMMUNICATOR.md"
+    }
+  },
+  "dashboard": {
+    "1.0.0": {
+      "type": "app",
+      "version": "1.0.0",
+      "entryFile": "/apps/dashboard/build/index.js",
+      "entryDir": "/apps/dashboard/build",
+      "updatedAt": "2023-02-17T14:56:47.420Z",
+      "size": "4023248",
+      "sizeHuman": "3.8M",
+      "appProps": {
+        "theme": {
+          "value": "theme-dark",
+          "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+        },
+        "region": {
+          "value": "qa-de-1",
+          "description": "Default region"
+        },
+        "domain": {
+          "value": "monsoon3",
+          "description": "Default domain"
+        },
+        "prodmode": {
+          "value": "true",
+          "description": "Production mode"
+        }
+      },
+      "readme": "/apps/dashboard/README.md"
+    }
+  },
+  "undefined": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/exampleapp/node_modules/react-query/react/../es/react/index.js",
+      "entryDir": "/apps/exampleapp/node_modules/react-query/react/../es/react",
+      "updatedAt": "2023-02-23T10:07:37.226Z",
+      "size": "4230",
+      "sizeHuman": "4.1K",
+      "appProps": {}
+    }
+  },
+  "react-query": {
+    "3.39.2": {
+      "type": "app",
+      "version": "3.39.2",
+      "entryFile": "/apps/exampleapp/node_modules/react-query/es/index.js",
+      "entryDir": "/apps/exampleapp/node_modules/react-query/es",
+      "updatedAt": "2023-02-23T10:07:31.244Z",
+      "size": "2440446",
+      "sizeHuman": "2.3M",
+      "appProps": {},
+      "readme": "/apps/exampleapp/node_modules/react-query/README.md"
+    }
+  },
+  "exampleapp": {
+    "1.0.0": {
+      "type": "app",
+      "version": "1.0.0",
+      "entryFile": "/apps/exampleapp/build/widget.js",
+      "entryDir": "/apps/exampleapp/build",
+      "updatedAt": "2023-02-17T14:56:47.420Z",
+      "size": "2563174",
+      "sizeHuman": "2.4M",
+      "appProps": {
+        "theme": {
+          "value": "theme-dark",
+          "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+        },
+        "endpoint": {
+          "value": "",
+          "description": "Endpoint URL of the API"
+        },
+        "embeded": {
+          "value": "false",
+          "description": "Set to true if app is to be embedded in another existing app or page, like e.g. Elektra.  If set to true the app won't render a page header/footer and instead render only the content"
+        }
+      },
+      "readme": "/apps/exampleapp/README.md"
+    }
+  },
+  "greenhouse": {
+    "0.0.1": {
+      "type": "app",
+      "version": "0.0.1",
+      "entryFile": "/apps/greenhouse/build/index.js",
+      "entryDir": "/apps/greenhouse/build",
+      "updatedAt": "2023-02-17T14:56:47.421Z",
+      "size": "108261",
+      "sizeHuman": "105.7K",
+      "appProps": {
+        "theme": {
+          "value": "theme-dark",
+          "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+        },
+        "endpoint": {
+          "value": "",
+          "description": "Endpoint URL of the API"
+        },
+        "embedded": {
+          "value": "false",
+          "description": "Set to true if app is to be embedded in another existing app or page, like e.g. Elektra.  If set to true the app won't render a page header/footer and instead render only the content"
+        }
+      },
+      "readme": "/apps/greenhouse/README.md"
+    }
+  },
+  "heureka": {
+    "1.0.0": {
+      "type": "app",
+      "version": "1.0.0",
+      "entryFile": "/apps/heureka/build/index.js",
+      "entryDir": "/apps/heureka/build",
+      "updatedAt": "2023-02-22T15:36:39.287Z",
+      "size": "209565",
+      "sizeHuman": "204.7K",
+      "appProps": {
+        "theme": {
+          "value": "theme-dark",
+          "type": "optional",
+          "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+        },
+        "endpoint": {
+          "value": "https://the_endpoint/api/v1",
+          "type": "required",
+          "description": "Endpoint URL of the API"
+        },
+        "issuerurl": {
+          "value": "https://tbd.com",
+          "type": "required",
+          "description": "Endpoint URL of Open ID provider"
+        },
+        "clientid": {
+          "value": "tbd",
+          "type": "required",
+          "description": "OIDC client id"
+        }
+      },
+      "readme": "/apps/heureka/README.md"
+    }
+  },
+  "maintenance": {
+    "1.0.0": {
+      "type": "app",
+      "version": "1.0.0",
+      "entryFile": "/apps/maintenance/build/index.js",
+      "entryDir": "/apps/maintenance/build",
+      "updatedAt": "2023-02-17T14:56:47.421Z",
+      "size": "146164",
+      "sizeHuman": "142.7K",
+      "appProps": {
+        "theme": {
+          "value": "theme-dark",
+          "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+        },
+        "service": {
+          "value": "compute",
+          "description": "Name of the service being maintained"
+        }
+      },
+      "readme": "/apps/maintenance/README.md"
+    }
+  },
+  "@apollo/client/cache": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/cache/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/cache/index.j",
+      "updatedAt": "2023-02-23T10:07:38.811Z",
+      "size": "902168",
+      "sizeHuman": "881.0K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/core": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/core/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/core/index.j",
+      "updatedAt": "2023-02-23T10:07:38.827Z",
+      "size": "849331",
+      "sizeHuman": "829.4K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/errors": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/errors/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/errors/index.j",
+      "updatedAt": "2023-02-23T10:07:38.814Z",
+      "size": "19173",
+      "sizeHuman": "18.7K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/link/batch-http": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/link/batch-http/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/link/batch-http/index.j",
+      "updatedAt": "2023-02-23T10:07:43.058Z",
+      "size": "45961",
+      "sizeHuman": "44.9K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/link/batch": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/link/batch/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/link/batch/index.j",
+      "updatedAt": "2023-02-23T10:07:43.057Z",
+      "size": "57684",
+      "sizeHuman": "56.3K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/link/context": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/link/context/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/link/context/index.j",
+      "updatedAt": "2023-02-23T10:07:43.054Z",
+      "size": "13483",
+      "sizeHuman": "13.2K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/link/core": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/link/core/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/link/core/index.j",
+      "updatedAt": "2023-02-23T10:07:43.069Z",
+      "size": "50735",
+      "sizeHuman": "49.5K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/link/error": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/link/error/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/link/error/index.j",
+      "updatedAt": "2023-02-23T10:07:43.064Z",
+      "size": "28288",
+      "sizeHuman": "27.6K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/link/http": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/link/http/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/link/http/index.j",
+      "updatedAt": "2023-02-23T10:07:43.081Z",
+      "size": "198550",
+      "sizeHuman": "193.9K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/link/persisted-queries": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/link/persisted-queries/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/link/persisted-queries/index.j",
+      "updatedAt": "2023-02-23T10:07:43.062Z",
+      "size": "59324",
+      "sizeHuman": "57.9K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/link/retry": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/link/retry/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/link/retry/index.j",
+      "updatedAt": "2023-02-23T10:07:43.072Z",
+      "size": "54453",
+      "sizeHuman": "53.2K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/link/schema": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/link/schema/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/link/schema/index.j",
+      "updatedAt": "2023-02-23T10:07:43.073Z",
+      "size": "20105",
+      "sizeHuman": "19.6K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/link/subscriptions": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/link/subscriptions/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/link/subscriptions/index.j",
+      "updatedAt": "2023-02-23T10:07:43.075Z",
+      "size": "17985",
+      "sizeHuman": "17.6K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/link/utils": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/link/utils/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/link/utils/index.j",
+      "updatedAt": "2023-02-23T10:07:43.101Z",
+      "size": "34403",
+      "sizeHuman": "33.6K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/link/ws": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/link/ws/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/link/ws/index.j",
+      "updatedAt": "2023-02-23T10:07:43.082Z",
+      "size": "12191",
+      "sizeHuman": "11.9K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client": {
+    "3.7.8": {
+      "type": "app",
+      "version": "3.7.8",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/./index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/.",
+      "updatedAt": "2023-02-23T10:07:32.880Z",
+      "size": "4666367",
+      "sizeHuman": "4.4M",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/@apollo/client/README.md"
+    }
+  },
+  "@apollo/client/react/components": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/react/components/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/react/components/index.j",
+      "updatedAt": "2023-02-23T10:07:43.005Z",
+      "size": "33053",
+      "sizeHuman": "32.3K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/react/context": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/react/context/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/react/context/index.j",
+      "updatedAt": "2023-02-23T10:07:43.007Z",
+      "size": "24755",
+      "sizeHuman": "24.2K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/react/hoc": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/react/hoc/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/react/hoc/index.j",
+      "updatedAt": "2023-02-23T10:07:43.023Z",
+      "size": "132124",
+      "sizeHuman": "129.0K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/react/hooks": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/react/hooks/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/react/hooks/index.j",
+      "updatedAt": "2023-02-23T10:07:43.048Z",
+      "size": "253882",
+      "sizeHuman": "247.9K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/react": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/react/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/react/index.j",
+      "updatedAt": "2023-02-23T10:07:38.817Z",
+      "size": "559234",
+      "sizeHuman": "546.1K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/react/parser": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/react/parser/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/react/parser/index.j",
+      "updatedAt": "2023-02-23T10:07:43.008Z",
+      "size": "34344",
+      "sizeHuman": "33.5K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/react/ssr": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/react/ssr/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/react/ssr/index.j",
+      "updatedAt": "2023-02-23T10:07:43.053Z",
+      "size": "46703",
+      "sizeHuman": "45.6K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/testing/core": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/testing/core/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/testing/core/index.j",
+      "updatedAt": "2023-02-23T10:07:43.087Z",
+      "size": "129503",
+      "sizeHuman": "126.5K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/testing": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/testing/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/testing/index.j",
+      "updatedAt": "2023-02-23T10:07:38.820Z",
+      "size": "153688",
+      "sizeHuman": "150.1K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/utilities/globals": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/utilities/globals/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/utilities/globals/index.j",
+      "updatedAt": "2023-02-23T10:07:43.090Z",
+      "size": "21251",
+      "sizeHuman": "20.8K",
+      "appProps": {}
+    }
+  },
+  "@apollo/client/utilities": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/@apollo/client/utilities/index.js",
+      "entryDir": "/apps/requests/node_modules/@apollo/client/utilities/index.j",
+      "updatedAt": "2023-02-23T10:07:38.828Z",
+      "size": "468678",
+      "sizeHuman": "457.7K",
+      "appProps": {}
+    }
+  },
+  "babel-loader": {
+    "8.1.0": {
+      "type": "app",
+      "version": "8.1.0",
+      "entryFile": "/apps/requests/node_modules/babel-loader/lib/index.js",
+      "entryDir": "/apps/requests/node_modules/babel-loader/lib",
+      "updatedAt": "2023-02-23T10:07:51.059Z",
+      "size": "55606",
+      "sizeHuman": "54.3K",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/babel-loader/README.md"
+    }
+  },
+  "clean-webpack-plugin": {
+    "3.0.0": {
+      "type": "app",
+      "version": "3.0.0",
+      "entryFile": "/apps/requests/node_modules/clean-webpack-plugin/dist/clean-webpack-plugin.js",
+      "entryDir": "/apps/requests/node_modules/clean-webpack-plugin/dist",
+      "updatedAt": "2023-02-23T10:07:51.113Z",
+      "size": "53532",
+      "sizeHuman": "52.3K",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/clean-webpack-plugin/README.md"
+    }
+  },
+  "ajv-formats": {
+    "2.1.1": {
+      "type": "app",
+      "version": "2.1.1",
+      "entryFile": "/apps/requests/node_modules/css-minimizer-webpack-plugin/node_modules/ajv-formats/dist/index.js",
+      "entryDir": "/apps/requests/node_modules/css-minimizer-webpack-plugin/node_modules/ajv-formats/dist",
+      "updatedAt": "2023-02-23T10:07:32.856Z",
+      "size": "64515",
+      "sizeHuman": "63.0K",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/css-minimizer-webpack-plugin/node_modules/ajv-formats/README.md"
+    }
+  },
+  "ajv-keywords": {
+    "5.1.0": {
+      "type": "app",
+      "version": "5.1.0",
+      "entryFile": "/apps/requests/node_modules/css-minimizer-webpack-plugin/node_modules/ajv-keywords/dist/index.js",
+      "entryDir": "/apps/requests/node_modules/css-minimizer-webpack-plugin/node_modules/ajv-keywords/dist",
+      "updatedAt": "2023-02-23T10:07:32.856Z",
+      "size": "160478",
+      "sizeHuman": "156.7K",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/css-minimizer-webpack-plugin/node_modules/ajv-keywords/README.md"
+    }
+  },
+  "ajv": {
+    "8.12.0": {
+      "type": "app",
+      "version": "8.12.0",
+      "entryFile": "/apps/requests/node_modules/css-minimizer-webpack-plugin/node_modules/ajv/dist/ajv.js",
+      "entryDir": "/apps/requests/node_modules/css-minimizer-webpack-plugin/node_modules/ajv/dist",
+      "updatedAt": "2023-02-23T10:07:32.856Z",
+      "size": "1208367",
+      "sizeHuman": "1.2M",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/css-minimizer-webpack-plugin/node_modules/ajv/README.md"
+    }
+  },
+  "schema-utils": {
+    "4.0.0": {
+      "type": "app",
+      "version": "4.0.0",
+      "entryFile": "/apps/requests/node_modules/css-minimizer-webpack-plugin/node_modules/schema-utils/dist/index.js",
+      "entryDir": "/apps/requests/node_modules/css-minimizer-webpack-plugin/node_modules/schema-utils/dist",
+      "updatedAt": "2023-02-23T10:07:32.857Z",
+      "size": "94964",
+      "sizeHuman": "92.7K",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/css-minimizer-webpack-plugin/node_modules/schema-utils/README.md"
+    },
+    "2.7.1": {
+      "type": "app",
+      "version": "2.7.1",
+      "entryFile": "/apps/requests/node_modules/schema-utils/dist/index.js",
+      "entryDir": "/apps/requests/node_modules/schema-utils/dist",
+      "updatedAt": "2023-02-23T10:07:32.863Z",
+      "size": "106098",
+      "sizeHuman": "103.6K",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/schema-utils/README.md"
+    }
+  },
+  "css-minimizer-webpack-plugin": {
+    "4.2.2": {
+      "type": "app",
+      "version": "4.2.2",
+      "entryFile": "/apps/requests/node_modules/css-minimizer-webpack-plugin/dist/index.js",
+      "entryDir": "/apps/requests/node_modules/css-minimizer-webpack-plugin/dist",
+      "updatedAt": "2023-02-23T10:07:32.953Z",
+      "size": "1618500",
+      "sizeHuman": "1.5M",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/css-minimizer-webpack-plugin/README.md"
+    }
+  },
+  "json-schema-traverse": {
+    "1.0.0": {
+      "type": "app",
+      "version": "1.0.0",
+      "entryFile": "/apps/requests/node_modules/json-schema-traverse/index.js",
+      "entryDir": "/apps/requests/node_modules/json-schema-traverse/index.j",
+      "updatedAt": "2023-02-23T10:07:32.858Z",
+      "size": "42700",
+      "sizeHuman": "41.7K",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/json-schema-traverse/README.md"
+    }
+  },
+  "json5": {
+    "1.0.2": {
+      "type": "app",
+      "version": "1.0.2",
+      "entryFile": "/apps/requests/node_modules/json5/lib/index.js",
+      "entryDir": "/apps/requests/node_modules/json5/lib",
+      "updatedAt": "2023-02-23T10:07:32.858Z",
+      "size": "90576",
+      "sizeHuman": "88.5K",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/json5/README.md"
+    }
+  },
+  "loader-utils": {
+    "1.4.2": {
+      "type": "app",
+      "version": "1.4.2",
+      "entryFile": "/apps/requests/node_modules/loader-utils/lib/index.js",
+      "entryDir": "/apps/requests/node_modules/loader-utils/lib",
+      "updatedAt": "2023-02-23T10:07:51.252Z",
+      "size": "42263",
+      "sizeHuman": "41.3K",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/loader-utils/README.md"
+    }
+  },
+  "react-router-dom": {
+    "5.3.4": {
+      "type": "app",
+      "version": "5.3.4",
+      "entryFile": "/apps/requests/node_modules/react-router-dom/esm/react-router-dom.js",
+      "entryDir": "/apps/requests/node_modules/react-router-dom/esm",
+      "updatedAt": "2023-02-23T10:07:51.259Z",
+      "size": "676533",
+      "sizeHuman": "660.7K",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/react-router-dom/README.md"
+    }
+  },
+  "symbol-observable": {
+    "4.0.0": {
+      "type": "app",
+      "version": "4.0.0",
+      "entryFile": "/apps/requests/node_modules/symbol-observable/es/index.js",
+      "entryDir": "/apps/requests/node_modules/symbol-observable/es",
+      "updatedAt": "2023-02-23T10:07:32.862Z",
+      "size": "29076",
+      "sizeHuman": "28.4K",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/symbol-observable/README.md"
+    }
+  },
+  "ts-invariant": {
+    "0.10.3": {
+      "type": "app",
+      "version": "0.10.3",
+      "entryFile": "/apps/requests/node_modules/ts-invariant/lib/invariant.js",
+      "entryDir": "/apps/requests/node_modules/ts-invariant/lib",
+      "updatedAt": "2023-02-23T10:07:32.861Z",
+      "size": "40830",
+      "sizeHuman": "39.9K",
+      "appProps": {},
+      "readme": "/apps/requests/node_modules/ts-invariant/README.md"
+    }
+  },
+  "ts-invariant/process": {
+    "undefined": {
+      "type": "app",
+      "entryFile": "/apps/requests/node_modules/ts-invariant/process/./index.js",
+      "entryDir": "/apps/requests/node_modules/ts-invariant/process/.",
+      "updatedAt": "2023-02-23T10:07:38.805Z",
+      "size": "12989",
+      "sizeHuman": "12.7K",
+      "appProps": {}
+    }
+  },
+  "requests": {
+    "1.0.0": {
+      "type": "app",
+      "version": "1.0.0",
+      "entryFile": "/apps/requests/build/index.js",
+      "entryDir": "/apps/requests/build",
+      "updatedAt": "2023-02-17T14:56:47.421Z",
+      "size": "10179765",
+      "sizeHuman": "9.7M",
+      "appProps": {
+        "theme": {
+          "value": "theme-dark",
+          "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+        }
+      },
+      "readme": "/apps/requests/README.md"
+    }
+  },
+  "template": {
+    "1.0.0": {
+      "type": "app",
+      "version": "1.0.0",
+      "entryFile": "/apps/template/build/index.js",
+      "entryDir": "/apps/template/build",
+      "updatedAt": "2023-02-17T14:56:47.422Z",
+      "size": "107346",
+      "sizeHuman": "104.8K",
+      "appProps": {
+        "theme": {
+          "value": "theme-dark",
+          "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+        },
+        "endpoint": {
+          "value": "",
+          "description": "Endpoint URL of the API"
+        },
+        "embedded": {
+          "value": "false",
+          "description": "Set to true if app is to be embedded in another existing app or page, like e.g. Elektra.  If set to true the app won't render a page header/footer and instead render only the content"
+        }
+      },
+      "readme": "/apps/template/README.md"
+    }
+  },
+  "volta": {
+    "1.0.1": {
+      "type": "app",
+      "version": "1.0.1",
+      "entryFile": "/apps/volta/build/index.js",
+      "entryDir": "/apps/volta/build",
+      "updatedAt": "2023-02-21T16:10:56.242Z",
+      "size": "133506",
+      "sizeHuman": "130.4K",
+      "appProps": {
+        "theme": {
+          "value": "theme-dark",
+          "type": "optional",
+          "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+        },
+        "endpoint": {
+          "value": "https://the_endpoint/api/v1",
+          "type": "required",
+          "description": "Endpoint URL of the API"
+        },
+        "issuerurl": {
+          "value": "https://endpoint_url_of_the_openid_provider.com",
+          "type": "required",
+          "description": "Endpoint URL of the OpenID provider"
+        },
+        "clientid": {
+          "value": "tbd",
+          "type": "required",
+          "description": "OIDC client id"
+        },
+        "disabledcas": {
+          "value": "",
+          "type": "optional",
+          "description": "Coma separated strings containing the CA names which should not be displayed. Ex: 'galvani-pki,mutual_tls-pki'"
+        },
+        "documentationlinks": {
+          "value": "",
+          "type": "optional",
+          "description": "Key value pairs separated by '=' and each pair separated by ','. Ex: '2fa-pki=https://doculink.com,mutual_tls-pki=https://doculink.com'"
+        }
+      },
+      "readme": "/apps/volta/README.md"
+    }
+  },
+  "whois": {
+    "1.0.0": {
+      "type": "app",
+      "version": "1.0.0",
+      "entryFile": "/apps/whois/build/index.js",
+      "entryDir": "/apps/whois/build",
+      "updatedAt": "2023-02-17T14:56:47.422Z",
+      "size": "106402",
+      "sizeHuman": "103.9K",
+      "appProps": {
+        "theme": {
+          "value": "theme-dark",
+          "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+        }
+      },
+      "readme": "/apps/whois/README.md"
+    }
+  },
+  "communicator": {
+    "2.1.0": {
+      "type": "lib",
+      "version": "2.1.0",
+      "entryFile": "/libs/communicator/build/index.js",
+      "entryDir": "/libs/communicator/build",
+      "updatedAt": "2023-02-21T16:10:56.287Z",
+      "size": "64613",
+      "sizeHuman": "63.1K",
+      "appProps": {},
+      "readme": "/libs/communicator/README.md"
+    }
+  },
+  "style-loader": {
+    "3.3.1": {
+      "type": "lib",
+      "version": "3.3.1",
+      "entryFile": "/libs/juno-ui-components/node_modules/style-loader/dist/cjs.js",
+      "entryDir": "/libs/juno-ui-components/node_modules/style-loader/dist",
+      "updatedAt": "2023-02-23T10:07:31.880Z",
+      "size": "72286",
+      "sizeHuman": "70.6K",
+      "appProps": {},
+      "readme": "/libs/juno-ui-components/node_modules/style-loader/README.md"
+    }
+  },
+  "juno-ui-components": {
+    "1.1.8": {
+      "type": "lib",
+      "version": "1.1.8",
+      "entryFile": "/libs/juno-ui-components/build/index.js",
+      "entryDir": "/libs/juno-ui-components/build",
+      "updatedAt": "2023-02-17T14:56:47.424Z",
+      "size": "247982535",
+      "sizeHuman": "236.5M",
+      "appProps": {},
+      "readme": "/libs/juno-ui-components/README.md"
+    }
+  },
+  "messages-provider": {
+    "0.1.4": {
+      "type": "lib",
+      "version": "0.1.4",
+      "entryFile": "/libs/messages-provider/build/index.js",
+      "entryDir": "/libs/messages-provider/build",
+      "updatedAt": "2023-02-22T15:36:39.291Z",
+      "size": "49354",
+      "sizeHuman": "48.2K",
+      "appProps": {},
+      "readme": "/libs/messages-provider/README.md"
+    }
+  },
+  "oauth": {
+    "0.1.1": {
+      "type": "lib",
+      "version": "0.1.1",
+      "entryFile": "/libs/oauth/build/index.js",
+      "entryDir": "/libs/oauth/build",
+      "updatedAt": "2023-02-17T14:56:47.424Z",
+      "size": "50975",
+      "sizeHuman": "49.8K",
+      "appProps": {},
+      "readme": "/libs/oauth/README.md"
+    }
+  },
+  "policy-engine": {
+    "2.0.0": {
+      "type": "lib",
+      "version": "2.0.0",
+      "entryFile": "/libs/policy-engine/build/esm/index.js",
+      "entryDir": "/libs/policy-engine/build/esm",
+      "updatedAt": "2023-02-17T14:40:22.358Z",
+      "size": "113833",
+      "sizeHuman": "111.2K",
+      "appProps": {},
+      "readme": "/libs/policy-engine/README.md"
+    }
+  },
+  "url-state-provider": {
+    "1.0.0": {
+      "type": "lib",
+      "version": "1.0.0",
+      "entryFile": "/libs/url-state-provider/build/esm/index.js",
+      "entryDir": "/libs/url-state-provider/build/esm",
+      "updatedAt": "2023-02-17T14:40:22.925Z",
+      "size": "62477",
+      "sizeHuman": "61.0K",
+      "appProps": {},
+      "readme": "/libs/url-state-provider/README.md"
+    }
+  },
+  "url-state-router": {
+    "1.0.0": {
+      "type": "lib",
+      "version": "1.0.0",
+      "entryFile": "/libs/url-state-router/build/index.js",
+      "entryDir": "/libs/url-state-router/build",
+      "updatedAt": "2023-02-17T14:56:47.424Z",
+      "size": "66941",
+      "sizeHuman": "65.4K",
+      "appProps": {},
+      "readme": "/libs/url-state-router/README.md"
+    }
+  }
+}

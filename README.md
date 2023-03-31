@@ -33,16 +33,42 @@ and preset tailwind config with juno-ui-components config
 
 Use Webpack for apps, and Rollup for libraries
 
+Start dashboard
+
+```bash
+yarn dashboard
+```
+
 Start any app in apps folder with workspace APP_NAME start
 
 ```bash
-npm --workspace dashboard start
+yarn workspace dashboard start
 ```
 
 In workspaces
 
+```
+wb yarn dashboard
+wb yarn workspace dashboard start
+```
+
+# Testing in production mode
+
+## Run App in production mode
+
+Sometimes the application reacts different when it is compiled in production mode. If you want to test the application in production mode run following command:
+
 ```bash
-wb npm --workspace dashboard install
+wb yarn workspace heureka production
+```
+
+## Reference local libs in production
+
+Following an example how to reference a local lib which will be used in production. All changes made
+directly on this lib will be reflected in production when restarting the server
+
+```js
+import { Router, Route, Switch } from "url-state-router/src/index.js"
 ```
 
 # Debug
@@ -66,7 +92,7 @@ Start locally the widget loader within the container
 
 ```bash
 wb
-APP_PORT=$LOADER_PORT npm --workspace widget-loader start
+APP_PORT=$LOADER_PORT yarn workspace widget-loader start
 ```
 
 Test im browser:

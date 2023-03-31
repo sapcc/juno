@@ -2,10 +2,10 @@
 
 ## Installation
 
-To include Juno UI components as a dev dependency in your app install with npm:
+To include Juno UI components as a dev dependency in your app install with yarn:
 
 ```bash
-npm add --dev juno-ui-components
+yarn add --dev juno-ui-components
 ```
 
 …or declare manually as a dev-dependency:
@@ -20,7 +20,7 @@ npm add --dev juno-ui-components
 ```
 
 ```bash
-npm --workspaces install
+yarn install
 ```
 
 ## Working With Tailwind
@@ -45,7 +45,7 @@ Doing this lets you use Tailwind classnames from the Juno UI Components library.
 In order to work ON (NOT WITH) the Juno Design System and its components run storybook with:
 
 ```bash
-npm --workspace juno-ui-components storybook
+yarn workspace juno-ui-components storybook
 ```
 
 or just run from the root directory of this repository `npm run ui-components`
@@ -53,5 +53,5 @@ or just run from the root directory of this repository `npm run ui-components`
 Run the test suite:
 
 ```bash
-npm --workspace juno-ui-components test
+yarn workspace juno-ui-components test
 ```
