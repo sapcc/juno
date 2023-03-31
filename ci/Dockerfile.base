@@ -10,7 +10,7 @@ FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:18-alpine AS 
 LABEL source_repository="https://github.com/sapcc/juno"
 
 RUN apk --no-cache add git ca-certificates rsync jq
-RUN npm i -g glob @jspm/generator
+RUN npm i -g glob @jspm/generator ; npm i -g npm@latest
 
 RUN mkdir -p "/juno"
 ADD . /juno 
