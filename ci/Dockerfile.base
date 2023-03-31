@@ -1,5 +1,5 @@
 # This Dockerfile builds the base image that stores the entire juno repo 
-# and runs yarn install on every change.
+# and runs npm install on every change.
 
 # This image is finally used to build the apps, libs and the assets server. 
 # The reason is the caching of node_modules!
@@ -17,6 +17,5 @@ ADD . /juno
 
 WORKDIR /juno 
 
-RUN yarn install --update-checksums --silent ; \
-  if [ $? -ne 0 ]; then yarn install --update-checksums --silent; fi
+RUN npm install --silent
 RUN npx browserslist@latest --update-db
