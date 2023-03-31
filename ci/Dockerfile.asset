@@ -20,6 +20,7 @@ RUN node scripts/generate_communication_readme.mjs --path=/juno/$ASSET_PATH
 
 RUN rsync -avu --delete --exclude 'node_modules' "/tmp/src/$ASSET_PATH/" "/juno/$ASSET_PATH"
 
+RUN npm run build-libs
 # TEST AND BUILD ASSET
 # IGNORE_EXTERNALS=true will results in a bundle which includes all dependencies. 
 # This is the case if the jspm cdn is unreachable!!! 
