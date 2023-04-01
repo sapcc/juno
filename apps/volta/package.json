@@ -40,7 +40,7 @@
     "shadow-dom-testing-library": "^1.7.1",
     "tailwindcss": "^3.0.24",
     "util": "^0.12.4",
-    "zustand": "^4.1.5"
+    "zustand": "^4.3.6"
   },
   "scripts": {
     "test": "jest",
