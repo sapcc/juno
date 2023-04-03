@@ -98,6 +98,7 @@ const Shell = (props = {}) => {
           issuerurl: props.issuerurl,
           clientid: props.clientid,
           initialLogin: true,
+          requestParams: JSON.stringify({ connector_id: "ccloud" }),
         },
       },
     })

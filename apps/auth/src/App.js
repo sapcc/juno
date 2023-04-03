@@ -26,6 +26,7 @@ const App = (props = {}) => {
         clientID: props.clientid,
         initialLogin: props.initialLogin,
         refresh: true,
+        requestParams: props.requestParams,
         flowType: "code",
         onUpdate: (authData) => {
           let data = enrichAuthData(authData)

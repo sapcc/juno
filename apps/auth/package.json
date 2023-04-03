@@ -61,6 +61,9 @@
       "type": "required",
       "description": "OIDC client id"
     },
+    "requestParams": {
+      "value": "{\"connector_id\": \"ccloud\"}"
+    },
     "debug": {
       "value": true,
       "type": "optional",
