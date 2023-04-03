@@ -4,6 +4,7 @@ const pkg = require("./package.json")
 const minify = require("rollup-plugin-babel-minify")
 const analyze = require("rollup-plugin-analyzer")
 const commonjs = require("@rollup/plugin-commonjs")
+const { nodeResolve } = require("@rollup/plugin-node-resolve")
 
 // IMPORTANT!
 // package.json is single source of truth policy
@@ -25,6 +26,8 @@ const config = [
       },
     ],
     plugins: [
+      nodeResolve(),
+
       babel({
         exclude: "node_modules/**",
         babelHelpers: "bundled",

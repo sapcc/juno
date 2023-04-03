@@ -1,6 +1,8 @@
 const terser = require("@rollup/plugin-terser")
 const del = require("rollup-plugin-delete")
 const fs = require("fs")
+const { nodeResolve } = require("@rollup/plugin-node-resolve")
+const commonjs = require("@rollup/plugin-commonjs")
 let pkg = JSON.parse(fs.readFileSync("./package.json"))
 
 if (!/.+\/.+\.js/.test(pkg.main))
@@ -32,7 +34,12 @@ const config = [
         format: "esm",
       },
     ],
-    plugins: [terser(), del({ targets: [mainBuildDir, moduleBuildDir] })],
+    plugins: [
+      terser(),
+      del({ targets: [mainBuildDir, moduleBuildDir] }),
+      nodeResolve(),
+      commonjs(),
+    ],
     external:
       isProduction && !IGNORE_EXTERNALS
         ? Object.keys(pkg.peerDependencies || {})

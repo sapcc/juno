@@ -3,6 +3,8 @@ const pkg = require("./package.json")
 const analyze = require("rollup-plugin-analyzer")
 const terser = require("@rollup/plugin-terser")
 const babel = require("@rollup/plugin-babel")
+const { nodeResolve } = require("@rollup/plugin-node-resolve")
+const commonjs = require("@rollup/plugin-commonjs")
 const fs = require("fs")
 
 if (!/.+\/.+\.js/.test(pkg.module))
@@ -48,10 +50,12 @@ const config = [
       },
     ],
     plugins: [
+      nodeResolve(),
       babel({
         exclude: "node_modules/**",
         babelHelpers: "bundled",
       }),
+      commonjs(),
       del({ targets: [`${buildDir}/**/*`] }),
       terser(),
       analyze({ limit: 0, summaryOnly: true }),
