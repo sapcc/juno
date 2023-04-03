@@ -20,6 +20,7 @@ const isProduction = process.env.NODE_ENV === "production"
 const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
 // in dev environment we prefix output file with public
 let outfile = `${isProduction ? "" : "public/"}${pkg.main || pkg.module}`
+
 // get output from outputfile
 let outdir = outfile.slice(0, outfile.lastIndexOf("/"))
 const args = process.argv.slice(2)
@@ -68,7 +69,7 @@ const build = async () => {
         name: "start/end",
         setup(build) {
           build.onStart(() => {
-            console.log(clear)
+            //console.log(clear)
             console.log(yellow, "Compiling...")
           })
           build.onEnd(() => console.log(green, "Done!"))

@@ -1,7 +1,7 @@
 {
   "name": "exampleapp",
   "version": "1.0.0",
-  "module": "build/widget.js",
+  "module": "build/index.js",
   "source": "src/index.js",
   "private": true,
   "devDependencies": {
