@@ -4,8 +4,8 @@ RUN \
   cd /juno ; \
   npm run build-libs ; \
   npm --workspace juno-ui-components install 1>/dev/null && \
-  npm --workspace juno-ui-components build 1>/dev/null && \
-  npm --workspace juno-ui-components build-storybook -o ./build 1>/dev/null 
+  npm --workspace juno-ui-components run build 1>/dev/null && \
+  npm --workspace juno-ui-components run build-storybook -o ./build 1>/dev/null 
 
 FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:18-alpine
 LABEL source_repository="https://github.com/sapcc/juno/libs/juno-ui-components"
