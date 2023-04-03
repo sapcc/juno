@@ -19,10 +19,10 @@
     "autoprefixer": "^10.4.2",
     "babel-jest": "^29.3.1",
     "babel-plugin-transform-import-meta": "^2.2.0",
-    "communicator": "https://assets.juno.global.cloud.sap/libs/communicator@latest/package.tgz",
+    "communicator": "*",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
-    "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz",
+    "juno-ui-components": "*",
     "postcss": "^8.4.21",
     "postcss-url": "^10.1.3",
     "prop-types": "^15.8.1",
@@ -34,7 +34,7 @@
     "sass": "^1.60.0",
     "shadow-dom-testing-library": "^1.7.1",
     "tailwindcss": "^3.0.24",
-    "url-state-provider": "https://assets.juno.global.cloud.sap/libs/url-state-provider@latest/package.tgz",
+    "url-state-provider": "*",
     "util": "^0.12.4",
     "zustand": "^4.1.1"
   },
@@ -45,12 +45,12 @@
   },
   "peerDependencies": {
     "custom-event-polyfill": "^1.0.7",
-    "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz",
+    "juno-ui-components": "*",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.2",
-    "url-state-provider": "https://assets.juno.global.cloud.sap/libs/url-state-provider@latest/package.tgz",
+    "url-state-provider": "*",
     "zustand": "^4.1.1"
   },
   "appProps": {

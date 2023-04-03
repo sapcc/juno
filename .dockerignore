@@ -1,1 +1,4 @@
 ci
+.npm/cache
+node_modules
+build
