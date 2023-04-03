@@ -2,7 +2,6 @@ FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-base:latest AS base
 
 RUN \
   cd /juno ; \
-  npm run build-libs ; \
   npm --workspace juno-ui-components install 1>/dev/null && \
   npm --workspace juno-ui-components run build 1>/dev/null && \
   npm --workspace juno-ui-components run build-storybook -o ./build 1>/dev/null 
