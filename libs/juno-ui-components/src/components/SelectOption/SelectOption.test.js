@@ -1,42 +1,76 @@
 import * as React from "react"
-import { render, screen} from "@testing-library/react"
-import { SelectOption } from "./index"
+import { cleanup, render, screen } from "@testing-library/react"
+import { Select } from "../Select/index"
+import { SelectOption } from "../SelectOption/index"
+
 
 describe("SelectOption", () => {
-	
-	test("renders an option element", async () => {
-		render(<SelectOption />)
-		expect(screen.getByRole("option")).toBeInTheDocument()
-	})
-	
-	test("renders an option with a value as passed", async () => {
-		render(<SelectOption value="49"/>)
-		expect(screen.getByRole("option")).toBeInTheDocument()
-		expect(screen.getByRole("option")).toHaveAttribute('value', "49")
-	})
-	
-	test("renders an option with a label as passed", async () => {
-		render(<SelectOption label="My first option"/>)
-		expect(screen.getByRole("option")).toBeInTheDocument()
-		expect(screen.getByRole("option")).toHaveTextContent("My first option")
-	})
-	
-	test("renders a disabled option", async () => {
-		render(<SelectOption disabled />)
-		expect(screen.getByRole("option")).toBeInTheDocument()
-		expect(screen.getByRole("option")).toBeDisabled()
-	})
-	
-	test("renders a custom className", async () => {
-		render(<SelectOption className="my-custom-classname" />)
-		expect(screen.getByRole("option")).toBeInTheDocument()
-		expect(screen.getByRole("option")).toHaveClass("my-custom-classname")
-	})
-	
-	test("renders all props", async () => {
-		render(<SelectOption data-lolol="some-prop" />)
-		expect(screen.getByRole("option")).toBeInTheDocument()
-		expect(screen.getByRole("option")).toHaveAttribute("data-lolol", 'some-prop')
-	})
-	
+  
+  afterEach(() => {
+    cleanup();
+    jest.clearAllMocks();
+  });
+  
+  test("renders a SelectOptionGroup", async () => {
+    render(
+      <Select open>
+        <SelectOption />
+      </Select>
+    )
+    expect(screen.getByRole("option")).toBeInTheDocument()
+  })
+  
+  test("renders a label as passed", async () => {
+    render(
+      <Select open>
+        <SelectOption label="my-option"/>
+      </Select>
+    )
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveTextContent("my-option")
+  })
+  
+  test("renders children as passed", async () => {
+    const child = "my-child-label"
+    render(
+      <Select open>
+        <SelectOption>{child}</SelectOption>
+      </Select>
+    )
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveTextContent("my-child-label")
+  })
+  
+  test("renders children instead of label if both children and label are being passed", async () => {
+    const child = "my-child-label"
+    render(
+      <Select open>
+        <SelectOption label="my-label">{child}</SelectOption>
+      </Select>
+    )
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveTextContent("my-child-label")
+    expect(screen.getByRole("option")).not.toHaveTextContent("my-label")
+  })
+  
+  test("renders a className as passed", async () => {
+    render(
+      <Select open>
+        <SelectOption className="my-fancy-class"/>
+      </Select>
+    )
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveClass("my-fancy-class")
+  })
+  
+  test("renders all props as passed", async () => {
+    render(
+      <Select open>
+        <SelectOption data-lolol="123"/>
+      </Select>
+    )
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveAttribute("data-lolol", "123")
+  })
+  
 })

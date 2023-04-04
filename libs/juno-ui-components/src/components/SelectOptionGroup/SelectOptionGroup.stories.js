@@ -1,11 +1,7 @@
 import React from "react"
+import { Select } from "../Select/index.js"
 import { SelectOptionGroup } from "./index.js"
 import { SelectOption } from "../SelectOption/index.js"
-
-import {
-  Default as DefaultSelectOption,
-  Disabled as DisabledSelectOption,
-} from "../SelectOption/SelectOption.stories"
 
 export default {
   title: "Forms/Select/SelectOptionGroup",
@@ -13,23 +9,29 @@ export default {
   argTypes: {},
 }
 
-const Template = ({ options, ...args }) => (
-  <SelectOptionGroup {...args}>
-    {options.map((option, i) => (
-      <SelectOption {...option} key={`option-${i}`} />
-    ))}
-  </SelectOptionGroup>
-)
+const Template = ({children, ...args}) => {
+  return (
+    <Select open>
+      <SelectOptionGroup {...args}>{children}</SelectOptionGroup>
+    </Select>
+  )
+}
 
 export const Default = Template.bind({})
 Default.args = {
-  label: "My option group",
-  options: [DefaultSelectOption.args, DisabledSelectOption.args],
+  children: [
+    <SelectOption value="1" key="1">1</SelectOption>,
+    <SelectOption value="2" key="2">2</SelectOption>,
+    <SelectOption value="3" key="3">3</SelectOption>
+  ]
 }
 
-export const Disabled = Template.bind({})
-Disabled.args = {
-  label: "My disabled option group",
-  options: [DefaultSelectOption.args, DisabledSelectOption.args],
-  disabled: true,
+export const Labelled = Template.bind({})
+Labelled.args = {
+  label: "Labelled Group",
+  children: [
+    <SelectOption value="1" key="1">1</SelectOption>,
+    <SelectOption value="2" key="2">2</SelectOption>,
+    <SelectOption value="3" key="3">3</SelectOption>
+  ]
 }

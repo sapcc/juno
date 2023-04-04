@@ -62,14 +62,20 @@ describe("Pagination", () => {
     expect(handlePressNext).toHaveBeenCalledTimes(1)
   })
   
+  // TODO: This test needs re-work: Fire event when value changes
   test("fires onChange handler as passed when Select changes for select variant", async () => {
-    const handleChange = jest.fn()
+    const mockHandleChange = jest.fn()
     const { container } = render(
-      <Pagination variant="select" pages={6} onSelectChange={handleChange} />
+      <Pagination variant="select" currentPage={1} pages={6} onSelectChange={mockHandleChange} />
     )
     const select = screen.getByRole('combobox')
-    fireEvent.change(select, { target: { value: 'a' } })
-    expect(handleChange).toHaveBeenCalledTimes(1)
+    expect(select).toBeInTheDocument()
+    expect(select).toHaveTextContent("1")
+    await userEvent.click(select)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    await userEvent.click(screen.getByRole("option", { name: "4" }))
+    expect(select).toHaveTextContent("4")
+    expect(mockHandleChange).toHaveBeenCalledTimes(1)
   })
   
   test("fires onKeyPress handler on Enter as passed for input variant", async () => {

@@ -33,6 +33,7 @@ const filtervalueStyles = `
 `
 
 /**
+-- Deprecated. For new implementations, use Pill instead.--\n
 A Pill to represent Key and Value of a filter. Can be closed to un-apply the filter represented.
 Mostly to be used inside a Filters component in conjunction with FilterInput. */
 export const FilterPill = ({

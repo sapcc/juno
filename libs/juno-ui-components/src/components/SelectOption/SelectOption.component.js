@@ -1,40 +1,61 @@
 import React from "react"
+import * as RadixSelect from "@radix-ui/react-select"
 import PropTypes from "prop-types"
 
-/** A basic SelectOption. Can only be used inside a Select. */
-export const SelectOption = ({
-	value,
-	label,
-	disabled,
-	className,
-	...props
-	}) => {
-	return (
-		<option 
-			value={value}
-			disabled={disabled}
-			className={`juno-select-option ${className}`}
-			{...props}
-		>
-		{label}
-		</option>
-	)
-}
+const optionStyles = `
+  jn-text-theme-default
+  jn-flex
+  jn-items-center
+  jn-w-full
+  jn-pt-[0.6875rem]
+  jn-pb-[0.5rem]
+  jn-px-[0.875rem]
+  jn-cursor-pointer
+  jn-select-none
+  jn-bg-clip-padding
+  jn-truncate
+  jn-text-left
+  jn-bg-theme-background-lvl-1
+  focus:jn-outline-none
+  focus:jn-ring-2
+  focus:jn-ring-inset
+  focus:jn-ring-theme-focus
+  hover:jn-bg-theme-background-lvl-3
+`
+
+/** An individual select option. Use as child of Select. */
+
+export const SelectOption = React.forwardRef(
+  ({ 
+    children, 
+    value, 
+    label, 
+    disabled,
+    className, 
+    ...props}, 
+  forwardedRef) => {
+    return (
+      <RadixSelect.Item className={`juno-select-option ${optionStyles} ${disabled ? "jn-opacity-50 jn-cursor-not-allowed" : ""} ${className}`} ref={forwardedRef} value={value} disabled={disabled} {...props} >
+        <RadixSelect.ItemText>
+          {children || label || value }
+        </RadixSelect.ItemText>
+      </RadixSelect.Item>
+    )
+  }
+)
 
 SelectOption.propTypes = {
-	/** Pass a visible label */
-	label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	/** Pass a value the option should represent */
-	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-	/** Whether the option is disabled */
-	disabled: PropTypes.bool,
-	/** Add a class name to the option */
-	className: PropTypes.string,
+  children: PropTypes.node,
+  value: PropTypes.string,
+  label: PropTypes.string,
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
 }
 
 SelectOption.defaultProps = {
-	value: null,
-	label: null,
-	disabled: false,
-	className: "",
+  children: null,
+  value: "",
+  label: "",
+  disabled: false,
+  className: "",
 }

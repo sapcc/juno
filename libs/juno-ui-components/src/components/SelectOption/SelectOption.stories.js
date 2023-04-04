@@ -1,4 +1,5 @@
 import React from "react"
+import { Select } from "../Select/index.js"
 import { SelectOption } from "./index.js"
 
 export default {
@@ -7,17 +8,23 @@ export default {
   argTypes: {},
 }
 
-const Template = (args) => <SelectOption {...args} />
+const Template = ({children, ...args}) => {
+  return (
+    <Select open>
+      <SelectOption {...args}>{children}</SelectOption>
+    </Select>
+  )
+}
 
 export const Default = Template.bind({})
 Default.args = {
-  value: "my-option-value",
-  label: "My option",
+  value: "option",
+  label: "Option"
 }
 
 export const Disabled = Template.bind({})
 Disabled.args = {
-  value: "my-disabled-option-value",
-  label: "My disabled option",
   disabled: true,
+  value: "disabled-option",
+  children: "Disabled Option"
 }

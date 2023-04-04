@@ -1,8 +1,8 @@
 import React from "react"
 import { InputGroup } from "./index.js"
 import { Button } from "../Button/index"
-import { Select } from "../Select/index"
-import { SelectOption } from "../SelectOption/index"
+import { NativeSelect } from "../NativeSelect/index"
+import { NativeSelectOption } from "../NativeSelectOption/index"
 import { TextInput } from "../TextInput/index"
 
 export default {
@@ -92,20 +92,20 @@ export const ButtonWithOptions = Template.bind({})
 ButtonWithOptions.args = {
   children: [
     <Button label="Button with Options" />,
-    <Select>
-      <SelectOption value="1" label="Action 1"/>
-      <SelectOption value="2" label="Action 2"/>
-    </Select>
+    <NativeSelect>
+      <NativeSelectOption value="1" label="Action 1"/>
+      <NativeSelectOption value="2" label="Action 2"/>
+    </NativeSelect>
   ]
 }
 
 export const SelectWithTextInput = Template.bind({})
 SelectWithTextInput.args = {
   children: [
-    <Select>
-      <SelectOption value="1" label="Action 1"/>
-      <SelectOption value="2" label="Action 2"/>
-    </Select>,
+    <NativeSelect>
+      <NativeSelectOption value="1" label="Action 1"/>
+      <NativeSelectOption value="2" label="Action 2"/>
+    </NativeSelect>,
     <TextInput placeholder="Value…"/>
   ]
 }
@@ -116,23 +116,23 @@ TextInputWithButtonAndOptions.args = {
   children: [
     <TextInput placeholder="Enter Value…" />,
     <Button label="Submit" />,
-    <Select placeholder="Other Actions…"> 
-      <SelectOption value="1" label="Save"/>
-      <SelectOption value="2" label="Delete"/>
-    </Select>
+    <NativeSelect placeholder="Other Actions…"> 
+      <NativeSelectOption value="1" label="Save"/>
+      <NativeSelectOption value="2" label="Delete"/>
+    </NativeSelect>
   ]
 }
 
 export const SelectWithSelect = Template.bind({})
 SelectWithSelect.args = {
   children: [
-    <Select>
-      <SelectOption value="1" label="Action 1"/>
-      <SelectOption value="2" label="Action 2"/>
-    </Select>,
-    <Select>
-      <SelectOption value="2-1" label="Action 1"/>
-      <SelectOption value="2-2" label="Action 2"/>
-    </Select>,
+    <NativeSelect>
+      <NativeSelectOption value="1" label="Action 1"/>
+      <NativeSelectOption value="2" label="Action 2"/>
+    </NativeSelect>,
+    <NativeSelect>
+      <NativeSelectOption value="2-1" label="Action 1"/>
+      <NativeSelectOption value="2-2" label="Action 2"/>
+    </NativeSelect>,
   ]
 }

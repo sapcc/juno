@@ -2,7 +2,7 @@ import React from "react"
 import { FilterInput } from "./index.js"
 
 export default {
-  title: "Components/Filter/FilterInput",
+  title: "Deprecated/Filter/FilterInput",
   component: FilterInput,
   argTypes: {},
 }
