@@ -45,7 +45,10 @@ const createAppsDataSlice = (set, get) => ({
     active: [],
     config: {},
     setActive: (active) =>
-      set((state) => ({ apps: { ...state.apps, active } })),
+      set((state) => {
+        if (!Array.isArray(active)) active = [active]
+        return { apps: { ...state.apps, active } }
+      }),
     addActive: (appName) =>
       set((state) => {
         const index = state.apps.active.findInde((i) => i === appName)
@@ -70,12 +73,10 @@ const createAppsDataSlice = (set, get) => ({
 const useStore = create((set, get) => ({
   ...createAuthDataSlice(set, get),
   ...createAppsDataSlice(set, get),
-  endpoint: "",
-  urlStateKey: "",
+  apiEndpoint: "",
   assetsHost: "",
 
-  setEndpoint: (value) => set(() => ({ endpoint: value })),
-  setUrlStateKey: (value) => set(() => ({ urlStateKey: value })),
+  setApiEndpoint: (value) => set(() => ({ apiEndpoint: value })),
   setAssetsHost: (value) => set(() => ({ assetsHost: value })),
 }))
 

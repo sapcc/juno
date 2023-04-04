@@ -4,7 +4,7 @@ import useStore from "../hooks/useStore"
 import { Spinner } from "juno-ui-components"
 import { useRef } from "react"
 
-const App = ({ name, active }) => {
+const Plugin = ({ name, active }) => {
   const { mount } = useAppLoader()
   const holder = useRef()
   const app = useRef(document.createElement("div"))
@@ -42,4 +42,4 @@ const App = ({ name, active }) => {
   return <div data-app={name} ref={holder}></div>
 }
 
-export default App
+export default Plugin

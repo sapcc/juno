@@ -1,24 +1,55 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Button, LoadingIndicator, Spinner, Stack } from "juno-ui-components"
 import useStore from "../hooks/useStore"
 import useAppLoader from "../hooks/useAppLoader"
 import { Transition } from "@tailwindui/react"
 
-const Auth = ({ children }) => {
+const orgName = new URL(window.location.href).searchParams.get("org")
+
+const Auth = ({ clientId, issuerUrl, children }) => {
   const auth = useStore((state) => state.auth)
   const ref = React.createRef()
   const { mount } = useAppLoader()
-  const config = useStore((state) => state.apps.config)
   const [loading, setLoading] = React.useState(!auth?.appLoaded)
   const [longLoading, setLongLoading] = React.useState(false)
 
-  React.useEffect(() => {
-    if (!mount || !config["auth"]) return
-    mount(ref.current, config["auth"])
-  }, [mount, config["auth"]])
+  // in this useEffect we load the auth app via import (see mount)
+  // It should happen just once!
+  // The connection to the auth events happens in the useCommunication hook!
+  useEffect(() => {
+    if (!mount || !clientId || !issuerUrl) return
+
+    mount(ref.current, {
+      name: "auth",
+      version: "latest",
+      props: {
+        issuerurl: issuerUrl,
+        clientid: clientId,
+        initialLogin: true,
+        requestParams: JSON.stringify({
+          connector_id: !orgName ? undefined : orgName,
+        }),
+      },
+    })
+  }, [mount, clientId, issuerUrl])
+
+  // read org name from token and adjust url to contain the org name
+  useEffect(() => {
+    if (!auth?.loggedIn) return
+
+    const orgString = auth.data?.raw?.groups?.find(
+      (g) => g.indexOf("organization:") === 0
+    )
+    if (orgString) {
+      const name = orgString.split(":")[1]
+      const url = new URL(window.location.href)
+      url.searchParams.set("org", name)
+      window.history.replaceState(null, null, url.href)
+    }
+  }, [auth])
 
   // timeout for waiting for auth
-  React.useEffect(() => {
+  useEffect(() => {
     if (auth?.appLoaded) return
     // set timeout for waiting for auth app
     let loadingTimer
@@ -32,18 +63,11 @@ const Auth = ({ children }) => {
   }, [auth?.appLoaded])
 
   // set long loading
-  React.useEffect(() => {
+  useEffect(() => {
     let longLoadingTimer = setTimeout(() => setLongLoading(true), 5000) // long loading if longer than 5 seconds
     return () => longLoadingTimer && clearTimeout(longLoadingTimer)
   }, [])
 
-  // console.log(
-  //   "===================auth",
-  //   "loggedIn",auth?.loggedIn,
-  //   "isProcessing",auth?.isProcessing,
-  //   "loading",loading,
-  //   "appLoaded", auth?.appLoaded
-  // )
   return (
     <>
       <div data-app="greenhouse-auth" ref={ref} />
