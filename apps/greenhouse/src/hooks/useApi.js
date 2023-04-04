@@ -1,6 +1,5 @@
 import { useMemo } from "react"
 import { createClient } from "sapcc-k8sclient"
-import { apiEndpoint } from "../../secretProps"
 import useStore from "./useStore"
 
 const useApi = () => {
