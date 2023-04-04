@@ -7,6 +7,7 @@ import { SelectOption } from "../SelectOption/index"
 const mockOnValueChange = jest.fn()
 const mockOnOpenChange = jest.fn()
 
+/** Create a Parent component to test functionality and interactions of controlled components. */
 const SelectRowParent = ({
 	value,
 	onChange,

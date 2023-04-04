@@ -6,7 +6,8 @@ import "@testing-library/jest-dom"
 import "regenerator-runtime/runtime"
 
 /*  
-Mock ResizeObserver
+Mock ResizeObserver. 
+Required to test Radix-UI-based components.
 https://github.com/ZeeCoder/use-resize-observer/issues/40
 https://stackoverflow.com/questions/64558062/how-to-mock-resizeobserver-to-work-in-unit-tests-using-react-testing-library
 */
@@ -20,6 +21,7 @@ window.ResizeObserver = ResizeObserver
 
 
 /**
+ * Required to test Radix-UI-based components:
  * JSDOM doesn't implement PointerEvent so we need to mock our own implementation
  * Default to mouse left click interaction
  * https://github.com/radix-ui/primitives/issues/1822
