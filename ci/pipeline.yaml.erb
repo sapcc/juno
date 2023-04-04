@@ -153,7 +153,8 @@ resource_types:
     type: registry-image
     check_every: 24h
     source:
-      repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/sapcc/concourse-git-resource-proxy
+      repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-git-resource-proxy
+      tag: latest
 
   - name: time-version-resource
     type: docker-image
