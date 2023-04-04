@@ -13,8 +13,12 @@ const useApi = () => {
 
   if (client) {
     client
-      .get("/api/v1/pods")
-      .then((r) => console.log("=========================", r))
+      .get("/apis/greenhouse.sap/v1alpha1/plugins", { limit: 500 })
+      .then((r) => console.log("=========================plugins", r))
+
+    client
+      .get("/apis/greenhouse.sap/v1alpha1/pluginconfigs", { limit: 500 })
+      .then((r) => console.log("=========================configs", r))
   }
 
   return client
