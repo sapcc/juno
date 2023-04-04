@@ -7,13 +7,6 @@ import { Icon, Stack, Button } from "juno-ui-components"
 import useStore from "../../hooks/useStore"
 import Avatar from "../Avatar"
 
-console.log(
-  "======================",
-  CCloudShape,
-  SupernovaIcon,
-  DoopIcon,
-  HeurekaIcon
-)
 const AppIcon = ({ name }) => {
   switch (name) {
     case "supernova":

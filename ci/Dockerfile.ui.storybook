@@ -2,9 +2,8 @@ FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-base:latest AS base
 
 RUN \
   cd /juno ; \
-  yarn workspace juno-ui-components install 1>/dev/null && \
-  yarn workspace juno-ui-components build 1>/dev/null && \
-  yarn workspace juno-ui-components build-storybook -o ./build 1>/dev/null 
+  npm --workspace juno-ui-components install 1>/dev/null && \
+  npm --workspace juno-ui-components run build-storybook 1>/dev/null 
 
 FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:18-alpine
 LABEL source_repository="https://github.com/sapcc/juno/libs/juno-ui-components"
@@ -15,7 +14,7 @@ RUN apk --no-cache add ca-certificates && npm install -g http-server
 RUN mkdir -p /app
 WORKDIR /app
 
-COPY --from=base /juno/libs/juno-ui-components/build/* "/app/"
+COPY --from=base /juno/libs/juno-ui-components/storybook-static/* "/app/"
 RUN ls -la
 
 # run app

@@ -20,8 +20,9 @@ const isProduction = process.env.NODE_ENV === "production"
 const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
 // in dev environment we prefix output file with public
 let outfile = `${isProduction ? "" : "public/"}${pkg.main || pkg.module}`
+
 // get output from outputfile
-let outdir = outfile.slice(0, outfile.lastIndexOf("/"))
+let [outdir, file] = outfile.split("/", 2)
 const args = process.argv.slice(2)
 const watch = args.indexOf("--watch") >= 0
 const serve = args.indexOf("--serve") >= 0
@@ -54,7 +55,7 @@ const build = async () => {
       isProduction && !IGNORE_EXTERNALS
         ? Object.keys(pkg.peerDependencies || {})
         : [],
-    entryPoints: [pkg.source],
+    entryPoints: { [file.replace(".js", "")]: pkg.source },
     outdir,
     // this step is important for performance reason.
     // the main file (index.js) contains minimal code needed to

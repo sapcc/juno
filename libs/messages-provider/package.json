@@ -1,15 +1,13 @@
 {
   "name": "messages-provider",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Messages provider",
   "source": "src/index.js",
   "main": "build/index.js",
   "module": "build/index.js",
   "license": "Apache-2.0",
   "peerDependencies": {
-    "juno-ui-components": "1.2.3",
-    "lodash.uniqueid": "^4.0.1",
-    "prop-types": "^15.8.1",
+    "juno-ui-components": "*",
     "react": "^18.2.0",
     "zustand": "^4.1.5"
   },
@@ -19,14 +17,13 @@
     "@babel/preset-react": "^7.18.6",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^24.0.0",
-    "@rollup/plugin-node-resolve": "^13.1.3",
     "@testing-library/dom": "^8.19.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
-    "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.2.3/package.tgz",
+    "juno-ui-components": "*",
     "lodash.uniqueid": "^4.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
@@ -39,10 +36,14 @@
   },
   "scripts": {
     "build": "NODE_ENV=production rollup -c",
-    "test": "NODE_ENV=test yarn jest",
+    "test": "NODE_ENV=test jest",
     "start": "PORT=$APP_PORT node server.js"
   },
   "jest": {
     "testEnvironment": "jsdom"
+  },
+  "dependencies": {
+    "build": "^0.1.4",
+    "run": "^1.4.0"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "oauth",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Authenticates user via OIDC",
   "source": "src/index.js",
   "main": "build/index.js",
@@ -14,7 +14,7 @@
     "oauth-pkce": "^0.0.6"
   },
   "scripts": {
-    "test": "NODE_ENV=test yarn jest",
+    "test": "NODE_ENV=test jest",
     "build": "NODE_ENV=production node ./esbuild.config.js"
   },
   "babel": {

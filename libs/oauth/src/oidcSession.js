@@ -27,7 +27,12 @@ const oidcFlowHandler = (flowType) => {
 
 //############################## REQUEST #################################
 // This function initiates the oidc flow
-const createOidcRequest = async ({ issuerURL, clientID, flowType }) => {
+const createOidcRequest = async ({
+  issuerURL,
+  clientID,
+  flowType,
+  requestParams,
+}) => {
   try {
     // create state props and store them in the SessionStorage
     // to use them after the redirect back from the ID provider
@@ -39,11 +44,24 @@ const createOidcRequest = async ({ issuerURL, clientID, flowType }) => {
     const handler = oidcFlowHandler(flowType)
 
     // make the actual request
-    const url = await handler.buildRequestUrl({
+    let url = await handler.buildRequestUrl({
       issuerURL,
       clientID,
       oidcState,
     })
+
+    // add additional search params
+    if (requestParams) {
+      let params =
+        typeof requestParams === "string"
+          ? JSON.parse(requestParams)
+          : requestParams
+      const newUrl = new URL(url)
+      Object.keys(params).forEach((k) =>
+        newUrl.searchParams.append(k, params[k])
+      )
+      url = newUrl.href
+    }
 
     // redirect to this URL
     window.location.replace(url)
@@ -212,16 +230,16 @@ const oidcSession = (params) => {
   }
 
   let expirationTimer
-  const updateExpirationTimer=()=>{
+  const updateExpirationTimer = () => {
     clearTimeout(expirationTimer)
-    if(state?.auth?.parsed?.expiresAt) {
+    if (state?.auth?.parsed?.expiresAt) {
       const expiresIn = expiresAt - Date.now() - 5000
       console.info(
         "(OAUTH) logout token in",
         Math.floor(expiresIn / 1000),
         "seconds"
       )
-      expirationTimer = setTimeout(logout,expiresIn)
+      expirationTimer = setTimeout(logout, expiresIn)
     }
   }
 
@@ -263,7 +281,7 @@ const oidcSession = (params) => {
 
   const login = () => {
     update({ isProcessing: true })
-    createOidcRequest({ issuerURL, clientID, flowType })
+    createOidcRequest({ issuerURL, clientID, flowType, requestParams })
   }
 
   const logout = (options) => {

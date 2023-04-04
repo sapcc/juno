@@ -37,7 +37,7 @@ const App = () => {
 ## Install
 
 ```bash
-yarn add url-state-router
+npm add url-state-router
 ```
 
 ## Router
@@ -195,6 +195,6 @@ const Items = () => {
 # Development
 
 ```bash
-yarn start
-yarn test
+npm run start
+npm run test
 ```

@@ -12,7 +12,7 @@ const files = glob.sync(`${DIRNAME}/../libs/**/package.json`, {
 files.forEach((pkgFile) => {
   const pkg = JSON.parse(fs.readFileSync(pkgFile))
 
-  exec(`yarn workspace ${pkg.name} build`, (error, stdout, stderr) => {
+  exec(`npm --workspace ${pkg.name} run build`, (error, stdout, stderr) => {
     console.log("==========BUILD LIB", pkg.name)
 
     if (error) {

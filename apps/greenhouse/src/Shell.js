@@ -25,7 +25,6 @@ const appsConfig = {
     },
   },
 
-  
   heureka: {
     name: "heureka",
     version: "latest",
@@ -34,7 +33,6 @@ const appsConfig = {
       endpoint: "https://heureka-staging.scaleout.ap-jp-2.cloud.sap/api/v1",
     },
   },
-
 
   doop: {
     name: "doop",
@@ -46,24 +44,24 @@ const appsConfig = {
   },
 }
 
-document.head.appendChild(document.createElement("script")).text =
-  "(" +
-  function () {
-    // injected DOM script is not a content script anymore,
-    // it can modify objects and functions of the page
-    var _pushState = history.pushState
-    var _replaceState = history.replaceState
-    history.pushState = function (state, title, url) {
-      _pushState.call(this, state, title, url)
-      window.dispatchEvent(new CustomEvent("popstate", { state }))
-    }
-    history.replaceState = function (state, title, url) {
-      _replaceState.call(this, state, title, url)
-      window.dispatchEvent(new CustomEvent("popstate", { state }))
-    }
-    // repeat the above for replaceState too
-  } +
-  ")(); document.currentScript.remove();" // remove the DOM script element
+// document.head.appendChild(document.createElement("script")).text =
+//   "(" +
+//   function () {
+//     // injected DOM script is not a content script anymore,
+//     // it can modify objects and functions of the page
+//     var _pushState = history.pushState
+//     var _replaceState = history.replaceState
+//     history.pushState = function (state, title, url) {
+//       _pushState.call(this, state, title, url)
+//       window.dispatchEvent(new CustomEvent("popstate", { state }))
+//     }
+//     history.replaceState = function (state, title, url) {
+//       _replaceState.call(this, state, title, url)
+//       window.dispatchEvent(new CustomEvent("popstate", { state }))
+//     }
+//     // repeat the above for replaceState too
+//   } +
+//   ")(); document.currentScript.remove();" // remove the DOM script element
 
 const Shell = (props = {}) => {
   const setEndpoint = useStore((state) => state.setEndpoint)
@@ -100,6 +98,7 @@ const Shell = (props = {}) => {
           issuerurl: props.issuerurl,
           clientid: props.clientid,
           initialLogin: true,
+          requestParams: JSON.stringify({ connector_id: "ccloud" }),
         },
       },
     })
@@ -107,15 +106,10 @@ const Shell = (props = {}) => {
     setAssetsHost(props.currentHost)
   }, [setEndpoint, setUrlStateKey, setAppsConfig, setAssetsHost])
 
-  // Initial state from URL
+  // Initial state from URL (on login)
   React.useEffect(() => {
     if (!loggedIn) return
     const greenhouseUrlState = registerConsumer(URL_STATE_KEY)
-    // console.log(
-    //   "========================URL STATE",
-    //   greenhouseUrlState.currentState(),
-    //   window.location.href
-    // )
     let active = greenhouseUrlState.currentState()?.a
     if (active) setActive(active.split(","))
     else setActive([Object.keys(appsConfig)?.[0]])

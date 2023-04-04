@@ -6,12 +6,9 @@
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
   "license": "Apache-2.0",
-  "peerDependencies": {
-    "lz-string": "^1.4.4"
-  },
   "scripts": {
     "build": "rollup -c",
-    "test": "NODE_ENV=test yarn jest "
+    "test": "NODE_ENV=test jest "
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",

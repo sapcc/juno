@@ -1,4 +1,4 @@
 import PolicyEngine from "./engine"
 
-export { PolicyEngine }
-export default (config) => new PolicyEngine(config)
+const init = (config) => new PolicyEngine(config)
+export { init as default, PolicyEngine }

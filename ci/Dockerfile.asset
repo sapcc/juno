@@ -1,5 +1,4 @@
-# Juno is a monorepo containing apps and libs. The packages are managed using yarn 3. 
-# Yarn 3 caches all packges and simulates the node_modules folder.
+# Juno is a monorepo containing apps and libs. The packages are managed using npm. 
 #
 # The build idea:
 # we get the entire monorepo and build the required app in the base layer. 
@@ -21,18 +20,15 @@ RUN node scripts/generate_communication_readme.mjs --path=/juno/$ASSET_PATH
 
 RUN rsync -avu --delete --exclude 'node_modules' "/tmp/src/$ASSET_PATH/" "/juno/$ASSET_PATH"
 
+RUN npm run build-libs
 # TEST AND BUILD ASSET
 # IGNORE_EXTERNALS=true will results in a bundle which includes all dependencies. 
 # This is the case if the jspm cdn is unreachable!!! 
 RUN \
   ASSET_NAME=$(jq -r .name /juno/$ASSET_PATH/package.json) ; \ 
-  yarn workspace $ASSET_NAME install ; \ 
-  ASSET_TEST_SCRIPT=$(jq -r '.scripts | has("test")' /juno/$ASSET_PATH/package.json) ; \
-  ASSET_BUILD_SCRIPT=$(jq -r '.scripts | has("build")' /juno/$ASSET_PATH/package.json) ; \ 
-  echo $ASSET_NAME "test script: $ASSET_TEST_SCRIPT, build script: $ASSET_BUILD_SCRIPT" ; \
-  ([[ "$ASSET_TEST_SCRIPT" == "false" ]]  || CI=true yarn workspace $ASSET_NAME test) && \
-  ([[ "$ASSET_BUILD_SCRIPT" == "false" ]] || CI=false NODE_ENV=production IGNORE_EXTERNALS=false yarn workspace $ASSET_NAME build 1>/dev/null)
-
+  npm install --silent --workspace $ASSET_NAME ; \ 
+  npm --workspace $ASSET_NAME run test --if-present ; \
+  NODE_ENV=production IGNORE_EXTERNALS=false npm --workspace $ASSET_NAME run build --if-present
 
 # COPY RESULTS OF THE BUILD TO /tmp
 
