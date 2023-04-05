@@ -6,20 +6,13 @@ import { ShadowRoot, StyleProvider, PortalProvider } from "../../index"
 /**
  * This provider acts as a wrapper for Juno apps.
  */
-export const AppShellProvider = ({
-  shadowRoot,
-  shadowRootMode,
-}) => {
-
+export const AppShellProvider = ({ shadowRoot, shadowRootMode, children }) => {
   return (
-    <>
-      <ShadowRoot>
-        <StyleProvider stylesWrapper={shadowRoot ? "inline" : styleImport}>
-          {children}
-          <PortalProvider />
-        </StyleProvider>
-      </ShadowRoot>
-    </>
+    <ShadowRoot>
+      <StyleProvider stylesWrapper={shadowRoot ? "inline" : styleImport}>
+        <PortalProvider>{children}</PortalProvider>
+      </StyleProvider>
+    </ShadowRoot>
   )
 }
 
@@ -29,13 +22,12 @@ AppShellProvider.propTypes = {
   /** Shadow root mode */
   shadowRootMode: PropTypes.oneOf(["open", "closed"]),
   /** Where app stylesheets are imported. This is only relevant if shadowRoot === false. If you use a ShadowRoot the styles must be inline. */
-  styleImport: PropTypes.oneOf(["head", "inline"])
+  styleImport: PropTypes.oneOf(["head", "inline"]),
 }
 
 // define default values
 AppShellProvider.defaultProps = {
   shadowRoot: true,
   shadowRootMode: "open",
-  styleImport: "inline"
+  styleImport: "inline",
 }
-

@@ -49,5 +49,5 @@ const Example2 = ({}) => {
 }
 
 Default.args = {
-  children: <Example />,
+  children: <Example2 />,
 }

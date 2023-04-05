@@ -41,8 +41,8 @@ export const PortalProvider = ({ className, id, children }) => {
 PortalProvider.Portal = Portal
 
 PortalProvider.propTypes = {
-  className: PropTypes.className,
-  id: PropTypes.id,
+  className: PropTypes.string,
+  id: PropTypes.string,
 }
 
 // define default values
