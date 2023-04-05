@@ -18,6 +18,7 @@ const btnBase = `
   focus-visible:jn-ring-theme-focus
   focus-visible:jn-ring-offset-1
   focus-visible:jn-ring-offset-theme-focus
+  disabled:jn-opacity-50
   disabled:jn-cursor-not-allowed
   disabled:jn-pointer-events-none
 `

@@ -17,20 +17,6 @@
 		border-color: var(--color-button-default-active-border);
 		color: var(--color-button-default-active-text);
 	}
-	
-	&:disabled {
-		background-color: var(--color-button-default-disabled-bg);
-		border-color: var(--color-button-default-disabled-border);
-		color: var(--color-button-default-disabled-text);
-
-		.juno-button-icon {
-			color: var(--color-button-default-disabled-text);
-		}
-	}
-
-	.juno-button-icon {
-		color: var(--color-accent);
-	}
 
 }
 
@@ -51,63 +37,38 @@
 		color: var(--color-button-subdued-active-text);
 	}
 	
-	&:disabled {
-		background-color: var(--color-button-subdued-disabled-bg);
-		border-color: var(--color-button-subdued-disabled-border);
-		color: var(--color-button-subdued-disabled-text);
-	}
 }
 
-.juno-button-primary {
-	background-image: var(--gradient-button-primary-bg);
-	border: 1px solid var(--color-button-primary-border);
+.juno-button-primary { // DONE
+	background-color: var(--color-button-primary-bg);
 	color: var(--color-button-primary-text);
 	
 	&:hover {
-		background-image: none;
 		background-color: var(--color-button-primary-hover-bg);
-		border-color: var(--color-button-primary-hover-border);
 		color: var(--color-button-primary-hover-text);
 	}
 	
 	&:active {
-		background-image: none;
 		background-color: var(--color-button-primary-active-bg);
-		border-color: var(--color-button-primary-active-border);
 		color: var(--color-button-primary-active-text);
 	}
 	
-	&:disabled {
-		background-image: var(--gradient-button-primary-disabled-bg);
-		border-color: var(--color-button-primary-disabled-border);
-		color: var(--color-button-primary-disabled-text);
-	}
 }
 
 
 
 .juno-button-primary-danger {
 	background-image: var(--gradient-button-primary-danger-bg);
-	border: 1px solid var(--color-button-primary-danger-border);
 	color: var(--color-button-primary-danger-text);
 	
 	&:hover {
-		background-image: none;
 		background-color: var(--color-button-primary-danger-hover-bg);
-		border-color: var(--color-button-primary-danger-hover-border);
 		color: var(--color-button-primary-danger-hover-text);
 	}
 	
 	&:active {
-		background-image: none;
 		background-color: var(--color-button-primary-danger-active-bg);
-		border-color: var(--color-button-primary-danger-active-border);
 		color: var(--color-button-primary-danger-active-text);
 	}
 	
-	&:disabled {
-		background-image: var(--gradient-button-primary-danger-disabled-bg);
-		border-color: var(--color-button-primary-danger-disabled-border);
-		color: var(--color-button-primary-danger-disabled-text);
-	}
 }

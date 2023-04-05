@@ -290,9 +290,9 @@
   --color-black-raw: 0, 0, 0;
 }
 
-/* ----- LIGHT THEME ----- */
+/* When assigning colors to uses with tailwind transparency functions, use "[color]-raw" variables: */
 
-/* When assigning colors to uses, use "[color]-raw" variables: */
+/* ----- LIGHT THEME ----- */
 
 .theme-light {
   // LT Background Colors
@@ -338,85 +338,58 @@
   // LT Button
   // LT Primary Button
   --color-button-primary-text: var(--color-white);
-  --gradient-button-primary-bg: linear-gradient(
-    to right top,
-    rgb(51, 242, 255) 0%,
-    var(--color-accent) 100%
-  );
-  --color-button-primary-border: var(--color-accent);
+  --color-button-primary-bg: var(--color-juno-blue-7);
   // |-- LT Primary Button :hover
-  --color-button-primary-hover-bg: var(--color-juno-blue-6);
-  --color-button-primary-hover-border: var(--color-accent);
+  --color-button-primary-hover-bg: var(--color-juno-blue-5);
   --color-button-primary-hover-text: var(--color-white);
   // |-- LT Primary Button :active
-  --color-button-primary-active-bg: var(--color-accent);
-  --color-button-primary-active-border: var(--color-accent);
+  --color-button-primary-active-bg: var(--color-juno-blue-8);
   --color-button-primary-active-text: var(--color-white);
-  // |-- LT Primary Button :disabled
-  --gradient-button-primary-disabled-bg: linear-gradient(
-    to right top,
-    rgb(253, 253, 253) 0%,
-    rgb(230, 230, 230) 100%
-  );
-  --color-button-primary-disabled-border: rgb(203, 203, 203);
-  --color-button-primary-disabled-text: rgb(203, 203, 203);
+  
+  
   // LT Default Button
-  --color-button-default-text: var(--color-text-default);
-  --color-button-default-icon: var(--color-accent);
-  --color-button-default-bg: transparent;
-  --color-button-default-border: var(--color-accent);
+  --color-button-default-text: var(--color-text-high);
+  --color-button-default-bg: var(--color-background-lvl-4);
+  --color-button-default-border: var(--color-background-lvl-4);
   // |-- LT Default Button :hover
-  --color-button-default-hover-text: var(--color-accent);
-  --color-button-default-hover-bg: transparent;
-  --color-button-default-hover-border: var(--color-accent);
+  --color-button-default-hover-text: var(--color-text-high);
+  --color-button-default-hover-bg: var(--color-background-lvl-3);
+  --color-button-default-hover-border: var(--color-background-lvl-3);
   // |-- LT Default Button :active
-  --color-button-default-active-bg: var(--color-juno-grey-light-5);
-  --color-button-default-active-border: var(--color-accent);
-  --color-button-default-active-text: var(--color-text-default);
-  // |-- LT Default Button :disabled
-  --color-button-default-disabled-text: rgb(203, 203, 203);
-  --color-button-default-disabled-bg: transparent;
-  --color-button-default-disabled-border: rgb(203, 203, 203);
+  --color-button-default-active-text: var(--color-text-high);
+  --color-button-default-active-bg: var(--color-background-lvl-2);
+  --color-button-default-active-border: var(--color-background-lvl-4);
+  
+  
   // LT Subdued Button
   --color-button-subdued-text: var(--color-text-default);
-  --color-button-subdued-bg: transparent;
-  --color-button-subdued-border: var(--color-juno-text-default);
+  --color-button-subdued-icon: var(--color-text-default);
+  --color-button-subdued-bg: var(--color-background-lvl-3);
+  --color-button-subdued-border: var(--color-background-lvl-4);
   // |-- LT Subdued Button :hover
   --color-button-subdued-hover-text: var(--color-text-default);
-  --color-button-subdued-bg: transparent;
-  --color-button-subdued-hover-border: var(--color-accent);
+  --color-button-subdued-hover-bg: var(--color-background-lvl-1);
+  --color-button-subdued-hover-border: var(--color-background-lvl-4);
   // |-- LT Subdued Button :active
-  --color-button-subdued-active-bg: var(--color-juno-grey-light-5);
-  --color-button-subdued-active-border: var(--color-text-default);
   --color-button-subdued-active-text: var(--color-text-default);
-  // |-- LT Subdued Button :disabled
-  --color-button-subdued-disabled-text: rgb(203, 203, 203);
-  --color-button-subdued-disabled-bg: transparent;
-  --color-button-default-disabled-border: rgb(203, 203, 203);
+  --color-button-subdued-active-bg: var(--color-background-lvl-0);
+  --color-button-subdued-active-border: var(--color-background-lvl-4);
+
+
   // LT Primary Danger Button
   --color-button-primary-danger-text: var(--color-white);
-  --gradient-button-primary-danger-bg: linear-gradient(
-    90deg,
-    rgb(227, 107, 62) 0%,
-    rgb(187, 62, 15) 100%
-  );
-  --color-button-primary-danger-border: var(--color-sap-red-dark);
+  --color-button-primary-danger-bg: var(--color-sap-red-7);
   // |-- LT Primary Danger Button :hover
   --color-button-primary-danger-hover-text: var(--color-white);
-  --color-button-primary-danger-hover-bg: var(--color-red-light-3);
-  --color-button-primary-danger-hover-border: var(--color-sap-red-dark);
+  --color-button-primary-danger-hover-bg: var(--color-sap-red-6);
   // |-- LT Primary Danger Button :active
-  --color-button-primary-danger-active-bg: var(--color-sap-red-dark-1);
-  --color-button-primary-danger-active-border: var(--color-danger);
   --color-button-primary-danger-active-text: var(--color-white);
-  // |-- LT Primary Danger Button  :disabled
-  --color-button-primary-danger-disabled-text: rgb(203, 203, 203);
-  --gradient-button-primary-danger-disabled-bg: linear-gradient(
-    to right top,
-    rgb(253, 253, 253) 0%,
-    rgb(230, 230, 230) 100%
-  );
-  --color-button-primary-danger-disabled-border: rgb(203, 203, 203);
+  --color-button-primary-danger-active-bg: var(--color-sap-red-8);
+
+
+  
+  
+  
   // LT Icon
   --color-icon-danger: var(--color-sap-red-raw);
   --color-icon-info: var(--color-accent-raw);
@@ -578,86 +551,57 @@
 
   // DT Button
   // DT Primary Button
+  --color-button-primary-bg: var(--color-juno-turquoise-7);
   --color-button-primary-text: var(--color-white);
-  --gradient-button-primary-bg: linear-gradient(
-    to right top,
-    rgb(7, 79, 90) 0%,
-    var(--color-accent) 100%
-  );
   // |-- DT Primary Button :hover
-  --color-button-primary-border: var(--color-accent);
-  --color-button-primary-hover-bg: var(--color-juno-turquoise-8);
-  --color-button-primary-hover-border: var(--color-accent);
+  --color-button-primary-hover-bg: var(--color-juno-turquoise-5);
   --color-button-primary-hover-text: var(--color-white);
   // |-- DT Primary Button :active
-  --color-button-primary-active-bg: var(--color-accent);
-  --color-button-primary-active-border: var(--color-white);
+  --color-button-primary-active-bg: var(--color-juno-turquoise-9);
   --color-button-primary-active-text: var(--color-white);
-  // |-- DT Primary Button :disabled
-  --gradient-button-primary-disabled-bg: linear-gradient(
-    to right top,
-    rgb(0, 7, 15) 0%,
-    rgb(44, 46, 49) 100%
-  );
-  --color-button-primary-disabled-border: rgb(76, 79, 83);
-  --color-button-primary-disabled-text: rgb(76, 79, 83);
+  
+  
   // DT Default Button
-  --color-button-default-text: var(--color-text-default);
-  --color-button-default-icon: var(--color-accent-raw);
-  --color-button-default-bg: transparent;
-  --color-button-default-border: var(--color-accent);
+  --color-button-default-text: var(--color-text-high);
+  --color-button-default-icon: var(--color-text-high);
+  --color-button-default-bg: var(--color-background-lvl-4);
+  --color-button-default-border: var(--color-background-lvl-4);
   // |-- DT Default Button :hover
-  --color-button-default-hover-text: var(--color-accent);
-  --color-button-default-hover-bg: transparent;
-  --color-button-default-hover-border: var(--color-accent);
+  --color-button-default-hover-text: var(--color-text-high);
+  --color-button-default-hover-bg: var(--color-background-lvl-3);
+  --color-button-default-hover-border: var(--color-background-lvl-3);
   // |-- DT Default Button :active
-  --color-button-default-active-bg: var(--color-juno-grey-blue-1);
-  --color-button-default-active-border: var(--color-accent);
-  --color-button-default-active-text: var(--color-text-default);
-  // |-- DT Default Button :disabled
-  --color-button-default-disabled-text: rgb(76, 79, 83);
-  --color-button-default-disabled-bg: transparent;
-  --color-button-default-disabled-border: rgb(76, 79, 83);
+  --color-button-default-active-text: var(--color-text-high);
+  --color-button-default-active-bg: var(--color-background-lvl-2);
+  --color-button-default-active-border: var(--color-background-lvl-4);
+  
+  
   // DT Subdued Button
   --color-button-subdued-text: var(--color-text-default);
-  --color-button-subdued-bg: transparent;
-  --color-button-subdued-border: var(--color-juno-text-default);
+  --color-button-subdued-icon: var(--color-text-default);
+  --color-button-subdued-bg: var(--color-background-lvl-3);
+  --color-button-subdued-border: var(--color-background-lvl-4);
   // |-- DT Subdued Button :hover
   --color-button-subdued-hover-text: var(--color-text-default);
-  --color-button-subdued-bg: transparent;
-  --color-button-subdued-hover-border: var(--color-accent);
+  --color-button-subdued-hover-bg: var(--color-background-lvl-2);
+  --color-button-subdued-hover-border: var(--color-background-lvl-4);
   // |-- DT Subdued Button :active
-  --color-button-subdued-active-bg: var(--color-juno-grey-blue-1);
-  --color-button-subdued-active-border: var(--color-text-default);
   --color-button-subdued-active-text: var(--color-text-default);
-  // |-- DT Subdued Button :disabled
-  --color-button-subdued-disabled-text: rgb(76, 79, 83);
-  --color-button-subdued-disabled-bg: transparent;
-  --color-button-default-disabled-border: rgb(76, 79, 83);
+  --color-button-subdued-active-bg: var(--color-background-lvl-0);
+  --color-button-subdued-active-border: var(--color-background-lvl-4);
+
+
   // DT Primary-Danger Button
   --color-button-primary-danger-text: var(--color-white);
-  --gradient-button-primary-danger-bg: linear-gradient(
-    to right top,
-    rgb(230, 117, 85) 0%,
-    rgb(255, 65, 11) 100%
-  );
-  --color-button-primary-danger-border: rgb(255, 65, 11);
-  // |-- DT Primary-Danger Button :hover
+  --color-button-primary-danger-bg: var(--color-sap-red-6);
+  // |-- DT Primary Danger Button :hover
   --color-button-primary-danger-hover-text: var(--color-white);
-  --color-button-primary-danger-hover-bg: var(--color-sap-red-dark-1);
-  --color-button-primary-danger-hover-border: rgb(255, 65, 11);
-  // |-- DT Primary-Danger Button :active
-  --color-button-primary-danger-active-bg: var(--color-danger);
-  --color-button-primary-danger-active-border: var(--color-white);
+  --color-button-primary-danger-hover-bg: var(--color-sap-red-5);
+  // |-- DT Primary Danger Button :active
   --color-button-primary-danger-active-text: var(--color-white);
-  // |-- DT Primary-Danger Button :disabled
-  --color-button-primary-danger-disabled-text: rgb(76, 79, 83);
-  --gradient-button-primary-danger-disabled-bg: linear-gradient(
-    to right top,
-    rgb(0, 7, 15) 0%,
-    rgb(44, 46, 49) 100%
-  );
-  --color-button-primary-danger-disabled-border: rgb(76, 79, 83);
+  --color-button-primary-danger-active-bg: var(--color-sap-red-7);
+  
+  
   // DT Icon
   --color-icon-danger: var(--color-sap-red-raw);
   --color-icon-info: var(--color-accent-raw);
