@@ -4,14 +4,22 @@
 # This image is finally used to build the apps, libs and the assets server. 
 # The reason is the caching of node_modules!
 
-# docker run --rm -it --name juno -v /workspace/juno:/juno -v /workspace/temp/:/tmp juno:latest /bin/bash 
+# build local:
+# run this command in juno root "docker build -t juno-base -f ./ci/Dockerfile.base ."
+
+# run local:
+# docker run --rm -it --name juno -v /workspace/juno:/juno -v /workspace/temp/juno/:/tmp juno-base:latest /bin/bash 
+# docker run --rm -it --name juno -v /workspace/juno:/juno -v /workspace/temp/juno/:/tmp keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base:latest /bin/bash
 
 FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:18-alpine
 
 LABEL source_repository="https://github.com/sapcc/juno"
 
+# upgrade npm to latest
+RUN npm i -g npm@latest
+
 RUN apk --no-cache add git ca-certificates rsync jq bash
-RUN npm i -g glob @jspm/generator
+RUN npm i -g glob @jspm/generator 
 
 RUN mkdir -p "/juno"
 ADD . /juno 
@@ -19,4 +27,5 @@ ADD . /juno
 WORKDIR /juno 
 
 RUN npm install --silent
+# npm WARN exec The following package was not found and will be installed: browserslist@4.21.5
 RUN npx browserslist@latest --update-db
