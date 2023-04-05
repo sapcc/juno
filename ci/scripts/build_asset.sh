@@ -9,9 +9,10 @@ if [ ! -f "CODEOWNERS" ]; then
 fi
 
 function help() {
-  echo "Usage: build_assets.sh --asset-path||-ap --asset-name||-sn --root-path||-rp
+  echo "Usage: build_assets.sh --asset-path||-ap --asset-name||-sn --root-path||-rp --output-path||-op
     Example: ./ci/scripts/build_asset.sh --asset-path apps/ --asset-name assets-overview --root-path /app
-    --root-path is optional default is /juno"
+    --root-path is optional default is /juno
+    --output-path is optional default is ../build-result"
   exit
 }
 
@@ -20,6 +21,7 @@ if [[ "$1" == "--help" ]]; then
 fi
 
 ROOT_PATH="/juno"
+OUTPUT_PATH="../build-result"
 while [[ $# -gt 0 ]]; do
   case $1 in
   --asset-name | -an)
@@ -34,6 +36,10 @@ while [[ $# -gt 0 ]]; do
     ;;
   --root-path | -rp)
     ROOT_PATH="$2"
+    shift # past argument
+    shift # past value
+  --output-path | -op)
+    OUTPUT_PATH="$2"
     shift # past argument
     shift # past value
     ;;
@@ -59,9 +65,10 @@ fi
 
 ASSET_PATH="$ASSET_PATH$ASSET_NAME"
 
-echo "use ROOT_PATH  = $ROOT_PATH"
-echo "use ASSET_NAME = $ASSET_NAME"
-echo "use ASSET_PATH = $ASSET_PATH"
+echo "use ROOT_PATH   = $ROOT_PATH"
+echo "use ASSET_NAME  = $ASSET_NAME"
+echo "use ASSET_PATH  = $ASSET_PATH"
+echo "use OUTPUT_PATH = $OUTPUT_PATH"
 echo "============================"
 # this dir is mounted from the pipeline inside the images
 # upgrade to latest asset XY source to prevent edge cases
@@ -70,16 +77,11 @@ echo "============================"
 
 echo "sync /tmp/latest/$ASSET_PATH to $ROOT_PATH/$ASSET_PATH"
 echo "============================"
-#rsync -avu --delete "/tmp/latest/$ASSET_PATH/" "$ROOT_PATH/$ASSET_PATH" >/dev/null
+rsync -avu --delete --exclude 'node_modules' "/tmp/latest/$ASSET_PATH/" "$ROOT_PATH/$ASSET_PATH" >/dev/null
 
+exit
 # install and build libs
-# IMPORTANT!
-# some assets have dependencies to libs
-# to test the asset we need to build the libs which includes all dependencies
-# build-libs script set the NODE_ENV to development which includes all
-# dependencies in the builds defined in peer dependencies.
-# RUN yarn install >/dev/null ; yarn build-libs > /dev/null
-yarn workspace $ASSET_NAME install >/dev/null
+npm run build-libs
 #yarn build-libs
 
 echo "generate COMMUNICATOR.md in $ROOT_PATH/$ASSET_PATH"
