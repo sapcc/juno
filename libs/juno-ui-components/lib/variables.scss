@@ -288,6 +288,16 @@
   // BLACK
   --color-black: rgb(0, 0, 0);
   --color-black-raw: 0, 0, 0;
+  
+  // SAP BRAND COLORS NEW
+  --color-sap-red-1: rgb(244, 215, 204);
+  --color-sap-red-2: rgb(238, 191, 174);
+  --color-sap-red-3: rgb(231, 163, 137);
+  --color-sap-red-4: rgb(222, 126, 91);
+  --color-sap-red-5: rgb(208, 69, 18);
+  --color-sap-red-6: rgb(187, 62, 15);
+  --color-sap-red-7: rgb(164, 54, 13);
+  --color-sap-red-8: rgb(124, 37, 4);
 }
 
 /* When assigning colors to uses with tailwind transparency functions, use "[color]-raw" variables: */
