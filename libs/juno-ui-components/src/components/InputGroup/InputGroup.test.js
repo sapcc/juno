@@ -3,8 +3,8 @@ import { render, screen } from "@testing-library/react"
 import { InputGroup } from "./index"
 import { Button } from "../Button/index"
 import { TextInput } from "../TextInput/index"
-import { Select } from "../Select/index"
-import { SelectOption } from "../SelectOption/index"
+import { NativeSelect } from "../NativeSelect/index"
+import { NativeSelectOption } from "../NativeSelectOption/index"
 
 describe("InputGroup", () => {
   
@@ -18,10 +18,10 @@ describe("InputGroup", () => {
       <InputGroup>
         <Button label="A Button" />
         <TextInput value="some value"/>
-        <Select>
-          <SelectOption label="A Select Option" value="sel-opt-1" />
-          <SelectOption label="Another Select Option" value="sel-opt-2" />
-        </Select>
+        <NativeSelect>
+          <NativeSelectOption label="A Select Option" value="sel-opt-1" />
+          <NativeSelectOption label="Another Select Option" value="sel-opt-2" />
+        </NativeSelect>
       </InputGroup>
     )
     expect(document.querySelector(".juno-input-group")).toBeInTheDocument()
@@ -70,10 +70,10 @@ describe("InputGroup", () => {
       <InputGroup disabled>
         <Button />
         <TextInput />
-        <Select>
-          <SelectOption label="A Select Option" value="sel-opt-1" />
-          <SelectOption label="Another Select Option" value="sel-opt-2" />
-        </Select> 
+        <NativeSelect>
+          <NativeSelectOption label="A Select Option" value="sel-opt-1" />
+          <NativeSelectOption label="Another Select Option" value="sel-opt-2" />
+        </NativeSelect> 
       </InputGroup>
     )
     expect(screen.getByRole("button")).toBeInTheDocument()

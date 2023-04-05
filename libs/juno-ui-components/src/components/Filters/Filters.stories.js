@@ -4,7 +4,7 @@ import { FilterPill } from "../FilterPill/FilterPill.component"
 import { SearchInput } from "../SearchInput/SearchInput.component"
 
 export default {
-  title: "Components/Filter/Filters",
+  title: "Deprecated/Filter/Filters",
   component: Filters,
   argTypes: {},
 }

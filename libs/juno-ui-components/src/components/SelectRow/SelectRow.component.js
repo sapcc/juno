@@ -33,10 +33,6 @@ const floatinglabelcontainerstyles = `
   jn-opacity-75
 `
 
-const floatingselectstyles = `
-  jn-pt-[0.8125rem]
-`
-
 const errortextstyles = `
   jn-text-xs
   jn-text-theme-error
@@ -65,12 +61,32 @@ export const SelectRow = ({
   successtext,
   children,
   value,
+  onValueChange,
   onChange,
+  onOpenChange,
   defaultValue,
+  open,
+  error,
+  loading,
   ...props
 }) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [hasError, setHasError] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  
+  useEffect(() => {
+    setIsOpen(open)
+  }, [open])
+  
+  useEffect(() => {
+    setHasError(error)
+  }, [error])
+  
+  useEffect(() => {
+    setIsLoading(loading)
+  }, [loading])
 
   const invalidated = useMemo(
     () => invalid || (errortext && errortext.length ? true : false),
@@ -115,17 +131,20 @@ export const SelectRow = ({
       {variant !== "floating" ? labelContainer : null}
       <div>
         <Select
-          className={`${selectstyles} ${
-            variant === "floating" ? floatingselectstyles : ""
-          }`}
+          className={`${selectstyles}`}
+          labelClassName={ variant === "floating" ? "jn-pt-[0.8125rem]" : "" }
           name={name}
           id={id}
-          onChange={onChange}
+          onValueChange={onValueChange || onChange}
+          onOpenChange={onOpenChange}
           disabled={disabled}
           invalid={isInvalid}
           valid={isValid}
           value={value}
           defaultValue={defaultValue}
+          open={isOpen}
+          error={hasError}
+          loading={isLoading}
         >
           {children}
         </Select>
@@ -167,10 +186,20 @@ SelectRow.propTypes = {
   children: PropTypes.node,
   /** Passing a value turns the select into a controlled component. If you pass a value you must also specify an onChange handler to deal with value changes */
   value: PropTypes.string,
-  /** Pass a handler to the Select element */
+  /** Pass a handler to the Select element to execute once the value changes */
+  onValueChange: PropTypes.func,
+  /** Deprecated: Use `onValueChange` instead. */
   onChange: PropTypes.func,
+  /** Pass handler to execute once the Selects open state changes */
+  onOpenChange: PropTypes.func,
   /** Pass a default Value that should be selected initially. Use this if you want to use the select as an uncontrolled component. */
-  defaultValue: PropTypes.string
+  defaultValue: PropTypes.string,
+  /** Whether the Select is open */
+  open: PropTypes.bool,
+  /** Whether the Select has an error, e.g. when loading necessary option data failed. When the Select has been negatively validated, use `invalid` instead. */
+  error: PropTypes.bool,
+  /** Whether the Select is currently busy loading options. Will display a Spinner Icon. */
+  loading: PropTypes.bool,
 }
 
 SelectRow.defaultProps = {
@@ -185,6 +214,11 @@ SelectRow.defaultProps = {
   invalid: false,
   errortext: "",
   value: undefined,
+  onValueChange: undefined,
   onChange: undefined,
-  defaultValue: undefined
+  onOpenChange: undefined,
+  defaultValue: undefined,
+  open: undefined,
+  error: undefined,
+  loading: undefined,
 }

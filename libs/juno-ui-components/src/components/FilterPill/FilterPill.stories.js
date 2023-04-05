@@ -2,7 +2,7 @@ import React from "react"
 import { FilterPill } from "./index.js"
 
 export default {
-  title: "Components/Filter/FilterPill",
+  title: "Deprecated/Filter/FilterPill",
   component: FilterPill,
   argTypes: {},
 }
