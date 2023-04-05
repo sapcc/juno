@@ -58,7 +58,10 @@ export { PageHeader } from "./components/PageHeader/index.js"
 export { Pagination } from "./components/Pagination/index.js"
 export { Pill } from "./components/Pill/index.js"
 export { Portal } from "./components/Portal/index.js"
-export { PortalProvider } from "./components/PortalProvider/index.js"
+export {
+  PortalProvider,
+  PortalContent,
+} from "./components/PortalProvider/index.js"
 export { Radio } from "./components/Radio/index.js"
 export { RadioGroup } from "./components/RadioGroup/index.js"
 export { RadioRow } from "./components/RadioRow/index.js"

@@ -1,1 +1,1 @@
-export { PortalProvider } from "./PortalProvider.component"
+export { PortalProvider, PortalContent } from "./PortalProvider.component"
