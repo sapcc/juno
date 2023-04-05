@@ -70,14 +70,6 @@ echo "use ASSET_NAME  = $ASSET_NAME"
 echo "use ASSET_PATH  = $ASSET_PATH"
 echo "use OUTPUT_PATH = $OUTPUT_PATH"
 echo "============================"
-# this dir is mounted from the pipeline inside the images
-# upgrade to latest asset XY source to prevent edge cases
-# for instance the base image build is to slow and we are using in that point of time a
-# base image where the changes form asset XY is not backed in
-
-echo "sync /tmp/latest/$ASSET_PATH to $ROOT_PATH/$ASSET_PATH"
-echo "============================"
-rsync -avu --delete --exclude 'node_modules' "/tmp/latest/$ASSET_PATH/" "$ROOT_PATH/$ASSET_PATH" >/dev/null
 
 exit
 # install and build libs
