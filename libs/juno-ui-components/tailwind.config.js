@@ -50,7 +50,7 @@ module.exports = {
         9: withOpacity("--color-juno-grey-blue-9-raw"),
         10: withOpacity("--color-juno-grey-blue-10-raw"),
         11: withOpacity("--color-juno-grey-blue-11-raw"),
-        DEFAULT: withOpacity("--color-juno-grey-blue-10-raw"),
+        DEFAULT: withOpacity("--color-juno-grey-blue-11-raw"),
       },
       "juno-blue": {
         1: withOpacity("--color-juno-blue-1-raw"),
@@ -63,7 +63,7 @@ module.exports = {
         8: withOpacity("--color-juno-blue-8-raw"),
         9: withOpacity("--color-juno-blue-9-raw"),
         10: withOpacity("--color-juno-blue-10-raw"),
-        DEFAULT: withOpacity("--color-juno-blue-4-raw"),
+        DEFAULT: withOpacity("--color-juno-blue-5-raw"),
       },
       "juno-turquoise": {
         1: withOpacity("--color-juno-turquoise-1-raw"),
@@ -101,7 +101,7 @@ module.exports = {
         6: withOpacity("--color-sap-grey-1-raw"),
         7: withOpacity("--color-sap-grey-0-raw"),
         8: withOpacity("--color-sap-black-raw"),
-        DEFAULT: withOpacity("--color-sap-black-raw"),
+        DEFAULT: withOpacity("--color-sap-black-8-raw"),
       },
       "sap-blue": {
         1: withOpacity("--color-sap-blue-1-raw"),
@@ -111,7 +111,7 @@ module.exports = {
         5: withOpacity("--color-sap-blue-5-raw"),
         6: withOpacity("--color-sap-blue-6-raw"),
         7: withOpacity("--color-sap-blue-7-raw"),
-        DEFAULT: withOpacity("--color-sap-blue-raw"),
+        DEFAULT: withOpacity("--color-sap-blue-5-raw"),
       },
       "sap-gold": {
         1: withOpacity("--color-sap-gold-1-raw"),
@@ -121,7 +121,7 @@ module.exports = {
         5: withOpacity("--color-sap-gold-5-raw"),
         6: withOpacity("--color-sap-gold-6-raw"),
         7: withOpacity("--color-sap-gold-7-raw"),
-        DEFAULT: withOpacity("--color-sap-gold-raw"),
+        DEFAULT: withOpacity("--color-sap-gold-5-raw"),
       },
       "sap-purple": {
         1: withOpacity("--color-sap-purple-1-raw"),
@@ -131,7 +131,7 @@ module.exports = {
         5: withOpacity("--color-sap-purple-5-raw"),
         6: withOpacity("--color-sap-purple-6-raw"),
         7: withOpacity("--color-sap-purple-7-raw"),
-        DEFAULT: withOpacity("--color-sap-purple-raw"),
+        DEFAULT: withOpacity("--color-sap-purple-5-raw"),
       },
       "sap-green": {
         1: withOpacity("--color-sap-green-1-raw"),
@@ -141,7 +141,7 @@ module.exports = {
         5: withOpacity("--color-sap-green-5-raw"),
         6: withOpacity("--color-sap-green-6-raw"),
         7: withOpacity("--color-sap-green-7-raw"),
-        DEFAULT: withOpacity("--color-sap-green-raw"),
+        DEFAULT: withOpacity("--color-sap-green-5-raw"),
       },
       "sap-red": {
         1: withOpacity("--color-sap-red-1-raw"),
@@ -152,7 +152,7 @@ module.exports = {
         6: withOpacity("--color-sap-red-6-raw"),
         7: withOpacity("--color-sap-red-7-raw"),
         8: withOpacity("--color-sap-red-8-raw"),
-        DEFAULT: withOpacity("--color-sap-red-raw"),
+        DEFAULT: withOpacity("--color-sap-red-5-raw"),
       },
       white: withOpacity("--color-white-raw"),
       black: withOpacity("--color-black-raw"),
