@@ -48,9 +48,12 @@ const PluginContainer = () => {
     Promise.all([
       fetch(manifestUrl).then((r) => r.json()),
       k8sClient.get("/apis/greenhouse.sap/v1alpha1/plugins", { limit: 500 }),
-      k8sClient.get("/apis/greenhouse.sap/v1alpha1/pluginconfigs", {
-        limit: 500,
-      }),
+      k8sClient.get(
+        `/apis/greenhouse.sap/v1alpha1/namespaces/ccloud/pluginconfigs`,
+        {
+          limit: 500,
+        }
+      ),
     ]).then(([manifest, plugins, configs]) => {
       console.log("::::::::::::::::::::::::manifest", manifest)
       console.log("::::::::::::::::::::::::plugins", plugins.items)
