@@ -35,15 +35,48 @@ const testAppsConfig = {
 }
 
 const PluginContainer = () => {
-  const client = useApi()
+  const k8sClient = useApi()
   const setAppsConfig = useStore((state) => state.apps.setConfig)
   const setActive = useStore((state) => state.apps.setActive)
   const activeApps = useStore((state) => state.apps.active)
   const appsConfig = useStore((state) => state.apps.config)
+  const assetsHost = useStore((state) => state.assetsHost)
 
   useLayoutEffect(() => {
-    setAppsConfig(testAppsConfig)
-  }, [])
+    if (!k8sClient || !assetsHost) return
+    const manifestUrl = new URL("/manifest.json", assetsHost)
+    Promise.all([
+      fetch(manifestUrl).then((r) => r.json()),
+      k8sClient.get("/apis/greenhouse.sap/v1alpha1/plugins", { limit: 500 }),
+      k8sClient.get("/apis/greenhouse.sap/v1alpha1/pluginconfigs", {
+        limit: 500,
+      }),
+    ]).then(([manifest, plugins, configs]) => {
+      console.log("::::::::::::::::::::::::manifest", manifest)
+      console.log("::::::::::::::::::::::::plugins", plugins.items)
+      console.log("::::::::::::::::::::::::configs", configs.items)
+
+      const config = {}
+      plugins.items.forEach((plugin) => {
+        const name = plugin.spec?.uiApplication?.name
+        const version = plugin.spec?.uiApplication?.version
+        if (manifest[name]?.[version]) {
+          config[name] = {
+            name,
+            version,
+            navigable: true,
+            props: {},
+          }
+          plugin.spec?.options?.forEach(
+            (option) => (config[name]["props"][option.name] = option.default)
+          )
+        }
+      })
+      console.log("======================config", config)
+      setAppsConfig(testAppsConfig)
+      // setAppsConfig(config)
+    })
+  }, [k8sClient, assetsHost])
 
   // set first plugin in the list of plugin config as active unless active exists
   useLayoutEffect(() => {
