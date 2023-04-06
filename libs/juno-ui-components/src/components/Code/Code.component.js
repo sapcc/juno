@@ -4,7 +4,6 @@ import PropTypes from "prop-types"
 const codeStyles = `
   jn-bg-theme-code-block
   jn-text-sm
-  jn-whitespace-pre-wrap
 `
 
 /** A basic inline <code> component.

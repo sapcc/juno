@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import PropTypes from "prop-types"
 import ReactJson from "react-json-view"
-import { Code } from "../Code/index.js"
 import { Icon } from "../Icon/index.js"
 
 const wrapperStyles = `
@@ -12,12 +11,16 @@ const wrapperStyles = `
 const preStyles = (wrap) => {
   return `
     jn-p-6
-    ${wrap ? "jn-break-words jn-break-all jn-whitespace-pre-wrap" : "jn-overflow-x-auto"}
+    ${
+      wrap
+        ? "jn-break-words jn-break-all jn-whitespace-pre-wrap"
+        : "jn-overflow-x-auto"
+    }
   `
 }
 
 const sizeStyles = (size) => {
-  switch(size) {
+  switch (size) {
     case "small":
       return `
         juno-codeblock-pre-small
@@ -84,7 +87,7 @@ const jsonStyles = `
 const jsonViewStyles = {
   fontFamily: "IBM Plex Mono",
   fontSize: "0.875rem",
-  padding: "1.5rem"
+  padding: "1.5rem",
 }
 
 const jsonTheme = {
@@ -106,7 +109,6 @@ const jsonTheme = {
   base0F: "var(--color-syntax-highlight-base0F)", // integer value
 }
 
-
 /**  A basic CodeBlock component. Accepts a content prop or children. Will render a pre-wrapped code element. */
 export const CodeBlock = ({
   content,
@@ -114,72 +116,76 @@ export const CodeBlock = ({
   heading,
   wrap,
   size,
-  copy, 
+  copy,
   lang,
   className,
   ...props
 }) => {
   const [isCopied, setIsCopied] = useState(false)
   const timeoutRef = React.useRef(null)
-    
+
   React.useEffect(() => {
     return () => clearTimeout(timeoutRef.current) // clear when component is unmounted
   }, [])
-  
+
   const theCode = useRef(null)
-  
+
   const handleCopyClick = () => {
-    const textToCopy = ( lang === "json" ? JSON.stringify(content || children) : theCode.current.textContent )
+    const textToCopy =
+      lang === "json"
+        ? JSON.stringify(content || children)
+        : theCode.current.textContent
     navigator.clipboard.writeText(textToCopy)
     setIsCopied(true)
     clearTimeout(timeoutRef.current) // clear any possibly existing Refs
     timeoutRef.current = setTimeout(() => setIsCopied(false), 1000)
   }
 
-
   return (
-    <div 
-      className={`juno-code-block ${wrapperStyles} ${ lang ? `juno-code-block-lang-${lang}` : "" } ${className}`}
+    <div
+      className={`juno-code-block ${wrapperStyles} ${
+        lang ? `juno-code-block-lang-${lang}` : ""
+      } ${className}`}
       data-lang={lang || null}
       {...props}
     >
-      { heading && heading.length ? 
-          <div className={`juno-codeblock-heading ${headingStyles}`}>
-            <span className={`${headingInnerStyles}`}>{heading}</span>
-          </div>
-        :
-          ""
-      }
-      { lang === "json" ? 
-      
+      {heading && heading.length ? (
+        <div className={`juno-codeblock-heading ${headingStyles}`}>
+          <span className={`${headingInnerStyles}`}>{heading}</span>
+        </div>
+      ) : (
+        ""
+      )}
+      {lang === "json" ? (
         <ReactJson
-            src={content || children}
-            iconStyle="square"
-            collapsed={3}
-            theme={jsonTheme}
-            style={jsonViewStyles}
-          />
-        
-        :
-        
-        <pre className={`juno-code-block-pre ${preStyles(wrap)} ${sizeStyles(size)}`}>
+          src={content || children}
+          iconStyle="square"
+          collapsed={3}
+          theme={jsonTheme}
+          style={jsonViewStyles}
+        />
+      ) : (
+        <pre
+          className={`juno-code-block-pre ${preStyles(wrap)} ${sizeStyles(
+            size
+          )}`}
+        >
           <code className={`${codeStyles}`} ref={theCode}>
-            { content || children }
+            {content || children}
           </code>
         </pre>
-        
-        }
+      )}
 
-      
-      { copy ?
-          <div className={`juno-codeblock-bottombar ${bottomBarStyles}`}>
-            <span className={`${copyTextStyles}`} >{ isCopied ? "Copied!" : "" }</span>
-            <Icon icon="contentCopy" onClick={handleCopyClick} />
-          </div> 
-        :
-          ""
-      }
-      
+      {copy ? (
+        <div className={`juno-codeblock-bottombar ${bottomBarStyles}`}>
+          <span className={`${copyTextStyles}`}>
+            {isCopied ? "Copied!" : ""}
+          </span>
+          <Icon icon="contentCopy" onClick={handleCopyClick} />
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   )
 }

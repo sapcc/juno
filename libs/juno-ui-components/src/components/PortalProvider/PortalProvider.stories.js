@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { PortalProvider, usePortalRef } from "."
 import { Message } from "../Message/index.js"
-import { Code } from "../Code/index.js"
+import { CodeBlock } from "../CodeBlock/index.js"
 
 export default {
   title: "Layout/PortalProvider",
@@ -27,7 +27,7 @@ const PortalRefContent = () => {
     <>
       {portalRef &&
         ReactDOM.createPortal(
-          <Code>
+          <CodeBlock>
             {`
 import React from "react"
 import ReactDOM from "react-dom"
@@ -39,7 +39,7 @@ const MyComponent = () => {
     { portalRef && ReactDOM.createPortal("I'm inside the portal",portalRef) }
   )
 }`}
-          </Code>,
+          </CodeBlock>,
           portalRef
         )}
     </>

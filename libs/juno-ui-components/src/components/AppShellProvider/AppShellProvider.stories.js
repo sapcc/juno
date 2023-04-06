@@ -1,6 +1,6 @@
 import React from "react"
 import { AppShellProvider } from "."
-import { Code } from "../Code/index.js"
+import { CodeBlock } from "../CodeBlock/index.js"
 import { Message } from "../Message"
 
 export default {
@@ -17,8 +17,8 @@ const Template = (args) => (
 export const Default = Template.bind({})
 Default.args = {
   children: [
-    <Message>Juno styles are added inline</Message>,
-    <Code>
+    <Message key={0}>Juno styles are added inline</Message>,
+    <CodeBlock key={1}>
       {`
 <ShadowRoot>
   <StyleProvider>
@@ -28,7 +28,7 @@ Default.args = {
     </PortalProvider>
   </StyleProvider>
 </ShadowRoot>`}
-    </Code>,
+    </CodeBlock>,
   ],
 }
 
@@ -36,8 +36,10 @@ export const NoShadowRoot = Template.bind({})
 NoShadowRoot.args = {
   shadowRoot: false,
   children: [
-    <Message>No ShadowRoot, but the styles are still inline (default)</Message>,
-    <Code>
+    <Message key={0}>
+      No ShadowRoot, but the styles are still inline (default)
+    </Message>,
+    <CodeBlock key={1}>
       {`
 <StyleProvider>
   <style>{/* styles */}</style>
@@ -45,7 +47,7 @@ NoShadowRoot.args = {
     {/* App */}
   </PortalProvider>
 </StyleProvider>`}
-    </Code>,
+    </CodeBlock>,
   ],
 }
 
@@ -54,15 +56,15 @@ StylesInHead.args = {
   shadowRoot: false,
   stylesWrapper: "head",
   children: [
-    <Message>Juno styles are added to the head tag</Message>,
-    <Code>
+    <Message key={0}>Juno styles are added to the head tag</Message>,
+    <CodeBlock key={1}>
       {`
 <StyleProvider>
   <PortalProvider>
     {/* App */}
   </PortalProvider>
 </StyleProvider>`}
-    </Code>,
+    </CodeBlock>,
   ],
 }
 
@@ -71,8 +73,8 @@ StylesInline.args = {
   shadowRoot: false,
   stylesWrapper: "inline",
   children: [
-    <Message>Juno style are added inline</Message>,
-    <Code>
+    <Message key={0}>Juno style are added inline</Message>,
+    <CodeBlock key={1}>
       {`
 <StyleProvider>
   <style>{/* styles */}</style>
@@ -80,6 +82,6 @@ StylesInline.args = {
     {/* App */}
   </PortalProvider>
 </StyleProvider>`}
-    </Code>,
+    </CodeBlock>,
   ],
 }
