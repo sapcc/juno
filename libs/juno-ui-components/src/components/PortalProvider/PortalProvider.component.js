@@ -35,14 +35,14 @@ Portal.propTypes = {}
  * This provider acts as a container for portals. All portals within a Juno app should be added as children to this.
  * The PortalProvider itself needs to be placed inside the Juno StyleProvider, otherwise styles might not be applied correctly on children of portals.
  *
- * The main task of the PortalProvider is to provide a place where certain components
- * such as modals are maunted. Many existing libs place such components outside of the
+ * The main task of the PortalProvider is to offer a place (portal) where certain components
+ * such as modals are mounted. Many existing libs place such components outside of the
  * current application's DOM tree, because the control over creating and scheduling
- * such components is not with the application but with the lib. This is not a problem
+ * the components is not with the application but with the lib. This is not a problem
  * as long as the application is in the global document tree. Once shadow root comes
  * into play, it changes. In this case, such components are placed outside of the
  * shadow root and individual app styles are not applied. The PortalProvider solves
- * this problem by creating the portal where the app is mounted.
+ * this problem by creating the portal that lives in the same DOM tree as the actual app.
  *
  * The PortalProvider is appended at the top of the application tree and all lower
  * components are children of it. This means that all children can access the portal.
