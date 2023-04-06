@@ -22,9 +22,9 @@ const inputStyles = `
 
 const selectOptions = (pages) => {
   let opts = []
-  if ( pages ) {
+  if (pages) {
     for (let i = 0; i < pages; i++) {
-      const p = i + 1
+      const p = (i + 1).toString() // SelectOption requires strings for value and label
       opts.push(<SelectOption value={p} label={p} key={p} />)
     }
   }
@@ -32,34 +32,37 @@ const selectOptions = (pages) => {
 }
 
 const renderPaginationInnards = (
-  variant, 
-  currentPage, 
+  variant,
+  currentPage,
   pages,
-  handleSelectChange, 
+  handleSelectChange,
   handleKeyPress
 ) => {
   switch (variant) {
     case "number":
-        return (
-          <span>{ currentPage || "0" }</span>
-        )
+      return <span>{currentPage || "0"}</span>
       break
     case "select":
       return (
-        <Select name="pages" width="auto" defaultValue={currentPage} onValueChange={handleSelectChange}>
-          { selectOptions(pages) }
+        <Select
+          name="pages"
+          width="auto"
+          defaultValue={currentPage?.toString()} // here the same, defaultValue is of type string
+          onValueChange={handleSelectChange}
+        >
+          {selectOptions(pages)}
         </Select>
       )
       break
     case "input":
       return (
         <span>
-          <TextInput 
-            value={ currentPage || "" }
+          <TextInput
+            value={currentPage || ""}
             onKeyPress={handleKeyPress}
             className={`${inputStyles}`}
           />
-          <span className="jn-ml-1" >of {pages || "0"}</span>
+          <span className="jn-ml-1">of {pages || "0"}</span>
         </span>
       )
       break
@@ -82,38 +85,50 @@ export const Pagination = ({
   className,
   ...props
 }) => {
-  
   const handlePrevClick = (event) => {
     onPressPrevious && onPressPrevious(event)
   }
-  
+
   const handleNextClick = (event) => {
     onPressNext && onPressNext(event)
   }
-  
+
   const handleSelectChange = (event) => {
     onSelectChange && onSelectChange(event)
   }
-  
+
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       onKeyPress && onKeyPress(event)
     }
   }
-  
+
   return (
-    <div className={`juno-pagination juno-pagination-${ variant || "default"} ${paginationStyles} ${className}`} {...props}>
-      <Button 
-        icon="chevronLeft" 
-        disabled={isFirstPage} 
-        onClick={ handlePrevClick} 
+    <div
+      className={`juno-pagination juno-pagination-${
+        variant || "default"
+      } ${paginationStyles} ${className}`}
+      {...props}
+    >
+      <Button
+        icon="chevronLeft"
+        disabled={isFirstPage}
+        onClick={handlePrevClick}
         title="Previous Page"
       />
-        { variant ? renderPaginationInnards(variant, currentPage, pages, handleSelectChange, handleKeyPress) : null }
-      <Button 
-        icon="chevronRight" 
-        disabled={isLastPage} 
-        onClick={handleNextClick} 
+      {variant
+        ? renderPaginationInnards(
+            variant,
+            currentPage,
+            pages,
+            handleSelectChange,
+            handleKeyPress
+          )
+        : null}
+      <Button
+        icon="chevronRight"
+        disabled={isLastPage}
+        onClick={handleNextClick}
         title="Next Page"
       />
     </div>

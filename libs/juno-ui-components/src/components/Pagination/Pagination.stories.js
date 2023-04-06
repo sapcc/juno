@@ -6,13 +6,31 @@ export default {
   component: Pagination,
   argTypes: {
     variant: {
-      options: ["\"\" (default)", "number", "select", "input"],
-      control: { type: 'select' }
-    }
+      options: ['"" (default)', "number", "select", "input"],
+      control: { type: "select" },
+    },
   },
 }
 
-const Template = (args) => <Pagination {...args} />
+const Template = ({ currentPage, pages, ...args }) => {
+  const [page, setPage] = React.useState(currentPage)
+  const prev = React.useCallback(() => setPage(page > 1 ? page - 1 : 1), [page])
+  const next = React.useCallback(
+    () => setPage(!pages || page < pages ? page + 1 : pages),
+    [page]
+  )
+
+  return (
+    <Pagination
+      {...args}
+      pages={pages}
+      currentPage={page}
+      onPressPrevious={prev}
+      onPressNext={next}
+      pnPressNext={next}
+    />
+  )
+}
 
 export const Default = Template.bind({})
 Default.args = {}
