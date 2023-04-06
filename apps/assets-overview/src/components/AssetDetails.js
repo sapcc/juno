@@ -212,7 +212,6 @@ const AssetDetails = () => {
                 {asset?.type === APP && (
                   <TabPanel>
                     <AssetDetailsScripttag
-                      test={console.log("isLatest====", isLatest)}
                       asset={asset}
                       isLatest={isLatest}
                       dependencies={dependencies}
