@@ -87,11 +87,15 @@
   "jest": {
     "verbose": true,
     "testEnvironment": "jsdom",
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-merge-refs/)"
+    ],
     "setupFilesAfterEnv": [
       "./setupTests.js"
     ],
     "transform": {
-      "^.+\\.jsx?$": "babel-jest",
+      "\\.[jt]sx?$": "babel-jest",
+      "\\.mjs$": "babel-jest",
       "^.+\\.svg$": "<rootDir>/test/__mocks__/svg.js"
     },
     "moduleNameMapper": {
