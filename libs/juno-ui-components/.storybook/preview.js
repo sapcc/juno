@@ -16,7 +16,6 @@ import "../src/global.scss"
 import { StyleProvider } from "../src/components/StyleProvider"
 import { ContentArea } from "../src/components/ContentArea/index"
 import { Container } from "../src/components/Container/index"
-import { theme } from "../tailwind.config"
 
 export const parameters = {
   options: {
@@ -69,7 +68,7 @@ export const parameters = {
     // if decorators should be rendered for a story or component add the below to the component's config under parameters: { docs: { source: ...} }
     // and set excludeDecorators to false
     source: {
-      type: 'dynamic',
+      type: "dynamic",
       excludeDecorators: true,
     },
   },

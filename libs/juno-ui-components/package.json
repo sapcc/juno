@@ -88,7 +88,7 @@
     "verbose": true,
     "testEnvironment": "jsdom",
     "transformIgnorePatterns": [
-      "node_modules/(?!react-merge-refs/)"
+      "node_modules/(?!(react-merge-refs)/)"
     ],
     "setupFilesAfterEnv": [
       "./setupTests.js"

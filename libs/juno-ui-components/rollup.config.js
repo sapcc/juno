@@ -50,10 +50,6 @@ const config = [
     ],
 
     plugins: [
-      nodeResolve(),
-      babel({
-        babelHelpers: "bundled",
-      }),
       del({ targets: [`${buildDir}/**/*`] }),
       svgr({
         svgo: false,
@@ -88,7 +84,16 @@ const config = [
           },
         ],
       }),
+
+      nodeResolve(),
+      babel({
+        // babelrc: false,
+        // // exclude: "node_modules/**",
+        // presets: ["@babel/preset-react"],
+        babelHelpers: "bundled",
+      }),
       commonjs(),
+
       minify({ comments: false }),
       analyze({
         summaryOnly: true,
