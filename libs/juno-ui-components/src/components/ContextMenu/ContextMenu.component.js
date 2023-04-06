@@ -67,14 +67,10 @@ ContextMenu.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   open: PropTypes.bool,
-  portal: PropTypes.bool,
-  targetSelector: PropTypes.string,
 }
 
 ContextMenu.defaultProps = {
   className: "",
   children: null,
   open: false,
-  portal: false,
-  targetSelector: "",
 }
