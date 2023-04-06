@@ -28,25 +28,17 @@ const PortalRefContent = () => {
       {portalRef &&
         ReactDOM.createPortal(
           <Code>
-            {`import React from "react"`}
-            <br />
-            {`import ReactDOM from "react-dom"`}
-            <br />
-            {`import { usePortalRef } from "juno-ui-components"`}
-            <br />
-            <br />
-            {`const MyComponent = () => {`}
-            <br />
-            &nbsp;&nbsp;{`const portalRef = usePortalRef()`}
-            <br />
-            &nbsp;&nbsp;{`return (`}
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            {`{ portalRef && ReactDOM.createPortal("I'm inside the portal",portalRef) }`}
-            <br />
-            &nbsp;&nbsp;{`)`}
-            <br />
-            {`}`}
+            {`
+import React from "react"
+import ReactDOM from "react-dom"
+import { usePortalRef } from "juno-ui-components"
+
+const MyComponent = () => {
+  const portalRef = usePortalRef()
+  return (
+    { portalRef && ReactDOM.createPortal("I'm inside the portal",portalRef) }
+  )
+}`}
           </Code>,
           portalRef
         )}
