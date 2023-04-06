@@ -2,6 +2,7 @@ import "./global.scss"
 export { AppBody } from "./components/AppBody/index.js"
 export { AppIntro } from "./components/AppIntro/index.js"
 export { AppShell } from "./components/AppShell/index.js"
+export { AppShellProvider } from "./components/AppShellProvider/index.js"
 export { Badge } from "./components/Badge/index.js"
 export { Box } from "./components/Box/index.js"
 export { Breadcrumb } from "./components/Breadcrumb/index.js"
@@ -56,7 +57,10 @@ export { PageFooter } from "./components/PageFooter/index.js"
 export { PageHeader } from "./components/PageHeader/index.js"
 export { Pagination } from "./components/Pagination/index.js"
 export { Pill } from "./components/Pill/index.js"
-export { Portal } from "./components/Portal/index.js"
+export {
+  PortalProvider,
+  usePortalRef,
+} from "./components/PortalProvider/index.js"
 export { Radio } from "./components/Radio/index.js"
 export { RadioGroup } from "./components/RadioGroup/index.js"
 export { RadioRow } from "./components/RadioRow/index.js"
@@ -71,6 +75,7 @@ export { SideNavigation } from "./components/SideNavigation/index.js"
 export { SideNavigationItem } from "./components/SideNavigationItem/index.js"
 export { Spinner } from "./components/Spinner/index.js"
 export { Stack } from "./components/Stack/index.js"
+export { StyleProvider } from "./components/StyleProvider/index.js"
 export { Switch } from "./components/Switch/index.js"
 export { SwitchRow } from "./components/SwitchRow/index.js"
 export { Tab } from "./components/Tab/index.js"
@@ -89,6 +94,6 @@ export { TopNavigation } from "./components/TopNavigation/index.js"
 export { TopNavigationItem } from "./components/TopNavigationItem/index.js"
 export * from "./components/Form/index.js"
 
+// backwards compatibility, StyleProvider as default export
 import { StyleProvider } from "./components/StyleProvider/index.js"
-
 export default StyleProvider

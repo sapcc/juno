@@ -5,7 +5,7 @@
   "module": "build/index.js",
   "source": "src/index.js",
   "style": "build/lib/variables.css",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "files": [
     "src/colors.css",
     "tailwind.config.js"
@@ -78,7 +78,7 @@
     "react-dom": "^18.2.0"
   },
   "scripts": {
-    "storybook": "start-storybook -p $APP_PORT --ci",
+    "storybook": "start-storybook -p $APP_PORT --ci --no-open",
     "build-storybook": "build-storybook",
     "build": "rollup -c",
     "test": "jest",
@@ -87,11 +87,15 @@
   "jest": {
     "verbose": true,
     "testEnvironment": "jsdom",
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-merge-refs/)"
+    ],
     "setupFilesAfterEnv": [
       "./setupTests.js"
     ],
     "transform": {
-      "^.+\\.jsx?$": "babel-jest",
+      "\\.[jt]sx?$": "babel-jest",
+      "\\.mjs$": "babel-jest",
       "^.+\\.svg$": "<rootDir>/test/__mocks__/svg.js"
     },
     "moduleNameMapper": {
