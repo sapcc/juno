@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 import { Menu } from "../Menu/index.js"
-import { Portal } from "../Portal/index.js"
 
 /*
 TODO:

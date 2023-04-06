@@ -4,20 +4,16 @@ import PropTypes from "prop-types"
 const codeStyles = `
   jn-bg-theme-code-block
   jn-text-sm
+  jn-whitespace-pre-wrap
 `
 
 /** A basic inline <code> component.
-*   Accepts "content" prop or renders children as passed.
-*/
-export const Code = ({
-  content,
-  children,
-  className,
-  ...props
-}) => {
+ *   Accepts "content" prop or renders children as passed.
+ */
+export const Code = ({ content, children, className, ...props }) => {
   return (
     <code className={`juno-code ${codeStyles} ${className}`} {...props}>
-      { content || children }
+      {content || children}
     </code>
   )
 }
@@ -33,4 +29,3 @@ Code.defaultProps = {
   className: "",
   children: null,
 }
-

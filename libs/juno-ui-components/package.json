@@ -78,7 +78,7 @@
     "react-dom": "^18.2.0"
   },
   "scripts": {
-    "storybook": "start-storybook -p $APP_PORT --ci",
+    "storybook": "start-storybook -p $APP_PORT --ci --no-open",
     "build-storybook": "build-storybook",
     "build": "rollup -c",
     "test": "jest",

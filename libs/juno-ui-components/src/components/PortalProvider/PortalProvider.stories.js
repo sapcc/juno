@@ -25,17 +25,28 @@ const PortalRefContent = () => {
 
   return (
     <>
-      <Message className="jn-mt-5" title="Hi!" text="I'm outside the portal" />
-
       {portalRef &&
         ReactDOM.createPortal(
           <Code>
-            {`const portalRef = usePortalRef()
-              \n
-              return (
-                {portalRef && ReactDOM.createPortal("I'm inside the portal",portalRef)}
-              )
-            `}
+            {`import React from "react"`}
+            <br />
+            {`import ReactDOM from "react-dom"`}
+            <br />
+            {`import { usePortalRef } from "juno-ui-components"`}
+            <br />
+            <br />
+            {`const MyComponent = () => {`}
+            <br />
+            &nbsp;&nbsp;{`const portalRef = usePortalRef()`}
+            <br />
+            &nbsp;&nbsp;{`return (`}
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            {`{ portalRef && ReactDOM.createPortal("I'm inside the portal",portalRef) }`}
+            <br />
+            &nbsp;&nbsp;{`)`}
+            <br />
+            {`}`}
           </Code>,
           portalRef
         )}
@@ -45,15 +56,11 @@ const PortalRefContent = () => {
 /**
  *  PortalRef
  */
-export const PortalRef = {
-  render: () => <PortalRefContent />,
-}
-
-// const PortalRef = (args) => (
-//   <PortalProvider>
-//     <PortalRefContent />
-//   </PortalProvider>
-// )
+const PortalRef = (args) => (
+  <PortalProvider>
+    <PortalRefContent />
+  </PortalProvider>
+)
 
 /** The PortalProvider is the parent for all portals of a Juno app. */
-export { Default as PortalComponent }
+export { Default as PortalComponent, PortalRef }
