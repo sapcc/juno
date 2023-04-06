@@ -1,53 +1,59 @@
-import React, { useState } from "react"
-import { PortalProvider } from "."
+import React from "react"
+import ReactDOM from "react-dom"
+import { PortalProvider, usePortalRef } from "."
 import { Message } from "../Message/index.js"
+import { Code } from "../Code/index.js"
 
 export default {
   title: "Layout/PortalProvider",
   component: PortalProvider,
+  subcomponents: { "PortalProvider.Portal": PortalProvider.Portal },
+  tags: ["autodocs"],
   argTypes: {},
 }
 
-const Template = (args) => (
-  <PortalProvider {...args}>{args.children}</PortalProvider>
+const Default = (args) => (
+  <PortalProvider>
+    <PortalProvider.Portal>
+      <Message title="Hi!" text="I'm inside the portal" />
+    </PortalProvider.Portal>
+  </PortalProvider>
 )
 
+const PortalRefContent = () => {
+  let portalRef = usePortalRef()
+
+  return (
+    <>
+      <Message className="jn-mt-5" title="Hi!" text="I'm outside the portal" />
+
+      {portalRef &&
+        ReactDOM.createPortal(
+          <Code>
+            {`const portalRef = usePortalRef()
+              \n
+              return (
+                {portalRef && ReactDOM.createPortal("I'm inside the portal",portalRef)}
+              )
+            `}
+          </Code>,
+          portalRef
+        )}
+    </>
+  )
+}
+/**
+ *  PortalRef
+ */
+export const PortalRef = {
+  render: () => <PortalRefContent />,
+}
+
+// const PortalRef = (args) => (
+//   <PortalProvider>
+//     <PortalRefContent />
+//   </PortalProvider>
+// )
+
 /** The PortalProvider is the parent for all portals of a Juno app. */
-export const Default = Template.bind({})
-
-const Example = ({}) => {
-  const [show, setShow] = useState(true)
-  return (
-    <>
-      <button onClick={() => setShow(!show)}>Toggle</button>
-      <Message title="Hi!" text="I'm outside a portal" />
-
-      <PortalProvider.Portal>
-        <div className="juno-pt-3">
-          {show && <Message title="Hi!" text="I'm inside a portal" />}
-        </div>
-      </PortalProvider.Portal>
-    </>
-  )
-}
-
-const Example2 = ({}) => {
-  const [show, setShow] = useState(true)
-  return (
-    <>
-      <button onClick={() => setShow(!show)}>Toggle</button>
-      <Message title="Hi!" text="I'm outside a portal" />
-
-      <PortalProvider.Portal>
-        {show && <Message title="Hi!" text="I'm inside a portal" />}
-      </PortalProvider.Portal>
-      <PortalProvider.Portal>{show && "Test"}</PortalProvider.Portal>
-      <PortalProvider.Portal>{show && "Test2"}</PortalProvider.Portal>
-      <PortalProvider.Portal>{show && "Test3"}</PortalProvider.Portal>
-    </>
-  )
-}
-
-Default.args = {
-  children: <Example2 />,
-}
+export { Default as PortalComponent }

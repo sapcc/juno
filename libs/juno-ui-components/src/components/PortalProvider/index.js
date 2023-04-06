@@ -1,1 +1,1 @@
-export { PortalProvider, PortalContent } from "./PortalProvider.component"
+export { PortalProvider, usePortalRef } from "./PortalProvider.component"

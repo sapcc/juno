@@ -10,15 +10,23 @@ import { createPortal } from "react-dom"
 
 const PortalContext = createContext()
 
-export const Portal = ({ children }) => {
+export function usePortalRef() {
   const ref = useContext(PortalContext)
-  const [_, setInitialized] = useState(ref.current)
+  const [_, setInitialized] = useState(ref?.current)
 
   useEffect(() => {
+    if (!ref) {
+      console.warn("usePortalRef should be called inside a PortalProvider!")
+      return
+    }
     if (ref.current) setInitialized(true)
-  }, [ref.current])
+  }, [ref])
+  return ref?.current
+}
 
-  return ref.current ? createPortal(children, ref.current) : null
+const Portal = ({ children }) => {
+  const ref = usePortalRef()
+  return ref ? createPortal(children, ref) : null
 }
 
 Portal.propTypes = {}
@@ -26,6 +34,21 @@ Portal.propTypes = {}
 /**
  * This provider acts as a container for portals. All portals within a Juno app should be added as children to this.
  * The PortalProvider itself needs to be placed inside the Juno StyleProvider, otherwise styles might not be applied correctly on children of portals.
+ *
+ * The main task of the PortalProvider is to provide a place where certain components
+ * such as modals are maunted. Many existing libs place such components outside of the
+ * current application's DOM tree, because the control over creating and scheduling
+ * such components is not with the application but with the lib. This is not a problem
+ * as long as the application is in the global document tree. Once shadow root comes
+ * into play, it changes. In this case, such components are placed outside of the
+ * shadow root and individual app styles are not applied. The PortalProvider solves
+ * this problem by creating the portal where the app is mounted.
+ *
+ * The PortalProvider is appended at the top of the application tree and all lower
+ * components are children of it. This means that all children can access the portal.
+ * There are two ways you can do this. Via the ProtalProvider.Portal component or via
+ * a usePortalRef hook. While the component places all children in the portal, the hook
+ * returns a React reference object to the DOM element.
  */
 export const PortalProvider = ({ className, id, children }) => {
   const ref = useRef()
@@ -39,6 +62,7 @@ export const PortalProvider = ({ className, id, children }) => {
 }
 // bind Portal to PortalProvider
 PortalProvider.Portal = Portal
+Portal.displayName = "PortalProvider.Portal"
 
 PortalProvider.propTypes = {
   className: PropTypes.string,
