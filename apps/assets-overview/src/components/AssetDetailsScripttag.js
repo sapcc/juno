@@ -30,7 +30,7 @@ ${newAppProps}>
 }
 
 // TODO display data props type (optional and required)
-const AssetDetailsScripttag = ({ asset, dependencies }) => {
+const AssetDetailsScripttag = ({ asset, dependencies, isLatest }) => {
   return (
     <Container py px={false}>
       <h1 className="font-bold text-xl">Data props</h1>
@@ -76,7 +76,7 @@ const AssetDetailsScripttag = ({ asset, dependencies }) => {
       <CodeBlock className={panelSectionCss} heading="Script tag" lang="html">
         {scriptTag({
           name: asset?.name,
-          version: asset?.version,
+          version: isLatest ? "latest" : asset?.version,
           appProps: asset?.appProps,
         })}
         {dependencies?.length > 0 && (

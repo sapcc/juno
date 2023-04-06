@@ -121,7 +121,7 @@ const AssetDetails = () => {
   }
 
   // ############### VERSION HANDLING #################
-  const versions = React.useMemo(() => {
+  const versions = useMemo(() => {
     if (!data || !assetName) return null
 
     const versionMap = Object.keys(data[assetName]).reduce((map, version) => {
@@ -137,6 +137,11 @@ const AssetDetails = () => {
       .reverse()
       .map((version) => ({ value: version, label: versionMap[version] }))
   }, [data, assetName])
+
+  const isLatest = useMemo(() => {
+    if (!data || !assetVersion) return null
+    return assetVersion === data[assetName]["latest"]?.version
+  }, [data, assetVersion])
 
   const changeVersion = React.useCallback(
     (version) => {
@@ -207,7 +212,9 @@ const AssetDetails = () => {
                 {asset?.type === APP && (
                   <TabPanel>
                     <AssetDetailsScripttag
+                      test={console.log("isLatest====", isLatest)}
                       asset={asset}
+                      isLatest={isLatest}
                       dependencies={dependencies}
                     />
                   </TabPanel>
