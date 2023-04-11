@@ -11,7 +11,7 @@ fi
 function help() {
   echo "Usage: build_assets.sh --asset-path||-ap --asset-name||-sn --root-path||-rp --output-path||-op
     Example: ./scripts/build_asset.sh --asset-name auth --asset-path ./apps/auth/ --root-path /app --output-path /tmp/juno-build
-    --root-path is optional default is ./src
+    --root-path is optional default is ./latest
     --output-path is optional default is ../build-result"
   exit
 }
@@ -20,7 +20,7 @@ if [[ "$1" == "--help" ]]; then
   help
 fi
 
-ROOT_PATH="./src"
+ROOT_PATH="./latest"
 OUTPUT_PATH="../build-result"
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -128,6 +128,7 @@ cp "$ROOT_PATH/$ASSET_PATH/README.md" "$OUTPUT_PATH/$ASSET_PATH/README.md"
 
 echo "create $OUTPUT_PATH/$ASSET_PATH/package.tgz"
 cd "$OUTPUT_PATH/$ASSET_PATH"
+# todo use npm-pack instead https://docs.npmjs.com/cli/v6/commands/npm-pack
 tar --exclude="package.tgz" -czf package.tgz .
 
 echo "Build for $ASSET_NAME done 🙂"
