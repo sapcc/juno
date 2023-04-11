@@ -11,7 +11,7 @@ fi
 function help() {
   echo "Usage: build_assets.sh --asset-path||-ap --asset-name||-sn --root-path||-rp --output-path||-op
     Example: ./scripts/build_asset.sh --asset-name auth --asset-path ./apps/auth/ --root-path /app --output-path /tmp/juno-build
-    --root-path is optional default is $(pwd)/latest
+    --root-path is optional default is $(pwd)
     --output-path is optional default is ./build-result"
   exit
 }
@@ -20,7 +20,7 @@ if [[ "$1" == "--help" ]]; then
   help
 fi
 
-ROOT_PATH=$(pwd)"/latest"
+ROOT_PATH=$(pwd)
 OUTPUT_PATH="./build-result"
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -49,7 +49,7 @@ while [[ $# -gt 0 ]]; do
     ;;
   *)
     echo "$1 unkown option!"
-    exit
+    exit 1
     ;;
   esac
 done
