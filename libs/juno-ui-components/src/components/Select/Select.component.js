@@ -99,7 +99,10 @@ export const Select = React.forwardRef(
     }, [valid])
     
     const handleOpenChange = (event) => {
-      setIsOpen(!isOpen)
+      // change only when open state is uncontrolled:
+      if ( open === undefined ) {
+        setIsOpen(!isOpen)
+      }
       onOpenChange && onOpenChange(event)
     }
     
