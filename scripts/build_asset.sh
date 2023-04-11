@@ -11,8 +11,8 @@ fi
 function help() {
   echo "Usage: build_assets.sh --asset-path||-ap --asset-name||-sn --root-path||-rp --output-path||-op
     Example: ./scripts/build_asset.sh --asset-name auth --asset-path ./apps/auth/ --root-path /app --output-path /tmp/juno-build
-    --root-path is optional default is ./latest
-    --output-path is optional default is ../build-result"
+    --root-path is optional default is $(pwd)/latest
+    --output-path is optional default is ./build-result"
   exit
 }
 
@@ -20,8 +20,8 @@ if [[ "$1" == "--help" ]]; then
   help
 fi
 
-ROOT_PATH="./latest"
-OUTPUT_PATH="../build-result"
+ROOT_PATH=$(pwd)"/latest"
+OUTPUT_PATH="./build-result"
 while [[ $# -gt 0 ]]; do
   case $1 in
   --asset-name | -an)
