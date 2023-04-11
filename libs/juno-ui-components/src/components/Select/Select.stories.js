@@ -204,3 +204,33 @@ Disabled.args = {
     <SelectOption value="3" key="3">Value 3</SelectOption>
   ]
 }
+
+export const SubduedSelect = Template.bind({})
+SubduedSelect.args = {
+  variant: "subdued",
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}
+
+export const PrimarySelect = Template.bind({})
+PrimarySelect.args = {
+  variant: "primary",
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}
+
+export const PrimaryDangerSelect = Template.bind({})
+PrimaryDangerSelect.args = {
+  variant: "primary-danger",
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}

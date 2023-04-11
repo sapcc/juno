@@ -3,6 +3,7 @@ import * as RadixSelect from "@radix-ui/react-select"
 import { Icon } from "../Icon/index.js"
 import { Spinner } from "../Spinner/index.js"
 import PropTypes from "prop-types"
+import "./select.scss"
 
 const triggerStyles = `
   jn-appearance-none
@@ -42,7 +43,6 @@ const scrollButtonStyles = `
   jn-py-1
 `
 
-
 /** A Select component for selecting a single item. Can be used controlled or uncontrolled. 
     Used in Pagination, Filters, SelectRow.  
     TODO: trigger active state styles (invert chevron?), menu theming, z-index, iframe / shadow dom, menu scrolling in popper mode -> make align-items default?, tests
@@ -68,6 +68,7 @@ export const Select = React.forwardRef(
     position,
     valid,
     value,
+    variant,
     width,
     ...props
   }, 
@@ -102,6 +103,8 @@ export const Select = React.forwardRef(
       setIsOpen(!isOpen)
       onOpenChange && onOpenChange(event)
     }
+    
+    const theVariant = variant || "default"
     
     const TriggerIcons = () => {
       if (isLoading) {
@@ -142,6 +145,7 @@ export const Select = React.forwardRef(
             juno-select-trigger
             ${ triggerStyles }
             ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+            ${ "juno-select-" + theVariant}
             ${ hasError || isInvalid ? triggerErrorStyles : "" }
             ${ hasError ? "juno-select-error jn-cursor-not-allowed" : "" }
             ${ isValid ? "juno-select-valid " + triggerValidStyles : "" } 
@@ -223,6 +227,8 @@ Select.propTypes = {
   defaultValue: PropTypes.string,
   /** The value of the Select (controlled mode) */
   value: PropTypes.string,
+  /** The semantic variant of the Select */
+  variant: PropTypes.oneOf(["", "primary", "primary-danger", "default", "subdued"]),
   /** The width of the select. Either 'full' (default) or 'auto'. */
   width: PropTypes.oneOf(["full", "auto"]),
 }
@@ -248,4 +254,5 @@ Select.defaultProps = {
   defaultValue: undefined,
   value: undefined,
   width: "full",
+  variant: undefined,
 }
