@@ -145,7 +145,7 @@ export const Select = React.forwardRef(
             juno-select-trigger
             ${ triggerStyles }
             ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
-            ${ "juno-select-" + theVariant}
+            ${ hasError || isInvalid || isValid || isLoading ? "" : "juno-select-" + theVariant}
             ${ hasError || isInvalid ? triggerErrorStyles : "" }
             ${ hasError ? "juno-select-error jn-cursor-not-allowed" : "" }
             ${ isValid ? "juno-select-valid " + triggerValidStyles : "" } 
