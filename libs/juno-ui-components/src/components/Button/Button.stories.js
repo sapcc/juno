@@ -23,20 +23,6 @@ export default {
 
 const Template = (args) => <Button {...args} />
 
-export const Primary = Template.bind({})
-Primary.parameters = {
-  docs: {
-    description: {
-      story:
-        "Only use the primary button **maximum once per page** for the preferred user action",
-    },
-  },
-}
-Primary.args = {
-  variant: "primary",
-  label: "Primary",
-}
-
 export const Default = Template.bind({})
 Default.parameters = {
   docs: {
@@ -62,6 +48,20 @@ Subdued.parameters = {
 Subdued.args = {
   variant: "subdued",
   label: "Subdued",
+}
+
+export const Primary = Template.bind({})
+Primary.parameters = {
+  docs: {
+    description: {
+      story:
+        "Only use the primary button **maximum once per page** for the preferred user action",
+    },
+  },
+}
+Primary.args = {
+  variant: "primary",
+  label: "Primary",
 }
 
 export const PrimaryDanger = Template.bind({})
