@@ -9,24 +9,26 @@
   
     // SAP Brand Non-Colors
     // RGB
-    --color-sap-black: rgb(0, 0, 0);
-    --color-sap-grey-0: rgb(34, 34, 34);
-    --color-sap-grey-1: rgb(60, 60, 60);
-    --color-sap-grey-2: rgb(114, 114, 114);
-    --color-sap-grey-3: rgb(150, 150, 150);
-    --color-sap-grey-4: rgb(198, 198, 198);
-    --color-sap-grey-5: rgb(234, 234, 234);
-    --color-sap-white: rgb(255, 255, 255);
+    --color-sap-grey-1: rgb(255, 255, 255);
+    --color-sap-grey-2: rgb(234, 234, 234);
+    --color-sap-grey-3: rgb(198, 198, 198);
+    --color-sap-grey-4: rgb(150, 150, 150);
+    --color-sap-grey-5: rgb(114, 114, 114);
+    --color-sap-grey-6: rgb(60, 60, 60);
+    --color-sap-grey-7: rgb(34, 34, 34);
+    --color-sap-grey-8: rgb(0, 0, 0);
+    
   
     // RAW
-    --color-sap-black-raw: 0, 0, 0;
-    --color-sap-grey-0-raw: 34, 34, 34;
-    --color-sap-grey-1-raw: 60, 60, 60;
-    --color-sap-grey-2-raw: 114, 114, 114;
-    --color-sap-grey-3-raw: 150, 150, 150;
-    --color-sap-grey-4-raw: 198, 198, 198;
-    --color-sap-grey-5-raw: 234, 234, 234;
-    --color-sap-white-raw: 255, 255, 255;
+    --color-sap-grey-1-raw: 255, 255, 255;
+    --color-sap-grey-2-raw: 234, 234, 234;
+    --color-sap-grey-3-raw: 198, 198, 198;
+    --color-sap-grey-4-raw: 150, 150, 150;
+    --color-sap-grey-5-raw: 114, 114, 114;
+    --color-sap-grey-6-raw: 60, 60, 60;
+    --color-sap-grey-7-raw: 34, 34, 34;
+    --color-sap-grey-8-raw: 0, 0, 0;
+  
   
   
     // WHITE
@@ -45,30 +47,30 @@
     --color-sap-blue-2: rgb(165, 211, 234);     // --color-sap-blue-light-1
     --color-sap-blue-3: rgb(137, 201, 232);     // --color-sap-blue-light-2
     --color-sap-blue-4: rgb(67, 162, 208);      // --color-sap-blue-light-3
-    --color-sap-blue-5: rgb(15, 125, 184);      // --color-sap-blue
-    --color-sap-blue-6: rgb(30, 106, 146);      // --color-sap-blue-dark-1 
-    --color-sap-blue-7: rgb(10, 103, 153);      // --color-sap-blue-dark
+    --color-sap-blue-5: rgb(0, 125, 184);       // --color-sap-blue
+    --color-sap-blue-6: rgb(0, 103, 153);       // --color-sap-blue-dark
+    --color-sap-blue-7: rgb(0, 81, 120);        // --color-sap-blue-dark-1
     // RAW
     --color-sap-blue-1-raw: 203, 232, 247;
     --color-sap-blue-2-raw: 165, 211, 234;
     --color-sap-blue-3-raw: 137, 201, 232;
     --color-sap-blue-4-raw: 67, 162, 208;
-    --color-sap-blue-5-raw: 15, 125, 184;
-    --color-sap-blue-6-raw: 30, 106, 146;
-    --color-sap-blue-7-raw: 10, 103, 153;
+    --color-sap-blue-5-raw: 0, 125, 184;
+    --color-sap-blue-6-raw: 0, 103, 153;
+    --color-sap-blue-7-raw: 0, 81, 120;
       
     // SAP GOLD
     // RGB                                        // Corresponding SAP web brand color:
     --color-sap-gold-1: rgb(251, 232, 188);     // --color-sap-gold-light
-    --color-sap-gold-2: rgb(248, 219, 149);     // --color-sap-gold-light-1
+    --color-sap-gold-2: rgb(248, 219, 150);     // --color-sap-gold-light-1
     --color-sap-gold-3: rgb(246, 204, 108);     // --color-sap-gold-light-2
     --color-sap-gold-4: rgb(243, 188, 58);      // --color-sap-gold-light-3
     --color-sap-gold-5: rgb(240, 171, 0);       // --color-sap-gold
     --color-sap-gold-6: rgb(217, 151, 0);       // --color-sap-gold-dark
     --color-sap-gold-7: rgb(150, 105, 0);       // --color-sap-gold-dark-1
     // RAW
-    --color-sap-gold-2-raw: 248, 219, 149;
     --color-sap-gold-1-raw: 251, 232, 188;
+    --color-sap-gold-2-raw: 248, 219, 150;
     --color-sap-gold-3-raw: 246, 204, 108;
     --color-sap-gold-4-raw: 243, 188, 58; 
     --color-sap-gold-5-raw: 240, 171, 0;  
@@ -81,17 +83,17 @@
     --color-sap-purple-2: rgb(223, 181, 218);   // --color-sap-purple-light-1
     --color-sap-purple-3: rgb(209, 147, 201);   // --color-sap-purple-light-2
     --color-sap-purple-4: rgb(190, 102, 178);   // --color-sap-purple-light-3
-    --color-sap-purple-5: rgb(151, 13, 130);    // --color-sap-purple
-    --color-sap-purple-6: rgb(118, 8, 103);     // --color-sap-purple-dark
-    --color-sap-purple-7: rgb(97, 6, 86);       // --color-sap-purple-dark-1
+    --color-sap-purple-5: rgb(151, 10, 130);    // --color-sap-purple
+    --color-sap-purple-6: rgb(118, 7, 103);     // --color-sap-purple-dark
+    --color-sap-purple-7: rgb(97, 6, 85);       // --color-sap-purple-dark-1
     // RAW
     --color-sap-purple-1-raw: 235, 209, 232;
     --color-sap-purple-2-raw: 223, 181, 218;
     --color-sap-purple-3-raw: 209, 147, 201;
     --color-sap-purple-4-raw: 190, 102, 178;
-    --color-sap-purple-5-raw: 151, 13, 130; 
-    --color-sap-purple-6-raw: 118, 8, 103;  
-    --color-sap-purple-7-raw: 97, 6, 86;    
+    --color-sap-purple-5-raw: 151, 10, 130; 
+    --color-sap-purple-6-raw: 118, 7, 103;  
+    --color-sap-purple-7-raw: 97, 6, 85;    
     
     // SAP GREEN
     // RGB                                      // Corresponding SAP web brand color:
@@ -99,16 +101,16 @@
     --color-sap-green-2: rgb(169, 228, 179);  // --color-sap-green-light-1
     --color-sap-green-3: rgb(132, 216, 146);  // --color-sap-green-light-2
     --color-sap-green-4: rgb(87, 202, 106);   // --color-sap-green-light-3
-    --color-sap-green-5: rgb(79, 184, 27);    // --color-sap-green
-    --color-sap-green-6: rgb(22, 145, 43);    // --color-sap-green-dark
+    --color-sap-green-5: rgb(79, 184, 28);    // --color-sap-green
+    --color-sap-green-6: rgb(22, 145, 42);    // --color-sap-green-dark
     --color-sap-green-7: rgb(18, 120, 35);    // --color-sap-green-dark-1
     // RAW
     --color-sap-green-1-raw: 201, 238, 207;
     --color-sap-green-2-raw: 169, 228, 179;
     --color-sap-green-3-raw: 132, 216, 146;
     --color-sap-green-4-raw: 87, 202, 106; 
-    --color-sap-green-5-raw: 79, 184, 27;
-    --color-sap-green-6-raw: 22, 145, 43;  
+    --color-sap-green-5-raw: 79, 184, 28;
+    --color-sap-green-6-raw: 22, 145, 42   ;  
     --color-sap-green-7-raw: 18, 120, 35;  
   
     // SAP RED
@@ -119,8 +121,8 @@
     --color-sap-red-3: rgb(231, 163, 137);  // --color-red-light-2
     --color-sap-red-4: rgb(222, 126, 91);   // --color-red-light-3
     --color-sap-red-5: rgb(208, 69, 18);    // --color-sap-red
-    --color-sap-red-6: rgb(187, 62, 15);    // --color-sap-red-dark
-    --color-sap-red-7: rgb(164, 54, 13);    // --color-sap-red-dark-1
+    --color-sap-red-6: rgb(187, 62, 16);    // --color-sap-red-dark
+    --color-sap-red-7: rgb(164, 54, 14);    // --color-sap-red-dark-1
     --color-sap-red-8: rgb(124, 37, 4);     // not in original SAP web brand colors, we had to add a darker shade for button primary dark active state
     // RAW
     --color-sap-red-1-raw: 244, 215, 204;
@@ -128,8 +130,8 @@
     --color-sap-red-3-raw: 231, 163, 137;
     --color-sap-red-4-raw: 222, 126, 91; 
     --color-sap-red-5-raw: 208, 69, 18;  
-    --color-sap-red-6-raw: 187, 62, 15;  
-    --color-sap-red-7-raw: 164, 54, 13;  
+    --color-sap-red-6-raw: 187, 62, 16;  
+    --color-sap-red-7-raw: 164, 54, 14;  
     --color-sap-red-8-raw: 124, 37, 4;
     
     // JUNO COLORS
