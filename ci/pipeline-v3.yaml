@@ -1,0 +1,131 @@
+# prettier-ignore
+
+resources:
+
+  - name: base.image
+    type: docker-image
+    source:
+      username: ((registry-user/keppel-ccloud.username))
+      password: ((registry-user/keppel-ccloud.password))
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v2-base
+
+  - name: juno.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      username: sapcc-bot
+      password: ((github-access-token/sapcc-bot))      
+
+  
+  - name: assets-server.version
+    type: time-version-resource
+    check_every: 525600h
+    source: { key: juno-assets-server-version } # disambiguate from other time-version resources
+
+  - name: assets-server.image
+    type: docker-image
+    source:
+      username: ((registry-user/keppel-ccloud.username))
+      password: ((registry-user/keppel-ccloud.password))
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server
+
+  - name: app-assets-overview.git
+    type: git
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["apps/assets-overview","package.json","ci/Dockerfile.asset","e2e", ".yarn"]
+      username: sapcc-bot
+      password: ((github-access-token/sapcc-bot))
+      
+  - name: app-assets-overview.image
+    type: docker-image
+    check_every: 24h
+    source:
+      username: ((registry-user/keppel-ccloud.username))
+      password: ((registry-user/keppel-ccloud.password))
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v2-app-assets-overview   
+
+resource_types:
+  - name: git-proxy
+    type: registry-image
+    check_every: 24h
+    source:
+      repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/sapcc/concourse-git-resource-proxy
+
+  - name: time-version-resource
+    type: docker-image
+    check_every: 24h
+    source:
+      repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-time-version-resource
+      tag: v2
+
+  - name: release
+    type: docker-image
+    check_every: 24h
+    source:
+      repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-release-resource
+      tag: v2.latest
+
+  - name: github-release
+    type: docker-image
+    check_every: 24h
+    source:
+      repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-github-release-resource  
+
+
+jobs:
+  
+  - name: readme
+    serial: true
+    plan:
+      - task: describe-this-pipeline
+        config:
+          platform: "linux"
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/alpine
+              tag: latest
+          run:
+            path: /bin/echo
+            args:
+              - -e
+              - '\tThis pipeline is defined at: https://github.com/sapcc/juno/ci/\n\n'
+              - '\tManage Juno images: https://keppel.eu-de-1.cloud.sap/ccloud/juno\n'
+
+  
+    #name: build-base-image
+    #public: true
+    #plan:
+    #  - get: juno.git
+    #    trigger: true
+    #
+    #  - put: base.image
+    #    params:
+    #      tag_as_latest: true
+    #      cache: true
+    #      cache_tag: "latest"
+    #      build: juno.git
+    #      dockerfile: juno.git/ci/Dockerfile.base
+
+  - name: build-app-assets-overview
+    public: true
+    plan:
+      - get: app-assets-overview.git
+        trigger: true
+
+      - put: app-assets-overview.image
+        params:
+          tag_as_latest: true
+          cache: true
+          cache_tag: "latest"
+          build: app-assets-overview.git
+          build_args: 
+            ASSET_NAME: "assets-overview" 
+            ASSET_PATH: "apps/assets-overview"
+            BUILD_DIR: ""
+          dockerfile: app-assets-overview.git/ci/Dockerfile.asset
+        get_params:
+          skip_download: true
