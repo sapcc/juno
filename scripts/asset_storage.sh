@@ -14,7 +14,7 @@ function help() {
   --action    -> upload|download
   --kind      -> libs|apps|apis|static
   --container -> default is juno-assets
-  --root-path -> default is /tmp/build_result (must be always an absolute path!)
+  --root-path -> default is ./build_result
   possible ENV Vars:
   * OS_PROJECT_DOMAIN_NAME: default is ccadmin
   * OS_PROJECT_NAME: default is master
@@ -94,8 +94,6 @@ if [[ -z "$ROOT_PATH" ]]; then
   ROOT_PATH="/tmp/build_result"
 fi
 
-ASSET_PATH="$ROOT_PATH/$ASSET_PATH"
-
 if [[ -z "$OS_AUTH_URL" ]]; then
   OS_AUTH_URL="https://identity-3.qa-de-1.cloud.sap/v3"
 fi
@@ -114,7 +112,7 @@ echo "OS_USER_DOMAIN_NAME: $OS_USER_DOMAIN_NAME"
 echo "OS_PROJECT_NAME: $OS_PROJECT_NAME"
 echo "OS_PROJECT_ID: $OS_PROJECT_ID"
 echo "OS_USERNAME: $OS_USERNAME"
-echo "========================="
+echo "=================================="
 
 export OS_AUTH_VERSION=3
 export OS_AUTH_URL=$OS_AUTH_URL
@@ -131,31 +129,31 @@ fi
 # auth swift and set OS_STORAGE_URL and OS_AUTH_TOKEN
 eval $(swift auth)
 
-DESTINATION="$ASSET_PATH"
 echo "use ACTION      = $ACTION"
 echo "use ASSET_PATH  = $ASSET_PATH"
 echo "use ASSET_NAME  = $ASSET_NAME"
-echo "use ASSET_PATH  = $ASSET_PATH"
 echo "use CONTAINER   = $CONTAINER"
-echo "use DESTINATION = $DESTINATION"
-echo "============================"
+echo "=================================="
 
 # https://docs.openstack.org/ocata/cli-reference/swift.html
 function upload() {
-  echo "Swift container upload from $ASSET_PATH to container $CONTAINER and destination $DESTINATION"
-  #cd "$ASSET_PATH"
+  echo "Swift container upload from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
   #swift upload --skip-identical --changed "$DESTIONATION" .
-  cd $ROOT_PATH
-  #echo "Command: swift upload --skip-identical --changed $CONTAINER $DESTINATION"
-  swift upload --skip-identical --changed "$CONTAINER" "$DESTINATION" &&
+  cd "$ROOT_PATH"
+  echo "=================================="
+  #echo "Command: swift upload --skip-identical --changed $CONTAINER $ASSET_PATH"
+  swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" &&
+    echo "==================================" &&
     echo "upload done 🙂"
 }
 
 function download() {
-  echo "Swift container download from container $CONTAINER $DESTINATION to $ASSET_PATH"
+  echo "Swift container download from container $CONTAINER $ASSET_PATH to $ASSET_PATH"
   cd "$ROOT_PATH"
-  #echo "Command: swift download --skip-identical $CONTAINER $DESTINATION"
-  swift download --skip-identical "$CONTAINER" -p "$DESTINATION" &&
+  echo "=================================="
+  #echo "Command: swift download --skip-identical $CONTAINER $ASSET_PATH"
+  swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" &&
+    echo "==================================" &&
     echo "download done 🙂"
 }
 
