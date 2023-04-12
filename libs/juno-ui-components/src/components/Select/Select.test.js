@@ -88,6 +88,48 @@ describe("Select", () => {
     expect(screen.getByRole("combobox")).toHaveClass("juno-select-error")
   })
   
+  test("renders a subdued Select variant as passed", async () => {
+    render(<Select variant="subdued" />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select-subdued")
+  })
+  
+  test("renders a primary Select variant as passed", async () => {
+    render(<Select variant="primary" />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select-primary")
+  })
+  
+  test("renders a primary-danger Select variant as passed", async () => {
+    render(<Select variant="primary-danger" />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select-primary-danger")
+  })
+  
+  test("does not render semantic classes when in loading state as passed", async () => {
+    render(<Select variant="primary-danger" loading />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).not.toHaveClass("juno-select-primary-danger")
+  })
+  
+  test("does not render semantic classes when in error state as passed", async () => {
+    render(<Select variant="primary-danger" error />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).not.toHaveClass("juno-select-primary-danger")
+  })
+  
+  test("does not render semantic classes when validated as passed", async () => {
+    render(<Select variant="primary-danger" valid />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).not.toHaveClass("juno-select-primary-danger")
+  })
+  
+  test("does not render semantic classes when invalidated as passed", async () => {
+    render(<Select variant="primary-danger" invalid />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).not.toHaveClass("juno-select-primary-danger")
+  })
+  
   test("renders an open Select as passed", async () => {
     render(<Select open onOpenChange={ () => {} }>
       <SelectOption value="1"></SelectOption>
