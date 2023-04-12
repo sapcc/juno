@@ -23,20 +23,15 @@ const Template = ({ items, ...args }) => (
   </SelectRow>
 )
 
-const ControlledTemplate = ({open, value, children, ...args}) => {
-  const [isOpen, setIsOpen] = useState(false)
+const ControlledTemplate = ({value, children, ...args}) => {
   const [val, setVal] = useState(undefined)
-  
-  useEffect(() => {
-    setIsOpen(open)
-  }, [open])
   
   useEffect(() => {
     setVal(value)
   }, [value])
   
   return (
-    <SelectRow value={val} open={isOpen} onOpenChange={ () => {} } onValueChange={ () => {} } {...args} >
+    <SelectRow value={val}  onValueChange={ (value) => {setVal(value)} } {...args} >
       { children }
     </SelectRow>
   )
@@ -55,6 +50,7 @@ Default.args = {
 export const Controlled = ControlledTemplate.bind({})
 Controlled.args = {
   label: "Controlled SelectRow",
+  value: "2",
   children: [
     <SelectOption value="1" key="1">Value 1</SelectOption>,
     <SelectOption value="2" key="2">Value 2</SelectOption>,
