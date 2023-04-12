@@ -66,10 +66,11 @@ Controlled.args = {
   ]
 }
 
-export const WithHelpText = Template.bind({})
-WithHelpText.args = {
-  label: "Select Row with Helptext",
+export const WithHelpTextAndPlaceholder = Template.bind({})
+WithHelpTextAndPlaceholder.args = {
+  label: "Select Row with Helptext and placeholder",
   helptext: "Select one",
+  placeholder: "Select an option…", 
   items: [
     { ...DefaultSelectOptionStory.args, value: "d-1", label: "Option 1" },
     { ...DefaultSelectOptionStory.args, value: "d-2", label: "Option 2" },

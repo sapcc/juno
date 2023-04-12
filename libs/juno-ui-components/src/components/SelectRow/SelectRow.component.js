@@ -58,6 +58,7 @@ export const SelectRow = ({
   invalid,
   errortext,
   valid,
+  placeholder,
   successtext,
   children,
   value,
@@ -135,6 +136,7 @@ export const SelectRow = ({
           labelClassName={ variant === "floating" ? "jn-pt-[0.8125rem]" : "" }
           name={name}
           id={id}
+          placeholder={placeholder}
           onValueChange={onValueChange || onChange}
           onOpenChange={onOpenChange}
           disabled={disabled}
@@ -168,6 +170,8 @@ SelectRow.propTypes = {
   variant: PropTypes.oneOf(["floating", "stacked"]),
   /** Label text */
   label: PropTypes.string,
+  /** The placeholder to show in the Select if no value is selected. defaults to "Select…". */
+  placeholder: PropTypes.string,
   /** Id */
   id: PropTypes.string,
   /** Help text */
@@ -206,6 +210,7 @@ SelectRow.defaultProps = {
   name: null,
   variant: "floating",
   label: null,
+  placeholder: "Select…",
   id: null,
   required: null,
   className: "",
