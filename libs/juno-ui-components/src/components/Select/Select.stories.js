@@ -4,12 +4,20 @@ import { SelectOption } from "../SelectOption/index.js"
 import { SelectOptionGroup } from "../SelectOptionGroup/index.js"
 import { SelectDivider } from "../SelectDivider/index.js"
 import { Default as SelectOptionDefaultStory } from "../SelectOption/SelectOption.stories.js"
+import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 
 export default {
   title: "Forms/Base Elements/Select",
   component: Select,
   argTypes: {},
+  decorators: [
+    (story) => (
+      <PortalProvider>
+        {story()}
+      </PortalProvider>
+    ),
+  ],
 }
 
 const Template = ({children, ...args}) => {

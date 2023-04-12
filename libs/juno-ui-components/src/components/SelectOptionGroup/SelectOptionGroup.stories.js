@@ -2,11 +2,19 @@ import React from "react"
 import { Select } from "../Select/index.js"
 import { SelectOptionGroup } from "./index.js"
 import { SelectOption } from "../SelectOption/index.js"
+import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 export default {
   title: "Forms/Select/SelectOptionGroup",
   component: SelectOptionGroup,
   argTypes: {},
+  decorators: [
+    (story) => (
+      <PortalProvider>
+        {story()}
+      </PortalProvider>
+    ),
+  ],
 }
 
 const Template = ({children, ...args}) => {

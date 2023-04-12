@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import { StyleProvider, ShadowRoot, PortalProvider } from "../../index"
 
 /**
- * This provider acts as a wrapper for Juno apps.
+ * This provider acts as a wrapper for Juno apps. It renders a StyleProvider and PortalProvider
  */
 export const AppShellProvider = ({
   shadowRoot,

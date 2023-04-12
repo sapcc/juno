@@ -20,6 +20,7 @@ Default.args = {
     <Message key={0}>Juno styles are added inline</Message>,
     <CodeBlock key={1}>
       {`
+{/* AppShellProvider renders a ShadowRoot, StyleProvider and PortalProvider */}      
 <ShadowRoot>
   <StyleProvider>
     <style>{/* styles */}</style>
@@ -41,6 +42,7 @@ NoShadowRoot.args = {
     </Message>,
     <CodeBlock key={1}>
       {`
+{/* AppShellProvider renders a StyleProvider and PortalProvider */}
 <StyleProvider>
   <style>{/* styles */}</style>
   <PortalProvider>
@@ -59,6 +61,7 @@ StylesInHead.args = {
     <Message key={0}>Juno styles are added to the head tag</Message>,
     <CodeBlock key={1}>
       {`
+{/* AppShellProvider renders a StyleProvider and PortalProvider */}
 <StyleProvider>
   <PortalProvider>
     {/* App */}
@@ -76,6 +79,7 @@ StylesInline.args = {
     <Message key={0}>Juno style are added inline</Message>,
     <CodeBlock key={1}>
       {`
+{/* AppShellProvider renders a StyleProvider and PortalProvider */}
 <StyleProvider>
   <style>{/* styles */}</style>
   <PortalProvider>

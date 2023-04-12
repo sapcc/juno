@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { SelectRow } from "./index.js"
 import { SelectOption } from "../SelectOption/"
 import { Default as DefaultSelectOptionStory } from "../SelectOption/SelectOption.stories"
+import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 export default {
   title: "Forms/Select/SelectRow",
@@ -12,7 +13,14 @@ export default {
         disable: true
       }
     }
-  }
+  },
+  decorators: [
+    (story) => (
+      <PortalProvider>
+        {story()}
+      </PortalProvider>
+    ),
+  ],
 }
 
 const Template = ({ items, ...args }) => (

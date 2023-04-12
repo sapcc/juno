@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import * as RadixSelect from "@radix-ui/react-select"
 import { Icon } from "../Icon/index.js"
 import { Spinner } from "../Spinner/index.js"
+import { usePortalRef } from "../PortalProvider/PortalProvider.component"
 import PropTypes from "prop-types"
 import "./select.scss"
 
@@ -43,6 +44,25 @@ const scrollButtonStyles = `
   jn-py-1
 `
 
+/** Wrap children in a Portal if portal option is set to true  */
+const PortalWrapper = ({ withPortal, children }) => {
+  
+  if (withPortal) {
+    const portalContainer = usePortalRef()
+    return (
+      <RadixSelect.Portal container={portalContainer}>
+        {children}
+      </RadixSelect.Portal>
+    )
+  } else {
+    return (
+      children
+    )
+  }
+  
+}
+
+
 /** A Select component for selecting a single item. Can be used controlled or uncontrolled. 
     Used in Pagination, Filters, SelectRow.  
     TODO: trigger active state styles (invert chevron?), menu theming, z-index, iframe / shadow dom, menu scrolling in popper mode -> make align-items default?, tests
@@ -65,6 +85,7 @@ export const Select = React.forwardRef(
     onValueChange,
     open,
     placeholder, 
+    portal,
     position,
     valid,
     value,
@@ -173,7 +194,7 @@ export const Select = React.forwardRef(
             <TriggerIcons />
           </RadixSelect.Icon>
         </RadixSelect.Trigger>
-        <RadixSelect.Portal>
+        <PortalWrapper withPortal={portal}>
           <RadixSelect.Content className={`juno-select-content ${contentStyles}`} position={position} sideOffset={2}>
             <RadixSelect.ScrollUpButton className={`${scrollButtonStyles}`}>
               <Icon icon="expandLess"/>
@@ -185,7 +206,7 @@ export const Select = React.forwardRef(
               <Icon icon="expandMore"/>
             </RadixSelect.ScrollDownButton>
           </RadixSelect.Content>
-        </RadixSelect.Portal>
+        </PortalWrapper>
       </RadixSelect.Root>
     )
   }
@@ -222,6 +243,8 @@ Select.propTypes = {
   open: PropTypes.bool,
   /** Placeholder to display when no option is selected */
   placeholder: PropTypes.string,
+  /** Whether the select options should be rendered in a portal. Default: true. If using the portal you must also wrap your app in an AppShellProvider (recommended) or PortalProvider! */
+  portal: PropTypes.bool,
   /** The positioning mode of the Select menu. Defaults to 'popper' (below the trigger).  */
   position: PropTypes.oneOf(["popper", "align-items"]),
   /** Whether the Select has been positively validated */
@@ -252,6 +275,7 @@ Select.defaultProps = {
   onValueChange: undefined,
   open: undefined,
   placeholder: "Select…",
+  portal: true,
   position: "popper",
   valid: false,
   defaultValue: undefined,
