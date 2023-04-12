@@ -70,6 +70,12 @@ describe("SelectRow", () => {
 		expect(screen.getByTestId("select-row")).toHaveClass("my-custom-class")
 	})
 	
+	test("renders a placeholder in the Select as passed", async () => {
+		render(<SelectRow placeholder="my placeholder" />)
+		expect(screen.getByRole("combobox")).toBeInTheDocument()
+		expect(screen.getByRole("combobox")).toHaveTextContent("my placeholder")
+	})
+	
 	test("renders a disabled select as passed", async () => {
 		render(<SelectRow disabled />)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
