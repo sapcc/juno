@@ -50,8 +50,8 @@ while [[ $# -gt 0 ]]; do
     shift # past argument
     shift # past value
     ;;
-  --kind | -k)
-    KIND="$2"
+  --asset-path | -k)
+    ASSET_PATH="$2"
     shift # past argument
     shift # past value
     ;;
@@ -85,8 +85,8 @@ if [[ -z "$ACTION" ]]; then
   exit 1
 fi
 
-if [[ -z "$KIND" ]]; then
-  echo "no KIND given 😐"
+if [[ -z "$ASSET_PATH" ]]; then
+  echo "no ASSET_PATH given 😐"
   exit 1
 fi
 
@@ -94,7 +94,7 @@ if [[ -z "$ROOT_PATH" ]]; then
   ROOT_PATH="/tmp/build_result"
 fi
 
-ASSET_PATH="$ROOT_PATH/$KIND/$ASSET_NAME/"
+ASSET_PATH="$ROOT_PATH/$ASSET_PATH"
 
 if [[ -z "$OS_AUTH_URL" ]]; then
   OS_AUTH_URL="https://identity-3.qa-de-1.cloud.sap/v3"
@@ -131,9 +131,9 @@ fi
 # auth swift and set OS_STORAGE_URL and OS_AUTH_TOKEN
 eval $(swift auth)
 
-DESTINATION="$KIND/$ASSET_NAME"
+DESTINATION="$ASSET_PATH"
 echo "use ACTION      = $ACTION"
-echo "use KIND        = $KIND"
+echo "use ASSET_PATH  = $ASSET_PATH"
 echo "use ASSET_NAME  = $ASSET_NAME"
 echo "use ASSET_PATH  = $ASSET_PATH"
 echo "use CONTAINER   = $CONTAINER"
