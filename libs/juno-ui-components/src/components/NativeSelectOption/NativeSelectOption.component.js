@@ -16,7 +16,7 @@ export const NativeSelectOption = ({
 			className={`juno-select-option ${className}`}
 			{...props}
 		>
-		{label}
+		{label || value}
 		</option>
 	)
 }

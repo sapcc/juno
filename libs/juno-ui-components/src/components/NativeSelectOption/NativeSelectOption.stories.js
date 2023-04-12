@@ -2,7 +2,7 @@ import React from "react"
 import { NativeSelectOption } from "./index.js"
 
 export default {
-  title: "Forms/NativeSelect/NativeSelectOption",
+  title: "Forms/Base Elements/NativeSelect/NativeSelectOption",
   component: NativeSelectOption,
   argTypes: {},
 }
