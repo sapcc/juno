@@ -56,12 +56,12 @@ done
 
 if [[ -z "$ASSET_NAME" ]]; then
   echo "No ASSET_NAME path found 😐"
-  exit
+  exit 1
 fi
 
 if [[ -z "$ASSET_PATH" ]]; then
   echo "No ASSET_PATH path found 😐"
-  exit
+  exit 1
 fi
 
 echo "use ROOT_PATH   = $ROOT_PATH"
@@ -112,7 +112,7 @@ fi
 
 if [[ -z "$BUILD_DIR" ]]; then
   echo "No BUILD_DIR found 😐"
-  exit
+  exit 1
 fi
 
 echo "=================================="
