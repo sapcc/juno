@@ -1,16 +1,16 @@
 ARG BASE_URL_PLACEHOLDER="%BASE_URL%"
 
 # Latest assets server image
-FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server:latest AS lastbuild
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-assets-server:latest AS lastbuild
 
 # Base image
-FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-base:latest AS base 
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base:latest AS base 
 ARG BASE_URL_PLACEHOLDER
 
 RUN mkdir -p /tmp/latest
 
 # copy all app and lib builds (from dist) to tmp/latest  
-# input cames from the pipeline
+# input is comming from the pipeline
 
 # -> /apps/whois/build, package.json
 # -> /apps/volta/build, package.json
