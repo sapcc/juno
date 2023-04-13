@@ -1,7 +1,10 @@
 ARG BASE_URL_PLACEHOLDER="%BASE_URL%"
 
 # Latest assets server image
-FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-assets-server:latest AS lastbuild
+# NOTE: if this image does not exist 
+#       this is the case if the image was not build before
+#       comment out this line for the first run
+#FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-assets-server:latest AS lastbuild
 
 # Base image
 FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base:latest AS base 
@@ -24,7 +27,10 @@ ARG VERBOSE="false"
 # create folder in tmp for merged assets
 RUN mkdir -p /tmp/final 
 # copy old versions of assets to current layer
-COPY --from=lastbuild /usr/share/nginx/html /tmp/final
+# NOTE: if this image does not exist 
+#       this is the case if the image was not build before
+#       comment out this line for the first run
+#COPY --from=lastbuild /usr/share/nginx/html /tmp/final
 
 # merge latest assets over the old assets 
 # RUN rsync -avu "/tmp/latest/" "/tmp/final"  
