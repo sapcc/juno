@@ -16,9 +16,10 @@ function help() {
   --container -> default is juno-assets
   --root-path -> default is ./build_result
   possible ENV Vars:
+  * OS_USER_DOMAIN_NAME: per default this is not set 
   * OS_PROJECT_DOMAIN_NAME: default is ccadmin
   * OS_PROJECT_NAME: default is master
-  * OS_PROJECT_ID: this is optional
+  * OS_PROJECT_ID: per default this is not set 
   * OS_AUTH_URL: default is https://identity-3.qa-de-1.cloud.sap/v3
   * OS_USERNAME: this is not optional
   * OS_PASSWORD: this is not optional"
@@ -106,25 +107,29 @@ if [[ -z "$OS_PROJECT_NAME" ]]; then
   OS_PROJECT_NAME="master"
 fi
 
-echo "OS_AUTH_URL: $OS_AUTH_URL"
-echo "OS_PROJECT_DOMAIN_NAME: $OS_PROJECT_DOMAIN_NAME"
-echo "OS_USER_DOMAIN_NAME: $OS_USER_DOMAIN_NAME"
-echo "OS_PROJECT_NAME: $OS_PROJECT_NAME"
-echo "OS_PROJECT_ID: $OS_PROJECT_ID"
-echo "OS_USERNAME: $OS_USERNAME"
-echo "=================================="
-
 export OS_AUTH_VERSION=3
+echo "OS_AUTH_URL: $OS_AUTH_URL"
 export OS_AUTH_URL=$OS_AUTH_URL
-export OS_USER_DOMAIN_NAME=$OS_PROJECT_DOMAIN_NAME
+
+echo "OS_PROJECT_DOMAIN_NAME: $OS_PROJECT_DOMAIN_NAME"
 export OS_PROJECT_DOMAIN_NAME=$OS_PROJECT_DOMAIN_NAME
+
+echo "OS_USER_DOMAIN_NAME: $OS_PROJECT_DOMAIN_NAME"
+export OS_USER_DOMAIN_NAME=$OS_PROJECT_DOMAIN_NAME
+
+echo "OS_PROJECT_NAME: $OS_PROJECT_NAME"
 export OS_PROJECT_NAME=$OS_PROJECT_NAME
-export OS_PASSWORD=$OS_PASSWORD
-export OS_USERNAME=$OS_USERNAME
 
 if [[ -n "$OS_PROJECT_ID" ]]; then
   export OS_PROJECT_ID=$OS_PROJECT_ID
+  echo "OS_PROJECT_ID: $OS_PROJECT_ID"
 fi
+
+echo "OS_PROJECT_ID: $OS_PROJECT_ID"
+echo "OS_USERNAME: $OS_USERNAME"
+export OS_USERNAME=$OS_USERNAME
+export OS_PASSWORD=$OS_PASSWORD
+echo "=================================="
 
 # auth swift and set OS_STORAGE_URL and OS_AUTH_TOKEN
 eval $(swift auth)
