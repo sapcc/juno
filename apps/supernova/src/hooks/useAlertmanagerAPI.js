@@ -11,6 +11,7 @@ const loadWorker = fetch(workerUrl)
 
 const useAlertmanagerAPI = (apiEndpoint) => {
   const setAlertsData = useStore((state) => state.alerts.setAlertsData)
+  const setFilteredAlerts = useStore((state) => state.alerts.setFilteredItems)
   const setIsLoading = useStore((state) => state.alerts.setIsLoading)
   const setIsUpdating = useStore((state) => state.alerts.setIsUpdating)
   const isUserActive = useStore((state) => state.userActivity.isActive)
@@ -30,6 +31,8 @@ const useAlertmanagerAPI = (apiEndpoint) => {
         switch (action) {
           case "ALERTS_UPDATE":
             setAlertsData({ items: e.data.alerts, counts: e.data.counts })
+            // initially set filtered list to all items
+            setFilteredAlerts(e.data.alerts)
             break
           case "ALERTS_FETCH_START":
             setIsUpdating(true)

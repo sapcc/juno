@@ -5,15 +5,15 @@ import { Pill, Stack } from "juno-ui-components"
 import useStore from "../../hooks/useStore"
 
 const AlertLabels = ({alert}) => {
-  const filterKeys = useStore((state) => state.filters.keys)
+  const filterLabels = useStore((state) => state.filters.labels)
 
   return (
     <Stack gap="2" alignment="start" wrap={true}>
-      {filterKeys.map(key => {
-        let value = alert.labels?.[key]
-        // return `${key}: ${value}`
+      {filterLabels.map(filterLabel => {
+        let value = alert.labels?.[filterLabel]
+        
         return value &&
-          <Pill key={key} pillKey={key} pillValue={value} />
+          <Pill key={filterLabel} pillKey={filterLabel} pillValue={value} />
       })}
     </Stack>
   )

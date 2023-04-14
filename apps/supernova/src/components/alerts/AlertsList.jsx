@@ -18,8 +18,8 @@ const AlertsList = () => {
   const alerts = useStore((state) => state.alerts)
 
   const alertsSorted = useMemo(() => {
-    if (alerts?.items) {
-      return alerts.items.slice(0, visibleAmount)
+    if (alerts?.itemsFiltered) {
+      return alerts.itemsFiltered.slice(0, visibleAmount)
     }
   }, [alerts, visibleAmount])
 
@@ -27,6 +27,7 @@ const AlertsList = () => {
     return () => clearTimeout(timeoutRef.current) // clear when component is unmounted
   }, [])
 
+  // endless scroll observer
   const observer = useRef()
   const lastListElementRef = useCallback(
     (node) => {

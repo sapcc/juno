@@ -3,6 +3,7 @@
  * @module alertsService
  */
 import { get } from "./client"
+import { countAlerts } from "../lib/utils"
 
 /**
  * This method sorts the alerts first by severity (critical -> warning -> others), then by status, then by startsAt timestamp and finally by region
@@ -42,51 +43,6 @@ const sort = (items) => {
       return a.labels?.region?.localeCompare(b.labels?.region)
     else return 1
   })
-}
-
-// count alerts and create a map
-// {
-//   global: { total: number, critical: number, ...},
-//   regions: {
-//     "eu-de-1": { total: number, critical: {total: number, suppressed: number}, warning: {...}, ...}
-//   }, ...
-// }
-const count = (alerts) => {
-  const counts = { global: { total: 0 }, regions: {} }
-
-  if (!alerts || alerts.length === 0) return counts
-
-  // run through each alert once and adjust different types of counts as necessary
-  alerts.forEach((alert) => {
-    // total number of alerts
-    counts.global.total += 1
-    
-    const region = alert.labels?.region
-    const severity = alert.labels?.severity
-    const state = alert.status?.state
-
-    // global count per severity
-    counts.global[severity] = counts.global[severity] || 0 // init
-    counts.global[severity] += 1
-
-    // count per region and severity
-    counts.regions[region] = counts.regions[region] || {} // init
-    counts.regions[region].total = counts.regions[region].total || 0 // init
-    counts.regions[region].total += 1
-
-    // total count per region and severity
-    counts.regions[region][severity] = counts.regions[region][severity] || {} // init
-    counts.regions[region][severity]["total"] = counts.regions[region][severity]?.total || 0 // init
-    counts.regions[region][severity]["total"] += 1
-    // suppressed per region and severity
-    if (state === "suppressed" ) {
-      counts.regions[region][severity].suppressed = counts.regions[region][severity]?.suppressed || 0 // init
-      counts.regions[region][severity].suppressed += 1
-    }
-
-  })
-
-  return counts
 }
 
 // default value for watch interval
@@ -146,6 +102,9 @@ function AlertsService(initialConfig) {
           if (alert.status && alert.status.state) {
             alert.status.state = alert.status.state.toLowerCase()
           }
+          if (alert.labels && alert.labels.status) {
+            alert.labels.status = alert.labels.status.toLowerCase()
+          }
         })
 
         console.info("Alerts service: limit items")
@@ -163,7 +122,7 @@ function AlertsService(initialConfig) {
 
           console.info("Alerts service: inform listener")
           // inform listener to receive new alerts
-          config?.onChange({ alerts, counts: count(alerts) })
+          config?.onChange({ alerts, counts: countAlerts(alerts) })
         } else {
           console.info("Alerts service: no change found")
         }

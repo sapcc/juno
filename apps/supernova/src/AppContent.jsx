@@ -6,6 +6,7 @@ import useStore from "./hooks/useStore"
 import AlertsList from "./components/alerts/AlertsList"
 import RegionsList from "./components/regions/RegionsList"
 import StatusBar from "./components/status/StatusBar"
+import Filters from "./components/filters/Filters"
 
 const AppContent = (props) => {
   const alerts = useStore((state) => state.alerts)
@@ -22,7 +23,10 @@ const AppContent = (props) => {
       <RegionsList />
       
       {alerts.items && !alerts.isLoading && (
-        <StatusBar totalCounts={alerts.totalCounts} isUpdating={alerts.isUpdating} updatedAt={alerts.updatedAt} />
+        <>
+          <Filters />
+          <StatusBar totalCounts={alerts.totalCounts} isUpdating={alerts.isUpdating} updatedAt={alerts.updatedAt} />
+        </>
       )}
 
       {alerts.isLoading && (
