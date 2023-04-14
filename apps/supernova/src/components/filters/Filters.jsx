@@ -2,7 +2,7 @@ import React from "react"
 import { Pill, Stack } from "juno-ui-components"
 
 import FilterSelect from "./FilterSelect"
-import useStore from "../../hooks/useStore"
+import { useActiveFilters, useFilterActions } from "../../hooks/useStore"
 
 const filtersStyles = `
   bg-theme-background-lvl-2
@@ -11,21 +11,22 @@ const filtersStyles = `
   my-px
 `
 
-const Filters = ({}) => {
-  const filters = useStore((state) => state.filters)
+const Filters = () => {
+  const activeFilters = useActiveFilters()
+  const { removeActiveFilter } = useFilterActions()
 
   return (
     <Stack direction="vertical" gap="4" className={`filters ${filtersStyles}`}>
-      <FilterSelect filters={filters} />
+      <FilterSelect />
       <Stack gap="2">
-        { Object.entries(filters.activeFilters).map(([key, values]) => {
+        { Object.entries(activeFilters).map(([key, values]) => {
           return (
             values.map((value) => 
               <Pill 
                 pillKey={key}
                 pillValue={value}
                 closeable
-                onClose={() => filters.removeActiveFilter(key, value)}
+                onClose={() => removeActiveFilter(key, value)}
                 key={`${key}:${value}`}
               />
             )

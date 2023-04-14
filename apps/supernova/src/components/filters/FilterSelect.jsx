@@ -7,17 +7,20 @@ import {
   SelectRow,
   TextInput,
 } from "juno-ui-components"
+import { useFilterLabels, useFilterActions } from "../../hooks/useStore"
 
 
-const FilterSelect = ({ filters }) => {
+const FilterSelect = () => {
   const [filterLabel, setFilterLabel] = useState()
   const [filterValue, setFilterValue] = useState("")
+
+  const { addActiveFilter } = useFilterActions()
+  const filterLabels = useFilterLabels() 
 
   const handleFilterAdd = () => {
     if (filterLabel && filterValue) {
       // add active filter to store
-      // TODO: check that value exists in available values list
-      filters.addActiveFilter(filterLabel, filterValue)
+      addActiveFilter(filterLabel, filterValue)
 
       // reset filterValue
       setFilterValue("")
@@ -37,7 +40,7 @@ const FilterSelect = ({ filters }) => {
         value={filterLabel}
         onValueChange={(val) => setFilterLabel(val)}
       >
-        {filters?.labels?.map((filterLabel) => (
+        {filterLabels?.map((filterLabel) => (
           <SelectOption
             value={filterLabel}
             label={filterLabel}

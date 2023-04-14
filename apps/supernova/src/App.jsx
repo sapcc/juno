@@ -4,11 +4,11 @@ import { AppShell, AppShellProvider } from "juno-ui-components"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
 import useAlertmanagerAPI from "./hooks/useAlertmanagerAPI"
-import useStore from "./hooks/useStore"
+import { useFilterActions } from "./hooks/useStore"
 import useCommunication from "./hooks/useCommunication"
 
 function App(props = {}) {
-  const setFilterLabels = useStore((state) => state.filters.setLabels)
+  const { setLabels } = useFilterActions()
 
   const embedded = useMemo(
     () => props.embedded === "true" || props.embedded === true,
@@ -36,7 +36,7 @@ function App(props = {}) {
       "type"
     ]
 
-    setFilterLabels(filterLabels)
+    setLabels(filterLabels)
   }, [])
 
   useCommunication()

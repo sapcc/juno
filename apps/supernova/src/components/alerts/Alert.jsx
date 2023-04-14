@@ -42,7 +42,7 @@ const Alert = ({ alert }, ref) => {
   const dateFormat = { ...DateTime.DATE_MED }
   const timeFormat = { ...DateTime.TIME_24_WITH_SHORT_OFFSET }
   const startTime = DateTime.fromISO(alert.startsAt)
-  var daysFiring = DateTime.now().diff(startTime, "days")
+  const daysFiring = DateTime.now().diff(startTime, "days")
 
   return (
     <DataGridRow>
