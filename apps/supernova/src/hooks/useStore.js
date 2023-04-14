@@ -21,10 +21,12 @@ const createAlertsSlice = (set, get) => ({
   alerts: {
     items: [],
     itemsFiltered: [],
-    totalCounts: {},
-    severityCountsPerRegion: {},
+    totalCounts: {}, // { total: number, critical: number, ...},
+    severityCountsPerRegion: {}, // {"eu-de-1": { total: number, critical: {total: number, suppressed: number}, warning: {...}, ...}
     isLoading: false,
+    isUpdating: false,
     updatedAt: null,
+    error: null,
 
     actions: {
       setAlertsData: ({ items, counts }) =>
@@ -154,6 +156,9 @@ const useStore = create(
   }))
 )
 
+// atomic exports only instead of exporting whole store
+// See reasoning here: https://tkdodo.eu/blog/working-with-zustand
+
 // Store exports
 export const useUrlStateKey                    = () => useStore((state) => state.urlStateKey)
 
@@ -169,7 +174,9 @@ export const useAlertsItemsFiltered            = () => useStore((state) => state
 export const useAlertsTotalCounts              = () => useStore((state) => state.alerts.totalCounts)
 export const useAlertsSeverityCountsPerRegion  = () => useStore((state) => state.alerts.severityCountsPerRegion)
 export const useAlertsIsLoading                = () => useStore((state) => state.alerts.isLoading)
+export const useAlertsIsUpdating               = () => useStore((state) => state.alerts.isUpdating)
 export const useAlertsUpdatedAt                = () => useStore((state) => state.alerts.updatedAt)
+export const useAlertsError                    = () => useStore((state) => state.alerts.error)
 
 export const useAlertsActions                  = () => useStore((state) => state.alerts.actions)
 
