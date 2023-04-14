@@ -1,6 +1,7 @@
 ARG BASE_URL_PLACEHOLDER="%BASE_URL%"
 
 # Latest assets server image
+# FIRSTRUN!
 # NOTE: if this image does not exist 
 #       this is the case if the image was not build before
 #       comment out this line for the first run
@@ -29,6 +30,7 @@ ARG VERBOSE="false"
 RUN mkdir -p /tmp/final 
 
 # copy old versions of assets to current layer
+# FIRSTRUN!
 # NOTE: if this image does not exist 
 #       this is the case if the image was not build before
 #       comment out this line for the first run

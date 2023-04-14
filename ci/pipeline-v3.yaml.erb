@@ -1,9 +1,16 @@
 # prettier-ignore
 <%
   ASSETS = {
-    "auth": { type: "app", path: "apps/auth" },
+    "assets-overview": { type: "app", path: "apps/assets-overview"},
+    "communicator": { type: "lib", path: "libs/communicator"},
+    "juno-ui-components": { type: "lib", path: "libs/juno-ui-components"},
+    "messages-provider": { type: "lib", path: "libs/messages-provider"},
+    "policy-engine": { type: "lib", path: "libs/policy-engine"},
+    "url-state-provider": { type: "lib", path: "libs/url-state-provider"},
+    "url-state-router": { type: "lib", path: "libs/url-state-router"},
   }
 %>
+#    "oauth": { type: "lib", path: "libs/oauth"},
 
 resources:
   <%# BASE IMAGE %>
@@ -20,6 +27,13 @@ resources:
       username: ((registry-user/keppel-ccloud.username))
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-swift
+
+  - name: assets-server.image
+    type: docker-image
+    source:
+      username: ((registry-user/keppel-ccloud.username))
+      password: ((registry-user/keppel-ccloud.password))
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-assets-server
 
   - name: juno.git
     type: git
@@ -49,17 +63,18 @@ resources:
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
   
-  - name: assets-server.version
-    type: time-version-resource
-    check_every: 525600h
-    source: { key: "juno-assets-server-version" } # disambiguate from other time-version resources
-
   - name: <%= details[:type] %>-<%= name %>.version
     type: time-version-resource
     check_every: 525600h
     source: { key: "<%= details[:type] %>-<%= name %>" } # disambiguate from other time-version resources
 
   <% end %>
+
+  - name: assets-server.version
+    type: time-version-resource
+    check_every: 525600h
+    source: { key: "juno-assets-server-version" } # disambiguate from other time-version resources
+
 
 resource_types:
   - name: git-proxy
@@ -189,14 +204,23 @@ jobs:
   <% end %> 
 
   <% 
-  # this step combines all app images
-  # for that we use nginx image and copy all built apps (in the step before)
-  # into /usr/share/nginx/html/
-  # this image will be deployed as CDN server 
+  # this step combines all assets that where build and uploaded before to swift
+  # for that we use nginx image and copy all assets (that where build in the step before) into /usr/share/nginx/html/
+  # this image will be deployed as asset server 
+
+  # Important! 
+  # If the asset-server.image was not build before 
+  # 1) comment the parts in the dockerfile where the image is needed to copy old stuff over
+  # 2) you need first build the libs otherwise the build importmap step will fail because 
+  #    it will not find the libs
+  # 3) if the libs are build and uploaded to swift you can add the apps
+  # 4) when the apps are build without problems you can uncomment the parts in 
+  #    the dockerfile to store the old versions 
   %>
   - name: build-assets-server
     public: true
     plan:
+      - get: swift.image
       - get: juno.git        
         passed: [build-base-image]
       <% ASSETS.each do |name, details|%>
@@ -218,7 +242,7 @@ jobs:
         config:
           platform: linux
           inputs:
-            - name: juno
+            - name: juno.git
           outputs:
             - name: dist
           run:
@@ -226,6 +250,25 @@ jobs:
             args:
               - -cx
               - |
-                set -e 
-                cd ./juno
-                exit 1
+                cd ./juno.git
+                <% ASSETS.each do |name, details|%>
+                  ./scripts/asset_storage.sh --asset-name <%= name %> --asset-path <%= details[:path] %> --action download --root-path ../dist
+                  ls -all ../dist/<%=details[:type]%>s/<%= name %>/
+                <% end %>
+      
+      # to serve our js, css and stattic assets this step will add all the created data 
+      # in dist/ to the nginx image in /usr/share/nginx/html
+      - put: assets-server.image
+        params:
+          tag_as_latest: true
+          cache: true
+          cache_tag: "latest"
+          # root for docker build, its using the output dir from the step before
+          build: dist
+          dockerfile: juno.git/ci/Dockerfile.assets.server
+          tag: assets-server.version/version
+          build_args: 
+            PROVIDERS: "jspm"
+            DEFAULT_PROVIDER: "jspm"
+        get_params:
+          skip_download: true   
