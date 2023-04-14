@@ -20,12 +20,14 @@ RUN mkdir -p /tmp/latest
 # -> /libs/juno-ui-components/build, package.json
 ADD . /tmp/latest
 WORKDIR /tmp/latest
+RUN ls
 
 ARG NPM_PROVIDER="jspm"
 ARG VERBOSE="false"
 
 # create folder in tmp for merged assets
 RUN mkdir -p /tmp/final 
+
 # copy old versions of assets to current layer
 # NOTE: if this image does not exist 
 #       this is the case if the image was not build before
@@ -33,14 +35,18 @@ RUN mkdir -p /tmp/final
 #COPY --from=lastbuild /usr/share/nginx/html /tmp/final
 
 # merge latest assets over the old assets 
-# RUN rsync -avu "/tmp/latest/" "/tmp/final"  
 RUN \
   for PACKAGE in ./**/*/package.json; do \
   VERSION=$(jq -r .version $PACKAGE); \
   DIR=$(dirname $PACKAGE); \
-  rm -rf /tmp/final/$DIR ; rm -rf /tmp/final/$DIR@$VERSION ; rm -rf /tmp/final/$DIR@latest ; \
-  cp -r $DIR /tmp/final/$DIR@$VERSION ; cp -r $DIR /tmp/final/$DIR@latest ; \
-  done ; 
+  rm -rf /tmp/final/$DIR; \
+  rm -rf /tmp/final/$DIR@$VERSION; \
+  rm -rf /tmp/final/$DIR@latest; \
+  mkdir -p /tmp/final/$DIR@$VERSION; \ 
+  cp -r $DIR/* /tmp/final/$DIR@$VERSION/; \
+  mkdir -p /tmp/final/$DIR@latest; \
+  cp -r $DIR/* /tmp/final/$DIR@latest/; \
+  done ;
 
 RUN mkdir -p /tmp/final/global && cp /juno/README.md /tmp/final/global/
 
