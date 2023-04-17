@@ -13,7 +13,7 @@ ci-clean:
 	if [ -e pipeline.yaml ]; then rm pipeline.yaml; fi
 
 ci-create:
-	docker run --rm -v "${CURDIR}":/myapp -w /myapp keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/ruby:3-alpine erb pipeline-v3.yaml.erb > pipeline.yaml 
+	docker run --rm -v "${CURDIR}":/myapp -w /myapp keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/ruby:3-alpine erb pipeline.yaml.erb > pipeline.yaml 
 
 ensure-name:
 ifndef NAME
