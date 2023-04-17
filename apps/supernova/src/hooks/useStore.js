@@ -23,6 +23,7 @@ const createAlertsSlice = (set, get) => ({
     itemsFiltered: [],
     totalCounts: {}, // { total: number, critical: number, ...},
     severityCountsPerRegion: {}, // {"eu-de-1": { total: number, critical: {total: number, suppressed: number}, warning: {...}, ...}
+    regions: [], // save all available regions from initial list here
     isLoading: false,
     isUpdating: false,
     updatedAt: null,
@@ -35,6 +36,7 @@ const createAlertsSlice = (set, get) => ({
             state.alerts.items = items
             state.alerts.totalCounts = counts?.global
             state.alerts.severityCountsPerRegion = counts?.regions
+            state.alerts.regions = Object.keys(counts?.regions).sort()
             state.alerts.isLoading = false
             state.alerts.isUpdating = false
             state.alerts.updatedAt = Date.now()
@@ -208,6 +210,7 @@ export const useAlertsItems                   = () => useStore((state) => state.
 export const useAlertsItemsFiltered           = () => useStore((state) => state.alerts.itemsFiltered)
 export const useAlertsTotalCounts             = () => useStore((state) => state.alerts.totalCounts)
 export const useAlertsSeverityCountsPerRegion = () => useStore((state) => state.alerts.severityCountsPerRegion)
+export const useAlertsRegions                 = () => useStore((state) => state.alerts.regions)
 export const useAlertsIsLoading               = () => useStore((state) => state.alerts.isLoading)
 export const useAlertsIsUpdating              = () => useStore((state) => state.alerts.isUpdating)
 export const useAlertsUpdatedAt               = () => useStore((state) => state.alerts.updatedAt)
