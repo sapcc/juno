@@ -7,7 +7,7 @@ import {
   SelectOption,
   SelectRow,
 } from "juno-ui-components"
-import { useFilterLabels, useFilterLabelValues, useFilterActions } from "../../hooks/useStore"
+import { useFilterLabels, useFilterLabelValues, useFilterActions, useActiveFilters } from "../../hooks/useStore"
 import { humanizeString } from "../../lib/utils"
 
 
@@ -19,6 +19,7 @@ const FilterSelect = () => {
   const { addActiveFilter, loadFilterLabelValues } = useFilterActions()
   const filterLabels = useFilterLabels() 
   const filterLabelValues = useFilterLabelValues()
+  const activeFilters = useActiveFilters()
 
   const handleFilterAdd = (value) => {
     
@@ -84,7 +85,10 @@ const FilterSelect = () => {
         className="filter-value-select w-96 bg-theme-background-lvl-1"
         key={resetKey}
       >
-        { filterLabelValues[filterLabel]?.values?.map((value) =>
+        { filterLabelValues[filterLabel]?.values?.filter((value) => 
+            // filter out already active values for this label
+            !activeFilters[filterLabel]?.includes(value)
+          ).map((value) =>
           <SelectOption
             value={value}
             key={value}
