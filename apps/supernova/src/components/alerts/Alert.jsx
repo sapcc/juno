@@ -106,7 +106,7 @@ const Alert = ({ alert }, ref) => {
           )}
         </Stack>
       </DataGridCell>
-      <DataGridCell>{alert.status?.state}</DataGridCell>
+      <DataGridCell>{alert.labels?.status}</DataGridCell>
       <DataGridCell>
         <Button size="small" variant="subdued">Silence</Button>
       </DataGridCell>

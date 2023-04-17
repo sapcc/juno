@@ -3,27 +3,35 @@ import React, { useState } from "react"
 import {
   Button,
   InputGroup,
+  Select,
   SelectOption,
   SelectRow,
-  TextInput,
 } from "juno-ui-components"
-import { useFilterLabels, useFilterActions } from "../../hooks/useStore"
+import { useFilterLabels, useFilterLabelValues, useFilterActions } from "../../hooks/useStore"
+import { humanizeString } from "../../lib/utils"
 
 
 const FilterSelect = () => {
   const [filterLabel, setFilterLabel] = useState()
-  const [filterValue, setFilterValue] = useState("")
+  const [filterValue, setFilterValue] = useState()
+  const [resetKey, setResetKey] = useState(Date.now())
 
-  const { addActiveFilter } = useFilterActions()
+  const { addActiveFilter, loadFilterLabelValues } = useFilterActions()
   const filterLabels = useFilterLabels() 
+  const filterLabelValues = useFilterLabelValues()
 
-  const handleFilterAdd = () => {
-    if (filterLabel && filterValue) {
+  const handleFilterAdd = (value) => {
+    
+    if (filterLabel && (filterValue || value)) {
       // add active filter to store
-      addActiveFilter(filterLabel, filterValue)
+      addActiveFilter(filterLabel, (filterValue || value))
 
       // reset filterValue
-      setFilterValue("")
+      setFilterValue(undefined)
+      // force key change to reset the Select component to its initial state
+      // so that the placeholder is rendered again. This is a workaround to fix an open issue 
+      // in Radix UI. See: https://github.com/radix-ui/primitives/issues/1569
+      setResetKey(Date.now())
 
       // TODO: remove filterValue from available value list
     } else {
@@ -31,28 +39,58 @@ const FilterSelect = () => {
     }
   }
 
+  const handleFilterLabelChange = (value) => {
+    setFilterLabel(value)
+    // lazy loading of all possible values for this label (only load them if we haven't already)
+    if (!filterLabelValues[value]?.values) {
+      loadFilterLabelValues(value)
+    }
+  }
+
+  const handleFilterValueChange = (value) => {
+    setFilterValue(value)
+    handleFilterAdd(value)
+  }
+
+  // const handleKeyDown = (event) => {
+  //   if (event.key === "Enter") {
+  //     handleFilterValueChange()
+  //   } 
+  // }
+
   return (
     <InputGroup>
       <SelectRow
         name="filter"
-        className="w-64 mb-0"
+        className="filter-label-select w-64 mb-0"
         label="Filter"
         value={filterLabel}
-        onValueChange={(val) => setFilterLabel(val)}
+        onValueChange={(val) => handleFilterLabelChange(val)}
       >
         {filterLabels?.map((filterLabel) => (
           <SelectOption
             value={filterLabel}
-            label={filterLabel}
+            label={humanizeString(filterLabel)}
             key={filterLabel}
           />
         ))}
       </SelectRow>
-      <TextInput
+      <Select
+        name="filterValue"
         value={filterValue}
-        onChange={(event) => setFilterValue(event.target.value)}
-        className="bg-theme-background-lvl-1 w-64"
-      />
+        onValueChange={(value) => handleFilterValueChange(value)}
+        disabled={filterLabelValues[filterLabel] ? false : true}
+        loading={filterLabelValues[filterLabel]?.isLoading}
+        className="filter-value-select w-96 bg-theme-background-lvl-1"
+        key={resetKey}
+      >
+        { filterLabelValues[filterLabel]?.values?.map((value) =>
+          <SelectOption
+            value={value}
+            key={value}
+          />
+        )}
+      </Select>
       <Button
         onClick={() => handleFilterAdd()}
         icon="filterAlt"

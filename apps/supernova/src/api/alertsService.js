@@ -96,15 +96,14 @@ function AlertsService(initialConfig) {
         // sort alerts
         let alerts = sort(items)
         
-        // normalize some values to lower case
-        console.info("Alerts service: normalize item values")
+        // copy additional filter options to labels for easier filter selection
+        // because the alert object is nested this makes it a lot easier to filter, since we only use what is present in alert.labels
+        console.info("Alerts service: copy additional filters to labels")
         alerts.forEach(alert => {
-          if (alert.status && alert.status.state) {
-            alert.status.state = alert.status.state.toLowerCase()
+          if (alert.labels) {
+            alert.labels.status = alert.status?.state
           }
-          if (alert.labels && alert.labels.status) {
-            alert.labels.status = alert.labels.status.toLowerCase()
-          }
+          
         })
 
         console.info("Alerts service: limit items")

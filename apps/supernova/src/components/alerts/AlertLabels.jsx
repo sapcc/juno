@@ -13,7 +13,7 @@ const AlertLabels = ({alert}) => {
   return (
     <Stack gap="2" alignment="start" wrap={true}>
       {filterLabels.map(filterLabel => {
-        let value = filterLabels[filterLabel]
+        let value = alert.labels?.[filterLabel]
         
         return value &&
           <Pill key={filterLabel} pillKey={filterLabel} pillValue={value} />
