@@ -6,6 +6,7 @@ import {
   Select,
   SelectOption,
   SelectRow,
+  Stack,
 } from "juno-ui-components"
 import { useFilterLabels, useFilterLabelValues, useFilterActions, useActiveFilters } from "../../hooks/useStore"
 import { humanizeString } from "../../lib/utils"
@@ -16,7 +17,7 @@ const FilterSelect = () => {
   const [filterValue, setFilterValue] = useState()
   const [resetKey, setResetKey] = useState(Date.now())
 
-  const { addActiveFilter, loadFilterLabelValues } = useFilterActions()
+  const { addActiveFilter, loadFilterLabelValues, clearActiveFilters } = useFilterActions()
   const filterLabels = useFilterLabels() 
   const filterLabelValues = useFilterLabelValues()
   const activeFilters = useActiveFilters()
@@ -60,47 +61,56 @@ const FilterSelect = () => {
   // }
 
   return (
-    <InputGroup>
-      <SelectRow
-        name="filter"
-        className="filter-label-select w-64 mb-0"
-        label="Filter"
-        value={filterLabel}
-        onValueChange={(val) => handleFilterLabelChange(val)}
-      >
-        {filterLabels?.map((filterLabel) => (
-          <SelectOption
-            value={filterLabel}
-            label={humanizeString(filterLabel)}
-            key={filterLabel}
-          />
-        ))}
-      </SelectRow>
-      <Select
-        name="filterValue"
-        value={filterValue}
-        onValueChange={(value) => handleFilterValueChange(value)}
-        disabled={filterLabelValues[filterLabel] ? false : true}
-        loading={filterLabelValues[filterLabel]?.isLoading}
-        className="filter-value-select w-96 bg-theme-background-lvl-1"
-        key={resetKey}
-      >
-        { filterLabelValues[filterLabel]?.values?.filter((value) => 
-            // filter out already active values for this label
-            !activeFilters[filterLabel]?.includes(value)
-          ).map((value) =>
-          <SelectOption
-            value={value}
-            key={value}
-          />
-        )}
-      </Select>
-      <Button
-        onClick={() => handleFilterAdd()}
-        icon="filterAlt"
-        className="py-[0.3rem]"
-      />
-    </InputGroup>
+    <Stack alignment="center" gap="8">
+      <InputGroup>
+        <SelectRow
+          name="filter"
+          className="filter-label-select w-64 mb-0"
+          label="Filter"
+          value={filterLabel}
+          onValueChange={(val) => handleFilterLabelChange(val)}
+        >
+          {filterLabels?.map((filterLabel) => (
+            <SelectOption
+              value={filterLabel}
+              label={humanizeString(filterLabel)}
+              key={filterLabel}
+            />
+          ))}
+        </SelectRow>
+        <Select
+          name="filterValue"
+          value={filterValue}
+          onValueChange={(value) => handleFilterValueChange(value)}
+          disabled={filterLabelValues[filterLabel] ? false : true}
+          loading={filterLabelValues[filterLabel]?.isLoading}
+          className="filter-value-select w-96 bg-theme-background-lvl-1"
+          key={resetKey}
+        >
+          { filterLabelValues[filterLabel]?.values?.filter((value) =>
+              // filter out already active values for this label
+              !activeFilters[filterLabel]?.includes(value)
+            ).map((value) =>
+            <SelectOption
+              value={value}
+              key={value}
+            />
+          )}
+        </Select>
+        <Button
+          onClick={() => handleFilterAdd()}
+          icon="filterAlt"
+          className="py-[0.3rem]"
+        />
+      </InputGroup>
+      {activeFilters && Object.keys(activeFilters).length > 0 &&
+        <Button
+          label="Clear all filters"
+          onClick={() => clearActiveFilters()}
+          variant="subdued"
+        />
+      }
+    </Stack>
   )
 }
 

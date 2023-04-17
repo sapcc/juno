@@ -116,7 +116,7 @@ const createFiltersSlice = (set, get) => ({
           }
         }),
 
-      setActiveFilters: (activeFilters) =>
+      setActiveFilters: (activeFilters) => {
         set((state) => {
           return {
             filters: {
@@ -124,7 +124,18 @@ const createFiltersSlice = (set, get) => ({
               activeFilters,
             },
           }
-        }),
+        })
+        get().alerts.actions.filterItems()
+      },
+
+      clearActiveFilters: () => { 
+        set(
+          produce((state) => {
+            state.filters.activeFilters = {}
+          })
+        )
+        get().alerts.actions.filterItems()
+      },
 
       addActiveFilter: (filterLabel, filterValue) => {
         set(

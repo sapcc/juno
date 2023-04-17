@@ -31,7 +31,13 @@ const AppContent = (props) => {
 
       <RegionsList />
 
-      {totalCounts.total > 0 && !isLoading && (
+      {isLoading ? (
+        <Stack gap="2">
+          <span>Loading</span>
+          <Spinner variant="primary" />
+        </Stack>
+      )
+      : (
         <>
           <Filters />
           <StatusBar
@@ -39,17 +45,10 @@ const AppContent = (props) => {
             isUpdating={isUpdating}
             updatedAt={updatedAt}
           />
+          <AlertsList />
         </>
       )}
 
-      {isLoading && (
-        <Stack gap="2">
-          <span>Loading</span>
-          <Spinner variant="primary" />
-        </Stack>
-      )}
-
-      <AlertsList />
     </Container>
   )
 }
