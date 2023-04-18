@@ -39,7 +39,7 @@ const Search = ({ onSearch, resultsShown, value }) => {
       className={`search ${searchClasses(resultsShown)}`}
     >
       <SearchInput
-        placeholder="IPs, IP lists, or IP ranges (CIDR)"
+        placeholder="IPs, IP lists, IP ranges (CIDR), project id, domain id or cost object"
         className=""
         variant="hero"
         value={searchTerm}

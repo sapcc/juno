@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useMemo, useEffect } from "react"
 import ReactJson from "react-json-view"
 import { DateTime } from "luxon"
 import { Icon, Stack } from "juno-ui-components"
@@ -39,7 +39,15 @@ const capitalize = (string) => {
 const ResultItem = ({ content, expand }) => {
   const [isExpanded, setIsExpanded] = useState(false)
 
-  React.useEffect(() => {
+  const responsibles = useMemo(() => {
+    if (!content?.responsibles) return null
+    // billing api do not return anymore following values. We extract them active and we leave the rest as it is.
+    const { controller, securityExpert, productOwner, ...rest } =
+      content.responsibles
+    return rest
+  }, [content.responsibles])
+
+  useEffect(() => {
     setIsExpanded(expand)
   }, [expand])
 
@@ -61,11 +69,11 @@ const ResultItem = ({ content, expand }) => {
         {content.region && (
           <div className="text-theme-light">{content.region}</div>
         )}
-        {content.responsibles && (
+        {responsibles && (
           <>
             <h4 className="font-bold mt-3">Responsible Persons:</h4>
             <Stack direction="vertical" gap="2">
-              {Object.entries(content.responsibles).map(
+              {Object.entries(responsibles).map(
                 ([contactType, contactInfo]) => (
                   <div key={contactType}>
                     <h5>{capitalize(contactType)}:</h5>
