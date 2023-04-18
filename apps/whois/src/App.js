@@ -42,7 +42,7 @@ const App = (props) => {
   const [items, setItems] = React.useState(null)
   const [error, setError] = React.useState(null)
   const [statusCode, setStatusCode] = React.useState(null)
-  const { embedded } = props
+  const { embedded, endpoint } = props
 
   const resultsShown = items !== null
 
@@ -59,7 +59,7 @@ const App = (props) => {
     setProcessing(true)
 
     // search
-    searchByInput(term, options)
+    searchByInput(endpoint, term, options)
       .then((response) => {
         // get status code from response
         setStatusCode(response.status)
