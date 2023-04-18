@@ -182,6 +182,11 @@ const AssetDetails = () => {
                 >
                   {versions.map((version, i) => (
                     <SelectOption
+                      test={console.log(
+                        "rendering option: ",
+                        version.label,
+                        version.value
+                      )}
                       key={i}
                       label={version.label}
                       value={version.value}
