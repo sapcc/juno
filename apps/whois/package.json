@@ -44,9 +44,7 @@
     "build": "NODE_ENV=production node esbuild.config.js"
   },
   "peerDependencies": {
-    "cidr-regex": "^3.1.1",
     "custom-event-polyfill": "^1.0.7",
-    "ip-regex": "^5.0.0",
     "juno-ui-components": "*",
     "luxon": "^2.3.0",
     "prop-types": "^15.8.1",
