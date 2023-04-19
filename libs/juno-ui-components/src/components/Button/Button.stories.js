@@ -78,12 +78,6 @@ PrimaryDanger.args = {
   label: "Primary Danger",
 }
 
-export const Large = Template.bind({})
-Large.args = {
-  size: "large",
-  label: "Large",
-}
-
 export const DefaultSize = Template.bind({})
 DefaultSize.args = {
   label: "Default",
@@ -180,19 +174,6 @@ SmallWithIcon.parameters = {
 }
 SmallWithIcon.args = {
   ...Small.args,
-  icon: "warning",
-}
-
-export const LargeWithIcon = Template.bind({})
-LargeWithIcon.parameters = {
-  docs: {
-    description: {
-      story: "Large Button with Icon",
-    },
-  },
-}
-LargeWithIcon.args = {
-  ...Large.args,
   icon: "warning",
 }
 
@@ -427,17 +408,3 @@ SmallInProgress.args = {
   progressLabel: "Small in Progress…",
 }
 
-// large button in progress
-export const LargeInProgress = Template.bind({})
-LargeInProgress.parameters = {
-  docs: {
-    description: {
-      story: "Large Button in Progress",
-    },
-  },
-}
-LargeInProgress.args = {
-  ...Large.args,
-  progress: true,
-  progressLabel: "Large in Progress…",
-}
