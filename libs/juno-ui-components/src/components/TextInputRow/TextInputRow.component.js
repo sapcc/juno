@@ -88,9 +88,9 @@ const successtextstyles = `
 `
 
 const iconcontainerstyles = `
-  jn-flex
+  jn-inline-flex
   jn-absolute
-  jn-top-1.5
+  jn-top-[.4rem]
   jn-right-3
 `
 

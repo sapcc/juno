@@ -50,11 +50,11 @@ const searchStyles = (variant) => {
 const iconWrapperStyles = (variant) => {
   switch (variant) {
     case "rounded":
-      return `jn-absolute jn-right-3`
+      return `jn-absolute jn-inline-flex jn-right-3 jn-top-1`
     case "hero":
-      return `jn-absolute jn-right-5`
+      return `jn-absolute jn-inline-flex jn-right-5`
     default:
-      return `jn-absolute jn-right-3`
+      return `jn-absolute jn-inline-flex jn-right-3 jn-top-2`
   }
 }
 

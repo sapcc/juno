@@ -9,6 +9,8 @@ const badgeBaseStyles = `
 	jn-text-theme-default
 	jn-py-0.5
 	jn-px-1
+  jn-justify-center
+  jn-items-center
 `
 
 const defaultStyles = `jn-bg-theme-badge-default`
@@ -25,7 +27,7 @@ const criticalStyles = `jn-bg-theme-danger/70 jn-text-theme-high`
 
 const errorStyles = `jn-bg-theme-error/25`
 
-const iconStyles = `jn-mr-1 jn-mt-[-0.125rem]`
+const iconStyles = `jn-mr-1 jn-items-center`
 
 const knownVariants = [
   "info",
@@ -89,9 +91,13 @@ export const Badge = ({
 
   return (
     <span
-      className={`juno-badge juno-badge-${variant} ${badgeBaseStyles} ${getVariantStyle(
-        variant
-      )} ${className}`}
+      className={`
+        juno-badge 
+        juno-badge-${variant} 
+        ${badgeBaseStyles} 
+        ${getVariantStyle(variant)}
+        ${ icon ? "jn-inline-flex" : "" }
+        ${className}`}
       {...props}
     >
       {icon ? (

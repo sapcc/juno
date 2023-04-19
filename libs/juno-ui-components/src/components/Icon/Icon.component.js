@@ -67,7 +67,6 @@ const anchorIconStyles = `
 // hover style needs to be revisited. only works if no icon color was passed
 const buttonIconStyles = `
   hover:jn-text-theme-high
-	jn-inline-block
   focus:jn-outline-none 
   focus-visible:jn-ring-2
   focus-visible:jn-ring-theme-focus
@@ -137,7 +136,7 @@ const getColoredSizedIcon = ({
   iconClassName,
   ...iconProps
 }) => {
-  const iconClass = `juno-icon juno-icon-${icon} jn-inline-block jn-fill-current ${color} ${iconClassName}`
+  const iconClass = `juno-icon juno-icon-${icon} jn-fill-current ${color} ${iconClassName}`
 
   switch (icon) {
     case "accountCircle":
