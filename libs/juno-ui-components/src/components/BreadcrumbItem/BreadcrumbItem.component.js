@@ -13,6 +13,7 @@ const breadcrumbitemstyles = `
 
 const breadcrumblinkstyles = `
   jn-text-theme-high
+  jn-inline-flex
 `
 
 const disabledstyles = `

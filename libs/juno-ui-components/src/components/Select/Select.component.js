@@ -190,7 +190,7 @@ export const Select = React.forwardRef(
               <RadixSelect.Value placeholder={placeholder}/> 
             </span>
           }
-          <RadixSelect.Icon>
+          <RadixSelect.Icon className="jn-inline-flex">
             <TriggerIcons />
           </RadixSelect.Icon>
         </RadixSelect.Trigger>
