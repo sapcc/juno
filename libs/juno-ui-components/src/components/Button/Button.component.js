@@ -23,19 +23,43 @@ const btnBase = `
   disabled:jn-pointer-events-none
 `
 
-const btnSmall = `
+const btnSmallBase = `
   jn-text-sm
   jn-leading-5
-  jn-px-[0.4375rem]
+  jn-px-[0.5rem]
+
+`
+
+const btnDefaultBase = `
+  jn-text-base
+  jn-leading-6
+  jn-px-[0.625rem]  
+
+`
+
+const btnSmallDefaultVerticalPadding = `
+  jn-py-[0.3125rem]
+`
+
+const btnSmallSubduedVerticalPadding = `
   jn-py-[0.25rem]
 `
 
-const btnDefaultSize = `
-  jn-text-base
-  jn-leading-6
-  jn-px-[0.5625rem]  
+const btnDefaultVerticalPadding = `
+  jn-py-[0.4375rem]
+`
+
+const btnDefaultSubduedVerticalPadding = `
   jn-py-[0.375rem]
 `
+
+const getVerticalPadding = ( size, variant ) => {
+  if ( size === "small") {
+    return (variant === "subdued" ? `${btnSmallSubduedVerticalPadding}` : `${btnSmallDefaultVerticalPadding}`)
+  } else {
+    return (variant === "subdued" ? `${btnDefaultSubduedVerticalPadding}` : `${btnDefaultVerticalPadding}`)
+  }
+}
 
 const btnIconSmall = `
   jn-mr-2
@@ -122,7 +146,8 @@ export const Button = React.forwardRef(
           juno-button-${theVariant} 
           juno-button-${size}-size 
           ${btnBase} 
-          ${ size === 'small' ? btnSmall : btnDefaultSize } 
+          ${ size === 'small' ? btnSmallBase : btnDefaultBase } 
+          ${ getVerticalPadding(size, variant) }
           ${progressClass(progress)} 
           ${className}`
         }
@@ -146,7 +171,8 @@ export const Button = React.forwardRef(
           juno-button-${theVariant} 
           juno-button-${size}-size 
           ${btnBase} 
-          ${ size === 'small' ? btnSmall : btnDefaultSize } 
+          ${ size === 'small' ? btnSmallBase : btnDefaultBase }
+          ${ getVerticalPadding(size, variant) }
           ${progressClass(progress)} 
           ${className}
         `}
