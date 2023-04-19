@@ -37,41 +37,8 @@ const btnDefaultSize = `
   jn-py-[0.375rem]
 `
 
-const btnLarge = `
-  jn-text-2xl
-  jn-pl-4
-  jn-pr-lg
-  jn-py-sm
-`
-
-const sizeClass = (size) => {
-  switch (size) {
-    case "small":
-      return btnSmall
-    case "large":
-      return btnLarge
-    default:
-      return btnDefaultSize
-  }
-}
-
-const iconSize = (size) => {
-  switch (size) {
-    case "small":
-      return "1.125rem"
-    case "large":
-      return "2rem"
-    default:
-      return "1.5rem"
-  }
-}
-
 const btnIconSmall = `
   jn-mr-2
-`
-
-const btnIconLarge = `
-  jn-mr-3
 `
 
 const btnIconDefault = `
@@ -79,30 +46,16 @@ const btnIconDefault = `
 `
 
 const iconClasses = (size) => {
-  switch (size) {
-    case "small":
-      return `${btnIconSmall}`
-    case "large":
-      return `${btnIconLarge}`
-    default:
-      return `${btnIconDefault}`
+  if (size === "small") {
+    return `${btnIconSmall}`
+  } else {
+    return `${btnIconDefault}`
   }
 }
 
 const progressClass = (progress) => {
   const progClass = progress ? `in-progress` : ``
   return progClass
-}
-
-const spinnerSize = (size) => {
-  switch (size) {
-    case "small":
-      return "1.125rem" // 18px/16px
-    case "large":
-      return "2rem" // 32px/16px
-    default:
-      return "1.5rem" // 24px/16px
-  }
 }
 
 const spinnerColorClass = (variant, disabled) => {
@@ -141,7 +94,7 @@ export const Button = React.forwardRef(
 
     const buttonIcon = progress ? (
       <Spinner
-        size={spinnerSize(size)}
+        size={ size === "small" ? "1.125rem" : "1.5rem" }
         color={`${spinnerColorClass(theVariant, disabled)}`}
       />
     ) : icon ? (
@@ -150,7 +103,7 @@ export const Button = React.forwardRef(
         className={`juno-button-icon ${
           label || children ? iconClasses(size) : ""
         } `}
-        size={size ? iconSize(size) : ""}
+        size={ size === "small" ? "1.125rem" : "1.5rem" }
       />
     ) : null
 
@@ -164,9 +117,15 @@ export const Button = React.forwardRef(
     const button = (
       <button
         type="button"
-        className={`juno-button juno-button-${theVariant} juno-button-${size}-size ${btnBase} ${sizeClass(
-          size
-        )} ${progressClass(progress)} ${className}`}
+        className={`
+          juno-button 
+          juno-button-${theVariant} 
+          juno-button-${size}-size 
+          ${btnBase} 
+          ${ size === 'small' ? btnSmall : btnDefaultSize } 
+          ${progressClass(progress)} 
+          ${className}`
+        }
         disabled={disabled}
         onClick={handleClick}
         title={titleValue}
@@ -182,9 +141,15 @@ export const Button = React.forwardRef(
       <a
         href={href}
         role="button"
-        className={`juno-button juno-button-${theVariant} juno-button-${size}-size ${btnBase} ${sizeClass(
-          size
-        )} ${progressClass(progress)} ${className}`}
+        className={`
+          juno-button 
+          juno-button-${theVariant} 
+          juno-button-${size}-size 
+          ${btnBase} 
+          ${ size === 'small' ? btnSmall : btnDefaultSize } 
+          ${progressClass(progress)} 
+          ${className}
+        `}
         disabled={disabled}
         onClick={onClick}
         title={titleValue}
@@ -204,7 +169,7 @@ Button.propTypes = {
   /** Choose a variant for your purpose. May leave empty to get default button. */
   variant: PropTypes.oneOf(["primary", "primary-danger", "default", "subdued"]),
   /** Leave empty for default size */
-  size: PropTypes.oneOf(["small", "default", "large"]),
+  size: PropTypes.oneOf(["small", "default"]),
   /** Whether the button is disabled */
   disabled: PropTypes.bool,
   /** Optionally specify an href. This will turn the Button into an <a> element */

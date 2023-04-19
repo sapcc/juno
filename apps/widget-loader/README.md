@@ -28,6 +28,31 @@ Example:
 ></script>
 ```
 
+### HTML Template
+
+```html
+<!DOCTYPE html>
+<html style="height: 100vh; background: rgb(13, 20, 28);">
+  <head>
+    <title>App</title>
+    <link
+      rel="icon"
+      href="https://assets.juno.global.cloud.sap/assets/favicon.ico"
+    />
+  </head>
+  <body style="height: 100vh;">
+    <script
+      defer
+      src="https://assets.juno.global.cloud.sap/apps/widget-loader@latest/build/app.js"
+      data-name="APP_NAME"
+      data-version="latest"
+    ></script>
+  </body>
+</html>
+```
+
+replace APP_NAME with your app name, e.g. whois
+
 ## Options
 
 - `data-url` (required unless data-name is provided) an absolute URL to the MFE. If this option is used, `data-version` and `data-name` are ignored

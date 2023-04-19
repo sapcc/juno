@@ -124,6 +124,8 @@ const AssetDetails = () => {
   const versions = useMemo(() => {
     if (!data || !assetName) return null
 
+    console.group("Versions handling:")
+
     const versionMap = Object.keys(data[assetName]).reduce((map, version) => {
       map[data[assetName][version]?.version] =
         version === "latest"
@@ -132,10 +134,17 @@ const AssetDetails = () => {
       return map
     }, {})
 
-    return Object.keys(versionMap)
+    console.log("versionMap: ", versionMap)
+
+    const result = Object.keys(versionMap)
       .sort(compareVersions())
       .reverse()
       .map((version) => ({ value: version, label: versionMap[version] }))
+
+    console.log("versions result: ", result)
+    console.groupEnd()
+
+    return result
   }, [data, assetName])
 
   const isLatest = useMemo(() => {
@@ -173,6 +182,11 @@ const AssetDetails = () => {
                 >
                   {versions.map((version, i) => (
                     <SelectOption
+                      test={console.log(
+                        "rendering option: ",
+                        version.label,
+                        version.value
+                      )}
                       key={i}
                       label={version.label}
                       value={version.value}
