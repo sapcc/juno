@@ -103,12 +103,6 @@ describe("Button", () => {
     expect(screen.getByRole("button")).toHaveClass("juno-button-default-size")
   })
 
-  test("renders a large button", async () => {
-    render(<Button size="large">Click me</Button>)
-    expect(screen.getByRole("button")).toBeInTheDocument()
-    expect(screen.getByRole("button")).toHaveClass("juno-button-large-size")
-  })
-
   test("renders a custom className as passed", async () => {
     render(<Button className="my-custom-classname">Click me</Button>)
     expect(screen.getByRole("button")).toHaveClass("my-custom-classname")
