@@ -4,7 +4,7 @@ import useStore from "./hooks/useStore"
 import ShellLayout from "./components/layout/ShellLayout"
 import Auth from "./components/Auth"
 import styles from "./styles.scss"
-import StyleProvider from "juno-ui-components"
+import { AppShellProvider } from "juno-ui-components"
 import useCommunication from "./hooks/useCommunication"
 import PluginContainer from "./components/PluginContainer"
 import useUrlState from "./hooks/useUrlState"
@@ -37,14 +37,11 @@ const Shell = (props = {}) => {
 
 const StyledShell = (props) => {
   return (
-    <StyleProvider
-      stylesWrapper="shadowRoot"
-      theme={`${props.theme ? props.theme : "theme-dark"}`}
-    >
+    <AppShellProvider>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <Shell {...props} />
-    </StyleProvider>
+    </AppShellProvider>
   )
 }
 

@@ -7,10 +7,9 @@ import Results from "./Results"
 import { search as searchByInput } from "./actions"
 import SearchingIndicator from "./img/Loading_Animation.svg"
 
-import { Button, Message, PageHeader, Stack } from "juno-ui-components"
+import { AppShellProvider, Button, Message, PageHeader, Stack } from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
 import styles from "./styles.scss"
-import StyleProvider from "juno-ui-components"
 
 const URL_STATE_KEY = "whois"
 
@@ -122,7 +121,7 @@ const App = (props) => {
           </Stack>
         )}
         {error && (
-          <Message variant="danger">
+          <Message variant="info">
             {error}
             {statusCode === 404 && (
               <Stack gap="4" alignment="center">
@@ -168,14 +167,11 @@ const App = (props) => {
 
 const StyledApp = (props) => {
   return (
-    <StyleProvider
-      stylesWrapper="shadowRoot"
-      theme={`${props.theme ? props.theme : "theme-dark"}`}
-    >
+    <AppShellProvider>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <App {...props} />
-    </StyleProvider>
+    </AppShellProvider>
   )
 }
 

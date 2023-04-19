@@ -16,7 +16,7 @@ export function usePortalRef() {
 
   useEffect(() => {
     if (!ref) {
-      console.warn("usePortalRef should be called inside a PortalProvider!")
+      console.warn("usePortalRef should be called inside a PortalProvider! You are probably using a component that renders a portal, e.g. Select. Be sure that your app is wrapped in an AppShellProvider.")
       return
     }
     if (ref.current) setInitialized(true)

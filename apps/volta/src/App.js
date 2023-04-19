@@ -3,7 +3,7 @@ import { oidcSession } from "oauth"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import styles from "./styles.scss"
-import StyleProvider from "juno-ui-components"
+import { AppShellProvider } from "juno-ui-components"
 import AppContent from "./AppContent"
 import { MessagesProvider } from "messages-provider"
 import useStore from "./store"
@@ -60,13 +60,10 @@ const App = (props) => {
 
 const StyledApp = (props) => {
   return (
-    <StyleProvider
-      stylesWrapper="shadowRoot"
-      theme={`${props.theme ? props.theme : "theme-dark"}`}
-    >
+    <AppShellProvider>
       <style>{styles.toString()}</style>
       <App {...props} />
-    </StyleProvider>
+    </AppShellProvider>
   )
 }
 
