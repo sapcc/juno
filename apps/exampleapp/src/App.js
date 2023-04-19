@@ -1,10 +1,9 @@
 import React from "react"
 
 import useStore from "./store"
-import { AppShell } from "juno-ui-components"
+import { AppShell, AppShellProvider } from "juno-ui-components"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import styles from "./styles.scss"
-import StyleProvider from "juno-ui-components"
 import AppContent from "./AppContent"
 
 // IMPORTANT: Replace this with your app's name
@@ -39,14 +38,11 @@ const App = (props = {}) => {
 
 const StyledApp = (props) => {
   return (
-    <StyleProvider
-      stylesWrapper="shadowRoot"
-      theme={`${props.theme ? props.theme : "theme-dark"}`}
-    >
+    <AppShellProvider>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <App {...props} />
-    </StyleProvider>
+    </AppShellProvider>
   )
 }
 export default StyledApp

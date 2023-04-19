@@ -69,6 +69,7 @@ const Home = () => {
           <Stack direction="vertical" alignment="end" gap="1">
             <Button
               icon={selectedDomain ? "openInBrowser" : "place"}
+              variant="primary"
               title={
                 selectedDomain
                   ? `Enter ${selectedDomain}`

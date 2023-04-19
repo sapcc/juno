@@ -3,9 +3,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import useStore from "./hooks/useStore"
 import AppRouter from "./components/AppRouter"
 import { MessagesStateProvider } from "./messageStore"
-import { AppShell } from "juno-ui-components"
+import { AppShell, AppShellProvider } from "juno-ui-components"
 import styles from "./styles.scss"
-import StyleProvider from "juno-ui-components"
 import useCommunication from "./hooks/useCommunication"
 import CustomPageHeader from "./components/CustomPageHeader"
 
@@ -46,16 +45,13 @@ const App = (props) => {
 
 const StyledApp = (props) => {
   return (
-    <StyleProvider
-      stylesWrapper="shadowRoot"
-      theme={`${props.theme ? props.theme : "theme-dark"}`}
-    >
+    <AppShellProvider>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <MessagesStateProvider>
         <App {...props} />
       </MessagesStateProvider>
-    </StyleProvider>
+    </AppShellProvider>
   )
 }
 

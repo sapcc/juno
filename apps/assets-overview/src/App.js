@@ -1,11 +1,10 @@
 import React from "react"
 
 import useStore from "./store"
-import { AppShell } from "juno-ui-components"
+import { AppShell, AppShellProvider } from "juno-ui-components"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
-import StyleProvider from "juno-ui-components"
 import { MessagesProvider } from "messages-provider"
 import markdown from "github-markdown-css/github-markdown.css"
 import markdownDark from "github-markdown-css/github-markdown-dark.css"
@@ -52,7 +51,7 @@ const App = (props = {}) => {
 const StyledApp = (props) => {
   const theme = props.theme ? props.theme : "theme-dark"
   return (
-    <StyleProvider stylesWrapper="shadowRoot" theme={theme}>
+    <AppShellProvider>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <style>{markdown.toString()}</style>
@@ -62,7 +61,7 @@ const StyledApp = (props) => {
           : markdownLight.toString()}
       </style>
       <App {...props} />
-    </StyleProvider>
+    </AppShellProvider>
   )
 }
 

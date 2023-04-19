@@ -3,8 +3,8 @@ import PageFooter from "./components/layout/PageFooter"
 import PageHead from "./components/layout/PageHead"
 import Home from "./pages/home"
 import styles from "./styles.scss"
-import StyleProvider from "juno-ui-components"
 import useStore from "./store"
+import { AppShellProvider } from "juno-ui-components"
 
 const App = (props) => {
   const loginOverlayVisible = useStore(
@@ -50,14 +50,11 @@ const App = (props) => {
 
 const StyledApp = (props = {}) => {
   return (
-    <StyleProvider
-      stylesWrapper="shadowRoot"
-      theme={`${props.theme ? props.theme : "theme-dark"}`}
-    >
+    <AppShellProvider>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <App {...props} />
-    </StyleProvider>
+    </AppShellProvider>
   )
 }
 
