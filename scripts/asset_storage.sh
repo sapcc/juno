@@ -95,12 +95,19 @@ if [[ -z "$ACTION" ]]; then
   exit 1
 fi
 
-if [[ -z "$ASSET_TYPE" ]]; then
-  echo "no ASSET_TYPE given 😐"
+if [[ -z "$ASSET_PATH" ]]; then
+  if [[ -z "$ASSET_TYPE" ]]; then
+    echo "no ASSET_TYPE given 😐"
+    exit 1
+  fi
+fi
+
+if [[ -z "$ASSET_NAME" ]]; then
+  echo "no ASSET_NAME given 😐"
   exit 1
 fi
 
-if [[ -z "$ASSET_TYPE" ]]; then
+if [[ -n "$ASSET_TYPE" ]]; then
   ASSET_PATH="$ASSET_TYPE/$ASSET_NAME"
 fi
 
