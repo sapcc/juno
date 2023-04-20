@@ -100,6 +100,15 @@ if [[ -z "$ASSET_TYPE" ]]; then
   exit 1
 fi
 
+if [[ -z "$ASSET_TYPE" ]]; then
+  ASSET_PATH="$ASSET_TYPE/$ASSET_NAME"
+fi
+
+if [[ -z "$ASSET_PATH" ]]; then
+  echo "no ASSET_PATH given 😐"
+  exit 1
+fi
+
 if [[ -z "$ROOT_PATH" ]]; then
   ROOT_PATH="/tmp/build_result"
 fi
@@ -145,7 +154,6 @@ echo "=================================="
 # auth swift and set OS_STORAGE_URL and OS_AUTH_TOKEN
 eval "$(swift auth)"
 
-ASSET_PATH="$ASSET_TYPE/$ASSET_NAME"
 echo "use ACTION      = $ACTION"
 echo "use ASSET_PATH  = $ASSET_PATH"
 echo "use ASSET_NAME  = $ASSET_NAME"
