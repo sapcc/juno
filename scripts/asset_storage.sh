@@ -9,12 +9,16 @@ if [ ! -f "CODEOWNERS" ]; then
 fi
 
 function help() {
-  echo "Usage: build_assets.sh --asset-name||-am --kind||-k --action|-a --container||-c --root-path||-rp
-  example: ./scripts/asset_storage.sh --asset-name assets-overview --kind apps --action upload --root-path ../build_result
-  --action    -> upload|download
-  --kind      -> libs|apps|apis|static
-  --container -> default is juno-assets
-  --root-path -> default is ./build_result
+  echo "Usage: build_assets.sh --asset-name||-am --asset-path||-ap --asset-type||-at --action|-a --container||-c --root-path||-rp
+  example: ./scripts/asset_storage.sh --asset-name assets-overview --asset-type apps --action upload --root-path ../build_result
+  --asset-name -> if no asset-name is fiven the whole folder that is 
+                  defined with the --asset-type option is downloaded
+  --asset-path -> optional like apps/asset-name, if set --asset-type is ingnored
+  --asset-type -> libs|apps|apis|static
+  --action     -> upload|download
+
+  --container  -> default is juno-assets
+  --root-path  -> default is ./build_result
   possible ENV Vars:
   * OS_USER_DOMAIN_NAME: per default this is not set 
   * OS_PROJECT_DOMAIN_NAME: default is ccadmin
@@ -47,7 +51,12 @@ while [[ $# -gt 0 ]]; do
     shift # past argument
     shift # past value
     ;;
-  --asset-path | -k)
+  --asset-type | -at)
+    ASSET_TYPE="$2"
+    shift # past argument
+    shift # past value
+    ;;
+  --asset-path | -ap)
     ASSET_PATH="$2"
     shift # past argument
     shift # past value
@@ -81,18 +90,13 @@ if [[ -z "$CONTAINER" ]]; then
   CONTAINER="juno-assets"
 fi
 
-if [[ -z "$ASSET_NAME" ]]; then
-  echo "no ASSET_NAME given 😐"
-  exit 1
-fi
-
 if [[ -z "$ACTION" ]]; then
   echo "no ACTION given 😐"
   exit 1
 fi
 
-if [[ -z "$ASSET_PATH" ]]; then
-  echo "no ASSET_PATH given 😐"
+if [[ -z "$ASSET_TYPE" ]]; then
+  echo "no ASSET_TYPE given 😐"
   exit 1
 fi
 
@@ -139,8 +143,9 @@ export OS_PASSWORD=$OS_PASSWORD
 echo "=================================="
 
 # auth swift and set OS_STORAGE_URL and OS_AUTH_TOKEN
-eval $(swift auth)
+eval "$(swift auth)"
 
+ASSET_PATH="$ASSET_TYPE/$ASSET_NAME"
 echo "use ACTION      = $ACTION"
 echo "use ASSET_PATH  = $ASSET_PATH"
 echo "use ASSET_NAME  = $ASSET_NAME"
