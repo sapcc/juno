@@ -33,33 +33,33 @@
    The devDependencies are located also in the `package.json` file. Since the base app is now copied outside the Juno repository the Juno dependencies have to have a full qualified URL. Replace for all Juno devDependencies the version string `*` with the fully qualified URL.
    Find all libs having as a version the a `*` string. Ex:
 
-<!---
-use yaml instead of json to not highlight as an error using "..."
--->
+    <!---
+    use yaml instead of json to not highlight as an error using "..."
+    -->
 
-```yaml
-"devDependencies": {
-...
-"juno-ui-components": "*",
-"url-state-provider": "*",
-...
-},
-```
+   ```yaml
+   "devDependencies": {
+   ...
+   "juno-ui-components": "*",
+   "url-state-provider": "*",
+   ...
+   },
+   ```
 
-Exchange the `*` for the fully qualified URL. Ex:
+   Exchange the `*` for the fully qualified URL. Ex:
 
-<!---
-use yaml instead of json to not highlight as an error using "..."
--->
+    <!---
+    use yaml instead of json to not highlight as an error using "..."
+    -->
 
-```yaml
-"devDependencies": {
-...
-"juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz",
-"url-state-provider": "https://assets.juno.global.cloud.sap/libs/messages-provider@latest/package.tgz",
-...
-},
-```
+   ```yaml
+   "devDependencies": {
+   ...
+   "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz",
+   "url-state-provider": "https://assets.juno.global.cloud.sap/libs/messages-provider@latest/package.tgz",
+   ...
+   },
+   ```
 
 If you need an expecific version other the `latest` please change the version in the fully qualified URL and check which versions we have available in our [overview app](https://assets.juno.global.cloud.sap/?__s=N4IghgzhCmAuEFoD2A3aAnFBLaB3EAXKLGAEYCSAdgCbQAehATADQiVgrmzQC2hIIVgAcwlaABsA8kOhjqhAGZhxMAL6qgA). Ex: `https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.2.7/package.tgz`
 
