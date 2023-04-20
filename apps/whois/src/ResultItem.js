@@ -1,8 +1,9 @@
 import React, { useState, useMemo, useEffect } from "react"
-import ReactJson from "react-json-view"
+import ReactJsonView from "react-json-view"
 import { DateTime } from "luxon"
 import { Icon, Stack } from "juno-ui-components"
 
+const JsonView = ReactJsonView.default
 const leftColumn = `
   w-1/6
   overflow-hidden
@@ -114,7 +115,7 @@ const ResultItem = ({ content, expand }) => {
         )}
 
         <div className={resultStyles(isExpanded)}>
-          <ReactJson
+          <JsonView
             src={content}
             iconStyle="square"
             collapsed={3}
