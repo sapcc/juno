@@ -102,11 +102,7 @@ if [[ -z "$ASSET_PATH" ]]; then
   fi
 fi
 
-if [[ -z "$ASSET_NAME" ]]; then
-  echo "no ASSET_NAME given 😐"
-  exit 1
-fi
-
+# ASSET_TYPE will owerwrite ASSET_PATH
 if [[ -n "$ASSET_TYPE" ]]; then
   ASSET_PATH="$ASSET_TYPE/$ASSET_NAME"
 fi
