@@ -17,7 +17,7 @@
 2. Delete all peerDependencies.
    To be able to build a self contained app meaning all libs bundled together with the app itself and without any external dependencies you will have to remove all peerDependencies. Tee peerDependencies are defined in the `package.json` file and it is enaugh to remove the whole section with key `peerDependencies`.
    See following example of the peerDependencies section located in the package.json file:
-   ```jsonc
+   ```json
      "peerDependencies": {
      "@tanstack/react-query": "^4.28.0",
      "juno-ui-components": "*",
@@ -33,34 +33,42 @@
    The devDependencies are located also in the `package.json` file. Since the base app is now copied outside the Juno repository the Juno dependencies have to have a full qualified URL. Replace for all Juno devDependencies the version string `*` with the fully qualified URL.
    Find all libs having as a version the a `*` string. Ex:
 
-   ```jsonc
-   "devDependencies": {
-   ...
-   "juno-ui-components": "*",
-   "url-state-provider": "*",
-   ...
-   },
-   ```
+<!---
+use yaml instead of json to not highlight as an error using "..."
+-->
 
-   Exchange the `*` for the fully qualified URL. Ex:
+```yaml
+"devDependencies": {
+...
+"juno-ui-components": "*",
+"url-state-provider": "*",
+...
+},
+```
 
-   ```yaml
-   "devDependencies": {
-   ...
-   "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz",
-   "url-state-provider": "https://assets.juno.global.cloud.sap/libs/messages-provider@latest/package.tgz",
-   ...
-   },
-   ```
+Exchange the `*` for the fully qualified URL. Ex:
 
-   If you need an expecific version other the `latest` please change the version in the fully qualified URL and check which versions we have available in our [overview app](https://assets.juno.global.cloud.sap/?__s=N4IghgzhCmAuEFoD2A3aAnFBLaB3EAXKLGAEYCSAdgCbQAehATADQiVgrmzQC2hIIVgAcwlaABsA8kOhjqhAGZhxMAL6qgA). Ex: `https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.2.7/package.tgz`
+<!---
+use yaml instead of json to not highlight as an error using "..."
+-->
 
-4. Install all dependencies.
+```yaml
+"devDependencies": {
+...
+"juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz",
+"url-state-provider": "https://assets.juno.global.cloud.sap/libs/messages-provider@latest/package.tgz",
+...
+},
+```
+
+If you need an expecific version other the `latest` please change the version in the fully qualified URL and check which versions we have available in our [overview app](https://assets.juno.global.cloud.sap/?__s=N4IghgzhCmAuEFoD2A3aAnFBLaB3EAXKLGAEYCSAdgCbQAehATADQiVgrmzQC2hIIVgAcwlaABsA8kOhjqhAGZhxMAL6qgA). Ex: `https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.2.7/package.tgz`
+
+1. Install all dependencies.
    Run following compand to install all needed dependencies.
    ```bash
    npm install
    ```
-5. Build the application.
+2. Build the application.
    Run following command to build the application.
 
    ```bash
@@ -69,4 +77,4 @@
 
    All compiled chuncks will be placed under `public/build` folder.
 
-6. Copy the content of the public folder to your webserver and serve the `index.html`
+3. Copy the content of the public folder to your webserver and serve the `index.html`
