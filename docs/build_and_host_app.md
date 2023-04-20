@@ -44,7 +44,7 @@
 
    Exchange the `*` for the fully qualified URL. Ex:
 
-   ```jsonc
+   ```yaml
    "devDependencies": {
    ...
    "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz",
