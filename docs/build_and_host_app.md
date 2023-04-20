@@ -33,7 +33,7 @@
    The devDependencies are located also in the `package.json` file. Since the base app is now copied outside the Juno repository the Juno dependencies have to have a full qualified URL. Replace for all Juno devDependencies the version string `*` with the fully qualified URL.
    Find all libs having as a version the a `*` string. Ex:
 
-   ```json
+   ```javascript
    "devDependencies": {
    ...
    "juno-ui-components": "*",
@@ -44,7 +44,7 @@
 
    Exchange the `*` for the fully qualified URL. Ex:
 
-   ```json
+   ```javascript
    "devDependencies": {
    ...
    "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz",
