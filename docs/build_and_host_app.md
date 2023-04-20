@@ -17,7 +17,7 @@
 2. Delete all peerDependencies.
    To be able to build a self contained app meaning all libs bundled together with the app itself and without any external dependencies you will have to remove all peerDependencies. Tee peerDependencies are defined in the `package.json` file and it is enaugh to remove the whole section with key `peerDependencies`.
    See following example of the peerDependencies section located in the package.json file:
-   ```json
+   ```json5
      "peerDependencies": {
      "@tanstack/react-query": "^4.28.0",
      "juno-ui-components": "*",
@@ -33,7 +33,7 @@
    The devDependencies are located also in the `package.json` file. Since the base app is now copied outside the Juno repository the Juno dependencies have to have a full qualified URL. Replace for all Juno devDependencies the version string `*` with the fully qualified URL.
    Find all libs having as a version the a `*` string. Ex:
 
-   ```javascript
+   ```json5
    "devDependencies": {
    ...
    "juno-ui-components": "*",
@@ -44,7 +44,7 @@
 
    Exchange the `*` for the fully qualified URL. Ex:
 
-   ```javascript
+   ```json5
    "devDependencies": {
    ...
    "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz",
