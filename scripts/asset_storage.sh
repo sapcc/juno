@@ -40,10 +40,6 @@ if [[ -z "$OS_USERNAME" ]]; then
   exit
 fi
 
-if [[ -z "$CONTAINER" ]]; then
-  CONTAINER="juno-assets"
-fi
-
 while [[ $# -gt 0 ]]; do
   case $1 in
   --asset-name | -an)
@@ -66,6 +62,11 @@ while [[ $# -gt 0 ]]; do
     shift # past argument
     shift # past value
     ;;
+  --container | -c)
+    CONTAINER="$2"
+    shift # past argument
+    shift # past value
+    ;;
   --help)
     help
     ;;
@@ -75,6 +76,10 @@ while [[ $# -gt 0 ]]; do
     ;;
   esac
 done
+
+if [[ -z "$CONTAINER" ]]; then
+  CONTAINER="juno-assets"
+fi
 
 if [[ -z "$ASSET_NAME" ]]; then
   echo "no ASSET_NAME given 😐"
