@@ -1,5 +1,7 @@
 # prettier-ignore
 <%
+  SWIFT_JUNO_ASSETS = "juno-assets"
+  SWIFT_3RD_PARTY = "juno-3rd-party"
   ASSETS = {
     "auth":                 { type: "app", path: "apps/auth" },
     "assets-overview":      { type: "app", path: "apps/assets-overview"},
@@ -123,7 +125,8 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: pipelineV3
-      paths: ["<%=details[:path]%>","package.json","e2e", ".yarn", "scripts/build_asset.sh", "scripts/asset_storage.sh" ]
+      paths: ["<%=details[:path]%>","package.json","e2e", ".yarn" ]
+      # Note: add this if you need to test changes in this scripts -> "scripts/build_asset.sh", "scripts/asset_storage.sh"
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
   
@@ -265,7 +268,7 @@ jobs:
               - |
                 set -e 
                 cd ./juno
-                ./scripts/asset_storage.sh --asset-name <%= name %> --asset-path <%= details[:path] %> --action upload --root-path ../build_result
+                ./scripts/asset_storage.sh --asset-name <%= name %> --container <%= SWIFT_JUNO_ASSETS %> --asset-path <%= details[:path] %> --action upload --root-path ../build_result
   <% end %> 
 
   <% 
