@@ -15,6 +15,7 @@ const URL_STATE_KEY = "whois"
 
 const contentClasses = ({ resultsShown }) => {
   return `
+    bg-theme-global-bg
     px-6
     
     ${
@@ -94,7 +95,7 @@ const App = (props) => {
   }, [search])
 
   return (
-    <div className="whois h-full">
+    <div className="whois h-full bg-theme-global-bg">
       {!embedded && <PageHeader heading="Whois" />}
       <Stack
         direction="vertical"
