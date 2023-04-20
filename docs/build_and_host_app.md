@@ -61,14 +61,14 @@
    },
    ```
 
-If you need an expecific version other the `latest` please change the version in the fully qualified URL and check which versions we have available in our [overview app](https://assets.juno.global.cloud.sap/?__s=N4IghgzhCmAuEFoD2A3aAnFBLaB3EAXKLGAEYCSAdgCbQAehATADQiVgrmzQC2hIIVgAcwlaABsA8kOhjqhAGZhxMAL6qgA). Ex: `https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.2.7/package.tgz`
+   If you need an expecific version other the `latest` please change the version in the fully qualified URL and check which versions we have available in our [overview app](https://assets.juno.global.cloud.sap/?__s=N4IghgzhCmAuEFoD2A3aAnFBLaB3EAXKLGAEYCSAdgCbQAehATADQiVgrmzQC2hIIVgAcwlaABsA8kOhjqhAGZhxMAL6qgA). Ex: `https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.2.7/package.tgz`
 
-1. Install all dependencies.
+4. Install all dependencies.
    Run following compand to install all needed dependencies.
    ```bash
    npm install
    ```
-2. Build the application.
+5. Build the application.
    Run following command to build the application.
 
    ```bash
@@ -77,4 +77,4 @@ If you need an expecific version other the `latest` please change the version in
 
    All compiled chuncks will be placed under `public/build` folder.
 
-3. Copy the content of the public folder to your webserver and serve the `index.html`
+6. Copy the content of the public folder to your webserver and serve the `index.html`
