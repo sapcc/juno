@@ -89,12 +89,15 @@ function integrity_check() {
   echo "--------------------"
   echo "Run integrity check"
   echo "--------------------"
-  echo "package.json ✔️"
-  echo "package.tgz ✔️"
-  echo "peerDependencies ✔️"
-  echo "main/module ✔️"
-  echo "README.md ✔️"
-  echo "build dir"
+  echo $(date) >build_log
+  echo "version ✔️" >>./build_log
+  echo "name ✔️" >>./build_log
+  echo "package.json ✔️" >>./build_log
+  echo "peerDependencies ✔️" >>./build_log
+  echo "main/module ✔️" >>./build_log
+  echo "README.md ✔️" >>./build_log
+  echo "build dir ✔️" >>./build_log
+  cat ./build_log
   # TODO: feedback to upload error or success to swift
 }
 
@@ -142,8 +145,9 @@ while IFS= read -d $'\0' -r dirname; do
 
     asset_dist_path="$destination_path/${asset_name}@${asset_version}"
     if [ -d "$asset_dist_path" ]; then
-      echo "Error: the directory $asset_dist_path already exist"
-      echo "       that means there are dublicated versions in $KIND -> $ASSET_TYPE -> ${asset_name} 😐"
+      error_msg="Error: the directory $asset_dist_path already exist that means there are dublicated versions in $KIND -> $ASSET_TYPE -> ${asset_name} 😐"
+      echo $error_msg
+      echo $error_msg >>$asset_dirname/build_log
       exit 1
     fi
 
