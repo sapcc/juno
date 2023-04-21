@@ -4,7 +4,14 @@ import SupernovaIcon from "../../assets/juno_supernova.svg"
 import DoopIcon from "../../assets/juno_doop.svg"
 import HeurekaIcon from "../../assets/juno_heureka.svg"
 import { Icon, Stack, Button } from "juno-ui-components"
-import useStore from "../../hooks/useStore"
+import {
+  useAuthData,
+  useAuthLoggedIn,
+  useAppsActions,
+  useAppsConfig,
+  useAppsActive,
+  useAuthActions,
+} from "../../hooks/useStore"
 import Avatar from "../Avatar"
 
 const AppIcon = ({ name }) => {
@@ -66,10 +73,12 @@ break-all
 `
 
 const PluginNav = () => {
-  const auth = useStore((state) => state.auth)
-  const setActive = useStore((state) => state.apps.setActive)
-  const config = useStore((state) => state.apps.config)
-  const active = useStore((state) => state.apps.active)
+  const authData = useAuthData()
+  const loggedIn = useAuthLoggedIn()
+  const { login, logout } = useAuthActions()
+  const { setActive: setActiveApps } = useAppsActions()
+  const appsConfig = useAppsConfig()
+  const activeApps = useAppsActive()
 
   return (
     <Stack
@@ -89,7 +98,7 @@ const PluginNav = () => {
           HOUSE
         </span>
       </Stack>
-      {Object.values(config)
+      {Object.values(appsConfig)
         .filter((a) => a.navigable)
         .map((appConf, i) => (
           <Stack
@@ -97,11 +106,11 @@ const PluginNav = () => {
             direction="vertical"
             alignment="center"
             className={`greenhouse-nav-item ${navItem(
-              active.indexOf(appConf.name) >= 0
+              activeApps.indexOf(appConf.name) >= 0
             )}`}
             role="button"
             tabIndex="0"
-            onClick={() => setActive([appConf.name])}
+            onClick={() => setActiveApps([appConf.name])}
           >
             <AppIcon name={appConf.name} />
             <span className={appNameStyles}>{appConf.name}</span>
@@ -114,22 +123,18 @@ const PluginNav = () => {
         alignment="center"
         className="mt-4 py-4 border-theme-background-lvl-1 border-t-2"
       >
-        {auth?.loggedIn ? (
+        {loggedIn ? (
           <>
             <Avatar
-              url={auth.data?.parsed?.avatarUrl.small}
-              userID={auth.data?.parsed?.loginName}
+              url={authData?.parsed?.avatarUrl.small}
+              userID={authData?.parsed?.loginName}
             />
-            <Button
-              variant="subdued"
-              size="small"
-              onClick={() => auth?.logout()}
-            >
+            <Button variant="subdued" size="small" onClick={() => logout()}>
               logout
             </Button>
           </>
         ) : (
-          <Button size="small" onClick={() => auth?.login()}>
+          <Button size="small" onClick={() => login()}>
             Login
           </Button>
         )}

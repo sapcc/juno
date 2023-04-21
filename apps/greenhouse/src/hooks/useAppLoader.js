@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useState, useMemo, useRef } from "react"
-import useStore from "./useStore"
+import { useAssetsHost } from "./useStore"
 
 // load widget-loader with importmap-only attribute to
 // ensure the importmap is loaded
@@ -9,7 +9,6 @@ const loadImportmap = (assetsHost) => {
     importmaps[assetsHost] ||
     new Promise((resolve, reject) => {
       // this promise is resolved once!
-      console.log("===PROMISE", assetsHost)
       const url = new URL("/apps/widget-loader@latest/build/app.js", assetsHost)
       const script = document.createElement("script")
       script.src = url.href
@@ -26,7 +25,7 @@ const loadImportmap = (assetsHost) => {
 }
 
 const useAppLoader = () => {
-  const assetsHost = useStore((state) => state.assetsHost)
+  const assetsHost = useAssetsHost()
 
   const mount = useCallback(
     (container, config) => {

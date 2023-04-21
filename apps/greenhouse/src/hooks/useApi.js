@@ -1,73 +1,72 @@
 import { useCallback, useMemo } from "react"
 import { createClient } from "sapcc-k8sclient"
-import useStore from "./useStore"
+import { useAuthData, useApiEndpoint, useAssetsHost } from "./useStore"
 
 const useApi = () => {
-  const token = useStore((state) => state.auth.data?.JWT)
-  const groups = useStore((state) => state.auth.data?.raw?.groups)
-  const apiEndpoint = useStore((state) => state.apiEndpoint)
-  const assetsHost = useStore((state) => state.assetsHost)
+  const authData = useAuthData()
+  // const token = useStoreByKey("auth.data?.JWT")
+  // const groups = useStoreByKey("auth.data?.raw?.groups")
+  const apiEndpoint = useApiEndpoint()
+  const assetsHost = useAssetsHost()
 
   const namespace = useMemo(() => {
-    if (!groups) return null
-    const orgString = groups.find((g) => g.indexOf("organization:") === 0)
+    if (!authData?.raw?.groups) return null
+    const orgString = authData?.raw?.groups.find(
+      (g) => g.indexOf("organization:") === 0
+    )
     if (!orgString) return null
     return orgString.split(":")[1]
-  }, [groups])
+  }, [authData?.raw?.groups])
 
   const client = useMemo(() => {
-    if (!apiEndpoint || !token) return null
-    return createClient({ apiEndpoint, token })
-  }, [apiEndpoint, token])
+    if (!apiEndpoint || !authData?.JWT) return null
+    return createClient({ apiEndpoint, token: authData?.JWT })
+  }, [apiEndpoint, authData?.JWT])
 
-  const getPluginsConfig = useCallback(() => {
-    if (!client || !assetsHost || !namespace) return
+  const getPluginConfigs = useCallback(() => {
+    console.log("====", client, assetsHost, namespace)
+    if (!client || !assetsHost || !namespace) return Promise.resolve({})
 
     const manifestUrl = new URL("/manifest.json", assetsHost)
     return Promise.all([
+      // manifest
       fetch(manifestUrl).then((r) => r.json()),
-      client.get("/apis/greenhouse.sap/v1alpha1/plugins", { limit: 500 }),
+      // plugin configs
       client.get(
         `/apis/greenhouse.sap/v1alpha1/namespaces/${namespace}/pluginconfigs`,
         {
           limit: 500,
         }
       ),
-    ]).then(([manifest, plugins, configs]) => {
-      console.log("::::::::::::::::::::::::manifest", manifest)
-      console.log("::::::::::::::::::::::::plugins", plugins.items)
-      console.log("::::::::::::::::::::::::configs", configs.items)
+    ]).then(([manifest, configs]) => {
+      // console.log("::::::::::::::::::::::::manifest", manifest)
+      // console.log("::::::::::::::::::::::::configs", configs.items)
 
       const config = {}
-      plugins.items.forEach((plugin) => {
-        const name = plugin.spec?.uiApplication?.name
-        const version = plugin.spec?.uiApplication?.version
-        if (manifest[name]?.[version]) {
+      configs.items.forEach((plugin) => {
+        const name = plugin.status?.uiApplication?.name
+        const version = plugin.status?.uiApplication?.version
+        const url = plugin.status?.uiApplication?.url
+
+        if ((url && url.indexOf(assetsHost) < 0) || manifest[name]?.[version]) {
           config[name] = {
             name,
             version,
-            url: plugin.spec?.uiApplication?.url,
+            url,
             navigable: true,
-            props: {},
+            props: plugin.spec?.optionValues?.reduce((map, item) => {
+              map[item.name] = item.value
+              return map
+            }, {}),
           }
-          plugin.spec?.options?.forEach(
-            (option) => (config[name]["props"][option.name] = option.default)
-          )
-          const pluginConfig = configs.items.find(
-            (c) => c.metadata?.name === name
-          )
-          pluginConfig?.spec?.optionValues?.forEach(
-            (o) => (config[name]["props"][o.name] = o.value)
-          )
         }
       })
 
-      console.log("=====================plugins config", config)
       return config
     })
   }, [client, assetsHost, namespace])
 
-  return { client, getPluginsConfig }
+  return { client, getPluginConfigs }
 }
 
 export default useApi

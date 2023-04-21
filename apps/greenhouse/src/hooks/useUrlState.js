@@ -1,23 +1,29 @@
 import { useEffect } from "react"
 import { registerConsumer } from "url-state-provider"
-import useStore from "./useStore"
+import {
+  useAppsActions,
+  useAppsActive,
+  useAppsConfig,
+  useAuthAppIsLoading,
+  useAuthLoggedIn,
+} from "./useStore"
 
 // url state manager
 const urlStateManager = registerConsumer("GREENHOUSE")
 const ACTIVE_APPS_KEY = "a"
 
 const useUrlState = () => {
-  const setActive = useStore((state) => state.apps.setActive)
-  const activeApps = useStore((state) => state.apps.active)
-  const appsConfig = useStore((state) => state.apps.config)
-  const loggedIn = useStore((state) => state.auth.loggedIn)
+  const { setActive: setActiveApps } = useAppsActions()
+  const activeApps = useAppsActive()
+  const appsConfig = useAppsConfig()
+  const loggedIn = useAuthLoggedIn()
 
   // Initial state from URL (on login)
   useEffect(() => {
     if (!loggedIn || !appsConfig) return
     let active = urlStateManager.currentState()?.[ACTIVE_APPS_KEY]
-    if (active) setActive(active.split(","))
-  }, [loggedIn, appsConfig])
+    if (active) setActiveApps(active.split(","))
+  }, [loggedIn, appsConfig, setActiveApps])
 
   // sync URL state
   useEffect(() => {

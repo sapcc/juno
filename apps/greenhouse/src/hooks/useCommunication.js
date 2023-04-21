@@ -1,33 +1,46 @@
 import { useEffect } from "react"
 import { broadcast, get, watch } from "communicator"
-import useStore from "./useStore"
+import {
+  useAuthAppLoaded,
+  useAuthIsProcessing,
+  useAuthError,
+  useAuthLoggedIn,
+  useAuthLastAction,
+  useAuthActions,
+} from "./useStore"
 
 const useCommunication = () => {
-  const auth = useStore((state) => state.auth)
+  const authAppLoaded = useAuthAppLoaded()
+  const authIsProcessing = useAuthIsProcessing()
+  const authError = useAuthError()
+  const authLoggedIn = useAuthLoggedIn()
+  const authLastAction = useAuthLastAction()
+  const { setData: authSetData, setAppLoaded: authSetAppLoaded } =
+    useAuthActions()
 
   useEffect(() => {
-    if (!auth.appLoaded || auth?.isProcessing || auth?.error) return
-    if (auth?.lastAction?.name === "signOn" && !auth?.loggedIn) {
+    if (!authAppLoaded || authIsProcessing || authError) return
+    if (authLastAction?.name === "signOn" && !authLoggedIn) {
       broadcast("AUTH_LOGIN", "greenhouse", { debug: true })
-    } else if (auth?.lastAction?.name === "signOut" && auth?.loggedIn) {
+    } else if (authLastAction?.name === "signOut" && authLoggedIn) {
       broadcast("AUTH_LOGOUT", "greenhouse")
     }
-  }, [auth?.lastAction])
+  }, [authAppLoaded, authIsProcessing, authError, authLoggedIn, authLastAction])
 
   useEffect(() => {
-    if (!auth?.setData || !auth?.setAppLoaded) return
+    if (!authSetData || !authSetAppLoaded) return
 
-    get("AUTH_APP_LOADED", auth?.setAppLoaded)
-    const unwatchLoaded = watch("AUTH_APP_LOADED", auth?.setAppLoaded)
+    get("AUTH_APP_LOADED", authSetAppLoaded)
+    const unwatchLoaded = watch("AUTH_APP_LOADED", authSetAppLoaded)
 
-    get("AUTH_GET_DATA", auth.setData)
-    const unwatchUpdate = watch("AUTH_UPDATE_DATA", auth.setData)
+    get("AUTH_GET_DATA", authSetData)
+    const unwatchUpdate = watch("AUTH_UPDATE_DATA", authSetData)
 
     return () => {
       if (unwatchLoaded) unwatchLoaded()
       if (unwatchUpdate) unwatchUpdate()
     }
-  }, [auth?.setData, auth?.setAppLoaded])
+  }, [authSetData, authSetAppLoaded])
 }
 
 export default useCommunication
