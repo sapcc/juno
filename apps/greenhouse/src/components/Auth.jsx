@@ -1,16 +1,27 @@
 import React, { useEffect } from "react"
 import { Button, LoadingIndicator, Spinner, Stack } from "juno-ui-components"
-import useStore from "../hooks/useStore"
+import {
+  useAuthAppLoaded,
+  useAuthLoggedIn,
+  useAuthIsProcessing,
+  useAuthData,
+  useAuthError,
+} from "../hooks/useStore"
 import useAppLoader from "../hooks/useAppLoader"
 import { Transition } from "@tailwindui/react"
 
 const orgName = new URL(window.location.href).searchParams.get("org")
 
 const Auth = ({ clientId, issuerUrl, children }) => {
-  const auth = useStore((state) => state.auth)
+  const authData = useAuthData()
+  const authAppLoaded = useAuthAppLoaded()
+  const authLoggedIn = useAuthLoggedIn()
+  const authIsProcessing = useAuthIsProcessing()
+  const authError = useAuthError()
+
   const ref = React.createRef()
   const { mount } = useAppLoader()
-  const [loading, setLoading] = React.useState(!auth?.appLoaded)
+  const [loading, setLoading] = React.useState(!authAppLoaded)
   const [longLoading, setLongLoading] = React.useState(false)
 
   // in this useEffect we load the auth app via import (see mount)
@@ -35,9 +46,9 @@ const Auth = ({ clientId, issuerUrl, children }) => {
 
   // read org name from token and adjust url to contain the org name
   useEffect(() => {
-    if (!auth?.loggedIn) return
+    if (!authLoggedIn) return
 
-    const orgString = auth.data?.raw?.groups?.find(
+    const orgString = authData?.raw?.groups?.find(
       (g) => g.indexOf("organization:") === 0
     )
     if (orgString) {
@@ -46,21 +57,21 @@ const Auth = ({ clientId, issuerUrl, children }) => {
       url.searchParams.set("org", name)
       window.history.replaceState(null, null, url.href)
     }
-  }, [auth])
+  }, [authLoggedIn, authData])
 
   // timeout for waiting for auth
   useEffect(() => {
-    if (auth?.appLoaded) return
+    if (authAppLoaded) return
     // set timeout for waiting for auth app
     let loadingTimer
-    if (!auth?.appLoaded) {
+    if (!authAppLoaded) {
       loadingTimer = setTimeout(() => {
-        if (!auth?.appLoaded) setLoading(false)
+        if (!authAppLoaded) setLoading(false)
       }, 30000) // 30 seconds
     }
 
     return () => loadingTimer && clearTimeout(loadingTimer)
-  }, [auth?.appLoaded])
+  }, [authAppLoaded])
 
   // set long loading
   useEffect(() => {
@@ -73,7 +84,7 @@ const Auth = ({ clientId, issuerUrl, children }) => {
       <div data-app="greenhouse-auth" ref={ref} />
 
       <Transition
-        show={auth?.loggedIn}
+        show={authLoggedIn}
         enter="transition-opacity duration-1000"
         enterFrom="opacity-0"
         enterTo="opacity-100"
@@ -84,14 +95,14 @@ const Auth = ({ clientId, issuerUrl, children }) => {
         {children}
       </Transition>
 
-      {!auth?.loggedIn && (
+      {!authLoggedIn && (
         <Stack
           alignment="center"
           distribution="center"
           direction="vertical"
           className="h-screen"
         >
-          {loading || auth?.isProcessing ? (
+          {loading || authIsProcessing ? (
             <>
               {longLoading ? (
                 <LoadingIndicator className="jn-text-theme-info" />
@@ -106,11 +117,11 @@ const Auth = ({ clientId, issuerUrl, children }) => {
             </>
           ) : (
             <>
-              {auth?.appLoaded ? (
+              {authAppLoaded ? (
                 <>
                   <span>
-                    {auth?.error
-                      ? JSON.stringify(auth?.error)
+                    {authError
+                      ? JSON.stringify(authError)
                       : "Authentication required"}
                   </span>
                   <Button onClick={() => auth?.login()} className="mt-3">

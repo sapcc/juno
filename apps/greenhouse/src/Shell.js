@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from "react"
 
-import useStore from "./hooks/useStore"
+import { useActions } from "./hooks/useStore"
 import ShellLayout from "./components/layout/ShellLayout"
 import Auth from "./components/Auth"
 import styles from "./styles.scss"
@@ -10,8 +10,7 @@ import PluginContainer from "./components/PluginContainer"
 import useUrlState from "./hooks/useUrlState"
 
 const Shell = (props = {}) => {
-  const setApiEndpoint = useStore((state) => state.setApiEndpoint)
-  const setAssetsHost = useStore((state) => state.setAssetsHost)
+  const { setApiEndpoint, setAssetsHost } = useActions()
 
   useCommunication()
   useUrlState()
