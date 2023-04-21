@@ -5,7 +5,7 @@
   "module": "build/index.js",
   "source": "src/index.js",
   "style": "build/lib/variables.css",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "files": [
     "src/colors.css",
     "tailwind.config.js"
@@ -54,7 +54,6 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-json-view": "^1.21.3",
     "react-jss": "^10.8.1",
     "react-merge-refs": "^2.0.1",
     "react-tabs": "^4.2.1",

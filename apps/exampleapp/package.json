@@ -1,6 +1,6 @@
 {
   "name": "exampleapp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "module": "build/index.js",
   "source": "src/index.js",
   "private": true,
@@ -30,7 +30,6 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-json-view": "^1.21.3",
     "react-test-renderer": "^18.2.0",
     "sass": "^1.60.0",
     "shadow-dom-testing-library": "^1.7.1",
