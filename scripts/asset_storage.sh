@@ -9,7 +9,7 @@ if [ ! -f "CODEOWNERS" ]; then
 fi
 
 function help() {
-  echo "Usage: build_assets.sh --asset-name||-am --asset-path||-ap --asset-type||-at --action|-a --container||-c --root-path||-rp
+  echo "Usage: build_asset.sh --asset-name||-am --asset-path||-ap --asset-type||-at --action|-a --container||-c --root-path||-rp
   example: ./scripts/asset_storage.sh --asset-name assets-overview --asset-type apps --action upload --root-path ../build_result
   --asset-name -> if no asset-name is fiven the whole folder that is 
                   defined with the --asset-type option is downloaded
@@ -18,7 +18,7 @@ function help() {
   --action     -> upload|download
 
   --container  -> default is juno-assets
-  --root-path  -> default is ./build_result
+  --root-path  -> default is /tmp/build_result
   possible ENV Vars:
   * OS_USER_DOMAIN_NAME: per default this is not set 
   * OS_PROJECT_DOMAIN_NAME: default is ccadmin
@@ -32,11 +32,6 @@ function help() {
 
 if [[ "$1" == "--help" ]]; then
   help
-fi
-
-if [[ -z "$OS_PASSWORD" ]]; then
-  echo "no OS_PASSWORD given"
-  exit
 fi
 
 if [[ -z "$OS_USERNAME" ]]; then
@@ -107,6 +102,11 @@ if [[ -n "$ASSET_TYPE" ]]; then
   ASSET_PATH="$ASSET_TYPE/$ASSET_NAME"
 fi
 
+if [ ! -d "$ASSET_PATH" ]; then
+  echo "directory ASSET_PATH $ASSET_PATH does not exist 😐"
+  exit 1
+fi
+
 if [[ -z "$ASSET_PATH" ]]; then
   echo "no ASSET_PATH given 😐"
   exit 1
@@ -114,6 +114,11 @@ fi
 
 if [[ -z "$ROOT_PATH" ]]; then
   ROOT_PATH="/tmp/build_result"
+fi
+
+if [ ! -d "$ROOT_PATH" ]; then
+  echo "directory ROOT_PATH $ROOT_PATH does not exist 😐"
+  exit 1
 fi
 
 if [[ -z "$OS_AUTH_URL" ]]; then
@@ -158,6 +163,9 @@ echo "=================================="
 eval "$(swift auth)"
 
 echo "use ACTION      = $ACTION"
+if [[ -n "$ASSET_TYPE" ]]; then
+  echo "use ASSET_TYPE  = $ASSET_TYPE"
+fi
 echo "use ASSET_PATH  = $ASSET_PATH"
 echo "use ASSET_NAME  = $ASSET_NAME"
 echo "use CONTAINER   = $CONTAINER"
