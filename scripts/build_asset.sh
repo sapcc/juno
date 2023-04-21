@@ -55,12 +55,12 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [[ -z "$ASSET_NAME" ]]; then
-  echo "No ASSET_NAME path found 😐"
+  echo "Error: no ASSET_NAME path found 😐"
   exit 1
 fi
 
 if [[ -z "$ASSET_PATH" ]]; then
-  echo "No ASSET_PATH path found 😐"
+  echo "Error: no ASSET_PATH path found 😐"
   exit 1
 fi
 
@@ -111,7 +111,7 @@ else
 fi
 
 if [[ -z "$BUILD_DIR" ]]; then
-  echo "No BUILD_DIR found 😐"
+  echo "Error: no BUILD_DIR found 😐"
   exit 1
 fi
 

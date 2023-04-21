@@ -86,13 +86,13 @@ if [[ -z "$CONTAINER" ]]; then
 fi
 
 if [[ -z "$ACTION" ]]; then
-  echo "no ACTION given 😐"
+  echo "Error: no ACTION given 😐"
   exit 1
 fi
 
 if [[ -z "$ASSET_PATH" ]]; then
   if [[ -z "$ASSET_TYPE" ]]; then
-    echo "no ASSET_TYPE given 😐"
+    echo "Error: no ASSET_TYPE given 😐"
     exit 1
   fi
 fi
@@ -103,12 +103,12 @@ if [[ -n "$ASSET_TYPE" ]]; then
 fi
 
 if [ ! -d "$ASSET_PATH" ]; then
-  echo "directory ASSET_PATH $ASSET_PATH does not exist 😐"
+  echo "Error: directory ASSET_PATH $ASSET_PATH does not exist 😐"
   exit 1
 fi
 
 if [[ -z "$ASSET_PATH" ]]; then
-  echo "no ASSET_PATH given 😐"
+  echo "Error: no ASSET_PATH given 😐"
   exit 1
 fi
 
@@ -117,7 +117,7 @@ if [[ -z "$ROOT_PATH" ]]; then
 fi
 
 if [ ! -d "$ROOT_PATH" ]; then
-  echo "directory ROOT_PATH $ROOT_PATH does not exist 😐"
+  echo "Error: directory ROOT_PATH $ROOT_PATH does not exist 😐"
   exit 1
 fi
 
