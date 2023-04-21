@@ -135,18 +135,21 @@ while IFS= read -d $'\0' -r dirname; do
 
     integrity_check
 
-    echo "Compose $KIND distribution and $ASSET_TYPE -> ${asset_name}@${asset_version}"
+    echo "Compose $KIND distribution for $ASSET_TYPE -> ${asset_name}@${asset_version}"
     cd ..
     destination_path="$DIST_PATH/$KIND/$ASSET_TYPE"
     mkdir -p $destination_path
-    echo "mv $asset_dirname \"$destination_path/${asset_name}@${asset_version}/\""
-    if [ -d "$asset_dirname" ]; then
-      echo "Error: the directory $asset_dirname already exist"
-      echo "that means there are dublicated versions in $KIND -> $ASSET_TYPE -> ${asset_name} 😐"
+
+    asset_dist_path="$destination_path/${asset_name}@${asset_version}"
+    if [ -d "$asset_dist_path" ]; then
+      echo "Error: the directory $asset_dist_path already exist"
+      echo "       that means there are dublicated versions in $KIND -> $ASSET_TYPE -> ${asset_name} 😐"
       exit 1
     fi
 
-    mv $asset_dirname "$destination_path/${asset_name}@${asset_version}"
+    echo "cp -r  $asset_dirname $asset_dist_path"
+    cp -r "$asset_dirname" "$asset_dist_path"
+
   done < <(find ./ -mindepth 1 -maxdepth 1 -type d -print0)
 done < <(find ./ -mindepth 1 -maxdepth 1 -type d -print0)
 
