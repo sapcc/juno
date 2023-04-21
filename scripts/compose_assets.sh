@@ -89,6 +89,7 @@ function integrity_check () {
    echo "--------------------"
    echo "Run integrity check"
    echo "--------------------"
+   # TODO: feedback to upload error or success to swift
 }
 
 # https://stackoverflow.com/questions/2107945/how-to-loop-over-directories-in-linux
@@ -96,15 +97,23 @@ while IFS= read -d $'\0' -r dirname ; do
     cd $dirname
     while IFS= read -d $'\0' -r asset_dirname ; do 
       echo "=================================="
+      # check file structure
       if [ -f "package.json" ]; then
-        # this is the case for
-        # apps/APPNAME/package.json
+        # this is the case for apps/APPNAME/package.json
+        # we are in the correct dir and do not need to go deeper
         echo "dirname: $dirname"
+        asset_dirname=$dirname
       else
-        # in this case we go on level deeper
-        # apps/APPNAME/SOMEVERSION/package.json
+        # in this case we go one level deeper
         echo "dirname: $asset_dirname"
-        cd $asset_dirname
+        if [ -f "package.json" ]; then
+          # apps/APPNAME/SOMEVERSION/package.json
+          cd $asset_dirname
+        else
+          echo "unsupported file structure, no package.json was found in $(pwd)"
+          exit 1
+          # TODO: feedback to upload error or success to swift
+        fi
       fi
       
       asset_name=$(cat package.json | jq -r '.name')
@@ -129,3 +138,5 @@ while IFS= read -d $'\0' -r dirname ; do
       mv $asset_dirname "$destination_path/${asset_name}@${asset_version}"
     done < <(find ./ -mindepth 1 -maxdepth 1 -type d -print0)
 done < <(find ./ -mindepth 1 -maxdepth 1 -type d -print0)
+
+# TODO: feedback to upload error or success to swift
