@@ -3,7 +3,7 @@ import ReactJsonView from "react-json-view"
 import { DateTime } from "luxon"
 import { Icon, Stack } from "juno-ui-components"
 
-const JsonView = ReactJsonView.default
+const JsonView = ReactJsonView.default || ReactJsonView
 const leftColumn = `
   w-1/6
   overflow-hidden
