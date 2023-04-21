@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react"
 import useAppLoader from "../hooks/useAppLoader"
-import useStore from "../hooks/useStore"
+import { useAppsConfig } from "../hooks/useStore"
 import { Spinner } from "juno-ui-components"
 import { useRef } from "react"
 
@@ -8,7 +8,7 @@ const Plugin = ({ name, active }) => {
   const { mount } = useAppLoader()
   const holder = useRef()
   const app = useRef(document.createElement("div"))
-  const config = useStore((state) => state.apps.config)
+  const config = useAppsConfig()
   const mounted = useRef(false)
 
   // create a promise to mount the app

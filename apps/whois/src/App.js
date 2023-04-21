@@ -6,6 +6,7 @@ import Search from "./Search"
 import Results from "./Results"
 import { search as searchByInput } from "./actions"
 import SearchingIndicator from "./img/Loading_Animation.svg"
+import ipBackground from "./img/IP-Background.svg?url"
 
 import { AppShellProvider, Button, Message, PageHeader, Stack } from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
@@ -15,6 +16,7 @@ const URL_STATE_KEY = "whois"
 
 const contentClasses = ({ resultsShown }) => {
   return `
+    bg-theme-global-bg
     px-6
     
     ${
@@ -94,7 +96,16 @@ const App = (props) => {
   }, [search])
 
   return (
-    <div className="whois h-full">
+    <div 
+      className="whois h-full bg-theme-global-bg"
+      style={{
+        backgroundImage: `url('${
+          new URL(ipBackground, import.meta.url).href
+        }')`,
+        backgroundPosition: "bottom right",
+        backgroundRepeat: "no-repeat",
+      }}
+      >
       {!embedded && <PageHeader heading="Whois" />}
       <Stack
         direction="vertical"

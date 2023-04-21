@@ -55,6 +55,7 @@ const DEFAULT_INTERVAL = 300000
 function AlertsService(initialConfig) {
   // default config
   let config = {
+    debug: false,
     initialFetch: false,
     apiEndpoint: null,
     watch: true,
@@ -79,20 +80,23 @@ function AlertsService(initialConfig) {
   const update = () => {
     // do nothing until apiEndpoint and onChange config values are set
     if (!config?.apiEndpoint || !config?.onChange) {
-      console.warn("Alerts service: missing apiEndpoint or onChange callback")
+      if (config?.debug)
+        console.warn("Alerts service: missing apiEndpoint or onChange callback")
       return
     }
     // call onFetchStart if defined
     // This is useful to inform the listener that a new fetch is starting
     if (config.onFetchStart) config.onFetchStart()
 
-    console.info("Alerts service: start fetch")
+    if (config?.debug) console.info("Alerts service: start fetch")
     // get all alerts filtered by params if defined
     initialFetchPerformed = true
     return get(`${config.apiEndpoint}/alerts`, { params: config.params })
       .then((items) => {
-        console.info("Alerts service: receive items")
-        console.info("Alerts service: sort items")
+        if (config?.debug) {
+          console.info("Alerts service: receive items")
+          console.info("Alerts service: sort items")
+        }
         // sort alerts
         let alerts = sort(items)
         
@@ -106,24 +110,25 @@ function AlertsService(initialConfig) {
           
         })
 
-        console.info("Alerts service: limit items")
+        if (config?.debug) console.info("Alerts service: limit items")
         // slice if limit provided
         if (config?.limit) alerts = alerts.slice(0, config.limit)
 
         // check if new loaded alerts are different from the last response
         const newCompareString = JSON.stringify(alerts)
-        console.info(
-          "Alerts service: any changes?",
-          compareString !== newCompareString
-        )
+        if (config?.debug)
+          console.info(
+            "Alerts service: any changes?",
+            compareString !== newCompareString
+          )
         if (compareString !== newCompareString) {
           compareString = newCompareString
 
-          console.info("Alerts service: inform listener")
+          if (config?.debug) console.info("Alerts service: inform listener")
           // inform listener to receive new alerts
           config?.onChange({ alerts, counts: countAlerts(alerts) })
         } else {
-          console.info("Alerts service: no change found")
+          if (config?.debug) console.info("Alerts service: no change found")
         }
         if (config.onFetchEnd) config.onFetchEnd()
       })
@@ -158,7 +163,7 @@ function AlertsService(initialConfig) {
       (key) => allowedOptions.indexOf(key) < 0 && delete config[key]
     )
 
-    console.log("Alerts service: new config", config)
+    if (config?.debug) console.log("Alerts service: new config", config)
 
     updateWatcher(oldConfig)
     if (config.initialFetch && !initialFetchPerformed) update()

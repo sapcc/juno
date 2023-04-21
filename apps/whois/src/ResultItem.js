@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react"
-import ReactJson from "react-json-view"
 import { DateTime } from "luxon"
-import { Icon, Stack } from "juno-ui-components"
+import { JsonViewer, Icon, Stack } from "juno-ui-components"
 
 const leftColumn = `
   w-1/6
@@ -114,29 +113,7 @@ const ResultItem = ({ content, expand }) => {
         )}
 
         <div className={resultStyles(isExpanded)}>
-          <ReactJson
-            src={content}
-            iconStyle="square"
-            collapsed={3}
-            theme={{
-              base00: "var(--color-syntax-highlight-base00)", //bg
-              base01: "var(--color-syntax-highlight-base01)", //?
-              base02: "var(--color-syntax-highlight-base02)", //lines and boxes
-              base03: "var(--color-syntax-highlight-base03)",
-              base04: "var(--color-syntax-highlight-base04)",
-              base05: "var(--color-syntax-highlight-base05)",
-              base06: "var(--color-syntax-highlight-base06)",
-              base07: "var(--color-syntax-highlight-base07)",
-              base08: "var(--color-syntax-highlight-base08)", // NULL
-              base09: "var(--color-syntax-highlight-base09)", // String value
-              base0A: "var(--color-syntax-highlight-base0A)", // NaN
-              base0B: "var(--color-syntax-highlight-base0B)", // float value
-              base0C: "var(--color-syntax-highlight-base0C)", // index
-              base0D: "var(--color-syntax-highlight-base0D)", // expanded icon
-              base0E: "var(--color-syntax-highlight-base0E)", // bool + collapsed icon
-              base0F: "var(--color-syntax-highlight-base0F)", // integer value
-            }}
-          />
+          <JsonViewer data={content} expanded={3} />
         </div>
 
         <Stack

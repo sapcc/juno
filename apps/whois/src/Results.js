@@ -13,7 +13,7 @@ const rightColumn = `
 
 const Results = ({ items, processing }) => {
   return (
-    <>
+    <div className="whois-main">
       {!processing && items && (
         <div>
           <h2 className="text-2xl mb-3">
@@ -45,7 +45,7 @@ const Results = ({ items, processing }) => {
           </Stack>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

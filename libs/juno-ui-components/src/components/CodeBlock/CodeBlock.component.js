@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import PropTypes from "prop-types"
-import ReactJson from "react-json-view"
+import { JsonViewer } from "../JsonViewer"
 import { Icon } from "../Icon/index.js"
 
 const wrapperStyles = `
@@ -157,10 +157,9 @@ export const CodeBlock = ({
         ""
       )}
       {lang === "json" ? (
-        <ReactJson
-          src={content || children}
-          iconStyle="square"
-          collapsed={3}
+        <JsonViewer
+          data={content}
+          expanded={3}
           theme={jsonTheme}
           style={jsonViewStyles}
         />
