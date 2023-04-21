@@ -31,7 +31,7 @@ const useAppLoader = () => {
     (container, config) => {
       if (!assetsHost) return null
       return loadImportmap(assetsHost).then(() => {
-        console.log("==============MOUNT", config?.name)
+        console.log("==============MOUNT", config?.name, config)
         let url = config.url
           ? config.url
           : `@juno/${config.name}@${config.version || "latest"}`

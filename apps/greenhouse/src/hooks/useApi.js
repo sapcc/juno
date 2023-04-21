@@ -24,7 +24,6 @@ const useApi = () => {
   }, [apiEndpoint, authData?.JWT])
 
   const getPluginConfigs = useCallback(() => {
-    console.log("====", client, assetsHost, namespace)
     if (!client || !assetsHost || !namespace) return Promise.resolve({})
 
     const manifestUrl = new URL("/manifest.json", assetsHost)

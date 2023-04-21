@@ -21,7 +21,7 @@ const useCommunication = () => {
   useEffect(() => {
     if (!authAppLoaded || authIsProcessing || authError) return
     if (authLastAction?.name === "signOn" && !authLoggedIn) {
-      broadcast("AUTH_LOGIN", "greenhouse", { debug: true })
+      broadcast("AUTH_LOGIN", "greenhouse", { debug: false })
     } else if (authLastAction?.name === "signOut" && authLoggedIn) {
       broadcast("AUTH_LOGOUT", "greenhouse")
     }
