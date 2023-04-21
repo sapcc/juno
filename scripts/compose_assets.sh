@@ -118,12 +118,14 @@ while IFS= read -d $'\0' -r dirname ; do
       echo "main: $asset_main"
       echo "module: $asset_module"
       echo "peer deps: $asset_peer_deps"
+      
       integrity_check
-      echo "Compose for $KIND distribution..."
+
+      echo "Compose $KIND distribution and $ASSET_TYPE -> ${asset_name}@${asset_version}"
       cd ..
       destination_path="$DIST_PATH/$KIND/$ASSET_TYPE"
       mkdir -p $destination_path
       echo "mv $asset_dirname \"$destination_path/${asset_name}@${asset_version}/\""
-      #mv $asset_dirname "$destination_path/${asset_name}@${asset_version}"
+      mv $asset_dirname "$destination_path/${asset_name}@${asset_version}"
     done < <(find ./ -mindepth 1 -maxdepth 1 -type d -print0)
 done < <(find ./ -mindepth 1 -maxdepth 1 -type d -print0)
