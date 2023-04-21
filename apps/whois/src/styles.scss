@@ -2,19 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-.theme-dark {
+// .theme-dark {
 
-  .whois {
-    background: url(img/IP-Background.svg) bottom right no-repeat;
-  }
-}
+//   .whois {
+//     background: url(img/IP-Background.svg?url) bottom right no-repeat;
+//   }
+// }
 
-.theme-light {
+// .theme-light {
 
-  .whois {
-    background: url(img/IP-Background_light.svg) bottom right no-repeat;
-  }
-}
+//   .whois {
+//     background: url(img/IP-Background_light.svg?url) bottom right no-repeat;
+//   }
+// }
 
 .whois {
   min-height: 40rem;
