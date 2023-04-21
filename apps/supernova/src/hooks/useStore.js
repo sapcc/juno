@@ -11,7 +11,7 @@ const createUserActivitySlice = (set, get) => ({
       setIsActive: (activity) => {
         set((state) => ({
           userActivity: { ...state.userActivity, isActive: activity },
-        }))
+        }), false, "userActivity.setIsActive")
       },
     },
   },
@@ -40,10 +40,21 @@ const createAlertsSlice = (set, get) => ({
             state.alerts.isLoading = false
             state.alerts.isUpdating = false
             state.alerts.updatedAt = Date.now()
-            // reset previously lazy loaded filter label values (they might have changed since last load)
-            state.filters.filterLabelValues = {}
-          })
+            
+            // on the initial fetch copy all items to the filtered items list once since
+            // most views operate on the filtered items list
+            if (state.alerts.itemsFiltered.length === 0) {
+              state.alerts.itemsFiltered = items
+            }
+            // TODO: 
+            // reload previously loaded filter label values (they might have changed since last load)
+            // state.filters.filterLabelValues = {} // -> do NOT just reset them, reload instead 
+          }), false, "alerts.setAlertsData"
         )
+        // if there are already active filters, filter the new list
+        if (Object.keys(get().filters.activeFilters)?.length > 0 ) {
+          get().alerts.actions.filterItems()
+        }
       },
 
       filterItems: () => {
@@ -67,7 +78,7 @@ const createAlertsSlice = (set, get) => ({
 
               return visible
             })
-          })
+          }), false, "alerts.filterItems"
         )
         get().alerts.actions.updateFilteredCounts()
       },
@@ -76,7 +87,7 @@ const createAlertsSlice = (set, get) => ({
         set(
           produce((state) => {
             state.alerts.itemsFiltered = items
-          })
+          }), false, "alerts.setFilteredItems"
         )
         get().alerts.actions.updateFilteredCounts()
       },
@@ -87,14 +98,14 @@ const createAlertsSlice = (set, get) => ({
           produce((state) => {
             state.alerts.totalCounts = counts.global
             state.alerts.severityCountsPerRegion = counts.regions
-          })
+          }), false, "alerts.updateFilteredCounts"
         )
       },
 
       setIsLoading: (value) =>
-        set((state) => ({ alerts: { ...state.alerts, isLoading: value } })),
+        set((state) => ({ alerts: { ...state.alerts, isLoading: value } }), false, "alerts.setIsLoading"),
       setIsUpdating: (value) =>
-        set((state) => ({ alerts: { ...state.alerts, isUpdating: value } })),
+        set((state) => ({ alerts: { ...state.alerts, isUpdating: value } }), false, "alerts.setIsUpdating"),
     },
   },
 })
@@ -114,7 +125,7 @@ const createFiltersSlice = (set, get) => ({
               labels,
             },
           }
-        }),
+        }, false, "filters.setLabels"),
 
       setActiveFilters: (activeFilters) => {
         set((state) => {
@@ -124,7 +135,7 @@ const createFiltersSlice = (set, get) => ({
               activeFilters,
             },
           }
-        })
+        }, false, "filters.setActiveFilters")
         get().alerts.actions.filterItems()
       },
 
@@ -132,7 +143,7 @@ const createFiltersSlice = (set, get) => ({
         set(
           produce((state) => {
             state.filters.activeFilters = {}
-          })
+          }), false, "filters.clearActiveFilters"
         )
         get().alerts.actions.filterItems()
       },
@@ -147,7 +158,7 @@ const createFiltersSlice = (set, get) => ({
                 filterValue,
               ]),
             ]
-          })
+          }), false, "filters.addActiveFilter"
         )
         // after adding a new filter key and value: filter items
         get().alerts.actions.filterItems()
@@ -164,24 +175,19 @@ const createFiltersSlice = (set, get) => ({
             if (state.filters.activeFilters[filterLabel].length === 0) {
               delete state.filters.activeFilters[filterLabel]
             }
-          })
+          }), false, "filters.removeActiveFilter"
         )
         // after removing a filter: filter items
         get().alerts.actions.filterItems()
       },
 
-      // load possible values for the given filter label and add them to the list
+      // retieve all possible values for the given filter label from the list of items and add them to the list
       loadFilterLabelValues: (filterLabel) => {
         set(
           produce((state) => {
             state.filters.filterLabelValues[filterLabel] = {isLoading: true}
-          })
+          }), false, "filters.loadFilterLabelValues.isLoading"
         )
-        get().filters.actions.addFilterLabelValues(filterLabel)
-      },
-
-      // find all possible values for the given filter label and add them to the list
-      addFilterLabelValues: (filterLabel) => {
         set(
           produce((state) => {
             // use Set to ensure unique values
@@ -189,9 +195,22 @@ const createFiltersSlice = (set, get) => ({
             // remove any "blank" values from the list
             state.filters.filterLabelValues[filterLabel].values = values.filter((value) => value ? true : false)
             state.filters.filterLabelValues[filterLabel].isLoading = false
-          })
+          }), false, "filters.loadFilterLabelValues"
         )
       },
+
+      // TODO:
+      // update previously loaded filter label values (e.g. after new items were fetched, the possible values might have changed)
+      // updateFilterLabelValues: () => {
+      //   set(
+      //     produce((state) => {
+      //       Object.keys(state.filters.filterLabelValues).map((label) =>
+
+      //       )
+      //     })
+      //   )
+      // }
+
     },
   },
 })

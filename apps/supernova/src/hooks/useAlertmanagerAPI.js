@@ -28,8 +28,6 @@ const useAlertmanagerAPI = (apiEndpoint) => {
         switch (action) {
           case "ALERTS_UPDATE":
             setAlertsData({ items: e.data.alerts, counts: e.data.counts })
-            // initially set filtered list to all items
-            setFilteredItems(e.data.alerts)
             break
           case "ALERTS_FETCH_START":
             setIsUpdating(true)
