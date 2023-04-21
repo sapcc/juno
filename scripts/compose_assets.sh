@@ -105,11 +105,10 @@ while IFS= read -d $'\0' -r dirname ; do
         asset_dirname=$dirname
       else
         # in this case we go one level deeper
+        cd $asset_dirname
         echo "dirname: $asset_dirname"
-        if [ -f "package.json" ]; then
+        if [ ! -f "package.json" ]; then
           # apps/APPNAME/SOMEVERSION/package.json
-          cd $asset_dirname
-        else
           echo "unsupported file structure, no package.json was found in $(pwd)"
           exit 1
           # TODO: feedback to upload error or success to swift
