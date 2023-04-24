@@ -64,11 +64,13 @@ if [[ -z "$ASSET_PATH" ]]; then
   exit 1
 fi
 
+echo "=================================="
+echo "----------------------------------"
 echo "use ROOT_PATH   = $ROOT_PATH"
 echo "use ASSET_NAME  = $ASSET_NAME"
 echo "use ASSET_PATH  = $ASSET_PATH"
 echo "use OUTPUT_PATH = $OUTPUT_PATH"
-echo "=================================="
+echo "----------------------------------"
 
 echo "generate COMMUNICATOR.md in $ROOT_PATH/$ASSET_PATH"
 node scripts/generate_communication_readme.mjs --path=$ROOT_PATH/$ASSET_PATH
@@ -79,7 +81,7 @@ npm run build-libs
 # TEST AND BUILD ASSET
 # IGNORE_EXTERNALS=true will results in a bundle which includes all dependencies.
 # This is the case if the jspm cdn is unreachable!!!
-echo "=================================="
+echo "----------------------------------"
 echo "run Tests for ...."
 ASSET_NAME=$(jq -r .name $ROOT_PATH/$ASSET_PATH/package.json)
 npm --workspace $ASSET_NAME run test --if-present
@@ -90,7 +92,7 @@ NODE_ENV=production IGNORE_EXTERNALS=false npm --workspace $ASSET_NAME run build
 # Example: package.json#module = build/esm/index.js
 # echo build/esm/index.js | sed -e 's/^\///' | cut -d/ -f1
 # Result: build
-echo "=================================="
+echo "----------------------------------"
 if [[ -z "$BUILD_DIR" ]]; then
   echo "Look for module in package.json"
   BUILD_DIR=$(jq -r .module $ROOT_PATH/$ASSET_PATH/package.json)
@@ -115,7 +117,7 @@ if [[ -z "$BUILD_DIR" ]]; then
   exit 1
 fi
 
-echo "=================================="
+echo "----------------------------------"
 echo "use BUILD_DIR = $BUILD_DIR"
 echo "copy assets data from $ROOT_PATH/$ASSET_PATH/$BUILD_DIR to $OUTPUT_PATH/$ASSET_PATH/"
 mkdir -p "$OUTPUT_PATH/$ASSET_PATH"
@@ -131,9 +133,9 @@ cd "$OUTPUT_PATH/$ASSET_PATH"
 # todo use npm-pack instead https://docs.npmjs.com/cli/v6/commands/npm-pack
 tar --exclude="package.tgz" -czf package.tgz .
 
-echo "=================================="
+echo "----------------------------------"
 echo "Build for $ASSET_NAME done 🙂"
-echo "=================================="
+echo "----------------------------------"
 echo "Results"
 ls -la
 echo "=================================="

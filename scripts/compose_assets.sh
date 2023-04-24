@@ -76,34 +76,40 @@ if [ ! -d "$DIST_PATH" ]; then
   exit 1
 fi
 
+echo "=================================="
+echo "### combine $KIND $ASSET_TYPE ###"
+echo "----------------------------------"
 SOURCE_PATH="$SOURCE_PATH/$KIND"
 echo "use KIND        = $KIND"
 echo "use ASSET_TYPE  = $ASSET_TYPE"
 echo "use SOURCE_PATH = $SOURCE_PATH"
 echo "use DIST_PATH   = $DIST_PATH"
-echo "=================================="
+echo "----------------------------------"
 
 cd $SOURCE_PATH/$ASSET_TYPE
 
 function integrity_check() {
-  echo "--------------------"
+  echo "----------------------------------"
   echo "Run integrity check"
-  echo "--------------------"
+  echo "----------------------------------"
+
   echo $(date) >build_log
-  echo "version ✔️" >>./build_log
-  echo "name ✔️" >>./build_log
-  echo "package.json ✔️" >>./build_log
-  echo "peerDependencies ✔️" >>./build_log
-  echo "main/module ✔️" >>./build_log
-  echo "README.md ✔️" >>./build_log
-  echo "build dir ✔️" >>./build_log
+  {
+    echo "version ✔️"
+    echo "name ✔️"
+    echo "package.json ✔️"
+    echo "peerDependencies ✔️"
+    echo "main/module ✔️"
+    echo "README.md ✔️"
+    echo "build dir ✔️"
+  } >>build_log
   cat ./build_log
   # TODO: feedback to upload error or success to swift
 }
 
 # https://stackoverflow.com/questions/2107945/how-to-loop-over-directories-in-linux
 while IFS= read -d $'\0' -r dirname; do
-  cd $dirname
+  cd "$dirname"
   while IFS= read -d $'\0' -r asset_dirname; do
     # check file structure
     if [ -f "package.json" ]; then
@@ -113,7 +119,7 @@ while IFS= read -d $'\0' -r dirname; do
       asset_dirname=$dirname
     else
       # in this case we go one level deeper
-      cd $asset_dirname
+      cd "$asset_dirname"
       echo "dirname: $asset_dirname"
       if [ ! -f "package.json" ]; then
         # apps/APPNAME/SOMEVERSION/package.json
@@ -140,18 +146,22 @@ while IFS= read -d $'\0' -r dirname; do
     echo "Compose $KIND distribution for $ASSET_TYPE -> ${asset_name}@${asset_version}"
     cd ..
     destination_path="$DIST_PATH/$KIND/$ASSET_TYPE"
-    mkdir -p $destination_path
+    mkdir -p "$destination_path"
 
     asset_dist_path="$destination_path/${asset_name}@${asset_version}"
     if [ -d "$asset_dist_path" ]; then
       error_msg="Error: the directory $asset_dist_path already exist that means there are dublicated versions in $KIND -> $ASSET_TYPE -> ${asset_name} 😐"
-      echo $error_msg
-      echo $error_msg >>$asset_dirname/build_log
+      echo "$error_msg"
+      echo "$error_msg" >>"$asset_dirname/build_log"
       exit 1
     fi
 
     echo "cp -r  $asset_dirname $asset_dist_path"
     cp -r "$asset_dirname" "$asset_dist_path"
+    echo "----------------------------------"
+    ls -all "$asset_dist_path"
+    echo "----------------------------------"
+    echo "Build for $asset_name done 🙂"
     echo "=================================="
 
   done < <(find ./ -mindepth 1 -maxdepth 1 -type d -print0)

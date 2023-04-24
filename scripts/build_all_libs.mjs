@@ -13,9 +13,9 @@ files.forEach((pkgFile) => {
   const pkg = JSON.parse(fs.readFileSync(pkgFile))
 
   exec(`npm --workspace ${pkg.name} run build`, (error, stdout, stderr) => {
-    console.log("==================================")
+    console.log("----------------------------------")
     console.log("BUILD LIB", pkg.name)
-    console.log("==================================")
+    console.log("----------------------------------")
     if (error) {
       console.log(error.message)
       return
