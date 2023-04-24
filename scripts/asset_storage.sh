@@ -178,17 +178,17 @@ function upload() {
   #swift upload --skip-identical --changed "$DESTIONATION" .
   cd "$ROOT_PATH"
   echo "=================================="
-  #echo "Command: swift upload --skip-identical --changed $CONTAINER $ASSET_PATH"
-  swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" &&
-    echo "==================================" &&
+  # echo "Command: swift upload --skip-identical --changed $CONTAINER $ASSET_PATH"
+  # swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" &&
+  echo "==================================" &&
     echo "upload done 🙂"
 }
 
 function download() {
   echo "Swift container download from container $CONTAINER $ASSET_PATH to $ASSET_PATH"
   cd "$ROOT_PATH"
-  echo "=================================="
-  #echo "Command: swift download --skip-identical $CONTAINER $ASSET_PATH"
+  # echo "=================================="
+  # echo "Command: swift download --skip-identical $CONTAINER $ASSET_PATH"
   swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" &&
     echo "==================================" &&
     echo "download done 🙂"
