@@ -134,7 +134,11 @@ if [[ -z "$OS_PROJECT_NAME" ]]; then
 fi
 
 echo "=================================="
-echo "### $ACTION asset $ASSET_NAME ###"
+if [[ -n "$ASSET_NAME" ]]; then
+  echo "### $ACTION kind $KIND ###"
+else
+  echo "### $ACTION asset $ASSET_NAME ###"
+fi
 echo "----------------------------------"
 
 export OS_AUTH_VERSION=3
@@ -165,6 +169,7 @@ export OS_PASSWORD=$OS_PASSWORD
 # auth swift and set OS_STORAGE_URL and OS_AUTH_TOKEN
 eval "$(swift auth)"
 
+echo "----------------------------------"
 echo "use ACTION      = $ACTION"
 if [[ -n "$ASSET_TYPE" ]]; then
   echo "use ASSET_TYPE  = $ASSET_TYPE"
