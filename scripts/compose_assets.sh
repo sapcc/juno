@@ -86,7 +86,12 @@ echo "use SOURCE_PATH = $SOURCE_PATH"
 echo "use DIST_PATH   = $DIST_PATH"
 echo "----------------------------------"
 
-cd $SOURCE_PATH/$ASSET_TYPE
+if [ ! -d "$SOURCE_PATH/$ASSET_TYPE" ]; then
+  echo "Error: the path $SOURCE_PATH/$ASSET_TYPE not found 🤨"
+  exit 1
+fi
+
+cd "$SOURCE_PATH/$ASSET_TYPE"
 
 function integrity_check() {
   echo "----------------------------------"
