@@ -65,6 +65,7 @@ if [[ -z "$ASSET_PATH" ]]; then
 fi
 
 echo "=================================="
+echo "### build asset $ASSET_NAME ###"
 echo "----------------------------------"
 echo "use ROOT_PATH   = $ROOT_PATH"
 echo "use ASSET_NAME  = $ASSET_NAME"
