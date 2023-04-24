@@ -134,6 +134,9 @@ if [[ -z "$OS_PROJECT_NAME" ]]; then
 fi
 
 echo "=================================="
+echo "### $ACTION asset $ASSET_NAME ###"
+echo "----------------------------------"
+
 export OS_AUTH_VERSION=3
 echo "OS_AUTH_URL: $OS_AUTH_URL"
 export OS_AUTH_URL=$OS_AUTH_URL
@@ -158,7 +161,6 @@ echo "OS_PROJECT_ID: $OS_PROJECT_ID"
 echo "OS_USERNAME: $OS_USERNAME"
 export OS_USERNAME=$OS_USERNAME
 export OS_PASSWORD=$OS_PASSWORD
-echo "=================================="
 
 # auth swift and set OS_STORAGE_URL and OS_AUTH_TOKEN
 eval "$(swift auth)"
@@ -170,27 +172,27 @@ fi
 echo "use ASSET_PATH  = $ASSET_PATH"
 echo "use ASSET_NAME  = $ASSET_NAME"
 echo "use CONTAINER   = $CONTAINER"
-echo "=================================="
+echo "----------------------------------"
 
 # https://docs.openstack.org/ocata/cli-reference/swift.html
 function upload() {
   echo "Swift container upload from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
   #swift upload --skip-identical --changed "$DESTIONATION" .
   cd "$ROOT_PATH"
-  echo "=================================="
+  echo "----------------------------------"
   # echo "Command: swift upload --skip-identical --changed $CONTAINER $ASSET_PATH"
-  # swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" &&
-  echo "==================================" &&
+  swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" &&
+    echo "----------------------------------" &&
     echo "upload done 🙂"
 }
 
 function download() {
   echo "Swift container download from container $CONTAINER $ASSET_PATH to $ASSET_PATH"
   cd "$ROOT_PATH"
-  # echo "=================================="
+  # echo "----------------------------------"
   # echo "Command: swift download --skip-identical $CONTAINER $ASSET_PATH"
   swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" &&
-    echo "==================================" &&
+    echo "----------------------------------" &&
     echo "download done 🙂"
 }
 

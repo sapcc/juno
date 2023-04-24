@@ -159,9 +159,10 @@ while IFS= read -d $'\0' -r dirname; do
     echo "cp -r  $asset_dirname $asset_dist_path"
     cp -r "$asset_dirname" "$asset_dist_path"
     echo "----------------------------------"
+    echo "Results:"
     ls -all "$asset_dist_path"
     echo "----------------------------------"
-    echo "Build for $asset_name done 🙂"
+    echo "Combine for $asset_name done 🙂"
     echo "=================================="
 
   done < <(find ./ -mindepth 1 -maxdepth 1 -type d -print0)

@@ -137,6 +137,6 @@ tar --exclude="package.tgz" -czf package.tgz .
 echo "----------------------------------"
 echo "Build for $ASSET_NAME done 🙂"
 echo "----------------------------------"
-echo "Results"
+echo "Results:"
 ls -la
 echo "=================================="
