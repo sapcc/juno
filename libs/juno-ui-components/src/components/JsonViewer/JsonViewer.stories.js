@@ -4,119 +4,81 @@ import { JsonViewer } from "./index.js"
 export default {
   title: "Components/JsonViewer",
   component: JsonViewer,
+  description: "TEST",
   argTypes: {},
+  parameters: {
+    controls: { sort: "alpha" },
+  },
+}
+
+const data = {
+  id: 9,
+  date: new Date(),
+  getPrice: () => `$12`,
+  regex: /^(.+)$/,
+  nan: NaN,
+  null: null,
+  title: "Infinix INBOOK",
+  description: "Infinix Inbook X1 Ci3 10th 8GB...",
+  price: 1099,
+  discountPercentage: 11.83,
+  rating: 4.54,
+  stock: 96,
+  available: true,
+  brand: "Infinix",
+  category: "laptops",
+  thumbnail: "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
+  test: "https://i.dummyjson.com/data/products/9/thumbnail.jpg?xxxxxxxxxxxxxxxxnnnnnnnnnnnnnnnnnnnnnnnndddddddddddddddddddddddddddddddd",
+  test2:
+    "LoremipsumdolorsitametconsectetueradipiscingelitAeneancommodoligulaegetdolorAeneanmassaCumsociisnatoquepenatibusetmagnisdisparturientmontesnasceturridiculus",
+  images: [
+    "https://i.dummyjson.com/data/products/9/1.jpg",
+    "https://i.dummyjson.com/data/products/9/2.png",
+    "https://i.dummyjson.com/data/products/9/3.png",
+    "https://i.dummyjson.com/data/products/9/4.jpg",
+    "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
+  ],
 }
 
 const Template = (args) => <JsonViewer {...args} />
 
+/** TEST */
 export const Default = Template.bind({})
 Default.args = {
-  data: {
-    id: 9,
-    title: "Infinix INBOOK",
-    description: "Infinix Inbook X1 Ci3 10th 8GB...",
-    price: 1099,
-    discountPercentage: 11.83,
-    rating: 4.54,
-    stock: 96,
-    brand: "Infinix",
-    category: "laptops",
-    thumbnail: "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
-    images: [
-      "https://i.dummyjson.com/data/products/9/1.jpg",
-      "https://i.dummyjson.com/data/products/9/2.png",
-      "https://i.dummyjson.com/data/products/9/3.png",
-      "https://i.dummyjson.com/data/products/9/4.jpg",
-      "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
-    ],
-  },
+  data,
 }
 
 export const Light = Template.bind({})
 Light.args = {
   theme: "light",
-  data: {
-    id: 9,
-    title: "Infinix INBOOK",
-    description: "Infinix Inbook X1 Ci3 10th 8GB...",
-    price: 1099,
-    discountPercentage: 11.83,
-    rating: 4.54,
-    stock: 96,
-    brand: "Infinix",
-    category: "laptops",
-    thumbnail: "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
-    images: [
-      "https://i.dummyjson.com/data/products/9/1.jpg",
-      "https://i.dummyjson.com/data/products/9/2.png",
-      "https://i.dummyjson.com/data/products/9/3.png",
-      "https://i.dummyjson.com/data/products/9/4.jpg",
-      "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
-    ],
-  },
+  data,
 }
 
 export const Expanded = Template.bind({})
 Expanded.args = {
-  expanded: true,
-  data: {
-    id: 9,
-    title: "Infinix INBOOK",
-    description: "Infinix Inbook X1 Ci3 10th 8GB...",
-    price: 1099,
-    discountPercentage: 11.83,
-    rating: 4.54,
-    stock: 96,
-    brand: "Infinix",
-    category: "laptops",
-    thumbnail: "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
-    test: "https://i.dummyjson.com/data/products/9/thumbnail.jpgxxxxxxxxxxxxxxxxnnnnnnnnnnnnnnnnnnnnnnnndddddddddddddddddddddddddddddddd",
-    images: [
-      "https://i.dummyjson.com/data/products/9/1.jpg",
-      "https://i.dummyjson.com/data/products/9/2.png",
-      "https://i.dummyjson.com/data/products/9/3.png",
-      "https://i.dummyjson.com/data/products/9/4.jpg",
-      "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
-    ],
-  },
+  expanded: Infinity,
+  data,
 }
 export const CustomTheme = Template.bind({})
 CustomTheme.args = {
   theme: {
-    base00: "rgba(0, 0, 0, 0)",
+    base00: "rgb(39, 40, 34)",
     base01: "rgb(245, 245, 245)",
-    base02: "rgb(235, 235, 235)",
+    base02: "rgb(73, 72, 62)",
     base03: "#93a1a1",
-    base04: "rgba(255, 255, 255, 0.3)",
-    base05: "#586e75",
+    base04: "rgb(165, 159, 133)",
+    base05: "rgb(248, 248, 242)",
     base06: "#073642",
-    base07: "#ddd",
-    base08: "#d33682",
-    base09: "#cb4b16",
-    base0A: "#dc322f",
-    base0B: "#859900",
-    base0C: "#6c71c4",
-    base0D: "#586e75",
-    base0E: "#2aa198",
-    base0F: "#268bd2",
+    base07: "rgb(249, 248, 245)",
+    base08: "rgb(249, 38, 114)",
+    base09: "rgb(253, 151, 31)",
+    base0A: "rgb(244, 191, 117)",
+    base0B: "rgb(166, 226, 46)",
+    base0C: "rgb(161, 239, 228)",
+    base0D: "rgb(102, 217, 239)",
+    base0E: "rgb(174, 129, 255)",
+    base0F: "rgb(204, 102, 51)",
   },
-  data: {
-    id: 9,
-    title: "Infinix INBOOK",
-    description: "Infinix Inbook X1 Ci3 10th 8GB...",
-    price: 1099,
-    discountPercentage: 11.83,
-    rating: 4.54,
-    stock: 96,
-    brand: "Infinix",
-    category: "laptops",
-    thumbnail: "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
-    images: [
-      "https://i.dummyjson.com/data/products/9/1.jpg",
-      "https://i.dummyjson.com/data/products/9/2.png",
-      "https://i.dummyjson.com/data/products/9/3.png",
-      "https://i.dummyjson.com/data/products/9/4.jpg",
-      "https://i.dummyjson.com/data/products/9/thumbnail.jpg",
-    ],
-  },
+  data: { ...data, test2: undefined },
+  truncate: false,
 }

@@ -1,46 +1,52 @@
 import PropTypes from "prop-types"
 import React, { useContext } from "react"
 
+// DEFAULT THEME FOR LIGHT MODE
 const THEME_LIGHT = {
-  base00: "white",
-  base01: "#ddd",
-  base02: "#ddd",
-  base03: "#444",
-  base04: "purple",
-  base05: "#444",
-  base06: "#444",
-  base07: "#444",
-  base08: "#444",
-  base09: "rgba(70, 70, 230, 1)",
-  base0A: "rgba(70, 70, 230, 1)",
-  base0B: "rgba(70, 70, 230, 1)",
-  base0C: "rgba(70, 70, 230, 1)",
-  base0D: "rgba(70, 70, 230, 1)",
-  base0E: "rgba(70, 70, 230, 1)",
-  base0F: "rgba(70, 70, 230, 1)",
+  base00: "#fff",
+  base01: "rgb(245, 245, 245)",
+  base02: "rgb(235, 235, 235)",
+  base03: "#93a1a1",
+  base04: "rgba(0, 0, 0, 0.3)",
+  base05: "#586e75",
+  base06: "#073642",
+  base07: "#002b36",
+  base08: "#d33682",
+  base09: "#cb4b16",
+  base0A: "#dc322f",
+  base0B: "#859900",
+  base0C: "#6c71c4",
+  base0D: "#586e75",
+  base0E: "#2aa198",
+  base0F: "#268bd2",
 }
 
+// DEFAULT THEME (DARK)
 const DEFAULT_THEME = {
-  base00: "var(--color-syntax-highlight-base00)", //bg
-  base01: "var(--color-syntax-highlight-base01)", //?
-  base02: "var(--color-syntax-highlight-base02)", //lines and boxes
-  base03: "var(--color-syntax-highlight-base03)",
-  base04: "var(--color-syntax-highlight-base04)",
-  base05: "var(--color-syntax-highlight-base05)",
-  base06: "var(--color-syntax-highlight-base06)",
-  base07: "var(--color-syntax-highlight-base07)",
-  base08: "var(--color-syntax-highlight-base08)", // NULL
-  base09: "var(--color-syntax-highlight-base09)", // String value
-  base0A: "var(--color-syntax-highlight-base0A)", // NaN
-  base0B: "var(--color-syntax-highlight-base0B)", // float value
-  base0C: "var(--color-syntax-highlight-base0C)", // index
-  base0D: "var(--color-syntax-highlight-base0D)", // expanded icon
-  base0E: "var(--color-syntax-highlight-base0E)", // bool + collapsed icon
-  base0F: "var(--color-syntax-highlight-base0F)", // integer value
+  base00: "var(--color-syntax-highlight-base00)", // background
+  base01: "var(--color-syntax-highlight-base01)", // -
+  base02: "var(--color-syntax-highlight-base02)", // border, type background
+  base03: "var(--color-syntax-highlight-base03)", // -
+  base04: "var(--color-syntax-highlight-base04)", // size
+  base05: "var(--color-syntax-highlight-base05)", // types: "undefined"
+  base06: "var(--color-syntax-highlight-base06)", // -
+  base07: "var(--color-syntax-highlight-base07)", // key, brace
+  base08: "var(--color-syntax-highlight-base08)", // types: "NaN"
+  base09: "var(--color-syntax-highlight-base09)", // ..., types: "string"
+  base0A: "var(--color-syntax-highlight-base0A)", // types: "null", "regex"
+  base0B: "var(--color-syntax-highlight-base0B)", // types: "float"
+  base0C: "var(--color-syntax-highlight-base0C)", // array index
+  base0D: "var(--color-syntax-highlight-base0D)", // expanded icon, types: "date", "function"
+  base0E: "var(--color-syntax-highlight-base0E)", // collapsed icon, types: "boolean"
+  base0F: "var(--color-syntax-highlight-base0F)", // copy icon, types: "integer"
 }
 
-const INDENTATION_SIZE = 20
+// indent size in pixel
+const INDENTATION_SIZE = 5
+// default truncate size
+const DEFAULT_TRUNCATE_LENGTH = 100
 
+// map of color keys to theme
 const colorMap = (theme) => ({
   background: theme.base00,
   ellipsis: theme.base09,
@@ -74,16 +80,20 @@ const type = (value) => {
   if (value === null) return "null"
   if (Array.isArray(value)) return "array"
   if (value instanceof RegExp) return "regex"
+  if (value instanceof Date) return "date"
   const t = (typeof value).toLowerCase()
   if (t === "number") {
+    if (Number.isNaN(value)) return "nan"
     return Number.isInteger(value) ? "integer" : "float"
   } else return t
 }
 
+// Theme context to provide colors, ident size ect. in component tree
 const ThemeContext = React.createContext(DEFAULT_THEME)
 
+// this component renders the expand icon depends on the expanded prop
 const ExpandIcon = ({ expanded }) => {
-  const colors = useContext(ThemeContext)
+  const { colors } = useContext(ThemeContext)
   return (
     <svg
       fill={expanded ? colors.icon.expanded : colors.icon.collapsed}
@@ -106,73 +116,113 @@ const ExpandIcon = ({ expanded }) => {
   )
 }
 
-const JsonData = ({ name, value, expanded, nestedLevel = 0 }) => {
+const NameLabel = ({ name }) => {
+  const { colors } = useContext(ThemeContext)
+  const isIndex = typeof name === "number"
+  const color = isIndex ? colors.index : colors.key
+  const label = isIndex ? name : `"${name}"`
+
+  return (
+    <span style={{ color }}>
+      <span style={{ opacity: 0.85 }}>{` ${label} `}</span>:{" "}
+    </span>
+  )
+}
+
+// this component show the right side of the json, type + value
+// for null, NaN and undefined values a background is shown
+const TypeValueLabel = ({ type, value }) => {
+  const { colors, truncate } = useContext(ThemeContext)
+  let undefinedValue = ["nan", "null", "undefined"].includes(type)
+  let label = type === "string" ? `"${value}"` : `${value}`
+  if (truncate) {
+    const length = truncate === true ? DEFAULT_TRUNCATE_LENGTH : truncate
+    if (label.length > length) label = label.slice(0, length - 3) + "..."
+  }
+
+  return (
+    <span
+      style={{
+        color: colors.dataType[type],
+        backgroundColor: undefinedValue
+          ? colors.dataType.background
+          : undefined,
+        borderRadius: 3,
+        padding: undefinedValue ? "2px 5px" : 0,
+      }}
+    >
+      {!undefinedValue && (
+        <span
+          style={{
+            opacity: 0.8,
+            fontSize: "small",
+            margin: "0 4px",
+          }}
+        >
+          {type}
+        </span>
+      )}
+      <span>{label}</span>
+    </span>
+  )
+}
+
+// This component renders a row of json entry
+const JsonData = ({ name, value, nestedLevel = 0 }) => {
+  const { colors, expanded, indentWidth } = useContext(ThemeContext)
   const [isExpanded, setIsExpanded] = React.useState(
     expanded === true || (expanded !== false && expanded > nestedLevel)
   )
-  const colors = useContext(ThemeContext)
   const dataType = React.useMemo(() => type(value), [value])
 
-  const childrenCount = React.useMemo(
-    () =>
-      dataType === "array"
-        ? value.length
-        : dataType === "object"
-        ? Object.keys(value).length
-        : false,
-    [value, dataType]
+  const children = React.useMemo(() => {
+    if (dataType === "array")
+      return value.map((v, i) => ({ name: i, value: v }))
+    if (dataType === "object")
+      return Object.keys(value).map((key, i) => ({
+        name: key,
+        value: value[key],
+      }))
+    return null
+  }, [dataType, value])
+
+  const ExpandButton = React.useCallback(
+    ({ children }) => (
+      <button onClick={() => setIsExpanded(!isExpanded)}>{children}</button>
+    ),
+    [isExpanded, setIsExpanded]
   )
 
   return (
     <div data-json-viewer={name}>
       <div style={{ letterSpacing: 0.5, padding: "3px 0" }}>
         {/* Expand Button */}
-        {childrenCount > 0 && (
-          <button onClick={() => setIsExpanded(!isExpanded)}>
-            <ExpandIcon expanded={isExpanded} />
-          </button>
+        {children?.length > 0 && (
+          <>
+            <ExpandButton>
+              <ExpandIcon expanded={isExpanded} />
+            </ExpandButton>{" "}
+          </>
         )}
         {/* NAME */}
-        <span style={{ color: colors.key }}>
-          {" "}
-          <span style={{ opacity: 0.85 }}>
-            {typeof name === "number" ? (
-              <span style={{ color: colors.index }}>{name}</span>
-            ) : (
-              `"${name}"`
-            )}
-          </span>{" "}
-          :{" "}
-        </span>
+        {(name || name === 0) && <NameLabel name={name} />}
 
-        {childrenCount === false ? (
+        {/* show type and value if no children */}
+        {!children ? (
           // atomic value, not an array nor an object
-          <span style={{ color: colors.dataType[dataType] }}>
-            <span
-              style={{
-                opacity: 0.8,
-                fontSize: "small",
-                margin: "0 4px",
-              }}
-            >
-              {dataType}
-            </span>
-            <span>{dataType === "string" ? `"${value}"` : value}</span>
-          </span>
+          <TypeValueLabel type={dataType} value={value} />
         ) : (
           <>
-            <span style={{ color: colors.key }}>
+            <span style={{ color: colors.brace }}>
               {dataType === "array" ? "[" : "{"}
             </span>
             {!isExpanded && (
               <>
-                <button
-                  onClick={() => setIsExpanded(!isExpanded)}
-                  style={{ color: colors.ellipsis }}
-                >
-                  ...
-                </button>
-                <span style={{ color: colors.key }}>
+                {/* Expand Icon */}
+                <ExpandButton>
+                  <span style={{ color: colors.ellipsis }}>...</span>
+                </ExpandButton>
+                <span style={{ color: colors.brace }}>
                   {dataType === "array" ? "]" : "}"}
                 </span>
               </>
@@ -186,38 +236,28 @@ const JsonData = ({ name, value, expanded, nestedLevel = 0 }) => {
               }}
             >
               {" "}
-              {childrenCount} {childrenCount === 1 ? "item" : "items"}
+              {children?.length} {children?.length === 1 ? "item" : "items"}
             </span>
 
             {isExpanded && (
               <>
+                {/* sub items */}
                 <div
                   data-body={name}
                   style={{
-                    paddingLeft: INDENTATION_SIZE,
+                    paddingLeft: INDENTATION_SIZE * indentWidth,
                     marginLeft: 8,
                     borderLeft: `1px solid ${colors.border}`,
                   }}
                 >
-                  {dataType === "array"
-                    ? value.map((value, i) => (
-                        <JsonData
-                          key={i}
-                          name={i}
-                          value={value}
-                          expanded={expanded}
-                          nestedLevel={nestedLevel + 1}
-                        />
-                      ))
-                    : Object.keys(value).map((key, i) => (
-                        <JsonData
-                          key={i}
-                          name={key}
-                          value={value[key]}
-                          expanded={expanded}
-                          nestedLevel={nestedLevel + 1}
-                        />
-                      ))}
+                  {children?.map((entry, i) => (
+                    <JsonData
+                      key={i}
+                      name={entry.name}
+                      value={entry.value}
+                      nestedLevel={nestedLevel + 1}
+                    />
+                  ))}
                 </div>
                 <span style={{ color: colors.key, marginLeft: 6 }}>
                   {dataType === "array" ? "]" : "}"}
@@ -231,12 +271,21 @@ const JsonData = ({ name, value, expanded, nestedLevel = 0 }) => {
   )
 }
 
-export const JsonViewer = ({ data, showRoot, theme, expanded, style }) => {
+/** A component to render json data in a nice way. */
+export const JsonViewer = ({
+  data,
+  showRoot,
+  theme,
+  expanded,
+  indentWidth,
+  style,
+  truncate,
+}) => {
   const currentTheme =
     theme === "light" ? { ...THEME_LIGHT } : { ...DEFAULT_THEME, ...theme }
   const colors = colorMap(currentTheme)
   return (
-    <ThemeContext.Provider value={colors}>
+    <ThemeContext.Provider value={{ colors, expanded, indentWidth, truncate }}>
       <div
         data-json-viewer
         style={{
@@ -246,11 +295,7 @@ export const JsonViewer = ({ data, showRoot, theme, expanded, style }) => {
           ...style,
         }}
       >
-        <JsonData
-          name={showRoot ? "root" : ""}
-          value={data}
-          expanded={expanded}
-        />
+        <JsonData name={showRoot ? "root" : false} value={data} />
       </div>
     </ThemeContext.Provider>
   )
@@ -259,19 +304,64 @@ export const JsonViewer = ({ data, showRoot, theme, expanded, style }) => {
 JsonViewer.propTypes = {
   /** Pass a json. Required.  */
   data: PropTypes.object.isRequired,
+  /** pass a styles object */
   style: PropTypes.object,
   /** show root key */
   showRoot: PropTypes.bool,
-  /** colors map */
-  theme: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-  /** Pass a className */
+  /** dark, light or map of colors
+   *
+   * @param base00 background
+   * @param base01 NOT used
+   * @param base02 border, NaN,null, undefined background
+   * @param base03 NOT used
+   * @param base04 size (x items)
+   * @param base05 type "undefined"
+   * @param base06 NOT used
+   * @param base07 key, brace
+   * @param base08 type "NaN"
+   * @param base09 ellipsis (...), type "string"
+   * @param base0A types: "null", "regex"
+   * @param base0B type "float"
+   * @param base0C index
+   * @param base0D expanded icon, types: "date", "function"
+   * @param base0E collapsed icon, types: "boolean"
+   * @param base0F copy icon, type "integer"
+   */
+  theme: PropTypes.oneOfType([
+    PropTypes.shape({
+      base00: PropTypes.string,
+      base01: PropTypes.string,
+      base02: PropTypes.string,
+      base03: PropTypes.string,
+      base04: PropTypes.string,
+      base05: PropTypes.string,
+      base06: PropTypes.string,
+      base07: PropTypes.string,
+      base08: PropTypes.string,
+      base09: PropTypes.string,
+      base0A: PropTypes.string,
+      base0B: PropTypes.string,
+      base0C: PropTypes.string,
+      base0D: PropTypes.string,
+      base0E: PropTypes.string,
+      base0F: PropTypes.string,
+    }),
+    PropTypes.oneOf(["dark", "light"]),
+  ]),
+  /** expanded can be true|false or a number */
   expanded: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  // cut strings after max length is reached */
+  truncate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  /* indent width */
+  indentWidth: PropTypes.number,
 }
 
 JsonViewer.defaultProps = {
-  data: {},
-  style: undefined,
-  showRoot: true,
-  theme: null,
+  showRoot: false,
+  indentWidth: 4,
   expanded: 1,
+  truncate: false,
+  style: undefined,
+  data: {},
+  theme: "dark",
 }
