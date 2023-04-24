@@ -133,6 +133,7 @@ if [[ -z "$OS_PROJECT_NAME" ]]; then
   OS_PROJECT_NAME="master"
 fi
 
+echo "=================================="
 export OS_AUTH_VERSION=3
 echo "OS_AUTH_URL: $OS_AUTH_URL"
 export OS_AUTH_URL=$OS_AUTH_URL

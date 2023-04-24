@@ -105,7 +105,6 @@ function integrity_check() {
 while IFS= read -d $'\0' -r dirname; do
   cd $dirname
   while IFS= read -d $'\0' -r asset_dirname; do
-    echo "=================================="
     # check file structure
     if [ -f "package.json" ]; then
       # this is the case for apps/APPNAME/package.json
@@ -153,6 +152,7 @@ while IFS= read -d $'\0' -r dirname; do
 
     echo "cp -r  $asset_dirname $asset_dist_path"
     cp -r "$asset_dirname" "$asset_dist_path"
+    echo "=================================="
 
   done < <(find ./ -mindepth 1 -maxdepth 1 -type d -print0)
 done < <(find ./ -mindepth 1 -maxdepth 1 -type d -print0)
