@@ -109,6 +109,7 @@ function integrity_check() {
     echo "build dir ✔️"
   } >>build_log
   cat ./build_log
+  echo "----------------------------------"
   # TODO: feedback to upload error or success to swift
 }
 
@@ -161,7 +162,6 @@ while IFS= read -d $'\0' -r dirname; do
       exit 1
     fi
 
-    echo "cp -r  $asset_dirname $asset_dist_path"
     cp -r "$asset_dirname" "$asset_dist_path"
     echo "----------------------------------"
     echo "Combine for $asset_name done 🙂"
