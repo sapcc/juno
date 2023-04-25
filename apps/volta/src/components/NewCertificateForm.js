@@ -62,7 +62,7 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
   // on form init set the identity attributes
   useEffect(() => {
     if (!setAttribute) return
-    const userId = authData?.auth?.parsed.loginName?.toUpperCase()
+    const userId = authData?.auth?.raw?.sub.toUpperCase()
     if (userId) {
       setAttribute({ key: "identity", value: userId })
     }
@@ -195,7 +195,7 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
         }
       />
       <TextInputRow
-        label="User"
+        label="User ID"
         value={formState.identity}
         onChange={(e) => {
           onAttrChanged("identity", e.target.value?.toUpperCase())
