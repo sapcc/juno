@@ -28,6 +28,14 @@ const invalidstyles = `
 const validstyles = `
 	jn-border-theme-success
 `
+
+const wrapperStyles = `
+  jn-relative
+`
+
+const labelStyles = `
+`
+
 /** 
 A controlled Text Input.
 Also covers email, telephone, password, url derivates. 
@@ -44,6 +52,7 @@ export const TextInput = ({
   valid,
   autoFocus,
   className,
+  label,
   autoComplete,
   onChange,
   ...props
@@ -70,24 +79,33 @@ export const TextInput = ({
   }
 
   return (
-    <input
-      type={type}
-      name={name || "unnamed input"}
-      autoComplete={autoComplete}
-      value={val}
-      id={id}
-      placeholder={placeholder}
-      disabled={disabled}
-      readOnly={readOnly}
-      autoFocus={autoFocus}
-      onChange={handleInputChange}
-      className={`juno-textinput ${textinputstyles} ${
-        isInvalid ? "juno-textinput-invalid " + invalidstyles : ""
-      } ${isValid ? "juno-textinput-valid " + validstyles : ""}  ${
-        isValid || isInvalid ? "" : defaultborderstyles
-      } ${className}`}
-      {...props}
-    />
+    <span 
+      className={`juno-form-input-wrapper ${wrapperStyles}`} 
+      >
+      { label && label.length ? 
+          <label htmlFor={id || null} className={`juno-label`} >{label}</label>
+        :
+          ""
+      }
+      <input
+        type={type}
+        name={name || "unnamed input"}
+        autoComplete={autoComplete}
+        value={val}
+        id={id}
+        placeholder={placeholder}
+        disabled={disabled}
+        readOnly={readOnly}
+        autoFocus={autoFocus}
+        onChange={handleInputChange}
+        className={`juno-textinput ${textinputstyles} ${
+          isInvalid ? "juno-textinput-invalid " + invalidstyles : ""
+        } ${isValid ? "juno-textinput-valid " + validstyles : ""}  ${
+          isValid || isInvalid ? "" : defaultborderstyles
+        } ${className}`}
+        {...props}
+      />
+    </span>
   )
 }
 
@@ -118,6 +136,8 @@ TextInput.propTypes = {
   onChange: PropTypes.func,
   /** Specify the type attribute. Defaults to an input with no type attribute, which in turn will be treateas as type="text" by browsers. */
   type: PropTypes.oneOf(["text", "email", "password", "tel", "url", "number"]),
+  /** The label of the input */
+  label: PropTypes.string,
 }
 
 TextInput.defaultProps = {
@@ -133,4 +153,5 @@ TextInput.defaultProps = {
   autoComplete: "off",
   onChange: undefined,
   type: null,
+  label: undefined,
 }
