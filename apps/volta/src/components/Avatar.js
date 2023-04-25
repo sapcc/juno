@@ -11,6 +11,7 @@ bg-cover
 `
 
 const Avatar = ({ user, displayName }) => {
+  console.log("avatar: ", user)
   return (
     <Stack alignment="center">
       <div

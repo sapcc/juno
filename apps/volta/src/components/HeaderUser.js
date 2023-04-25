@@ -8,7 +8,7 @@ const HeaderUser = ({ auth, logout }) => {
     return auth.parsed.fullName
   }, [auth])
 
-  const sapID = useMemo(() => auth?.parsed?.loginName || "", [auth])
+  const sapID = useMemo(() => auth?.raw?.sub || "", [auth])
 
   return (
     <Stack alignment="center" className="ml-auto" distribution="end">
