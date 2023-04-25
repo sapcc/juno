@@ -12,7 +12,7 @@ const dividerStyles = `
 export const SelectDivider = React.forwardRef(
   ({className, ...props}, forwardedRef) => {
     return (
-      <div className={`juno-select-divider ${dividerStyles} ${className}`} {...props}></div>
+      <div className={`juno-select-divider ${dividerStyles} ${className}`} ref={forwardedRef} {...props}></div>
     )
   }
 )
