@@ -83,12 +83,16 @@ const progressClass = (progress) => {
 }
 
 const spinnerColorClass = (variant, disabled) => {
-  if (disabled) {
-    return "jn-text-theme-disabled"
-  } else if (variant === "default") {
-    return "jn-text-theme-accent"
+  switch ( variant ) {
+    case "default":
+      return "jn-text-theme-accent"
+    case "primary":
+      return "jn-text-white"
+    case "primary-danger":
+      return "jn-text-white"
+    default:
+      return ""
   }
-  return ""
 }
 
 /**
