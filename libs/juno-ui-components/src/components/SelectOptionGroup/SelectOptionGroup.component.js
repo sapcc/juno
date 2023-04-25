@@ -13,7 +13,7 @@ const labelStyles = `
 export const SelectOptionGroup = React.forwardRef(
   ({children, label, className, ...props}, forwardedRef) => {
     return (
-      <RadixSelect.Group className={`juno-select-option-group ${className}`} {...props}>
+      <RadixSelect.Group className={`juno-select-option-group ${className}`} ref={forwardedRef} {...props}>
         { label ? 
             <RadixSelect.Label className={`juno-select-group-label ${labelStyles}`}>{label}</RadixSelect.Label>
           :
