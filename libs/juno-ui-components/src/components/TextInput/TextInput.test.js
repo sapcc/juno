@@ -114,9 +114,9 @@ describe("TextInput", () => {
 	test("fires onChange handler as passed", async () => {
 		const handleChange = jest.fn()
 		const { container } = render(
-			<TextInput onChange={handleChange} />
+			<TextInput onChange={handleChange} data-testid="my-input"/>
 		)
-		const textinput = container.firstChild
+		const textinput = screen.getByRole("textbox")
 		fireEvent.change(textinput, { target: { value: 'a' } })
 		expect(handleChange).toHaveBeenCalledTimes(1)
 	})

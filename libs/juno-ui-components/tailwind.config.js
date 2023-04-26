@@ -255,6 +255,7 @@ module.exports = {
           "filter-input": withOpacity("--color-filter-input-border"),
           "filter-pill": withOpacity("--color-filter-pill-border"),
           "box-default": "var(--color-box-border)",
+          "textinput-default": withOpacity("--color-textinput-default-border")
         },
       },
       // backgroundImage: theme => ({
