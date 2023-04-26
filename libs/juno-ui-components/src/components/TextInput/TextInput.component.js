@@ -102,7 +102,7 @@ export const TextInput = ({
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
   
-  /* Set the focus state variable in case the input was focussed by passing autoFocus or the input was rendered and focussed by the user before React started listneing to client side events, e.g. when rendering server-side: */
+  /* Set the focus state variable in case the input was focussed by passing autoFocus, or when the input was rendered and focussed by the user before React started listening to client side events, e.g. when rendering server-side: */
   useEffect(() => {
     if (document.hasFocus() && ref.current.contains(document.activeElement)) {
       setFocus(true);
@@ -153,7 +153,7 @@ export const TextInput = ({
       }
       <input
         type={type}
-        name={name || "unnamed input"}
+        name={name}
         autoComplete={autoComplete}
         value={val}
         id={id}
