@@ -12,6 +12,17 @@ const Template = (args) => <TextInput {...args} />
 export const Default = Template.bind({})
 Default.args = {}
 
+export const WithLabel = Template.bind({})
+WithLabel.args = {
+  label: "Text Input"
+}
+
+export const RequiredWithLabel = Template.bind({})
+RequiredWithLabel.args = {
+  label: "Required Text Input",
+  required: true,
+}
+
 export const Invalid = Template.bind({})
 Invalid.args = {
   invalid: true,

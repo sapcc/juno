@@ -34,6 +34,23 @@ const wrapperStyles = `
 `
 
 const labelStyles = `
+  jn-absolute
+  jn-pointer-events-none
+  jn-top-0
+  jn-left-0
+  jn-top-[-0.125rem]
+  jn-left-[0.9375rem]
+  jn-transform 
+  jn-origin-top-left 
+  jn-transition-all 
+  jn-duration-100 
+  jn-ease-in-out
+  jn-z-10
+`
+
+const minLabelStyles = `
+  jn-scale-75
+  -jn-translate-y-1
 `
 
 /** 
@@ -83,7 +100,12 @@ export const TextInput = ({
       className={`juno-form-input-wrapper ${wrapperStyles}`} 
       >
       { label && label.length ? 
-          <label htmlFor={id || null} className={`juno-label`} >{label}</label>
+          <label 
+            htmlFor={id || null} 
+            className={`juno-label ${labelStyles} ${ val && val.length ? minLabelStyles : "" }`} 
+          >
+            {label}
+          </label>
         :
           ""
       }
