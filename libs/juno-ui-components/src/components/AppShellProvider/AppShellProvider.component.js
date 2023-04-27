@@ -10,6 +10,7 @@ export const AppShellProvider = ({
   shadowRoot,
   shadowRootMode,
   stylesWrapper,
+  theme,
   children,
 }) => {
   const Wrapper = React.useCallback(
@@ -23,7 +24,10 @@ export const AppShellProvider = ({
   )
   return (
     <Wrapper>
-      <StyleProvider stylesWrapper={shadowRoot ? "inline" : stylesWrapper}>
+      <StyleProvider
+        theme={theme}
+        stylesWrapper={shadowRoot ? "inline" : stylesWrapper}
+      >
         <PortalProvider>{children}</PortalProvider>
       </StyleProvider>
     </Wrapper>
@@ -37,6 +41,8 @@ AppShellProvider.propTypes = {
   shadowRootMode: PropTypes.oneOf(["open", "closed"]),
   /** Where app stylesheets are imported. This is only relevant if shadowRoot === false. If you use a ShadowRoot the styles must be inline. */
   stylesWrapper: PropTypes.oneOf(["head", "inline"]),
+  /** theme: theme-dark or theme-light */
+  theme: PropTypes.string,
 }
 
 // define default values
@@ -44,4 +50,5 @@ AppShellProvider.defaultProps = {
   shadowRoot: true,
   shadowRootMode: "open",
   stylesWrapper: "inline",
+  theme: null,
 }

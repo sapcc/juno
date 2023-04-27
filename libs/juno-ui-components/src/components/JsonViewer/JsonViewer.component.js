@@ -1,25 +1,6 @@
 import PropTypes from "prop-types"
 import React, { useContext } from "react"
-
-// DEFAULT THEME FOR LIGHT MODE
-const THEME_LIGHT = {
-  base00: "#fff",
-  base01: "rgb(245, 245, 245)",
-  base02: "rgb(235, 235, 235)",
-  base03: "#93a1a1",
-  base04: "rgba(0, 0, 0, 0.3)",
-  base05: "#586e75",
-  base06: "#073642",
-  base07: "#002b36",
-  base08: "#d33682",
-  base09: "#cb4b16",
-  base0A: "#dc322f",
-  base0B: "#859900",
-  base0C: "#6c71c4",
-  base0D: "#586e75",
-  base0E: "#2aa198",
-  base0F: "#268bd2",
-}
+import * as themes from "./themes"
 
 // DEFAULT THEME (DARK)
 const DEFAULT_THEME = {
@@ -188,7 +169,12 @@ const JsonData = ({ name, value, nestedLevel = 0 }) => {
 
   const ExpandButton = React.useCallback(
     ({ children }) => (
-      <button onClick={() => setIsExpanded(!isExpanded)}>{children}</button>
+      <span
+        style={{ cursor: "pointer", display: "inline-block" }}
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        {children}
+      </span>
     ),
     [isExpanded, setIsExpanded]
   )
@@ -281,8 +267,10 @@ export const JsonViewer = ({
   style,
   truncate,
 }) => {
-  const currentTheme =
-    theme === "light" ? { ...THEME_LIGHT } : { ...DEFAULT_THEME, ...theme }
+  const currentTheme = (typeof theme === "string" && themes[theme]) || {
+    ...DEFAULT_THEME,
+    ...theme,
+  }
   const colors = colorMap(currentTheme)
   return (
     <ThemeContext.Provider value={{ colors, expanded, indentWidth, truncate }}>
@@ -363,5 +351,5 @@ JsonViewer.defaultProps = {
   truncate: false,
   style: undefined,
   data: {},
-  theme: "dark",
+  theme: null,
 }
