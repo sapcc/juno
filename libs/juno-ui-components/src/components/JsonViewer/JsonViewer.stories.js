@@ -25,6 +25,7 @@ const data = {
   rating: 4.54,
   stock: 96,
   available: true,
+  array: [],
   brand: "Infinix",
   category: "laptops",
   thumbnail: "https://i.dummyjson.com/data/products/9/thumbnail.jpg",

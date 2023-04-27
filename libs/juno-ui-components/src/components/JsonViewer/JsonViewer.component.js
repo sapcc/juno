@@ -1,12 +1,12 @@
-import PropTypes from "prop-types"
-import React, { useContext } from "react"
+import PropTypes, { exact } from "prop-types"
+import React, { useContext, useLayoutEffect } from "react"
 import * as themes from "./themes"
 
 // DEFAULT THEME (DARK)
 const DEFAULT_THEME = {
   base00: "var(--color-syntax-highlight-base00)", // background
-  base01: "var(--color-syntax-highlight-base01)", // -
-  base02: "var(--color-syntax-highlight-base02)", // border, type background
+  base01: "var(--color-syntax-highlight-base01)", // toolbar: border
+  base02: "var(--color-syntax-highlight-base02)", // border, type background, border
   base03: "var(--color-syntax-highlight-base03)", // -
   base04: "var(--color-syntax-highlight-base04)", // size
   base05: "var(--color-syntax-highlight-base05)", // types: "undefined"
@@ -36,6 +36,10 @@ const colorMap = (theme) => ({
   index: theme.base0C,
   size: theme.base04,
   border: theme.base02,
+  toolbar: {
+    border: theme.base01,
+    background: theme.base01,
+  },
   icon: {
     expanded: theme.base0D,
     collapsed: theme.base0E,
@@ -88,6 +92,7 @@ const ExpandIcon = ({ expanded }) => {
         width: "1em",
       }}
     >
+      <title>Expand/Collapse</title>
       {expanded ? (
         <path d="M1344 800v64q0 14-9 23t-23 9h-832q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h832q14 0 23 9t9 23zm128 448v-832q0-66-47-113t-113-47h-832q-66 0-113 47t-47 113v832q0 66 47 113t113 47h832q66 0 113-47t47-113zm128-832v832q0 119-84.5 203.5t-203.5 84.5h-832q-119 0-203.5-84.5t-84.5-203.5v-832q0-119 84.5-203.5t203.5-84.5h832q119 0 203.5 84.5t84.5 203.5z"></path>
       ) : (
@@ -96,6 +101,36 @@ const ExpandIcon = ({ expanded }) => {
     </svg>
   )
 }
+
+const ExpandAllIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    class="juno-icon juno-icon-expandMore jn-fill-current jn-global-text "
+    alt="expand more"
+    role="img"
+  >
+    <title>Expand All</title>
+    <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"></path>
+  </svg>
+)
+
+const CollapseAllIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    class="juno-icon juno-icon-expandLess jn-fill-current jn-global-text "
+    alt="expand less"
+    role="img"
+  >
+    <title>Collapse All</title>
+    <path d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z"></path>
+  </svg>
+)
 
 const NameLabel = ({ name }) => {
   const { colors } = useContext(ThemeContext)
@@ -148,12 +183,54 @@ const TypeValueLabel = ({ type, value }) => {
   )
 }
 
+const Toolbar = ({ onExpand, onSearch }) => {
+  const { colors, searchTerm } = useContext(ThemeContext)
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderBottom: `1px solid ${colors.toolbar?.border}`,
+        padding: "3px 0 5px 0",
+      }}
+    >
+      <span style={{ display: "flex" }}>
+        <span style={{ cursor: "pointer" }} onClick={() => onExpand(true)}>
+          <ExpandAllIcon />
+        </span>
+        <span style={{ cursor: "pointer" }} onClick={() => onExpand(false)}>
+          <CollapseAllIcon />
+        </span>
+      </span>
+
+      <input
+        value={searchTerm}
+        onChange={(e) => onSearch(e.target.value)}
+        placeholder="Search"
+        style={{
+          backgroundColor: colors.toolbar.background,
+          borderRadius: 3,
+          padding: "3px 5px",
+          outline: "none",
+        }}
+      />
+    </div>
+  )
+}
+
 // This component renders a row of json entry
 const JsonData = ({ name, value, nestedLevel = 0 }) => {
-  const { colors, expanded, indentWidth } = useContext(ThemeContext)
+  const { colors, expanded, indentWidth, expandAll } = useContext(ThemeContext)
   const [isExpanded, setIsExpanded] = React.useState(
     expanded === true || (expanded !== false && expanded > nestedLevel)
   )
+
+  useLayoutEffect(() => {
+    if (typeof expandAll === "boolean") setIsExpanded(expandAll)
+  }, [expandAll])
+
   const dataType = React.useMemo(() => type(value), [value])
 
   const children = React.useMemo(() => {
@@ -183,7 +260,7 @@ const JsonData = ({ name, value, nestedLevel = 0 }) => {
     <div data-json-viewer={name}>
       <div style={{ letterSpacing: 0.5, padding: "3px 0" }}>
         {/* Expand Button */}
-        {children?.length > 0 && (
+        {children && (
           <>
             <ExpandButton>
               <ExpandIcon expanded={isExpanded} />
@@ -272,8 +349,21 @@ export const JsonViewer = ({
     ...theme,
   }
   const colors = colorMap(currentTheme)
+  const [searchTerm, setSearchTerm] = React.useState("")
+  const [expandAll, setExpandAll] = React.useState(false)
+
+  console.log("============", expandAll, searchTerm)
   return (
-    <ThemeContext.Provider value={{ colors, expanded, indentWidth, truncate }}>
+    <ThemeContext.Provider
+      value={{
+        colors,
+        expanded,
+        expandAll,
+        searchTerm,
+        indentWidth,
+        truncate,
+      }}
+    >
       <div
         data-json-viewer
         style={{
@@ -283,6 +373,13 @@ export const JsonViewer = ({
           ...style,
         }}
       >
+        <Toolbar
+          onExpand={(v) => {
+            setExpandAll(v)
+            setExpandAll(null)
+          }}
+          onSearch={(v) => setSearchTerm(v)}
+        />
         <JsonData name={showRoot ? "root" : false} value={data} />
       </div>
     </ThemeContext.Provider>
