@@ -59,8 +59,27 @@ describe("parseIdTokenData", () => {
         email: "dona.moore@example.com",
         groups: ["test"],
         loginName: "test",
+        userId: "P123456",
       })
     )
+  })
+
+  test("should map valid userId from sub", () => {
+    const data = parseIdTokenData({ sub: "P123456" })
+    expect(data).toEqual(
+      expect.objectContaining({
+        userId: "P123456",
+      })
+    )
+  })
+
+  test("shouldn't map invalid userId from sub", () => {
+    const data1 = parseIdTokenData({ sub: "A123456" })
+    const data2 = parseIdTokenData({ sub: "DD1456" })
+    const data3 = parseIdTokenData({ sub: "123456" })
+    expect(data1).toEqual(expect.objectContaining({ userId: null }))
+    expect(data2).toEqual(expect.objectContaining({ userId: null }))
+    expect(data3).toEqual(expect.objectContaining({ userId: null }))
   })
 
   test("should accept mail property for email", () => {
