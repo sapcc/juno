@@ -6,15 +6,13 @@ import styles from "./styles.scss"
 import { AppShellProvider } from "juno-ui-components"
 import AppContent from "./AppContent"
 import { MessagesProvider } from "messages-provider"
-import useStore from "./store"
+import { useGlobalsActions, useAuthActions } from "./hooks/useStore"
 
 const App = (props) => {
-  const setEndpoint = useStore((state) => state.setEndpoint)
-  const setAuthData = useStore((state) => state.setAuthData)
-  const setDocumentationLinks = useStore((state) => state.setDocumentationLinks)
-  const setDisabledCAs = useStore((state) => state.setDisabledCAs)
-  const setLogin = useStore((state) => state.setLogin)
-  const setLogout = useStore((state) => state.setLogout)
+  const { setData, setLogin, setLogout } = useAuthActions()
+  const { setEndpoint, setDisabledCAs, setDocumentationLinks } =
+    useGlobalsActions()
+
   // fetch the auth token and save the object globally
   // keep it in the app so the issuerurl and clientid have not to be saved on the state
   const oidc = React.useMemo(
@@ -25,11 +23,11 @@ const App = (props) => {
         initialLogin: true,
         refresh: true,
         flowType: "code",
-        onUpdate: (authData) => {
-          setAuthData(authData)
+        onUpdate: (data) => {
+          setData(data)
         },
       }),
-    [setAuthData]
+    [setData]
   )
   setLogin(oidc.login)
   setLogout(oidc.logout)

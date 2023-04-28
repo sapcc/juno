@@ -1,7 +1,13 @@
-import React, { useEffect, useState, useCallback } from "react"
+import React, { useEffect } from "react"
 import { getCertificates } from "../queries"
 import { useMessageStore } from "messages-provider"
-import useStore from "../store"
+import {
+  useSsoShowNew,
+  useSsoActions,
+  useAuthData,
+  useGlobalsEndpoint,
+  useGlobalsDocumentationLinks,
+} from "../hooks/useStore"
 import { parseError } from "../helpers"
 import {
   DataGrid,
@@ -25,11 +31,12 @@ jn-pb-2
 
 const CertificateList = ({ ca }) => {
   const addMessage = useMessageStore((state) => state.addMessage)
-  const showPanel = useStore(useCallback((state) => state.showNewSSO))
-  const setShowNewSSO = useStore(useCallback((state) => state.setShowNewSSO))
-  const authData = useStore(useCallback((state) => state.authData))
-  const endpoint = useStore(useCallback((state) => state.endpoint))
-  const docuLinks = useStore(useCallback((state) => state.documentationLinks))
+
+  const showPanel = useSsoShowNew()
+  const { setShowNewSSO } = useSsoActions()
+  const authData = useAuthData()
+  const endpoint = useGlobalsEndpoint()
+  const docuLinks = useGlobalsDocumentationLinks()
 
   // fetch the certificates
   const { isLoading, isError, data, error } = getCertificates(

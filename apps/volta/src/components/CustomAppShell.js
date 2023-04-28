@@ -7,14 +7,14 @@ import {
   TopNavigationItem,
 } from "juno-ui-components"
 import { Messages } from "messages-provider"
-import useStore from "../store"
+import { useAuthData, useAuthLogout, useSsoActions } from "../hooks/useStore"
 import { useNavigate } from "react-router-dom"
 import HeaderUser from "./HeaderUser"
 
 const CustomAppShell = ({ children }) => {
-  const setShowNewSSO = useStore(useCallback((state) => state.setShowNewSSO))
-  const authData = useStore(useCallback((state) => state.authData))
-  const logout = useStore(useCallback((state) => state.logout))
+  const { setShowNewSSO } = useSsoActions()
+  const authData = useAuthData()
+  const logout = useAuthLogout()
   const navigate = useNavigate()
 
   const backToRootPath = () => {

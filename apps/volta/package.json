@@ -60,6 +60,9 @@
     "react-router-dom": "6.4.5",
     "zustand": "^4.1.5"
   },
+  "importmapExtras": {
+    "zustand/middleware": "^4.1.1"
+  },
   "appProps": {
     "theme": {
       "value": "theme-dark",

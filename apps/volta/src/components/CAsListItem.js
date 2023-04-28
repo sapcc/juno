@@ -2,7 +2,7 @@ import React, { useCallback } from "react"
 import { useSearchParams } from "react-router-dom"
 import { Stack, Button } from "juno-ui-components"
 import IconCertificateAuthority from "../img/Icon_Certificate_Authority.svg"
-import useStore from "../store"
+import { useGlobalsDocumentationLinks } from "../hooks/useStore"
 
 export const cardHeaderCss = `
 font-bold
@@ -20,7 +20,7 @@ w-full
 
 const CAsListItem = ({ ca }) => {
   let [_, setSearchParams] = useSearchParams()
-  const docuLinks = useStore(useCallback((state) => state.documentationLinks))
+  const docuLinks = useGlobalsDocumentationLinks()
 
   const onCASelected = (caName) => {
     // update URL state

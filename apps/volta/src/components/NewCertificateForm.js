@@ -21,14 +21,18 @@ import {
 } from "../lib/csrUtils"
 import { newCertificateMutation } from "../queries"
 import { useCertState } from "../hooks/useCertState"
-import useStore from "../store"
 import { parseError } from "../helpers"
 import { useQueryClient } from "@tanstack/react-query"
 import { useMessageStore } from "messages-provider"
+import {
+  useGlobalsActions,
+  useAuthData,
+  useGlobalsEndpoint,
+} from "../hooks/useStore"
 
 const ALGORITHM_KEY = "RSA-2048"
 
-const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
+const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
   const addMessage = useMessageStore((state) => state.addMessage)
   const resetMessages = useMessageStore((state) => state.resetMessages)
 
@@ -40,8 +44,8 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
     useCallback((state) => state.formValidation)
   )
 
-  const authData = useStore(useCallback((state) => state.authData))
-  const endpoint = useStore(useCallback((state) => state.endpoint))
+  const authData = useAuthData()
+  const endpoint = useGlobalsEndpoint()
   const queryClient = useQueryClient()
 
   const [pemPrivateKey, setPemPrivateKey] = useState(null)
@@ -51,13 +55,8 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
 
   // useMutation can't create a subscription like for useQuery. State can't be shared
   // https://github.com/tannerlinsley/react-query/issues/2304
-  const { isLoading, isError, error, data, isSuccess, mutate } =
-    newCertificateMutation()
-
-  useEffect(() => {
-    if (!onFormLoading) return
-    onFormLoading(isLoading)
-  }, [isLoading])
+  // TODO handle the isLoading
+  const { isLoading, mutate } = newCertificateMutation()
 
   // on form init set the identity attributes
   useEffect(() => {
@@ -100,43 +99,62 @@ const NewCertificateForm = ({ ca, onFormSuccess, onFormLoading }, ref) => {
     })
   }
 
-  useImperativeHandle(ref, () => ({
-    submit() {
-      // reset panel messages
-      resetMessages()
-      // check validaton
-      setShowValidation(formValidation)
-      if (Object.keys(formValidation).length > 0) return
-      mutate(
-        {
-          endpoint: endpoint,
-          ca: ca,
-          bearerToken: authData?.auth?.JWT,
-          formState: formState,
-        },
-        {
-          onSuccess: (data, variables, context) => {
-            addMessage({
-              variant: "success",
-              text: <span>Successfully create SSO cert</span>,
-            })
-            // return response to the parent
-            if (onFormSuccess) {
-              onFormSuccess(pemPrivateKey, data?.certificate)
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        submit() {
+          // reset panel messages
+          resetMessages()
+          // check validaton
+          setShowValidation(formValidation)
+          if (Object.keys(formValidation).length > 0) return
+          mutate(
+            {
+              endpoint: endpoint,
+              ca: ca,
+              bearerToken: authData?.auth?.JWT,
+              formState: formState,
+            },
+            {
+              onSuccess: (data, variables, context) => {
+                addMessage({
+                  variant: "success",
+                  text: <span>Successfully create SSO cert</span>,
+                })
+                // return response to the parent
+                if (onFormSuccess) {
+                  onFormSuccess(pemPrivateKey, data?.certificate)
+                }
+                // refetch cert list
+                queryClient.invalidateQueries("certificates")
+              },
+              onError: (error, variables, context) => {
+                addMessage({
+                  variant: "error",
+                  text: parseError(error),
+                })
+              },
             }
-            // refetch cert list
-            queryClient.invalidateQueries("certificates")
-          },
-          onError: (error, variables, context) => {
-            addMessage({
-              variant: "error",
-              text: parseError(error),
-            })
-          },
-        }
-      )
+          )
+        },
+      }
     },
-  }))
+    [
+      resetMessages,
+      setShowValidation,
+      endpoint,
+      ca,
+      authData,
+      addMessage,
+      onFormSuccess,
+      pemPrivateKey,
+      queryClient,
+      parseError,
+      formState,
+      formValidation,
+    ]
+  )
 
   const textAreaHelpText = () => {
     return (

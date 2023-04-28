@@ -3,7 +3,12 @@ import { getCAs } from "./queries"
 import { useSearchParams } from "react-router-dom"
 import { useMessageStore, MessagesProvider } from "messages-provider"
 import { parseError } from "./helpers"
-import useStore from "./store"
+import {
+  useGlobalsEndpoint,
+  useGlobalsDisabledCAs,
+  useAuthData,
+  useAuthLogin,
+} from "./hooks/useStore"
 
 import WellcomeView from "./components/WellcomeView"
 import CustomAppShell from "./components/CustomAppShell"
@@ -13,10 +18,11 @@ import CertificateList from "./components/CertificateList"
 
 const AppContent = () => {
   const addMessage = useMessageStore((state) => state.addMessage)
-  const endpoint = useStore(useCallback((state) => state.endpoint))
-  const authData = useStore(useCallback((state) => state.authData))
-  const login = useStore(useCallback((state) => state.login))
-  const disabledCAs = useStore(useCallback((state) => state.disabledCAs))
+  const endpoint = useGlobalsEndpoint()
+  const disabledCAs = useGlobalsDisabledCAs()
+  const authData = useAuthData()
+  const login = useAuthLogin()
+
   let [searchParams] = useSearchParams()
 
   // set an error message when oidc fails
