@@ -88,7 +88,7 @@ RUN \
 
 # Check the integrity of the file structure
 RUN chmod +x /juno/scripts/check_file_integrity.sh && \
-  /juno/scripts/check_file_integrity.sh global apps libs assets index.html manifest* importmap*
+  /juno/scripts/check_file_integrity.sh global apps libs assets externals index.html manifest* importmap*
 
 
 ############### FINAL IMAGE! ###################
