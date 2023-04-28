@@ -52,19 +52,27 @@ Default.args = {
 export const Light = Template.bind({})
 Light.args = {
   theme: "light",
+  toolbar: true,
   data,
 }
 
 export const Expanded = Template.bind({})
 Expanded.args = {
-  expanded: Infinity,
+  expanded: true,
+  data,
+}
+
+export const WithToolbar = Template.bind({})
+WithToolbar.args = {
+  expanded: 1,
+  toolbar: true,
   data,
 }
 export const CustomTheme = Template.bind({})
 CustomTheme.args = {
   theme: {
     base00: "rgb(39, 40, 34)",
-    base01: "rgb(245, 245, 245)",
+    base01: "rgba(73, 72, 62,0.8)",
     base02: "rgb(73, 72, 62)",
     base03: "#93a1a1",
     base04: "rgb(165, 159, 133)",
@@ -81,5 +89,6 @@ CustomTheme.args = {
     base0F: "rgb(204, 102, 51)",
   },
   data: { ...data, test2: undefined },
+  toolbar: true,
   truncate: false,
 }

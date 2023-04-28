@@ -5,7 +5,7 @@ import * as themes from "./themes"
 // DEFAULT THEME (DARK)
 const DEFAULT_THEME = {
   base00: "var(--color-syntax-highlight-base00)", // background
-  base01: "var(--color-syntax-highlight-base01)", // toolbar: border
+  base01: "var(--color-syntax-highlight-base01)", // toolbar: border, background
   base02: "var(--color-syntax-highlight-base02)", // border, type background, border
   base03: "var(--color-syntax-highlight-base03)", // -
   base04: "var(--color-syntax-highlight-base04)", // size
@@ -36,6 +36,10 @@ const colorMap = (theme) => ({
   index: theme.base0C,
   size: theme.base04,
   border: theme.base02,
+  highlight: {
+    foreground: theme.base06,
+    background: theme.base02,
+  },
   toolbar: {
     border: theme.base01,
     background: theme.base01,
@@ -43,7 +47,7 @@ const colorMap = (theme) => ({
   icon: {
     expanded: theme.base0D,
     collapsed: theme.base0E,
-    copy: theme.base0F,
+    expandAll: theme.base0E,
   },
   dataType: {
     boolean: theme.base0E,
@@ -77,6 +81,7 @@ const type = (value) => {
 const ThemeContext = React.createContext(DEFAULT_THEME)
 
 // this component renders the expand icon depends on the expanded prop
+// per entry
 const ExpandIcon = ({ expanded }) => {
   const { colors } = useContext(ThemeContext)
   return (
@@ -102,36 +107,90 @@ const ExpandIcon = ({ expanded }) => {
   )
 }
 
-const ExpandAllIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    class="juno-icon juno-icon-expandMore jn-fill-current jn-global-text "
-    alt="expand more"
-    role="img"
-  >
-    <title>Expand All</title>
-    <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"></path>
-  </svg>
-)
+// Toolbar Icon
+const ExpandAllIcon = () => {
+  const { colors } = useContext(ThemeContext)
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill={colors.icon.expandAll}
+      alt="expand more"
+      role="img"
+    >
+      <title>Expand All</title>
+      <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"></path>
+    </svg>
+  )
+}
 
-const CollapseAllIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    class="juno-icon juno-icon-expandLess jn-fill-current jn-global-text "
-    alt="expand less"
-    role="img"
-  >
-    <title>Collapse All</title>
-    <path d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z"></path>
-  </svg>
-)
+// Toolbar Icon
+const CollapseAllIcon = () => {
+  const { colors } = useContext(ThemeContext)
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill={colors.icon.expandAll}
+      alt="expand less"
+      role="img"
+    >
+      <title>Collapse All</title>
+      <path d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z"></path>
+    </svg>
+  )
+}
 
+const StringWithHighlight = ({ value }) => {
+  const { colors, searchTerm } = useContext(ThemeContext)
+
+  const highlight = React.useMemo(() => {
+    if (
+      value === undefined ||
+      value === null ||
+      !searchTerm ||
+      searchTerm === ""
+    )
+      return null
+
+    try {
+      const startIndex = value
+        .toString()
+        .toLowerCase()
+        .indexOf(searchTerm.toLowerCase())
+
+      if (startIndex < 0) return null
+
+      return { start: startIndex, end: startIndex + searchTerm.length }
+    } catch (e) {
+      console.debug("JsonViewer:", e)
+      return null
+    }
+  }, [searchTerm])
+
+  return highlight ? (
+    <>
+      {value.slice(0, highlight.start)}
+      <span
+        style={{
+          backgroundColor: colors.highlight.background,
+          color: colors.highlight.foreground,
+        }}
+      >
+        {value.slice(highlight.start, highlight.end)}
+      </span>
+      {value.slice(highlight.end)}
+    </>
+  ) : (
+    value
+  )
+}
+
+// Key label (left side) with highlight functionality
 const NameLabel = ({ name }) => {
   const { colors } = useContext(ThemeContext)
   const isIndex = typeof name === "number"
@@ -140,13 +199,18 @@ const NameLabel = ({ name }) => {
 
   return (
     <span style={{ color }}>
-      <span style={{ opacity: 0.85 }}>{` ${label} `}</span>:{" "}
+      {" "}
+      <span style={{ opacity: 0.85 }}>
+        <StringWithHighlight value={label} />
+      </span>
+      {" : "}
     </span>
   )
 }
 
 // this component show the right side of the json, type + value
 // for null, NaN and undefined values a background is shown
+// value label (left side) with highlight functionality
 const TypeValueLabel = ({ type, value }) => {
   const { colors, truncate } = useContext(ThemeContext)
   let undefinedValue = ["nan", "null", "undefined"].includes(type)
@@ -178,13 +242,15 @@ const TypeValueLabel = ({ type, value }) => {
           {type}
         </span>
       )}
-      <span>{label}</span>
+      <span>
+        <StringWithHighlight value={label} />
+      </span>
     </span>
   )
 }
 
-const Toolbar = ({ onExpand, onSearch }) => {
-  const { colors, searchTerm } = useContext(ThemeContext)
+const Toolbar = () => {
+  const { colors, searchTerm, onExpandAll, onSearch } = useContext(ThemeContext)
 
   return (
     <div
@@ -197,10 +263,10 @@ const Toolbar = ({ onExpand, onSearch }) => {
       }}
     >
       <span style={{ display: "flex" }}>
-        <span style={{ cursor: "pointer" }} onClick={() => onExpand(true)}>
+        <span style={{ cursor: "pointer" }} onClick={() => onExpandAll(true)}>
           <ExpandAllIcon />
         </span>
-        <span style={{ cursor: "pointer" }} onClick={() => onExpand(false)}>
+        <span style={{ cursor: "pointer" }} onClick={() => onExpandAll(false)}>
           <CollapseAllIcon />
         </span>
       </span>
@@ -222,14 +288,24 @@ const Toolbar = ({ onExpand, onSearch }) => {
 
 // This component renders a row of json entry
 const JsonData = ({ name, value, nestedLevel = 0 }) => {
-  const { colors, expanded, indentWidth, expandAll } = useContext(ThemeContext)
+  const { colors, expanded, searchTerm, indentWidth, expandAll } =
+    useContext(ThemeContext)
   const [isExpanded, setIsExpanded] = React.useState(
     expanded === true || (expanded !== false && expanded > nestedLevel)
   )
 
   useLayoutEffect(() => {
-    if (typeof expandAll === "boolean") setIsExpanded(expandAll)
+    if (!expandAll) return
+    setIsExpanded(expandAll.expanded)
   }, [expandAll])
+
+  useLayoutEffect(() => {
+    if (value && searchTerm) {
+      try {
+        if (JSON.stringify(value).indexOf(searchTerm) > 0) setIsExpanded(true)
+      } catch (e) {}
+    }
+  }, [searchTerm])
 
   const dataType = React.useMemo(() => type(value), [value])
 
@@ -248,7 +324,9 @@ const JsonData = ({ name, value, nestedLevel = 0 }) => {
     ({ children }) => (
       <span
         style={{ cursor: "pointer", display: "inline-block" }}
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={() => {
+          setIsExpanded(!isExpanded)
+        }}
       >
         {children}
       </span>
@@ -338,6 +416,7 @@ const JsonData = ({ name, value, nestedLevel = 0 }) => {
 export const JsonViewer = ({
   data,
   showRoot,
+  toolbar,
   theme,
   expanded,
   indentWidth,
@@ -350,9 +429,8 @@ export const JsonViewer = ({
   }
   const colors = colorMap(currentTheme)
   const [searchTerm, setSearchTerm] = React.useState("")
-  const [expandAll, setExpandAll] = React.useState(false)
+  const [expandAll, setExpandAll] = React.useState(null)
 
-  console.log("============", expandAll, searchTerm)
   return (
     <ThemeContext.Provider
       value={{
@@ -362,6 +440,9 @@ export const JsonViewer = ({
         searchTerm,
         indentWidth,
         truncate,
+        onExpandAll: (v) =>
+          setExpandAll({ expanded: v, timestamp: Date.now() }),
+        onSearch: (v) => setSearchTerm(v),
       }}
     >
       <div
@@ -373,13 +454,7 @@ export const JsonViewer = ({
           ...style,
         }}
       >
-        <Toolbar
-          onExpand={(v) => {
-            setExpandAll(v)
-            setExpandAll(null)
-          }}
-          onSearch={(v) => setSearchTerm(v)}
-        />
+        {toolbar && <Toolbar />}
         <JsonData name={showRoot ? "root" : false} value={data} />
       </div>
     </ThemeContext.Provider>
@@ -391,6 +466,8 @@ JsonViewer.propTypes = {
   data: PropTypes.object.isRequired,
   /** pass a styles object */
   style: PropTypes.object,
+  /** show toolbar */
+  toolbar: PropTypes.bool,
   /** show root key */
   showRoot: PropTypes.bool,
   /** dark, light or map of colors
@@ -444,6 +521,7 @@ JsonViewer.propTypes = {
 JsonViewer.defaultProps = {
   showRoot: false,
   indentWidth: 4,
+  toolbar: false,
   expanded: 1,
   truncate: false,
   style: undefined,
