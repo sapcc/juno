@@ -55,21 +55,7 @@ RUN \
   --output=/tmp/final/importmap.$provider.json  \
   --verbose=$VERBOSE ; \
   \
-  # DEV\
-  node /juno/scripts/generate_importmap.mjs \
-  --provider=$provider \
-  --env=development \
-  --exit-on-error=$EXIT_ON_ERROR \
-  --src=/tmp/final \
-  --external-path=/tmp/final \
-  --base-url=$BASE_URL_PLACEHOLDER \
-  --ignore-externals=false \
-  --output=/tmp/final/importmap.$provider.dev.json  \
-  --verbose=$VERBOSE ; \
-  done || exit 1; \
-  \
   cp /tmp/final/importmap.$DEFAULT_PROVIDER.json /tmp/final/importmap.json ; \
-  cp /tmp/final/importmap.$DEFAULT_PROVIDER.dev.json /tmp/final/importmap.dev.json ; \
   \
   node /juno/scripts/generate_manifest.mjs \
   --src=/tmp/final \
