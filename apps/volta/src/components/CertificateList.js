@@ -40,7 +40,7 @@ const CertificateList = ({ ca }) => {
 
   // fetch the certificates
   const { isLoading, isError, data, error } = getCertificates(
-    authData?.auth?.JWT,
+    authData?.JWT,
     endpoint,
     ca?.name
   )

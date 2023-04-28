@@ -61,7 +61,7 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
   // on form init set the identity attributes
   useEffect(() => {
     if (!setAttribute) return
-    const userId = authData?.auth?.raw?.sub.toUpperCase()
+    const userId = authData?.raw?.sub.toUpperCase()
     if (userId) {
       setAttribute({ key: "identity", value: userId })
     }
@@ -113,7 +113,7 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
             {
               endpoint: endpoint,
               ca: ca,
-              bearerToken: authData?.auth?.JWT,
+              bearerToken: authData?.JWT,
               formState: formState,
             },
             {

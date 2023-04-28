@@ -7,30 +7,34 @@ import {
   TopNavigationItem,
 } from "juno-ui-components"
 import { Messages } from "messages-provider"
-import { useAuthData, useAuthLogout, useSsoActions } from "../hooks/useStore"
-import { useNavigate } from "react-router-dom"
+import {
+  useAuthData,
+  useAuthLogout,
+  useSsoActions,
+  useAuthLoggedIn,
+  useGlobalsActions,
+} from "../hooks/useStore"
 import HeaderUser from "./HeaderUser"
 
 const CustomAppShell = ({ children }) => {
   const { setShowNewSSO } = useSsoActions()
   const authData = useAuthData()
+  const loggedIn = useAuthLoggedIn()
   const logout = useAuthLogout()
-  const navigate = useNavigate()
+  const { setSelectedCA } = useGlobalsActions()
 
   const backToRootPath = () => {
     setShowNewSSO(false)
-    navigate("/")
+    setSelectedCA("")
   }
 
   const pageHeader = React.useMemo(() => {
     return (
       <PageHeader heading="Converged Cloud | Volta" onClick={backToRootPath}>
-        {authData?.loggedIn && (
-          <HeaderUser auth={authData?.auth} logout={logout} />
-        )}
+        {loggedIn && <HeaderUser auth={authData} logout={logout} />}
       </PageHeader>
     )
-  }, [authData])
+  }, [loggedIn, authData, logout])
 
   const topBar = (
     <TopNavigation>

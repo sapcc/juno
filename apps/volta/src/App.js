@@ -1,7 +1,6 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useLayoutEffect } from "react"
 import { oidcSession } from "oauth"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
 import styles from "./styles.scss"
 import { AppShellProvider } from "juno-ui-components"
 import AppContent from "./AppContent"
@@ -29,11 +28,14 @@ const App = (props) => {
       }),
     [setData]
   )
-  setLogin(oidc.login)
-  setLogout(oidc.logout)
+
+  useEffect(() => {
+    setLogin(oidc.login)
+    setLogout(oidc.logout)
+  }, [oidc.login, oidc.logout])
 
   // on load application save the props to be used in oder components
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (props.endpoint) setEndpoint(props.endpoint)
     if (props.disabledcas) setDisabledCAs(props.disabledcas)
     if (props.documentationlinks)
@@ -45,12 +47,7 @@ const App = (props) => {
   return (
     <QueryClientProvider client={queryClient}>
       <MessagesProvider>
-        {/* the router is being used just to make easy use of the url parameters */}
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<AppContent />} />
-          </Routes>
-        </BrowserRouter>
+        <AppContent />
       </MessagesProvider>
     </QueryClientProvider>
   )

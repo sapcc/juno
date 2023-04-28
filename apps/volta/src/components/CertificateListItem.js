@@ -90,7 +90,7 @@ const CertificateListItem = ({ item, ca }) => {
       {
         endpoint: endpoint,
         ca: ca.name,
-        bearerToken: authData?.auth?.JWT,
+        bearerToken: authData?.JWT,
         serial: item.serial,
       },
       {

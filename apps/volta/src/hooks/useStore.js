@@ -24,12 +24,24 @@ const createSsoSlice = (set, get) => ({
 const createAuthSlice = (set, get) => ({
   auth: {
     data: null,
+    isProcessing: false,
+    loggedIn: false,
+    error: null,
     login: null,
     logout: null,
 
     actions: {
-      setData: (data) =>
-        set((state) => ({ auth: { ...state.auth, data: data } })),
+      setData: (data) => {
+        set((state) => ({
+          auth: {
+            ...state.auth,
+            isProcessing: data.isProcessing,
+            loggedIn: data.loggedIn,
+            error: data.error,
+            data: data.auth,
+          },
+        }))
+      },
       setLogin: (func) =>
         set((state) => ({ auth: { ...state.auth, login: func } })),
       setLogout: (func) =>
@@ -43,9 +55,12 @@ const createGlobalsSlice = (set, get) => ({
     endpoint: "",
     disabledCAs: [],
     documentationLinks: {},
+    selectedCA: "",
     actions: {
       setEndpoint: (endpoint) =>
         set((state) => ({ globals: { ...state.globals, endpoint: endpoint } })),
+      setSelectedCA: (ca) =>
+        set((state) => ({ globals: { ...state.globals, selectedCA: ca } })),
       setDisabledCAs: (cas) =>
         set((state) => {
           if (!cas || typeof cas !== "string") return state
@@ -90,12 +105,18 @@ export const useGlobalsDisabledCAs = () =>
   useStore((state) => state.globals.disabledCAs)
 export const useGlobalsDocumentationLinks = () =>
   useStore((state) => state.globals.documentationLinks)
+export const useGlobalsSelectedCA = () =>
+  useStore((state) => state.globals.selectedCA)
 
 export const useGlobalsActions = () =>
   useStore((state) => state.globals.actions)
 
 // Auth exports
 export const useAuthData = () => useStore((state) => state.auth.data)
+export const useAuthIsProcessing = () =>
+  useStore((state) => state.auth.isProcessing)
+export const useAuthLoggedIn = () => useStore((state) => state.auth.loggedIn)
+export const useAuthError = () => useStore((state) => state.auth.error)
 export const useAuthLogin = () => useStore((state) => state.auth.login)
 export const useAuthLogout = () => useStore((state) => state.auth.logout)
 
