@@ -61,6 +61,7 @@ RUN \
   --env=development \
   --exit-on-error=$EXIT_ON_ERROR \
   --src=/tmp/final \
+  --external-path=/tmp/final \
   --base-url=$BASE_URL_PLACEHOLDER \
   --ignore-externals=false \
   --output=/tmp/final/importmap.$provider.dev.json  \
