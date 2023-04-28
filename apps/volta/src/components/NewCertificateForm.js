@@ -25,7 +25,7 @@ import { parseError } from "../helpers"
 import { useQueryClient } from "@tanstack/react-query"
 import { useMessageStore } from "messages-provider"
 import {
-  useGlobalsActions,
+  useSsoActions,
   useAuthData,
   useGlobalsEndpoint,
 } from "../hooks/useStore"
@@ -33,6 +33,7 @@ import {
 const ALGORITHM_KEY = "RSA-2048"
 
 const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
+  const { setIsFormSubmitting } = useSsoActions()
   const addMessage = useMessageStore((state) => state.addMessage)
   const resetMessages = useMessageStore((state) => state.resetMessages)
 
@@ -55,8 +56,12 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
 
   // useMutation can't create a subscription like for useQuery. State can't be shared
   // https://github.com/tannerlinsley/react-query/issues/2304
-  // TODO handle the isLoading
   const { isLoading, mutate } = newCertificateMutation()
+
+  // save when the form is submitting to disable the save button
+  useEffect(() => {
+    setIsFormSubmitting(isLoading)
+  }, [isLoading])
 
   // on form init set the identity attributes
   useEffect(() => {
