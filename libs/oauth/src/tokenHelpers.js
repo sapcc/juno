@@ -59,7 +59,7 @@ export function parseIdTokenData(tokenData) {
     firstName = firstName || userName?.firstName
     lastName = lastName || userName?.lastName
   }
-  const regex = new RegExp("^[c,d,i,s,p,C,D,I,S,P][0-9]*$")
+  const regex = new RegExp("^[c,d,i,s,p,C,D,I,S,P][0-9]$")
   const userId = tokenData?.sub?.match(regex) ? tokenData.sub : null
 
   return {

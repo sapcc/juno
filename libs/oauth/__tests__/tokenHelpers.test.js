@@ -77,9 +77,11 @@ describe("parseIdTokenData", () => {
     const data1 = parseIdTokenData({ sub: "A123456" })
     const data2 = parseIdTokenData({ sub: "DD1456" })
     const data3 = parseIdTokenData({ sub: "123456" })
+    const data4 = parseIdTokenData({ sub: "d" })
     expect(data1).toEqual(expect.objectContaining({ userId: null }))
     expect(data2).toEqual(expect.objectContaining({ userId: null }))
     expect(data3).toEqual(expect.objectContaining({ userId: null }))
+    expect(data4).toEqual(expect.objectContaining({ userId: null }))
   })
 
   test("should accept mail property for email", () => {
