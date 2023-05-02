@@ -43,38 +43,25 @@ WORKDIR /tmp/final
 
 # Create importmaps and manifest
 RUN \
+  cd /tmp/final ; \
   for provider in $PROVIDERS; do \
   echo "===$provider" ; \
   if [ "$DEFAULT_PROVIDER" = "$provider" ]; then  EXIT_ON_ERROR="true"; else EXIT_ON_ERROR="false";  fi; \
   node /juno/scripts/generate_importmap.mjs \
   --provider=$provider \
+  --external-path=externals_$provider \
   --exit-on-error=$EXIT_ON_ERROR \
-  --src=/tmp/final \
+  --src=/. \
   --base-url=$BASE_URL_PLACEHOLDER \
   --ignore-externals=false \
-  --output=/tmp/final/importmap.$provider.json  \
+  --output=./importmap.$provider.json  \
   --verbose=$VERBOSE ; \
   \
-  # DEV\
-  node /juno/scripts/generate_importmap.mjs \
-  --provider=$provider \
-  --env=development \
-  --external-path=externals_dev \
-  --exit-on-error=$EXIT_ON_ERROR \
-  --src=/tmp/final \
-  --external-path=/tmp/final \
-  --base-url=$BASE_URL_PLACEHOLDER \
-  --ignore-externals=false \
-  --output=/tmp/final/importmap.$provider.dev.json  \
-  --verbose=$VERBOSE ; \
-  done || exit 1; \
-  \
-  cp /tmp/final/importmap.$DEFAULT_PROVIDER.json /tmp/final/importmap.json ; \
-  cp /tmp/final/importmap.$DEFAULT_PROVIDER.dev.json /tmp/final/importmap.dev.json ; \
+  cp ./importmap.$DEFAULT_PROVIDER.json ./importmap.json ; \
   \
   node /juno/scripts/generate_manifest.mjs \
-  --src=/tmp/final \
-  --output=/tmp/final/manifest.json \
+  --src=./ \
+  --output=./manifest.json \
   --base-url=$BASE_URL_PLACEHOLDER \
   --verbose=$VERBOSE ;
 
@@ -89,7 +76,7 @@ RUN \
 
 # Check the integrity of the file structure
 RUN chmod +x /juno/scripts/check_file_integrity.sh && \
-  /juno/scripts/check_file_integrity.sh global apps libs assets externals externals_dev index.html manifest* importmap*
+  /juno/scripts/check_file_integrity.sh global apps libs assets externals_* index.html manifest* importmap*
 
 
 ############### FINAL IMAGE! ###################
