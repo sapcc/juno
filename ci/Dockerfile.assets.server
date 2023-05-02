@@ -43,7 +43,6 @@ WORKDIR /tmp/final
 
 # Create importmaps and manifest
 RUN \
-  cd /tmp/final ; \
   for provider in $PROVIDERS; do \
   echo "===$provider" ; \
   if [ "$DEFAULT_PROVIDER" = "$provider" ]; then  EXIT_ON_ERROR="true"; else EXIT_ON_ERROR="false";  fi; \
@@ -51,11 +50,12 @@ RUN \
   --provider=$provider \
   --external-path=externals_$provider \
   --exit-on-error=$EXIT_ON_ERROR \
-  --src=/. \
+  --src=./ \
   --base-url=$BASE_URL_PLACEHOLDER \
   --ignore-externals=false \
   --output=./importmap.$provider.json  \
   --verbose=$VERBOSE ; \
+  done ; \
   \
   cp ./importmap.$DEFAULT_PROVIDER.json ./importmap.json ; \
   \
