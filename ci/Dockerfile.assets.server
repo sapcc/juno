@@ -26,9 +26,6 @@ RUN mkdir -p /tmp/final
 # copy old versions of assets to current layer
 COPY --from=lastbuild /usr/share/nginx/html /tmp/final
 
-# delete ald importmaps and manifests
-RUN rm -rf externals_* importmap* importmap*
-
 # merge latest assets over the old assets 
 # RUN rsync -avu "/tmp/latest/" "/tmp/final"  
 RUN \
@@ -42,6 +39,10 @@ RUN \
 RUN mkdir -p /tmp/final/global && cp /juno/README.md /tmp/final/global/
 
 WORKDIR /tmp/final 
+
+# delete ald importmaps and manifests
+RUN rm -rf externals_* importmap* importmap*
+
 
 # Create importmaps and manifest
 RUN \
