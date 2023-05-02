@@ -17,14 +17,14 @@ import {
 import HeaderUser from "./HeaderUser"
 
 const CustomAppShell = ({ children }) => {
-  const { setShowNewSSO } = useSsoActions()
+  const { setShowNewCert } = useSsoActions()
   const authData = useAuthData()
   const loggedIn = useAuthLoggedIn()
   const logout = useAuthLogout()
   const { setSelectedCA } = useGlobalsActions()
 
   const backToRootPath = () => {
-    setShowNewSSO(false)
+    setShowNewCert(false)
     setSelectedCA("")
   }
 

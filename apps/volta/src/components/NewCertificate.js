@@ -10,14 +10,14 @@ import FormPanelFooter from "./NewCertificateFormPanelFooter"
 
 const NewCertificate = ({ ca }) => {
   const showPanel = useSsoShowNew()
-  const { setShowNewSSO } = useSsoActions()
+  const { setShowNewCert } = useSsoActions()
   const resetMessages = useMessageStore((state) => state.resetMessages)
   const [pk, setPk] = useState(null)
   const [ssoCert, setSsoCert] = useState(null)
   const [formResutlsCopied, setFormResutlsCopied] = useState(false)
 
   const onPanelClose = () => {
-    setShowNewSSO(false)
+    setShowNewCert(false)
     // reset messages
     resetMessages()
     // reset form results

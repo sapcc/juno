@@ -1,13 +1,13 @@
 import { create } from "zustand"
 import { devtools } from "zustand/middleware"
 
-const createSsoSlice = (set, get) => ({
+const createCertSlice = (set, get) => ({
   sso: {
     showNewSSO: false,
     isFormSubmitting: false,
 
     actions: {
-      setShowNewSSO: (show) =>
+      setShowNewCert: (show) =>
         set((state) => ({ sso: { ...state.sso, showNewSSO: show } })),
       setIsFormSubmitting: (isFormSubmitting) => {
         set((state) => ({
@@ -89,7 +89,7 @@ const createGlobalsSlice = (set, get) => ({
 
 const useStore = create(
   devtools((set, get) => ({
-    ...createSsoSlice(set, get),
+    ...createCertSlice(set, get),
     ...createAuthSlice(set, get),
     ...createGlobalsSlice(set, get),
   }))

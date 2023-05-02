@@ -33,7 +33,7 @@ const CertificateList = ({ ca }) => {
   const addMessage = useMessageStore((state) => state.addMessage)
 
   const showPanel = useSsoShowNew()
-  const { setShowNewSSO } = useSsoActions()
+  const { setShowNewCert } = useSsoActions()
   const authData = useAuthData()
   const endpoint = useGlobalsEndpoint()
   const docuLinks = useGlobalsDocumentationLinks()
@@ -56,7 +56,7 @@ const CertificateList = ({ ca }) => {
   }, [error])
 
   const onAddClicked = () => {
-    setShowNewSSO(true)
+    setShowNewCert(true)
   }
 
   return (
