@@ -18,8 +18,7 @@ RUN mkdir -p /tmp/latest
 ADD . /tmp/latest
 WORKDIR /tmp/latest
 
-ARG PROVIDERS="jspm unpkg jsdelivr"
-ARG DEFAULT_PROVIDER="jspm"
+ARG NPM_PROVIDER="jspm"
 ARG VERBOSE="false"
 
 # create folder in tmp for merged assets
@@ -43,21 +42,15 @@ WORKDIR /tmp/final
 
 # Create importmaps and manifest
 RUN \
-  for provider in $PROVIDERS; do \
-  echo "===$provider" ; \
-  if [ "$DEFAULT_PROVIDER" = "$provider" ]; then  EXIT_ON_ERROR="true"; else EXIT_ON_ERROR="false";  fi; \
   node /juno/scripts/generate_importmap.mjs \
-  --provider=$provider \
-  --external-path=externals_$provider \
+  --provider=$NPM_PROVIDER \
+  --external-path=externals \
   --exit-on-error=$EXIT_ON_ERROR \
   --src=./ \
   --base-url=$BASE_URL_PLACEHOLDER \
   --ignore-externals=false \
-  --output=./importmap.$provider.json  \
+  --output=./importmap.json  \
   --verbose=$VERBOSE ; \
-  done ; \
-  \
-  cp ./importmap.$DEFAULT_PROVIDER.json ./importmap.json ; \
   \
   node /juno/scripts/generate_manifest.mjs \
   --src=./ \
@@ -76,7 +69,7 @@ RUN \
 
 # Check the integrity of the file structure
 RUN chmod +x /juno/scripts/check_file_integrity.sh && \
-  /juno/scripts/check_file_integrity.sh global apps libs assets externals_* index.html manifest* importmap*
+  /juno/scripts/check_file_integrity.sh global apps libs assets externals index.html manifest.json importmap.json
 
 
 ############### FINAL IMAGE! ###################

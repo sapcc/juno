@@ -22,7 +22,7 @@ const availableArgs = [
   "--ignore-externals=true|false",
   "--base-url=URL_OF_ASSETS_SERVER",
   "--external-path=PATH_TO_EXTERNALS_ON_LOCAL_MACHINE",
-  "--local=true|false, default is true. If true all external dependencies are downloaded to local and the importmap is linked to local.",
+  "--local=[true|false], default is true. If true all external dependencies are downloaded to local and the importmap is linked to local.",
   "--verbose|-v",
   "--env=[production|development]",
   "--help|-h",
@@ -251,7 +251,7 @@ const downloadFile = (url, path) => {
         })
       })
       .on("error", (err) => {
-        reject(error)
+        reject(err)
       })
   })
 }
@@ -381,6 +381,16 @@ const start = async () => {
     Object.keys(packageURLs).forEach((url) => {
       const path = url.replace("https://ga.jspm.io", options.externalPath)
       downloadFile(url, path)
+      try {
+        // download source map
+        // for that we have to replace .js with .js.map on the end
+        downloadFile(
+          url.replace(/\.js$/, ".js.map"),
+          path.replace(/\.js$/, ".js.map")
+        )
+      } catch (e) {
+        console.warn(e)
+      }
     })
   }
   console.log("Write importmap to ", options.output)
