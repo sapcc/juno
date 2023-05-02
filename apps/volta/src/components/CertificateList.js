@@ -2,8 +2,9 @@ import React, { useEffect } from "react"
 import { getCertificates } from "../queries"
 import { useMessageStore } from "messages-provider"
 import {
-  useSsoShowNew,
-  useSsoActions,
+  useCertShowNew,
+  useRevokedList,
+  useCertActions,
   useAuthData,
   useGlobalsEndpoint,
   useGlobalsDocumentationLinks,
@@ -31,9 +32,9 @@ jn-pb-2
 
 const CertificateList = ({ ca }) => {
   const addMessage = useMessageStore((state) => state.addMessage)
-
-  const showPanel = useSsoShowNew()
-  const { setShowNewCert } = useSsoActions()
+  const showPanel = useCertShowNew()
+  const { setShowNewCert } = useCertActions()
+  const revokedList = useRevokedList()
   const authData = useAuthData()
   const endpoint = useGlobalsEndpoint()
   const docuLinks = useGlobalsDocumentationLinks()
@@ -42,8 +43,11 @@ const CertificateList = ({ ca }) => {
   const { isLoading, isError, data, error } = getCertificates(
     authData?.JWT,
     endpoint,
-    ca?.name
+    ca?.name,
+    revokedList
   )
+
+  console.log("CertificateList:::::", data, revokedList)
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {

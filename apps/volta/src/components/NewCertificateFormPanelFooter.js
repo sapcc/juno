@@ -1,9 +1,9 @@
 import React from "react"
 import { Button, Panel, PanelFooter } from "juno-ui-components"
-import { useSsoIsFormSubmitting } from "../hooks/useStore"
+import { useCertIsFormSubmitting } from "../hooks/useStore"
 
 const NewCertificateFormPanelFooter = ({ onCancel, onSave }) => {
-  const isFormSubmitting = useSsoIsFormSubmitting()
+  const isFormSubmitting = useCertIsFormSubmitting()
   return (
     <PanelFooter>
       <Button onClick={onCancel} variant="subdued" disabled={isFormSubmitting}>

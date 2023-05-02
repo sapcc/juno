@@ -2,20 +2,43 @@ import { create } from "zustand"
 import { devtools } from "zustand/middleware"
 
 const createCertSlice = (set, get) => ({
-  sso: {
-    showNewSSO: false,
+  cert: {
+    showNewCert: false,
     isFormSubmitting: false,
+    revokedList: [], // used to keep track of the revoked certs and poll until we get the right state
 
     actions: {
       setShowNewCert: (show) =>
-        set((state) => ({ sso: { ...state.sso, showNewSSO: show } })),
+        set((state) => ({ cert: { ...state.cert, showNewCert: show } })),
       setIsFormSubmitting: (isFormSubmitting) => {
         set((state) => ({
-          sso: {
-            ...state.sso,
+          cert: {
+            ...state.cert,
             isFormSubmitting: isFormSubmitting,
           },
         }))
+      },
+      addRevokedCert: (ca, certSN) => {
+        set((state) => {
+          const index = state.cert.revokedList.findIndex(
+            (i) => i.certSN === certSN && i.ca === ca
+          )
+          if (index >= 0) return state
+          const newList = state.cert.revokedList.slice()
+          newList.push({ certSN: certSN, ca: ca })
+          return { cert: { ...state.cert, revokedList: newList } }
+        })
+      },
+      removeRevokedCert: (ca, certSN) => {
+        set((state) => {
+          const index = state.cert.revokedList.findIndex(
+            (i) => i.certSN === certSN && i.ca === ca
+          )
+          if (index < 0) return state
+          const newList = state.cert.revokedList.slice()
+          newList.splice(index, 1)
+          return { cert: { ...state.cert, revokedList: newList } }
+        })
       },
     },
   },
@@ -122,9 +145,10 @@ export const useAuthLogout = () => useStore((state) => state.auth.logout)
 
 export const useAuthActions = () => useStore((state) => state.auth.actions)
 
-// SSO exports
-export const useSsoShowNew = () => useStore((state) => state.sso.showNewSSO)
-export const useSsoIsFormSubmitting = () =>
-  useStore((state) => state.sso.isFormSubmitting)
+// Cert exports
+export const useCertShowNew = () => useStore((state) => state.cert.showNewCert)
+export const useCertIsFormSubmitting = () =>
+  useStore((state) => state.cert.isFormSubmitting)
+export const useRevokedList = () => useStore((state) => state.cert.revokedList)
 
-export const useSsoActions = () => useStore((state) => state.sso.actions)
+export const useCertActions = () => useStore((state) => state.cert.actions)

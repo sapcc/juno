@@ -10,14 +10,14 @@ import { Messages } from "messages-provider"
 import {
   useAuthData,
   useAuthLogout,
-  useSsoActions,
+  useCertActions,
   useAuthLoggedIn,
   useGlobalsActions,
 } from "../hooks/useStore"
 import HeaderUser from "./HeaderUser"
 
 const CustomAppShell = ({ children }) => {
-  const { setShowNewCert } = useSsoActions()
+  const { setShowNewCert } = useCertActions()
   const authData = useAuthData()
   const loggedIn = useAuthLoggedIn()
   const logout = useAuthLogout()

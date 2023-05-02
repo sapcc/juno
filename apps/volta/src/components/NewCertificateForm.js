@@ -25,7 +25,7 @@ import { parseError } from "../helpers"
 import { useQueryClient } from "@tanstack/react-query"
 import { useMessageStore } from "messages-provider"
 import {
-  useSsoActions,
+  useCertActions,
   useAuthData,
   useGlobalsEndpoint,
 } from "../hooks/useStore"
@@ -33,7 +33,7 @@ import {
 const ALGORITHM_KEY = "RSA-2048"
 
 const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
-  const { setIsFormSubmitting } = useSsoActions()
+  const { setIsFormSubmitting } = useCertActions()
   const addMessage = useMessageStore((state) => state.addMessage)
   const resetMessages = useMessageStore((state) => state.resetMessages)
 
@@ -131,8 +131,8 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
                 if (onFormSuccess) {
                   onFormSuccess(pemPrivateKey, data?.certificate)
                 }
-                // refetch cert list
-                queryClient.invalidateQueries("certificates")
+                // Invalidate every query with a key that starts with `certificates`
+                queryClient.invalidateQueries({ queryKey: ["certificates"] })
               },
               onError: (error, variables, context) => {
                 addMessage({
