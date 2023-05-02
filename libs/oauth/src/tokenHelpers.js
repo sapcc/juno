@@ -59,6 +59,8 @@ export function parseIdTokenData(tokenData) {
     firstName = firstName || userName?.firstName
     lastName = lastName || userName?.lastName
   }
+  const regex = new RegExp("^[c,d,i,s,p,C,D,I,S,P][0-9]+$")
+  const userId = tokenData?.sub?.match(regex) ? tokenData.sub : null
 
   return {
     loginName,
@@ -69,5 +71,6 @@ export function parseIdTokenData(tokenData) {
     expiresAt: tokenData.exp * 1000,
     expiresAtDate: new Date(tokenData.exp * 1000),
     groups: tokenData.groups,
+    userId,
   }
 }
