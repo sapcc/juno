@@ -1,6 +1,9 @@
 /** @module ImportMap */
 /**
  * This module generates importmap to be used in browser to share libs between juno apps.
+ * It uses the jspm generator to resolve dependencies, build the importmap and download the
+ * appropriate files.
+ * In the end, all dependencies listed in the import map are loaded from the juno Assets Server.
  */
 
 import glob from "glob"

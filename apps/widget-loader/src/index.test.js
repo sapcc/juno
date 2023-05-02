@@ -20,8 +20,8 @@ Object.defineProperty(document, "currentScript", {
 
 require("./index.js")
 
-describe("window.__junoWidgetLoader", () => {
-  test("window.__junoWidgetLoader is defined", async () => {
-    expect(window.__junoWidgetLoader).toBeDefined()
+describe("window.__JUNO_WIDGET_LOADER", () => {
+  test("window.__JUNO_WIDGET_LOADER is defined", async () => {
+    expect(window.__JUNO_WIDGET_LOADER).toBeDefined()
   })
 })
