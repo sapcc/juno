@@ -382,12 +382,10 @@ const start = async () => {
       const path = url.replace("https://ga.jspm.io", options.externalPath)
       downloadFile(url, path)
       try {
+        const mapPath = (src) => src.replace(/\.(m?js)$/, ".$1.map")
         // download source map
         // for that we have to replace .js with .js.map on the end
-        downloadFile(
-          url.replace(/\.js$/, ".js.map"),
-          path.replace(/\.js$/, ".js.map")
-        )
+        downloadFile(mapPath(url), mapPath(path))
       } catch (e) {
         console.warn(e)
       }
