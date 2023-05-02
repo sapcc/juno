@@ -97,6 +97,11 @@ RUN rm -rf /etc/nginx/conf.d/default.conf && echo -e $'\
   server { \n \
   \tlisten       80; \n \
   \tserver_name  localhost; \n \
+  \tinclude mime.types; \n \
+  \ttypes \n \ 
+  \t{ \n \
+  \t\tapplication/javascript mjs js; \n \
+  \t} \n \
   \n \
   \tlocation / { \n \
   \t\troot   /usr/share/nginx/html; \n \
