@@ -3,7 +3,7 @@ const fs = require("node:fs/promises")
 const pkg = require("./package.json")
 
 // https://github.com/naecoo/esbuild-plugin-replace
-const { replace } = require('esbuild-plugin-replace');
+const { replace } = require("esbuild-plugin-replace")
 
 // this function generates app props based on package.json and propSecrets.json
 const appProps = require("../../helpers/appProps")
@@ -26,7 +26,7 @@ const serve = args.indexOf("--serve") >= 0
 const green = "\x1b[32m%s\x1b[0m"
 const yellow = "\x1b[33m%s\x1b[0m"
 const clear = "\033c"
-const shimVersion = pkg.peerDependencies["es-module-shims"] || "noShimVersionSet"
+const shimVersion = pkg.importmapShim["deployed"] || "noShimVersionSet"
 
 esbuild
   .context({
@@ -42,7 +42,7 @@ esbuild
         : [],
     plugins: [
       replace({
-        '__shimVersion': `${shimVersion}`
+        __shimVersion: `${shimVersion}`,
       }),
       {
         name: "start/end",

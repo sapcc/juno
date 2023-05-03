@@ -20,6 +20,9 @@
   "peerDependencies": {
     "es-module-shims": "1.6.2"
   },
+  "importmapShim": {
+    "deployed": "1.6.2"
+  },
   "babel": {
     "presets": [
       "@babel/preset-env"
