@@ -47,8 +47,6 @@ const CertificateList = ({ ca }) => {
     revokedList
   )
 
-  console.log("CertificateList:::::", data, revokedList)
-
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
     if (error) {
@@ -101,6 +99,12 @@ const CertificateList = ({ ca }) => {
                     <CertificateListItem key={i} item={item} ca={ca} />
                   ))}
                 </DataGrid>
+                {data?.length > 10 && (
+                  <Stack
+                    distribution="end"
+                    className="p-6"
+                  >{`${data?.length} Items`}</Stack>
+                )}
               </>
             )}
             {data && data.length === 0 && (
