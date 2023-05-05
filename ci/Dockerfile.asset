@@ -27,7 +27,7 @@ RUN npm run build-libs
 RUN \
   ASSET_NAME=$(jq -r .name /juno/$ASSET_PATH/package.json) ; \ 
   npm install --silent --workspace $ASSET_NAME ; \ 
-  npm --workspace $ASSET_NAME run test --if-present ; \
+  npm --workspace $ASSET_NAME run test --if-present && \
   NODE_ENV=production IGNORE_EXTERNALS=false npm --workspace $ASSET_NAME run build --if-present
 
 # COPY RESULTS OF THE BUILD TO /tmp
