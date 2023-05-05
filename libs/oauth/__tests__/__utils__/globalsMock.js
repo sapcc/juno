@@ -3,8 +3,8 @@ globalThis.console.warn = jest.fn()
 globalThis.console.info = jest.fn()
 
 delete global.window.location
-global.window = Object.create(window)
-global.window.location = {}
+// global.window = Object.create(window)
+// global.window.location = {}
 
 global.window.location = {
   ancestorOrigins: null,
