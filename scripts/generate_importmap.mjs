@@ -1,13 +1,17 @@
 /** @module ImportMap */
 /**
  * This module generates importmap to be used in browser to share libs between juno apps.
+ * It uses the jspm generator to resolve dependencies, build the importmap and download the
+ * appropriate files.
+ * In the end, all dependencies listed in the import map are loaded from the juno Assets Server.
  */
 
 import glob from "glob"
 import { Generator } from "@jspm/generator"
 import fs from "fs"
-import path from "path"
+import pathLib from "path"
 import url from "url"
+import https from "https"
 // import { exit } from "node:process"
 
 // ignore-externals allows us to bundle all libs into one final file.
@@ -20,6 +24,8 @@ const availableArgs = [
   "--output=FILE_PATH",
   "--ignore-externals=true|false",
   "--base-url=URL_OF_ASSETS_SERVER",
+  "--external-path=PATH_TO_EXTERNALS_ON_LOCAL_MACHINE",
+  "--local=[true|false], default is true. If true all external dependencies are downloaded to local and the importmap is linked to local.",
   "--verbose|-v",
   "--env=[production|development]",
   "--help|-h",
@@ -29,10 +35,12 @@ const availableArgs = [
 const options = {
   provider: "jspm",
   exitOnError: true,
-  src: path.dirname(url.fileURLToPath(import.meta.url)),
+  src: pathLib.dirname(url.fileURLToPath(import.meta.url)),
   baseUrl: "%BASE_URL%",
   output: "./importmap.json",
   ignoreExternals: false,
+  externalPath: "externals",
+  local: true,
   verbose: false,
   v: false,
   env: "production",
@@ -61,7 +69,7 @@ if (options.help || options.h) {
 }
 
 const PACKAGES_PATHS = ["apps", "libs"]
-const rootPath = path.resolve(options.src)
+const rootPath = pathLib.resolve(options.src)
 const globPattern = `${rootPath}/@(${PACKAGES_PATHS.join("|")})/**/package.json`
 const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
 const files = glob.sync(globPattern, { ignore: [`node_modules/**`] })
@@ -193,127 +201,202 @@ const mergePkgImportMaps = (pkgPath, pkgImportMaps) => {
   }
 }
 
-console.log("CREATE IMPORTMAP")
-for (let name in packageRegistry) {
-  for (let version in packageRegistry[name]) {
-    // registered package data
-    const regPkg = findRegisteredPackage(name, version)
+const packageURLs = {}
 
-    // scope for juno packages
-    // Example: %BASE_URL%/apps/dashboard@latest/
-    const pkgPath = `${options.baseUrl}/${regPkg.path}/`
-    // import name e.g. @juno/PACKAGE_NAME@VERSION
-    const pkgImportName = `@juno/${name}@${version}`
+/**
+ * This function gets package dependencies from jspm and
+ * stores them in packageURLs map
+ * @param {string} name of the package, can contain version
+ * @returns {object} importmap
+ */
+const installPackage = async (name) => {
+  const generator = new Generator({
+    env: [options.env, "browser"],
+    defaultProvider: options.provider,
+  })
+  await generator.install(name)
 
-    // add packages to imports under @juno prefix
-    importMap.imports[pkgImportName] = pkgPath + regPkg.entryFile
-    importMap.imports[pkgImportName + "/"] = pkgPath + regPkg.entryDir
+  // register external deps for download
+  if (options.local) {
+    const html = await generator.htmlInject(`<!doctype html>`, {
+      comment: false,
+      preload: true,
+    })
 
-    // move to the next item unless peer dependencies exist
-    if (!regPkg.peerDependencies) continue
+    // store urls of all dep packages
+    const matches = [
+      ...html.matchAll(/<link rel="modulepreload" href="(.+)" \/>/g),
+    ]
+    matches.forEach((m) => (packageURLs[m[1]] = true))
+  }
 
-    // create scope for current package path
-    importMap.scopes[pkgPath] = { ...importMap.scopes[pkgPath] }
+  return generator.getMap()
+}
 
-    // container ro collect all dependency importmaps
-    const pkgImportMaps = []
+/**
+ * This function downloads a remote package from jspm to local path
+ * @param {string} url
+ * @param {string} path
+ * @returns void
+ */
+const downloadFile = (url, path) => {
+  return new Promise((resolve, reject) => {
+    fs.mkdirSync(pathLib.dirname(path), { recursive: true })
+    const file = fs.createWriteStream(path)
+    https
+      .get(url, (response) => {
+        response.pipe(file)
 
-    for (let depName in regPkg.peerDependencies) {
-      let depVersion = regPkg.peerDependencies[depName]
+        // The whole response has been received. Print out the result.
+        response.on("end", () => {
+          file.close()
+          resolve()
+        })
+      })
+      .on("error", (err) => {
+        reject(err)
+      })
+  })
+}
 
-      // in peer dependencies could our libs contain a url as version.
-      // in this case we try to extract the version from url.
-      // Example: "oauth": "https://assets.juno.global.cloud.sap/libs/oauth@1.0.0/package.tgz" -> "libs/oauth@1.0.0/build/index.js" 
-      if(depVersion.startsWith("http")) {
-        const versionMatch = depVersion.match(/^http.*@([^/]+).*$/)
-        if(versionMatch) depVersion = versionMatch[1]
-      }
-      // ownPackage = juno lib
-      const ownPackage = findRegisteredPackage(depName, depVersion)
+const start = async () => {
+  console.log("CREATE IMPORTMAP")
+  for (let name in packageRegistry) {
+    for (let version in packageRegistry[name]) {
+      // registered package data
+      const regPkg = findRegisteredPackage(name, version)
 
-      if (ownPackage) {
-        /* OWN PACKAGE -> add it to the package dependencies
+      // scope for juno packages
+      // Example: %BASE_URL%/apps/dashboard@latest/
+      const pkgPath = `${options.baseUrl}/${regPkg.path}/`
+      // import name e.g. @juno/PACKAGE_NAME@VERSION
+      const pkgImportName = `@juno/${name}@${version}`
+
+      // add packages to imports under @juno prefix
+      importMap.imports[pkgImportName] = pkgPath + regPkg.entryFile
+      importMap.imports[pkgImportName + "/"] = pkgPath + regPkg.entryDir
+
+      // move to the next item unless peer dependencies exist
+      if (!regPkg.peerDependencies && !regPkg.importmapExtras) continue
+
+      // create scope for current package path
+      importMap.scopes[pkgPath] = { ...importMap.scopes[pkgPath] }
+
+      // container ro collect all dependency importmaps
+      const pkgImportMaps = []
+
+      for (let depName in regPkg.peerDependencies) {
+        let depVersion = regPkg.peerDependencies[depName]
+
+        // in peer dependencies could our libs contain a url as version.
+        // in this case we try to extract the version from url.
+        // Example: "oauth": "https://assets.juno.global.cloud.sap/libs/oauth@1.0.0/package.tgz" -> "libs/oauth@1.0.0/build/index.js"
+        if (depVersion.startsWith("http")) {
+          const versionMatch = depVersion.match(/^http.*@([^/]+).*$/)
+          if (versionMatch) depVersion = versionMatch[1]
+        }
+        // ownPackage = juno lib
+        const ownPackage = findRegisteredPackage(depName, depVersion)
+
+        if (ownPackage) {
+          /* OWN PACKAGE -> add it to the package dependencies
           Example: {
             "%BASE_URL%/apps/dashboard/": {
               "juno-ui-components": "%BASE_URL%/libs/juno-ui-components@VERSION/build/index.js"
             }
           }
          */
-        console.log(
-          "\x1b[33m%s\x1b[0m",
-          `(-) ${name}@${version} install internal dependency ${ownPackage.name}@${ownPackage.version} from ${ownPackage.path}`
-        )
+          console.log(
+            "\x1b[33m%s\x1b[0m",
+            `(-) ${name}@${version} install internal dependency ${ownPackage.name}@${ownPackage.version} from ${ownPackage.path}`
+          )
 
-        importMap.scopes[pkgPath][
-          `${ownPackage.name}/`
-        ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryDir}`
-        importMap.scopes[pkgPath][
-          ownPackage.name
-        ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryFile}`
-      } else {
-        // EXTERNAL PACKAGE -> use generator to get all dependencies
-        console.log(
-          "\x1b[36m%s\x1b[0m",
-          `(+) ${name}@${version} install external dependency ${depName}@${depVersion}`
-        )
-        // create generator
-        let generator = new Generator({
-          env: [options.env, "browser"],
-          defaultProvider: options.provider,
-        })
+          importMap.scopes[pkgPath][
+            `${ownPackage.name}/`
+          ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryDir}`
+          importMap.scopes[pkgPath][
+            ownPackage.name
+          ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryFile}`
+        } else {
+          // EXTERNAL PACKAGE -> use generator to get all dependencies
+          console.log(
+            "\x1b[36m%s\x1b[0m",
+            `(+) ${name}@${version} install external dependency ${depName}@${depVersion}`
+          )
 
-        try {
-          // get the importmap for current dependency
-          await generator.install(`${depName}@${depVersion}`)
-          // save importmap
-          pkgImportMaps.push(generator.getMap())
+          try {
+            // get the importmap for current dependency
+            const map = await installPackage(`${depName}@${depVersion}`)
+            // save importmap
+            pkgImportMaps.push(map)
 
-          // Fix react-dom/client dependency
-          if (depName === "react-dom" && depVersion >= "18.2") {
-            console.log(
-              "\x1b[33m%s\x1b[0m",
-              `(!) ${name}@${version} FIX react-dom, add react-dom/client`
-            )
-            generator = new Generator({
-              env: [options.env, "browser"],
-              defaultProvider: options.provider,
-            })
-            await generator.install(`react-dom@${depVersion}/client`)
-            pkgImportMaps.push(generator.getMap())
+            // Fix react-dom/client dependency
+            if (depName === "react-dom" && depVersion >= "18.2") {
+              console.log(
+                "\x1b[33m%s\x1b[0m",
+                `(!) ${name}@${version} FIX react-dom, add react-dom/client`
+              )
+              const map = await installPackage(`react-dom@${depVersion}/client`)
+              pkgImportMaps.push(map)
+            }
+          } catch (error) {
+            console.log(error)
+            if (options.exitOnError) process.exit(1)
           }
-        } catch (error) {
-          console.log(error)
-          if (options.exitOnError) process.exit(1)
         }
-
-        pkgImportMaps.push(generator.getMap())
       }
-    }
 
-    if (regPkg.importmapExtras) {
-      for (let dep in regPkg.importmapExtras) {
-        const version = regPkg.importmapExtras[dep]
-        const [_, name, subPath] = dep.match(/^(.+)\/([^\/]+)$/)
-        console.log(
-          "\x1b[33m%s\x1b[0m",
-          `(!) ${regPkg.name}@${regPkg.version} install extra package: ${name}@${version}/${subPath}`
-        )
-        let generator = new Generator({
-          env: [options.env, "browser"],
-          defaultProvider: options.provider,
-        })
-        await generator.install(`${name}@${version}/${subPath}`)
-        pkgImportMaps.push(generator.getMap())
+      if (regPkg.importmapExtras) {
+        for (let dep in regPkg.importmapExtras) {
+          const version = regPkg.importmapExtras[dep]
+          const [_, name, subPath] = dep.match(/^(.+)\/([^\/]+)$/)
+          console.log(
+            "\x1b[33m%s\x1b[0m",
+            `(!) ${regPkg.name}@${regPkg.version} install extra package: ${name}@${version}/${subPath}`
+          )
+          const map = await installPackage(`${name}@${version}/${subPath}`)
+          pkgImportMaps.push(map)
+        }
       }
-    }
 
-    mergePkgImportMaps(pkgPath, pkgImportMaps)
+      mergePkgImportMaps(pkgPath, pkgImportMaps)
+    }
   }
+
+  if (options.verbose || options.v) {
+    console.log("==============IMPORTMAP==============")
+    console.log(JSON.stringify(importMap, null, 2))
+  }
+
+  let importMapString = JSON.stringify(importMap, null, 2)
+
+  // link deps in importmap to local
+  if (options.local) {
+    // replace jspm host with locals host placeholder
+    importMapString = importMapString.replaceAll(
+      "https://ga.jspm.io",
+      `${options.baseUrl}/${options.externalPath}`
+    )
+
+    console.log("download packages to", options.externalPath)
+    fs.rmSync(options.externalPath, { recursive: true, force: true })
+    fs.mkdirSync(options.externalPath, { recursive: true })
+    Object.keys(packageURLs).forEach((url) => {
+      const path = url.replace("https://ga.jspm.io", options.externalPath)
+      downloadFile(url, path)
+      try {
+        const mapPath = (src) => src.replace(/\.(m?js)$/, ".$1.map")
+        // download source map
+        // for that we have to replace .js with .js.map on the end
+        downloadFile(mapPath(url), mapPath(path))
+      } catch (e) {
+        console.warn(e)
+      }
+    })
+  }
+  console.log("Write importmap to ", options.output)
+
+  fs.writeFileSync(options.output, importMapString)
 }
 
-if (options.verbose || options.v) {
-  console.log("==============IMPORTMAP==============")
-  console.log(JSON.stringify(importMap, null, 2))
-}
-console.log("Write importmap to ", options.output)
-fs.writeFileSync(options.output, JSON.stringify(importMap, null, 2))
+start()

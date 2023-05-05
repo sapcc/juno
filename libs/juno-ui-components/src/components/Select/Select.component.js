@@ -37,7 +37,7 @@ const contentStyles = `
   jn-bg-theme-background-lvl-1
   jn-w-[var(--radix-select-trigger-width)]
   jn-max-h-[var(--radix-select-content-available-height)]
-  jn-z-[999]
+  jn-z-[9999]
 `
 
 const scrollButtonStyles = `

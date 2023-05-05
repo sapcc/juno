@@ -20,15 +20,14 @@ Default.args = {
     <Message key={0}>Juno styles are added inline</Message>,
     <CodeBlock key={1}>
       {`
-{/* AppShellProvider renders a ShadowRoot, StyleProvider and PortalProvider */}      
-<ShadowRoot>
-  <StyleProvider>
-    <style>{/* styles */}</style>
-    <PortalProvider>
-      {/* App */}
-    </PortalProvider>
-  </StyleProvider>
-</ShadowRoot>`}
+export default => (props) => {
+  render (
+    <AppShellProvider>
+      <style>{/* app styles */}</style>
+      <App {...props} />
+    </AppShellProvider>
+  )
+}`}
     </CodeBlock>,
   ],
 }
@@ -42,13 +41,14 @@ NoShadowRoot.args = {
     </Message>,
     <CodeBlock key={1}>
       {`
-{/* AppShellProvider renders a StyleProvider and PortalProvider */}
-<StyleProvider>
-  <style>{/* styles */}</style>
-  <PortalProvider>
-    {/* App */}
-  </PortalProvider>
-</StyleProvider>`}
+export default => (props) => {
+  render (
+    <AppShellProvider shadowRoot={false}>
+      <style>{/* app styles */}</style>
+      <App {...props} />
+    </AppShellProvider>
+  )
+}`}
     </CodeBlock>,
   ],
 }
@@ -61,12 +61,14 @@ StylesInHead.args = {
     <Message key={0}>Juno styles are added to the head tag</Message>,
     <CodeBlock key={1}>
       {`
-{/* AppShellProvider renders a StyleProvider and PortalProvider */}
-<StyleProvider>
-  <PortalProvider>
-    {/* App */}
-  </PortalProvider>
-</StyleProvider>`}
+export default => (props) => {
+  render (
+    <AppShellProvider shadowRoot={false} stylesWrapper="head">
+      <style>{/* app styles */}</style>
+      <App {...props} />
+    </AppShellProvider>
+  )
+}`}
     </CodeBlock>,
   ],
 }
@@ -79,13 +81,29 @@ StylesInline.args = {
     <Message key={0}>Juno style are added inline</Message>,
     <CodeBlock key={1}>
       {`
-{/* AppShellProvider renders a StyleProvider and PortalProvider */}
-<StyleProvider>
-  <style>{/* styles */}</style>
-  <PortalProvider>
-    {/* App */}
-  </PortalProvider>
-</StyleProvider>`}
+export default => (props) => {
+  render (
+    <AppShellProvider shadowRoot={false} stylesWrapper="inline">
+      <style>{/* app styles */}</style>
+      <App {...props} />
+    </AppShellProvider>
+  )
+}`}
     </CodeBlock>,
+  ],
+}
+
+export const ThemeLight = Template.bind({})
+ThemeLight.args = {
+  theme: "theme-light",
+  children: [
+    <Message key={0}>Light Theme</Message>,
+    <CodeBlock key={1}>{`
+<AppShellProvider theme="theme-light">
+  <style>{/* app styles */}</style>
+  <App>
+    {/* App Body */}
+  </App>
+</AppShellProvider>`}</CodeBlock>,
   ],
 }

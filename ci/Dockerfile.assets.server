@@ -18,8 +18,7 @@ RUN mkdir -p /tmp/latest
 ADD . /tmp/latest
 WORKDIR /tmp/latest
 
-ARG PROVIDERS="jspm unpkg jsdelivr"
-ARG DEFAULT_PROVIDER="jspm"
+ARG NPM_PROVIDER="jspm"
 ARG VERBOSE="false"
 
 # create folder in tmp for merged assets
@@ -41,38 +40,25 @@ RUN mkdir -p /tmp/final/global && cp /juno/README.md /tmp/final/global/
 
 WORKDIR /tmp/final 
 
+# delete ald importmaps and manifests
+RUN rm -rf externals_* importmap* importmap*
+
+
 # Create importmaps and manifest
 RUN \
-  for provider in $PROVIDERS; do \
-  echo "===$provider" ; \
-  if [ "$DEFAULT_PROVIDER" = "$provider" ]; then  EXIT_ON_ERROR="true"; else EXIT_ON_ERROR="false";  fi; \
   node /juno/scripts/generate_importmap.mjs \
-  --provider=$provider \
+  --provider=$NPM_PROVIDER \
+  --external-path=externals \
   --exit-on-error=$EXIT_ON_ERROR \
-  --src=/tmp/final \
+  --src=./ \
   --base-url=$BASE_URL_PLACEHOLDER \
   --ignore-externals=false \
-  --output=/tmp/final/importmap.$provider.json  \
+  --output=./importmap.json  \
   --verbose=$VERBOSE ; \
-  \
-  # DEV\
-  node /juno/scripts/generate_importmap.mjs \
-  --provider=$provider \
-  --env=development \
-  --exit-on-error=$EXIT_ON_ERROR \
-  --src=/tmp/final \
-  --base-url=$BASE_URL_PLACEHOLDER \
-  --ignore-externals=false \
-  --output=/tmp/final/importmap.$provider.dev.json  \
-  --verbose=$VERBOSE ; \
-  done || exit 1; \
-  \
-  cp /tmp/final/importmap.$DEFAULT_PROVIDER.json /tmp/final/importmap.json ; \
-  cp /tmp/final/importmap.$DEFAULT_PROVIDER.dev.json /tmp/final/importmap.dev.json ; \
   \
   node /juno/scripts/generate_manifest.mjs \
-  --src=/tmp/final \
-  --output=/tmp/final/manifest.json \
+  --src=./ \
+  --output=./manifest.json \
   --base-url=$BASE_URL_PLACEHOLDER \
   --verbose=$VERBOSE ;
 
@@ -87,7 +73,7 @@ RUN \
 
 # Check the integrity of the file structure
 RUN chmod +x /juno/scripts/check_file_integrity.sh && \
-  /juno/scripts/check_file_integrity.sh global apps libs assets index.html manifest* importmap*
+  /juno/scripts/check_file_integrity.sh global apps libs assets externals index.html manifest.json importmap.json
 
 
 ############### FINAL IMAGE! ###################
@@ -108,6 +94,11 @@ RUN rm -rf /etc/nginx/conf.d/default.conf && echo -e $'\
   server { \n \
   \tlisten       80; \n \
   \tserver_name  localhost; \n \
+  \tinclude mime.types; \n \
+  \ttypes \n \ 
+  \t{ \n \
+  \t\tapplication/javascript mjs js; \n \
+  \t} \n \
   \n \
   \tlocation / { \n \
   \t\troot   /usr/share/nginx/html; \n \
