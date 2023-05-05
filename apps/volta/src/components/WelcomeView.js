@@ -1,7 +1,7 @@
 import React from "react"
 import { Stack, Button, Spinner } from "juno-ui-components"
 
-const WellcomeView = ({ loginCallback, isProcessing }) => {
+const WelcomeView = ({ loginCallback, isProcessing }) => {
   return (
     <Stack
       alignment="center"
@@ -10,7 +10,7 @@ const WellcomeView = ({ loginCallback, isProcessing }) => {
       className="mt-[10vh]"
     >
       <p className="text-xl">
-        Wellcome to the Converged Cloud Client Certificate Self-Service
+        Welcome to the Converged Cloud Client Certificate Self-Service
       </p>
       {isProcessing ? (
         <Spinner />
@@ -31,4 +31,4 @@ const WellcomeView = ({ loginCallback, isProcessing }) => {
   )
 }
 
-export default WellcomeView
+export default WelcomeView

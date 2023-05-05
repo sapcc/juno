@@ -14,7 +14,7 @@ import {
 } from "./hooks/useStore"
 import useUrlState from "./hooks/useUrlState"
 
-import WellcomeView from "./components/WellcomeView"
+import WelcomeView from "./components/WelcomeView"
 import CustomAppShell from "./components/CustomAppShell"
 import NewCertificate from "./components/NewCertificate"
 import CAsList from "./components/CAsList"
@@ -82,7 +82,7 @@ const AppContent = () => {
   return (
     <CustomAppShell>
       {authError || !loggedIn ? (
-        <WellcomeView loginCallback={login} isProcessing={authIsProcessing} />
+        <WelcomeView loginCallback={login} isProcessing={authIsProcessing} />
       ) : (
         <>
           {selectedCA ? (
