@@ -1,9 +1,18 @@
 import React, { useEffect, useCallback, useMemo } from "react"
 import { getCAs } from "./queries"
-import { useSearchParams } from "react-router-dom"
 import { useMessageStore, MessagesProvider } from "messages-provider"
 import { parseError } from "./helpers"
-import useStore from "./store"
+import {
+  useGlobalsEndpoint,
+  useGlobalsDisabledCAs,
+  useAuthData,
+  useAuthIsProcessing,
+  useAuthLoggedIn,
+  useAuthError,
+  useAuthLogin,
+  useGlobalsSelectedCA,
+} from "./hooks/useStore"
+import useUrlState from "./hooks/useUrlState"
 
 import WellcomeView from "./components/WellcomeView"
 import CustomAppShell from "./components/CustomAppShell"
@@ -13,25 +22,31 @@ import CertificateList from "./components/CertificateList"
 
 const AppContent = () => {
   const addMessage = useMessageStore((state) => state.addMessage)
-  const endpoint = useStore(useCallback((state) => state.endpoint))
-  const authData = useStore(useCallback((state) => state.authData))
-  const login = useStore(useCallback((state) => state.login))
-  const disabledCAs = useStore(useCallback((state) => state.disabledCAs))
-  let [searchParams] = useSearchParams()
+  const endpoint = useGlobalsEndpoint()
+  const disabledCAs = useGlobalsDisabledCAs()
+  const selectedCAName = useGlobalsSelectedCA()
+
+  const authData = useAuthData()
+  const authIsProcessing = useAuthIsProcessing()
+  const loggedIn = useAuthLoggedIn()
+  const authError = useAuthError()
+  const login = useAuthLogin()
+
+  useUrlState()
 
   // set an error message when oidc fails
   useEffect(() => {
-    if (authData?.error) {
+    if (authError) {
       addMessage({
         variant: "error",
-        text: parseError(authData?.error),
+        text: parseError(authError),
       })
     }
-  }, [authData?.error])
+  }, [authError])
 
   // fetch the CAs
   // pass disabled cas to just fetch the ones that should be displayed
-  const cas = getCAs(authData?.auth?.JWT, endpoint, disabledCAs)
+  const cas = getCAs(authData?.JWT, endpoint, disabledCAs)
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   // TODO think about to add the message error with an onError callback directly on getCAs
@@ -46,14 +61,14 @@ const AppContent = () => {
 
   // find ca given per param in the url
   const selectedCA = useMemo(() => {
-    if (cas?.data?.length > 0) {
-      const index = cas?.data.findIndex((e) => e.name == searchParams.get("ca"))
+    if (cas?.data?.length > 0 && selectedCAName?.length > 0) {
+      const index = cas?.data.findIndex((e) => e.name == selectedCAName)
       if (index >= 0) {
         return cas?.data[index]
       }
     }
     return null
-  }, [cas, searchParams.get("ca")])
+  }, [cas, selectedCAName])
 
   const displayCAs = useMemo(() => {
     if (!cas?.data) return []
@@ -66,11 +81,8 @@ const AppContent = () => {
 
   return (
     <CustomAppShell>
-      {authData?.auth?.error || !authData?.loggedIn ? (
-        <WellcomeView
-          loginCallback={login}
-          isProcessing={authData.isProcessing}
-        />
+      {authError || !loggedIn ? (
+        <WellcomeView loginCallback={login} isProcessing={authIsProcessing} />
       ) : (
         <>
           {selectedCA ? (

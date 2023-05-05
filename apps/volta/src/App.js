@@ -1,20 +1,17 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useLayoutEffect } from "react"
 import { oidcSession } from "oauth"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
 import styles from "./styles.scss"
 import { AppShellProvider } from "juno-ui-components"
 import AppContent from "./AppContent"
 import { MessagesProvider } from "messages-provider"
-import useStore from "./store"
+import { useGlobalsActions, useAuthActions } from "./hooks/useStore"
 
 const App = (props) => {
-  const setEndpoint = useStore((state) => state.setEndpoint)
-  const setAuthData = useStore((state) => state.setAuthData)
-  const setDocumentationLinks = useStore((state) => state.setDocumentationLinks)
-  const setDisabledCAs = useStore((state) => state.setDisabledCAs)
-  const setLogin = useStore((state) => state.setLogin)
-  const setLogout = useStore((state) => state.setLogout)
+  const { setData, setLogin, setLogout } = useAuthActions()
+  const { setEndpoint, setDisabledCAs, setDocumentationLinks } =
+    useGlobalsActions()
+
   // fetch the auth token and save the object globally
   // keep it in the app so the issuerurl and clientid have not to be saved on the state
   const oidc = React.useMemo(
@@ -25,17 +22,20 @@ const App = (props) => {
         initialLogin: true,
         refresh: true,
         flowType: "code",
-        onUpdate: (authData) => {
-          setAuthData(authData)
+        onUpdate: (data) => {
+          setData(data)
         },
       }),
-    [setAuthData]
+    [setData]
   )
-  setLogin(oidc.login)
-  setLogout(oidc.logout)
+
+  useEffect(() => {
+    setLogin(oidc.login)
+    setLogout(oidc.logout)
+  }, [oidc.login, oidc.logout])
 
   // on load application save the props to be used in oder components
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (props.endpoint) setEndpoint(props.endpoint)
     if (props.disabledcas) setDisabledCAs(props.disabledcas)
     if (props.documentationlinks)
@@ -47,12 +47,7 @@ const App = (props) => {
   return (
     <QueryClientProvider client={queryClient}>
       <MessagesProvider>
-        {/* the router is being used just to make easy use of the url parameters */}
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<AppContent />} />
-          </Routes>
-        </BrowserRouter>
+        <AppContent />
       </MessagesProvider>
     </QueryClientProvider>
   )

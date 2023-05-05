@@ -1,8 +1,13 @@
-import React, { useState, useMemo, useCallback } from "react"
+import React, { useState, useMemo, useCallback, useEffect } from "react"
 import { DataGridRow, DataGridCell, Icon, Badge } from "juno-ui-components"
 import InlineConfirmRemove from "./InlineConfirmRemove"
 import { revokeCertificateMutation } from "../queries"
-import useStore from "../store"
+import {
+  useGlobalsEndpoint,
+  useAuthData,
+  useRevokedList,
+  useCertActions,
+} from "../hooks/useStore"
 import { useQueryClient } from "@tanstack/react-query"
 import { parseError } from "../helpers"
 import { DateTime } from "luxon"
@@ -46,8 +51,10 @@ whitespace-nowrap
 
 const CertificateListItem = ({ item, ca }) => {
   const addMessage = useMessageStore((state) => state.addMessage)
-  const authData = useStore(useCallback((state) => state.authData))
-  const endpoint = useStore(useCallback((state) => state.endpoint))
+  const authData = useAuthData()
+  const endpoint = useGlobalsEndpoint()
+  const revokedList = useRevokedList()
+  const { addRevokedCert, removeRevokedCert } = useCertActions()
 
   const queryClient = useQueryClient()
   const [showConfirm, setShowConfirm] = useState(false)
@@ -56,6 +63,21 @@ const CertificateListItem = ({ item, ca }) => {
   // https://github.com/tannerlinsley/react-query/issues/2304
   const { isLoading, isError, error, data, isSuccess, mutate } =
     revokeCertificateMutation()
+
+  const isCertRevoked = React.useMemo(() => {
+    return revokedList.find(
+      (element) => element?.ca === ca?.name && element?.certSN === item?.serial
+    )
+  }, [item?.serial, ca?.name, revokedList])
+
+  useEffect(
+    () => {
+      if (isCertRevoked && item?.status?.toLowerCase() === "revoked")
+        removeRevokedCert(ca?.name, item?.serial)
+    },
+    [item?.status],
+    isCertRevoked
+  )
 
   const expiresAtString = React.useMemo(() => {
     if (!item.not_after) return "No date available"
@@ -68,29 +90,39 @@ const CertificateListItem = ({ item, ca }) => {
     return item?.status?.toLowerCase() === "active"
   }, [item?.status])
 
-  const stateBadge = React.useMemo(() => {
-    // Active, Expired, Pending, Revoked
-    switch (item.status) {
-      case "Active":
-        return <Badge variant="success" text={item.status} />
-      case "Expired":
-        return <Badge variant="danger" text={item.status} />
-      case "Pending":
-        return <Badge variant="warning" text={item.status} />
-      case "Revoked":
-        return <Badge text={item.status} />
-      default:
-        return <Badge text={item.status} />
+  const status = React.useMemo(() => {
+    if (isCertRevoked && item?.status?.toLowerCase() !== "revoked") {
+      // set to processing until is finished revoked
+      return "Processing"
     }
-  }, [item?.status])
+    return item?.status
+  }, [[item?.status], isCertRevoked])
 
-  const onRemoveConfirmed = () => {
+  const variant = React.useMemo(() => {
+    // Active, Expired, Pending, Revoked
+    switch (status) {
+      case "Active":
+        return "success"
+      case "Expired":
+        return "danger"
+      case "Pending":
+        return "warning"
+      case "Revoked":
+        return "default"
+      case "Processing":
+        return "warning"
+      default:
+        return "default"
+    }
+  }, [status])
+
+  const onRevokeConfirmed = () => {
     setShowConfirm(false)
     mutate(
       {
         endpoint: endpoint,
         ca: ca.name,
-        bearerToken: authData?.auth?.JWT,
+        bearerToken: authData?.JWT,
         serial: item.serial,
       },
       {
@@ -103,8 +135,10 @@ const CertificateListItem = ({ item, ca }) => {
               </span>
             ),
           })
-          // refetch cert list
-          queryClient.invalidateQueries("certificates")
+          // keep track of the revoked certs so the list get polled until the state is reflected
+          addRevokedCert(ca.name, item.serial)
+          // Invalidate every query with a key that starts with `certificates`
+          queryClient.invalidateQueries({ queryKey: ["certificates"] })
         },
         onError: (error, variables, context) => {
           addMessage({
@@ -140,7 +174,9 @@ const CertificateListItem = ({ item, ca }) => {
           {item.identity}
         </DataGridCell>
         <DataGridCell className={cellClasses(showConfirm)}>
-          {stateBadge}
+          <div>
+            <Badge variant={variant} text={status} />
+          </div>
         </DataGridCell>
         <DataGridCell className={cellClasses(showConfirm)}>
           <span className={expirationDateClasses}>{expiresAtString}</span>
@@ -161,7 +197,7 @@ const CertificateListItem = ({ item, ca }) => {
         actionText="Revoke"
         actionIcon="deleteForever"
         show={showConfirm}
-        onConfirm={onRemoveConfirmed}
+        onConfirm={onRevokeConfirmed}
         onCancel={() => setShowConfirm(false)}
       />
     </>

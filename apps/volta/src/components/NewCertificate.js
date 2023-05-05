@@ -4,20 +4,20 @@ import { CertStateProvider } from "../hooks/useCertState"
 import NewCertificateForm from "./NewCertificateForm"
 import NewCertificateResutls from "./NewCertificateResults"
 import CustomPanelBody from "./CustomPanelBody"
-import useStore from "../store"
+import { useCertShowNew, useCertActions } from "../hooks/useStore"
 import { useMessageStore } from "messages-provider"
+import FormPanelFooter from "./NewCertificateFormPanelFooter"
 
 const NewCertificate = ({ ca }) => {
-  const showPanel = useStore(useCallback((state) => state.showNewSSO))
-  const setShowNewSSO = useStore(useCallback((state) => state.setShowNewSSO))
+  const showPanel = useCertShowNew()
+  const { setShowNewCert } = useCertActions()
   const resetMessages = useMessageStore((state) => state.resetMessages)
   const [pk, setPk] = useState(null)
   const [ssoCert, setSsoCert] = useState(null)
   const [formResutlsCopied, setFormResutlsCopied] = useState(false)
-  const [isFormLoading, setIsFormLoading] = useState(false)
 
   const onPanelClose = () => {
-    setShowNewSSO(false)
+    setShowNewCert(false)
     // reset messages
     resetMessages()
     // reset form results
@@ -40,10 +40,6 @@ const NewCertificate = ({ ca }) => {
     setFormResutlsCopied(isCopied)
   }
 
-  const onFormLoading = (isLoading) => {
-    setIsFormLoading(isLoading)
-  }
-
   const resultsPanelFooter = useMemo(
     () => (
       <PanelFooter>
@@ -57,26 +53,6 @@ const NewCertificate = ({ ca }) => {
       </PanelFooter>
     ),
     [formResutlsCopied]
-  )
-
-  const formPanelFooter = useMemo(
-    () => (
-      <PanelFooter>
-        <Button onClick={onPanelClose} variant="subdued">
-          Cancel
-        </Button>
-        <Button
-          className="ml-2"
-          onClick={onSaveClicked}
-          variant="primary"
-          disabled={isFormLoading}
-          progress={isFormLoading}
-        >
-          Create
-        </Button>
-      </PanelFooter>
-    ),
-    [isFormLoading]
   )
 
   return (
@@ -101,16 +77,22 @@ const NewCertificate = ({ ca }) => {
               />
             </CustomPanelBody>
           ) : (
-            <CustomPanelBody footer={formPanelFooter}>
-              <CertStateProvider>
+            <CertStateProvider>
+              <CustomPanelBody
+                footer={
+                  <FormPanelFooter
+                    onCancel={onPanelClose}
+                    onSave={onSaveClicked}
+                  />
+                }
+              >
                 <NewCertificateForm
                   ref={formRef}
                   ca={ca}
                   onFormSuccess={onFormSuccess}
-                  onFormLoading={onFormLoading}
                 />
-              </CertStateProvider>
-            </CustomPanelBody>
+              </CustomPanelBody>
+            </CertStateProvider>
           )}
         </>
       )}
