@@ -66,7 +66,7 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
   // on form init set the identity attributes
   useEffect(() => {
     if (!setAttribute) return
-    const userId = authData?.raw?.sub.toUpperCase()
+    const userId = authData?.parsed?.userId?.toUpperCase()
     if (userId) {
       setAttribute({ key: "identity", value: userId })
     }
