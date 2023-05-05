@@ -36,6 +36,9 @@ for (let arg of args) {
     })
 
     options[key] = match[2] ? match[2] : true
+
+    if (options[key] === "true") options[key] = true
+    if (options[key] === "false") options[key] = false
     continue
   }
 }
@@ -76,6 +79,7 @@ files.sort().forEach(async (file) => {
   let type = PACKAGES_PATHS.find((p) => path.indexOf(p) >= 0)
   type = type && type.slice(0, -1)
   const entryFile = pkg.module || pkg.main
+  // console.log(":::", pkg.name, entryFile)
   const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/"))
   const meta = fs.statSync(`${rootPath}/${path}`)
 

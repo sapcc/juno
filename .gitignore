@@ -4,7 +4,8 @@
 node_modules
 
 .npm/*
-/test_data
+scripts/test_data
+scripts/externals
 scripts/im.json
 scripts/manifest.json
 scripts/importmap.json
