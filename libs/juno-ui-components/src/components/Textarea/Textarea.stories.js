@@ -14,6 +14,17 @@ Default.args = {
   placeholder: "Some text here",
 }
 
+export const WithLabel = Template.bind({})
+WithLabel.args = {
+  label: "Textarea"
+}
+
+export const RequiredWithLabel = Template.bind({})
+RequiredWithLabel.args = {
+  label: "Required Textarea",
+  required: true,
+}
+
 export const Invalid = Template.bind({})
 Invalid.args = {
   invalid: true,
