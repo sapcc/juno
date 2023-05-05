@@ -9,36 +9,54 @@ const createCertSlice = (set, get) => ({
 
     actions: {
       setShowNewCert: (show) =>
-        set((state) => ({ cert: { ...state.cert, showNewCert: show } })),
+        set(
+          (state) => ({ cert: { ...state.cert, showNewCert: show } }),
+          false,
+          "cert/setShowNewCert"
+        ),
       setIsFormSubmitting: (isFormSubmitting) => {
-        set((state) => ({
-          cert: {
-            ...state.cert,
-            isFormSubmitting: isFormSubmitting,
-          },
-        }))
+        set(
+          (state) => (
+            {
+              cert: {
+                ...state.cert,
+                isFormSubmitting: isFormSubmitting,
+              },
+            },
+            false,
+            "cert/setIsFormSubmitting"
+          )
+        )
       },
       addRevokedCert: (ca, certSN) => {
-        set((state) => {
-          const index = state.cert.revokedList.findIndex(
-            (i) => i.certSN === certSN && i.ca === ca
-          )
-          if (index >= 0) return state
-          const newList = state.cert.revokedList.slice()
-          newList.push({ certSN: certSN, ca: ca })
-          return { cert: { ...state.cert, revokedList: newList } }
-        })
+        set(
+          (state) => {
+            const index = state.cert.revokedList.findIndex(
+              (i) => i.certSN === certSN && i.ca === ca
+            )
+            if (index >= 0) return state
+            const newList = state.cert.revokedList.slice()
+            newList.push({ certSN: certSN, ca: ca })
+            return { cert: { ...state.cert, revokedList: newList } }
+          },
+          false,
+          "cert/addRevokedCert"
+        )
       },
       removeRevokedCert: (ca, certSN) => {
-        set((state) => {
-          const index = state.cert.revokedList.findIndex(
-            (i) => i.certSN === certSN && i.ca === ca
-          )
-          if (index < 0) return state
-          const newList = state.cert.revokedList.slice()
-          newList.splice(index, 1)
-          return { cert: { ...state.cert, revokedList: newList } }
-        })
+        set(
+          (state) => {
+            const index = state.cert.revokedList.findIndex(
+              (i) => i.certSN === certSN && i.ca === ca
+            )
+            if (index < 0) return state
+            const newList = state.cert.revokedList.slice()
+            newList.splice(index, 1)
+            return { cert: { ...state.cert, revokedList: newList } }
+          },
+          false,
+          "cert/removeRevokedCert"
+        )
       },
     },
   },
@@ -55,20 +73,32 @@ const createAuthSlice = (set, get) => ({
 
     actions: {
       setData: (data) => {
-        set((state) => ({
-          auth: {
-            ...state.auth,
-            isProcessing: data.isProcessing,
-            loggedIn: data.loggedIn,
-            error: data.error,
-            data: data.auth,
-          },
-        }))
+        set(
+          (state) => ({
+            auth: {
+              ...state.auth,
+              isProcessing: data.isProcessing,
+              loggedIn: data.loggedIn,
+              error: data.error,
+              data: data.auth,
+            },
+          }),
+          false,
+          "auth/setData"
+        )
       },
       setLogin: (func) =>
-        set((state) => ({ auth: { ...state.auth, login: func } })),
+        set(
+          (state) => ({ auth: { ...state.auth, login: func } }),
+          false,
+          "auth/setLogin"
+        ),
       setLogout: (func) =>
-        set((state) => ({ auth: { ...state.auth, logout: func } })),
+        set(
+          (state) => ({ auth: { ...state.auth, logout: func } }),
+          false,
+          "auth/setLogout"
+        ),
     },
   },
 })
@@ -81,31 +111,47 @@ const createGlobalsSlice = (set, get) => ({
     selectedCA: "",
     actions: {
       setEndpoint: (endpoint) =>
-        set((state) => ({ globals: { ...state.globals, endpoint: endpoint } })),
+        set(
+          (state) => ({ globals: { ...state.globals, endpoint: endpoint } }),
+          false,
+          "globals/setEndpoint"
+        ),
       setSelectedCA: (ca) =>
-        set((state) => ({ globals: { ...state.globals, selectedCA: ca } })),
+        set(
+          (state) => ({ globals: { ...state.globals, selectedCA: ca } }),
+          false,
+          "globals/setSelectedCA"
+        ),
       setDisabledCAs: (cas) =>
-        set((state) => {
-          if (!cas || typeof cas !== "string") return state
-          const disabledCAs = cas.split(",")
-          return { globals: { ...state.globals, disabledCAs: disabledCAs } }
-        }),
+        set(
+          (state) => {
+            if (!cas || typeof cas !== "string") return state
+            const disabledCAs = cas.split(",")
+            return { globals: { ...state.globals, disabledCAs: disabledCAs } }
+          },
+          false,
+          "globals/setDisabledCAs"
+        ),
       setDocumentationLinks: (links) =>
-        set((state) => {
-          if (!links || typeof links !== "string") return state
-          let newLinks = {}
-          const keyValueLinks = links.split(",")
-          keyValueLinks.forEach((kv) => {
-            const kvArr = kv.split("=")
-            // ensure that there are key and value
-            if (kvArr.length === 2) {
-              newLinks[kvArr[0]] = kvArr[1]
+        set(
+          (state) => {
+            if (!links || typeof links !== "string") return state
+            let newLinks = {}
+            const keyValueLinks = links.split(",")
+            keyValueLinks.forEach((kv) => {
+              const kvArr = kv.split("=")
+              // ensure that there are key and value
+              if (kvArr.length === 2) {
+                newLinks[kvArr[0]] = kvArr[1]
+              }
+            })
+            return {
+              globals: { ...state.globals, documentationLinks: newLinks },
             }
-          })
-          return {
-            globals: { ...state.globals, documentationLinks: newLinks },
-          }
-        }),
+          },
+          false,
+          "globals/setDocumentationLinks"
+        ),
     },
   },
 })
