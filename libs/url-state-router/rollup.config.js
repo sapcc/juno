@@ -50,7 +50,7 @@ const config = [
       },
     ],
     plugins: [
-      nodeResolve(),
+      // nodeResolve(),
       babel({
         exclude: "node_modules/**",
         babelHelpers: "bundled",
