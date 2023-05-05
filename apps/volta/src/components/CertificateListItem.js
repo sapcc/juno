@@ -174,7 +174,9 @@ const CertificateListItem = ({ item, ca }) => {
           {item.identity}
         </DataGridCell>
         <DataGridCell className={cellClasses(showConfirm)}>
-          <Badge variant={variant} text={status} />
+          <div>
+            <Badge variant={variant} text={status} />
+          </div>
         </DataGridCell>
         <DataGridCell className={cellClasses(showConfirm)}>
           <span className={expirationDateClasses}>{expiresAtString}</span>
