@@ -16,16 +16,14 @@ const createCertSlice = (set, get) => ({
         ),
       setIsFormSubmitting: (isFormSubmitting) => {
         set(
-          (state) => (
-            {
-              cert: {
-                ...state.cert,
-                isFormSubmitting: isFormSubmitting,
-              },
+          (state) => ({
+            cert: {
+              ...state.cert,
+              isFormSubmitting: isFormSubmitting,
             },
-            false,
-            "cert/setIsFormSubmitting"
-          )
+          }),
+          false,
+          "cert/setIsFormSubmitting"
         )
       },
       addRevokedCert: (ca, certSN) => {
