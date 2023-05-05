@@ -138,12 +138,12 @@ export const TextInput = ({
   
   return (
     <span 
-      className={`juno-form-input-wrapper ${wrapperStyles}`} 
+      className={`juno-textinput-wrapper ${wrapperStyles}`} 
       >
       { label && label.length ?
           <label 
             htmlFor={id || null} 
-            className={`juno-label ${labelStyles} ${ hasFocus || val && val.length ? minLabelStyles : "" }`} 
+            className={`juno-label ${labelStyles} ${ placeholder || hasFocus || val && val.length ? minLabelStyles : "" }`} 
           >
             {label}
             { required ? <span className={`required ${requiredLabelStyles}`} ></span> : "" }
