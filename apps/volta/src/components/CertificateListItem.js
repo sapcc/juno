@@ -13,6 +13,8 @@ import { parseError } from "../helpers"
 import { DateTime } from "luxon"
 import { useMessageStore } from "messages-provider"
 
+const PROCESSING_STATE = "Processing"
+
 // if remove row shows
 // - remove cell bottom border so the 2 cells belongs together
 // - change the background color so it is easier to difference from the other rows
@@ -93,7 +95,7 @@ const CertificateListItem = ({ item, ca }) => {
   const status = React.useMemo(() => {
     if (isCertRevoked && item?.status?.toLowerCase() !== "revoked") {
       // set to processing until is finished revoked
-      return "Processing"
+      return PROCESSING_STATE
     }
     return item?.status
   }, [[item?.status], isCertRevoked])
@@ -109,7 +111,7 @@ const CertificateListItem = ({ item, ca }) => {
         return "warning"
       case "Revoked":
         return "default"
-      case "Processing":
+      case PROCESSING_STATE:
         return "warning"
       default:
         return "default"
@@ -184,7 +186,7 @@ const CertificateListItem = ({ item, ca }) => {
         <DataGridCell className={cellClasses(showConfirm)}>
           {isCertAvtive && (
             <Icon
-              disabled={showConfirm}
+              disabled={showConfirm || status === PROCESSING_STATE}
               icon="deleteForever"
               onClick={() => setShowConfirm(true)}
             />
