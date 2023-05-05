@@ -1,6 +1,3 @@
-
-
-
 import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { TextInput } from "./index"
@@ -8,7 +5,7 @@ import { TextInput } from "./index"
 
 describe("TextInput", () => {
 	
-	test("renders a valid html default text input with no type attribute", async () => {
+	test("renders a html default text input with no type attribute", async () => {
 		render(<TextInput />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).not.toHaveAttribute('type')
@@ -24,6 +21,14 @@ describe("TextInput", () => {
 		render(<TextInput value="Some kind of value" />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveAttribute('value', "Some kind of value")
+	})
+	
+	test("renders a label as passed", async () => {
+		render(<TextInput label="The Label" id="my-textinput"/>)
+		// implicitly test whether the input element can be selected via the labels text:
+		expect(screen.getByLabelText("The Label")).toBeInTheDocument()
+		expect(document.querySelector(".juno-label")).toBeInTheDocument()
+		expect(document.querySelector(".juno-label")).toHaveTextContent("The Label")
 	})
 	
 	test("renders a text input with an id as passed", async () => {
