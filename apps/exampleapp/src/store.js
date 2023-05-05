@@ -1,5 +1,5 @@
 import React from "react"
-import create from "zustand"
+import { create } from "zustand"
 import { devtools } from "zustand/middleware"
 
 // global zustand store. See how this works here: https://github.com/pmndrs/zustand

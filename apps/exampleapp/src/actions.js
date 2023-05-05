@@ -33,17 +33,62 @@ const checkStatus = (response) => {
 export const fetchPeaks = ({ queryKey }) => {
   const [_key, endpoint, options] = queryKey
   const query = encodeUrlParamsFromObject(options)
-  return fetch(`${endpoint}/peaks?${query}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
+  return Promise.resolve([
+    {
+      id: 1,
+      name: "Ushba",
+      height: "4737m",
+      region: "Svanetsia",
+      mainrange: "Caucasus",
+      countries: "Georgia",
+      url: "https://en.wikipedia.org/wiki/Ushba",
     },
-  })
-    .then(checkStatus)
-    .then((response) => {
-      return response.json()
-    })
+    {
+      id: 2,
+      name: "Ama Dablam",
+      height: "6814m",
+      region: "Khumbu",
+      mainrange: "Himalayas",
+      countries: "Nepal",
+      url: "https://en.wikipedia.org/wiki/Ama_Dablam",
+    },
+    {
+      id: 3,
+      name: "Lhotse",
+      height: "8516m",
+      region: "Khumbu",
+      mainrange: "Himalayas",
+      countries: "China, Nepal",
+      url: "https://en.wikipedia.org/wiki/Lhotse",
+    },
+    {
+      id: 4,
+      name: "Nuptse",
+      height: "7861m",
+      region: "Khumbu",
+      mainrange: "Himalayas",
+      countries: "Nepal",
+      url: "https://en.wikipedia.org/wiki/Nuptse",
+    },
+    {
+      id: 5,
+      name: "Weisshorn",
+      height: "4506m",
+      region: "Valais",
+      mainrange: "Swiss Alps",
+      countries: "Switzerland",
+      url: "https://en.wikipedia.org/wiki/Weisshorn",
+    },
+    {
+      id: 6,
+      name: "Zinalrothorn",
+      height: "4221m",
+      region: "Valais",
+      mainrange: "Swiss Alps",
+      countries: "Switzerland",
+      url: "https://en.wikipedia.org/wiki/Zinalrothorn",
+    },
+  ])
 }
 
 export const fetchPeak = ({ queryKey }) => {

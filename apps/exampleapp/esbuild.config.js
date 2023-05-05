@@ -22,7 +22,12 @@ const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
 let outfile = `${isProduction ? "" : "public/"}${pkg.main || pkg.module}`
 
 // get output from outputfile
-let [outdir, file] = outfile.split("/", 2)
+// let [outdir, file] = outfile.split("/", 2)
+let outdir = outfile.slice(0, outfile.lastIndexOf("/"))
+
+console.log(`=====================outdir: ${outdir}`)
+console.log(`=====================file: ${outfile}`)
+// process.exit()
 const args = process.argv.slice(2)
 const watch = args.indexOf("--watch") >= 0
 const serve = args.indexOf("--serve") >= 0
@@ -55,7 +60,7 @@ const build = async () => {
       isProduction && !IGNORE_EXTERNALS
         ? Object.keys(pkg.peerDependencies || {})
         : [],
-    entryPoints: { [file.replace(".js", "")]: pkg.source },
+    entryPoints: [pkg.source],
     outdir,
     // this step is important for performance reason.
     // the main file (index.js) contains minimal code needed to
