@@ -20,6 +20,20 @@ describe("Textarea", () => {
 		expect(screen.getByRole("textbox")).toHaveTextContent("Test some text")
 	})
 	
+	test("renders a label as passed", async () => {
+		render(<Textarea label="The Label" id="my-textarea"/>)
+		// implicitly test whether the textarea element can be selected via the labels text:
+		expect(screen.getByLabelText("The Label")).toBeInTheDocument()
+		expect(document.querySelector(".juno-label")).toBeInTheDocument()
+		expect(document.querySelector(".juno-label")).toHaveTextContent("The Label")
+	})
+	
+	test("renders a Textarea with an id as passed", async () => {
+		render(<Textarea id="my-textinput" />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveAttribute('id', "my-textinput")
+	})
+	
 	test("renders an invalid textarea as passed", async () => {
 		render(<Textarea invalid />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
@@ -68,7 +82,7 @@ describe("Textarea", () => {
 		const { container } = render(
 			<Textarea onChange={handleChange} />
 		)
-		const textarea = container.firstChild
+		const textarea = screen.getByRole("textbox")
 		fireEvent.change(textarea, { target: { value: 'a' } })
 		expect(handleChange).toHaveBeenCalledTimes(1)
 	})
