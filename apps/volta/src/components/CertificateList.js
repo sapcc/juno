@@ -1,7 +1,14 @@
-import React, { useEffect, useState, useCallback } from "react"
+import React, { useEffect } from "react"
 import { getCertificates } from "../queries"
 import { useMessageStore } from "messages-provider"
-import useStore from "../store"
+import {
+  useCertShowNew,
+  useRevokedList,
+  useCertActions,
+  useAuthData,
+  useGlobalsEndpoint,
+  useGlobalsDocumentationLinks,
+} from "../hooks/useStore"
 import { parseError } from "../helpers"
 import {
   DataGrid,
@@ -25,17 +32,19 @@ jn-pb-2
 
 const CertificateList = ({ ca }) => {
   const addMessage = useMessageStore((state) => state.addMessage)
-  const showPanel = useStore(useCallback((state) => state.showNewSSO))
-  const setShowNewSSO = useStore(useCallback((state) => state.setShowNewSSO))
-  const authData = useStore(useCallback((state) => state.authData))
-  const endpoint = useStore(useCallback((state) => state.endpoint))
-  const docuLinks = useStore(useCallback((state) => state.documentationLinks))
+  const showPanel = useCertShowNew()
+  const { setShowNewCert } = useCertActions()
+  const revokedList = useRevokedList()
+  const authData = useAuthData()
+  const endpoint = useGlobalsEndpoint()
+  const docuLinks = useGlobalsDocumentationLinks()
 
   // fetch the certificates
   const { isLoading, isError, data, error } = getCertificates(
-    authData?.auth?.JWT,
+    authData?.JWT,
     endpoint,
-    ca?.name
+    ca?.name,
+    revokedList
   )
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
@@ -49,7 +58,7 @@ const CertificateList = ({ ca }) => {
   }, [error])
 
   const onAddClicked = () => {
-    setShowNewSSO(true)
+    setShowNewCert(true)
   }
 
   return (
@@ -90,6 +99,12 @@ const CertificateList = ({ ca }) => {
                     <CertificateListItem key={i} item={item} ca={ca} />
                   ))}
                 </DataGrid>
+                {data?.length > 10 && (
+                  <Stack
+                    distribution="end"
+                    className="p-6"
+                  >{`${data?.length} Items`}</Stack>
+                )}
               </>
             )}
             {data && data.length === 0 && (

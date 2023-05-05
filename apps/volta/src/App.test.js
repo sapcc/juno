@@ -58,7 +58,7 @@ describe("logged in", () => {
     await render(<App issuerurl={"https://sap.com"} clientid={"000000"} />)
 
     let welcome = await screen.queryAllByShadowText(
-      /Wellcome to the Converged Cloud /i
+      /Welcome to the Converged Cloud /i
     )
     expect(welcome.length > 0).toBe(false)
   })
@@ -83,7 +83,7 @@ describe("not logged in", () => {
     await render(<App issuerurl={"https://sap.com"} clientid={"000000"} />)
 
     let welcome = await screen.queryAllByShadowText(
-      /Wellcome to the Converged Cloud /i
+      /Welcome to the Converged Cloud /i
     )
     expect(welcome.length > 0).toBe(true)
   })
