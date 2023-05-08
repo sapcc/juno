@@ -141,6 +141,8 @@ while IFS= read -d $'\0' -r dirname; do
     asset_module=$(cat package.json | jq -r '.module')
     asset_peer_deps=$(cat package.json | jq -r '.peerDependencies')
 
+    cat <<<"$(jq ".${KIND}=true" package.json)" >package_new.json && cp package_new.json package.json && rm package_new.json
+
     echo "name: $asset_name"
     echo "version: $asset_version"
     echo "main: $asset_main"
@@ -155,6 +157,8 @@ while IFS= read -d $'\0' -r dirname; do
     mkdir -p "$destination_path"
 
     asset_dist_path="$destination_path/${asset_name}@${asset_version}"
+    # TODO: check for name collision with asset_name in juno_assets and check for name/version collsions in juno-3rd-party
+    # jq -r '.name' */**/package.json
     if [ -d "$asset_dist_path" ]; then
       error_msg="Error: the directory $asset_dist_path already exist that means there are dublicated versions in $KIND -> $ASSET_TYPE -> ${asset_name} 😐"
       echo "$error_msg"
