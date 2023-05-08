@@ -19,9 +19,10 @@ const Messages = ({ className }) => {
     <>
       {messages && messages.length > 0 && (
         <div className={`juno-message-provider ${className}`}>
-          {messages.map((item) => (
+          {messages.map((item, index) => (
             <Message
               key={item.id}
+              className={index > 0 ? "mt-4" : ""}
               variant={item.variant}
               dismissible={true}
               autoDismiss={shouldAutoDismiss(item.variant)}
