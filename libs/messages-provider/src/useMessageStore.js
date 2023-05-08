@@ -40,9 +40,20 @@ const removeMessageValidation = (props) => {
 // Zustand with typescript: https://docs.pmnd.rs/zustand/guides/typescript#slices-pattern
 // v4
 // https://github.com/pmndrs/zustand/blob/55d0c3aec9fbca9d56432f39abba08f7b90e7edb/docs/previous-versions/zustand-v3-create-context.md
-const createMessagesSlice = (set) => ({
+const createMessagesSlice = (set, get) => ({
   storeId: uniqueId("store-"),
   messages: [], // this is the messages state
+  actions: {
+    addMessage: ({ variant, text }) => {
+      get().addMessage({ variant, text })
+    },
+    removeMessage: (id) => {
+      get().removeMessage(id)
+    },
+    resetMessages: () => {
+      get().resetMessages()
+    },
+  },
   addMessage: ({ variant, text }) => {
     addMessageValidation({ variant: variant, text: text })
     return set((state) => {
@@ -89,13 +100,30 @@ const StoreContext = createContext()
 export const MessagesProvider = ({ children }) => {
   return (
     <StoreContext.Provider
-      value={createStore((set) => createMessagesSlice(set))}
+      value={createStore((set, get) => createMessagesSlice(set, get))}
     >
       {children}
     </StoreContext.Provider>
   )
 }
 
-const useMessagesStore = (selector) =>
-  useStore(useContext(StoreContext), selector)
-export { useMessagesStore as useStore }
+const messageStore = (selector) => useStore(useContext(StoreContext), selector)
+
+// decrecated old hook
+export const useMessageStore = (selector) => {
+  if (
+    process.env.NODE_ENV === "development" ||
+    process.env.NODE_ENV === "test"
+  ) {
+    console.warn(
+      `useMessageStore is deprecated and will be removed with the next version 0.2.0. Please visit the documentation (https://assets.juno.global.cloud.sap/?__s=N4IghgzhCmAuEFoD2A3aAnFBLaB3EAXKLGAEYCSAdgCbQAehATADQiVgrmzQC2hIIVgAcwlaABsA8kOhjqhWOgCu0VpBiwAcmB7R+uqGADm0REPSostdIPBQ4ANQwQsSSvwAMAOgCMXgKwgAL5BQA) for more information.`
+    )
+  }
+  return messageStore(selector)
+}
+
+// states
+export const useMessages = () => messageStore((state) => state.messages)
+
+// actions
+export const useActions = () => messageStore((state) => state.actions)
