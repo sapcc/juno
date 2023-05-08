@@ -1,6 +1,5 @@
 import React, { createContext, useContext } from "react"
 import { createStore, useStore } from "zustand"
-import uniqueId from "lodash.uniqueid"
 import PropTypes from "prop-types"
 
 const addMessageValidation = (props) => {
@@ -32,6 +31,10 @@ const removeMessageValidation = (props) => {
     "MessageProvider.removeMessage"
   )
   return props
+}
+
+const uniqueId = (prefix) => {
+  return `${prefix}-${(+new Date() + Math.random()).toString(36).slice(-5)}}`
 }
 
 // General zustand docu: https://github.com/pmndrs/zustand
