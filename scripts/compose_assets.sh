@@ -151,7 +151,7 @@ while IFS= read -d $'\0' -r dirname; do
 
     echo "Compose $KIND distribution for $ASSET_TYPE -> ${asset_name}@${asset_version}"
     cd ..
-    destination_path="$DIST_PATH/$KIND/$ASSET_TYPE"
+    destination_path="$DIST_PATH/$ASSET_TYPE"
     mkdir -p "$destination_path"
 
     asset_dist_path="$destination_path/${asset_name}@${asset_version}"
