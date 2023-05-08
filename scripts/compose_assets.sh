@@ -98,17 +98,40 @@ function integrity_check() {
   echo "Run integrity check"
   echo "----------------------------------"
 
+  error_and_exit="false"
   echo $(date) >build_log
   {
-    echo "version ✔️"
-    echo "name ✔️"
-    echo "package.json ✔️"
-    echo "peerDependencies ✔️"
-    echo "main/module ✔️"
-    echo "README.md ✔️"
-    echo "build dir ✔️"
+    if [[ -n "${version}" ]]; then
+      echo "version ✔️"
+    else
+      echo "Error: version not found!"
+      error_and_exit="true"
+    fi
+
+    if [[ -n "${name}" ]]; then
+      echo "name ✔️"
+    else
+      echo "Error: name not found!"
+      error_and_exit="true"
+    fi
+
+    if [[ -n "${peerDependencies}" ]]; then
+      echo "peerDependencies ✔️"
+    else
+      echo "Error: peerDependencies not found!"
+      error_and_exit="true"
+    fi
+
+    #echo "main/module ✔️"
+    #echo "README.md ✔️"
+    #echo "build dir ✔️"
+
   } >>build_log
   cat ./build_log
+  if [[ "$error_and_exit" == "true" ]]; then
+    exit
+  fi
+
   echo "----------------------------------"
   # TODO: feedback to upload error or success to swift
 }
@@ -135,13 +158,17 @@ while IFS= read -d $'\0' -r dirname; do
       fi
     fi
 
+    # add kind to package.json, we need that for later
+    cat <<<"$(jq ".kind = \"${KIND}\"" package.json)" >package_new.json
+    if [ -f "package_new.json" ]; then
+      cp package_new.json package.json && rm package_new.json
+    fi
+
     asset_name=$(cat package.json | jq -r '.name')
     asset_version=$(cat package.json | jq -r '.version')
     asset_main=$(cat package.json | jq -r '.main')
     asset_module=$(cat package.json | jq -r '.module')
     asset_peer_deps=$(cat package.json | jq -r '.peerDependencies')
-
-    cat <<<"$(jq ".${KIND}=true" package.json)" >package_new.json && cp package_new.json package.json && rm package_new.json
 
     echo "name: $asset_name"
     echo "version: $asset_version"
