@@ -8,7 +8,7 @@ import {
 } from "juno-ui-components"
 import { getVulnerability } from "../queries"
 import useStore from "../hooks/useStore"
-import { useStore as useMessageStore } from "../messageStore"
+import { useActions } from "messages-provider"
 import { useRouter } from "url-state-router"
 import { parseError } from "../helpers"
 import {
@@ -26,7 +26,7 @@ const VulnerabilitiyDetails = () => {
 
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const auth = useStore(useCallback((state) => state.auth))
-  const setMessage = useMessageStore((state) => state.setMessage)
+  const { addMessage } = useActions()
   const vulnerabilityId = routeParams?.vulnerabilityId
   const { isLoading, isError, isFetching, data, error } = getVulnerability(
     auth?.id_token,
@@ -37,7 +37,7 @@ const VulnerabilitiyDetails = () => {
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
     if (error) {
-      setMessage({
+      addMessage({
         variant: "error",
         text: parseError(error),
       })

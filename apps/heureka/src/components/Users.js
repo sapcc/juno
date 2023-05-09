@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react"
 import useStore from "../hooks/useStore"
-import { useStore as useMessageStore } from "../messageStore"
+import { useActions } from "messages-provider"
 import { Container } from "juno-ui-components"
 import { getUsers, getUserFilters } from "../queries"
 import UsersList from "./UsersList"
@@ -14,7 +14,7 @@ const ITEMS_PER_PAGE = 10
 const Users = ({}) => {
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const auth = useStore(useCallback((state) => state.auth))
-  const setMessage = useMessageStore((state) => state.setMessage)
+  const { addMessage } = useActions()
   const [paginationOptions, setPaginationOptions] = useState({
     limit: ITEMS_PER_PAGE,
     offset: 0,
@@ -29,7 +29,7 @@ const Users = ({}) => {
 
   useEffect(() => {
     if (users.error) {
-      setMessage({
+      addMessage({
         variant: "error",
         text: parseError(users.error),
       })
@@ -38,7 +38,7 @@ const Users = ({}) => {
 
   useEffect(() => {
     if (filters.error) {
-      setMessage({
+      addMessage({
         variant: "error",
         text: parseError(filters.error),
       })

@@ -9,7 +9,7 @@ import {
 } from "juno-ui-components"
 import { useRouter } from "url-state-router"
 import Breadcrumb from "./Breadcrumb"
-import Messages from "./Messages"
+import { Messages } from "messages-provider"
 
 const AppContainer = ({ tabsConfig, component, children }) => {
   const { navigateTo, currentPath } = useRouter()

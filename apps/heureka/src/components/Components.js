@@ -1,9 +1,9 @@
 import React, { useEffect, useCallback, useState } from "react"
 import { getComponents, getComponentFilters } from "../queries"
 import useStore from "../hooks/useStore"
-import { useStore as useMessageStore } from "../messageStore"
+import { useActions } from "messages-provider"
 import { parseError } from "../helpers"
-import { Stack, Spinner, Container } from "juno-ui-components"
+import { Container } from "juno-ui-components"
 import Pagination from "./Pagination"
 import ComponentsList from "./ComponentsList"
 import FilterToolbar from "./FilterToolbar"
@@ -14,7 +14,7 @@ const ITEMS_PER_PAGE = 10
 const Components = () => {
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const auth = useStore(useCallback((state) => state.auth))
-  const setMessage = useMessageStore((state) => state.setMessage)
+  const { addMessage } = useActions()
   const [paginationOptions, setPaginationOptions] = useState({
     limit: ITEMS_PER_PAGE,
     offset: 0,
@@ -30,7 +30,7 @@ const Components = () => {
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
     if (components.error) {
-      setMessage({
+      addMessage({
         variant: "error",
         text: parseError(components.error),
       })
@@ -39,7 +39,7 @@ const Components = () => {
 
   useEffect(() => {
     if (filters.error) {
-      setMessage({
+      addMessage({
         variant: "error",
         text: parseError(filters.error),
       })
