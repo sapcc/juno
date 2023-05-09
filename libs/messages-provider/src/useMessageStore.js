@@ -59,43 +59,55 @@ const createMessagesSlice = (set, get) => ({
   },
   addMessage: ({ variant, text }) => {
     addMessageValidation({ variant: variant, text: text })
-    return set((state) => {
-      console.log("STORE: ", state.storeId)
-      // check if a message with the same text and variant exists
-      const index = state.messages.findIndex((item) => {
-        return (
-          JSON.stringify(item.text) === JSON.stringify(text) &&
-          item.variant === variant
-        )
-      })
-      if (index >= 0) return state
+    return set(
+      (state) => {
+        console.log("STORE: ", state.storeId)
+        // check if a message with the same text and variant exists
+        const index = state.messages.findIndex((item) => {
+          return (
+            JSON.stringify(item.text) === JSON.stringify(text) &&
+            item.variant === variant
+          )
+        })
+        if (index >= 0) return state
 
-      let items = state.messages.slice()
-      items.push({
-        variant: variant,
-        text: text,
-        id: uniqueId("message-"),
-      })
-      return { ...state, messages: items }
-    })
+        let items = state.messages.slice()
+        items.push({
+          variant: variant,
+          text: text,
+          id: uniqueId("message-"),
+        })
+        return { ...state, messages: items }
+      },
+      false,
+      "messages-provider:addMessage"
+    )
   },
   removeMessage: (id) => {
     removeMessageValidation({ id: id })
-    return set((state) => {
-      // find the message with id
-      const index = state.messages.findIndex((item) => item.id == id)
-      if (index < 0) {
-        return state
-      }
-      let newItems = state.messages.slice()
-      newItems.splice(index, 1)
-      return { ...state, messages: newItems }
-    })
+    return set(
+      (state) => {
+        // find the message with id
+        const index = state.messages.findIndex((item) => item.id == id)
+        if (index < 0) {
+          return state
+        }
+        let newItems = state.messages.slice()
+        newItems.splice(index, 1)
+        return { ...state, messages: newItems }
+      },
+      false,
+      "messages-provider:removeMessage"
+    )
   },
   resetMessages: () =>
-    set((state) => {
-      return { ...state, messages: [] }
-    }),
+    set(
+      (state) => {
+        return { ...state, messages: [] }
+      },
+      false,
+      "messages-provider:resetMessages"
+    ),
 })
 
 const StoreContext = createContext()
