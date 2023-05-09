@@ -2,29 +2,29 @@
 <%
   # supported asset types
   ASSET_TYPES = { 
+    "juno-assets": ["apps","libs"],
     "juno-3rd-party": ["apps"],
-    "juno-assets": ["apps"]
   }
   ASSETS = {
     "auth":                 { type: "app", path: "apps/auth" },
-    #"assets-overview":      { type: "app", path: "apps/assets-overview"},
+    "assets-overview":      { type: "app", path: "apps/assets-overview"},
     #"user-activity":        { type: "app", path: "apps/user-activity"},
     #"volta":                { type: "app", path: "apps/volta"},
     #"whois":                { type: "app", path: "apps/whois"},
     #"widget-loader":        { type: "app", path: "apps/widget-loader"},
     #"dashboard":            { type: "app", path: "apps/dashboard"},
     #"doop":                 { type: "app", path: "apps/doop"},
-    #"supernova":            { type: "app", path: "apps/supernova"},
+    "supernova":            { type: "app", path: "apps/supernova"},
     #"exampleapp":           { type: "app", path: "apps/exampleapp"},
     #"greenhouse":           { type: "app", path: "apps/greenhouse" },
     #"heureka":              { type: "app", path: "apps/heureka"},
-    #"juno-ui-components":   { type: "lib", path: "libs/juno-ui-components"},
-    #"messages-provider":    { type: "lib", path: "libs/messages-provider"},
-    #"oauth":                { type: "lib", path: "libs/oauth"},
-    #"policy-engine":        { type: "lib", path: "libs/policy-engine"},
-    #"communicator":         { type: "lib", path: "libs/communicator"},
-    #"url-state-provider":   { type: "lib", path: "libs/url-state-provider"},
-    #"url-state-router":     { type: "lib", path: "libs/url-state-router"},
+    "juno-ui-components":   { type: "lib", path: "libs/juno-ui-components"},
+    "messages-provider":    { type: "lib", path: "libs/messages-provider"},
+    "oauth":                { type: "lib", path: "libs/oauth"},
+    "policy-engine":        { type: "lib", path: "libs/policy-engine"},
+    "communicator":         { type: "lib", path: "libs/communicator"},
+    "url-state-provider":   { type: "lib", path: "libs/url-state-provider"},
+    "url-state-router":     { type: "lib", path: "libs/url-state-router"},
 }
 %>
 
@@ -344,13 +344,13 @@ jobs:
                     # check and compose everthing in the dist output folder that 
                     # we can compine everything in the asset-server buid step
                     ./scripts/compose_assets.sh --asset-type <%= asset_type %> --source-path ../temp  --dist-path $DIST_PATH --kind <%= name %>
-                    echo ""
-                    ls -all $DIST_PATH/<%= name %>/<%= asset_type %>
-                    echo ""
                   <% end %>
                 <% end %>
-                exit 1
-      
+                echo ""
+                ls -all $DIST_PATH/apps/
+                ls -all $DIST_PATH/libs/
+                #exit 1
+
       # to serve our js, css and stattic assets this step will add all the created data 
       # in dist/ to the nginx image in /usr/share/nginx/html
       - put: assets-server.image
