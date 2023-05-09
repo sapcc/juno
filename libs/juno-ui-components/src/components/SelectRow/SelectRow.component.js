@@ -23,16 +23,6 @@ const floatingcontainerstyles = `
   jn-relative
 `
 
-const floatinglabelcontainerstyles = `
-  jn-absolute
-  jn-top-0.5
-  jn-left-4
-  jn-transform 
-  jn-origin-top-left 
-  jn-scale-75
-  jn-opacity-75
-`
-
 const errortextstyles = `
   jn-text-xs
   jn-text-theme-error
@@ -106,22 +96,6 @@ export const SelectRow = ({
     setIsValid(validated)
   }, [validated])
 
-  // labelContainer needs to be rendered in different markup order /positions depending on variant in order to avoid z-index hassle:
-  const labelContainer = (
-    <div
-      className={`juno-label-container ${
-        variant === "floating" ? floatinglabelcontainerstyles : ""
-      }`}
-    >
-      <Label
-        text={label}
-        htmlFor={id}
-        required={required}
-        disabled={disabled}
-      />
-    </div>
-  )
-
   return (
     <div
       className={`juno-select-row juno-select-row-${variant} ${selectrow} ${
@@ -129,13 +103,14 @@ export const SelectRow = ({
       } ${className}`}
       {...props}
     >
-      {variant !== "floating" ? labelContainer : null}
       <div>
         <Select
           className={`${selectstyles}`}
           labelClassName={ variant === "floating" ? "jn-pt-[0.8125rem]" : "" }
           name={name}
           id={id}
+          label={label}
+          required={required}
           placeholder={placeholder}
           onValueChange={onValueChange || onChange}
           onOpenChange={onOpenChange}
@@ -150,7 +125,6 @@ export const SelectRow = ({
         >
           {children}
         </Select>
-        {variant === "floating" ? labelContainer : null}
         {errortext && errortext.length ? (
           <p className={`${errortextstyles}`}>{errortext}</p>
         ) : null}
