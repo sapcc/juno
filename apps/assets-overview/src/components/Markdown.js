@@ -4,11 +4,11 @@ import { useQuery } from "@tanstack/react-query"
 import { fetchMarkdown } from "../actions"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
-import { useMessageStore } from "messages-provider"
+import { useActions } from "messages-provider"
 import { parseError } from "../helpers"
 
 const Markdown = ({ path }) => {
-  const addMessage = useMessageStore((state) => state.addMessage)
+  const { addMessage } = useActions()
 
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ["markdown", path],
