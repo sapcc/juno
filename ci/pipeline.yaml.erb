@@ -339,10 +339,13 @@ jobs:
                     ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type <%= asset_type %> --action download --root-path ../temp/juno-3rd-party
                 <% end %>
 
+                # check name collisions
+                ./ci/scripts/check_for_name_conflicts.sh --juno-assets-path ./juno-assets --third-party-assets-path ./juno-3rd-party
+
                 <% ASSET_TYPES.each do |name,asset_types|%>
                   <% asset_types.each do |asset_type|%>
                     # check and compose everthing in the dist output folder that 
-                    # we can compine everything in the asset-server buid step
+                    # we can combine everything in the asset-server buid step
                     ./ci/scripts/compose_assets.sh --asset-type <%= asset_type %> --source-path ../temp  --dist-path $DIST_PATH --kind <%= name %>
                   <% end %>
                 <% end %>

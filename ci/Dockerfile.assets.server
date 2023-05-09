@@ -6,7 +6,7 @@ ARG EXIT_ON_ERROR="true"
 # NOTE: if this image does not exist 
 #       this is the case if the image was not build before
 #       comment out this line for the first run
-FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server:latest AS lastbuild
+#FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server:latest AS lastbuild
 
 # Base image
 FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base:latest AS base 
@@ -35,7 +35,7 @@ RUN mkdir -p /tmp/final
 # NOTE: if this image does not exist 
 #       this is the case if the image was not build before
 #       comment out this line for the first run
-COPY --from=lastbuild /usr/share/nginx/html /tmp/final
+#COPY --from=lastbuild /usr/share/nginx/html /tmp/final
 
 # merge latest assets over the old assets 
 RUN \
