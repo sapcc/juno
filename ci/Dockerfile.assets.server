@@ -40,15 +40,16 @@ RUN mkdir -p /tmp/final
 # merge latest assets over the old assets 
 RUN \
   for PACKAGE in ./**/*/package.json; do \
+  NAME=$(jq -r .name $PACKAGE); \
   VERSION=$(jq -r .version $PACKAGE); \
   DIR=$(dirname $PACKAGE); \
   rm -rf /tmp/final/$DIR; \
-  rm -rf /tmp/final/$DIR@$VERSION; \
-  rm -rf /tmp/final/$DIR@latest; \
-  mkdir -p /tmp/final/$DIR@$VERSION; \ 
-  cp -r $DIR/* /tmp/final/$DIR@$VERSION/; \
-  mkdir -p /tmp/final/$DIR@latest; \
-  cp -r $DIR/* /tmp/final/$DIR@latest/; \
+  rm -rf /tmp/final/$NAME@$VERSION; \
+  rm -rf /tmp/final/$NAME@latest; \
+  mkdir -p /tmp/final/$NAME@$VERSION; \ 
+  cp -r $DIR/* /tmp/final/$NAME@$VERSION/; \
+  mkdir -p /tmp/final/$NAME@latest; \
+  cp -r $DIR/* /tmp/final/$NAME@latest/; \
   done ;
 
 RUN mkdir -p /tmp/final/global && cp /juno/README.md /tmp/final/global/
