@@ -1,5 +1,6 @@
 ci
 !ci/scripts
+!ci/obsolete_assets.json
 .npm/cache
 node_modules
 build
