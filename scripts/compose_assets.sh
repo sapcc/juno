@@ -94,6 +94,13 @@ fi
 cd "$SOURCE_PATH/$ASSET_TYPE"
 
 function integrity_check() {
+
+  version=$1
+  name=$2
+  peerDependencies=$3
+  main=$4
+  module=$5
+
   echo "----------------------------------"
   echo "Run integrity check"
   echo "----------------------------------"
@@ -101,30 +108,56 @@ function integrity_check() {
   error_and_exit="false"
   echo $(date) >build_log
   {
-    if [[ -n "${version}" ]]; then
+    if [[ "${version}" != "null" ]]; then
       echo "version ✔️"
     else
-      echo "Error: version not found!"
+      echo "Error: version not found in package.json!"
       error_and_exit="true"
     fi
 
-    if [[ -n "${name}" ]]; then
+    if [[ "${name}" != "null" ]]; then
       echo "name ✔️"
     else
-      echo "Error: name not found!"
+      echo "Error: name not found in package.json!"
       error_and_exit="true"
     fi
 
-    if [[ -n "${peerDependencies}" ]]; then
+    if [[ "${peerDependencies}" != "null" ]]; then
       echo "peerDependencies ✔️"
     else
-      echo "Error: peerDependencies not found!"
+      echo "Error: peerDependencies not found in package.json!"
       error_and_exit="true"
     fi
 
-    #echo "main/module ✔️"
-    #echo "README.md ✔️"
-    #echo "build dir ✔️"
+    if [[ "${main}" != "null" ]] || [[ "${module}" != "null" ]]; then
+      if [[ "${main}" != "null" ]]; then
+        echo "main ✔️"
+        if [ -f "${main}" ]; then
+          echo "main -> ${main} exist ✔️"
+        else
+          echo "Error: main -> ${main} does not exist"
+          error_and_exit="true"
+        fi
+      else
+        echo "module ✔️"
+        if [ -f "${module}" ]; then
+          echo "module -> ${module} exist ✔️"
+        else
+          echo "Error: module -> ${module} does not exist"
+          error_and_exit="true"
+        fi
+      fi
+    else
+      echo "Error: main or module not found in package.json!"
+      error_and_exit="true"
+    fi
+
+    if [ -f "README.md" ]; then
+      echo "README.md exist ✔️"
+    else
+      echo "Error: README.md does not exist"
+      error_and_exit="true"
+    fi
 
   } >>build_log
   cat ./build_log
@@ -176,7 +209,7 @@ while IFS= read -d $'\0' -r dirname; do
     echo "module: $asset_module"
     echo "peer deps: $asset_peer_deps"
 
-    integrity_check
+    integrity_check "$asset_version" "$asset_name" "$asset_peer_deps" "$asset_main" "$asset_module"
 
     echo "Compose $KIND distribution for $ASSET_TYPE -> ${asset_name}@${asset_version}"
     cd ..
