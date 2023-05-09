@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from "react"
 import { getService } from "../queries"
 import useStore from "../hooks/useStore"
-import { useStore as useMessageStore } from "../messageStore"
+import { useActions } from "messages-provider"
 import { useRouter } from "url-state-router"
 import {
   parseError,
@@ -49,7 +49,7 @@ const ServiceDetail = () => {
 
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const auth = useStore(useCallback((state) => state.auth))
-  const setMessage = useMessageStore((state) => state.setMessage)
+  const { addMessage } = useActions()
   const serviceId = routeParams?.serviceId
   const { isLoading, isError, isFetching, data, error } = getService(
     auth?.id_token,
@@ -60,7 +60,7 @@ const ServiceDetail = () => {
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
     if (error) {
-      setMessage({
+      addMessage({
         variant: "error",
         text: parseError(error),
       })

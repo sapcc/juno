@@ -6,15 +6,9 @@ import {
   DataGridCell,
   Container,
 } from "juno-ui-components"
-import {
-  DetailSection,
-  DetailSectionBox,
-  DetailContentHeading,
-  DetailSectionHeader,
-} from "../styles"
+import { DetailSection, DetailSectionBox, DetailSectionHeader } from "../styles"
 import { getServices, getUsers } from "../queries"
 import useStore from "../hooks/useStore"
-import { useStore as useMessageStore } from "../messageStore"
 import ServicesList from "./ServicesList"
 import HintLoading from "./HintLoading"
 import UsersList from "./UsersList"
@@ -26,7 +20,6 @@ const ITEMS_PER_PAGE = 10
 const Home = () => {
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const auth = useStore(useCallback((state) => state.auth))
-  const setMessage = useMessageStore((state) => state.setMessage)
   const [servicesPaginationOptions, setServicesPaginationOptions] = useState({
     limit: ITEMS_PER_PAGE,
     offset: 0,

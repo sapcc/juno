@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import useStore from "./hooks/useStore"
 import AppRouter from "./components/AppRouter"
-import { MessagesStateProvider } from "./messageStore"
+import { MessagesProvider } from "messages-provider"
 import { AppShell, AppShellProvider } from "juno-ui-components"
 import styles from "./styles.scss"
 import useCommunication from "./hooks/useCommunication"
@@ -48,9 +48,9 @@ const StyledApp = (props) => {
     <AppShellProvider>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
-      <MessagesStateProvider>
+      <MessagesProvider>
         <App {...props} />
-      </MessagesStateProvider>
+      </MessagesProvider>
     </AppShellProvider>
   )
 }

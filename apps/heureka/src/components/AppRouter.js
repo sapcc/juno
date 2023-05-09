@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { Router, Route, Redirect, Switch } from "url-state-router"
-import { useStore as useMessageStore } from "../messageStore"
+import { useActions, Messages } from "messages-provider"
 
 import AppContainer from "./AppContainer"
 import Services from "./Services"
@@ -17,7 +17,6 @@ import UserDetail from "./UserDetail"
 import SupportGroups from "./SupportGroups"
 import Home from "./Home"
 import useStore from "../hooks/useStore"
-import Messages from "./Messages"
 import WelcomeView from "./WelcomeView"
 
 export const HOME_PATH = "/home"
@@ -48,12 +47,12 @@ const AppRouter = (props) => {
   const auth = useStore((state) => state.auth)
   const loggedIn = useStore((state) => state.loggedIn)
   const login = useStore((state) => state.login)
-  const setMessage = useMessageStore((state) => state.setMessage)
+  const { addMessage } = useActions()
   const embedded = useStore((state) => state.embedded)
 
   useEffect(() => {
     if (auth?.error) {
-      setMessage({
+      addMessage({
         variant: "error",
         text: parseError(auth?.error),
       })
