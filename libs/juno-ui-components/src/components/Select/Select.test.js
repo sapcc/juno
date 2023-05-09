@@ -44,6 +44,20 @@ describe("Select", () => {
     expect(screen.getByRole("combobox")).toHaveClass("juno-select")
   })
   
+  test("renders a label as passed", async () => {
+    render(<Select label="My Label" id="my-select"/>)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByLabelText("My Label")).toBeInTheDocument()
+    expect(document.querySelector(".juno-label")).toBeInTheDocument()
+    expect(document.querySelector(".juno-label")).toHaveTextContent("My Label")
+  })
+  
+  test("redners a required marker as passed", async () => {
+    render(<Select label="My Label" required={true} />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(document.querySelector(".required")).toBeInTheDocument()
+  })
+  
   test("renders an aria-label as passed", async () => {
     render(<Select ariaLabel="my-select" />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()

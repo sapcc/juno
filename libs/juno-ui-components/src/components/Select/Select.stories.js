@@ -51,9 +51,30 @@ const ControlledTemplate = ({open, value, children, ...args}) => {
 export const Default = Template.bind({})
 Default.args = {
   children: [
-    <SelectOption value="val-1" key="1">Value 1</SelectOption>,
-    <SelectOption value="val-2" key="2">Value 2</SelectOption>,
-    <SelectOption value="val-3" key="3">Value 3</SelectOption>
+    <SelectOption value="val-1" key="1">Option 1</SelectOption>,
+    <SelectOption value="val-2" key="2">Option 2</SelectOption>,
+    <SelectOption value="val-3" key="3">Option 3</SelectOption>
+  ]
+}
+
+export const WithLabel = Template.bind({})
+WithLabel.args = {
+  label: "Select an Option",
+  children: [
+    <SelectOption value="val-1" key="1">Option 1</SelectOption>,
+    <SelectOption value="val-2" key="2">Option 2</SelectOption>,
+    <SelectOption value="val-3" key="3">Option 3</SelectOption>
+  ]
+}
+
+export const RequiredWithLabel = Template.bind({})
+RequiredWithLabel.args = {
+  label: "Selecting an Option is Required",
+  required: true,
+  children: [
+    <SelectOption value="val-1" key="1">Option 1</SelectOption>,
+    <SelectOption value="val-2" key="2">Option 2</SelectOption>,
+    <SelectOption value="val-3" key="3">Option 3</SelectOption>
   ]
 }
 
