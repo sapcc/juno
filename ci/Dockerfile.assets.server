@@ -1,4 +1,5 @@
 ARG BASE_URL_PLACEHOLDER="%BASE_URL%"
+ARG EXIT_ON_ERROR="true"
 
 # Latest assets server image
 # FIRSTRUN!
