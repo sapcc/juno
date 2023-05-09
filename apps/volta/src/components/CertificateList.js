@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { getCertificates } from "../queries"
-import { useMessageStore } from "messages-provider"
+import { useActions } from "messages-provider"
 import {
   useCertShowNew,
   useRevokedList,
@@ -31,7 +31,7 @@ jn-pb-2
  `
 
 const CertificateList = ({ ca }) => {
-  const addMessage = useMessageStore((state) => state.addMessage)
+  const { addMessage } = useActions()
   const showPanel = useCertShowNew()
   const { setShowNewCert } = useCertActions()
   const revokedList = useRevokedList()

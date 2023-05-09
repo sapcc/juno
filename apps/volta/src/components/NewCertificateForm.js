@@ -23,7 +23,7 @@ import { newCertificateMutation } from "../queries"
 import { useCertState } from "../hooks/useCertState"
 import { parseError } from "../helpers"
 import { useQueryClient } from "@tanstack/react-query"
-import { useMessageStore } from "messages-provider"
+import { useActions } from "messages-provider"
 import {
   useCertActions,
   useAuthData,
@@ -34,8 +34,7 @@ const ALGORITHM_KEY = "RSA-2048"
 
 const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
   const { setIsFormSubmitting } = useCertActions()
-  const addMessage = useMessageStore((state) => state.addMessage)
-  const resetMessages = useMessageStore((state) => state.resetMessages)
+  const { addMessage, resetMessages } = useActions()
 
   // the form state is being handeled in a zustand context store. Since the complexity
   // in this form is very low could be removed from here.
