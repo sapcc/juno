@@ -1,4 +1,5 @@
 ci
+!ci/scripts
 .npm/cache
 node_modules
 build

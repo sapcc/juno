@@ -9,7 +9,7 @@ fi
 
 function help() {
   echo "Usage: compose_assets.sh --asset-type||-at --source-path||-rp --kind||-k
-  example: ./scripts/compose_assets.sh --asset-type apps --source-path ../workbench --dist-path ../dist
+  example: ./ci/scripts/compose_assets.sh --asset-type apps --source-path ../workbench --dist-path ../dist
   --asset-type  -> libs|apps|apis|static
   --source-path -> default is /tmp/build_result (can be realtive and absolute)
   --kind        -> juno-assets || juno-3rd-party (default is juno-assets)

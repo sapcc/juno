@@ -6,7 +6,7 @@ ARG EXIT_ON_ERROR="true"
 # NOTE: if this image does not exist 
 #       this is the case if the image was not build before
 #       comment out this line for the first run
-#FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-assets-server:latest AS lastbuild
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server:latest AS lastbuild
 
 # Base image
 FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base:latest AS base 
@@ -35,7 +35,7 @@ RUN mkdir -p /tmp/final
 # NOTE: if this image does not exist 
 #       this is the case if the image was not build before
 #       comment out this line for the first run
-#COPY --from=lastbuild /usr/share/nginx/html /tmp/final
+COPY --from=lastbuild /usr/share/nginx/html /tmp/final
 
 # merge latest assets over the old assets 
 RUN \
@@ -61,7 +61,7 @@ RUN rm -rf externals_* importmap* importmap*
 
 # Create importmaps and manifest
 RUN \
-  node /juno/scripts/generate_importmap.mjs \
+  node /juno/ci/scripts/generate_importmap.mjs \
   --provider=$NPM_PROVIDER \
   --external-path=externals \
   --exit-on-error=$EXIT_ON_ERROR \
@@ -71,7 +71,7 @@ RUN \
   --output=./importmap.json  \
   --verbose=$VERBOSE ; \
   \
-  node /juno/scripts/generate_manifest.mjs \
+  node /juno/ci/scripts/generate_manifest.mjs \
   --src=./ \
   --output=./manifest.json \
   --base-url=$BASE_URL_PLACEHOLDER \
@@ -87,8 +87,8 @@ RUN \
 # /tmp/final/manifest.json
 
 # Check the integrity of the file structure
-RUN chmod +x /juno/scripts/check_file_integrity.sh && \
-  /juno/scripts/check_file_integrity.sh global apps libs assets externals index.html manifest.json importmap.json
+RUN chmod +x /juno/ci/scripts/check_file_integrity.sh && \
+  /juno/ci/scripts/check_file_integrity.sh global apps libs assets externals index.html manifest.json importmap.json
 
 
 ############### FINAL IMAGE! ###################

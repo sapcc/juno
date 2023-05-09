@@ -10,7 +10,7 @@ fi
 
 function help() {
   echo "Usage: build_assets.sh --asset-path||-ap --asset-name||-sn --root-path||-rp --output-path||-op
-    Example: ./scripts/build_asset.sh --asset-name auth --asset-path ./apps/auth/ --root-path /app --output-path /tmp/juno-build
+    Example: ./ci/scripts/build_asset.sh --asset-name auth --asset-path ./apps/auth/ --root-path /app --output-path /tmp/juno-build
     --root-path is optional default is $(pwd)
     --output-path is optional default is ./build-result"
   exit
@@ -74,7 +74,7 @@ echo "use OUTPUT_PATH = $OUTPUT_PATH"
 echo "----------------------------------"
 
 echo "generate COMMUNICATOR.md in $ROOT_PATH/$ASSET_PATH"
-node scripts/generate_communication_readme.mjs --path=$ROOT_PATH/$ASSET_PATH
+node ci/scripts/generate_communication_readme.mjs --path=$ROOT_PATH/$ASSET_PATH
 
 # install and build libs
 npm run build-libs
