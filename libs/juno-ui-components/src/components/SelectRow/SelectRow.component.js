@@ -98,15 +98,12 @@ export const SelectRow = ({
 
   return (
     <div
-      className={`juno-select-row juno-select-row-${variant} ${selectrow} ${
-        variant === "floating" ? floatingcontainerstyles : ""
-      } ${className}`}
+      className={`juno-select-row ${className}`}
       {...props}
     >
       <div>
         <Select
           className={`${selectstyles}`}
-          labelClassName={ variant === "floating" ? "jn-pt-[0.8125rem]" : "" }
           name={name}
           id={id}
           label={label}
@@ -140,8 +137,6 @@ export const SelectRow = ({
 SelectRow.propTypes = {
   /** Name attribute of the input */
   name: PropTypes.string,
-  /** Floating (default) or stacked layout variant */
-  variant: PropTypes.oneOf(["floating", "stacked"]),
   /** Label text */
   label: PropTypes.string,
   /** The placeholder to show in the Select if no value is selected. defaults to "Select…". */
@@ -182,7 +177,6 @@ SelectRow.propTypes = {
 
 SelectRow.defaultProps = {
   name: null,
-  variant: "floating",
   label: null,
   placeholder: "Select…",
   id: null,
