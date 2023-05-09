@@ -97,9 +97,8 @@ function integrity_check() {
 
   version=$1
   name=$2
-  peerDependencies=$3
-  main=$4
-  module=$5
+  main=$3
+  module=$4
 
   echo "----------------------------------"
   echo "Run integrity check"
@@ -119,13 +118,6 @@ function integrity_check() {
       echo "name ✔️"
     else
       echo "Error: name not found in package.json!"
-      error_and_exit="true"
-    fi
-
-    if [[ "${peerDependencies}" != "null" ]]; then
-      echo "peerDependencies ✔️"
-    else
-      echo "Error: peerDependencies not found in package.json!"
       error_and_exit="true"
     fi
 
@@ -209,7 +201,7 @@ while IFS= read -d $'\0' -r dirname; do
     echo "module: $asset_module"
     echo "peer deps: $asset_peer_deps"
 
-    integrity_check "$asset_version" "$asset_name" "$asset_peer_deps" "$asset_main" "$asset_module"
+    integrity_check "$asset_version" "$asset_name" "$asset_main" "$asset_module"
 
     echo "Compose $KIND distribution for $ASSET_TYPE -> ${asset_name}@${asset_version}"
     cd ..
