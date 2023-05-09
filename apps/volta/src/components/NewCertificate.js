@@ -5,13 +5,13 @@ import NewCertificateForm from "./NewCertificateForm"
 import NewCertificateResutls from "./NewCertificateResults"
 import CustomPanelBody from "./CustomPanelBody"
 import { useCertShowNew, useCertActions } from "../hooks/useStore"
-import { useMessageStore } from "messages-provider"
+import { useActions } from "messages-provider"
 import FormPanelFooter from "./NewCertificateFormPanelFooter"
 
 const NewCertificate = ({ ca }) => {
   const showPanel = useCertShowNew()
   const { setShowNewCert } = useCertActions()
-  const resetMessages = useMessageStore((state) => state.resetMessages)
+  const { resetMessages } = useActions()
   const [pk, setPk] = useState(null)
   const [ssoCert, setSsoCert] = useState(null)
   const [formResutlsCopied, setFormResutlsCopied] = useState(false)
