@@ -1,6 +1,6 @@
-import React, { useCallback } from "react"
+import React from "react"
 import { Message } from "juno-ui-components"
-import { useStore } from "./useMessageStore"
+import { useMessages, useActions } from "./useMessageStore"
 
 const shouldAutoDismiss = (variant) => {
   if (variant === "info" || variant === "success") return true
@@ -8,8 +8,8 @@ const shouldAutoDismiss = (variant) => {
 }
 
 const Messages = ({ className }) => {
-  const messages = useStore(useCallback((state) => state.messages))
-  const removeMessage = useStore((state) => state.removeMessage)
+  const messages = useMessages()
+  const { removeMessage } = useActions()
 
   const onDismiss = (id) => {
     removeMessage(id)
@@ -19,9 +19,10 @@ const Messages = ({ className }) => {
     <>
       {messages && messages.length > 0 && (
         <div className={`juno-message-provider ${className}`}>
-          {messages.map((item) => (
+          {messages.map((item, index) => (
             <Message
               key={item.id}
+              className={index > 0 ? "mt-4" : ""}
               variant={item.variant}
               dismissible={true}
               autoDismiss={shouldAutoDismiss(item.variant)}

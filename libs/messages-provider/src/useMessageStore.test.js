@@ -1,6 +1,6 @@
 import * as React from "react"
 import { renderHook, act, waitFor } from "@testing-library/react"
-import { useStore, MessagesProvider } from "./useMessageStore"
+import { useMessages, useActions, MessagesProvider } from "./useMessageStore"
 
 const originalConsoleError = global.console.error
 
@@ -28,20 +28,22 @@ describe("useMessageStore", () => {
     const wrapper = ({ children }) => (
       <MessagesProvider>{children}</MessagesProvider>
     )
-    const { result } = renderHook(() => useStore(), { wrapper })
-    expect(result.current.messages.length).toBe(0)
+    const { result } = renderHook(() => useMessages(), { wrapper })
+    expect(result.current.length).toBe(0)
   })
 
   it("adds a message correctly", () => {
     const wrapper = ({ children }) => (
       <MessagesProvider>{children}</MessagesProvider>
     )
-    const { result } = renderHook(() => useStore(), { wrapper })
-
+    const actions = renderHook(() => useActions(), { wrapper })
+    const { result } = renderHook(() => useMessages(), { wrapper })
     act(() =>
-      result.current.addMessage({ variant: "error", text: "this is an error" })
+      actions.result.current.addMessage({
+        variant: "error",
+        text: "this is an error",
+      })
     )
-
     waitFor(() => {
       expect(result.current.messages.length).toBe(1)
       expect(result.current.messages[0].variant).toEqual("error")
@@ -53,10 +55,9 @@ describe("useMessageStore", () => {
     const wrapper = ({ children }) => (
       <MessagesProvider>{children}</MessagesProvider>
     )
-    const { result } = renderHook(() => useStore(), { wrapper })
-
+    const actions = renderHook(() => useActions(), { wrapper })
     expect(() => {
-      act(() => result.current.addMessage({ variant: "error" }))
+      act(() => actions.result.current.addMessage({ variant: "error" }))
     }).toThrow(/Failed prop type: The prop `text`/)
   })
 
@@ -64,11 +65,13 @@ describe("useMessageStore", () => {
     const wrapper = ({ children }) => (
       <MessagesProvider>{children}</MessagesProvider>
     )
-    const { result } = renderHook(() => useStore(), { wrapper })
-
+    const actions = renderHook(() => useActions(), { wrapper })
     expect(() => {
       act(() =>
-        result.current.addMessage({ variant: "miau", text: "this is an error" })
+        actions.result.current.addMessage({
+          variant: "miau",
+          text: "this is an error",
+        })
       )
     }).toThrow(/Failed prop type: Invalid prop `variant`/)
   })
@@ -77,13 +80,16 @@ describe("useMessageStore", () => {
     const wrapper = ({ children }) => (
       <MessagesProvider>{children}</MessagesProvider>
     )
-    const { result } = renderHook(() => useStore(), { wrapper })
-
+    const actions = renderHook(() => useActions(), { wrapper })
+    const { result } = renderHook(() => useMessages(), { wrapper })
     act(() =>
-      result.current.addMessage({ variant: "error", text: "this is an error" })
+      actions.result.current.addMessage({
+        variant: "error",
+        text: "this is an error",
+      })
     )
     act(() =>
-      result.current.addMessage({
+      actions.result.current.addMessage({
         variant: "info",
         text: "this is an info message",
       })
@@ -91,8 +97,12 @@ describe("useMessageStore", () => {
 
     waitFor(() => {
       expect(result.current.messages.length).toBe(2)
+
+      act(() =>
+        actions.result.current.removeMessage(result.current.messages[1].id)
+      )
     })
-    act(() => result.current.removeMessage(result.current.messages[1].id))
+
     waitFor(() => {
       expect(result.current.messages.length).toBe(1)
     })
@@ -102,10 +112,9 @@ describe("useMessageStore", () => {
     const wrapper = ({ children }) => (
       <MessagesProvider>{children}</MessagesProvider>
     )
-    const { result } = renderHook(() => useStore(), { wrapper })
-
+    const actions = renderHook(() => useActions(), { wrapper })
     expect(() => {
-      act(() => result.current.removeMessage())
+      act(() => actions.result.current.removeMessage())
     }).toThrow(/Failed prop type: The prop `id`/)
   })
 
@@ -113,22 +122,24 @@ describe("useMessageStore", () => {
     const wrapper = ({ children }) => (
       <MessagesProvider>{children}</MessagesProvider>
     )
-    const { result } = renderHook(() => useStore(), { wrapper })
-
+    const actions = renderHook(() => useActions(), { wrapper })
+    const { result } = renderHook(() => useMessages(), { wrapper })
     act(() =>
-      result.current.addMessage({ variant: "error", text: "this is an error" })
+      actions.result.current.addMessage({
+        variant: "error",
+        text: "this is an error",
+      })
     )
     act(() =>
-      result.current.addMessage({
+      actions.result.current.addMessage({
         variant: "info",
         text: "this is an info message",
       })
     )
-
     waitFor(() => {
       expect(result.current.messages.length).toBe(2)
+      act(() => result.current.resetMessages())
     })
-    act(() => result.current.resetMessages())
     waitFor(() => {
       expect(result.current.messages.length).toBe(0)
     })
