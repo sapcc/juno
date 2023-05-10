@@ -27,9 +27,11 @@ async function deleteAssets(src, assetNames) {
     // console.log("::::", src, file)
     const newPath = path.join(src, file)
 
-    if (assetNames.indexOf(file) >= 0) {
+    const allVersionsPattern = file.replace(/@.*$/, "") + "@*"
+    // console.log("===", allVersionsPattern)
+    if (assetNames.includes(file) || assetNames.includes(allVersionsPattern)) {
       console.log("delete", file)
-      await fs.rmdirSync(newPath, { recursive: true })
+      await fs.rmSync(newPath, { recursive: true })
     } else if (fs.statSync(newPath).isDirectory()) {
       deleteAssets(newPath, assetNames)
     }
@@ -43,9 +45,9 @@ async function main() {
 
   const assetNames = []
   for (let name in obsoleteAssets) {
-    obsoleteAssets[name].forEach((version) =>
+    obsoleteAssets[name].forEach((version) => {
       assetNames.push(`${name}@${version}`)
-    )
+    })
   }
 
   console.log("Assets to be deleted:", assetNames)
