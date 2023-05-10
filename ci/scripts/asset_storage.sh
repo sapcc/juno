@@ -186,7 +186,7 @@ function upload() {
   cd "$ROOT_PATH"
   echo "----------------------------------"
   # echo "Command: swift upload --skip-identical --changed $CONTAINER $ASSET_PATH"
-  swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" &&
+  swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" >/dev/null &&
     echo "----------------------------------" &&
     echo "upload done 🙂"
 }
@@ -196,7 +196,7 @@ function download() {
   cd "$ROOT_PATH"
   # echo "----------------------------------"
   # echo "Command: swift download --skip-identical $CONTAINER $ASSET_PATH"
-  swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" &&
+  swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" >/dev/null &&
     echo "----------------------------------" &&
     echo "download done 🙂"
 }
