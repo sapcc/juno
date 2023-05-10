@@ -29,7 +29,7 @@ async function deleteAssets(src, assetNames) {
 
     if (assetNames.indexOf(file) >= 0) {
       console.log("delete", file)
-      await fs.rmdirSync(newPath)
+      await fs.rmdirSync(newPath, { recursive: true })
     } else if (fs.statSync(newPath).isDirectory()) {
       deleteAssets(newPath, assetNames)
     }
