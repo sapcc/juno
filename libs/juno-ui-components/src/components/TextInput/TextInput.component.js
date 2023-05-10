@@ -91,6 +91,7 @@ export const TextInput = ({
   className,
   label,
   autoComplete,
+  width,
   onChange,
   onFocus,
   onBlur,
@@ -138,7 +139,12 @@ export const TextInput = ({
   
   return (
     <span 
-      className={`juno-textinput-wrapper ${wrapperStyles}`} 
+      className={`
+        juno-textinput-wrapper 
+        ${wrapperStyles}
+        ${ width == "auto" ? "jn-inline-block" : "jn-block" }
+        ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+        `} 
       >
       { label && label.length ?
           <label 
@@ -172,6 +178,7 @@ export const TextInput = ({
           ${ isInvalid ? "juno-textinput-invalid " + invalidstyles : "" } 
           ${ isValid ? "juno-textinput-valid " + validstyles : "" }  
           ${ isValid || isInvalid ? "" : defaultborderstyles } 
+          ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
           ${ className }
         `}
         {...props}
@@ -215,6 +222,8 @@ TextInput.propTypes = {
   type: PropTypes.oneOf(["text", "email", "password", "tel", "url", "number"]),
   /** The label of the input */
   label: PropTypes.string,
+  /** The width of the text input. Either 'full' (default) or 'auto'. */
+  width: PropTypes.oneOf(["full", "auto"]),
 }
 
 TextInput.defaultProps = {
@@ -234,4 +243,5 @@ TextInput.defaultProps = {
   onBlur: undefined,
   type: null,
   label: undefined,
+  width: "full",
 }
