@@ -42,14 +42,17 @@ RUN \
   for PACKAGE in ./**/*/package.json; do \
   NAME=$(jq -r .name $PACKAGE); \
   VERSION=$(jq -r .version $PACKAGE); \
+  # dir is something like ./libs/juno-ui-components@1.1.5
   DIR=$(dirname $PACKAGE); \
+  # asset path is then ./libs
+  ASSET_PATH=$(dirname $DIR); \
   rm -rf /tmp/final/$DIR; \
-  rm -rf /tmp/final/$NAME@$VERSION; \
-  rm -rf /tmp/final/$NAME@latest; \
-  mkdir -p /tmp/final/$NAME@$VERSION; \ 
-  cp -r $DIR/* /tmp/final/$NAME@$VERSION/; \
-  mkdir -p /tmp/final/$NAME@latest; \
-  cp -r $DIR/* /tmp/final/$NAME@latest/; \
+  rm -rf /tmp/final/$ASSET_PATH/$NAME@$VERSION; \
+  rm -rf /tmp/final/$ASSET_PATH/$NAME@latest; \
+  mkdir -p /tmp/final/$ASSET_PATH/$NAME@$VERSION; \ 
+  cp -r $DIR/* /tmp/final/$ASSET_PATH/$NAME@$VERSION/; \
+  mkdir -p /tmp/final/$ASSET_PATH/$NAME@latest; \
+  cp -r $DIR/* /tmp/final/$ASSET_PATH/$NAME@latest/; \
   done ;
 
 RUN mkdir -p /tmp/final/global && cp /juno/README.md /tmp/final/global/
