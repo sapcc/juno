@@ -134,14 +134,10 @@ const AssetDetails = () => {
       return map
     }, {})
 
-    console.log("versionMap: ", versionMap)
-
     const result = Object.keys(versionMap)
       .sort(compareVersions())
       .reverse()
       .map((version) => ({ value: version, label: versionMap[version] }))
-
-    console.log("versions result: ", result)
     console.groupEnd()
 
     return result
@@ -178,15 +174,12 @@ const AssetDetails = () => {
                   label="version"
                   variant="floating"
                   value={asset?.version}
-                  onChange={(e) => changeVersion(e.target.value)}
+                  onValueChange={(value) => {
+                    return changeVersion(value)
+                  }}
                 >
                   {versions.map((version, i) => (
                     <SelectOption
-                      test={console.log(
-                        "rendering option: ",
-                        version.label,
-                        version.value
-                      )}
                       key={i}
                       label={version.label}
                       value={version.value}
