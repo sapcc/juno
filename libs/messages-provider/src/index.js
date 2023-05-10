@@ -1,7 +1,9 @@
 import {
   MessagesProvider,
-  useStore as useMessageStore,
+  useMessageStore,
+  useActions,
+  useMessages,
 } from "./useMessageStore"
 import Messages from "./Messages"
 
-export { MessagesProvider, useMessageStore, Messages }
+export { MessagesProvider, useMessageStore, Messages, useActions, useMessages }

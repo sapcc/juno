@@ -8,12 +8,12 @@ import TabContainer from "./components/TabContainer"
 import AssetsList from "./components/AssetsList"
 import AssetDetails from "./components/AssetDetails"
 import { APP, LIB } from "./helpers"
-import { useMessageStore } from "messages-provider"
+import { useActions } from "messages-provider"
 import { parseError } from "./helpers"
 import Documentation from "./components/Documentation"
 
 const AppContent = (props) => {
-  const addMessage = useMessageStore((state) => state.addMessage)
+  const { addMessage } = useActions()
   const manifestUrl = useStore((state) => state.manifestUrl)
   const urlStateKey = useStore((state) => state.urlStateKey)
   const setOrigin = useStore((state) => state.setOrigin)

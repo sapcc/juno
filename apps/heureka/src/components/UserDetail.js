@@ -10,7 +10,7 @@ import {
 } from "juno-ui-components"
 import { useRouter } from "url-state-router"
 import { getUser } from "../queries"
-import { useStore as useMessageStore } from "../messageStore"
+import { useActions } from "messages-provider"
 import useStore from "../hooks/useStore"
 import {
   DetailSection,
@@ -27,7 +27,7 @@ const UserDetail = ({}) => {
   const { routeParams } = useRouter()
   const endpoint = useStore(useCallback((state) => state.endpoint))
   const auth = useStore(useCallback((state) => state.auth))
-  const setMessage = useMessageStore((state) => state.setMessage)
+  const { addMessage } = useActions()
   const userId = routeParams?.userId
   const { isLoading, isError, isFetching, data, error } = getUser(
     auth?.id_token,
@@ -38,7 +38,7 @@ const UserDetail = ({}) => {
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
     if (error) {
-      setMessage({
+      addMessage({
         variant: "error",
         text: parseError(error),
       })

@@ -11,7 +11,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query"
 import { parseError } from "../helpers"
 import { DateTime } from "luxon"
-import { useMessageStore } from "messages-provider"
+import { useActions } from "messages-provider"
 
 const PROCESSING_STATE = "Processing"
 
@@ -52,7 +52,7 @@ whitespace-nowrap
 `
 
 const CertificateListItem = ({ item, ca }) => {
-  const addMessage = useMessageStore((state) => state.addMessage)
+  const { addMessage } = useActions()
   const authData = useAuthData()
   const endpoint = useGlobalsEndpoint()
   const revokedList = useRevokedList()

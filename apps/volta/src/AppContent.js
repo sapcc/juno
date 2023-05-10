@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useMemo } from "react"
 import { getCAs } from "./queries"
-import { useMessageStore, MessagesProvider } from "messages-provider"
+import { useActions, MessagesProvider } from "messages-provider"
 import { parseError } from "./helpers"
 import {
   useGlobalsEndpoint,
@@ -21,7 +21,7 @@ import CAsList from "./components/CAsList"
 import CertificateList from "./components/CertificateList"
 
 const AppContent = () => {
-  const addMessage = useMessageStore((state) => state.addMessage)
+  const { addMessage } = useActions()
   const endpoint = useGlobalsEndpoint()
   const disabledCAs = useGlobalsDisabledCAs()
   const selectedCAName = useGlobalsSelectedCA()
