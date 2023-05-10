@@ -90,6 +90,7 @@ export const Textarea = ({
   className,
   label,
   autoComplete,
+  width,
   onChange,
   onFocus,
   onBlur,
@@ -137,7 +138,12 @@ export const Textarea = ({
   
   return (
     <span 
-      className={`juno-textinput-wrapper ${wrapperStyles}`} 
+      className={`
+        juno-textinput-wrapper 
+        ${wrapperStyles}
+        ${ width == "auto" ? "jn-inline-block" : "jn-block" }
+        ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+      `} 
       >
       { label && label.length ?
           <label 
@@ -170,6 +176,7 @@ export const Textarea = ({
           ${ isInvalid ? "juno-textarea-invalid " + invalidstyles : "" } 
           ${ isValid ? "juno-textarea-valid " + validstyles : "" }  
           ${ isValid || isInvalid ? "" : defaultborderstyles } 
+          ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
           ${ className }
         `}
         {...props}
@@ -213,6 +220,8 @@ Textarea.propTypes = {
   type: PropTypes.oneOf(["text", "email", "password", "tel", "url", "number"]),
   /** The label of the input */
   label: PropTypes.string,
+  /** The width of the textarea. Either 'full' (default) or 'auto'. */
+  width: PropTypes.oneOf(["full", "auto"]),
 }
 
 Textarea.defaultProps = {
@@ -232,4 +241,5 @@ Textarea.defaultProps = {
   onBlur: undefined,
   type: null,
   label: undefined,
+  width: "full",
 }
