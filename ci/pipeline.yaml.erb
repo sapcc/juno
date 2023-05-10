@@ -340,7 +340,7 @@ jobs:
                 <% end %>
 
                 # check name collisions
-                ./ci/scripts/check_for_name_conflicts.sh --juno-assets-path ./juno-assets --third-party-assets-path ./juno-3rd-party
+                ./ci/scripts/check_for_name_conllisions.sh --juno-assets-path ./juno-assets --third-party-assets-path ./juno-3rd-party
 
                 <% ASSET_TYPES.each do |name,asset_types|%>
                   <% asset_types.each do |asset_type|%>
