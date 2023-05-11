@@ -1,6 +1,6 @@
 {
   "name": "messages-provider",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Messages provider",
   "source": "src/index.js",
   "main": "build/index.js",

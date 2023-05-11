@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 const addMessageValidation = (props) => {
   PropTypes.checkPropTypes(
     {
-      text: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired || PropTypes.object.isRequired,
       variant: PropTypes.oneOf([
         "info",
         "warning",
@@ -48,20 +48,20 @@ const createMessagesSlice = (set, get) => ({
   messages: [], // this is the messages state
   actions: {
     addMessage: ({ variant, text }) => {
-      get().addMessage({ variant, text })
+      return get().addMessage({ variant, text })
     },
     removeMessage: (id) => {
-      get().removeMessage(id)
+      return get().removeMessage(id)
     },
     resetMessages: () => {
-      get().resetMessages()
+      return get().resetMessages()
     },
   },
   addMessage: ({ variant, text }) => {
     addMessageValidation({ variant: variant, text: text })
-    return set(
+    let messageId = null
+    set(
       (state) => {
-        console.log("STORE: ", state.storeId)
         // check if a message with the same text and variant exists
         const index = state.messages.findIndex((item) => {
           return (
@@ -72,16 +72,18 @@ const createMessagesSlice = (set, get) => ({
         if (index >= 0) return state
 
         let items = state.messages.slice()
+        messageId = uniqueId("message-")
         items.push({
           variant: variant,
           text: text,
-          id: uniqueId("message-"),
+          id: messageId,
         })
         return { ...state, messages: items }
       },
       false,
       "messages-provider:addMessage"
     )
+    return messageId
   },
   removeMessage: (id) => {
     removeMessageValidation({ id: id })
