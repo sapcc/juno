@@ -2,7 +2,9 @@
 
 ## Prerequisits
 
+Installed:
 - node 18
+- esbuild
 
 ## Instructions
 
@@ -55,13 +57,13 @@
    ```yaml
    "devDependencies": {
    ...
-   "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz",
-   "url-state-provider": "https://assets.juno.global.cloud.sap/libs/messages-provider@latest/package.tgz",
+   "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.5.9/package.tgz",
+   "url-state-provider": "https://assets.juno.global.cloud.sap/libs/messages-provider@0.1.6/package.tgz",
    ...
    },
    ```
 
-   If you need an specific version other the `latest` please change the version in the fully qualified URL and check which versions we have available in our [overview app](https://assets.juno.global.cloud.sap/?__s=N4IghgzhCmAuEFoD2A3aAnFBLaB3EAXKLGAEYCSAdgCbQAehATADQiVgrmzQC2hIIVgAcwlaABsA8kOhjqhAGZhxMAL6qgA). E.g.: `https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.2.7/package.tgz`
+   We recommend referencing a specific version of each lib as shown above, rather than `latest`, which would also be possible. If you do want to reference `latest`, please be aware that upgrading to a newer version later then requires you to clean your npm cache first via `npm cache clean`. To see the newest available versions of the Juno libs check our [overview app](https://assets.juno.global.cloud.sap/?__s=N4IghgzhCmAuEFoD2A3aAnFBLaB3EAXKLGAEYCSAdgCbQAehATADQiVgrmzQC2hIIVgAcwlaABsA8kOhjqhAGZhxMAL6qgA). E.g.: `https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.5.9/package.tgz`
 
 4. Install all dependencies.
    Run the following compand to install all needed dependencies.
@@ -73,6 +75,13 @@
    ```bash
    npm run start
    ```
+   
+   If you get the error: 
+   ```bash
+   Error: Cannot find module '../../helpers/appProps'
+   ```
+   fix it by copying `appProps.js` from juno helpers/appProps to base directory and adapting the path in `esbuild.js` to `const appProps = require("./appProps")`
+   
 6. Build the application.
    Run the following command to build the application.
 
