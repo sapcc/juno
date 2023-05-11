@@ -1,4 +1,7 @@
 #!/bin/bash
+# exit on error
+set -e
+
 function help() {
   echo "Usage: check_for_name_collisions.sh --juno-assets-path||-j --third-party-assets-path||-t --asset-type||-at --help||-h
   --juno-assets-path path to juno assets  
@@ -49,15 +52,22 @@ if [[ -z "$ASSET_TYPE" ]]; then
   exit 1
 fi
 
+if [ ! -d "$JUNO_ASSETS_PATH/$ASSET_TYPE" ]; then
+  echo "Error: juno-assets '$JUNO_ASSETS_PATH/$ASSET_TYPE' path not found 😐"
+  exit 1
+fi
 # juno-assets/apps/APPNAME/package.json
 asset_names_arr=($(jq -r '.name' $JUNO_ASSETS_PATH/$ASSET_TYPE/**/package.json))
 # make arr unique
 juno_assets=($(echo "${asset_names_arr[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
 
+third_3rd_party_assets=()
 # juno-3rd-party/apps/APPNAME/APPFOLDER/package.json
-asset_names_arr=($(jq -r '.name' $THIRD_PARTY_ASSETS_PATH/$ASSET_TYPE/**/**/package.json))
-# make arr unique
-third_3rd_party_assets=($(echo "${asset_names_arr[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+if [ -d "$THIRD_PARTY_ASSETS_PATH/$ASSET_TYPE" ]; then
+  asset_names_arr=($(jq -r '.name' $THIRD_PARTY_ASSETS_PATH/$ASSET_TYPE/**/**/package.json))
+  # make arr unique
+  third_3rd_party_assets=($(echo "${asset_names_arr[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+fi
 
 echo ""
 echo "### Found juno-asset names ###"
