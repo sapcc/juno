@@ -135,8 +135,6 @@ fi
 
 echo "=================================="
 if [[ -n "$ASSET_NAME" ]]; then
-  echo "### $ACTION kind $KIND ###"
-else
   echo "### $ACTION asset $ASSET_NAME ###"
 fi
 echo "----------------------------------"
@@ -182,10 +180,7 @@ echo "----------------------------------"
 # https://docs.openstack.org/ocata/cli-reference/swift.html
 function upload() {
   echo "Swift container upload from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
-  #swift upload --skip-identical --changed "$DESTIONATION" .
   cd "$ROOT_PATH"
-  echo "----------------------------------"
-  # echo "Command: swift upload --skip-identical --changed $CONTAINER $ASSET_PATH"
   swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" >/dev/null &&
     echo "----------------------------------" &&
     echo "upload done 🙂"
@@ -194,8 +189,6 @@ function upload() {
 function download() {
   echo "Swift container download from container $CONTAINER $ASSET_PATH to $ASSET_PATH"
   cd "$ROOT_PATH"
-  # echo "----------------------------------"
-  # echo "Command: swift download --skip-identical $CONTAINER $ASSET_PATH"
   swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" >/dev/null &&
     echo "----------------------------------" &&
     echo "download done 🙂"

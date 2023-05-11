@@ -1,8 +1,9 @@
 #!/bin/bash
 function help() {
-  echo "Usage: check_for_name_collisions.sh --juno-assets-path||-j --third-party-assets-path||-t --help||-h
+  echo "Usage: check_for_name_collisions.sh --juno-assets-path||-j --third-party-assets-path||-t --asset-type||-at --help||-h
   --juno-assets-path path to juno assets  
-  --third-party-assets-path path to third-party assets"
+  --third-party-assets-path path to third-party assets
+  --asset-type = apps or libs"
   exit
 }
 
@@ -18,6 +19,11 @@ while [[ $# -gt 0 ]]; do
     shift # past argument
     shift # past value
     ;;
+  --asset-type | -at)
+    ASSET_TYPE="$2"
+    shift # past argument
+    shift # past value
+    ;;
   --help)
     help
     ;;
@@ -28,22 +34,47 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-arr=($(jq -r '.name' $JUNO_ASSETS_PATH/**/package.json))
-# make arr unique
-juno_assets=($(echo "${arr[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+if [[ -z "$JUNO_ASSETS_PATH" ]]; then
+  echo "Error: JUNO_ASSETS_PATH not given 😐"
+  exit 1
+fi
 
-arr=($(jq -r '.name' $THIRD_PARTY_ASSETS_PATH/**/package.json))
-# make arr unique
-third_party_assets=($(echo "${arr[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+if [[ -z "$THIRD_PARTY_ASSETS_PATH" ]]; then
+  echo "Error:: THIRD_PARTY_ASSETS_PATH not given 😐"
+  exit 1
+fi
 
+if [[ -z "$ASSET_TYPE" ]]; then
+  echo "Error: ASSET_TYPE not given 😐"
+  exit 1
+fi
+
+# juno-assets/apps/APPNAME/package.json
+asset_names_arr=($(jq -r '.name' $JUNO_ASSETS_PATH/$ASSET_TYPE/**/package.json))
+# make arr unique
+juno_assets=($(echo "${asset_names_arr[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+
+# juno-3rd-party/apps/APPNAME/APPFOLDER/package.json
+asset_names_arr=($(jq -r '.name' $THIRD_PARTY_ASSETS_PATH/$ASSET_TYPE/**/**/package.json))
+# make arr unique
+third_3rd_party_assets=($(echo "${asset_names_arr[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
+
+echo ""
+echo "### Found juno-asset names ###"
 printf '%s\n' "${juno_assets[@]}"
-printf '%s\n' "${third_party_assets[@]}"
+echo ""
+echo "### Found juno-3rd-party asset names ###"
+printf '%s\n' "${third_3rd_party_assets[@]}"
 
-for item1 in $juno_assets; do
-  for item2 in $third_party_assets; do
-    if [[ $item1 = $item2 ]]; then
-      echo "Name collision found, 3rd party asset $item2 collides with juno asset $item1"
+for item1 in "${juno_assets[@]}"; do
+  for item2 in "${third_3rd_party_assets[@]}"; do
+    if [[ "$item1" = "$item2" ]]; then
+      echo ""
+      echo "Error:     name collision found, 3rd party asset '$item2' collides with juno asset '$item1' 😔"
+      echo "Sollution: please rename '$item2'"
       exit 1
     fi
   done
 done
+
+echo "No collision found, all asset names for asset-type $ASSET_TYPE are fine 👍"
