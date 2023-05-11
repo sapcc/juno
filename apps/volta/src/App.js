@@ -55,7 +55,7 @@ const App = (props) => {
 
 const StyledApp = (props) => {
   return (
-    <AppShellProvider>
+    <AppShellProvider theme={`${props.theme ? props.theme : "theme-dark"}`}>
       <style>{styles.toString()}</style>
       <App {...props} />
     </AppShellProvider>
