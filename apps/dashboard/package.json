@@ -52,11 +52,6 @@
     "zustand/middleware": "^4.1.1"
   },
   "appProps": {
-    "theme": {
-      "value": "theme-dark",
-      "type": "optional",
-      "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
-    },
     "region": {
       "value": "qa-de-1",
       "description": "Default region"
