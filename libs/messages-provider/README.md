@@ -167,7 +167,9 @@ export default NewItemForm
   Accepts an object containing:
 
   - variant (string). Variants are defined below.
-  - text (string)
+  - text (string or object)
+
+  Returns the message id if succeed otherwise null.
 
   ```javascript
   import { useActions } from "messages-provider"
