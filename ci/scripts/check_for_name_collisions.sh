@@ -79,9 +79,9 @@ printf '%s\n' "${third_3rd_party_assets[@]}"
 for item1 in "${juno_assets[@]}"; do
   for item2 in "${third_3rd_party_assets[@]}"; do
     if [[ "$item1" = "$item2" ]]; then
-      echo ""
-      echo "Error:    name collision found, 3rd-party-asset '$item2' collides with juno-asset '$item1' 😔"
-      echo "Solution: please rename '$item2'"
+      ERROR="\n$(date)\nError:    name collision found, 3rd-party-asset '$item2' collides with juno-asset '$item1' 😔\nSolution: please rename '$item2'"
+      echo -e "$ERROR" >>"$THIRD_PARTY_ASSETS_PATH/$ASSET_TYPE/build_log"
+      echo -e "$ERROR"
       exit 1
     fi
   done
