@@ -8,12 +8,13 @@ if [ ! -f "CODEOWNERS" ]; then
 fi
 
 function help() {
-  echo "Usage: compose_assets.sh --asset-type||-at --source-path||-rp --kind||-k
+  echo "Usage: compose_assets.sh --asset-type||-at --source-path||-rp --kind||-k --no-exit-on-error
   example: ./ci/scripts/compose_assets.sh --asset-type apps --source-path ../workbench --dist-path ../dist
-  --asset-type  -> libs|apps|apis|static
-  --source-path -> default is /tmp/build_result (can be realtive and absolute)
-  --kind        -> juno-assets || juno-3rd-party (default is juno-assets)
-  --dist-path   -> default is /tmp/dist (must be absolute)"
+  --asset-type    -> libs|apps|apis|static
+  --source-path   -> default is /tmp/build_result (can be realtive and absolute)
+  --kind          -> juno-assets || juno-3rd-party (default is juno-assets)
+  --dist-path     -> default is /tmp/dist (must be absolute)
+  --error-on-exit -> use this that error produces normal exit (possible values 0|1 default is 1)"
   exit
 }
 
@@ -39,6 +40,11 @@ while [[ $# -gt 0 ]]; do
     shift # past argument
     shift # past value
     ;;
+  --error-on-exit)
+    ERROR_ON_EXIT=$2
+    shift # past argument
+    shift # past value
+    ;;
   --help)
     help
     ;;
@@ -60,6 +66,10 @@ fi
 
 if [[ -z "$SOURCE_PATH" ]]; then
   SOURCE_PATH="/tmp/build_result"
+fi
+
+if [[ -z "$ERROR_ON_EXIT" ]]; then
+  ERROR_ON_EXIT="1"
 fi
 
 if [ ! -d "$SOURCE_PATH" ]; then
@@ -155,7 +165,7 @@ function integrity_check() {
   } >>"$SOURCE_PATH"/build_log
   cat "$SOURCE_PATH"/build_log
   if [[ "$error_and_exit" == "true" ]]; then
-    exit
+    exit "$ERROR_ON_EXIT"
   fi
 
   echo "----------------------------------"
@@ -179,7 +189,7 @@ while IFS= read -d $'\0' -r dirname; do
       if [ ! -f "package.json" ]; then
         # apps/APPNAME/SOMEVERSION/package.json
         echo "Error: unsupported file structure, no package.json was found in $(pwd) 😐"
-        exit 1
+        exit "$ERROR_ON_EXIT"
         # TODO: feedback to upload error or success to swift
       fi
     fi
@@ -216,7 +226,7 @@ while IFS= read -d $'\0' -r dirname; do
       error_msg="Error: the directory $asset_dist_path already exist that means there are dublicated versions in $KIND -> $ASSET_TYPE -> ${asset_name} 😐"
       echo "$error_msg"
       echo -e "$(data)\n$error_msg" >>"$SOURCE_PATH/build_log"
-      exit 1
+      exit "$ERROR_ON_EXIT"
     fi
 
     cp -r "$asset_dirname" "$asset_dist_path"

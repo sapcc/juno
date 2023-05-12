@@ -82,7 +82,8 @@ for item1 in "${juno_assets[@]}"; do
       ERROR="\n$(date)\nError:    name collision found, 3rd-party-asset '$item2' collides with juno-asset '$item1' 😔\nSolution: please rename '$item2'"
       echo -e "$ERROR" >>"$THIRD_PARTY_ASSETS_PATH/$ASSET_TYPE/build_log"
       echo -e "$ERROR"
-      exit 1
+      # we only use exit here because this should not block the pipeline
+      exit
     fi
   done
 done
