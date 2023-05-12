@@ -38,10 +38,6 @@ const disablediconstyles = `
   jn-opacity-50
 `
 
-const stackedinputstyles = `
-	jn-w-full
-`
-
 const iconpadding = `
   jn-pr-10
 `
