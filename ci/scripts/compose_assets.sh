@@ -118,54 +118,67 @@ function integrity_check() {
   echo >build_log
   {
     echo -e "$(date)\n"
-    if [[ "${version}" != "null" ]]; then
-      echo "version ✔️"
-    else
-      echo "Error: version not found in package.json!"
-      error_and_exit="true"
-    fi
 
-    if [[ "${name}" != "null" ]]; then
-      echo "name ✔️"
-    else
-      echo "Error: name not found in package.json!"
+    if [ -f "$SOURCE_PATH/$ASSET_TYPE/$ASSET_NAME/error_log" ]; then
+      echo "Error: cannot combine because error_log was found"
+      cat $SOURCE_PATH/$ASSET_TYPE/$ASSET_NAME/error_log
       error_and_exit="true"
-    fi
+    else
 
-    if [[ "${main}" != "null" ]] || [[ "${module}" != "null" ]]; then
-      if [[ "${main}" != "null" ]]; then
-        echo "main ✔️"
-        if [ -f "${main}" ]; then
-          echo "main -> ${main} exist ✔️"
+      if [[ "${version}" != "null" ]]; then
+        echo "version ✔️"
+      else
+        echo "Error: version not found in package.json!"
+        error_and_exit="true"
+      fi
+
+      if [[ "${name}" != "null" ]]; then
+        echo "name ✔️"
+      else
+        echo "Error: name not found in package.json!"
+        error_and_exit="true"
+      fi
+
+      if [[ "${main}" != "null" ]] || [[ "${module}" != "null" ]]; then
+        if [[ "${main}" != "null" ]]; then
+          echo "main ✔️"
+          if [ -f "${main}" ]; then
+            echo "main -> ${main} exist ✔️"
+          else
+            echo "Error: main -> ${main} does not exist"
+            error_and_exit="true"
+          fi
         else
-          echo "Error: main -> ${main} does not exist"
-          error_and_exit="true"
+          echo "module ✔️"
+          if [ -f "${module}" ]; then
+            echo "module -> ${module} exist ✔️"
+          else
+            echo "Error: module -> ${module} does not exist"
+            error_and_exit="true"
+          fi
         fi
       else
-        echo "module ✔️"
-        if [ -f "${module}" ]; then
-          echo "module -> ${module} exist ✔️"
-        else
-          echo "Error: module -> ${module} does not exist"
-          error_and_exit="true"
-        fi
+        echo "Error: main or module not found in package.json!"
+        error_and_exit="true"
       fi
-    else
-      echo "Error: main or module not found in package.json!"
-      error_and_exit="true"
+
+      if [ -f "README.md" ]; then
+        echo "README.md exist ✔️"
+      else
+        echo "Error: README.md does not exist"
+        error_and_exit="true"
+      fi
+
     fi
 
-    if [ -f "README.md" ]; then
-      echo "README.md exist ✔️"
-    else
-      echo "Error: README.md does not exist"
-      error_and_exit="true"
-    fi
+  } >>"$SOURCE_PATH/$ASSET_TYPE/$ASSET_NAME/build_log"
 
-  } >>"$SOURCE_PATH"/build_log
-  cat "$SOURCE_PATH"/build_log
   if [[ "$error_and_exit" == "true" ]]; then
+    mv $SOURCE_PATH/$ASSET_TYPE/$ASSET_NAME/build_log $SOURCE_PATH/$ASSET_TYPE/$ASSET_NAME/error_log
+    cat $SOURCE_PATH/$ASSET_TYPE/$ASSET_NAME/error_log
     exit "$ERROR_ON_EXIT"
+  else
+    cat "$SOURCE_PATH/$ASSET_TYPE/$ASSET_NAME/build_log"
   fi
 
   echo "----------------------------------"
@@ -236,5 +249,3 @@ while IFS= read -d $'\0' -r dirname; do
 
   done < <(find ./ -mindepth 1 -maxdepth 1 -type d -print0)
 done < <(find ./ -mindepth 1 -maxdepth 1 -type d -print0)
-
-# TODO: feedback to upload error or success to swift
