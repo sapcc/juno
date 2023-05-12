@@ -1,5 +1,4 @@
 import React from "react"
-import { panelSectionCss } from "../styles"
 import { CodeBlock, Container } from "juno-ui-components"
 
 const AssetDetailsAdvanced = ({ asset }) => {

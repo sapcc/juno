@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo } from "react"
 import useAppLoader from "../hooks/useAppLoader"
 import { useRef } from "react"
+import { Box } from "juno-ui-components"
 
-const AssetPreview = ({ active, config }) => {
+const AssetDetailsPreview = ({ config }) => {
   const { mount } = useAppLoader()
   const holder = useRef()
   const app = useRef(document.createElement("div"))
@@ -23,20 +24,17 @@ const AssetPreview = ({ active, config }) => {
   useEffect(() => {
     if (!config) return
 
-    if (active) {
-      // load and add to holder
-      mountApp.then((loaded) => {
-        if (!loaded) return
-        holder.current.appendChild(app.current)
-      })
-    } else {
-      // remove from holder
-      if (holder.current.contains(app.current))
-        holder.current.removeChild(app.current)
-    }
-  }, [active])
+    mountApp.then((loaded) => {
+      if (!loaded) return
+      holder.current.appendChild(app.current)
+    })
+  }, [])
 
-  return <div data-app={config.name} ref={holder}></div>
+  return (
+    <Box className="p-8">
+      <div data-app={config.name} ref={holder}></div>
+    </Box>
+  )
 }
 
-export default AssetPreview
+export default AssetDetailsPreview

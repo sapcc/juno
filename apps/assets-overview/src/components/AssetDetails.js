@@ -24,12 +24,13 @@ import {
 import { useQuery } from "@tanstack/react-query"
 import { fetchAssetsManifest } from "../actions"
 import { APP } from "../helpers"
-import AssetDetailsMarkdown from "./AssetDetailsMarkdown"
-import AssetDetailsScripttag from "./AssetDetailsScripttag"
-import AssetDetailsAdvanced from "./AssetDetailsAdvanced"
 import { MessagesProvider } from "messages-provider"
 import { compareVersions } from "../helpers"
-import AssetPreview from "./AssetPreview"
+
+import AssetDetailsReadme from "./AssetDetailsReadme"
+import AssetDetailsGetStarted from "./AssetDetailsGetStarted"
+import AssetDetailsAdvanced from "./AssetDetailsAdvanced"
+import AssetDetailsPreview from "./AssetDetailsPreview"
 
 const AssetDetailsFooter = ({ onCancelCallback }) => {
   return (
@@ -208,17 +209,17 @@ const AssetDetails = () => {
                 </TabList>
                 <TabPanel>
                   <MessagesProvider>
-                    <AssetDetailsMarkdown path={asset?.readme} />
+                    <AssetDetailsReadme path={asset?.readme} />
                   </MessagesProvider>
                 </TabPanel>
                 {asset?.communicatorReadme && (
                   <TabPanel>
-                    <AssetDetailsMarkdown path={asset?.communicatorReadme} />
+                    <AssetDetailsReadme path={asset?.communicatorReadme} />
                   </TabPanel>
                 )}
                 {asset?.type === APP && (
                   <TabPanel>
-                    <AssetDetailsScripttag
+                    <AssetDetailsGetStarted
                       asset={asset}
                       isLatest={isLatest}
                       dependencies={dependencies}
@@ -227,9 +228,8 @@ const AssetDetails = () => {
                 )}
                 {asset?.type === APP && (
                   <TabPanel>
-                    <AssetPreview
+                    <AssetDetailsPreview
                       config={{ name: asset.name, version: asset.version }}
-                      active={true}
                     />
                   </TabPanel>
                 )}

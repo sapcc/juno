@@ -1,12 +1,14 @@
-export const panelSectionCss = `
-mt-6
+export const sectionCss = `
+mb-8
 `
 
-export const h1SectionCss = `
+export const h1Css = `
 font-bold 
 text-xl 
-mb-6
 pb-2
+`
+
+export const headerCss = `
 border-b 
 border-theme-background-lvl-2
 `

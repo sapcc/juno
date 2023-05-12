@@ -31,12 +31,11 @@ const useAppLoader = () => {
     (container, config) => {
       if (!assetsUrl) return null
       return loadImportmap(assetsUrl).then(() => {
-        console.log("==============MOUNT", config?.name, config)
         let url = config.url
           ? config.url
           : `@juno/${config.name}@${config.version || "latest"}`
         return importShim(url).then((app) => {
-          app.mount(container, { props: { ...config.props, embedded: true } })
+          app.mount(container, { props: { ...config.props } })
           return app.unmount
         })
       })

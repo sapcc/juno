@@ -1,7 +1,6 @@
 import React from "react"
-import { panelSectionCss, h1SectionCss, h2Css } from "../styles"
+import { sectionCss, h1Css, headerCss } from "../styles"
 import { CodeBlock } from "juno-ui-components"
-import { scriptTag } from "../helpers"
 
 const baseHtml = ({ name, version }) => {
   return `<!DOCTYPE html>
@@ -13,7 +12,10 @@ const baseHtml = ({ name, version }) => {
       <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
     </head>
     <body style="height: 100vh; flex-grow: 1; margin: 0; padding: 0;">
-      ${scriptTag({ name, version })}
+     
+      <!--Add here the micro-frontend script tag-->
+      <!--Add here the dependencies if given-->
+
     </body>
   </html> 
   `
@@ -22,8 +24,16 @@ const baseHtml = ({ name, version }) => {
 const StandaloneSetup = ({ asset }) => {
   return (
     <>
-      <h1 className={`${h1SectionCss} mt-6`}>Standalone setup</h1>
-      <CodeBlock className={panelSectionCss} heading="index.html" lang="html">
+      <h1 className={`${h1Css} ${headerCss} ${sectionCss}`}>
+        Standalone setup
+      </h1>
+      <p className={sectionCss}>
+        To be able to run the micro-frontend standalone please use the following
+        base html markup and add the script tags as describe in the sections
+        above. To ensure an optimal experience rendering the micro-frontend keep
+        please the styles as they are set in the base html.
+      </p>
+      <CodeBlock className={sectionCss} heading="index.html" lang="html">
         {baseHtml({ name: asset?.name, version: asset?.version })}
       </CodeBlock>
     </>
