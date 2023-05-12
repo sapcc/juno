@@ -5,7 +5,7 @@ import { Default as DefaultSelectOptionStory } from "../SelectOption/SelectOptio
 import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 export default {
-  title: "Forms/Select/SelectRow",
+  title: "Deprecated/SelectRow",
   component: SelectRow,
   argTypes: {
     items: {

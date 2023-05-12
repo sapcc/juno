@@ -2,7 +2,7 @@ import React from "react"
 import { TextareaRow } from "./index.js"
 
 export default {
-  title: "Forms/TextareaRow",
+  title: "Deprecated/TextareaRow",
   component: TextareaRow,
   argTypes: {},
 }

@@ -2,7 +2,7 @@ import React from "react"
 import { TextInputRow } from "./index.js"
 
 export default {
-  title: "Forms/TextInputRow",
+  title: "Deprecated/TextInputRow",
   component: TextInputRow,
   argTypes: {},
 }
