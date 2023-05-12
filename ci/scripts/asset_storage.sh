@@ -179,7 +179,7 @@ echo "----------------------------------"
 
 # https://docs.openstack.org/ocata/cli-reference/swift.html
 function upload() {
-  echo "Swift container upload from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
+  echo "Swift upload from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
   cd "$ROOT_PATH"
   swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" >/dev/null &&
     echo "----------------------------------" &&
@@ -187,7 +187,7 @@ function upload() {
 }
 
 function download() {
-  echo "Swift container download from container $CONTAINER $ASSET_PATH to $ASSET_PATH"
+  echo "Swift download from container $CONTAINER $ASSET_PATH to $ASSET_PATH"
   cd "$ROOT_PATH"
   swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" >/dev/null &&
     echo "----------------------------------" &&

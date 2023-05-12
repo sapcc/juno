@@ -70,18 +70,18 @@ if [ -d "$THIRD_PARTY_ASSETS_PATH/$ASSET_TYPE" ]; then
 fi
 
 echo ""
-echo "### Found juno-asset names ###"
+echo "### Found juno-asset $ASSET_TYPE names ###"
 printf '%s\n' "${juno_assets[@]}"
 echo ""
-echo "### Found juno-3rd-party asset names ###"
+echo "### Found juno-3rd-party $ASSET_TYPE names ###"
 printf '%s\n' "${third_3rd_party_assets[@]}"
 
 for item1 in "${juno_assets[@]}"; do
   for item2 in "${third_3rd_party_assets[@]}"; do
     if [[ "$item1" = "$item2" ]]; then
       echo ""
-      echo "Error:     name collision found, 3rd party asset '$item2' collides with juno asset '$item1' 😔"
-      echo "Sollution: please rename '$item2'"
+      echo "Error:    name collision found, 3rd-party-asset '$item2' collides with juno-asset '$item1' 😔"
+      echo "Solution: please rename '$item2'"
       exit 1
     fi
   done
