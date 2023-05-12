@@ -105,8 +105,9 @@ function integrity_check() {
   echo "----------------------------------"
 
   error_and_exit="false"
-  echo $(date) >build_log
+  echo >build_log
   {
+    echo -e "$(date)\n"
     if [[ "${version}" != "null" ]]; then
       echo "version ✔️"
     else
@@ -151,8 +152,8 @@ function integrity_check() {
       error_and_exit="true"
     fi
 
-  } >>build_log
-  cat ./build_log
+  } >>"$SOURCE_PATH"/build_log
+  cat "$SOURCE_PATH"/build_log
   if [[ "$error_and_exit" == "true" ]]; then
     exit
   fi
@@ -214,7 +215,7 @@ while IFS= read -d $'\0' -r dirname; do
     if [ -d "$asset_dist_path" ]; then
       error_msg="Error: the directory $asset_dist_path already exist that means there are dublicated versions in $KIND -> $ASSET_TYPE -> ${asset_name} 😐"
       echo "$error_msg"
-      echo "$error_msg" >>"$asset_dirname/build_log"
+      echo -e "$(data)\n$error_msg" >>"$SOURCE_PATH/build_log"
       exit 1
     fi
 
