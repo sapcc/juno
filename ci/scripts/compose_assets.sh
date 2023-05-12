@@ -115,13 +115,23 @@ function integrity_check() {
   echo "----------------------------------"
 
   error_and_exit="false"
+  error_log_location="error_log"
+  if [ -f "../error_log" ]; then
+    error_log_location="../error_log"
+  fi
+
+  if [ -f "$error_log_location" ]; then
+    echo "Error: cannot combine because error_log was found"
+    ERROR_LOG=$(cat $error_log_location)
+  fi
+
   echo
   {
     echo -e "\n$(date)"
 
-    if [ -f "error_log" ]; then
+    if [[ -n "$ERROR_LOG" ]]; then
       echo "Error: cannot combine because error_log was found"
-      cat error_log
+      echo -e "$ERROR_LOG"
       error_and_exit="true"
     else
 
@@ -171,14 +181,14 @@ function integrity_check() {
 
     fi
 
-  } >build_log
+  } >"build_log"
 
   if [[ "$error_and_exit" == "true" ]]; then
-    mv build_log error_log
-    cat error_log
+    mv build_log $error_log_location
+    cat "$error_log_location"
     exit "$ERROR_ON_EXIT"
   else
-    cat build_log
+    cat "build_log"
   fi
 
   echo "----------------------------------"
