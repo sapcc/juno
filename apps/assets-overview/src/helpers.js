@@ -41,3 +41,22 @@ export const compareVersions = (key) => (a, b) => {
   // 4. We hit this if the all checked versions so far are equal
   return b1.length - a1.length
 }
+
+export const scriptTag = ({ name, version, appProps }) => {
+  let newAppProps = ""
+  if (appProps && typeof appProps === "object") {
+    Object.keys(appProps).forEach((key, index) => {
+      newAppProps = `${newAppProps}${
+        index ? "\n" : ""
+      }  data-props-${key}="REPLACE_ME"`
+    })
+  }
+
+  return `<script
+  defer
+  src="https://assets.juno.global.cloud.sap/apps/widget-loader@latest/build/app.js" 
+  data-name="${name}"
+  data-version="${version || "latest"}"
+${newAppProps}>
+</script>`
+}

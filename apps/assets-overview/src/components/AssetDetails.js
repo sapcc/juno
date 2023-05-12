@@ -29,6 +29,7 @@ import AssetDetailsScripttag from "./AssetDetailsScripttag"
 import AssetDetailsAdvanced from "./AssetDetailsAdvanced"
 import { MessagesProvider } from "messages-provider"
 import { compareVersions } from "../helpers"
+import AssetPreview from "./AssetPreview"
 
 const AssetDetailsFooter = ({ onCancelCallback }) => {
   return (
@@ -124,8 +125,6 @@ const AssetDetails = () => {
   const versions = useMemo(() => {
     if (!data || !assetName) return null
 
-    console.group("Versions handling:")
-
     const versionMap = Object.keys(data[assetName]).reduce((map, version) => {
       map[data[assetName][version]?.version] =
         version === "latest"
@@ -203,7 +202,8 @@ const AssetDetails = () => {
                 <TabList>
                   <Tab>Readme</Tab>
                   {asset?.communicatorReadme && <Tab>Communication</Tab>}
-                  {asset?.type === APP && <Tab>Script tag</Tab>}
+                  {asset?.type === APP && <Tab>Get started</Tab>}
+                  {asset?.type === APP && <Tab>Preview</Tab>}
                   <Tab>Advance</Tab>
                 </TabList>
                 <TabPanel>
@@ -222,6 +222,14 @@ const AssetDetails = () => {
                       asset={asset}
                       isLatest={isLatest}
                       dependencies={dependencies}
+                    />
+                  </TabPanel>
+                )}
+                {asset?.type === APP && (
+                  <TabPanel>
+                    <AssetPreview
+                      config={{ name: asset.name, version: asset.version }}
+                      active={true}
                     />
                   </TabPanel>
                 )}

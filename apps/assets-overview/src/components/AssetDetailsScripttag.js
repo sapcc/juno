@@ -8,32 +8,15 @@ import {
   Container,
   CodeBlock,
 } from "juno-ui-components"
-import { panelSectionCss } from "../styles"
+import StandaloneSetup from "./StandaloneSetup"
+import { panelSectionCss, h1SectionCss, h2Css } from "../styles"
+import { scriptTag } from "../helpers"
 
-const scriptTag = ({ name, version, appProps }) => {
-  let newAppProps = ""
-  if (appProps && typeof appProps === "object") {
-    Object.keys(appProps).forEach((key, index) => {
-      newAppProps = `${newAppProps}${
-        index ? "\n" : ""
-      }  data-props-${key}="REPLACE_ME"`
-    })
-  }
-
-  return `<script
-  defer
-  src="https://assets.juno.global.cloud.sap/apps/widget-loader@latest/build/app.js" 
-  data-name="${name}"
-  data-version="${version || "latest"}"
-${newAppProps}>
-</script>`
-}
-
-// TODO display data props type (optional and required)
 const AssetDetailsScripttag = ({ asset, dependencies, isLatest }) => {
   return (
     <Container py px={false}>
-      <h1 className="font-bold text-xl">Data props</h1>
+      <h1 className={h1SectionCss}>Script tag</h1>
+      <h2 className={h2Css}>Data props</h2>
       <DataGrid className={panelSectionCss} columns={2}>
         <DataGridRow>
           <DataGridHeadCell>Name</DataGridHeadCell>
@@ -92,6 +75,7 @@ const AssetDetailsScripttag = ({ asset, dependencies, isLatest }) => {
           </>
         )}
       </CodeBlock>
+      <StandaloneSetup asset={asset} />
     </Container>
   )
 }

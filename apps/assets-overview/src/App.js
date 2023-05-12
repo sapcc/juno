@@ -11,11 +11,9 @@ import markdownDark from "github-markdown-css/github-markdown-dark.css"
 import markdownLight from "github-markdown-css/github-markdown-light.css"
 import CustomPageHeader from "./components/CustomPageHeader"
 
-const URL_STATE_KEY = "assets-overview"
-
 const App = (props = {}) => {
   const setManifestUrl = useStore((state) => state.setManifestUrl)
-  const setUrlStateKey = useStore((state) => state.setUrlStateKey)
+  const setAssetsUrl = useStore((state) => state.setAssetsUrl)
 
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
@@ -26,7 +24,7 @@ const App = (props = {}) => {
   // used from overall in the application
   React.useEffect(() => {
     // default is /manifest.json
-    let manifestUrl = props.manifestUrl || "/manifest.json"
+    let manifestUrl = `${props.assetsUrl}/manifest.json` || "/manifest.json"
     // if manifestUrl does not start with http use current origin as prefix
     if (manifestUrl.indexOf("http") < 0) {
       // ensure first char is a "/"
@@ -34,7 +32,7 @@ const App = (props = {}) => {
       manifestUrl = window.location.origin + manifestUrl
     }
     setManifestUrl(manifestUrl)
-    setUrlStateKey(URL_STATE_KEY)
+    setAssetsUrl(props.assetsUrl)
   }, [])
 
   return (
