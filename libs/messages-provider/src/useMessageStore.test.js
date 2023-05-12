@@ -38,13 +38,17 @@ describe("useMessageStore", () => {
     )
     const actions = renderHook(() => useActions(), { wrapper })
     const { result } = renderHook(() => useMessages(), { wrapper })
-    act(() =>
-      actions.result.current.addMessage({
-        variant: "error",
-        text: "this is an error",
-      })
+    let actionResult = null
+    act(
+      () =>
+        (actionResult = actions.result.current.addMessage({
+          variant: "error",
+          text: "this is an error",
+        }))
     )
+
     waitFor(() => {
+      expect(actionResult).toMatch(/message-/) //addMessage return message id if success
       expect(result.current.messages.length).toBe(1)
       expect(result.current.messages[0].variant).toEqual("error")
       expect(result.current.messages[0].text).toEqual("this is an error")

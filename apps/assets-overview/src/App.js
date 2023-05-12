@@ -48,10 +48,21 @@ const App = (props = {}) => {
   )
 }
 
+// the list styles are being reseted bei juno
+// add them back so it works within a markdown container
+const fixMarkdownLists = `
+  ol {
+      list-style: decimal;
+  }
+  ul {
+    list-style: disc;
+}
+`
+
 const StyledApp = (props) => {
   const theme = props.theme ? props.theme : "theme-dark"
   return (
-    <AppShellProvider>
+    <AppShellProvider theme={theme}>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <style>{markdown.toString()}</style>
@@ -60,6 +71,7 @@ const StyledApp = (props) => {
           ? markdownDark.toString()
           : markdownLight.toString()}
       </style>
+      <style>{fixMarkdownLists}</style>
       <App {...props} />
     </AppShellProvider>
   )

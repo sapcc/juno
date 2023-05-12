@@ -8,7 +8,13 @@ import { search as searchByInput } from "./actions"
 import SearchingIndicator from "./img/Loading_Animation.svg"
 import ipBackground from "./img/IP-Background.svg?url"
 
-import { AppShellProvider, Button, Message, PageHeader, Stack } from "juno-ui-components"
+import {
+  AppShellProvider,
+  Button,
+  Message,
+  PageHeader,
+  Stack,
+} from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
 import styles from "./styles.scss"
 
@@ -96,7 +102,7 @@ const App = (props) => {
   }, [search])
 
   return (
-    <div 
+    <div
       className="whois h-full bg-theme-global-bg"
       style={{
         backgroundImage: `url('${
@@ -105,7 +111,7 @@ const App = (props) => {
         backgroundPosition: "bottom right",
         backgroundRepeat: "no-repeat",
       }}
-      >
+    >
       {!embedded && <PageHeader heading="Whois" />}
       <Stack
         direction="vertical"
@@ -178,7 +184,7 @@ const App = (props) => {
 
 const StyledApp = (props) => {
   return (
-    <AppShellProvider>
+    <AppShellProvider theme={`${props.theme ? props.theme : "theme-dark"}`}>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <App {...props} />
