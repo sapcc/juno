@@ -115,13 +115,13 @@ function integrity_check() {
   echo "----------------------------------"
 
   error_and_exit="false"
-  echo >build_log
+  echo
   {
-    echo -e "$(date)\n"
+    echo -e "\n$(date)"
 
-    if [ -f "$SOURCE_PATH/$ASSET_TYPE/$ASSET_NAME/error_log" ]; then
+    if [ -f "error_log" ]; then
       echo "Error: cannot combine because error_log was found"
-      cat $SOURCE_PATH/$ASSET_TYPE/$ASSET_NAME/error_log
+      cat error_log
       error_and_exit="true"
     else
 
@@ -171,14 +171,14 @@ function integrity_check() {
 
     fi
 
-  } >>"$SOURCE_PATH/$ASSET_TYPE/$ASSET_NAME/build_log"
+  } >build_log
 
   if [[ "$error_and_exit" == "true" ]]; then
-    mv $SOURCE_PATH/$ASSET_TYPE/$ASSET_NAME/build_log $SOURCE_PATH/$ASSET_TYPE/$ASSET_NAME/error_log
-    cat $SOURCE_PATH/$ASSET_TYPE/$ASSET_NAME/error_log
+    mv build_log error_log
+    cat error_log
     exit "$ERROR_ON_EXIT"
   else
-    cat "$SOURCE_PATH/$ASSET_TYPE/$ASSET_NAME/build_log"
+    cat build_log
   fi
 
   echo "----------------------------------"
