@@ -1,7 +1,9 @@
 import React from "react"
 import { Form } from "./index.js"
-import { TextInputRow } from "../TextInputRow/index.js"
-import { Default as DefaultTextInputRowStory } from "../TextInputRow/TextInputRow.stories"
+import { FormRow } from "../FormRow/index.js"
+import { TextInput } from "../TextInput/index.js"
+import { Button } from "../Button/index.js"
+import { ButtonRow } from "../ButtonRow/index.js"
 
 export default {
   title: "Forms/Form",
@@ -15,27 +17,31 @@ export default {
   }
 }
 
-const Template = ({ items, ...args }) => (
+const Template = ({ children, ...args }) => (
   <Form {...args}>
-    {items.map((item, i) => (
-      <TextInputRow {...item} key={`input-${i}`} />
-    ))}
+    { children }
   </Form>
 )
 
 export const Default = Template.bind({})
 Default.args = {
-  items: [
-    { ...DefaultTextInputRowStory.args, label: "First Name", id: "d-1" },
-    { ...DefaultTextInputRowStory.args, label: "Last Name", id: "d-2" },
+  title: "A Simple Form",
+  children: [
+    <FormRow>
+      <TextInput label="First Name" id="first-name"/>
+    </FormRow>,
+    <FormRow>
+      <TextInput label="Last Name" id="last-name"/>
+    </FormRow>,
+    <FormRow>
+      <TextInput label="Email" id="email" type="email" required />
+    </FormRow>,
+    <ButtonRow>
+      <Button>Cancel</Button>
+      <Button variant="primary">Submit</Button>
+    </ButtonRow>
   ],
 }
 
-export const WithTitle = Template.bind({})
-WithTitle.args = {
-  title: "Form With A Title",
-  items: [
-    { ...DefaultTextInputRowStory.args, label: "First Name", id: "wt-1" },
-    { ...DefaultTextInputRowStory.args, label: "Last Name", id: "wt-2" },
-  ],
-}
+
+
