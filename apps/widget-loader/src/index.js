@@ -44,8 +44,9 @@
     store.loadImportmap ||
     new Promise((resolve, reject) => {
       // console.log("load shim", origin)
+      // __shimVersion is set from es build, you can found the version in peerDependencies 
       const shimUrl = new URL(
-        "/externals/npm:es-module-shims@1.6.2/dist/es-module-shims.js",
+        "/externals/npm:es-module-shims@__shimVersion/dist/es-module-shims.js",
         origin
       )
 
