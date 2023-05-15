@@ -70,11 +70,10 @@ export const baseHtml = ({ name, hasDependencies }) => {
       <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
       <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
     </head>
-    <body style="height: 100vh; flex-grow: 1; margin: 0; padding: 0;">
-     
-      <!--Add here the micro-frontend script tag-->
-      <!--Add here the dependencies if given-->
+    <body style="height: 100vh; flex-grow: 1; margin: 0; padding: 0;">     
 
+      <!--Add here the micro-frontend script tag-->
+      ${hasDependencies ? "<!--Add here the dependencies-->\n" : ""}
     </body>
   </html> 
   `

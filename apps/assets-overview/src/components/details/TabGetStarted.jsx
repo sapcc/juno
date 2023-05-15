@@ -107,7 +107,11 @@ const TabGetStarted = ({ asset, dependencies, isLatest }) => {
           html."
         >
           <CodeBlock heading="index.html" lang="html">
-            {baseHtml({ name: asset?.name, version: asset?.version })}
+            {baseHtml({
+              name: asset?.name,
+              version: asset?.version,
+              hasDependencies: dependencies?.length > 0,
+            })}
           </CodeBlock>
         </DetailSection>
       </div>
