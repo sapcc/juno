@@ -20,19 +20,14 @@ const App = (props = {}) => {
 
   const embedded = props.embedded === "true" || props.embedded === true
 
-  // on app initial load save Endpoint and URL_STATE_KEY so it can be
-  // used from overall in the application
+  // setup assets url and manifest url
   React.useEffect(() => {
-    // default is /manifest.json
-    let manifestUrl = `${props.assetsUrl}/manifest.json` || "/manifest.json"
-    // if manifestUrl does not start with http use current origin as prefix
-    if (manifestUrl.indexOf("http") < 0) {
-      // ensure first char is a "/"
-      if (manifestUrl[0] !== "/") manifestUrl = "/" + manifestUrl
-      manifestUrl = window.location.origin + manifestUrl
+    let assetsUrl = props.assetsUrl
+    if (!assetsUrl) {
+      return assetsUrl(window.location.origin)
     }
-    setManifestUrl(manifestUrl)
-    setAssetsUrl(props.assetsUrl)
+    setAssetsUrl(assetsUrl)
+    setManifestUrl(assetsUrl + "/manifest.json")
   }, [])
 
   return (
