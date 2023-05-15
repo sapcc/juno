@@ -24,7 +24,7 @@ const App = (props = {}) => {
   React.useEffect(() => {
     let assetsUrl = props.assetsUrl
     if (!assetsUrl) {
-      return assetsUrl(window.location.origin)
+      assetsUrl = window.location.origin
     }
     setAssetsUrl(assetsUrl)
     setManifestUrl(assetsUrl + "/manifest.json")
