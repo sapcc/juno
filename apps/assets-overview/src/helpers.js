@@ -60,3 +60,22 @@ export const scriptTag = ({ name, version, appProps }) => {
 ${newAppProps}>
 </script>`
 }
+
+export const baseHtml = ({ name, hasDependencies }) => {
+  return `<!DOCTYPE html>
+  <html style="margin: 0; padding: 0; display: flex; flex-direction: column;">
+    <head>
+      <title>Converged Cloud | ${name}</title>
+      <link rel="icon" href="/assets/favicon.ico"/>
+      <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    </head>
+    <body style="height: 100vh; flex-grow: 1; margin: 0; padding: 0;">
+     
+      <!--Add here the micro-frontend script tag-->
+      <!--Add here the dependencies if given-->
+
+    </body>
+  </html> 
+  `
+}

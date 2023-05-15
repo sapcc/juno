@@ -69,8 +69,6 @@ const AssetDetails = () => {
   const dependencies = React.useMemo(() => {
     if (!asset?.appDependencies) return []
 
-    asset.appDependencies = { auth: "latest" }
-
     const deps = []
     for (let name in asset.appDependencies) {
       const version = asset.appDependencies[name]

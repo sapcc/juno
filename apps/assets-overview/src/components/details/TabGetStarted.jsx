@@ -8,23 +8,25 @@ import {
   Container,
   CodeBlock,
 } from "juno-ui-components"
-import StandaloneSetup from "../StandaloneSetup"
-import { sectionCss, headerCss, h1Css, h2Css } from "../../styles"
-import { scriptTag } from "../../helpers"
+import { sectionCss, h2Css } from "../../styles"
+import { scriptTag, baseHtml } from "../../helpers"
+import DetailSection from "./DetailSection"
 
 const TabGetStarted = ({ asset, dependencies, isLatest }) => {
   return (
     <Container py px={false}>
-      <h1 className={`${h1Css} ${headerCss} ${sectionCss}`}>Script tag</h1>
-      <p>
-        To run this micro-frontend please setup a script tag with following data
-        props. Replace the prop values with string <i>REPLACE_ME</i> with the
-        correspondig values if required.
-      </p>
-
-      <div className={sectionCss}>
+      <DetailSection
+        title="Script tag"
+        description={
+          <span>
+            To run this micro-frontend please setup a script tag with following
+            data props. Replace the prop values with string <i>REPLACE_ME</i>{" "}
+            with the correspondig values if required.
+          </span>
+        }
+      >
         <h2 className={h2Css}>Data props</h2>
-        <DataGrid className={sectionCss} columns={2}>
+        <DataGrid columns={2}>
           <DataGridRow>
             <DataGridHeadCell>Name</DataGridHeadCell>
             <DataGridHeadCell>Description</DataGridHeadCell>
@@ -65,27 +67,24 @@ const TabGetStarted = ({ asset, dependencies, isLatest }) => {
           )}
         </DataGrid>
 
-        <CodeBlock className="" heading="Script tag" lang="html">
+        <CodeBlock heading="Script tag" lang="html">
           {scriptTag({
             name: asset?.name,
             version: isLatest ? "latest" : asset?.version,
             appProps: asset?.appProps,
           })}
         </CodeBlock>
-      </div>
+      </DetailSection>
 
-      <div className={sectionCss}>
-        {dependencies?.length > 0 && (
-          <>
-            <h1 className={`${h1Css} ${headerCss} ${sectionCss}`}>
-              Dependencies
-            </h1>
-            <p className={sectionCss}>
-              Additional to the script tag described in the section above add
+      {dependencies?.length > 0 && (
+        <div className={sectionCss}>
+          <DetailSection
+            title="Dependencies"
+            description="Additional to the script tag described in the section above add
               please following script tags (asset dependencies) to be able to
-              run this micro-frontend.
-            </p>
-            <CodeBlock className="" heading="Script tag" lang="html">
+              run this micro-frontend."
+          >
+            <CodeBlock heading="Script tag" lang="html">
               {dependencies.map((app) =>
                 scriptTag({
                   name: app?.name,
@@ -94,11 +93,24 @@ const TabGetStarted = ({ asset, dependencies, isLatest }) => {
                 })
               )}
             </CodeBlock>
-          </>
-        )}
-      </div>
+          </DetailSection>
+        </div>
+      )}
 
-      <StandaloneSetup asset={asset} />
+      <div>
+        <DetailSection
+          title="Standalone setup"
+          description="To be able to run the micro-frontend standalone please use the
+          following base html markup and add the script tags as describe in the
+          sections above. To ensure an optimal experience rendering the
+          micro-frontend keep please the styles as they are set in the base
+          html."
+        >
+          <CodeBlock heading="index.html" lang="html">
+            {baseHtml({ name: asset?.name, version: asset?.version })}
+          </CodeBlock>
+        </DetailSection>
+      </div>
     </Container>
   )
 }
