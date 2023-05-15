@@ -1,8 +1,7 @@
 import React from "react"
-import { panelSectionCss } from "../styles"
 import { CodeBlock, Container } from "juno-ui-components"
 
-const AssetDetailsAdvanced = ({ asset }) => {
+const TabAdvanced = ({ asset }) => {
   return (
     <Container py px={false}>
       <CodeBlock content={asset || {}} heading="Asset JSON" lang="json" />
@@ -10,4 +9,4 @@ const AssetDetailsAdvanced = ({ asset }) => {
   )
 }
 
-export default AssetDetailsAdvanced
+export default TabAdvanced

@@ -24,11 +24,13 @@ import {
 import { useQuery } from "@tanstack/react-query"
 import { fetchAssetsManifest } from "../actions"
 import { APP } from "../helpers"
-import AssetDetailsMarkdown from "./AssetDetailsMarkdown"
-import AssetDetailsScripttag from "./AssetDetailsScripttag"
-import AssetDetailsAdvanced from "./AssetDetailsAdvanced"
 import { MessagesProvider } from "messages-provider"
 import { compareVersions } from "../helpers"
+
+import TabWithMarkdown from "./details/TabWithMarkdown"
+import AssetDetailsGetStarted from "./details/TabGetStarted"
+import TabAdvanced from "./details/TabAdvanced"
+import TabPreview from "./details/TabPreview"
 
 const AssetDetailsFooter = ({ onCancelCallback }) => {
   return (
@@ -66,8 +68,6 @@ const AssetDetails = () => {
   // assets that this asset depends on
   const dependencies = React.useMemo(() => {
     if (!asset?.appDependencies) return []
-
-    asset.appDependencies = { auth: "latest" }
 
     const deps = []
     for (let name in asset.appDependencies) {
@@ -123,8 +123,6 @@ const AssetDetails = () => {
   // ############### VERSION HANDLING #################
   const versions = useMemo(() => {
     if (!data || !assetName) return null
-
-    console.group("Versions handling:")
 
     const versionMap = Object.keys(data[assetName]).reduce((map, version) => {
       map[data[assetName][version]?.version] =
@@ -203,30 +201,38 @@ const AssetDetails = () => {
                 <TabList>
                   <Tab>Readme</Tab>
                   {asset?.communicatorReadme && <Tab>Communication</Tab>}
-                  {asset?.type === APP && <Tab>Script tag</Tab>}
+                  {asset?.type === APP && <Tab>Get started</Tab>}
+                  {asset?.type === APP && <Tab>Preview</Tab>}
                   <Tab>Advance</Tab>
                 </TabList>
                 <TabPanel>
                   <MessagesProvider>
-                    <AssetDetailsMarkdown path={asset?.readme} />
+                    <TabWithMarkdown path={asset?.readme} />
                   </MessagesProvider>
                 </TabPanel>
                 {asset?.communicatorReadme && (
                   <TabPanel>
-                    <AssetDetailsMarkdown path={asset?.communicatorReadme} />
+                    <TabWithMarkdown path={asset?.communicatorReadme} />
                   </TabPanel>
                 )}
                 {asset?.type === APP && (
                   <TabPanel>
-                    <AssetDetailsScripttag
+                    <AssetDetailsGetStarted
                       asset={asset}
                       isLatest={isLatest}
                       dependencies={dependencies}
                     />
                   </TabPanel>
                 )}
+                {asset?.type === APP && (
+                  <TabPanel>
+                    <TabPreview
+                      config={{ name: asset.name, version: asset.version }}
+                    />
+                  </TabPanel>
+                )}
                 <TabPanel>
-                  <AssetDetailsAdvanced asset={asset} />
+                  <TabAdvanced asset={asset} />
                 </TabPanel>
               </MainTabs>
             ) : (
