@@ -71,7 +71,7 @@
     "assetsUrl": {
       "value": "https://assets.url",
       "type": "required",
-      "description": "Endpoint URL where to fetch the assets manifest and widgetloader"
+      "description": "Endpoint URL of the assets server"
     },
     "embedded": {
       "value": "false",
