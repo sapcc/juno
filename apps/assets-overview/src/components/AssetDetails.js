@@ -27,10 +27,10 @@ import { APP } from "../helpers"
 import { MessagesProvider } from "messages-provider"
 import { compareVersions } from "../helpers"
 
-import AssetDetailsReadme from "./AssetDetailsReadme"
-import AssetDetailsGetStarted from "./AssetDetailsGetStarted"
-import AssetDetailsAdvanced from "./AssetDetailsAdvanced"
-import AssetDetailsPreview from "./AssetDetailsPreview"
+import TabWithMarkdown from "./details/TabWithMarkdown"
+import AssetDetailsGetStarted from "./details/TabGetStarted"
+import TabAdvanced from "./details/TabAdvanced"
+import TabPreview from "./details/TabPreview"
 
 const AssetDetailsFooter = ({ onCancelCallback }) => {
   return (
@@ -209,12 +209,12 @@ const AssetDetails = () => {
                 </TabList>
                 <TabPanel>
                   <MessagesProvider>
-                    <AssetDetailsReadme path={asset?.readme} />
+                    <TabWithMarkdown path={asset?.readme} />
                   </MessagesProvider>
                 </TabPanel>
                 {asset?.communicatorReadme && (
                   <TabPanel>
-                    <AssetDetailsReadme path={asset?.communicatorReadme} />
+                    <TabWithMarkdown path={asset?.communicatorReadme} />
                   </TabPanel>
                 )}
                 {asset?.type === APP && (
@@ -228,13 +228,13 @@ const AssetDetails = () => {
                 )}
                 {asset?.type === APP && (
                   <TabPanel>
-                    <AssetDetailsPreview
+                    <TabPreview
                       config={{ name: asset.name, version: asset.version }}
                     />
                   </TabPanel>
                 )}
                 <TabPanel>
-                  <AssetDetailsAdvanced asset={asset} />
+                  <TabAdvanced asset={asset} />
                 </TabPanel>
               </MainTabs>
             ) : (

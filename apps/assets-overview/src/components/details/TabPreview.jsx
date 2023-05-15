@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from "react"
-import useAppLoader from "../hooks/useAppLoader"
+import useAppLoader from "../../hooks/useAppLoader"
 import { useRef } from "react"
 import { Box } from "juno-ui-components"
 
-const AssetDetailsPreview = ({ config }) => {
+const TabPreview = ({ config }) => {
   const { mount } = useAppLoader()
   const holder = useRef()
   const app = useRef(document.createElement("div"))
@@ -37,4 +37,4 @@ const AssetDetailsPreview = ({ config }) => {
   )
 }
 
-export default AssetDetailsPreview
+export default TabPreview

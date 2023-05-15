@@ -8,11 +8,11 @@ import {
   Container,
   CodeBlock,
 } from "juno-ui-components"
-import StandaloneSetup from "./StandaloneSetup"
-import { sectionCss, headerCss, h1Css, h2Css } from "../styles"
-import { scriptTag } from "../helpers"
+import StandaloneSetup from "../StandaloneSetup"
+import { sectionCss, headerCss, h1Css, h2Css } from "../../styles"
+import { scriptTag } from "../../helpers"
 
-const AssetDetailsGetStarted = ({ asset, dependencies, isLatest }) => {
+const TabGetStarted = ({ asset, dependencies, isLatest }) => {
   return (
     <Container py px={false}>
       <h1 className={`${h1Css} ${headerCss} ${sectionCss}`}>Script tag</h1>
@@ -103,4 +103,4 @@ const AssetDetailsGetStarted = ({ asset, dependencies, isLatest }) => {
   )
 }
 
-export default AssetDetailsGetStarted
+export default TabGetStarted
