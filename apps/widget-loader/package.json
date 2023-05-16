@@ -68,5 +68,6 @@
       "value": "false",
       "description": "if true then only the importmap is loaded, all other props except importmap-url and debug are ignored!"
     }
-  }
+  },
+  "appPreview": false
 }

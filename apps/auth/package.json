@@ -74,5 +74,6 @@
       "type": "optional",
       "description": "trigger login process automatically on load press. Possible values are 'true' or 'false' (default)"
     }
-  }
+  },
+  "appPreview": false
 }

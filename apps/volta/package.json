@@ -94,5 +94,6 @@
       "type": "optional",
       "description": "Key value pairs separated by '=' and each pair separated by ','. Ex: '2fa-pki=https://doculink.com,mutual_tls-pki=https://doculink.com'"
     }
-  }
+  },
+  "appPreview": true
 }

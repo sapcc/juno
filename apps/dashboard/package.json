@@ -64,5 +64,6 @@
       "value": "true",
       "description": "Production mode"
     }
-  }
+  },
+  "appPreview": true
 }
