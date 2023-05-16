@@ -2,7 +2,7 @@ import React from "react"
 import { SwitchRow } from "./index.js"
 
 export default {
-  title: "Forms/SwitchRow",
+  title: "Deprecated/SwitchRow",
   component: SwitchRow,
   argTypes: {},
 }
