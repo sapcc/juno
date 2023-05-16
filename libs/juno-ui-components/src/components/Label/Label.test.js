@@ -17,18 +17,18 @@ describe("Label", () => {
   test("renders a disabled label", async () => {
     render(<Label text="my-label" disabled />)
     expect(screen.getByText("my-label")).toBeInTheDocument()
-    expect(screen.getByText("my-label")).toHaveClass('disabled')
-  })
-  
-  test("renders a variant as passed", async () => {
-    render(<Label text="my-label" variant="floating" />)
-    expect(screen.getByText("my-label")).toBeInTheDocument()
-    expect(screen.getByText("my-label")).toHaveClass('floating-label')
+    expect(screen.getByText("my-label")).toHaveClass('juno-label-disabled')
   })
   
   test("renders a required symbol as passed", async () => {
     render(<Label text="Required Input" required />)
     expect(document.querySelector('.required')).toBeInTheDocument()
+  })
+  
+  test("renders a minimized label as passed", async () => {
+    render(<Label text="my-label" minimized />)
+    expect(screen.getByText("my-label")).toBeInTheDocument()
+    expect(screen.getByText("my-label")).toHaveClass("juno-label-minimized")
   })
   
   test("renders a custom className as passed", async () => {
