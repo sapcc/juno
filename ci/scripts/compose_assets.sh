@@ -7,6 +7,9 @@ if [ ! -f "CODEOWNERS" ]; then
   exit
 fi
 
+NC='\033[0m' # No Color
+RED='\033[1;31m'
+
 function help() {
   echo "Usage: compose_assets.sh --asset-type||-at --source-path||-rp --kind||-k --no-exit-on-error
   example: ./ci/scripts/compose_assets.sh --asset-type apps --source-path ../workbench --dist-path ../dist
@@ -123,6 +126,7 @@ function integrity_check() {
   if [ -f "$error_log_location" ]; then
     echo "Error: cannot combine because error_log was found"
     ERROR_LOG=$(cat $error_log_location)
+    # we exit maybe later
   fi
 
   echo
@@ -185,7 +189,9 @@ function integrity_check() {
 
   if [[ "$error_and_exit" == "true" ]]; then
     mv build_log $error_log_location
+    echo -e "${RED}"
     cat "$error_log_location"
+    echo -e "${NC}"
     exit "$ERROR_ON_EXIT"
   else
     cat "build_log"
@@ -211,7 +217,8 @@ while IFS= read -d $'\0' -r dirname; do
       echo "dirname: $asset_dirname"
       if [ ! -f "package.json" ]; then
         # apps/APPNAME/SOMEVERSION/package.json
-        echo "Error: unsupported file structure, no package.json was found in $(pwd) 😐"
+        # TODO: write this to the error log
+        echo -e "${RED}Error: unsupported file structure, no package.json was found in $(pwd) 😐${NC}"
         exit "$ERROR_ON_EXIT"
         # TODO: feedback to upload error or success to swift
       fi
@@ -243,13 +250,11 @@ while IFS= read -d $'\0' -r dirname; do
     mkdir -p "$destination_path"
 
     asset_dist_path="$destination_path/${asset_name}@${asset_version}"
-    # TODO: check for name collision with asset_name in juno_assets and check for name/version collsions in juno-3rd-party
-    # jq -r '.name' */**/package.json
     if [ -d "$asset_dist_path" ]; then
       error_msg="Error: the directory $asset_dist_path already exist that means there are dublicated versions in $KIND -> $ASSET_TYPE -> ${asset_name} 😐"
-      echo "$error_msg"
+      echo -e "${RED}${error_msg}${NC}"
       echo -e "$(data)\n$error_msg" >>"$SOURCE_PATH/build_log"
-      exit "$ERROR_ON_EXIT"
+      exit 1
     fi
 
     cp -r "$asset_dirname" "$asset_dist_path"

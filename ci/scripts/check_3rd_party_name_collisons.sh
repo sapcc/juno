@@ -10,6 +10,9 @@ function help() {
   exit
 }
 
+NC='\033[0m' # No Color
+RED='\033[1;31m'
+
 while [[ $# -gt 0 ]]; do
   case $1 in
   --juno-assets-path | -j)
@@ -81,7 +84,7 @@ for item1 in "${juno_assets[@]}"; do
     if [[ "$item1" = "$item2" ]]; then
       ERROR="\n$(date)\nError:    name collision found, 3rd-party-asset '$item2' collides with juno-asset '$item1' 😔\nSolution: please rename '$item2'"
       echo -e "$ERROR" >"$THIRD_PARTY_ASSETS_PATH/$ASSET_TYPE/$item2/error_log"
-      echo -e echo -e "\033[0;31m$ERROR${NC} 👎"
+      echo -e "${RED}${ERROR}${NC} 👎"
       # we only use exit here because this should not block the pipeline
       exit
     fi
