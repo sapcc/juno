@@ -38,12 +38,14 @@ describe("Textarea", () => {
 		render(<Textarea invalid />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveClass("juno-textarea-invalid")
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
 	})
 	
 	test("renders a valid textarea as passed", async () => {
 		render(<Textarea valid />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveClass("juno-textarea-valid")
+		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
 	})
 	
 	test("renders a placeholder as passed", async () => {

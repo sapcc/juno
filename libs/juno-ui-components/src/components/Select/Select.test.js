@@ -80,12 +80,14 @@ describe("Select", () => {
     render(<Select valid />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveClass("juno-select-valid")
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
   
   test("renders an invalid Select as passed", async () => {
     render(<Select invalid />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveClass("juno-select-invalid")
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
   })
   
   test("renders loading Select with a Spinner as passed", async () => {

@@ -44,6 +44,7 @@ describe("Switch", () => {
     })
     expect(screen.getByRole("switch")).toBeInTheDocument()
     expect(screen.getByRole("switch")).toHaveClass("juno-switch-invalid")
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
   })
   
   test("renders a valid Switch as passed", async () => {
@@ -52,6 +53,7 @@ describe("Switch", () => {
     })
     expect(screen.getByRole("switch")).toBeInTheDocument()
     expect(screen.getByRole("switch")).toHaveClass("juno-switch-valid")
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
   
   test("renders a default size switch by default", async () => {
