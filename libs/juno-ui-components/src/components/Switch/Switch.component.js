@@ -153,7 +153,10 @@ export const Switch = ({
 			>
 				<span className={`juno-switch-handle ${handlebasestyles} ${handlesizestyles(size)} ${ isOn ? handleonstyles : handleoffstyles}`} ></span>
 			</button>
-			<label className={`juno-switch-label ${switchLabelStyles}`}>
+			<label 
+				className={`juno-label ${switchLabelStyles}`}
+				htmlFor={id}
+			>
 				{label}
 				{ required ? <span className={`required ${requiredStyles}`} ></span> : "" }
 			</label>
