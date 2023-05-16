@@ -318,40 +318,54 @@ jobs:
           outputs:
             - name: dist
           run:
-            path: /bin/sh
+            path: /bin/bash
             # NOTE use -cx for debugging, than you can see the commands that where tirggered in the log
             args:
               - -c
               - |
+                # exit on error
+                set -e
+
                 mkdir -p ./temp/juno-assets
                 mkdir -p ./temp/juno-3rd-party
                 DIST_PATH=$(pwd)/dist
                 cd ./juno.git
 
-                # download our own assets
+                # 1.1) download our own assets
                 <% ASSETS.each do |name, details|%>
                   ./ci/scripts/asset_storage.sh --container juno-assets --asset-name <%= name %> --asset-path <%= details[:path] %> --action download --root-path ../temp/juno-assets
                   # ls -all ../temp/juno-assets/<%=details[:type]%>s/<%= name %>/
                 <% end %>
-                # download juno-3rd-party assets
+                # 1.2) download and check for name collission in juno-3rd-party assets
                 <% ASSET_TYPES[:"juno-3rd-party"].each do |asset_type|%>
                     # download 3rd party assets
-                    ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type <%= asset_type %> --action download --root-path ../temp/juno-3rd-party
+                    ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type <%= asset_type %> --action download --root-path ../temp/juno-3rd-party                  
+                    ./ci/scripts/check_3rd_party_name_collisons.sh --juno-assets-path ../temp/juno-assets --third-party-assets-path ../temp/juno-3rd-party --asset-type <%= asset_type %>
                 <% end %>
-
-                # check name collisions
-                ./ci/scripts/check_for_name_conllisions.sh --juno-assets-path ./juno-assets --third-party-assets-path ./juno-3rd-party
-
+                # 2) compose everthing together that we can use it in the asset-server image build
                 <% ASSET_TYPES.each do |name,asset_types|%>
                   <% asset_types.each do |asset_type|%>
-                    # check and compose everthing in the dist output folder that 
+                    # check and compose everthing in the dist output folder that
                     # we can combine everything in the asset-server buid step
-                    ./ci/scripts/compose_assets.sh --asset-type <%= asset_type %> --source-path ../temp  --dist-path $DIST_PATH --kind <%= name %>
+                    if [[ "<%= name %>" == "juno-3rd-party" ]]; then
+                      # if the integrity check for 3rd party fails there will be no error
+                      # because we do not want a blocked pipeline
+                      # but an error log is uploaded to the 3rd party apps/libs folder
+                      # if an error_log was found the new version is not deployed
+                      ./ci/scripts/compose_assets.sh --error-on-exit 0 --asset-type <%= asset_type %> --source-path ../temp  --dist-path $DIST_PATH --kind <%= name %>
+                    else
+                      ./ci/scripts/compose_assets.sh --error-on-exit 1 --asset-type <%= asset_type %> --source-path ../temp  --dist-path $DIST_PATH --kind <%= name %>
+                    fi
                   <% end %>
                 <% end %>
                 echo ""
+                echo "### APPS ###"
                 ls -all $DIST_PATH/apps/
+                echo "### LIBS ###"
                 ls -all $DIST_PATH/libs/
+                # upload build logs
+                ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type apps --action upload --root-path ../temp/juno-3rd-party &> /dev/null
+                ./ci/scripts/asset_storage.sh --container juno-assets --asset-type apps --action upload --root-path ../temp/juno-assets &> /dev/null
                 #exit 1
 
       # to serve our js, css and stattic assets this step will add all the created data 
