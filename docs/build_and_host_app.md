@@ -58,7 +58,7 @@ Installed:
    "devDependencies": {
    ...
    "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.5.9/package.tgz",
-   "url-state-provider": "https://assets.juno.global.cloud.sap/libs/messages-provider@0.1.6/package.tgz",
+   "url-state-provider": "https://assets.juno.global.cloud.sap/libs/url-state-provider@1.0.0/package.tgz",
    ...
    },
    ```
