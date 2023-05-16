@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { TextInput } from "../TextInput/index.js"
 import { Label } from "../Label/index.js"
 import { Icon } from "../Icon/index"
+import withDeprecationWarning from '../withDeprecationWarning/withDeprecationWarning.component.js'
 
 
 const inputcontainerstyles = `
@@ -44,7 +45,7 @@ const iconpadding = `
 
 
 /** A text input group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
-export const TextInputRow = ({
+const TextInputRow = ({
   type,
   value,
   name,
@@ -230,3 +231,5 @@ TextInputRow.defaultProps = {
   onFocus: undefined,
   onBlur: undefined,
 }
+
+export default withDeprecationWarning(TextInputRow, "TextInputRow is deprecated and will be removed in future versions")

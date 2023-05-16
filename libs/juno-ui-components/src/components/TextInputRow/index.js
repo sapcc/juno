@@ -1,1 +1,1 @@
-export { TextInputRow } from "./TextInputRow.component"
+export { default as TextInputRow } from "./TextInputRow.component"
