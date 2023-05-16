@@ -175,7 +175,7 @@ export const Switch = ({
 					icon="dangerous"
 					color="jn-text-theme-error"
 					size="1.125rem"
-					className={`${iconstyles}`}
+					className={`${iconstyles} ${ disabled ? "jn-opacity-50" : "" }`}
 				/>
 			) : ""}
 			{isValid ? (
@@ -183,7 +183,7 @@ export const Switch = ({
 					icon="checkCircle"
 					color="jn-text-theme-success"
 					size="1.125rem"
-					className={`${iconstyles}`}
+					className={`${iconstyles} ${ disabled ? "jn-opacity-50" : "" }`}
 				/>
 			) : ""}
 		</span>
