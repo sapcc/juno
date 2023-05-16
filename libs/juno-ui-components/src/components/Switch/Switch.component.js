@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 
+const switchWrapperStyles = `
+	jn-flex
+	jn-flex-row
+`
+
 const switchbasestyles = `
 	jn-rounded-full
 	jn-relative
@@ -59,16 +64,36 @@ const validbasestyles = `
 `
 
 const handleonstyles = `
-	jn-right-[1px] jn-bg-theme-switch-handle-checked
+	jn-right-[1px] 
+	jn-bg-theme-switch-handle-checked
 `
 const handleoffstyles = `
 	jn-left-[1px]
+`
+
+const switchLabelStyles = `
+	jn-text-theme-high
+	jn-ml-2
+	disabled:jn-cursor-not-allowed
+`
+
+const requiredStyles = `
+		jn-inline-block
+		jn-w-1
+		jn-h-1
+		jn-rounded-full
+		jn-align-top
+		jn-ml-1
+		jn-mt-1
+		jn-bg-theme-required
 `
 
 /** A Switch/Toggle component */
 export const Switch = ({
 	name,
 	id,
+	label,
+	required,
 	size,
 	on,
 	disabled,
@@ -102,7 +127,11 @@ export const Switch = ({
 	}
 	
 	return (
-		<>
+		<span className={`
+			juno-switch-wrapper 
+			${switchWrapperStyles}
+			`}
+		>
 			<button 
 				type="button"
 				role="switch"
@@ -111,12 +140,24 @@ export const Switch = ({
 				aria-checked={isOn}
 				disabled={disabled}
 				onClick={handleClick}
-				className={`juno-switch juno-switch-${size} ${switchbasestyles} ${switchsizestyles(size)} ${ isInvalid ? "juno-switch-invalid " + invalidbasestyles : "" } ${ isValid ? "juno-switch-valid " + validbasestyles : "" } ${ isValid || isInvalid ? "" : defaultborderstyles } ${className}`}
+				className={`
+					juno-switch 
+					juno-switch-${size} 
+					${switchbasestyles} 
+					${switchsizestyles(size)} 
+					${ isInvalid ? "juno-switch-invalid " + invalidbasestyles : "" } 
+					${ isValid ? "juno-switch-valid " + validbasestyles : "" } 
+					${ isValid || isInvalid ? "" : defaultborderstyles } 
+					${className}`}
 				{...props}
 			>
 				<span className={`juno-switch-handle ${handlebasestyles} ${handlesizestyles(size)} ${ isOn ? handleonstyles : handleoffstyles}`} ></span>
 			</button>
-		</>
+			<label className={`juno-switch-label ${switchLabelStyles}`}>
+				{label}
+				{ required ? <span className={`required ${requiredStyles}`} ></span> : "" }
+			</label>
+		</span>
 	)
 }
 
@@ -125,6 +166,10 @@ Switch.propTypes = {
 	name: PropTypes.string,
 	/** Id */
 	id: PropTypes.string,
+	/** Add a label to the Switch */
+	label: PropTypes.string,
+	/** Whether the Switch is required */
+	required: PropTypes.bool,
 	/** Leave empty for default size */
 	size: PropTypes.oneOf(["small", "default", "large"]),
 	/**  Pass checked state for initial rendering. */
@@ -144,8 +189,10 @@ Switch.propTypes = {
 }
 
 Switch.defaultProps = {
-	name: "unnamed switch",
+	name: "",
 	id: null,
+	label: undefined,
+	required: false,
 	size: "default",
 	on: false,
 	disabled: null,
