@@ -53,8 +53,16 @@ export const Label = ({
 			{...props}
 		>
 			{ text }
+			{ required ? 
+				<span className={`
+					juno-required 
+					${ requiredstyles }
+					`}>
+				</span> 
+			: 
+				"" }
 		</label>
-		{ required ? <span className={`required ${requiredstyles}`} ></span> : "" }
+		
 		</>
 	)
 }

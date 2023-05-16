@@ -52,7 +52,7 @@ describe("RadioGroup", () => {
 			</RadioGroup>
 		)
 		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
-		expect(document.querySelector('.required')).toBeInTheDocument()
+		expect(document.querySelector('.juno-required')).toBeInTheDocument()
 	})
 	
 	test("renders a disabled radiogroup as passes", async () => {

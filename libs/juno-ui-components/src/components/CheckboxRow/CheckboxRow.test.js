@@ -54,7 +54,7 @@ describe("CheckboxRow", () => {
 	
 	test("renders a required label as passed", async () => {
 		render(<CheckboxRow label="Required Input" required />)
-		expect(document.querySelector('.required')).toBeInTheDocument()
+		expect(document.querySelector('.juno-required')).toBeInTheDocument()
 	})
 	
 	test("renders a disabled Checkbox as passed", async () => {

@@ -22,7 +22,7 @@ describe("Label", () => {
   
   test("renders a required symbol as passed", async () => {
     render(<Label text="Required Input" required />)
-    expect(document.querySelector('.required')).toBeInTheDocument()
+    expect(document.querySelector('.juno-required')).toBeInTheDocument()
   })
   
   test("renders a minimized label as passed", async () => {

@@ -28,7 +28,7 @@ describe("CheckboxGroup", () => {
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
-		expect(document.querySelector('.required')).toBeInTheDocument()
+		expect(document.querySelector('.juno-required')).toBeInTheDocument()
 	})
 	
 	test("does not render any checkboxes if no children passed", async () => {
