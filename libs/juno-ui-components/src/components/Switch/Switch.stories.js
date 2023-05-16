@@ -57,14 +57,17 @@ Disabled.parameters = {
 Disabled.args = {
   on: true,
   disabled: true,
+  label: "Disabled Switch",
 }
 
 export const Invalid = Template.bind({})
 Invalid.args = {
   invalid: true,
+  label: "Invalid Switch",
 }
 
 export const Valid = Template.bind({})
 Valid.args = {
   valid: true,
+  label: "Valid Switch",
 }
