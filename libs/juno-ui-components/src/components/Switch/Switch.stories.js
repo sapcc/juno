@@ -22,16 +22,20 @@ Default.parameters = {
     description: { story: 'Default Switch. Defaults to "off".' },
   },
 }
-Default.args = {}
+Default.args = {
+  label: "Switch"
+}
 
 export const Small = Template.bind({})
 Small.args = {
   size: "small",
+  label: "Small Switch"
 }
 
 export const Large = Template.bind({})
 Large.args = {
   size: "large",
+  label: "Large Switch"
 }
 
 export const On = Template.bind({})
