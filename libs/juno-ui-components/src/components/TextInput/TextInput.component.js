@@ -72,29 +72,6 @@ const requiredLabelStyles = `
     jn-bg-theme-required
 `
 
-const iconcontainerstyles = `
-  jn-inline-flex
-  jn-absolute
-  jn-top-[.4rem]
-  jn-right-3
-`
-
-const disablediconstyles = `
-  jn-opacity-50
-`
-
-const iconpadding = `
-  jn-pr-10
-`
-
-const inputrightpadding = () => {
-  if (isValid || isInvalid) {
-    return iconpadding
-  } else {
-    return ""
-  }
-}
-
 /** 
 A controlled Text Input.
 Also covers email, telephone, password, url derivates. 
@@ -160,27 +137,6 @@ export const TextInput = ({
     onBlur && onBlur(event)
   }
   
-  const Icons = ({ disabled }) => {
-    if (isValid || isInvalid) {
-      return (
-        <div
-          className={`juno-textinput-row-icon-container ${iconcontainerstyles} ${
-            disabled ? disablediconstyles : ""
-          }`}
-        >
-          {isInvalid ? (
-            <Icon icon="dangerous" color="jn-text-theme-error" />
-          ) : ""}
-          {isValid ? (
-            <Icon icon="checkCircle" color="jn-text-theme-success" />
-          ) : ""}
-        </div>
-      )
-    } else {
-      return ""
-    }
-  }
-  
   return (
     <span 
       className={`
@@ -227,7 +183,6 @@ export const TextInput = ({
         `}
         {...props}
       />
-      <Icons disabled={disabled} />
     </span>
   )
 }
