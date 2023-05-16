@@ -114,6 +114,13 @@ const AssetDetails = () => {
     return Object.keys(asset).length
   }, [asset])
 
+  // Preview just work for
+  // - Apps
+  // - Apps different from assets-overview to avoid rendering loops
+  const displayPreview = useMemo(() => {
+    return asset?.type === APP && urlStateKey !== asset?.name
+  }, [asset])
+
   const onTabSelected = (index) => {
     setTabIndex(index)
     const urlState = currentState(urlStateKey)
@@ -202,7 +209,7 @@ const AssetDetails = () => {
                   <Tab>Readme</Tab>
                   {asset?.communicatorReadme && <Tab>Communication</Tab>}
                   {asset?.type === APP && <Tab>Get started</Tab>}
-                  {asset?.type === APP && <Tab>Preview</Tab>}
+                  {displayPreview && <Tab>Preview</Tab>}
                   <Tab>Advance</Tab>
                 </TabList>
                 <TabPanel>
@@ -224,7 +231,7 @@ const AssetDetails = () => {
                     />
                   </TabPanel>
                 )}
-                {asset?.type === APP && (
+                {displayPreview && (
                   <TabPanel>
                     <TabPreview
                       config={{ name: asset.name, version: asset.version }}
