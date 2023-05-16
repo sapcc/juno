@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react"
 import useAppLoader from "../../hooks/useAppLoader"
 import { useRef } from "react"
-import { Box, Stack, Spinner } from "juno-ui-components"
+import { Box, Stack, Spinner, Message } from "juno-ui-components"
 
 const TabPreview = ({ config }) => {
   const { mount } = useAppLoader()
@@ -27,28 +27,44 @@ const TabPreview = ({ config }) => {
   )
 
   useEffect(() => {
-    mountApp.then((loaded) => {
-      if (!loaded) return
-      holder.current.appendChild(app.current)
-    })
-  }, [])
+    if (config?.appPreview) {
+      mountApp.then((loaded) => {
+        if (!loaded) return
+        holder.current.appendChild(app.current)
+      })
+    }
+  }, [config])
 
   return (
     <Box className="p-8">
-      {isLoading ? (
-        <Stack className="pt-2" alignment="center">
-          <Spinner variant="primary" />
-          Loading...
-        </Stack>
-      ) : (
+      {config?.appPreview ? (
         <>
-          <p className="mb-6">
-            This is a preview of the <b>{config.name}</b> micro frontend without{" "}
-            <b>any specific configuration.</b>
-          </p>
+          {isLoading ? (
+            <Stack className="pt-2" alignment="center">
+              <Spinner variant="primary" />
+              Loading...
+            </Stack>
+          ) : (
+            <>
+              <p className="mb-6">
+                This is a preview of the <b>{config.name}</b> micro frontend
+                without <b>any specific configuration.</b>
+              </p>
+            </>
+          )}
+          <div data-app={config.name} ref={holder}></div>
         </>
+      ) : (
+        <Message
+          title={<b>{config.name}</b>}
+          text={
+            <>
+              This is a <b>backend</b> micro frontend without content and
+              therefor no preview available
+            </>
+          }
+        />
       )}
-      <div data-app={config.name} ref={holder}></div>
     </Box>
   )
 }
