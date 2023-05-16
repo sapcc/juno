@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
+import { Label } from "../Label/index"
 import { Icon } from "../Icon/index"
 
 const switchWrapperStyles = `
@@ -162,14 +163,15 @@ export const Switch = ({
 			>
 				<span className={`juno-switch-handle ${handlebasestyles} ${handlesizestyles(size)} ${ isOn ? handleonstyles : handleoffstyles}`} ></span>
 			</button>
-			<label 
-				className={`juno-label ${switchLabelStyles}`}
+			
+			<Label 
+				text={label}
 				htmlFor={id}
+				className="jn-ml-2"
 				disabled={disabled}
-			>
-				{label}
-				{ required ? <span className={`required ${requiredStyles}`} ></span> : "" }
-			</label>
+				required={required}
+			/>
+			
 			{isInvalid ? (
 				<Icon
 					icon="dangerous"
@@ -178,6 +180,7 @@ export const Switch = ({
 					className={`${iconstyles} ${ disabled ? "jn-opacity-50" : "" }`}
 				/>
 			) : ""}
+			
 			{isValid ? (
 				<Icon
 					icon="checkCircle"
@@ -186,6 +189,7 @@ export const Switch = ({
 					className={`${iconstyles} ${ disabled ? "jn-opacity-50" : "" }`}
 				/>
 			) : ""}
+			
 		</span>
 	)
 }
