@@ -5,8 +5,6 @@ import { Label } from "../Label/index.js"
 import { Icon } from "../Icon/index"
 
 const switchrow = `
-	jn-flex
-	jn-flex-row
 	jn-mb-1
 `
 
@@ -31,13 +29,6 @@ const successtextstyles = `
   jn-text-xs
   jn-text-theme-success
   jn-mt-1
-`
-
-const iconstyles = `
-  jn-inline-block 
-  jn-ml-1 
-  jn-leading-1
-  jn-mt-[-.2rem]
 `
 
 /** A checkbox input group containing a checkbox, associated label, and structural markup */
@@ -93,6 +84,7 @@ export const SwitchRow = ({
       <div className={`juno-switch-container ${switchcontainerstyles}`}>
         <Switch
           name={name}
+          label={label}
           onChange={handleChange}
           onClick={onClick}
           id={id}
@@ -103,28 +95,6 @@ export const SwitchRow = ({
         />
       </div>
       <div className={`jn-pt-0.5`}>
-        <Label
-          text={label}
-          htmlFor={id}
-          required={required}
-          disabled={disabled}
-        />
-        {isInvalid ? (
-          <Icon
-            icon="dangerous"
-            color="jn-text-theme-error"
-            size="1.125rem"
-            className={`${iconstyles}`}
-          />
-        ) : null}
-        {isValid ? (
-          <Icon
-            icon="checkCircle"
-            color="jn-text-theme-success"
-            size="1.125rem"
-            className={`${iconstyles}`}
-          />
-        ) : null}
         {errortext && errortext.length ? (
           <p className={`${errortextstyles}`}>{errortext}</p>
         ) : null}
