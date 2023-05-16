@@ -96,12 +96,14 @@ describe("TextInput", () => {
 		render(<TextInput invalid />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-invalid")
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
 	})
 	
 	test("renders a valid input as passed", async () => {
 		render(<TextInput valid />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-valid")
+		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
 	})
 	
 	test("renders a className as passed", async () => {
