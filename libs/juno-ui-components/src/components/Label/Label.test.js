@@ -25,8 +25,14 @@ describe("Label", () => {
     expect(document.querySelector('.juno-required')).toBeInTheDocument()
   })
   
-  test("renders a minimized label as passed", async () => {
-    render(<Label text="my-label" minimized />)
+  test("renders a floating label as passed", async () => {
+    render(<Label text="my-label" floating />)
+    expect(screen.getByText("my-label")).toBeInTheDocument()
+    expect(screen.getByText("my-label")).toHaveClass("juno-label-floating")
+  })
+  
+  test("renders a minimized floating label as passed", async () => {
+    render(<Label text="my-label" floating minimized />)
     expect(screen.getByText("my-label")).toBeInTheDocument()
     expect(screen.getByText("my-label")).toHaveClass("juno-label-minimized")
   })

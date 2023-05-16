@@ -4,6 +4,21 @@ import PropTypes from "prop-types"
 const labelstyles = `
 	jn-text-theme-high
 	jn-text-base
+	jn-transform 
+	jn-origin-top-left 
+	jn-transition-all 
+	jn-duration-100 
+	jn-ease-in-out
+	jn-z-10
+`
+
+const floatingStyles = `
+	jn-absolute
+`
+
+const minimizedStyles = `
+	jn-scale-75
+	-jn-translate-y-[0.4375rem]
 `
 
 const requiredstyles = `
@@ -15,10 +30,6 @@ const requiredstyles = `
 	jn-ml-1
 	jn-mt-2
 	jn-bg-theme-required
-`
-
-const minimizedStyles = `
-
 `
 
 const disabledstyles = `
@@ -35,16 +46,17 @@ export const Label = ({
 	htmlFor,
 	required,
 	disabled,
+	floating,
 	minimized,
 	className,
 	...props
-}) => {
+}) => {	
 	return (
-		<>
 		<label 
 			className={`
 				juno-label 
 				${ labelstyles } 
+				${ floating ? "juno-label-floating " + floatingStyles : "" }
 				${ minimized ? "juno-label-minimized " + minimizedStyles : "" }
 				${ disabled ? "juno-label-disabled " + disabledstyles : "" } 
 				${ className }
@@ -62,8 +74,6 @@ export const Label = ({
 			: 
 				"" }
 		</label>
-		
-		</>
 	)
 }
 
@@ -78,15 +88,18 @@ Label.propTypes = {
 	className: PropTypes.string,
 	/** Label for a disabled input */
 	disabled: PropTypes.bool,
-	/** Whether the label is minimzed */
+	/** Whether the label is floating */
+	floating: PropTypes.bool,
+	/** Whether the label is minimized. Requires `floating` set to TRUE. */
 	minimized: PropTypes.bool,
 }
 
 Label.defaultProps = {
 	text: "",
-	htmlFor: "",
+	htmlFor: undefined,
 	required: false,
 	className: "",
 	disabled: false,
+	floating: false,
 	minimized: false,
 }
