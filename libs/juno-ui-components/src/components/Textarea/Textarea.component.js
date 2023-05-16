@@ -14,6 +14,7 @@ const textareastyles = `
   focus:jn-ring-2
   focus:jn-ring-theme-focus
   disabled:jn-opacity-50
+  disabled:jn-cursor-not-allowed
 `
 
 const defaultborderstyles = `
@@ -69,6 +70,24 @@ const requiredLabelStyles = `
     jn-ml-1
     jn-mt-2
     jn-bg-theme-required
+`
+
+const iconcontainerstyles = `
+  jn-inline-flex
+  jn-absolute
+  jn-top-[.4rem]
+  jn-right-3
+`
+
+const disablediconstyles = `
+  jn-opacity-50
+`
+
+const iconstyles = `
+  jn-inline-block 
+  jn-ml-1 
+  jn-leading-1
+  jn-mt-[-.2rem]
 `
 
 /** 
@@ -136,6 +155,27 @@ export const Textarea = ({
     onBlur && onBlur(event)
   }
   
+  const Icons = ({ disabled }) => {
+    if (isValid || isInvalid) {
+      return (
+        <div
+          className={`juno-textinput-row-icon-container ${iconcontainerstyles} ${
+            disabled ? disablediconstyles : ""
+          }`}
+        >
+          {isInvalid ? (
+            <Icon icon="dangerous" color="jn-text-theme-error" />
+          ) : null}
+          {isValid ? (
+            <Icon icon="checkCircle" color="jn-text-theme-success" />
+          ) : null}
+        </div>
+      )
+    } else {
+      return ""
+    }
+  }
+  
   return (
     <span 
       className={`
@@ -148,7 +188,13 @@ export const Textarea = ({
       { label && label.length ?
           <label 
             htmlFor={id || null} 
-            className={`juno-label ${labelStyles} ${ placeholder || hasFocus || val && val.length ? minLabelStyles : "" }`} 
+            disabled={disabled}
+            className={`
+              juno-label 
+              ${labelStyles} 
+              ${ placeholder || hasFocus || val && val.length ? minLabelStyles : "" }
+              ${ disabled ? "jn-opacity-50" : "" }
+            `} 
           >
             {label}
             { required ? <span className={`required ${requiredLabelStyles}`} ></span> : "" }
@@ -181,6 +227,7 @@ export const Textarea = ({
         `}
         {...props}
       />
+      <Icons disabled={disabled} />
     </span>
   )
 }
