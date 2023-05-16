@@ -1,4 +1,4 @@
-# Build and host your own Juno application
+# Build and host your own Juno application (linux/darwin)
 
 ## Prerequisits
 
