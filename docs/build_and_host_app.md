@@ -3,8 +3,19 @@
 ## Prerequisits
 
 Installed:
-- node 18
-- esbuild
+
+- node >= 18
+- npm >= 9.6
+
+Check successfully installations:
+
+```bash
+node -v
+# v18.15.0
+
+npm -v
+# 9.6.4
+```
 
 ## Instructions
 
@@ -41,25 +52,33 @@ Installed:
 
    ```yaml
    "devDependencies": {
-   ...
-   "juno-ui-components": "*",
-   "url-state-provider": "*",
-   ...
+      ...
+      "juno-ui-components": "*",
+      "url-state-provider": "*",
+      ...
    },
    ```
 
-   Replace the `*` with the fully qualified URL. E.g.:
+   Replace the `*` with the fully qualified URL.
 
-    <!---
-    use yaml instead of json to not highlight as an error using "..."
-    -->
+   Use following pattern:
 
-   ```yaml
+   ```js
    "devDependencies": {
-   ...
-   "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.5.9/package.tgz",
-   "url-state-provider": "https://assets.juno.global.cloud.sap/libs/url-state-provider@1.0.0/package.tgz",
-   ...
+      //...
+      "<package_name>": "https://assets.juno.global.cloud.sap/libs/<package_name>@latest/package.tgz",
+      //...
+   },
+   ```
+
+   E.g.:
+
+   ```js
+   "devDependencies": {
+      //...
+      "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.5.9/package.tgz",
+      "url-state-provider": "https://assets.juno.global.cloud.sap/libs/url-state-provider@1.0.0/package.tgz",
+      //...
    },
    ```
 
@@ -67,22 +86,26 @@ Installed:
 
 4. Install all dependencies.
    Run the following compand to install all needed dependencies.
+
    ```bash
    npm add -D esbuild
    npm install
    ```
- 
+
 5. Start your application at least once.
+
    ```bash
    npm run start
    ```
-   
-   If you get the error: 
+
+   If you get the error:
+
    ```bash
    Error: Cannot find module '../../helpers/appProps'
    ```
+
    fix it by copying `appProps.js` from juno helpers/appProps to base directory and adapting the path in `esbuild.js` to `const appProps = require("./appProps")`
-   
+
 6. Build the application.
    Run the following command to build the application.
 
@@ -92,19 +115,19 @@ Installed:
 
    All compiled chunks will be placed under the `/build` folder.
 
-7. Copy everything to your webserver. 
-   * Copy the `/build` folder with all its contents to your webserver. 
-   * Copy the following files from your `/public` folder to your webserver: `favicon.ico`, `favicon-16x16.png`, `favicon-32x32.png`, `index.html`
-   * The folder from which you want to serve the app should look like this now:
-      ```
-      /
-      - build/
-         - index.js
-         - App-xxxx.js
-         - ...
-      - index.html
-      - favicon.ico
-      - favicon-16x16.png
-      - favicon-32x32.png
-      ```
-   *  Then serve `index.html`
+7. Copy everything to your webserver.
+   - Copy the `/build` folder with all its contents to your webserver.
+   - Copy the following files from your `/public` folder to your webserver: `favicon.ico`, `favicon-16x16.png`, `favicon-32x32.png`, `index.html`
+   - The folder from which you want to serve the app should look like this now:
+     ```
+     /
+     - build/
+        - index.js
+        - App-xxxx.js
+        - ...
+     - index.html
+     - favicon.ico
+     - favicon-16x16.png
+     - favicon-32x32.png
+     ```
+   - Then serve `index.html`
