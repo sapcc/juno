@@ -74,6 +74,7 @@ const handleoffstyles = `
 const switchLabelStyles = `
 	jn-text-theme-high
 	jn-ml-2
+	disabled:jn-opacity-50
 	disabled:jn-cursor-not-allowed
 `
 
@@ -156,6 +157,7 @@ export const Switch = ({
 			<label 
 				className={`juno-label ${switchLabelStyles}`}
 				htmlFor={id}
+				disabled={disabled}
 			>
 				{label}
 				{ required ? <span className={`required ${requiredStyles}`} ></span> : "" }
