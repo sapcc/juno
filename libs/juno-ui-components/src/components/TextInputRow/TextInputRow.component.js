@@ -28,22 +28,6 @@ const successtextstyles = `
   jn-mt-1
 `
 
-const iconcontainerstyles = `
-  jn-inline-flex
-  jn-absolute
-  jn-top-[.4rem]
-  jn-right-3
-`
-
-const disablediconstyles = `
-  jn-opacity-50
-`
-
-const iconpadding = `
-  jn-pr-10
-`
-
-
 /** A text input group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
 const TextInputRow = ({
   type,
@@ -110,34 +94,6 @@ const TextInputRow = ({
     if (onBlur) onBlur(event)
   }
 
-  const Icons = ({ disabled }) => {
-    if (isValid || isInvalid) {
-      return (
-        <div
-          className={`juno-textinput-row-icon-container ${iconcontainerstyles} ${
-            disabled ? disablediconstyles : ""
-          }`}
-        >
-          {isInvalid ? (
-            <Icon icon="dangerous" color="jn-text-theme-error" />
-          ) : null}
-          {isValid ? (
-            <Icon icon="checkCircle" color="jn-text-theme-success" />
-          ) : null}
-        </div>
-      )
-    } else {
-      return ""
-    }
-  }
-
-  const inputrightpadding = () => {
-    if (isValid || isInvalid) {
-      return iconpadding
-    } else {
-      return ""
-    }
-  }
 
   return (
     <div
@@ -160,7 +116,6 @@ const TextInputRow = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
-      <Icons disabled={disabled} />
       {errortext && errortext.length ? (
         <p className={`${errortextstyles}`}>{errortext}</p>
       ) : null}

@@ -73,21 +73,6 @@ const stackedinputstyles = `
 	jn-w-full
 `
 
-const iconcontainerstyles = `
-  jn-flex
-  jn-absolute
-  jn-top-1.5
-  jn-right-3
-`
-
-const disablediconstyles = `
-  jn-opacity-50
-`
-
-const iconpadding = `
-  jn-pr-10
-`
-
 /** A textarea group containing a textarea, associated label, optional helptext, and structural markup */
 
 export const TextareaRow = ({
@@ -138,27 +123,6 @@ export const TextareaRow = ({
     onChange && onChange(event)
   }
   
-  const Icons = ({ disabled }) => {
-    if (isValid || isInvalid) {
-      return (
-        <div
-          className={`juno-textinput-row-icon-container ${iconcontainerstyles} ${
-            disabled ? disablediconstyles : ""
-          }`}
-        >
-          {isInvalid ? (
-            <Icon icon="dangerous" color="jn-text-theme-error" />
-          ) : null}
-          {isValid ? (
-            <Icon icon="checkCircle" color="jn-text-theme-success" />
-          ) : null}
-        </div>
-      )
-    } else {
-      return ""
-    }
-  }
-  
   const textarearightpadding = () => {
     if ( isValid || isInvalid ) {
       return iconpadding
@@ -187,7 +151,6 @@ export const TextareaRow = ({
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
         />
-        <Icons disabled={disabled} />
         {errortext && errortext.length ? (
           <p className={`${errortextstyles}`}>{errortext}</p>
         ) : null}
