@@ -9,6 +9,9 @@ const withDeprecationWarning = (WrappedComponent, message) => {
 
     return <WrappedComponent {...props} />;
   };
+  
+  // assign the defaultProps of the wrapped component to the higher-order component, otherwise these would be lost:
+  ComponentWithDeprecationWarning.defaultProps = WrappedComponent.defaultProps
 
   return ComponentWithDeprecationWarning;
 };

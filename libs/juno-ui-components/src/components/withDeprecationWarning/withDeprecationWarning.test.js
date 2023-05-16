@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 import withDeprecationWarning from './withDeprecationWarning.component.js';
 
 describe('withDeprecationWarning', () => {
+  
   const TestComponent = () => {
     return <div>Test Component</div>;
   };
