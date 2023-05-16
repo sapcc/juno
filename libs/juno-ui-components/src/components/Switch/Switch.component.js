@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
+import { Icon } from "../Icon/index"
 
 const switchWrapperStyles = `
 	jn-flex
@@ -89,6 +90,13 @@ const requiredStyles = `
 		jn-bg-theme-required
 `
 
+const iconstyles = `
+	jn-inline-block 
+	jn-ml-1 
+	jn-leading-1
+	jn-mt-[-.2rem]
+`
+
 /** A Switch/Toggle component */
 export const Switch = ({
 	name,
@@ -162,6 +170,22 @@ export const Switch = ({
 				{label}
 				{ required ? <span className={`required ${requiredStyles}`} ></span> : "" }
 			</label>
+			{isInvalid ? (
+				<Icon
+					icon="dangerous"
+					color="jn-text-theme-error"
+					size="1.125rem"
+					className={`${iconstyles}`}
+				/>
+			) : ""}
+			{isValid ? (
+				<Icon
+					icon="checkCircle"
+					color="jn-text-theme-success"
+					size="1.125rem"
+					className={`${iconstyles}`}
+				/>
+			) : ""}
 		</span>
 	)
 }
