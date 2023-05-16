@@ -68,6 +68,7 @@ Installed:
 4. Install all dependencies.
    Run the following compand to install all needed dependencies.
    ```bash
+   npm add -D esbuild
    npm install
    ```
  
