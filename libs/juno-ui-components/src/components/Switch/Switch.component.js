@@ -6,6 +6,7 @@ import { Icon } from "../Icon/index"
 const switchWrapperStyles = `
 	jn-flex
 	jn-flex-row
+	jn-items-center
 `
 
 const switchbasestyles = `
