@@ -90,7 +90,7 @@ Label.propTypes = {
 	disabled: PropTypes.bool,
 	/** Whether the label is floating */
 	floating: PropTypes.bool,
-	/** Whether the label is minimized. Requires `floating` set to TRUE. */
+	/** Whether the label is minimized. Requires `floating` set to TRUE, otherwise it will have no effect. */
 	minimized: PropTypes.bool,
 }
 
