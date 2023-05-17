@@ -1,10 +1,7 @@
 import React from "react"
 import { RadioGroup } from "./index.js"
 import { RadioRow } from "../RadioRow/"
-import {
-  Default as RadioRowStory,
-  Checked as CheckedRadioRowStory,
-} from "../RadioRow/RadioRow.stories"
+
 
 export default {
   title: "Forms/Radio/RadioGroup",
@@ -18,60 +15,58 @@ export default {
   }
 }
 
-const Template = ({ items, ...args }) => (
+const Template = ({ children, ...args }) => (
   <RadioGroup {...args}>
-    {items.map((item, i) => (
-      <RadioRow {...item} key={`${i}`} />
-    ))}
+    { children }
   </RadioGroup>
 )
 
 export const Default = Template.bind({})
 Default.args = {
   name: "default-radiogroup",
-  selected: "v-1",
-  items: [
-    { ...RadioRowStory.args, label: "Option 1", value: "v-1" },
-    { ...RadioRowStory.args, label: "Option 2", value: "v-2" },
-    { ...RadioRowStory.args, label: "Option 3", value: "v-3" },
+  selected: "default-1",
+  children: [
+    <RadioRow id="default-1" value="default-1" />,
+    <RadioRow id="default-2" value="default-2" />,
+    <RadioRow id="default-3" value="default-3" />
   ],
 }
 
 export const WithLabel = Template.bind({})
 WithLabel.args = {
   name: "labelled-radiogroup",
-  selected: "v-1",
+  selected: "labelled-1",
   label: "Labelled RadioGroup",
-  items: [
-    { ...RadioRowStory.args, label: "Option 1", value: "v-1" },
-    { ...RadioRowStory.args, label: "Option 2", value: "v-2" },
-    { ...RadioRowStory.args, label: "Option 3", value: "v-3" },
+  children: [
+    <RadioRow id="labelled-1" value="labelled-1" label="Option 1"/>,
+    <RadioRow id="labelled-2" value="labelled-2" label="Option 2"/>,
+    <RadioRow id="labelled-3" value="labelled-3" label="Option 3"/>
   ],
 }
 
 export const Required = Template.bind({})
 Required.args = {
   name: "required-radiogroup",
-  selected: "v-1",
+  selected: "required-1",
   label: "Required RadioGroup",
   required: true,
-  items: [
-    { ...RadioRowStory.args, label: "Option 1", value: "v-1" },
-    { ...RadioRowStory.args, label: "Option 2", value: "v-2" },
-    { ...RadioRowStory.args, label: "Option 3", value: "v-3" },
+  children: [
+    <RadioRow id="required-1" value="required-1" label="Option 1"/>,
+    <RadioRow id="required-2" value="required-2" label="Option 2"/>,
+    <RadioRow id="required-3" value="required-3" label="Option 3"/>
   ],
 }
 
 export const Disabled = Template.bind({})
 Disabled.args = {
   name: "disabled-radiogroup",
-  selected: "v-1",
+  selected: "disabled-1",
   label: "Disabled RadioGroup",
   disabled: true,
-  items: [
-    { ...RadioRowStory.args, label: "Option 1", value: "v-1" },
-    { ...RadioRowStory.args, label: "Option 2", value: "v-2" },
-    { ...RadioRowStory.args, label: "Option 3", value: "v-3" },
+  children: [
+    <RadioRow id="disabled-1" value="disabled-1" label="Option 1"/>,
+    <RadioRow id="disabled-2" value="disabled-2" label="Option 2"/>,
+    <RadioRow id="disabled-3" value="disabled-3" label="Option 3"/>
   ],
 }
 
@@ -81,23 +76,23 @@ Valid.args = {
   selected: "",
   label: "Valid RadioGroup",
   valid: true,
-  items: [
-    { ...RadioRowStory.args, label: "Option 1", value: "v-1" },
-    { ...RadioRowStory.args, label: "Option 2", value: "v-2" },
-    { ...RadioRowStory.args, label: "Option 3", value: "v-3" },
+  children: [
+    <RadioRow id="valid-1" value="valid-1" label="Option 1"/>,
+    <RadioRow id="valid-2" value="valid-2" label="Option 2"/>,
+    <RadioRow id="valid-3" value="valid-3" label="Option 3"/>
   ],
 }
 
 export const WithSuccess = Template.bind({})
 WithSuccess.args = {
   name: "success-radiogroup",
-  selected: "v-1",
+  selected: "success-1",
   successtext: "A RadioGroup with successful validation",
   label: "RadioGroup with success",
-  items: [
-    { ...RadioRowStory.args, label: "Option 1", value: "v-1" },
-    { ...RadioRowStory.args, label: "Option 2", value: "v-2" },
-    { ...RadioRowStory.args, label: "Option 3", value: "v-3" },
+  children: [
+    <RadioRow id="success-1" value="success-1" label="Option 1"/>,
+    <RadioRow id="success-2" value="success-2" label="Option 2"/>,
+    <RadioRow id="success-3" value="success-3" label="Option 3"/>
   ],
 }
 
@@ -107,22 +102,22 @@ Invalid.args = {
   selected: "",
   label: "Invalid RadioGroup",
   invalid: true,
-  items: [
-    { ...RadioRowStory.args, label: "Option 1", value: "v-1" },
-    { ...RadioRowStory.args, label: "Option 2", value: "v-2" },
-    { ...RadioRowStory.args, label: "Option 3", value: "v-3" },
+  children: [
+    <RadioRow id="invalid-1" value="invalid-1" label="Option 1"/>,
+    <RadioRow id="invalid-2" value="invalid-2" label="Option 2"/>,
+    <RadioRow id="invalid-3" value="invalid-3" label="Option 3"/>
   ],
 }
 
 export const WithError = Template.bind({})
 WithError.args = {
   name: "error-radiogroup",
-  selected: "v-1",
+  selected: "error-1",
   errortext: "A RadioGroup with failed validation",
   label: "RadioGroup with error",
-  items: [
-    { ...RadioRowStory.args, label: "Option 1", value: "v-1" },
-    { ...RadioRowStory.args, label: "Option 2", value: "v-2" },
-    { ...RadioRowStory.args, label: "Option 3", value: "v-3" },
+  children: [
+    <RadioRow id="error-1" value="error-1" label="Option 1"/>,
+    <RadioRow id="error-2" value="error-2" label="Option 2"/>,
+    <RadioRow id="error-3" value="error-3" label="Option 3"/>
   ],
 }
