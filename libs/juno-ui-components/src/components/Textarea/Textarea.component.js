@@ -172,7 +172,7 @@ export const Textarea = ({
             disabled={disabled}
             required={required}
             floating
-            minimized={ placeholder || hasFocus || val && val.length }
+            minimized={ placeholder || hasFocus || val && val.length  ? true : false}
           />
         :
           ""
