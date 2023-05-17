@@ -28,7 +28,7 @@ const App = (props = {}) => {
       <AppShell
         pageHeader="Converged Cloud | Doop"
         contentHeading="Doop"
-        embedded={props.embedded === true}
+        embedded={props.embedded === "true" || props.embedded === true}
       >
         Doop Content
       </AppShell>

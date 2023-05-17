@@ -13,6 +13,7 @@ import {
   useCertActions,
   useAuthLoggedIn,
   useGlobalsActions,
+  useGlobalsEmbedded,
 } from "../hooks/useStore"
 import HeaderUser from "./HeaderUser"
 
@@ -22,6 +23,7 @@ const CustomAppShell = ({ children }) => {
   const loggedIn = useAuthLoggedIn()
   const logout = useAuthLogout()
   const { setSelectedCA } = useGlobalsActions()
+  const embedded = useGlobalsEmbedded()
 
   const backToRootPath = () => {
     setShowNewCert(false)
@@ -43,7 +45,11 @@ const CustomAppShell = ({ children }) => {
   )
 
   return (
-    <AppShell pageHeader={pageHeader} topNavigation={topBar}>
+    <AppShell
+      pageHeader={pageHeader}
+      topNavigation={topBar}
+      embedded={embedded}
+    >
       <Container py>
         <Messages className="mb-6" />
         {children}
