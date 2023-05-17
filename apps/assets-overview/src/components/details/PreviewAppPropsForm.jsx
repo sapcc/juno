@@ -47,7 +47,7 @@ const PreviewAppPropsForm = ({ asset, onAppPropsChange }) => {
               color="jn-global-text"
               icon={show ? "expandLess" : "expandMore"}
             />
-            Set Configuration
+            Set configuration
           </Stack>
         </div>
       </Stack>

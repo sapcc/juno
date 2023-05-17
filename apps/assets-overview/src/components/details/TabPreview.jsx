@@ -27,25 +27,24 @@ const TabPreview = ({ asset }) => {
 
   // create a promise to mount the app
   // this promise is resolved once
-  const mountApp = useMemo(
-    () =>
-      new Promise((resolve) => {
-        const a = mount(app.current, config)
-        setIsLoading(true)
-        if (!a) resolve(false)
-        else
-          a.then(() => {
-            setIsLoading(false)
-            return resolve(true)
-          })
-      }),
-    [mount, config]
-  )
+  const mountApp = useMemo(() => {
+    if (!config?.appPreview) return
+    return new Promise((resolve) => {
+      const a = mount(app.current, config)
+      setIsLoading(true)
+      if (!a) resolve(false)
+      else
+        a.then(() => {
+          setIsLoading(false)
+          return resolve(true)
+        })
+    })
+  }, [mount, config])
 
   useEffect(() => {
     if (config?.appPreview) {
       mountApp.then((loaded) => {
-        if (!loaded) return
+        if (!loaded || !holder.current) return
         holder.current.appendChild(app.current)
       })
     }
@@ -68,23 +67,20 @@ const TabPreview = ({ asset }) => {
               </Stack>
             ) : (
               <>
-                <p className="mb-6">
-                  This is a preview of the <b>{config.name}</b> micro frontend
-                  without <b>any specific configuration.</b>
-                </p>
+                {Object.keys(appProps || {}).length <= 0 && (
+                  <p className="mb-6">
+                    This is a preview of the <b>{config.name}</b> micro frontend
+                    without <b>any specific configuration.</b>
+                  </p>
+                )}
               </>
             )}
             <div data-app={config.name} ref={holder}></div>
           </>
         ) : (
           <Message
-            title={<b>{config.name}</b>}
-            text={
-              <>
-                This is a <b>backend</b> micro frontend without content and
-                therefor no preview available
-              </>
-            }
+            title={config.name}
+            text="There is no preview available for this micro frontend"
           />
         )}
       </Box>

@@ -95,7 +95,9 @@ const AssetDetails = () => {
       setOpened(newState?.panelOpened)
       setAssetName(newState?.assetName)
       setAssetVersion(newState?.assetVersion)
-      if (newState?.panelTabIndex) setTabIndex(newState?.panelTabIndex)
+      if (newState?.panelTabIndex != null) {
+        setTabIndex(newState?.panelTabIndex)
+      }
     }
     updatePanelStateFromURL(urlState)
     // this listener reacts on any change on the url state
@@ -108,28 +110,11 @@ const AssetDetails = () => {
   // call close reducer from url store
   const onClose = () => {
     // remove assetName,assetVersion and panelTabIndex
-    // key from object
     const { assetName, assetVersion, panelTabIndex, ...restOfKeys } = urlState
-
-    push(urlStateKey, {
-      ...restOfKeys,
-      panelOpened: false,
-    })
+    push(urlStateKey, { ...restOfKeys, panelOpened: false })
     // since the panel is cached reset following values
     setTabIndex(0)
   }
-
-  const length = useMemo(() => {
-    if (!asset) return 0
-    return Object.keys(asset).length
-  }, [asset])
-
-  // Preview just work for
-  // - Apps
-  // - Apps different from assets-overview to avoid rendering loops
-  const displayPreview = useMemo(() => {
-    return asset?.type === APP && urlStateKey !== asset?.name
-  }, [asset])
 
   const onTabSelected = (index) => {
     setTabIndex(index)
@@ -213,13 +198,13 @@ const AssetDetails = () => {
               />
             )}
 
-            {length > 0 ? (
+            {Object.keys(asset || {}).length > 0 ? (
               <MainTabs selectedIndex={tabIndex} onSelect={onTabSelected}>
                 <TabList>
                   <Tab>Readme</Tab>
                   {asset?.communicatorReadme && <Tab>Communication</Tab>}
                   {asset?.type === APP && <Tab>Get started</Tab>}
-                  {displayPreview && <Tab>Preview</Tab>}
+                  {asset?.type === APP && <Tab>Preview</Tab>}
                   <Tab>Advance</Tab>
                 </TabList>
                 <TabPanel>
@@ -241,7 +226,7 @@ const AssetDetails = () => {
                     />
                   </TabPanel>
                 )}
-                {displayPreview && (
+                {asset?.type === APP && (
                   <TabPanel>
                     <TabPreview asset={asset} />
                   </TabPanel>
