@@ -2,6 +2,7 @@ import React from "react"
 import { Form } from "./index.js"
 import { FormRow } from "../FormRow/index.js"
 import { FormSection } from "../FormSection/index.js"
+import { FormHint } from "../FormHint/index.js"
 import { TextInput } from "../TextInput/index.js"
 import { Select } from "../Select/index.js"
 import { SelectOption } from "../SelectOption/index.js"
@@ -66,6 +67,7 @@ ComplexForm.args = {
           <SelectOption value="blue" key="2">Blue</SelectOption>
           <SelectOption value="other" key="3">Other</SelectOption>
         </Select>
+        <FormHint text="Your favorite color to the best of your knowledge" />
       </FormRow>
       <FormRow>
         <TextInput label="First Name" id="first-name"/>
