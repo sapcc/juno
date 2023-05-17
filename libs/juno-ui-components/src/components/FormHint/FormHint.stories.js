@@ -25,7 +25,7 @@ WithChildren.args = {
 export const ErrorVariant = Template.bind({})
 ErrorVariant.args = {
   variant: "error",
-  text: "A FormHint containg an error or invalidation message"
+  text: "A FormHint containing an error or invalidation message"
 }
 
 export const SuccessVariant = Template.bind({})
