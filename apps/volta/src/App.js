@@ -9,7 +9,7 @@ import { useGlobalsActions, useAuthActions } from "./hooks/useStore"
 
 const App = (props) => {
   const { setData, setLogin, setLogout } = useAuthActions()
-  const { setEndpoint, setDisabledCAs, setDocumentationLinks } =
+  const { setEndpoint, setDisabledCAs, setDocumentationLinks, setEmbedded } =
     useGlobalsActions()
 
   // fetch the auth token and save the object globally
@@ -40,6 +40,7 @@ const App = (props) => {
     if (props.disabledcas) setDisabledCAs(props.disabledcas)
     if (props.documentationlinks)
       setDocumentationLinks(props.documentationlinks)
+    if (props.embedded === "true" || props.embedded === true) setEmbedded(true)
   }, [])
 
   const queryClient = new QueryClient()

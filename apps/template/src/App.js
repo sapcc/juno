@@ -29,7 +29,7 @@ const App = (props = {}) => {
       <AppShell
         pageHeader="Converged Cloud | App Template"
         contentHeading="App template page title"
-        embedded={props.embedded === true}
+        embedded={props.embedded === "true" || props.embedded === true}
       >
         <AppContent props={props} />
       </AppShell>
