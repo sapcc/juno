@@ -58,7 +58,7 @@ describe("TextInputRow", () => {
 
   test("renders a required label as passed", async () => {
     render(<TextareaRow label="Required Textarea" required />)
-    expect(document.querySelector(".required")).toBeInTheDocument()
+    expect(document.querySelector(".juno-required")).toBeInTheDocument()
   })
 
   test("renders a disabled textarea row as passed", async () => {

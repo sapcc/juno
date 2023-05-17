@@ -95,7 +95,7 @@ describe("TextInputRow", () => {
 
   test("renders a required label as passed", async () => {
     render(<TextInputRow label="Required Input" required />)
-    expect(document.querySelector(".required")).toBeInTheDocument()
+    expect(document.querySelector(".juno-required")).toBeInTheDocument()
   })
 
   test("renders a className to the row as passed", async () => {

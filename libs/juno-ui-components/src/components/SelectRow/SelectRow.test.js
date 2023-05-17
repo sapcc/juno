@@ -61,7 +61,7 @@ describe("SelectRow", () => {
 	
 	test("renders a required label as passed", async () => {
 		render(<SelectRow label="Required Input" required />)
-		expect(document.querySelector('.required')).toBeInTheDocument()
+		expect(document.querySelector('.juno-required')).toBeInTheDocument()
 	})
 	
 	test("renders a custom class to the row as passed", async () => {

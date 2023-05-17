@@ -191,7 +191,7 @@ export const TextInput = ({
             className={`juno-label ${labelStyles} ${ placeholder || hasFocus || val && val.length ? minLabelStyles : "" }`} 
           >
             {label}
-            { required ? <span className={`required ${requiredLabelStyles}`} ></span> : "" }
+            { required ? <span className={`juno-required ${requiredLabelStyles}`} ></span> : "" }
           </label>  
         :
           ""

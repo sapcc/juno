@@ -199,7 +199,7 @@ export const Select = React.forwardRef(
               className={`juno-label ${labelStyles}`}
             >
               {label}
-              { required ? <span className={`required ${requiredLabelStyles}`} ></span> : "" }
+              { required ? <span className={`juno-required ${requiredLabelStyles}`} ></span> : "" }
             </label>
           :
             ""

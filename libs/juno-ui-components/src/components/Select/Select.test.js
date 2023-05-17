@@ -55,7 +55,7 @@ describe("Select", () => {
   test("redners a required marker as passed", async () => {
     render(<Select label="My Label" required={true} />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(document.querySelector(".required")).toBeInTheDocument()
+    expect(document.querySelector(".juno-required")).toBeInTheDocument()
   })
   
   test("renders an aria-label as passed", async () => {
