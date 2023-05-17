@@ -187,4 +187,4 @@ TextInputRow.defaultProps = {
   onBlur: undefined,
 }
 
-export default withDeprecationWarning(TextInputRow, "TextInputRow is deprecated and will be removed in future versions")
+export default withDeprecationWarning(TextInputRow, "TextInputRow is deprecated and will be removed in future versions. To be future-proof, use TextInput instead.")
