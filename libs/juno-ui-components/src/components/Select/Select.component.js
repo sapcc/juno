@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import * as RadixSelect from "@radix-ui/react-select"
+import { Label } from "../Label/index"
 import { Icon } from "../Icon/index.js"
 import { Spinner } from "../Spinner/index.js"
 import { usePortalRef } from "../PortalProvider/PortalProvider.component"
@@ -11,13 +12,9 @@ const wrapperStyles = `
 `
 
 const labelStyles = `
-  jn-absolute
   jn-pointer-events-none
-  jn-top-0
-  jn-left-4
-  jn-text-xs
-  jn-z-10
-  jn-leading-[1.125rem]
+  jn-top-2
+  jn-left-[0.9375rem]
 `
 
 const triggerStyles = `
@@ -48,17 +45,6 @@ const triggerErrorStyles = `
 const triggerValidStyles = `
   jn-border
   jn-border-theme-success
-`
-
-const requiredLabelStyles = `
-    jn-inline-block
-    jn-w-1
-    jn-h-1
-    jn-rounded-full
-    jn-align-top
-    jn-ml-1
-    jn-mt-1
-    jn-bg-theme-required
 `
 
 const contentStyles = `
@@ -194,13 +180,15 @@ export const Select = React.forwardRef(
       >
         {
           label && label.length ?
-            <label 
-              htmlFor={id || null}
-              className={`juno-label ${labelStyles}`}
-            >
-              {label}
-              { required ? <span className={`juno-required ${requiredLabelStyles}`} ></span> : "" }
-            </label>
+            <Label 
+              text={label}
+              htmlFor={id}
+              className={`${labelStyles}`}
+              disabled={disabled}
+              required={required}
+              floating
+              minimized
+            />
           :
             ""
         }
