@@ -14,25 +14,25 @@ const App = (props) => {
 
   // fetch the auth token and save the object globally
   // keep it in the app so the issuerurl and clientid have not to be saved on the state
-  const oidc = React.useMemo(
-    () =>
-      oidcSession({
-        issuerURL: props.issuerurl,
-        clientID: props.clientid,
-        initialLogin: true,
-        refresh: true,
-        flowType: "code",
-        onUpdate: (data) => {
-          setData(data)
-        },
-      }),
-    [setData]
-  )
+  const oidc = React.useMemo(() => {
+    if (props?.issuerurl?.length <= 0 || props?.clientid.length <= 0) return
+    return oidcSession({
+      issuerURL: props.issuerurl,
+      clientID: props.clientid,
+      initialLogin: true,
+      refresh: true,
+      flowType: "code",
+      onUpdate: (data) => {
+        setData(data)
+      },
+    })
+  }, [setData])
 
   useEffect(() => {
+    if (!oidc?.login || !oidc?.logout) return
     setLogin(oidc.login)
     setLogout(oidc.logout)
-  }, [oidc.login, oidc.logout])
+  }, [oidc?.login, oidc?.logout])
 
   // on load application save the props to be used in oder components
   useLayoutEffect(() => {
