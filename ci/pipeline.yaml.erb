@@ -162,6 +162,37 @@ resource_types:
       repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-time-version-resource
       tag: v2
 
+groups: 
+  - name: assets 
+    jobs:
+      <% ASSETS.each do |name,details| %>
+      - build-<%= details[:type] %>-<%= name %>
+      <% end %>
+      - build-assets-server-image
+      - deploy-assets-server-to-s-qa-de-1
+      - e2e-tests-assets-server-s-qa-de-1
+      <%["eu-nl-1","ap-au-1","la-br-1","na-us-1"].each do |region|%>
+      - deploy-assets-server-to-<%= region %>
+      <% end %>  
+
+  - name: base
+    jobs:
+      - readme
+      - build-base-image
+      - build-swift-image  
+  - name: storybook
+    jobs:
+      - build-ui-storybook-image
+      - deploy-storybook-to-s-qa-de-1
+      - e2e-tests-storybook-s-qa-de-1
+      - deploy-storybook-to-s-eu-nl-1   
+  - name: hosting 
+    jobs:
+      - build-hosting-image
+      - deploy-hosting-to-s-qa-de-1
+      - e2e-tests-hosting-s-qa-de-1
+      - deploy-hosting-to-s-eu-nl-1     
+  
 jobs:
   - name: readme
     serial: true
@@ -387,6 +418,8 @@ jobs:
   # =============================================================
   # EXTRA IMAGES
 
+
+  ########### STORYBOOK ############
   # BUILD STORYBOOK IMAGE
   - name: build-ui-storybook-image
     serial: true
@@ -407,6 +440,65 @@ jobs:
               dockerfile: ui-storybook.git/ci/Dockerfile.ui.storybook
               tag: ui-storybook.version/version
 
+  # DEPLOY STORYBOOK TO QA 
+  - name: deploy-storybook-to-s-qa-de-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: ui-storybook.version
+            trigger: true
+            passed: [build-ui-storybook-image]
+
+  # RUN CYPRESS TESTS FOR STORYBOOK IN QA 
+  - name: e2e-tests-storybook-s-qa-de-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: ui-storybook.version
+            trigger: true
+            passed: [deploy-storybook-to-s-qa-de-1]            
+
+  # DEPLOY STORYBOOK TO PROD
+  - name: deploy-storybook-to-s-eu-nl-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: ui-storybook.version
+            trigger: false
+            passed: [e2e-tests-storybook-s-qa-de-1]
+
+  ############ ASSETS SERVER  #########
+  # DEPLOY ASSETS SERVER TO QA 
+  - name: deploy-assets-server-to-s-qa-de-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: assets-server.version
+            trigger: true
+            passed: [build-assets-server-image]
+
+  # RUN CYPRESS TESTS FOR ASSETS SERVER IN QA 
+  - name: e2e-tests-assets-server-s-qa-de-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: assets-server.version
+            trigger: true
+            passed: [deploy-assets-server-to-s-qa-de-1]            
+
+  # DEPLOY ASSETS SERVER TO PROD (HA)
+  <%["eu-nl-1","ap-au-1","la-br-1","na-us-1"].each do |region|%>
+  - name: deploy-assets-server-to-<%= region %>
+    serial: true
+    plan:
+      - in_parallel:
+          - get: assets-server.version
+            trigger: false
+            passed: [e2e-tests-assets-server-s-qa-de-1]    
+  <% end %>                
+
+
+  ########### HOSTING ###########
   # BUILD HOSTING IMAGE
   - name: build-hosting-image
     serial: true
@@ -426,3 +518,30 @@ jobs:
                 KEPPEL_HOSTNAME: keppel.eu-de-1.cloud.sap
               dockerfile: hosting.git/ci/Dockerfile.hosting
               tag: hosting.version/version
+
+  # DEPLOY HOSTING TO QA 
+  - name: deploy-hosting-to-s-qa-de-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: hosting.version
+            trigger: true
+            passed: [build-hosting-image]
+
+  # RUN CYPRESS TESTS FOR HOSTING IN QA 
+  - name: e2e-tests-hosting-s-qa-de-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: hosting.version
+            trigger: true
+            passed: [deploy-hosting-to-s-qa-de-1]            
+
+  # DEPLOY HOSTING TO PROD
+  - name: deploy-hosting-to-s-eu-nl-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: hosting.version
+            trigger: false
+            passed: [e2e-tests-hosting-s-qa-de-1]  
