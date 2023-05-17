@@ -1,6 +1,5 @@
-ci
-!ci/scripts
-!ci/obsolete_assets.json
+ci/helm-charts
+ci/pipeline*
 .npm/cache
 node_modules
 build

@@ -23,7 +23,6 @@ RUN mkdir -p /tmp/latest
 # -> /libs/juno-ui-components/build, package.json
 ADD . /tmp/latest
 WORKDIR /tmp/latest
-RUN ls
 
 ARG NPM_PROVIDER="jspm"
 ARG VERBOSE="false"
@@ -97,6 +96,10 @@ RUN \
 RUN chmod +x /juno/ci/scripts/check_file_integrity.sh && \
   /juno/ci/scripts/check_file_integrity.sh global apps libs assets externals index.html manifest.json importmap.json
 
+# create self signed dummy certificate and key
+RUN apk add openssl ; openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
+  -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=dummy" \
+  -keyout /tmp/tls.key  -out /tmp/tls.crt
 
 ############### FINAL IMAGE! ###################
 FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/nginx:alpine AS server
@@ -104,10 +107,12 @@ ARG BASE_URL_PLACEHOLDER
 
 LABEL source_repository="https://github.com/sapcc/juno"
 
-RUN apk --no-cache add rsync
-
 # delete default html files of nginx
-RUN rm -rf /usr/share/nginx/html
+RUN rm -rf /usr/share/nginx/html ; 
+# copy tls certificate and key
+COPY --from=base /tmp/tls.crt /tmp/tls.key /etc/ssl/juno/ 
+# COPY --from=base /tmp/tls.key /etc/ssl/sap/tls.key
+
 # copy new version 
 COPY --from=base /tmp/final "/usr/share/nginx/html"
 
@@ -115,6 +120,9 @@ COPY --from=base /tmp/final "/usr/share/nginx/html"
 RUN rm -rf /etc/nginx/conf.d/default.conf && echo -e $'\
   server { \n \
   \tlisten       80; \n \
+  \tlisten 443 default_server ssl; \n\ 
+  \tssl_certificate     /etc/ssl/juno/tls.crt; \n\
+  \tssl_certificate_key /etc/ssl/juno/tls.key; \n\
   \tserver_name  localhost; \n \
   \tinclude mime.types; \n \
   \ttypes \n \ 
