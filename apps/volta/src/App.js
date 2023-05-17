@@ -4,18 +4,31 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import styles from "./styles.scss"
 import { AppShellProvider } from "juno-ui-components"
 import AppContent from "./AppContent"
-import { MessagesProvider } from "messages-provider"
+import { useActions, MessagesProvider } from "messages-provider"
 import { useGlobalsActions, useAuthActions } from "./hooks/useStore"
 
 const App = (props) => {
   const { setData, setLogin, setLogout } = useAuthActions()
   const { setEndpoint, setDisabledCAs, setDocumentationLinks, setEmbedded } =
     useGlobalsActions()
+  const { addMessage } = useActions()
 
   // fetch the auth token and save the object globally
   // keep it in the app so the issuerurl and clientid have not to be saved on the state
   const oidc = React.useMemo(() => {
-    if (props?.issuerurl?.length <= 0 || props?.clientid?.length <= 0) return
+    if (
+      !props?.issuerurl ||
+      props?.issuerurl?.length <= 0 ||
+      !props?.clientid ||
+      props?.clientid?.length <= 0
+    ) {
+      addMessage({
+        variant: "error",
+        text: "Missing required data props for authentication",
+      })
+      return
+    }
+
     return oidcSession({
       issuerURL: props.issuerurl,
       clientID: props.clientid,
@@ -47,9 +60,7 @@ const App = (props) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <MessagesProvider>
-        <AppContent />
-      </MessagesProvider>
+      <AppContent />
     </QueryClientProvider>
   )
 }
@@ -58,7 +69,9 @@ const StyledApp = (props) => {
   return (
     <AppShellProvider theme={`${props.theme ? props.theme : "theme-dark"}`}>
       <style>{styles.toString()}</style>
-      <App {...props} />
+      <MessagesProvider>
+        <App {...props} />
+      </MessagesProvider>
     </AppShellProvider>
   )
 }
