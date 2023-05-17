@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import PropTypes from "prop-types"
+import { Label } from "../Label/index"
 import { Icon } from "../Icon/index"
 
 const textinputstyles = `
@@ -44,32 +45,9 @@ const wrapperStyles = `
 `
 
 const labelStyles = `
-  jn-absolute
   jn-pointer-events-none
   jn-top-2
   jn-left-[0.9375rem]
-  jn-transform 
-  jn-origin-top-left 
-  jn-transition-all 
-  jn-duration-100 
-  jn-ease-in-out
-  jn-z-10
-`
-
-const minLabelStyles = `
-  jn-scale-75
-  -jn-translate-y-[0.4375rem]
-`
-
-const requiredLabelStyles = `
-    jn-inline-block
-    jn-w-1
-    jn-h-1
-    jn-rounded-full
-    jn-align-top
-    jn-ml-1
-    jn-mt-2
-    jn-bg-theme-required
 `
 
 const iconcontainerstyles = `
@@ -186,13 +164,15 @@ export const TextInput = ({
         `} 
       >
       { label && label.length ?
-          <label 
-            htmlFor={id || null} 
-            className={`juno-label ${labelStyles} ${ placeholder || hasFocus || val && val.length ? minLabelStyles : "" }`} 
-          >
-            {label}
-            { required ? <span className={`juno-required ${requiredLabelStyles}`} ></span> : "" }
-          </label>  
+          <Label 
+            text={label}
+            htmlFor={id}
+            className={`${labelStyles}`}
+            disabled={disabled}
+            required={required}
+            floating
+            minimized={ placeholder || hasFocus || val && val.length }
+          />
         :
           ""
       }
