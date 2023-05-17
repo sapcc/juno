@@ -14,8 +14,14 @@ const App = (props) => {
 
   // fetch the auth token and save the object globally
   // keep it in the app so the issuerurl and clientid have not to be saved on the state
-  const oidc = React.useMemo(() => {
-    if (props?.issuerurl?.length <= 0 || props?.clientid?.length <= 0) return
+  const oidc = React.useMemo(() => {=
+    if (
+      !props?.issuerurl ||
+      props?.issuerurl?.length <= 0 ||
+      !props?.clientid ||
+      props?.clientid?.length <= 0
+    )
+      return
     return oidcSession({
       issuerURL: props.issuerurl,
       clientID: props.clientid,
