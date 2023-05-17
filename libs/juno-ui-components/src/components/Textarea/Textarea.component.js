@@ -3,6 +3,11 @@ import PropTypes from "prop-types"
 import { Label } from "../Label/index"
 import { Icon } from "../Icon/index"
 
+const wrapperStyles = `
+  jn-inline-block
+  jn-relative
+`
+
 const textareastyles = `
   jn-bg-theme-textinput
   jn-text-theme-textinput
@@ -39,10 +44,7 @@ const noLabelStyles = `
   jn-py-4
 `
 
-const wrapperStyles = `
-  jn-inline-block
-  jn-relative
-`
+
 
 const labelStyles = `
   jn-pointer-events-none
@@ -158,7 +160,7 @@ export const Textarea = ({
   return (
     <span 
       className={`
-        juno-textinput-wrapper 
+        juno-textarea-wrapper 
         ${wrapperStyles}
         ${ width == "auto" ? "jn-inline-block" : "jn-block" }
         ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
