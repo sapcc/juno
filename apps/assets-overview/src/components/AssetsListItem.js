@@ -32,11 +32,15 @@ const AssetsListItem = ({ name, versions }) => {
   //
   const onShowDetails = React.useCallback(() => {
     const urlState = currentState(urlStateKey)
+    // set  panelTabIndex: 0 to reset the tabs on changing asset
+    // there is edge cases with the tab index due to the different
+    // number of tabs depending on the asset type, preview and comunicator options
     push(urlStateKey, {
       ...urlState,
       panelOpened: true,
       assetName: name,
       assetVersion: latest?.version,
+      panelTabIndex: 0,
     })
   }, [urlStateKey, name, latest?.version])
 
