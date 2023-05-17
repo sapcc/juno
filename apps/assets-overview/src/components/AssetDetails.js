@@ -62,17 +62,18 @@ const AssetDetails = () => {
     if (!data) return null
     if (!assetName || !assetVersion) return null
 
-    return { ...data[assetName][assetVersion], name: assetName }
+    // check just the latest version, since this param exists in the latest versions
+    const latestAppPreview =
+      data[assetName] &&
+      data[assetName]["latest"] &&
+      data[assetName]["latest"]?.appPreview
+
+    return {
+      ...data[assetName][assetVersion],
+      name: assetName,
+      latestAppPreview: latestAppPreview,
+    }
   }, [data, assetName, assetVersion])
-
-  // check just the latest version, since this param exists in the latest versions
-  const appPreview = useMemo(() => {
-    if (!data) return null
-    if (!assetName) return null
-
-    const latestApp = { ...data[assetName]["latest"], name: assetName }
-    return latestApp?.appPreview
-  }, [data, assetName])
 
   // assets that this asset depends on
   const dependencies = React.useMemo(() => {
@@ -242,13 +243,7 @@ const AssetDetails = () => {
                 )}
                 {displayPreview && (
                   <TabPanel>
-                    <TabPreview
-                      config={{
-                        name: asset?.name,
-                        version: asset?.version,
-                        appPreview: appPreview,
-                      }}
-                    />
+                    <TabPreview asset={asset} />
                   </TabPanel>
                 )}
                 <TabPanel>
