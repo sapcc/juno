@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import PropTypes from "prop-types"
+import { Label } from "../Label/index"
 import { Icon } from "../Icon/index"
 
 const textareastyles = `
@@ -44,33 +45,11 @@ const wrapperStyles = `
 `
 
 const labelStyles = `
-  jn-absolute
   jn-pointer-events-none
   jn-top-2
   jn-left-[0.9375rem]
-  jn-transform 
-  jn-origin-top-left 
-  jn-transition-all 
-  jn-duration-100 
-  jn-ease-in-out
-  jn-z-10
 `
 
-const minLabelStyles = `
-  jn-scale-75
-  -jn-translate-y-[0.4375rem]
-`
-
-const requiredLabelStyles = `
-    jn-inline-block
-    jn-w-1
-    jn-h-1
-    jn-rounded-full
-    jn-align-top
-    jn-ml-1
-    jn-mt-2
-    jn-bg-theme-required
-`
 
 const iconcontainerstyles = `
   jn-inline-flex
@@ -186,19 +165,15 @@ export const Textarea = ({
       `} 
       >
       { label && label.length ?
-          <label 
-            htmlFor={id || null} 
+          <Label 
+            text={label}
+            htmlFor={id}
+            className={`${labelStyles}`}
             disabled={disabled}
-            className={`
-              juno-label 
-              ${labelStyles} 
-              ${ placeholder || hasFocus || val && val.length ? minLabelStyles : "" }
-              ${ disabled ? "jn-opacity-50" : "" }
-            `} 
-          >
-            {label}
-            { required ? <span className={`required ${requiredLabelStyles}`} ></span> : "" }
-          </label>  
+            required={required}
+            floating
+            minimized={ placeholder || hasFocus || val && val.length }
+          />
         :
           ""
       }
