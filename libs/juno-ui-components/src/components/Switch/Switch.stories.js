@@ -23,19 +23,22 @@ Default.parameters = {
   },
 }
 Default.args = {
-  label: "Switch"
+  label: "Switch",
+  id: "switch-default"
 }
 
 export const Small = Template.bind({})
 Small.args = {
   size: "small",
-  label: "Small Switch"
+  label: "Small Switch",
+  id: "switch-small"
 }
 
 export const Large = Template.bind({})
 Large.args = {
   size: "large",
-  label: "Large Switch"
+  label: "Large Switch",
+  id: "switch-large"
 }
 
 export const On = Template.bind({})
@@ -58,16 +61,19 @@ Disabled.args = {
   on: true,
   disabled: true,
   label: "Disabled Switch",
+  id: "switch-disabled",
 }
 
 export const Invalid = Template.bind({})
 Invalid.args = {
   invalid: true,
   label: "Invalid Switch",
+  id: "switch-invalid",
 }
 
 export const Valid = Template.bind({})
 Valid.args = {
   valid: true,
   label: "Valid Switch",
+  id: "switch-valid",
 }
