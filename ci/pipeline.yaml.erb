@@ -541,6 +541,7 @@ jobs:
           TAG_VARIABLE:       image.tag
           REGION:             <%= region %>
           CONTEXT:            <%= region %>
+          TAG_VARIABLE:       image.tag
           VALUES:             local:globals global:juno
           KUBELOGON_USER:     ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
@@ -555,12 +556,13 @@ jobs:
           helm-charts.git: juno.git
           
         params:
-          CHART_PATH: ci/helm-charts/assets_server_prod
-          RELEASE: juno-assets-server-prod
-          NAMESPACE: juno
+          CHART_PATH:         ci/helm-charts/assets_server_prod
+          RELEASE:            juno-assets-server-prod
+          NAMESPACE:          juno
           HELM_MAJOR_VERSION: '3'
-          REGION:       <%= region %>
-          CONTEXT:      <%= region %>
+          REGION:             <%= region %>
+          CONTEXT:            <%= region %>
+          TAG_VARIABLE:       image.tag
           VALUES:             local:globals global:juno
           KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
