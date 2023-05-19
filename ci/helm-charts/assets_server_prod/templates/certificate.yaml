@@ -5,7 +5,7 @@ metadata:
   namespace: juno
 spec:
   dnsNames:
-    - assets2.juno.global.cloud.sap
+    - assets.juno2.global.cloud.sap
   issuerRef:
     group: certmanager.cloud.sap
     kind: DigicertIssuer
