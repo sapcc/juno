@@ -535,12 +535,13 @@ jobs:
           app.version: assets-server.version
           helm-charts.git: juno.git
         params:
-          CHART_PATH:   ci/helm-charts/assets_server_prod
-          RELEASE:      juno-assets-server-prod
-          NAMESPACE:    juno
-          TAG_VARIABLE: image.tag
-          REGION:       <%= region %>
-          CONTEXT:      <%= region %>
+          CHART_PATH:         ci/helm-charts/assets_server_prod
+          RELEASE:            juno-assets-server-prod
+          NAMESPACE:          juno
+          TAG_VARIABLE:       image.tag
+          REGION:             <%= region %>
+          CONTEXT:            <%= region %>
+          VALUES:             local:globals global:juno
           KUBELOGON_USER:     ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           HELM_MAJOR_VERSION: '3'
@@ -560,6 +561,7 @@ jobs:
           HELM_MAJOR_VERSION: '3'
           REGION:       <%= region %>
           CONTEXT:      <%= region %>
+          VALUES:             local:globals global:juno
           KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))
