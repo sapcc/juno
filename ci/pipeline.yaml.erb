@@ -158,11 +158,11 @@ resources:
     source: { key: "juno-assets-server-version" } # disambiguate from other time-version resources
 
   <%HA_REGIONS.each do |region|%> 
-  - name: <%=region%>.release
+  - name: <%= region %>.release
     type: release
-    check_every: never 
-    source: { region: <%=region%>, tenso_password: ((keystone-user-password/tenso-prod)) }
-    expose_build_created_by: true  
+    check_every: never # only when triggered by a job
+    source: { region: <%= region %>, tenso_password: ((keystone-user-password/tenso-prod)) }
+    expose_build_created_by: true
   <% end %>   
 
 resource_types:
