@@ -42,6 +42,10 @@ export const fetchAssetsManifest = ({ queryKey }) => {
     .then((response) => {
       return response.json()
     })
+    .then((manifest) => {
+      console.log("==::", manifest?.auth?.latest)
+      return manifest
+    })
 }
 
 export const fetchMarkdown = ({ queryKey }) => {

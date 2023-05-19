@@ -42,13 +42,18 @@ export const compareVersions = (key) => (a, b) => {
   return b1.length - a1.length
 }
 
+export const camelToDash = (string) => {
+  if (!string) return null
+  return string.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase())
+}
+
 export const scriptTag = ({ name, version, appProps }) => {
   let newAppProps = ""
   if (appProps && typeof appProps === "object") {
     Object.keys(appProps).forEach((key, index) => {
       newAppProps = `${newAppProps}${
         index ? "\n" : ""
-      }  data-props-${key}="REPLACE_ME"`
+      }  data-props-${camelToDash(key)}="REPLACE_ME"`
     })
   }
 
