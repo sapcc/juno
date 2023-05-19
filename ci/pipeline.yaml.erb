@@ -25,7 +25,8 @@
     "communicator":         { type: "lib", path: "libs/communicator"},
     "url-state-provider":   { type: "lib", path: "libs/url-state-provider"},
     "url-state-router":     { type: "lib", path: "libs/url-state-router"},
-}
+  }
+  HA_REGIONS = ["eu-nl-1","ap-ae-1","ap-cn-1","ap-jp-2","ap-au-1","la-br-1","na-us-1"]
 %>
 
 resources:
@@ -52,6 +53,15 @@ resources:
       username: ((registry-user/keppel-ccloud.username))
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-assets-server
+
+  - name: secrets.git
+    type: git-proxy
+    webhook_token: lfkhslkfhs
+    check_every: 6h
+    source:
+      uri: git@github.wdf.sap.corp:cc/secrets.git
+      branch: "master"
+      private_key: ((github-private-key/cc-secrets))
 
   - name: juno.git
     type: git
@@ -147,6 +157,14 @@ resources:
     check_every: 525600h
     source: { key: "juno-assets-server-version" } # disambiguate from other time-version resources
 
+  <%HA_REGIONS.each do |region|%> 
+  - name: <%=region%>.release
+    type: release
+    check_every: never 
+    source: { region: <%=region%>, tenso_password: ((keystone-user-password/tenso-prod)) }
+    expose_build_created_by: true  
+  <% end %>   
+
 resource_types:
   - name: git-proxy
     type: registry-image
@@ -171,8 +189,10 @@ groups:
       - build-assets-server-image
       - deploy-assets-server-to-s-qa-de-1
       - e2e-tests-assets-server-s-qa-de-1
-      <%["eu-nl-1","ap-au-1","la-br-1","na-us-1"].each do |region|%>
+      - promote-prod-assets-server
+      <%HA_REGIONS.each do |region|%>
       - deploy-assets-server-to-<%= region %>
+      - e2e-tests-assets-server-<%= region %>
       <% end %>  
 
   - name: base
@@ -484,17 +504,78 @@ jobs:
       - in_parallel:
           - get: assets-server.version
             trigger: true
-            passed: [deploy-assets-server-to-s-qa-de-1]            
+            passed: [deploy-assets-server-to-s-qa-de-1]   
+
+  # PROMOTE TO PROD  
+  - name: promote-prod-assets-server
+    serial: true
+    plan:
+      - in_parallel:
+          - get: assets-server.version
+            trigger: false
+            passed: [e2e-tests-assets-server-s-qa-de-1]   
 
   # DEPLOY ASSETS SERVER TO PROD (HA)
-  <%["eu-nl-1","ap-au-1","la-br-1","na-us-1"].each do |region|%>
+  <%HA_REGIONS.each do |region|%>
   - name: deploy-assets-server-to-<%= region %>
     serial: true
     plan:
       - in_parallel:
           - get: assets-server.version
             trigger: false
-            passed: [e2e-tests-assets-server-s-qa-de-1]    
+            passed: [promote-prod-assets-server]           
+          - get: juno.git
+          - get: secrets.git
+            params:
+              depth: 100 
+
+      - task: diff
+        file: secrets.git/ci/shared/task-helm-diff.yaml
+        input_mapping:
+          app.version: assets-server.version
+          helm-charts.git: juno.git
+        params:
+          CHART_PATH:   ci/helm-charts/assets_server_prod
+          RELEASE:      juno-assets-server-prod
+          NAMESPACE:    juno
+          TAG_VARIABLE: image.tag
+          REGION:       <%= region %>
+          CONTEXT:      <%= region %>
+          KUBELOGON_USER:     ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          HELM_MAJOR_VERSION: '3'
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))
+
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          app.version: assets-server.version
+          helm-charts.git: juno.git
+          
+        params:
+          CHART_PATH: ci/helm-charts/assets_server_prod
+          RELEASE: juno-assets-server-prod
+          NAMESPACE: juno
+          HELM_MAJOR_VERSION: '3'
+          REGION:       <%= region %>
+          CONTEXT:      <%= region %>
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))
+
+    ensure:
+      put: <%= region %>.release   
+
+  # RUN CYPRESS TESTS FOR ASSETS SERVER IN PROD 
+  - name: e2e-tests-assets-server-<%= region %>
+    serial: true
+    plan:
+      - in_parallel:
+          - get: assets-server.version
+            trigger: true
+            passed: [deploy-assets-server-to-<%= region %>]                 
   <% end %>                
 
 

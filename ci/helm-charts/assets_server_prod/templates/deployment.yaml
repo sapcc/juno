@@ -31,7 +31,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
         - name: server
-          image: "{{ .Values.global.registry }}/juno-v3-assets-server:{{ .Values.global.assets_server_image_tag }}"
+          image: "{{ .Values.global.registry }}/juno-v3-assets-server:{{.Values.image.tag}}"
           imagePullPolicy: IfNotPresent
           ports:
             - name: https
