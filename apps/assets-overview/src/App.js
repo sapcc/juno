@@ -5,7 +5,7 @@ import { AppShell, AppShellProvider } from "juno-ui-components"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
-import { MessagesProvider } from "messages-provider"
+import { MessagesProvider, useActions } from "messages-provider"
 import markdown from "github-markdown-css/github-markdown.css"
 import markdownDark from "github-markdown-css/github-markdown-dark.css"
 import markdownLight from "github-markdown-css/github-markdown-light.css"
@@ -14,6 +14,7 @@ import CustomPageHeader from "./components/CustomPageHeader"
 const App = (props = {}) => {
   const setManifestUrl = useStore((state) => state.setManifestUrl)
   const setAssetsUrl = useStore((state) => state.setAssetsUrl)
+  const { addMessage } = useActions()
 
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
@@ -23,8 +24,12 @@ const App = (props = {}) => {
   // setup assets url and manifest url
   React.useEffect(() => {
     let assetsUrl = props.assetsUrl
-    if (!assetsUrl) {
-      assetsUrl = window.location.origin
+    if (!assetsUrl || props?.assetsUrl?.length <= 0) {
+      addMessage({
+        variant: "error",
+        text: "Missing required assetsUrl data prop",
+      })
+      return
     }
     setAssetsUrl(assetsUrl)
     setManifestUrl(assetsUrl + "/manifest.json")
@@ -33,9 +38,7 @@ const App = (props = {}) => {
   return (
     <QueryClientProvider client={queryClient}>
       <AppShell pageHeader={CustomPageHeader} embedded={embedded}>
-        <MessagesProvider>
-          <AppContent props={props} />
-        </MessagesProvider>
+        <AppContent props={props} />
       </AppShell>
     </QueryClientProvider>
   )
@@ -65,7 +68,9 @@ const StyledApp = (props) => {
           : markdownLight.toString()}
       </style>
       <style>{fixMarkdownLists}</style>
-      <App {...props} />
+      <MessagesProvider>
+        <App {...props} />
+      </MessagesProvider>
     </AppShellProvider>
   )
 }
