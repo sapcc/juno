@@ -5,7 +5,7 @@ import { AppShell, AppShellProvider } from "juno-ui-components"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
-import { MessagesProvider } from "messages-provider"
+import { MessagesProvider, useActions } from "messages-provider"
 import markdown from "github-markdown-css/github-markdown.css"
 import markdownDark from "github-markdown-css/github-markdown-dark.css"
 import markdownLight from "github-markdown-css/github-markdown-light.css"
@@ -14,28 +14,35 @@ import CustomPageHeader from "./components/CustomPageHeader"
 const App = (props = {}) => {
   const setManifestUrl = useStore((state) => state.setManifestUrl)
   const setAssetsUrl = useStore((state) => state.setAssetsUrl)
+  const { addMessage } = useActions()
 
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
 
-  const embedded = props.embedded === "true" || props.embedded === true
-
   // setup assets url and manifest url
   React.useEffect(() => {
-    let assetsUrl = props.assetsUrl
-    if (!assetsUrl) {
-      assetsUrl = window.location.origin
+    try {
+      const url = new URL(
+        "/manifest.json",
+        props.assetsUrl || props.currentHost
+      )
+      setAssetsUrl(url.origin)
+      setManifestUrl(url.href)
+    } catch (e) {
+      addMessage({
+        variant: "error",
+        text: `Bad required assetsUrl data prop - ${e.message}`,
+      })
     }
-    setAssetsUrl(assetsUrl)
-    setManifestUrl(assetsUrl + "/manifest.json")
   }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AppShell pageHeader={CustomPageHeader} embedded={embedded}>
-        <MessagesProvider>
-          <AppContent props={props} />
-        </MessagesProvider>
+      <AppShell
+        pageHeader={CustomPageHeader}
+        embedded={props.embedded === "true" || props.embedded === true}
+      >
+        <AppContent props={props} />
       </AppShell>
     </QueryClientProvider>
   )
@@ -65,7 +72,9 @@ const StyledApp = (props) => {
           : markdownLight.toString()}
       </style>
       <style>{fixMarkdownLists}</style>
-      <App {...props} />
+      <MessagesProvider>
+        <App {...props} />
+      </MessagesProvider>
     </AppShellProvider>
   )
 }

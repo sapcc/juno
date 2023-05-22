@@ -47,7 +47,7 @@ export const camelToDash = (string) => {
   return string.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase())
 }
 
-export const scriptTag = ({ name, version, appProps }) => {
+export const scriptTag = ({ assetsUrl, name, version, appProps }) => {
   let newAppProps = ""
   if (appProps && typeof appProps === "object") {
     Object.keys(appProps).forEach((key, index) => {
@@ -59,7 +59,7 @@ export const scriptTag = ({ name, version, appProps }) => {
 
   return `<script
   defer
-  src="https://assets.juno.global.cloud.sap/apps/widget-loader@latest/build/app.js" 
+  src="${assetsUrl}/apps/widget-loader@latest/build/app.js" 
   data-name="${name}"
   data-version="${version || "latest"}"
 ${newAppProps}>

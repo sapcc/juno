@@ -11,8 +11,11 @@ import {
 import { sectionCss, h2Css } from "../../styles"
 import { scriptTag, baseHtml } from "../../helpers"
 import DetailSection from "./DetailSection"
+import useStore from "../../store"
 
 const TabGetStarted = ({ asset, dependencies, isLatest }) => {
+  const assetsUrl = useStore((state) => state.assetsUrl)
+
   return (
     <Container py px={false}>
       <DetailSection
@@ -69,6 +72,7 @@ const TabGetStarted = ({ asset, dependencies, isLatest }) => {
 
         <CodeBlock heading="Script tag" lang="html">
           {scriptTag({
+            assetsUrl: assetsUrl,
             name: asset?.name,
             version: isLatest ? "latest" : asset?.version,
             appProps: asset?.appProps,
@@ -87,6 +91,7 @@ const TabGetStarted = ({ asset, dependencies, isLatest }) => {
             <CodeBlock heading="Script tag" lang="html">
               {dependencies.map((app) =>
                 scriptTag({
+                  assetsUrl: assetsUrl,
                   name: app?.name,
                   version: app?.version,
                   appProps: app?.appProps,
