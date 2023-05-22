@@ -88,6 +88,7 @@
   // broadcast custom event
   window.dispatchEvent(new CustomEvent(JUNO_IMPORTMAP_LOADED_EVENT))
 
+  if (importmapOnly === "true" || importmap === true) return
   // APP LOADER
   // get the app URL
   // from given url or from importmap based on name and version
