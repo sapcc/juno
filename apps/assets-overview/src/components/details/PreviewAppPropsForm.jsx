@@ -65,7 +65,7 @@ const PreviewAppPropsForm = ({ asset, onAppPropsChange }) => {
         ))}
         <Stack className="mb-4" alignment="center" distribution="end">
           <Button
-            label="Set"
+            label="Apply"
             onClick={() => onAppPropsChange(formState)}
             variant="primary"
           />
