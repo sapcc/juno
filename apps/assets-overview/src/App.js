@@ -19,25 +19,29 @@ const App = (props = {}) => {
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
 
-  const embedded = props.embedded === "true" || props.embedded === true
-
   // setup assets url and manifest url
   React.useEffect(() => {
-    let assetsUrl = props.assetsUrl
-    if (!assetsUrl || props?.assetsUrl?.length <= 0) {
+    try {
+      const url = new URL(
+        "/manifest.json",
+        props.assetsUrl || props.currentHost
+      )
+      setAssetsUrl(url.origin)
+      setManifestUrl(url.href)
+    } catch (e) {
       addMessage({
         variant: "error",
-        text: "Missing required assetsUrl data prop",
+        text: `Bad required assetsUrl data prop - ${e.message}`,
       })
-      return
     }
-    setAssetsUrl(assetsUrl)
-    setManifestUrl(assetsUrl + "/manifest.json")
   }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AppShell pageHeader={CustomPageHeader} embedded={embedded}>
+      <AppShell
+        pageHeader={CustomPageHeader}
+        embedded={props.embedded === "true" || props.embedded === true}
+      >
         <AppContent props={props} />
       </AppShell>
     </QueryClientProvider>
