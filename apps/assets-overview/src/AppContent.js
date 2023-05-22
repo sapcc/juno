@@ -19,12 +19,17 @@ const AppContent = (props) => {
   const setOrigin = useStore((state) => state.setOrigin)
   const [tabIndex, setTabIndex] = useState(0)
 
-  const { isLoading, isError, data, error } = useQuery({
+  const { isLoading, isInitialLoading, data, error } = useQuery({
     queryKey: ["manifest", manifestUrl],
     queryFn: fetchAssetsManifest,
     enabled: !!manifestUrl,
     staleTime: Infinity,
   })
+
+  // avoid to show the loading spinner when the query is disabled
+  const isReallyLoading = useMemo(() => {
+    return isLoading && !!manifestUrl
+  }, [isLoading, manifestUrl])
 
   // if error send error to the message store
   useEffect(() => {
@@ -88,17 +93,29 @@ const AppContent = (props) => {
         </TabList>
         <TabPanel>
           <TabContainer>
-            <Documentation isLoading={isLoading} data={globals} error={error} />
+            <Documentation
+              isLoading={isReallyLoading}
+              data={globals}
+              error={error}
+            />
           </TabContainer>
         </TabPanel>
         <TabPanel>
           <TabContainer>
-            <AssetsList isLoading={isLoading} assets={apps} error={error} />
+            <AssetsList
+              isLoading={isReallyLoading}
+              assets={apps}
+              error={error}
+            />
           </TabContainer>
         </TabPanel>
         <TabPanel>
           <TabContainer>
-            <AssetsList isLoading={isLoading} assets={libs} error={error} />
+            <AssetsList
+              isLoading={isReallyLoading}
+              assets={libs}
+              error={error}
+            />
           </TabContainer>
         </TabPanel>
       </MainTabs>
