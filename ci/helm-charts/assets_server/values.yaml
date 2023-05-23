@@ -1,6 +1,5 @@
 owner-info:
   support-group: containers
-<<<<<<< HEAD
   service: juno
   helm-chart-url: https://github.com/sapcc/juno/tree/main/ci/helm-charts/charts/assets_server
   maintainers:
@@ -9,13 +8,3 @@ owner-info:
     - Arturo Reuschenbach
     - Andreas Pfau
     - Hoda Noori
-=======
-  service: juno-assets-server-qa # optional
-  maintainers:
-    - Esther Schmitz
-    - Andreas Pfau
-    - Hans-Georg Winkler
-    - Arturo Reuschenbach Puncernau
-    - Hoda Noori
-  helm-chart-url: https://github.com/sapcc/juno/tree/main/ci/helm-charts
->>>>>>> 7c30da46 (ci: add more tasks to the pipeline)
