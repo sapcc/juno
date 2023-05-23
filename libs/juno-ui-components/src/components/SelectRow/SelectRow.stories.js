@@ -7,6 +7,13 @@ import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 export default {
   title: "Deprecated/SelectRow",
   component: SelectRow,
+  parameters: {
+    docs: {
+      description: {
+        component: "SelectRow is deprecated, use Select instead."
+      },
+    },
+  },
   argTypes: {
     items: {
       table: {

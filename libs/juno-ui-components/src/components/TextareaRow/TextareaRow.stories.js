@@ -4,6 +4,13 @@ import { TextareaRow } from "./index.js"
 export default {
   title: "Deprecated/TextareaRow",
   component: TextareaRow,
+  parameters: {
+    docs: {
+      description: {
+        component: "TextareaRow is deprecated, use Textarea instead."
+      },
+    },
+  },
   argTypes: {},
 }
 

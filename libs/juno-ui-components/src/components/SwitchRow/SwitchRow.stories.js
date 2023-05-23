@@ -4,6 +4,13 @@ import { SwitchRow } from "./index.js"
 export default {
   title: "Deprecated/SwitchRow",
   component: SwitchRow,
+  parameters: {
+    docs: {
+      description: {
+        component: "SwitchRow is deprecated, use Switch instead."
+      },
+    },
+  },
   argTypes: {},
 }
 
