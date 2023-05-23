@@ -90,6 +90,10 @@ ComplexForm.args = {
       <FormRow key="fr-4">
         <Textarea label="Your Message" id="message" placeholder="If there is something else we should know about you – now is the time!"/>
       </FormRow>
+      <FormRow>
+        <TextInput invalid value="Error!" />
+        <FormHint variant="error" text="A textInput with an error for no reason whatsoever." />
+      </FormRow>
       <FormRow key="fr-5">
         <Switch label="Wake me up at 4.30am" id="wakey" />
       </FormRow>
