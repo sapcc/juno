@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { Textarea } from "../Textarea/index.js"
 import { Label } from "../Label/index.js"
 import { Icon } from "../Icon/index"
+import withDeprecationWarning from '../withDeprecationWarning/withDeprecationWarning.component.js'
 
 /* Stacked: Label is above the text input element */
 const stackedcontainerstyles = `
@@ -75,7 +76,7 @@ const stackedinputstyles = `
 
 /** A textarea group containing a textarea, associated label, optional helptext, and structural markup */
 
-export const TextareaRow = ({
+const TextareaRow = ({
   value,
   name,
   label,
@@ -210,3 +211,5 @@ TextareaRow.defaultProps = {
   disabled: null,
   onChange: undefined,
 }
+
+export default withDeprecationWarning(TextareaRow, "TextareaRow is deprecated and will be removed in future versions. To be future-proof, use Textarea instead.")
