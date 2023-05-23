@@ -34,6 +34,13 @@ const PreviewAppPropsForm = ({ asset, onAppPropsChange }) => {
     setShow(!show)
   }
 
+  // on enter key submit the form
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onAppPropsChange(formState)
+    }
+  }
+
   const onInputChanged = (key, value) => {
     setFormState({ ...formState, [key]: value })
   }
@@ -61,6 +68,7 @@ const PreviewAppPropsForm = ({ asset, onAppPropsChange }) => {
             required={appProps[key]?.type === "required"}
             helptext={`${appProps[key]?.description}`}
             onChange={(e) => onInputChanged(key, e?.target?.value)}
+            onKeyDown={handleKeyDown}
           />
         ))}
         <Stack className="mb-4" alignment="center" distribution="end">
