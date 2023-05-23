@@ -43,7 +43,6 @@ export const fetchAssetsManifest = ({ queryKey }) => {
       return response.json()
     })
     .then((manifest) => {
-      console.log("==::", manifest?.auth?.latest)
       return manifest
     })
 }
