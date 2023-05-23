@@ -1,22 +1,23 @@
 import React, { useState, useEffect, useMemo } from "react"
 import { TabPanel, MainTabs, TabList, Tab } from "juno-ui-components"
-import useStore from "./store"
+import useStore from "../store"
 import { useQuery } from "@tanstack/react-query"
-import { fetchAssetsManifest } from "./actions"
+import { fetchAssetsManifest } from "../actions"
 import { currentState, push } from "url-state-provider"
-import TabContainer from "./components/TabContainer"
-import AssetsList from "./components/AssetsList"
-import AssetDetails from "./components/AssetDetails"
-import { APP, LIB } from "./helpers"
+import TabContainer from "./TabContainer"
+import AssetsList from "./AssetsList"
+import AssetDetails from "./AssetDetails"
 import { useActions } from "messages-provider"
-import { parseError } from "./helpers"
-import Documentation from "./components/Documentation"
+import { parseError } from "../helpers"
+import Documentation from "./Documentation"
+import CustomPageHeader from "./CustomPageHeader"
 
 const AppContent = (props) => {
   const { addMessage } = useActions()
   const manifestUrl = useStore((state) => state.manifestUrl)
   const urlStateKey = useStore((state) => state.urlStateKey)
   const setOrigin = useStore((state) => state.setOrigin)
+  const embedded = useStore((state) => state.embedded)
   const [tabIndex, setTabIndex] = useState(0)
 
   const { isLoading, isInitialLoading, data, error } = useQuery({
@@ -83,7 +84,7 @@ const AppContent = (props) => {
   }
 
   return (
-    <>
+    <AppShell pageHeader={CustomPageHeader} embedded={embedded}>
       <AssetDetails />
       <MainTabs selectedIndex={tabIndex} onSelect={onTabSelected}>
         <TabList>
@@ -119,7 +120,7 @@ const AppContent = (props) => {
           </TabContainer>
         </TabPanel>
       </MainTabs>
-    </>
+    </AppShell>
   )
 }
 
