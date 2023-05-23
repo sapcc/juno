@@ -1,19 +1,19 @@
 import React from "react"
 
 import useStore from "./store"
-import { AppShell, AppShellProvider } from "juno-ui-components"
+import { AppShellProvider } from "juno-ui-components"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import AppContent from "./AppContent"
 import styles from "./styles.scss"
 import { MessagesProvider, useActions } from "messages-provider"
 import markdown from "github-markdown-css/github-markdown.css"
 import markdownDark from "github-markdown-css/github-markdown-dark.css"
 import markdownLight from "github-markdown-css/github-markdown-light.css"
-import CustomPageHeader from "./components/CustomPageHeader"
+import AppRouter from "./components/AppRouter"
 
 const App = (props = {}) => {
   const setManifestUrl = useStore((state) => state.setManifestUrl)
   const setAssetsUrl = useStore((state) => state.setAssetsUrl)
+  const setEmbedded = useStore((state) => state.setEmbedded)
   const { addMessage } = useActions()
 
   // Create query client which it can be used from overall in the app
@@ -36,14 +36,14 @@ const App = (props = {}) => {
     }
   }, [])
 
+  // setup other props
+  React.useEffect(() => {
+    setEmbedded(props.embedded === "true" || props.embedded === true)
+  }, [])
+
   return (
     <QueryClientProvider client={queryClient}>
-      <AppShell
-        pageHeader={CustomPageHeader}
-        embedded={props.embedded === "true" || props.embedded === true}
-      >
-        <AppContent props={props} />
-      </AppShell>
+      <AppRouter />
     </QueryClientProvider>
   )
 }
