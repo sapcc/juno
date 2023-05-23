@@ -11,8 +11,10 @@ import {
 import useStore from "../store"
 import Markdown from "./Markdown"
 import { currentState, push } from "url-state-provider"
+import HintNotFound from "./HintNotFound"
+import HintLoading from "./HintLoading"
 
-const Documentation = ({ data }) => {
+const Documentation = ({ isLoading, data }) => {
   const origin = useStore((state) => state.origin)
   const urlStateKey = useStore((state) => state.urlStateKey)
   const urlState = currentState(urlStateKey)
@@ -85,50 +87,53 @@ const Documentation = ({ data }) => {
   return useMemo(() => {
     return (
       <>
-        {!nav ? (
-          <Stack className="pt-2" alignment="center">
-            <Spinner variant="primary" />
-            Loading ...
-          </Stack>
+        {isLoading ? (
+          <HintLoading text="Loading documentation..." />
         ) : (
-          <Stack alignmet="start" gap="5">
-            <SideNavigation>
-              {Object.keys(nav).map((key, index) => (
-                <SideNavigationItem
-                  key={index}
-                  className="whitespace-nowrap"
-                  active={activeNavItem === key}
-                  label={nav[key]?.label}
-                  onClick={() => onNavItemClicked(key)}
-                />
-              ))}
-            </SideNavigation>
-            <Container>
-              {activeNavItem === "wigetLoader" && widgetLoaderVersions && (
-                <Stack distribution="end" className="w-full">
-                  <SelectRow
-                    label="version"
-                    variant="floating"
-                    value={widgetLoaderVersion}
-                    onChange={(e) => changeVersion(e.target.value)}
-                  >
-                    {widgetLoaderVersions.map((version, i) => (
-                      <SelectOption
-                        key={i}
-                        label={version.label}
-                        value={version.value}
-                      />
-                    ))}
-                  </SelectRow>
-                </Stack>
-              )}
-              <Markdown path={nav?.[activeNavItem]?.path} />
-            </Container>
-          </Stack>
+          <>
+            {nav ? (
+              <Stack alignmet="start" gap="5">
+                <SideNavigation>
+                  {Object.keys(nav).map((key, index) => (
+                    <SideNavigationItem
+                      key={index}
+                      className="whitespace-nowrap"
+                      active={activeNavItem === key}
+                      label={nav[key]?.label}
+                      onClick={() => onNavItemClicked(key)}
+                    />
+                  ))}
+                </SideNavigation>
+                <Container>
+                  {activeNavItem === "wigetLoader" && widgetLoaderVersions && (
+                    <Stack distribution="end" className="w-full">
+                      <SelectRow
+                        label="version"
+                        variant="floating"
+                        value={widgetLoaderVersion}
+                        onChange={(e) => changeVersion(e.target.value)}
+                      >
+                        {widgetLoaderVersions.map((version, i) => (
+                          <SelectOption
+                            key={i}
+                            label={version.label}
+                            value={version.value}
+                          />
+                        ))}
+                      </SelectRow>
+                    </Stack>
+                  )}
+                  <Markdown path={nav?.[activeNavItem]?.path} />
+                </Container>
+              </Stack>
+            ) : (
+              <HintNotFound text="No documentation found" />
+            )}
+          </>
         )}
       </>
     )
-  }, [activeNavItem, nav])
+  }, [activeNavItem, nav, isLoading])
 }
 
 export default Documentation

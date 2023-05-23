@@ -51,12 +51,12 @@
     "react-dom": "^18.2.0"
   },
   "appProps": {
-    "issuerurl": {
+    "issuerUrl": {
       "value": "https://endpoint_url_of_the_openid_provider.com",
       "type": "required",
       "description": "Endpoint URL of the OpenID provider"
     },
-    "clientid": {
+    "clientId": {
       "value": "tbd",
       "type": "required",
       "description": "OIDC client id"
@@ -74,5 +74,6 @@
       "type": "optional",
       "description": "trigger login process automatically on load press. Possible values are 'true' or 'false' (default)"
     }
-  }
+  },
+  "appPreview": false
 }

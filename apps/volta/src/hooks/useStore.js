@@ -107,7 +107,14 @@ const createGlobalsSlice = (set, get) => ({
     disabledCAs: [],
     documentationLinks: {},
     selectedCA: "",
+    embedded: false,
     actions: {
+      setEmbedded: (embedded) =>
+        set(
+          (state) => ({ globals: { ...state.globals, embedded: embedded } }),
+          false,
+          "globals/setEmbedded"
+        ),
       setEndpoint: (endpoint) =>
         set(
           (state) => ({ globals: { ...state.globals, endpoint: endpoint } }),
@@ -174,6 +181,8 @@ export const useGlobalsDocumentationLinks = () =>
   useStore((state) => state.globals.documentationLinks)
 export const useGlobalsSelectedCA = () =>
   useStore((state) => state.globals.selectedCA)
+export const useGlobalsEmbedded = () =>
+  useStore((state) => state.globals.embedded)
 
 export const useGlobalsActions = () =>
   useStore((state) => state.globals.actions)

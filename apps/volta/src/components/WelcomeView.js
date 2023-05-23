@@ -7,7 +7,7 @@ const WelcomeView = ({ loginCallback, isProcessing }) => {
       alignment="center"
       distribution="center"
       direction="vertical"
-      className="mt-[10vh]"
+      className="my-[10vh]"
     >
       <p className="text-xl">
         Welcome to the Converged Cloud Client Certificate Self-Service

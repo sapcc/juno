@@ -20,6 +20,7 @@
     "babel-jest": "^29.3.1",
     "babel-plugin-transform-import-meta": "^2.2.0",
     "body-parser": "^1.20.1",
+    "esbuild": "^0.17.19",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
     "juno-ui-components": "*",
@@ -65,9 +66,10 @@
       "value": "",
       "description": "Endpoint URL of the API"
     },
-    "embeded": {
+    "embedded": {
       "value": "false",
       "description": "Set to true if app is to be embedded in another existing app or page, like e.g. Elektra.  If set to true the app won't render a page header/footer and instead render only the content"
     }
-  }
+  },
+  "appPreview": true
 }

@@ -61,5 +61,6 @@
       "type": "required",
       "description": "Endpoint URL of the API"
     }
-  }
+  },
+  "appPreview": true
 }

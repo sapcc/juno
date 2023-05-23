@@ -1,10 +1,10 @@
 import React from "react"
 import { Container } from "juno-ui-components"
-import Markdown from "./Markdown"
+import Markdown from "../Markdown"
 import { Messages } from "messages-provider"
-import useStore from "../store"
+import useStore from "../../store"
 
-const AssetDetailsCommunicationReadme = ({ path }) => {
+const TabWithMarkdown = ({ path }) => {
   const origin = useStore((state) => state.origin)
   const url = React.useMemo(() => {
     if (!origin || !path) return null
@@ -23,4 +23,4 @@ const AssetDetailsCommunicationReadme = ({ path }) => {
   )
 }
 
-export default AssetDetailsCommunicationReadme
+export default TabWithMarkdown

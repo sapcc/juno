@@ -41,3 +41,45 @@ export const compareVersions = (key) => (a, b) => {
   // 4. We hit this if the all checked versions so far are equal
   return b1.length - a1.length
 }
+
+export const camelToDash = (string) => {
+  if (!string) return null
+  return string.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase())
+}
+
+export const scriptTag = ({ assetsUrl, name, version, appProps }) => {
+  let newAppProps = ""
+  if (appProps && typeof appProps === "object") {
+    Object.keys(appProps).forEach((key, index) => {
+      newAppProps = `${newAppProps}${
+        index ? "\n" : ""
+      }  data-props-${camelToDash(key)}="REPLACE_ME"`
+    })
+  }
+
+  return `<script
+  defer
+  src="${assetsUrl}/apps/widget-loader@latest/build/app.js" 
+  data-name="${name}"
+  data-version="${version || "latest"}"
+${newAppProps}>
+</script>`
+}
+
+export const baseHtml = ({ name, hasDependencies }) => {
+  return `<!DOCTYPE html>
+  <html style="margin: 0; padding: 0; display: flex; flex-direction: column;">
+    <head>
+      <title>Converged Cloud | ${name}</title>
+      <link rel="icon" href="/assets/favicon.ico"/>
+      <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    </head>
+    <body style="height: 100vh; flex-grow: 1; margin: 0; padding: 0;">     
+
+      <!--Add here the micro-frontend script tag-->
+      ${hasDependencies ? "<!--Add here the dependencies-->\n" : ""}
+    </body>
+  </html> 
+  `
+}

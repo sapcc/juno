@@ -79,5 +79,6 @@
       "type": "required",
       "description": "This value is necessary to communicate with the Kubernetes API. All the information you need comes from this API."
     }
-  }
+  },
+  "appPreview": true
 }

@@ -59,5 +59,6 @@
       "type": "optional",
       "description": "Log debug info. Default is false."
     }
-  }
+  },
+  "appPreview": false
 }

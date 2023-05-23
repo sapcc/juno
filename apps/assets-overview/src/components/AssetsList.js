@@ -1,13 +1,13 @@
-import React, { useMemo, useEffect } from "react"
+import React from "react"
 import {
   DataGrid,
   DataGridRow,
   DataGridHeadCell,
   DataGridCell,
-  Stack,
-  Spinner,
 } from "juno-ui-components"
 import AssetsListItem from "./AssetsListItem"
+import HintNotFound from "./HintNotFound"
+import HintLoading from "./HintLoading"
 
 const AssetsList = ({ assets, isLoading, error }) => {
   const size = React.useMemo(
@@ -15,13 +15,7 @@ const AssetsList = ({ assets, isLoading, error }) => {
     [assets]
   )
 
-  if (isLoading && !assets)
-    return (
-      <Stack className="pt-2" alignment="center">
-        <Spinner variant="primary" />
-        Loading assets...
-      </Stack>
-    )
+  if (isLoading && !assets) return <HintLoading text="Loading assets..." />
 
   return (
     <DataGrid columns={4}>
@@ -44,14 +38,7 @@ const AssetsList = ({ assets, isLoading, error }) => {
       ) : (
         <DataGridRow>
           <DataGridCell colSpan={4}>
-            <Stack
-              alignment="center"
-              distribution="center"
-              direction="vertical"
-              className="h-full"
-            >
-              <span>No assets found</span>
-            </Stack>
+            <HintNotFound text="No assets found" />
           </DataGridCell>
         </DataGridRow>
       )}

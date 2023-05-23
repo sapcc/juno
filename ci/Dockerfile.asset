@@ -11,14 +11,16 @@ FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-base:latest AS build
 ARG ASSET_PATH
 ARG BUILD_DIR
 
-RUN mkdir -p /tmp/src
-ADD . /tmp/src
+# cache node_modules if exist and delete older asset code in juno
+RUN mkdir -p $(dirname /tmp/$ASSET_PATH) && mv -v /juno/$ASSET_PATH /tmp/$ASSET_PATH
+# add newer code for current asset to juno folder
+ADD "./${ASSET_PATH}" "/juno/${ASSET_PATH}"
+# copy cached node modules back to juno folder for current asset
+RUN cp -r "/tmp/${ASSET_PATH}/node_modules" "/juno/${ASSET_PATH}/" 2>/dev/null || : && rm -rf /tmp/$ASSET_PATH
 
 WORKDIR /juno
-
+# create communicateor readme
 RUN node scripts/generate_communication_readme.mjs --path=/juno/$ASSET_PATH
-
-RUN rsync -avu --delete --exclude 'node_modules' "/tmp/src/$ASSET_PATH/" "/juno/$ASSET_PATH"
 
 RUN npm run build-libs
 # TEST AND BUILD ASSET
@@ -40,7 +42,7 @@ RUN \
 RUN \
   if [ -z "$BUILD_DIR" ]; then BUILD_DIR=$(jq -r .module /juno/$ASSET_PATH/package.json); fi ; \
   if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR=$(jq -r .main /juno/$ASSET_PATH/package.json); fi ; \
-  if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR="build"; else BUILD_DIR="$(echo $BUILD_DIR | sed -e 's/^\///' | cut -d/ -f1)"; fi ; \ 
+  if [ "$BUILD_DIR" = "null" ]; then BUILD_DIR="build"; else BUILD_DIR="$(echo $BUILD_DIR | sed -e "s/^\///" | cut -d "/" -f1)"; fi && \
   echo "===${BUILD_DIR}" ; \
   mkdir -p "/tmp/$ASSET_PATH" ; \
   cp -r "/juno/$ASSET_PATH/$BUILD_DIR" "/tmp/$ASSET_PATH/" ; \
