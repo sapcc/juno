@@ -2,7 +2,7 @@ import React from "react"
 import { Switch } from "./index"
 
 export default {
-  title: "Forms/Base Elements/Switch",
+  title: "Forms/Switch",
   component: Switch,
   parameters: {
     docs: {

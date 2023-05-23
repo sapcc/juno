@@ -8,7 +8,7 @@ import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 
 export default {
-  title: "Forms/Base Elements/Select",
+  title: "Forms/Select/Select",
   component: Select,
   argTypes: {},
   decorators: [
