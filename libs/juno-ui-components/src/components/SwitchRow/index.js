@@ -1,1 +1,1 @@
-export { SwitchRow } from "./SwitchRow.component"
+export { default as SwitchRow } from "./SwitchRow.component"

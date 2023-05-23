@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Select } from "../Select/index.js"
 import { Label } from "../Label/index.js"
+import withDeprecationWarning from '../withDeprecationWarning/withDeprecationWarning.component.js'
 
 const selectrow = `
 	jn-flex
@@ -36,7 +37,7 @@ const successtextstyles = `
 `
 
 /** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
-export const SelectRow = ({
+const SelectRow = ({
   name,
   variant,
   label,
@@ -195,3 +196,5 @@ SelectRow.defaultProps = {
   error: undefined,
   loading: undefined,
 }
+
+export default withDeprecationWarning(SelectRow, "SelectRow is deprecated and will be removed in future versions. To be future-proof, use Select instead.")

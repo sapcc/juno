@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { Switch } from "../Switch/index.js"
 import { Label } from "../Label/index.js"
 import { Icon } from "../Icon/index"
+import withDeprecationWarning from '../withDeprecationWarning/withDeprecationWarning.component.js'
 
 const switchrow = `
 	jn-mb-1
@@ -32,7 +33,7 @@ const successtextstyles = `
 `
 
 /** A checkbox input group containing a checkbox, associated label, and structural markup */
-export const SwitchRow = ({
+const SwitchRow = ({
   name,
   label,
   id,
@@ -154,3 +155,5 @@ SwitchRow.defaultProps = {
   onChange: undefined,
   onClick: undefined,
 }
+
+export default withDeprecationWarning(SwitchRow, "SwitchRow is deprecated and will be removed in future versions. To be future-proof, use Switch instead.")

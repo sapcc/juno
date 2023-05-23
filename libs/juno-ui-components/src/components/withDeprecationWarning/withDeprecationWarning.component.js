@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 
 const withDeprecationWarning = (WrappedComponent, message) => {
   
   const ComponentWithDeprecationWarning = (props) => {
     useEffect(() => {
-      console.warn(message);
-    }, []);
+      console.warn(message)
+    }, [])
 
-    return <WrappedComponent {...props} />;
-  };
+    return <WrappedComponent {...props} />
+  }
   
   // assign the defaultProps of the wrapped component to the higher-order component, otherwise these would be lost:
   ComponentWithDeprecationWarning.defaultProps = WrappedComponent.defaultProps
 
-  return ComponentWithDeprecationWarning;
-};
+  return ComponentWithDeprecationWarning
+}
 
-export default withDeprecationWarning;
+export default withDeprecationWarning
