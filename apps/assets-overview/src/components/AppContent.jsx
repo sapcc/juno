@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react"
-import { TabPanel, MainTabs, TabList, Tab } from "juno-ui-components"
+import { AppShell, TabPanel, MainTabs, TabList, Tab } from "juno-ui-components"
 import useStore from "../store"
 import { useQuery } from "@tanstack/react-query"
 import { fetchAssetsManifest } from "../actions"
