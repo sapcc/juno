@@ -92,9 +92,14 @@ npm -v
    ```js
     "name": "myapp",
    ```
-   Additionally in `src/App.js` update the `URL_STATE_KEY` constant with your app name as above.
+   
+5. In `src/App.js` also update the `URL_STATE_KEY` constant with your app name.
+   ```js
+   /* IMPORTANT: Replace this with your app's name */
+   const URL_STATE_KEY = "template"
+   ```
 
-5. Install all dependencies.
+6. Install all dependencies.
    Run the following compand to install all needed dependencies.
 
    ```bash
@@ -102,7 +107,7 @@ npm -v
    npm install
    ```
 
-6. Start your application at least once.
+7. Start your application at least once.
 
    ```bash
    npm run start
@@ -116,7 +121,7 @@ npm -v
 
    fix it by copying `appProps.js` from juno helpers/appProps to base directory and adapting the path in `esbuild.js` to `const appProps = require("./appProps")`
 
-7. Build the application.
+8. Build the application.
    Run the following command to build the application.
 
    ```bash
@@ -125,7 +130,7 @@ npm -v
 
    All compiled chunks will be placed under the `/build` folder.
 
-8. Copy everything to your webserver.
+9. Copy everything to your webserver.
    - Copy the `/build` folder with all its contents to your webserver.
    - Copy the following files from your `/public` folder to your webserver: `favicon.ico`, `favicon-16x16.png`, `favicon-32x32.png`, `index.html`
    - The folder from which you want to serve the app should look like this now:
