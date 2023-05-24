@@ -44,6 +44,16 @@ function URLToState() {
 }
 
 /**
+ * Converts state data to query param
+ * @param {JSON} state data
+ * @returns new query param string with encoded data
+ */
+function stateToQueryParam(state) {
+  var encodedState = encode(state)
+  return SEARCH_KEY + "=" + encodedState
+}
+
+/**
  * Converts state data to url string
  * @param {JSON} state data
  * @returns new url string with encoded data
@@ -239,4 +249,5 @@ export {
   removeOnChangeListener,
   registerConsumer,
   stateToURL,
+  stateToQueryParam,
 }
