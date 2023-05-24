@@ -11,7 +11,7 @@ const TabPreview = ({ asset }) => {
   const app = useRef(document.createElement("div"))
   const [isLoading, setIsLoading] = useState(false)
   const [appProps, setAppProps] = useState({})
-  const urlStateKey = useStore((state) => state.urlStateKey)
+  const urlStateTestingKey = useStore((state) => state.urlStateTestingKey)
 
   useEffect(() => {
     // reset app props on asset change
@@ -71,7 +71,7 @@ const TabPreview = ({ asset }) => {
                 onClick={(e) => {
                   e.preventDefault()
                   const url = stateToURL({
-                    [`${urlStateKey}-testing`]: { p: "/testing", o: config },
+                    [urlStateTestingKey]: { p: "/testing", o: config },
                   })
                   window.open(url, "_blank")
                 }}

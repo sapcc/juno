@@ -7,8 +7,8 @@ import { useActions, Messages } from "messages-provider"
 const TestContent = () => {
   const { addMessage } = useActions()
   const { mount } = useAppLoader()
-  const urlStateKey = useStore((state) => state.urlStateKey)
-  const urlState = currentState(`${urlStateKey}-testing`)
+  const urlStateTestingKey = useStore((state) => state.urlStateTestingKey)
+  const urlState = currentState(urlStateTestingKey)
   const holder = useRef()
   const app = useRef(document.createElement("div"))
 

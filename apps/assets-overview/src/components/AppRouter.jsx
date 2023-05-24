@@ -5,12 +5,12 @@ import AppContent from "./AppContent"
 import TestContent from "./TestContent"
 
 const AppRouter = () => {
-  const urlStateKey = useStore((state) => state.urlStateKey)
+  const urlStateTestingKey = useStore((state) => state.urlStateTestingKey)
 
   return (
     <>
-      {urlStateKey && (
-        <Router stateID={`${urlStateKey}-testing`}>
+      {urlStateTestingKey && (
+        <Router stateID={urlStateTestingKey}>
           <Route exact path="/" component={AppContent} />
           <Route exact path="/testing" component={TestContent} />
         </Router>
