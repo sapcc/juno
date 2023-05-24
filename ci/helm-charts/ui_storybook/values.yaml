@@ -1,6 +1,6 @@
 owner-info:
   support-group: containers
-  service: juno-dashboard
+  service: juno-ui-storybook
   maintainers:
     - Esther Schmitz
     - Andreas Pfau

@@ -112,24 +112,9 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: pipelineV3
-      paths: ["ci/Dockerfile.hosting","ci/pipeline.yaml.erb"]
+      paths: ["ci/helm-charts/hosting","e2e/cypress/integration/hosting"]
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
-  
-  - name: hosting.version
-    type: time-version-resource
-    icon: lock
-    check_every: 525600h
-    source: { key: juno-hosting-version } # disambiguate from other time-version resources
-
-  - name: hosting.image
-    type: docker-image
-    icon: docker
-    source:
-      username: ((registry-user/keppel-ccloud.username))
-      password: ((registry-user/keppel-ccloud.password))
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-hosting
-
   <%# ASSETS SOURCE GIT %>
   <% ASSETS.each do |name,details| %>
   - name: <%=details[:type]%>-<%= name %>.git
@@ -208,7 +193,6 @@ groups:
       - deploy-storybook-to-s-eu-nl-1   
   - name: hosting 
     jobs:
-      - build-hosting-image
       - deploy-hosting-to-s-qa-de-1
       - e2e-tests-hosting-s-qa-de-1
       - deploy-hosting-to-s-eu-nl-1     
@@ -466,9 +450,29 @@ jobs:
     serial: true
     plan:
       - in_parallel:
-          - get: ui-storybook.version
-            trigger: true
-            passed: [build-ui-storybook-image]
+        - geg: ui-storybook.git
+        - get: ui-storybook.version
+          trigger: true
+          passed: [build-ui-storybook-image]
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          app.version: ui-storybook.version
+          helm-charts.git: ui-storybook.git
+
+        params:
+          HELM_MAJOR_VERSION: '3'
+          CHART_PATH: ci/helm-charts/ui_storybook
+          RELEASE: juno-v3
+          NAMESPACE: juno
+          REGION: qa-de-1
+          CONTEXT: s-qa-de-1
+          TAG_VARIABLE:  image.tag
+          VALUES: local:globals s-local:juno 
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))            
 
   # RUN CYPRESS TESTS FOR STORYBOOK IN QA 
   - name: e2e-tests-storybook-s-qa-de-1
@@ -494,9 +498,32 @@ jobs:
     serial: true
     plan:
       - in_parallel:
-          - get: assets-server.version
-            trigger: true
-            passed: [build-assets-server-image]
+        - get: juno.git
+        - get: secrets.git
+          params:
+            depth: 100 
+        - get: assets-server.version
+          trigger: true
+          passed: [build-assets-server-image]
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          app.version: assets-server.version
+          helm-charts.git: juno.git
+
+        params:
+          HELM_MAJOR_VERSION: '3'
+          CHART_PATH: ci/helm-charts/assets-server
+          RELEASE: juno-v3
+          NAMESPACE: juno
+          REGION: qa-de-1
+          CONTEXT: s-qa-de-1
+          TAG_VARIABLE:       image.tag
+          VALUES: local:globals s-local:juno 
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))
 
   # RUN CYPRESS TESTS FOR ASSETS SERVER IN QA 
   - name: e2e-tests-assets-server-s-qa-de-1
@@ -539,7 +566,6 @@ jobs:
           CHART_PATH:         ci/helm-charts/assets_server_prod
           RELEASE:            juno-assets-server-prod
           NAMESPACE:          juno
-          TAG_VARIABLE:       image.tag
           REGION:             <%= region %>
           CONTEXT:            <%= region %>
           TAG_VARIABLE:       image.tag
@@ -585,49 +611,92 @@ jobs:
 
 
   ########### HOSTING ###########
-  # BUILD HOSTING IMAGE
-  - name: build-hosting-image
-    serial: true
-    plan:
-      - in_parallel:
-          - get: hosting.git
-            trigger: true
-          - put: hosting.version
-      - in_parallel:
-          - put: hosting.image
-            params:
-              tag_as_latest: true
-              # cache: true
-              cache_tag: "latest"
-              build: hosting.git
-              build_args: 
-                KEPPEL_HOSTNAME: keppel.eu-de-1.cloud.sap
-              dockerfile: hosting.git/ci/Dockerfile.hosting
-              tag: hosting.version/version
-
   # DEPLOY HOSTING TO QA 
   - name: deploy-hosting-to-s-qa-de-1
     serial: true
     plan:
       - in_parallel:
-          - get: hosting.version
+          - get: hosting.git
             trigger: true
-            passed: [build-hosting-image]
+
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          helm-charts.git: hosting.git
+
+        params:
+          HELM_MAJOR_VERSION: '3'
+          CHART_PATH: ci/helm-charts/hosting
+          RELEASE: juno-v3
+          NAMESPACE: juno
+          REGION: qa-de-1
+          CONTEXT: s-qa-de-1
+          VALUES: local:globals s-local:juno
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))
 
   # RUN CYPRESS TESTS FOR HOSTING IN QA 
   - name: e2e-tests-hosting-s-qa-de-1
     serial: true
     plan:
       - in_parallel:
-          - get: hosting.version
+          - get: hosting.git
             trigger: true
-            passed: [deploy-hosting-to-s-qa-de-1]            
+            passed: [deploy-hosting-to-s-qa-de-1]   
+
+              - name: e2e-s-qa-de-1
+      - task: cypress
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud/cypress-client
+              tag: "latest"
+          inputs:
+            - name: hosting.git
+              path: /app/juno
+          params:
+            CYPRESS_API_URL: "https://director.cypress.qa-de-1.cloud.sap"
+            CYPRESS_BROWSER: chrome
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd /app/juno/e2e
+                CI_BUID_ID="$(date) - CI - dashboard-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/hosting/dashboard*" && \
+                CI_BUID_ID="$(date) - CI - exampleapp-components-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                echo $CI_BUID_ID && \
+                CYPRESS_BASE_URL=https://exampleapp.juno.qa-de-1.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/hosting/exampleapp*"
 
   # DEPLOY HOSTING TO PROD
   - name: deploy-hosting-to-s-eu-nl-1
     serial: true
     plan:
       - in_parallel:
-          - get: hosting.version
-            trigger: false
+          - get: hosting.git
+            trigger: true
             passed: [e2e-tests-hosting-s-qa-de-1]  
+
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          helm-charts.git: hosting.git
+        params:
+          HELM_MAJOR_VERSION: '3'
+          CHART_PATH: ci/helm-charts/hosting
+          RELEASE: juno-v3
+          NAMESPACE: juno
+          REGION: eu-nl-1
+          CONTEXT: s-eu-nl-1
+          VALUES: local:globals s-local:juno 
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))            

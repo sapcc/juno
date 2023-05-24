@@ -2,13 +2,13 @@ kind: Deployment
 apiVersion: apps/v1
 
 metadata:
-  name: hosting-exampleapp
+  name: hosting
   namespace: juno
 
 spec:
   selector:
     matchLabels:
-      app: hosting-exampleapp
+      app: hosting
   revisionHistoryLimit: 3
   replicas: 1
   strategy:
@@ -19,30 +19,22 @@ spec:
   template:
     metadata:
       labels:
-        app: hosting-exampleapp
+        app: hosting
+      annotations:
+        checksum/index-html-configmap: {{ include (print $.Template.BasePath "/index-html-configmap.yaml") . | sha256sum }}
+        checksum/nginx-configmap: {{ include (print $.Template.BasePath "/nginx-configmap.yaml") . | sha256sum }}
     spec:
       # The preStop hook below sleeps 30 seconds, extend the gracePeriod accordingly
       terminationGracePeriodSeconds: 60
       containers:
-        - name: hosting-exampleapp
-          image: "{{ .Values.global.registry }}/juno-v2-hosting:{{ .Values.global.hosting_image_tag }}"
+        - name: hosting
+          image: "{{ .Values.global.dockerHubMirror }}/library/nginx:alpine"
           imagePullPolicy: IfNotPresent
           ports:
-            - name: web
+            - name: dashboard
               containerPort: 80
-          env:
-            - name: PAGE_TITLE
-              value: exampleapp
-            - name: FAVICON_URL
-              value: https://assets.juno.{{ $.Values.global.region }}.cloud.sap/assets/favicon.ico
-            - name: NAME
-              value: exampleapp
-            - name: VERSION
-              value: latest
-            - name: ASSETS_HOST
-              value: https://assets.juno.{{ $.Values.global.region }}.cloud.sap
-            - name: PROPS
-              value: ""
+            - name: exampleapp
+              containerPort: 81  
           resources:
             requests:
               cpu: "100m"
@@ -76,3 +68,21 @@ spec:
               exec:
                 #Give the ingress some time to reload its config
                 command: ["/bin/sh", "-c", "sleep 30"]
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d/
+            - name: index-html
+              mountPath: /usr/share/nginx/html/         
+      volumes:
+        - name: nginx-conf
+          configMap:
+            defaultMode: 420
+            name: nginx-configmap
+            items:
+              - key: nginx.conf
+                path: default.conf
+
+        - name: index-html
+          configMap:
+            defaultMode: 420
+            name: index-html-configmap

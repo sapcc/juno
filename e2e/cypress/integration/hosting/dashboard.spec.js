@@ -1,4 +1,4 @@
-describe("Landing page", () => {
+describe("Dashboard", () => {
   before(() => {
     cy.visit("/")
   })
