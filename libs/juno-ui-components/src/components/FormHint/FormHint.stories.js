@@ -22,6 +22,11 @@ WithChildren.args = {
   children: <>A FormHint with a <a href="#">Link</a>.</>
 }
 
+export const WithTextAsChildren = Template.bind({})
+WithTextAsChildren.args = {
+  text: <>A FormHint with a <a href="#">Link</a>.</>
+}
+
 export const ErrorVariant = Template.bind({})
 ErrorVariant.args = {
   variant: "error",

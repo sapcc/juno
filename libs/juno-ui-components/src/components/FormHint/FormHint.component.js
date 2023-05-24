@@ -45,7 +45,7 @@ FormHint.propTypes = {
   /** The children to render as a hint associated with a form element */
   children: PropTypes.node,
   /** The text to render. If both children and text are passed, children will rendered */
-  text: PropTypes.string,
+  text: PropTypes.node,
   /** The variant of the the hint. Defaults to 'help'. */
   variant: PropTypes.oneOf(["help", "error", "success"]),
   /** Pass a custom className */

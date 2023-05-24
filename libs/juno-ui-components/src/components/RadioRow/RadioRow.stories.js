@@ -4,6 +4,13 @@ import { RadioRow } from "./index.js"
 export default {
   title: "Forms/Radio/RadioRow",
   component: RadioRow,
+  parameters: {
+    docs: {
+      description: {
+        component: "RadioRow is deprecated, use Radio instead."
+      },
+    },
+  },
   argTypes: {},
 }
 
