@@ -86,6 +86,7 @@ export const Radio = ({
 	checked,
 	className,
 	disabled,
+	required,
 	invalid,
 	valid,
 	helptext,
@@ -182,7 +183,7 @@ export const Radio = ({
 				</div>
 				{ label && label.length ?
 						<>
-							<Label text={label} htmlFor={id} disabled={disabled} className={`${labelStyles}`} />
+							<Label text={label} htmlFor={id} disabled={disabled} required={required} className={`${labelStyles}`} />
 							{isInvalid ? (
 								<Icon
 									icon="dangerous"
@@ -244,6 +245,8 @@ Radio.propTypes = {
 	className: PropTypes.string,
 	/** Whether the checkbox is disabled */
 	disabled: PropTypes.bool,
+	/** Whether the Radio is required */
+	required: PropTypes.bool,
 	/** Whether the Radio is invalid */
 	invalid: PropTypes.bool,
 	/** Whether the Radio is valid */
@@ -267,6 +270,7 @@ Radio.defaultProps = {
 	id: "",
 	className: "",
 	disabled: false,
+	required: false,
 	invalid: false,
 	valid: false,
 	helptext: "",

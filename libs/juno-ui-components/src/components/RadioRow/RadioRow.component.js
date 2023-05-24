@@ -51,6 +51,7 @@ const RadioRow = ({
   helptext,
   className,
   disabled,
+  required,
   invalid,
   errortext,
   valid,
@@ -67,6 +68,7 @@ const RadioRow = ({
       id={id}
       helptext={helptext}
       disabled={disabled}
+      required={required}
       invalid={invalid}
       valid={valid}
       errortext={errortext}
@@ -93,6 +95,8 @@ RadioRow.propTypes = {
   helptext: PropTypes.node,
   /** Pass to disable the Radio */
   disabled: PropTypes.bool,
+  /** Whether the Radio is required */
+  required: PropTypes.bool,
   /** Whether the Radio is invalid */
   invalid: PropTypes.bool,
   /** Error text to be displayed. When passed, the Radio will automatically be invalidated. */
@@ -116,6 +120,7 @@ RadioRow.defaultProps = {
   helptext: "",
   className: "",
   disabled: false,
+  required: false,
   errortext: "",
   valid: false,
   successtext: "",

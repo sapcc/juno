@@ -39,6 +39,12 @@ describe("Radio", () => {
 		expect(radio).toBeChecked()
 	})
 	
+	test("renders a required Radio as passed if a label is supplied", async () => {
+		render(<Radio required label="Required Radio" />)
+		expect(screen.getByRole("radio")).toBeInTheDocument()
+		expect(document.querySelector('.juno-required')).toBeInTheDocument()
+	})
+	
 	test("renders no checked attribute if false", async () => {
 		act(() => {
 			render(<Radio checked={false} />)

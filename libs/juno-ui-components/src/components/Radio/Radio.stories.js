@@ -20,6 +20,13 @@ WithLabel.args = {
   label: "Radio with label",
 }
 
+export const Required = Template.bind({})
+Required.args = {
+  required: true,
+  label: "Required Radio",
+  helptext: "Only a Radio with a label passed will render a required marker."
+}
+
 export const WithHelptext = Template.bind({})
 WithHelptext.args = {
   label: "A Radio",

@@ -46,6 +46,12 @@ describe("RadioRow", () => {
 		expect(screen.getByRole("radio")).toBeDisabled()
 	})
 	
+	test("renders a required RadioRow as passed if a label is supplied", async () => {
+		render(<RadioRow required label="Required Radio" />)
+		expect(screen.getByRole("radio")).toBeInTheDocument()
+		expect(document.querySelector('.juno-required')).toBeInTheDocument()
+	})
+	
 	test("renders an invalid RadioRow as passed", async () => {
 		render(<RadioRow label="Invalid radio" invalid label="Radio" />)
 		expect(screen.getByRole("radio")).toBeInTheDocument()
