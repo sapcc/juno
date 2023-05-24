@@ -1,16 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { Form, Stack, TextInputRow, Icon, Button } from "juno-ui-components"
 
-// bg-theme-background-lvl-2
 const formAreaCss = (show) => {
   return `      
-      opacity-0
-      h-0
-      transition
+      transition-all
       ease-out
-      duration-300
-      mb-0
-			${show && `opacity-100 h-fit`}
+      max-h-0
+      overflow-y-scroll
+			${show ? "duration-1000 max-h-[34rem]" : `duration-300`}
 		`
     .replace(/\n/g, " ")
     .replace(/\s+/g, " ")
@@ -59,26 +56,30 @@ const PreviewAppPropsForm = ({ asset, onAppPropsChange }) => {
         </div>
       </Stack>
 
-      <Form className={formAreaCss(show)}>
-        {Object.keys(appProps).map((key) => (
-          <TextInputRow
-            key={key}
-            id={key}
-            label={key}
-            required={appProps[key]?.type === "required"}
-            helptext={`${appProps[key]?.description}`}
-            onChange={(e) => onInputChanged(key, e?.target?.value)}
-            onKeyDown={handleKeyDown}
-          />
-        ))}
-        <Stack className="mb-4" alignment="center" distribution="end">
-          <Button
-            label="Apply"
-            onClick={() => onAppPropsChange(formState)}
-            variant="primary"
-          />
-        </Stack>
-      </Form>
+      <div className="overflow-hidden">
+        <div className={formAreaCss(show)}>
+          <Form className="p-1">
+            {Object.keys(appProps).map((key) => (
+              <TextInputRow
+                key={key}
+                id={key}
+                label={key}
+                required={appProps[key]?.type === "required"}
+                helptext={`${appProps[key]?.description}`}
+                onChange={(e) => onInputChanged(key, e?.target?.value)}
+                onKeyDown={handleKeyDown}
+              />
+            ))}
+            <Stack className="mb-4" alignment="center" distribution="end">
+              <Button
+                label="Apply"
+                onClick={() => onAppPropsChange(formState)}
+                variant="primary"
+              />
+            </Stack>
+          </Form>
+        </div>
+      </div>
     </div>
   )
 }
