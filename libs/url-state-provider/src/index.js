@@ -238,4 +238,5 @@ export {
   addOnChangeListener,
   removeOnChangeListener,
   registerConsumer,
+  stateToURL,
 }
