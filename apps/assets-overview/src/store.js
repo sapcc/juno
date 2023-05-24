@@ -11,6 +11,7 @@ const useStore = create((set) => ({
   embedded: "",
   setEmbedded: (embedded) => set((state) => ({ embedded: embedded })),
   urlStateKey: "assets-overview",
+  urlStateTestingKey: "assets-overview-testing",
 }))
 
 export default useStore
