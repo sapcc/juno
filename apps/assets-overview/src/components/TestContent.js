@@ -13,11 +13,7 @@ const TestContent = () => {
   const app = useRef(document.createElement("div"))
 
   const config = useMemo(() => {
-    return {
-      name: urlState?.a,
-      version: urlState?.v || "latest",
-      props: urlState?.dp || {},
-    }
+    return urlState?.o || {}
   }, [urlState])
 
   // create a promise to mount the app
