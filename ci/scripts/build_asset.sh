@@ -9,9 +9,8 @@ if [ ! -f "CODEOWNERS" ]; then
 fi
 
 function help() {
-  echo "Usage: build_assets.sh --asset-path||-ap --asset-name||-sn --root-path||-rp --output-path||-op
-    Example: ./ci/scripts/build_asset.sh --asset-name auth --asset-path ./apps/auth/ --root-path /app --output-path /tmp/juno-build
-    --root-path is optional default is $(pwd)
+  echo "Usage: build_assets.sh --asset-path||-ap --asset-name||-sn --output-path||-op
+    Example: ./ci/scripts/build_asset.sh --asset-name auth --asset-path ./apps/auth/ --output-path /tmp/juno-build
     --output-path is optional default is ./build-result"
   exit
 }
@@ -20,7 +19,6 @@ if [[ "$1" == "--help" ]]; then
   help
 fi
 
-ROOT_PATH=$(pwd)
 OUTPUT_PATH="./build-result"
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -31,11 +29,6 @@ while [[ $# -gt 0 ]]; do
     ;;
   --asset-path | -ap)
     ASSET_PATH="$2"
-    shift # past argument
-    shift # past value
-    ;;
-  --root-path | -rp)
-    ROOT_PATH="$2"
     shift # past argument
     shift # past value
     ;;
@@ -67,14 +60,13 @@ fi
 echo "=================================="
 echo "### build asset $ASSET_NAME ###"
 echo "----------------------------------"
-echo "use ROOT_PATH   = $ROOT_PATH"
 echo "use ASSET_NAME  = $ASSET_NAME"
 echo "use ASSET_PATH  = $ASSET_PATH"
 echo "use OUTPUT_PATH = $OUTPUT_PATH"
 echo "----------------------------------"
 
-echo "generate COMMUNICATOR.md in $ROOT_PATH/$ASSET_PATH"
-node ci/scripts/generate_communication_readme.mjs --path=$ROOT_PATH/$ASSET_PATH
+echo "generate COMMUNICATOR.md in $ASSET_PATH"
+node ci/scripts/generate_communication_readme.mjs --path=$ASSET_PATH
 
 # install and build libs
 npm run build-libs
@@ -84,7 +76,7 @@ npm run build-libs
 # This is the case if the jspm cdn is unreachable!!!
 echo "----------------------------------"
 echo "run Tests for ...."
-ASSET_NAME=$(jq -r .name $ROOT_PATH/$ASSET_PATH/package.json)
+ASSET_NAME=$(jq -r .name $ASSET_PATH/package.json)
 npm --workspace $ASSET_NAME run test --if-present
 NODE_ENV=production IGNORE_EXTERNALS=false npm --workspace $ASSET_NAME run build --if-present
 
@@ -96,12 +88,12 @@ NODE_ENV=production IGNORE_EXTERNALS=false npm --workspace $ASSET_NAME run build
 echo "----------------------------------"
 if [[ -z "$BUILD_DIR" ]]; then
   echo "Look for module in package.json"
-  BUILD_DIR=$(jq -r .module $ROOT_PATH/$ASSET_PATH/package.json)
+  BUILD_DIR=$(jq -r .module $ASSET_PATH/package.json)
 fi
 
 if [[ "$BUILD_DIR" == "null" ]]; then
   echo "No module found, look for main in package.json"
-  BUILD_DIR=$(jq -r .main $ROOT_PATH/$ASSET_PATH/package.json)
+  BUILD_DIR=$(jq -r .main $ASSET_PATH/package.json)
 fi
 
 if [[ "$BUILD_DIR" == "null" ]]; then
@@ -120,14 +112,14 @@ fi
 
 echo "----------------------------------"
 echo "use BUILD_DIR = $BUILD_DIR"
-echo "copy assets data from $ROOT_PATH/$ASSET_PATH/$BUILD_DIR to $OUTPUT_PATH/$ASSET_PATH/"
+echo "copy assets data from $ASSET_PATH/$BUILD_DIR to $OUTPUT_PATH/$ASSET_PATH/"
 mkdir -p "$OUTPUT_PATH/$ASSET_PATH"
-cp -r "$ROOT_PATH/$ASSET_PATH/$BUILD_DIR" "$OUTPUT_PATH/$ASSET_PATH/"
-cp "$ROOT_PATH/$ASSET_PATH/package.json" "$OUTPUT_PATH/$ASSET_PATH/package.json"
-if [ -f "$ROOT_PATH/$ASSET_PATH/COMMUNICATOR.md" ]; then
-  cp -n "$ROOT_PATH/$ASSET_PATH/COMMUNICATOR.md" "$OUTPUT_PATH/$ASSET_PATH/COMMUNICATOR.md"
+cp -r "$ASSET_PATH/$BUILD_DIR" "$OUTPUT_PATH/$ASSET_PATH/"
+cp "$ASSET_PATH/package.json" "$OUTPUT_PATH/$ASSET_PATH/package.json"
+if [ -f "$ASSET_PATH/COMMUNICATOR.md" ]; then
+  cp -n "$ASSET_PATH/COMMUNICATOR.md" "$OUTPUT_PATH/$ASSET_PATH/COMMUNICATOR.md"
 fi
-cp "$ROOT_PATH/$ASSET_PATH/README.md" "$OUTPUT_PATH/$ASSET_PATH/README.md"
+cp "$ASSET_PATH/README.md" "$OUTPUT_PATH/$ASSET_PATH/README.md"
 
 echo "create $OUTPUT_PATH/$ASSET_PATH/package.tgz"
 cd "$OUTPUT_PATH/$ASSET_PATH"
