@@ -323,7 +323,7 @@ jobs:
     plan:
       - get: swift.image
       - get: juno.git        
-        passed: [build-base-image]
+
       <% ASSETS.each do |name, details|%>
       - get: <%= details[:type] %>-<%= name %>.version
         trigger: false

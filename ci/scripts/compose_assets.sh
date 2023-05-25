@@ -201,9 +201,10 @@ function integrity_check() {
   # TODO: feedback to upload error or success to swift
 }
 
+current_path=$(pwd)
 # https://stackoverflow.com/questions/2107945/how-to-loop-over-directories-in-linux
 while IFS= read -d $'\0' -r dirname; do
-  cd "$SOURCE_PATH/$ASSET_TYPE/$dirname"
+  cd "$current_path/$dirname"
   # cd "$dirname"
   while IFS= read -d $'\0' -r asset_dirname; do
     # check file structure
