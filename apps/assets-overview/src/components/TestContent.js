@@ -3,6 +3,7 @@ import { currentState } from "url-state-provider"
 import useStore from "../store"
 import useAppLoader from "../hooks/useAppLoader"
 import { useActions, Messages } from "messages-provider"
+import { Stack } from "juno-ui-components"
 
 const TestContent = () => {
   const { addMessage } = useActions()
@@ -29,6 +30,7 @@ const TestContent = () => {
           addMessage({
             variant: "warning",
             text: `This is a preview of ${config?.name}. Not for productive use!`,
+            dismissible: false,
           })
           return resolve(true)
         }).catch((e) => {
@@ -49,10 +51,10 @@ const TestContent = () => {
   }, [])
 
   return (
-    <>
+    <Stack className="h-full" direction="vertical">
       <Messages />
-      <div data-app={config.name} ref={holder}></div>
-    </>
+      <div data-app={config.name} className="inline grow" ref={holder} />
+    </Stack>
   )
 }
 
