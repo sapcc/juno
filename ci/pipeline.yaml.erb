@@ -366,11 +366,11 @@ jobs:
                   # ls -all ../temp/juno-assets/<%=details[:type]%>s/<%= name %>/
                 <% end %>
                 # 1.2) download and check for name collission in juno-3rd-party assets
-                #<% ASSET_TYPES[:"juno-3rd-party"].each do |asset_type|%>
-                #    # download 3rd party assets
-                #    ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type <%= asset_type %> --action download --root-path ../temp/juno-3rd-party                  
-                #    ./ci/scripts/check_3rd_party_name_collisons.sh --juno-assets-path ../temp/juno-assets --third-party-assets-path ../temp/juno-3rd-party --asset-type <%= asset_type %>
-                #<% end %>
+                <% ASSET_TYPES[:"juno-3rd-party"].each do |asset_type|%>
+                    # download 3rd party assets
+                    ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type <%= asset_type %> --action download --root-path ../temp/juno-3rd-party                  
+                    ./ci/scripts/check_3rd_party_name_collisons.sh --juno-assets-path ../temp/juno-assets --third-party-assets-path ../temp/juno-3rd-party --asset-type <%= asset_type %>
+                <% end %>
                 # 2) compose everthing together that we can use it in the asset-server image build
                 <% ASSET_TYPES.each do |name,asset_types|%>
                   <% asset_types.each do |asset_type|%>

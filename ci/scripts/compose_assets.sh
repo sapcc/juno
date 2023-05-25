@@ -203,8 +203,8 @@ function integrity_check() {
 
 # https://stackoverflow.com/questions/2107945/how-to-loop-over-directories-in-linux
 while IFS= read -d $'\0' -r dirname; do
-  cd "$dirname"
-  back="../"
+  cd "$SOURCE_PATH/$ASSET_TYPE/$dirname"
+  # cd "$dirname"
   while IFS= read -d $'\0' -r asset_dirname; do
     # check file structure
     if [ -f "package.json" ]; then
@@ -215,7 +215,6 @@ while IFS= read -d $'\0' -r dirname; do
     else
       # in this case we go one level deeper
       cd "$asset_dirname"
-      back="${back}../"
       echo "dirname: $asset_dirname"
       if [ ! -f "package.json" ]; then
         # apps/APPNAME/SOMEVERSION/package.json
@@ -247,8 +246,7 @@ while IFS= read -d $'\0' -r dirname; do
     integrity_check "$asset_version" "$asset_name" "$asset_main" "$asset_module"
 
     echo "Compose $KIND distribution for $ASSET_TYPE -> ${asset_name}@${asset_version}"
-    echo "go to $back"
-    cd $back
+    cd ..
     destination_path="$DIST_PATH/$ASSET_TYPE"
     mkdir -p "$destination_path"
 
