@@ -182,12 +182,14 @@ groups:
       - build-ui-storybook-image
       - deploy-storybook-to-s-qa-de-1
       - e2e-tests-storybook-s-qa-de-1
-      - deploy-storybook-to-s-eu-nl-1   
+      - deploy-storybook-to-s-eu-nl-1 
+      - e2e-tests-storybook-s-eu-nl-1  
   - name: hosting 
     jobs:
       - deploy-hosting-to-s-qa-de-1
       - e2e-tests-hosting-s-qa-de-1
       - deploy-hosting-to-s-eu-nl-1     
+      - e2e-tests-hosting-s-eu-nl-1
   
 jobs:
   - name: readme

@@ -34,7 +34,8 @@ spec:
                 name: hosting
                 port: 
                   number: 80 
-                    
+
+# global dns entries are managed in eu-de-1                    
 {{- if eq .Values.global.region "eu-nl-1" }}
     {{- range tuple "juno" "ccloud" "convergedcloud" }}
     - host: "{{ . }}.global.{{ $.Values.global.tld }}"
