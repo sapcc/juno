@@ -26,7 +26,7 @@
     "url-state-provider":   { type: "lib", path: "libs/url-state-provider"},
     "url-state-router":     { type: "lib", path: "libs/url-state-router"},
   }
-  HA_REGIONS = ["eu-nl-1","ap-ae-1","ap-cn-1","ap-jp-2","ap-au-1","la-br-1","na-us-1"]
+  HA_REGIONS = ["eu-de-1","eu-de-2","eu-nl-1","ap-ae-1","ap-jp-2","ap-au-1","la-br-1","na-us-1","na-us-2"]
 %>
 
 resources:
@@ -171,12 +171,6 @@ groups:
       - deploy-assets-server-to-<%= region %>
       - e2e-tests-assets-server-<%= region %>
       <% end %>  
-
-  - name: base
-    jobs:
-      - readme
-      - build-base-image
-      - build-swift-image  
   - name: storybook
     jobs:
       - build-ui-storybook-image
@@ -190,7 +184,12 @@ groups:
       - e2e-tests-hosting-s-qa-de-1
       - deploy-hosting-to-s-eu-nl-1     
       - e2e-tests-hosting-s-eu-nl-1
-  
+  - name: base
+    jobs:
+      - readme
+      - build-base-image
+      - build-swift-image  
+
 jobs:
   - name: readme
     serial: true
@@ -659,6 +658,7 @@ jobs:
           app.version: assets-server.version
           helm-charts.git: juno.git
         params:
+          DEBUG_TASK:         1 
           CHART_PATH:         ci/helm-charts/assets_server_ha
           RELEASE:            juno-assets-server-prod
           NAMESPACE:          juno
@@ -679,7 +679,7 @@ jobs:
           helm-charts.git: juno.git
           
         params:
-          CHART_PATH:         ci/helm-charts/assets_server_prod
+          CHART_PATH:         ci/helm-charts/assets_server_ha
           RELEASE:            juno-assets-server-prod
           NAMESPACE:          juno
           HELM_MAJOR_VERSION: '3'

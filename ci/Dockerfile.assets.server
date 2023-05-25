@@ -119,6 +119,7 @@ COPY --from=base /tmp/final "/usr/share/nginx/html"
 # Replace default nginx config
 RUN rm -rf /etc/nginx/conf.d/default.conf && echo -e $'\
   server { \n \
+  \tadd_header Access-Control-Allow-Origin *;\n\
   \tlisten       80; \n \
   \tlisten 443 default_server ssl; \n\ 
   \tssl_certificate     /etc/ssl/juno/tls.crt; \n\

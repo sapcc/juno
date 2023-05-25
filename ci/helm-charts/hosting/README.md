@@ -1,16 +1,15 @@
 ## qa-de-1
 
-- juno -> dashboard
-- exampleapp.juno -> example
-- assets.juno -> assets server (qa)
-- ui.juno -> storybook
+- juno.qa-de-1.cloud.sap -> dashboard
+- exampleapp.juno.qa-de-1.cloud.sap -> exampleapp
+- assets.juno.qa-de-1.cloud.sap -> assets server (qa)
+- ui.juno.qa-de-1.cloud.sap -> storybook
 
 ## s-eu-nl-1
 
-- juno -> dashboard
-- exampleapp.juno -> exampleapp
-- assets.juno -> assets server (qa)
-- ui.juno -> storybook
+- juno.eu-nl-1.cloud.sap -> dashboard
+- exampleapp.juno.eu-nl-1.cloud.sap -> exampleapp
+- ui.juno.eu-nl-1.cloud.sap -> storybook
 
 ## global
 
