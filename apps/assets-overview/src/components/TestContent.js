@@ -26,6 +26,10 @@ const TestContent = () => {
       if (!a) resolve(false)
       else
         a.then(() => {
+          addMessage({
+            variant: "warning",
+            text: `This is a preview of ${config?.name}. Not for productive use!`,
+          })
           return resolve(true)
         }).catch((e) => {
           addMessage({
@@ -39,6 +43,7 @@ const TestContent = () => {
   useEffect(() => {
     mountApp.then((loaded) => {
       if (!loaded || !holder.current) return
+      app.current.setAttribute("style", "display: inline;")
       holder.current.appendChild(app.current)
     })
   }, [])
