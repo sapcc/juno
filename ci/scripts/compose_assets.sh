@@ -203,6 +203,7 @@ function integrity_check() {
 
 # https://stackoverflow.com/questions/2107945/how-to-loop-over-directories-in-linux
 while IFS= read -d $'\0' -r dirname; do
+  pwd
   cd "$dirname"
   while IFS= read -d $'\0' -r asset_dirname; do
     # check file structure
