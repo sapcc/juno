@@ -141,10 +141,12 @@ RUN rm -rf /etc/nginx/conf.d/default.conf && echo -e $'\
   \t\tsub_filter_types *; \n \
   \t\tsub_filter_once off; \n \
   \t\tadd_header Cache-Control "no-store, no-cache"; \n \
+  \t\tadd_header Access-Control-Allow-Origin *;\n\
   \t} \n \
   \n \
   \tlocation ~* .*widget-loader@latest.*\.js$ { \n \
   \t\tadd_header Cache-Control "no-store, no-cache"; \n \
+  \t\tadd_header Access-Control-Allow-Origin *;\n\
   \t}\n \
   } \n \
   ' > /etc/nginx/conf.d/default.conf
