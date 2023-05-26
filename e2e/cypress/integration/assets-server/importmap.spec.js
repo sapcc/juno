@@ -14,10 +14,10 @@ describe("manifest", () => {
     const assets = [
       "assets-overview",
       "dashboard",
+      "greenhouse",
       "exampleapp",
       "heureka",
-      "maintenance",
-      "requests",
+      "teams2slack",
       "volta",
       "whois",
       "widget-loader",

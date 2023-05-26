@@ -1,16 +1,22 @@
 ARG BASE_URL_PLACEHOLDER="%BASE_URL%"
+ARG EXIT_ON_ERROR="true"
 
 # Latest assets server image
-FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-assets-server:latest AS lastbuild
+# FIRSTRUN!
+# NOTE: if this image does not exist 
+#       this is the case if the image was not build before
+#       comment out this line for the first run
+# TODO: change to v3 when switching to this version
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-assets-server:latest AS lastbuild
 
 # Base image
-FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-base:latest AS base 
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base:latest AS base 
 ARG BASE_URL_PLACEHOLDER
 
 RUN mkdir -p /tmp/latest
 
 # copy all app and lib builds (from dist) to tmp/latest  
-# input cames from the pipeline
+# input is comming from the pipeline
 
 # -> /apps/whois/build, package.json
 # -> /apps/volta/build, package.json
@@ -23,30 +29,45 @@ ARG VERBOSE="false"
 
 # create folder in tmp for merged assets
 RUN mkdir -p /tmp/final 
+
 # copy old versions of assets to current layer
+# FIRSTRUN!
+# NOTE: if this image does not exist 
+#       this is the case if the image was not build before
+#       comment out this line for the first run
 COPY --from=lastbuild /usr/share/nginx/html /tmp/final
 
 # merge latest assets over the old assets 
-# RUN rsync -avu "/tmp/latest/" "/tmp/final"  
 RUN \
   for PACKAGE in ./**/*/package.json; do \
+  NAME=$(jq -r .name $PACKAGE); \
   VERSION=$(jq -r .version $PACKAGE); \
+  # dir is something like ./libs/juno-ui-components@1.1.5
   DIR=$(dirname $PACKAGE); \
-  rm -rf /tmp/final/$DIR ; rm -rf /tmp/final/$DIR@$VERSION ; rm -rf /tmp/final/$DIR@latest ; \
-  cp -r $DIR /tmp/final/$DIR@$VERSION ; cp -r $DIR /tmp/final/$DIR@latest ; \
-  done ; 
+  # asset path is then ./libs
+  ASSET_PATH=$(dirname $DIR); \
+  rm -rf /tmp/final/$DIR; \
+  rm -rf /tmp/final/$ASSET_PATH/$NAME@$VERSION; \
+  rm -rf /tmp/final/$ASSET_PATH/$NAME@latest; \
+  mkdir -p /tmp/final/$ASSET_PATH/$NAME@$VERSION; \ 
+  cp -r $DIR/* /tmp/final/$ASSET_PATH/$NAME@$VERSION/; \
+  mkdir -p /tmp/final/$ASSET_PATH/$NAME@latest; \
+  cp -r $DIR/* /tmp/final/$ASSET_PATH/$NAME@latest/; \
+  done ;
 
 RUN mkdir -p /tmp/final/global && cp /juno/README.md /tmp/final/global/
 
 WORKDIR /tmp/final 
 
-# delete ald importmaps and manifests
-RUN rm -rf externals_* importmap* importmap*
+# delete old importmaps and manifests and obsolete assets (see: ci/obsolete_assets.json
+RUN \
+  rm -rf externals_* importmap* importmap* ; \
+  node /juno/ci/scripts/delete_obsolete_assets.js --manifest=/juno/ci/obsolete_assets.json --src=./
 
 
 # Create importmaps and manifest
 RUN \
-  node /juno/scripts/generate_importmap.mjs \
+  node /juno/ci/scripts/generate_importmap.mjs \
   --provider=$NPM_PROVIDER \
   --external-path=externals \
   --exit-on-error=$EXIT_ON_ERROR \
@@ -56,7 +77,7 @@ RUN \
   --output=./importmap.json  \
   --verbose=$VERBOSE ; \
   \
-  node /juno/scripts/generate_manifest.mjs \
+  node /juno/ci/scripts/generate_manifest.mjs \
   --src=./ \
   --output=./manifest.json \
   --base-url=$BASE_URL_PLACEHOLDER \
@@ -72,9 +93,13 @@ RUN \
 # /tmp/final/manifest.json
 
 # Check the integrity of the file structure
-RUN chmod +x /juno/scripts/check_file_integrity.sh && \
-  /juno/scripts/check_file_integrity.sh global apps libs assets externals index.html manifest.json importmap.json
+RUN chmod +x /juno/ci/scripts/check_file_integrity.sh && \
+  /juno/ci/scripts/check_file_integrity.sh global apps libs assets externals index.html manifest.json importmap.json
 
+# create self signed dummy certificate and key
+RUN apk add openssl ; openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
+  -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=dummy" \
+  -keyout /tmp/tls.key  -out /tmp/tls.crt
 
 ############### FINAL IMAGE! ###################
 FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/nginx:alpine AS server
@@ -82,17 +107,24 @@ ARG BASE_URL_PLACEHOLDER
 
 LABEL source_repository="https://github.com/sapcc/juno"
 
-RUN apk --no-cache add rsync
-
 # delete default html files of nginx
-RUN rm -rf /usr/share/nginx/html
+RUN rm -rf /usr/share/nginx/html ; 
+# copy tls certificate and key
+COPY --from=base /tmp/tls.crt /tmp/tls.key /etc/ssl/juno/ 
+# COPY --from=base /tmp/tls.key /etc/ssl/sap/tls.key
+
 # copy new version 
 COPY --from=base /tmp/final "/usr/share/nginx/html"
 
 # Replace default nginx config
 RUN rm -rf /etc/nginx/conf.d/default.conf && echo -e $'\
   server { \n \
+  \troot  /usr/share/nginx/html; \n\
+  \tadd_header Access-Control-Allow-Origin *;\n\
   \tlisten       80; \n \
+  \tlisten 443 default_server ssl; \n\ 
+  \tssl_certificate     /etc/ssl/juno/tls.crt; \n\
+  \tssl_certificate_key /etc/ssl/juno/tls.key; \n\
   \tserver_name  localhost; \n \
   \tinclude mime.types; \n \
   \ttypes \n \ 
@@ -101,31 +133,21 @@ RUN rm -rf /etc/nginx/conf.d/default.conf && echo -e $'\
   \t} \n \
   \n \
   \tlocation / { \n \
-  \t\troot   /usr/share/nginx/html; \n \
   \t\tindex  index.html index.htm; \n \
   \t} \n \
   \n \
   \tlocation ~* (importmap|manifest).*\.json$ { \n \
-  \t\troot  /usr/share/nginx/html; \n \
   \t\tsub_filter '$BASE_URL_PLACEHOLDER$' "https://$host"; \n \
   \t\tsub_filter_types *; \n \
   \t\tsub_filter_once off; \n \
   \t\tadd_header Cache-Control "no-store, no-cache"; \n \
+  \t\tadd_header Access-Control-Allow-Origin *;\n\
   \t} \n \
   \n \
   \tlocation ~* .*widget-loader@latest.*\.js$ { \n \
-  \t\troot /usr/share/nginx/html; \n \
   \t\tadd_header Cache-Control "no-store, no-cache"; \n \
+  \t\tadd_header Access-Control-Allow-Origin *;\n\
   \t}\n \
-  \n \
-  \t#error_page  404              /404.html; \n \
-  \n \
-  \t# redirect server error pages to the static page /50x.html \n \
-  \terror_page   500 502 503 504  /50x.html; \n \
-  \n \
-  \tlocation = /50x.html { \n \
-  \t\troot   /usr/share/nginx/html; \n \
-  \t} \n \
   } \n \
   ' > /etc/nginx/conf.d/default.conf
 
