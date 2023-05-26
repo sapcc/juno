@@ -739,9 +739,9 @@ jobs:
     serial: true
     plan:
       - in_parallel:
-          - get: hosting.git
-            trigger: true
-
+        - get: hosting.git
+          trigger: true
+        - get: secrets.git
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
         input_mapping:
@@ -801,9 +801,10 @@ jobs:
     serial: true
     plan:
       - in_parallel:
-          - get: hosting.git
-            trigger: true
-            passed: [e2e-tests-hosting-s-qa-de-1]  
+        - get: secrets.git 
+        - get: hosting.git
+          trigger: true
+          passed: [e2e-tests-hosting-s-qa-de-1]  
 
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
