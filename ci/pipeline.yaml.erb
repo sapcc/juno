@@ -68,7 +68,7 @@ resources:
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: pipelineV3
+      branch: main
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))      
 
@@ -77,7 +77,7 @@ resources:
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: pipelineV3
+      branch: main
       username: sapcc-bot
       paths: ["ci/Dockerfile.swift"]
       password: ((github-access-token/sapcc-bot))   
@@ -87,7 +87,7 @@ resources:
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: pipelineV3
+      branch: main
       paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.ui.storybook","e2e","ci/helm-charts/ui_storybook"]
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
@@ -111,7 +111,7 @@ resources:
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: pipelineV3
+      branch: main
       paths: ["ci/helm-charts/hosting","e2e/cypress/integration/hosting"]
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
@@ -122,7 +122,7 @@ resources:
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: pipelineV3
+      branch: main
       paths: ["<%=details[:path]%>","package.json","e2e", ".yarn", "ci/scripts" ]
       # Note: add this if you need to test changes in scripts -> you need to add "scripts"
       username: sapcc-bot
@@ -803,7 +803,7 @@ jobs:
       - in_parallel:
         - get: secrets.git 
         - get: hosting.git
-          trigger: true
+          trigger: false
           passed: [e2e-tests-hosting-s-qa-de-1]  
 
       - task: deploy
