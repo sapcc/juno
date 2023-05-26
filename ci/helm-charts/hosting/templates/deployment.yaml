@@ -10,7 +10,7 @@ spec:
     matchLabels:
       app: hosting
   revisionHistoryLimit: 3
-  replicas: 1
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:

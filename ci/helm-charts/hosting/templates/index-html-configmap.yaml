@@ -10,8 +10,8 @@ data:
     <head>
     <title>CCLOUD</title>
     <link rel="icon" sizes="any" href="https://assets.juno.global.cloud.sap/assets/favicon.ico"/>
-    <link rel="icon" type="image/png" sizes="16x16"href="https://assets.juno.global.cloud.sap/assets/favicon.ico"/>
-    <link rel="icon" type="image/png" sizes="32x32"href="https://assets.juno.global.cloud.sap/assets/favicon.ico"/>
+    <link rel="icon" type="image/png" sizes="16x16"href="https://assets.juno.global.cloud.sap/assets/favicon-16x16.png"/>
+    <link rel="icon" type="image/png" sizes="32x32"href="https://assets.juno.global.cloud.sap/assets/favicon-32x32.png"/>
     </head>
     <body style="height: 100vh; flex-grow: 1; margin: 0; padding: 0;">
     <script
@@ -27,8 +27,8 @@ data:
     <head>
     <title>CCLOUD</title>
     <link rel="icon" sizes="any" href="https://assets.juno.global.cloud.sap/assets/favicon.ico"/>
-    <link rel="icon" type="image/png" sizes="16x16"href="https://assets.juno.global.cloud.sap/assets/favicon.ico"/>
-    <link rel="icon" type="image/png" sizes="32x32"href="https://assets.juno.global.cloud.sap/assets/favicon.ico"/>
+    <link rel="icon" type="image/png" sizes="16x16"href="https://assets.juno.global.cloud.sap/assets/favicon-16x16.png"/>
+    <link rel="icon" type="image/png" sizes="32x32"href="https://assets.juno.global.cloud.sap/assets/favicon-32x32.png"/>
     </head>
     <body style="height: 100vh; flex-grow: 1; margin: 0; padding: 0;">
     <script
