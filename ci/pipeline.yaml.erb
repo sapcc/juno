@@ -456,7 +456,7 @@ jobs:
         params:
           HELM_MAJOR_VERSION: '3'
           CHART_PATH: ci/helm-charts/ui_storybook
-          RELEASE: juno-v3
+          RELEASE: juno-v3-storybook
           NAMESPACE: juno
           REGION: qa-de-1
           CONTEXT: s-qa-de-1
@@ -520,7 +520,7 @@ jobs:
         params:
           HELM_MAJOR_VERSION: '3'
           CHART_PATH: ci/helm-charts/ui_storybook
-          RELEASE: juno-v3
+          RELEASE: juno-v3-storybook
           NAMESPACE: juno
           REGION: eu-nl-1
           CONTEXT: s-eu-nl-1
@@ -588,7 +588,7 @@ jobs:
         params:
           HELM_MAJOR_VERSION: '3'
           CHART_PATH: ci/helm-charts/assets-server
-          RELEASE: juno-v3
+          RELEASE: juno-v3-assets-server
           NAMESPACE: juno
           REGION: qa-de-1
           CONTEXT: s-qa-de-1
@@ -665,7 +665,7 @@ jobs:
         params:
           DEBUG_TASK:         1 
           CHART_PATH:         ci/helm-charts/assets_server_ha
-          RELEASE:            juno-assets-server-prod
+          RELEASE:            juno-v3-assets-server-ha
           NAMESPACE:          juno
           REGION:             <%= region %>
           CONTEXT:            <%= region %>
@@ -750,7 +750,7 @@ jobs:
         params:
           HELM_MAJOR_VERSION: '3'
           CHART_PATH: ci/helm-charts/hosting
-          RELEASE: juno-v3
+          RELEASE: juno-v3-hosting
           NAMESPACE: juno
           REGION: qa-de-1
           CONTEXT: s-qa-de-1
@@ -813,7 +813,7 @@ jobs:
         params:
           HELM_MAJOR_VERSION: '3'
           CHART_PATH: ci/helm-charts/hosting
-          RELEASE: juno-v3
+          RELEASE: juno-v3-hosting
           NAMESPACE: juno
           REGION: eu-nl-1
           CONTEXT: s-eu-nl-1

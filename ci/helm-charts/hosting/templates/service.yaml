@@ -12,8 +12,8 @@ spec:
     - name: dashboard
       port: 80
       protocol: TCP
-      targetPort: web
+      targetPort: dashboard
     - name: exampleapp
       port: 81
       protocol: TCP
-      targetPort: web
+      targetPort: exampleapp
