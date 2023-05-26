@@ -439,6 +439,7 @@ jobs:
     serial: true
     plan:
       - in_parallel:
+        - get: secrets.git
         - get: ui-storybook.git
         - get: ui-storybook.version
           trigger: true
@@ -502,6 +503,7 @@ jobs:
     serial: true
     plan:
       - in_parallel:
+        - get: secrets.git
         - get: ui-storybook.version
           trigger: false
           passed: [e2e-tests-storybook-s-qa-de-1]
