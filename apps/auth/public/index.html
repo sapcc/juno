@@ -33,7 +33,9 @@
       // appProps are generated in development env and added to the build
       import appProps from "./build/appProps.js"
       import("./build/index.js").then((app) => {
-        app.mount(document.getElementById("root"), { props: appProps })
+        app.mount(document.getElementById("root"), {
+          props: appProps,
+        })
       })
     </script>
     <div id="root" data-juno-app="auth"></div>

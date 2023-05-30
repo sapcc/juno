@@ -21,9 +21,25 @@ const App = (props = {}) => {
   const [authData, setAuthData] = React.useState()
 
   const oidc = React.useMemo(() => {
-    if (props.mock === "true" || props.mock === true) {
+    if (
+      props.mock === "true" ||
+      props.mock === true ||
+      typeof props.mock === "string"
+    ) {
+      let token
+
+      try {
+        token = JSON.parse(atob(props.mock))
+      } catch (e) {
+        try {
+          token = JSON.parse(props.mock)
+        } catch (e) {
+          token = MOCKED_TOKEN
+        }
+      }
+
       return mockedSession({
-        token: MOCKED_TOKEN,
+        token,
         initialLogin: props.initialLogin,
         onUpdate: (authData) => {
           let data = enrichAuthData(authData)
