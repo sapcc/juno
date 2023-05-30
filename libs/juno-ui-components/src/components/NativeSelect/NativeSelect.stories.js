@@ -13,7 +13,7 @@ import {
 } from "../NativeSelectOptionGroup/NativeSelectOptionGroup.stories"
 
 export default {
-  title: "Forms/Base Elements/NativeSelect/NativeSelect",
+  title: "Forms/NativeSelect/NativeSelect",
   component: NativeSelect,
   argTypes: {},
 }
