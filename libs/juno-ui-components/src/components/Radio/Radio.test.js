@@ -18,6 +18,13 @@ describe("Radio", () => {
 		expect(screen.getByRole("radio")).toHaveAttribute('name', "My Radio")
 	})
 	
+	test("renders a radio with a label", async () => {
+		render(<Radio label="My Radio" id="my-radio"/>)
+		expect(screen.getByLabelText("My Radio")).toBeInTheDocument()
+		expect(document.querySelector(".juno-label")).toBeInTheDocument()
+		expect(document.querySelector(".juno-label")).toHaveTextContent("My Radio")
+	})
+	
 	test("renders a radio with an id as passed", async () => {
 		render(<Radio id="my-radio" />)
 		expect(screen.getByRole("radio")).toBeInTheDocument()
@@ -54,18 +61,6 @@ describe("Radio", () => {
 		expect(radio).not.toBeChecked()
 	})
 	
-	test("renders a custom className as passed", async () => {
-		render(<Radio data-testid="23" className="my-custom-class" />)
-		expect(screen.getByTestId("23")).toBeInTheDocument()
-		expect(screen.getByTestId("23")).toHaveClass('my-custom-class')
-	})
-	
-	test("renders all props as passed", async () => {
-		render(<Radio id="check-1" data-testid="23" data-lolol={true}/>)
-		expect(screen.getByTestId("23")).toBeInTheDocument()
-		expect(screen.getByTestId("23")).toHaveAttribute('data-lolol')
-	})
-	
 	test("renders a disabled radio as passed", async () => {
 		render(<Radio disabled />)
 		const radio = screen.getByRole('radio')
@@ -85,6 +80,29 @@ describe("Radio", () => {
 		const radio = screen.getByRole('radio')
 		expect(radio).toBeInTheDocument()
 		expect(radio).toHaveClass("juno-radio-valid")
+	})
+	
+	test("renders a helptext as passed", async () => {
+		render(<Radio helptext="this is a helptext"/>)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-help")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is a helptext")
+	})
+	
+	test("renders a successtext as passed and validates the Radio", async () => {
+		render(<Radio successtext="great success!" />)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-success")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("great success!")
+		expect(screen.getByRole("radio")).toHaveClass("juno-radio-valid")
+	})
+	
+	test("renders an errortext as passed and invalidates the Radio", async () => {
+		render(<Radio errortext="this is an error!" />)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-error")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is an error!")
+		expect(screen.getByRole("radio")).toHaveClass("juno-radio-invalid")
 	})
 	
 	test("fires handler on change as passed", async () => {
@@ -121,6 +139,18 @@ describe("Radio", () => {
 			screen.getByRole('radio').click();
 		})
 		expect(onClickSpy).not.toHaveBeenCalled()
+	})
+	
+	test("renders a custom className as passed", async () => {
+		render(<Radio data-testid="23" className="my-custom-class" />)
+		expect(screen.getByTestId("23")).toBeInTheDocument()
+		expect(screen.getByTestId("23")).toHaveClass('my-custom-class')
+	})
+	
+	test("renders all props as passed", async () => {
+		render(<Radio id="check-1" data-testid="23" data-lolol={true}/>)
+		expect(screen.getByTestId("23")).toBeInTheDocument()
+		expect(screen.getByTestId("23")).toHaveAttribute('data-lolol')
 	})
 	
 })
