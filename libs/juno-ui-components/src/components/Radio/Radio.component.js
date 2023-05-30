@@ -180,7 +180,7 @@ export const Radio = ({
 						""
 					}
 				</div>
-				{ label && label.length ?
+				{ label && isNotEmptyString(label) ?
 						<>
 							<Label text={label} htmlFor={id} disabled={disabled} required={required} className={`${labelStyles}`} />
 							{isInvalid ? (
