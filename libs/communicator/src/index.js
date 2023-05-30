@@ -24,10 +24,8 @@ const broadcast = (name, data, options) => {
   try {
     if (typeof name !== "string")
       throw new Error("(broadcast) the message name must be given.")
-    if (data === undefined)
-      throw new Error(
-        "(broadcast) the message data must be given (null is allowed)."
-      )
+    if (data === undefined) data = null
+
     const { debug, ...unknownOptions } = options || {}
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
