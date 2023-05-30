@@ -855,6 +855,5 @@ jobs:
                 CI_BUID_ID="$(date) - CI - dashboard-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
                 echo $CI_BUID_ID && \
                 CYPRESS_BASE_URL=https://juno.global.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/hosting/dashboard*" && \
-                CI_BUID_ID="$(date) - CI - exampleapp-components-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
-                echo $CI_BUID_ID && \
-                CYPRESS_BASE_URL=https://exampleapp.juno.global.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/hosting/exampleapp*"
+                CYPRESS_BASE_URL=https://ccloud.juno.global.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/hosting/dashboard*" && \
+                CYPRESS_BASE_URL=https://convergedcloud.juno.global.cloud.sap cy2 run --record --key 'juno' --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/hosting/dashboard*" 
