@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useMemo, useRef } from "react"
 import PropTypes from "prop-types"
 import { Label } from "../Label/index"
 import { Icon } from "../Icon/index"
+import { FormHint } from "../FormHint/"
 
 const textinputstyles = `
 	jn-bg-theme-textinput
@@ -68,6 +69,10 @@ const iconstyles = `
   jn-mt-[-.2rem]
 `
 
+const hintStyles = `
+  jn-mt-0
+`
+
 /** 
 A controlled Text Input.
 Also covers email, telephone, password, url derivates. 
@@ -86,6 +91,9 @@ export const TextInput = ({
   autoFocus,
   className,
   label,
+  helptext,
+  successtext,
+  errortext,
   autoComplete,
   width,
   onChange,
@@ -93,6 +101,11 @@ export const TextInput = ({
   onBlur,
   ...props
 }) => {
+  
+  const isNotEmptyString = (str) => {
+    return !(typeof str === 'string' && str.trim().length === 0)
+  }
+  
   const ref = useRef()
   const [val, setValue] = useState("")
   const [hasFocus, setFocus] = useState(false)
@@ -110,13 +123,22 @@ export const TextInput = ({
     setValue(value)
   }, [value])
 
+  const invalidated = useMemo(
+    () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
+    [invalid, errortext]
+  )
+  const validated = useMemo(
+    () => valid || (successtext && isNotEmptyString(successtext) ? true : false),
+    [valid, successtext]
+  )
+  
   useEffect(() => {
-    setIsInvalid(invalid)
-  }, [invalid])
-
+    setIsInvalid(invalidated)
+  }, [invalidated])
+  
   useEffect(() => {
-    setIsValid(valid)
-  }, [valid])
+    setIsValid(validated)
+  }, [validated])
 
   const handleValueChange = (event) => {
     setValue(event.target.value)
@@ -155,55 +177,72 @@ export const TextInput = ({
   }
   
   return (
-    <span 
-      className={`
-        juno-textinput-wrapper 
-        ${wrapperStyles}
-        ${ width == "auto" ? "jn-inline-block" : "jn-block" }
-        ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
-        `} 
-      >
-      { label && label.length ?
-          <Label 
-            text={label}
-            htmlFor={id}
-            className={`${labelStyles}`}
-            disabled={disabled}
-            required={required}
-            floating
-            minimized={ placeholder || hasFocus || val && val.length ? true : false}
-          />
+    <div>
+      <span 
+        className={`
+          juno-textinput-wrapper 
+          ${wrapperStyles}
+          ${ width == "auto" ? "jn-inline-block" : "jn-block" }
+          ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+          `} 
+        >
+        { label && label.length ?
+            <Label 
+              text={label}
+              htmlFor={id}
+              className={`${labelStyles}`}
+              disabled={disabled}
+              required={required}
+              floating
+              minimized={ placeholder || hasFocus || val && val.length ? true : false}
+            />
+          :
+            ""
+        }
+        <input
+          type={type}
+          name={name}
+          autoComplete={autoComplete}
+          value={val}
+          id={id}
+          ref={ref}
+          placeholder={placeholder}
+          disabled={disabled}
+          readOnly={readOnly}
+          autoFocus={autoFocus}
+          onChange={handleValueChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          className={
+            `juno-textinput 
+            ${ textinputstyles }
+            ${ label ? withLabelStyles : noLabelStyles }
+            ${ isInvalid ? "juno-textinput-invalid " + invalidstyles : "" } 
+            ${ isValid ? "juno-textinput-valid " + validstyles : "" }  
+            ${ isValid || isInvalid ? "" : defaultborderstyles } 
+            ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+            ${ className }
+          `}
+          {...props}
+        />
+        <Icons disabled={disabled} />
+      </span>
+      { errortext && isNotEmptyString(errortext) ?
+          <FormHint text={errortext} variant="error" className={`${hintStyles}`} />
         :
           ""
       }
-      <input
-        type={type}
-        name={name}
-        autoComplete={autoComplete}
-        value={val}
-        id={id}
-        ref={ref}
-        placeholder={placeholder}
-        disabled={disabled}
-        readOnly={readOnly}
-        autoFocus={autoFocus}
-        onChange={handleValueChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        className={
-          `juno-textinput 
-          ${ textinputstyles }
-          ${ label ? withLabelStyles : noLabelStyles }
-          ${ isInvalid ? "juno-textinput-invalid " + invalidstyles : "" } 
-          ${ isValid ? "juno-textinput-valid " + validstyles : "" }  
-          ${ isValid || isInvalid ? "" : defaultborderstyles } 
-          ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
-          ${ className }
-        `}
-        {...props}
-      />
-      <Icons disabled={disabled} />
-    </span>
+      { successtext && isNotEmptyString(successtext) ?
+          <FormHint text={successtext} variant="success" className={`${hintStyles}`} />
+        :
+          ""
+      }
+      { helptext && isNotEmptyString(helptext) ?
+          <FormHint text={helptext} className={`${hintStyles}`} />
+        :
+          ""
+       }
+    </div>
   )
 }
 
@@ -242,6 +281,12 @@ TextInput.propTypes = {
   type: PropTypes.oneOf(["text", "email", "password", "tel", "url", "number"]),
   /** The label of the input */
   label: PropTypes.string,
+  /** A helptext to render to explain meaning and significance of the TextInput */
+  helptext: PropTypes.node,
+  /** A text to render when the TextInput was successfully validated */
+  successtext: PropTypes.node,
+  /** A text to render when the TextInput has an error or could not be validated */
+  errortext: PropTypes.node,
   /** The width of the text input. Either 'full' (default) or 'auto'. */
   width: PropTypes.oneOf(["full", "auto"]),
 }
@@ -258,6 +303,9 @@ TextInput.defaultProps = {
   autoFocus: false,
   className: "",
   autoComplete: "off",
+  helptext: "",
+  successtext: "",
+  errortext: "",
   onChange: undefined,
   onFocus: undefined,
   onBlur: undefined,

@@ -72,3 +72,23 @@ export const Password = Template.bind({})
 Password.args = {
   type: "password",
 }
+
+export const WithHelpText = Template.bind({})
+WithHelpText.args = {
+  helptext: "This is an explanatory text referring to the input"
+}
+
+export const WithHelpTextAsNode = Template.bind({})
+WithHelpTextAsNode.args = {
+  helptext: <>This is a helptext with a <a href="#">Link</a></>
+}
+
+export const WithSuccessText = Template.bind({})
+WithSuccessText.args = {
+  successtext: "This field is a great success!"
+}
+
+export const WithErrorText = Template.bind({})
+WithErrorText.args = {
+  errortext: "This field has an error"
+}

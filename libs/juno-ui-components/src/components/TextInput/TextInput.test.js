@@ -106,16 +106,27 @@ describe("TextInput", () => {
 		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
 	})
 	
-	test("renders a className as passed", async () => {
-		render(<TextInput className="my-custom-class" />)
-		expect(screen.getByRole("textbox")).toBeInTheDocument()
-		expect(screen.getByRole("textbox")).toHaveClass("my-custom-class")
+	test("renders a helptext as passed", async () => {
+		render(<TextInput helptext="this is a helptext"/>)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-help")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is a helptext")
 	})
 	
-	test("renders other props as passed", async () => {
-		render(<TextInput data-lolol="527" />)
-		expect(screen.getByRole("textbox")).toBeInTheDocument()
-		expect(screen.getByRole("textbox")).toHaveAttribute('data-lolol', "527")
+	test("renders a successtext as passed and validates the Radio", async () => {
+		render(<TextInput successtext="great success!" />)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-success")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("great success!")
+		expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-valid")
+	})
+	
+	test("renders an errortext as passed and invalidates the Radio", async () => {
+		render(<TextInput errortext="this is an error!" />)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-error")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is an error!")
+		expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-invalid")
 	})
 
 	test("fires onChange handler as passed", async () => {
@@ -135,6 +146,18 @@ describe("TextInput", () => {
 			)
 		screen.getByRole('textbox').click();
 		expect(onChangeSpy).not.toHaveBeenCalled();	
+	})
+	
+	test("renders a className as passed", async () => {
+		render(<TextInput className="my-custom-class" />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveClass("my-custom-class")
+	})
+	
+	test("renders other props as passed", async () => {
+		render(<TextInput data-lolol="527" />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveAttribute('data-lolol', "527")
 	})
 	
 })
