@@ -1,1 +1,1 @@
-export { CheckboxRow } from "./CheckboxRow.component"
+export { default as CheckboxRow } from "./CheckboxRow.component"

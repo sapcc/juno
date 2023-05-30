@@ -2,8 +2,15 @@ import React from "react"
 import { CheckboxRow } from "./index.js"
 
 export default {
-  title: "Forms/Checkbox/CheckboxRow",
+  title: "Deprecated/CheckboxRow",
   component: CheckboxRow,
+  parameters: {
+    docs: {
+      description: {
+        component: "CheckboxRow is deprecated, use Checkbox instead."
+      },
+    },
+  },
   argTypes: {},
 }
 
@@ -19,6 +26,7 @@ export const Checked = Template.bind({})
 Checked.args = {
   label: "Checked CheckboxRow",
   id: "checked",
+  checked: true,
 }
 
 export const WithHelpText = Template.bind({})
