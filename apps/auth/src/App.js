@@ -1,6 +1,7 @@
 import React from "react"
 import useCommunication from "./useCommunication"
-import { oidcSession } from "oauth"
+import { oidcSession, mockedSession } from "oauth"
+import { MOCKED_TOKEN } from "./mockedToken"
 
 const enrichAuthData = (data) => {
   if (!data) return data
@@ -19,22 +20,31 @@ const enrichAuthData = (data) => {
 const App = (props = {}) => {
   const [authData, setAuthData] = React.useState()
 
-  const oidc = React.useMemo(
-    () =>
-      oidcSession({
-        issuerURL: props.issuerurl,
-        clientID: props.clientid,
+  const oidc = React.useMemo(() => {
+    if (props.mock === "true" || props.mock === true) {
+      return mockedSession({
+        token: MOCKED_TOKEN,
         initialLogin: props.initialLogin,
-        refresh: true,
-        requestParams: props.requestParams,
-        flowType: "code",
         onUpdate: (authData) => {
           let data = enrichAuthData(authData)
           setAuthData(data)
         },
-      }),
-    [setAuthData]
-  )
+      })
+    }
+
+    return oidcSession({
+      issuerURL: props.issuerUrl || props.issuerurl, // backwards compatibility
+      clientID: props.clientId || props.clientid, // backwards compatibility
+      initialLogin: props.initialLogin,
+      refresh: true,
+      requestParams: props.requestParams,
+      flowType: "code",
+      onUpdate: (authData) => {
+        let data = enrichAuthData(authData)
+        setAuthData(data)
+      },
+    })
+  }, [setAuthData])
 
   useCommunication({
     authData,
@@ -84,3 +94,71 @@ const App = (props = {}) => {
 }
 
 export default App
+
+// import React from "react"
+// import useCommunication from "./useCommunication"
+// import { oidcSession } from "oauth"
+// import { mockAuthData } from "./Mock"
+
+// const enrichAuthData = (data) => {
+//   if (!data) return data
+
+//   const enrichedAuth = { ...data }
+//   const userId = data.auth?.parsed?.loginName
+
+//   if (userId) {
+//     enrichedAuth.auth.parsed["avatarUrl"] = {
+//       small: `https://avatars.wdf.sap.corp/avatar/${userId}?size=24x24`,
+//     }
+//   }
+//   return enrichedAuth
+// }
+
+// // const App = (props = {}) => {
+// //   const [authData, setAuthData] = React.useState()
+
+// //   const oidc = React.useMemo(() => {
+// //     console.log("===============")
+// //     if (props.mock === "true" || props.mock === true) {
+// //       let data = enrichAuthData(mockAuthData())
+// //       if (props.initialLogin) {
+// //         setAuthData(data)
+// //       }
+// //       return {
+// //         login: () => setAuthData(data),
+// //         logout: () => setAuthData(null),
+// //       }
+// //     }
+
+// //     return (
+// //       oidcSession({
+// //         issuerURL: props.issuerUrl,
+// //         clientID: props.clientId,
+// //         initialLogin: props.initialLogin,
+// //         refresh: true,
+// //         requestParams: props.requestParams,
+// //         flowType: "code",
+// //         onUpdate: (authData) => {
+// //           let data = enrichAuthData(authData)
+// //           setAuthData(data)
+// //         },
+// //       }),
+// //       [setAuthData]
+// //     )
+// //   }, [])
+
+// //   useCommunication({
+// //     authData,
+// //     login: oidc.login,
+// //     logout: () =>
+// //       oidc.logout({
+// //         resetOIDCSession: props.resetOIDCSession,
+// //         silent: true,
+// //       }),
+// //     debug: props.debug === "true" || props.debug === true,
+// //   })
+
+// //   return null
+// // }
+
+// // export default App
