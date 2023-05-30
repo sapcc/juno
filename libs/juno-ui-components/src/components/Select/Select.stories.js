@@ -263,3 +263,43 @@ PrimaryDangerSelect.args = {
     <SelectOption value="3" key="3">Value 3</SelectOption>
   ]
 }
+
+export const WithHelpText = Template.bind({})
+WithHelpText.args = {
+  helptext: "This is an explanatory text referring to the input",
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}
+
+export const WithHelpTextAsNode = Template.bind({})
+WithHelpTextAsNode.args = {
+  helptext: <>This is a helptext with a <a href="#">Link</a></>,
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}
+
+export const WithSuccessText = Template.bind({})
+WithSuccessText.args = {
+  successtext: "This field is a great success!",
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}
+
+export const WithErrorText = Template.bind({})
+WithErrorText.args = {
+  errortext: "This field has an error",
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}

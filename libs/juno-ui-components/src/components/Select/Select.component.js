@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import * as RadixSelect from "@radix-ui/react-select"
 import { Label } from "../Label/index"
 import { Icon } from "../Icon/index.js"
 import { Spinner } from "../Spinner/index.js"
 import { usePortalRef } from "../PortalProvider/PortalProvider.component"
 import PropTypes from "prop-types"
+import { FormHint } from "../FormHint/"
 import "./select.scss"
 
 const wrapperStyles = `
@@ -60,6 +61,10 @@ const scrollButtonStyles = `
   jn-py-1
 `
 
+const hintStyles = `
+  jn-mt-0
+`
+
 /** Wrap children in a Portal if portal option is set to true  */
 const PortalWrapper = ({ withPortal, children }) => {
   
@@ -109,9 +114,17 @@ export const Select = React.forwardRef(
     value,
     variant,
     width,
+    helptext,
+    errortext,
+    successtext,
     ...props
   }, 
   forwardedRef ) => {
+    
+    const isNotEmptyString = (str) => {
+      return !(typeof str === 'string' && str.trim().length === 0)
+    }
+    
     const [isOpen, setIsOpen] = useState(false)
     const [hasError, setHasError] = useState(false)
     const [isInvalid, setIsInvalid] = useState(false)
@@ -126,17 +139,26 @@ export const Select = React.forwardRef(
       setHasError(error)
     }, [error])
     
+    const invalidated = useMemo(
+      () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
+      [invalid, errortext]
+    )
+    const validated = useMemo(
+      () => valid || (successtext && isNotEmptyString(successtext) ? true : false),
+      [valid, successtext]
+    )
+    
     useEffect(() => {
-      setIsInvalid(invalid)
-    }, [invalid])
+      setIsInvalid(invalidated)
+    }, [invalidated])
+    
+    useEffect(() => {
+      setIsValid(validated)
+    }, [validated])
     
     useEffect(() => {
       setIsLoading(loading)
     }, [loading])
-    
-    useEffect(() => {
-      setIsValid(valid)
-    }, [valid])
     
     const handleOpenChange = (event) => {
       // change only when open state is uncontrolled:
@@ -169,90 +191,108 @@ export const Select = React.forwardRef(
     }
     
     return (
-      <span 
-        className={
-          `juno-select-wrapper 
-          ${wrapperStyles}
-          ${ width == "auto" ? "jn-inline-block" : "jn-block" }
-          ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
-          `
-        } 
-      >
-        {
-          label && label.length ?
-            <Label 
-              text={label}
-              htmlFor={id}
-              className={`${labelStyles}`}
-              disabled={disabled}
-              required={required}
-              floating
-              minimized
-            />
+      <div>
+        <span 
+          className={
+            `juno-select-wrapper 
+            ${wrapperStyles}
+            ${ width == "auto" ? "jn-inline-block" : "jn-block" }
+            ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+            `
+          } 
+        >
+          {
+            label && label.length ?
+              <Label 
+                text={label}
+                htmlFor={id}
+                className={`${labelStyles}`}
+                disabled={disabled}
+                required={required}
+                floating
+                minimized
+              />
+            :
+              ""
+          }
+          <RadixSelect.Root 
+            defaultOpen={defaultOpen}
+            disabled={disabled || hasError || isLoading} 
+            name={name}
+            onOpenChange={handleOpenChange}
+            onValueChange={onValueChange}
+            value={value}
+            open={open}
+            defaultValue={defaultValue}
+          >
+            <RadixSelect.Trigger 
+              id={id}
+              aria-label={ariaLabel}
+              className={`
+                juno-select
+                juno-select-trigger
+                ${ triggerStyles }
+                ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+                ${ hasError || isInvalid || isValid || isLoading ? "" : "juno-select-" + theVariant}
+                ${ hasError || isInvalid ? triggerErrorStyles : "" }
+                ${ hasError ? "juno-select-error jn-cursor-not-allowed" : "" }
+                ${ isValid ? "juno-select-valid " + triggerValidStyles : "" } 
+                ${ disabled ? "juno-select-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
+                ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
+                ${ isLoading ? "juno-select-loading jn-cursor-not-allowed" : "" }
+                ${ isInvalid ? "juno-select-invalid" : "" }
+                ${ className }
+              `}
+              ref={forwardedRef}
+              {...props}
+            >
+              { 
+                isLoading || hasError ?
+                  ""
+                :
+                <span className={`
+                  ${labelClassName}
+                  ${ label ? triggerLabelStyles : "" }
+                `}>
+                  <RadixSelect.Value placeholder={placeholder}/> 
+                </span>
+              }
+              <RadixSelect.Icon className="jn-inline-flex">
+                <TriggerIcons />
+              </RadixSelect.Icon>
+            </RadixSelect.Trigger>
+            <PortalWrapper withPortal={portal}>
+              <RadixSelect.Content className={`juno-select-content ${contentStyles}`} position={position} sideOffset={2}>
+                <RadixSelect.ScrollUpButton className={`${scrollButtonStyles}`}>
+                  <Icon icon="expandLess"/>
+                </RadixSelect.ScrollUpButton>
+                <RadixSelect.Viewport>
+                  { children }
+                </RadixSelect.Viewport>
+                <RadixSelect.ScrollDownButton className={`${scrollButtonStyles}`}>
+                  <Icon icon="expandMore"/>
+                </RadixSelect.ScrollDownButton>
+              </RadixSelect.Content>
+            </PortalWrapper>
+          </RadixSelect.Root>
+        </span>
+        { errortext && isNotEmptyString(errortext) ?
+            <FormHint text={errortext} variant="error" className={`${hintStyles}`} />
           :
             ""
         }
-        <RadixSelect.Root 
-          defaultOpen={defaultOpen}
-          disabled={disabled || hasError || isLoading} 
-          name={name}
-          onOpenChange={handleOpenChange}
-          onValueChange={onValueChange}
-          value={value}
-          open={open}
-          defaultValue={defaultValue}
-        >
-          <RadixSelect.Trigger 
-            id={id}
-            aria-label={ariaLabel}
-            className={`
-              juno-select
-              juno-select-trigger
-              ${ triggerStyles }
-              ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
-              ${ hasError || isInvalid || isValid || isLoading ? "" : "juno-select-" + theVariant}
-              ${ hasError || isInvalid ? triggerErrorStyles : "" }
-              ${ hasError ? "juno-select-error jn-cursor-not-allowed" : "" }
-              ${ isValid ? "juno-select-valid " + triggerValidStyles : "" } 
-              ${ disabled ? "juno-select-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
-              ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
-              ${ isLoading ? "juno-select-loading jn-cursor-not-allowed" : "" }
-              ${ isInvalid ? "juno-select-invalid" : "" }
-              ${ className }
-            `}
-            ref={forwardedRef}
-            {...props}
-          >
-            { 
-              isLoading || hasError ?
-                ""
-              :
-              <span className={`
-                ${labelClassName}
-                ${ label ? triggerLabelStyles : "" }
-              `}>
-                <RadixSelect.Value placeholder={placeholder}/> 
-              </span>
-            }
-            <RadixSelect.Icon className="jn-inline-flex">
-              <TriggerIcons />
-            </RadixSelect.Icon>
-          </RadixSelect.Trigger>
-          <PortalWrapper withPortal={portal}>
-            <RadixSelect.Content className={`juno-select-content ${contentStyles}`} position={position} sideOffset={2}>
-              <RadixSelect.ScrollUpButton className={`${scrollButtonStyles}`}>
-                <Icon icon="expandLess"/>
-              </RadixSelect.ScrollUpButton>
-              <RadixSelect.Viewport>
-                { children }
-              </RadixSelect.Viewport>
-              <RadixSelect.ScrollDownButton className={`${scrollButtonStyles}`}>
-                <Icon icon="expandMore"/>
-              </RadixSelect.ScrollDownButton>
-            </RadixSelect.Content>
-          </PortalWrapper>
-        </RadixSelect.Root>
-      </span>
+        { successtext && isNotEmptyString(successtext) ?
+            <FormHint text={successtext} variant="success" className={`${hintStyles}`} />
+          :
+            ""
+        }
+        { helptext && isNotEmptyString(helptext) ?
+            <FormHint text={helptext} className={`${hintStyles}`} />
+          :
+            ""
+         }
+      </div>
+      
     )
   }
 )
@@ -306,6 +346,12 @@ Select.propTypes = {
   variant: PropTypes.oneOf(["", "primary", "primary-danger", "default", "subdued"]),
   /** The width of the select. Either 'full' (default) or 'auto'. */
   width: PropTypes.oneOf(["full", "auto"]),
+  /** A helptext to render to explain meaning and significance of the Select */
+  helptext: PropTypes.node,
+  /** A text to render when the Select was successfully validated */
+  errortext: PropTypes.node,
+  /** A text to render when the Select has an error or could not be validated */
+  successtext: PropTypes.node,
 }
 
 Select.defaultProps = {
@@ -333,4 +379,7 @@ Select.defaultProps = {
   value: undefined,
   width: "full",
   variant: undefined,
+  helptext: "",
+  errortext: "",
+  successtext: "",
 }
