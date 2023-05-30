@@ -200,7 +200,9 @@ const oidcSession = (params) => {
 
   if (Object.keys(unknownProps).length > 0) {
     console.warn(
-      "WARNING: (OAUTH) unknown options: unknown. Allowed options are issuerURL, clientID, initialLogin, refresh, flowType, onUpdate, requestParams, callbackURL"
+      `WARNING: (OAUTH) unknown options: ${Object.keys(
+        unknownProps
+      )}. Allowed options are issuerURL, clientID, initialLogin, refresh, flowType, onUpdate, requestParams, callbackURL`
     )
   }
 

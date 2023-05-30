@@ -14,9 +14,10 @@ describe("oidcSession", () => {
       refresh: true,
       requestParams: { organization: "Test" },
       unknown: true,
+      test: "test",
     })
     expect(globalThis.console.warn).toHaveBeenLastCalledWith(
-      "WARNING: (OAUTH) unknown options: unknown. Allowed options are issuerURL, clientID, initialLogin, refresh, flowType, onUpdate, requestParams, callbackURL"
+      "WARNING: (OAUTH) unknown options: unknown,test. Allowed options are issuerURL, clientID, initialLogin, refresh, flowType, onUpdate, requestParams, callbackURL"
     )
   })
 
