@@ -5,42 +5,6 @@ import { Label } from "../Label/index.js"
 import { Icon } from "../Icon/"
 import withDeprecationWarning from '../withDeprecationWarning/withDeprecationWarning.component.js'
 
-const radiorow = `
-	jn-flex
-	jn-flex-row
-  jn-mb-1
-`
-
-const radiocontainerstyles = `
-	jn-mt-1
-	jn-mr-2
-`
-
-const helptextstyles = `
-	jn-text-xs
-	jn-text-theme-light
-	jn-mt-1
-`
-
-const errortextstyles = `
-  jn-text-xs
-  jn-text-theme-error
-  jn-mt-1
-`
-
-const successtextstyles = `
-  jn-text-xs
-  jn-text-theme-success
-  jn-mt-1
-`
-
-const iconstyles = `
-  jn-inline-block 
-  jn-ml-1 
-  jn-leading-1
-  jn-mt-[-.2rem]
-`
-
 /** A controlled radio row containing a radio, associated label, and structural markup */
 const RadioRow = ({
   value,
