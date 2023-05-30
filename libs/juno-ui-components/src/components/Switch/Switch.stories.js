@@ -77,3 +77,27 @@ Valid.args = {
   label: "Valid Switch",
   id: "switch-valid",
 }
+
+export const WithHelpText = Template.bind({})
+WithHelpText.args = {
+  label: "Switch",
+  helptext: "This is an explanatory text referring to the input"
+}
+
+export const WithHelpTextAsNode = Template.bind({})
+WithHelpTextAsNode.args = {
+  label: "Switch",
+  helptext: <>This is a helptext with a <a href="#">Link</a></>
+}
+
+export const WithSuccessText = Template.bind({})
+WithSuccessText.args = {
+  label: "Switch",
+  successtext: "This field is a great success!"
+}
+
+export const WithErrorText = Template.bind({})
+WithErrorText.args = {
+  label: "Switch",
+  errortext: "This field has an error"
+}

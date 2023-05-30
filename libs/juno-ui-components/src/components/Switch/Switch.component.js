@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Label } from "../Label/index"
 import { Icon } from "../Icon/index"
+import { FormHint } from "../FormHint/"
 
 const switchWrapperStyles = `
 	jn-flex
@@ -99,6 +100,10 @@ const iconstyles = `
 	jn-mt-[-.2rem]
 `
 
+const hintStyles = `
+	jn-mt-0
+`
+
 /** A Switch/Toggle component */
 export const Switch = ({
 	name,
@@ -110,11 +115,19 @@ export const Switch = ({
 	disabled,
 	invalid,
 	valid,
+	helptext,
+	errortext,
+	successtext,
 	className,
 	onChange,
 	onClick,
 	...props
 }) => {
+	
+	const isNotEmptyString = (str) => {
+		return !(typeof str === 'string' && str.trim().length === 0)
+	}
+	
 	const [isOn, setIsOn] = useState(on)
 	const [isInvalid, setIsInvalid] = useState(false)
 	const [isValid, setIsValid] = useState(false)
@@ -123,13 +136,22 @@ export const Switch = ({
 		setIsOn(on)
 	  }, [on])
 		
+	const invalidated = useMemo(
+		() => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
+		[invalid, errortext]
+	)
+	const validated = useMemo(
+		() => valid || (successtext && isNotEmptyString(successtext) ? true : false),
+		[valid, successtext]
+	)
+		
 	useEffect(() => {
-		setIsInvalid(invalid)
-	}, [invalid])
+		setIsInvalid(invalidated)
+	}, [invalidated])
 	
 	useEffect(() => {
-		setIsValid(valid)
-	}, [valid])
+		setIsValid(validated)
+	}, [validated])
 	
 	const handleClick = (event) => {
 		setIsOn(!isOn)
@@ -138,60 +160,77 @@ export const Switch = ({
 	}
 	
 	return (
-		<span className={`
-			juno-switch-wrapper 
-			${switchWrapperStyles}
-			`}
-		>
-			<button 
-				type="button"
-				role="switch"
-				name={name}
-				id={id}
-				aria-checked={isOn}
-				disabled={disabled}
-				onClick={handleClick}
-				className={`
-					juno-switch 
-					juno-switch-${size} 
-					${switchbasestyles} 
-					${switchsizestyles(size)} 
-					${ isInvalid ? "juno-switch-invalid " + invalidbasestyles : "" } 
-					${ isValid ? "juno-switch-valid " + validbasestyles : "" } 
-					${ isValid || isInvalid ? "" : defaultborderstyles } 
-					${className}`}
-				{...props}
+		<div>
+			<span className={`
+				juno-switch-wrapper 
+				${switchWrapperStyles}
+				`}
 			>
-				<span className={`juno-switch-handle ${handlebasestyles} ${handlesizestyles(size)} ${ isOn ? handleonstyles : handleoffstyles}`} ></span>
-			</button>
-			
-			<Label 
-				text={label}
-				htmlFor={id}
-				className="jn-ml-2"
-				disabled={disabled}
-				required={required}
-			/>
-			
-			{isInvalid ? (
-				<Icon
-					icon="dangerous"
-					color="jn-text-theme-error"
-					size="1.125rem"
-					className={`${iconstyles} ${ disabled ? "jn-opacity-50" : "" }`}
+				<button 
+					type="button"
+					role="switch"
+					name={name}
+					id={id}
+					aria-checked={isOn}
+					disabled={disabled}
+					onClick={handleClick}
+					className={`
+						juno-switch 
+						juno-switch-${size} 
+						${switchbasestyles} 
+						${switchsizestyles(size)} 
+						${ isInvalid ? "juno-switch-invalid " + invalidbasestyles : "" } 
+						${ isValid ? "juno-switch-valid " + validbasestyles : "" } 
+						${ isValid || isInvalid ? "" : defaultborderstyles } 
+						${className}`}
+					{...props}
+				>
+					<span className={`juno-switch-handle ${handlebasestyles} ${handlesizestyles(size)} ${ isOn ? handleonstyles : handleoffstyles}`} ></span>
+				</button>
+				
+				<Label 
+					text={label}
+					htmlFor={id}
+					className="jn-ml-2"
+					disabled={disabled}
+					required={required}
 				/>
-			) : ""}
-			
-			{isValid ? (
-				<Icon
-					icon="checkCircle"
-					color="jn-text-theme-success"
-					size="1.125rem"
-					className={`${iconstyles} ${ disabled ? "jn-opacity-50" : "" }`}
-				/>
-			) : ""}
-			
-		</span>
+				
+				{isInvalid ? (
+					<Icon
+						icon="dangerous"
+						color="jn-text-theme-error"
+						size="1.125rem"
+						className={`${iconstyles} ${ disabled ? "jn-opacity-50" : "" }`}
+					/>
+				) : ""}
+				
+				{isValid ? (
+					<Icon
+						icon="checkCircle"
+						color="jn-text-theme-success"
+						size="1.125rem"
+						className={`${iconstyles} ${ disabled ? "jn-opacity-50" : "" }`}
+					/>
+				) : ""}
+				
+			</span>
+			{ errortext && isNotEmptyString(errortext) ?
+					<FormHint text={errortext} variant="error" className={`${hintStyles}`} />
+				:
+					""
+			}
+			{ successtext && isNotEmptyString(successtext) ?
+					<FormHint text={successtext} variant="success" className={`${hintStyles}`} />
+				:
+					""
+			}
+			{ helptext && isNotEmptyString(helptext) ?
+					<FormHint text={helptext} className={`${hintStyles}`} />
+				:
+					""
+			 }
+		</div>
 	)
 }
 
@@ -214,6 +253,12 @@ Switch.propTypes = {
 	invalid: PropTypes.bool,
 	/** Whether the Switch is valid */
 	valid: PropTypes.bool,
+	/** A helptext to render to explain meaning and significance of the Switch */
+	helptext: PropTypes.node,
+	/** A text to render when the Switch was successfully validated */
+	errortext: PropTypes.node,
+	/** A text to render when the Switch has an error or could not be validated */
+	successtext: PropTypes.node,
 	/** Pass a className */
 	className: PropTypes.string,
 	/** Pass a change handler */
@@ -232,6 +277,9 @@ Switch.defaultProps = {
 	disabled: null,
 	invalid: false,
 	valid: false,
+	helptext: "",
+	errortext: "",
+	successtext: "",
 	className: "",
 	onChange: undefined,
 	onClick: undefined,
