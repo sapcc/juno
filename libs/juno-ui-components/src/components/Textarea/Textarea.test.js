@@ -74,9 +74,27 @@ describe("Textarea", () => {
 		expect(screen.getByRole("textbox")).toHaveFocus()
 	})
 	
-	test("renders a className as passed", async () => {
-		render(<Textarea className="my-custom-class" />)
-		expect(screen.getByRole("textbox")).toHaveClass("my-custom-class")
+	test("renders a helptext as passed", async () => {
+		render(<Textarea helptext="this is a helptext"/>)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-help")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is a helptext")
+	})
+	
+	test("renders a successtext as passed and validates the Element", async () => {
+		render(<Textarea successtext="great success!" />)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-success")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("great success!")
+		expect(screen.getByRole("textbox")).toHaveClass("juno-textarea-valid")
+	})
+	
+	test("renders an errortext as passed and invalidates the Element", async () => {
+		render(<Textarea errortext="this is an error!" />)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-error")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is an error!")
+		expect(screen.getByRole("textbox")).toHaveClass("juno-textarea-invalid")
 	})
 	
 	test("fires onChange handler as passed", async () => {
@@ -89,14 +107,6 @@ describe("Textarea", () => {
 		expect(handleChange).toHaveBeenCalledTimes(1)
 	})
 	
-	test("renders other props as passed", async () => {
-		render(<Textarea cols="100" rows="25" minLength="0" maxLength="100"/>)
-		expect(screen.getByRole("textbox")).toHaveAttribute('cols', "100")
-		expect(screen.getByRole("textbox")).toHaveAttribute('rows', "25")
-		expect(screen.getByRole("textbox")).toHaveAttribute('minlength', "0")
-		expect(screen.getByRole("textbox")).toHaveAttribute('maxlength', "100")
-	})
-	
 	test("does not fire onChange handler when disabled", async () => {
 		const onChangeSpy = jest.fn();
 		const { container } = render(
@@ -104,6 +114,19 @@ describe("Textarea", () => {
 			)
 		screen.getByRole('textbox').click();
 		expect(onChangeSpy).not.toHaveBeenCalled();	
+	})
+	
+	test("renders a className as passed", async () => {
+		render(<Textarea className="my-custom-class" />)
+		expect(screen.getByRole("textbox")).toHaveClass("my-custom-class")
+	})
+	
+	test("renders other props as passed", async () => {
+		render(<Textarea cols="100" rows="25" minLength="0" maxLength="100"/>)
+		expect(screen.getByRole("textbox")).toHaveAttribute('cols', "100")
+		expect(screen.getByRole("textbox")).toHaveAttribute('rows', "25")
+		expect(screen.getByRole("textbox")).toHaveAttribute('minlength', "0")
+		expect(screen.getByRole("textbox")).toHaveAttribute('maxlength', "100")
 	})
 
 })

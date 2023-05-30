@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useMemo, useRef } from "react"
 import PropTypes from "prop-types"
 import { Label } from "../Label/index"
 import { Icon } from "../Icon/index"
+import { FormHint } from "../FormHint/"
 
 const wrapperStyles = `
   jn-inline-block
@@ -44,14 +45,11 @@ const noLabelStyles = `
   jn-py-4
 `
 
-
-
 const labelStyles = `
   jn-pointer-events-none
   jn-top-2
   jn-left-[0.9375rem]
 `
-
 
 const iconcontainerstyles = `
   jn-inline-flex
@@ -69,6 +67,9 @@ const iconstyles = `
   jn-ml-1 
   jn-leading-1
   jn-mt-[-.2rem]
+`
+const hintStyles = `
+  jn-mt-0
 `
 
 /** 
@@ -89,6 +90,9 @@ export const Textarea = ({
   autoFocus,
   className,
   label,
+  helptext,
+  successtext,
+  errortext,
   autoComplete,
   width,
   onChange,
@@ -96,6 +100,11 @@ export const Textarea = ({
   onBlur,
   ...props
 }) => {
+  
+  const isNotEmptyString = (str) => {
+    return !(typeof str === 'string' && str.trim().length === 0)
+  }
+  
   const ref = useRef()
   const [val, setValue] = useState("")
   const [hasFocus, setFocus] = useState(false)
@@ -112,14 +121,23 @@ export const Textarea = ({
   useEffect(() => {
     setValue(value)
   }, [value])
+  
+  const invalidated = useMemo(
+    () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
+    [invalid, errortext]
+  )
+  const validated = useMemo(
+    () => valid || (successtext && isNotEmptyString(successtext) ? true : false),
+    [valid, successtext]
+  )
 
   useEffect(() => {
-    setIsInvalid(invalid)
-  }, [invalid])
+    setIsInvalid(invalidated)
+  }, [invalidated])
 
   useEffect(() => {
-    setIsValid(valid)
-  }, [valid])
+    setIsValid(validated)
+  }, [validated])
 
   const handleValueChange = (event) => {
     setValue(event.target.value)
@@ -158,60 +176,79 @@ export const Textarea = ({
   }
   
   return (
-    <span 
-      className={`
-        juno-textarea-wrapper 
-        ${wrapperStyles}
-        ${ width == "auto" ? "jn-inline-block" : "jn-block" }
-        ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
-      `} 
-      >
-      { label && label.length ?
-          <Label 
-            text={label}
-            htmlFor={id}
-            className={`${labelStyles}`}
-            disabled={disabled}
-            required={required}
-            floating
-            minimized={ placeholder || hasFocus || val && val.length  ? true : false}
-          />
+    <div>
+      <span 
+        className={`
+          juno-textarea-wrapper 
+          ${wrapperStyles}
+          ${ width == "auto" ? "jn-inline-block" : "jn-block" }
+          ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+        `} 
+        >
+        { label && label.length ?
+            <Label 
+              text={label}
+              htmlFor={id}
+              className={`${labelStyles}`}
+              disabled={disabled}
+              required={required}
+              floating
+              minimized={ placeholder || hasFocus || val && val.length  ? true : false}
+            />
+          :
+            ""
+        }
+        <textarea
+          name={name}
+          autoComplete={autoComplete}
+          value={val}
+          id={id}
+          ref={ref}
+          placeholder={placeholder}
+          disabled={disabled}
+          readOnly={readOnly}
+          autoFocus={autoFocus}
+          onChange={handleValueChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          className={
+            `juno-textarea 
+            ${ textareastyles }
+            ${ label ? withLabelStyles : noLabelStyles }
+            ${ isInvalid ? "juno-textarea-invalid " + invalidstyles : "" } 
+            ${ isValid ? "juno-textarea-valid " + validstyles : "" }  
+            ${ isValid || isInvalid ? "" : defaultborderstyles } 
+            ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+            ${ className }
+          `}
+          {...props}
+        />
+        <Icons disabled={disabled} />
+      </span>
+      { errortext && isNotEmptyString(errortext) ?
+          <FormHint text={errortext} variant="error" className={`${hintStyles}`} />
         :
           ""
       }
-      <textarea
-        name={name}
-        autoComplete={autoComplete}
-        value={val}
-        id={id}
-        ref={ref}
-        placeholder={placeholder}
-        disabled={disabled}
-        readOnly={readOnly}
-        autoFocus={autoFocus}
-        onChange={handleValueChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        className={
-          `juno-textarea 
-          ${ textareastyles }
-          ${ label ? withLabelStyles : noLabelStyles }
-          ${ isInvalid ? "juno-textarea-invalid " + invalidstyles : "" } 
-          ${ isValid ? "juno-textarea-valid " + validstyles : "" }  
-          ${ isValid || isInvalid ? "" : defaultborderstyles } 
-          ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
-          ${ className }
-        `}
-        {...props}
-      />
-      <Icons disabled={disabled} />
-    </span>
+      { successtext && isNotEmptyString(successtext) ?
+          <FormHint text={successtext} variant="success" className={`${hintStyles}`} />
+        :
+          ""
+      }
+      { helptext && isNotEmptyString(helptext) ?
+          <FormHint text={helptext} className={`${hintStyles}`} />
+        :
+          ""
+       }
+    </div>
   )
 }
 
 Textarea.propTypes = {
   /** Pass a name attribute */
   name: PropTypes.string,
+  /** The label of the textarea */
+  label: PropTypes.string,
   /** Pass a value */
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /** Pass an id */
@@ -242,8 +279,12 @@ Textarea.propTypes = {
   onBlur: PropTypes.func,
   /** Specify the type attribute. Defaults to an input with no type attribute, which in turn will be treateas as type="text" by browsers. */
   type: PropTypes.oneOf(["text", "email", "password", "tel", "url", "number"]),
-  /** The label of the input */
-  label: PropTypes.string,
+  /** A helptext to render to explain meaning and significance of the Textarea */
+  helptext: PropTypes.node,
+  /** A text to render when the Textarea was successfully validated */
+  successtext: PropTypes.node,
+  /** A text to render when the Textarea has an error or could not be validated */
+  errortext: PropTypes.node,
   /** The width of the textarea. Either 'full' (default) or 'auto'. */
   width: PropTypes.oneOf(["full", "auto"]),
 }
@@ -260,6 +301,9 @@ Textarea.defaultProps = {
   autoFocus: false,
   className: "",
   autoComplete: "off",
+  helptext: "",
+  successtext: "",
+  errortext: "",
   onChange: undefined,
   onFocus: undefined,
   onBlur: undefined,

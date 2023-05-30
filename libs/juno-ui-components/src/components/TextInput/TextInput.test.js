@@ -113,7 +113,7 @@ describe("TextInput", () => {
 		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is a helptext")
 	})
 	
-	test("renders a successtext as passed and validates the Radio", async () => {
+	test("renders a successtext as passed and validates the Element", async () => {
 		render(<TextInput successtext="great success!" />)
 		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
 		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-success")
@@ -121,7 +121,7 @@ describe("TextInput", () => {
 		expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-valid")
 	})
 	
-	test("renders an errortext as passed and invalidates the Radio", async () => {
+	test("renders an errortext as passed and invalidates the Element", async () => {
 		render(<TextInput errortext="this is an error!" />)
 		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
 		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-error")
