@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Radio } from "../Radio/index.js"
-import { Label } from "../Label/index.js"
-import { Icon } from "../Icon/"
 import withDeprecationWarning from '../withDeprecationWarning/withDeprecationWarning.component.js'
 
-/** A controlled radio row containing a radio, associated label, and structural markup */
+/** A radio row containing a radio, associated label, and structural markup */
 const RadioRow = ({
   value,
   name,

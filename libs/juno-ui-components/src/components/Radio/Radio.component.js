@@ -153,9 +153,7 @@ export const Radio = ({
 						${ hasFocus ? mockfocusradiostyles : "" } 
 						${ disabled ? mockdisabledradiostyles : "" } 
 						${ isInvalid ? errorstyles : "" } 
-						${ isInvalid ? "juno-radio-invalid" : "" }
 						${ isValid ? successstyles : ""} 
-						${ isValid ? "juno-radio-valid" : "" }
 						${ isInvalid || isValid ? "" : noBorderStyles }
 						${className}
 					`}
@@ -163,7 +161,7 @@ export const Radio = ({
 				>
 					<input 
 						type="radio"
-						name={name || "unnamed radio"}
+						name={name}
 						value={value}
 						id={id}
 						checked={isChecked}
