@@ -1,2 +1,3 @@
 import oidcSession from "./oidcSession"
-export { oidcSession }
+import mockedSession from "./mockedSession"
+export { oidcSession, mockedSession }
