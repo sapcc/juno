@@ -51,7 +51,6 @@ const noBorderStyles = `
 	jn-border-transparent
 `
 
-
 const errorstyles = `
 	jn-border
 	jn-border-theme-error
@@ -264,6 +263,7 @@ Radio.propTypes = {
 }
 
 Radio.defaultProps = {
+	name: undefined,
 	label: undefined,
 	checked: false,
 	value: "",
