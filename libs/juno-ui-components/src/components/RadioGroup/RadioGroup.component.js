@@ -150,7 +150,6 @@ export const RadioGroup = ({
         :
           ""
       }
-      
       <div
         className={`juno-checkbox-group-options ${groupstyles} ${
           isValid ? validgroupstyles : ""
@@ -208,14 +207,14 @@ RadioGroup.propTypes = {
   disabled: PropTypes.bool,
   /** Whether the RadioGroup is invalid */
   invalid: PropTypes.bool,
-  /** A text to render to further explain meaning and significance of the Select */
-  helptext: PropTypes.string,
+  /** A text to render to further explain meaning and significance of the group */
+  helptext: PropTypes.node,
   /** Text to display in case validation failed. Will set the whole group to invalid when passed. */
-  errortext: PropTypes.string,
+  errortext: PropTypes.node,
   /** Whether the RadioGroup is valid */
   valid: PropTypes.bool,
   /** Text to display in case validation is successful. When passed, will set the whole group to valid. */
-  successtext: PropTypes.string,
+  successtext: PropTypes.node,
   /** Pass a custom class to apply to the individual Radios of the group */
   className: PropTypes.string,
   /** Child Radio components. These will receive the name attribute passed to RadioGroup. */
