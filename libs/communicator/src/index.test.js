@@ -29,10 +29,7 @@ describe("Communicator", () => {
     })
     test("log warning on missing data", () => {
       broadcast("TEST")
-      expect(globalThis.console.error).toHaveBeenCalledWith(
-        "Communicator Error:",
-        "(broadcast) the message data must be given (null is allowed)."
-      )
+      expect(bc.postMessage).toHaveBeenCalledWith(null)
     })
 
     test("unknown options", () => {

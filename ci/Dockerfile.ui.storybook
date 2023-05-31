@@ -1,4 +1,4 @@
-FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v2-base:latest AS base 
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base:latest AS base 
 
 RUN \
   cd /juno ; \

@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  namespace: juno
+  name: hosting
+
+spec:
+  selector:
+    app: hosting
+  ports:
+    - name: dashboard
+      port: 80
+      protocol: TCP
+      targetPort: dashboard
+    - name: exampleapp
+      port: 81
+      protocol: TCP
+      targetPort: exampleapp

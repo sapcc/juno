@@ -62,7 +62,7 @@ export function parseIdTokenData(tokenData) {
   const regex = new RegExp("^[c,d,i,s,p,C,D,I,S,P][0-9]+$")
   const userId = tokenData?.sub?.match(regex) ? tokenData.sub : null
 
-  return {
+  const parsedData = {
     loginName,
     email,
     firstName,
@@ -73,4 +73,20 @@ export function parseIdTokenData(tokenData) {
     groups: tokenData.groups,
     userId,
   }
+
+  if (Array.isArray(tokenData.groups)) {
+    tokenData.groups.forEach((item) => {
+      if (item.startsWith("organization:")) {
+        parsedData.organizations = parsedData.organizations || []
+        parsedData.organizations.push(item.substring("organization:".length))
+      }
+      if (item.startsWith("team:")) {
+        parsedData.teams = parsedData.teams || []
+        parsedData.teams.push(item.substring("team:".length))
+      }
+    })
+  }
+  // groups: ["organization:test-org", "team:test-team-1", "team:test-team-2"],
+
+  return parsedData
 }

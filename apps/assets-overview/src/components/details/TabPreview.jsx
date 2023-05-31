@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo, useState, useRef } from "react"
 import useAppLoader from "../../hooks/useAppLoader"
-import { Box, Stack, Spinner, Message } from "juno-ui-components"
+import { Box, Stack, Spinner, Message, Icon } from "juno-ui-components"
 import PreviewAppPropsForm from "./PreviewAppPropsForm"
+import useStore from "../../store"
+import { stateToURL } from "url-state-provider"
 
 const TabPreview = ({ asset }) => {
   const { mount } = useAppLoader()
@@ -9,6 +11,7 @@ const TabPreview = ({ asset }) => {
   const app = useRef(document.createElement("div"))
   const [isLoading, setIsLoading] = useState(false)
   const [appProps, setAppProps] = useState({})
+  const urlStateTestingKey = useStore((state) => state.urlStateTestingKey)
 
   useEffect(() => {
     // reset app props on asset change
@@ -55,34 +58,55 @@ const TabPreview = ({ asset }) => {
 
   return (
     <>
-      <PreviewAppPropsForm asset={asset} onAppPropsChange={onAppPropsChange} />
-      <Box className="p-8">
-        {config?.appPreview ? (
-          <>
-            {isLoading ? (
-              <Stack className="pt-2" alignment="center">
-                <Spinner variant="primary" />
-                Loading...
-              </Stack>
-            ) : (
-              <>
-                {Object.keys(appProps || {}).length <= 0 && (
-                  <p className="mb-6">
-                    This is a preview of the <b>{config.name}</b> micro frontend
-                    without <b>any specific configuration.</b>
-                  </p>
-                )}
-              </>
-            )}
-            <div data-app={config.name} ref={holder}></div>
-          </>
-        ) : (
-          <Message
-            title={config.name}
-            text="There is no preview available for this micro frontend"
+      {config?.appPreview ? (
+        <>
+          <PreviewAppPropsForm
+            asset={asset}
+            onAppPropsChange={onAppPropsChange}
           />
-        )}
-      </Box>
+          <Box>
+            <Stack className="mt-2" distribution="end">
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault()
+                  const url = stateToURL({
+                    [urlStateTestingKey]: { p: "/testing", o: config },
+                  })
+                  window.open(url, "_blank")
+                }}
+              >
+                <Icon color="jn-global-text" icon="openInNew" />
+              </a>
+            </Stack>
+
+            <div className="px-8 pb-8 pt-2">
+              {isLoading ? (
+                <Stack alignment="center">
+                  <Spinner variant="primary" />
+                  Loading...
+                </Stack>
+              ) : (
+                <>
+                  {Object.keys(appProps || {}).length <= 0 && (
+                    <p className="mb-6">
+                      This is a preview of the <b>{config.name}</b> micro
+                      frontend without <b>any specific configuration.</b>
+                    </p>
+                  )}
+                </>
+              )}
+              <div data-app={config.name} ref={holder}></div>
+            </div>
+          </Box>
+        </>
+      ) : (
+        <Message
+          className="mt-8"
+          title={config.name}
+          text="There is no preview available for this micro frontend"
+        />
+      )}
     </>
   )
 }

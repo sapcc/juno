@@ -8,7 +8,10 @@ const useStore = create((set) => ({
   setAssetsUrl: (newUrl) => set((state) => ({ assetsUrl: newUrl })),
   origin: "",
   setOrigin: (newOrigin) => set((state) => ({ origin: newOrigin })),
+  embedded: "",
+  setEmbedded: (embedded) => set((state) => ({ embedded: embedded })),
   urlStateKey: "assets-overview",
+  urlStateTestingKey: "assets-overview-testing",
 }))
 
 export default useStore
