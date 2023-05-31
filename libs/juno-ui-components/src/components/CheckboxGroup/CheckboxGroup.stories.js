@@ -67,8 +67,32 @@ ValidCheckboxGroup.args = {
   ],
 }
 
-export const CheckboxGroupWithSuccess = Template.bind({})
-CheckboxGroupWithSuccess.args = {
+export const WithHelptext = Template.bind({})
+WithHelptext.args = {
+  name: "checkbox-group-with-helptext",
+  label: "A CheckboxGroup with helptext",
+  helptext: "A helptext",
+  children: [
+    <Checkbox value="val-1" id="c-1" label="Option 1" />,
+    <Checkbox value="val-2" id="c-2" label="Option 2" />,
+    <Checkbox value="val-3" id="c-3" label="Option 3" />,
+  ],
+}
+
+export const WithHelptextAsNode = Template.bind({})
+WithHelptextAsNode.args = {
+  name: "checkbox-group-with-helptext-as-node",
+  label: "A CheckboxGroup with helptext as node",
+  helptext: <>This is a helptext with a <a href="#">Link</a></>,
+  children: [
+    <Checkbox value="val-1" id="c-1" label="Option 1" />,
+    <Checkbox value="val-2" id="c-2" label="Option 2" />,
+    <Checkbox value="val-3" id="c-3" label="Option 3" />,
+  ],
+}
+
+export const WithSuccesstext = Template.bind({})
+WithSuccesstext.args = {
   name: "checkbox-group-with-success",
   label: "A CheckboxGroup with successful validation",
   successtext: "This group is valid.",
@@ -91,8 +115,8 @@ InvalidCheckboxGroup.args = {
   ],
 }
 
-export const CheckboxGroupWithError = Template.bind({})
-CheckboxGroupWithError.args = {
+export const WithErrortext = Template.bind({})
+WithErrortext.args = {
   name: "checkbox-group-with-error",
   label: "A CheckboxGroup with an Error",
   errortext: "This group has an error.",

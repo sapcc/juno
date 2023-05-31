@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Label } from "../Label/index.js"
 import { Icon } from "../Icon/index"
+import { FormHint } from "../FormHint/index"
 
 const checkboxgroupstyles = `
 	jn-mb-4
@@ -57,18 +58,25 @@ A component to semantically group Checkboxes together. All Checkboxes inside the
 */
 export const CheckboxGroup = ({
   name,
+  id,
   label,
   selected,
   required,
   disabled,
   valid,
-  errortext,
   invalid,
+  helptext,
+  errortext,
   successtext,
   children,
   className,
   ...props
 }) => {
+  
+  const isNotEmptyString = (str) => {
+    return !(typeof str === 'string' && str.trim().length === 0)
+  }
+  
   const [selectedOptions, setSelectedOptions] = useState([])
   const [isValid, setIsValid] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
@@ -136,22 +144,17 @@ export const CheckboxGroup = ({
       } ${checkboxgroupstyles} ${className}`}
       {...props}
     >
-      {label ? (
-        <Label
-          text={label}
-          htmlFor={name}
-          required={required}
-          className={`${checkboxgrouplabelstyles}`}
-        />
-      ) : (
-        ""
-      )}
-      {errortext && errortext.length ? (
-        <p className={`${errortextstyles}`}>{errortext}</p>
-      ) : null}
-      {successtext && successtext.length ? (
-        <p className={`${successtextstyles}`}>{successtext}</p>
-      ) : null}
+      {
+        label && isNotEmptyString(label) ?
+          <Label 
+            text={label}
+            htmlFor={id}
+            disabled={disabled}
+            required={required}
+          />
+        :
+          ""
+      }
       <div
         className={`juno-checkbox-group-options ${groupstyles} ${
           isValid ? validgroupstyles : ""
@@ -175,6 +178,21 @@ export const CheckboxGroup = ({
         ) : null}
         {namedChildren()}
       </div>
+      { errortext && isNotEmptyString(errortext) ?
+          <FormHint text={errortext} variant="error" />
+        :
+          ""
+      }
+      { successtext && isNotEmptyString(successtext) ?
+          <FormHint text={successtext} variant="success" />
+        :
+          ""
+      }
+      { helptext && isNotEmptyString(helptext) ?
+          <FormHint text={helptext} />
+        :
+          ""
+       }
     </div>
   )
 }
@@ -182,6 +200,8 @@ export const CheckboxGroup = ({
 CheckboxGroup.propTypes = {
   /** Name attribute. Checkboxes within the group will have this name attribute */
   name: PropTypes.string,
+  /** The id of the group as a whole */
+  id: PropTypes.string,
   /** Label for the groupd as a whole */
   label: PropTypes.string,
   /** Array of values of individual selected options in the group */
@@ -196,8 +216,12 @@ CheckboxGroup.propTypes = {
   errortext: PropTypes.string,
   /** Whether the CheckboxGroup is valid */
   valid: PropTypes.bool,
+  /** A text to render to further explain meaning and significance of the group */
+  helptext: PropTypes.node,
   /** Text to display in case validation is successful. When passed, will set the whole group to valid. */
-  successtext: PropTypes.string,
+  successtext: PropTypes.node,
+  /** Text to display in case validation is unsuccessful. When passed, will set the whole group to invalid. */
+  errortext: PropTypes.node,
   /** Custom class to be passed to the individual checkboxes of the group */
   className: PropTypes.string,
   /** Child checkbox components */
@@ -206,12 +230,14 @@ CheckboxGroup.propTypes = {
 
 CheckboxGroup.defaultProps = {
   name: "",
+  id: "",
   className: "",
   label: "",
   required: false,
   selected: [],
   disabled: false,
   invalid: false,
+  helptext: "",
   errortext: "",
   valid: false,
   successtext: "",
