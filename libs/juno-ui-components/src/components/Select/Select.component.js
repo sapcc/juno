@@ -202,7 +202,7 @@ export const Select = React.forwardRef(
           } 
         >
           {
-            label && label.length ?
+            label && isNotEmptyString(label) ?
               <Label 
                 text={label}
                 htmlFor={id}
