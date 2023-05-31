@@ -1,6 +1,7 @@
 import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { CheckboxGroup } from "./index"
+import { Checkbox } from "../Checkbox/index"
 import { CheckboxRow } from "../CheckboxRow/index"
 
 describe("CheckboxGroup", () => {
@@ -104,7 +105,7 @@ describe("CheckboxGroup", () => {
 		expect(screen.getByText("Great Success!")).toBeInTheDocument()
 	})
 	
-	test("renders a invalid CheckboxGroup as passed", async () => {
+	test("renders an invalid CheckboxGroup as passed", async () => {
 		render(
 			<CheckboxGroup invalid>
 				<CheckboxRow value="test-checkbox"/>
