@@ -26,9 +26,9 @@ export const Default = Template.bind({})
 Default.args = {
   name: "Default CheckboxGroup",
   children: [
-    <Checkbox value="val-1" id="c-1" label="Option 1" />,
-    <Checkbox value="val-2" id="c-2" label="Option 2" />,
-    <Checkbox value="val-3" id="c-3" label="Option 3" />,
+    <Checkbox value="val-1" id="c-1" label="Option 1" key="1" />,
+    <Checkbox value="val-2" id="c-2" label="Option 2" key="2" />,
+    <Checkbox value="val-3" id="c-3" label="Option 3" key="3" />,
   ],
 }
 
@@ -37,9 +37,9 @@ WithLabel.args = {
   name: "Labelled ChechboxGroup",
   label: "A Labelled CheckboxGroup",
   children: [
-    <Checkbox value="val-1" id="c-1" label="Option 1" />,
-    <Checkbox value="val-2" id="c-2" label="Option 2" />,
-    <Checkbox value="val-3" id="c-3" label="Option 3" />,
+    <Checkbox value="val-1" id="c-1" label="Option 1" key="1" />,
+    <Checkbox value="val-2" id="c-2" label="Option 2" key="2" />,
+    <Checkbox value="val-3" id="c-3" label="Option 3" key="3" />,
   ],
 }
 
@@ -49,9 +49,9 @@ Required.args = {
   label: "A Required, Labelled CheckboxGroup",
   required: true,
   children: [
-    <Checkbox value="val-1" id="c-1" label="Option 1" />,
-    <Checkbox value="val-2" id="c-2" label="Option 2" />,
-    <Checkbox value="val-3" id="c-3" label="Option 3" />,
+    <Checkbox value="val-1" id="c-1" label="Option 1" key="1" />,
+    <Checkbox value="val-2" id="c-2" label="Option 2" key="2" />,
+    <Checkbox value="val-3" id="c-3" label="Option 3" key="3" />,
   ],
 }
 
@@ -61,9 +61,9 @@ ValidCheckboxGroup.args = {
   label: "A valid CheckboxGroup",
   valid: true,
   children: [
-    <Checkbox value="val-1" id="c-1" label="Option 1" />,
-    <Checkbox value="val-2" id="c-2" label="Option 2" />,
-    <Checkbox value="val-3" id="c-3" label="Option 3" />,
+    <Checkbox value="val-1" id="c-1" label="Option 1" key="1" />,
+    <Checkbox value="val-2" id="c-2" label="Option 2" key="2" />,
+    <Checkbox value="val-3" id="c-3" label="Option 3" key="3" />,
   ],
 }
 
@@ -73,9 +73,9 @@ WithHelptext.args = {
   label: "A CheckboxGroup with helptext",
   helptext: "A helptext",
   children: [
-    <Checkbox value="val-1" id="c-1" label="Option 1" />,
-    <Checkbox value="val-2" id="c-2" label="Option 2" />,
-    <Checkbox value="val-3" id="c-3" label="Option 3" />,
+    <Checkbox value="val-1" id="c-1" label="Option 1" key="1" />,
+    <Checkbox value="val-2" id="c-2" label="Option 2" key="2" />,
+    <Checkbox value="val-3" id="c-3" label="Option 3" key="3" />,
   ],
 }
 
@@ -85,9 +85,9 @@ WithHelptextAsNode.args = {
   label: "A CheckboxGroup with helptext as node",
   helptext: <>This is a helptext with a <a href="#">Link</a></>,
   children: [
-    <Checkbox value="val-1" id="c-1" label="Option 1" />,
-    <Checkbox value="val-2" id="c-2" label="Option 2" />,
-    <Checkbox value="val-3" id="c-3" label="Option 3" />,
+    <Checkbox value="val-1" id="c-1" label="Option 1" key="1" />,
+    <Checkbox value="val-2" id="c-2" label="Option 2" key="2" />,
+    <Checkbox value="val-3" id="c-3" label="Option 3" key="3" />,
   ],
 }
 
@@ -97,9 +97,9 @@ WithSuccesstext.args = {
   label: "A CheckboxGroup with successful validation",
   successtext: "This group is valid.",
   children: [
-    <Checkbox value="val-1" id="c-1" label="Option 1" />,
-    <Checkbox value="val-2" id="c-2" label="Option 2" />,
-    <Checkbox value="val-3" id="c-3" label="Option 3" />,
+    <Checkbox value="val-1" id="c-1" label="Option 1" key="1" />,
+    <Checkbox value="val-2" id="c-2" label="Option 2" key="2" />,
+    <Checkbox value="val-3" id="c-3" label="Option 3" key="3" />,
   ],
 }
 
@@ -109,9 +109,9 @@ InvalidCheckboxGroup.args = {
   label: "An invalid CheckboxGroup",
   invalid: true,
   children: [
-    <Checkbox value="val-1" id="c-1" label="Option 1" />,
-    <Checkbox value="val-2" id="c-2" label="Option 2" />,
-    <Checkbox value="val-3" id="c-3" label="Option 3" />,
+    <Checkbox value="val-1" id="c-1" label="Option 1" key="1" />,
+    <Checkbox value="val-2" id="c-2" label="Option 2" key="2" />,
+    <Checkbox value="val-3" id="c-3" label="Option 3" key="3" />,
   ],
 }
 
@@ -121,8 +121,8 @@ WithErrortext.args = {
   label: "A CheckboxGroup with an Error",
   errortext: "This group has an error.",
   children: [
-    <Checkbox value="val-1" id="c-1" label="Option 1" />,
-    <Checkbox value="val-2" id="c-2" label="Option 2" />,
-    <Checkbox value="val-3" id="c-3" label="Option 3" />,
+    <Checkbox value="val-1" id="c-1" label="Option 1" key="1" />,
+    <Checkbox value="val-2" id="c-2" label="Option 2" key="2" />,
+    <Checkbox value="val-3" id="c-3" label="Option 3" key="3" />,
   ],
 }
