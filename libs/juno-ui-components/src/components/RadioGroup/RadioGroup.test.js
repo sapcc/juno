@@ -89,6 +89,13 @@ describe("RadioGroup", () => {
 		expect(document.querySelector("#radio-3")).toBeChecked()
 	})
 	
+	test("renders a helptext as passed", async () => {
+		render(<RadioGroup name="a-radiogroup" helptext="this is a helptext"/>)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-help")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is a helptext")
+	})
+	
 	test("renders a valid RadioGroup as passed", async () => {
 		render(
 			<RadioGroup valid name="my-radiogroup">

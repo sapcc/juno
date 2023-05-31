@@ -1,6 +1,6 @@
 import React from "react"
 import { RadioGroup } from "./index.js"
-import { RadioRow } from "../RadioRow/"
+import { Radio } from "../Radio/"
 
 
 export default {
@@ -26,9 +26,9 @@ Default.args = {
   name: "default-radiogroup",
   selected: "default-1",
   children: [
-    <RadioRow id="default-1" value="default-1" />,
-    <RadioRow id="default-2" value="default-2" />,
-    <RadioRow id="default-3" value="default-3" />
+    <Radio id="default-1" value="default-1" label="Option 1" />,
+    <Radio id="default-2" value="default-2" label="Option 2" />,
+    <Radio id="default-3" value="default-3" label="Option 3" />
   ],
 }
 
@@ -38,9 +38,9 @@ WithLabel.args = {
   selected: "labelled-1",
   label: "Labelled RadioGroup",
   children: [
-    <RadioRow id="labelled-1" value="labelled-1" label="Option 1"/>,
-    <RadioRow id="labelled-2" value="labelled-2" label="Option 2"/>,
-    <RadioRow id="labelled-3" value="labelled-3" label="Option 3"/>
+    <Radio id="labelled-1" value="labelled-1" label="Option 1"/>,
+    <Radio id="labelled-2" value="labelled-2" label="Option 2"/>,
+    <Radio id="labelled-3" value="labelled-3" label="Option 3"/>
   ],
 }
 
@@ -51,9 +51,9 @@ Required.args = {
   label: "Required RadioGroup",
   required: true,
   children: [
-    <RadioRow id="required-1" value="required-1" label="Option 1"/>,
-    <RadioRow id="required-2" value="required-2" label="Option 2"/>,
-    <RadioRow id="required-3" value="required-3" label="Option 3"/>
+    <Radio id="required-1" value="required-1" label="Option 1"/>,
+    <Radio id="required-2" value="required-2" label="Option 2"/>,
+    <Radio id="required-3" value="required-3" label="Option 3"/>
   ],
 }
 
@@ -64,9 +64,9 @@ Disabled.args = {
   label: "Disabled RadioGroup",
   disabled: true,
   children: [
-    <RadioRow id="disabled-1" value="disabled-1" label="Option 1"/>,
-    <RadioRow id="disabled-2" value="disabled-2" label="Option 2"/>,
-    <RadioRow id="disabled-3" value="disabled-3" label="Option 3"/>
+    <Radio id="disabled-1" value="disabled-1" label="Option 1"/>,
+    <Radio id="disabled-2" value="disabled-2" label="Option 2"/>,
+    <Radio id="disabled-3" value="disabled-3" label="Option 3"/>
   ],
 }
 
@@ -77,22 +77,9 @@ Valid.args = {
   label: "Valid RadioGroup",
   valid: true,
   children: [
-    <RadioRow id="valid-1" value="valid-1" label="Option 1"/>,
-    <RadioRow id="valid-2" value="valid-2" label="Option 2"/>,
-    <RadioRow id="valid-3" value="valid-3" label="Option 3"/>
-  ],
-}
-
-export const WithSuccess = Template.bind({})
-WithSuccess.args = {
-  name: "success-radiogroup",
-  selected: "success-1",
-  successtext: "A RadioGroup with successful validation",
-  label: "RadioGroup with success",
-  children: [
-    <RadioRow id="success-1" value="success-1" label="Option 1"/>,
-    <RadioRow id="success-2" value="success-2" label="Option 2"/>,
-    <RadioRow id="success-3" value="success-3" label="Option 3"/>
+    <Radio id="valid-1" value="valid-1" label="Option 1"/>,
+    <Radio id="valid-2" value="valid-2" label="Option 2"/>,
+    <Radio id="valid-3" value="valid-3" label="Option 3"/>
   ],
 }
 
@@ -103,9 +90,48 @@ Invalid.args = {
   label: "Invalid RadioGroup",
   invalid: true,
   children: [
-    <RadioRow id="invalid-1" value="invalid-1" label="Option 1"/>,
-    <RadioRow id="invalid-2" value="invalid-2" label="Option 2"/>,
-    <RadioRow id="invalid-3" value="invalid-3" label="Option 3"/>
+    <Radio id="invalid-1" value="invalid-1" label="Option 1"/>,
+    <Radio id="invalid-2" value="invalid-2" label="Option 2"/>,
+    <Radio id="invalid-3" value="invalid-3" label="Option 3"/>
+  ],
+}
+
+export const WithHelptext = Template.bind({})
+WithHelptext.args = {
+  name: "with-helptext",
+  selected: "",
+  label: "A RadioGroup",
+  helptext: "Some additional explanation goes here",
+  children: [
+    <Radio id="invalid-1" value="invalid-1" label="Option 1"/>,
+    <Radio id="invalid-2" value="invalid-2" label="Option 2"/>,
+    <Radio id="invalid-3" value="invalid-3" label="Option 3"/>
+  ],
+}
+
+export const WithHelptextAsNode = Template.bind({})
+WithHelptextAsNode.args = {
+  name: "with-helptext-as-node",
+  selected: "",
+  label: "A RadioGroup",
+  helptext: <>This is a helptext with a <a href="#">Link</a></>,
+  children: [
+    <Radio id="invalid-1" value="invalid-1" label="Option 1"/>,
+    <Radio id="invalid-2" value="invalid-2" label="Option 2"/>,
+    <Radio id="invalid-3" value="invalid-3" label="Option 3"/>
+  ],
+}
+
+export const WithSuccess = Template.bind({})
+WithSuccess.args = {
+  name: "success-radiogroup",
+  selected: "success-1",
+  successtext: "A RadioGroup with successful validation",
+  label: "RadioGroup with success",
+  children: [
+    <Radio id="success-1" value="success-1" label="Option 1"/>,
+    <Radio id="success-2" value="success-2" label="Option 2"/>,
+    <Radio id="success-3" value="success-3" label="Option 3"/>
   ],
 }
 
@@ -116,8 +142,8 @@ WithError.args = {
   errortext: "A RadioGroup with failed validation",
   label: "RadioGroup with error",
   children: [
-    <RadioRow id="error-1" value="error-1" label="Option 1"/>,
-    <RadioRow id="error-2" value="error-2" label="Option 2"/>,
-    <RadioRow id="error-3" value="error-3" label="Option 3"/>
+    <Radio id="error-1" value="error-1" label="Option 1"/>,
+    <Radio id="error-2" value="error-2" label="Option 2"/>,
+    <Radio id="error-3" value="error-3" label="Option 3"/>
   ],
 }

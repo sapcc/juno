@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Label } from "../Label/index.js"
 import { Icon } from "../Icon/index"
+import { FormHint } from "../FormHint/index"
 
 const radiogroupstyles = `
 	jn-mb-4
@@ -58,11 +59,13 @@ A component to semantically and functionally group individual RadioRows: All con
 
 export const RadioGroup = ({
   name,
+  id,
   label,
   selected,
   required,
   disabled,
   valid,
+  helptext,
   successtext,
   invalid,
   errortext,
@@ -70,6 +73,11 @@ export const RadioGroup = ({
   className,
   ...props
 }) => {
+  
+  const isNotEmptyString = (str) => {
+    return !(typeof str === 'string' && str.trim().length === 0)
+  }
+  
   const [selectedOption, setSelectedOption] = useState("")
   const [isValid, setIsValid] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
@@ -131,22 +139,18 @@ export const RadioGroup = ({
       onChange={namedChildren}
       {...props}
     >
-      {label ? (
-        <Label
-          text={label}
-          htmlFor={name}
-          className={`${radiogrouplabelstyles}`}
-          required={required}
-        />
-      ) : (
-        ""
-      )}
-      {errortext && errortext.length ? (
-        <p className={`${errortextstyles}`}>{errortext}</p>
-      ) : null}
-      {successtext && successtext.length ? (
-        <p className={`${successtextstyles}`}>{successtext}</p>
-      ) : null}
+      {
+        label && isNotEmptyString(label) ?
+          <Label 
+            text={label}
+            htmlFor={id}
+            disabled={disabled}
+            required={required}
+          />
+        :
+          ""
+      }
+      
       <div
         className={`juno-checkbox-group-options ${groupstyles} ${
           isValid ? validgroupstyles : ""
@@ -170,6 +174,21 @@ export const RadioGroup = ({
         ) : null}
         {namedChildren()}
       </div>
+      { errortext && isNotEmptyString(errortext) ?
+          <FormHint text={errortext} variant="error" />
+        :
+          ""
+      }
+      { successtext && isNotEmptyString(successtext) ?
+          <FormHint text={successtext} variant="success" />
+        :
+          ""
+      }
+      { helptext && isNotEmptyString(helptext) ?
+          <FormHint text={helptext} />
+        :
+          ""
+       }
     </div>
   )
 }
@@ -177,6 +196,8 @@ export const RadioGroup = ({
 RadioGroup.propTypes = {
   /** Name attribute. Radios within the group using the same name will work together as mutually exclusive options. */
   name: PropTypes.string.isRequired,
+  /** Id for the group of radios */
+  id: PropTypes.string,
   /** Label for the group of radios as a whole. Mandatory if you want to denote a selection in the set is required. */
   label: PropTypes.string,
   /** The value of the selected option */
@@ -187,6 +208,8 @@ RadioGroup.propTypes = {
   disabled: PropTypes.bool,
   /** Whether the RadioGroup is invalid */
   invalid: PropTypes.bool,
+  /** A text to render to further explain meaning and significance of the Select */
+  helptext: PropTypes.string,
   /** Text to display in case validation failed. Will set the whole group to invalid when passed. */
   errortext: PropTypes.string,
   /** Whether the RadioGroup is valid */
@@ -201,12 +224,14 @@ RadioGroup.propTypes = {
 
 RadioGroup.defaultProps = {
   name: null,
+  id: "",
   className: "",
   required: null,
   label: null,
   selected: "",
   disabled: false,
   valid: false,
+  helptext: "",
   successtext: "",
   invalid: false,
   errortext: "",
