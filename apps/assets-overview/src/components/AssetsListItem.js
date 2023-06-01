@@ -1,5 +1,5 @@
 import React from "react"
-import { DataGrid, DataGridRow, DataGridCell } from "juno-ui-components"
+import { DataGridRow, DataGridCell, Pill, Stack } from "juno-ui-components"
 import useStore from "../store"
 import { currentState, push } from "url-state-provider"
 import { DateTime } from "luxon"
@@ -49,7 +49,28 @@ const AssetsListItem = ({ name, versions }) => {
       className="hover:text-theme-accent cursor-pointer"
       onClick={onShowDetails}
     >
-      <DataGridCell>{name}</DataGridCell>
+      <DataGridCell>
+        <Stack direction="vertical" gap="1.5">
+          <Stack direction="horizontal" gap="1.5">
+            {name}{" "}
+            {latest.kind === "juno-3rd-party" && <Pill pillValueLabel="3rd" />}
+            {latest.license && <Pill pillValueLabel={latest.license} />}
+          </Stack>
+          {latest.author && (
+            <span className="text-xs text-juno-grey-light/30">
+              powered by {latest.author}{" "}
+              {latest.repository && (
+                <>
+                  {", "}
+                  <a onClick={() => window.open(latest.repository, "_blank")}>
+                    {latest.repository}
+                  </a>
+                </>
+              )}
+            </span>
+          )}
+        </Stack>
+      </DataGridCell>
       <DataGridCell className="">
         {latest?.version}{" "}
         {olderVersions?.length > 0 && `(${olderVersions.length} more releases)`}

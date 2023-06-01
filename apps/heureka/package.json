@@ -1,6 +1,8 @@
 {
   "name": "heureka",
   "version": "1.0.1",
+  "author": "Juno team (SAP)",
+  "license": "MIT",
   "module": "build/index.js",
   "source": "src/index.js",
   "private": true,

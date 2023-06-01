@@ -1,6 +1,8 @@
 {
   "name": "doop",
   "version": "1.0.1",
+  "author": "Juno team (SAP)",
+  "license": "MIT",
   "source": "src/index.js",
   "module": "build/index.js",
   "private": true,

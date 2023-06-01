@@ -16,7 +16,7 @@ const AssetsList = ({ assets, isLoading, error }) => {
   )
 
   if (isLoading && !assets) return <HintLoading text="Loading assets..." />
-
+  console.log("====", assets)
   return (
     <DataGrid columns={4}>
       <DataGridRow>

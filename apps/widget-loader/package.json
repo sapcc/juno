@@ -1,6 +1,8 @@
 {
   "name": "widget-loader",
   "version": "1.2.1",
+  "author": "Juno team (SAP)",
+  "license": "MIT",
   "description": "This app presets the juno environment on the host and loads other apps",
   "source": "src/index.js",
   "main": "build/app.js",
