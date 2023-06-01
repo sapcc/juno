@@ -44,6 +44,8 @@ const AssetsListItem = ({ name, versions }) => {
     })
   }, [urlStateKey, name, latest?.version])
 
+  latest.repository = "https://github.com/juno-project/juno"
+
   return (
     <DataGridRow
       className="hover:text-theme-accent cursor-pointer"
@@ -54,19 +56,10 @@ const AssetsListItem = ({ name, versions }) => {
           <Stack direction="horizontal" gap="1.5">
             {name}{" "}
             {latest.kind === "juno-3rd-party" && <Pill pillValueLabel="3rd" />}
-            {latest.license && <Pill pillValueLabel={latest.license} />}
           </Stack>
           {latest.author && (
             <span className="text-xs text-juno-grey-light/30">
               powered by {latest.author}{" "}
-              {latest.repository && (
-                <>
-                  {", "}
-                  <a onClick={() => window.open(latest.repository, "_blank")}>
-                    {latest.repository}
-                  </a>
-                </>
-              )}
             </span>
           )}
         </Stack>

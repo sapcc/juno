@@ -13,6 +13,7 @@ import {
   TabPanel,
   SelectRow,
   SelectOption,
+  Pill,
 } from "juno-ui-components"
 import useStore from "../store"
 import {
@@ -169,7 +170,37 @@ const AssetDetails = () => {
         ) : (
           <>
             {versions && (
-              <Stack distribution="end">
+              <Stack distribution="between">
+                <Stack gap="2">
+                  {asset.author && (
+                    <div>
+                      <Pill
+                        closeable={false}
+                        pillKeyLabel="Powered by"
+                        pillValueLabel={asset.author}
+                      />
+                    </div>
+                  )}
+                  {asset.license && (
+                    <div>
+                      <Pill
+                        closeable={false}
+                        pillKeyLabel="License"
+                        pillValueLabel={asset.license}
+                      />
+                    </div>
+                  )}
+                  {asset.repository && (
+                    <div>
+                      <Pill
+                        closeable={false}
+                        pillKeyLabel="Repo"
+                        pillValueLabel={asset.repository}
+                      />
+                    </div>
+                  )}
+                </Stack>
+
                 <SelectRow
                   label="version"
                   variant="floating"
