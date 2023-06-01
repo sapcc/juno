@@ -12,7 +12,7 @@ import { Transition } from "@tailwindui/react"
 
 const orgName = new URL(window.location.href).searchParams.get("org")
 
-const Auth = ({ clientId, issuerUrl, children }) => {
+const Auth = ({ clientId, issuerUrl, mock, children }) => {
   const authData = useAuthData()
   const authAppLoaded = useAuthAppLoaded()
   const authLoggedIn = useAuthLoggedIn()
@@ -34,8 +34,9 @@ const Auth = ({ clientId, issuerUrl, children }) => {
       name: "auth",
       version: "latest",
       props: {
-        issuerurl: issuerUrl,
-        clientid: clientId,
+        issuerUrl: issuerUrl,
+        clientId: clientId,
+        mock: mock,
         initialLogin: true,
         requestParams: JSON.stringify({
           connector_id: !orgName ? undefined : orgName,

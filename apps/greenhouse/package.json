@@ -78,6 +78,11 @@
       "value": "URL TO K8S API",
       "type": "required",
       "description": "This value is necessary to communicate with the Kubernetes API. All the information you need comes from this API."
+    },
+    "mock": {
+      "value": false,
+      "type": "optional",
+      "description": "mock the OIDC data, allowed values are 'true', 'false' (default), or json (pure or base64 encoded)"
     }
   },
   "appPreview": true

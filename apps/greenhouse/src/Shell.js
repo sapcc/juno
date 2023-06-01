@@ -26,7 +26,11 @@ const Shell = (props = {}) => {
   }, [setApiEndpoint, setAssetsHost])
 
   return (
-    <Auth clientId={props?.authClientId} issuerUrl={props?.authIssuerUrl}>
+    <Auth
+      clientId={props?.authClientId}
+      issuerUrl={props?.authIssuerUrl}
+      mock={props?.mock}
+    >
       <ShellLayout>
         <PluginContainer />
       </ShellLayout>
