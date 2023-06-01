@@ -109,6 +109,11 @@ files.sort().forEach(async (file) => {
     appPreview: pkg.appPreview || false,
     kind: pkg.kind,
     appPreview: pkg.appPreview || false,
+    author: pkg.author,
+    description: pkg.description,
+    keywords: pkg.keywords || [],
+    license: pkg.license,
+    repository: pkg.repository,
   }
 
   if (fs.existsSync(`${rootPath}/${path}/README.md`)) {
