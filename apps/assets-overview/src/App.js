@@ -9,6 +9,7 @@ import markdown from "github-markdown-css/github-markdown.css"
 import markdownDark from "github-markdown-css/github-markdown-dark.css"
 import markdownLight from "github-markdown-css/github-markdown-light.css"
 import AppRouter from "./components/AppRouter"
+import useAssetTestUrl from "./hooks/useAssetTestUrl"
 
 const App = (props = {}) => {
   const setManifestUrl = useStore((state) => state.setManifestUrl)
@@ -60,6 +61,9 @@ const fixMarkdownLists = `
 `
 
 const StyledApp = (props) => {
+  // check if the url contains assets test statement and process it if so.
+  useAssetTestUrl()
+
   const theme = props.theme ? props.theme : "theme-dark"
   return (
     <AppShellProvider theme={theme}>

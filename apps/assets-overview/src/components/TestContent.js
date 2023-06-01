@@ -29,7 +29,7 @@ const TestContent = () => {
         a.then(() => {
           addMessage({
             variant: "warning",
-            text: `This is a preview of ${config?.name}. Not for productive use!`,
+            text: `This is a preview of ${config?.name}@${config?.version}. Not for productive use!`,
             dismissible: false,
           })
           return resolve(true)
