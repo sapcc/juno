@@ -29,7 +29,7 @@ const Shell = (props = {}) => {
     <Auth
       clientId={props?.authClientId}
       issuerUrl={props?.authIssuerUrl}
-      mock={props?.mock}
+      mock={props?.mockAuth}
     >
       <ShellLayout>
         <PluginContainer />
