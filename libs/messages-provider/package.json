@@ -39,7 +39,10 @@
     "start": "PORT=$APP_PORT node server.js"
   },
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "./setupTests.js"
+    ]
   },
   "dependencies": {
     "build": "^0.1.4",
