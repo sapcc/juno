@@ -18,19 +18,27 @@ const Messages = ({ className }) => {
   return (
     <>
       {messages && messages.length > 0 && (
-        <div className={`juno-message-provider ${className}`}>
-          {messages.map((item, index) => (
-            <Message
-              key={item.id}
-              className={index > 0 ? "mt-4" : ""}
-              variant={item.variant}
-              dismissible={true}
-              autoDismiss={shouldAutoDismiss(item.variant)}
-              onDismiss={() => onDismiss(item.id)}
-            >
-              {item.text}
-            </Message>
-          ))}
+        <div
+          role="group"
+          className={`juno-message-provider ${className ? className : ""}`}
+        >
+          {messages.map((item, index) => {
+            const { id, variant, text, ...props } = item
+            return (
+              <Message
+                role="alert"
+                key={id}
+                className={index > 0 ? "mt-4" : ""}
+                variant={variant}
+                dismissible={true}
+                autoDismiss={shouldAutoDismiss(variant)}
+                onDismiss={() => onDismiss(id)}
+                {...props}
+              >
+                {text}
+              </Message>
+            )
+          })}
         </div>
       )}
     </>

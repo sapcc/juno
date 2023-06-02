@@ -1,6 +1,6 @@
 import * as React from "react"
 import { renderHook, act, waitFor } from "@testing-library/react"
-import { useMessages, useActions, MessagesProvider } from "./useMessageStore"
+import { useMessages, useActions, MessagesProvider } from "./index"
 
 const originalConsoleError = global.console.error
 
@@ -78,6 +78,32 @@ describe("useMessageStore", () => {
         })
       )
     }).toThrow(/Failed prop type: Invalid prop `variant`/)
+  })
+
+  it("adds a message extra props (ex. dismissible) correctly", () => {
+    const wrapper = ({ children }) => (
+      <MessagesProvider>{children}</MessagesProvider>
+    )
+    const actions = renderHook(() => useActions(), { wrapper })
+    const { result } = renderHook(() => useMessages(), { wrapper })
+
+    let actionResult = null
+    act(
+      () =>
+        (actionResult = actions.result.current.addMessage({
+          variant: "error",
+          text: "this is an error",
+          dismissible: true,
+        }))
+    )
+
+    waitFor(() => {
+      expect(actionResult).toMatch(/message-/) //addMessage return message id if success
+      expect(result.current.messages.length).toBe(1)
+      expect(result.current.messages[0].variant).toEqual("error")
+      expect(result.current.messages[0].text).toEqual("this is an error")
+      expect(result.current.messages[0].dismissible).toBeTruthy()
+    })
   })
 
   it("remove a message correctly", () => {

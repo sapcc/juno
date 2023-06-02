@@ -47,8 +47,8 @@ const createMessagesSlice = (set, get) => ({
   storeId: uniqueId("store-"),
   messages: [], // this is the messages state
   actions: {
-    addMessage: ({ variant, text }) => {
-      return get().addMessage({ variant, text })
+    addMessage: (props) => {
+      return get().addMessage(props)
     },
     removeMessage: (id) => {
       return get().removeMessage(id)
@@ -57,7 +57,7 @@ const createMessagesSlice = (set, get) => ({
       return get().resetMessages()
     },
   },
-  addMessage: ({ variant, text }) => {
+  addMessage: ({ variant, text, ...props }) => {
     addMessageValidation({ variant: variant, text: text })
     let messageId = null
     set(
@@ -77,6 +77,7 @@ const createMessagesSlice = (set, get) => ({
           variant: variant,
           text: text,
           id: messageId,
+          ...props,
         })
         return { ...state, messages: items }
       },
