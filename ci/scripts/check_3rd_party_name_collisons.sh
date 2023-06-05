@@ -86,7 +86,7 @@ for item1 in "${juno_assets[@]}"; do
       echo -e "$ERROR" >"$THIRD_PARTY_ASSETS_PATH/$ASSET_TYPE/$item2/error_log"
       echo -e "${RED}${ERROR}${NC} 👎"
       # we only use exit here because this should not block the pipeline
-      exit
+      # exit
     fi
   done
 done
