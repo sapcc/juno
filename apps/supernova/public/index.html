@@ -29,6 +29,16 @@
     </script>
   </head>
   <body>
+    <script
+      defer
+      src="https://assets.juno.qa-de-1.cloud.sap/apps/widget-loader@latest/build/app.js"
+      data-name="auth"
+      data-version="1.0.3"
+      data-props-issuer-url="https://auth.greenhouse-qa.eu-nl-1.cloud.sap/"
+      data-props-client-id="greenhouse"
+    >
+      // data-props-initial-login="true"
+    </script>
     <script type="module">
       // appProps are generated in development env and added to the build
       import appProps from "./build/appProps.js"
