@@ -32,6 +32,7 @@ const usePredefinedFilters = () => {
     // if no support_group of labels available return
     const label = "support_group"
     if (
+      !authData?.parsed?.teams ||
       authData?.parsed?.teams?.length <= 0 ||
       filterLabels?.length <= 0 ||
       !filterLabels.includes(label)
