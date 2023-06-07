@@ -13,7 +13,6 @@ describe("manifest", () => {
   describe("_global", () => {
     it(`contains _global scope`, () => {
       cy.request("manifest.json").then((response) => {
-        console.log(response)
         expect(response.body).to.have.property("_global")
       })
     })

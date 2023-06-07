@@ -1,0 +1,21 @@
+# cypress client image
+# https://github.com/cypress-io/cypress-docker-images/tree/master/included#cypressincluded
+FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/cypress/included:12.13.0
+LABEL source_repository="https://github.wdf.sap.corp/secrets/ci/cypress-dashboard"
+
+# https://github.com/cypress-io/cypress-docker-images
+# https://hub.docker.com/r/cypress/browsers
+# https://github.com/cypress-io/cypress-docker-images/tree/master/browsers#naming-scheme
+
+# install sorry cypress wrapper
+# https://docs.sorry-cypress.dev/guide/get-started
+RUN npm install -g cypress-cloud
+
+ENV chrome="96"
+ENV firefox="93"
+ENV electron="94"
+
+SHELL ["/bin/bash", "-c"]
+# map cy2 to cypress-cloud
+RUN echo -e '#!/bin/sh\n CURRENTS_API_URL=$CYPRESS_API_URL \n cypress-cloud "$@"' > /usr/bin/cy2 && \
+  chmod +x /usr/bin/cy2

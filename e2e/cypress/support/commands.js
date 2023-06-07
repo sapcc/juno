@@ -23,3 +23,12 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+// React 18
+import { mount } from "cypress/react18"
+
+Cypress.Commands.add("mount", (component, options) => {
+  // Wrap any parent components needed
+  // ie: return mount(<MyProvider>{component}</MyProvider>, options)
+  return mount(component, options)
+})
