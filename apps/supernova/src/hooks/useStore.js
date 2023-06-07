@@ -6,6 +6,7 @@ import { countAlerts } from "../lib/utils"
 const createGlobalsSlice = (set, get) => ({
   globals: {
     embedded: false,
+    isUrlStateSetup: false,
 
     actions: {
       setEmbedded: (embedded) =>
@@ -13,6 +14,14 @@ const createGlobalsSlice = (set, get) => ({
           (state) => ({ globals: { ...state.globals, embedded: embedded } }),
           false,
           "globals/setEmbedded"
+        ),
+      setIsUrlStateSetup: (setup) =>
+        set(
+          (state) => ({
+            globals: { ...state.globals, isUrlStateSetup: setup },
+          }),
+          false,
+          "globals/setIsUrlStateSetup"
         ),
     },
   },
@@ -336,19 +345,17 @@ const useStore = create(
     ...createUserActivitySlice(set, get),
     ...createAlertsSlice(set, get),
     ...createFiltersSlice(set, get),
-    urlStateKey: "supernova",
   }))
 )
 
 // atomic exports only instead of exporting whole store
 // See reasoning here: https://tkdodo.eu/blog/working-with-zustand
 
-// Store exports
-export const useUrlStateKey = () => useStore((state) => state.urlStateKey)
-
 // Globals exports
 export const useGlobalsEmbedded = () =>
   useStore((state) => state.globals.embedded)
+export const useGlobalsIsUrlStateSetup = () =>
+  useStore((state) => state.globals.isUrlStateSetup)
 export const useGlobalsActions = () =>
   useStore((state) => state.globals.actions)
 
