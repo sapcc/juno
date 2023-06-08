@@ -61,7 +61,7 @@
     "authClientId": {
       "value": "tbd",
       "type": "required",
-      "description": "OIDC client id"
+      "description": "OIDC client id. "
     },
     "theme": {
       "value": "theme-dark",

@@ -10,7 +10,9 @@ import {
 import useAppLoader from "../hooks/useAppLoader"
 import { Transition } from "@tailwindui/react"
 
-const orgName = new URL(window.location.href).searchParams.get("org")
+const currentUrl = new URL(window.location.href)
+let match = currentUrl.host.match(/^(.+)\.dashboard\..+/)
+let orgName = match ? match[1] : currentUrl.searchParams.get("org")
 
 const Auth = ({ clientId, issuerUrl, mock, children }) => {
   const authData = useAuthData()
@@ -37,6 +39,7 @@ const Auth = ({ clientId, issuerUrl, mock, children }) => {
         issuerUrl: issuerUrl,
         clientId: clientId,
         mock: mock,
+        debug: true,
         initialLogin: true,
         requestParams: JSON.stringify({
           connector_id: !orgName ? undefined : orgName,
