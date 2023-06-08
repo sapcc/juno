@@ -52,14 +52,17 @@ const Auth = ({ clientId, issuerUrl, mock, children }) => {
   useEffect(() => {
     if (!authLoggedIn) return
 
-    const orgString = authData?.raw?.groups?.find(
-      (g) => g.indexOf("organization:") === 0
-    )
-    if (orgString) {
-      const name = orgString.split(":")[1]
-      const url = new URL(window.location.href)
-      url.searchParams.set("org", name)
-      window.history.replaceState(null, null, url.href)
+    if (!orgName) {
+      const orgString = authData?.raw?.groups?.find(
+        (g) => g.indexOf("organization:") === 0
+      )
+
+      if (orgString) {
+        const name = orgString.split(":")[1]
+        let url = new URL(window.location.href)
+        url.searchParams.set("org", name)
+        window.history.replaceState(null, null, url.href)
+      }
     }
   }, [authLoggedIn, authData])
 

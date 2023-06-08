@@ -128,11 +128,11 @@ export const useAuthAppIsLoading = () => useStore((s) => s.auth.appIsLoading)
 export const useAuthActions = () => useStore((s) => s.auth.actions)
 
 // APPS
-export const useApiEndpoint = () => useStore((s) => s.apiEndpoint)
-export const useAssetsHost = () => useStore((s) => s.assetsHost)
-export const useActions = () => useStore((s) => s.actions)
-
-// GLOBAL
 export const useAppsActive = () => useStore((s) => s.apps.active)
 export const useAppsConfig = () => useStore((s) => s.apps.config)
 export const useAppsActions = () => useStore((s) => s.apps.actions)
+
+// GLOBAL
+export const useApiEndpoint = () => useStore((s) => s.apiEndpoint)
+export const useAssetsHost = () => useStore((s) => s.assetsHost)
+export const useActions = () => useStore((s) => s.actions)
