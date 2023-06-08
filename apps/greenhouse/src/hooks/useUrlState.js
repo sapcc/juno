@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { registerConsumer } from "url-state-provider/src"
+import { registerConsumer } from "url-state-provider"
 import {
   useAppsActions,
   useAppsActive,
