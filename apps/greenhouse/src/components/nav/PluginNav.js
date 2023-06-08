@@ -23,7 +23,7 @@ const AppIcon = ({ name }) => {
     case "heureka":
       return <HeurekaIcon />
     default:
-      return <Icon />
+      return <Icon icon="autoAwesomeMosaic" />
   }
 }
 
