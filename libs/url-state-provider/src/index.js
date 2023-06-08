@@ -75,40 +75,29 @@ function stateToURL(state) {
 }
 
 /**
- * Variable where to host the global state
- */
-window[STATE_KEY] = window[STATE_KEY] || URLToState()
-// console.log("===========INITIAL STATE", window[STATE_KEY])
-
-/**
  *
  * @param {string} stateID
  * @returns state for stateID
  */
 function currentState(stateID) {
-  // The initial state is being set when this file is loaded on browser (see a few lines below)
-  // There is a clash when using the oauth together with the url-state-router lib. Problem use case:
-  // - App, ex. heureka, tries to load with a given state: https://heureka.app/?__s=N4IgFgpgrgThDWBDAggB1SAXKDmQHoBnCGANwEsBjCQkAXzqA
-  // - Initial State is being set correctly ==> {"heurekaApp": {"p": "/services"}
-  // - oauth ask for authentication and afterwards REDIRECTS back to https://heureka.app without params to avoid garbage. The correct url (lastUrl) is been saved in the session.
-  // - due to the redirect this file is being loaded again and the initial state set to empty (redirect has no params)
-  // - right after the oauth lib reads from the session the lastUrl and adds it to the history
-  // - current state returns allways the initial state and therefore we lose the original state set by the url-state-router
-  // The fix is to return the current state represented on the URL. With this fix we should not use this method internally since we could cause loops.
-  // return window[STATE_KEY][stateID]
   return URLToState()[stateID]
 }
+
 /**
  *
  * @param {string} stateID a key of the state
  * @param {JSON} state
  * @returns new url string
  */
-function updateState(stateID, state) {
-  // update global state
-  window[STATE_KEY][stateID] = state
-  // convert global state to URL
-  return stateToURL(window[STATE_KEY])
+function updateState(stateID, state, options = {}) {
+  // get current state from URL
+  const newState = URLToState()
+  // change state, overwrite or merge if "merge" option is true
+  newState[stateID] = options?.merge
+    ? { ...newState[stateID], ...state }
+    : state
+  // convert to url
+  return stateToURL(newState)
 }
 
 /**
@@ -119,7 +108,7 @@ function updateState(stateID, state) {
  */
 function push(stateID, state, historyOptions) {
   historyOptions = historyOptions || {}
-  var newUrl = updateState(stateID, state)
+  var newUrl = updateState(stateID, state, { merge: historyOptions?.merge })
 
   window.history.pushState(
     historyOptions.state || "",
@@ -205,17 +194,13 @@ window.onpopstate = function () {
   var state = URLToState()
   if (!state) return
 
-  // save old state and update global state to the current url state
-  var oldState = window[STATE_KEY]
-  window[STATE_KEY] = state
-
   // get keys from listeners (key is stateID)
   var stateIDs = Object.keys(onHistoryChangeListeners)
 
   // for all keys in listeners
   for (var i = 0; i < stateIDs.length; i++) {
     var stateID = stateIDs[i]
-    informListener(stateID, state[stateID], oldState[stateID])
+    informListener(stateID, state[stateID])
   }
 }
 
