@@ -5,35 +5,48 @@ import {
   useFilterLabels,
   useFilterActions,
   useActiveFilters,
+  useShowDetailsFor,
   useGlobalsActions,
 } from "./useStore"
 
 const urlStateManager = registerConsumer("supernova")
 const ACTIVE_FILTERS = "f"
+const DETAILS_FOR = "d"
 
 const useUrlState = () => {
   const loggedIn = useAuthLoggedIn()
   const { setActiveFilters } = useFilterActions()
   const activeFilters = useActiveFilters()
-  const { setIsUrlStateSetup } = useGlobalsActions()
+  const { setIsUrlStateSetup, setShowDetailsFor } = useGlobalsActions()
+  const detailsFor = useShowDetailsFor()
 
   // Set initial state from URL (on login)
   // do with useLayoutEffect so the ui isn't rendered before
   useLayoutEffect(() => {
     if (!loggedIn) return
-    let activeFilters = urlStateManager.currentState()?.[ACTIVE_FILTERS]
+    const activeFilters = urlStateManager.currentState()?.[ACTIVE_FILTERS]
     if (activeFilters) {
       setActiveFilters(activeFilters)
+    }
+    const detailsFor = urlStateManager.currentState()?.[DETAILS_FOR]
+    if (detailsFor) {
+      setShowDetailsFor(detailsFor)
     }
     setIsUrlStateSetup(true)
   }, [loggedIn, setActiveFilters])
 
-  // sync URL state
+  // sync URL state for filters
   useEffect(() => {
     if (!loggedIn) return
     // activeFilters: {cluster:["test1", "test2"], region: ["test1"]}
     urlStateManager.push({ [ACTIVE_FILTERS]: activeFilters })
   }, [loggedIn, activeFilters])
+
+  // sync URL state for details
+  useEffect(() => {
+    if (!loggedIn) return
+    urlStateManager.push({ [DETAILS_FOR]: detailsFor })
+  }, [loggedIn, detailsFor])
 }
 
 export default useUrlState
