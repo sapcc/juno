@@ -79,17 +79,25 @@ echo ""
 echo "### Found juno-3rd-party $ASSET_TYPE names ###"
 printf '%s\n' "${third_3rd_party_assets[@]}"
 
+ERROR_FOUND="false"
 for item1 in "${juno_assets[@]}"; do
   for item2 in "${third_3rd_party_assets[@]}"; do
     if [[ "$item1" = "$item2" ]]; then
       ERROR="\n$(date)\nError:    name collision found, 3rd-party-asset '$item2' collides with juno-asset '$item1' 😔\nSolution: please rename '$item2'"
+      # 1) write to error log file
       echo -e "$ERROR" >"$THIRD_PARTY_ASSETS_PATH/$ASSET_TYPE/$item2/error_log"
+      # 2) print error to stdout
       echo -e "${RED}${ERROR}${NC} 👎"
       # we only use exit here because this should not block the pipeline
       # AP: do not exit here, give it a chance to include further 3rd-party assets.
       # exit
+      ERROR_FOUND="true"
     fi
   done
 done
 
-echo "No collision found, all asset names for asset-type $ASSET_TYPE are fine 👍"
+if [[ "$ERROR_FOUND" == "false" ]]; then
+  echo "No collision found, all asset names for asset-type $ASSET_TYPE are fine 👍"
+else
+  echo "Name collisions found, please check the log which asstes are involved!"
+fi
