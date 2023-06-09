@@ -124,12 +124,10 @@ function integrity_check() {
   fi
 
   if [ -f "$error_log_location" ]; then
-    echo "Error: cannot combine because error_log was found"
     ERROR_LOG=$(cat $error_log_location)
     # we exit maybe later
   fi
 
-  echo
   {
     echo -e "\n$(date)"
 
@@ -211,12 +209,10 @@ while IFS= read -d $'\0' -r dirname; do
     if [ -f "package.json" ]; then
       # this is the case for apps/APPNAME/package.json
       # we are in the correct dir and do not need to go deeper
-      echo "dirname: $dirname"
       asset_dirname=$dirname
     else
       # in this case we go one level deeper
       cd "$asset_dirname"
-      echo "dirname: $asset_dirname"
       if [ ! -f "package.json" ]; then
         # apps/APPNAME/SOMEVERSION/package.json
         # TODO: write this to the error log
@@ -238,7 +234,10 @@ while IFS= read -d $'\0' -r dirname; do
     asset_module=$(cat package.json | jq -r '.module')
     asset_peer_deps=$(cat package.json | jq -r '.peerDependencies')
 
-    echo "name: $asset_name"
+    echo "Compose $KIND distribution for $ASSET_TYPE -> ${asset_name}@${asset_version}"
+    echo "----------------------------------"
+    echo "asset: $asset_name"
+    echo "dirname: $asset_dirname"
     echo "version: $asset_version"
     echo "main: $asset_main"
     echo "module: $asset_module"
@@ -246,7 +245,6 @@ while IFS= read -d $'\0' -r dirname; do
 
     integrity_check "$asset_version" "$asset_name" "$asset_main" "$asset_module"
 
-    echo "Compose $KIND distribution for $ASSET_TYPE -> ${asset_name}@${asset_version}"
     cd ..
     destination_path="$DIST_PATH/$ASSET_TYPE"
     mkdir -p "$destination_path"
