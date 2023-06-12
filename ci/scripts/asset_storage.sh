@@ -17,7 +17,7 @@ function help() {
   --asset-type -> libs|apps|apis|static
   --action     -> upload|download
 
-  --container  -> default is juno-assets
+  --container  -> where to upload or download assets
   --root-path  -> default is /tmp/build_result
   possible ENV Vars:
   * OS_USER_DOMAIN_NAME: per default this is not set 
@@ -82,7 +82,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [[ -z "$CONTAINER" ]]; then
-  CONTAINER="juno-assets"
+  echo "Error: no CONTAINER given 😐"
+  exit 1
 fi
 
 if [[ -z "$ACTION" ]]; then
