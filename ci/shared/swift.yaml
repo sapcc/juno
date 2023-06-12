@@ -24,7 +24,7 @@ params:
 run:
   path: /bin/sh
   args:
-    - -cx
+    - -c
     - |
       set -e cd
       cd ./data_dir
