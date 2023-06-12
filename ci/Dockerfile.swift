@@ -10,4 +10,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install --yes git c
 ARG SWIFT_CLIENT_VERSION="3.9.0"
 RUN pip3 --no-cache-dir install python-swiftclient==${SWIFT_CLIENT_VERSION} python-keystoneclient
 
-WORKDIR /juno 
+# this is used later in shared tasks to get access to ci scripts
+ADD ./ci/scripts /ci/scripts 
+
+WORKDIR /ci 
