@@ -11,6 +11,6 @@ ARG SWIFT_CLIENT_VERSION="3.9.0"
 RUN pip3 --no-cache-dir install python-swiftclient==${SWIFT_CLIENT_VERSION} python-keystoneclient
 
 # this is used later in shared tasks to get access to ci scripts
-ADD ./ci/scripts /ci/scripts 
+ADD . /juno 
 
-WORKDIR /ci 
+WORKDIR /juno

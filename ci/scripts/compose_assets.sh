@@ -4,7 +4,7 @@ set -e
 
 if [ ! -f "CODEOWNERS" ]; then
   echo "This script must run from root of juno repo"
-  exit
+  exit 1
 fi
 
 NC='\033[0m' # No Color
@@ -234,6 +234,7 @@ while IFS= read -d $'\0' -r dirname; do
     asset_module=$(cat package.json | jq -r '.module')
     asset_peer_deps=$(cat package.json | jq -r '.peerDependencies')
 
+    echo ""
     echo "Compose $KIND distribution for $ASSET_TYPE -> ${asset_name}@${asset_version}"
     echo "----------------------------------"
     echo "asset: $asset_name"

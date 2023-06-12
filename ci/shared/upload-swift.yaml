@@ -27,5 +27,7 @@ run:
   args:
     - -cx
     - |
-      set -e 
-      /ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container juno-assets --asset-path $ASSET_PATH --action upload --root-path ../upload
+      set -e cd
+      /juno
+      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container juno-assets --asset-path $ASSET_PATH --action upload --root-path ../upload
+      exit 1
