@@ -20,8 +20,8 @@ Default.args = {
     <Message key={0}>Juno styles are added inline</Message>,
     <CodeBlock key={1}>
       {`
-export default => (props) => {
-  render (
+export default (props) => {
+  return (
     <AppShellProvider>
       <style>{/* app styles */}</style>
       <App {...props} />
@@ -41,8 +41,8 @@ NoShadowRoot.args = {
     </Message>,
     <CodeBlock key={1}>
       {`
-export default => (props) => {
-  render (
+export default (props) => {
+  return (
     <AppShellProvider shadowRoot={false}>
       <style>{/* app styles */}</style>
       <App {...props} />
@@ -61,8 +61,8 @@ StylesInHead.args = {
     <Message key={0}>Juno styles are added to the head tag</Message>,
     <CodeBlock key={1}>
       {`
-export default => (props) => {
-  render (
+export default (props) => {
+  return (
     <AppShellProvider shadowRoot={false} stylesWrapper="head">
       <style>{/* app styles */}</style>
       <App {...props} />
@@ -81,8 +81,8 @@ StylesInline.args = {
     <Message key={0}>Juno style are added inline</Message>,
     <CodeBlock key={1}>
       {`
-export default => (props) => {
-  render (
+export default (props) => {
+  return (
     <AppShellProvider shadowRoot={false} stylesWrapper="inline">
       <style>{/* app styles */}</style>
       <App {...props} />
