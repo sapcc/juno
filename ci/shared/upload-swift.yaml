@@ -10,7 +10,6 @@ inputs:
   # TODO: scripte in das image reinbacken
   #       asset_storage script auf kind anpassen das es auch auf thirdparty hochladen kann
   - name: upload_dir # where the data is located that you want to upload
-  - name: juno # juno git repo
 
 params:
   KIND: "third_party"
@@ -29,5 +28,4 @@ run:
     - -cx
     - |
       set -e 
-      cd ./juno
-      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container juno-assets --asset-path $ASSET_PATH --action upload --root-path ../upload
+      /ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container juno-assets --asset-path $ASSET_PATH --action upload --root-path ../upload
