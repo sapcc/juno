@@ -5,7 +5,7 @@ set -e
 
 if [ ! -f "CODEOWNERS" ]; then
   echo "This script must run from root of juno repo"
-  exit
+  exit 1
 fi
 
 function help() {

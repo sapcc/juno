@@ -2,6 +2,11 @@
 # exit on error
 set -e
 
+if [ ! -f "CODEOWNERS" ]; then
+  echo "This script must run from root of juno repo"
+  exit 1
+fi
+
 function help() {
   echo "Usage: check_for_name_collisions.sh --juno-assets-path||-j --third-party-assets-path||-t --asset-type||-at --help||-h
   --juno-assets-path path to juno assets  
