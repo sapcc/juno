@@ -79,8 +79,8 @@ resources:
       uri: https://github.com/sapcc/juno.git
       branch: main
       username: sapcc-bot
-      paths: ["ci/Dockerfile.swift"]
-      password: ((github-access-token/sapcc-bot))   
+      paths: ["ci/Dockerfile.swift","ci/scripts/"]
+      password: ((github-access-token/sapcc-bot))
 
   - name: ui-storybook.git
     type: git
@@ -123,8 +123,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["<%=details[:path]%>","package.json","e2e", ".yarn", "ci/scripts" ]
-      # Note: add this if you need to test changes in scripts -> you need to add "scripts"
+      paths: ["<%=details[:path]%>","package.json","e2e", ".yarn", "ci/scripts", "ci/shared" ]
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
   
@@ -279,29 +278,20 @@ jobs:
                 echo ""
                 ./ci/scripts/build_asset.sh --asset-path <%= details[:path] %> --asset-name <%= name %> --output-path ../build_result
       - task: upload
-        image: swift.image
-        params: 
+        file: <%=details[:type]%>-<%= name %>.git/ci/shared/swift.yaml
+        input_mapping:
+          data_dir: build_result
+        params:
+          ACTION: upload
+          CONTAINER: "juno-assets"
+          ASSET_NAME: <%= name %>
+          ASSET_PATH: <%= details[:path] %>
           OS_USERNAME: ((swift-username))
           OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
           OS_AUTH_URL: ((swift-auth-url))
           OS_USER_DOMAIN_NAME: ((swift-user-domain-name))
           OS_PROJECT_DOMAIN_NAME: ((swift-project-domain-name))
           OS_PROJECT_NAME: ((swift-project-name))
-        input_mapping: 
-          juno: <%=details[:type]%>-<%= name %>.git
-        config:
-          inputs:
-            - name: build_result
-            - name: juno
-          platform: linux
-          run:
-            path: /bin/sh
-            args:
-              - -cx
-              - |
-                set -e 
-                cd ./juno
-                ./ci/scripts/asset_storage.sh --asset-name <%= name %> --container juno-assets --asset-path <%= details[:path] %> --action upload --root-path ../build_result
   <% end %> 
 
   <% 
@@ -318,6 +308,7 @@ jobs:
   # 4) when the apps are build without problems you can uncomment the parts in 
   #    the dockerfile to store the old versions 
   %>
+  
   - name: build-assets-server-image
     public: true
     plan:
@@ -331,7 +322,8 @@ jobs:
       <% end %>
       - put: assets-server.version
       <%# COPY ALL BUILDS TO dist %>
-      - task: combine-builds
+
+      - task: download-assets
         image: swift.image
         params: 
           OS_USERNAME: ((swift-username))
@@ -345,6 +337,44 @@ jobs:
           inputs:
             - name: juno.git
           outputs:
+            - name: juno-assets
+            - name: juno-3rd-party
+          run:
+            path: /bin/bash
+            # NOTE use -cx for debugging, than you can see the commands that where tirggered in the log
+            args:
+              - -c
+              - |
+                # exit on error
+                set -e
+                cd ./juno.git
+                # 1) download our own assets
+                <% ASSETS.each do |name, details|%>
+                  ./ci/scripts/asset_storage.sh --container juno-assets --asset-name <%= name %> --asset-path <%= details[:path] %> --action download --root-path ../juno-assets
+                <% end %>
+                # 2) download and check for name collission in juno-3rd-party assets
+                <% ASSET_TYPES[:"juno-3rd-party"].each do |asset_type|%>
+                    # download 3rd party assets
+                    ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type <%= asset_type %> --action download --root-path ../juno-3rd-party                  
+                    ./ci/scripts/check_3rd_party_name_collisions.sh --juno-assets-path ../juno-assets --third-party-assets-path ../juno-3rd-party --asset-type <%= asset_type %>
+                <% end %>
+
+      - task: combine-builds
+        image: swift.image
+        params: 
+          OS_USERNAME: ((swift-username))
+          OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
+          OS_AUTH_URL: ((swift-auth-url))
+          OS_USER_DOMAIN_NAME: ((swift-user-domain-name))
+          OS_PROJECT_DOMAIN_NAME: ((swift-project-domain-name))
+          OS_PROJECT_NAME: ((swift-project-name))
+        config:
+          platform: linux
+          inputs:
+            - name: juno.git
+            - name: juno-assets
+            - name: juno-3rd-party
+          outputs:
             - name: dist
           run:
             path: /bin/bash
@@ -355,23 +385,10 @@ jobs:
                 # exit on error
                 set -e
 
-                mkdir -p ./temp/juno-assets
-                mkdir -p ./temp/juno-3rd-party
                 DIST_PATH=$(pwd)/dist
                 cd ./juno.git
 
-                # 1.1) download our own assets
-                <% ASSETS.each do |name, details|%>
-                  ./ci/scripts/asset_storage.sh --container juno-assets --asset-name <%= name %> --asset-path <%= details[:path] %> --action download --root-path ../temp/juno-assets
-                  # ls -all ../temp/juno-assets/<%=details[:type]%>s/<%= name %>/
-                <% end %>
-                # 1.2) download and check for name collission in juno-3rd-party assets
-                <% ASSET_TYPES[:"juno-3rd-party"].each do |asset_type|%>
-                    # download 3rd party assets
-                    ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type <%= asset_type %> --action download --root-path ../temp/juno-3rd-party                  
-                    ./ci/scripts/check_3rd_party_name_collisions.sh --juno-assets-path ../temp/juno-assets --third-party-assets-path ../temp/juno-3rd-party --asset-type <%= asset_type %>
-                <% end %>
-                # 2) compose everthing together that we can use it in the asset-server image build
+                # compose everthing together that we can use it in the asset-server image build
                 <% ASSET_TYPES.each do |name,asset_types|%>
                   <% asset_types.each do |asset_type|%>
                     # check and compose everthing in the dist output folder that
@@ -381,9 +398,9 @@ jobs:
                       # because we do not want a blocked pipeline
                       # but an error log is uploaded to the 3rd party apps/libs folder
                       # if an error_log was found the new version is not deployed
-                      ./ci/scripts/compose_assets.sh --error-on-exit 0 --asset-type <%= asset_type %> --source-path ../temp  --dist-path $DIST_PATH --kind <%= name %>
+                      ./ci/scripts/compose_assets.sh --error-on-exit 0 --asset-type <%= asset_type %> --source-path ../  --dist-path $DIST_PATH --kind <%= name %>
                     else
-                      ./ci/scripts/compose_assets.sh --error-on-exit 1 --asset-type <%= asset_type %> --source-path ../temp  --dist-path $DIST_PATH --kind <%= name %>
+                      ./ci/scripts/compose_assets.sh --error-on-exit 1 --asset-type <%= asset_type %> --source-path ../  --dist-path $DIST_PATH --kind <%= name %>
                     fi
                   <% end %>
                 <% end %>
@@ -393,8 +410,8 @@ jobs:
                 echo "### LIBS ###"
                 ls -all $DIST_PATH/libs/
                 # upload build logs
-                ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type apps --action upload --root-path ../temp/juno-3rd-party &> /dev/null
-                ./ci/scripts/asset_storage.sh --container juno-assets --asset-type apps --action upload --root-path ../temp/juno-assets &> /dev/null
+                ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type apps --action upload --root-path ../juno-3rd-party &> /dev/null
+                ./ci/scripts/asset_storage.sh --container juno-assets --asset-type apps --action upload --root-path ../juno-assets &> /dev/null
                 #exit 1
 
       # to serve our js, css and stattic assets this step will add all the created data 
