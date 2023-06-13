@@ -10,7 +10,10 @@ export default {
 const Template = (args) => <Radio {...args} />
 
 export const Default = Template.bind({})
-Default.args = {
+Default.args = {}
+
+export const Checked = Template.bind({})
+Checked.args = {
   checked: true,
 }
 
