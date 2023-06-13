@@ -8,7 +8,7 @@ image_resource:
 
 inputs:
   - name: data_dir # where the data is located that you want to upload
-output:
+outputs:
   - name: data_dir # where the data is located that you want to download
 
 params:
