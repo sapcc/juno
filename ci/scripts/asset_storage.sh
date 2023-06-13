@@ -186,9 +186,9 @@ echo "use ASSET_NAME  = $ASSET_NAME"
 echo "use CONTAINER   = $CONTAINER"
 echo "----------------------------------"
 
-OUTPUT=""
+OUTPUT="/dev/null"
 if [[ "$DEBUG" == "true" ]]; then
-  OUTPUT=">/dev/null"
+  OUTPUT="/tmp/swift-debug.log"
 fi
 
 # https://docs.openstack.org/ocata/cli-reference/swift.html
@@ -196,7 +196,7 @@ function upload() {
   echo "Swift upload from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
   cd "$ROOT_PATH"
 
-  swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" $OUTPUT &&
+  swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" >$OUTPUT &&
     echo "----------------------------------" &&
     echo "upload done 🙂"
 }
@@ -204,7 +204,7 @@ function upload() {
 function download() {
   echo "Swift download from container $CONTAINER $ASSET_PATH to $ASSET_PATH"
   cd "$ROOT_PATH"
-  swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" $OUTPUT &&
+  swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" >$OUTPUT &&
     echo "----------------------------------" &&
     echo "download done 🙂"
 }
@@ -216,4 +216,12 @@ if [[ "$ACTION" == "upload" ]]; then
 fi
 if [[ "$ACTION" == "download" ]]; then
   download
+fi
+
+if [[ "$DEBUG" == "true" ]]; then
+  echo ""
+  echo "Log for $ACTION:"
+  echo "----------------"
+  cat /tmp/swift-debug.log 2>/dev/null
+  echo "----------------"
 fi
