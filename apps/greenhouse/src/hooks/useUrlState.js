@@ -1,15 +1,16 @@
-import { useEffect } from "react"
-import { registerConsumer } from "url-state-provider"
+import { useEffect, useLayoutEffect } from "react"
+import { registerConsumer } from "url-state-provider/src"
 import {
   useAppsActions,
   useAppsActive,
   useAppsConfig,
-  useAuthAppIsLoading,
   useAuthLoggedIn,
+  useGlobalsIsUrlStateSetup,
+  useGlobalsActions,
 } from "./useStore"
 
 // url state manager
-const urlStateManager = registerConsumer("GREENHOUSE")
+const { currentState, push } = registerConsumer("greenhouse", !!loggedIn)
 const ACTIVE_APPS_KEY = "a"
 
 const useUrlState = () => {
@@ -17,17 +18,21 @@ const useUrlState = () => {
   const activeApps = useAppsActive()
   const appsConfig = useAppsConfig()
   const loggedIn = useAuthLoggedIn()
+  const isUrlStateSetup = useGlobalsIsUrlStateSetup()
+  const { setIsUrlStateSetup } = useGlobalsActions()
 
   // Initial state from URL (on login)
   useEffect(() => {
-    if (!loggedIn || !appsConfig) return
+    if (!loggedIn || !appsConfig || isUrlStateSetup) return
+
     let active = urlStateManager.currentState()?.[ACTIVE_APPS_KEY]
     if (active) setActiveApps(active.split(","))
+    setIsUrlStateSetup(true)
   }, [loggedIn, appsConfig, setActiveApps])
 
   // sync URL state
   useEffect(() => {
-    if (!loggedIn) return
+    if (!loggedIn || !isUrlStateSetup) return
     urlStateManager.push({ [ACTIVE_APPS_KEY]: activeApps.join(",") })
   }, [loggedIn, activeApps])
 }

@@ -102,19 +102,42 @@ const createAppsDataSlice = (set, get) => ({
     },
   },
 })
-// global zustand store. See how this works here: https://github.com/pmndrs/zustand
+
+const createGlobalsSlice = (set, get) => ({
+  globals: {
+    apiEndpoint: "",
+    assetsHost: "",
+    isUrlStateSetup: false,
+
+    actions: {
+      setApiEndpoint: (value) =>
+        set(
+          (state) => ({ globals: { ...state.globals, apiEndpoint: value } }),
+          false,
+          "globals/setApiEndpoint"
+        ),
+      setAssetsHost: (value) =>
+        set(
+          (state) => ({ globals: { ...state.globals, assetsHost: value } }),
+          false,
+          "globals/setAssetsHost"
+        ),
+      setIsUrlStateSetup: (setup) =>
+        set(
+          (state) => ({
+            globals: { ...state.globals, isUrlStateSetup: setup },
+          }),
+          false,
+          "globals/setIsUrlStateSetup"
+        ),
+    },
+  },
+})
+
 const useStore = create((set, get) => ({
   ...createAuthDataSlice(set, get),
   ...createAppsDataSlice(set, get),
-  apiEndpoint: "",
-  assetsHost: "",
-
-  actions: {
-    setApiEndpoint: (value) =>
-      set(() => ({ apiEndpoint: value }), false, "setApiEndpoint"),
-    setAssetsHost: (value) =>
-      set(() => ({ assetsHost: value }), false, "setAssetsHost"),
-  },
+  ...createGlobalsSlice(set, get),
 }))
 
 // AUTH
@@ -133,6 +156,9 @@ export const useAppsConfig = () => useStore((s) => s.apps.config)
 export const useAppsActions = () => useStore((s) => s.apps.actions)
 
 // GLOBAL
-export const useApiEndpoint = () => useStore((s) => s.apiEndpoint)
-export const useAssetsHost = () => useStore((s) => s.assetsHost)
-export const useActions = () => useStore((s) => s.actions)
+export const useGlobalsApiEndpoint = () =>
+  useStore((s) => s.globals.apiEndpoint)
+export const useGlobalsAssetsHost = () => useStore((s) => s.globals.assetsHost)
+export const useGlobalsIsUrlStateSetup = () =>
+  useStore((state) => state.globals.isUrlStateSetup)
+export const useGlobalsActions = () => useStore((s) => s.globals.actions)
