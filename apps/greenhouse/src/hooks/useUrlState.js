@@ -10,7 +10,7 @@ import {
 } from "./useStore"
 
 // url state manager
-const { currentState, push } = registerConsumer("greenhouse")
+const urlStateManager = registerConsumer("greenhouse")
 const ACTIVE_APPS_KEY = "a"
 
 const useUrlState = () => {
