@@ -7,19 +7,20 @@ image_resource:
     tag: "latest"
 
 inputs:
-  - name: data_dir # where the data is located that you want to upload
+  - name: data_dir # where the data is located that you want to upload or download
 
 params:
   ACTION: # upload or download
-  CONTAINER: # the container to upload
-  ASSET_NAME: # the assetname that you want to upload
-  ASSET_PATH: # the assetpath from where to upload
+  CONTAINER: # the container to handle
+  ASSET_NAME: # the assetname that you want to upload or download
+  ASSET_PATH: # the assetpath from where to upload or download
   OS_USERNAME: # username for the project to access the object storage
   OS_PASSWORD: # password for the project to access the object storage
   OS_AUTH_URL: # auth url for the region to access the object storage
   OS_USER_DOMAIN_NAME: # domain name for the project to access
   OS_PROJECT_DOMAIN_NAME: # domain name for the project
   OS_PROJECT_NAME: # project name for the project that you want to access
+  DEBUG: "false" # enable debug
 
 run:
   path: /bin/sh
@@ -30,4 +31,4 @@ run:
       cd ./data_dir
       DATA_DIR=$(pwd)
       cd /juno
-      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container juno-assets --asset-path $ASSET_PATH --action $ACTION --root-path $DATA_DIR --container $CONTAINER
+      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container juno-assets --asset-path $ASSET_PATH --action $ACTION --root-path $DATA_DIR --container $CONTAINER --debug $DEBUG
