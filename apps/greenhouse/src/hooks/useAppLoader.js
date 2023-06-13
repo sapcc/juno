@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useState, useMemo, useRef } from "react"
-import { useAssetsHost } from "./useStore"
+import { useGlobalsAssetsHost } from "./useStore"
 
 // load widget-loader with importmap-only attribute to
 // ensure the importmap is loaded
@@ -25,13 +25,13 @@ const loadImportmap = (assetsHost) => {
 }
 
 const useAppLoader = () => {
-  const assetsHost = useAssetsHost()
+  const assetsHost = useGlobalsAssetsHost()
 
   const mount = useCallback(
     (container, config) => {
       if (!assetsHost) return null
       return loadImportmap(assetsHost).then(() => {
-        console.log("==============MOUNT", config?.name, config)
+        console.log("==============MOUNT", config?.name, config, assetsHost)
         let url = config.url
           ? config.url
           : `@juno/${config.name}@${config.version || "latest"}`

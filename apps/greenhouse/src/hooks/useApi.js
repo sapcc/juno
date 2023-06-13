@@ -1,13 +1,17 @@
 import { useCallback, useMemo } from "react"
 import { createClient } from "sapcc-k8sclient"
-import { useAuthData, useApiEndpoint, useAssetsHost } from "./useStore"
+import {
+  useAuthData,
+  useGlobalsApiEndpoint,
+  useGlobalsAssetsHost,
+} from "./useStore"
 
 const useApi = () => {
   const authData = useAuthData()
   // const token = useStoreByKey("auth.data?.JWT")
   // const groups = useStoreByKey("auth.data?.raw?.groups")
-  const apiEndpoint = useApiEndpoint()
-  const assetsHost = useAssetsHost()
+  const apiEndpoint = useGlobalsApiEndpoint()
+  const assetsHost = useGlobalsAssetsHost()
 
   const namespace = useMemo(() => {
     if (!authData?.raw?.groups) return null
