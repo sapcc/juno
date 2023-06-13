@@ -38,13 +38,13 @@ resources:
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base
 
-  - name: swift.image
+  - name: ci-helper.image
     type: docker-image
     icon: docker
     source:
       username: ((registry-user/keppel-ccloud.username))
       password: ((registry-user/keppel-ccloud.password))
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-swift
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-ci-helper
 
   - name: assets-server.image
     type: docker-image
@@ -72,14 +72,14 @@ resources:
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))      
 
-  - name: juno-swift.git
+  - name: juno-ci-helper.git
     type: git
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
       username: sapcc-bot
-      paths: ["ci/Dockerfile.swift","ci/scripts/"]
+      paths: ["ci/Dockerfile.ci-helper","ci/scripts/"]
       password: ((github-access-token/sapcc-bot))
 
   - name: ui-storybook.git
@@ -187,7 +187,7 @@ groups:
     jobs:
       - readme
       - build-base-image
-      - build-swift-image  
+      - build-ci-helper-image  
 
 jobs:
   - name: readme
@@ -224,19 +224,19 @@ jobs:
           build: juno.git
           dockerfile: juno.git/ci/Dockerfile.base
 
-  - name: build-swift-image
+  - name: build-ci-helper-image
     public: true
     plan:
-      - get: juno-swift.git
+      - get: juno-ci-helper.git
         trigger: true
 
-      - put: swift.image
+      - put: ci-helper.image
         params:
           tag_as_latest: true
           cache: true
           cache_tag: "latest"
-          build: juno-swift.git
-          dockerfile: juno-swift.git/ci/Dockerfile.swift
+          build: juno-ci-helper.git
+          dockerfile: juno-ci-helper.git/ci/Dockerfile.ci-helper
 
   # ============================================================= 
   # BUILD ASSET SERVER IMAGE
@@ -248,7 +248,7 @@ jobs:
       - get: <%= details[:type] %>-<%= name %>.git
         trigger: true
       - get: base.image
-      - get: swift.image
+      - get: ci-helper.image
       - put: <%= details[:type] %>-<%= name %>.version
 
       - task: build
@@ -312,7 +312,7 @@ jobs:
   - name: build-assets-server-image
     public: true
     plan:
-      - get: swift.image
+      - get: ci-helper.image
       - get: juno.git        
 
       <% ASSETS.each do |name, details|%>
@@ -324,7 +324,7 @@ jobs:
       <%# COPY ALL BUILDS TO dist %>
 
       - task: download-assets
-        image: swift.image
+        image: ci-helper.image
         params: 
           OS_USERNAME: ((swift-username))
           OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
@@ -360,7 +360,7 @@ jobs:
                 <% end %>
 
       - task: combine-builds
-        image: swift.image
+        image: ci-helper.image
         params: 
           OS_USERNAME: ((swift-username))
           OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
