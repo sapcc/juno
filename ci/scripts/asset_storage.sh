@@ -8,17 +8,20 @@ if [ ! -f "CODEOWNERS" ]; then
   exit 1
 fi
 
+#TODO: add debug option
+
 function help() {
-  echo "Usage: build_asset.sh --asset-name||-am --asset-path||-ap --asset-type||-at --action|-a --container||-c --root-path||-rp
+  echo "Usage: build_asset.sh --asset-name||-am --asset-path||-ap --asset-type||-at --action|-a --container||-c --root-path||-rp --debug||-d
   example: ./ci/scripts/asset_storage.sh --asset-name assets-overview --asset-type apps --action upload --root-path ../build_result
   --asset-name -> if no asset-name is fiven the whole folder that is 
                   defined with the --asset-type option is downloaded
   --asset-path -> optional like apps/asset-name, if set --asset-type is ingnored
   --asset-type -> libs|apps|apis|static
   --action     -> upload|download
-
   --container  -> where to upload or download assets
   --root-path  -> default is /tmp/build_result
+  --debug      -> default is 'false'
+
   possible ENV Vars:
   * OS_USER_DOMAIN_NAME: per default this is not set 
   * OS_PROJECT_DOMAIN_NAME: default is ccadmin
@@ -36,7 +39,7 @@ fi
 
 if [[ -z "$OS_USERNAME" ]]; then
   echo "no OS_USERNAME given"
-  exit
+  exit 1
 fi
 
 while [[ $# -gt 0 ]]; do
@@ -68,6 +71,11 @@ while [[ $# -gt 0 ]]; do
     ;;
   --container | -c)
     CONTAINER="$2"
+    shift # past argument
+    shift # past value
+    ;;
+  --debug | -d)
+    DEBUG="$2"
     shift # past argument
     shift # past value
     ;;
@@ -178,11 +186,17 @@ echo "use ASSET_NAME  = $ASSET_NAME"
 echo "use CONTAINER   = $CONTAINER"
 echo "----------------------------------"
 
+OUTPUT=""
+if [[ "$DEBUG" == "true" ]]; then
+  OUTPUT=">/dev/null"
+fi
+
 # https://docs.openstack.org/ocata/cli-reference/swift.html
 function upload() {
   echo "Swift upload from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
   cd "$ROOT_PATH"
-  swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" >/dev/null &&
+
+  swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" $OUTPUT &&
     echo "----------------------------------" &&
     echo "upload done 🙂"
 }
@@ -190,7 +204,7 @@ function upload() {
 function download() {
   echo "Swift download from container $CONTAINER $ASSET_PATH to $ASSET_PATH"
   cd "$ROOT_PATH"
-  swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" >/dev/null &&
+  swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" $OUTPUT &&
     echo "----------------------------------" &&
     echo "download done 🙂"
 }
