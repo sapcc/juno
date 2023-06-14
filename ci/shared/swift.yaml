@@ -16,12 +16,12 @@ params:
   CONTAINER: # the container to handle
   ASSET_NAME: # the assetname that you want to upload or download
   ASSET_PATH: # the assetpath from where to upload or download
-  OS_USERNAME: # username for the project to access the object storage
-  OS_PASSWORD: # password for the project to access the object storage
-  OS_AUTH_URL: # auth url for the region to access the object storage
-  OS_USER_DOMAIN_NAME: # domain name for the project to access
-  OS_PROJECT_DOMAIN_NAME: # domain name for the project
-  OS_PROJECT_NAME: # project name for the project that you want to access
+  OS_USERNAME: concourse
+  OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
+  OS_AUTH_URL: https://identity-3.eu-de-1.cloud.sap/v3
+  OS_USER_DOMAIN_NAME: Default
+  OS_PROJECT_DOMAIN_NAME: ccadmin
+  OS_PROJECT_NAME: master
   DEBUG: "false" # enable debug
 
 run:
