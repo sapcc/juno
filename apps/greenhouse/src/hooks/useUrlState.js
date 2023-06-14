@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from "react"
-import { registerConsumer } from "url-state-provider/src"
+import { registerConsumer } from "url-state-provider"
 import {
   useAppsActions,
   useAppsActive,
@@ -22,7 +22,7 @@ const useUrlState = () => {
   const { setIsUrlStateSetup } = useGlobalsActions()
 
   // Initial state from URL (on login)
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!loggedIn || !appsConfig || isUrlStateSetup) return
 
     let active = urlStateManager.currentState()?.[ACTIVE_APPS_KEY]
