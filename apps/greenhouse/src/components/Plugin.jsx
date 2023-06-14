@@ -7,7 +7,9 @@ import { useRef } from "react"
 const Plugin = ({ name, active }) => {
   const { mount } = useAppLoader()
   const holder = useRef()
-  const app = useRef(document.createElement("div"))
+  const el = document.createElement("div")
+  el.classList.add("inline")
+  const app = useRef(el)
   const config = useAppsConfig()
   const mounted = useRef(false)
 
@@ -39,7 +41,7 @@ const Plugin = ({ name, active }) => {
     }
   }, [active])
 
-  return <div data-app={name} ref={holder}></div>
+  return <div data-app={name} ref={holder} className="inline"></div>
 }
 
 export default Plugin
