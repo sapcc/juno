@@ -33,4 +33,4 @@ run:
       cd ./data_dir
       DATA_DIR=$(pwd)
       cd /juno
-      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container juno-assets --asset-path $ASSET_PATH --action $ACTION --root-path $DATA_DIR --container $CONTAINER --debug $DEBUG
+      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container $CONTAINER --asset-path $ASSET_PATH --action $ACTION --root-path $DATA_DIR --container $CONTAINER --debug $DEBUG
