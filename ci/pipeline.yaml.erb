@@ -286,12 +286,6 @@ jobs:
           CONTAINER: "juno-assets"
           ASSET_NAME: <%= name %>
           ASSET_PATH: <%= details[:path] %>
-          OS_USERNAME: ((swift-username))
-          OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
-          OS_AUTH_URL: ((swift-auth-url))
-          OS_USER_DOMAIN_NAME: ((swift-user-domain-name))
-          OS_PROJECT_DOMAIN_NAME: ((swift-project-domain-name))
-          OS_PROJECT_NAME: ((swift-project-name))
   <% end %> 
 
   <% 
