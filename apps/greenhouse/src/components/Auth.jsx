@@ -33,6 +33,7 @@ const Auth = ({ clientId, issuerUrl, mock, children }) => {
     if (!mount || !clientId || !issuerUrl) return
 
     mount(ref.current, {
+      id: "auth",
       name: "auth",
       version: "latest",
       props: {
