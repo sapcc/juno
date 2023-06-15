@@ -53,18 +53,80 @@
     "react-dom": "^18.2.0"
   },
   "appProps": {
+    "protocol": {
+      "value": "oidc",
+      "type": "required",
+      "description": "oidc|openstack, protocol of the authentication mechanism."
+    },
     "issuerUrl": {
       "value": "https://endpoint_url_of_the_openid_provider.com",
       "type": "required",
-      "description": "Endpoint URL of the OpenID provider"
+      "description": "(oidc) endpoint URL of the OpenID provider"
     },
     "clientId": {
       "value": "tbd",
       "type": "required",
-      "description": "OIDC client id"
+      "description": "(oidc) client id"
     },
     "requestParams": {
-      "value": "{\"connector_id\": \"ccloud\"}"
+      "value": "{\"connector_id\": \"ccloud\"}",
+      "type": "optional",
+      "description": "(oidc) additional parameters for the request to the OpenID provider"
+    },
+    "authEndpoint": {
+      "value": "https://tbd",
+      "type": "required",
+      "description": "(openstack) auth api endpoint, Required if protocol is not 'openstack'."
+    },
+    "authMethod": {
+      "value": "password",
+      "type": "required",
+      "description": "(openstack) auth method (password|token|external), Required if protocol is not 'openstack'."
+    },
+    "authToken": {
+      "value": "",
+      "type": "optional",
+      "description": "(openstack) auth token. You can use a openstack auth token to authenticate the user."
+    },
+    "scopeDomainId": {
+      "value": "",
+      "type": "optional",
+      "description": "(openstack) scope domain id."
+    },
+    "scopeDomain": {
+      "value": "",
+      "type": "optional",
+      "description": "(openstack) scope domain name."
+    },
+    "scopeProjectId": {
+      "value": "",
+      "type": "optional",
+      "description": "(openstack) scope project id. If specified, no domainId or domain is required."
+    },
+    "scopeProjectName": {
+      "value": "",
+      "type": "optional",
+      "description": "(openstack) scope project name. DomainId or domain is required!"
+    },
+    "userDomainId": {
+      "value": "",
+      "type": "optional",
+      "description": "(openstack) user domain id. Required if userDomain is not specified!"
+    },
+    "userDomain": {
+      "value": "",
+      "type": "optional",
+      "description": "(openstack) user domain name. Required if userDomainId is not specified!"
+    },
+    "showScopeForm": {
+      "value": false,
+      "type": "optional",
+      "description": "(openstack) if false then show only user/password fields."
+    },
+    "userName": {
+      "value": null,
+      "type": "optional",
+      "description": "(openstack) user name. That will prefill user name field."
     },
     "debug": {
       "value": true,
@@ -79,7 +141,7 @@
     "mock": {
       "value": false,
       "type": "optional",
-      "description": "mock the OIDC data, allowed values are 'true', 'false' (default), or json (pure or base64 encoded)"
+      "description": "mock the auth data, allowed values are 'true', 'false' (default), or json (pure or base64 encoded)"
     }
   },
   "appPreview": false
