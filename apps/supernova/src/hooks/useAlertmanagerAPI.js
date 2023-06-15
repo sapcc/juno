@@ -1,8 +1,18 @@
 import { useEffect } from "react"
 import { useAlertsActions, useUserIsActive } from "./useStore"
-let workerUrl = new URL("workers/api.js", import.meta.url)
+import { get } from "../api/client"
 
-const loadWorker = fetch(workerUrl)
+let alertsWorkerUrl = new URL("workers/api.js", import.meta.url)
+let silencesWorkerUrl = new URL("workers/silences.js", import.meta.url)
+
+const loadAlertsWorker = fetch(alertsWorkerUrl)
+  .then((r) => r.blob())
+  .then((blob) => {
+    var blobUrl = window.URL.createObjectURL(blob)
+    return new Worker(blobUrl, { type: "module" })
+  })
+
+const loadSilencesWorker = fetch(silencesWorkerUrl)
   .then((r) => r.blob())
   .then((blob) => {
     var blobUrl = window.URL.createObjectURL(blob)
@@ -10,7 +20,8 @@ const loadWorker = fetch(workerUrl)
   })
 
 const useAlertmanagerAPI = (apiEndpoint) => {
-  const { setAlertsData, setFilteredItems, setIsLoading, setIsUpdating } = useAlertsActions()
+  const { setAlertsData, setFilteredItems, setIsLoading, setIsUpdating } =
+    useAlertsActions()
   const isUserActive = useUserIsActive()
 
   // Create a web worker to get updates from the alert manager api
@@ -21,7 +32,7 @@ const useAlertmanagerAPI = (apiEndpoint) => {
     // set alerts state to loading
     setIsLoading(true)
 
-    loadWorker.then((worker) => {
+    loadAlertsWorker.then((worker) => {
       // receive messages from worker
       worker.onmessage = (e) => {
         const action = e.data.action
@@ -34,6 +45,15 @@ const useAlertmanagerAPI = (apiEndpoint) => {
             break
           case "ALERTS_FETCH_END":
             setIsUpdating(false)
+            break
+          case "SILENCES_UPDATE":
+            console.log("SILENCES_UPDATE:::::")
+            break
+          case "SILENCES_FETCH_START":
+            console.log("SILENCES_FETCH_START:::::")
+            break
+          case "SILENCES_FETCH_END":
+            console.log("SILENCES_FETCH_END:::::")
             break
         }
       }
@@ -50,12 +70,38 @@ const useAlertmanagerAPI = (apiEndpoint) => {
       cleanup = () => worker.terminate()
     })
 
+    loadSilencesWorker.then((worker) => {
+      // receive messages from worker
+      worker.onmessage = (e) => {
+        const action = e.data.action
+        switch (action) {
+          case "SILENCES_UPDATE":
+            console.log("SILENCES_UPDATE:::::")
+            break
+          case "SILENCES_FETCH_START":
+            console.log("SILENCES_FETCH_START:::::")
+            break
+          case "SILENCES_FETCH_END":
+            console.log("SILENCES_FETCH_END:::::")
+            break
+        }
+      }
+
+      // initial config
+      worker.postMessage({
+        action: "SILENCES_CONFIGURE",
+        apiEndpoint: apiEndpoint,
+      })
+
+      cleanup = () => worker.terminate()
+    })
+
     return () => cleanup && cleanup()
   }, [apiEndpoint])
 
   useEffect(() => {
     if (isUserActive === undefined) return
-    loadWorker.then((worker) => {
+    loadAlertsWorker.then((worker) => {
       worker.postMessage({
         action: "ALERTS_CONFIGURE",
         watch: isUserActive,
