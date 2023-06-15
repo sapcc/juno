@@ -47,12 +47,14 @@ const useApi = () => {
 
       const config = {}
       configs.items.forEach((plugin) => {
+        const id = plugin.metadata?.name
         const name = plugin.status?.uiApplication?.name
         const version = plugin.status?.uiApplication?.version
         const url = plugin.status?.uiApplication?.url
 
         if ((url && url.indexOf(assetsHost) < 0) || manifest[name]?.[version]) {
-          config[name] = {
+          config[id] = {
+            id,
             name,
             version,
             url,

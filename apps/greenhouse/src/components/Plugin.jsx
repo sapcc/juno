@@ -4,7 +4,7 @@ import { useAppsConfig } from "../hooks/useStore"
 import { Spinner } from "juno-ui-components"
 import { useRef } from "react"
 
-const Plugin = ({ name, active }) => {
+const Plugin = ({ id, active }) => {
   const { mount } = useAppLoader()
   const holder = useRef()
   const el = document.createElement("div")
@@ -18,7 +18,7 @@ const Plugin = ({ name, active }) => {
   const mountApp = useMemo(
     () =>
       new Promise((resolve) => {
-        const a = mount(app.current, config[name])
+        const a = mount(app.current, config[id])
         if (!a) resolve(false)
         else a.then(() => (mounted.current = true)).then(() => resolve(true))
       }),
@@ -26,7 +26,7 @@ const Plugin = ({ name, active }) => {
   )
 
   useEffect(() => {
-    if (!config[name]) return
+    if (!config[id]) return
 
     if (active) {
       // load and add to holder
@@ -41,7 +41,7 @@ const Plugin = ({ name, active }) => {
     }
   }, [active])
 
-  return <div data-app={name} ref={holder} className="inline"></div>
+  return <div data-app={id} ref={holder} className="inline"></div>
 }
 
 export default Plugin

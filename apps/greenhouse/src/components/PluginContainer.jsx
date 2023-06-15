@@ -10,7 +10,7 @@ const PluginContainer = () => {
     useAppsActions()
   const activeApps = useAppsActive()
   const appsConfig = useAppsConfig()
-  const availableAppNames = React.useMemo(
+  const availableAppIds = React.useMemo(
     () => Object.keys(appsConfig),
     [appsConfig]
   )
@@ -23,15 +23,15 @@ const PluginContainer = () => {
   // set first plugin in the list of plugin config as active unless active exists
   useLayoutEffect(() => {
     if (!appsConfig) return
-    const availableAppNames = Object.keys(appsConfig)
-    if (availableAppNames.length === 0) return
-    const active = activeApps.map((a) => availableAppNames.indexOf(a) >= 0)
-    if (active.length === 0) setActiveApps(availableAppNames[0])
+    const availableAppIds = Object.keys(appsConfig)
+    if (availableAppIds.length === 0) return
+    const active = activeApps.map((a) => availableAppIds.indexOf(a) >= 0)
+    if (active.length === 0) setActiveApps(availableAppIds[0])
   }, [appsConfig, activeApps, setActiveApps])
 
-  if (availableAppNames.length === 0) return "No plugins available"
-  return availableAppNames.map((appName, i) => (
-    <Plugin name={appName} key={i} active={activeApps.indexOf(appName) >= 0} />
+  if (availableAppIds.length === 0) return "No plugins available"
+  return availableAppIds.map((id, i) => (
+    <Plugin id={id} key={i} active={activeApps.indexOf(id) >= 0} />
   ))
 }
 
