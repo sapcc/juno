@@ -106,14 +106,14 @@ const PluginNav = () => {
             direction="vertical"
             alignment="center"
             className={`greenhouse-nav-item ${navItem(
-              activeApps.indexOf(appConf.name) >= 0
+              activeApps.indexOf(appConf.id) >= 0
             )}`}
             role="button"
             tabIndex="0"
-            onClick={() => setActiveApps([appConf.name])}
+            onClick={() => setActiveApps([appConf.id])}
           >
             <AppIcon name={appConf.name} />
-            <span className={appNameStyles}>{appConf.name}</span>
+            <span className={appNameStyles}>{appConf.id}</span>
           </Stack>
         ))}
 
