@@ -113,20 +113,6 @@ fi
 echo "----------------------------------"
 echo "use BUILD_DIR = $BUILD_DIR"
 
-# Version handling, this is only relevant for lib
-echo "Check Version..."
-VERSION=$(jq -r .version $ASSET_PATH/package.json)
-echo "###$VERSION"
-echo "$OUTPUT_PATH/$ASSET_PATH/last-build-version"
-if [ -f "$OUTPUT_PATH/$ASSET_PATH/last-build-version" ]; then
-  LAST_VERSION=$(cat $OUTPUT_PATH/$ASSET_PATH/last-build-version)
-  if [[ "$VERSION" != "$LAST_VERSION" ]]; then
-    echo "New Version found!"
-    echo $VERSION >$OUTPUT_PATH/$ASSET_PATH/new-version-found
-  fi
-fi
-echo $VERSION >$OUTPUT_PATH/$ASSET_PATH/last-build-version
-
 echo "copy assets data from $ASSET_PATH/$BUILD_DIR to $OUTPUT_PATH/$ASSET_PATH/"
 mkdir -p "$OUTPUT_PATH/$ASSET_PATH"
 cp -r "$ASSET_PATH/$BUILD_DIR" "$OUTPUT_PATH/$ASSET_PATH/"
@@ -140,6 +126,20 @@ echo "create $OUTPUT_PATH/$ASSET_PATH/package.tgz"
 cd "$OUTPUT_PATH/$ASSET_PATH"
 # todo use npm-pack instead https://docs.npmjs.com/cli/v6/commands/npm-pack
 tar --exclude="package.tgz" -czf package.tgz .
+
+# Version handling, this is only relevant for lib
+echo "Check Version..."
+VERSION=$(jq -r .version $ASSET_PATH/package.json)
+echo "Version: $VERSION"
+echo "$OUTPUT_PATH/$ASSET_PATH/last-build-version"
+if [ -f "$OUTPUT_PATH/$ASSET_PATH/last-build-version" ]; then
+  LAST_VERSION=$(cat $OUTPUT_PATH/$ASSET_PATH/last-build-version)
+  if [[ "$VERSION" != "$LAST_VERSION" ]]; then
+    echo "New Version found!"
+    echo $VERSION >$OUTPUT_PATH/$ASSET_PATH/new-version-found
+  fi
+fi
+echo $VERSION >$OUTPUT_PATH/$ASSET_PATH/last-build-version
 
 echo "----------------------------------"
 echo "Build for $ASSET_NAME done 🙂"
