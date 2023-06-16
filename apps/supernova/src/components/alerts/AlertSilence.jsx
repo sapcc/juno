@@ -8,51 +8,88 @@ import {
   TextInputRow,
   SelectRow,
   SelectOption,
+  Stack,
+  Icon,
 } from "juno-ui-components"
 import AlertLabels from "./AlertLabels"
 import { Markup } from "interweave"
 import { descriptionParsed } from "../../lib/utils"
 import { useAuthData } from "../../hooks/useStore"
 
+const detailsCss = (show) => {
+  return `      
+      transition-all
+      ease-out
+      max-h-0
+      overflow-y-scroll
+			${show ? "duration-1000 max-h-[34rem]" : `duration-300`}
+		`
+    .replace(/\n/g, " ")
+    .replace(/\s+/g, " ")
+}
+
 const AlertSilence = ({ alert }) => {
-  const [displaySilence, setDisplaySilence] = useState(false)
+  const [displayNewSilence, setDisplayNewSilence] = useState(false)
+  const [showDetails, setShowDetails] = useState(false)
   const authData = useAuthData()
 
   const name = useMemo(() => {
     return authData?.parsed?.fullName
   }, [authData])
 
-  const title = useMemo(() => {
-    if (!alert) return
-    return `New Silence for alert ${alert?.labels?.alertname}`
-  }, [alert])
-
   return (
     <>
-      <Button size="small" onClick={() => setDisplaySilence(!displaySilence)}>
+      <Button
+        size="small"
+        onClick={() => setDisplayNewSilence(!displayNewSilence)}
+      >
         Silence
       </Button>
-      {displaySilence && (
+      {displayNewSilence && (
         <Modal
-          title={title}
+          title="New Silence"
           size="large"
           open={true}
           onCancel={function noRefCheck() {}}
           onConfirm={null}
         >
-          <AlertLabels alert={alert} />
-          <Box className="mt-4">
-            <Markup
-              content={descriptionParsed(
-                alert.annotations?.description?.replace(
-                  /`([^`]+)`/g,
-                  "<code class='inline-code'>$1</code>"
-                )
-              )}
-              tagName="div"
-              className="text-theme-light"
-            />
-          </Box>
+          <span className="text-lg">
+            Alert <b>{alert?.labels?.alertname}</b>
+          </span>
+
+          <Stack className="mb-4" alignment="center" distribution="end">
+            <div
+              className="cursor-pointer"
+              onClick={() => setShowDetails(!showDetails)}
+            >
+              <Stack alignment="center">
+                <Icon
+                  color="jn-global-text"
+                  icon={showDetails ? "expandLess" : "expandMore"}
+                />
+                Show details
+              </Stack>
+            </div>
+          </Stack>
+
+          <div className="overflow-hidden">
+            <div className={detailsCss(showDetails)}>
+              <AlertLabels alert={alert} />
+              <Box className="mt-4">
+                <Markup
+                  content={descriptionParsed(
+                    alert.annotations?.description?.replace(
+                      /`([^`]+)`/g,
+                      "<code class='inline-code'>$1</code>"
+                    )
+                  )}
+                  tagName="div"
+                  className="text-theme-light"
+                />
+              </Box>
+            </div>
+          </div>
+
           <Form className="mt-4">
             <TextInputRow
               required
