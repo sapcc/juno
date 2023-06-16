@@ -129,7 +129,7 @@ tar --exclude="package.tgz" -czf package.tgz .
 
 # Version handling, this is only relevant for lib
 echo "Check Version..."
-VERSION=$(jq -r .version $ASSET_PATH/package.json)
+VERSION=$(jq -r .version $OUTPUT_PATH/$ASSET_PATH/package.json)
 echo "Version: $VERSION"
 echo "$OUTPUT_PATH/$ASSET_PATH/last-build-version"
 if [ -f "$OUTPUT_PATH/$ASSET_PATH/last-build-version" ]; then
