@@ -21,8 +21,10 @@ self.onmessage = (e) => {
       if (e.data?.apiEndpoint) {
         e.data["fetchFn"] = () => fetchAction(e.data?.apiEndpoint)
       }
-      console.log("SILENCES_CONFIGURE", e.data)
       silenceService.configure(e.data)
+      break
+    case "SILENCES_FETCH":
+      silenceService.fetch()
       break
   }
 }

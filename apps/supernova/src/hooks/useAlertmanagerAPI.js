@@ -3,6 +3,7 @@ import {
   useAlertsActions,
   useUserIsActive,
   useSilencesActions,
+  useSilencesLocalItems,
 } from "./useStore"
 
 let alertsWorkerUrl = new URL("workers/api.js", import.meta.url)
@@ -123,6 +124,16 @@ const useAlertmanagerAPI = (apiEndpoint) => {
       })
     })
   }, [isUserActive])
+
+  // as soon as we have locally some silences we refetch the them
+  useEffect(() => {
+    if (!useSilencesLocalItems || useSilencesLocalItems?.length <= 0) return
+    loadSilencesWorker.then((worker) => {
+      worker.postMessage({
+        action: "SILENCES_FETCH",
+      })
+    })
+  }, [useSilencesLocalItems])
 }
 
 export default useAlertmanagerAPI

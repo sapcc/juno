@@ -431,6 +431,8 @@ export const useSilencesIsUpdating = () =>
 export const useSilencesUpdatedAt = () =>
   useStore((state) => state.silences.updatedAt)
 export const useSilencesError = () => useStore((state) => state.silences.error)
+export const useSilencesLocalItems = () =>
+  useStore((state) => state.silences.localItems)
 
 export const useSilencesActions = () =>
   useStore((state) => state.silences.actions)

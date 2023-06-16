@@ -8,6 +8,7 @@ const createSilencesSlice = (set, get) => ({
     isUpdating: false,
     updatedAt: null,
     error: null,
+    localItems: [],
 
     actions: {
       setSilences: ({ items }) => {
@@ -24,16 +25,29 @@ const createSilencesSlice = (set, get) => ({
           return hash
         })
 
-        set(
+        return set(
           produce((state) => {
             state.silences.items = newItems
             state.silences.itemsHash = hash
             state.silences.isLoading = false
             state.silences.isUpdating = false
             state.silences.updatedAt = Date.now()
+            state.silences.localItems = []
           }),
           false,
           "silences.setSilencesData"
+        )
+      },
+      addSilence: (silence) => {
+        let items = state.silences.localItems()
+        items.push(silence)
+
+        return set(
+          produce((state) => {
+            state.silences.localItems = items
+          }),
+          false,
+          "silences.addSilence"
         )
       },
       setIsLoading: (value) =>
