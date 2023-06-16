@@ -107,11 +107,18 @@ const useAlertmanagerAPI = (apiEndpoint) => {
     return () => cleanup && cleanup()
   }, [apiEndpoint])
 
+  // enable/disable watching in the workers
   useEffect(() => {
     if (isUserActive === undefined) return
     loadAlertsWorker.then((worker) => {
       worker.postMessage({
         action: "ALERTS_CONFIGURE",
+        watch: isUserActive,
+      })
+    })
+    loadSilencesWorker.then((worker) => {
+      worker.postMessage({
+        action: "SILENCES_CONFIGURE",
         watch: isUserActive,
       })
     })
