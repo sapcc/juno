@@ -15,6 +15,7 @@ import {
 import AlertLabels from "./AlertLabels"
 import AlertLinks from "./AlertLinks"
 import AlertSilence from "./AlertSilence"
+import AlertStatus from "./AlertStatus"
 import { descriptionParsed } from "../../lib/utils"
 
 const cellSeverityClasses = (severity) => {
@@ -107,7 +108,9 @@ const Alert = ({ alert }, ref) => {
           )}
         </Stack>
       </DataGridCell>
-      <DataGridCell>{alert.labels?.status}</DataGridCell>
+      <DataGridCell>
+        <AlertStatus status={alert.status} />
+      </DataGridCell>
       <DataGridCell>
         <AlertSilence alert={alert} />
       </DataGridCell>

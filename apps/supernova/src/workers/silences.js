@@ -3,7 +3,7 @@ import { get } from "../api/client"
 
 const fetchAction = (endpoint) => {
   return get(`${endpoint}/silences`, {}).then((data) => {
-    console.log("fetched data:::", data)
+    self.postMessage({ action: "SILENCES_UPDATE", silences: data })
   })
 }
 
