@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import {
   Modal,
   Button,
@@ -33,6 +33,12 @@ const AlertSilence = ({ alert }) => {
   const [showDetails, setShowDetails] = useState(false)
   const authData = useAuthData()
 
+  const onCloseModal = () => {
+    // reset state
+    setDisplayNewSilence(false)
+    setShowDetails(false)
+  }
+
   const name = useMemo(() => {
     return authData?.parsed?.fullName
   }, [authData])
@@ -50,7 +56,7 @@ const AlertSilence = ({ alert }) => {
           title="New Silence"
           size="large"
           open={true}
-          onCancel={function noRefCheck() {}}
+          onCancel={onCloseModal}
           onConfirm={null}
         >
           <span className="text-lg">
