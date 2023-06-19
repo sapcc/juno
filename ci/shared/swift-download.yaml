@@ -7,7 +7,7 @@ image_resource:
     tag: "latest"
 
 outputs:
-  - name: download # where the data is located that you want to download
+  - name: download # where do you want to download
 
 params:
   CONTAINER: # the container to handle
@@ -27,7 +27,7 @@ run:
     - -c
     - |
       set -e cd
-      cd ./data_dir
-      DATA_DIR=$(pwd)
+      cd ./download
+      DOWNLOAD_DIR=$(pwd)
       cd /juno
-      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container $CONTAINER --asset-path $ASSET_PATH --action download --root-path $DATA_DIR --container $CONTAINER --debug $DEBUG
+      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container $CONTAINER --asset-path $ASSET_PATH --action download --root-path $DOWNLOAD_DIR --container $CONTAINER --debug $DEBUG
