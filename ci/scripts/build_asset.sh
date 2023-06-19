@@ -9,7 +9,7 @@ if [ ! -f "CODEOWNERS" ]; then
 fi
 
 function help() {
-  echo "Usage: build_assets.sh --asset-path||-ap --asset-name||-sn --output-path||-op
+  echo "Usage: build_assets.sh --asset-path||-ap --asset-name||-sn --asset-type||-at --output-path||-op
     Example: ./ci/scripts/build_asset.sh --asset-name auth --asset-path ./apps/auth/ --output-path /tmp/juno-build
     --output-path is optional default is ./build-result"
   exit
@@ -29,6 +29,11 @@ while [[ $# -gt 0 ]]; do
     ;;
   --asset-path | -ap)
     ASSET_PATH="$2"
+    shift # past argument
+    shift # past value
+    ;;
+  --output-type | -at)
+    ASSET_TYPE="$2"
     shift # past argument
     shift # past value
     ;;
@@ -54,6 +59,11 @@ fi
 
 if [[ -z "$ASSET_PATH" ]]; then
   echo "Error: no ASSET_PATH path found 😐"
+  exit 1
+fi
+
+if [[ -z "$ASSET_TYPE" ]]; then
+  echo "Error: no ASSET_TYPE path found 😐"
   exit 1
 fi
 
@@ -127,19 +137,23 @@ cd "$OUTPUT_PATH/$ASSET_PATH"
 # todo use npm-pack instead https://docs.npmjs.com/cli/v6/commands/npm-pack
 tar --exclude="package.tgz" -czf package.tgz .
 
-# Version handling, this is only relevant for lib
-echo "Check Version..."
-VERSION=$(jq -r .version package.json)
-echo "Version: $VERSION"
-echo "last-build-version"
-if [ -f "last-build-version" ]; then
-  LAST_VERSION=$(cat last-build-version)
-  if [[ "$VERSION" != "$LAST_VERSION" ]]; then
-    echo "New Version found!"
-    echo $VERSION >new-version-found
+if [[ "$ASSET_TYPE" == "lib" ]]; then
+  # Version handling, this is only relevant for lib
+  echo "Check Version..."
+  VERSION=$(jq -r .version package.json)
+  echo "Version: $VERSION"
+  if [ -f "last-build-version" ]; then
+    LAST_VERSION=$(cat last-build-version)
+    echo "Last build version: $LAST_VERSION"
+    if [[ "$VERSION" != "$LAST_VERSION" ]]; then
+      echo "New Version found! This is good 🙂"
+      echo "$VERSION" >last-build-version
+    else
+      # this is a flag that in the upload task nothing new is uploaded
+      echo "DO-NOTHING: no new version for lib $ASSET_NAME was found" >swift-action
+    fi
   fi
 fi
-echo $VERSION >last-build-version
 
 echo "----------------------------------"
 echo "Build for $ASSET_NAME done 🙂"
