@@ -7,12 +7,9 @@ image_resource:
     tag: "latest"
 
 inputs:
-  - name: data_dir # where the data is located that you want to upload
-outputs:
-  - name: data_dir # where the data is located that you want to download
+  - name: upload # where the data is located that you want to upload
 
 params:
-  ACTION: # upload or download
   CONTAINER: # the container to handle
   ASSET_NAME: # the assetname that you want to upload or download
   ASSET_PATH: # the assetpath from where to upload or download
@@ -30,7 +27,8 @@ run:
     - -c
     - |
       set -e cd
-      cd ./data_dir
-      DATA_DIR=$(pwd)
+      cd ./upload
+      UPLOAD_DIR=$(pwd)
       cd /juno
-      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container $CONTAINER --asset-path $ASSET_PATH --action $ACTION --root-path $DATA_DIR --container $CONTAINER --debug $DEBUG
+      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container $CONTAINER --asset-path $ASSET_PATH --action upload --root-path $UPLOAD_DIR --container $CONTAINER --debug $DEBUG
+      exit 1
