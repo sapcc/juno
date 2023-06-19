@@ -1,7 +1,6 @@
 import React, { forwardRef } from "react"
 
 import { DataGridCell, DataGridRow } from "juno-ui-components"
-
 import AlertLabels from "./shared/AlertLabels"
 import AlertLinks from "./shared/AlertLinks"
 import AlertSilence from "./AlertSilence"
