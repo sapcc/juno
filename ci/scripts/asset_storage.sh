@@ -196,13 +196,8 @@ function upload() {
   echo "Swift upload from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
   cd "$ROOT_PATH"
 
-  SWIFT_ACTION=""
-  if [ -f "swift-action" ]; then
-    SWIFT_ACTION=$(cat swift-action)
-  fi
-
-  if [[ "$SWIFT_ACTION" == *"DO-NOTHING"* ]]; then
-    echo $SWIFT_ACTION
+  if [ -z "$(ls -A "$ASSET_PATH")" ]; then
+    echo "The directory $ASSET_PATH is empty, noting to upload to swift..."
   else
     swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" >$OUTPUT &&
       echo "----------------------------------" &&
