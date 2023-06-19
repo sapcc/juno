@@ -1,9 +1,15 @@
 import ApiService from "../api/apiService"
 import { get } from "../api/client"
+import { sortSilencesByState } from "../lib/utils"
 
 const fetchAction = (endpoint) => {
   return get(`${endpoint}/silences`, {}).then((data) => {
-    self.postMessage({ action: "SILENCES_UPDATE", silences: data })
+    const sortedSilences = sortSilencesByState(data)
+    self.postMessage({
+      action: "SILENCES_UPDATE",
+      silences: data,
+      sortedSilences: sortedSilences,
+    })
   })
 }
 

@@ -4,6 +4,7 @@ const createSilencesSlice = (set, get) => ({
   silences: {
     items: [],
     itemsHash: {},
+    itemsByState: {},
     isLoading: false,
     isUpdating: false,
     updatedAt: null,
@@ -11,7 +12,7 @@ const createSilencesSlice = (set, get) => ({
     localItems: [],
 
     actions: {
-      setSilences: ({ items }) => {
+      setSilences: ({ items, itemsByState }) => {
         if (!items) return
 
         // remove duplicates
@@ -29,6 +30,7 @@ const createSilencesSlice = (set, get) => ({
           produce((state) => {
             state.silences.items = newItems
             state.silences.itemsHash = hash
+            state.silences.itemsByState = itemsByState
             state.silences.isLoading = false
             state.silences.isUpdating = false
             state.silences.updatedAt = Date.now()
