@@ -99,8 +99,6 @@ if [[ "$ASSET_TYPE" == "lib" ]] && [[ -n "$LAST_BUILD_PATH" ]]; then
   else
     # this is a flag that in the upload task nothing new is uploaded
     echo "No new version found. Nothing to build"
-    mkdir -p "$OUTPUT_PATH/$ASSET_PATH"
-    echo "DO-NOTHING: no new version for lib $ASSET_NAME was found" >"$OUTPUT_PATH/$ASSET_PATH/swift-action"
     exit
   fi
 fi
