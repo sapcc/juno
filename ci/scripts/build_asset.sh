@@ -85,6 +85,8 @@ if [[ -n "${string}" ]]; then
   echo "string is not empty"
 fi
 
+mkdir -p "$OUTPUT_PATH/$ASSET_PATH"
+
 # check for new versions from last build
 if [[ "$ASSET_TYPE" == "lib" ]] && [[ -n "$LAST_BUILD_PATH" ]]; then
   # Version handling, this is only relevant for lib
@@ -97,7 +99,6 @@ if [[ "$ASSET_TYPE" == "lib" ]] && [[ -n "$LAST_BUILD_PATH" ]]; then
   if [[ "$CURRENT_VERSION" != "$LAST_VERSION" ]]; then
     echo "New Version found! This is good 🙂"
   else
-    # this is a flag that in the upload task nothing new is uploaded
     echo "No new version found. Nothing to build"
     exit
   fi
@@ -152,7 +153,6 @@ echo "----------------------------------"
 echo "use BUILD_DIR = $BUILD_DIR"
 
 echo "copy assets data from $ASSET_PATH/$BUILD_DIR to $OUTPUT_PATH/$ASSET_PATH/"
-mkdir -p "$OUTPUT_PATH/$ASSET_PATH"
 cp -r "$ASSET_PATH/$BUILD_DIR" "$OUTPUT_PATH/$ASSET_PATH/"
 cp "$ASSET_PATH/package.json" "$OUTPUT_PATH/$ASSET_PATH/package.json"
 if [ -f "$ASSET_PATH/COMMUNICATOR.md" ]; then
