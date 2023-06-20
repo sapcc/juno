@@ -8,28 +8,15 @@ import {
   TextInputRow,
   SelectRow,
   SelectOption,
-  Stack,
-  Icon,
-  ModalFooter,
-  ButtonRow,
 } from "juno-ui-components"
-import AlertLabels from "./shared/AlertLabels"
-import { Markup } from "interweave"
-import { descriptionParsed } from "../../lib/utils"
-import { useAuthData } from "../../hooks/useStore"
+import {
+  useAuthData,
+  useSilencesExcludedLabelsHash,
+  useFilterLabels,
+} from "../../hooks/useStore"
 import { post } from "../../api/client"
-
-const detailsCss = (show) => {
-  return `      
-      transition-all
-      ease-out
-      max-h-0
-      overflow-y-scroll
-			${show ? "duration-1000 max-h-[34rem]" : `duration-300`}
-		`
-    .replace(/\n/g, " ")
-    .replace(/\s+/g, " ")
-}
+import AlertDescription from "../alerts/shared/AlertDescription"
+import SilenceNewAdvanced from "./SilenceNewAdvanced"
 
 const validateForm = (values) => {
   const invalidItems = {}
@@ -51,17 +38,49 @@ const errorHelpText = (messages) => {
 
 const DEFAULT_FORM_VALUES = { duration: "2", comment: "" }
 
-const AlertSilence = ({ alert }) => {
+const SilenceNew = ({ alert }) => {
+  const authData = useAuthData()
+  const excludedLabelsHash = useSilencesExcludedLabelsHash()
+  const filterLabels = useFilterLabels()
   const [displayNewSilence, setDisplayNewSilence] = useState(false)
-  const [showDetails, setShowDetails] = useState(false)
   const [formState, setFormState] = useState(DEFAULT_FORM_VALUES)
   const [showValidation, setShowValidation] = useState({})
-  const authData = useAuthData()
+  const [matchers, setMatchers] = useState([])
+
+  const name = useMemo(() => {
+    return authData?.parsed?.fullName
+  }, [authData])
+
+  // init the matchers
+  // use displayNewSilence to reset the matchers on open and close the same alert
+  useEffect(() => {
+    if (!alert?.labels || !excludedLabelsHash || !filterLabels) return
+
+    let items = []
+    // allow just labels which are configured
+    filterLabels.forEach((filterLabel) => {
+      const value = alert?.labels?.[filterLabel]
+      if (value) {
+        const matcher = {
+          key: filterLabel,
+          value: value,
+          excluded: false,
+          configurable: false,
+        }
+        // copy excluded label values to a different array
+        if (excludedLabelsHash[filterLabel]) {
+          items.push({ ...matcher, excluded: true, configurable: true })
+        } else {
+          items.push(matcher)
+        }
+      }
+    })
+    setMatchers(items)
+  }, [alert, excludedLabelsHash, filterLabels, displayNewSilence])
 
   const onCloseModal = () => {
     // reset state
     setDisplayNewSilence(false)
-    setShowDetails(false)
     setFormState(DEFAULT_FORM_VALUES)
   }
 
@@ -75,9 +94,20 @@ const AlertSilence = ({ alert }) => {
     setFormState({ ...formState, [key]: value })
   }
 
-  const name = useMemo(() => {
-    return authData?.parsed?.fullName
-  }, [authData])
+  const onMatchersChanged = (matcher) => {
+    const index = matchers.findIndex((item) => item.key == matcher.key)
+    let items = matchers.slice()
+    // update item
+    if (index >= 0) {
+      items[index] = {
+        key: matcher.key,
+        value: matcher.value,
+        excluded: !matcher.excluded,
+        configurable: matcher.configurable,
+      }
+    }
+    setMatchers(items)
+  }
 
   return (
     <>
@@ -89,7 +119,7 @@ const AlertSilence = ({ alert }) => {
       </Button>
       {displayNewSilence && (
         <Modal
-          title="New Silence"
+          title="New Silence for"
           size="large"
           open={true}
           confirmButtonLabel="Save"
@@ -97,45 +127,19 @@ const AlertSilence = ({ alert }) => {
           onConfirm={onSubmitForm}
         >
           <span className="text-lg">
-            Alert <b>{alert?.labels?.alertname}</b>
+            <b>{alert?.labels?.alertname}</b>
           </span>
 
-          {/* <Stack className="mb-4" alignment="center" distribution="end"> */}
-          <div
-            className="cursor-pointer mt-2"
-            onClick={() => setShowDetails(!showDetails)}
-          >
-            <Stack alignment="center">
-              Show details
-              <Icon
-                color="jn-global-text"
-                icon={showDetails ? "expandLess" : "expandMore"}
-              />
-            </Stack>
-          </div>
-          {/* </Stack> */}
+          <Box className="mt-2">
+            <AlertDescription description={alert.annotations?.description} />
+          </Box>
 
-          <div className="overflow-hidden">
-            <div className={detailsCss(showDetails)}>
-              <div className="pt-4">
-                <AlertLabels alert={alert} />
-                <Box className="mt-4">
-                  <Markup
-                    content={descriptionParsed(
-                      alert.annotations?.description?.replace(
-                        /`([^`]+)`/g,
-                        "<code class='inline-code'>$1</code>"
-                      )
-                    )}
-                    tagName="div"
-                    className="text-theme-light"
-                  />
-                </Box>
-              </div>
-            </div>
-          </div>
+          <SilenceNewAdvanced
+            matchers={matchers}
+            onMatchersChanged={onMatchersChanged}
+          />
 
-          <Form className="mt-8">
+          <Form className="mt-6">
             <TextInputRow required label="Silenced by" value={name} disabled />
             <TextareaRow
               label="Description"
@@ -170,4 +174,4 @@ const AlertSilence = ({ alert }) => {
   )
 }
 
-export default AlertSilence
+export default SilenceNew
