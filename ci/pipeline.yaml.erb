@@ -123,7 +123,8 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["<%=details[:path]%>","package.json","e2e", ".yarn", "ci/scripts", "ci/shared" ]
+      paths: ["<%=details[:path]%>","package.json","e2e", ".yarn", "ci/shared" ]
+      # "ci/scripts"
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
   
