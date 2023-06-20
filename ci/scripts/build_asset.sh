@@ -79,11 +79,6 @@ echo "----------------------------------"
 echo "use ASSET_NAME  = $ASSET_NAME"
 echo "use ASSET_PATH  = $ASSET_PATH"
 echo "use OUTPUT_PATH = $OUTPUT_PATH"
-echo "----------------------------------"
-
-if [[ -n "${string}" ]]; then
-  echo "string is not empty"
-fi
 
 mkdir -p "$OUTPUT_PATH/$ASSET_PATH"
 
@@ -91,6 +86,7 @@ mkdir -p "$OUTPUT_PATH/$ASSET_PATH"
 if [[ "$ASSET_TYPE" == "lib" ]] && [[ -n "$LAST_BUILD_PATH" ]]; then
   # Version handling, this is only relevant for lib
   echo "use LAST_BUILD_PATH = $LAST_BUILD_PATH"
+  echo "----------------------------------"
   echo "Check Version..."
   CURRENT_VERSION=$(jq -r .version "$ASSET_PATH/package.json")
   echo "Current Version: $CURRENT_VERSION"
@@ -103,6 +99,7 @@ if [[ "$ASSET_TYPE" == "lib" ]] && [[ -n "$LAST_BUILD_PATH" ]]; then
     exit
   fi
 fi
+echo "----------------------------------"
 
 echo "generate COMMUNICATOR.md in $ASSET_PATH"
 node ci/scripts/generate_communication_readme.mjs --path="$ASSET_PATH"
