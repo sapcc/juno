@@ -194,7 +194,10 @@ fi
 function sync() {
   echo "Swift sync from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
   cd "$ROOT_PATH"
-  rclone sync "$ASSET_PATH" Juno:$CONTAINER
+  # https://rclone.org/commands/rclone_sync/
+  # Important: Since this can cause data loss, test first with the --dry-run or the --interactive/-i flag.
+  # use "rclone sync --dry-run  "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH" for a dry run
+  rclone sync --dry-run "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH
 }
 
 # https://docs.openstack.org/ocata/cli-reference/swift.html
