@@ -5,7 +5,18 @@ FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:bullseye-slim
 
 LABEL source_repository="https://github.com/sapcc/juno"
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install --yes git ca-certificates rsync jq python3-pip 
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install --yes git ca-certificates rsync jq python3-pip wget
+
+# https://rclone.org/downloads/
+# https://rclone.org/swift/
+RUN wget https://downloads.rclone.org/v1.62.2/rclone-v1.62.2-linux-amd64.deb -O /tmp/docker.deb rclone.deb && \
+  dpkg -i rclone.deb && \
+  rm rclone.deb
+
+RUN echo -e $'\
+  "[juno]\n\
+  type = swift\n\
+  env_auth = true"' >/root/.config/rclone/rclone.conf
 
 # to up and download assets to swift
 ARG SWIFT_CLIENT_VERSION="3.9.0"
