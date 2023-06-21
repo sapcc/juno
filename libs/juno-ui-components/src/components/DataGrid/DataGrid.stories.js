@@ -150,7 +150,7 @@ CustomGridTemplate.parameters = {
   },
 }
 CustomGridTemplate.args = {
-  gridColumnTemplate: `min-content repeat(${defaultColumns - 1}, 1fr)`
+  gridColumnTemplate: `20% repeat(${defaultColumns - 1}, auto)`
 }
 
 export const NoHead = Template.bind({})

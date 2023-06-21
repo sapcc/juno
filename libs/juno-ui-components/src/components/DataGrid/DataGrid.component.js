@@ -75,7 +75,9 @@ DataGrid.propTypes = {
 	columnMinSize: PropTypes.string,
 	/** Specify which columns should be sized by minimum content size (i.e. as small as possible). Pass an array of column numbers (first column is 0) */
 	minContentColumns: PropTypes.arrayOf(PropTypes.number),
-	/** Set the grid column template in CSS grid 'grid-template-columns' notation. If this prop is passed, all other template props (columns, columnMaxSize, columnMinSize, minContentColumns) are ignored */
+	/** Set the grid column template in CSS grid 'grid-template-columns' notation. If this prop is passed, all other template props (columns, columnMaxSize, 
+	 *  columnMinSize, minContentColumns) are ignored. The easiest case where you might need this is e.g. if you want to set specific column widths for some
+	 *  or all columns, e.g. "20% auto auto 10%" (The first column is set to 20%, the next two to auto size, the last to 10%). */
 	gridColumnTemplate: PropTypes.string,
 	/** Set the vertical alignment for all GridCells. Default: center. PLEASE NOTE: the center alignment is achieved by using a flexbox column layout, 
 	 * which means that all child elements of the cell will be stacked vertically. To avoid this, wrap the elements in their own div */

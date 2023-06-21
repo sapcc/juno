@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 
 const panelFooterClasses = `
   jn-border-t
-  jn-border-t-theme-panel
+  jn-border-t-theme-background-lvl-2
   jn-px-8
   jn-py-4
   jn-flex
