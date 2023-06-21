@@ -4,13 +4,13 @@ import { Icon } from "../Icon"
 
 const panelClasses = (isOpen, isTransitioning, size) => {
   return `
-      jn-absolute
+      jn-fixed
       jn-right-0
       jn-transition-transform
       jn-ease-out
       jn-duration-300
       jn-inset-y-0
-      jn-z-10
+      jn-z-[51]
       jn-grid
       jn-grid-rows-[auto_1fr]
       jn-bg-theme-panel
@@ -24,6 +24,10 @@ const panelClasses = (isOpen, isTransitioning, size) => {
     .replace(/\n/g, " ")
     .replace(/\s+/g, " ")
 }
+
+const contentWrapperClasses = `
+  jn-overflow-auto
+`
 
 const panelHeaderClasses = `
   jn-flex
@@ -112,7 +116,9 @@ export const Panel = ({
           />
         }
       </div>
-      {children}
+      <div className={`juno-panel-content-wrapper ${contentWrapperClasses}`}>
+        {children}
+      </div>
     </div>
   )
 }

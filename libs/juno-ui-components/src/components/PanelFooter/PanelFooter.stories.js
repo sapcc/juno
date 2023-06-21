@@ -7,10 +7,18 @@ import { Button } from "../Button/index.js"
 import { Panel } from "../Panel/index.js"
 import { PanelBody } from "../PanelBody/index.js"
 
+// the decorator captures the panel's fixed positioning within the iframe. otherwise it would be placed relative to the viewport which is unwieldy in storybook
 export default {
   title: "Layout/Panel/PanelFooter",
   component: PanelFooter,
   argTypes: {},
+  decorators: [
+    (story) => (
+      <div className="jn-contrast-100">
+        {story()}
+      </div>
+    ),
+  ],
 }
 
 const Template = (args) => (
