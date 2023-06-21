@@ -10,7 +10,9 @@ export default {
 const Template = (args) => <Radio {...args} />
 
 export const Default = Template.bind({})
-Default.args = {}
+Default.args = {
+  value: "1"
+}
 
 export const Checked = Template.bind({})
 Checked.args = {
@@ -52,11 +54,13 @@ Disabled.args = {
 export const Valid = Template.bind({})
 Valid.args = {
   valid: true,
+  label: "This Radio is valid",
 }
 
 export const Invalid = Template.bind({})
 Invalid.args = {
   invalid: true,
+  label: "This Radio is invalid",
 }
 
 export const ValidWithLabel = Template.bind({})

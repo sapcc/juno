@@ -24,13 +24,34 @@ const Template = ({ children, ...args }) => (
 export const Default = Template.bind({})
 Default.args = {
   name: "default-radiogroup",
-
   children: [
     <Radio id="default-1" value="default-1" label="Option 1" key="1" />,
-    <Radio id="default-2" value="default-2" label="Option 2" key="2" checked/>,
+    <Radio id="default-2" value="default-2" label="Option 2" key="2" />,
     <Radio id="default-3" value="default-3" label="Option 3" key="3" />
   ],
 }
+
+export const Selected = Template.bind({})
+Selected.args = {
+  name: "group-selected-radiogroup",
+  selected: "selected-2",
+  children: [
+    <Radio id="group-selected-1" value="selected-1" label="Option 1" key="1" />,
+    <Radio id="group-selected-2" value="selected-2" label="Option 2" key="2" />,
+    <Radio id="group-selected-3" value="selected-3" label="Option 3" key="3" />
+  ]
+}
+
+export const IndividuallyChecked = Template.bind({})
+IndividuallyChecked.args = {
+  name: "individually-checked-radiogroup",
+  children: [
+    <Radio id="individually-checked-1" value="individually-checked-1" label="Option 1" key="1" />,
+    <Radio id="individually-checked-2" value="individually-checked-2" label="Option 2" key="2" />,
+    <Radio id="individually-checked-3" value="individually-checked-3" label="Option 3" key="3" checked />
+  ]
+}
+
 
 export const WithLabel = Template.bind({})
 WithLabel.args = {
@@ -103,9 +124,9 @@ WithHelptext.args = {
   label: "A RadioGroup",
   helptext: "Some additional explanation goes here",
   children: [
-    <Radio id="invalid-1" value="invalid-1" label="Option 1" key="1" />,
-    <Radio id="invalid-2" value="invalid-2" label="Option 2" key="2" />,
-    <Radio id="invalid-3" value="invalid-3" label="Option 3" key="3" />
+    <Radio id="invalid-1" value="with-helptext-1" label="Option 1" key="1" />,
+    <Radio id="invalid-2" value="with-helptext-2" label="Option 2" key="2" />,
+    <Radio id="invalid-3" value="with-helptext-3" label="Option 3" key="3" />
   ],
 }
 
@@ -116,9 +137,9 @@ WithHelptextAsNode.args = {
   label: "A RadioGroup",
   helptext: <>This is a helptext with a <a href="#">Link</a></>,
   children: [
-    <Radio id="invalid-1" value="invalid-1" label="Option 1" key="1" />,
-    <Radio id="invalid-2" value="invalid-2" label="Option 2" key="2" />,
-    <Radio id="invalid-3" value="invalid-3" label="Option 3" key="3" />
+    <Radio id="invalid-1" value="with-helptext-node-1" label="Option 1" key="1" />,
+    <Radio id="invalid-2" value="with-helptext-node-2" label="Option 2" key="2" />,
+    <Radio id="invalid-3" value="with-helptext-node-3" label="Option 3" key="3" />
   ],
 }
 
