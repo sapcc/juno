@@ -10,6 +10,10 @@ inputs:
   - name: upload # where the data is located that you want to upload
 
 params:
+  ACTION:
+    upload # upload or sync,
+    # upload will keep deleted files that are deleted in the source untouched in the destination
+    # sync will sync all changes and also deletes files that are deleted in the source
   CONTAINER: # the container to handle
   ASSET_NAME: # the assetname that you want to upload or download
   ASSET_PATH: # the assetpath from where to upload or download
@@ -30,5 +34,5 @@ run:
       cd ./upload
       UPLOAD_DIR=$(pwd)
       cd /juno
-      exit 1
-      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container $CONTAINER --asset-path $ASSET_PATH --action sync --root-path $UPLOAD_DIR --container $CONTAINER --debug $DEBUG
+      # exit 1
+      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container $CONTAINER --asset-path $ASSET_PATH --action $ACTION --root-path $UPLOAD_DIR --container $CONTAINER --debug $DEBUG
