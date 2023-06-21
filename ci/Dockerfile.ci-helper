@@ -9,11 +9,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install --yes git c
 
 # https://rclone.org/downloads/
 # https://rclone.org/swift/
-RUN wget https://downloads.rclone.org/v1.62.2/rclone-v1.62.2-linux-amd64.deb -O /tmp/rclone.deb /tmp/rclone.deb && \
+RUN wget https://downloads.rclone.org/v1.62.2/rclone-v1.62.2-linux-amd64.deb -O /tmp/rclone.deb && \
   dpkg -i /tmp/rclone.deb && \
   rm /tmp/rclone.deb
 
-RUN echo -e $'\
+RUN mkdir -p /root/.config/rclone/ && echo -e $'\
   "[juno]\n\
   type = swift\n\
   env_auth = true"' >/root/.config/rclone/rclone.conf
