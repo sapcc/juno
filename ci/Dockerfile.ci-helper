@@ -13,10 +13,10 @@ RUN wget https://downloads.rclone.org/v1.62.2/rclone-v1.62.2-linux-amd64.deb -O 
   dpkg -i /tmp/rclone.deb && \
   rm /tmp/rclone.deb
 
-RUN mkdir -p /root/.config/rclone/ && echo -e $'\
-  "[juno]\n\
+RUN mkdir -p /root/.config/rclone/ && echo '\
+  [juno]\n\
   type = swift\n\
-  env_auth = true"' >/root/.config/rclone/rclone.conf
+  env_auth = true' >/root/.config/rclone/rclone.conf
 
 # to up and download assets to swift
 ARG SWIFT_CLIENT_VERSION="3.9.0"
