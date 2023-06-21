@@ -17,7 +17,7 @@ function help() {
                   defined with the --asset-type option is downloaded
   --asset-path -> optional like apps/asset-name, if set --asset-type is ingnored
   --asset-type -> libs|apps|apis|static
-  --action     -> upload|download
+  --action     -> upload|download|sync
   --container  -> where to upload or download assets
   --root-path  -> default is /tmp/build_result
   --debug      -> default is 'false'
@@ -191,6 +191,12 @@ if [[ "$DEBUG" == "true" ]]; then
   OUTPUT="/tmp/swift-debug.log"
 fi
 
+function sync() {
+  echo "Swift sync from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
+  cd "$ROOT_PATH"
+  rclone sync "$ASSET_PATH" Juno:$CONTAINER
+}
+
 # https://docs.openstack.org/ocata/cli-reference/swift.html
 function upload() {
   echo "Swift upload from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
@@ -220,6 +226,9 @@ if [[ "$ACTION" == "upload" ]]; then
 fi
 if [[ "$ACTION" == "download" ]]; then
   download
+fi
+if [[ "$ACTION" == "sync" ]]; then
+  sync
 fi
 
 if [[ "$DEBUG" == "true" ]]; then

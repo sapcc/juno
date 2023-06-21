@@ -30,5 +30,5 @@ run:
       cd ./upload
       UPLOAD_DIR=$(pwd)
       cd /juno
-      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container $CONTAINER --asset-path $ASSET_PATH --action upload --root-path $UPLOAD_DIR --container $CONTAINER --debug $DEBUG
-      # exit 1
+      exit 1
+      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container $CONTAINER --asset-path $ASSET_PATH --action sync --root-path $UPLOAD_DIR --container $CONTAINER --debug $DEBUG
