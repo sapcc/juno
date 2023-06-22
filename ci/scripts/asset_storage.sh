@@ -209,7 +209,7 @@ function sync() {
     if [[ "$DRY_RUN" == "true" ]]; then
       rclone sync --dry-run "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH
     else
-      rclone sync --verbose "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH
+      rclone sync --verbose "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH >$OUTPUT
     fi
   fi
 
@@ -249,10 +249,14 @@ if [[ "$ACTION" == "sync" ]]; then
   sync
 fi
 
+echo ""
 if [[ "$DEBUG" == "true" ]]; then
-  echo ""
-  echo "Log for $ACTION:"
-  echo "----------------"
-  cat /tmp/swift-debug.log 2>/dev/null
-  echo "----------------"
+  if [ -f "/tmp/swift-debug.log" ]; then
+    echo "Log for $ACTION:"
+    echo "----------------"
+    cat /tmp/swift-debug.log 2>/dev/null
+    echo "----------------"
+  else
+    echo "Warning: no debug log file found"
+  fi
 fi
