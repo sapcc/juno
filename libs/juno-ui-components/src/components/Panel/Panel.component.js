@@ -17,7 +17,15 @@ const panelClasses = (isOpen, isTransitioning, size) => {
       jn-backdrop-blur
       jn-backdrop-saturate-150     
       jn-shadow-md
-      ${size === "large" ? `jn-w-[80%]` : `jn-w-[50%]`}
+      ${size === "large" ? `
+          jn-w-[90%]
+          xl:jn-w-[80%]
+          2xl:jn-w-[1228px]` 
+        : `
+          jn-w-[75%]
+          xl:jn-w-[55%]
+          2xl:jn-w-[844px]`
+        }
 			${!isOpen ? `jn-translate-x-[100%]` : ""}
 			${!isOpen && !isTransitioning ? `jn-invisible` : ""}
 		`
