@@ -207,9 +207,11 @@ function sync() {
     echo "The directory $ASSET_PATH is empty, noting to sync to swift..."
   else
     if [[ "$DRY_RUN" == "true" ]]; then
-      rclone sync --dry-run "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH
+      rclone sync --dry-run "$ASSET_PATH" "juno:$CONTAINER/$ASSET_PATH"
     else
-      rclone sync --verbose "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH >$OUTPUT
+      rclone sync --verbose "$ASSET_PATH" "juno:$CONTAINER/$ASSET_PATH" >$OUTPUT &&
+        echo "----------------------------------" &&
+        echo "sync done 🙂"
     fi
   fi
 
