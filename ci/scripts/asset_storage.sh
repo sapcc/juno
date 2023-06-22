@@ -203,10 +203,14 @@ function sync() {
   # https://rclone.org/commands/rclone_sync/
   # Important: Since this can cause data loss, test first with the --dry-run or the --interactive/-i flag.
   # use "rclone sync --dry-run  "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH" for a dry run
-  if [[ "$DRY_RUN" == "true" ]]; then
-    rclone sync --dry-run "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH
+  if [ -z "$(ls -A "$ASSET_PATH")" ]; then
+    echo "The directory $ASSET_PATH is empty, noting to sync to swift..."
   else
-    rclone sync "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH
+    if [[ "$DRY_RUN" == "true" ]]; then
+      rclone sync --dry-run "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH
+    else
+      rclone sync --verbose "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH
+    fi
   fi
 
 }
