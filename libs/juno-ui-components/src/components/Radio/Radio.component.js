@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useContext } from "react"
+import React, { useState, useEffect, useMemo, useId, useContext } from "react"
 import PropTypes from "prop-types"
 import { RadioGroupContext } from "../RadioGroup/RadioGroup.component.js"
 import { Label } from "../Label/index.js"
@@ -102,6 +102,10 @@ export const Radio = ({
 		return !(typeof str === 'string' && str.trim().length === 0)
 	}
 	
+	const uniqueId = () => (
+		"juno-radio-" + useId()
+	)
+	
 	// Consume and deconstruct the context so we won't get errors but 'undefined' when trying to access a group context in case there is none:
 	const radioGroupContext = useContext(RadioGroupContext)
 	const { 
@@ -198,6 +202,8 @@ export const Radio = ({
 		setHasFocus(false)
 	}
 	
+	const theId = id || uniqueId()
+	
 	return (
 		<div className={`jn-radio-outer`} >
 			<div className={`juno-radio-wrapper ${wrapperStyles}`} >
@@ -222,7 +228,7 @@ export const Radio = ({
 							${ isValid ? "juno-radio-valid" : ""}
 						`}
 						disabled={ groupDisabled || disabled }
-						id={id}
+						id={theId}
 						onBlur={handleBlur}
 						onChange={handleChange}
 						onClick={handleClick}
@@ -242,7 +248,7 @@ export const Radio = ({
 							<Label 
 								className={`${labelStyles}`}
 								disabled={ groupDisabled || disabled }
-								htmlFor={id} 
+								htmlFor={theId} 
 								required={required}
 								text={label} 
 							/>

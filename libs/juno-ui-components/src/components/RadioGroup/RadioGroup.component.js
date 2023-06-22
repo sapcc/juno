@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, createContext } from "react"
+import React, { useState, useEffect, useMemo, useId, createContext } from "react"
 import PropTypes from "prop-types"
 import { Label } from "../Label/index.js"
 import { Icon } from "../Icon/index"
@@ -81,6 +81,15 @@ export const RadioGroup = ({
     return !(typeof str === 'string' && str.trim().length === 0)
   }
   
+  
+  const uniqueId = () => (
+    "juno-radiogroup-" + useId()
+  )
+  
+  // Create unique identifiers for use with name and id of the group:
+  const groupName = name || uniqueId()
+  const groupId = id || uniqueId()
+  
   const [selectedValue, setSelectedValue] = useState(selected)
   const [isValid, setIsValid] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
@@ -126,7 +135,7 @@ export const RadioGroup = ({
     <RadioGroupContext.Provider
       value={{
         selectedValue: selectedValue,
-        name: name,
+        name: groupName,
         onChange: handleRadioChange,
         updateSelectedValue: updateSelectedValue,
         disabled: disabled,
@@ -140,7 +149,7 @@ export const RadioGroup = ({
           ${isInvalid ? "juno-radiogroup-invalid" : ""} 
           ${className}
         `}
-        id={id}
+        id={groupId}
         role="radiogroup"
         {...props}
       >
@@ -148,7 +157,7 @@ export const RadioGroup = ({
           label && isNotEmptyString(label) ?
             <Label 
               text={label}
-              htmlFor={id}
+              htmlFor={groupId}
               disabled={disabled}
               required={required}
             />
@@ -212,11 +221,11 @@ RadioGroup.propTypes = {
   className: PropTypes.string,
   /** Whether all Radios in the group are disabled */
   disabled: PropTypes.bool,
-  /** The id of the group */
+  /** The id of the group. If not passed, RadioGroup will create and use a unique id for the group */
   id: PropTypes.string,
   /** Label for the group of radios as a whole. Passing a label is mandatory in order to denote a selection in the set is required by passing the `required` prop. */
   label: PropTypes.string,
-  /** The name of all radios in a group. */
+  /** The name of all radios in a group. If not passed, RadioGroup will create and use a unique name identifier for its child Radios */
   name: PropTypes.string,
   /** An onChange handler to execute when the selected option changes */ 
   onChange: PropTypes.func,

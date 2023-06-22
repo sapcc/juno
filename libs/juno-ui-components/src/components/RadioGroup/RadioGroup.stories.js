@@ -2,7 +2,6 @@ import React from "react"
 import { RadioGroup } from "./index.js"
 import { Radio } from "../Radio/"
 
-
 export default {
   title: "Forms/Radio/RadioGroup",
   component: RadioGroup,
@@ -12,7 +11,7 @@ export default {
         disable: true
       }
     }
-  }
+  },
 }
 
 const Template = ({ children, ...args }) => (
@@ -23,11 +22,10 @@ const Template = ({ children, ...args }) => (
 
 export const Default = Template.bind({})
 Default.args = {
-  name: "default-radiogroup",
   children: [
-    <Radio id="default-1" value="default-1" label="Option 1" key="1" />,
-    <Radio id="default-2" value="default-2" label="Option 2" key="2" />,
-    <Radio id="default-3" value="default-3" label="Option 3" key="3" />
+    <Radio value="default-1" label="Option 1" key="1" />,
+    <Radio value="default-2" label="Option 2" key="2" />,
+    <Radio value="default-3" label="Option 3" key="3" />
   ],
 }
 
