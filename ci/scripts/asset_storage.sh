@@ -254,7 +254,7 @@ if [[ "$DEBUG" == "true" ]]; then
   if [ -f "/tmp/swift-debug.log" ]; then
     echo "Log for $ACTION:"
     echo "----------------"
-    cat /tmp/swift-debug.log 2>/dev/null
+    cat /tmp/swift-debug.log
     echo "----------------"
   else
     echo "Warning: no debug log file found"
