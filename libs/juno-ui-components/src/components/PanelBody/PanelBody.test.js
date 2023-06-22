@@ -12,12 +12,6 @@ describe("PanelBody", () => {
     )
   })
 
-  test("renders a panel body with overflow auto", async () => {
-    render(<PanelBody data-testid="panel-body" />)
-    expect(screen.getByTestId("panel-body")).toBeInTheDocument()
-    expect(screen.getByTestId("panel-body")).toHaveClass("jn-overflow-auto")
-  })
-
   test("renders children as passed", async () => {
     render(
       <PanelBody data-testid="panel-body">

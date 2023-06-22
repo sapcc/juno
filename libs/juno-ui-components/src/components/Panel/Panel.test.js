@@ -46,6 +46,7 @@ describe("Panel", () => {
     expect(screen.queryByLabelText("close")).not.toBeInTheDocument()
   })
 
+
   test("renders a custom classname", async () => {
     render(<Panel className="my-custom-classname" />)
     expect(screen.getByRole("dialog")).toBeInTheDocument()
