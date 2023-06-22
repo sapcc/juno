@@ -88,14 +88,24 @@ if [[ "$ASSET_TYPE" == "lib" ]] && [[ -n "$LAST_BUILD_PATH" ]]; then
   echo "use LAST_BUILD_PATH = $LAST_BUILD_PATH"
   echo "----------------------------------"
   echo "Check Version..."
+
+  if [ ! -f "$ASSET_PATH/package.json" ]; then
+    echo "Error: $ASSET_PATH/package.json doesn't exist"
+  fi
   CURRENT_VERSION=$(jq -r .version "$ASSET_PATH/package.json")
   echo "Current Version: $CURRENT_VERSION"
-  LAST_VERSION=$(jq -r .version "$LAST_BUILD_PATH/libs/$ASSET_NAME/package.json")
+  if [ -f "$LAST_BUILD_PATH/libs/$ASSET_NAME/package.json" ]; then
+    LAST_VERSION=$(jq -r .version "$LAST_BUILD_PATH/libs/$ASSET_NAME/package.json")
+  else
+    echo "Warning: no package.json in '$LAST_BUILD_PATH/libs/$ASSET_NAME/' found"
+    LAST_VERSION="not found"
+  fi
+
   echo "Last build version: $LAST_VERSION"
   if [[ "$CURRENT_VERSION" != "$LAST_VERSION" ]]; then
-    echo "New Version found! This is good 🙂"
+    echo "New Version $CURRENT_VERSION! This will trigger a new build 🙂"
   else
-    echo "No new version found. Nothing to build"
+    echo "No new version found. Nothing to build..."
     exit
   fi
 fi
