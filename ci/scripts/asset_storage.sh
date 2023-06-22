@@ -8,8 +8,6 @@ if [ ! -f "CODEOWNERS" ]; then
   exit 1
 fi
 
-#TODO: add debug option
-
 function help() {
   echo "Usage: build_asset.sh --asset-name||-am --asset-path||-ap --asset-type||-at --action|-a --container||-c --root-path||-rp --debug||-d --dry-run||-dr
   example: ./ci/scripts/asset_storage.sh --asset-name assets-overview --asset-type apps --action upload --root-path ../build_result
