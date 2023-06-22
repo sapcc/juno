@@ -207,7 +207,7 @@ function sync() {
     if [[ "$DRY_RUN" == "true" ]]; then
       rclone sync --dry-run "$ASSET_PATH" "juno:$CONTAINER/$ASSET_PATH"
     else
-      rclone sync --verbose "$ASSET_PATH" "juno:$CONTAINER/$ASSET_PATH" >$OUTPUT &&
+      rclone sync --verbose "$ASSET_PATH" "juno:$CONTAINER/$ASSET_PATH" &>$OUTPUT &&
         echo "----------------------------------" &&
         echo "sync done 🙂"
     fi
@@ -223,7 +223,7 @@ function upload() {
   if [ -z "$(ls -A "$ASSET_PATH")" ]; then
     echo "The directory $ASSET_PATH is empty, noting to upload to swift..."
   else
-    swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" >$OUTPUT &&
+    swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" &>$OUTPUT &&
       echo "----------------------------------" &&
       echo "upload done 🙂"
   fi
@@ -232,7 +232,7 @@ function upload() {
 function download() {
   echo "Swift download from container $CONTAINER $ASSET_PATH to $ASSET_PATH"
   cd "$ROOT_PATH"
-  swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" >$OUTPUT &&
+  swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" &>$OUTPUT &&
     echo "----------------------------------" &&
     echo "download done 🙂"
 }
