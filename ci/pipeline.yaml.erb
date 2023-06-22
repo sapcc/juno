@@ -123,8 +123,9 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["<%=details[:path]%>","package.json","e2e", ".yarn", "ci/shared" ]
+      paths: ["<%=details[:path]%>","package.json","e2e", ".yarn" ]
       # "ci/scripts"
+      # "ci/shared"
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
   
@@ -259,6 +260,7 @@ jobs:
         output_mapping:
           download: last_build
         params:
+          DEBUG: "true"
           CONTAINER: "juno-assets"
           ASSET_NAME: <%= name %>
           ASSET_PATH: <%= details[:path] %>
@@ -284,6 +286,7 @@ jobs:
               - |
                 set -e 
                 ls -la
+                # TODO: this need a lot of runtime, move that stuff into build_asset.sh after version check
                 echo "sync all node_modules from /juno/ to ./latest/"
                 rsync -am --include='*/' --include='node_modules/***' --exclude='*' /juno/ ./latest
                 cd ./latest
@@ -292,11 +295,14 @@ jobs:
                 echo ""
                 ./ci/scripts/build_asset.sh --asset-path <%= details[:path] %> --asset-name <%= name %> --asset-type <%= details[:type] %> --output-path ../build_result <% if details[:type] == "lib" %> --last-build-path ../last_build <% end %>
                 #exit 1
-      - task: upload
+      - task: sync
         file: <%=details[:type]%>-<%= name %>.git/ci/shared/swift-upload.yaml
         input_mapping:
           upload: build_result
         params:
+          ACTION: sync
+          DRY_RUN: "false"
+          DEBUG: "true"
           CONTAINER: "juno-assets"
           ASSET_NAME: <%= name %>
           ASSET_PATH: <%= details[:path] %>
