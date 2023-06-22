@@ -12,8 +12,8 @@ inputs:
 params:
   ACTION:
     upload # upload or sync,
-    # upload will keep deleted files that are deleted in the source untouched in the destination
-    # sync will sync all changes and also deletes files that are deleted in the source
+    # upload will keep deleted files that are not exiting in the source untouched in the destination folder
+    # sync will synchronies all changes, that means it will also delete files in the destination that are not exiting in the source folder
   CONTAINER: # the container to handle
   ASSET_NAME: # the assetname that you want to upload or download
   ASSET_PATH: # the assetpath from where to upload or download
@@ -24,6 +24,7 @@ params:
   OS_PROJECT_DOMAIN_NAME: ccadmin
   OS_PROJECT_NAME: master
   DEBUG: "false" # enable debug
+  DRY_RUN: "false" # this is only valid if you use the sync mode and is useful to prevent data loss 😉
 
 run:
   path: /bin/sh
@@ -35,4 +36,4 @@ run:
       UPLOAD_DIR=$(pwd)
       cd /juno
       # exit 1
-      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container $CONTAINER --asset-path $ASSET_PATH --action $ACTION --root-path $UPLOAD_DIR --container $CONTAINER --debug $DEBUG
+      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container $CONTAINER --asset-path $ASSET_PATH --action $ACTION --root-path $UPLOAD_DIR --container $CONTAINER --debug $DEBUG --dry-run $DRY_RUN

@@ -11,7 +11,7 @@ fi
 #TODO: add debug option
 
 function help() {
-  echo "Usage: build_asset.sh --asset-name||-am --asset-path||-ap --asset-type||-at --action|-a --container||-c --root-path||-rp --debug||-d
+  echo "Usage: build_asset.sh --asset-name||-am --asset-path||-ap --asset-type||-at --action|-a --container||-c --root-path||-rp --debug||-d --dry-run||-dr
   example: ./ci/scripts/asset_storage.sh --asset-name assets-overview --asset-type apps --action upload --root-path ../build_result
   --asset-name -> if no asset-name is fiven the whole folder that is 
                   defined with the --asset-type option is downloaded
@@ -21,6 +21,7 @@ function help() {
   --container  -> where to upload or download assets
   --root-path  -> default is /tmp/build_result
   --debug      -> default is 'false'
+  --dry-run    -> default is 'false', this is only valid if you use the sync mode and is useful to prevent data loss 😉
 
   possible ENV Vars:
   * OS_USER_DOMAIN_NAME: per default this is not set 
@@ -76,6 +77,11 @@ while [[ $# -gt 0 ]]; do
     ;;
   --debug | -d)
     DEBUG="$2"
+    shift # past argument
+    shift # past value
+    ;;
+  --dry-run | -d)
+    DRY_RUN="$2"
     shift # past argument
     shift # past value
     ;;
@@ -197,7 +203,12 @@ function sync() {
   # https://rclone.org/commands/rclone_sync/
   # Important: Since this can cause data loss, test first with the --dry-run or the --interactive/-i flag.
   # use "rclone sync --dry-run  "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH" for a dry run
-  rclone sync --dry-run "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH
+  if [[ "$DRY_RUN" == "true" ]]; then
+    rclone sync --dry-run "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH
+  else
+    rclone sync "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH
+  fi
+
 }
 
 # https://docs.openstack.org/ocata/cli-reference/swift.html
