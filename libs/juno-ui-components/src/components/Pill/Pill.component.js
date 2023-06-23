@@ -40,12 +40,17 @@ export const Pill = ({
   pillValue,
   pillValueLabel,
   closeable,
+  onClick,
   onClose,
   className,
   ...props
 }) => {
   const handleCloseClick = () => {
     onClose && onClose(uid || pillKey || pillValue)
+  }
+
+  const handleClick = () => {
+    onClick && onClick(uid || pillKey || pillValue)
   }
 
   return (
@@ -57,11 +62,11 @@ export const Pill = ({
         :
         <>
           { (pillKeyLabel || pillKey) &&
-            <span className={`${pillKeyStyles}`}>
+            <span className={`${pillKeyStyles}`} onClick={handleClick}>
               {pillKeyLabel || pillKey}
             </span>
           }
-          <span className={`${pillValueStyles}`}>
+          <span className={`${pillValueStyles}`} onClick={handleClick}>
             {pillValueLabel || pillValue}
           </span>
         </>
@@ -88,6 +93,8 @@ Pill.propTypes = {
   closeable: PropTypes.bool,
   /** Pass a handler to be executed when closing the Pill. Also returns either the uid (fallback: pillKey -> fallback: pillValue) */
   onClose: PropTypes.func,
+  /** Pass a handler to be executed when clicking on the Pill (but not on the close button). Also returns either the uid (fallback: pillKey -> fallback: pillValue) */
+  onClick: PropTypes.func,
 }
 
 Pill.defaultProps = {
@@ -97,6 +104,7 @@ Pill.defaultProps = {
   pillValue: "",
   pillValueLabel: "",
   closeable: false,
+  onClick: undefined,
   onClose: undefined,
   className: "",
 }
