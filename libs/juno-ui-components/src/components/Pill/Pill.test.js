@@ -92,6 +92,35 @@ describe("Pill", () => {
     expect(handleClose).toHaveBeenCalledWith("abc")
   })
 
+  test("an onClick handler is called as passed and returns the uid", () => {
+    const handleClick = jest.fn()
+    render(
+      <Pill
+        uid="uidAbc"
+        pillKey="TheRequiredKey"
+        pillValue="TheRequiredValue"
+        onClick={handleClick}
+      />
+    )
+    screen.getByText("TheRequiredKey").click()
+    expect(handleClick).toHaveBeenCalledTimes(1)
+    expect(handleClick).toHaveBeenCalledWith("uidAbc")
+  })
+
+  test("an onClick handler is called as passed and returns the pillKey if uid missing", () => {
+    const handleClick = jest.fn()
+    render(
+      <Pill
+        pillKey="abc"
+        pillValue="TheRequiredValue"
+        onClick={handleClick}
+      />
+    )
+    screen.getByText("abc").click()
+    expect(handleClick).toHaveBeenCalledTimes(1)
+    expect(handleClick).toHaveBeenCalledWith("abc")
+  })
+
   test("renders a custom className", async () => {
     render(
       <Pill
