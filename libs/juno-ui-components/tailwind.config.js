@@ -222,6 +222,7 @@ module.exports = {
       },
       textColor: {
         theme: {
+          highest: withOpacity("--color-text-highest-raw"),
           high: withOpacity("--color-text-high-raw"),
           default: withOpacity("--color-text-default-raw"),
           light: withOpacity("--color-text-light-raw"),
