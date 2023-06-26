@@ -30,4 +30,17 @@ run:
       cd ./download
       DOWNLOAD_DIR=$(pwd)
       cd /juno
-      ./ci/scripts/asset_storage.sh --asset-name $ASSET_NAME --container $CONTAINER --asset-path $ASSET_PATH --action download --root-path $DOWNLOAD_DIR --container $CONTAINER --debug $DEBUG
+      # to prevent weird error messages from the asset_storage script check the given params
+      if [[ -z "$CONTAINER" ]]; then
+        echo "Error: no container given"
+        exit 1
+      fi
+      if [[ -z "$ASSET_NAME" ]]; then
+        echo "Error: no asset name given"
+        exit 1
+      fi
+      if [[ -z "$ASSET_PATH" ]]; then
+        echo "Error: no asset path given"
+        exit 1
+      fi
+      ./ci/scripts/asset_storage.sh --container $CONTAINER --asset-name $ASSET_NAME --asset-path $ASSET_PATH --action download --root-path $DOWNLOAD_DIR --debug $DEBUG
