@@ -2,33 +2,43 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/Icon.component.js"
 
-const pillStyles = `
-	jn-inline-flex
-	jn-basis-auto
-	jn-shrink
-	jn-items-center
-	jn-flex-nowrap
-	jn-text-xs
-	jn-p-px
-	jn-border
-	jn-rounded
-	jn-border-theme-background-lvl-4
-`
+const pillStyles = (onClick) => {
+  return`
+    jn-inline-flex
+    jn-basis-auto
+    jn-shrink
+    jn-items-center
+    jn-flex-nowrap
+    jn-text-xs
+    jn-p-px
+    jn-border
+    jn-rounded
+    jn-border-theme-background-lvl-4
+    jn-group
+    ${onClick ? "jn-cursor-pointer" : ""}
+  `
+}
 
-const pillKeyStyles = `
-	jn-bg-theme-background-lvl-3
-	jn-px-1
-	jn-py-0.5
-	jn-rounded-sm
-	jn-inline-block
-`
+const pillKeyStyles = (onClick) => {
+  return`
+    jn-bg-theme-background-lvl-3
+    ${onClick ? "group-hover:jn-text-theme-high" : ""}
+    jn-px-1
+    jn-py-0.5
+    jn-rounded-sm
+    jn-inline-block
+  `
+}
 
-const pillValueStyles = `
-	jn-px-1
-	jn-py-0.5
-	jn-text-theme-high
-	jn-inline-block
-`
+const pillValueStyles = (onClick) => {
+  return`
+    jn-px-1
+    jn-py-0.5
+    jn-text-theme-high
+    ${onClick ? "group-hover:jn-text-theme-highest" : ""}
+    jn-inline-block
+  `
+}
 
 /**
 A Pill to represent a value, or key and value. Can e.g. be used to represent selected filter values in a filter component. Can optionally be closed. On close the uid, if provided, or the pillKey is returned in the callback.
@@ -54,7 +64,7 @@ export const Pill = ({
   }
 
   return (
-    <div className={`juno-pill ${pillStyles} ${className}`} {...props}>
+    <div className={`juno-pill ${pillStyles(onClick)} ${className}`} {...props}>
       { (!pillValue && !pillValueLabel) ?
         <span className={`${pillValueStyles}`}>
           set pillValue or pillValueLabel
@@ -62,11 +72,11 @@ export const Pill = ({
         :
         <>
           { (pillKeyLabel || pillKey) &&
-            <span className={`${pillKeyStyles}`} onClick={handleClick}>
+            <span className={`pill-key ${pillKeyStyles(onClick)}`} onClick={handleClick}>
               {pillKeyLabel || pillKey}
             </span>
           }
-          <span className={`${pillValueStyles}`} onClick={handleClick}>
+          <span className={`pill-value ${pillValueStyles(onClick)}`} onClick={handleClick}>
             {pillValueLabel || pillValue}
           </span>
         </>
