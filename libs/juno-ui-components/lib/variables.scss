@@ -244,12 +244,14 @@
   .theme-dark {
     // TEXT COLORS
     // RGB
+    --color-juno-text-highest: rgb(253, 254, 255);
     --color-juno-text-high: rgb(222, 223, 224);
     --color-juno-text-default: rgb(187, 187, 187);
     --color-juno-text-light: rgb(122, 122, 122);
     --color-juno-text-disabled: rgb(92, 92, 92);
 
     // RAW
+    --color-juno-text-highest-raw: 253, 254, 255;
     --color-juno-text-high-raw: 222, 223, 224;
     --color-juno-text-default-raw: 187, 187, 187;
     --color-juno-text-light-raw: 122, 122, 122;
@@ -274,13 +276,15 @@
   .theme-light {
     // TEXT COLORS
     // RGB
-    --color-juno-text-high: rgb(0, 0, 0);
+    --color-juno-text-highest: rgb(0, 0, 0);
+    --color-juno-text-high: rgb(40, 40, 40);
     --color-juno-text-default: rgb(76, 76, 76);
     --color-juno-text-light: rgb(150, 150, 150);
     --color-juno-text-disabled: rgb(183, 183, 183);
 
     // RAW
-    --color-juno-text-high-raw: 0, 0, 0;
+    --color-juno-text-highest-raw: 0, 0, 0;
+    --color-juno-text-high-raw: 40, 40, 40;
     --color-juno-text-default-raw: 76, 76, 76;
     --color-juno-text-light-raw: 150, 150, 150;
     --color-juno-text-disabled-raw: 183, 183, 183;
@@ -334,11 +338,13 @@
   --color-focus: var(--color-accent);
   --color-focus-raw: var(--color-accent-raw);
   // LT Text
+  --color-text-highest: var(--color-juno-text-highest);
   --color-text-high: var(--color-juno-text-high);
   --color-text-default: var(--color-juno-text-default);
   --color-text-light: var(--color-juno-text-light);
   --color-text-disabled: var(--color-juno-text-disabled);
   --color-text-link: var(--color-accent);
+  --color-text-highest-raw: var(--color-juno-text-highest-raw);
   --color-text-high-raw: var(--color-juno-text-high-raw);
   --color-text-default-raw: var(--color-juno-text-default-raw);
   --color-text-light-raw: var(--color-juno-text-light-raw);
@@ -537,11 +543,13 @@
   --color-focus-raw: var(--color-accent-raw);
   --color-focus-border: var(--color-accent-raw);
   // DT Text
+  --color-text-highest: var(--color-juno-text-highest);
   --color-text-high: var(--color-juno-text-high);
   --color-text-default: var(--color-juno-text-default);
   --color-text-light: var(--color-juno-text-light);
   --color-text-disabled: var(--color-juno-text-disabled);
   --color-text-link: var(--color-accent);
+  --color-text-highest-raw: var(--color-juno-text-highest-raw);
   --color-text-high-raw: var(--color-juno-text-high-raw);
   --color-text-default-raw: var(--color-juno-text-default-raw);
   --color-text-light-raw: var(--color-juno-text-light-raw);
