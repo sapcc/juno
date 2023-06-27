@@ -36,5 +36,4 @@ run:
       export UPLOAD_DIR=$(pwd)
       cd /juno
       source ./ci/scripts/swift-upload-pre-check.sh
-      exit 1
       ./ci/scripts/asset_storage.sh --container $CONTAINER --asset-name $ASSET_NAME --asset-path $ASSET_PATH --action $ACTION --root-path $UPLOAD_DIR --debug $DEBUG --dry-run $DRY_RUN
