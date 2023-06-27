@@ -1,6 +1,7 @@
 import PropTypes, { exact } from "prop-types"
 import React, { useContext, useLayoutEffect } from "react"
 import * as themes from "./themes"
+import { SearchInput } from "../SearchInput"
 
 // DEFAULT THEME (DARK)
 const DEFAULT_THEME = {
@@ -43,6 +44,7 @@ const colorMap = (theme) => ({
   toolbar: {
     border: theme.base01,
     background: theme.base01,
+    foreground: theme.base07,
   },
   icon: {
     expanded: theme.base0D,
@@ -271,16 +273,15 @@ const Toolbar = () => {
         </span>
       </span>
 
-      <input
-        value={searchTerm}
-        onChange={(e) => onSearch(e.target.value)}
-        placeholder="Search"
+      <SearchInput
+        className="jn-me-1"
         style={{
           backgroundColor: colors.toolbar.background,
-          borderRadius: 3,
-          padding: "3px 5px",
-          outline: "none",
+          color: colors.toolbar.foreground,
         }}
+        onChange={(e) => onSearch(e.target.value)}
+        clear
+        onClear={() => onSearch(null)}
       />
     </div>
   )
