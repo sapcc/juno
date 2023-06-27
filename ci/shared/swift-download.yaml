@@ -22,11 +22,11 @@ params:
   DEBUG: "false" # enable debug
 
 run:
-  path: /bin/sh
+  path: /bin/bash
   args:
     - -c
     - |
-      set -e cd
+      set -e
       cd ./download
       DOWNLOAD_DIR=$(pwd)
       cd /juno
