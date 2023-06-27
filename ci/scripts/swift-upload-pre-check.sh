@@ -5,7 +5,7 @@ if [[ -z "$UPLOAD_DIR" ]]; then
   exit 1
 fi
 
-if [ -d "$UPLOAD_DIR" ]; then
+if [ ! -d "$UPLOAD_DIR" ]; then
   echo "Error: upload dir '$UPLOAD_DIR' not found"
   exit 1
 fi
@@ -31,12 +31,13 @@ fi
 # libs/NAME/content
 export ASSET_PATH="${TYPE}s/${ASSET_NAME}"
 if [ -e "$ASSET_NAME" ]; then
-  echo "Info: Files structure are compatible, do nothing"
+  echo "Info: file structure in upload are compatible 👍"
 else
-  echo "Warning: Files structure not compatible will move everything to $ASSET_PATH"
-  mkdir -p "/tmp/$ASSET_PATH"
-  mv ./*glob* "/tmp/$ASSET_PATH"
-  mv "/tmp/$ASSET_PATH" ./
+  echo "Warning: file structure in upload not compatible will move everything to upload/$ASSET_PATH"
+  mkdir -p "/juno_tmp/$ASSET_PATH"
+  mv * "/juno_tmp/$ASSET_PATH"
+  cd /juno_tmp/ || exit 1
+  mv * "$UPLOAD_DIR"
 fi
 
 cd /juno || exit 1
