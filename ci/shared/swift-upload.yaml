@@ -14,9 +14,9 @@ params:
     upload # upload or sync,
     # upload will keep deleted files that are not exiting in the source untouched in the destination folder
     # sync will synchronies all changes, that means it will also delete files in the destination that are not exiting in the source folder
-  CONTAINER: # the container to handle
+  CONTAINER: juno-3rd-party # the container to handle
   ASSET_NAME: # the assetname that you want to upload or download
-  ASSET_PATH: # the assetpath from where to upload or download
+  TYPE: # app or lib
   OS_USERNAME: concourse
   OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
   OS_AUTH_URL: https://identity-3.eu-de-1.cloud.sap/v3
@@ -27,25 +27,13 @@ params:
   DRY_RUN: "false" # this is only valid if you use the sync mode and is useful to prevent data loss 😉
 
 run:
-  path: /bin/sh
+  path: /bin/bash
   args:
     - -c
     - |
-      set -e cd
+      set -e
       cd ./upload
-      UPLOAD_DIR=$(pwd)
-      cd /juno
-      # to prevent weird error messages from the asset_storage script check the given params
-      if [[ -z "$CONTAINER" ]]; then
-        echo "Error: no container given"
-        exit 1
-      fi
-      if [[ -z "$ASSET_NAME" ]]; then
-        echo "Error: no asset name given"
-        exit 1
-      fi
-      if [[ -z "$ASSET_PATH" ]]; then
-        echo "Error: no asset path given"
-        exit 1
-      fi
+      export UPLOAD_DIR=$(pwd)
+      source ./ci/scripts/swift-upload-precheck.sh
+      exit 1
       ./ci/scripts/asset_storage.sh --container $CONTAINER --asset-name $ASSET_NAME --asset-path $ASSET_PATH --action $ACTION --root-path $UPLOAD_DIR --debug $DEBUG --dry-run $DRY_RUN
