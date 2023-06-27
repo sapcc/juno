@@ -30,7 +30,7 @@ fi
 # apps/NAME/content
 # libs/NAME/content
 export ASSET_PATH="${TYPE}s/${ASSET_NAME}"
-if [ -e "$ASSET_NAME" ]; then
+if [ -e "$ASSET_PATH" ]; then
   echo "Info: file structure in upload are compatible 👍"
 else
   echo "Warning: file structure in upload not compatible will move everything to upload/$ASSET_PATH"
