@@ -14,7 +14,7 @@ function help() {
   --asset-name -> if no asset-name is fiven the whole folder that is 
                   defined with the --asset-type option is downloaded
   --asset-path -> optional like apps/asset-name, if set --asset-type is ingnored
-  --asset-type -> libs|apps|apis|static
+  --asset-type -> lib|app
   --action     -> upload|download|sync
   --container  -> where to upload or download assets
   --root-path  -> default is /tmp/build_result
