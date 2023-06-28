@@ -104,20 +104,12 @@ if [[ -z "$ACTION" ]]; then
 fi
 
 if [[ -z "$ASSET_PATH" ]]; then
-  if [[ -z "$ASSET_TYPE" ]]; then
-    echo "Error: no ASSET_TYPE given 😐"
+  if [[ -n "$ASSET_TYPE" ]]; then
+    ASSET_PATH="${ASSET_TYPE}s/${ASSET_NAME}"
+  else
+    echo "Error: no ASSET_PATH given 😐"
     exit 1
   fi
-fi
-
-# ASSET_TYPE will owerwrite ASSET_PATH
-if [[ -n "$ASSET_TYPE" ]]; then
-  ASSET_PATH="$ASSET_TYPE/$ASSET_NAME"
-fi
-
-if [[ -z "$ASSET_PATH" ]]; then
-  echo "Error: no ASSET_PATH given 😐"
-  exit 1
 fi
 
 if [[ -z "$ROOT_PATH" ]]; then
