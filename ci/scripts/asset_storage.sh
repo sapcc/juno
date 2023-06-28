@@ -9,7 +9,7 @@ if [ ! -f "CODEOWNERS" ]; then
 fi
 
 function help() {
-  echo "Usage: build_asset.sh --asset-name||-am --asset-path||-ap --asset-type||-at --action|-a --container||-c --root-path||-rp --debug||-d --dry-run||-dr
+  echo "Usage: asset_storage.sh --asset-name||-am --asset-path||-ap --asset-type||-at --action|-a --container||-c --root-path||-rp --debug||-d --dry-run||-dr
   example: ./ci/scripts/asset_storage.sh --asset-name assets-overview --asset-type apps --action upload --root-path ../build_result
   --asset-name -> if no asset-name is fiven the whole folder that is 
                   defined with the --asset-type option is downloaded
