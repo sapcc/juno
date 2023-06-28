@@ -10,7 +10,7 @@ fi
 
 function help() {
   echo "Usage: build_assets.sh --asset-path||-ap --asset-name||-sn --asset-type||-at --output-path||-op --last-build-path||-lbp
-    Example: ./ci/scripts/build_asset.sh --asset-name auth --asset-path ./apps/auth/ --output-path /tmp/juno-build
+    Example: ./ci/scripts/asset_build.sh --asset-name auth --asset-path ./apps/auth/ --output-path /tmp/juno-build
     --last-build-path is optional and only used when asset-type = lib is used to find out there was a new version found
     --asset-path is optional when --asset-type is given"
   exit
