@@ -29,6 +29,21 @@
 %>
 
 resources:
+  - name: swift-juno-assets.version
+    type: http-resource
+    source:
+      url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/juno-assets
+      method: HEAD
+      version: 
+        header: x-container-bytes-used
+  - name: swift-3rdparty.version
+    type: http-resource
+    source:
+      url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/juno-3rd-party
+      method: HEAD
+      version: 
+        header: x-container-bytes-used
+
   - name: base.image
     type: docker-image
     icon: docker
@@ -144,6 +159,13 @@ resources:
     source: { key: "juno-assets-server-version" } # disambiguate from other time-version resources
 
 resource_types:
+  - name: http-resource
+    type: docker-image
+    check_every: 20m
+    source:
+      repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/jgriff/http-resource
+      tag: latest
+
   - name: git-proxy
     type: registry-image
     check_every: 24h
@@ -327,7 +349,11 @@ jobs:
     public: true
     plan:
       - get: ci-helper.image
-      - get: juno.git        
+      - get: juno.git   
+      - get: swift-3rdparty.version 
+        trigger: true  
+      - get: swift-juno-assets.version
+        trigger: true    
 
       <% ASSETS.each do |name, details|%>
       - get: <%= details[:type] %>-<%= name %>.version

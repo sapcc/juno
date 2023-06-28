@@ -101,41 +101,68 @@ function updateState(stateID, state, options = {}) {
 }
 
 /**
- * Convert and push new state to the history
+ * Push new state. The old and the new state are merged.
  * @param {string} stateID key of the specific state in the search params
  * @param {JSON} state
+ * @param {boolean} merge if true, the old and the new state are merged
  * @param {Object} historyOptions options for the window.history (state, title)
+ * @param {boolean} historyOptions.state - The state object is a JavaScript object which is
+ * associated with the new history entry created by pushState(). Whenever the user navigates to the new
+ * state, a popstate event is fired, and the state property of the event contains a copy of the history
+ * entry's state object.
+ * @param {string} historyOptions.title - Most browsers currently ignores this parameter, although
+ * they may use it in the future. Passing the empty string here should be safe against future
+ * changes to the method.
+ * @param {boolean} historyOptions.replace - If true it replaces the last state in the window history (default false).
  */
-function push(stateID, state, historyOptions) {
+function updateStateAndHistory(stateID, state, merge, historyOptions) {
   historyOptions = historyOptions || {}
-  var newUrl = updateState(stateID, state, { merge: historyOptions?.merge })
+  const newUrl = updateState(stateID, state, { merge })
+  const historyState = historyOptions.state || ""
+  const historyTitle = historyOptions.title || ""
 
-  window.history.pushState(
-    historyOptions.state || "",
-    historyOptions.title || "",
-    newUrl
-  )
-
+  if (historyOptions?.replace) {
+    window.history.replaceState(historyState, historyTitle, newUrl)
+  } else {
+    window.history.pushState(historyState, historyTitle, newUrl)
+  }
   informListener(stateID, state)
 }
 
 /**
- * Convert and replace new url in the history
+ * Push new state. The old and the new state are merged.
  * @param {string} stateID key of the specific state in the search params
  * @param {JSON} state
  * @param {Object} historyOptions options for the window.history (state, title)
+ * @param {boolean} historyOptions.state - The state object is a JavaScript object which is
+ * associated with the new history entry created by pushState(). Whenever the user navigates to the new
+ * state, a popstate event is fired, and the state property of the event contains a copy of the history
+ * entry's state object.
+ * @param {string} historyOptions.title - Most browsers currently ignores this parameter, although
+ * they may use it in the future. Passing the empty string here should be safe against future
+ * changes to the method.
+ * @param {boolean} historyOptions.replace - If true it replaces the last state in the window history (default false).
+ */
+function push(stateID, state, historyOptions) {
+  updateStateAndHistory(stateID, state, true, historyOptions)
+}
+
+/**
+ * Replace state. The old state is overwritten.
+ * @param {string} stateID key of the specific state in the search params
+ * @param {JSON} state
+ * @param {Object} historyOptions options for the window.history (state, title)
+ * @param {boolean} historyOptions.state - The state object is a JavaScript object which is
+ * associated with the new history entry created by pushState(). Whenever the user navigates to the new
+ * state, a popstate event is fired, and the state property of the event contains a copy of the history
+ * entry's state object.
+ * @param {string} historyOptions.title - Most browsers currently ignores this parameter, although
+ * they may use it in the future. Passing the empty string here should be safe against future
+ * changes to the method.
+ * @param {boolean} historyOptions.replace - If true it replaces the last state in the window history (default false).
  */
 function replace(stateID, state, historyOptions) {
-  historyOptions = historyOptions || {}
-  var newUrl = updateState(stateID, state)
-
-  window.history.replaceState(
-    historyOptions.state || "",
-    historyOptions.title || "",
-    newUrl
-  )
-
-  informListener(stateID, state)
+  updateStateAndHistory(stateID, state, false, historyOptions)
 }
 
 /**
