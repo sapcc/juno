@@ -10,7 +10,7 @@ outputs:
   - name: download # where do you want to download
 
 params:
-  CONTAINER: # the container to handle
+  CONTAINER: juno-3rd-party # the container to handle
   ASSET_NAME: # the assetname that you want to download
   ASSET_TYPE: # app or lib
   OS_USERNAME: concourse
@@ -31,10 +31,6 @@ run:
       DOWNLOAD_DIR=$(pwd)
       cd /juno
       # to prevent weird error messages from the asset_storage script check the given params
-      if [[ -z "$CONTAINER" ]]; then
-        echo "Error: no CONTAINER given"
-        exit 1
-      fi
       if [[ -z "$ASSET_NAME" ]]; then
         echo "Error: no ASSET_NAME given"
         exit 1
