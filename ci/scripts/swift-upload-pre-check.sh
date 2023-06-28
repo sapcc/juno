@@ -22,7 +22,7 @@ if [[ -z "$ASSET_NAME" ]]; then
   exit 1
 fi
 if [[ -z "$TYPE" ]]; then
-  echo "Error: no kind given. allowed values are 'lib' or 'app'"
+  echo "Error: no type given. allowed values are 'lib' or 'app'"
   exit 1
 fi
 

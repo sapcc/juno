@@ -115,11 +115,6 @@ if [[ -n "$ASSET_TYPE" ]]; then
   ASSET_PATH="$ASSET_TYPE/$ASSET_NAME"
 fi
 
-if [ ! -d "$ASSET_PATH" ]; then
-  echo "Error: directory ASSET_PATH $ASSET_PATH does not exist 😐"
-  exit 1
-fi
-
 if [[ -z "$ASSET_PATH" ]]; then
   echo "Error: no ASSET_PATH given 😐"
   exit 1
@@ -197,7 +192,6 @@ fi
 
 function sync() {
   echo "Swift sync from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
-  cd "$ROOT_PATH"
   # https://rclone.org/commands/rclone_sync/
   # Important: Since this can cause data loss, test first with the --dry-run or the --interactive/-i flag.
   # use "rclone sync --dry-run  "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH" for a dry run
@@ -212,14 +206,11 @@ function sync() {
         echo "sync done 🙂"
     fi
   fi
-
 }
 
 # https://docs.openstack.org/ocata/cli-reference/swift.html
 function upload() {
   echo "Swift upload from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
-  cd "$ROOT_PATH"
-
   if [ -z "$(ls -A "$ASSET_PATH")" ]; then
     echo "The directory $ASSET_PATH is empty, noting to upload to swift..."
   else
@@ -231,11 +222,16 @@ function upload() {
 
 function download() {
   echo "Swift download from container $CONTAINER $ASSET_PATH to $ASSET_PATH"
-  cd "$ROOT_PATH"
   swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" &>$OUTPUT &&
     echo "----------------------------------" &&
     echo "download done 🙂"
 }
+
+cd "$ROOT_PATH"
+if [ ! -d "$ASSET_PATH" ]; then
+  echo "Error: directory ASSET_PATH $ASSET_PATH does not exist 😐"
+  exit 1
+fi
 
 # juno-assets -> our own stuff
 # juno-assets-3rd-party -> 3rd party stuff that we want to build
