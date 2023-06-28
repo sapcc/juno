@@ -4,17 +4,73 @@ import { Label } from "../Label/index.js"
 import { Icon } from "../Icon/index"
 import { FormHint } from "../FormHint/index"
 
+const checkboxgroupstyles = `
+	jn-mb-4
+	jn-last:mb-0
+`
+
+const checkboxgrouplabelstyles = `
+	jn-inline-block
+	jn-mb-1
+`
+
+const groupstyles = `
+	jn-relative
+	jn-rounded
+	jn-border
+	jn-py-1
+`
+
+const defaultgroupstyles = `
+	jn-border-transparent
+`
+
+const validgroupstyles = `
+	jn-border-theme-success
+	jn-px-2
+`
+
+const invalidgroupstyles = `
+	jn-border-theme-error
+	jn-px-2
+`
+
+const errortextstyles = `
+	jn-text-xs
+	jn-text-theme-error
+	jn-mb-2
+`
+
+const successtextstyles = `
+	jn-text-xs
+	jn-text-theme-success
+	jn-mb-2
+`
+
+const iconstyles = `
+	jn-absolute
+	jn-right-2
+	jn-top-1.5
+`
+
 
 export const CheckboxGroupContext = createContext()
 
 export const CheckboxGroup = ({
   children,
+  className,
   disabled,
+  errortext,
+  helptext,
   id,
+  invalid,
   label,
   name,
   onChange,
+  required,
   selected,
+  successtext,
+  valid,
   ...props
 }) => {
   
@@ -33,12 +89,31 @@ export const CheckboxGroup = ({
   
   // Init state variables:
   const [selectedOptions, setSelectedOptions] = useState(selected) // undefined, empty array or array of values
+  const [isValid, setIsValid] = useState(false)
+  const [isInvalid, setIsInvalid] = useState(false)
+
+  const validated = useMemo(
+    () => valid || (successtext && successtext.length ? true : false),
+    [valid, successtext]
+  )
+  const invalidated = useMemo(
+    () => invalid || (errortext && errortext.length ? true : false),
+    [invalid, errortext]
+  )
   
   useEffect(() => {
     if (selected) {
       setSelectedOptions(selected)
     }
   }, [selected])
+  
+  useEffect(() => {
+    setIsValid(validated)
+  }, [validated])
+
+  useEffect(() => {
+    setIsInvalid(invalidated)
+  }, [invalidated])
 
   // Callback function to be passed via context to individual checkboxes:
   const handleCheckboxChange = (value) => {
@@ -72,10 +147,71 @@ export const CheckboxGroup = ({
         }
       }
     >
-      <div>
-        <div>
+      <div
+        className={`
+          juno-checkboxgroup 
+          ${ isValid ? "juno-checkboxgroup-valid" : "" } 
+          ${ isInvalid ? "juno-checkboxgroup-invalid" : "" } 
+          ${checkboxgroupstyles} 
+          ${className}
+        `}
+        id={groupId}
+        role="group"
+        {...props}
+      >
+        {
+          label && isNotEmptyString(label) ?
+            <Label 
+              text={label}
+              htmlFor={groupId}
+              disabled={disabled}
+              required={required}
+            />
+          :
+            ""
+        }
+        <div
+          className={`
+            juno-checkbox-group-options 
+            ${ groupstyles } 
+            ${ isValid ? validgroupstyles : "" } 
+            ${ isInvalid ? invalidgroupstyles : ""} 
+            ${ isValid || isInvalid ? "" : defaultgroupstyles }
+          `}
+        >
+          {isInvalid ? (
+            <Icon
+              icon="dangerous"
+              color="jn-text-theme-error"
+              className={`${iconstyles}`}
+            />
+          ) : ""}
+          {isValid ? (
+            <Icon
+              icon="checkCircle"
+              color="jn-text-theme-success"
+              className={`${iconstyles}`}
+            />
+          ) : ""}
+          
           { children }
+          
         </div>
+        { errortext && isNotEmptyString(errortext) ?
+            <FormHint text={errortext} variant="error" />
+          :
+            ""
+        }
+        { successtext && isNotEmptyString(successtext) ?
+            <FormHint text={successtext} variant="success" />
+          :
+            ""
+        }
+        { helptext && isNotEmptyString(helptext) ?
+            <FormHint text={helptext} />
+          :
+            ""
+         }
         <p>
           selectedOptions: {selectedOptions}
         </p>
@@ -86,24 +222,45 @@ export const CheckboxGroup = ({
 }
 
 CheckboxGroup.propTypes = {
+  /** The Checkbox children of the CheckboxGroup */
   children: PropTypes.node,
+  className: PropTypes.string,
+  /** Whether all Checkboxes in the group are disabled */
   disabled: PropTypes.bool,
+  errortext: PropTypes.node,
+  helptext: PropTypes.node,
+  /** The id of the group. If not passed, a unique id will be created and used for the group as a whole. */
   id: PropTypes.string,
+  invalid: PropTypes.bool,
+  /*+ The label of the whole group. */
   label: PropTypes.string,
+  /** The name of all checkboxes in the group. If not passed, a unique name identifier will be created and used for the group as a whole. */ 
   name: PropTypes.string,
+  /** An onChange handler to execute when the selection of options changes */
   onChange: PropTypes.func,
+  /** Whether a selection in the group is required */
+  required: PropTypes.bool,
   /** Array of values of individual selected options in the group */
   selected: PropTypes.array,
+  successtext: PropTypes.node,
+  valid: PropTypes.bool,
 }
 
 CheckboxGroup.defaultProps = {
   children: null,
+  className: "",
   disabled: false,
+  errortext: "",
+  helptext: "",
   id: "",
+  invalid: false,
   label: undefined,
   name: "",
   onChange: undefined,
+  required: false,
   selected: undefined,
+  successtext: "",
+  valid: false,
 }
 
 

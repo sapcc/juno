@@ -89,7 +89,7 @@ describe("CheckboxGroup", () => {
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
-		expect(screen.getByRole("group")).toHaveClass("juno-checkbox-group-valid")
+		expect(screen.getByRole("group")).toHaveClass("juno-checkboxgroup-valid")
 		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
 	})
 	
@@ -100,7 +100,7 @@ describe("CheckboxGroup", () => {
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
-		expect(screen.getByRole("group")).toHaveClass("juno-checkbox-group-valid")
+		expect(screen.getByRole("group")).toHaveClass("juno-checkboxgroup-valid")
 		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
 		expect(screen.getByText("Great Success!")).toBeInTheDocument()
 	})
@@ -112,7 +112,7 @@ describe("CheckboxGroup", () => {
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
-		expect(screen.getByRole("group")).toHaveClass("juno-checkbox-group-invalid")
+		expect(screen.getByRole("group")).toHaveClass("juno-checkboxgroup-invalid")
 		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
 	})
 	
@@ -123,7 +123,7 @@ describe("CheckboxGroup", () => {
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
-		expect(screen.getByRole("group")).toHaveClass("juno-checkbox-group-invalid")
+		expect(screen.getByRole("group")).toHaveClass("juno-checkboxgroup-invalid")
 		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
 		expect(screen.getByText("Big Error!")).toBeInTheDocument()
 	})

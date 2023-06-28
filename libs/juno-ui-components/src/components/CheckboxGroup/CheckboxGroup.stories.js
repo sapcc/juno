@@ -74,6 +74,17 @@ Required.args = {
   ],
 }
 
+export const Disabled = Template.bind({})
+Disabled.args = {
+  label: "A disabled CheckboxGroup",
+  disabled: true,
+  children: [
+    <Checkbox value="val-1" id="c-1" label="Option 1" key="1" />,
+    <Checkbox value="val-2" id="c-2" label="Option 2" key="2" />,
+    <Checkbox value="val-3" id="c-3" label="Option 3" key="3" />,
+  ],
+}
+
 export const ValidCheckboxGroup = Template.bind({})
 ValidCheckboxGroup.args = {
   name: "valid-checkbox-group",

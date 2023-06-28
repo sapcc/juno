@@ -5,13 +5,107 @@ import { Label } from "../Label/index.js"
 import { Icon } from "../Icon/"
 import { FormHint } from "../FormHint/"
 
+const wrapperStyles = `
+	jn-inline-flex
+	jn-items-center
+`
+
+const inputstyles = `
+	jn-w-4
+	jn-h-4
+	jn-opacity-0
+	jn-z-50
+`
+
+const mockcheckboxstyles = `
+	jn-relative
+	jn-w-4
+	jn-h-4
+	jn-rounded-sm
+	jn-bg-theme-checkbox
+	jn-cursor-pointer
+	focus:jn-outline-none
+	focus:jn-ring-2
+	focus:jn-ring-theme-focus
+`
+
+const mockfocusstyles = `
+	jn-ring-2
+	jn-ring-theme-focus
+`
+
+const mockcheckmarkstyles = `
+	jn-absolute
+	jn-top-0
+	jn-left-0
+	jn-text-theme-checkbox-checked
+	jn-fill-current
+`
+
+
+const mockindeterminatestyles = `
+	jn-absolute
+	jn-w-2
+	jn-h-0.5
+	jn-top-1.5
+	jn-left-[.2rem]
+	jn-inline-block
+	jn-bg-theme-focus
+`
+
+const mockdisabledstyles = `
+	jn-pointer-events-none
+	jn-opacity-50
+	jn-cursor-not-allowed
+`
+
+const noBorderStyles = `
+	jn-border
+	jn-border-transparent
+`
+
+const errorstyles = `
+	jn-border
+	jn-border-theme-error
+`
+
+const successstyles = `
+	jn-border
+	jn-border-theme-success
+`
+
+const labelStyles = `
+	jn-leading-0
+	jn-ml-2
+`
+
+const iconStyles = `
+	jn-ml-1
+`
+
+const hintStyles = `
+	jn-mt-0
+	jn-ml-6
+`
+
+
 
 export const Checkbox = ({
 	checked,
+	className,
+	disabled,
+	errortext,
+	helptext,
 	id,
+	indeterminate,
+	invalid,
 	label,
 	name,
 	onChange,
+	onClick,
+	required,
+	successtext,
+	valid,
 	value,
 	...props
 }) => {
@@ -50,6 +144,10 @@ export const Checkbox = ({
 	
 	
 	const [isChecked, setIsChecked] = useState( initialChecked() )
+	const [isIndeterminate, setIsIndeterminate] = useState(false)
+	const [hasFocus, setHasFocus] = useState(false)
+	const [isInvalid, setIsInvalid] = useState(false)
+	const [isValid, setIsValid] = useState(false)
 	
 	// Run once to update the parent state to respect and reflect the checked prop if we are in a group context, but parent has no selected options set via its prop:
 	useEffect(() => {
@@ -64,14 +162,47 @@ export const Checkbox = ({
 		}
 	}, [checked] )
 	
+	const invalidated = useMemo(
+		() => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
+		[invalid, errortext]
+	)
+	const validated = useMemo(
+		() => valid || (successtext && isNotEmptyString(successtext) ? true : false),
+		[valid, successtext]
+	)
+	
+	useEffect( () => {
+		setIsIndeterminate(indeterminate)
+	}, [indeterminate])
+	
+	useEffect( () => {
+		setIsInvalid(invalidated)
+	}, [invalidated])
+	
+	useEffect( () => {
+		setIsValid(validated)
+	}, [validated])
+	
 	const handleChange = (event) => {
 		setIsChecked(!isChecked)
 		// If we are in a context, update :
 		if (groupHandleCheckboxChange && typeof groupHandleCheckboxChange === "function") {
-			groupHandleCheckboxChange(value, isChecked)
+			groupHandleCheckboxChange(value)
 		}
 		
 		onChange && onChange(event)
+	}
+	
+	const handleClick = (event) => {
+		onClick && onClick(event)
+	}
+	
+	const handleFocus = () => {
+		setHasFocus(true)
+	}
+	
+	const handleBlur = () => {
+		setHasFocus(false)
 	}
 	
 	const determineChecked = () => {
@@ -85,35 +216,145 @@ export const Checkbox = ({
 	const theId = id || uniqueId()
 	
 	return (
-		<div>
-			<input 
-				checked={ determineChecked() }
-				id={theId}
-				name={groupName || name}
-				onChange={handleChange}
-				type="checkbox"
-				value={value}
-			/>
-			<Label text={ determineChecked().toString() } htmlFor={theId}/>
+		<div className="jn-checkbox-outer">
+			<div className={`jn-checkbox-wrapper ${wrapperStyles}`}>
+				<div
+					className={`
+						juno-checkbox 
+						${mockcheckboxstyles} 
+						${ hasFocus ? mockfocusstyles : "" } 
+						${ groupDisabled || disabled ? mockdisabledstyles : "" } 
+						${ isInvalid ? errorstyles : "" } 
+						${ isValid ? successstyles : "" } 
+						${ isInvalid || isValid ? "" : noBorderStyles }
+						${className}
+					`}
+					{...props}
+				>
+				{ determineChecked() ? 	<svg 
+					xmlns="http://www.w3.org/2000/svg" 
+					className={`${mockcheckmarkstyles}`} 
+					width="16" 
+					height="16" 
+					viewBox="0 0 16 16">
+						<polygon points="5.75 11.15 2.6 8 1.55 9.05 5.75 13.25 14.75 4.25 13.7 3.2"/>
+					</svg>
+				: 
+					"" }
+					<input 
+						checked={ determineChecked() }
+						className={`
+							${inputstyles} 
+							${ isInvalid ? "juno-checkbox-invalid" : ""} 
+							${ isValid ? "juno-checkbox-valid" : ""} 
+							${ groupDisabled || disabled ? "jn-cursor-not-allowed" : ""}
+						`}
+						disabled={ groupDisabled || disabled }
+						id={theId}
+						name={groupName || name}
+						onBlur={handleBlur}
+						onChange={handleChange}
+						onClick={handleClick}
+						onFocus={handleFocus}
+						type="checkbox"
+						value={value}
+					/>
+					{ isIndeterminate && !determineChecked() ? 
+						<div className={`${mockindeterminatestyles}`}></div>
+					: 
+						"" }
+				</div>
+				{ label && isNotEmptyString(label) ? 
+					<>
+						<Label 
+							text={label}
+							htmlFor={theId}
+							disabled={groupDisabled || disabled}
+							required={required}
+							className={`${labelStyles}`}
+						/>
+						{isInvalid ? (
+							<Icon
+								icon="dangerous"
+								color="jn-text-theme-error"
+								size="1.125rem"
+								className={`
+									${iconStyles}
+									${ groupDisabled || disabled ? "jn-opacity-50" :""}
+								`}
+							/>
+						) : ""}
+						{isValid ? (
+							<Icon
+								icon="checkCircle"
+								color="jn-text-theme-success"
+								size="1.125rem"
+								className={`
+									${iconStyles}
+									${disabled ? "jn-opacity-50" :""}
+								`}
+							/>
+						) : ""}
+					</>
+				:
+					""
+			}
+			</div>
+			{ errortext && isNotEmptyString(errortext) ?
+					<FormHint text={errortext} variant="error" className={`${hintStyles}`} />
+				:
+					""
+			}
+			{ successtext && isNotEmptyString(successtext) ?
+					<FormHint text={successtext} variant="success" className={`${hintStyles}`} />
+				:
+					""
+			}
+			{ helptext && isNotEmptyString(helptext) ?
+					<FormHint text={helptext} className={`${hintStyles}`} />
+				:
+					""
+			 }
 		</div>
 	)
 }
 
 Checkbox.propTypes = {
 	checked: PropTypes.bool,
+	className: PropTypes.string,
+	disabled: PropTypes.bool,
+	errortext: PropTypes.node,
+	helptext: PropTypes.node,
 	id: PropTypes.string,
+	indeterminate: PropTypes.bool,
+	invalid: PropTypes.bool,
 	label: PropTypes.string,
 	name: PropTypes.string,
 	onChange: PropTypes.func,
+	onClick: PropTypes.func,
+	required: PropTypes.bool,
+	successtext: PropTypes.node,
+	/** Whether the Checkbox was successfully validated */
+	valid: PropTypes.bool,
 	value: PropTypes.string,
 }
 
 Checkbox.defaultProps = {
 	checked: false,
+	className: "",
+	disabled: false,
+	errortext: "",
+	helptext: "",
 	id: "",
+	indeterminate: false,
+	invalid: false,
 	label: undefined,
 	name: "",
 	onChange: undefined,
+	onClick: undefined,
+	required: false,
+	successtext: "",
+	valid: false,
 	value: undefined,
 }
 
