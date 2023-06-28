@@ -188,7 +188,7 @@ function sync() {
   # Important: Since this can cause data loss, test first with the --dry-run or the --interactive/-i flag.
   # use "rclone sync --dry-run  "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH" for a dry run
   if [ -z "$(ls -A "$ASSET_PATH")" ]; then
-    echo "The directory $ASSET_PATH is empty, noting to sync to swift..."
+    echo "The directory $ASSET_PATH is empty, noting sync to swift..."
   else
     if [[ "$DRY_RUN" == "true" ]]; then
       rclone sync --dry-run "$ASSET_PATH" "juno:$CONTAINER/$ASSET_PATH"
@@ -204,7 +204,7 @@ function sync() {
 function upload() {
   echo "Swift upload from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
   if [ -z "$(ls -A "$ASSET_PATH")" ]; then
-    echo "The directory $ASSET_PATH is empty, noting to upload to swift..."
+    echo "The directory $ASSET_PATH is empty, noting upload to swift..."
   else
     swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" &>$OUTPUT &&
       echo "----------------------------------" &&
