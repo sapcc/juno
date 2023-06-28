@@ -14,6 +14,8 @@ beforeEach(() => {
 
     originalConsoleError(...args)
   }
+  // reset store by each test
+  // no need to reset the store since each provider creates in each test a new store
 })
 
 // https://github.com/testing-library/react-hooks-testing-library/blob/chore/migration-guide/MIGRATION_GUIDE.md
@@ -23,7 +25,7 @@ beforeEach(() => {
 // React 17 @testing-library/react-hooks vs React 18 @testing-library/react
 //   https://github.com/testing-library/react-testing-library/pull/991#issuecomment-1207138334
 // catch consol warns: https://www.jackfranklin.co.uk/blog/failing-tests-on-react-proptypes/
-describe("useMessageStore", () => {
+describe("messages-provider", () => {
   it("return no messages on initialize", () => {
     const wrapper = ({ children }) => (
       <MessagesProvider>{children}</MessagesProvider>
@@ -36,12 +38,14 @@ describe("useMessageStore", () => {
     const wrapper = ({ children }) => (
       <MessagesProvider>{children}</MessagesProvider>
     )
-    const actions = renderHook(() => useActions(), { wrapper })
-    const { result } = renderHook(() => useMessages(), { wrapper })
+    const store = renderHook(
+      () => ({ actions: useActions(), messages: useMessages() }),
+      { wrapper }
+    )
     let actionResult = null
     act(
       () =>
-        (actionResult = actions.result.current.addMessage({
+        (actionResult = store.result.current.actions.addMessage({
           variant: "error",
           text: "this is an error",
         }))
@@ -49,9 +53,9 @@ describe("useMessageStore", () => {
 
     waitFor(() => {
       expect(actionResult).toMatch(/message-/) //addMessage return message id if success
-      expect(result.current.messages.length).toBe(1)
-      expect(result.current.messages[0].variant).toEqual("error")
-      expect(result.current.messages[0].text).toEqual("this is an error")
+      expect(store.result.current.messages.length).toBe(1)
+      expect(store.result.current.messages[0].variant).toEqual("error")
+      expect(store.result.current.messages[0].text).toEqual("this is an error")
     })
   })
 
@@ -84,13 +88,15 @@ describe("useMessageStore", () => {
     const wrapper = ({ children }) => (
       <MessagesProvider>{children}</MessagesProvider>
     )
-    const actions = renderHook(() => useActions(), { wrapper })
-    const { result } = renderHook(() => useMessages(), { wrapper })
+    const store = renderHook(
+      () => ({ actions: useActions(), messages: useMessages() }),
+      { wrapper }
+    )
 
     let actionResult = null
     act(
       () =>
-        (actionResult = actions.result.current.addMessage({
+        (actionResult = store.result.current.actions.addMessage({
           variant: "error",
           text: "this is an error",
           dismissible: true,
@@ -99,10 +105,10 @@ describe("useMessageStore", () => {
 
     waitFor(() => {
       expect(actionResult).toMatch(/message-/) //addMessage return message id if success
-      expect(result.current.messages.length).toBe(1)
-      expect(result.current.messages[0].variant).toEqual("error")
-      expect(result.current.messages[0].text).toEqual("this is an error")
-      expect(result.current.messages[0].dismissible).toBeTruthy()
+      expect(store.result.current.messages.length).toBe(1)
+      expect(store.result.current.messages[0].variant).toEqual("error")
+      expect(store.result.current.messages[0].text).toEqual("this is an error")
+      expect(store.result.current.messages[0].dismissible).toBeTruthy()
     })
   })
 
@@ -110,32 +116,30 @@ describe("useMessageStore", () => {
     const wrapper = ({ children }) => (
       <MessagesProvider>{children}</MessagesProvider>
     )
-    const actions = renderHook(() => useActions(), { wrapper })
-    const { result } = renderHook(() => useMessages(), { wrapper })
+    const store = renderHook(
+      () => ({ actions: useActions(), messages: useMessages() }),
+      { wrapper }
+    )
     act(() =>
-      actions.result.current.addMessage({
+      store.result.current.actions.addMessage({
         variant: "error",
         text: "this is an error",
       })
     )
     act(() =>
-      actions.result.current.addMessage({
+      store.result.current.actions.addMessage({
         variant: "info",
         text: "this is an info message",
       })
     )
 
-    waitFor(() => {
-      expect(result.current.messages.length).toBe(2)
-
-      act(() =>
-        actions.result.current.removeMessage(result.current.messages[1].id)
+    expect(store.result.current.messages.length).toBe(2)
+    act(() =>
+      store.result.current.actions.removeMessage(
+        store.result.current.messages[1].id
       )
-    })
-
-    waitFor(() => {
-      expect(result.current.messages.length).toBe(1)
-    })
+    )
+    expect(store.result.current.messages.length).toBe(1)
   })
 
   it("test proptype for removeMessage id", () => {
@@ -152,26 +156,56 @@ describe("useMessageStore", () => {
     const wrapper = ({ children }) => (
       <MessagesProvider>{children}</MessagesProvider>
     )
-    const actions = renderHook(() => useActions(), { wrapper })
-    const { result } = renderHook(() => useMessages(), { wrapper })
+    const store = renderHook(
+      () => ({ actions: useActions(), messages: useMessages() }),
+      { wrapper }
+    )
     act(() =>
-      actions.result.current.addMessage({
+      store.result.current.actions.addMessage({
         variant: "error",
         text: "this is an error",
       })
     )
     act(() =>
-      actions.result.current.addMessage({
+      store.result.current.actions.addMessage({
         variant: "info",
         text: "this is an info message",
       })
     )
-    waitFor(() => {
-      expect(result.current.messages.length).toBe(2)
-      act(() => result.current.resetMessages())
-    })
-    waitFor(() => {
-      expect(result.current.messages.length).toBe(0)
-    })
+
+    expect(store.result.current.messages.length).toBe(2)
+    act(() => store.result.current.actions.resetMessages())
+    expect(store.result.current.messages.length).toBe(0)
+  })
+
+  it("creates different stores when using different providers", () => {
+    const wrapper1 = ({ children }) => (
+      <MessagesProvider>{children}</MessagesProvider>
+    )
+    const wrapper2 = ({ children }) => (
+      <MessagesProvider>{children}</MessagesProvider>
+    )
+    const store = renderHook(
+      () => ({ actions: useActions(), messages: useMessages() }),
+      {
+        wrapper: wrapper1,
+      }
+    )
+    const store2 = renderHook(
+      () => ({ actions: useActions(), messages: useMessages() }),
+      {
+        wrapper: wrapper2,
+      }
+    )
+
+    act(() =>
+      store.result.current.actions.addMessage({
+        variant: "error",
+        text: "this is an error",
+      })
+    )
+
+    expect(store.result.current.messages.length).toBe(1)
+    expect(store2.result.current.messages.length).toBe(0)
   })
 })
