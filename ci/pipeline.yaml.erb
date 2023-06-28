@@ -6,24 +6,24 @@
     "juno-3rd-party": ["apps"],
   }
   ASSETS = {
-    #"auth":                 { type: "app", path: "apps/auth" },
-    #"assets-overview":      { type: "app", path: "apps/assets-overview"},
-    #"user-activity":        { type: "app", path: "apps/user-activity"},
-    #"volta":                { type: "app", path: "apps/volta"},
-    #"whois":                { type: "app", path: "apps/whois"},
-    #"widget-loader":        { type: "app", path: "apps/widget-loader"},
-    #"dashboard":            { type: "app", path: "apps/dashboard"},
-    #"supernova":            { type: "app", path: "apps/supernova"},
+    "auth":                 { type: "app", path: "apps/auth" },
+    "assets-overview":      { type: "app", path: "apps/assets-overview"},
+    "user-activity":        { type: "app", path: "apps/user-activity"},
+    "volta":                { type: "app", path: "apps/volta"},
+    "whois":                { type: "app", path: "apps/whois"},
+    "widget-loader":        { type: "app", path: "apps/widget-loader"},
+    "dashboard":            { type: "app", path: "apps/dashboard"},
+    "supernova":            { type: "app", path: "apps/supernova"},
     "exampleapp":           { type: "app", path: "apps/exampleapp"},
-    #"greenhouse":           { type: "app", path: "apps/greenhouse" },
-    #"heureka":              { type: "app", path: "apps/heureka"},
+    "greenhouse":           { type: "app", path: "apps/greenhouse" },
+    "heureka":              { type: "app", path: "apps/heureka"},
     "juno-ui-components":   { type: "lib", path: "libs/juno-ui-components"},
     "messages-provider":    { type: "lib", path: "libs/messages-provider"},
-    #"oauth":                { type: "lib", path: "libs/oauth"},
-    #"policy-engine":        { type: "lib", path: "libs/policy-engine"},
-    #"communicator":         { type: "lib", path: "libs/communicator"},
-    #"url-state-provider":   { type: "lib", path: "libs/url-state-provider"},
-    #"url-state-router":     { type: "lib", path: "libs/url-state-router"},
+    "oauth":                { type: "lib", path: "libs/oauth"},
+    "policy-engine":        { type: "lib", path: "libs/policy-engine"},
+    "communicator":         { type: "lib", path: "libs/communicator"},
+    "url-state-provider":   { type: "lib", path: "libs/url-state-provider"},
+    "url-state-router":     { type: "lib", path: "libs/url-state-router"},
   }
   HA_REGIONS = ["eu-de-1","eu-de-2","eu-nl-1","ap-ae-1","ap-jp-2","ap-au-1","la-br-1","na-us-1","na-us-2"]
 %>
@@ -122,7 +122,8 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["<%=details[:path]%>","package.json","e2e", ".yarn", "ci"]
+      paths: ["<%=details[:path]%>","package.json","e2e", ".yarn"]
+      # "ci"
       # "ci/scripts"
       # "ci/shared"
       username: sapcc-bot
