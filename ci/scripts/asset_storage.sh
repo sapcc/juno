@@ -220,9 +220,11 @@ function download() {
 }
 
 cd "$ROOT_PATH"
-if [ ! -d "$ASSET_PATH" ]; then
-  echo "Error: directory ASSET_PATH $ASSET_PATH does not exist 😐"
-  exit 1
+if [[ "$ACTION" == "upload" ]] || [[ "$ACTION" == "sync" ]]; then
+  if [ ! -d "$ASSET_PATH" ]; then
+    echo "Error: directory ASSET_PATH $ASSET_PATH does not exist 😐"
+    exit 1
+  fi
 fi
 
 # juno-assets -> our own stuff
@@ -245,6 +247,6 @@ if [[ "$DEBUG" == "true" ]]; then
     cat /tmp/swift-debug.log
     echo "----------------"
   else
-    echo "Warning: no debug log file found"
+    echo "Note: no debug log file found"
   fi
 fi
