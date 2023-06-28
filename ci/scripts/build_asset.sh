@@ -12,7 +12,7 @@ function help() {
   echo "Usage: build_assets.sh --asset-path||-ap --asset-name||-sn --asset-type||-at --output-path||-op --last-build-path||-lbp
     Example: ./ci/scripts/build_asset.sh --asset-name auth --asset-path ./apps/auth/ --output-path /tmp/juno-build
     --last-build-path is optional and only used when asset-type = lib is used to find out there was a new version found
-    --output-path is optional default is ./build-result"
+    --asset-path is optional when --asset-type is given"
   exit
 }
 
@@ -63,13 +63,27 @@ if [[ -z "$ASSET_NAME" ]]; then
   exit 1
 fi
 
-if [[ -z "$ASSET_PATH" ]]; then
-  echo "Error: no ASSET_PATH path found 😐"
+if [[ -z "$ASSET_TYPE" ]]; then
+  echo "Error: no ASSET_TYPE path found 😐"
   exit 1
 fi
 
-if [[ -z "$ASSET_TYPE" ]]; then
-  echo "Error: no ASSET_TYPE path found 😐"
+if [[ -z "$ASSET_PATH" ]]; then
+  if [[ -n "$ASSET_TYPE" ]]; then
+    ASSET_PATH="${ASSET_TYPE}s/${ASSET_NAME}"
+  else
+    echo "Error: no ASSET_PATH path found 😐"
+    exit 1
+  fi
+fi
+
+# check basic paths exist
+if [ ! -d "$ASSET_PATH" ]; then
+  echo "Error: directory ASSET_PATH $ASSET_PATH does not exist 😐"
+  exit 1
+fi
+if [ ! -d "$OUTPUT_PATH" ]; then
+  echo "Error: directory OUTPUT_PATH $OUTPUT_PATH does not exist 😐"
   exit 1
 fi
 
@@ -88,6 +102,11 @@ if [[ "$ASSET_TYPE" == "lib" ]] && [[ -n "$LAST_BUILD_PATH" ]]; then
   echo "use LAST_BUILD_PATH = $LAST_BUILD_PATH"
   echo "----------------------------------"
   echo "Check Version..."
+
+  if [ ! -d "$LAST_BUILD_PATH" ]; then
+    echo "Error: directory LAST_BUILD_PATH $LAST_BUILD_PATH does not exist 😐"
+    exit 1
+  fi
 
   if [ ! -f "$ASSET_PATH/package.json" ]; then
     echo "Error: $ASSET_PATH/package.json doesn't exist"
