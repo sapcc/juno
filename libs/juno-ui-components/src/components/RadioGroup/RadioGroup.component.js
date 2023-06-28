@@ -81,7 +81,6 @@ export const RadioGroup = ({
     return !(typeof str === 'string' && str.trim().length === 0)
   }
   
-  
   const uniqueId = () => (
     "juno-radiogroup-" + useId()
   )

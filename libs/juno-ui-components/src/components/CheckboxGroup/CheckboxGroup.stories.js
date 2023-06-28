@@ -24,11 +24,30 @@ const Template = ({ children, ...args }) => (
 
 export const Default = Template.bind({})
 Default.args = {
-  name: "Default CheckboxGroup",
   children: [
-    <Checkbox value="val-1" id="c-1" label="Option 1" key="1" />,
-    <Checkbox value="val-2" id="c-2" label="Option 2" key="2" />,
-    <Checkbox value="val-3" id="c-3" label="Option 3" key="3" />,
+    <Checkbox value="val-1" label="Option 1" key="1" />,
+    <Checkbox value="val-2" label="Option 2" key="2" />,
+    <Checkbox value="val-3" label="Option 3" key="3" />,
+  ],
+}
+
+export const Selected = Template.bind({})
+Selected.args = {
+  selected: ["val-2"],
+  children: [
+    <Checkbox value="val-1" label="Option 1" key="1" />,
+    <Checkbox value="val-2" label="Option 2" key="2" />,
+    <Checkbox value="val-3" label="Option 3" key="3" />,
+  ],
+}
+
+export const IndividuallyChecked = Template.bind({})
+IndividuallyChecked.args = {
+  children: [
+    <Checkbox value="val-1" label="Option 1" key="1" />,
+    <Checkbox value="val-2" label="Option 2" key="2" checked />,
+    <Checkbox value="val-3" label="Option 3" key="3" checked />,
+    <Checkbox value="val-4" label="Option 4" key="4" />,
   ],
 }
 
