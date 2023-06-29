@@ -220,8 +220,14 @@ RadioGroup.propTypes = {
   className: PropTypes.string,
   /** Whether all Radios in the group are disabled */
   disabled: PropTypes.bool,
+  /** Text to display in case validation failed or there is an error. Will set the whole group to invalid when passed. */
+  errortext: PropTypes.node,
+  /** A text to render to further explain meaning and significance of the group */
+  helptext: PropTypes.node,
   /** The id of the group. If not passed, RadioGroup will create and use a unique id for the group */
   id: PropTypes.string,
+  /** Whether the group not be validated. */
+  invalid: PropTypes.bool,
   /** Label for the group of radios as a whole. Passing a label is mandatory in order to denote a selection in the set is required by passing the `required` prop. */
   label: PropTypes.string,
   /** The name of all radios in a group. If not passed, RadioGroup will create and use a unique name identifier for its child Radios */
@@ -232,18 +238,27 @@ RadioGroup.propTypes = {
   required: PropTypes.bool,
   /** The value of the initially selected radio. This will override 'checked' set on any of the child radio elements. */
   selected: PropTypes.string,
+  /** Text to display in case validation is successful. When passed, will set the whole group to valid. */
+  successtext: PropTypes.node,
+  /** Whether the RadioGroup was successfully validated */
+  valid: PropTypes.bool,
 }
 
 RadioGroup.defaultProps = {
   children: null,
   className: "",
   disabled: false,
+  errortext: "",
+  helptext: "",
   id: "",
+  invalid: false,
   label: "",
   name: undefined,
   onChange: undefined,
   required: false,
   selected: undefined,
+  successtext: "",
+  valid: false,
 }
 
 // ----------------------------------------------------------------------------------------------------

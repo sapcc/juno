@@ -224,10 +224,13 @@ export const CheckboxGroup = ({
 CheckboxGroup.propTypes = {
   /** The Checkbox children of the CheckboxGroup */
   children: PropTypes.node,
+  /** Pass a custom className */
   className: PropTypes.string,
   /** Whether all Checkboxes in the group are disabled */
   disabled: PropTypes.bool,
+  /** Text to display in case validation failed or there is an error. Will set the whole group to invalid when passed. */
   errortext: PropTypes.node,
+  /** A text to render to further explain meaning and significance of the group */
   helptext: PropTypes.node,
   /** The id of the group. If not passed, a unique id will be created and used for the group as a whole. */
   id: PropTypes.string,
@@ -242,7 +245,9 @@ CheckboxGroup.propTypes = {
   required: PropTypes.bool,
   /** Array of values of individual selected options in the group */
   selected: PropTypes.array,
+  /** Text to display in case validation is successful. When passed, will set the whole group to valid. */
   successtext: PropTypes.node,
+  /** Whether the CheckboxGroup was successfully validated */
   valid: PropTypes.bool,
 }
 
