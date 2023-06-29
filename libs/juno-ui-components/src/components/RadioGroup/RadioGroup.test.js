@@ -1,6 +1,7 @@
 import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { RadioGroup } from "./index"
+import {Radio} from "../Radio/index"
 import {RadioRow} from "../RadioRow/index"
 
 
@@ -19,9 +20,9 @@ describe("RadioGroup", () => {
 	test("renders radio rows as passed", async () => {
 		render(
 			<RadioGroup name="my-radiogroup"> 
-				<RadioRow />
-				<RadioRow />
-				<RadioRow />
+				<Radio />
+				<Radio />
+				<Radio />
 			</RadioGroup>
 		)
 		expect(screen.getAllByRole("radio")).toHaveLength(3)
@@ -30,16 +31,27 @@ describe("RadioGroup", () => {
 	test("renders individually named radios as passed", async () => {
 		render(
 			<RadioGroup name="my-radiogroup"> 
-				<RadioRow />
+				<Radio />
 			</RadioGroup>
 		)
 		expect(screen.getByRole("radio")).toHaveAttribute('name', "my-radiogroup")
 	})
 	
+	test("renders radios with an auto-generated name if no name was passed", async () => {
+		render(
+			<RadioGroup> 
+				<Radio />
+				<Radio />
+			</RadioGroup>
+		)
+		const radios = screen.getAllByRole("radio")
+		radios.forEach( radio => expect(radio).toHaveAttribute('name') )
+	})
+	
     test("renders a label for the group as passed", async () => {
 		render(
 			<RadioGroup name="my-radiogroup" label="My labeled RadioGroup" >
-				<RadioRow />
+				<Radio />
 			</RadioGroup>
 		)
 		expect(screen.getByText("My labeled RadioGroup")).toBeInTheDocument()
@@ -48,7 +60,7 @@ describe("RadioGroup", () => {
 	test("renders a required label as passed", async () => {
 		render(
 			<RadioGroup name="my-radiogroup" label="my-labeled-radiogroup" required >
-				<RadioRow />
+				<Radio />
 			</RadioGroup>
 		)
 		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
@@ -58,7 +70,7 @@ describe("RadioGroup", () => {
 	test("renders a disabled radiogroup as passes", async () => {
 		render(
 			<RadioGroup name="my-radiogroup" disabled={true} >
-				<RadioRow />
+				<Radio />
 			</RadioGroup>
 		)
 		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
@@ -68,9 +80,9 @@ describe("RadioGroup", () => {
 	test("renders a radiogroup with a selected option as passed to the parent", async () => {
 		render(
 			<RadioGroup name="my-radiogroup" selected="val2">
-				<RadioRow value="val1" />
-				<RadioRow value="val2" id="radio-2"/>
-				<RadioRow value="val3" />
+				<Radio value="val1" />
+				<Radio value="val2" id="radio-2"/>
+				<Radio value="val3" />
 			</RadioGroup>
 		)
 		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
@@ -80,9 +92,9 @@ describe("RadioGroup", () => {
 	test("renders a radiogroup with a checked radio as passed to a child", async () => {
 		render(
 			<RadioGroup name="my-radiogroup">
-				<RadioRow value="v1" />
-				<RadioRow value="v2" />
-				<RadioRow value="v3" id="radio-3" checked />
+				<Radio value="v1" />
+				<Radio value="v2" />
+				<Radio value="v3" id="radio-3" checked />
 			</RadioGroup>
 		)
 		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
@@ -99,7 +111,7 @@ describe("RadioGroup", () => {
 	test("renders a valid RadioGroup as passed", async () => {
 		render(
 			<RadioGroup valid name="my-radiogroup">
-				<RadioRow value="v1"/>
+				<Radio value="v1"/>
 			</RadioGroup>
 		)
 		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
@@ -110,7 +122,7 @@ describe("RadioGroup", () => {
 	test("renders a valid RadioGroup when successtext is passed", async () => {
 		render(
 			<RadioGroup successtext="Great Success!" name="my-radiogroup">
-				<RadioRow value="v1"/>
+				<Radio value="v1"/>
 			</RadioGroup>
 		)
 		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
@@ -122,7 +134,7 @@ describe("RadioGroup", () => {
 	test("renders a invalid RadioGroup as passed", async () => {
 		render(
 			<RadioGroup invalid name="my-radiogroup">
-				<RadioRow value="v1"/>
+				<Radio value="v1"/>
 			</RadioGroup>
 		)
 		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
@@ -133,7 +145,7 @@ describe("RadioGroup", () => {
 	test("renders an invalid RadioGroup when errortext is passed", async () => {
 		render(
 			<RadioGroup errortext="Big Error!" name="my-radiogroup">
-				<RadioRow value="v1"/>
+				<Radio value="v1"/>
 			</RadioGroup>
 		)
 		expect(screen.getByRole("radiogroup")).toBeInTheDocument()
