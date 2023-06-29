@@ -2,7 +2,6 @@ import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { RadioGroup } from "./index"
 import {Radio} from "../Radio/index"
-import {RadioRow} from "../RadioRow/index"
 
 
 describe("RadioGroup", () => {
@@ -17,7 +16,7 @@ describe("RadioGroup", () => {
 		  }).toThrow()
 	})
 	
-	test("renders radio rows as passed", async () => {
+	test("renders radios as passed", async () => {
 		render(
 			<RadioGroup name="my-radiogroup"> 
 				<Radio />
