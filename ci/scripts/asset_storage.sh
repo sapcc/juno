@@ -14,7 +14,7 @@ function help() {
   --asset-name -> if no asset-name is fiven the whole folder that is 
                   defined with the --asset-type option is downloaded
   --asset-path -> optional like apps/asset-name, if set --asset-type is ingnored
-  --asset-type -> lib|app
+  --asset-type -> app || lib
   --action     -> upload|download|sync
   --container  -> where to upload or download assets
   --root-path  -> default is /tmp/build_result
@@ -50,6 +50,9 @@ while [[ $# -gt 0 ]]; do
     ;;
   --asset-type | -at)
     ASSET_TYPE="$2"
+    if [[ "$ASSET_TYPE" != *"s" ]]; then
+      ASSET_TYPE="${ASSET_TYPE}s"
+    fi
     shift # past argument
     shift # past value
     ;;
@@ -78,7 +81,7 @@ while [[ $# -gt 0 ]]; do
     shift # past argument
     shift # past value
     ;;
-  --dry-run | -d)
+  --dry-run | -dr)
     DRY_RUN="$2"
     shift # past argument
     shift # past value
@@ -105,7 +108,7 @@ fi
 
 if [[ -z "$ASSET_PATH" ]]; then
   if [[ -n "$ASSET_TYPE" ]]; then
-    ASSET_PATH="${ASSET_TYPE}s/${ASSET_NAME}"
+    ASSET_PATH="$ASSET_TYPE/$ASSET_NAME"
   else
     echo "Error: no ASSET_PATH given 😐"
     exit 1
