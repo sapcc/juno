@@ -13,7 +13,7 @@ RED='\033[1;31m'
 function help() {
   echo "Usage: compose_assets.sh --asset-type||-at --source-path||-rp --kind||-k --no-exit-on-error
   example: ./ci/scripts/compose_assets.sh --asset-type apps --source-path ../workbench --dist-path ../dist
-  --asset-type    -> libs|apps|apis|static
+  --asset-type    -> lib|app
   --source-path   -> default is /tmp/build_result (can be realtive and absolute)
   --kind          -> juno-assets || juno-3rd-party (default is juno-assets)
   --dist-path     -> default is /tmp/dist (must be absolute)
@@ -24,7 +24,7 @@ function help() {
 while [[ $# -gt 0 ]]; do
   case $1 in
   --asset-type | -at)
-    ASSET_TYPE="$2"
+    ASSET_TYPE="{$2}s"
     shift # past argument
     shift # past value
     ;;
