@@ -71,7 +71,7 @@ describe("CheckboxGroup", () => {
 			</CheckboxGroup>
 		)
 		const checkboxes = screen.getAllByRole("checkbox")
-		checkboxes.forEach( checkbox => expect(radio).toHaveAttribute('name') )
+		checkboxes.forEach( checkbox => expect(checkbox).toHaveAttribute('name') )
 	})
 	
 	test("renders Checkboxes as passed", async () => {
