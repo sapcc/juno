@@ -167,5 +167,44 @@ RUN echo -e $'\
   \t</body>\n\
   </html>' > /usr/share/nginx/html/index.html   
 
+RUN echo -e $'\
+  <!DOCTYPE html> \n\
+  <html lang="en"> \n\
+  \t<head> \n\
+  \t\t<meta charset="UTF-8" /> \n\
+  \t\t<title>Assets Test</title> \n\
+  \t\t<style> \n\
+  \t\t\t.blured { \n\
+  \t\t\t\tposition: absolute; \n\
+  \t\t\t\tleft: 0; \n\
+  \t\t\t\tright: 0; \n\
+  \t\t\t\ttop: 0; \n\
+  \t\t\t\tbottom: 0; \n\
+  \t\t\t\tbackdrop-filter: blur(10px); \n\
+  \t\t\t\tz-index: 1000; \n\
+  \t\t\t} \n\
+  \t\t</style> \n\
+  \t</head> \n\
+  \t<body> \n\
+  \t\tAsset mount test \n\
+  \t\t<script> \n\
+  \t\t\tconst params = new URLSearchParams(window.location.search) \n\
+  \t\t\tconst { name, version, props } = JSON.parse(atob(params.get("config"))) \n\
+  \t\t\tconst script = document.createElement("script") \n\
+  \t\t\tscript.src = "/apps/widget-loader@latest/build/app.js" \n\
+  \t\t\tscript.setAttribute("data-name", name) \n\
+  \t\t\tscript.setAttribute("data-version", version) \n\
+  \t\t\tif (props) { \n\
+  \t\t\t\tObject.keys(props).forEach((key) => { \n\
+  \t\t\t\t\tconst propKey = key.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase()) \n\
+  \t\t\t\t\tscript.setAttribute(`data-props-${propKey}`, props[key]) \n\
+  \t\t\t\t}) \n\
+  \t\t\t} \n\
+  \t\t\tdocument.currentScript.replaceWith(script) \n\
+  \t\t</script> \n\
+  \t\t<div class="blured"></div> \n\
+  \t</body> \n\
+  </html>' > /usr/share/nginx/html/mount-test.html   
+
 # default command is nginx
 # CMD nginx -g "daemon off;"
