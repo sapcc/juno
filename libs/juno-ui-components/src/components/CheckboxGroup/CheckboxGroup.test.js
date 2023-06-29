@@ -82,6 +82,17 @@ describe("CheckboxGroup", () => {
 		expect(screen.getByRole("checkbox")).toBeChecked()
 	})
 	
+	test("renders disabled child Checkboxes as passed", async () => {
+		render(
+			<CheckboxGroup disabled >
+				<Checkbox id="c-1" />
+				<Checkbox id="c-2" />
+			</CheckboxGroup>
+		)
+		expect(document.getElementById("c-1")).toBeDisabled()
+		expect(document.getElementById("c-2")).toBeDisabled()
+	})
+	
 	test("renders a valid CheckboxGroup as passed", async () => {
 		render(
 			<CheckboxGroup valid>
