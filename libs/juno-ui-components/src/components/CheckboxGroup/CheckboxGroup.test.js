@@ -2,7 +2,6 @@ import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { CheckboxGroup } from "./index"
 import { Checkbox } from "../Checkbox/index"
-import { CheckboxRow } from "../CheckboxRow/index"
 
 describe("CheckboxGroup", () => {
 	
@@ -42,7 +41,7 @@ describe("CheckboxGroup", () => {
 		  }).toThrow()
 	})
 	
-	test("renders CheckboxRows as passed", async () => {
+	test("renders Checkboxes as passed", async () => {
 		render(
 			<CheckboxGroup> 
 				<Checkbox />
@@ -53,7 +52,7 @@ describe("CheckboxGroup", () => {
 		expect(screen.getAllByRole("checkbox")).toHaveLength(3)
 	})
 	
-	test("renders individually named CheckboxRows as passed", async () => {
+	test("renders individually named Checkboxes as passed", async () => {
 		render(
 			<CheckboxGroup name="my-checkboxgroup"> 
 				<Checkbox />
@@ -64,7 +63,18 @@ describe("CheckboxGroup", () => {
 		expect(screen.getAllByRole("checkbox")).toHaveLength(3)
 	})
 	
-	test("renders CheckboxRows as passed", async () => {
+	test("renders Checkboxes with an auto-generated name if no name was passed", async () => {
+		render(
+			<CheckboxGroup> 
+				<Checkbox />
+				<Checkbox />
+			</CheckboxGroup>
+		)
+		const checkboxes = screen.getAllByRole("checkbox")
+		checkboxes.forEach( checkbox => expect(radio).toHaveAttribute('name') )
+	})
+	
+	test("renders Checkboxes as passed", async () => {
 		render(
 			<CheckboxGroup name="my-checkboxgroup"> 
 				<Checkbox />
@@ -73,7 +83,7 @@ describe("CheckboxGroup", () => {
 		expect(screen.getByRole("checkbox")).toHaveAttribute("name", "my-checkboxgroup")
 	})
 	
-	test("renders checked CheckboxRows as passed", async () => {
+	test("renders checked Checkboxes as passed", async () => {
 		render(
 			<CheckboxGroup selected={["test-checkbox"]}>
 				<Checkbox value="test-checkbox"/>
