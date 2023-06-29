@@ -60,7 +60,7 @@ export const InvalidWithLabel = Template.bind({})
 InvalidWithLabel.args = {
   invalid: true,
   label: "Invalidated checkbox with label and icon",
-  successtext: "This option is invalid.",
+  errortext: "This option is invalid.",
   helptext: "Validation icons will only show when there is a label on the Checkbox",
 }
 
