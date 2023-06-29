@@ -45,9 +45,9 @@ describe("CheckboxGroup", () => {
 	test("renders CheckboxRows as passed", async () => {
 		render(
 			<CheckboxGroup> 
-				<CheckboxRow />
-				<CheckboxRow />
-				<CheckboxRow />
+				<Checkbox />
+				<Checkbox />
+				<Checkbox />
 			</CheckboxGroup>
 		)
 		expect(screen.getAllByRole("checkbox")).toHaveLength(3)
@@ -56,9 +56,9 @@ describe("CheckboxGroup", () => {
 	test("renders individually named CheckboxRows as passed", async () => {
 		render(
 			<CheckboxGroup name="my-checkboxgroup"> 
-				<CheckboxRow />
-				<CheckboxRow />
-				<CheckboxRow />
+				<Checkbox />
+				<Checkbox />
+				<Checkbox />
 			</CheckboxGroup>
 		)
 		expect(screen.getAllByRole("checkbox")).toHaveLength(3)
@@ -67,7 +67,7 @@ describe("CheckboxGroup", () => {
 	test("renders CheckboxRows as passed", async () => {
 		render(
 			<CheckboxGroup name="my-checkboxgroup"> 
-				<CheckboxRow />
+				<Checkbox />
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("checkbox")).toHaveAttribute("name", "my-checkboxgroup")
@@ -76,7 +76,7 @@ describe("CheckboxGroup", () => {
 	test("renders checked CheckboxRows as passed", async () => {
 		render(
 			<CheckboxGroup selected={["test-checkbox"]}>
-				<CheckboxRow value="test-checkbox"/>
+				<Checkbox value="test-checkbox"/>
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("checkbox")).toBeChecked()
@@ -96,7 +96,7 @@ describe("CheckboxGroup", () => {
 	test("renders a valid CheckboxGroup as passed", async () => {
 		render(
 			<CheckboxGroup valid>
-				<CheckboxRow value="test-checkbox"/>
+				<Checkbox value="test-checkbox"/>
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
@@ -107,7 +107,7 @@ describe("CheckboxGroup", () => {
 	test("renders a valid CheckboxGroup when successtext is passed", async () => {
 		render(
 			<CheckboxGroup successtext="Great Success!">
-				<CheckboxRow value="test-checkbox"/>
+				<Checkbox value="test-checkbox"/>
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
@@ -119,7 +119,7 @@ describe("CheckboxGroup", () => {
 	test("renders an invalid CheckboxGroup as passed", async () => {
 		render(
 			<CheckboxGroup invalid>
-				<CheckboxRow value="test-checkbox"/>
+				<Checkbox value="test-checkbox"/>
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
@@ -130,7 +130,7 @@ describe("CheckboxGroup", () => {
 	test("renders an invalid CheckboxGroup when errortext is passed", async () => {
 		render(
 			<CheckboxGroup errortext="Big Error!">
-				<CheckboxRow value="test-checkbox"/>
+				<Checkbox value="test-checkbox"/>
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
@@ -139,10 +139,22 @@ describe("CheckboxGroup", () => {
 		expect(screen.getByText("Big Error!")).toBeInTheDocument()
 	})
 	
+	test("renders a helptext as passed", async () => {
+		render(
+			<CheckboxGroup helptext="This is a helpful text">
+				<Checkbox />
+				<Checkbox />
+			</CheckboxGroup>
+		)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-help")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("This is a helpful text")
+	})
+	
 	test("renders a custom className", async () => {
 		render(
 			<CheckboxGroup name="my-checkboxgroup" className="my-custom-classname"> 
-				<CheckboxRow value="test-checkbox"/>
+				<Checkbox value="test-checkbox"/>
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
@@ -152,7 +164,7 @@ describe("CheckboxGroup", () => {
 	test("renders all props", async () => {
 		render(
 			<CheckboxGroup name="my-checkboxgroup" data-lolol="some-prop"> 
-				<CheckboxRow value="test-checkbox"/>
+				<Checkbox value="test-checkbox"/>
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
