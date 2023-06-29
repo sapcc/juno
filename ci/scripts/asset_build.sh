@@ -13,7 +13,7 @@ function help() {
     Example: ./ci/scripts/asset_build.sh --asset-name auth --asset-path ./apps/auth/ --output-path /tmp/juno-build
     --last-build-path is optional and only used when asset-type = lib is used to find out there was a new version found
     --asset-path is optional when --asset-type is given
-    --asset-type -> lib|app"
+    --asset-type -> app || lib"
   exit
 }
 
@@ -36,6 +36,9 @@ while [[ $# -gt 0 ]]; do
     ;;
   --asset-type | -at)
     ASSET_TYPE="$2"
+    if [[ "$ASSET_TYPE" != *"s" ]]; then
+      ASSET_TYPE="${ASSET_TYPE}s"
+    fi
     shift # past argument
     shift # past value
     ;;
@@ -71,7 +74,7 @@ fi
 
 if [[ -z "$ASSET_PATH" ]]; then
   if [[ -n "$ASSET_TYPE" ]]; then
-    ASSET_PATH="${ASSET_TYPE}s/${ASSET_NAME}"
+    ASSET_PATH="$ASSET_TYPE/$ASSET_NAME"
   else
     echo "Error: no ASSET_PATH path found 😐"
     exit 1

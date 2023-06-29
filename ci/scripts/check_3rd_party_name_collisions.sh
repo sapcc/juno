@@ -11,7 +11,7 @@ function help() {
   echo "Usage: check_for_name_collisions.sh --juno-assets-path||-j --third-party-assets-path||-t --asset-type||-at --help||-h
   --juno-assets-path path to juno assets  
   --third-party-assets-path path to third-party assets
-  --asset-type = apps or libs"
+  --asset-type = app || lib"
   exit
 }
 
@@ -20,18 +20,21 @@ RED='\033[1;31m'
 
 while [[ $# -gt 0 ]]; do
   case $1 in
-  --juno-assets-path | -j)
+  --juno-assets-path | -ja)
     JUNO_ASSETS_PATH="$2"
     shift # past argument
     shift # past value
     ;;
-  --third-party-assets-path | -t)
+  --third-party-assets-path | -tp)
     THIRD_PARTY_ASSETS_PATH="$2"
     shift # past argument
     shift # past value
     ;;
   --asset-type | -at)
     ASSET_TYPE="$2"
+    if [[ "$ASSET_TYPE" != *"s" ]]; then
+      ASSET_TYPE="${ASSET_TYPE}s"
+    fi
     shift # past argument
     shift # past value
     ;;
