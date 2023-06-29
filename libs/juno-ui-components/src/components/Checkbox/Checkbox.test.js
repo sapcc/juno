@@ -31,6 +31,12 @@ describe("Checkbox", () => {
 		expect(screen.getByRole("checkbox")).toHaveAttribute('id', "my-checkbox")
 	})
 	
+	test("renders a Checkbox with an auto-generated id if no id was passed", async () => {
+		render(<Checkbox />)
+		expect(screen.getByRole("checkbox")).toBeInTheDocument()
+		expect(screen.getByRole("checkbox")).toHaveAttribute('id')
+	})
+	
 	test("renders a checkbox with a value as passed", async () => {
 		render(<Checkbox value="ValueAsPassed" />)
 		expect(screen.getByRole("checkbox")).toBeInTheDocument()

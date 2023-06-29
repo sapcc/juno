@@ -31,6 +31,12 @@ describe("Radio", () => {
 		expect(screen.getByRole("radio")).toHaveAttribute('id', "my-radio")
 	})
 	
+	test("renders a Checkbox with an auto-generated id if no id was passed", async () => {
+		render(<Radio />)
+		expect(screen.getByRole("radio")).toBeInTheDocument()
+		expect(screen.getByRole("radio")).toHaveAttribute('id')
+	})
+	
 	test("renders a radio with a value as passed", async () => {
 		render(<Radio value="ValueAsPassed" />)
 		expect(screen.getByRole("radio")).toBeInTheDocument()
