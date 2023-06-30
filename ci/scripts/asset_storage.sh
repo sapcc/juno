@@ -15,7 +15,7 @@ function help() {
                   defined with the --asset-type option is downloaded
   --asset-path -> optional like apps/asset-name, if set --asset-type is ingnored
   --asset-type -> app || lib
-  --action     -> upload|download|sync
+  --action     -> upload ||download || sync
   --container  -> where to upload or download assets
   --root-path  -> default is /tmp/build_result
   --debug      -> default is 'false'
