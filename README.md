@@ -36,13 +36,13 @@ Use Webpack for apps, and Rollup for libraries
 Start any app in apps folder with workspace APP_NAME start
 
 ```bash
-npm --workspace dashboard run start
+npm -w dashboard run start
 ```
 
 ## In workspaces
 
 ```bash
-wb npm --workspace dashboard run start
+wb npm -w dashboard run start
 ```
 
 # Debug
