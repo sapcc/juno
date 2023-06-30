@@ -45,7 +45,7 @@ Doing this lets you use Tailwind classnames from the Juno UI Components library.
 In order to work ON (NOT WITH) the Juno Design System and its components run storybook with:
 
 ```bash
-npm --workspace juno-ui-components storybook
+npm -w juno-ui-components run storybook
 ```
 
 or just run from the root directory of this repository `npm run ui-components`
@@ -53,5 +53,5 @@ or just run from the root directory of this repository `npm run ui-components`
 Run the test suite:
 
 ```bash
-npm --workspace juno-ui-components test
+npm -w juno-ui-components run test
 ```
