@@ -54,7 +54,7 @@ describe("CheckboxRow", () => {
 	
 	test("renders a required label as passed", async () => {
 		render(<CheckboxRow label="Required Input" required />)
-		expect(document.querySelector('.required')).toBeInTheDocument()
+		expect(document.querySelector('.juno-required')).toBeInTheDocument()
 	})
 	
 	test("renders a disabled Checkbox as passed", async () => {
@@ -66,7 +66,7 @@ describe("CheckboxRow", () => {
 	
 	test("renders an invalid CheckboxRow as passed", async () => {
 		act(() => {
-			render(<CheckboxRow invalid />)
+			render(<CheckboxRow invalid label="invalid checkbox"/>)
 		})
 		expect(screen.getByRole("checkbox")).toBeInTheDocument()
 		expect(screen.getByRole("checkbox")).toHaveClass("juno-checkbox-invalid")
@@ -74,7 +74,7 @@ describe("CheckboxRow", () => {
 	})
 	
 	test("renders an invalid CheckRow with an error text as passed", async () => {
-		render(<CheckboxRow errortext="This is an error text" />)
+		render(<CheckboxRow errortext="This is an error text" label="Checkbox"/>)
 		expect(screen.getByRole("checkbox")).toBeInTheDocument()
 		expect(screen.getByRole("checkbox")).toHaveClass("juno-checkbox-invalid")
 		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
@@ -83,7 +83,7 @@ describe("CheckboxRow", () => {
 	
 	test("renders a valid CheckboxRow as passed", async () => {
 		act(() => {
-			render(<CheckboxRow valid />)
+			render(<CheckboxRow valid label="valid checkbox"/>)
 		})
 		expect(screen.getByRole("checkbox")).toBeInTheDocument()
 		expect(screen.getByRole("checkbox")).toHaveClass("juno-checkbox-valid")

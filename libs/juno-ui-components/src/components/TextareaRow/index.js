@@ -1,1 +1,1 @@
-export { TextareaRow } from "./TextareaRow.component"
+export { default as TextareaRow } from "./TextareaRow.component"

@@ -2,8 +2,15 @@ import React from "react"
 import { RadioRow } from "./index.js"
 
 export default {
-  title: "Forms/Radio/RadioRow",
+  title: "Deprecated/RadioRow",
   component: RadioRow,
+  parameters: {
+    docs: {
+      description: {
+        component: "RadioRow is deprecated, use Radio instead."
+      },
+    },
+  },
   argTypes: {},
 }
 
@@ -43,6 +50,13 @@ Disabled.args = {
   label: "Disabled Radio",
   id: "radio-row-disabled",
   disabled: true,
+}
+
+export const Required = Template.bind({})
+Required.args = {
+  label: "Required Radio",
+  id: "required-radio",
+  required: true,
 }
 
 export const Invalid = Template.bind({})

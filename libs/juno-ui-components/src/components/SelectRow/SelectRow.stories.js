@@ -5,8 +5,15 @@ import { Default as DefaultSelectOptionStory } from "../SelectOption/SelectOptio
 import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 export default {
-  title: "Forms/Select/SelectRow",
+  title: "Deprecated/SelectRow",
   component: SelectRow,
+  parameters: {
+    docs: {
+      description: {
+        component: "SelectRow is deprecated, use Select instead."
+      },
+    },
+  },
   argTypes: {
     items: {
       table: {
@@ -48,6 +55,23 @@ const ControlledTemplate = ({value, children, ...args}) => {
 
 export const Default = Template.bind({})
 Default.args = {
+  name: "",
+  placeholder: "Select…",
+  id: "",
+  required: false,
+  className: "",
+  helptext: "",
+  disabled: false,
+  invalid: false,
+  errortext: "",
+  value: undefined,
+  onValueChange: undefined,
+  onChange: undefined,
+  onOpenChange: undefined,
+  defaultValue: undefined,
+  open: undefined,
+  error: undefined,
+  loading: undefined,
   label: "Select Row",
   items: [
     { ...DefaultSelectOptionStory.args, value: "d-1", label: "Option 1" },
@@ -57,6 +81,21 @@ Default.args = {
 
 export const Controlled = ControlledTemplate.bind({})
 Controlled.args = {
+  name: "",
+  placeholder: "Select…",
+  id: "",
+  required: false,
+  className: "",
+  helptext: "",
+  disabled: false,
+  invalid: false,
+  errortext: "",
+  onChange: undefined,
+  onOpenChange: undefined,
+  defaultValue: undefined,
+  open: undefined,
+  error: undefined,
+  loading: undefined,
   label: "Controlled SelectRow",
   value: "2",
   children: [
@@ -68,6 +107,21 @@ Controlled.args = {
 
 export const WithHelpTextAndPlaceholder = Template.bind({})
 WithHelpTextAndPlaceholder.args = {
+  name: "",
+  id: "",
+  required: false,
+  className: "",
+  disabled: false,
+  invalid: false,
+  errortext: "",
+  value: undefined,
+  onValueChange: undefined,
+  onChange: undefined,
+  onOpenChange: undefined,
+  defaultValue: undefined,
+  open: undefined,
+  error: undefined,
+  loading: undefined,
   label: "Select Row with Helptext and placeholder",
   helptext: "Select one",
   placeholder: "Select an option…", 
@@ -79,6 +133,22 @@ WithHelpTextAndPlaceholder.args = {
 
 export const WithHelpTextWithLink = Template.bind({})
 WithHelpTextWithLink.args = {
+  name: "",
+  placeholder: "Select…",
+  id: "",
+  required: false,
+  className: "",
+  disabled: false,
+  invalid: false,
+  errortext: "",
+  value: undefined,
+  onValueChange: undefined,
+  onChange: undefined,
+  onOpenChange: undefined,
+  defaultValue: undefined,
+  open: undefined,
+  error: undefined,
+  loading: undefined,
   label: "Select Row with Helptext",
   helptext: <>Helptext with a <a href="#">Link</a></>,
   items: [

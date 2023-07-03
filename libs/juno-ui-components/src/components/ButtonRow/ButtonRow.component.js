@@ -16,7 +16,7 @@ export const ButtonRow = ({
 	...props
 }) => {
 	return (
-		<Stack gap="2" className={`juno-button-row ${className}`} {...props} >
+		<Stack gap="2" distribution="end" className={`juno-button-row ${className}`} {...props} >
 			{children}
 		</Stack>
 	)

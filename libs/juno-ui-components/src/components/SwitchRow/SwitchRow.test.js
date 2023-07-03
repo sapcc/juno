@@ -37,11 +37,6 @@ describe("SwitchRow", () => {
 		expect(screen.getByRole("link")).toHaveTextContent("Link")
 	  })
 	
-	test("renders a required label as passed", async () => {
-		render(<SwitchRow label="Required Input" required />)
-		expect(document.querySelector('.required')).toBeInTheDocument()
-	})
-	
 	test("renders a disabled switch as passed", async () => {
 		render(<SwitchRow disabled />)
 		expect(screen.getByRole("switch")).toBeDisabled()

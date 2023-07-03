@@ -1,6 +1,3 @@
-
-
-
 import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { TextInput } from "./index"
@@ -8,7 +5,7 @@ import { TextInput } from "./index"
 
 describe("TextInput", () => {
 	
-	test("renders a valid html default text input with no type attribute", async () => {
+	test("renders a html default text input with no type attribute", async () => {
 		render(<TextInput />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).not.toHaveAttribute('type')
@@ -24,6 +21,14 @@ describe("TextInput", () => {
 		render(<TextInput value="Some kind of value" />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveAttribute('value', "Some kind of value")
+	})
+	
+	test("renders a label as passed", async () => {
+		render(<TextInput label="The Label" id="my-textinput"/>)
+		// implicitly test whether the input element can be selected via the labels text:
+		expect(screen.getByLabelText("The Label")).toBeInTheDocument()
+		expect(document.querySelector(".juno-label")).toBeInTheDocument()
+		expect(document.querySelector(".juno-label")).toHaveTextContent("The Label")
 	})
 	
 	test("renders a text input with an id as passed", async () => {
@@ -91,12 +96,56 @@ describe("TextInput", () => {
 		render(<TextInput invalid />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-invalid")
+		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
 	})
 	
 	test("renders a valid input as passed", async () => {
 		render(<TextInput valid />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-valid")
+		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
+	})
+	
+	test("renders a helptext as passed", async () => {
+		render(<TextInput helptext="this is a helptext"/>)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-help")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is a helptext")
+	})
+	
+	test("renders a successtext as passed and validates the Element", async () => {
+		render(<TextInput successtext="great success!" />)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-success")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("great success!")
+		expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-valid")
+	})
+	
+	test("renders an errortext as passed and invalidates the Element", async () => {
+		render(<TextInput errortext="this is an error!" />)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-error")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is an error!")
+		expect(screen.getByRole("textbox")).toHaveClass("juno-textinput-invalid")
+	})
+
+	test("fires onChange handler as passed", async () => {
+		const handleChange = jest.fn()
+		const { container } = render(
+			<TextInput onChange={handleChange} data-testid="my-input"/>
+		)
+		const textinput = screen.getByRole("textbox")
+		fireEvent.change(textinput, { target: { value: 'a' } })
+		expect(handleChange).toHaveBeenCalledTimes(1)
+	})
+	
+	test("does not fire onChange handler when disabled", async () => {
+		const onChangeSpy = jest.fn();
+		const { container } = render(
+				<TextInput onChange={onChangeSpy} disabled />
+			)
+		screen.getByRole('textbox').click();
+		expect(onChangeSpy).not.toHaveBeenCalled();	
 	})
 	
 	test("renders a className as passed", async () => {
@@ -109,25 +158,6 @@ describe("TextInput", () => {
 		render(<TextInput data-lolol="527" />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveAttribute('data-lolol', "527")
-	})
-
-	test("fires onChange handler as passed", async () => {
-		const handleChange = jest.fn()
-		const { container } = render(
-			<TextInput onChange={handleChange} />
-		)
-		const textinput = container.firstChild
-		fireEvent.change(textinput, { target: { value: 'a' } })
-		expect(handleChange).toHaveBeenCalledTimes(1)
-	})
-	
-	test("does not fire onChange handler when disabled", async () => {
-		const onChangeSpy = jest.fn();
-		const { container } = render(
-				<TextInput onChange={onChangeSpy} disabled />
-			)
-		screen.getByRole('textbox').click();
-		expect(onChangeSpy).not.toHaveBeenCalled();	
 	})
 	
 })

@@ -13,7 +13,7 @@ const formSectionHeading = `
 	jn-mb-4
 `
 
-/** A Form section to group form groups with an optional title. */
+/** A Form section to group form elements inside complex forms with an optional title. */
 export const FormSection = ({
 
 	title,

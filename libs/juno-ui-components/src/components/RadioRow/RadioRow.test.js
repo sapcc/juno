@@ -46,15 +46,21 @@ describe("RadioRow", () => {
 		expect(screen.getByRole("radio")).toBeDisabled()
 	})
 	
+	test("renders a required RadioRow as passed if a label is supplied", async () => {
+		render(<RadioRow required label="Required Radio" />)
+		expect(screen.getByRole("radio")).toBeInTheDocument()
+		expect(document.querySelector('.juno-required')).toBeInTheDocument()
+	})
+	
 	test("renders an invalid RadioRow as passed", async () => {
-		render(<RadioRow invalid />)
+		render(<RadioRow label="Invalid radio" invalid label="Radio" />)
 		expect(screen.getByRole("radio")).toBeInTheDocument()
 		expect(screen.getByRole("radio")).toHaveClass("juno-radio-invalid")
 		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
 	})
 	
 	test("renders an invalid RadioRow with an error text as passed", async () => {
-		render(<RadioRow errortext="This is an error text" />)
+		render(<RadioRow errortext="This is an error text" label="Radio" />)
 		expect(screen.getByRole("radio")).toBeInTheDocument()
 		expect(screen.getByRole("radio")).toHaveClass("juno-radio-invalid")
 		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
@@ -62,14 +68,14 @@ describe("RadioRow", () => {
 	})
 	
 	test("renders a valid RadioRow as passed", async () => {
-		render(<RadioRow valid />)
+		render(<RadioRow  label="Radio label" valid />)
 		expect(screen.getByRole("radio")).toBeInTheDocument()
 		expect(screen.getByRole("radio")).toHaveClass("juno-radio-valid")
 		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
 	})
 	
 	test("renders a valid RadioRow with a successtext as passed", async () => {
-		render(<RadioRow successtext="GREAT SUCCESS!!!" />)
+		render(<RadioRow successtext="GREAT SUCCESS!!!" label="Radio" />)
 		expect(screen.getByRole("radio")).toBeInTheDocument()
 		expect(screen.getByRole("radio")).toHaveClass("juno-radio-valid")
 		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()

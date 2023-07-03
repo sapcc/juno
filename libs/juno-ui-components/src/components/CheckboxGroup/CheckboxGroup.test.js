@@ -1,7 +1,7 @@
 import * as React from "react"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { CheckboxGroup } from "./index"
-import { CheckboxRow } from "../CheckboxRow/index"
+import { Checkbox } from "../Checkbox/index"
 
 describe("CheckboxGroup", () => {
 	
@@ -28,7 +28,7 @@ describe("CheckboxGroup", () => {
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
-		expect(document.querySelector('.required')).toBeInTheDocument()
+		expect(document.querySelector('.juno-required')).toBeInTheDocument()
 	})
 	
 	test("does not render any checkboxes if no children passed", async () => {
@@ -41,96 +41,130 @@ describe("CheckboxGroup", () => {
 		  }).toThrow()
 	})
 	
-	test("renders CheckboxRows as passed", async () => {
+	test("renders Checkboxes as passed", async () => {
 		render(
 			<CheckboxGroup> 
-				<CheckboxRow />
-				<CheckboxRow />
-				<CheckboxRow />
+				<Checkbox />
+				<Checkbox />
+				<Checkbox />
 			</CheckboxGroup>
 		)
 		expect(screen.getAllByRole("checkbox")).toHaveLength(3)
 	})
 	
-	test("renders individually named CheckboxRows as passed", async () => {
+	test("renders individually named Checkboxes as passed", async () => {
 		render(
 			<CheckboxGroup name="my-checkboxgroup"> 
-				<CheckboxRow />
-				<CheckboxRow />
-				<CheckboxRow />
+				<Checkbox />
+				<Checkbox />
+				<Checkbox />
 			</CheckboxGroup>
 		)
 		expect(screen.getAllByRole("checkbox")).toHaveLength(3)
 	})
 	
-	test("renders CheckboxRows as passed", async () => {
+	test("renders Checkboxes with an auto-generated name if no name was passed", async () => {
+		render(
+			<CheckboxGroup> 
+				<Checkbox />
+				<Checkbox />
+			</CheckboxGroup>
+		)
+		const checkboxes = screen.getAllByRole("checkbox")
+		checkboxes.forEach( checkbox => expect(checkbox).toHaveAttribute('name') )
+	})
+	
+	test("renders Checkboxes as passed", async () => {
 		render(
 			<CheckboxGroup name="my-checkboxgroup"> 
-				<CheckboxRow />
+				<Checkbox />
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("checkbox")).toHaveAttribute("name", "my-checkboxgroup")
 	})
 	
-	test("renders checked CheckboxRows as passed", async () => {
+	test("renders checked Checkboxes as passed", async () => {
 		render(
 			<CheckboxGroup selected={["test-checkbox"]}>
-				<CheckboxRow value="test-checkbox"/>
+				<Checkbox value="test-checkbox"/>
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("checkbox")).toBeChecked()
 	})
 	
+	test("renders disabled child Checkboxes as passed", async () => {
+		render(
+			<CheckboxGroup disabled >
+				<Checkbox id="c-1" />
+				<Checkbox id="c-2" />
+			</CheckboxGroup>
+		)
+		expect(document.getElementById("c-1")).toBeDisabled()
+		expect(document.getElementById("c-2")).toBeDisabled()
+	})
+	
 	test("renders a valid CheckboxGroup as passed", async () => {
 		render(
 			<CheckboxGroup valid>
-				<CheckboxRow value="test-checkbox"/>
+				<Checkbox value="test-checkbox"/>
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
-		expect(screen.getByRole("group")).toHaveClass("juno-checkbox-group-valid")
+		expect(screen.getByRole("group")).toHaveClass("juno-checkboxgroup-valid")
 		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
 	})
 	
 	test("renders a valid CheckboxGroup when successtext is passed", async () => {
 		render(
 			<CheckboxGroup successtext="Great Success!">
-				<CheckboxRow value="test-checkbox"/>
+				<Checkbox value="test-checkbox"/>
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
-		expect(screen.getByRole("group")).toHaveClass("juno-checkbox-group-valid")
+		expect(screen.getByRole("group")).toHaveClass("juno-checkboxgroup-valid")
 		expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
 		expect(screen.getByText("Great Success!")).toBeInTheDocument()
 	})
 	
-	test("renders a invalid CheckboxGroup as passed", async () => {
+	test("renders an invalid CheckboxGroup as passed", async () => {
 		render(
 			<CheckboxGroup invalid>
-				<CheckboxRow value="test-checkbox"/>
+				<Checkbox value="test-checkbox"/>
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
-		expect(screen.getByRole("group")).toHaveClass("juno-checkbox-group-invalid")
+		expect(screen.getByRole("group")).toHaveClass("juno-checkboxgroup-invalid")
 		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
 	})
 	
 	test("renders an invalid CheckboxGroup when errortext is passed", async () => {
 		render(
 			<CheckboxGroup errortext="Big Error!">
-				<CheckboxRow value="test-checkbox"/>
+				<Checkbox value="test-checkbox"/>
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
-		expect(screen.getByRole("group")).toHaveClass("juno-checkbox-group-invalid")
+		expect(screen.getByRole("group")).toHaveClass("juno-checkboxgroup-invalid")
 		expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
 		expect(screen.getByText("Big Error!")).toBeInTheDocument()
+	})
+	
+	test("renders a helptext as passed", async () => {
+		render(
+			<CheckboxGroup helptext="This is a helpful text">
+				<Checkbox />
+				<Checkbox />
+			</CheckboxGroup>
+		)
+		expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+		expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-help")
+		expect(document.querySelector(".juno-form-hint")).toHaveTextContent("This is a helpful text")
 	})
 	
 	test("renders a custom className", async () => {
 		render(
 			<CheckboxGroup name="my-checkboxgroup" className="my-custom-classname"> 
-				<CheckboxRow value="test-checkbox"/>
+				<Checkbox value="test-checkbox"/>
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()
@@ -140,7 +174,7 @@ describe("CheckboxGroup", () => {
 	test("renders all props", async () => {
 		render(
 			<CheckboxGroup name="my-checkboxgroup" data-lolol="some-prop"> 
-				<CheckboxRow value="test-checkbox"/>
+				<Checkbox value="test-checkbox"/>
 			</CheckboxGroup>
 		)
 		expect(screen.getByRole("group")).toBeInTheDocument()

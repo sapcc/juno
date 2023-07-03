@@ -58,7 +58,7 @@ describe("TextInputRow", () => {
 
   test("renders a required label as passed", async () => {
     render(<TextareaRow label="Required Textarea" required />)
-    expect(document.querySelector(".required")).toBeInTheDocument()
+    expect(document.querySelector(".juno-required")).toBeInTheDocument()
   })
 
   test("renders a disabled textarea row as passed", async () => {
@@ -102,18 +102,6 @@ describe("TextInputRow", () => {
       <TextareaRow data-testid="textarea-row" className="my-custom-class" />
     )
     expect(screen.getByTestId("textarea-row")).toHaveClass("my-custom-class")
-  })
-  
-  test("renders a floating variant textarea-row by default", async () => {
-    render(<TextareaRow data-testid="textarea-row" />)
-    expect(screen.getByTestId("textarea-row")).toBeInTheDocument()
-    expect(screen.getByTestId("textarea-row")).toHaveClass("juno-textarea-row-floating")
-  })
-  
-  test("renders a stacked variant textarea-row as passed", async () => {
-    render(<TextareaRow data-testid="textarea-row" variant="stacked" />)
-    expect(screen.getByTestId("textarea-row")).toBeInTheDocument()
-    expect(screen.getByTestId("textarea-row")).toHaveClass("juno-textarea-row-stacked")
   })
 
   test("renders all props to teh row as passed", async () => {

@@ -22,6 +22,14 @@ describe("Switch", () => {
     expect(screen.getByRole("switch")).toHaveAttribute('id', "my-switch")
   })
   
+  test("renders a Switch with an associated label as passed", async () => {
+    render(<Switch id="my-switch" label="My Switch"/>)
+    expect(screen.getByRole("switch")).toBeInTheDocument()
+    expect(screen.getByLabelText("My Switch")).toBeInTheDocument()
+    expect(document.querySelector(".juno-label")).toBeInTheDocument()
+    expect(document.querySelector(".juno-label")).toHaveTextContent("My Switch")
+  })
+  
   test("renders a disabled switch as passed", async () => {
     act(() => {
       render(<Switch disabled />)
@@ -36,6 +44,7 @@ describe("Switch", () => {
     })
     expect(screen.getByRole("switch")).toBeInTheDocument()
     expect(screen.getByRole("switch")).toHaveClass("juno-switch-invalid")
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
   })
   
   test("renders a valid Switch as passed", async () => {
@@ -44,6 +53,7 @@ describe("Switch", () => {
     })
     expect(screen.getByRole("switch")).toBeInTheDocument()
     expect(screen.getByRole("switch")).toHaveClass("juno-switch-valid")
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
   
   test("renders a default size switch by default", async () => {
@@ -76,6 +86,29 @@ describe("Switch", () => {
     render(<Switch />)
     expect(screen.getByRole("switch")).toBeInTheDocument()
     expect(screen.getByRole("switch")).toHaveAttribute('aria-checked', "false")
+  })
+  
+  test("renders a helptext as passed", async () => {
+    render(<Switch helptext="this is a helptext"/>)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-help")
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is a helptext")
+  })
+  
+  test("renders a successtext as passed and validates the Element", async () => {
+    render(<Switch successtext="great success!" />)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-success")
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("great success!")
+    expect(screen.getByRole("switch")).toHaveClass("juno-switch-valid")
+  })
+  
+  test("renders an errortext as passed and invalidates the Element", async () => {
+    render(<Switch errortext="this is an error!" />)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-error")
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is an error!")
+    expect(screen.getByRole("switch")).toHaveClass("juno-switch-invalid")
   })
   
   test("renders a custom className", async () => {

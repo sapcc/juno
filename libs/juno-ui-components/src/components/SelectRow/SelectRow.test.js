@@ -61,7 +61,7 @@ describe("SelectRow", () => {
 	
 	test("renders a required label as passed", async () => {
 		render(<SelectRow label="Required Input" required />)
-		expect(document.querySelector('.required')).toBeInTheDocument()
+		expect(document.querySelector('.juno-required')).toBeInTheDocument()
 	})
 	
 	test("renders a custom class to the row as passed", async () => {
@@ -120,18 +120,6 @@ describe("SelectRow", () => {
 		render(<SelectRow error />)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
 		expect(screen.getByRole("combobox")).toHaveClass("juno-select-error")
-	})
-	
-	test("renders a floating variant select row by default", async () => {
-		render(<SelectRow data-testid="select-row" />)
-		expect(screen.getByTestId("select-row")).toBeInTheDocument()
-		expect(screen.getByTestId("select-row")).toHaveClass("juno-select-row-floating")
-	})
-	
-	test("renders a stacked variant select row as passed", async () => {
-		render(<SelectRow data-testid="select-row" variant="stacked" />)
-		expect(screen.getByTestId("select-row")).toBeInTheDocument()
-		expect(screen.getByTestId("select-row")).toHaveClass("juno-select-row-stacked")
 	})
 	
 	test("renders all props as passed", async () => {

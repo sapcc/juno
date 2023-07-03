@@ -8,7 +8,7 @@ import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 
 export default {
-  title: "Forms/Base Elements/Select",
+  title: "Forms/Select/Select",
   component: Select,
   argTypes: {},
   decorators: [
@@ -51,9 +51,30 @@ const ControlledTemplate = ({open, value, children, ...args}) => {
 export const Default = Template.bind({})
 Default.args = {
   children: [
-    <SelectOption value="val-1" key="1">Value 1</SelectOption>,
-    <SelectOption value="val-2" key="2">Value 2</SelectOption>,
-    <SelectOption value="val-3" key="3">Value 3</SelectOption>
+    <SelectOption value="val-1" key="1">Option 1</SelectOption>,
+    <SelectOption value="val-2" key="2">Option 2</SelectOption>,
+    <SelectOption value="val-3" key="3">Option 3</SelectOption>
+  ]
+}
+
+export const WithLabel = Template.bind({})
+WithLabel.args = {
+  label: "Select an Option",
+  children: [
+    <SelectOption value="val-1" key="1">Option 1</SelectOption>,
+    <SelectOption value="val-2" key="2">Option 2</SelectOption>,
+    <SelectOption value="val-3" key="3">Option 3</SelectOption>
+  ]
+}
+
+export const RequiredWithLabel = Template.bind({})
+RequiredWithLabel.args = {
+  label: "Selecting an Option is Required",
+  required: true,
+  children: [
+    <SelectOption value="val-1" key="1">Option 1</SelectOption>,
+    <SelectOption value="val-2" key="2">Option 2</SelectOption>,
+    <SelectOption value="val-3" key="3">Option 3</SelectOption>
   ]
 }
 
@@ -236,6 +257,46 @@ PrimarySelect.args = {
 export const PrimaryDangerSelect = Template.bind({})
 PrimaryDangerSelect.args = {
   variant: "primary-danger",
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}
+
+export const WithHelpText = Template.bind({})
+WithHelpText.args = {
+  helptext: "This is an explanatory text referring to the input",
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}
+
+export const WithHelpTextAsNode = Template.bind({})
+WithHelpTextAsNode.args = {
+  helptext: <>This is a helptext with a <a href="#">Link</a></>,
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}
+
+export const WithSuccessText = Template.bind({})
+WithSuccessText.args = {
+  successtext: "This field is a great success!",
+  children: [
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}
+
+export const WithErrorText = Template.bind({})
+WithErrorText.args = {
+  errortext: "This field has an error",
   children: [
     <SelectOption value="1" key="1">Value 1</SelectOption>,
     <SelectOption value="2" key="2">Value 2</SelectOption>,

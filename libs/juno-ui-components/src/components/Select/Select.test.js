@@ -44,6 +44,20 @@ describe("Select", () => {
     expect(screen.getByRole("combobox")).toHaveClass("juno-select")
   })
   
+  test("renders a label as passed", async () => {
+    render(<Select label="My Label" id="my-select"/>)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByLabelText("My Label")).toBeInTheDocument()
+    expect(document.querySelector(".juno-label")).toBeInTheDocument()
+    expect(document.querySelector(".juno-label")).toHaveTextContent("My Label")
+  })
+  
+  test("redners a required marker as passed", async () => {
+    render(<Select label="My Label" required={true} />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(document.querySelector(".juno-required")).toBeInTheDocument()
+  })
+  
   test("renders an aria-label as passed", async () => {
     render(<Select ariaLabel="my-select" />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
@@ -66,12 +80,14 @@ describe("Select", () => {
     render(<Select valid />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveClass("juno-select-valid")
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
   
   test("renders an invalid Select as passed", async () => {
     render(<Select invalid />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveClass("juno-select-invalid")
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
   })
   
   test("renders loading Select with a Spinner as passed", async () => {
@@ -167,6 +183,29 @@ describe("Select", () => {
     expect(screen.getByRole("combobox")).not.toHaveTextContent("Option 1")
     expect(screen.getByRole("combobox")).toHaveTextContent("Option 2")
     expect(screen.getByRole("combobox")).not.toHaveTextContent("Option 3")    
+  })
+  
+  test("renders a helptext as passed", async () => {
+    render(<Select helptext="this is a helptext"/>)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-help")
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is a helptext")
+  })
+  
+  test("renders a successtext as passed and validates the Element", async () => {
+    render(<Select successtext="great success!" />)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-success")
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("great success!")
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select-valid")
+  })
+  
+  test("renders an errortext as passed and invalidates the Element", async () => {
+    render(<Select errortext="this is an error!" />)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-error")
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is an error!")
+    expect(screen.getByRole("combobox")).toHaveClass("juno-select-invalid")
   })
   
   test("allows user to open a Select by clicking on it", async () => {

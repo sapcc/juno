@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Select } from "../Select/index.js"
 import { Label } from "../Label/index.js"
+import withDeprecationWarning from '../withDeprecationWarning/withDeprecationWarning.component.js'
 
 const selectrow = `
 	jn-flex
@@ -23,16 +24,6 @@ const floatingcontainerstyles = `
   jn-relative
 `
 
-const floatinglabelcontainerstyles = `
-  jn-absolute
-  jn-top-0.5
-  jn-left-4
-  jn-transform 
-  jn-origin-top-left 
-  jn-scale-75
-  jn-opacity-75
-`
-
 const errortextstyles = `
   jn-text-xs
   jn-text-theme-error
@@ -46,7 +37,7 @@ const successtextstyles = `
 `
 
 /** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
-export const SelectRow = ({
+const SelectRow = ({
   name,
   variant,
   label,
@@ -106,36 +97,18 @@ export const SelectRow = ({
     setIsValid(validated)
   }, [validated])
 
-  // labelContainer needs to be rendered in different markup order /positions depending on variant in order to avoid z-index hassle:
-  const labelContainer = (
-    <div
-      className={`juno-label-container ${
-        variant === "floating" ? floatinglabelcontainerstyles : ""
-      }`}
-    >
-      <Label
-        text={label}
-        htmlFor={id}
-        required={required}
-        disabled={disabled}
-      />
-    </div>
-  )
-
   return (
     <div
-      className={`juno-select-row juno-select-row-${variant} ${selectrow} ${
-        variant === "floating" ? floatingcontainerstyles : ""
-      } ${className}`}
+      className={`juno-select-row ${className}`}
       {...props}
     >
-      {variant !== "floating" ? labelContainer : null}
       <div>
         <Select
           className={`${selectstyles}`}
-          labelClassName={ variant === "floating" ? "jn-pt-[0.8125rem]" : "" }
           name={name}
           id={id}
+          label={label}
+          required={required}
           placeholder={placeholder}
           onValueChange={onValueChange || onChange}
           onOpenChange={onOpenChange}
@@ -150,7 +123,6 @@ export const SelectRow = ({
         >
           {children}
         </Select>
-        {variant === "floating" ? labelContainer : null}
         {errortext && errortext.length ? (
           <p className={`${errortextstyles}`}>{errortext}</p>
         ) : null}
@@ -166,8 +138,6 @@ export const SelectRow = ({
 SelectRow.propTypes = {
   /** Name attribute of the input */
   name: PropTypes.string,
-  /** Floating (default) or stacked layout variant */
-  variant: PropTypes.oneOf(["floating", "stacked"]),
   /** Label text */
   label: PropTypes.string,
   /** The placeholder to show in the Select if no value is selected. defaults to "Select…". */
@@ -208,7 +178,6 @@ SelectRow.propTypes = {
 
 SelectRow.defaultProps = {
   name: null,
-  variant: "floating",
   label: null,
   placeholder: "Select…",
   id: null,
@@ -227,3 +196,5 @@ SelectRow.defaultProps = {
   error: undefined,
   loading: undefined,
 }
+
+export default withDeprecationWarning(SelectRow, "SelectRow is deprecated and will be removed in future versions. To be future-proof, use Select instead.")

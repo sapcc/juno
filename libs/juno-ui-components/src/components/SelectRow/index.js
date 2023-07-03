@@ -1,1 +1,1 @@
-export { SelectRow } from "./SelectRow.component"
+export { default as SelectRow } from "./SelectRow.component"

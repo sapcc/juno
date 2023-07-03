@@ -95,7 +95,7 @@ describe("TextInputRow", () => {
 
   test("renders a required label as passed", async () => {
     render(<TextInputRow label="Required Input" required />)
-    expect(document.querySelector(".required")).toBeInTheDocument()
+    expect(document.querySelector(".juno-required")).toBeInTheDocument()
   })
 
   test("renders a className to the row as passed", async () => {
@@ -145,22 +145,6 @@ describe("TextInputRow", () => {
     render(<TextInputRow autoFocus />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveFocus()
-  })
-
-  test("renders a floating variant textinput-row by default", async () => {
-    render(<TextInputRow data-testid="textinput-row" />)
-    expect(screen.getByTestId("textinput-row")).toBeInTheDocument()
-    expect(screen.getByTestId("textinput-row")).toHaveClass(
-      "juno-textinput-row-floating"
-    )
-  })
-
-  test("renders a stacked variant textinput-row as passed", async () => {
-    render(<TextInputRow data-testid="textinput-row" variant="stacked" />)
-    expect(screen.getByTestId("textinput-row")).toBeInTheDocument()
-    expect(screen.getByTestId("textinput-row")).toHaveClass(
-      "juno-textinput-row-stacked"
-    )
   })
 
   test("renders all props to the row as passed", async () => {
