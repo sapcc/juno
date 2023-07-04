@@ -52,7 +52,20 @@ describe("Select", () => {
     expect(document.querySelector(".juno-label")).toHaveTextContent("My Label")
   })
   
-  test("redners a required marker as passed", async () => {
+  test("renders an id as passed", async () => {
+    render(<Select id="select-1" />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveAttribute("id", "select-1")
+  })
+  
+  test("renders a generated unique id if no id was passed", async () => {
+    render(<Select />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveAttribute("id")
+    expect(screen.getByRole("combobox").getAttribute("id")).toMatch("juno-select")
+  })
+  
+  test("renders a required marker as passed", async () => {
     render(<Select label="My Label" required={true} />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(document.querySelector(".juno-required")).toBeInTheDocument()
