@@ -35,6 +35,7 @@ describe("Checkbox", () => {
 		render(<Checkbox />)
 		expect(screen.getByRole("checkbox")).toBeInTheDocument()
 		expect(screen.getByRole("checkbox")).toHaveAttribute('id')
+		expect(screen.getByRole("checkbox").getAttribute("id")).toMatch("juno-checkbox")
 	})
 	
 	test("renders a checkbox with a value as passed", async () => {

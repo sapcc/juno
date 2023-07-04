@@ -35,6 +35,7 @@ describe("Radio", () => {
 		render(<Radio />)
 		expect(screen.getByRole("radio")).toBeInTheDocument()
 		expect(screen.getByRole("radio")).toHaveAttribute('id')
+		expect(screen.getByRole("radio").getAttribute("id")).toMatch("juno-radio")
 	})
 	
 	test("renders a radio with a value as passed", async () => {
