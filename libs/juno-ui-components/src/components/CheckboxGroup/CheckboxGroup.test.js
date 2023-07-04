@@ -13,7 +13,20 @@ describe("CheckboxGroup", () => {
 		expect(screen.getByTestId("checkbox-group")).toBeInTheDocument()
 	})
 	
-	test("renders a CheckboxGroup with a label as passed", async () => {
+	test("renders a CheckboxGroup with an id as passed ", async () => {
+		render(< CheckboxGroup data-testid="group" id="my-checkboxgroup-1"/>)
+		expect(screen.getByTestId("group")).toBeInTheDocument()
+		expect(screen.getByTestId("group")).toHaveAttribute("id", "my-checkboxgroup-1")
+	})
+	
+	test("renders a CheckboxGroup with an auto-generated id if no id is passed", async () => {
+		render(< CheckboxGroup data-testid="group"/>)
+		expect(screen.getByTestId("group")).toBeInTheDocument()
+		expect(screen.getByTestId("group")).toHaveAttribute("id")
+		expect(screen.getByTestId("group").getAttribute("id")).toMatch("juno-checkboxgroup")
+	})
+	
+	test("renders a CheckboxGroup with an associated label as passed", async () => {
 		render(
 			<CheckboxGroup name="my-checkboxgroup" label="My Group of Checkboxes"> 
 			</CheckboxGroup>
