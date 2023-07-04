@@ -37,6 +37,13 @@ describe("TextInput", () => {
 		expect(screen.getByRole("textbox")).toHaveAttribute('id', "my-textinput")
 	})
 	
+	test("renders a text input with an auto-generated id if no id is passed", async () => {
+		render(<TextInput />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveAttribute("id")
+		expect(screen.getByRole("textbox").getAttribute("id")).toMatch("juno-textinput")
+	})
+	
 	test("renders a placeholder as passed", async () => {
 		render(<TextInput placeholder="my placeholder" />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
