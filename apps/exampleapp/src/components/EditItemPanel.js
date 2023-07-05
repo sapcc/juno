@@ -4,7 +4,8 @@ import {
   Form,
   PanelBody,
   PanelFooter,
-  TextInputRow,
+  FormRow,
+  TextInput,
 } from "juno-ui-components"
 import useStore from "../store"
 import { currentState, push } from "url-state-provider"
@@ -71,31 +72,41 @@ const EditItemPanel = ({ closeCallback }) => {
       }
     >
       <Form>
-        <TextInputRow
-          label="Name"
-          value={formState?.name}
-          onChange={(e) => onAttrChanged("name", e.target.value)}
-        />
-        <TextInputRow
-          label="Height"
-          value={formState?.height}
-          onChange={(e) => onAttrChanged("height", e.target.value)}
-        />
-        <TextInputRow
-          label="Main Range"
-          value={formState?.mainrange}
-          onChange={(e) => onAttrChanged("mainrange", e.target.value)}
-        />
-        <TextInputRow
-          label="Region"
-          value={formState?.region}
-          onChange={(e) => onAttrChanged("region", e.target.value)}
-        />
-        <TextInputRow
-          label="Country"
-          value={formState?.countries}
-          onChange={(e) => onAttrChanged("countries", e.target.value)}
-        />
+        <FormRow>
+          <TextInput
+            label="Name"
+            value={formState?.name}
+            onChange={(e) => onAttrChanged("name", e.target.value)}
+          />
+        </FormRow>
+        <FormRow>
+          <TextInput
+            label="Height"
+            value={formState?.height}
+            onChange={(e) => onAttrChanged("height", e.target.value)}
+          />
+        </FormRow>
+        <FormRow>
+          <TextInput
+            label="Main Range"
+            value={formState?.mainrange}
+            onChange={(e) => onAttrChanged("mainrange", e.target.value)}
+          />
+        </FormRow>
+        <FormRow>
+          <TextInput
+            label="Region"
+            value={formState?.region}
+            onChange={(e) => onAttrChanged("region", e.target.value)}
+          />
+        </FormRow>
+        <FormRow>
+          <TextInput
+            label="Country"
+            value={formState?.countries}
+            onChange={(e) => onAttrChanged("countries", e.target.value)}
+          />
+        </FormRow>
       </Form>
     </PanelBody>
   )
