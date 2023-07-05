@@ -25,8 +25,6 @@ describe("TextInput", () => {
 	
 	test("renders a label as passed", async () => {
 		render(<TextInput label="The Label" id="my-textinput"/>)
-		// implicitly test whether the input element can be selected via the labels text:
-		expect(screen.getByLabelText("The Label")).toBeInTheDocument()
 		expect(document.querySelector(".juno-label")).toBeInTheDocument()
 		expect(document.querySelector(".juno-label")).toHaveTextContent("The Label")
 	})
@@ -35,6 +33,27 @@ describe("TextInput", () => {
 		render(<TextInput id="my-textinput" />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toHaveAttribute('id', "my-textinput")
+	})
+	
+	test("renders a text input with an auto-generated id if no id is passed", async () => {
+		render(<TextInput />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveAttribute("id")
+		expect(screen.getByRole("textbox").getAttribute("id")).toMatch("juno-textinput")
+	})
+	
+	test("renders a text input with a label associated by an id as passed", async () => {
+		render(<TextInput label="TextInput goes here" id="ti-1"/>)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveAttribute("id")
+		expect(screen.getByRole("textbox").getAttribute("id")).toMatch("ti-1")
+		expect(screen.getByLabelText("TextInput goes here")).toBeInTheDocument()
+	})
+	
+	test("renders a text input with a label associated by an auto-generated id if no id was passed ", async () => {
+		render(<TextInput label="This is a TextInput" />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByLabelText("This is a TextInput")).toBeInTheDocument()
 	})
 	
 	test("renders a placeholder as passed", async () => {

@@ -35,6 +35,21 @@ describe("Checkbox", () => {
 		render(<Checkbox />)
 		expect(screen.getByRole("checkbox")).toBeInTheDocument()
 		expect(screen.getByRole("checkbox")).toHaveAttribute('id')
+		expect(screen.getByRole("checkbox").getAttribute("id")).toMatch("juno-checkbox")
+	})
+	
+	test("renders a Checkbox with an associated label with an id as passed", async () => {
+		render(<Checkbox id="my-checkbox" label="My Checkbox"/>)
+		expect(screen.getByRole("checkbox")).toBeInTheDocument()
+		expect(screen.getByLabelText("My Checkbox")).toBeInTheDocument()
+		expect(document.querySelector(".juno-label")).toBeInTheDocument()
+		expect(document.querySelector(".juno-label")).toHaveTextContent("My Checkbox")
+	})
+	
+	test("renders a Checkbox with a label associated by an auto-generated id if no id was passed ", async () => {
+		render(<Checkbox label="This is a Checkbox" />)
+		expect(screen.getByRole("checkbox")).toBeInTheDocument()
+		expect(screen.getByLabelText("This is a Checkbox")).toBeInTheDocument()
 	})
 	
 	test("renders a checkbox with a value as passed", async () => {

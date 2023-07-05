@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react"
+import React, { useState, useEffect, useMemo, useId } from "react"
 import * as RadixSelect from "@radix-ui/react-select"
 import { Label } from "../Label/index"
 import { Icon } from "../Icon/index.js"
@@ -125,6 +125,10 @@ export const Select = React.forwardRef(
       return !(typeof str === 'string' && str.trim().length === 0)
     }
     
+    const uniqueId = () => (
+      "juno-select-" + useId()
+    )
+    
     const [isOpen, setIsOpen] = useState(false)
     const [hasError, setHasError] = useState(false)
     const [isInvalid, setIsInvalid] = useState(false)
@@ -190,6 +194,8 @@ export const Select = React.forwardRef(
       }
     }
     
+    const theId = id || uniqueId()
+    
     return (
       <div>
         <span 
@@ -205,7 +211,7 @@ export const Select = React.forwardRef(
             label && isNotEmptyString(label) ?
               <Label 
                 text={label}
-                htmlFor={id}
+                htmlFor={theId}
                 className={`${labelStyles}`}
                 disabled={disabled}
                 required={required}
@@ -226,7 +232,7 @@ export const Select = React.forwardRef(
             defaultValue={defaultValue}
           >
             <RadixSelect.Trigger 
-              id={id}
+              id={theId}
               aria-label={ariaLabel}
               className={`
                 juno-select

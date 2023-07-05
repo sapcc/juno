@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react"
+import React, { useState, useEffect, useMemo, useId } from "react"
 import PropTypes from "prop-types"
 import { Label } from "../Label/index"
 import { Icon } from "../Icon/index"
@@ -128,6 +128,10 @@ export const Switch = ({
 		return !(typeof str === 'string' && str.trim().length === 0)
 	}
 	
+	const uniqueId = () => (
+		"juno-switch-" + useId()
+	)
+	
 	const [isOn, setIsOn] = useState(on)
 	const [isInvalid, setIsInvalid] = useState(false)
 	const [isValid, setIsValid] = useState(false)
@@ -159,6 +163,8 @@ export const Switch = ({
 		onChange && onChange(event)
 	}
 	
+	const theId = id || uniqueId()
+	
 	return (
 		<div>
 			<span className={`
@@ -170,7 +176,7 @@ export const Switch = ({
 					type="button"
 					role="switch"
 					name={name}
-					id={id}
+					id={theId}
 					aria-checked={isOn}
 					disabled={disabled}
 					onClick={handleClick}
@@ -190,7 +196,7 @@ export const Switch = ({
 				
 				<Label 
 					text={label}
-					htmlFor={id}
+					htmlFor={theId}
 					className="jn-ml-2"
 					disabled={disabled}
 					required={required}

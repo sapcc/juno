@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from "react"
+import React, { useState, useEffect, useMemo, useId, useRef } from "react"
 import PropTypes from "prop-types"
 import { Label } from "../Label/index"
 import { Icon } from "../Icon/index"
@@ -106,6 +106,10 @@ export const TextInput = ({
     return !(typeof str === 'string' && str.trim().length === 0)
   }
   
+  const uniqueId = () => (
+    "juno-textinput-" + useId()
+  )
+  
   const ref = useRef()
   const [val, setValue] = useState("")
   const [hasFocus, setFocus] = useState(false)
@@ -176,6 +180,8 @@ export const TextInput = ({
     }
   }
   
+  const theId = id || uniqueId()
+  
   return (
     <div>
       <span 
@@ -189,7 +195,7 @@ export const TextInput = ({
         { label && label.length ?
             <Label 
               text={label}
-              htmlFor={id}
+              htmlFor={theId}
               className={`${labelStyles}`}
               disabled={disabled}
               required={required}
@@ -204,7 +210,7 @@ export const TextInput = ({
           name={name}
           autoComplete={autoComplete}
           value={val}
-          id={id}
+          id={theId}
           ref={ref}
           placeholder={placeholder}
           disabled={disabled}

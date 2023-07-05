@@ -47,7 +47,20 @@ describe("RadioGroup", () => {
 		radios.forEach( radio => expect(radio).toHaveAttribute('name') )
 	})
 	
-    test("renders a label for the group as passed", async () => {
+	test("renders a RadioGroup with an id as passed", async () => {
+		render(<RadioGroup data-testid="group" id="my-radiogroup" />)
+		expect(screen.getByTestId("group")).toBeInTheDocument()
+		expect(screen.getByTestId("group")).toHaveAttribute("id", "my-radiogroup")
+	})
+	
+	test("renders a RadioGroup with an auto-generated id if no id is passed", async () => {
+		render(< RadioGroup data-testid="group"/>)
+		expect(screen.getByTestId("group")).toBeInTheDocument()
+		expect(screen.getByTestId("group")).toHaveAttribute("id")
+		expect(screen.getByTestId("group").getAttribute("id")).toMatch("juno-radiogroup")
+	})
+	
+  test("renders a label for the group as passed", async () => {
 		render(
 			<RadioGroup name="my-radiogroup" label="My labeled RadioGroup" >
 				<Radio />

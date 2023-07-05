@@ -29,9 +29,30 @@ describe("Textarea", () => {
 	})
 	
 	test("renders a Textarea with an id as passed", async () => {
-		render(<Textarea id="my-textinput" />)
+		render(<Textarea id="my-textarea" />)
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
-		expect(screen.getByRole("textbox")).toHaveAttribute('id', "my-textinput")
+		expect(screen.getByRole("textbox")).toHaveAttribute('id', "my-textarea")
+	})
+	
+	test("renders a Textarea with an auto-generated id if no id is passed", async () => {
+		render(<Textarea /> )
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveAttribute("id")
+		expect(screen.getByRole("textbox").getAttribute("id")).toMatch("juno-textarea")
+	})
+	
+	test("renders a Textarea with a label associated by an id as passed", async () => {
+		render(< Textarea label="My Textarea" id="ta-1"/>)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toHaveAttribute("id")
+		expect(screen.getByRole("textbox").getAttribute("id")).toMatch("ta-1")
+		expect(screen.getByLabelText("My Textarea")).toBeInTheDocument()
+	})
+	
+	test("renders a Textarea with a label associated by an auto-generated id if no id was passed ", async () => {
+		render(<Textarea label="This is a Textarea" />)
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		expect(screen.getByLabelText("This is a Textarea")).toBeInTheDocument()
 	})
 	
 	test("renders an invalid textarea as passed", async () => {

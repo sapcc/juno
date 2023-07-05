@@ -35,6 +35,21 @@ describe("Radio", () => {
 		render(<Radio />)
 		expect(screen.getByRole("radio")).toBeInTheDocument()
 		expect(screen.getByRole("radio")).toHaveAttribute('id')
+		expect(screen.getByRole("radio").getAttribute("id")).toMatch("juno-radio")
+	})
+	
+	test("renders a Radio with an associated label with an id as passed", async () => {
+		render(<Radio id="my-radio" label="My Radio"/>)
+		expect(screen.getByRole("radio")).toBeInTheDocument()
+		expect(screen.getByLabelText("My Radio")).toBeInTheDocument()
+		expect(document.querySelector(".juno-label")).toBeInTheDocument()
+		expect(document.querySelector(".juno-label")).toHaveTextContent("My Radio")
+	})
+	
+	test("renders a Radio with a label associated by an auto-generated id if no id was passed ", async () => {
+		render(<Radio label="This is a Radio" />)
+		expect(screen.getByRole("radio")).toBeInTheDocument()
+		expect(screen.getByLabelText("This is a Radio")).toBeInTheDocument()
 	})
 	
 	test("renders a radio with a value as passed", async () => {
