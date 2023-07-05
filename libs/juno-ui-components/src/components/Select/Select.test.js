@@ -44,25 +44,37 @@ describe("Select", () => {
     expect(screen.getByRole("combobox")).toHaveClass("juno-select")
   })
   
-  test("renders a label as passed", async () => {
+  test("renders a Select with a label as passed", async () => {
     render(<Select label="My Label" id="my-select"/>)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByLabelText("My Label")).toBeInTheDocument()
     expect(document.querySelector(".juno-label")).toBeInTheDocument()
     expect(document.querySelector(".juno-label")).toHaveTextContent("My Label")
   })
   
-  test("renders an id as passed", async () => {
+  test("renders a Select with an id as passed", async () => {
     render(<Select id="select-1" />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveAttribute("id", "select-1")
   })
   
-  test("renders a generated unique id if no id was passed", async () => {
+  test("renders Select with a generated unique id if no id was passed", async () => {
     render(<Select />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveAttribute("id")
     expect(screen.getByRole("combobox").getAttribute("id")).toMatch("juno-select")
+  })
+  
+  test("renders a Select with an associated label with an id as passed", async () => {
+    render(<Select id="my-select" label="My Select"/>)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByLabelText("My Select")).toBeInTheDocument()
+    expect(document.querySelector(".juno-label")).toBeInTheDocument()
+    expect(document.querySelector(".juno-label")).toHaveTextContent("My Select")
+  })
+  
+  test("renders a Select with a label associated by an auto-generated id if no id was passed ", async () => {
+    render(<Select label="This is a Select" />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByLabelText("This is a Select")).toBeInTheDocument()
   })
   
   test("renders a required marker as passed", async () => {

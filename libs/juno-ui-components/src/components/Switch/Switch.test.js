@@ -29,12 +29,18 @@ describe("Switch", () => {
     expect(screen.getByRole("switch").getAttribute("id")).toMatch("juno-switch")
   })
   
-  test("renders a Switch with an associated label as passed", async () => {
+  test("renders a Switch with an associated label with an id as passed", async () => {
     render(<Switch id="my-switch" label="My Switch"/>)
     expect(screen.getByRole("switch")).toBeInTheDocument()
     expect(screen.getByLabelText("My Switch")).toBeInTheDocument()
     expect(document.querySelector(".juno-label")).toBeInTheDocument()
     expect(document.querySelector(".juno-label")).toHaveTextContent("My Switch")
+  })
+  
+  test("renders a Switch with a label associated by an auto-generated id if no id was passed ", async () => {
+    render(<Switch label="This is a Switch" />)
+    expect(screen.getByRole("switch")).toBeInTheDocument()
+    expect(screen.getByLabelText("This is a Switch")).toBeInTheDocument()
   })
   
   test("renders a disabled switch as passed", async () => {
