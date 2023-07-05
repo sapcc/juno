@@ -9,9 +9,9 @@ import { SelectOption } from "../SelectOption/index.js"
 import { Switch } from "../Switch/index.js"
 import { Textarea } from "../Textarea/index.js"
 import { RadioGroup } from "../RadioGroup/index.js"
-import { RadioRow } from "../RadioRow/index.js"
+import { Radio } from "../Radio/index.js"
 import { CheckboxGroup } from "../CheckboxGroup/index.js"
-import { CheckboxRow } from "../CheckboxRow/index.js"
+import { Checkbox } from "../Checkbox/index.js"
 import { Button } from "../Button/index.js"
 import { ButtonRow } from "../ButtonRow/index.js"
 import { IntroBox } from "../IntroBox/index.js"
@@ -78,14 +78,14 @@ ComplexForm.args = {
     </FormSection>,
     <FormSection title="Second Section of the Form" key="fs-2">
       <RadioGroup name="color-radios" label="In case you are not sure, select your true favorite color:">
-        <RadioRow key="r-1" id="color-red" label="Red" value="red"/>
-        <RadioRow key="r-2" id="color-blue" label="Blue" value="blue"/>
-        <RadioRow key="r-3" id="color-green" label="Green" value="green"/>
-        <RadioRow key="r-4" id="color-yellow" label="Yellow" value="yellow"/>
+        <Radio key="r-1" id="color-red" label="Red" value="red"/>
+        <Radio key="r-2" id="color-blue" label="Blue" value="blue"/>
+        <Radio key="r-3" id="color-green" label="Green" value="green"/>
+        <Radio key="r-4" id="color-yellow" label="Yellow" value="yellow"/>
       </RadioGroup>
       <CheckboxGroup name="all-about-red" label="What is your opinion towards the color Red?">
-        <CheckboxRow key="c-1" id="overrated" label="Red is vastly overrated" value="overrated"/>
-        <CheckboxRow key="c-2" id="blackisred" label="Black is better" value="blackisbetter"/>
+        <Checkbox key="c-1" id="overrated" label="Red is vastly overrated" value="overrated"/>
+        <Checkbox key="c-2" id="blackisred" label="Black is better" value="blackisbetter"/>
       </CheckboxGroup>
       <FormRow key="fr-4">
         <Textarea label="Your Message" id="message" placeholder="If there is something else we should know about you – now is the time!"/>
