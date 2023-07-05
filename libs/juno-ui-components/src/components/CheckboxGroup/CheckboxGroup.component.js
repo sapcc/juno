@@ -212,9 +212,6 @@ export const CheckboxGroup = ({
           :
             ""
          }
-        <p>
-          selectedOptions: {selectedOptions}
-        </p>
       </div>
     </CheckboxGroupContext.Provider>
   )
