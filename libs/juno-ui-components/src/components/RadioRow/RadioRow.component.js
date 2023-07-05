@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Radio } from "../Radio/index.js"
-import withDeprecationWarning from '../withDeprecationWarning/withDeprecationWarning.component.js'
+import { withDeprecationWarning } from '../withDeprecationWarning/index.js'
 
 /** A radio row containing a radio, associated label, and structural markup */
 const RadioRow = ({

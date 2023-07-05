@@ -1,0 +1,1 @@
+export { withDeprecationWarning } from "./withDeprecationWarning.component";

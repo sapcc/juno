@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Checkbox } from "../Checkbox/index.js"
-import withDeprecationWarning from '../withDeprecationWarning/withDeprecationWarning.component.js'
+import { withDeprecationWarning } from '../withDeprecationWarning/index.js'
 
 /** A single checkbox, associated label, and structural markup */
 const CheckboxRow = ({
@@ -78,7 +78,7 @@ CheckboxRow.propTypes = {
 }
 
 CheckboxRow.defaultProps = {
-  value: null,
+  value: "",
   checked: false,
   indeterminate: false,
   name: null,

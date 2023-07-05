@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-const withDeprecationWarning = (WrappedComponent, message) => {
+export const withDeprecationWarning = (WrappedComponent, message) => {
   
   const ComponentWithDeprecationWarning = (props) => {
     useEffect(() => {
@@ -16,4 +16,3 @@ const withDeprecationWarning = (WrappedComponent, message) => {
   return ComponentWithDeprecationWarning
 }
 
-export default withDeprecationWarning

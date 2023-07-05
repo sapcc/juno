@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Select } from "../Select/index.js"
 import { Label } from "../Label/index.js"
-import withDeprecationWarning from '../withDeprecationWarning/withDeprecationWarning.component.js'
+import { withDeprecationWarning } from '../withDeprecationWarning/index.js'
 
 const selectrow = `
 	jn-flex

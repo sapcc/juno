@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { Switch } from "../Switch/index.js"
 import { Label } from "../Label/index.js"
 import { Icon } from "../Icon/index"
-import withDeprecationWarning from '../withDeprecationWarning/withDeprecationWarning.component.js'
+import { withDeprecationWarning } from '../withDeprecationWarning/index.js'
 
 const switchrow = `
 	jn-mb-1
