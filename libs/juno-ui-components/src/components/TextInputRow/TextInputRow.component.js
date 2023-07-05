@@ -1,34 +1,10 @@
-import React, { useState, useEffect, useMemo } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import { TextInput } from "../TextInput/index.js"
-import { Label } from "../Label/index.js"
-import { Icon } from "../Icon/index"
+import { FormRow } from "../FormRow/index.js"
 import { withDeprecationWarning } from '../withDeprecationWarning/index.js'
 
-
-const inputcontainerstyles = `
-  jn-relative
-`
-
-const helptextstyles = `
-	jn-text-xs
-	jn-text-theme-light
-	jn-mt-1
-`
-
-const errortextstyles = `
-  jn-text-xs
-  jn-text-theme-error
-  jn-mt-1
-`
-
-const successtextstyles = `
-  jn-text-xs
-  jn-text-theme-success
-  jn-mt-1
-`
-
-/** A text input group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
+/** DEPRECATED: A text input row containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. This component is DEPRECATED, use TextInput instead. */
 const TextInputRow = ({
   type,
   value,
@@ -50,80 +26,30 @@ const TextInputRow = ({
   onBlur,
   ...props
 }) => {
-  const [val, setValue] = useState("")
-  const [focus, setFocus] = useState(false)
-  const [isInvalid, setIsInvalid] = useState(false)
-  const [isValid, setIsValid] = useState(false)
-
-  React.useEffect(() => {
-    setValue(value)
-  }, [value])
-
-  const invalidated = useMemo(
-    () => invalid || (errortext && errortext.length ? true : false),
-    [invalid, errortext]
-  )
-  const validated = useMemo(
-    () => valid || (successtext && successtext.length ? true : false),
-    [valid, successtext]
-  )
-
-  useEffect(() => {
-    setIsInvalid(invalidated)
-  }, [invalidated])
-
-  useEffect(() => {
-    setIsValid(validated)
-  }, [validated])
-
-  useEffect(() => {
-    setFocus(autoFocus)
-  }, [autoFocus])
-
-  const handleChange = (event) => {
-    setValue(event.target.value)
-    onChange && onChange(event)
-  }
-
-  const handleFocus = (event) => {
-    setFocus(true)
-    if (onFocus) onFocus(event)
-  }
-  const handleBlur = (event) => {
-    setFocus(false)
-    if (onBlur) onBlur(event)
-  }
-
-
   return (
-    <div
-      className={`juno-textinput-row ${className}`}
-      {...props}
-    >
+    <FormRow>
       <TextInput
         type={type}
-        value={val}
+        value={value}
         name={name}
         id={id}
         label={label}
         required={required}
         placeholder={placeholder}
         disabled={disabled}
-        invalid={isInvalid}
-        valid={isValid}
+        invalid={invalid}
+        valid={valid}
         autoFocus={autoFocus}
-        onChange={handleChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
+        onChange={onChange}
+        errortext={errortext}
+        helptext={helptext}
+        successtext={successtext}
+        className={className}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        {...props}
       />
-      {errortext && errortext.length ? (
-        <p className={`${errortextstyles}`}>{errortext}</p>
-      ) : null}
-      {successtext && successtext.length ? (
-        <p className={`${successtextstyles}`}>{successtext}</p>
-      ) : null}
-      {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : null}
-    </div>
+    </FormRow>
   )
 }
 

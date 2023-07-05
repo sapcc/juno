@@ -1,38 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Switch } from "../Switch/index.js"
-import { Label } from "../Label/index.js"
-import { Icon } from "../Icon/index"
+import { FormRow } from "../FormRow/index.js"
 import { withDeprecationWarning } from '../withDeprecationWarning/index.js'
 
-const switchrow = `
-	jn-mb-1
-`
 
-const switchcontainerstyles = `
-	jn-mr-2
-	jn-leading-none
-`
 
-const helptextstyles = `
-	jn-text-xs
-	jn-text-theme-light
-	jn-mt-1
-`
-
-const errortextstyles = `
-  jn-text-xs
-  jn-text-theme-error
-  jn-mt-1
-`
-
-const successtextstyles = `
-  jn-text-xs
-  jn-text-theme-success
-  jn-mt-1
-`
-
-/** A checkbox input group containing a checkbox, associated label, and structural markup */
+/** DEPRECATED: A Switch input row containing a switch, associated label, and structural markup. This component is DEPRECATED, use Switch instead. */
 const SwitchRow = ({
   name,
   label,
@@ -50,61 +24,26 @@ const SwitchRow = ({
   onClick,
   ...props
 }) => {
-  const [isOn, setIsOn] = useState(on)
-  const [isInvalid, setIsInvalid] = useState(false)
-  const [isValid, setIsValid] = useState(false)
-
-  useEffect(() => {
-    setIsOn(on)
-  }, [on])
-
-  const invalidated = useMemo(
-    () => invalid || (errortext && errortext.length ? true : false),
-    [invalid, errortext]
-  )
-  const validated = useMemo(
-    () => valid || (successtext && successtext.length ? true : false),
-    [valid, successtext]
-  )
-
-  useEffect(() => {
-    setIsInvalid(invalidated)
-  }, [invalidated])
-
-  useEffect(() => {
-    setIsValid(validated)
-  }, [validated])
-
-  const handleChange = (event) => {
-    setIsOn(!isOn)
-    onChange && onChange(event)
-  }
-
   return (
-    <div className={`juno-switch-row ${switchrow} ${className}`} {...props}>
-      <div className={`juno-switch-container ${switchcontainerstyles}`}>
-        <Switch
-          name={name}
-          label={label}
-          onChange={handleChange}
-          onClick={onClick}
-          id={id}
-          on={on}
-          disabled={disabled}
-          invalid={isInvalid}
-          valid={isValid}
-        />
-      </div>
-      <div className={`jn-pt-0.5`}>
-        {errortext && errortext.length ? (
-          <p className={`${errortextstyles}`}>{errortext}</p>
-        ) : null}
-        {successtext && successtext.length ? (
-          <p className={`${successtextstyles}`}>{successtext}</p>
-        ) : null}
-        {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : null}
-      </div>
-    </div>
+    <FormRow>
+      <Switch
+        name={name}
+        label={label}
+        onChange={onChange}
+        onClick={onClick}
+        id={id}
+        on={on}
+        disabled={disabled}
+        invalid={invalid}
+        required={required}
+        valid={valid}
+        errortext={errortext}
+        helptext={helptext}
+        successtext={successtext}
+        className={className}
+        {...props}
+      />
+    </FormRow>
   )
 }
 

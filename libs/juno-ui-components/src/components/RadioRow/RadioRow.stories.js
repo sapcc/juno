@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: "RadioRow is deprecated, use Radio instead."
+        component: "DEPRECATED: A radio row containing a radio, associated label, and structural markup. This component is DEPRECATED, use Radio instead."
       },
     },
   },

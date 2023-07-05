@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: "TextareaRow is deprecated, use Textarea instead."
+        component: "DEPRECATED: A textarea row containing a textarea, associated label, optional helptext, and structural markup. This component is DEPRECATED, use Textarea instead."
       },
     },
   },
