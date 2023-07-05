@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { Checkbox } from "../Checkbox/index.js"
 import { withDeprecationWarning } from '../withDeprecationWarning/index.js'
 
-/** A single checkbox, associated label, and structural markup */
+/** DEPRECATED: A single checkbox, associated label, and structural markup. This component is DEPRECATED, use Checkbox instead. */
 const CheckboxRow = ({
   value,
   checked,

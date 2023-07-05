@@ -10,7 +10,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: "SelectRow is deprecated, use Select instead."
+        component: "DEPRECATED: A select group containing a select, an associated label, and necessary structural markup. This component is DEPRECATED, use Select instead."
       },
     },
   },

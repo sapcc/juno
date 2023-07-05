@@ -1,42 +1,11 @@
 import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
 import { Select } from "../Select/index.js"
-import { Label } from "../Label/index.js"
+import { FormRow } from "../FormRow/index.js"
 import { withDeprecationWarning } from '../withDeprecationWarning/index.js'
 
-const selectrow = `
-	jn-flex
-	jn-flex-col
-	jn-mb-2
-`
 
-const helptextstyles = `
-	jn-text-xs
-	jn-text-theme-light
-	jn-mt-1
-`
-
-const selectstyles = `
-	jn-w-full
-`
-
-const floatingcontainerstyles = `
-  jn-relative
-`
-
-const errortextstyles = `
-  jn-text-xs
-  jn-text-theme-error
-  jn-mt-1
-`
-
-const successtextstyles = `
-  jn-text-xs
-  jn-text-theme-success
-  jn-mt-1
-`
-
-/** A select group containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. */
+/** DEPRECATED: A select group containing a select, an associated label, and necessary structural markup. This component is DEPRECATED, use Select instead. */
 const SelectRow = ({
   name,
   variant,
@@ -62,76 +31,34 @@ const SelectRow = ({
   loading,
   ...props
 }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [hasError, setHasError] = useState(false)
-  const [isInvalid, setIsInvalid] = useState(false)
-  const [isValid, setIsValid] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  
-  useEffect(() => {
-    setIsOpen(open)
-  }, [open])
-  
-  useEffect(() => {
-    setHasError(error)
-  }, [error])
-  
-  useEffect(() => {
-    setIsLoading(loading)
-  }, [loading])
-
-  const invalidated = useMemo(
-    () => invalid || (errortext && errortext.length ? true : false),
-    [invalid, errortext]
-  )
-  const validated = useMemo(
-    () => valid || (successtext && successtext.length ? true : false),
-    [valid, successtext]
-  )
-
-  useEffect(() => {
-    setIsInvalid(invalidated)
-  }, [invalidated])
-
-  useEffect(() => {
-    setIsValid(validated)
-  }, [validated])
-
   return (
-    <div
-      className={`juno-select-row ${className}`}
-      {...props}
-    >
-      <div>
-        <Select
-          className={`${selectstyles}`}
-          name={name}
-          id={id}
-          label={label}
-          required={required}
-          placeholder={placeholder}
-          onValueChange={onValueChange || onChange}
-          onOpenChange={onOpenChange}
-          disabled={disabled}
-          invalid={isInvalid}
-          valid={isValid}
-          value={value}
-          defaultValue={defaultValue}
-          open={isOpen}
-          error={hasError}
-          loading={isLoading}
-        >
-          {children}
-        </Select>
-        {errortext && errortext.length ? (
-          <p className={`${errortextstyles}`}>{errortext}</p>
-        ) : null}
-        {successtext && successtext.length ? (
-          <p className={`${successtextstyles}`}>{successtext}</p>
-        ) : null}
-        {helptext ? <p className={`${helptextstyles}`}>{helptext}</p> : ""}
-      </div>
-    </div>
+    <FormRow>
+      <Select
+        name={name}
+        id={id}
+        label={label}
+        required={required}
+        placeholder={placeholder}
+        onValueChange={onValueChange || onChange}
+        onOpenChange={onOpenChange}
+        disabled={disabled}
+        invalid={invalid}
+        valid={valid}
+        value={value}
+        variant={variant}
+        defaultValue={defaultValue}
+        open={open}
+        error={error}
+        loading={loading}
+        errortext={errortext}
+        helptext={helptext}
+        successtext={successtext}
+        className={className}
+        {...props}
+      >
+        {children}
+      </Select>
+    </FormRow>
   )
 }
 
