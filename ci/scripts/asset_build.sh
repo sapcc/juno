@@ -94,14 +94,14 @@ fi
 echo "=================================="
 echo "### build asset $ASSET_NAME ###"
 echo "----------------------------------"
-echo "use ASSET_NAME  = $ASSET_NAME"
+echo "use ASSET_TYPE  = $ASSET_TYPE"
 echo "use ASSET_PATH  = $ASSET_PATH"
 echo "use OUTPUT_PATH = $OUTPUT_PATH"
 
 mkdir -p "$OUTPUT_PATH/$ASSET_PATH"
 
 # check for new versions from last build
-if [[ "$ASSET_TYPE" == "lib" ]] && [[ -n "$LAST_BUILD_PATH" ]]; then
+if [[ "$ASSET_TYPE" == "libs" ]] && [[ -n "$LAST_BUILD_PATH" ]]; then
   # Version handling, this is only relevant for lib
   echo "use LAST_BUILD_PATH = $LAST_BUILD_PATH"
   echo "----------------------------------"
@@ -118,9 +118,9 @@ if [[ "$ASSET_TYPE" == "lib" ]] && [[ -n "$LAST_BUILD_PATH" ]]; then
   CURRENT_VERSION=$(jq -r .version "$ASSET_PATH/package.json")
   echo "Current Version: $CURRENT_VERSION"
   if [ -f "$LAST_BUILD_PATH/libs/$ASSET_NAME/package.json" ]; then
-    LAST_VERSION=$(jq -r .version "$LAST_BUILD_PATH/libs/$ASSET_NAME/package.json")
+    LAST_VERSION=$(jq -r .version "$LAST_BUILD_PATH/$ASSET_TYPE/$ASSET_NAME/package.json")
   else
-    echo "Warning: no package.json in '$LAST_BUILD_PATH/libs/$ASSET_NAME/' found"
+    echo "Warning: no package.json in '$LAST_BUILD_PATH/$ASSET_TYPE/$ASSET_NAME/' found"
     LAST_VERSION="not found"
   fi
 
