@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import withDeprecationWarning from './withDeprecationWarning.component.js';
+import { withDeprecationWarning } from './withDeprecationWarning.component.js';
 
 describe('withDeprecationWarning', () => {
   
