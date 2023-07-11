@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: "TextInputRow is deprecated, use TextInput instead."
+        component: "DEPRECATED: A text input row containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. This component is DEPRECATED, use TextInput instead."
       },
     },
   },

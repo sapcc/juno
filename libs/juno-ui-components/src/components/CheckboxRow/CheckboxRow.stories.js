@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: "CheckboxRow is deprecated, use Checkbox instead."
+        component: "DEPRECATED: A radio row containing a radio, associated label, and structural markup. This component is DEPRECATED, use Radio instead."
       },
     },
   },

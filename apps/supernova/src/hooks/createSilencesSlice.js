@@ -5,7 +5,6 @@ const initialSilencesState = {
   itemsHash: {},
   itemsByState: {},
   excludedLabels: [],
-  excludedLabelsHash: {},
   isLoading: false,
   isUpdating: false,
   updatedAt: null,
@@ -146,19 +145,11 @@ const createSilencesSlice = (set, get) => ({
       },
       setExcludedLabels: (labels) => {
         if (!labels) return
-
-        // labels to hash object to easier access
-        const labelsHash = labels.reduce((map, label) => {
-          map[label] = label
-          return map
-        }, {})
-
         return set(
           (state) => ({
             silences: {
               ...state.silences,
               excludedLabels: labels,
-              excludedLabelsHash: labelsHash,
             },
           }),
           false,
@@ -166,18 +157,27 @@ const createSilencesSlice = (set, get) => ({
         )
       },
       /*
-      Find all silences in itemsByState with key expired that matches all labels (key&value) from the alert
+      Find all silences in itemsByState with key expired that matches all labels (key&value) from the alert but omit the labels that are excluded (excludedLabels)
       */
       getExpiredSilences: (alert) => {
         if (!alert) return
-        const { labels } = alert
+        const alertLabels = alert?.labels || {}
         const silences = get().silences.itemsByState?.expired || []
+        const excludedLabels = get().silences.excludedLabels || []
 
+        // find all expired silences that matches all labels from the alert excluding the excluded excludedLabels
         return silences.filter((silence) => {
           const silenceMatchers = silence?.matchers || []
-          // The every() method tests whether all elements in the array pass the test implemented by the provided function. It returns a Boolean value.
-          return silenceMatchers.every((matcher) => {
-            return labels[matcher.name] === matcher.value
+          // check if all labels from the alert are included in the silence
+          return Object.keys(alertLabels).every((label) => {
+            // check if the label is excluded
+            if (excludedLabels.includes(label)) return true
+            // check if the label is included in the silence
+            return silenceMatchers.some(
+              (silenceLabel) =>
+                silenceLabel?.name === label &&
+                silenceLabel?.value === alertLabels?.[label]
+            )
           })
         })
       },
@@ -187,9 +187,6 @@ const createSilencesSlice = (set, get) => ({
       getLatestMappingSilence: (alert) => {
         if (!alert) return
         const silences = get().silences.actions.getMappingSilences(alert)
-
-        console.log("silences", silences)
-
         if (!silences?.length) return
         // return the latest expired silence
         return silences.reduce((prev, current) =>

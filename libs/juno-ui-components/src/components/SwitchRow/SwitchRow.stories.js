@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: "SwitchRow is deprecated, use Switch instead."
+        component: "DEPRECATED: A Switch input row containing a switch, associated label, and structural markup. This component is DEPRECATED, use Switch instead. "
       },
     },
   },
