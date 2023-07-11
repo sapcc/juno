@@ -1,6 +1,6 @@
 import React, { useCallback } from "react"
 
-import { Modal, TextInputRow } from "juno-ui-components"
+import { Modal, FormRow, TextInput } from "juno-ui-components"
 import useStore from "../store"
 
 const LogInModal = () => {
@@ -17,8 +17,12 @@ const LogInModal = () => {
       onCancel={handleCloseClick}
       confirmButtonLabel="Log In"
     >
-      <TextInputRow label="Username" />
-      <TextInputRow label="Password" type="password" />
+      <FormRow>
+        <TextInput label="Username" />
+      </FormRow>
+      <FormRow>
+        <TextInput label="Password" type="password" />
+      </FormRow>
     </Modal>
   )
 }
