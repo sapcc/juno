@@ -56,6 +56,7 @@ const NewItemModal = () => {
       <FormRow>
         <TextInput
           label="Name"
+          autoFocus
           onChange={(e) => onAttrChanged("name", e.target.value)}
         />
       </FormRow>
