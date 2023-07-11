@@ -208,16 +208,6 @@ const createSilencesSlice = (set, get) => ({
           "silences.setIsUpdating"
         ),
     },
-    advanced: {
-      resetSlice: () =>
-        set(
-          (state) => ({
-            silences: { ...state.silences, ...initialSilencesState },
-          }),
-          false,
-          "silences.resetSilencesState"
-        ),
-    },
   },
 })
 
