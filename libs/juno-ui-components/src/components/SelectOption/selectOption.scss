@@ -1,0 +1,10 @@
+.juno-select-option.juno-select-option-truncate {
+  
+  span {
+    height: 1.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+}
