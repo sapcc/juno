@@ -137,5 +137,3 @@ export const useSilencesLocalItems = () =>
 
 export const useSilencesActions = () =>
   useAppStore((state) => state.silences.actions)
-export const useSilencesAdvanced = () =>
-  useAppStore((state) => state.silences.advanced)

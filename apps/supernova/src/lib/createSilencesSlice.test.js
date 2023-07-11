@@ -5,8 +5,6 @@ import {
   useSilencesLocalItems,
   useAlertsActions,
   useAlertsItems,
-  useSilences,
-  useSilencesAdvanced,
   StoreProvider,
 } from "../hooks/useAppStore"
 import {
