@@ -49,6 +49,8 @@ const useApi = () => {
       configs.items.forEach((plugin) => {
         const id = plugin.metadata?.name
         const name = plugin.status?.uiApplication?.name
+        const displayName = plugin.spec?.displayName
+        const weight = plugin.status?.weight
         const version = plugin.status?.uiApplication?.version
         const url = plugin.status?.uiApplication?.url
 
@@ -56,6 +58,8 @@ const useApi = () => {
           config[id] = {
             id,
             name,
+            displayName: displayName || name,
+            weight,
             version,
             url,
             navigable: true,
@@ -66,6 +70,8 @@ const useApi = () => {
           }
         }
       })
+
+      // console.log("::::::::::::::::::::::::config", config)
 
       return config
     })

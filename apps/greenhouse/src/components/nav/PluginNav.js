@@ -100,6 +100,15 @@ const PluginNav = () => {
       </Stack>
       {Object.values(appsConfig)
         .filter((a) => a.navigable)
+        .sort((a, b) => {
+          // sort by weight, then by name
+          // if weight is not defined, app is sorted to the end
+          const w1 = a.weight === undefined ? Infinity : a.weight
+          const w2 = b.weight === undefined ? Infinity : b.weight
+          let weightSort = w1 - w2
+          weightSort = weightSort > 0 ? 1 : weightSort < 0 ? -1 : 0
+          return weightSort || a.displayName.localeCompare(b.displayName)
+        })
         .map((appConf, i) => (
           <Stack
             key={i}
@@ -113,7 +122,7 @@ const PluginNav = () => {
             onClick={() => setActiveApps([appConf.id])}
           >
             <AppIcon name={appConf.name} />
-            <span className={appNameStyles}>{appConf.id}</span>
+            <span className={appNameStyles}>{appConf.displayName}</span>
           </Stack>
         ))}
 
