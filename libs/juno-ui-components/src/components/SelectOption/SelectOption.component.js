@@ -24,10 +24,6 @@ const optionStyles = `
   hover:jn-bg-theme-background-lvl-3
 `
 
-const truncateStyles = `
-  jn-truncate
-`
-
 /** An individual select option. Use as child of Select. */
 
 export const SelectOption = React.forwardRef(
