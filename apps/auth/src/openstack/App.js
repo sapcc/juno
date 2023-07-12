@@ -129,78 +129,82 @@ const App = (props) => {
     debug: props.debug === "true" || props.debug === true,
   })
 
-  const authenticate = React.useCallback(
-    (authConf) => {
-      setIsProcessing(true)
-      console.log("===authConf", { auth: authConf })
+  const authenticate = React.useCallback(() => {
+    setIsProcessing(true)
 
-      let headers = { "Content-Type": "application/json" }
-      let url = new URL(props.authEndpoint)
-      let version = url.pathname.split("/")[1]
+    console.log(
+      "===authConf",
+      JSON.stringify({ auth: authConf }, null, 2).replace(
+        /"password":\s*".+"/,
+        '"password": "********"'
+      )
+    )
 
-      url.pathname = `/${version}/auth/tokens`
+    let headers = { "Content-Type": "application/json" }
+    let url = new URL(props.authEndpoint)
+    let version = url.pathname.split("/")[1] || "v3"
 
-      console.log(":::", version, url.href)
+    url.pathname = `/${version}/auth/tokens`
 
-      fetch(url, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(authConf),
-      })
-        .then((response) => {
-          console.log("===response", response)
-          if (response.status >= 400) {
-            throw new Error(response.statusText)
-          }
-          return response.json()
-        })
-        .then((data) => console.log("=============data", data))
-        .catch((error) => setError(error.message))
-        .finally(() => setIsProcessing(false))
+    console.log(":::", version, url.href)
 
-      //   result = @connection.post( body: auth_params.to_json, headers: headers)
-
-      //   if result and result.respond_to?(:status)
-      //   if result.status>=500
-      //     raise MonsoonOpenstackAuth::ConnectionDriver::AuthenticationError.new(result.body,result.status)
-      //   end
-      // end
-
-      // body = JSON.parse(result.body)
-
-      // unless body['token']
-      //   message = body['error']['message'] rescue "Response does not contain token. #{body.to_s}"
-      //   code = body['error']['code'] rescue nil
-      //   error = MonsoonOpenstackAuth::ConnectionDriver::AuthenticationError.new(message,code)
-      //   raise error
-      // end
-
-      // token = body['token']
-      // token['value'] = result.headers['X-Subject-Token']
-    },
-    [setAuthData]
-  )
-
-  React.useEffect(() => {
-    if (props?.authMethod === "password") return
-
-    const authConf = { identity: { methods: [props?.authMethod] } }
-    const scope = scopeConf({
-      domain: props?.scopeDomain,
-      domainId: props?.scopeDomainId,
-      project: props?.scopeProject,
-      projectId: props?.scopeProjectId,
+    fetch(url, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(authConf),
     })
-    if (scope) authConf.scope = scope
+      .then((response) => {
+        console.log("===response", response)
+        if (response.status >= 400) {
+          throw new Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((data) => console.log("=============data", data))
+      .catch((error) => setError(error.message))
+      .finally(() => setIsProcessing(false))
 
-    if (props?.authMethod === "token") {
-      authConf.identity["token"] = { id: props?.authToken }
-    } else if (props?.authMethod === "external") {
-      authConf.identity["external"] = {}
-    }
+    //   result = @connection.post( body: auth_params.to_json, headers: headers)
 
-    authenticate(authConf)
-  }, [authenticate])
+    //   if result and result.respond_to?(:status)
+    //   if result.status>=500
+    //     raise MonsoonOpenstackAuth::ConnectionDriver::AuthenticationError.new(result.body,result.status)
+    //   end
+    // end
+
+    // body = JSON.parse(result.body)
+
+    // unless body['token']
+    //   message = body['error']['message'] rescue "Response does not contain token. #{body.to_s}"
+    //   code = body['error']['code'] rescue nil
+    //   error = MonsoonOpenstackAuth::ConnectionDriver::AuthenticationError.new(message,code)
+    //   raise error
+    // end
+
+    // token = body['token']
+    // token['value'] = result.headers['X-Subject-Token']
+  }, [authConf, setAuthData])
+
+  // React.useEffect(() => {
+  //   if (props?.authMethod === "password") return
+
+  //   const authConf = { identity: { methods: [props?.authMethod] } }
+  //   const scope = scopeConf({
+  //     domain: props?.scopeDomain,
+  //     domainId: props?.scopeDomainId,
+  //     project: props?.scopeProject,
+  //     projectId: props?.scopeProjectId,
+  //   })
+  //   if (scope) authConf.scope = scope
+
+  //   if (props?.authMethod === "token") {
+  //     authConf.identity["token"] = { id: props?.authToken }
+  //   } else if (props?.authMethod === "external") {
+  //     authConf.identity["external"] = {}
+  //   }
+
+  //   authenticate(authConf)
+  // }, [authenticate])
 
   return (
     <Modal
