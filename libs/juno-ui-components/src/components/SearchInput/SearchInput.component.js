@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
-import "./searchinput.css"
+import "./searchinput.scss"
 import { Icon } from "../Icon/index"
 import { Stack } from "../Stack/index"
 
