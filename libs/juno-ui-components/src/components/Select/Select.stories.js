@@ -194,6 +194,29 @@ ManyOptions.args = {
   ]
 }
 
+export const Typeahead = Template.bind({})
+Typeahead.args = {
+  typeahead: true,
+  children: [
+    <SelectOption value="rhubarb" key="1">Rhubarb</SelectOption>,
+    <SelectOption value="carrots" key="2">Carrots</SelectOption>,
+    <SelectOption value="spinach" key="3">Spinach</SelectOption>,
+    <SelectOption value="tomatoes" key="4">Tomatoes</SelectOption>,
+    <SelectOption value="cucumbers" key="5">Cucumbers</SelectOption>,
+    <SelectOption value="cauliflower" key="6">Cauliflower</SelectOption>,
+    <SelectOption value="eggplant" key="7">Eggplant</SelectOption>,
+    <SelectOption value="zucchini" key="8">Zucchini</SelectOption>,
+    <SelectOption value="brussels sprouts" key="9">Brussels Sprouts</SelectOption>,
+    <SelectOption value="horseradish" key="10">Horseradish</SelectOption>,
+    <SelectOption value="green beans" key="11">Green Beans</SelectOption>,
+    <SelectOption value="mushrooms" key="12">Mushrooms</SelectOption>,
+    <SelectOption value="leek" key="13">Leek</SelectOption>,
+    <SelectOption value="artichokes" key="14">Artichokes</SelectOption>,
+    <SelectOption value="peas" key="15">Peas</SelectOption>,
+    <SelectOption value="potatoes" key="16">Potatoes</SelectOption>,
+  ]
+}
+
 export const Loading = Template.bind({})
 Loading.args = {
   loading: true,

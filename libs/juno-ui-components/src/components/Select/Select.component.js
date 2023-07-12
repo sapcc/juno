@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useId, createContext } from "react"
+import React, { useState, useEffect, useMemo, useId, useRef, createContext } from "react"
 import * as RadixSelect from "@radix-ui/react-select"
 import { Label } from "../Label/index"
 import { Icon } from "../Icon/index.js"
@@ -6,6 +6,7 @@ import { Spinner } from "../Spinner/index.js"
 import { usePortalRef } from "../PortalProvider/PortalProvider.component"
 import PropTypes from "prop-types"
 import { FormHint } from "../FormHint/"
+import { TextInput } from "../TextInput/"
 import "./select.scss"
 
 const wrapperStyles = `
@@ -61,8 +62,17 @@ const scrollButtonStyles = `
   jn-py-1
 `
 
+const scrollIconStyles = `
+  jn-inline-block
+`
+
 const hintStyles = `
   jn-mt-0
+`
+
+const typeaheadOuterStyles = `
+  jn-bg-theme-background-lvl-1
+  jn-p-0.5
 `
 
 /** Wrap children in a Portal if portal option is set to true  */
@@ -120,6 +130,7 @@ export const Select = React.forwardRef(
     errortext,
     successtext,
     truncateOptions,
+    typeahead,
     ...props
   }, 
   forwardedRef ) => {
@@ -137,6 +148,7 @@ export const Select = React.forwardRef(
     const [isInvalid, setIsInvalid] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isValid, setIsValid] = useState(false)
+    const [searchStr, setSearchStr] = useState("")
     
     useEffect(() => {
       setIsOpen(open)
@@ -174,6 +186,14 @@ export const Select = React.forwardRef(
       }
       onOpenChange && onOpenChange(event)
     }
+    
+    const handleInputChange = (event) => {
+      setSearchStr(event.target.value)
+    }
+    
+    const filteredChildren = children.filter((child) => 
+      child.props.value?.toString().toLowerCase().includes(searchStr.toLowerCase())
+    )
     
     const theVariant = variant || "default"
     
@@ -277,14 +297,28 @@ export const Select = React.forwardRef(
               </RadixSelect.Trigger>
               <PortalWrapper withPortal={portal}>
                 <RadixSelect.Content className={`juno-select-content ${contentStyles}`} position={position} sideOffset={2}>
+                  { typeahead ? 
+                    <div className={`juno-select-typeahead-outer ${typeaheadOuterStyles}`}>
+                      <TextInput 
+                        placeholder="Search…" 
+                        onChange={handleInputChange} 
+                     />
+                    </div>
+                    :
+                     ""
+                  }
                   <RadixSelect.ScrollUpButton className={`${scrollButtonStyles}`}>
-                    <Icon icon="expandLess"/>
+                    <Icon icon="expandLess" className={`juno-select-scroll-up-icon ${scrollIconStyles}`} />
                   </RadixSelect.ScrollUpButton>
                   <RadixSelect.Viewport>
-                    { children }
+                    { typeahead ?
+                        filteredChildren
+                      :
+                        children 
+                    }
                   </RadixSelect.Viewport>
                   <RadixSelect.ScrollDownButton className={`${scrollButtonStyles}`}>
-                    <Icon icon="expandMore"/>
+                    <Icon icon="expandMore" className={`juno-select-scroll-down-icon ${scrollIconStyles}`}  />
                   </RadixSelect.ScrollDownButton>
                 </RadixSelect.Content>
               </PortalWrapper>
@@ -368,6 +402,8 @@ Select.propTypes = {
   successtext: PropTypes.node,
   /** Whether the option labels should be truncated in case they are longer/wider than the available space in an option or not. Default is FALSE. */
   truncateOptions: PropTypes.bool,
+  /** Whether the Select has an input field in the menu to type and filter the options by what the user types into the field */
+  typeahead: PropTypes.bool,
 }
 
 Select.defaultProps = {
@@ -399,4 +435,5 @@ Select.defaultProps = {
   errortext: "",
   successtext: "",
   truncateOptions: false,
+  typeahead: false,
 }
