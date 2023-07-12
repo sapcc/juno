@@ -67,10 +67,11 @@
 .juno-select-trigger {
   
   > span:first-child {
-    height: 1.5rem;
+    height: 1.75rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-align: left;
   }
   
 }
