@@ -1,6 +1,8 @@
-import React from "react"
+import React, { useContext } from "react"
 import * as RadixSelect from "@radix-ui/react-select"
 import PropTypes from "prop-types"
+import {SelectContext} from "../Select/Select.component.js"
+import "./selectOption.scss"
 
 const optionStyles = `
   jn-text-theme-default
@@ -13,7 +15,6 @@ const optionStyles = `
   jn-cursor-pointer
   jn-select-none
   jn-bg-clip-padding
-  jn-truncate
   jn-text-left
   jn-bg-theme-background-lvl-1
   focus:jn-outline-none
@@ -34,8 +35,15 @@ export const SelectOption = React.forwardRef(
     className, 
     ...props}, 
   forwardedRef) => {
+    
+    const selectContext = useContext(SelectContext)
+    const {
+      truncateOptions: truncateOptions,
+    } = selectContext || {}
+    
+    
     return (
-      <RadixSelect.Item className={`juno-select-option ${optionStyles} ${disabled ? "jn-opacity-50 jn-cursor-not-allowed" : ""} ${className}`} ref={forwardedRef} value={value} disabled={disabled} {...props} >
+      <RadixSelect.Item className={`juno-select-option ${optionStyles} ${disabled ? "jn-opacity-50 jn-cursor-not-allowed" : ""} ${ truncateOptions === true ? "juno-select-option-truncate" : "" } ${className}`} ref={forwardedRef} value={value} disabled={disabled} {...props} >
         <RadixSelect.ItemText>
           {children || label || value }
         </RadixSelect.ItemText>

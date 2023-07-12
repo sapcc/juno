@@ -48,6 +48,16 @@ const ControlledTemplate = ({open, value, children, ...args}) => {
   
 }
 
+const ConstrainedWidthTemplate = ({children, ...args}) => {
+  return (
+    <div style={ {width: "300px"} }>
+      <Select {...args}>
+        { children }
+      </Select>
+    </div>
+  )
+}
+
 export const Default = Template.bind({})
 Default.args = {
   children: [
@@ -261,6 +271,25 @@ PrimaryDangerSelect.args = {
     <SelectOption value="1" key="1">Value 1</SelectOption>,
     <SelectOption value="2" key="2">Value 2</SelectOption>,
     <SelectOption value="3" key="3">Value 3</SelectOption>
+  ]
+}
+
+export const TruncatedOptions = ConstrainedWidthTemplate.bind({})
+TruncatedOptions.args = {
+  truncateOptions: true,
+  children: [
+    <SelectOption value="1" key="1">Option with a very long title that will most likely not fit into the menu width</SelectOption>,
+    <SelectOption value="2" key="2">Another option with a very long title that will most likely not fit into the menu width</SelectOption>,
+    <SelectOption value="3" key="3">Yet another option with a very long title that will most likely not fit into the menu width</SelectOption>
+  ]
+}
+
+export const NonTruncatedOptions = ConstrainedWidthTemplate.bind({})
+NonTruncatedOptions.args = {
+  children: [
+    <SelectOption value="1" key="1">Option with a very long title that will most likely not fit into the menu width</SelectOption>,
+    <SelectOption value="2" key="2">Another option with a very long title that will most likely not fit into the menu width</SelectOption>,
+    <SelectOption value="3" key="3">Yet another option with a very long title that will most likely not fit into the menu width</SelectOption>
   ]
 }
 

@@ -233,6 +233,26 @@ describe("Select", () => {
     expect(screen.getByRole("combobox")).toHaveClass("juno-select-invalid")
   })
   
+  test("renders non-truncated Select Options by default", async () => {
+    render(
+      <Select open>
+        <SelectOption value="1">Option 1</SelectOption>
+      </Select>
+    )
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).not.toHaveClass("juno-select-option-truncate")
+  })
+  
+  test("renders truncated Select Options as passed", async () => {
+    render(
+      <Select truncateOptions open>
+        <SelectOption value="1">Option 1</SelectOption>
+      </Select>
+    )
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveClass("juno-select-option-truncate")
+  })
+  
   test("allows user to open a Select by clicking on it", async () => {
     render(
       <Select onOpenChange={mockOnOpenChange}>
