@@ -15,7 +15,7 @@ const wrapperStyles = `
 const labelStyles = `
   jn-pointer-events-none
   jn-top-2
-  jn-left-[0.9375rem]
+  jn-left-4
 `
 
 const triggerStyles = `
@@ -35,7 +35,8 @@ const triggerStyles = `
 `
 
 const triggerLabelStyles = `
-  jn-pt-3.5 
+  jn-text-left
+  jn-pt-[0.4rem]
 `
 
 const triggerErrorStyles = `
