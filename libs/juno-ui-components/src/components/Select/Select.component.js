@@ -237,7 +237,7 @@ export const Select = React.forwardRef(
               onOpenChange={handleOpenChange}
               onValueChange={onValueChange}
               value={value}
-              open={open}
+              open={isOpen}
               defaultValue={defaultValue}
             >
               <RadixSelect.Trigger 
