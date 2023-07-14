@@ -118,7 +118,7 @@ export const Modal = ({
 	return (
 		<>
 			{ isOpen && (
-					<div className={`juno-modal-container ${modalcontainerstyles}`} >
+					<div className={`juno-modal-container ${modalcontainerstyles}`} onClick={(e) => e.stopPropagation()}>
 						<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" {...props} >
 							<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
 								{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} >{ title || heading }</h1> : null }
