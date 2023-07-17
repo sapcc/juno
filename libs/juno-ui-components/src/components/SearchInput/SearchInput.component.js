@@ -26,6 +26,7 @@ const searchStyles = (variant) => {
     jn-bg-theme-textinput
     jn-text-theme-high
     jn-shadow
+    jn-w-full
     focus:jn-outline-none
     focus:jn-ring-2
     focus:jn-ring-theme-focus
@@ -123,7 +124,7 @@ export const SearchInput = ({
   }
 
   return (
-    <div className={`juno-search-input-wrapper ${wrapperStyles(variant)}`} role="search">
+    <div className={`juno-search-input-wrapper ${wrapperStyles(variant)} ${className}`} role="search">
       <Stack gap="2" alignment="center">
         <input
           type="search"
@@ -132,7 +133,7 @@ export const SearchInput = ({
           disabled={disabled}
           value={val}
           autoComplete={autoComplete}
-          className={`juno-search-input ${searchStyles(variant)} ${className}`}
+          className={`juno-search-input ${searchStyles(variant)}`}
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
           {...props}
