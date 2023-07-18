@@ -26,14 +26,14 @@ function App(props = {}) {
 
   useLayoutEffect(() => {
     // filterLabels are the labels shown in the filter dropdown, enabling users to filter alerts based on specific criteria.
-    if (props.filterLabels) setLabels("app,cluster,cluster_type,context,job,region,service,severity,status,support_group,tier,type")
+    if (props.filterLabels) setLabels(props.filterLabels)
 
     // silenceExcludedLabels are re labels that are initially excluded by default when creating a silence. However, they can be added if necessary when utilizing the advanced options in the silence form.
     if (props.silenceExcludedLabels)
       setExcludedLabels(props.silenceExcludedLabels)
 
     // AlertEnrichedLabels are labels that are used to enrich the alert data and should not be used when creating a silence
-    if(props.alertEnrichedLabels) setEnrichedLabels("status")
+    setEnrichedLabels("status")
 
     // predefined filters config
     const predefinedFilters = [
