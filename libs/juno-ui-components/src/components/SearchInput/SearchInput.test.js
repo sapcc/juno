@@ -123,7 +123,7 @@ describe("SearchInput", () => {
 
   test("renders custom classNames as passed", async () => {
     render(<SearchInput className="my-custom-class" />)
-    expect(screen.getByRole("searchbox")).toHaveClass("my-custom-class")
+    expect(screen.getByRole("search")).toHaveClass("my-custom-class")
   })
 
   test("renders all props as passed", async () => {
