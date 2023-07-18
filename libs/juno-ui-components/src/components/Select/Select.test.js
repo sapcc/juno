@@ -7,6 +7,7 @@ import { SelectOption } from "../SelectOption/index"
 
 const mockOnValueChange = jest.fn()
 const mockOnOpenChange = jest.fn()
+const mockOnChange = jest.fn()
 
 const SelectParent = ({
     value, 
@@ -303,6 +304,22 @@ describe("Select", () => {
     expect(select).toHaveTextContent("Option 3")
     expect(mockOnValueChange).toHaveBeenCalled()
   })
+  
+  test("executes an onChange handler when selected value changes", async () => {
+    render(
+      <SelectParent onChange={mockOnChange} >
+        <SelectOption value="val-1">Option 1</SelectOption>
+        <SelectOption value="val-2">Option 2</SelectOption>
+      </SelectParent>
+    )
+    const select = screen.getByRole("combobox")
+    expect(select).toBeInTheDocument()
+    await userEvent.click(select)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    await userEvent.click(screen.getByRole("option", { name: "Option 2" }))
+    expect(mockOnChange).toHaveBeenCalled()
+  })
+  
   
   test("renders a className to the Select trigger button as passed", async () => {
     render(

@@ -106,6 +106,7 @@ export const Select = React.forwardRef(
     labelClassName,
     loading,
     name,
+    onChange,
     onOpenChange,
     onValueChange,
     open,
@@ -176,6 +177,11 @@ export const Select = React.forwardRef(
       onOpenChange && onOpenChange(event)
     }
     
+    const handleValueChange = (event) => {
+      onValueChange && onValueChange(event) 
+      onChange && onChange(event)
+    }
+    
     const theVariant = variant || "default"
     
     const TriggerIcons = () => {
@@ -235,7 +241,7 @@ export const Select = React.forwardRef(
               disabled={disabled || hasError || isLoading} 
               name={name}
               onOpenChange={handleOpenChange}
-              onValueChange={onValueChange}
+              onValueChange={handleValueChange}
               value={value}
               open={isOpen}
               defaultValue={defaultValue}
@@ -337,6 +343,8 @@ Select.propTypes = {
   loading: PropTypes.bool,
   /** The name of the Select. When a form is submitted, this will be posted as name:value. */
   name: PropTypes.string,
+  /** Handler to be executed when the selected value changes. Alternative API to `onValueChange`. Both will work. */
+  onChange: PropTypes.func,
   /** Handler to be executed when the open state a controlled Select changes */
   onOpenChange: PropTypes.func,
   /** Handler to be executed when the selected value changes. */
@@ -384,6 +392,7 @@ Select.defaultProps = {
   labelClassName: "",
   loading: false,
   name: "",
+  onChange: undefined,
   onOpenChange: undefined,
   onValueChange: undefined,
   open: undefined,
