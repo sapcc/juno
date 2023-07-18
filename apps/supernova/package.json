@@ -78,9 +78,22 @@
       "description": "Alertmanager API Endpoint URL"
     },
     "filterLabels": {
-      "value": "app,cluster,cluster_type,context,job,region,service,severity,status,support_group,tier,type",
+      "value": [
+        "app",
+        "cluster",
+        "cluster_type",
+        "context",
+        "job",
+        "region",
+        "service",
+        "severity",
+        "status",
+        "support_group",
+        "tier",
+        "type"
+      ],
       "type": "required",
-      "description": "FilterLabels are the labels shown in the filter dropdown, enabling users to filter alerts based on specific criteria. The labels must be separated by comma. Default labels are: app,cluster,cluster_type,context,job,region,service,severity,status,support_group,tier,type"
+      "description": "FilterLabels are the labels shown in the filter dropdown, enabling users to filter alerts based on specific criteria. The labels must be separated by comma. Default labels are: app, cluster, cluster_type, context, job, region, service, severity, status, support_group, tier and type"
     },
     "silenceExcludedLabels": {
       "value": "pod,pod_name,instance",
@@ -92,7 +105,6 @@
       "type": "optional",
       "description": "AlertEnrichedLabels are labels that are used to enrich the alert data and should not be used when creating a silence. The labels must be separated by comma. Default labels are: status"
     }
-
   },
   "appDependencies": {
     "auth": "latest"

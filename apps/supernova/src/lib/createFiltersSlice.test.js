@@ -27,7 +27,7 @@ describe("createFiltersSlice", () => {
       expect(store.result.current.filterLabels).toEqual([])
     })
   
-    it("accepts and transforms to array of strings coma separated strings containing the labels to use", () => {
+    it("accepts objects", () => {
       const wrapper = ({ children }) => <StoreProvider>{children}</StoreProvider>
       const store = renderHook(
         () => ({
@@ -38,7 +38,7 @@ describe("createFiltersSlice", () => {
       )
   
       act(() => {
-        store.result.current.actions.setLabels("app,cluster,cluster_type,context,job,region,service,severity,status,support_group,tier,type")
+        store.result.current.actions.setLabels(["app","cluster","cluster_type","context","job","region","service","severity","status","support_group","tier","type"])
       })
   
       expect(store.result.current.filterLabels).toEqual(["app","cluster","cluster_type","context","job","region","service","severity","status","support_group","tier","type"])
