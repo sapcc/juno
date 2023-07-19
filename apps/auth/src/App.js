@@ -21,11 +21,7 @@ const App = (props = {}) => {
   const [authData, setAuthData] = React.useState()
 
   const oidc = React.useMemo(() => {
-    if (
-      props.mock === "true" ||
-      props.mock === true ||
-      typeof props.mock === "string"
-    ) {
+    if (props.mock === "true" || props.mock === true) {
       let token
 
       try {
