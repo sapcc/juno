@@ -1,9 +1,9 @@
 import * as React from "react"
 import { renderHook, act } from "@testing-library/react"
-import {  
+import {
   useFilterLabels,
   useFilterActions,
-  StoreProvider
+  StoreProvider,
 } from "../hooks/useAppStore"
 import {
   createFakeAlertStatustWith,
@@ -11,12 +11,12 @@ import {
   createFakeSilenceWith,
 } from "./fakeObjects"
 
-
 describe("createFiltersSlice", () => {
-
   describe("setLabels", () => {
     it("return empty array as default", () => {
-      const wrapper = ({ children }) => <StoreProvider>{children}</StoreProvider>
+      const wrapper = ({ children }) => (
+        <StoreProvider>{children}</StoreProvider>
+      )
       const store = renderHook(
         () => ({
           actions: useFilterActions(),
@@ -26,9 +26,11 @@ describe("createFiltersSlice", () => {
       )
       expect(store.result.current.filterLabels).toEqual([])
     })
-  
+
     it("accepts objects", () => {
-      const wrapper = ({ children }) => <StoreProvider>{children}</StoreProvider>
+      const wrapper = ({ children }) => (
+        <StoreProvider>{children}</StoreProvider>
+      )
       const store = renderHook(
         () => ({
           actions: useFilterActions(),
@@ -36,14 +38,38 @@ describe("createFiltersSlice", () => {
         }),
         { wrapper }
       )
-  
+
       act(() => {
-        store.result.current.actions.setLabels(["app","cluster","cluster_type","context","job","region","service","severity","status","support_group","tier","type"])
+        store.result.current.actions.setLabels([
+          "app",
+          "cluster",
+          "cluster_type",
+          "context",
+          "job",
+          "region",
+          "service",
+          "severity",
+          "status",
+          "support_group",
+          "tier",
+          "type",
+        ])
       })
-  
-      expect(store.result.current.filterLabels).toEqual(["app","cluster","cluster_type","context","job","region","service","severity","status","support_group","tier","type"])
+
+      expect(store.result.current.filterLabels).toEqual([
+        "app",
+        "cluster",
+        "cluster_type",
+        "context",
+        "job",
+        "region",
+        "service",
+        "severity",
+        "status",
+        "support_group",
+        "tier",
+        "type",
+      ])
     })
-
   })
-
 })
