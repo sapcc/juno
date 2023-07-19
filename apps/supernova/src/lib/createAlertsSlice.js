@@ -105,13 +105,18 @@ const createAlertsSlice = (set, get) => ({
               // if the item is still visible check if it gets filtered out by a search term
               // the search term is matched against the stringified item object
               // if the item object does not contain the search term, it is not visible
-              if (visible && state.filters.searchTerm && state.filters.searchTerm.length > 0) {
+              if (
+                visible &&
+                state.filters.searchTerm &&
+                state.filters.searchTerm.length > 0
+              ) {
                 const itemString = JSON.stringify(item).toLowerCase()
-                if (!itemString.includes(state.filters.searchTerm.toLowerCase())) {
+                if (
+                  !itemString.includes(state.filters.searchTerm.toLowerCase())
+                ) {
                   visible = false
                 }
               }
-
 
               return visible
             })
@@ -183,10 +188,11 @@ const createAlertsSlice = (set, get) => ({
         set(
           (state) => {
             if (!labels || typeof labels !== "string") return state
-            const newEnrichedLabels = labels.split(",") 
-            return { alerts: { ...state.alerts, enrichedLabels: newEnrichedLabels } }
-        }
-          ,
+            const newEnrichedLabels = labels.split(",")
+            return {
+              alerts: { ...state.alerts, enrichedLabels: newEnrichedLabels },
+            }
+          },
           false,
           "alerts.setEnrichedLabels"
         )
