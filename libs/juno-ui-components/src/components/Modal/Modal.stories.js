@@ -3,10 +3,10 @@ import { Modal } from "./index.js"
 import { ModalFooter } from "../ModalFooter/index.js"
 import { Button } from "../Button/index.js"
 import { ButtonRow } from "../ButtonRow/index.js"
-import { Form } from "../Form/index.js"
 import { TextInputRow } from "../TextInputRow"
 import { CheckboxRow } from "../CheckboxRow"
 import { Icon } from "../Icon"
+import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 
 const Template = ({closeOnConfirm, ...args}) => {
@@ -38,6 +38,13 @@ export default {
   component: Modal,
   argTypes: {},
   parameters: { actions: { argTypesRegex: null } },
+  decorators: [
+    (story) => (
+      <PortalProvider>
+        {story()}
+      </PortalProvider>
+    ),
+  ],
 }
 
 export const Default = Template.bind({})
