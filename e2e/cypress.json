@@ -1,8 +1,0 @@
-{
-  "projectId": "juno",
-  "defaultCommandTimeout": 30000,
-  "viewportWidth":1920,
-  "viewportHeight":1080,
-  "includeShadowDom": true,
-  "chromeWebSecurity": false
-}
