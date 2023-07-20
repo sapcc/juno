@@ -55,12 +55,12 @@ export const Pill = ({
   className,
   ...props
 }) => {
-  const handleCloseClick = () => {
-    onClose && onClose(uid || pillKey || pillValue)
+  const handleCloseClick = (event) => {
+    onClose && onClose(event, uid || pillKey || pillValue)
   }
 
-  const handleClick = () => {
-    onClick && onClick(uid || pillKey || pillValue)
+  const handleClick = (event) => {
+    onClick && onClick(event, uid || pillKey || pillValue)
   }
 
   return (
@@ -72,16 +72,16 @@ export const Pill = ({
         :
         <>
           { (pillKeyLabel || pillKey) &&
-            <span className={`pill-key ${pillKeyStyles(onClick)}`} onClick={handleClick}>
+            <span className={`pill-key ${pillKeyStyles(onClick)}`} onClick={(e) => handleClick(e)}>
               {pillKeyLabel || pillKey}
             </span>
           }
-          <span className={`pill-value ${pillValueStyles(onClick)}`} onClick={handleClick}>
+          <span className={`pill-value ${pillValueStyles(onClick)}`} onClick={(e) => handleClick(e)}>
             {pillValueLabel || pillValue}
           </span>
         </>
       }
-      {closeable && <Icon icon="close" size="18" onClick={handleCloseClick} />}
+      {closeable && <Icon icon="close" size="18" onClick={(e) => handleCloseClick(e)} />}
     </div>
   )
 }
@@ -101,9 +101,9 @@ Pill.propTypes = {
   className: PropTypes.string,
   /** Whether the pill should be closeable */
   closeable: PropTypes.bool,
-  /** Pass a handler to be executed when closing the Pill. Also returns either the uid (fallback: pillKey -> fallback: pillValue) */
+  /** Pass a handler to be executed when closing the Pill. Also returns the event and the uid (fallback: pillKey -> fallback: pillValue) */
   onClose: PropTypes.func,
-  /** Pass a handler to be executed when clicking on the Pill (but not on the close button). Also returns either the uid (fallback: pillKey -> fallback: pillValue) */
+  /** Pass a handler to be executed when clicking on the Pill (but not on the close button). Also returns the event and the uid (fallback: pillKey -> fallback: pillValue) */
   onClick: PropTypes.func,
 }
 
