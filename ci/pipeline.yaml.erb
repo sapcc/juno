@@ -547,10 +547,11 @@ jobs:
             args:
               - -c
               - |
+                CYPRESS_BROWSER=chrome
                 cd /app/juno/e2e
-                CI_BUID_ID="$(date) - CI - ui-components-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                CI_BUID_ID="$(date) - CI - ui-components-qa-tests - $CYPRESS_BROWSER" && \
                 echo $CI_BUID_ID && \
-                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress-cloud run --parallel --ci-build-id "$CI_BUID_ID" --browser chrome --spec "cypress/integration/ui-storybook/*" 
+                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress-cloud run --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/ui-storybook/*" 
 
   # DEPLOY STORYBOOK TO PROD
   - name: deploy-storybook-to-s-eu-nl-1
@@ -608,10 +609,11 @@ jobs:
             args:
               - -c
               - |
+                CYPRESS_BROWSER=chrome
                 cd /app/juno/e2e
-                CI_BUID_ID="$(date) - CI - ui-components-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                CI_BUID_ID="$(date) - CI - ui-components-qa-tests - $CYPRESS_BROWSER" && \
                 echo $CI_BUID_ID && \
-                CYPRESS_BASE_URL=https://ui.juno.eu-nl-1.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser chrome --spec "cypress/integration/ui-storybook/*" 
+                CYPRESS_BASE_URL=https://ui.juno.eu-nl-1.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/ui-storybook/*" 
 
 
   ############ ASSETS SERVER  #########
@@ -673,10 +675,11 @@ jobs:
             args:
               - -c
               - |
+                CYPRESS_BROWSER=chrome
                 cd /app/juno/e2e
-                CI_BUID_ID="$(date) - CI - assets-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                CI_BUID_ID="$(date) - CI - assets-qa-tests - $CYPRESS_BROWSER" && \
                 echo $CI_BUID_ID && \
-                CYPRESS_BASE_URL=https://assets.juno.qa-de-1.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser chrome --spec "cypress/integration/assets-server/*"
+                CYPRESS_BASE_URL=https://assets.juno.qa-de-1.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/assets-server/*"
 
 
   # PROMOTE TO PROD  
@@ -768,10 +771,11 @@ jobs:
             args:
               - -c
               - |
+                CYPRESS_BROWSER=chrome
                 cd /app/juno/e2e
-                CI_BUID_ID="$(date) - CI - assets-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                CI_BUID_ID="$(date) - CI - assets-qa-tests - $CYPRESS_BROWSER" && \
                 echo $CI_BUID_ID && \
-                CYPRESS_BASE_URL=https://assets.juno.global.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser chrome --spec "cypress/integration/assets-server/*"
+                CYPRESS_BASE_URL=https://assets.juno.global.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/assets-server/*"
               
   <% end %>                
 
@@ -827,13 +831,14 @@ jobs:
             args:
               - -c
               - |
+                CYPRESS_BROWSER=chrome
                 cd /app/juno/e2e
-                CI_BUID_ID="$(date) - CI - dashboard-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                CI_BUID_ID="$(date) - CI - dashboard-qa-tests - $CYPRESS_BROWSER" && \
                 echo $CI_BUID_ID && \
-                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser chrome --spec "cypress/integration/hosting/dashboard*" && \
-                CI_BUID_ID="$(date) - CI - exampleapp-components-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/hosting/dashboard*" && \
+                CI_BUID_ID="$(date) - CI - exampleapp-components-qa-tests - $CYPRESS_BROWSER" && \
                 echo $CI_BUID_ID && \
-                CYPRESS_BASE_URL=https://exampleapp.juno.qa-de-1.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser chrome --spec "cypress/integration/hosting/exampleapp*"
+                CYPRESS_BASE_URL=https://exampleapp.juno.qa-de-1.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/hosting/exampleapp*"
 
   # DEPLOY HOSTING TO PROD
   - name: deploy-hosting-to-s-eu-nl-1
@@ -887,9 +892,10 @@ jobs:
             args:
               - -c
               - |
+                CYPRESS_BROWSER=chrome
                 cd /app/juno/e2e
-                CI_BUID_ID="$(date) - CI - dashboard-qa-tests - $CYPRESS_BROWSER $BROWSER_VERSION" && \
+                CI_BUID_ID="$(date) - CI - dashboard-qa-tests - $CYPRESS_BROWSER" && \
                 echo $CI_BUID_ID && \
-                CYPRESS_BASE_URL=https://juno.global.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser chrome --spec "cypress/integration/hosting/dashboard*" && \
-                CYPRESS_BASE_URL=https://ccloud.juno.global.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser chrome --spec "cypress/integration/hosting/dashboard*" && \
-                CYPRESS_BASE_URL=https://convergedcloud.juno.global.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser chrome --spec "cypress/integration/hosting/dashboard*" 
+                CYPRESS_BASE_URL=https://juno.global.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/hosting/dashboard*" && \
+                CYPRESS_BASE_URL=https://ccloud.juno.global.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/hosting/dashboard*" && \
+                CYPRESS_BASE_URL=https://convergedcloud.juno.global.cloud.sap cypress-cloud run --record --parallel --ci-build-id "$CI_BUID_ID" --browser $CYPRESS_BROWSER --spec "cypress/integration/hosting/dashboard*" 
