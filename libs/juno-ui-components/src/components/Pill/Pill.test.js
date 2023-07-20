@@ -74,7 +74,7 @@ describe("Pill", () => {
     )
     screen.getByRole("button").click()
     expect(handleClose).toHaveBeenCalledTimes(1)
-    expect(handleClose).toHaveBeenCalledWith("uidAbc")
+    expect(handleClose).toHaveBeenCalledWith(expect.anything(), "uidAbc")
   })
 
   test("an onClose handler is called as passed and returns the pillKey if uid missing", () => {
@@ -89,7 +89,7 @@ describe("Pill", () => {
     )
     screen.getByRole("button").click()
     expect(handleClose).toHaveBeenCalledTimes(1)
-    expect(handleClose).toHaveBeenCalledWith("abc")
+    expect(handleClose).toHaveBeenCalledWith(expect.anything(), "abc")
   })
 
   test("an onClick handler is called as passed and returns the uid", () => {
@@ -104,7 +104,7 @@ describe("Pill", () => {
     )
     screen.getByText("TheRequiredKey").click()
     expect(handleClick).toHaveBeenCalledTimes(1)
-    expect(handleClick).toHaveBeenCalledWith("uidAbc")
+    expect(handleClick).toHaveBeenCalledWith(expect.anything(), "uidAbc")
   })
 
   test("an onClick handler is called as passed and returns the pillKey if uid missing", () => {
@@ -118,7 +118,7 @@ describe("Pill", () => {
     )
     screen.getByText("abc").click()
     expect(handleClick).toHaveBeenCalledTimes(1)
-    expect(handleClick).toHaveBeenCalledWith("abc")
+    expect(handleClick).toHaveBeenCalledWith(expect.anything(), "abc")
   })
 
   test("renders a custom className", async () => {
