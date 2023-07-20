@@ -32,13 +32,20 @@ function ApiService(initialConfig) {
   // This function performs the request to get the target data
   const update = () => {
     if (config.fetchFn) {
+      // call onFetchStart if defined
+      // This is useful to inform the listener that a new fetch is starting
       if (config.onFetchStart) config.onFetchStart()
+      if (config?.debug) console.info("ApiService: start fetch")
+      initialFetchPerformed = true
       return config
         .fetchFn()
         .then(() => {
           if (config.onFetchEnd) config.onFetchEnd()
         })
-        .catch((error) => console.warn("Service:", error))
+        .catch((error) => console.warn("ApiService:", error))
+    } else {
+      if (config?.debug) console.warn("ApiService: missing fetch function")
+      return
     }
   }
 
@@ -64,6 +71,7 @@ function ApiService(initialConfig) {
   // this function is public and used to update the config
   this.configure = (newOptions) => {
     const oldConfig = { ...config }
+    // update apiService config
     config = { ...config, ...newOptions }
 
     // check for allowed keys
@@ -73,6 +81,7 @@ function ApiService(initialConfig) {
 
     if (config?.debug) console.log("[service worker]: new config", config)
 
+    // update watcher will check the config relevant attribute changed to update the watcher
     updateWatcher(oldConfig)
     if (config.initialFetch && !initialFetchPerformed) update()
   }
