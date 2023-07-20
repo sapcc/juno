@@ -5,11 +5,6 @@ import {
   useFilterActions,
   StoreProvider,
 } from "../hooks/useAppStore"
-import {
-  createFakeAlertStatustWith,
-  createFakeAlertWith,
-  createFakeSilenceWith,
-} from "./fakeObjects"
 
 describe("createFiltersSlice", () => {
   describe("setLabels", () => {
@@ -27,7 +22,52 @@ describe("createFiltersSlice", () => {
       expect(store.result.current.filterLabels).toEqual([])
     })
 
-    it("accepts objects", () => {
+    // it("accepts objects", () => {
+    //   const wrapper = ({ children }) => (
+    //     <StoreProvider>{children}</StoreProvider>
+    //   )
+    //   const store = renderHook(
+    //     () => ({
+    //       actions: useFilterActions(),
+    //       filterLabels: useFilterLabels(),
+    //     }),
+    //     { wrapper }
+    //   )
+
+    //   act(() => {
+    //     store.result.current.actions.setLabels([
+    //       "app",
+    //       "cluster",
+    //       "cluster_type",
+    //       "context",
+    //       "job",
+    //       "region",
+    //       "service",
+    //       "severity",
+    //       "status",
+    //       "support_group",
+    //       "tier",
+    //       "type",
+    //     ])
+    //   })
+
+    //   expect(store.result.current.filterLabels).toEqual([
+    //     "app",
+    //     "cluster",
+    //     "cluster_type",
+    //     "context",
+    //     "job",
+    //     "region",
+    //     "service",
+    //     "severity",
+    //     "status",
+    //     "support_group",
+    //     "tier",
+    //     "type",
+    //   ])
+    // })
+
+    it("accepts objects as string", () => {
       const wrapper = ({ children }) => (
         <StoreProvider>{children}</StoreProvider>
       )
@@ -39,21 +79,23 @@ describe("createFiltersSlice", () => {
         { wrapper }
       )
 
+      const jsonString = JSON.stringify([
+        "app",
+        "cluster",
+        "cluster_type",
+        "context",
+        "job",
+        "region",
+        "service",
+        "severity",
+        "status",
+        "support_group",
+        "tier",
+        "type",
+      ])
+
       act(() => {
-        store.result.current.actions.setLabels([
-          "app",
-          "cluster",
-          "cluster_type",
-          "context",
-          "job",
-          "region",
-          "service",
-          "severity",
-          "status",
-          "support_group",
-          "tier",
-          "type",
-        ])
+        store.result.current.actions.setLabels(jsonString)
       })
 
       expect(store.result.current.filterLabels).toEqual([

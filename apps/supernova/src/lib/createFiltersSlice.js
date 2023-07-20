@@ -12,24 +12,24 @@ const createFiltersSlice = (set, get) => ({
     actions: {
       setLabels: (labels) =>
         set(
-          (state) => {            
+          (state) => {
             if (!labels) return state
             // check if the given labels are are an object which can be parsed with JSON.parse and if so, parse them. If not, return the state as is and log an error in the console
             try {
-              labels = JSON.parse(labels)
+              const jsonLabels = JSON.parse(labels)
               return {
                 filters: {
                   ...state.filters,
-                  labels,
+                  labels: jsonLabels,
                 },
               }
             } catch (error) {
               console.error(
                 "Error parsing filter labels from JSON. Please check the filterLabels prop. Error:",
-                error
+                error.message
               )
               return state
-            }            
+            }
           },
           false,
           "filters.setLabels"
