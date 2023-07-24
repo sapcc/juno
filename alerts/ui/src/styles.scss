@@ -20,6 +20,12 @@
   .juno-datagrid-cell {
     @apply bg-theme-background-lvl-1;
   }
+
+  &.no-hover {
+    .juno-datagrid-cell {
+      @apply bg-theme-background-lvl-0;
+    }
+  }
 }
 
 .juno-datagrid-row.active {
