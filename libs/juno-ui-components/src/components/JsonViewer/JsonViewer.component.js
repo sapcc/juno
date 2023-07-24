@@ -423,6 +423,8 @@ export const JsonViewer = ({
   indentWidth,
   style,
   truncate,
+  className,
+  ...props
 }) => {
   const currentTheme = (typeof theme === "string" && themes[theme]) || {
     ...DEFAULT_THEME,
@@ -448,12 +450,14 @@ export const JsonViewer = ({
     >
       <div
         data-json-viewer
+        className={`juno-json-viewer ${className}`}
         style={{
           backgroundColor: colors.background,
           fontFamily: "monospace",
           overflow: "auto",
           ...style,
         }}
+        {...props}
       >
         {toolbar && <Toolbar />}
         <JsonData name={showRoot ? "root" : false} value={data} />
@@ -517,6 +521,8 @@ JsonViewer.propTypes = {
   truncate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   /* indent width */
   indentWidth: PropTypes.number,
+  /* add custom classes */
+  className: PropTypes.string,
 }
 
 JsonViewer.defaultProps = {
