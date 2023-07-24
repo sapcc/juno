@@ -1,5 +1,5 @@
 describe("Dashboard", () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit("/")
   })
 
@@ -14,6 +14,7 @@ describe("Dashboard", () => {
   })
 
   it("contains login button", () => {
+    cy.visit("/")
     cy.contains("button", "Log in")
   })
 
