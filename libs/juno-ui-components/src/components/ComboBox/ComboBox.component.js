@@ -58,9 +58,10 @@ export const ComboBox = ({
   children,
   disabled,
   label,
-  value,
+  nullable,
   placeholder,
   truncateOptions,
+  value,
   width,
   ...props
 }) => {
@@ -102,7 +103,7 @@ export const ComboBox = ({
             ""
         }
         
-        <Combobox>
+        <Combobox nullable={nullable} >
           <div className={`${inputWrapperStyles}`}>
             <Combobox.Input 
               disabled={disabled} 
@@ -134,6 +135,8 @@ ComboBox.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
   label: PropTypes.string,
+  /** Whether the ComboBox can be reset to having no value selected by manually clearing the text and clicking outside of the ComboBox. Default is TRUE. When set to FALSE, the selected value can only be changed by selecting another value after the initial selection, but never back to no selected value at all. */
+  nullable: PropTypes.bool,
   placeholder: PropTypes.string,
   value: PropTypes.string,
   width: PropTypes.oneOf(["full", "auto"])
@@ -143,6 +146,7 @@ ComboBox.defaultProps = {
   children: null,
   disabled: false,
   label: undefined,
+  nullable: true,
   placeholder: "Select…",
   value: undefined,
   width: "full",
