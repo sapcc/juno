@@ -101,5 +101,8 @@
       "^.+\\.(css|scss)$": "<rootDir>/test/__mocks__/styleMock.js",
       "@material-design-icons/svg/.+\\.svg$": "<rootDir>/test/__mocks__/svgLib.js"
     }
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.15"
   }
 }
