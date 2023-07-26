@@ -91,6 +91,7 @@ export const ComboBox = ({
   
   const handleInputChange = (event) => {
     setSearchStr(event.target.value)
+    onInputChange && onInputChange(event)
   }
   
   const handleChange = (value) => {
@@ -174,6 +175,8 @@ ComboBox.propTypes = {
   label: PropTypes.string,
   /** Whether the ComboBox can be reset to having no value selected by manually clearing the text and clicking outside of the ComboBox. Default is TRUE. When set to FALSE, the selected value can only be changed by selecting another value after the initial selection, but never back to no selected value at all. */
   nullable: PropTypes.bool,
+  onChange: PropTypes.func,
+  onInputChange: PropTypes.func,
   /** A placeholder to render in the text input */
   placeholder: PropTypes.string,
   /** The selected value of the ComboBox in Controlled Mode. */
@@ -190,6 +193,8 @@ ComboBox.defaultProps = {
   helptext: "",
   label: undefined,
   nullable: true,
+  onChange: undefined,
+  onInputChange: undefined,
   placeholder: "Select…",
   value: "",
   width: "full",
