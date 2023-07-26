@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useId } from "react"
 import PropTypes from "prop-types"
 import { Combobox } from "@headlessui/react"
 import { Label } from "../Label/index.js"
 import { Icon } from "../Icon/index.js"
+import { FormHint } from "../FormHint/index.js"
 
 const inputWrapperStyles = `
   jn-relative
@@ -61,6 +62,7 @@ export const ComboBox = ({
   children,
   className,
   disabled,
+  helptext,
   label,
   nullable,
   placeholder,
@@ -75,6 +77,10 @@ export const ComboBox = ({
   const isNotEmptyString = (str) => {
     return !(typeof str === 'string' && str.trim().length === 0)
   }
+  
+  const uniqueId = () => (
+    "juno-combobox-" + useId()
+  )
   
   const [selectedValue, setSelectedValue] = useState(false)
   const [searchStr, setSearchStr] = useState("")
@@ -98,6 +104,7 @@ export const ComboBox = ({
     : children.filter((child) => 
         child.props.value?.toLowerCase().includes(searchStr.toLowerCase())
       )
+      
   
   return (
     <div className={`
@@ -144,6 +151,12 @@ export const ComboBox = ({
           </Combobox.Options>
         </Combobox>
         
+        { helptext && isNotEmptyString(helptext) ?
+            <FormHint text={helptext} />
+          :
+            ""
+         }
+        
     </div>
   )
 }
@@ -156,6 +169,7 @@ ComboBox.propTypes = {
   className: PropTypes.string,
   /*+ Whether the ComboBox is disabled */
   disabled: PropTypes.bool,
+  helptext: PropTypes.string,
   /** The label of the ComboBox */
   label: PropTypes.string,
   /** Whether the ComboBox can be reset to having no value selected by manually clearing the text and clicking outside of the ComboBox. Default is TRUE. When set to FALSE, the selected value can only be changed by selecting another value after the initial selection, but never back to no selected value at all. */
@@ -173,9 +187,10 @@ ComboBox.defaultProps = {
   children: null,
   className: "",
   disabled: false,
+  helptext: "",
   label: undefined,
   nullable: true,
   placeholder: "Select…",
-  value: undefined,
+  value: "",
   width: "full",
 }

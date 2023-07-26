@@ -14,7 +14,6 @@ const optionStyles = `
   data-[headlessui-state=active]:jn-ring-inset
   data-[headlessui-state=active]:jn-ring-theme-focus
   data-[headlessui-state=active]:jn-bg-theme-background-lvl-3
-  data-[headlessui-state=selected]:text-green
 `
 
 export const ComboBoxOption = ({
