@@ -6,6 +6,7 @@ import {
   useAuthIsProcessing,
   useAuthData,
   useAuthError,
+  useAuthActions,
 } from "../hooks/useStore"
 import useAppLoader from "../hooks/useAppLoader"
 import { Transition } from "@tailwindui/react"
@@ -14,12 +15,37 @@ const currentUrl = new URL(window.location.href)
 let match = currentUrl.host.match(/^(.+)\.dashboard\..+/)
 let orgName = match ? match[1] : currentUrl.searchParams.get("org")
 
+/**
+ * Auth Component:
+ *
+ * This component is responsible for managing user authentication and loading the authentication app dynamically.
+ * It receives the following props:
+ * - clientId: The client ID for authentication.
+ * - issuerUrl: The URL of the authentication issuer.
+ * - mock: A flag indicating whether to use mock authentication.
+ * - children: The content to be displayed when the user is logged in.
+ *
+ * The component uses custom hooks to handle authentication states and data. It dynamically loads the authentication
+ * app via the use of the useAppLoader hook. When mounted, the component connects to the authentication events,
+ * allowing seamless authentication experiences.
+ *
+ * The Auth component renders three main sections:
+ * 1. A div element with a data-app attribute set to "greenhouse-auth" and a ref for loading the authentication app.
+ * 2. A Transition component that displays the children (content) when the user is logged in, applying a smooth fade-in
+ *    and fade-out transition effect.
+ * 3. If the user is not logged in, a stack containing loading indicators, messages, and a "Sign in" button is rendered.
+ *    The component handles various loading states, shows a long loading indicator after 5 seconds, and displays specific
+ *    messages based on the authentication status.
+ *
+ * Note: The component reads organization information from the token and adjusts the URL accordingly after the user is logged in.
+ */
 const Auth = ({ clientId, issuerUrl, mock, children }) => {
   const authData = useAuthData()
   const authAppLoaded = useAuthAppLoaded()
   const authLoggedIn = useAuthLoggedIn()
   const authIsProcessing = useAuthIsProcessing()
   const authError = useAuthError()
+  const { login } = useAuthActions()
 
   const ref = React.createRef()
   const { mount } = useAppLoader()
@@ -69,6 +95,7 @@ const Auth = ({ clientId, issuerUrl, mock, children }) => {
 
   // timeout for waiting for auth
   useEffect(() => {
+    setLoading(!authAppLoaded)
     if (authAppLoaded) return
     // set timeout for waiting for auth app
     let loadingTimer
@@ -79,7 +106,7 @@ const Auth = ({ clientId, issuerUrl, mock, children }) => {
     }
 
     return () => loadingTimer && clearTimeout(loadingTimer)
-  }, [authAppLoaded])
+  }, [authAppLoaded, setLoading])
 
   // set long loading
   useEffect(() => {
@@ -96,7 +123,7 @@ const Auth = ({ clientId, issuerUrl, mock, children }) => {
         enter="transition-opacity duration-1000"
         enterFrom="opacity-0"
         enterTo="opacity-100"
-        leave="transition-opacity duration-100"
+        leave="transition-opacity duration-0"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
@@ -130,9 +157,9 @@ const Auth = ({ clientId, issuerUrl, mock, children }) => {
                   <span>
                     {authError
                       ? JSON.stringify(authError)
-                      : "Authentication required"}
+                      : "Please sign in before you can use Greenhouse."}
                   </span>
-                  <Button onClick={() => auth?.login()} className="mt-3">
+                  <Button variant="primary" onClick={login} className="mt-3">
                     Sign in
                   </Button>
                 </>
