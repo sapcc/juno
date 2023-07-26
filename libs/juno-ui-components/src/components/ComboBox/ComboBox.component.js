@@ -6,13 +6,10 @@ import { Icon } from "../Icon/index.js"
 
 const inputWrapperStyles = `
   jn-relative
-  jn-bg-theme-textinput
-  jn-text-theme-textinput
-  jn-border
-  jn-rounded-3px
 `
 
 const inputStyles = `
+  jn-rounded-3px
   jn-bg-theme-textinput
   jn-text-theme-textinput
   jn-border
@@ -43,7 +40,12 @@ const buttonStyles = `
   jn-h-textinput
   jn-w-6
   jn-h-4
-  jn-border-transparent
+  jn-border-theme-textinput-default
+  jn-border-l-0
+  jn-border-y-[1px]
+  jn-border-r-[1px]
+  jn-rounded-tr
+  jn-rounded-br
   jn-appearance-none
   jn-bg-theme-textinput
   jn-text-theme-textinput
@@ -55,11 +57,15 @@ const menuStyles = `
 `
 
 export const ComboBox = ({
+  ariaLabel,
   children,
+  className,
   disabled,
   label,
   nullable,
   placeholder,
+  onChange,
+  onInputChange,
   truncateOptions,
   value,
   width,
@@ -70,10 +76,20 @@ export const ComboBox = ({
     return !(typeof str === 'string' && str.trim().length === 0)
   }
   
+  const [selectedValue, setSelectedValue] = useState(false)
   const [searchStr, setSearchStr] = useState("")
+  
+  useEffect(() => {
+    setSelectedValue(value)
+  }, [value] )
   
   const handleInputChange = (event) => {
     setSearchStr(event.target.value)
+  }
+  
+  const handleChange = (value) => {
+    setSelectedValue(value)
+    onChange && onChange(value)
   }
   
   const filteredChildren = 
@@ -91,28 +107,31 @@ export const ComboBox = ({
       ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
     `}>
       
-      
-        { label && isNotEmptyString(label) ?
-            <Label 
-              text={label}
-              className={`${labelStyles}`}
-              floating
-              minimized
-            />
-          :
-            ""
-        }
-        
-        <Combobox nullable={nullable} >
+        <Combobox 
+          nullable={nullable}
+          onChange={handleChange}
+          value={selectedValue}
+        >
           <div className={`${inputWrapperStyles}`}>
+            
+            { label && isNotEmptyString(label) ?
+                <Label 
+                  text={label}
+                  className={`${labelStyles}`}
+                  floating
+                  minimized
+                />
+              :
+                ""
+            }
+            
             <Combobox.Input 
+              aria-label={ariaLabel || label}
               disabled={disabled} 
-              placeholder={placeholder} 
               onChange={handleInputChange}
-              className={`
-                juno-combobox-input 
-                ${inputStyles}`
-              } 
+              placeholder={placeholder} 
+              displayValue={selectedValue}
+              className={`juno-combobox-input ${inputStyles} ${className}`} 
             />
             <Combobox.Button disabled={disabled} className={`juno-combobox-toggle ${buttonStyles}`}>
               {({open}) => (
@@ -125,25 +144,34 @@ export const ComboBox = ({
           </Combobox.Options>
         </Combobox>
         
-        
-        
     </div>
   )
 }
 
 ComboBox.propTypes = {
+  ariaLabel: PropTypes.string,
+  /** The children to Render. Use `ComboBox.Option` elements. */
   children: PropTypes.node,
+  /*+ A custom className. Will be passed to the text input element of the ComboBox */
+  className: PropTypes.string,
+  /*+ Whether the ComboBox is disabled */
   disabled: PropTypes.bool,
+  /** The label of the ComboBox */
   label: PropTypes.string,
   /** Whether the ComboBox can be reset to having no value selected by manually clearing the text and clicking outside of the ComboBox. Default is TRUE. When set to FALSE, the selected value can only be changed by selecting another value after the initial selection, but never back to no selected value at all. */
   nullable: PropTypes.bool,
+  /** A placeholder to render in the text input */
   placeholder: PropTypes.string,
+  /** The selected value of the ComboBox in Controlled Mode. */
   value: PropTypes.string,
+  /** The width of the text input. Either 'full' (default) or 'auto'. */
   width: PropTypes.oneOf(["full", "auto"])
 }
 
 ComboBox.defaultProps = {
+  ariaLabel: undefined,
   children: null,
+  className: "",
   disabled: false,
   label: undefined,
   nullable: true,
