@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useId } from "react"
+import React, { useState, useEffect, useId, createContext } from "react"
 import PropTypes from "prop-types"
 import { Combobox } from "@headlessui/react"
 import { Label } from "../Label/index.js"
@@ -25,7 +25,12 @@ const inputStyles = `
   focus:jn-outline-none
   focus:jn-ring-2
   focus:jn-ring-theme-focus
-  data-[headlessui-state=disabled]:jn-opacity-50
+`
+
+const disabledInputStyles = `
+  jn-cursor-not-allowed
+  jn-pointer-events-none
+  jn-opacity-50
 `
 
 const labelStyles = `
@@ -53,9 +58,12 @@ const buttonStyles = `
 `
 
 const menuStyles = `
+  jn-mt-1
   jn-rounded
   jn-bg-theme-background-lvl-1
 `
+
+export const ComboBoxContext = createContext()
 
 export const ComboBox = ({
   ariaLabel,
@@ -66,6 +74,7 @@ export const ComboBox = ({
   label,
   nullable,
   placeholder,
+  required,
   onChange,
   onInputChange,
   truncateOptions,
@@ -108,57 +117,71 @@ export const ComboBox = ({
       
   
   return (
-    <div className={`
-      juno-combobox-wrapper
-      jn-relative
-      ${ width == "auto" ? "jn-inline-block" : "jn-block" }
-      ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
-    `}>
-      
-        <Combobox 
-          nullable={nullable}
-          onChange={handleChange}
-          value={selectedValue}
-        >
-          <div className={`${inputWrapperStyles}`}>
-            
-            { label && isNotEmptyString(label) ?
-                <Label 
-                  text={label}
-                  className={`${labelStyles}`}
-                  floating
-                  minimized
-                />
-              :
-                ""
-            }
-            
-            <Combobox.Input 
-              aria-label={ariaLabel || label}
-              disabled={disabled} 
-              onChange={handleInputChange}
-              placeholder={placeholder} 
-              displayValue={selectedValue}
-              className={`juno-combobox-input ${inputStyles} ${className}`} 
-            />
-            <Combobox.Button disabled={disabled} className={`juno-combobox-toggle ${buttonStyles}`}>
-              {({open}) => (
-                <Icon icon={ open ? "expandLess": "expandMore"} />
-              )}
-            </Combobox.Button>
-          </div>
-          <Combobox.Options className={`juno-combobox-options ${menuStyles}`} >
-            { filteredChildren }
-          </Combobox.Options>
-        </Combobox>
+    
+    <ComboBoxContext.Provider value={
+        {
+          selectedValue: selectedValue,
+          truncateOptions: truncateOptions
+        }
+      }
+    >
+      <div className={`
+        juno-combobox-wrapper
+        jn-relative
+        ${ width == "auto" ? "jn-inline-block" : "jn-block" }
+        ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+      `}>
         
-        { helptext && isNotEmptyString(helptext) ?
-            <FormHint text={helptext} />
-          :
-            ""
-         }
-        
-    </div>
+          <Combobox 
+            nullable={nullable}
+            onChange={handleChange}
+            value={selectedValue}
+            disabled={disabled}
+          >
+            <div className={`${inputWrapperStyles}`}>
+              
+              { label && isNotEmptyString(label) ?
+                  <Label 
+                    text={label}
+                    disabled={disabled}
+                    required={required}
+                    className={`${labelStyles}`}
+                    floating
+                    minimized
+                  />
+                :
+                  ""
+              }
+              
+              <Combobox.Input 
+                aria-label={ariaLabel || label}
+                disabled={disabled} 
+                onChange={handleInputChange}
+                placeholder={placeholder} 
+                displayValue={selectedValue}
+                className={`juno-combobox-input ${inputStyles} ${ disabled ? disabledInputStyles : "" } ${className}`} 
+              />
+              <Combobox.Button disabled={disabled} className={`juno-combobox-toggle ${buttonStyles}`}>
+                {({open}) => (
+                  <Icon icon={ open ? "expandLess": "expandMore"} />
+                )}
+              </Combobox.Button>
+            </div>
+            <Combobox.Options className={`juno-combobox-options ${menuStyles}`} >
+              { filteredChildren }
+            </Combobox.Options>
+          </Combobox>
+          
+          { helptext && isNotEmptyString(helptext) ?
+              <FormHint text={helptext} />
+            :
+              ""
+           }
+          
+      </div>
+    
+    </ComboBoxContext.Provider>
+    
   )
 }
 
@@ -170,6 +193,7 @@ ComboBox.propTypes = {
   className: PropTypes.string,
   /*+ Whether the ComboBox is disabled */
   disabled: PropTypes.bool,
+  /** A helptext to render to explain meaning and significance of the ComboBox */
   helptext: PropTypes.string,
   /** The label of the ComboBox */
   label: PropTypes.string,
@@ -179,6 +203,10 @@ ComboBox.propTypes = {
   onInputChange: PropTypes.func,
   /** A placeholder to render in the text input */
   placeholder: PropTypes.string,
+  /** Whether the ComboBox is required */
+  required: PropTypes.bool,
+  /** Whether the option labels should be truncated in case they are longer/wider than the available space in an option or not. Default is FALSE. */
+  truncateOptions: PropTypes.bool,
   /** The selected value of the ComboBox in Controlled Mode. */
   value: PropTypes.string,
   /** The width of the text input. Either 'full' (default) or 'auto'. */
@@ -196,6 +224,8 @@ ComboBox.defaultProps = {
   onChange: undefined,
   onInputChange: undefined,
   placeholder: "Select…",
+  required: false,
+  truncateOptions: false,
   value: "",
   width: "full",
 }
