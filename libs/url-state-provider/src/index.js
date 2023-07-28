@@ -4,6 +4,7 @@ var SEARCH_KEY = "__s"
 var STATE_KEY = "__url_state_provider"
 var URL_REGEX = new RegExp("[?&]" + SEARCH_KEY + "=([^&#]*)")
 
+const EVENT_URL_STATE_CHANGED = "URL_STATE_CHANGED"
 /**
  * Encode json data using lz-string
  * @param {JSON} json data to be encoded
@@ -127,6 +128,10 @@ function updateStateAndHistory(stateID, state, merge, historyOptions) {
     window.history.pushState(historyState, historyTitle, newUrl)
   }
   informListener(stateID, state)
+  const event = new CustomEvent(EVENT_URL_STATE_CHANGED, {
+    detail: state,
+  })
+  window.dispatchEvent(event)
 }
 
 /**
@@ -262,4 +267,5 @@ export {
   registerConsumer,
   stateToURL,
   stateToQueryParam,
+  EVENT_URL_STATE_CHANGED,
 }

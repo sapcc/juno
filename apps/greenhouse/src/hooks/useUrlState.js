@@ -35,6 +35,12 @@ const useUrlState = () => {
     if (!loggedIn || !isUrlStateSetup) return
     urlStateManager.push({ [ACTIVE_APPS_KEY]: activeApps.join(",") })
   }, [loggedIn, activeApps])
+
+  // useEffect(() => {
+  //   let t = urlStateManager.onChange((a, b, c) =>
+  //     console.log("--------------------------------------log", a, b, c)
+  //   )
+  // }, [urlStateManager])
 }
 
 export default useUrlState
