@@ -1,8 +1,5 @@
 import { useEffect, useLayoutEffect } from "react"
-import {
-  registerConsumer,
-  EVENT_URL_STATE_CHANGED,
-} from "url-state-provider/src"
+import { registerConsumer, EVENT_URL_STATE_CHANGED } from "url-state-provider"
 import {
   useAppsActions,
   useAppsActive,
