@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useCallback } from "react"
 import { broadcast, get, watch } from "communicator"
 import {
   useAuthAppLoaded,
@@ -7,6 +7,8 @@ import {
   useAuthLoggedIn,
   useAuthLastAction,
   useAuthActions,
+  useDemoMode,
+  useDemoUserToken,
 } from "./useStore"
 
 const useCommunication = () => {
@@ -17,6 +19,19 @@ const useCommunication = () => {
   const authLastAction = useAuthLastAction()
   const { setData: authSetData, setAppLoaded: authSetAppLoaded } =
     useAuthActions()
+  const demoMode = useDemoMode()
+  const demoUserToken = useDemoUserToken()
+
+  const setAuthData = useCallback(
+    (data) => {
+      // If we're in demo mode, we need to make sure the JWT is set to the demo user's JWT
+      if (data?.auth && demoMode && demoUserToken) {
+        data.auth.JWT = demoUserToken
+      }
+      authSetData(data)
+    },
+    [authSetData, demoMode, demoUserToken]
+  )
 
   useEffect(() => {
     if (!authAppLoaded || authIsProcessing || authError) return
@@ -33,14 +48,14 @@ const useCommunication = () => {
     get("AUTH_APP_LOADED", authSetAppLoaded)
     const unwatchLoaded = watch("AUTH_APP_LOADED", authSetAppLoaded)
 
-    get("AUTH_GET_DATA", authSetData)
-    const unwatchUpdate = watch("AUTH_UPDATE_DATA", authSetData)
+    get("AUTH_GET_DATA", setAuthData)
+    const unwatchUpdate = watch("AUTH_UPDATE_DATA", setAuthData)
 
     return () => {
       if (unwatchLoaded) unwatchLoaded()
       if (unwatchUpdate) unwatchUpdate()
     }
-  }, [authSetData, authSetAppLoaded])
+  }, [setAuthData, authSetAppLoaded])
 }
 
 export default useCommunication
