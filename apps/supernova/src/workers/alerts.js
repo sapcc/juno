@@ -52,7 +52,6 @@ const fetchAction = (endpoint, options = {}) => {
   })
 }
 
-// TODO: remove original implementation
 const alertsService = new ApiService({
   serviceName: "alerts",
   debug: true,
