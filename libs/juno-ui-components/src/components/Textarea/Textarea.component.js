@@ -49,6 +49,8 @@ const labelStyles = `
   jn-pointer-events-none
   jn-top-2
   jn-left-[0.9375rem]
+  jn-pr-4
+  jn-bg-theme-textinput
 `
 
 const iconcontainerstyles = `

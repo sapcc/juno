@@ -134,7 +134,7 @@ const refreshOidcToken = async ({
       parsed: parseIdTokenData(tokenData),
     }
   } catch (error) {
-    throw new Error("(OAUTH) refresh token, " + error.message)
+    throw new Error("(OAUTH) refresh token, " + error?.message)
   }
 }
 
@@ -275,9 +275,18 @@ const oidcSession = (params) => {
     const refreshToken = state?.auth?.refreshToken
     if (refreshToken) {
       console.info("(OAUTH) refresh token now")
-      receiveNewData(
-        refreshOidcToken({ issuerURL, clientID, flowType, refreshToken })
-      )
+      try {
+        const promise = refreshOidcToken({
+          issuerURL,
+          clientID,
+          flowType,
+          refreshToken,
+        })
+        receiveNewData(promise)
+      } catch (error) {
+        console.warn(error?.message || error)
+        logout()
+      }
     }
   }
 

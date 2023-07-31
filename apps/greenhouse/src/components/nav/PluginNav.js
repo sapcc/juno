@@ -139,7 +139,7 @@ const PluginNav = () => {
               userID={authData?.parsed?.loginName}
             />
             <Button variant="subdued" size="small" onClick={() => logout()}>
-              logout
+              Logout
             </Button>
           </>
         ) : (
