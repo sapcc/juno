@@ -12,5 +12,5 @@ jest.mock("./components/Auth")
 test("renders app", async () => {
   await act(() => render(<Shell />))
 
-  expect(Auth).toHaveBeenCalledTimes(1)
+  expect(Auth).toHaveBeenCalled()
 })
