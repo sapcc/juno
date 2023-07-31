@@ -97,6 +97,12 @@ function updateState(stateID, state, options = {}) {
   newState[stateID] = options?.merge
     ? { ...newState[stateID], ...state }
     : state
+
+  const event = new CustomEvent(EVENT_URL_STATE_CHANGED, {
+    detail: newState,
+  })
+  window.dispatchEvent(event)
+
   // convert to url
   return stateToURL(newState)
 }
@@ -128,10 +134,6 @@ function updateStateAndHistory(stateID, state, merge, historyOptions) {
     window.history.pushState(historyState, historyTitle, newUrl)
   }
   informListener(stateID, state)
-  const event = new CustomEvent(EVENT_URL_STATE_CHANGED, {
-    detail: state,
-  })
-  window.dispatchEvent(event)
 }
 
 /**

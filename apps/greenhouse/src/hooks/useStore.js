@@ -108,8 +108,15 @@ const createGlobalsSlice = (set, get) => ({
     apiEndpoint: "",
     assetsHost: "",
     isUrlStateSetup: false,
+    demoMode: false,
+    demoUserToken: null,
 
     actions: {
+      setDemoMode: (demoMode) =>
+        set((state) => ({ globals: { ...state.globals, demoMode } })),
+      setDemoUserToken: (demoUserToken) =>
+        set((state) => ({ globals: { ...state.globals, demoUserToken } })),
+
       setApiEndpoint: (value) =>
         set(
           (state) => ({ globals: { ...state.globals, apiEndpoint: value } }),
@@ -162,3 +169,5 @@ export const useGlobalsAssetsHost = () => useStore((s) => s.globals.assetsHost)
 export const useGlobalsIsUrlStateSetup = () =>
   useStore((state) => state.globals.isUrlStateSetup)
 export const useGlobalsActions = () => useStore((s) => s.globals.actions)
+export const useDemoMode = () => useStore((s) => s.globals.demoMode)
+export const useDemoUserToken = () => useStore((s) => s.globals.demoUserToken)

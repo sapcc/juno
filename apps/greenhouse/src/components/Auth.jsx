@@ -7,6 +7,7 @@ import {
   useAuthData,
   useAuthError,
   useAuthActions,
+  useGlobalsActions,
 } from "../hooks/useStore"
 import useAppLoader from "../hooks/useAppLoader"
 import { Transition } from "@tailwindui/react"
@@ -39,7 +40,14 @@ let orgName = match ? match[1] : currentUrl.searchParams.get("org")
  *
  * Note: The component reads organization information from the token and adjusts the URL accordingly after the user is logged in.
  */
-const Auth = ({ clientId, issuerUrl, mock, children }) => {
+const Auth = ({
+  clientId,
+  issuerUrl,
+  mock,
+  children,
+  demoOrg,
+  demoUserToken,
+}) => {
   const authData = useAuthData()
   const authAppLoaded = useAuthAppLoaded()
   const authLoggedIn = useAuthLoggedIn()
@@ -52,11 +60,24 @@ const Auth = ({ clientId, issuerUrl, mock, children }) => {
   const [loading, setLoading] = React.useState(!authAppLoaded)
   const [longLoading, setLongLoading] = React.useState(false)
 
+  const { setDemoMode } = useGlobalsActions()
+
   // in this useEffect we load the auth app via import (see mount)
   // It should happen just once!
   // The connection to the auth events happens in the useCommunication hook!
   useEffect(() => {
     if (!mount || !clientId || !issuerUrl) return
+
+    // if current orgName is the demo org, we mock the auth app
+    if (demoOrg === orgName) {
+      // we mock the auth app with default groups
+      mock = JSON.stringify({
+        groups: ["organization:demo", "team:containers", "role:ccloud:admin"],
+      })
+      // set demo mode
+      setDemoMode(true)
+      // see in useCommunication hook, there we redefine  the authData.JWT wit demoUserToken if demo mode is set
+    }
 
     mount(ref.current, {
       id: "auth",
@@ -73,7 +94,7 @@ const Auth = ({ clientId, issuerUrl, mock, children }) => {
         }),
       },
     })
-  }, [mount, clientId, issuerUrl])
+  }, [mount, clientId, issuerUrl, setDemoMode])
 
   // read org name from token and adjust url to contain the org name
   useEffect(() => {

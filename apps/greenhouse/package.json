@@ -1,6 +1,6 @@
 {
   "name": "greenhouse",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Juno team (SAP)",
   "license": "MIT",
   "source": "src/index.js",
@@ -85,6 +85,16 @@
       "value": false,
       "type": "optional",
       "description": "mock the OIDC data, allowed values are 'true', 'false' (default), or json (pure or base64 encoded)"
+    },
+    "demoOrg": {
+      "value": "demo",
+      "type": "optional",
+      "description": "if organization name is equal to this value, then the app will be in demo mode. That means that the authentication will be mocked and plugins are loaded from demo org."
+    },
+    "demoUserToken": {
+      "value": "token for demo user",
+      "type": "optional",
+      "description": "if both demoOrg and demoUserToken are set and organization name is equal to demoOrg, then this token will be used for authentication."
     }
   },
   "appPreview": true

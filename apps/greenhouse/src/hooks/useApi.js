@@ -6,6 +6,7 @@ import {
   useGlobalsAssetsHost,
 } from "./useStore"
 
+// get plugin configs from k8s api
 const useApi = () => {
   const authData = useAuthData()
   // const token = useStoreByKey("auth.data?.JWT")
@@ -45,6 +46,7 @@ const useApi = () => {
       // console.log("::::::::::::::::::::::::manifest", manifest)
       // console.log("::::::::::::::::::::::::configs", configs.items)
 
+      // create config map
       const config = {}
       configs.items.forEach((plugin) => {
         const id = plugin.metadata?.name
@@ -54,7 +56,10 @@ const useApi = () => {
         const version = plugin.status?.uiApplication?.version
         const url = plugin.status?.uiApplication?.url
 
+        // only add plugin if the url is from another host or the name with the given version is in the manifest!
         if ((url && url.indexOf(assetsHost) < 0) || manifest[name]?.[version]) {
+          // config contains id, name, displayName, weight, version, url, props
+          // the id is added to the props by default
           config[id] = {
             id,
             name,
@@ -63,10 +68,13 @@ const useApi = () => {
             version,
             url,
             navigable: true,
-            props: plugin.spec?.optionValues?.reduce((map, item) => {
-              map[item.name] = item.value
-              return map
-            }, {}),
+            props: plugin.spec?.optionValues?.reduce(
+              (map, item) => {
+                map[item.name] = item.value
+                return map
+              },
+              { id } // add plugin id to props
+            ),
           }
         }
       })

@@ -1,5 +1,8 @@
 import { useEffect, useLayoutEffect } from "react"
-import { registerConsumer } from "url-state-provider"
+import {
+  registerConsumer,
+  EVENT_URL_STATE_CHANGED,
+} from "url-state-provider/src"
 import {
   useAppsActions,
   useAppsActive,
@@ -10,8 +13,9 @@ import {
 } from "./useStore"
 
 // url state manager
-const urlStateManager = registerConsumer("greenhouse")
+const GREENHOUSE_STATE_KEY = "greenhouse"
 const ACTIVE_APPS_KEY = "a"
+const urlStateManager = registerConsumer(GREENHOUSE_STATE_KEY)
 
 const useUrlState = () => {
   const { setActive: setActiveApps } = useAppsActions()
@@ -36,11 +40,37 @@ const useUrlState = () => {
     urlStateManager.push({ [ACTIVE_APPS_KEY]: activeApps.join(",") })
   }, [loggedIn, activeApps])
 
-  // useEffect(() => {
-  //   let t = urlStateManager.onChange((a, b, c) =>
-  //     console.log("--------------------------------------log", a, b, c)
-  //   )
-  // }, [urlStateManager])
+  useEffect(() => {
+    // set document title
+    const eventHandler = (state) => {
+      // start with default title
+      let title = "Greenhouse"
+      try {
+        // get active app name from url state
+        const activeApp =
+          state.detail?.[GREENHOUSE_STATE_KEY]?.[ACTIVE_APPS_KEY]
+
+        if (activeApp) {
+          // add active app name and state
+          title += ` - ${activeApp}`
+          // get active app state from url state
+          let activeAppState = JSON.stringify(
+            state.detail?.[activeApp],
+            (k, v) => (v === null ? undefined : v)
+          )
+          // add active app state to title
+          if (activeAppState) title += `: ${activeAppState}`
+        }
+      } catch (e) {
+        console.debug("GREENHOUSE ERROR", e)
+      }
+      document.title = title
+    }
+    window.addEventListener(EVENT_URL_STATE_CHANGED, eventHandler)
+    return () => {
+      window.removeEventListener(EVENT_URL_STATE_CHANGED, eventHandler)
+    }
+  }, [])
 }
 
 export default useUrlState
