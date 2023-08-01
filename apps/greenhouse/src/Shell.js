@@ -31,7 +31,7 @@ const Shell = (props = {}) => {
     <Auth
       clientId={props?.authClientId}
       issuerUrl={props?.authIssuerUrl}
-      demoOrg={props?.demoOrg}
+      demoOrg={props?.demoOrg || "demo"}
       mock={props?.mockAuth}
     >
       <ShellLayout>
