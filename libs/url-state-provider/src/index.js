@@ -135,7 +135,6 @@ function updateStateAndHistory(stateID, state, merge, historyOptions) {
   } else {
     window.history.pushState(historyState, historyTitle, newUrl)
   }
-  // informListener(stateID, state)
 }
 
 /**

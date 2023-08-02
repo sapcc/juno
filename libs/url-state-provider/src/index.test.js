@@ -235,18 +235,36 @@ describe("replace", () => {
 })
 
 describe("addOnChangeListener", () => {
-  var listener, provider
+  var listener, listener2, provider
   beforeAll(() => {
     jest.resetModules()
     provider = require("./index")
     listener = jest.fn((newState) => null)
+    listener2 = jest.fn((newState) => null)
   })
 
   it("should register a new listener", () => {
     provider.addOnChangeListener("consumer1", listener)
 
     provider.push("consumer1", { p: "/items" })
+    expect(listener).not.toHaveBeenCalledWith({ p: "/items" })
+  })
+
+  it("should call listener when state changes from outside", () => {
+    provider.push("consumer1", { p: "/items" })
+    provider.push("consumer2", { p: "/items2" })
+
+    provider.addOnChangeListener("consumer1", listener)
+
+    window.dispatchEvent(new Event("popstate"))
     expect(listener).toHaveBeenCalledWith({ p: "/items" })
+  })
+
+  it("should call listener when state of other keys changes", () => {
+    provider.onGlobalChange(listener)
+
+    provider.push("consumer2", { p: "/items" })
+    expect(listener).toHaveBeenCalled()
   })
 })
 
