@@ -72,7 +72,7 @@ const Auth = ({
     if (demoOrg === orgName) {
       // we mock the auth app with default groups
       mock = JSON.stringify({
-        groups: ["organization:demo", "team:containers", "role:ccloud:admin"],
+        groups: ["organization:demo", "role:ccloud:admin"],
       })
       // set demo mode
       setDemoMode(true)
