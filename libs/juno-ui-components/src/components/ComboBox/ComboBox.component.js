@@ -70,6 +70,7 @@ export const ComboBox = ({
   children,
   className,
   disabled,
+  errortext,
   helptext,
   label,
   nullable,
@@ -77,6 +78,7 @@ export const ComboBox = ({
   required,
   onChange,
   onInputChange,
+  successtext,
   truncateOptions,
   value,
   width,
@@ -171,7 +173,16 @@ export const ComboBox = ({
               { filteredChildren }
             </Combobox.Options>
           </Combobox>
-          
+          { errortext && isNotEmptyString(errortext) ?
+              <FormHint text={errortext} variant="error"/>
+            :
+              ""
+          }
+          { successtext && isNotEmptyString(successtext) ?
+              <FormHint text={successtext} variant="success"/>
+            :
+              ""
+          }
           { helptext && isNotEmptyString(helptext) ?
               <FormHint text={helptext} />
             :
@@ -186,6 +197,7 @@ export const ComboBox = ({
 }
 
 ComboBox.propTypes = {
+  /** The aria-label of the ComboBox. Defaults to the label if label was passed. */
   ariaLabel: PropTypes.string,
   /** The children to Render. Use `ComboBox.Option` elements. */
   children: PropTypes.node,
@@ -193,19 +205,23 @@ ComboBox.propTypes = {
   className: PropTypes.string,
   /*+ Whether the ComboBox is disabled */
   disabled: PropTypes.bool,
+  errortext: PropTypes.string,
   /** A helptext to render to explain meaning and significance of the ComboBox */
   helptext: PropTypes.string,
   /** The label of the ComboBox */
   label: PropTypes.string,
   /** Whether the ComboBox can be reset to having no value selected by manually clearing the text and clicking outside of the ComboBox. Default is TRUE. When set to FALSE, the selected value can only be changed by selecting another value after the initial selection, but never back to no selected value at all. */
   nullable: PropTypes.bool,
+  /** A handler to execute when the ComboBox' selected value changes */
   onChange: PropTypes.func,
+  /** Handler to execute when the ComboBox text input value changes */
   onInputChange: PropTypes.func,
   /** A placeholder to render in the text input */
   placeholder: PropTypes.string,
   /** Whether the ComboBox is required */
   required: PropTypes.bool,
-  /** Whether the option labels should be truncated in case they are longer/wider than the available space in an option or not. Default is FALSE. */
+  successtext: PropTypes.string,
+  /** NOT IMPLEMENTED YET: Whether the option labels should be truncated in case they are longer/wider than the available space in an option or not. Default is FALSE. */
   truncateOptions: PropTypes.bool,
   /** The selected value of the ComboBox in Controlled Mode. */
   value: PropTypes.string,
@@ -218,6 +234,7 @@ ComboBox.defaultProps = {
   children: null,
   className: "",
   disabled: false,
+  errortext: "",
   helptext: "",
   label: undefined,
   nullable: true,
@@ -225,6 +242,7 @@ ComboBox.defaultProps = {
   onInputChange: undefined,
   placeholder: "Select…",
   required: false,
+  successtext: "",
   truncateOptions: false,
   value: "",
   width: "full",

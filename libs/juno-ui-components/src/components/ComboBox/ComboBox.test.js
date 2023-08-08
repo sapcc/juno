@@ -25,6 +25,27 @@ describe("ComboBox", () => {
     expect(document.querySelector(".juno-label")).toHaveTextContent("My Label")
   })
   
+  test("renders a helptext as passed", async () => {
+    render(<ComboBox helptext="A helptext goes here"/>)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-help")
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("A helptext goes here")
+  })
+  
+  test("renders an errortext as passed", async () => {
+    render(<ComboBox errortext="An errortext goes here"/>)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-error")
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("An errortext goes here")
+  })
+  
+  test("renders a successtext as passed", async () => {
+    render(<ComboBox successtext="A successtext goes here"/>)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-success")
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("A successtext goes here")
+  })
+  
   test("renders a ComboBox with a custom className as passed", async () => {
     render(<ComboBox className="my-combobox" />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
