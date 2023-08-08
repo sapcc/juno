@@ -211,8 +211,8 @@ export const ComboBox = ({
                   juno-combobox-input 
                   ${inputStyles} 
                   ${ disabled ? disabledInputStyles : "" }
-                  ${ isInvalid ? "juno-textinput-invalid " + invalidStyles : "" } 
-                  ${ isValid ? "juno-textinput-valid " + validStyles : "" }  
+                  ${ isInvalid ? "juno-combobox-invalid " + invalidStyles : "" } 
+                  ${ isValid ? "juno-combobox-valid " + validStyles : "" }  
                   ${ isValid || isInvalid ? "" : defaultBorderStyles } 
                   ${className}
                 `} 

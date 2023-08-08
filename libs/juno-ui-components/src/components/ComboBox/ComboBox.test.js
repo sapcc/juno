@@ -31,6 +31,30 @@ describe("ComboBox", () => {
     expect(document.querySelector('.juno-required')).toBeInTheDocument()
   })
   
+  test("renders a validated ComboBox as passed", async () => {
+    render(<ComboBox valid />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveClass("juno-combobox-valid")
+  })
+  
+  test("renders a validated ComboBox when a successtext was passed", async () => {
+    render(<ComboBox successtext="Great Success!" />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveClass("juno-combobox-valid")
+  })
+  
+  test("renders an invalidated ComboBox as passed", async () => {
+    render(<ComboBox invalid />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveClass("juno-combobox-invalid")
+  })
+  
+  test("renders an invalidated ComboBox when an errortext was passed", async () => {
+    render(<ComboBox errortext="Oh Snap!" />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveClass("juno-combobox-invalid")
+  })
+  
   test("renders a helptext as passed", async () => {
     render(<ComboBox helptext="A helptext goes here"/>)
     expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
