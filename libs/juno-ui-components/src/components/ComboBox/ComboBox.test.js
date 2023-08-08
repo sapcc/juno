@@ -35,24 +35,28 @@ describe("ComboBox", () => {
     render(<ComboBox valid />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveClass("juno-combobox-valid")
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
   
   test("renders a validated ComboBox when a successtext was passed", async () => {
     render(<ComboBox successtext="Great Success!" />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveClass("juno-combobox-valid")
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
   
   test("renders an invalidated ComboBox as passed", async () => {
     render(<ComboBox invalid />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveClass("juno-combobox-invalid")
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
   })
   
   test("renders an invalidated ComboBox when an errortext was passed", async () => {
     render(<ComboBox errortext="Oh Snap!" />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveClass("juno-combobox-invalid")
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
   })
   
   test("renders a helptext as passed", async () => {
