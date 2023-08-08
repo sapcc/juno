@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useId, createContext } from "react"
+import React, { useState, useEffect, useId, useMemo, createContext } from "react"
 import PropTypes from "prop-types"
 import { Combobox } from "@headlessui/react"
 import { Label } from "../Label/index.js"
@@ -14,7 +14,7 @@ const inputStyles = `
   jn-bg-theme-textinput
   jn-text-theme-textinput
   jn-border
-  jn-border-theme-textinput-default
+
   jn-text-base
   jn-leading-4
   jn-w-full
@@ -33,6 +33,18 @@ const disabledInputStyles = `
   jn-opacity-50
 `
 
+const defaultBorderStyles = `
+  jn-border-theme-textinput-default
+`
+
+const validStyles = `
+  jn-border-theme-success
+`
+
+const invalidStyles = `
+  jn-border-theme-error
+`
+
 const labelStyles = `
   jn-pointer-events-none
   jn-top-2
@@ -46,7 +58,6 @@ const buttonStyles = `
   jn-h-textinput
   jn-w-6
   jn-h-4
-  jn-border-theme-textinput-default
   jn-border-l-0
   jn-border-y-[1px]
   jn-border-r-[1px]
@@ -55,6 +66,18 @@ const buttonStyles = `
   jn-appearance-none
   jn-bg-theme-textinput
   jn-text-theme-textinput
+`
+
+const defaultButtonStyles = `
+  jn-border-theme-textinput-default
+`
+
+const invalidButtonStyles = `
+  jn-border-theme-error
+`
+
+const validButtonStyles = `
+  jn-border-theme-success
 `
 
 const menuStyles = `
@@ -70,8 +93,10 @@ export const ComboBox = ({
   children,
   className,
   disabled,
+  error,
   errortext,
   helptext,
+  invalid,
   label,
   nullable,
   placeholder,
@@ -80,6 +105,7 @@ export const ComboBox = ({
   onInputChange,
   successtext,
   truncateOptions,
+  valid,
   value,
   width,
   ...props
@@ -95,6 +121,8 @@ export const ComboBox = ({
   
   const [selectedValue, setSelectedValue] = useState(false)
   const [searchStr, setSearchStr] = useState("")
+  const [isInvalid, setIsInvalid] = useState(false)
+  const [isValid, setIsValid] = useState(false)
   
   useEffect(() => {
     setSelectedValue(value)
@@ -109,6 +137,23 @@ export const ComboBox = ({
     setSelectedValue(value)
     onChange && onChange(value)
   }
+  
+  const invalidated = useMemo(
+    () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
+    [invalid, errortext]
+  )
+  const validated = useMemo(
+    () => valid || (successtext && isNotEmptyString(successtext) ? true : false),
+    [valid, successtext]
+  )
+  
+  useEffect(() => {
+    setIsInvalid(invalidated)
+  }, [invalidated])
+  
+  useEffect(() => {
+    setIsValid(validated)
+  }, [validated])
   
   const filteredChildren = 
     searchStr === ""
@@ -161,9 +206,26 @@ export const ComboBox = ({
                 onChange={handleInputChange}
                 placeholder={placeholder} 
                 displayValue={selectedValue}
-                className={`juno-combobox-input ${inputStyles} ${ disabled ? disabledInputStyles : "" } ${className}`} 
+                autoComplete="off"
+                className={`
+                  juno-combobox-input 
+                  ${inputStyles} 
+                  ${ disabled ? disabledInputStyles : "" }
+                  ${ isInvalid ? "juno-textinput-invalid " + invalidStyles : "" } 
+                  ${ isValid ? "juno-textinput-valid " + validStyles : "" }  
+                  ${ isValid || isInvalid ? "" : defaultBorderStyles } 
+                  ${className}
+                `} 
               />
-              <Combobox.Button disabled={disabled} className={`juno-combobox-toggle ${buttonStyles}`}>
+              <Combobox.Button 
+                disabled={disabled} 
+                className={`
+                  juno-combobox-toggle 
+                  ${buttonStyles}
+                  ${ isInvalid ? "juno-combobox-toggle-invalid " + invalidButtonStyles : "" } 
+                  ${ isValid ? "juno-combobox-toggle-valid " + validButtonStyles : "" }  
+                  ${ isValid || isInvalid ? "" : defaultButtonStyles } 
+                `}>
                 {({open}) => (
                   <Icon icon={ open ? "expandLess": "expandMore"} />
                 )}
@@ -205,9 +267,11 @@ ComboBox.propTypes = {
   className: PropTypes.string,
   /*+ Whether the ComboBox is disabled */
   disabled: PropTypes.bool,
+  error: PropTypes.bool,
   errortext: PropTypes.string,
   /** A helptext to render to explain meaning and significance of the ComboBox */
   helptext: PropTypes.string,
+  invalid: PropTypes.bool,
   /** The label of the ComboBox */
   label: PropTypes.string,
   /** Whether the ComboBox can be reset to having no value selected by manually clearing the text and clicking outside of the ComboBox. Default is TRUE. When set to FALSE, the selected value can only be changed by selecting another value after the initial selection, but never back to no selected value at all. */
@@ -223,6 +287,7 @@ ComboBox.propTypes = {
   successtext: PropTypes.string,
   /** NOT IMPLEMENTED YET: Whether the option labels should be truncated in case they are longer/wider than the available space in an option or not. Default is FALSE. */
   truncateOptions: PropTypes.bool,
+  valid: PropTypes.bool,
   /** The selected value of the ComboBox in Controlled Mode. */
   value: PropTypes.string,
   /** The width of the text input. Either 'full' (default) or 'auto'. */
@@ -234,8 +299,10 @@ ComboBox.defaultProps = {
   children: null,
   className: "",
   disabled: false,
+  error: false,
   errortext: "",
   helptext: "",
+  invalid: false,
   label: undefined,
   nullable: true,
   onChange: undefined,
@@ -244,6 +311,7 @@ ComboBox.defaultProps = {
   required: false,
   successtext: "",
   truncateOptions: false,
+  valid: false,
   value: "",
   width: "full",
 }

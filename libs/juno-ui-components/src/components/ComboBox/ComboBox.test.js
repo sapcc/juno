@@ -25,6 +25,12 @@ describe("ComboBox", () => {
     expect(document.querySelector(".juno-label")).toHaveTextContent("My Label")
   })
   
+  test("renders a required ComboBox as passed", async () => {
+    render(<ComboBox label="My Required ComboBox" required />)
+    expect(document.querySelector(".juno-label")).toBeInTheDocument()
+    expect(document.querySelector('.juno-required')).toBeInTheDocument()
+  })
+  
   test("renders a helptext as passed", async () => {
     render(<ComboBox helptext="A helptext goes here"/>)
     expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
