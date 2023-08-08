@@ -37,14 +37,36 @@ Default.args = {
     <ComboBoxOption value="Peas" key="15">Peas</ComboBoxOption>,
     <ComboBoxOption value="Potatoes" key="16">Potatoes</ComboBoxOption>,
   ]
+}
 
+
+export const WithLabel = Template.bind({})
+WithLabel.args = {
+  label: "ComboBox",
+  children: [
+    <ComboBoxOption value="Rhubarb" key="1">Rhubarb</ComboBoxOption>,
+    <ComboBoxOption value="Carrots" key="2">Carrots</ComboBoxOption>,
+    <ComboBoxOption value="Spinach" key="3">Spinach</ComboBoxOption>,
+    <ComboBoxOption value="Tomatoes" key="4">Tomatoes</ComboBoxOption>,
+    <ComboBoxOption value="Cucumbers" key="5">Cucumbers</ComboBoxOption>,
+    <ComboBoxOption value="Cauliflower" key="6">Cauliflower</ComboBoxOption>,
+    <ComboBoxOption value="Eggplant" key="7">Eggplant</ComboBoxOption>,
+    <ComboBoxOption value="Zucchini" key="8">Zucchini</ComboBoxOption>,
+    <ComboBoxOption value="Brussels sprouts" key="9">Brussels Sprouts</ComboBoxOption>,
+    <ComboBoxOption value="Horseradish" key="10">Horseradish</ComboBoxOption>,
+    <ComboBoxOption value="Green beans" key="11">Green Beans</ComboBoxOption>,
+    <ComboBoxOption value="Mushrooms" key="12">Mushrooms</ComboBoxOption>,
+    <ComboBoxOption value="Leek" key="13">Leek</ComboBoxOption>,
+    <ComboBoxOption value="Artichokes" key="14">Artichokes</ComboBoxOption>,
+    <ComboBoxOption value="Peas" key="15">Peas</ComboBoxOption>,
+    <ComboBoxOption value="Potatoes" key="16">Potatoes</ComboBoxOption>,
+  ]
 }
 
 export const Disabled = Template.bind({})
 Disabled.args = {
-  disabled: true,
   label: "Disabled ComboBox",
-  helptext: "This ComboBox is well and truly disabled",
+  disabled: true,
   children: [
     <ComboBoxOption value="Rhubarb" key="1">Rhubarb</ComboBoxOption>,
     <ComboBoxOption value="Carrots" key="2">Carrots</ComboBoxOption>,
