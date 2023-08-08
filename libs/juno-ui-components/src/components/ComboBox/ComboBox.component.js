@@ -80,6 +80,13 @@ const validButtonStyles = `
   jn-border-theme-success
 `
 
+const disabledButtonStyles = `
+  jn-cursor-not-allowed
+  jn-pointer-events-none
+  jn-bg-transparent
+  jn-opacity-50
+`
+
 const menuStyles = `
   jn-mt-1
   jn-rounded
@@ -222,6 +229,7 @@ export const ComboBox = ({
                 className={`
                   juno-combobox-toggle 
                   ${buttonStyles}
+                  ${ disabled ? disabledButtonStyles : "" }
                   ${ isInvalid ? "juno-combobox-toggle-invalid " + invalidButtonStyles : "" } 
                   ${ isValid ? "juno-combobox-toggle-valid " + validButtonStyles : "" }  
                   ${ isValid || isInvalid ? "" : defaultButtonStyles } 
