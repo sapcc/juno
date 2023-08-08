@@ -93,6 +93,12 @@ const menuStyles = `
   jn-bg-theme-background-lvl-1
 `
 
+const iconContainerStyles = `
+  jn-absolute
+  jn-top-[.4rem]
+  jn-right-6
+`
+
 export const ComboBoxContext = createContext()
 
 export const ComboBox = ({
@@ -225,6 +231,21 @@ export const ComboBox = ({
                   ${className}
                 `} 
               />
+              {
+                isValid || isInvalid ?
+                  <span className={`
+                    juno-combobox-icon-container 
+                    ${iconContainerStyles} 
+                    ${ disabled ? "jn-opacity-50" : "" }
+                  `}>
+                    <Icon 
+                      icon={ isValid ? "checkCircle" : "dangerous" }
+                      color={ isValid ? "jn-text-theme-success" : "jn-text-theme-error"  }
+                    />
+                  </span>
+                :
+                  ""
+              }
               <Combobox.Button 
                 disabled={disabled} 
                 className={`
