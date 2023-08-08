@@ -217,3 +217,15 @@ WithSuccessText.args = {
     <ComboBoxOption value="Potatoes" key="16">Potatoes</ComboBoxOption>,
   ]
 }
+
+export const Loading = Template.bind({})
+Loading.args = {
+  loading: true,
+  helptext: "ComboBox busy loading options",
+}
+
+export const Error = Template.bind({})
+Error.args = {
+  error: true,
+  errortext: "ComboBox having trouble loading options"
+}

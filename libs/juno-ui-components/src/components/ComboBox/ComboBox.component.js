@@ -4,6 +4,7 @@ import { Combobox } from "@headlessui/react"
 import { Label } from "../Label/index.js"
 import { Icon } from "../Icon/index.js"
 import { FormHint } from "../FormHint/index.js"
+import { Spinner } from "../Spinner/index.js"
 
 const inputWrapperStyles = `
   jn-relative
@@ -14,7 +15,6 @@ const inputStyles = `
   jn-bg-theme-textinput
   jn-text-theme-textinput
   jn-border
-
   jn-text-base
   jn-leading-4
   jn-w-full
@@ -99,6 +99,16 @@ const iconContainerStyles = `
   jn-right-6
 `
 
+const centeredIconStyles = `
+  jn-absolute
+  jn-top-1/2
+  jn-left-1/2
+  jn-translate-y-[-50%]
+  jn-translate-x-[-0.75rem]
+`
+
+
+
 export const ComboBoxContext = createContext()
 
 export const ComboBox = ({
@@ -135,6 +145,8 @@ export const ComboBox = ({
   
   const [selectedValue, setSelectedValue] = useState(false)
   const [searchStr, setSearchStr] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasError, setHasError] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
   
@@ -169,6 +181,14 @@ export const ComboBox = ({
     setIsValid(validated)
   }, [validated])
   
+  useEffect(() => {
+    setHasError(error)
+  }, [error])
+  
+  useEffect(() => {
+    setIsLoading(loading)
+  }, [loading])
+  
   const filteredChildren = 
     searchStr === ""
     ? children
@@ -201,7 +221,7 @@ export const ComboBox = ({
           >
             <div className={`${inputWrapperStyles}`}>
               
-              { label && isNotEmptyString(label) ?
+              { label && isNotEmptyString(label) && !isLoading && !hasError ?
                   <Label 
                     text={label}
                     disabled={disabled}
@@ -218,7 +238,7 @@ export const ComboBox = ({
                 aria-label={ariaLabel || label}
                 disabled={disabled} 
                 onChange={handleInputChange}
-                placeholder={placeholder} 
+                placeholder={ !isLoading && !hasError ? placeholder : ""} 
                 displayValue={selectedValue}
                 autoComplete="off"
                 className={`
@@ -231,35 +251,50 @@ export const ComboBox = ({
                   ${className}
                 `} 
               />
-              {
-                isValid || isInvalid ?
-                  <span className={`
-                    juno-combobox-icon-container 
-                    ${iconContainerStyles} 
-                    ${ disabled ? "jn-opacity-50" : "" }
-                  `}>
-                    <Icon 
-                      icon={ isValid ? "checkCircle" : "dangerous" }
-                      color={ isValid ? "jn-text-theme-success" : "jn-text-theme-error"  }
-                    />
+              { 
+                isLoading || hasError ? 
+                  <span className={`${centeredIconStyles}`}>
+                    { isLoading ? 
+                        <Spinner />
+                      :
+                        <Icon icon="errorOutline" color="jn-text-theme-error" />
+                    }
                   </span>
+                :
+                    isValid || isInvalid  ?
+                      <span className={`
+                        juno-combobox-icon-container 
+                        ${iconContainerStyles} 
+                        ${ disabled ? "jn-opacity-50" : "" }
+                      `}>
+                        <Icon 
+                          icon={ isValid ? "checkCircle" : "dangerous" }
+                          color={ isValid ? "jn-text-theme-success" : "jn-text-theme-error"  }
+                        />
+                      </span>
+                    :
+                      ""
+              }
+              {
+                !hasError && !isLoading ?
+                  <Combobox.Button 
+                    disabled={disabled} 
+                    className={`
+                      juno-combobox-toggle 
+                      ${buttonStyles}
+                      ${ disabled ? disabledButtonStyles : "" }
+                      ${ isInvalid ? "juno-combobox-toggle-invalid " + invalidButtonStyles : "" } 
+                      ${ isValid ? "juno-combobox-toggle-valid " + validButtonStyles : "" }  
+                      ${ isValid || isInvalid ? "" : defaultButtonStyles } 
+                    `}>
+                    {({open}) => (
+                      <Icon icon={ open ? "expandLess": "expandMore"} />
+                    )}
+                  </Combobox.Button>
                 :
                   ""
               }
-              <Combobox.Button 
-                disabled={disabled} 
-                className={`
-                  juno-combobox-toggle 
-                  ${buttonStyles}
-                  ${ disabled ? disabledButtonStyles : "" }
-                  ${ isInvalid ? "juno-combobox-toggle-invalid " + invalidButtonStyles : "" } 
-                  ${ isValid ? "juno-combobox-toggle-valid " + validButtonStyles : "" }  
-                  ${ isValid || isInvalid ? "" : defaultButtonStyles } 
-                `}>
-                {({open}) => (
-                  <Icon icon={ open ? "expandLess": "expandMore"} />
-                )}
-              </Combobox.Button>
+
             </div>
             <Combobox.Options className={`juno-combobox-options ${menuStyles}`} >
               { filteredChildren }
@@ -297,7 +332,7 @@ ComboBox.propTypes = {
   className: PropTypes.string,
   /** Whether the ComboBox is disabled */
   disabled: PropTypes.bool,
-  /** NOT IMPLEMENTED YET: Whether the ComboBox has an error. Note this refers to an internal error like failing to load options etc., to indicate failed validation use `invalid` instead. */
+  /** Whether the ComboBox has an error. Note this refers to an internal error like failing to load options etc., to indicate failed validation use `invalid` instead. */
   error: PropTypes.bool,
   /** An errortext to display when the ComboBox failed validation or an internal error occurred. */
   errortext: PropTypes.string,
@@ -307,7 +342,7 @@ ComboBox.propTypes = {
   invalid: PropTypes.bool,
   /** The label of the ComboBox */
   label: PropTypes.string,
-  /** NOT IMPLEMENTED YET: Whether the ComboBox is still loading options */ 
+  /** Whether the ComboBox is busy loading options */ 
   loading: PropTypes.bool,
   /** Whether the ComboBox can be reset to having no value selected by manually clearing the text and clicking outside of the ComboBox. Default is TRUE. When set to FALSE, the selected value can only be changed by selecting another value after the initial selection, but never back to no selected value at all. */
   nullable: PropTypes.bool,
