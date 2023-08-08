@@ -105,6 +105,7 @@ export const ComboBox = ({
   helptext,
   invalid,
   label,
+  loading,
   nullable,
   placeholder,
   required,
@@ -271,17 +272,22 @@ ComboBox.propTypes = {
   ariaLabel: PropTypes.string,
   /** The children to Render. Use `ComboBox.Option` elements. */
   children: PropTypes.node,
-  /*+ A custom className. Will be passed to the text input element of the ComboBox */
+  /** A custom className. Will be passed to the text input element of the ComboBox */
   className: PropTypes.string,
-  /*+ Whether the ComboBox is disabled */
+  /** Whether the ComboBox is disabled */
   disabled: PropTypes.bool,
+  /** NOT IMPLEMENTED YET: Whether the ComboBox has an error. Note this refers to an internal error like failing to load options etc., to indicate failed validation use `invalid` instead. */
   error: PropTypes.bool,
+  /** An errortext to display when the ComboBox failed validation or an internal error occurred. */
   errortext: PropTypes.string,
   /** A helptext to render to explain meaning and significance of the ComboBox */
   helptext: PropTypes.string,
+  /** Whether the ComboBox failed validation */
   invalid: PropTypes.bool,
   /** The label of the ComboBox */
   label: PropTypes.string,
+  /** NOT IMPLEMENTED YET: Whether the ComboBox is still loading options */ 
+  loading: PropTypes.bool,
   /** Whether the ComboBox can be reset to having no value selected by manually clearing the text and clicking outside of the ComboBox. Default is TRUE. When set to FALSE, the selected value can only be changed by selecting another value after the initial selection, but never back to no selected value at all. */
   nullable: PropTypes.bool,
   /** A handler to execute when the ComboBox' selected value changes */
@@ -292,9 +298,11 @@ ComboBox.propTypes = {
   placeholder: PropTypes.string,
   /** Whether the ComboBox is required */
   required: PropTypes.bool,
+  /** A text to display in case the ComboBox was successfully validated. Will set the ComboBox to `valid` when passed. */
   successtext: PropTypes.string,
   /** NOT IMPLEMENTED YET: Whether the option labels should be truncated in case they are longer/wider than the available space in an option or not. Default is FALSE. */
   truncateOptions: PropTypes.bool,
+  /** Whether the ComboBox was successfully validated */
   valid: PropTypes.bool,
   /** The selected value of the ComboBox in Controlled Mode. */
   value: PropTypes.string,
@@ -312,6 +320,7 @@ ComboBox.defaultProps = {
   helptext: "",
   invalid: false,
   label: undefined,
+  loading: false,
   nullable: true,
   onChange: undefined,
   onInputChange: undefined,
