@@ -10,7 +10,8 @@ import PluginContainer from "./components/PluginContainer"
 import useUrlState from "./hooks/useUrlState"
 
 const Shell = (props = {}) => {
-  const { setApiEndpoint, setAssetsHost } = useGlobalsActions()
+  const { setApiEndpoint, setAssetsHost, setDemoUserToken } =
+    useGlobalsActions()
 
   useCommunication()
   useUrlState()
@@ -19,16 +20,18 @@ const Shell = (props = {}) => {
   // on app initial load save Endpoint and URL_STATE_KEY so it can be
   // used from overall in the application
   useLayoutEffect(() => {
-    if (!setApiEndpoint || !setAssetsHost) return
+    if (!setApiEndpoint || !setAssetsHost || !setDemoUserToken) return
     // set to empty string to fetch local test data in dev mode
     setApiEndpoint(props.apiEndpoint)
     setAssetsHost(props.currentHost)
-  }, [setApiEndpoint, setAssetsHost])
+    setDemoUserToken(props.demoUserToken)
+  }, [setApiEndpoint, setAssetsHost, setDemoUserToken])
 
   return (
     <Auth
       clientId={props?.authClientId}
       issuerUrl={props?.authIssuerUrl}
+      demoOrg={props?.demoOrg || "demo"}
       mock={props?.mockAuth}
     >
       <ShellLayout>

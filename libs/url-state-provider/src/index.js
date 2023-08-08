@@ -1,8 +1,13 @@
 import LZString from "lz-string"
 
 var SEARCH_KEY = "__s"
-var STATE_KEY = "__url_state_provider"
 var URL_REGEX = new RegExp("[?&]" + SEARCH_KEY + "=([^&#]*)")
+
+/**
+ * Variable where to host listeners for history changes
+ */
+var onHistoryChangeListeners = {}
+var onGlobalChangeListeners = []
 
 /**
  * Encode json data using lz-string
@@ -96,6 +101,10 @@ function updateState(stateID, state, options = {}) {
   newState[stateID] = options?.merge
     ? { ...newState[stateID], ...state }
     : state
+
+  // inform listeners for all changes in the url
+  onGlobalChangeListeners.forEach((listener) => listener(newState))
+
   // convert to url
   return stateToURL(newState)
 }
@@ -126,7 +135,6 @@ function updateStateAndHistory(stateID, state, merge, historyOptions) {
   } else {
     window.history.pushState(historyState, historyTitle, newUrl)
   }
-  informListener(stateID, state)
 }
 
 /**
@@ -166,11 +174,6 @@ function replace(stateID, state, historyOptions) {
 }
 
 /**
- * Variable where to host listeners for history changes
- */
-var onHistoryChangeListeners = {}
-
-/**
  * Add Listener for history changes for stateID
  * @param {string} stateID
  * @param {function} listener
@@ -185,6 +188,21 @@ function addOnChangeListener(stateID, listener) {
  */
 function removeOnChangeListener(stateID) {
   delete onHistoryChangeListeners[stateID]
+}
+
+/**
+ * Add Listener for all changes to the state
+ * @param {function} listener
+ * @returns function to remove the listener
+ */
+function addOnGlobalChangeListener(listener) {
+  onGlobalChangeListeners.push(listener)
+  return () => {
+    const index = onGlobalChangeListeners.indexOf(listener)
+    if (index > -1) {
+      onGlobalChangeListeners.splice(index, 1)
+    }
+  }
 }
 
 /**
@@ -210,26 +228,23 @@ function informListener(stateID, newState, oldState) {
   listener(newState)
 }
 
+function onGlobalChange(callback) {
+  return addOnGlobalChangeListener(callback)
+}
+
 /**
  * Handle history pop events.
  * onpopstate is fired every time the browser back and forward buttons are clicked.
  * If the event is fired we update th global state to the state in URL and we inform
  * every listener but only if the individual state has changed.
  */
-window.onpopstate = function () {
-  // get current state from URL
-  var state = URLToState()
-  if (!state) return
-
-  // get keys from listeners (key is stateID)
-  var stateIDs = Object.keys(onHistoryChangeListeners)
-
-  // for all keys in listeners
-  for (var i = 0; i < stateIDs.length; i++) {
-    var stateID = stateIDs[i]
+window.addEventListener("popstate", function (event) {
+  const newUrl = event.target.location.href
+  const state = URLToState(newUrl)
+  Object.keys(state).forEach((stateID) => {
     informListener(stateID, state[stateID])
-  }
-}
+  })
+})
 
 function registerConsumer(stateID) {
   return {
@@ -242,6 +257,7 @@ function registerConsumer(stateID) {
         removeOnChangeListener(stateID)
       }
     },
+    onGlobalChange,
     push: function (state, historyOptions) {
       //console.log("PUSH", stateID, state)
       push(stateID, state, historyOptions)
@@ -262,4 +278,5 @@ export {
   registerConsumer,
   stateToURL,
   stateToQueryParam,
+  onGlobalChange,
 }

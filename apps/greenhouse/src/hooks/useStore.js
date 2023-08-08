@@ -23,15 +23,15 @@ const createAuthDataSlice = (set, get) => ({
           "auth/setAppLoaded"
         )
       },
-      setData: (data) => {
+      setData: (data = {}) => {
         set(
           (state) => ({
             auth: {
               ...state.auth,
-              isProcessing: data.isProcessing,
-              loggedIn: data.loggedIn,
-              error: data.error,
-              data: data.auth,
+              isProcessing: data ? data.isProcessing : false,
+              loggedIn: data ? data.loggedIn : false,
+              error: data ? data.error : null,
+              data: data ? data.auth : null,
             },
           }),
           false,
@@ -49,8 +49,8 @@ const createAuthDataSlice = (set, get) => ({
           false,
           "auth/setAction"
         ),
-      login: () => get().auth.setAction(ACTIONS.SIGN_ON),
-      logout: () => get().auth.setAction(ACTIONS.SIGN_OUT),
+      login: () => get().auth.actions.setAction(ACTIONS.SIGN_ON),
+      logout: () => get().auth.actions.setAction(ACTIONS.SIGN_OUT),
     },
   },
 })
@@ -108,8 +108,15 @@ const createGlobalsSlice = (set, get) => ({
     apiEndpoint: "",
     assetsHost: "",
     isUrlStateSetup: false,
+    demoMode: false,
+    demoUserToken: null,
 
     actions: {
+      setDemoMode: (demoMode) =>
+        set((state) => ({ globals: { ...state.globals, demoMode } })),
+      setDemoUserToken: (demoUserToken) =>
+        set((state) => ({ globals: { ...state.globals, demoUserToken } })),
+
       setApiEndpoint: (value) =>
         set(
           (state) => ({ globals: { ...state.globals, apiEndpoint: value } }),
@@ -162,3 +169,5 @@ export const useGlobalsAssetsHost = () => useStore((s) => s.globals.assetsHost)
 export const useGlobalsIsUrlStateSetup = () =>
   useStore((state) => state.globals.isUrlStateSetup)
 export const useGlobalsActions = () => useStore((s) => s.globals.actions)
+export const useDemoMode = () => useStore((s) => s.globals.demoMode)
+export const useDemoUserToken = () => useStore((s) => s.globals.demoUserToken)

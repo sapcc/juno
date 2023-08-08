@@ -73,6 +73,48 @@ const App = (props = {}) => {
 }
 ```
 
+Certainly! Here's the code description in Markdown format:
+
+````markdown
+## Mocked Authentication Session Module
+
+This JavaScript module provides a mocked authentication session for a client application. It simulates the behavior of an authentication mechanism by generating a mock authentication token and handling login, logout, and token refresh actions.
+
+### Default Mocked Token
+
+A constant named `DEFAULT_MOCKED_TOKEN` defines a default mock authentication token with various properties such as issuer (`iss`), subject (`sub`), audience (`aud`), expiration time (`exp`), issuance time (`iat`), nonce, email, email verification status, user groups, name, and preferred username.
+
+```javascript
+const DEFAULT_MOCKED_TOKEN = {
+  iss: "https://auth.mock",
+  sub: "3ksXP1FQq7j9125Q6ayY",
+  aud: "mock-dev-env",
+  exp: Math.floor(Date.now() / 1000) + 8 * 3600,
+  iat: Math.floor(Date.now() / 1000),
+  nonce: "MOCK",
+  email: "jane.doe@sap.com",
+  email_verified: true,
+  groups: ["organization:test-org", "test-team-1"],
+  name: "I123456",
+  preferred_username: "Jane Doe",
+}
+```
+````
+
+#### Mocked Session
+
+The default exported function `mockedSession` is responsible for creating and managing a mocked authentication session. It takes in an object `params` as an argument, which can include properties like `token`, `initialLogin`, `onUpdate`, and additional unknown properties.
+
+The function initializes the `state` object with properties like `auth` (representing the authentication data), `error`, `loggedIn`, and `isProcessing`. It defines methods such as `login`, `logout`, and `refresh` to simulate login, logout, and token refresh actions, respectively. If `initialLogin` is true, it calls the `login` function to set the initial state.
+
+The function returns an object with methods `login`, `logout`, `refresh`, and `currentState`, allowing the client application to interact with the mocked authentication session.
+
+```javascript
+export default function mockedSession(params) {
+  // ... Function implementation
+}
+```
+
 ## Install
 
 add oauth to dependencies in package.json
