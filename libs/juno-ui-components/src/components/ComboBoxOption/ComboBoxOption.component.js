@@ -9,6 +9,7 @@ const optionStyles = `
   jn-pt-[0.6875rem]
   jn-pb-[0.5rem]
   jn-pr-[0.875rem]
+  jn-select-none
   data-[headlessui-state=active]:jn-outline-none
   data-[headlessui-state=active]:jn-ring-2
   data-[headlessui-state=active]:jn-ring-inset
@@ -30,7 +31,13 @@ const selectedIconStyles = `
   jn-inline-block
 `
 
+const disabledOptionLabelStyles = `
+  jn-opacity-50
+  jn-cursor-not-allowed
+`
+
 export const ComboBoxOption = ({
+  disabled,
   value,
   className,
   ...props
@@ -45,6 +52,7 @@ export const ComboBoxOption = ({
   return (
     <Combobox.Option
       value={value}
+      disabled={disabled}
       as={Fragment}
     >
       <li 
@@ -56,7 +64,7 @@ export const ComboBoxOption = ({
         {...props}
       >
         { selectedValue === value ? <Icon icon="check" className={`${selectedIconStyles}`} /> : "" }
-        <span>{value}</span>
+        <span className={`${disabled ? disabledOptionLabelStyles : ""}`}>{value}</span>
       </li>
 
     </Combobox.Option>
@@ -65,11 +73,13 @@ export const ComboBoxOption = ({
 
 
 ComboBoxOption.propTypes = {
+  disabled: PropTypes.bool,
   value: PropTypes.string,
   className: PropTypes.string,
 }
 
 ComboBoxOption.defaultProps = {
+  disabled: false,
   value: "",
   className: "",
 }

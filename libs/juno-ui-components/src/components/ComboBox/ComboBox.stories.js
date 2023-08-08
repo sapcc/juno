@@ -63,5 +63,15 @@ Disabled.args = {
     <ComboBoxOption value="Peas" key="15">Peas</ComboBoxOption>,
     <ComboBoxOption value="Potatoes" key="16">Potatoes</ComboBoxOption>,
   ]
+}
 
+export const DisabledOption = Template.bind({})
+DisabledOption.args = {
+  label: "ComboBox with a Disabled Option",
+  helptext: "Option Carrots should be disabled",
+  children: [
+    <ComboBoxOption value="Rhubarb" key="1">Rhubarb</ComboBoxOption>,
+    <ComboBoxOption value="Carrots" key="2" disabled >Carrots</ComboBoxOption>,
+    <ComboBoxOption value="Spinach" key="3">Spinach</ComboBoxOption>
+  ]
 }
