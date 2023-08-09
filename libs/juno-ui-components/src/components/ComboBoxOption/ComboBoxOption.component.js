@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { Combobox } from "@headlessui/react"
 import { ComboBoxContext } from "../ComboBox/ComboBox.component.js"
 import { Icon } from "../Icon/" 
-import "./ComboBoxOption.scss"
+
 
 const optionStyles = `
   jn-pt-[0.6875rem]
