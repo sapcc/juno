@@ -25,6 +25,27 @@ describe("ComboBox", () => {
     expect(document.querySelector(".juno-label")).toHaveTextContent("My Label")
   })
   
+  test("renders options as passed", async () => {
+    render(
+      <ComboBox>
+        <ComboBoxOption value="Option 1">Option 1</ComboBoxOption>
+      </ComboBox>
+    )
+    const cbox = screen.getByRole("combobox")
+    const cbutton = screen.getByRole("button")
+    expect(cbox).toBeInTheDocument()
+    expect(cbutton).toBeInTheDocument()
+    await userEvent.click(cbutton)
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveTextContent("Option 1")
+  })
+  
+  test("renders a ComboBox with a placeholder as passed", async () => {
+    render(<ComboBox placeholder="My Placeholder"/>)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveAttribute('placeholder', "My Placeholder")
+  })
+  
   test("renders a required ComboBox as passed", async () => {
     render(<ComboBox label="My Required ComboBox" required />)
     expect(document.querySelector(".juno-label")).toBeInTheDocument()
