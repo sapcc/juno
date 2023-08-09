@@ -284,6 +284,7 @@ export const ComboBox = ({
                   ${ isLoading || hasError ? "jn-cursor-not-allowed" : "" }
                   ${className}
                 `} 
+                {...props}
               />
               { 
                 isLoading || hasError ? 

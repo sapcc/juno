@@ -73,6 +73,12 @@ describe("ComboBox", () => {
     expect(screen.getByRole("combobox")).toHaveAttribute('placeholder', "My Placeholder")
   })
   
+  test("renders a disabled ComboBox as passed", async () => {
+    render(<ComboBox disabled />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toBeDisabled()
+  })
+  
   test("renders a required ComboBox as passed", async () => {
     render(<ComboBox label="My Required ComboBox" required />)
     expect(document.querySelector(".juno-label")).toBeInTheDocument()
@@ -132,6 +138,12 @@ describe("ComboBox", () => {
     render(<ComboBox className="my-combobox" />)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
     expect(screen.getByRole("combobox")).toHaveClass("my-combobox")
+  })
+  
+  test("renders all props as passed", async () => {
+    render(<ComboBox data-lolo="1234" />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveAttribute("data-lolo", "1234")
   })
   
   
