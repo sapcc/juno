@@ -395,7 +395,7 @@ ComboBox.propTypes = {
   required: PropTypes.bool,
   /** A text to display in case the ComboBox was successfully validated. Will set the ComboBox to `valid` when passed. */
   successtext: PropTypes.string,
-  /** NOT IMPLEMENTED YET: Whether the option labels should be truncated in case they are longer/wider than the available space in an option or not. Default is FALSE. */
+  /** Whether the option labels should be truncated in case they are longer/wider than the available space in an option or not. Default is FALSE. */
   truncateOptions: PropTypes.bool,
   /** Whether the ComboBox was successfully validated */
   valid: PropTypes.bool,

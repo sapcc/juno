@@ -6,6 +6,7 @@ import { Icon } from "../Icon/"
 
 
 const optionStyles = `
+  jn-flex
   jn-pt-[0.6875rem]
   jn-pb-[0.5rem]
   jn-pr-[0.875rem]
@@ -37,6 +38,14 @@ const disabledOptionLabelStyles = `
   jn-cursor-not-allowed
 `
 
+const truncateOptionStyles = `
+  jn-block
+  jn-h-6
+  jn-overflow-hidden
+  jn-text-ellipsis
+  jn-whitespace-nowrap
+`
+
 export const ComboBoxOption = ({
   disabled,
   value,
@@ -65,7 +74,14 @@ export const ComboBoxOption = ({
         {...props}
       >
         { selectedValue === value ? <Icon icon="check" size="18" className={`${selectedIconStyles}`} /> : "" }
-        <span className={`${disabled ? disabledOptionLabelStyles : ""}`}>{value}</span>
+        <span 
+          className={`
+            ${ disabled ? disabledOptionLabelStyles : "" }
+            ${ truncateOptions ? truncateOptionStyles : "" }
+          `}
+        >
+          {value}
+        </span>
       </li>
 
     </Combobox.Option>

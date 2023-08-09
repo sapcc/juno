@@ -267,6 +267,23 @@ WithSuccessText.args = {
   ]
 }
 
+export const NonTruncatedOptions = Template.bind({})
+NonTruncatedOptions.args = {
+  children: [
+    <ComboBoxOption value="Option with a very long title that is so long it will most likely not fit into the menu width, not at all really." key="1"></ComboBoxOption>,
+    <ComboBoxOption value="Yet another option with a very long title that is so long it will most likely not fit into the menu width, not at all really." key="2"></ComboBoxOption>
+  ]
+}
+
+export const TruncatedOptions = Template.bind({})
+TruncatedOptions.args = {
+  truncateOptions: true,
+  children: [
+    <ComboBoxOption value="Option with a very long title that is so long it will most likely not fit into the menu width, not at all really." key="1"></ComboBoxOption>,
+    <ComboBoxOption value="Yet another option with a very long title that is so long it will most likely not fit into the menu width, not at all really." key="2"></ComboBoxOption>
+  ]
+}
+
 export const Loading = Template.bind({})
 Loading.args = {
   loading: true,
