@@ -238,7 +238,7 @@ export const ComboBox = ({
             nullable={nullable}
             onChange={handleChange}
             value={selectedValue}
-            disabled={disabled}
+            disabled={ disabled || isLoading || hasError }
           >
             <div className={`${inputWrapperStyles}`}>
               
@@ -256,14 +256,14 @@ export const ComboBox = ({
               }
               
               <Combobox.Input 
-                aria-label={ariaLabel || label}
-                disabled={disabled} 
-                onChange={handleInputChange}
-                placeholder={ !isLoading && !hasError ? placeholder : ""} 
-                displayValue={selectedValue}
                 autoComplete="off"
-                onFocus={handleFocus}
+                aria-label={ ariaLabel || label }
+                disabled={ disabled || isLoading || hasError } 
+                displayValue={selectedValue}
                 onBlur={handleBlur}
+                onChange={handleInputChange}
+                onFocus={handleFocus}
+                placeholder={ !isLoading && !hasError ? placeholder : ""} 
                 className={`
                   juno-combobox-input 
                   ${inputStyles} 
@@ -272,6 +272,7 @@ export const ComboBox = ({
                   ${ isInvalid ? "juno-combobox-invalid " + invalidStyles : "" } 
                   ${ isValid ? "juno-combobox-valid " + validStyles : "" }  
                   ${ isValid || isInvalid ? "" : defaultBorderStyles } 
+                  ${ isLoading || hasError ? "jn-cursor-not-allowed" : "" }
                   ${className}
                 `} 
               />
@@ -279,9 +280,9 @@ export const ComboBox = ({
                 isLoading || hasError ? 
                   <span className={`${centeredIconStyles}`}>
                     { isLoading ? 
-                        <Spinner />
+                        <Spinner className={"jn-cursor-not-allowed"} />
                       :
-                        <Icon icon="errorOutline" color="jn-text-theme-error" />
+                        <Icon icon="errorOutline" color="jn-text-theme-error" className={"jn-cursor-not-allowed"} />
                     }
                   </span>
                 :

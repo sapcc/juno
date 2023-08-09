@@ -19,16 +19,17 @@ const optionStyles = `
 
 const unselectedOptionStyles = `
   jn-text-theme-default
-  jn-pl-[2.875rem]
+  jn-pl-[2.375rem]
 `
 
 const selectedOptionStyles = `
   jn-text-theme-accent
-  jn-pl-[0.875rem]
+  jn-pl-3.5
 `
 
 const selectedIconStyles = `
   jn-inline-block
+  jn-mr-1.5
 `
 
 const disabledOptionLabelStyles = `
@@ -63,7 +64,7 @@ export const ComboBoxOption = ({
         `}
         {...props}
       >
-        { selectedValue === value ? <Icon icon="check" className={`${selectedIconStyles}`} /> : "" }
+        { selectedValue === value ? <Icon icon="check" size="18" className={`${selectedIconStyles}`} /> : "" }
         <span className={`${disabled ? disabledOptionLabelStyles : ""}`}>{value}</span>
       </li>
 
