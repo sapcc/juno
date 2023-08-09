@@ -139,7 +139,7 @@ export const SearchInput = ({
           {...props}
         />
         <div className={`${iconWrapperStyles(variant)}`}>
-          { clear && val.length ? 
+          { clear && val?.length ? 
             <Icon 
                 icon="close"
                 size={`${clearIconSize(variant)}`}
