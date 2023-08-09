@@ -281,7 +281,8 @@ export const ComboBox = ({
                   ${ isInvalid ? "juno-combobox-invalid " + invalidStyles : "" } 
                   ${ isValid ? "juno-combobox-valid " + validStyles : "" }  
                   ${ isValid || isInvalid ? "" : defaultBorderStyles } 
-                  ${ isLoading || hasError ? "jn-cursor-not-allowed" : "" }
+                  ${ isLoading ? "juno-combobox-loading jn-cursor-not-allowed" : "" }
+                  ${ hasError ? "juno-combobox-error jn-cursor-not-allowed" : "" }
                   ${className}
                 `} 
                 {...props}

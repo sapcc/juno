@@ -5,6 +5,11 @@ import userEvent from "@testing-library/user-event"
 import { ComboBox } from "./index"
 import { ComboBoxOption } from "../ComboBoxOption/index"
 
+const mockOnBlur = jest.fn()
+const mockOnChange = jest.fn()
+const mockOnFocus = jest.fn()
+const mockOnInputChange = jest.fn()
+
 describe("ComboBox", () => {
   
   afterEach(() => {
@@ -132,6 +137,63 @@ describe("ComboBox", () => {
     expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
     expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-success")
     expect(document.querySelector(".juno-form-hint")).toHaveTextContent("A successtext goes here")
+  })
+  
+  test("renders a loading ComboBox with a Spinner as passed", async () => {
+    render(<ComboBox loading />)
+    expect(screen.getByRole("combobox")).toHaveClass("juno-combobox-loading")
+    expect(document.querySelector(".juno-spinner")).toBeInTheDocument()
+  })
+  
+  test("renders a ComboBox in error state with an Error icon as passed", async () => {
+    render(<ComboBox error />)
+    expect(screen.getByRole("combobox")).toHaveClass("juno-combobox-error")
+    expect(screen.getByTitle("Error")).toBeInTheDocument()
+  })
+  
+  test("fires an onBlur handler as passed when the ComboBox looses focus", async () => {
+    render(<ComboBox onBlur={mockOnBlur} />)
+    const user = userEvent.setup()
+    const cbox = screen.getByRole("combobox")
+    await user.click(cbox) // focus the element
+    await user.tab() // blur the element
+    expect(mockOnBlur).toHaveBeenCalled()
+  })
+  
+  test("fires an onChange handler as passed when the user selects an option", async () => {
+    render(
+      <ComboBox onChange={mockOnChange}>
+        <ComboBoxOption value="option 1" name="option 1">Option 1</ComboBoxOption>
+        <ComboBoxOption value="option 2" name="option 2">Option 2</ComboBoxOption>
+      </ComboBox>
+    )
+    const cbox = screen.getByRole("combobox")
+    const cbutton = screen.getByRole("button")
+    expect(cbox).toBeInTheDocument()
+    expect(cbutton).toBeInTheDocument()
+    await userEvent.click(cbutton)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    await userEvent.click(screen.getByRole("option", { name: "option 2" }))
+    expect(mockOnChange).toHaveBeenCalled()
+  })
+  
+  test("fires an onFocus handler as passed when the ComboBox receives focus", async () => {
+    render(<ComboBox onFocus={mockOnFocus} />)
+    const cbox = screen.getByRole("combobox")
+    await userEvent.click(cbox)
+    expect(mockOnFocus).toHaveBeenCalled()
+  })
+  
+  test("fires an onInputChange handler when the user types into the ComboBox", async () => {
+    render(
+      <ComboBox onInputChange={mockOnInputChange}>
+        <ComboBoxOption value="something">Something</ComboBoxOption>
+        <ComboBoxOption value="something else">Something else</ComboBoxOption>
+      </ComboBox>
+    )
+    const cbox = screen.getByRole("combobox")
+    await userEvent.type(cbox, "a")
+    expect(mockOnInputChange).toHaveBeenCalled()
   })
   
   test("renders a ComboBox with a custom className as passed", async () => {
