@@ -127,6 +127,7 @@ export const ComboBox = ({
   error,
   errortext,
   helptext,
+  id,
   invalid,
   label,
   loading,
@@ -152,6 +153,9 @@ export const ComboBox = ({
   const uniqueId = () => (
     "juno-combobox-" + useId()
   )
+  
+  const theId = id || uniqueId()
+  const helptextId = "juno-combobox-helptext-" + useId()
   
   const [selectedValue, setSelectedValue] = useState(false)
   const [searchStr, setSearchStr] = useState("")
@@ -210,6 +214,8 @@ export const ComboBox = ({
     onBlur && onBlur(event)
   }
   
+  
+  
   const filteredChildren = 
     searchStr === ""
     ? children
@@ -258,8 +264,10 @@ export const ComboBox = ({
               <Combobox.Input 
                 autoComplete="off"
                 aria-label={ ariaLabel || label }
+                aria-describedby={ helptext ? helptextId : "" }
                 disabled={ disabled || isLoading || hasError } 
                 displayValue={selectedValue}
+                id={theId}
                 onBlur={handleBlur}
                 onChange={handleInputChange}
                 onFocus={handleFocus}
@@ -336,7 +344,7 @@ export const ComboBox = ({
               ""
           }
           { helptext && isNotEmptyString(helptext) ?
-              <FormHint text={helptext} />
+              <FormHint text={helptext} id={helptextId} />
             :
               ""
            }
@@ -363,6 +371,8 @@ ComboBox.propTypes = {
   errortext: PropTypes.string,
   /** A helptext to render to explain meaning and significance of the ComboBox */
   helptext: PropTypes.string,
+  /** The Id of the ComboBox. Will be assigned to the text input part of the ComboBox. If not passed, an id will be auto-generated. */
+  id: PropTypes.string,
   /** Whether the ComboBox failed validation */
   invalid: PropTypes.bool,
   /** The label of the ComboBox */
@@ -403,6 +413,7 @@ ComboBox.defaultProps = {
   error: false,
   errortext: "",
   helptext: "",
+  id: "",
   invalid: false,
   label: undefined,
   loading: false,
