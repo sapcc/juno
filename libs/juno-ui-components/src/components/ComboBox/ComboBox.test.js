@@ -40,6 +40,12 @@ describe("ComboBox", () => {
     expect(screen.getByRole("option")).toHaveTextContent("Option 1")
   })
   
+  test("renders an id as passed", async () => {
+    render(<ComboBox id="My Id"/>)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveAttribute('id', "My Id")
+  })
+  
   test("renders a ComboBox with a placeholder as passed", async () => {
     render(<ComboBox placeholder="My Placeholder"/>)
     expect(screen.getByRole("combobox")).toBeInTheDocument()
