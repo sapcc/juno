@@ -255,7 +255,7 @@ export const ComboBox = ({
                     required={required}
                     className={`${labelStyles}`}
                     floating
-                    minimized={ placeholder || hasFocus || (searchStr && isNotEmptyString(searchStr) ) ? true : false}
+                    minimized={ placeholder || hasFocus || (searchStr && isNotEmptyString(searchStr) || (selectedValue && isNotEmptyString(selectedValue)) ) ? true : false}
                   />
                 :
                   ""
