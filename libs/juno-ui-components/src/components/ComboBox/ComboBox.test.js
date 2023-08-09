@@ -46,6 +46,27 @@ describe("ComboBox", () => {
     expect(screen.getByRole("combobox")).toHaveAttribute('id', "My Id")
   })
   
+  test("renders the id of the ComboBox input as the for attribute of the label", async () => {
+    render(<ComboBox label="the label"/>)
+    const cbox = screen.getByRole("combobox")
+    const label = document.querySelector(".juno-label")
+    expect(cbox).toBeInTheDocument()
+    expect(label).toBeInTheDocument()
+    expect(label.getAttribute("for")).toMatch(cbox.getAttribute("id"))
+  })
+  
+  test("renders an aria-label as passed", async () => {
+    render(<ComboBox ariaLabel="my aria-label" />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveAttribute('aria-label', "my aria-label")
+  })
+  
+  test("renders the label as an aria-label if no aria-label was passed", async () => {
+    render(<ComboBox label="My Label" />)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("combobox")).toHaveAttribute('aria-label', "My Label")
+  })
+    
   test("renders a ComboBox with a placeholder as passed", async () => {
     render(<ComboBox placeholder="My Placeholder"/>)
     expect(screen.getByRole("combobox")).toBeInTheDocument()

@@ -253,6 +253,7 @@ export const ComboBox = ({
                     text={label}
                     disabled={disabled}
                     required={required}
+                    htmlFor={theId}
                     className={`${labelStyles}`}
                     floating
                     minimized={ placeholder || hasFocus || (searchStr && isNotEmptyString(searchStr) || (selectedValue && isNotEmptyString(selectedValue)) ) ? true : false}
