@@ -21,10 +21,18 @@ const inputStyles = `
   jn-px-4
   jn-h-textinput
   jn-text-left
-  jn-pt-[0.4rem]
   focus:jn-outline-none
   focus:jn-ring-2
   focus:jn-ring-theme-focus
+`
+
+const withLabelInputStyles = `
+  jn-pt-[1.125rem] 
+  jn-pb-1
+`
+
+const noLabelInputStyles = `
+  jn-py-4
 `
 
 const disabledInputStyles = `
@@ -48,7 +56,7 @@ const invalidStyles = `
 const labelStyles = `
   jn-pointer-events-none
   jn-top-2
-  jn-left-4
+  jn-left-[0.9375rem]
 `
 
 const buttonStyles = `
@@ -125,7 +133,9 @@ export const ComboBox = ({
   nullable,
   placeholder,
   required,
+  onBlur,
   onChange,
+  onFocus,
   onInputChange,
   successtext,
   truncateOptions,
@@ -149,29 +159,11 @@ export const ComboBox = ({
   const [hasError, setHasError] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
+  const [hasFocus, setFocus] = useState(false)
   
   useEffect(() => {
     setSelectedValue(value)
   }, [value] )
-  
-  const handleInputChange = (event) => {
-    setSearchStr(event.target.value)
-    onInputChange && onInputChange(event)
-  }
-  
-  const handleChange = (value) => {
-    setSelectedValue(value)
-    onChange && onChange(value)
-  }
-  
-  const invalidated = useMemo(
-    () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
-    [invalid, errortext]
-  )
-  const validated = useMemo(
-    () => valid || (successtext && isNotEmptyString(successtext) ? true : false),
-    [valid, successtext]
-  )
   
   useEffect(() => {
     setIsInvalid(invalidated)
@@ -188,6 +180,35 @@ export const ComboBox = ({
   useEffect(() => {
     setIsLoading(loading)
   }, [loading])
+  
+  const invalidated = useMemo(
+    () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
+    [invalid, errortext]
+  )
+  const validated = useMemo(
+    () => valid || (successtext && isNotEmptyString(successtext) ? true : false),
+    [valid, successtext]
+  )
+  
+  const handleInputChange = (event) => {
+    setSearchStr(event.target.value)
+    onInputChange && onInputChange(event)
+  }
+  
+  const handleChange = (value) => {
+    setSelectedValue(value)
+    onChange && onChange(value)
+  }
+  
+  const handleFocus = (event) => {
+    setFocus(true)
+    onFocus && onFocus(event)
+  }
+  
+  const handleBlur = (event) => {
+    setFocus(false)
+    onBlur && onBlur(event)
+  }
   
   const filteredChildren = 
     searchStr === ""
@@ -228,7 +249,7 @@ export const ComboBox = ({
                     required={required}
                     className={`${labelStyles}`}
                     floating
-                    minimized
+                    minimized={ placeholder || hasFocus || (searchStr && isNotEmptyString(searchStr) ) ? true : false}
                   />
                 :
                   ""
@@ -241,9 +262,12 @@ export const ComboBox = ({
                 placeholder={ !isLoading && !hasError ? placeholder : ""} 
                 displayValue={selectedValue}
                 autoComplete="off"
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 className={`
                   juno-combobox-input 
                   ${inputStyles} 
+                  ${ label && isNotEmptyString(label) ? withLabelInputStyles : noLabelInputStyles }
                   ${ disabled ? disabledInputStyles : "" }
                   ${ isInvalid ? "juno-combobox-invalid " + invalidStyles : "" } 
                   ${ isValid ? "juno-combobox-valid " + validStyles : "" }  
@@ -346,8 +370,12 @@ ComboBox.propTypes = {
   loading: PropTypes.bool,
   /** Whether the ComboBox can be reset to having no value selected by manually clearing the text and clicking outside of the ComboBox. Default is TRUE. When set to FALSE, the selected value can only be changed by selecting another value after the initial selection, but never back to no selected value at all. */
   nullable: PropTypes.bool,
+  /** A handler to execute when the ComboBox looses focus */
+  onBlur: PropTypes.func,
   /** A handler to execute when the ComboBox' selected value changes */
   onChange: PropTypes.func,
+  /** A handler to execute when the ComboBox input receives focus */
+  onFocus: PropTypes.func,
   /** Handler to execute when the ComboBox text input value changes */
   onInputChange: PropTypes.func,
   /** A placeholder to render in the text input */
@@ -378,7 +406,9 @@ ComboBox.defaultProps = {
   label: undefined,
   loading: false,
   nullable: true,
+  onBlur: undefined,
   onChange: undefined,
+  onFocus: undefined,
   onInputChange: undefined,
   placeholder: "Select…",
   required: false,
