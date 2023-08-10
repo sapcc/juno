@@ -41,6 +41,7 @@ describe("ComboBox", () => {
     expect(cbox).toBeInTheDocument()
     expect(cbutton).toBeInTheDocument()
     await userEvent.click(cbutton)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
     expect(screen.getByRole("option")).toBeInTheDocument()
     expect(screen.getByRole("option")).toHaveTextContent("Option 1")
   })
@@ -194,6 +195,61 @@ describe("ComboBox", () => {
     const cbox = screen.getByRole("combobox")
     await userEvent.type(cbox, "a")
     expect(mockOnInputChange).toHaveBeenCalled()
+  })
+  
+  test("filters options as the user types", async () => {
+    render(
+      <ComboBox>
+        <ComboBoxOption value="aaa" name="aaa">aaa</ComboBoxOption>
+        <ComboBoxOption value="aab" name="aab">aab</ComboBoxOption>
+        <ComboBoxOption value="abc" name="abc">abc</ComboBoxOption>
+        <ComboBoxOption value="123" name="123">123</ComboBoxOption>
+      </ComboBox>
+    )
+    const user = userEvent.setup()
+    const cbox = screen.getByRole("combobox")
+    expect(cbox).toBeInTheDocument()
+    await user.type(cbox, "a")
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    expect(screen.getByRole("option", { name: "aaa" })).toBeInTheDocument()
+    expect(screen.getByRole("option", { name: "aab" })).toBeInTheDocument()
+    expect(screen.getByRole("option", { name: "abc" })).toBeInTheDocument()
+    expect(screen.queryByRole("option", { name: "123" })).not.toBeInTheDocument()
+    await user.type(cbox, "b")
+    expect(screen.queryByRole("option", { name: "aaa" })).not.toBeInTheDocument()
+    expect(screen.getByRole("option", { name: "aab" })).toBeInTheDocument()
+    expect(screen.getByRole("option", { name: "abc" })).toBeInTheDocument()
+    expect(screen.queryByRole("option", { name: "123" })).not.toBeInTheDocument()
+    await userEvent.clear(cbox)
+    expect(screen.getByRole("option", { name: "aaa" })).toBeInTheDocument()
+    expect(screen.getByRole("option", { name: "aab" })).toBeInTheDocument()
+    expect(screen.getByRole("option", { name: "abc" })).toBeInTheDocument()
+    expect(screen.getByRole("option", { name: "123" })).toBeInTheDocument()
+    await user.type(cbox, "1")
+    expect(screen.queryByRole("option", { name: "aaa" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("option", { name: "aab" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("option", { name: "abc" })).not.toBeInTheDocument()
+    expect(screen.getByRole("option", { name: "123" })).toBeInTheDocument()
+  })
+  
+  test("selects an option when the user clicks it and closes the menu", async () => {
+    render(
+      <ComboBox>
+        <ComboBoxOption value="aaa" name="aaa">aaa</ComboBoxOption>
+        <ComboBoxOption value="aab" name="aab">aab</ComboBoxOption>
+        <ComboBoxOption value="abc" name="abc">abc</ComboBoxOption>
+        <ComboBoxOption value="123" name="123">123</ComboBoxOption>
+      </ComboBox>
+    )
+    const cbox = screen.getByRole("combobox")
+    const cbutton = screen.getByRole("button")
+    expect(cbox).toBeInTheDocument()
+    expect(cbutton).toBeInTheDocument()
+    await userEvent.click(cbutton)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    await userEvent.click(screen.getByRole("option", { name: "abc" }))
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument()
+    expect(cbox).toHaveValue("abc")
   })
   
   test("renders a ComboBox with a custom className as passed", async () => {
