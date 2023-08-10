@@ -242,11 +242,11 @@ export const ComboBox = ({
       `}>
         
           <Combobox 
+            disabled={ disabled || isLoading || hasError }
             name={name}
             nullable={nullable}
             onChange={handleChange}
             value={selectedValue}
-            disabled={ disabled || isLoading || hasError }
           >
             <div className={`${inputWrapperStyles}`}>
               
@@ -373,9 +373,9 @@ ComboBox.propTypes = {
   /** Whether the ComboBox has an error. Note this refers to an internal error like failing to load options etc., to indicate failed validation use `invalid` instead. */
   error: PropTypes.bool,
   /** An errortext to display when the ComboBox failed validation or an internal error occurred. */
-  errortext: PropTypes.string,
+  errortext: PropTypes.node,
   /** A helptext to render to explain meaning and significance of the ComboBox */
-  helptext: PropTypes.string,
+  helptext: PropTypes.node,
   /** The Id of the ComboBox. Will be assigned to the text input part of the ComboBox. If not passed, an id will be auto-generated. */
   id: PropTypes.string,
   /** Whether the ComboBox failed validation */
@@ -401,7 +401,7 @@ ComboBox.propTypes = {
   /** Whether the ComboBox is required */
   required: PropTypes.bool,
   /** A text to display in case the ComboBox was successfully validated. Will set the ComboBox to `valid` when passed. */
-  successtext: PropTypes.string,
+  successtext: PropTypes.node,
   /** Whether the option labels should be truncated in case they are longer/wider than the available space in an option or not. Default is FALSE. */
   truncateOptions: PropTypes.bool,
   /** Whether the ComboBox was successfully validated */
