@@ -24,6 +24,15 @@ describe("ComboBox", () => {
     expect(screen.getByRole("combobox")).toHaveClass("juno-combobox-input")
   })
   
+  test("renders a ComboBox with a name as passed", async () => {
+    render(<ComboBox name="my-wonderful-combobox"/>)
+    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    /* Here we need to 'brutally' select the input, since headless 
+      a) does not add the name to the visible input element but to another, hidden input element it keeps in sync, and
+      b) react-testing fails when trying to access hidden elements by role: */
+    expect(document.querySelector("input[name='my-wonderful-combobox']")).toBeInTheDocument()
+  })
+  
   test("renders a ComboBox with a label as passed", async () => {
     render(<ComboBox label="My Label"/>)
     expect(document.querySelector(".juno-label")).toBeInTheDocument()

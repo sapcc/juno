@@ -131,6 +131,7 @@ export const ComboBox = ({
   invalid,
   label,
   loading,
+  name,
   nullable,
   placeholder,
   required,
@@ -241,6 +242,7 @@ export const ComboBox = ({
       `}>
         
           <Combobox 
+            name={name}
             nullable={nullable}
             onChange={handleChange}
             value={selectedValue}
@@ -382,6 +384,8 @@ ComboBox.propTypes = {
   label: PropTypes.string,
   /** Whether the ComboBox is busy loading options */ 
   loading: PropTypes.bool,
+  /** The name attribute of the ComboBox when used as part of a form  */
+  name: PropTypes.string,
   /** Whether the ComboBox can be reset to having no value selected by manually clearing the text and clicking outside of the ComboBox. Default is TRUE. When set to FALSE, the selected value can only be changed by selecting another value after the initial selection, but never back to no selected value at all. */
   nullable: PropTypes.bool,
   /** A handler to execute when the ComboBox looses focus */
@@ -420,6 +424,7 @@ ComboBox.defaultProps = {
   invalid: false,
   label: undefined,
   loading: false,
+  name: "",
   nullable: true,
   onBlur: undefined,
   onChange: undefined,
