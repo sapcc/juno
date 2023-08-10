@@ -59,6 +59,7 @@ describe("ComboBox", () => {
     expect(cbox).toBeInTheDocument()
     expect(label).toBeInTheDocument()
     expect(label.getAttribute("for")).toMatch(cbox.getAttribute("id"))
+    expect(screen.getByLabelText("the label")).toBeInTheDocument()
   })
   
   test("renders an aria-label as passed", async () => {
@@ -250,6 +251,20 @@ describe("ComboBox", () => {
     await userEvent.click(screen.getByRole("option", { name: "abc" }))
     expect(screen.queryByRole("listbox")).not.toBeInTheDocument()
     expect(cbox).toHaveValue("abc")
+  })
+  
+  test("renders a ComboBox with a selected value as passed", async () => {
+    render(
+      <ComboBox value="aab">
+        <ComboBoxOption value="aaa" name="aaa">aaa</ComboBoxOption>
+        <ComboBoxOption value="aab" name="aab">aab</ComboBoxOption>
+        <ComboBoxOption value="abc" name="abc">abc</ComboBoxOption>
+        <ComboBoxOption value="123" name="123">123</ComboBoxOption>
+      </ComboBox>
+    )
+    const cbox = screen.getByRole("combobox")
+    expect(cbox).toBeInTheDocument()
+    expect(cbox).toHaveValue("aab")
   })
   
   test("renders a ComboBox with a custom className as passed", async () => {
