@@ -11,7 +11,7 @@ import {
   shift,
   offset,
   flip,
-} from "@floating-ui/react-dom-interactions"
+} from "@floating-ui/react"
 
 /**
  * Hook that controls the state of the tooltip.

@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { mergeRefs } from "react-merge-refs"
+
+import { useMergeRefs } from "@floating-ui/react"
 
 import { useTooltipState } from "../Tooltip/Tooltip.component"
 
@@ -17,10 +18,7 @@ export const TooltipTrigger = React.forwardRef(function TooltipTrigger(
 
   // merge all the refs
   const childrenRef = children.ref
-  const ref = React.useMemo(
-    () => mergeRefs([state.reference, propRef, childrenRef]),
-    [state.reference, propRef, childrenRef]
-  )
+  const ref = useMergeRefs([state.refs.setReference, propRef, childrenRef])
 
   // `asChild` allows the user to pass any element as the anchor
   if (asChild && React.isValidElement(children)) {
