@@ -1,7 +1,7 @@
 import * as React from "react"
 import { cleanup, render, screen } from "@testing-library/react"
-import { Select } from "../Select/index"
-import { SelectOption } from "../SelectOption/index"
+import { RSelect } from "../RSelect/index"
+import { RSelectOption } from "../RSelectOption/index"
 
 
 describe("SelectOption", () => {
@@ -13,18 +13,18 @@ describe("SelectOption", () => {
   
   test("renders a SelectOptionGroup", async () => {
     render(
-      <Select open>
-        <SelectOption />
-      </Select>
+      <RSelect open>
+        <RSelectOption />
+      </RSelect>
     )
     expect(screen.getByRole("option")).toBeInTheDocument()
   })
   
   test("renders a label as passed", async () => {
     render(
-      <Select open>
-        <SelectOption label="my-option"/>
-      </Select>
+      <RSelect open>
+        <RSelectOption label="my-option"/>
+      </RSelect>
     )
     expect(screen.getByRole("option")).toBeInTheDocument()
     expect(screen.getByRole("option")).toHaveTextContent("my-option")
@@ -33,9 +33,9 @@ describe("SelectOption", () => {
   test("renders children as passed", async () => {
     const child = "my-child-label"
     render(
-      <Select open>
-        <SelectOption>{child}</SelectOption>
-      </Select>
+      <RSelect open>
+        <RSelectOption>{child}</RSelectOption>
+      </RSelect>
     )
     expect(screen.getByRole("option")).toBeInTheDocument()
     expect(screen.getByRole("option")).toHaveTextContent("my-child-label")
@@ -44,9 +44,9 @@ describe("SelectOption", () => {
   test("renders children instead of label if both children and label are being passed", async () => {
     const child = "my-child-label"
     render(
-      <Select open>
-        <SelectOption label="my-label">{child}</SelectOption>
-      </Select>
+      <RSelect open>
+        <RSelectOption label="my-label">{child}</RSelectOption>
+      </RSelect>
     )
     expect(screen.getByRole("option")).toBeInTheDocument()
     expect(screen.getByRole("option")).toHaveTextContent("my-child-label")
@@ -55,9 +55,9 @@ describe("SelectOption", () => {
   
   test("renders a className as passed", async () => {
     render(
-      <Select open>
-        <SelectOption className="my-fancy-class"/>
-      </Select>
+      <RSelect open>
+        <RSelectOption className="my-fancy-class"/>
+      </RSelect>
     )
     expect(screen.getByRole("option")).toBeInTheDocument()
     expect(screen.getByRole("option")).toHaveClass("my-fancy-class")
@@ -65,9 +65,9 @@ describe("SelectOption", () => {
   
   test("renders all props as passed", async () => {
     render(
-      <Select open>
-        <SelectOption data-lolol="123"/>
-      </Select>
+      <RSelect open>
+        <RSelectOption data-lolol="123"/>
+      </RSelect>
     )
     expect(screen.getByRole("option")).toBeInTheDocument()
     expect(screen.getByRole("option")).toHaveAttribute("data-lolol", "123")

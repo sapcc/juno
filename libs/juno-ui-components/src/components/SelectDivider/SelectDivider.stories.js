@@ -1,11 +1,11 @@
 import React from "react"
 import { SelectDivider } from "./index.js"
-import { Select } from "../Select/index.js"
-import { SelectOption } from "../SelectOption/index.js"
+import { RSelect } from "../RSelect/index.js"
+import { RSelectOption } from "../RSelectOption/index.js"
 import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 export default {
-  title: "Forms/Select/SelectDivider",
+  title: "Forms/RSelect/SelectDivider",
   component: SelectDivider,
   argTypes: {},
   decorators: [
@@ -19,11 +19,11 @@ export default {
 
 const Template = () => {
   return (
-    <Select open>
-      <SelectOption value="1">1</SelectOption>
+    <RSelect open>
+      <RSelectOption value="1">1</RSelectOption>
       <SelectDivider />
-      <SelectOption value="3">3</SelectOption>
-    </Select>
+      <RSelectOption value="3">3</RSelectOption>
+    </RSelect>
   )
 }
 

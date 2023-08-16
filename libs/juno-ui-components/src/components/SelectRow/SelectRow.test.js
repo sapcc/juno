@@ -2,7 +2,7 @@ import * as React from "react"
 import { cleanup, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { SelectRow } from "./index"
-import { SelectOption } from "../SelectOption/index"
+import { RSelectOption } from "../RSelectOption/index"
 
 const mockOnValueChange = jest.fn()
 const mockOnOpenChange = jest.fn()
@@ -131,8 +131,8 @@ describe("SelectRow", () => {
 	test("renders an open Select as passed", async () => {
 		render(
 			<SelectRow open>
-				<SelectOption value="v-1" label="Value 1" />
-				<SelectOption value="v-2" label="Value 2"/>
+				<RSelectOption value="v-1" label="Value 1" />
+				<RSelectOption value="v-2" label="Value 2"/>
 			</SelectRow>
 		)
 		expect(screen.getByRole("listbox")).toBeInTheDocument()
@@ -143,8 +143,8 @@ describe("SelectRow", () => {
 	test("sets selected option for an uncontrolled Select as passed", () => {
 		render(
 			<SelectRow defaultValue="v-2">
-				<SelectOption value="v-1" label="Value 1" />
-				<SelectOption value="v-2" label="Value 2"/>
+				<RSelectOption value="v-1" label="Value 1" />
+				<RSelectOption value="v-2" label="Value 2"/>
 			</SelectRow>
 		)
 		expect(screen.getByRole("combobox")).toHaveTextContent("Value 2")
@@ -154,8 +154,8 @@ describe("SelectRow", () => {
 	test("sets selected option for a controlled Select as passed", () => {
 		render(
 			<SelectRow value="v-2">
-				<SelectOption value="v-1" label="Value 1" />
-				<SelectOption value="v-2" label="Value 2"/>
+				<RSelectOption value="v-1" label="Value 1" />
+				<RSelectOption value="v-2" label="Value 2"/>
 			</SelectRow>
 		)
 		expect(screen.getByRole("combobox")).toHaveTextContent("Value 2")
@@ -165,9 +165,9 @@ describe("SelectRow", () => {
 	test("allows user to open a Select in a SelectRow by clicking on it, showing all children rendered as passed", async () => {
 		render(
 			<SelectRow onOpenChange={mockOnOpenChange}>
-				<SelectOption value="1">Option 1</SelectOption>
-				<SelectOption value="2">Option 2</SelectOption>
-				<SelectOption value="3">Option 3</SelectOption>
+				<RSelectOption value="1">Option 1</RSelectOption>
+				<RSelectOption value="2">Option 2</RSelectOption>
+				<RSelectOption value="3">Option 3</RSelectOption>
 			</SelectRow>
 		)
 		expect(screen.getByRole("combobox")).toBeInTheDocument()
@@ -183,9 +183,9 @@ describe("SelectRow", () => {
 	test("allows user to change a value on an uncontrolled SelectRow", async () => {
 		render(
 			<SelectRow defaultValue="val-1" onValueChange={mockOnValueChange}>
-				<SelectOption value="val-1">Option 1</SelectOption>
-				<SelectOption value="val-2">Option 2</SelectOption>
-				<SelectOption value="val-3">Option 3</SelectOption>
+				<RSelectOption value="val-1">Option 1</RSelectOption>
+				<RSelectOption value="val-2">Option 2</RSelectOption>
+				<RSelectOption value="val-3">Option 3</RSelectOption>
 			</SelectRow>
 		)
 		const select = screen.getByRole("combobox")
@@ -201,9 +201,9 @@ describe("SelectRow", () => {
 	test("allows user to change a value on a controlled SelectRow", async () => {
 		render(
 			<SelectRowParent value="v-1" onValueChange={mockOnValueChange}>
-				<SelectOption value="v-1" label="Option 1"/>
-				<SelectOption value="v-2" label="Option 2"/>
-				<SelectOption value="v-3" label="Option 3"/>
+				<RSelectOption value="v-1" label="Option 1"/>
+				<RSelectOption value="v-2" label="Option 2"/>
+				<RSelectOption value="v-3" label="Option 3"/>
 			</SelectRowParent>
 		)
 		const select = screen.getByRole("combobox")

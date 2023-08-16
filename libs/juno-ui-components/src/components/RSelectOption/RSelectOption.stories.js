@@ -1,11 +1,11 @@
 import React from "react"
-import { Select } from "../Select/index.js"
-import { SelectOption } from "./index.js"
+import { RSelect } from "../RSelect/index.js"
+import { RSelectOption } from "./index.js"
 import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 export default {
-  title: "Forms/Select/SelectOption",
-  component: SelectOption,
+  title: "Forms/RSelect/RSelectOption",
+  component: RSelectOption,
   argTypes: {},
   decorators: [
     (story) => (
@@ -18,9 +18,9 @@ export default {
 
 const Template = ({children, ...args}) => {
   return (
-    <Select open>
-      <SelectOption {...args}>{children}</SelectOption>
-    </Select>
+    <RSelect open>
+      <RSelectOption {...args}>{children}</RSelectOption>
+    </RSelect>
   )
 }
 

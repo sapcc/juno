@@ -4,8 +4,8 @@ import { FormRow } from "../FormRow/index.js"
 import { FormSection } from "../FormSection/index.js"
 import { FormHint } from "../FormHint/index.js"
 import { TextInput } from "../TextInput/index.js"
-import { Select } from "../Select/index.js"
-import { SelectOption } from "../SelectOption/index.js"
+import { RSelect } from "../RSelect/index.js"
+import { RSelectOption } from "../RSelectOption/index.js"
 import { Switch } from "../Switch/index.js"
 import { Textarea } from "../Textarea/index.js"
 import { RadioGroup } from "../RadioGroup/index.js"
@@ -62,11 +62,11 @@ ComplexForm.args = {
     <IntroBox text="In order to get to know you, we need to talk about colors." key="ib-1"/>,
     <FormSection title="First Section of the Form" key="fs-1">
       <FormRow key="fr-1">
-        <Select label="Your Favorite Color" placeholder="Select your favorite color…" id="color">
-          <SelectOption value="red" key="so-1">Red</SelectOption>
-          <SelectOption value="blue" key="so-2">Blue</SelectOption>
-          <SelectOption value="other" key="so-3">Other</SelectOption>
-        </Select>
+        <RSelect label="Your Favorite Color" placeholder="Select your favorite color…" id="color">
+          <RSelectOption value="red" key="so-1">Red</RSelectOption>
+          <RSelectOption value="blue" key="so-2">Blue</RSelectOption>
+          <RSelectOption value="other" key="so-3">Other</RSelectOption>
+        </RSelect>
         <FormHint text="Your favorite color to the best of your knowledge" />
       </FormRow>
       <FormRow key="fr-2">

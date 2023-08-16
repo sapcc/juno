@@ -2,8 +2,8 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Button } from "../Button/"
 import { Icon } from "../Icon/"
-import { Select } from "../Select/"
-import { SelectOption } from "../SelectOption/"
+import { RSelect } from "../RSelect/"
+import { RSelectOption } from "../RSelectOption/"
 import { TextInput } from "../TextInput"
 
 const paginationStyles = `
@@ -25,7 +25,7 @@ const selectOptions = (pages) => {
   if (pages) {
     for (let i = 0; i < pages; i++) {
       const p = (i + 1).toString() // SelectOption requires strings for value and label
-      opts.push(<SelectOption value={p} label={p} key={p} />)
+      opts.push(<RSelectOption value={p} label={p} key={p} />)
     }
   }
   return opts
@@ -44,14 +44,14 @@ const renderPaginationInnards = (
       break
     case "select":
       return (
-        <Select
+        <RSelect
           name="pages"
           width="auto"
           defaultValue={currentPage?.toString()} // here the same, defaultValue is of type string
           onValueChange={handleSelectChange}
         >
           {selectOptions(pages)}
-        </Select>
+        </RSelect>
       )
       break
     case "input":

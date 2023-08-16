@@ -91,7 +91,7 @@ export const SelectContext = createContext()
     Used in Pagination, Filters, SelectRow.  
     TODO: trigger active state styles (invert chevron?), menu theming, z-index, iframe / shadow dom, menu scrolling in popper mode -> make align-items default?, tests
 */
-export const Select = React.forwardRef(
+export const RSelect = React.forwardRef(
   ({
     ariaLabel,
     children,
@@ -318,7 +318,7 @@ export const Select = React.forwardRef(
   }
 )
 
-Select.propTypes = {
+RSelect.propTypes = {
   /** Pass an aria-label to the Select trigger */
   ariaLabel: PropTypes.string,
   /** Pass a custom className */
@@ -379,7 +379,7 @@ Select.propTypes = {
   truncateOptions: PropTypes.bool,
 }
 
-Select.defaultProps = {
+RSelect.defaultProps = {
   ariaLabel: "",
   className: "",
   children: null,

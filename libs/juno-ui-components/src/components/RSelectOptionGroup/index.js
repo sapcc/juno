@@ -1,0 +1,1 @@
+export { RSelectOptionGroup } from "./RSelectOptionGroup.component"

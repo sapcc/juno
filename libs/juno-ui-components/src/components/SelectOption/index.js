@@ -1,1 +1,0 @@
-export { SelectOption } from "./SelectOption.component.js"

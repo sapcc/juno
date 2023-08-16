@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import * as RadixSelect from "@radix-ui/react-select"
 import PropTypes from "prop-types"
-import {SelectContext} from "../Select/Select.component.js"
+import {SelectContext} from "../RSelect/RSelect.component.js"
 import "./selectOption.scss"
 
 const optionStyles = `
@@ -26,7 +26,7 @@ const optionStyles = `
 
 /** An individual select option. Use as child of Select. */
 
-export const SelectOption = React.forwardRef(
+export const RSelectOption = React.forwardRef(
   ({ 
     children, 
     value, 
@@ -52,7 +52,7 @@ export const SelectOption = React.forwardRef(
   }
 )
 
-SelectOption.propTypes = {
+RSelectOption.propTypes = {
   children: PropTypes.node,
   value: PropTypes.string,
   label: PropTypes.string,
@@ -60,7 +60,7 @@ SelectOption.propTypes = {
   className: PropTypes.string,
 }
 
-SelectOption.defaultProps = {
+RSelectOption.defaultProps = {
   children: null,
   value: "",
   label: "",

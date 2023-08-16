@@ -67,10 +67,13 @@ export { Radio } from "./components/Radio/index.js"
 export { RadioGroup } from "./components/RadioGroup/index.js"
 export { RadioRow } from "./components/RadioRow/index.js"
 export { SearchInput } from "./components/SearchInput/index.js"
-export { Select } from "./components/Select/index.js"
+
+export { RSelect } from "./components/RSelect/index.js"
 export { SelectDivider } from "./components/SelectDivider/index.js"
-export { SelectOption } from "./components/SelectOption/index.js"
-export { SelectOptionGroup } from "./components/SelectOptionGroup/index.js"
+export { RSelectOption } from "./components/RSelectOption/index.js"
+export { RSelectOptionGroup } from "./components/RSelectOptionGroup/index.js"
+
+
 export { SelectRow } from "./components/SelectRow/index.js"
 export { ShadowRoot } from "./components/ShadowRoot/index.js"
 export { SideNavigation } from "./components/SideNavigation/index.js"
