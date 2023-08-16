@@ -31,9 +31,9 @@ const PortalTemplate = ({ children, ...args }) => (
 export const Default = Template.bind({})
 Default.args = {
   children: [
-    <MenuItem key="1" label="Juno on Github" href="https://github.com/sapcc/juno"/>,
-    <MenuItem key="2" label="This item does nothing" />,
-    <MenuItem key="3" label="Disabled Item" disabled />,
+    <MenuItem key="1" label="Juno on Github" href="https://github.com/sapcc/juno" />,
+    <MenuItem key="2" label="This item does nothing" icon="help" />,
+    <MenuItem key="3" label="Disabled Item" href="https://github.com/sapcc/juno" disabled />,
     <MenuItem key="4" >
         <Button
         key={0}
@@ -42,7 +42,8 @@ Default.args = {
         size="small"
         className="jn-w-full"
       />
-    </MenuItem>
+    </MenuItem>,
+    <MenuItem key="5" onClick={ () => {} } label="Button as Item with OnClick" icon="help" />
   ],
 }
 
@@ -51,7 +52,7 @@ InsidePortal.args = {
   children: [
     <MenuItem key="1" label="Juno on Github" href="https://github.com/sapcc/juno"/>,
     <MenuItem key="2" label="This item does nothing" />,
-    <MenuItem key="3" label="Disabled Item" disabled />,
+    <MenuItem key="3" label="Disabled Item" href="https://github.com/sapcc/juno" disabled />,
     <MenuItem key="4" >
         <Button
         key={0}

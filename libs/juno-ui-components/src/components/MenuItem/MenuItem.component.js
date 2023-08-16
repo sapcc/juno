@@ -1,6 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
+import { Button } from "../Button/index.js"
+import { Menu } from "@headlessui/react"
 import { knownIcons } from "../Icon/Icon.component.js"
 
 const itemStyles = `
@@ -28,11 +30,11 @@ const iconStyles = `
 /** 
 A menu item to be used inside Menu.
 Can render `<a>`, `<button>`, or generic elements to hold other interactive elements.
-Use MenuSection to structure items inside a menu if needed.
 */
 export const MenuItem = ({
 	label,
 	icon,
+	disabled,
 	children,
 	onClick,
 	href,
@@ -40,56 +42,84 @@ export const MenuItem = ({
 	...props
 }) => {
 	
-	const icn = icon ? <Icon icon={icon} size="18" className={`${iconStyles}`} /> : null
-	const content = label || children
+	const icn = icon ? <Icon icon={icon} size="18" className={`${iconStyles}`} /> : ""
 	
-	const handleClick = (event) => {
-		onClick && onClick(event)
-	}
-	
-	const anchor = (
-		<a 
-			href={href} 
-			className={`juno-menu-item juno-menu-item-anchor ${itemStyles} ${actionableItemStyles} ${className}`} 
-			role="menuitem"
-			{ ...props } 
-		>
-			{icn}
-			{content}
-		</a>
+	return (
+		<Menu.Item disabled={disabled}>
+			{/* Render children as is if passed, otherwise render an <a> if href was passed, othwerwise render a button as passed, otherwise render plain text */}
+			<div>
+				{ children ?
+						children 
+					:
+						href ?
+							<>
+							{ icon ? <Icon icon={icon} size="18" className="jn-inline-block jn-mr-2" /> : "" }
+							<a href={href}>{label}</a>
+							</> 
+						:
+							onClick ?
+								<Button onClick={onClick} label={label} size="small" variant="subdued" icon={ icon ? icon : "" } className="jn-w-full" />
+							: 
+								<>
+									{ icon ? <Icon icon={icon} size="18" className="jn-inline-block jn-mr-2" /> : "" }
+									{ label }
+								</>
+				}
+			</div>
+		</Menu.Item>
 	)
 	
-	const button = (
-		<button 
-			onClick={handleClick} 
-			className={`juno-menu-item juno-menu-item-button ${itemStyles} ${actionableItemStyles} ${className}`}
-			role="menuitem"
-			{ ...props }
-		>
-			{icn}
-			{content}
-		</button>
-	)
-	
-	const plain = (
-		<div 
-			className={`juno-menu-item ${itemStyles} ${className}`} 
-			role="menuitem"
-			{ ...props } 
-		>
-			{icn}
-			{content}
-		</div>
-	)
-	
-	// render an anchor if an href prop was passed, otherwise render a button if onClick was passed, otherwise render non.interactive, plain element:
-	return href ? anchor : onClick ? button : plain
+	// const icn = icon ? <Icon icon={icon} size="18" className={`${iconStyles}`} /> : null
+	// const content = label || children
+	// 
+	// const handleClick = (event) => {
+	// 	onClick && onClick(event)
+	// }
+	// 
+	// const anchor = (
+	// 	<a 
+	// 		href={href} 
+	// 		className={`juno-menu-item juno-menu-item-anchor ${itemStyles} ${actionableItemStyles} ${className}`} 
+	// 		role="menuitem"
+	// 		{ ...props } 
+	// 	>
+	// 		{icn}
+	// 		{content}
+	// 	</a>
+	// )
+	// 
+	// const button = (
+	// 	<button 
+	// 		onClick={handleClick} 
+	// 		className={`juno-menu-item juno-menu-item-button ${itemStyles} ${actionableItemStyles} ${className}`}
+	// 		role="menuitem"
+	// 		{ ...props }
+	// 	>
+	// 		{icn}
+	// 		{content}
+	// 	</button>
+	// )
+	// 
+	// const plain = (
+	// 	<div 
+	// 		className={`juno-menu-item ${itemStyles} ${className}`} 
+	// 		role="menuitem"
+	// 		{ ...props } 
+	// 	>
+	// 		{icn}
+	// 		{content}
+	// 	</div>
+	// )
+	// 
+	// // render an anchor if an href prop was passed, otherwise render a button if onClick was passed, otherwise render non.interactive, plain element:
+	// return href ? anchor : onClick ? button : plain
 
 }
 
 MenuItem.propTypes = {
 	/** The label of the menu item. Will take precedence over children passed to the component. */
 	label: PropTypes.string,
+	disabled: PropTypes.bool,
 	/** Pass the name of an icon the button should show. Can be any icon included with Juno. */
 	icon: PropTypes.oneOf(knownIcons),
 	/** Add a className to the menu item */
@@ -105,6 +135,7 @@ MenuItem.propTypes = {
 MenuItem.defaultProps = {
 	label: "",
 	className: "",
+	disabled: false,
 	icon: null,
 	children: null,
 	href: "",

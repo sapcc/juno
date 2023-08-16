@@ -17,6 +17,14 @@ TODO:
 * don't ALWAYS render button!?!
 */
 
+const menuStyles = `
+  jn-overflow-hidden
+  jn-flex
+  jn-flex-col
+  jn-rounded
+  jn-bg-theme-background-lvl-1
+`
+
 const toggleStyles = `
 	hover:jn-text-theme-accent
 	active:jn-text-theme-accent
@@ -32,7 +40,7 @@ export const ContextMenu = ({
   icon, 
   className, 
   children, 
-  open, 
+  open,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -57,7 +65,7 @@ export const ContextMenu = ({
             `}>
             <Icon icon="moreVert"/>
           </Menu.Button>
-          <Menu.Items>
+          <Menu.Items className={`${menuStyles}`}>
             {children}
           </Menu.Items> 
         </Float>
