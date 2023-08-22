@@ -141,6 +141,7 @@ export const Select = ({
               ${ toggleStyles }
               ${ label && isNotEmptyString(label) ? "jn-pt-[0.4rem]" : "" }
               ${ disabled ? "juno-select-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
+              ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
               ${ isLoading ? "juno-combobox-loading jn-cursor-not-allowed" : "" }
               ${ hasError ? "juno-combobox-error jn-cursor-not-allowed" : "" }
             `}
