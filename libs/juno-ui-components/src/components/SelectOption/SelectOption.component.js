@@ -65,27 +65,32 @@ export const SelectOption = ({
       disabled={disabled} 
       value={value}  
     >
+    { ({ active, selected } ) => (
       <li
         className={`
           juno-select-option 
-          ${ optionStyles } 
-          ${ disabled ? "juno-select-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
-
-          
+          ${ optionStyles }
+          ${ selected ? "juno-select-option-selected " + selectedOptionStyles : unselectedOptionStyles }
+          ${ disabled ? "juno-select-option-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
           ${ className }
         `}
         {...props}
       >
-        { ({ selected }) => (<Icon icon="check" size="18" className={`${selectedIconStyles}`} />) }
-        <span 
+        { selected ? 
+            <Icon icon="check" size="18" className={`${selectedIconStyles}`} /> 
+          : 
+            "" 
+        }
+        <span
           className={`
             ${ disabled ? disabledOptionLabelStyles : "" }
             ${ truncateOptions ? truncateOptionStyles : "" }
           `}
         >
-          {value}
+          { value }
         </span>
       </li>
+    )}
     </Listbox.Option>
   )
 }
