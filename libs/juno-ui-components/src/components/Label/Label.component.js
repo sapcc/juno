@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef } from "react"
 import PropTypes from "prop-types"
 
 const labelstyles = `
@@ -41,16 +41,18 @@ const disabledstyles = `
 * A re-usable Label component
 */
 
-export const Label = ({
-	text,
-	htmlFor,
-	required,
-	disabled,
-	floating,
-	minimized,
-	className,
-	...props
-}) => {	
+export const Label = React.forwardRef(
+	(
+		{
+			text,
+			htmlFor,
+			required,
+			disabled,
+			floating,
+			minimized,
+			className,
+			...props
+	}, forwardedRef ) => {	
 	return (
 		<label 
 			className={`
@@ -75,7 +77,7 @@ export const Label = ({
 				"" }
 		</label>
 	)
-}
+})
 
 Label.propTypes = { 
 	/** Pass a string of text to be rendered as contents. Required.  */
