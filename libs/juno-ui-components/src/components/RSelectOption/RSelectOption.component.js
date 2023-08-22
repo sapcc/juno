@@ -43,7 +43,19 @@ export const RSelectOption = React.forwardRef(
     
     
     return (
-      <RadixSelect.Item className={`juno-select-option ${optionStyles} ${disabled ? "jn-opacity-50 jn-cursor-not-allowed" : ""} ${ truncateOptions === true ? "juno-select-option-truncate" : "" } ${className}`} ref={forwardedRef} value={value} disabled={disabled} {...props} >
+      <RadixSelect.Item 
+        className={`
+          juno-select-option 
+          ${optionStyles} 
+          ${disabled ? "jn-opacity-50 jn-cursor-not-allowed" : ""} 
+          ${ truncateOptions === true ? "juno-select-option-truncate" : "" } 
+          ${className}
+        `} 
+        ref={forwardedRef} 
+        value={value} 
+        disabled={disabled} 
+        {...props} 
+      >
         <RadixSelect.ItemText>
           {children || label || value }
         </RadixSelect.ItemText>
