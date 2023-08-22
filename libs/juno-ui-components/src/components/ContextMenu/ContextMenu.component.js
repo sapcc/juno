@@ -65,7 +65,10 @@ export const ContextMenu = ({
             `}>
             <Icon icon="moreVert"/>
           </Menu.Button>
-          <Menu.Items className={`${menuStyles}`}>
+          <Menu.Items 
+            as="ul"
+            className={`${menuStyles}`}
+          >
             {children}
           </Menu.Items> 
         </Float>

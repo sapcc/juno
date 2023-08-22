@@ -1,4 +1,4 @@
-import React from "react"
+import React, {Fragment} from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 import { Button } from "../Button/index.js"
@@ -45,9 +45,13 @@ export const MenuItem = ({
 	const icn = icon ? <Icon icon={icon} size="18" className={`${iconStyles}`} /> : ""
 	
 	return (
-		<Menu.Item disabled={disabled}>
+		<Menu.Item 
+			disabled={disabled}
+			as="li"
+			className={`juno-contextmenu-item ${itemStyles} ${className}`}
+		>
 			{/* Render children as is if passed, otherwise render an <a> if href was passed, othwerwise render a button as passed, otherwise render plain text */}
-			<div>
+
 				{ children ?
 						children 
 					:
@@ -65,7 +69,7 @@ export const MenuItem = ({
 									{ label }
 								</>
 				}
-			</div>
+	
 		</Menu.Item>
 	)
 	
