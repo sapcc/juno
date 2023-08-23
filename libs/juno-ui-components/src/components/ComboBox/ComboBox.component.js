@@ -166,6 +166,15 @@ export const ComboBox = ({
   const [isValid, setIsValid] = useState(false)
   const [hasFocus, setFocus] = useState(false)
   
+  const invalidated = useMemo(
+    () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
+    [invalid, errortext]
+  )
+  const validated = useMemo(
+    () => valid || (successtext && isNotEmptyString(successtext) ? true : false),
+    [valid, successtext]
+  )
+  
   useEffect(() => {
     setSelectedValue(value)
   }, [value] )
@@ -185,15 +194,6 @@ export const ComboBox = ({
   useEffect(() => {
     setIsLoading(loading)
   }, [loading])
-  
-  const invalidated = useMemo(
-    () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
-    [invalid, errortext]
-  )
-  const validated = useMemo(
-    () => valid || (successtext && isNotEmptyString(successtext) ? true : false),
-    [valid, successtext]
-  )
   
   const handleInputChange = (event) => {
     setSearchStr(event.target.value)
