@@ -73,7 +73,7 @@ describe("Select", () => {
     expect(screen.getByRole("button")).toHaveAttribute('aria-label', "my-select")
   })
   
-  test("renders a custom className to the Select toggle", async () => {
+  test("renders a custom className to the Select toggle as passed", async () => {
     render(<Select className="my-class" />)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveClass("my-class")
@@ -110,6 +110,24 @@ describe("Select", () => {
     render(<Select error />)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveClass("juno-select-error")
+  })
+  
+  test("opens the Select menu with options as passed when the user clicks the Select toggle", async () => {
+    render(
+      <Select>
+        <SelectOption value="Option 1" />
+        <SelectOption value="Option 2" />
+        <SelectOption value="Option 3" />
+      </Select>
+    )
+   const toggle = screen.getByRole("button")
+   expect(toggle).toBeInTheDocument()
+   await userEvent.click(toggle)
+   expect(screen.getByRole("listbox")).toBeInTheDocument()
+   expect(screen.queryAllByRole("option")).toHaveLength(3)
+   expect(screen.getAllByRole("option")[0]).toHaveTextContent("Option 1")
+   expect(screen.getAllByRole("option")[1]).toHaveTextContent("Option 2")
+   expect(screen.getAllByRole("option")[2]).toHaveTextContent("Option 3")
   })
   
   test("executes an onChange handler when the selected value changes", async () => {
