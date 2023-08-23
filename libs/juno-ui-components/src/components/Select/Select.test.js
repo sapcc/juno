@@ -67,7 +67,7 @@ describe("Select", () => {
     expect(document.querySelector(".juno-required")).toBeInTheDocument()
   })
   
-  test.skip("renders an aria-label as passed", async () => {
+  test("renders an aria-label as passed", async () => {
     render(<Select ariaLabel="my-select" />)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveAttribute('aria-label', "my-select")
