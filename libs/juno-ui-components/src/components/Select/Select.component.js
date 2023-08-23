@@ -54,6 +54,7 @@ const truncateStyles = `
 export const SelectContext = createContext()
 
 export const Select = ({
+  ariaLabel,
   children,
   className,
   defaultValue,
@@ -136,6 +137,7 @@ export const Select = ({
               ""
           }
           <Listbox.Button 
+            aria-label={ ariaLabel || label }
             as="button" 
             className={`
               juno-select-toggle
@@ -149,18 +151,18 @@ export const Select = ({
               ${ className }
             `}
           >
-            
-            { !hasError && !isLoading ?
+            {({ open }) => (
+              
+              (!hasError && !isLoading) ?
                 <>
-                  <span className={`${ truncateOptions ? truncateStyles : ""}`}>{ selectedValue || placeholder }</span>
-                  <span>
-                    <Icon icon={ open ? "expandLess" : "expandMore" } />
+                  <span className={`${ truncateOptions ? truncateStyles : ""}`}>
+                    { selectedValue || placeholder }
                   </span>
+                  <span><Icon icon={ open ? "expandLess" : "expandMore" } /></span>
                 </>
               :
                 <span className={`${centeredIconStyles}`} >
-                  {
-                    hasError ?
+                  { hasError ?
                      <Icon icon="errorOutline" color="jn-text-theme-error" className={"jn-cursor-not-allowed"} />
                     :
                       isLoading ?
@@ -169,8 +171,9 @@ export const Select = ({
                         ""
                   }
                 </span>
-            }
-            
+              
+            )}
+
           </Listbox.Button>
           <Listbox.Options 
             className={`
@@ -204,6 +207,7 @@ export const Select = ({
 }
 
 Select.propTypes = {
+  ariaLabel: PropTypes.string,
   children: PropTypes.node,
   className: PropTypes.string,
   defaultValue: PropTypes.string,
@@ -224,6 +228,7 @@ Select.propTypes = {
 }
 
 Select.defaultProps = {
+  ariaLabel: "",
   children: null,
   className: "",
   defaultValue: undefined,
