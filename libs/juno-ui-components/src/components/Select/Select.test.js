@@ -33,27 +33,27 @@ describe("Select", () => {
     expect(screen.getByRole("button")).toHaveTextContent("my-placeholder")
   })
   
-  test.skip("renders a Select toggle with an id as passed", async () => {
+  test("renders a Select toggle with an id as passed", async () => {
     render(<Select id="select-1" />)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveAttribute("id", "select-1")
   })
   
-  test.skip("renders a Select toggle with a generated unique id if no id was passed", async () => {
+  test("renders a Select toggle with a generated unique id if no id was passed", async () => {
     render(<Select />)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveAttribute("id")
     expect(screen.getByRole("button").getAttribute("id")).toMatch("juno-select-")
   })
   
-  test.skip("renders a Select toggle with an associated label with an id as passed", async () => {
+  test("renders a Select toggle with an associated label with an id as passed", async () => {
     render(<Select id="my-select" label="My Select"/>)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByLabelText("My Select")).toBeInTheDocument()
     expect(screen.getByLabelText("My Select")).toHaveClass("juno-select-toggle")
   })
   
-  test.skip("renders a Select toggle with a label associated by an auto-generated id if no id was passed ", async () => {
+  test("renders a Select toggle with a label associated by an auto-generated id if no id was passed ", async () => {
     render(<Select label="This is a Select" />)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByLabelText("This is a Select")).toBeInTheDocument()

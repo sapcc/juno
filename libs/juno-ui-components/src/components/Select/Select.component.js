@@ -62,6 +62,7 @@ export const Select = ({
   error,
   errortext,
   helptext,
+  id,
   label,
   loading,
   name,
@@ -79,7 +80,13 @@ export const Select = ({
   const isNotEmptyString = (str) => {
     return !(typeof str === 'string' && str.trim().length === 0)
   }
-
+  
+  const uniqueId = () => (
+    "juno-select-" + useId()
+  )
+  
+  const theId = id || uniqueId()
+  const helptextId = "juno-select-helptext-" + useId()
   
   const [selectedValue, setSelectedValue] = useState("")
   const [hasError, setHasError] = useState(false)
@@ -122,10 +129,12 @@ export const Select = ({
           onChange={handleChange}
           value={value}
           defaultValue={defaultValue}
+          {...props}
         >
           { label && isNotEmptyString(label) ?
               <Listbox.Label 
                 as={Label}
+                htmlFor={theId}
                 text={label}
                 className={`${labelStyles}`}
                 disabled={ disabled || isLoading || hasError } 
@@ -137,8 +146,10 @@ export const Select = ({
               ""
           }
           <Listbox.Button 
+            aria-describedby={ helptext ? helptextId : "" }
             aria-label={ ariaLabel || label }
             as="button" 
+            id={theId}
             className={`
               juno-select-toggle
               ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
@@ -196,7 +207,7 @@ export const Select = ({
             ""
         }
         { helptext && isNotEmptyString(helptext) ?
-            <FormHint text={helptext}  />
+            <FormHint text={helptext} id={helptextId} />
           :
             ""
          }
@@ -214,6 +225,7 @@ Select.propTypes = {
   disabled: PropTypes.bool,
   errortext: PropTypes.node,
   helptext: PropTypes.node,
+  id: PropTypes.node,
   label: PropTypes.string,
   loading: PropTypes.bool,
   name: PropTypes.string,
@@ -235,6 +247,7 @@ Select.defaultProps = {
   disabled: false,
   errortext: "",
   helptext: "",
+  id: "",
   label: undefined,
   loading: false,
   name: undefined,
