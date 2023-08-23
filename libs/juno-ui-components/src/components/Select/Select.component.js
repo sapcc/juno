@@ -1,4 +1,4 @@
-import React, { Fragment, createContext, useEffect, useId, useState } from "react"
+import React, { Fragment, createContext, useEffect, useId, useMemo, useState } from "react"
 import PropTypes from "prop-types"
 import { Listbox } from "@headlessui/react"
 import { SelectOption } from "../SelectOption/"
@@ -28,6 +28,20 @@ const toggleStyles = `
   focus:jn-outline-none
   focus:jn-ring-2
   focus:jn-ring-theme-focus
+`
+
+const defaultToggleBorderStyles = `
+
+`
+
+const validToggleStyles = `
+  jn-border
+  jn-border-theme-success
+`
+
+const invalidToggleStyles = `
+  jn-border
+  jn-border-theme-error
 `
 
 const centeredIconStyles = `
@@ -63,6 +77,7 @@ export const Select = ({
   errortext,
   helptext,
   id,
+  invalid,
   label,
   loading,
   name,
@@ -71,6 +86,7 @@ export const Select = ({
   required,
   successtext,
   truncateOptions,
+  valid,
   value,
   variant,
   width,
@@ -90,7 +106,18 @@ export const Select = ({
   
   const [selectedValue, setSelectedValue] = useState("")
   const [hasError, setHasError] = useState(false)
+  const [isInvalid, setIsInvalid] = useState(false)
+  const [isValid, setIsValid] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  
+  const invalidated = useMemo(
+    () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
+    [invalid, errortext]
+  )
+  const validated = useMemo(
+    () => valid || (successtext && isNotEmptyString(successtext) ? true : false),
+    [valid, successtext]
+  )
   
   useEffect(() => {
     setSelectedValue(value)
@@ -99,6 +126,14 @@ export const Select = ({
   useEffect(() => {
     setHasError(error)
   }, [error])
+  
+  useEffect(() => {
+    setIsInvalid(invalidated)
+  }, [invalidated])
+  
+  useEffect(() => {
+    setIsValid(validated)
+  }, [validated])
   
   useEffect(() => {
     setIsLoading(loading)
@@ -157,6 +192,9 @@ export const Select = ({
               ${ label && isNotEmptyString(label) ? "jn-pt-[0.4rem]" : "" }
               ${ disabled ? "juno-select-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
               ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
+              ${ isInvalid ? "juno-select-invalid " + invalidToggleStyles : "" } 
+              ${ isValid ? "juno-select-valid " + validToggleStyles : "" }  
+              ${ isValid || isInvalid ? "" : defaultToggleBorderStyles } 
               ${ isLoading ? "juno-select-loading jn-cursor-not-allowed" : "" }
               ${ hasError ? "juno-select-error jn-cursor-not-allowed" : "" }
               ${ className }
@@ -169,7 +207,17 @@ export const Select = ({
                   <span className={`${ truncateOptions ? truncateStyles : ""}`}>
                     { selectedValue || placeholder }
                   </span>
-                  <span><Icon icon={ open ? "expandLess" : "expandMore" } /></span>
+                  <span className="jn-flex">
+                    { isValid ? 
+                        <Icon icon="checkCircle" color="jn-text-theme-success" />
+                      : ""
+                    }
+                    { isInvalid ? 
+                        <Icon icon="dangerous" color="jn-text-theme-error" />
+                      : ""
+                    }
+                    <span><Icon icon={ open ? "expandLess" : "expandMore" } /></span>
+                  </span>
                 </>
               :
                 <span className={`${centeredIconStyles}`} >
@@ -226,6 +274,7 @@ Select.propTypes = {
   errortext: PropTypes.node,
   helptext: PropTypes.node,
   id: PropTypes.node,
+  invalid: PropTypes.bool,
   label: PropTypes.string,
   loading: PropTypes.bool,
   name: PropTypes.string,
@@ -234,6 +283,7 @@ Select.propTypes = {
   required: PropTypes.bool,
   successtext: PropTypes.node,
   truncateOptions: PropTypes.bool,
+  valid: PropTypes.bool,
   value: PropTypes.string,
   variant: PropTypes.oneOf(["", "primary", "primary-danger", "default", "subdued"]),
   width: PropTypes.oneOf(["full", "auto"])
@@ -248,14 +298,16 @@ Select.defaultProps = {
   errortext: "",
   helptext: "",
   id: "",
+  invalid: false,
   label: undefined,
   loading: false,
   name: undefined,
   onChange: undefined,
   placeholder: "Select…",
-  truncateOptions: false,
   required: false,
   successtext: "",
+  truncateOptions: false,
+  valid: false,
   value: undefined,
   variant: undefined,
   width: "full"

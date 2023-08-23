@@ -84,12 +84,32 @@ DisabledOption.args = {
   ]
 }
 
+export const Valid = Template.bind({})
+Valid.args = {
+  valid: true,
+  children: [
+    <SelectOption key="1" value="Option 1" />,
+    <SelectOption key="2" value="Option 2" />,
+    <SelectOption key="3" value="Option 3" />
+  ]
+}
+
+export const Invalid = Template.bind({})
+Invalid.args = {
+  invalid: true,
+  children: [
+    <SelectOption key="1" value="Option 1" />,
+    <SelectOption key="2" value="Option 2" />,
+    <SelectOption key="3" value="Option 3" />
+  ]
+}
+
 export const WithHelptext = Template.bind({})
 WithHelptext.args = {
   helptext: "You may select anything, really.",
   children: [
     <SelectOption key="1" value="Option 1" />,
-    <SelectOption key="2" value="Option 2" disabled />,
+    <SelectOption key="2" value="Option 2" />,
     <SelectOption key="3" value="Option 3" />
   ]
 }
@@ -99,7 +119,7 @@ WithHelptextAsNode.args = {
   helptext: <>More Info <a href="#">here</a>.</>,
   children: [
     <SelectOption key="1" value="Option 1" />,
-    <SelectOption key="2" value="Option 2" disabled />,
+    <SelectOption key="2" value="Option 2" />,
     <SelectOption key="3" value="Option 3" />
   ]
 }
@@ -109,7 +129,7 @@ WithErrortext.args = {
   errortext: "Please rethink your selection, somethig seems fishy.",
   children: [
     <SelectOption key="1" value="Option 1" />,
-    <SelectOption key="2" value="Option 2" disabled />,
+    <SelectOption key="2" value="Option 2" />,
     <SelectOption key="3" value="Option 3" />
   ]
 }
@@ -119,7 +139,7 @@ WithSuccesstext.args = {
   successtext: "That seems to be a valid selection.",
   children: [
     <SelectOption key="1" value="Option 1" />,
-    <SelectOption key="2" value="Option 2" disabled />,
+    <SelectOption key="2" value="Option 2" />,
     <SelectOption key="3" value="Option 3" />
   ]
 }

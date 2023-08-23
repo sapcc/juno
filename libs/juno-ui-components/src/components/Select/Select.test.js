@@ -85,16 +85,34 @@ describe("Select", () => {
     expect(screen.getByRole("button")).toBeDisabled()
   })
   
-  test.skip("renders a valid Select as passed", async () => {
+  test("renders a valid Select as passed", async () => {
     render(<Select valid />)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveClass("juno-select-valid")
     expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
   
-  test.skip("renders an invalid Select as passed", async () => {
+  test("renders an invalid Select as passed", async () => {
     render(<Select invalid />)
     expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveClass("juno-select-invalid")
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+  })
+  
+  test("renders a successtext as passed and validates the Element", async () => {
+    render(<Select successtext="great success!" />)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-success")
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("great success!")
+    expect(screen.getByRole("button")).toHaveClass("juno-select-valid")
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
+  })
+  
+  test("renders an errortext as passed and invalidates the Element", async () => {
+    render(<Select errortext="this is an error!" />)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-error")
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is an error!")
     expect(screen.getByRole("button")).toHaveClass("juno-select-invalid")
     expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
   })
