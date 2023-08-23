@@ -5,6 +5,7 @@ import { SelectOption } from "../SelectOption/"
 import { Label } from "../Label/"
 import { Icon } from "../Icon/"
 import { Spinner } from "../Spinner/"
+import { FormHint } from "../FormHint/"
 
 const labelStyles = `
   jn-no-wrap
@@ -180,6 +181,22 @@ export const Select = ({
             { children }
           </Listbox.Options>
         </Listbox>
+        
+        { errortext && isNotEmptyString(errortext) ?
+            <FormHint text={errortext} variant="error"/>
+          :
+            ""
+        }
+        { successtext && isNotEmptyString(successtext) ?
+            <FormHint text={successtext} variant="success"/>
+          :
+            ""
+        }
+        { helptext && isNotEmptyString(helptext) ?
+            <FormHint text={helptext}  />
+          :
+            ""
+         }
   
       </div>
     </SelectContext.Provider>
@@ -191,12 +208,15 @@ Select.propTypes = {
   className: PropTypes.string,
   defaultValue: PropTypes.string,
   disabled: PropTypes.bool,
+  errortext: PropTypes.node,
+  helptext: PropTypes.node,
   label: PropTypes.string,
   loading: PropTypes.bool,
   name: PropTypes.string,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   required: PropTypes.bool,
+  successtext: PropTypes.node,
   truncateOptions: PropTypes.bool,
   value: PropTypes.string,
   variant: PropTypes.oneOf(["", "primary", "primary-danger", "default", "subdued"]),
@@ -208,6 +228,8 @@ Select.defaultProps = {
   className: "",
   defaultValue: undefined,
   disabled: false,
+  errortext: "",
+  helptext: "",
   label: undefined,
   loading: false,
   name: undefined,
@@ -215,6 +237,7 @@ Select.defaultProps = {
   placeholder: "Select…",
   truncateOptions: false,
   required: false,
+  successtext: "",
   value: undefined,
   variant: undefined,
   width: "full"

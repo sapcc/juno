@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Select } from "./index.js"
 import { SelectOption } from "../SelectOption/"
 
+
 export default {
   title: "Forms/Select/Select",
   component: Select,
@@ -76,6 +77,46 @@ Disabled.args = {
 export const DisabledOption = Template.bind({})
 DisabledOption.args = {
   helptext: "Option 2 is not avilable",
+  children: [
+    <SelectOption key="1" value="Option 1" />,
+    <SelectOption key="2" value="Option 2" disabled />,
+    <SelectOption key="3" value="Option 3" />
+  ]
+}
+
+export const WithHelptext = Template.bind({})
+WithHelptext.args = {
+  helptext: "You may select anything, really.",
+  children: [
+    <SelectOption key="1" value="Option 1" />,
+    <SelectOption key="2" value="Option 2" disabled />,
+    <SelectOption key="3" value="Option 3" />
+  ]
+}
+
+export const WithHelptextAsNode = Template.bind({})
+WithHelptextAsNode.args = {
+  helptext: <>More Info <a href="#">here</a>.</>,
+  children: [
+    <SelectOption key="1" value="Option 1" />,
+    <SelectOption key="2" value="Option 2" disabled />,
+    <SelectOption key="3" value="Option 3" />
+  ]
+}
+
+export const WithErrortext = Template.bind({})
+WithErrortext.args = {
+  errortext: "Please rethink your selection, somethig seems fishy.",
+  children: [
+    <SelectOption key="1" value="Option 1" />,
+    <SelectOption key="2" value="Option 2" disabled />,
+    <SelectOption key="3" value="Option 3" />
+  ]
+}
+
+export const WithSuccesstext = Template.bind({})
+WithSuccesstext.args = {
+  successtext: "That seems to be a valid selection.",
   children: [
     <SelectOption key="1" value="Option 1" />,
     <SelectOption key="2" value="Option 2" disabled />,
