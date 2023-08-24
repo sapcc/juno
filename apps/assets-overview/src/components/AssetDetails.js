@@ -16,12 +16,7 @@ import {
   Pill,
 } from "juno-ui-components"
 import useStore from "../store"
-import {
-  currentState,
-  push,
-  addOnChangeListener,
-  removeOnChangeListener,
-} from "url-state-provider"
+import { currentState, push, onGlobalChange } from "url-state-provider"
 import { useQuery } from "@tanstack/react-query"
 import { fetchAssetsManifest } from "../actions"
 import { APP } from "../helpers"
@@ -102,10 +97,11 @@ const AssetDetails = () => {
     }
     updatePanelStateFromURL(urlState)
     // this listener reacts on any change on the url state
-    addOnChangeListener(urlStateKey, (newState) => {
-      updatePanelStateFromURL(newState)
+    const unregisterUrlListener = onGlobalChange((newState) => {
+      if (newState?.[urlStateKey])
+        updatePanelStateFromURL(newState[urlStateKey])
     })
-    return () => removeOnChangeListener(urlStateKey)
+    return unregisterUrlListener
   }, [urlStateKey])
 
   // call close reducer from url store
