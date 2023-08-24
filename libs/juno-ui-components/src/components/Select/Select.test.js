@@ -164,8 +164,13 @@ describe("Select", () => {
         <SelectOption value="Option 3" />
       </Select>
     )
-    expect(screen.getByRole("button")).toBeInTheDocument()
-    expect(screen.getByRole("button")).toHaveTextContent("Option 2")
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    expect(toggle).toHaveTextContent("Option 2")
+    await userEvent.click(toggle)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    expect(screen.getAllByRole("option")[1]).toHaveTextContent("Option 2")
+    expect(screen.getAllByRole("option")[1]).toHaveAttribute("aria-selected", "true")
   })
   
   test("opens the Select menu with options as passed when the user clicks the Select toggle", async () => {
