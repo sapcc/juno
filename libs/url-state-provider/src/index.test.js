@@ -3,7 +3,7 @@
  * which emulates the browser
  * @jest-environment jsdom
  */
-import LZString from "lz-string"
+import * as provider from "./index"
 
 Object.defineProperty(window, "location", {
   value: {
@@ -23,11 +23,9 @@ window.history.pushState = jest.fn().mockImplementation((state, title, url) => {
 
 describe("currentState", () => {
   describe("url does not contain state inforamtion", () => {
-    var provider
     beforeAll(() => {
       jest.resetModules()
       window.location.href = "http://localhost?prop1=test"
-      provider = require("./index")
     })
 
     it("should return empty object", () => {
@@ -36,20 +34,16 @@ describe("currentState", () => {
   })
 
   describe("url does contain state inforamtion", () => {
-    const state = LZString.compressToEncodedURIComponent(
-      JSON.stringify({
-        consumer1: { p: "/items" },
-        consumer2: { p: "/items/10", o: { tab: 2 } },
-      })
-    )
-    var provider
+    const state = provider.encode({
+      consumer1: { p: "/items" },
+      consumer2: { p: "/items/10", o: { tab: 2 } },
+    })
 
     beforeAll(() => {
       jest.resetModules()
       delete window["__url_state_provider"]
       window.location.href =
         "http://localhost?test1=test1&__s=" + state + "&test2=test2"
-      provider = require("./index")
     })
 
     it("should return state object for consumer1", () => {
@@ -66,20 +60,16 @@ describe("currentState", () => {
 })
 
 describe("push", () => {
-  const state = LZString.compressToEncodedURIComponent(
-    JSON.stringify({
-      consumer1: { p: "/items" },
-      consumer2: { p: "/items/10", o: { tab: 2 } },
-    })
-  )
-  var provider
+  const state = provider.encode({
+    consumer1: { p: "/items" },
+    consumer2: { p: "/items/10", o: { tab: 2 } },
+  })
 
   beforeAll(() => {
     jest.resetModules()
     delete window["__url_state_provider"]
     window.location.href =
       "http://localhost?test1=test1&__s=" + state + "&test2=test2"
-    provider = require("./index")
     provider.push("consumer1", { p: "/about", o: { tab: 1 } })
   })
 
@@ -98,22 +88,20 @@ describe("push", () => {
   })
 
   it("should modify state search param in URL", () => {
-    var newState = LZString.compressToEncodedURIComponent(
-      JSON.stringify({
-        consumer1: { p: "/about", o: { tab: 1 } },
-        consumer2: { p: "/items/10", o: { tab: 2 } },
-      })
-    )
+    var newState = provider.encode({
+      consumer1: { p: "/about", o: { tab: 1 } },
+      consumer2: { p: "/items/10", o: { tab: 2 } },
+    })
+
     expect(window.location.href.indexOf(newState) >= 0).toEqual(true)
   })
 
   it("should not modify other search params in URL", () => {
-    var newState = LZString.compressToEncodedURIComponent(
-      JSON.stringify({
-        consumer1: { p: "/about", o: { tab: 1 } },
-        consumer2: { p: "/items/10", o: { tab: 2 } },
-      })
-    )
+    var newState = provider.encode({
+      consumer1: { p: "/about", o: { tab: 1 } },
+      consumer2: { p: "/items/10", o: { tab: 2 } },
+    })
+
     expect(window.location.href).toEqual(
       "http://localhost?test1=test1&__s=" + newState + "&test2=test2"
     )
@@ -124,16 +112,14 @@ describe("push", () => {
       jest.resetModules()
       delete window["__url_state_provider"]
       window.location.href = "http://localhost"
-      provider = require("./index")
       provider.push("consumer1", { p: "/about" })
     })
 
     it("should add ?", () => {
-      var newState = LZString.compressToEncodedURIComponent(
-        JSON.stringify({
-          consumer1: { p: "/about" },
-        })
-      )
+      var newState = provider.encode({
+        consumer1: { p: "/about" },
+      })
+
       expect(window.location.href).toEqual("http://localhost?__s=" + newState)
     })
   })
@@ -156,25 +142,23 @@ describe("push", () => {
     // The browsers allow 2040 characters long URLs.
     // If we stay below 1500 characters, we can still support 50 different states with
     // a length of up to 1000 characters per path.
+
+    // console.log("==================", match?.[0]?.length)
     expect(match && match[1].length < 1500).toEqual(true)
   })
 })
 
 describe("replace", () => {
-  const state = LZString.compressToEncodedURIComponent(
-    JSON.stringify({
-      consumer1: { p: "/items" },
-      consumer2: { p: "/items/10", o: { tab: 2 } },
-    })
-  )
-  var provider
+  const state = provider.encode({
+    consumer1: { p: "/items" },
+    consumer2: { p: "/items/10", o: { tab: 2 } },
+  })
 
   beforeAll(() => {
     jest.resetModules()
     delete window["__url_state_provider"]
     window.location.href =
       "http://localhost?test1=test1&__s=" + state + "&test2=test2"
-    provider = require("./index")
     provider.replace("consumer1", { p: "/about", o: { tab: 1 } })
   })
 
@@ -193,22 +177,20 @@ describe("replace", () => {
   })
 
   it("should modify state search param in URL", () => {
-    var newState = LZString.compressToEncodedURIComponent(
-      JSON.stringify({
-        consumer1: { p: "/about", o: { tab: 1 } },
-        consumer2: { p: "/items/10", o: { tab: 2 } },
-      })
-    )
+    var newState = provider.encode({
+      consumer1: { p: "/about", o: { tab: 1 } },
+      consumer2: { p: "/items/10", o: { tab: 2 } },
+    })
+
     expect(window.location.href.indexOf(newState) >= 0).toEqual(true)
   })
 
   it("should not modify other search params in URL", () => {
-    var newState = LZString.compressToEncodedURIComponent(
-      JSON.stringify({
-        consumer1: { p: "/about", o: { tab: 1 } },
-        consumer2: { p: "/items/10", o: { tab: 2 } },
-      })
-    )
+    var newState = provider.encode({
+      consumer1: { p: "/about", o: { tab: 1 } },
+      consumer2: { p: "/items/10", o: { tab: 2 } },
+    })
+
     expect(window.location.href).toEqual(
       "http://localhost?test1=test1&__s=" + newState + "&test2=test2"
     )
@@ -219,26 +201,23 @@ describe("replace", () => {
       jest.resetModules()
       delete window["__url_state_provider"]
       window.location.href = "http://localhost"
-      provider = require("./index")
       provider.replace("consumer1", { p: "/about" })
     })
 
     it("should add ?", () => {
-      var newState = LZString.compressToEncodedURIComponent(
-        JSON.stringify({
-          consumer1: { p: "/about" },
-        })
-      )
+      var newState = provider.encode({
+        consumer1: { p: "/about" },
+      })
+
       expect(window.location.href).toEqual("http://localhost?__s=" + newState)
     })
   })
 })
 
 describe("addOnChangeListener", () => {
-  var listener, listener2, provider
+  var listener, listener2
   beforeAll(() => {
     jest.resetModules()
-    provider = require("./index")
     listener = jest.fn((newState) => null)
     listener2 = jest.fn((newState) => null)
   })
@@ -269,10 +248,9 @@ describe("addOnChangeListener", () => {
 })
 
 describe("removeOnChangeListener", () => {
-  var listener, provider
+  var listener
   beforeAll(() => {
     jest.resetModules()
-    provider = require("./index")
     listener = jest.fn((newState) => null)
   })
 
@@ -286,8 +264,6 @@ describe("removeOnChangeListener", () => {
 })
 
 describe("registerConsumer", () => {
-  var provider = require("./index")
-
   it("should be a function", () => {
     expect(typeof provider.registerConsumer === "function").toEqual(true)
   })

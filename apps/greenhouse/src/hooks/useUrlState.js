@@ -49,7 +49,7 @@ const useUrlState = () => {
         try {
           // get active app name from url state
           const activeApp = state?.[GREENHOUSE_STATE_KEY]?.[ACTIVE_APPS_KEY]
-          
+
           if (activeApp) {
             // add active app name and state
             title += ` - ${activeApp}`
