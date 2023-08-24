@@ -103,7 +103,7 @@ describe("push", () => {
     })
 
     expect(window.location.href).toEqual(
-      "http://localhost?test1=test1&__s=" + newState + "&test2=test2"
+      "http://localhost/?test1=test1&__s=" + newState + "&test2=test2"
     )
   })
 
@@ -120,7 +120,7 @@ describe("push", () => {
         consumer1: { p: "/about" },
       })
 
-      expect(window.location.href).toEqual("http://localhost?__s=" + newState)
+      expect(window.location.href).toEqual("http://localhost/?__s=" + newState)
     })
   })
 
@@ -138,13 +138,11 @@ describe("push", () => {
       states[key] = state
     }
 
-    var match = window.location.href.match(/.+__s=([^&]+)/)
+    var urlState = new URL(window.location.href).searchParams.get("__s")
     // The browsers allow 2040 characters long URLs.
     // If we stay below 1500 characters, we can still support 50 different states with
     // a length of up to 1000 characters per path.
-
-    // console.log("==================", match?.[0]?.length)
-    expect(match && match[1].length < 1500).toEqual(true)
+    expect(urlState.length < 1500).toEqual(true)
   })
 })
 
@@ -192,7 +190,7 @@ describe("replace", () => {
     })
 
     expect(window.location.href).toEqual(
-      "http://localhost?test1=test1&__s=" + newState + "&test2=test2"
+      "http://localhost/?test1=test1&__s=" + newState + "&test2=test2"
     )
   })
 
@@ -209,7 +207,7 @@ describe("replace", () => {
         consumer1: { p: "/about" },
       })
 
-      expect(window.location.href).toEqual("http://localhost?__s=" + newState)
+      expect(window.location.href).toEqual("http://localhost/?__s=" + newState)
     })
   })
 })
