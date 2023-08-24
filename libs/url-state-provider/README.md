@@ -175,4 +175,4 @@ unregisterConsumer2()
 
 ## License
 
-URL State Provider is licensed under the [MIT License](LICENSE).
+URL State Provider is licensed under the [Apache License](LICENSE).
