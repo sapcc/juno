@@ -64,9 +64,11 @@ function decode(string) {
  * @returns json
  */
 function URLToState() {
-  var match = window.location.href.match(URL_REGEX)
-  if (!match) return {}
-  return decode(match[1])
+  var urlStateParam = new URLSearchParams(window.location.search).get(
+    SEARCH_KEY
+  )
+  if (!urlStateParam) return {}
+  return decode(urlStateParam)
 }
 
 /**
@@ -86,18 +88,9 @@ function stateToQueryParam(state) {
  */
 function stateToURL(state) {
   var encodedState = encode(state)
-  var href = window.location.href
-  var match = href.match(URL_REGEX)
-
-  if (match) return href.replace(match[1], encodedState)
-
-  return (
-    href +
-    (href.indexOf("?") >= 0 ? "&" : "?") +
-    SEARCH_KEY +
-    "=" +
-    encodedState
-  )
+  var newUrl = new URL(window.location.href)
+  newUrl.searchParams.set(SEARCH_KEY, encodedState)
+  return decodeURIComponent(newUrl.toString())
 }
 
 /**
