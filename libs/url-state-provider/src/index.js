@@ -2,7 +2,6 @@ import LZString from "lz-string"
 import JsonURL from "@jsonurl/jsonurl"
 
 var SEARCH_KEY = "__s"
-var URL_REGEX = new RegExp("[?&]" + SEARCH_KEY + "=([^&#]*)")
 
 /**
  * Variable where to host listeners for history changes
@@ -20,7 +19,6 @@ function encode(json, options = {}) {
   try {
     let urlState = JsonURL.stringify(json, {
       AQF: true,
-      //impliedStringLiterals: true,
       ignoreNullArrayMembers: true,
       ignoreNullObjectMembers: true,
     })
@@ -32,7 +30,7 @@ function encode(json, options = {}) {
     //return LZString.compressToEncodedURIComponent(JSON.stringify(json))
     return urlState
   } catch (e) {
-    console.warn("URL State Router: Could not encode data", data)
+    console.warn("URL State Provider: Could not encode data", data)
     return ""
   }
 }
@@ -45,15 +43,20 @@ function encode(json, options = {}) {
 function decode(string) {
   try {
     // try to decode as jsonurl
-    let json = JsonURL.parse(string, { AQF: true })
+    let json = JsonURL.parse(encodeURIComponent(string), { AQF: true })
 
     // if parsed value is an object, return it
     if (json && typeof json === "object") return json
+  } catch (e) {
+    // do nothing
+    // go to the next step try to decode using lz-string
+  }
 
+  try {
     // try to decode as lz-string
     return JSON.parse(LZString.decompressFromEncodedURIComponent(string))
   } catch (e) {
-    console.warn("URL State Router: Could not decode string: ", string, e)
+    console.warn("URL State Provider: Could not decode string: ", string, e)
     return {}
   }
 }
@@ -64,9 +67,8 @@ function decode(string) {
  * @returns json
  */
 function URLToState() {
-  var urlStateParam = new URLSearchParams(window.location.search).get(
-    SEARCH_KEY
-  )
+  var currentUrl = new URL(window.location.href)
+  var urlStateParam = currentUrl.searchParams.get(SEARCH_KEY)
   if (!urlStateParam) return {}
   return decode(urlStateParam)
 }
@@ -90,6 +92,7 @@ function stateToURL(state) {
   var encodedState = encode(state)
   var newUrl = new URL(window.location.href)
   newUrl.searchParams.set(SEARCH_KEY, encodedState)
+  //return newUrl.toString()
   return decodeURIComponent(newUrl.toString())
 }
 
