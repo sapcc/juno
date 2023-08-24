@@ -49,7 +49,6 @@ export const SelectOption = ({
   children,
   className,
   disabled,
-  label,
   value,
   ...props
 }) => {
@@ -72,6 +71,7 @@ export const SelectOption = ({
           ${ optionStyles }
           ${ selected ? "juno-select-option-selected " + selectedOptionStyles : unselectedOptionStyles }
           ${ disabled ? "juno-select-option-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
+          ${ truncateOptions ? "juno-select-option-truncate" : "" }
           ${ className }
         `}
         {...props}

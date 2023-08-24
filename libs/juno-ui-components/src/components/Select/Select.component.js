@@ -164,7 +164,7 @@ export const Select = ({
           onChange={handleChange}
           value={value}
           defaultValue={defaultValue}
-          {...props}
+          
         >
           { label && isNotEmptyString(label) ?
               <Listbox.Label 
@@ -199,6 +199,7 @@ export const Select = ({
               ${ hasError ? "juno-select-error jn-cursor-not-allowed" : "" }
               ${ className }
             `}
+            {...props}
           >
             {({ open }) => (
               

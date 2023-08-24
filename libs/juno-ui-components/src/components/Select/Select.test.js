@@ -130,6 +130,44 @@ describe("Select", () => {
     expect(screen.getByRole("button")).toHaveClass("juno-select-error")
   })
   
+  test("renders non-truncated Select Options by default", async () => {
+    render(
+      <Select>
+        <SelectOption value="1">Option 1</SelectOption>
+      </Select>
+    )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    await userEvent.click(toggle)
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).not.toHaveClass("juno-select-option-truncate")
+  })
+  
+  test("renders truncated Select Options as passed", async () => {
+    render(
+      <Select truncateOptions>
+        <SelectOption value="1">Option 1</SelectOption>
+      </Select>
+    )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    await userEvent.click(toggle)
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveClass("juno-select-option-truncate")
+  })
+  
+  test("renders a Select with a value selected as passed", async () => {
+    render(
+      <Select value="Option 2">
+        <SelectOption value="Option 1" />
+        <SelectOption value="Option 2" />
+        <SelectOption value="Option 3" />
+      </Select>
+    )
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveTextContent("Option 2")
+  })
+  
   test("opens the Select menu with options as passed when the user clicks the Select toggle", async () => {
     render(
       <Select>

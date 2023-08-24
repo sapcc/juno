@@ -23,6 +23,16 @@ const Template = ({children, ...args}) => {
   )
 }
 
+const ConstrainedWidthTemplate = ({children, ...args}) => {
+  return (
+    <div style={ {width: "300px"} }>
+      <Select {...args}>
+        { children }
+      </Select>
+    </div>
+  )
+}
+
 
 export const Default = Template.bind({})
 Default.args = {
@@ -164,7 +174,7 @@ Loading.args = {
   ]
 }
 
-export const TruncatedOptions = Template.bind({})
+export const TruncatedOptions = ConstrainedWidthTemplate.bind({})
 TruncatedOptions.args = {
   truncateOptions: true,
   children: [
