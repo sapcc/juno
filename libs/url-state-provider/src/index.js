@@ -1,4 +1,5 @@
 import LZString from "lz-string"
+import JsonURL from "@jsonurl/jsonurl"
 
 var SEARCH_KEY = "__s"
 var URL_REGEX = new RegExp("[?&]" + SEARCH_KEY + "=([^&#]*)")
@@ -10,13 +11,26 @@ var onHistoryChangeListeners = {}
 var onGlobalChangeListeners = []
 
 /**
- * Encode json data using lz-string
+ * Encode json data using json-url or lz-string. It automatically detects the best encoding.
  * @param {JSON} json data to be encoded
+ * @param {Object} options options for the encoding. Possible values: mode: "auto" or "humanize"
  * @returns encoded string
  */
-function encode(json) {
+function encode(json, options = {}) {
   try {
-    return LZString.compressToEncodedURIComponent(JSON.stringify(json))
+    let urlState = JsonURL.stringify(json, {
+      AQF: true,
+      //impliedStringLiterals: true,
+      ignoreNullArrayMembers: true,
+      ignoreNullObjectMembers: true,
+    })
+    if (options?.mode === "humanize") return urlState
+
+    if (urlState.length > 1800) {
+      urlState = LZString.compressToEncodedURIComponent(JSON.stringify(json))
+    }
+    //return LZString.compressToEncodedURIComponent(JSON.stringify(json))
+    return urlState
   } catch (e) {
     console.warn("URL State Router: Could not encode data", data)
     return ""
@@ -24,15 +38,22 @@ function encode(json) {
 }
 
 /**
- * Decode using lz-string
+ * Decode using json-url or lz-string. It automatically detects the encoding.
  * @param {string} string to be decoded
  * @returns json
  */
 function decode(string) {
   try {
+    // try to decode as jsonurl
+    let json = JsonURL.parse(string, { AQF: true })
+
+    // if parsed value is an object, return it
+    if (json && typeof json === "object") return json
+
+    // try to decode as lz-string
     return JSON.parse(LZString.decompressFromEncodedURIComponent(string))
   } catch (e) {
-    console.warn("URL State Router: Could not decode string", string, e)
+    console.warn("URL State Router: Could not decode string: ", string, e)
     return {}
   }
 }
@@ -279,4 +300,6 @@ export {
   stateToURL,
   stateToQueryParam,
   onGlobalChange,
+  decode,
+  encode,
 }
