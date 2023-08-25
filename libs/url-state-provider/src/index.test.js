@@ -41,7 +41,6 @@ describe("currentState", () => {
 
     beforeAll(() => {
       jest.resetModules()
-      delete window["__url_state_provider"]
       window.location.href =
         "http://localhost?test1=test1&__s=" + state + "&test2=test2"
     })
