@@ -53,6 +53,7 @@ const centeredIconStyles = `
 `
 
 const menuStyles = `
+  jn-mt-1
   jn-rounded
   jn-bg-theme-background-lvl-1
 `

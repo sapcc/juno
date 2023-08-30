@@ -174,6 +174,27 @@ Loading.args = {
   ]
 }
 
+export const ManyOptions = Template.bind({})
+ManyOptions.args = {
+  children: [
+    <SelectOption key="1" value="Option 1" />,
+    <SelectOption key="2" value="Option 2" />,
+    <SelectOption key="3" value="Option 3" />,
+    <SelectOption key="4" value="Option 4" />,
+    <SelectOption key="5" value="Option 5" />,
+    <SelectOption key="6" value="Option 6" />,
+    <SelectOption key="7" value="Option 7" />,
+    <SelectOption key="8" value="Option 8" />,
+    <SelectOption key="9" value="Option 9" />,
+    <SelectOption key="10" value="Option 10" />,
+    <SelectOption key="11" value="Option 11" />,
+    <SelectOption key="12" value="Option 12" />,
+    <SelectOption key="13" value="Option 13" />,
+    <SelectOption key="14" value="Option 14" />,
+    <SelectOption key="15" value="Option 15" />
+  ]
+}
+
 export const TruncatedOptions = ConstrainedWidthTemplate.bind({})
 TruncatedOptions.args = {
   truncateOptions: true,
