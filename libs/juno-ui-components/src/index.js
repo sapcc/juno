@@ -14,6 +14,8 @@ export { CheckboxRow } from "./components/CheckboxRow/index.js"
 export { CheckboxGroup } from "./components/CheckboxGroup/index.js"
 export { Code } from "./components/Code/index.js"
 export { CodeBlock } from "./components/CodeBlock/index.js"
+export { ComboBox } from "./components/ComboBox/index.js"
+export { ComboBoxOption } from "./components/ComboBoxOption/index.js"
 export { ContentArea } from "./components/ContentArea/index.js"
 export { ContentAreaHeading } from "./components/ContentAreaHeading/index.js"
 export { ContentAreaToolbar } from "./components/ContentAreaToolbar/index.js"
@@ -72,6 +74,9 @@ export { RSelect } from "./components/RSelect/index.js"
 export { SelectDivider } from "./components/SelectDivider/index.js"
 export { RSelectOption } from "./components/RSelectOption/index.js"
 export { RSelectOptionGroup } from "./components/RSelectOptionGroup/index.js"
+
+export { Select } from "./components/Select/index.js"
+export { SelectOption } from "./components/SelectOption/index.js"
 
 
 export { SelectRow } from "./components/SelectRow/index.js"
