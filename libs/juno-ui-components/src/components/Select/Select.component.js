@@ -205,7 +205,7 @@ export const Select = ({
               
               (!hasError && !isLoading) ?
                 <>
-                  <span className={`${ truncateOptions ? truncateStyles : ""}`}>
+                  <span className={`${truncateStyles}`}>
                     { selectedValue || placeholder }
                   </span>
                   <span className="jn-flex">

@@ -192,3 +192,21 @@ TruncatedOptions.args = {
     />
   ]
 }
+
+export const NonTruncatedOptions = ConstrainedWidthTemplate.bind({})
+NonTruncatedOptions.args = {
+  children: [
+    <SelectOption  
+      value="Option with a very long title that will most likely not fit into the menu width" 
+      key="1"
+    />,
+    <SelectOption 
+      value="Another option with a very long title that will most likely not fit into the menu width" 
+      key="2"      
+    />,
+    <SelectOption 
+      value="Yet another option with a very long title that will most likely not fit into the menu width" 
+      key="3"
+    />
+  ]
+}
