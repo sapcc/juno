@@ -191,6 +191,23 @@ describe("Select", () => {
    expect(screen.getAllByRole("option")[2]).toHaveTextContent("Option 3")
   })
   
+  test("changes the selected value as clicked by users", async () => {
+    render(
+        <Select>
+          <SelectOption value="Option 1" />
+          <SelectOption value="Option 2" />
+          <SelectOption value="Option 3" />
+        </Select>
+      )
+     const toggle = screen.getByRole("button")
+     expect(toggle).toBeInTheDocument()
+     await userEvent.click(toggle)
+     expect(screen.getByRole("listbox")).toBeInTheDocument()
+     const option2 = screen.getAllByRole("option")[1]
+     await userEvent.click(option2)
+     expect(toggle).toHaveTextContent("Option 2")
+  })
+  
   test("executes an onChange handler when the selected value changes", async () => {
     render(
       <Select onChange={mockOnChange} >
