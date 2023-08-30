@@ -1,5 +1,6 @@
 import React, { useEffect, useState} from "react"
 import PropTypes from "prop-types"
+import { Menu as HLMenu } from "@headlessui/react"
 
 const baseStyles = `
 	jn-overflow-hidden
@@ -34,12 +35,14 @@ export const Menu = ({
 	...props
 }) => {
 	return (
-		<div className={`juno-menu juno-menu-${variant} ${baseStyles} ${variantStyles(variant)} ${className}`} 
+		<HLMenu>
+			<div className={`juno-menu juno-menu-${variant} ${baseStyles} ${variantStyles(variant)} ${className}`} 
 			role="menu" 
 			{...props} 
 		>
-			{ children }
-		</div>
+				{ children }
+			</div>
+		</HLMenu>
 	)
 }
 
