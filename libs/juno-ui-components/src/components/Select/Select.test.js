@@ -191,7 +191,7 @@ describe("Select", () => {
    expect(screen.getAllByRole("option")[2]).toHaveTextContent("Option 3")
   })
   
-  test("changes the selected value as clicked by users", async () => {
+  test("changes the selected value as clicked by a user", async () => {
     render(
         <Select>
           <SelectOption value="Option 1" />
@@ -201,6 +201,7 @@ describe("Select", () => {
       )
      const toggle = screen.getByRole("button")
      expect(toggle).toBeInTheDocument()
+     expect(toggle).toHaveTextContent("Select…")
      await userEvent.click(toggle)
      expect(screen.getByRole("listbox")).toBeInTheDocument()
      const option2 = screen.getAllByRole("option")[1]
