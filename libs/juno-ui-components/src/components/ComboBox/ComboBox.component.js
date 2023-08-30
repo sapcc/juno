@@ -166,6 +166,7 @@ export const ComboBox = ({
   const [isValid, setIsValid] = useState(false)
   const [hasFocus, setFocus] = useState(false)
   
+    
   const invalidated = useMemo(
     () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
     [invalid, errortext]
