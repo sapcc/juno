@@ -30,6 +30,7 @@ const selectedOptionStyles = `
 const selectedIconStyles = `
   jn-inline-block
   jn-mr-1.5
+  jn-overflow-auto
 `
 
 const disabledOptionLabelStyles = `
