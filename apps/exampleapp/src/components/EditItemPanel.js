@@ -5,6 +5,8 @@ import {
   PanelBody,
   PanelFooter,
   FormRow,
+  Select,
+  SelectOption,
   TextInput,
 } from "juno-ui-components"
 import useStore from "../store"
@@ -101,11 +103,18 @@ const EditItemPanel = ({ closeCallback }) => {
           />
         </FormRow>
         <FormRow>
-          <TextInput
+          {/* <TextInput
             label="Country"
             value={formState?.countries}
             onChange={(e) => onAttrChanged("countries", e.target.value)}
-          />
+          /> */}
+          <Select>
+            <SelectOption value="China"/>
+            <SelectOption value="Georgia"/>
+            <SelectOption value="Germany"/>
+            <SelectOption value="Nepal" />
+            <SelectOption value="Switzerland"/>
+          </Select>
         </FormRow>
       </Form>
     </PanelBody>

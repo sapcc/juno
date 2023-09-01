@@ -3,7 +3,13 @@ import React, { useState } from "react"
 import useStore from "../store"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { createPeak } from "../actions"
-import { Modal, FormRow, TextInput } from "juno-ui-components"
+import { 
+  Modal, 
+  FormRow, 
+  TextInput,
+  Select,
+  SelectOption
+} from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
 
 const NewItemModal = () => {
@@ -79,10 +85,13 @@ const NewItemModal = () => {
         />
       </FormRow>
       <FormRow>
-        <TextInput
-          label="Country"
-          onChange={(e) => onAttrChanged("country", e.target.value)}
-        />
+        <Select>
+          <SelectOption value="China"/>
+          <SelectOption value="Georgia"/>
+          <SelectOption value="Germany"/>
+          <SelectOption value="Nepal" />
+          <SelectOption value="Switzerland"/>
+        </Select>
       </FormRow>
       <FormRow>
         <TextInput

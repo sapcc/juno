@@ -17,6 +17,7 @@ import PanelManager from "./components/PanelManager"
 import { useQuery } from "@tanstack/react-query"
 import { fetchPeaks } from "./actions"
 import PeaksList from "./components/PeaksList/PeaksList"
+import Playground from "./components/Playground"
 
 const AppContent = (props) => {
   const endpoint = useStore((state) => state.endpoint)
@@ -95,8 +96,7 @@ const AppContent = (props) => {
         </TabPanel>
         <TabPanel>
           <Container py>
-            Content Panel two. Normally you will probably want to put the
-            TabPanel content into separate components.
+            <Playground />
           </Container>
         </TabPanel>
       </MainTabs>
