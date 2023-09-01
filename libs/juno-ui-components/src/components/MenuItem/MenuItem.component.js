@@ -1,8 +1,9 @@
-import React, {Fragment} from "react"
+import React, { Fragment, useContext } from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
 import { Button } from "../Button/index.js"
 import { Menu } from "@headlessui/react"
+import { MenuContext } from "../Menu/Menu.component.js"
 import { knownIcons } from "../Icon/Icon.component.js"
 
 const itemStyles = `
@@ -18,6 +19,14 @@ const itemStyles = `
 	jn-truncate
 	jn-text-left
 	jn-bg-theme-background-lvl-1
+`
+
+const smallStyles = `
+	jn-text-sm
+`
+
+const normalStyles = `
+	jn-text-base
 `
 
 const actionableItemStyles = `
@@ -44,15 +53,32 @@ export const MenuItem = ({
 	
 	const icn = icon ? <Icon icon={icon} size="18" className={`${iconStyles}`} /> : ""
 	
+	const handleClick = (event) => {
+		onClick && onClick(event)
+	}
+	
+	const menuContext = useContext(MenuContext)
+	const {
+		variant: variant,
+	} = menuContext || {}
+	
 	return (
 		<Menu.Item 
 			disabled={disabled}
-			as="li"
-			className={`juno-contextmenu-item ${itemStyles} ${className}`}
+			as={ href ? "a" : "button"}
+			href={href}
+			onClick={ handleClick }
+			className={`
+				juno-menu-item 
+				${ href ? "juno-menu-item-anchor" : "juno-menu-item-button"} 
+				${ itemStyles } 
+				${ variant === "small" ? smallStyles : normalStyles }
+				${ className }
+			`}
 		>
 			{/* Render children as is if passed, otherwise render an <a> if href was passed, othwerwise render a button as passed, otherwise render plain text */}
 
-				{ children ?
+				{/* { children ?
 						children 
 					:
 						href ?
@@ -62,61 +88,19 @@ export const MenuItem = ({
 							</> 
 						:
 							onClick ?
-								<Button onClick={onClick} label={label} size="small" variant="subdued" icon={ icon ? icon : "" } className="jn-w-full" />
+								<Button onClick={handleClick} label={label} size="small" variant="subdued" icon={ icon ? icon : "" } className="jn-w-full" />
 							: 
 								<>
 									{ icon ? <Icon icon={icon} size="18" className="jn-inline-block jn-mr-2" /> : "" }
 									{ label }
 								</>
+				} */}
+				{ icon ?
+					<Icon icon={icon} size="18" className="jn-inline-block jn-mr-2" /> : ""
 				}
-	
+				{ children || label }
 		</Menu.Item>
 	)
-	
-	// const icn = icon ? <Icon icon={icon} size="18" className={`${iconStyles}`} /> : null
-	// const content = label || children
-	// 
-	// const handleClick = (event) => {
-	// 	onClick && onClick(event)
-	// }
-	// 
-	// const anchor = (
-	// 	<a 
-	// 		href={href} 
-	// 		className={`juno-menu-item juno-menu-item-anchor ${itemStyles} ${actionableItemStyles} ${className}`} 
-	// 		role="menuitem"
-	// 		{ ...props } 
-	// 	>
-	// 		{icn}
-	// 		{content}
-	// 	</a>
-	// )
-	// 
-	// const button = (
-	// 	<button 
-	// 		onClick={handleClick} 
-	// 		className={`juno-menu-item juno-menu-item-button ${itemStyles} ${actionableItemStyles} ${className}`}
-	// 		role="menuitem"
-	// 		{ ...props }
-	// 	>
-	// 		{icn}
-	// 		{content}
-	// 	</button>
-	// )
-	// 
-	// const plain = (
-	// 	<div 
-	// 		className={`juno-menu-item ${itemStyles} ${className}`} 
-	// 		role="menuitem"
-	// 		{ ...props } 
-	// 	>
-	// 		{icn}
-	// 		{content}
-	// 	</div>
-	// )
-	// 
-	// // render an anchor if an href prop was passed, otherwise render a button if onClick was passed, otherwise render non.interactive, plain element:
-	// return href ? anchor : onClick ? button : plain
 
 }
 
@@ -142,6 +126,6 @@ MenuItem.defaultProps = {
 	disabled: false,
 	icon: null,
 	children: null,
-	href: "",
+	href: undefined,
 	onClick: undefined,
 }

@@ -66,7 +66,6 @@ export const ContextMenu = ({
             <Icon icon="moreVert"/>
           </Menu.Button>
           <Menu.Items 
-            as="ul"
             className={`${menuStyles}`}
           >
             {children}

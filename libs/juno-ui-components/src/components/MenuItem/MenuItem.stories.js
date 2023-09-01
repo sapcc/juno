@@ -1,5 +1,6 @@
 import React from "react"
 import { MenuItem } from "./index.js"
+import { Menu } from "../Menu/"
 import { Button } from "../Button/index.js"
 import { knownIcons } from "../Icon/Icon.component.js"
 
@@ -15,12 +16,18 @@ export default {
 	},
 }
 
-const Template = (args) => <MenuItem {...args} />
+const Template = (args) => <Menu><MenuItem {...args} /></Menu>
+
+const SmallTemplate = (args) => <Menu variant="small"><MenuItem {...args} /></Menu>
 
 export const Default = Template.bind({})
 Default.args = {
 	label: "Menu Item",
-	onClick: null, // ???
+}
+
+export const SmallMenuItem = SmallTemplate.bind({})
+SmallMenuItem.args = {
+	label: "Small menu item"
 }
 
 export const WithIcon = Template.bind({})
