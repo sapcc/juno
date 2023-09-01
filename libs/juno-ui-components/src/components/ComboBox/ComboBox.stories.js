@@ -17,6 +17,16 @@ const Template = ({children, ...args}) => {
   )
 }
 
+const ConstrainedWidthTemplate = ({children, ...args}) => {
+  return (
+    <div style={ {width: "300px"} }>
+      <ComboBox {...args}>
+        { children }
+      </ComboBox>
+    </div>
+  )
+}
+
 export const Default = Template.bind({})
 Default.args = {
   children: [
@@ -291,7 +301,7 @@ WithSuccessText.args = {
   ]
 }
 
-export const NonTruncatedOptions = Template.bind({})
+export const NonTruncatedOptions = ConstrainedWidthTemplate.bind({})
 NonTruncatedOptions.args = {
   children: [
     <ComboBoxOption value="Option with a very long title that is so long it will most likely not fit into the menu width, not at all really." key="1"></ComboBoxOption>,
@@ -299,7 +309,7 @@ NonTruncatedOptions.args = {
   ]
 }
 
-export const TruncatedOptions = Template.bind({})
+export const TruncatedOptions = ConstrainedWidthTemplate.bind({})
 TruncatedOptions.args = {
   truncateOptions: true,
   children: [
