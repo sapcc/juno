@@ -11,8 +11,6 @@ const StoreProvider = ({ children }) => (
 
 const useAppStore = (selector) => create(useContext(StoreContext), selector)
 
-export const useGlobalsEndpoint = () =>
-  useAppStore((state) => state.globals.endpoint)
 export const useGlobalsUrlStateKey = () =>
   useAppStore((state) => state.globals.urlStateKey)
 export const useGlobalsActions = () =>

@@ -11,16 +11,24 @@ const URL_STATE_KEY = "template"
 /* --------------------------- */
 
 const App = (props = {}) => {
-  const { setEndpoint, setUrlStateKey } = useGlobalsActions()
+  const { setUrlStateKey } = useGlobalsActions()
 
   // Create query client which it can be used from overall in the app
-  const queryClient = new QueryClient()
+  // set default endpoint to fetch data
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        meta: {
+          endpoint: props.endpoint || props.currentHost || "",
+        },
+      },
+    },
+  })
 
   // on app initial load save Endpoint and URL_STATE_KEY so it can be
   // used from overall in the application
   React.useEffect(() => {
     // set to empty string to fetch local test data in dev mode
-    setEndpoint(props.endpoint || props.currentHost || "")
     setUrlStateKey(URL_STATE_KEY)
   }, [])
 
