@@ -11,26 +11,30 @@ const itemStyles = `
 	jn-flex
 	jn-items-center
 	jn-w-full
-	jn-pt-[0.6875rem]
-	jn-pb-[0.5rem]
-	jn-px-[0.875rem]
 	cursor-pointer
 	bg-clip-padding
 	jn-truncate
 	jn-text-left
 	jn-bg-theme-background-lvl-1
+	disabled:jn-cursor-not-allowed
+	data-[headlessui-state="disabled"]:jn-cursor-not-allowed
 `
 
 const smallStyles = `
 	jn-text-sm
+	jn-p-2
 `
 
 const normalStyles = `
 	jn-text-base
+	jn-pt-[0.6875rem]
+	jn-pb-[0.5rem]
+	jn-px-[0.875rem]
 `
 
 const actionableItemStyles = `
 	hover:jn-bg-theme-background-lvl-3
+	data-[headlessui-state="disabled"]:jn-bg-theme-background-lvl-3
 `
 
 const iconStyles = `
@@ -63,43 +67,36 @@ export const MenuItem = ({
 	} = menuContext || {}
 	
 	return (
-		<Menu.Item 
-			disabled={disabled}
-			as={ href ? "a" : "button"}
-			href={href}
-			onClick={ handleClick }
-			className={`
-				juno-menu-item 
-				${ href ? "juno-menu-item-anchor" : "juno-menu-item-button"} 
-				${ itemStyles } 
-				${ variant === "small" ? smallStyles : normalStyles }
-				${ className }
-			`}
-		>
-			{/* Render children as is if passed, otherwise render an <a> if href was passed, othwerwise render a button as passed, otherwise render plain text */}
 
-				{/* { children ?
-						children 
-					:
-						href ?
-							<>
-							{ icon ? <Icon icon={icon} size="18" className="jn-inline-block jn-mr-2" /> : "" }
-							<a href={href}>{label}</a>
-							</> 
-						:
-							onClick ?
-								<Button onClick={handleClick} label={label} size="small" variant="subdued" icon={ icon ? icon : "" } className="jn-w-full" />
-							: 
-								<>
-									{ icon ? <Icon icon={icon} size="18" className="jn-inline-block jn-mr-2" /> : "" }
-									{ label }
-								</>
-				} */}
-				{ icon ?
-					<Icon icon={icon} size="18" className="jn-inline-block jn-mr-2" /> : ""
-				}
-				{ children || label }
-		</Menu.Item>
+				<Menu.Item 
+					disabled={disabled}
+					as={ href ? 
+						"a" : 
+						children ?
+							"div" :
+							"button"
+						}
+					href={ disabled ? undefined : href}
+					onClick={handleClick}
+					className={`
+						juno-menu-item 
+						${ href ? "juno-menu-item-anchor" : "juno-menu-item-button"} 
+						${ itemStyles } 
+						${ children ? "" : actionableItemStyles }
+						${ variant === "small" ? smallStyles : normalStyles }
+						${ disabled && href ? "jn-cursor-not-allowed" : "" }
+						${ className }
+					`}
+				>
+					<span className={`${ disabled ? "jn-opacity-50" : "" }`}>
+						{ icon ?
+							<Icon icon={icon} size="18" className="jn-inline-block jn-mr-2" /> : ""
+						}
+						{ children || label }
+					</span>
+				</Menu.Item>
+
+
 	)
 
 }

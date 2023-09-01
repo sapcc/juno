@@ -52,5 +52,17 @@ WithChildren.args = {
 	children: [
 		<Button label="Delete" size="small" variant="subdued" icon="deleteForever" className="jn-w-full" />
 	],
-	onClick: null, // ???
+}
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+	disabled: true,
+	label: "Disabled Item"
+}
+
+export const DisabledLink = Template.bind({})
+DisabledLink.args = {
+	disabled: true,
+	label: "Disabled Item as Link",
+	href: "https://github.com/sapcc/juno",
 }
