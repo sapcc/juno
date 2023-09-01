@@ -6,6 +6,7 @@ import { Label } from "../Label/"
 import { Icon } from "../Icon/"
 import { Spinner } from "../Spinner/"
 import { FormHint } from "../FormHint/"
+import { Float } from "@headlessui-float/react"
 
 const labelStyles = `
   jn-no-wrap
@@ -53,9 +54,9 @@ const centeredIconStyles = `
 `
 
 const menuStyles = `
-  jn-mt-1
   jn-rounded
   jn-bg-theme-background-lvl-1
+  jn-w-full
 `
 
 const truncateStyles = `
@@ -181,69 +182,78 @@ export const Select = ({
             :
               ""
           }
-          <Listbox.Button 
-            aria-describedby={ helptext ? helptextId : "" }
-            aria-label={ ariaLabel || label }
-            as="button" 
-            id={theId}
-            className={`
-              juno-select-toggle
-              ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
-              ${ toggleStyles }
-              ${ label && isNotEmptyString(label) ? "jn-pt-[0.4rem]" : "" }
-              ${ disabled ? "juno-select-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
-              ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
-              ${ isInvalid ? "juno-select-invalid " + invalidToggleStyles : "" } 
-              ${ isValid ? "juno-select-valid " + validToggleStyles : "" }  
-              ${ isValid || isInvalid ? "" : defaultToggleBorderStyles } 
-              ${ isLoading ? "juno-select-loading jn-cursor-not-allowed" : "" }
-              ${ hasError ? "juno-select-error jn-cursor-not-allowed" : "" }
-              ${ className }
-            `}
-            {...props}
+          
+          <Float 
+            offset={4}
+            adaptiveWidth
           >
-            {({ open }) => (
-              
-              (!hasError && !isLoading) ?
-                <>
-                  <span className={`${truncateStyles}`}>
-                    { selectedValue || placeholder }
-                  </span>
-                  <span className="jn-flex">
-                    { isValid ? 
-                        <Icon icon="checkCircle" color="jn-text-theme-success" />
-                      : ""
-                    }
-                    { isInvalid ? 
-                        <Icon icon="dangerous" color="jn-text-theme-error" />
-                      : ""
-                    }
-                    <span><Icon icon={ open ? "expandLess" : "expandMore" } /></span>
-                  </span>
-                </>
-              :
-                <span className={`${centeredIconStyles}`} >
-                  { hasError ?
-                     <Icon icon="errorOutline" color="jn-text-theme-error" className={"jn-cursor-not-allowed"} />
-                    :
-                      isLoading ?
-                        <Spinner className={"jn-cursor-not-allowed"} />
+          
+            <Listbox.Button 
+              aria-describedby={ helptext ? helptextId : "" }
+              aria-label={ ariaLabel || label }
+              as="button" 
+              id={theId}
+              className={`
+                juno-select-toggle
+                ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+                ${ toggleStyles }
+                ${ label && isNotEmptyString(label) ? "jn-pt-[0.4rem]" : "" }
+                ${ disabled ? "juno-select-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
+                ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
+                ${ isInvalid ? "juno-select-invalid " + invalidToggleStyles : "" } 
+                ${ isValid ? "juno-select-valid " + validToggleStyles : "" }  
+                ${ isValid || isInvalid ? "" : defaultToggleBorderStyles } 
+                ${ isLoading ? "juno-select-loading jn-cursor-not-allowed" : "" }
+                ${ hasError ? "juno-select-error jn-cursor-not-allowed" : "" }
+                ${ className }
+              `}
+              {...props}
+            >
+              {({ open }) => (
+                
+                (!hasError && !isLoading) ?
+                  <>
+                    <span className={`${truncateStyles}`}>
+                      { selectedValue || placeholder }
+                    </span>
+                    <span className="jn-flex">
+                      { isValid ? 
+                          <Icon icon="checkCircle" color="jn-text-theme-success" />
+                        : ""
+                      }
+                      { isInvalid ? 
+                          <Icon icon="dangerous" color="jn-text-theme-error" />
+                        : ""
+                      }
+                      <span><Icon icon={ open ? "expandLess" : "expandMore" } /></span>
+                    </span>
+                  </>
+                :
+                  <span className={`${centeredIconStyles}`} >
+                    { hasError ?
+                       <Icon icon="errorOutline" color="jn-text-theme-error" className={"jn-cursor-not-allowed"} />
                       :
-                        ""
-                  }
-                </span>
-              
-            )}
-
-          </Listbox.Button>
-          <Listbox.Options 
-            className={`
-              juno-select-menu
-              ${menuStyles}
-            `}
-          >
-            { children }
-          </Listbox.Options>
+                        isLoading ?
+                          <Spinner className={"jn-cursor-not-allowed"} />
+                        :
+                          ""
+                    }
+                  </span>
+                
+              )}
+  
+            </Listbox.Button>
+            <Listbox.Options 
+              className={`
+                juno-select-menu
+                ${menuStyles}
+              `}
+            >
+              { children }
+            </Listbox.Options>
+          
+          </Float>
+          
         </Listbox>
         
         { errortext && isNotEmptyString(errortext) ?

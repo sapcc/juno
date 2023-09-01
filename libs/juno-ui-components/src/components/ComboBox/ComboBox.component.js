@@ -5,6 +5,7 @@ import { Label } from "../Label/index.js"
 import { Icon } from "../Icon/index.js"
 import { FormHint } from "../FormHint/index.js"
 import { Spinner } from "../Spinner/index.js"
+import { Float } from "@headlessui-float/react"
 
 const inputWrapperStyles = `
   jn-relative
@@ -96,7 +97,6 @@ const disabledButtonStyles = `
 `
 
 const menuStyles = `
-  jn-mt-1
   jn-rounded
   jn-bg-theme-background-lvl-1
 `
@@ -249,6 +249,12 @@ export const ComboBox = ({
             onChange={handleChange}
             value={selectedValue}
           >
+          
+          <Float
+            offset={4}
+            adaptiveWidth
+          >
+          
             <div className={`${inputWrapperStyles}`}>
               
               { label && isNotEmptyString(label) && !isLoading && !hasError ?
@@ -338,7 +344,12 @@ export const ComboBox = ({
             <Combobox.Options className={`juno-combobox-options ${menuStyles}`} >
               { filteredChildren }
             </Combobox.Options>
+            
+          </Float>
+            
           </Combobox>
+          
+          
           { errortext && isNotEmptyString(errortext) ?
               <FormHint text={errortext} variant="error"/>
             :
