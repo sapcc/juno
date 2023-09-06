@@ -259,7 +259,7 @@ while IFS= read -d $'\0' -r dirname; do
       error_msg="Warning: the directory $asset_dist_path already exist that means there are dublicated versions in $KIND -> $ASSET_TYPE -> ${asset_name} 😐"
       echo -e "${YELLOW}${error_msg}${NC}"
       echo -e "$error_msg" >>"$current_path/../build_log"
-      exit 1
+      exit "$ERROR_ON_EXIT"
     fi
 
     cp -r "$asset_dirname" "$asset_dist_path"
