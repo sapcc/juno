@@ -9,6 +9,7 @@ fi
 
 NC='\033[0m' # No Color
 RED='\033[1;31m'
+YELLOW='\033[1;33m'
 
 function help() {
   echo "Usage: compose_assets.sh --asset-type||-at --source-path||-rp --kind||-k --no-exit-on-error
@@ -255,9 +256,9 @@ while IFS= read -d $'\0' -r dirname; do
 
     asset_dist_path="$destination_path/${asset_name}@${asset_version}"
     if [ -d "$asset_dist_path" ]; then
-      error_msg="Error: the directory $asset_dist_path already exist that means there are dublicated versions in $KIND -> $ASSET_TYPE -> ${asset_name} 😐"
-      echo -e "${RED}${error_msg}${NC}"
-      echo -e "$error_msg" >>"$SOURCE_PATH/build_log"
+      error_msg="Warning: the directory $asset_dist_path already exist that means there are dublicated versions in $KIND -> $ASSET_TYPE -> ${asset_name} 😐"
+      echo -e "${YELLOW}${error_msg}${NC}"
+      echo -e "$error_msg" >>"$current_path/../build_log"
       exit 1
     fi
 
