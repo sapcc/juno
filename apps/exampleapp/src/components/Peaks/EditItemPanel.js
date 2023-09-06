@@ -7,12 +7,12 @@ import {
   FormRow,
   TextInput,
 } from "juno-ui-components"
-import useStore from "../../store"
 import { currentState, push } from "url-state-provider"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { useGlobalsUrlStateKey } from "../StoreProvider"
 
 const EditItemPanel = ({ closeCallback }) => {
-  const urlStateKey = useStore((state) => state.urlStateKey)
+  const urlStateKey = useGlobalsUrlStateKey()
   const urlState = currentState(urlStateKey)
   const queryClient = useQueryClient()
   const [formState, setFormState] = useState({})

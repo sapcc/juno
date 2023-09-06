@@ -1,11 +1,11 @@
 import React, { useMemo } from "react"
 import { Panel } from "juno-ui-components"
-import useStore from "../store"
 import { currentState, push } from "url-state-provider"
-import EditItemPanel from "../components/Peaks/EditItemPanel"
+import EditItemPanel from "./Peaks/EditItemPanel"
+import { useGlobalsUrlStateKey } from "./StoreProvider"
 
 const PanelManager = ({ currentPanel }) => {
-  const urlStateKey = useStore((state) => state.urlStateKey)
+  const urlStateKey = useGlobalsUrlStateKey()
 
   const heading = useMemo(() => {
     switch (currentPanel) {

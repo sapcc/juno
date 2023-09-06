@@ -1,9 +1,8 @@
 import React, { useState } from "react"
-
-import useStore from "../../store"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Modal, FormRow, TextInput } from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
+import { useGlobalsUrlStateKey } from "../StoreProvider"
 
 const NewItemModal = () => {
   const urlStateKey = useStore((state) => state.urlStateKey)

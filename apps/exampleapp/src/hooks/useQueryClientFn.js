@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
-import useStore from "../store"
+import { useGlobalsEndpoint } from "../components/StoreProvider"
 
 class HTTPError extends Error {
   constructor(code, message) {
@@ -34,7 +34,7 @@ const checkStatus = (response) => {
 // hook to register query defaults that depends on the queryClient and options
 const useQueryClientFn = () => {
   const queryClient = useQueryClient()
-  const endpoint = useStore((state) => state.endpoint)
+  const endpoint = useGlobalsEndpoint()
 
   console.log("useQueryClientFn")
 

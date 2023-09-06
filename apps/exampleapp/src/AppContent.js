@@ -10,14 +10,14 @@ import {
   TabList,
   TabPanel,
 } from "juno-ui-components"
-import useStore from "./store"
+import { useGlobalsUrlStateKey } from "./components/StoreProvider"
 import { currentState, push, addOnChangeListener } from "url-state-provider"
 import ModalManager from "./components/ModalManager"
 import PanelManager from "./components/PanelManager"
 import Peaks from "./components/Peaks/Peaks"
 
 const AppContent = (props) => {
-  const urlStateKey = useStore((state) => state.urlStateKey)
+  const urlStateKey = useGlobalsUrlStateKey()
   const [currentPanel, setCurrentPanel] = useState(null)
   const [currentModal, setCurrentModal] = useState(null)
   const [tabIndex, setTabIndex] = useState(0)

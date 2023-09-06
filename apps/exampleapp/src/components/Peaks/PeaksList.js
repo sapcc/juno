@@ -7,11 +7,11 @@ import {
   DataGridRow,
 } from "juno-ui-components"
 import PeaksListItem from "./PeaksListItem"
-import useStore from "../../store"
 import { currentState, push } from "url-state-provider"
+import { useGlobalsUrlStateKey } from "../StoreProvider"
 
 const PeaksList = ({ peaks }) => {
-  const urlStateKey = useStore((state) => state.urlStateKey)
+  const urlStateKey = useGlobalsUrlStateKey()
 
   const items = useMemo(() => {
     if (!peaks) return []

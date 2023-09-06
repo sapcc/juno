@@ -1,11 +1,11 @@
 import React, { useMemo } from "react"
 import { DataGridCell, DataGridRow, Icon, Stack } from "juno-ui-components"
-import useStore from "../../store"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { currentState, push } from "url-state-provider"
+import { useGlobalsUrlStateKey } from "../StoreProvider"
 
 const PeaksListItem = ({ peak }) => {
-  const urlStateKey = useStore((state) => state.urlStateKey)
+  const urlStateKey = useGlobalsUrlStateKey()
   const queryClient = useQueryClient()
 
   const { isLoading, isError, error, data, isSuccess, mutate } = useMutation({

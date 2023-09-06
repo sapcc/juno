@@ -1,14 +1,14 @@
 import React, { useCallback } from "react"
 
 import { Modal, FormRow, TextInput } from "juno-ui-components"
-import useStore from "../store"
+import { useGlobalsActions } from "./StoreProvider"
 
 const LogInModal = () => {
-  const handleCloseClick = () => {
-    closeModal()
-  }
+  const { setShowModal } = useGlobalsActions()
 
-  closeModal = useStore(useCallback((state) => state.closeModal))
+  const handleCloseClick = () => {
+    setShowModal(false)
+  }
 
   return (
     <Modal
