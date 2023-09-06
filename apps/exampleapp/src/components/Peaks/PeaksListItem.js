@@ -3,15 +3,13 @@ import { DataGridCell, DataGridRow, Icon, Stack } from "juno-ui-components"
 import useStore from "../../store"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { currentState, push } from "url-state-provider"
-import { deletePeak } from "../../actions"
 
 const PeaksListItem = ({ peak }) => {
   const urlStateKey = useStore((state) => state.urlStateKey)
-  const endpoint = useStore((state) => state.endpoint)
   const queryClient = useQueryClient()
 
   const { isLoading, isError, error, data, isSuccess, mutate } = useMutation({
-    mutationFn: ({ endpoint, id }) => deletePeak(endpoint, id),
+    mutationKey: ["peakDelete"],
   })
 
   const handleEditPeakClick = () => {
@@ -26,7 +24,6 @@ const PeaksListItem = ({ peak }) => {
   const handleDeletePeakClick = () => {
     mutate(
       {
-        endpoint: endpoint,
         id: peak.id,
       },
       {

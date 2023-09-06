@@ -5,7 +5,6 @@ import { devtools } from "zustand/middleware"
 // global zustand store. See how this works here: https://github.com/pmndrs/zustand
 const useStore = create(
   devtools((set) => ({
-    // basics
     endpoint: "",
     setEndpoint: (newEndpoint) => set((state) => ({ endpoint: newEndpoint })),
     urlStateKey: "",

@@ -2,7 +2,7 @@ import React, { useMemo } from "react"
 import { Panel } from "juno-ui-components"
 import useStore from "../store"
 import { currentState, push } from "url-state-provider"
-import EditItemPanel from "./EditItemPanel"
+import EditItemPanel from "../components/Peaks/EditItemPanel"
 
 const PanelManager = ({ currentPanel }) => {
   const urlStateKey = useStore((state) => state.urlStateKey)

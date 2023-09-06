@@ -1,19 +1,18 @@
 import React, { useState } from "react"
 
-import useStore from "../store"
+import useStore from "../../store"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { createPeak } from "../actions"
 import { Modal, FormRow, TextInput } from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
 
 const NewItemModal = () => {
   const urlStateKey = useStore((state) => state.urlStateKey)
-  const endpoint = useStore((state) => state.endpoint)
+
   const queryClient = useQueryClient()
   const [formState, setFormState] = useState({})
 
   const { isLoading, isError, error, data, isSuccess, mutate } = useMutation({
-    mutationFn: ({ endpoint, formState }) => createPeak(endpoint, formState),
+    mutationKey: ["peakAdd"],
   })
 
   const closeNewItemModal = () => {
@@ -24,10 +23,7 @@ const NewItemModal = () => {
   const onSubmit = () => {
     // TODO form validation
     mutate(
-      {
-        endpoint: endpoint,
-        formState: formState,
-      },
+      { formState: formState },
       {
         onSuccess: (data, variables, context) => {
           closeNewItemModal()
@@ -90,7 +86,7 @@ const NewItemModal = () => {
           label="URL"
           onChange={(e) => onAttrChanged("url", e.target.value)}
         />
-      </FormRow>      
+      </FormRow>
     </Modal>
   )
 }
