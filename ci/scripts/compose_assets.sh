@@ -257,7 +257,7 @@ while IFS= read -d $'\0' -r dirname; do
     if [ -d "$asset_dist_path" ]; then
       error_msg="Error: the directory $asset_dist_path already exist that means there are dublicated versions in $KIND -> $ASSET_TYPE -> ${asset_name} 😐"
       echo -e "${RED}${error_msg}${NC}"
-      echo -e "$(data)\n$error_msg" >>"$SOURCE_PATH/build_log"
+      echo -e "$error_msg" >>"$SOURCE_PATH/build_log"
       exit 1
     fi
 
