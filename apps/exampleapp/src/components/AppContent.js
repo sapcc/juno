@@ -3,8 +3,7 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   Container,
-  Message,
-  Spinner,
+  Button,
   MainTabs,
   Tab,
   TabList,
@@ -16,7 +15,7 @@ import PanelManager from "./PanelManager"
 import Peaks from "./peaks/Peaks"
 
 const AppContent = (props) => {
-  const { setTabIndex } = useGlobalsActions()
+  const { setTabIndex, setEndpoint } = useGlobalsActions()
   const tabIndex = useGlobalsTabIndex()
 
   const onTabSelected = (index) => {

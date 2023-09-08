@@ -17,7 +17,6 @@ const PeaksNew = ({ closeCallback }) => {
   })
 
   const onSubmit = () => {
-    // TODO form validation
     mutate(
       { formState: formState },
       {

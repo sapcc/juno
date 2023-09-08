@@ -1,85 +1,64 @@
 import { useState, useEffect } from "react"
 import { registerConsumer } from "url-state-provider"
 import {
-  useGlobalsDetailsViolationGroup,
   useGlobalsActions,
-  useAuthLoggedIn,
-  useAuthData,
-  useFiltersActions,
-  useFiltersSearchTerm,
-  useFiltersActive,
+  useGlobalsTabIndex,
+  useGlobalsCurrentPanel,
+  useGlobalsCurrentModal,
 } from "../components/StoreProvider"
 
-const DEFAULT_KEY = "doop"
-const ACTIVE_FILTERS = "f"
-const SEARCH_TERM = "s"
-const DETAILS_VIOLATION_GROUP = "v"
+const DEFAULT_KEY = "exampleapp"
+const TAB_INDEX = "t"
+const CURRENT_PANEL = "p"
+const CURRENT_MODAL = "m"
 
 const useUrlState = (key) => {
   const [isURLRead, setIsURLRead] = useState(false)
-  // it is possible to have two doop apps on the page
+  // it is possible to have two apps instances on the same page
   // int his case the key should be different per app
   const urlStateManager = registerConsumer(key || DEFAULT_KEY)
-  const loggedIn = useAuthLoggedIn()
-  const authData = useAuthData()
-  // filters
-  const { set: setActiveFilters, setSearchTerm } = useFiltersActions()
-  const activeFilters = useFiltersActive()
-  const searchTerm = useFiltersSearchTerm()
+
+  // auth
+  const loggedIn = true // this state is faked for the example app so we don't need to login
+
   // globals
-  const detailsViolationGroup = useGlobalsDetailsViolationGroup()
-  const { setDetailsViolationGroup } = useGlobalsActions()
+  const { setTabIndex, setCurrentPanel, setCurrentModal } = useGlobalsActions()
+  const tabIndex = useGlobalsTabIndex()
+  const currentPanel = useGlobalsCurrentPanel()
+  const currentModal = useGlobalsCurrentModal()
 
   // Set initial state from URL (on login)
   useEffect(() => {
-    // don't read the url if we are already reading it or if we are not logged in
+    /* !!!IMPORTANT!!!
+      don't read the url if we are already read it or if we are not logged in!!!!!
+    */
     if (isURLRead || !loggedIn) return
     console.log(
-      `DOOP: (${key || DEFAULT_KEY}) setting up state from url:`,
+      `EXAMPLEAPP: (${key || DEFAULT_KEY}) setting up state from url:`,
       urlStateManager.currentState()
     )
-    const searchTerm = urlStateManager.currentState()?.[SEARCH_TERM]
-    const activeFilters = urlStateManager.currentState()?.[ACTIVE_FILTERS]
 
-    const detailsViolationGroup =
-      urlStateManager.currentState()?.[DETAILS_VIOLATION_GROUP]
-    // if there are no filters in the url, but there are teams in the auth data
-    // set the active filters to the teams
-    if (activeFilters === undefined && authData?.parsed?.teams) {
-      setActiveFilters(
-        authData?.parsed?.teams?.map((team) => ({
-          key: "supportGroup",
-          value: team,
-        }))
-      )
-    }
-    if (searchTerm) {
-      setSearchTerm(searchTerm)
-    }
-    if (activeFilters) {
-      setActiveFilters(activeFilters)
-    }
-    if (detailsViolationGroup) {
-      setDetailsViolationGroup(detailsViolationGroup)
-    }
+    // READ the url state and set the state
+    const newTabIndex = urlStateManager.currentState()?.[TAB_INDEX]
+    const newCurrentPanel = urlStateManager.currentState()?.[CURRENT_PANEL]
+    const newCurrentModal = urlStateManager.currentState()?.[CURRENT_MODAL]
+    // SAVE the state
+    if (newTabIndex) setTabIndex(newTabIndex)
+    if (newCurrentPanel) setCurrentPanel(newCurrentPanel)
+    if (newCurrentModal) setCurrentModal(newCurrentModal)
     setIsURLRead(true)
-  }, [
-    loggedIn,
-    authData,
-    setActiveFilters,
-    setDetailsViolationGroup,
-    setSearchTerm,
-  ])
-  // sync activeFilters to URL state
+  }, [loggedIn, setTabIndex, setCurrentPanel, setCurrentModal])
+
+  // SYNC states to URL state
   useEffect(() => {
-    // don't sync if we are not logged in OR if we are already reading the url
+    // don't sync if we are not logged in OR URL ist not yet read
     if (!isURLRead || !loggedIn) return
     urlStateManager.push({
-      [ACTIVE_FILTERS]: activeFilters,
-      [DETAILS_VIOLATION_GROUP]: detailsViolationGroup,
-      [SEARCH_TERM]: searchTerm,
+      [TAB_INDEX]: tabIndex,
+      [CURRENT_PANEL]: currentPanel,
+      [CURRENT_MODAL]: currentModal,
     })
-  }, [loggedIn, activeFilters, detailsViolationGroup, searchTerm])
+  }, [loggedIn, tabIndex, currentPanel, currentModal])
 }
 
 export default useUrlState

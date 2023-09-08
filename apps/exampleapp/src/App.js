@@ -8,11 +8,8 @@ import AppContent from "./components/AppContent"
 import AsyncWorker from "./components/AsyncWorker"
 import StoreProvider, { useGlobalsActions } from "./components/StoreProvider"
 
-// IMPORTANT: Replace this with your app's name
-const URL_STATE_KEY = "exampleapp"
-
 const App = (props = {}) => {
-  const { setEndpoint, setUrlStateKey } = useGlobalsActions()
+  const { setEndpoint } = useGlobalsActions()
 
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
@@ -21,12 +18,11 @@ const App = (props = {}) => {
   // used from overall in the application
   useEffect(() => {
     setEndpoint(props.endpoint)
-    setUrlStateKey(URL_STATE_KEY)
   }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AsyncWorker />
+      <AsyncWorker consumerId={props.id} />
       <AppShell
         pageHeader="Converged Cloud | Example App"
         contentHeading="Example App"

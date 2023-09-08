@@ -2,7 +2,6 @@ const createGlobalsSlice = (set, get) => ({
   globals: {
     endpoint: "",
     queryClientFnReady: false,
-    urlStateKey: "",
     tabIndex: 0,
     currentModal: null,
     currentPanel: null,
@@ -18,17 +17,6 @@ const createGlobalsSlice = (set, get) => ({
           }),
           false,
           "globals.setEndpoint"
-        ),
-      setUrlStateKey: (newUrlStateKey) =>
-        set(
-          (state) => ({
-            globals: {
-              ...state.globals,
-              urlStateKey: newUrlStateKey,
-            },
-          }),
-          false,
-          "globals.setUrlStateKey"
         ),
       setTabIndex: (newTabIndex) =>
         set(
