@@ -10,6 +10,7 @@ import {
 import PeaksListItem from "./PeaksListItem"
 import HintNotFound from "../shared/HintNotFound"
 import { useGlobalsActions } from "../StoreProvider"
+import useEndlessScrollList from "../../hooks/useEndlessScrollList"
 
 const PeaksList = ({ peaks }) => {
   const { setCurrentPanel } = useGlobalsActions()
@@ -18,6 +19,23 @@ const PeaksList = ({ peaks }) => {
     if (!peaks) return []
     return peaks
   }, [peaks])
+
+  const { scrollListItems, iterator } = useEndlessScrollList(items, {
+    loadingObject: (
+      <DataGridRow>
+        <DataGridCell colSpan={7}>
+          <span>Loading ...</span>
+        </DataGridCell>
+      </DataGridRow>
+    ),
+    refFunction: (ref) => (
+      <DataGridRow>
+        <DataGridCell colSpan={7} className="border-b-0 py-0">
+          <span ref={ref} />
+        </DataGridCell>
+      </DataGridRow>
+    ),
+  })
 
   const handleNewPeakClick = () => {
     setCurrentPanel({ type: "PeaksNew" })
@@ -43,9 +61,9 @@ const PeaksList = ({ peaks }) => {
           <DataGridHeadCell>Options</DataGridHeadCell>
         </DataGridRow>
 
-        {items?.length > 0 ? (
+        {scrollListItems?.length > 0 ? (
           <>
-            {items.map((peak, index) => (
+            {iterator.map((peak, index) => (
               <PeaksListItem key={index} peak={peak} />
             ))}
           </>

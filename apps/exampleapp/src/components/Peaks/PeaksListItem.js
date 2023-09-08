@@ -57,13 +57,15 @@ const PeaksListItem = ({ peak }) => {
             className="leading-none"
             onClick={handleDeletePeakClick}
           />
-          <Icon
-            icon="openInNew"
-            size="18"
-            href={peak.url}
-            target="_blank"
-            className="leading-none"
-          />
+          {peak?.url && (
+            <Icon
+              icon="openInNew"
+              size="18"
+              href={peak.url}
+              target="_blank"
+              className="leading-none"
+            />
+          )}
         </Stack>
       </DataGridCell>
     </DataGridRow>
