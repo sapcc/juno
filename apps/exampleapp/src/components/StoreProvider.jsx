@@ -24,4 +24,8 @@ export const useGlobalsCurrentPanel = () =>
   useStore((s) => s.globals.currentPanel)
 export const useGlobalsActions = () => useStore((s) => s.globals.actions)
 
+// auth
+export const useAuthUser = () => useStore((s) => s.auth.user)
+export const useAuthActions = () => useStore((s) => s.auth.actions)
+
 export default StoreProvider
