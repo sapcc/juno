@@ -7,8 +7,6 @@ import {
   FormRow,
   TextInput,
 } from "juno-ui-components"
-import { currentState, push } from "url-state-provider"
-import { useGlobalsUrlStateKey } from "../StoreProvider"
 
 const PeaksNew = ({ closeCallback }) => {
   const queryClient = useQueryClient()
