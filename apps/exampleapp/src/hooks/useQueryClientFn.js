@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
-import { useGlobalsEndpoint } from "../components/StoreProvider"
+import {
+  useGlobalsEndpoint,
+  useGlobalsActions,
+} from "../components/StoreProvider"
 
 class HTTPError extends Error {
   constructor(code, message) {
@@ -35,14 +38,15 @@ const checkStatus = (response) => {
 const useQueryClientFn = () => {
   const queryClient = useQueryClient()
   const endpoint = useGlobalsEndpoint()
-
-  console.log("useQueryClientFn")
+  const { setQueryClientFnReady } = useGlobalsActions()
 
   /*
   As stated in getQueryDefaults, the order of registration of query defaults does matter. Since the first matching defaults are returned by getQueryDefaults, the registration should be made in the following order: from the least generic key to the most generic one. This way, in case of specific key, the first matching one would be the expected one.
   */
   useEffect(() => {
     if (!queryClient || !endpoint) return
+
+    console.log("useQueryClientFn setting defaults", endpoint)
 
     queryClient.setQueryDefaults(["peaks"], {
       queryFn: ({ queryKey }) => {
@@ -119,7 +123,10 @@ const useQueryClientFn = () => {
           })
       },
     })
-  }, [queryClient, endpoint])
+
+    // set queryClientFnReady to true once
+    setQueryClientFnReady(true)
+  }, [queryClient, endpoint, setQueryClientFnReady])
 }
 
 export default useQueryClientFn

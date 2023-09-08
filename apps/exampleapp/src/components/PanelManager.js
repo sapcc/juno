@@ -1,33 +1,39 @@
 import React, { useMemo } from "react"
 import { Panel } from "juno-ui-components"
-import { currentState, push } from "url-state-provider"
-import EditItemPanel from "./Peaks/EditItemPanel"
-import { useGlobalsUrlStateKey } from "./StoreProvider"
+import PeaksEdit from "./peaks/PeaksEdit"
+import PeaksNew from "./peaks/PeaksNew"
+import { useGlobalsActions, useGlobalsCurrentPanel } from "./StoreProvider"
 
-const PanelManager = ({ currentPanel }) => {
-  const urlStateKey = useGlobalsUrlStateKey()
+const PanelManager = () => {
+  const { setCurrentPanel } = useGlobalsActions()
+  const currentPanel = useGlobalsCurrentPanel()
 
   const heading = useMemo(() => {
-    switch (currentPanel) {
-      case "EditPeaksItem":
+    switch (currentPanel?.type) {
+      case "PeaksEdit":
         return "Edit Peak"
+      case "PeaksNew":
+        return "Add a New Peak"
       default:
         return null
     }
   }, [currentPanel])
 
   const panelBody = () => {
-    switch (currentPanel) {
-      case "EditPeaksItem":
-        return <EditItemPanel closeCallback={onClose} />
+    switch (currentPanel?.type) {
+      case "PeaksEdit":
+        return (
+          <PeaksEdit peakId={currentPanel?.itemId} closeCallback={onClose} />
+        )
+      case "PeaksNew":
+        return <PeaksNew closeCallback={onClose} />
       default:
         return null
     }
   }
 
   const onClose = () => {
-    const urlState = currentState(urlStateKey)
-    push(urlStateKey, { ...urlState, currentPanel: "" })
+    setCurrentPanel(null)
   }
 
   return (

@@ -15,7 +15,13 @@ const useStore = (selector) => create(useContext(StoreContext), selector)
 export const useGlobalsEndpoint = () => useStore((s) => s.globals.endpoint)
 export const useGlobalsUrlStateKey = () =>
   useStore((s) => s.globals.urlStateKey)
-export const useGlobalShowModal = () => useStore((s) => s.globals.showModal)
+export const useGlobalsTabIndex = () => useStore((s) => s.globals.tabIndex)
+export const useGlobalsQueryClientFnReady = () =>
+  useStore((s) => s.globals.queryClientFnReady)
+export const useGlobalsCurrentModal = () =>
+  useStore((s) => s.globals.currentModal)
+export const useGlobalsCurrentPanel = () =>
+  useStore((s) => s.globals.currentPanel)
 export const useGlobalsActions = () => useStore((s) => s.globals.actions)
 
 export default StoreProvider

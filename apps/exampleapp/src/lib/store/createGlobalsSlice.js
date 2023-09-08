@@ -1,8 +1,11 @@
 const createGlobalsSlice = (set, get) => ({
   globals: {
     endpoint: "",
+    queryClientFnReady: false,
     urlStateKey: "",
-    showModal: false,
+    tabIndex: 0,
+    currentModal: null,
+    currentPanel: null,
 
     actions: {
       setEndpoint: (newEndpoint) =>
@@ -27,16 +30,49 @@ const createGlobalsSlice = (set, get) => ({
           false,
           "globals.setUrlStateKey"
         ),
-      setShowModal: (showModal) =>
+      setTabIndex: (newTabIndex) =>
         set(
           (state) => ({
             globals: {
               ...state.globals,
-              showModal,
+              tabIndex: newTabIndex,
             },
           }),
           false,
-          "globals.showModal"
+          "globals.setTabIndex"
+        ),
+      setCurrentModal: (newModal) =>
+        set(
+          (state) => ({
+            globals: {
+              ...state.globals,
+              currentModal: newModal,
+            },
+          }),
+          false,
+          "globals.setCurrentModal"
+        ),
+      setCurrentPanel: (newPanel) =>
+        set(
+          (state) => ({
+            globals: {
+              ...state.globals,
+              currentPanel: newPanel,
+            },
+          }),
+          false,
+          "globals.setCurrentPanel"
+        ),
+      setQueryClientFnReady: (readiness) =>
+        set(
+          (state) => ({
+            globals: {
+              ...state.globals,
+              queryClientFnReady: readiness,
+            },
+          }),
+          false,
+          "globals.setQueryClientFnReady"
         ),
     },
   },

@@ -1,12 +1,16 @@
 import React, { useState } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { Modal, FormRow, TextInput } from "juno-ui-components"
+import {
+  PanelBody,
+  PanelFooter,
+  Button,
+  FormRow,
+  TextInput,
+} from "juno-ui-components"
 import { currentState, push } from "url-state-provider"
 import { useGlobalsUrlStateKey } from "../StoreProvider"
 
-const NewItemModal = () => {
-  const urlStateKey = useStore((state) => state.urlStateKey)
-
+const PeaksNew = ({ closeCallback }) => {
   const queryClient = useQueryClient()
   const [formState, setFormState] = useState({})
 
@@ -14,18 +18,13 @@ const NewItemModal = () => {
     mutationKey: ["peakAdd"],
   })
 
-  const closeNewItemModal = () => {
-    const urlState = currentState(urlStateKey)
-    push(urlStateKey, { ...urlState, currentModal: "" })
-  }
-
   const onSubmit = () => {
     // TODO form validation
     mutate(
       { formState: formState },
       {
         onSuccess: (data, variables, context) => {
-          closeNewItemModal()
+          closeCallback()
           // refetch peaks
           queryClient.invalidateQueries("peaks")
         },
@@ -41,12 +40,13 @@ const NewItemModal = () => {
   }
 
   return (
-    <Modal
-      title="Add a New Peak"
-      open
-      onCancel={closeNewItemModal}
-      confirmButtonLabel="Save New Peak"
-      onConfirm={onSubmit}
+    <PanelBody
+      footer={
+        <PanelFooter>
+          <Button label="Cancel" variant="subdued" onClick={closeCallback} />
+          <Button label="Save" variant="primary" onClick={onSubmit} />
+        </PanelFooter>
+      }
     >
       <FormRow>
         <TextInput
@@ -86,8 +86,8 @@ const NewItemModal = () => {
           onChange={(e) => onAttrChanged("url", e.target.value)}
         />
       </FormRow>
-    </Modal>
+    </PanelBody>
   )
 }
 
-export default NewItemModal
+export default PeaksNew

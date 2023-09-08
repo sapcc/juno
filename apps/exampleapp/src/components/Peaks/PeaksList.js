@@ -5,13 +5,14 @@ import {
   DataGrid,
   DataGridHeadCell,
   DataGridRow,
+  DataGridCell,
 } from "juno-ui-components"
 import PeaksListItem from "./PeaksListItem"
-import { currentState, push } from "url-state-provider"
-import { useGlobalsUrlStateKey } from "../StoreProvider"
+import HintNotFound from "../shared/HintNotFound"
+import { useGlobalsActions } from "../StoreProvider"
 
 const PeaksList = ({ peaks }) => {
-  const urlStateKey = useGlobalsUrlStateKey()
+  const { setCurrentPanel } = useGlobalsActions()
 
   const items = useMemo(() => {
     if (!peaks) return []
@@ -19,11 +20,10 @@ const PeaksList = ({ peaks }) => {
   }, [peaks])
 
   const handleNewPeakClick = () => {
-    const urlState = currentState(urlStateKey)
-    push(urlStateKey, { ...urlState, currentModal: "NewPeaksItem" })
+    setCurrentPanel({ type: "PeaksNew" })
   }
 
-  return items.length > 0 ? (
+  return (
     <>
       <ContentAreaToolbar>
         <Button
@@ -43,15 +43,21 @@ const PeaksList = ({ peaks }) => {
           <DataGridHeadCell>Options</DataGridHeadCell>
         </DataGridRow>
 
-        {/* Render items: */}
-
-        {items.map((peak, index) => (
-          <PeaksListItem key={index} peak={peak} />
-        ))}
+        {items?.length > 0 ? (
+          <>
+            {items.map((peak, index) => (
+              <PeaksListItem key={index} peak={peak} />
+            ))}
+          </>
+        ) : (
+          <DataGridRow>
+            <DataGridCell colSpan={7}>
+              <HintNotFound text="No peaks found" />
+            </DataGridCell>
+          </DataGridRow>
+        )}
       </DataGrid>
     </>
-  ) : (
-    <div>There are no peaks to display.</div>
   )
 }
 

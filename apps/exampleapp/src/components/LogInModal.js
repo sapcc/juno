@@ -4,10 +4,10 @@ import { Modal, FormRow, TextInput } from "juno-ui-components"
 import { useGlobalsActions } from "./StoreProvider"
 
 const LogInModal = () => {
-  const { setShowModal } = useGlobalsActions()
+  const { setCurrentModal } = useGlobalsActions()
 
   const handleCloseClick = () => {
-    setShowModal(false)
+    setCurrentModal(null)
   }
 
   return (

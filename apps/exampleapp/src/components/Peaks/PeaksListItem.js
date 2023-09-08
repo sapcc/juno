@@ -1,24 +1,18 @@
 import React, { useMemo } from "react"
 import { DataGridCell, DataGridRow, Icon, Stack } from "juno-ui-components"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { currentState, push } from "url-state-provider"
-import { useGlobalsUrlStateKey } from "../StoreProvider"
+import { useGlobalsActions } from "../StoreProvider"
 
 const PeaksListItem = ({ peak }) => {
-  const urlStateKey = useGlobalsUrlStateKey()
   const queryClient = useQueryClient()
+  const { setCurrentPanel } = useGlobalsActions()
 
   const { isLoading, isError, error, data, isSuccess, mutate } = useMutation({
     mutationKey: ["peakDelete"],
   })
 
   const handleEditPeakClick = () => {
-    const urlState = currentState(urlStateKey)
-    push(urlStateKey, {
-      ...urlState,
-      currentPanel: "EditPeaksItem",
-      peakId: peak.id,
-    })
+    setCurrentPanel({ type: "PeaksEdit", itemId: peak.id })
   }
 
   const handleDeletePeakClick = () => {

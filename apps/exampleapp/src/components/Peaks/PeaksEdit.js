@@ -7,18 +7,14 @@ import {
   FormRow,
   TextInput,
 } from "juno-ui-components"
-import { currentState, push } from "url-state-provider"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { useGlobalsUrlStateKey } from "../StoreProvider"
 
-const EditItemPanel = ({ closeCallback }) => {
-  const urlStateKey = useGlobalsUrlStateKey()
-  const urlState = currentState(urlStateKey)
+const PeaksEdit = ({ peakId, closeCallback }) => {
   const queryClient = useQueryClient()
   const [formState, setFormState] = useState({})
 
   const peakFeach = useQuery({
-    queryKey: [`peaks`, urlState.peakId],
+    queryKey: [`peaks`, peakId],
   })
 
   const peakMutation = useMutation({
@@ -35,7 +31,7 @@ const EditItemPanel = ({ closeCallback }) => {
     // TODO form validation
     peakMutation.mutate(
       {
-        id: urlState.peakId,
+        id: peakId,
         formState: formState,
       },
       {
@@ -105,4 +101,4 @@ const EditItemPanel = ({ closeCallback }) => {
   )
 }
 
-export default EditItemPanel
+export default PeaksEdit

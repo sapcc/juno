@@ -3,7 +3,7 @@ import React, { useEffect } from "react"
 import { AppShell, AppShellProvider } from "juno-ui-components"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import styles from "./styles.scss"
-import AppContent from "./AppContent"
+import AppContent from "./components/AppContent"
 import AsyncWorker from "./components/AsyncWorker"
 import StoreProvider, { useGlobalsActions } from "./components/StoreProvider"
 

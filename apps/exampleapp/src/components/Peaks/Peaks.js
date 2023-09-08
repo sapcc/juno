@@ -2,14 +2,16 @@ import React from "react"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import PeaksList from "./PeaksList"
 import { Spinner, Message, Button } from "juno-ui-components"
+import { useGlobalsQueryClientFnReady } from "../StoreProvider"
 
-const Peaks = (props) => {
+const Peaks = () => {
   const queryClient = useQueryClient()
   const defaultOptions = queryClient.getQueryDefaults(["peaks"])
+  const queryClientFnReady = useGlobalsQueryClientFnReady()
 
   const { isLoading, isError, data, error } = useQuery({
     queryKey: [`peaks`],
-    enabled: !!defaultOptions,
+    enabled: !!queryClientFnReady,
   })
 
   console.log("Peaks::", isLoading, defaultOptions, data)
@@ -23,13 +25,6 @@ const Peaks = (props) => {
       )}
       {/* Loading indicator for page content */}
       {isLoading && <Spinner variant="primary" />}
-      <Button
-        label="Change token"
-        variant="primary"
-        onClick={() => {
-          console.log("click")
-        }}
-      />
       <PeaksList
         isLoading={isLoading}
         isError={isError}
