@@ -7,6 +7,27 @@ import { SelectOption } from "../SelectOption/index"
 
 const mockOnChange = jest.fn()
 
+const ControlledSelectParent = ({
+  value,
+  children,
+  onChange,
+  ...props
+}) => {
+  const [val, setVal] = React.useState(value)
+  
+  const handleChange = (v) => {
+    setVal(v)
+    onChange()
+  }
+  
+  return (
+    <Select value={val} onChange={handleChange} {...props}>
+      { children }
+    </Select>
+    
+  )
+}
+
 describe("Select", () => {
   
   afterEach(() => {
@@ -227,6 +248,42 @@ describe("Select", () => {
     expect(screen.getByRole("listbox")).toBeInTheDocument()
     await userEvent.click(screen.getByRole("option"))
     expect(mockOnChange).toHaveBeenCalled()
+  })
+  
+  test("works as a controlled component", async () => {
+    render(
+      <ControlledSelectParent value="Option 1" onChange={mockOnChange} >
+        <SelectOption value="Option 1">Option 1</SelectOption>
+        <SelectOption value="Option 2">Option 2</SelectOption>
+        <SelectOption value="Option 3">Option 3</SelectOption>
+      </ControlledSelectParent>
+    )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    expect(toggle).toHaveTextContent("Option 1")
+    await userEvent.click(toggle)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    const option2 = screen.getAllByRole("option")[1]
+    await userEvent.click(option2)
+    expect(toggle).toHaveTextContent("Option 2")
+  })
+  
+  test("works as an uncontrolled component", async () => {
+    render(
+      <Select defaultValue="Option 2">
+        <SelectOption value="Option 1">Option 1</SelectOption>
+        <SelectOption value="Option 2">Option 2</SelectOption>
+        <SelectOption value="Option 3">Option 3</SelectOption>
+      </Select>
+    )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    expect(toggle).toHaveTextContent("Option 2")
+    await userEvent.click(toggle)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    const option3 = screen.getAllByRole("option")[2]
+    await userEvent.click(option3)
+    expect(toggle).toHaveTextContent("Option 3")
   })
   
 })
