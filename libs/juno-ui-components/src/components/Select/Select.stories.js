@@ -195,6 +195,16 @@ ManyOptions.args = {
   ]
 }
 
+export const UncontrolledSelect = Template.bind({})
+UncontrolledSelect.args = {
+  defaultValue: "Option 2",
+  children: [
+    <SelectOption key="1" value="Option 1" />,
+    <SelectOption key="2" value="Option 2" />,
+    <SelectOption key="3" value="Option 3" />
+  ]
+}
+
 export const TruncatedOptions = ConstrainedWidthTemplate.bind({})
 TruncatedOptions.args = {
   truncateOptions: true,

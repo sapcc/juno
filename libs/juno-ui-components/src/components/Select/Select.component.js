@@ -214,12 +214,13 @@ export const Select = ({
               `}
               {...props}
             >
-              {({ open }) => (
+              {({ open, value }) => (
                 
                 (!hasError && !isLoading) ?
                   <>
                     <span className={`${truncateStyles}`}>
-                      { selectedValue || placeholder }
+                      { value || selectedValue || placeholder }
+                      
                     </span>
                     <span className="jn-flex">
                       { isValid ? 
