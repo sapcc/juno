@@ -316,7 +316,7 @@ Select.propTypes = {
   placeholder: PropTypes.string,
   /** Whether a selection is required. Will show a small required marker next to the label. If no label is used, no marker will be visible. */
   required: PropTypes.bool,
-  /** A note to render below the Select toggle in case the selected value has been positively validated. */
+  /** A note to render below the Select toggle in case the selected value has been positively validated. Will set the visible state of the Select toggle to `valid`. */
   successtext: PropTypes.node,
   /** Whether long texts in options will be truncated with "…" or not. Default is false. The Select toggle label will always be truncated. */
   truncateOptions: PropTypes.bool,
