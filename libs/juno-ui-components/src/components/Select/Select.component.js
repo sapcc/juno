@@ -171,7 +171,7 @@ export const Select = ({
           onChange={handleChange}
           value={value}
           defaultValue={defaultValue}
-          
+          name={name}
         >
           { label && isNotEmptyString(label) ?
               <Listbox.Label 
