@@ -33,6 +33,12 @@ describe("Select", () => {
     expect(screen.getByRole("button")).toHaveTextContent("my-placeholder")
   })
   
+  test("renders default placeholder if empty string or undefined were passed as value", async () => {
+    render(<Select value="" />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveTextContent("Select…")
+  })
+  
   test("renders a Select toggle with an id as passed", async () => {
     render(<Select id="select-1" />)
     expect(screen.getByRole("button")).toBeInTheDocument()
