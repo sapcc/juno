@@ -69,6 +69,11 @@ const truncateStyles = `
 
 export const SelectContext = createContext()
 
+/** 
+  A Select component to allow selecting a single item (multi-select TBD).
+  Pass a `defaultValue` to render as an uncontrolled component that tracks its open state etc internally.
+  Also TBD: semantic variants.
+*/
 export const Select = ({
   ariaLabel,
   children,
