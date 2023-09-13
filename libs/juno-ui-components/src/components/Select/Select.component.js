@@ -284,26 +284,49 @@ export const Select = ({
 }
 
 Select.propTypes = {
+  /** Pass an aria-label to the Select toggle button */
   ariaLabel: PropTypes.string,
+  /** The children to render as options. Use the SelectOption component, and SelectDivider if needed. */
   children: PropTypes.node,
+  /** Pass a custom className to the Select toggle button */
   className: PropTypes.string,
+  /** Pass a defaultValue to use as an uncontrolled component that handles its state internally */
   defaultValue: PropTypes.string,
+  /** Whether the Select is disabled */
   disabled: PropTypes.bool,
+  /** Whether the Select has an error, e.g. when loading options. When validated negatively, use `invalid` instead. */
+  error: PropTypes.bool,
+  /** A small message rendered in red text below the Select toggle. */
   errortext: PropTypes.node,
+  /** A small, neutral text rendered below the Select toggle to explain meaning and significance of the Select element */
   helptext: PropTypes.node,
+  /** Pass an id to the Select toggle */
   id: PropTypes.node,
+  /** Whether the Select has been validated unsuccessfully / negatively */
   invalid: PropTypes.bool,
+  /** Pass a label to render in the Select toggle button */
   label: PropTypes.string,
+  /** Whether the Select is busy loading options. Will show a Spinner in the Select toggle. */
   loading: PropTypes.bool,
+  /** Pass a name attribute to the Select to be transmitted when used in a form. */
   name: PropTypes.string,
+  /** Handler to be executed when the selected value changes */
   onChange: PropTypes.func,
+  /** A placeholder to render when no value has been selected. Default is "Select…". */
   placeholder: PropTypes.string,
+  /** Whether a selection is required. Will show a small required marker next to the label. If no label is used, no marker will be visible. */
   required: PropTypes.bool,
+  /** A note to render below the Select toggle in case the selected value has been positively validated. */
   successtext: PropTypes.node,
+  /** Whether long texts in options will be truncated with "…" or not. Default is false. The Select toggle label will always be truncated. */
   truncateOptions: PropTypes.bool,
+  /** Whether the Select was positively validated. Will show a green checkmark icon inside the Select toggle. */
   valid: PropTypes.bool,
+  /** The currently (pre-)selected value of the Select. Will trigger controlled mode. */
   value: PropTypes.string,
+  /** TBD: The semantic variant of the Select toggle button. Not implemented yet. */
   variant: PropTypes.oneOf(["", "primary", "primary-danger", "default", "subdued"]),
+  /** Whether the Select toggle should consume the available width of its parent container (default), or render its "natural" width depending on the content and the currently selected value or state. */
   width: PropTypes.oneOf(["full", "auto"])
 }
 
@@ -313,6 +336,7 @@ Select.defaultProps = {
   className: "",
   defaultValue: undefined,
   disabled: false,
+  error: false,
   errortext: "",
   helptext: "",
   id: "",
