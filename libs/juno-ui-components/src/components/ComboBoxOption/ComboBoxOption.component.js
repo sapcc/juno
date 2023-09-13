@@ -68,8 +68,9 @@ export const ComboBoxOption = ({
       <li 
         className={`
           juno-combobox-option 
-          ${optionStyles}
+          ${ optionStyles}
           ${ selectedValue === value ? selectedOptionStyles : unselectedOptionStyles }
+          ${ disabled ? "jn-cursor-not-allowed" : "" }
         `}
         {...props}
       >

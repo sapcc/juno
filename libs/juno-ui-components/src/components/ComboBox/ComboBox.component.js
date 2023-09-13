@@ -255,7 +255,10 @@ export const ComboBox = ({
             adaptiveWidth
           >
           
-            <div className={`${inputWrapperStyles}`}>
+            <div className={`
+                ${ inputWrapperStyles }
+                ${ disabled ? "jn-cursor-not-allowed" : "" }
+              `}>
               
               { label && isNotEmptyString(label) && !isLoading && !hasError ?
                   <Label 
