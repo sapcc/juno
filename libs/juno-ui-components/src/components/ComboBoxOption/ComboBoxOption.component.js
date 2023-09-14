@@ -47,6 +47,7 @@ const truncateOptionStyles = `
 `
 
 export const ComboBoxOption = ({
+  children,
   disabled,
   value,
   className,
@@ -59,9 +60,11 @@ export const ComboBoxOption = ({
     truncateOptions: truncateOptions,
   } = comboBoxContext || {}
   
+  const theValue = value || children
+  
   return (
     <Combobox.Option
-      value={value}
+      value={theValue}
       disabled={disabled}
       as={Fragment}
     >
@@ -71,17 +74,18 @@ export const ComboBoxOption = ({
           ${ optionStyles}
           ${ selectedValue === value ? selectedOptionStyles : unselectedOptionStyles }
           ${ disabled ? "jn-cursor-not-allowed" : "" }
+          ${ className }
         `}
         {...props}
       >
-        { selectedValue === value ? <Icon icon="check" size="18" className={`${selectedIconStyles}`} /> : "" }
+        { selectedValue === theValue ? <Icon icon="check" size="18" className={`${selectedIconStyles}`} /> : "" }
         <span 
           className={`
             ${ disabled ? disabledOptionLabelStyles : "" }
             ${ truncateOptions ? truncateOptionStyles : "" }
           `}
         >
-          {value}
+          { theValue }
         </span>
       </li>
 
@@ -91,12 +95,14 @@ export const ComboBoxOption = ({
 
 
 ComboBoxOption.propTypes = {
+  children: PropTypes.string,
   disabled: PropTypes.bool,
   value: PropTypes.string,
   className: PropTypes.string,
 }
 
 ComboBoxOption.defaultProps = {
+  children: undefined,
   disabled: false,
   value: "",
   className: "",
