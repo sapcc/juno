@@ -123,6 +123,7 @@ export const ComboBox = ({
   ariaLabel,
   children,
   className,
+  defaultValue,
   disabled,
   error,
   errortext,
@@ -243,6 +244,7 @@ export const ComboBox = ({
       `}>
         
           <Combobox 
+
             disabled={ disabled || isLoading || hasError }
             name={name}
             nullable={nullable}
@@ -383,6 +385,8 @@ ComboBox.propTypes = {
   children: PropTypes.node,
   /** A custom className. Will be passed to the text input element of the ComboBox */
   className: PropTypes.string,
+  /** Pass a defaultValue to use as an uncontrolled Component that will handle its state internally */
+  defaultValue: PropTypes.string,
   /** Whether the ComboBox is disabled */
   disabled: PropTypes.bool,
   /** Whether the ComboBox has an error. Note this refers to an internal error like failing to load options etc., to indicate failed validation use `invalid` instead. */
@@ -431,6 +435,7 @@ ComboBox.defaultProps = {
   ariaLabel: undefined,
   children: null,
   className: "",
+  defaultValue: undefined,
   disabled: false,
   error: false,
   errortext: "",
