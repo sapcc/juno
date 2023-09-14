@@ -286,4 +286,28 @@ describe("Select", () => {
     expect(toggle).toHaveTextContent("Option 3")
   })
   
+  test("works when options are not passed a value prop but only children", async () => {
+    render(
+      <Select>
+        <SelectOption>Option 1</SelectOption>
+        <SelectOption>Option 2</SelectOption>
+        <SelectOption>Option 3</SelectOption>
+        <SelectOption>Option 4</SelectOption>
+        <SelectOption>Option 5</SelectOption>
+      </Select>
+    )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    expect(toggle).toHaveTextContent("Select…")
+    await userEvent.click(toggle)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    const option3 = screen.getAllByRole("option")[2]
+    await userEvent.click(option3)
+    expect(toggle).toHaveTextContent("Option 3")
+    await userEvent.click(toggle)
+    const option1 = screen.getAllByRole("option")[0]
+    await userEvent.click(option1)
+    expect(toggle).toHaveTextContent("Option 1")
+  })
+  
 })

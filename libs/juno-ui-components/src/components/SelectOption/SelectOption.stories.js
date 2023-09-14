@@ -26,3 +26,10 @@ Disabled.args = {
   disabled: true,
   value: "Disabled Option"
 }
+
+export const ChildrenOnly = Template.bind({})
+ChildrenOnly.args = {
+  children: [
+    "Option 1"
+  ]
+}

@@ -241,3 +241,21 @@ NonTruncatedOptions.args = {
     />
   ]
 }
+
+export const WithChildrenOnly = Template.bind({})
+WithChildrenOnly.args = {
+  children: [
+    <SelectOption>Option 1</SelectOption>,
+    <SelectOption>Option 2</SelectOption>,
+    <SelectOption>Option 3</SelectOption>,
+    <SelectOption>Option 4</SelectOption>,
+    <SelectOption>Option 5</SelectOption>
+  ]
+}
+WithChildrenOnly.parameters = {
+  docs: {
+    description: {
+      story: "Alernatively to using a `value`-prop, strings as children can be passed."
+    }
+  }
+}

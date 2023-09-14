@@ -63,7 +63,7 @@ export const SelectOption = ({
     <Listbox.Option 
       as={Fragment}
       disabled={disabled} 
-      value={value}  
+      value={ value || children }  
     >
     { ({ active, selected } ) => (
       <li
@@ -88,7 +88,7 @@ export const SelectOption = ({
             ${ truncateOptions ? truncateOptionStyles : "" }
           `}
         >
-          { value }
+          { value || children }
         </span>
       </li>
     )}
