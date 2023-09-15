@@ -5,6 +5,13 @@ ALLOWED_TYPES=("app" "lib")
 
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
+# Überprüfen, ob das Betriebssystem macOS ist
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  SED_I="''"
+else
+  SED_I=''
+fi
+
 # function to create an app
 # $1: name of the app
 # $2: external (true/false)
@@ -37,13 +44,13 @@ create_app() {
   # go to the new app
   cd "$SCRIPT_DIR/../apps/$NAME" || exit 1
   # replace in all files the word "template" with $NAME
-  find . -type f -exec sed -i "s/template/$NAME/gi" {} \;
+  find . -type f -exec sed -i $SED_I "s/template/$NAME/gi" {} \;
 
   # if the app is external, change the package.json
   if [ $EXTERNAL = true ]; then
     # remove the peerDependencies, peerDependencies should be managed by developer
     echo "remove peerDependencies"
-    sed -i '/"peerDependencies":/,/}/d' package.json
+    sed -i $SED_I '/"peerDependencies":/,/}/d' package.json
     # find all libs in the libs folder
     folder_array=($(find $SCRIPT_DIR/../libs/* -maxdepth 0 -type d -exec basename {} \;))
 
@@ -55,7 +62,7 @@ create_app() {
       # print the link, escape the back slashes
       echo -e "link $folder to $(echo $url | sed 's/\\//g')"
       # replace the "*" with the url
-      sed -i "s/\"$folder\":\s*\"\*\"/\"$folder\": \"$url\"/g" package.json
+      sed -i $SED_I "s/\"$folder\":\s*\"\*\"/\"$folder\": \"$url\"/g" package.json
     done
   fi
 }
@@ -87,8 +94,8 @@ create_lib() {
   cd "$SCRIPT_DIR/../libs/$NAME" || exit 1
 
   # replace in all files the word "template" with $NAME
-  find . -type f -exec sed -i "s/template/$NAME/gi" {} \;
-  find . -type f -exec sed -i "s/template-lib/$NAME/gi" {} \;
+  find . -type f -exec sed -i $SED_I "s/template/$NAME/gi" {} \;
+  find . -type f -exec sed -i $SED_I "s/template-lib/$NAME/gi" {} \;
 }
 
 HELP="Usage: juno <command> [options] \n \n Commands: \n \t create \t Create a new app or lib \n \t delete \t Delete an app or lib \n \n Options: \n \t -h, --help \t Show help \n"
