@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react"
 import PropTypes from "prop-types"
-import { RSelect } from "../RSelect/index.js"
+import { Select } from "../Select/index.js"
 import { FormRow } from "../FormRow/index.js"
 import { withDeprecationWarning } from '../withDeprecationWarning/index.js'
 
@@ -33,13 +33,13 @@ const SelectRow = ({
 }) => {
   return (
     <FormRow>
-      <RSelect
+      <Select
         name={name}
         id={id}
         label={label}
         required={required}
         placeholder={placeholder}
-        onValueChange={onValueChange || onChange}
+        onChange={onValueChange || onChange}
         onOpenChange={onOpenChange}
         disabled={disabled}
         invalid={invalid}
@@ -57,7 +57,7 @@ const SelectRow = ({
         {...props}
       >
         {children}
-      </RSelect>
+      </Select>
     </FormRow>
   )
 }

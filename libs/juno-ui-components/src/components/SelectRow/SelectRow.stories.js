@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { SelectRow } from "./index.js"
-import { RSelectOption } from "../RSelectOption/"
-import { Default as DefaultSelectOptionStory } from "../RSelectOption/RSelectOption.stories"
+import { SelectOption } from "../SelectOption/"
+import { Default as DefaultSelectOptionStory } from "../SelectOption/SelectOption.stories"
 import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 export default {
@@ -31,11 +31,11 @@ export default {
 }
 
 const Template = ({ items, ...args }) => (
-  <RSelectRow {...args}>
+  <SelectRow {...args}>
     {items.map((item, i) => (
-      <RSelectOption {...item} key={`${i}`} />
+      <SelectOption {...item} key={`${i}`} />
     ))}
-  </RSelectRow>
+  </SelectRow>
 )
 
 const ControlledTemplate = ({value, children, ...args}) => {
@@ -46,9 +46,9 @@ const ControlledTemplate = ({value, children, ...args}) => {
   }, [value])
   
   return (
-    <RSelectRow value={val}  onValueChange={ (value) => {setVal(value)} } {...args} >
+    <SelectRow value={val}  onValueChange={ (value) => {setVal(value)} } {...args} >
       { children }
-    </RSelectRow>
+    </SelectRow>
   )
   
 }
@@ -99,9 +99,9 @@ Controlled.args = {
   label: "Controlled SelectRow",
   value: "2",
   children: [
-    <RSelectOption value="1" key="1">Value 1</RSelectOption>,
-    <RSelectOption value="2" key="2">Value 2</RSelectOption>,
-    <RSelectOption value="3" key="3">Value 3</RSelectOption>
+    <SelectOption value="1" key="1">Value 1</SelectOption>,
+    <SelectOption value="2" key="2">Value 2</SelectOption>,
+    <SelectOption value="3" key="3">Value 3</SelectOption>
   ]
 }
 

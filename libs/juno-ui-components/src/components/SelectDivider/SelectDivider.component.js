@@ -1,5 +1,4 @@
 import React from "react"
-import * as RadixSelect from "@radix-ui/react-select"
 import PropTypes from "prop-types"
 
 const dividerStyles = `
