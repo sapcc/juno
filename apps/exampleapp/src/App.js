@@ -17,7 +17,8 @@ const App = (props = {}) => {
   // on app initial load save Endpoint and URL_STATE_KEY so it can be
   // used from overall in the application
   useEffect(() => {
-    setEndpoint(props.endpoint)
+    // set default endpoint so the useQueryClientFn can be used
+    setEndpoint(props.endpoint || window.location.origin)
   }, [])
 
   return (

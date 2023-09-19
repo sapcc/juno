@@ -42,7 +42,6 @@ const fetchLocal = (urlString, options) => {
       return new Promise((resolve, reject) => {
         let json = null
         if (object) {
-          console.log("GET object", object)
           // object is given
           if (newDb?.[object]) {
             // object is found

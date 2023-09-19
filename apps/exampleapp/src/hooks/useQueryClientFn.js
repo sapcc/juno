@@ -65,8 +65,10 @@ const useQueryClientFn = () => {
         )
           .then(checkStatus)
           .then((response) => {
-            console.log("useQueryClientFn peaks response", response)
-            return response.json()
+            //  sort peaks by name
+            return response
+              .json()
+              .then((data) => data.sort((a, b) => a.name.localeCompare(b.name)))
           })
       },
     })
