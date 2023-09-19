@@ -12,6 +12,8 @@ import HintNotFound from "../shared/HintNotFound"
 import { useGlobalsActions } from "../StoreProvider"
 import useEndlessScrollList from "../../hooks/useEndlessScrollList"
 
+const LIST_COLUMNS = 6
+
 const PeaksList = ({ peaks }) => {
   const { setCurrentPanel } = useGlobalsActions()
 
@@ -23,14 +25,14 @@ const PeaksList = ({ peaks }) => {
   const { scrollListItems, iterator } = useEndlessScrollList(items, {
     loadingObject: (
       <DataGridRow>
-        <DataGridCell colSpan={7}>
+        <DataGridCell colSpan={LIST_COLUMNS}>
           <span>Loading ...</span>
         </DataGridCell>
       </DataGridRow>
     ),
     refFunction: (ref) => (
       <DataGridRow>
-        <DataGridCell colSpan={7} className="border-b-0 py-0">
+        <DataGridCell colSpan={LIST_COLUMNS} className="border-b-0 py-0">
           <span ref={ref} />
         </DataGridCell>
       </DataGridRow>
@@ -50,9 +52,8 @@ const PeaksList = ({ peaks }) => {
           label="Add a Peak"
         />
       </ContentAreaToolbar>
-      <DataGrid columns={7}>
+      <DataGrid columns={LIST_COLUMNS}>
         <DataGridRow>
-          <DataGridHeadCell>#</DataGridHeadCell>
           <DataGridHeadCell>Name</DataGridHeadCell>
           <DataGridHeadCell>Height</DataGridHeadCell>
           <DataGridHeadCell>Main Range</DataGridHeadCell>
@@ -69,7 +70,7 @@ const PeaksList = ({ peaks }) => {
           </>
         ) : (
           <DataGridRow>
-            <DataGridCell colSpan={7}>
+            <DataGridCell colSpan={LIST_COLUMNS}>
               <HintNotFound text="No peaks found" />
             </DataGridCell>
           </DataGridRow>

@@ -4,6 +4,7 @@ import {
   useGlobalsEndpoint,
   useGlobalsActions,
 } from "../components/StoreProvider"
+import fetchLocal from "../lib/fetchLocal"
 
 class HTTPError extends Error {
   constructor(code, message) {
@@ -51,9 +52,8 @@ const useQueryClientFn = () => {
     queryClient.setQueryDefaults(["peaks"], {
       queryFn: ({ queryKey }) => {
         const [_key, id, params] = queryKey
-        console.log("fetch peaks", _key, id)
         const query = encodeUrlParamsFromObject(params)
-        return fetch(
+        return fetchLocal(
           `${endpoint}/peaks${id ? "/" + id : ""}${query ? "" + query : ""}`,
           {
             method: "GET",
@@ -65,6 +65,7 @@ const useQueryClientFn = () => {
         )
           .then(checkStatus)
           .then((response) => {
+            console.log("useQueryClientFn peaks response", response)
             return response.json()
           })
       },
@@ -74,7 +75,7 @@ const useQueryClientFn = () => {
       mutationFn: ({ formState }) => {
         // Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
         const sendBody = JSON.stringify(formState)
-        return fetch(`${endpoint}/peaks`, {
+        return fetchLocal(`${endpoint}/peaks`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -93,7 +94,7 @@ const useQueryClientFn = () => {
       mutationFn: ({ id, formState }) => {
         // Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
         const sendBody = JSON.stringify(formState)
-        return fetch(`${endpoint}/peaks/${id}`, {
+        return fetchLocal(`${endpoint}/peaks/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -110,7 +111,7 @@ const useQueryClientFn = () => {
 
     queryClient.setMutationDefaults(["peakDelete"], {
       mutationFn: ({ id }) => {
-        return fetch(`${endpoint}/peaks/${id}`, {
+        return fetchLocal(`${endpoint}/peaks/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

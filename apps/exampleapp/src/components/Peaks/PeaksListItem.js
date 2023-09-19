@@ -34,7 +34,6 @@ const PeaksListItem = ({ peak }) => {
 
   return (
     <DataGridRow>
-      <DataGridCell>{peak.id}</DataGridCell>
       <DataGridCell>
         <strong>{peak.name}</strong>
       </DataGridCell>
