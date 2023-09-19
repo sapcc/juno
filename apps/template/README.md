@@ -33,7 +33,7 @@ Example:
 <script
   defer
   src="https://assets.juno.global.cloud.sap/apps/widget-loader@latest/build/app.js"
-  data-name="myapp"
+  data-name="template"
   data-version="latest"
   data-props-myprop="Passing a custom prop to my app"
 ></script>

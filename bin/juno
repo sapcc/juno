@@ -1,0 +1,189 @@
+#!/bin/bash
+
+ALLOWED_COMMANDS=("create" "delete")
+ALLOWED_TYPES=("app" "lib")
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+
+# Überprüfen, ob das Betriebssystem macOS ist
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  SED_I="''"
+else
+  SED_I=''
+fi
+
+# function to create an app
+# $1: name of the app
+# $2: external (true/false)
+create_app() {
+  NAME=$1
+  EXTERNAL=$2
+  # print the name of the app
+  # include "external" if the app is external
+  echo "creating$([ $EXTERNAL = true ] && echo " external") app $NAME"
+
+  # inform use user that a lib with this name already exists and he has to choose another name
+  if [ -d "$SCRIPT_DIR/../libs/$NAME" ]; then
+    echo "A lib with the name $NAME already exists. Please choose another name."
+    exit 1
+  fi
+
+  # ask user to replace if exists
+  if [ -d "$SCRIPT_DIR/../apps/$NAME" ]; then
+    read -p "The app $NAME already exists. Do you want to replace it? (y/n) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+      exit 1
+    fi
+  fi
+
+  # delete the app if it already exists
+  rm -rf "$SCRIPT_DIR/../apps/$NAME"
+  # copy the template app to the new app
+  cp -r "$SCRIPT_DIR/../apps/template" "$SCRIPT_DIR/../apps/$NAME"
+  # go to the new app
+  cd "$SCRIPT_DIR/../apps/$NAME" || exit 1
+  # replace in all files the word "template" with $NAME
+  find . -type f -exec sed -i $SED_I "s/template/$NAME/gi" {} \;
+
+  # if the app is external, change the package.json
+  if [ $EXTERNAL = true ]; then
+    # remove the peerDependencies, peerDependencies should be managed by developer
+    echo "remove peerDependencies"
+    sed -i $SED_I '/"peerDependencies":/,/}/d' package.json
+    # find all libs in the libs folder
+    folder_array=($(find $SCRIPT_DIR/../libs/* -maxdepth 0 -type d -exec basename {} \;))
+
+    # for each lib, replace "*" with the url to the latest version of the lib (assets server)
+    # example: "juno-ui-components": "*" -> "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@latest/package.tgz"
+    for folder in "${folder_array[@]}"; do
+      # define absolute url to the latest version of the lib
+      url="https:\/\/assets\.juno\.global\.cloud\.sap\/libs\/$folder@latest\/package\.tgz"
+      # print the link, escape the back slashes
+      echo -e "link $folder to $(echo $url | sed 's/\\//g')"
+      # replace the "*" with the url
+      sed -i $SED_I "s/\"$folder\":\s*\"\*\"/\"$folder\": \"$url\"/g" package.json
+    done
+  fi
+}
+
+create_lib() {
+  NAME=$1
+
+  # inform use user that an app with this name already exists and he has to choose another name
+  if [ -d "$SCRIPT_DIR/../apps/$NAME" ]; then
+    echo "An app with the name $NAME already exists. Please choose another name."
+    exit 1
+  fi
+
+  # ask user to replace if exists
+  if [ -d "$SCRIPT_DIR/../libs/$NAME" ]; then
+    read -p "The app $NAME already exists. Do you want to replace it? (y/n) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+      exit 1
+    fi
+  fi
+
+  echo "creating lib $NAME"
+  # delete the lib if it already exists
+  rm -rf "$SCRIPT_DIR/../libs/$NAME"
+  # copy the template lib to the new app
+  cp -r "$SCRIPT_DIR/../libs/template-lib" "$SCRIPT_DIR/../libs/$NAME"
+  # change directory
+  cd "$SCRIPT_DIR/../libs/$NAME" || exit 1
+
+  # replace in all files the word "template" with $NAME
+  find . -type f -exec sed -i $SED_I "s/template/$NAME/gi" {} \;
+  find . -type f -exec sed -i $SED_I "s/template-lib/$NAME/gi" {} \;
+}
+
+HELP="Usage: juno <command> [options] \n \n Commands: \n \t create \t Create a new app or lib \n \t delete \t Delete an app or lib \n \n Options: \n \t -h, --help \t Show help \n"
+COMMAND=$1
+
+if [[ "${ALLOWED_COMMANDS[*]}" != *"$COMMAND"* ]] || [ "$COMMAND" = "-h" ] || [ "$COMMAND" = "--help" ]; then
+  echo -e "$HELP"
+  exit 1
+fi
+
+############# CREATE #############
+if [ "$COMMAND" = "create" ]; then
+  HELP="Usage: juno create <type> <name> [options] \n \n Types: \n \t app \t Create a new app \n \t lib \t Create a new lib \n \n Options: \n \t -h, --help \t Show help \n \t -e, --external \t Create an external app or lib \n"
+  shift
+  TYPE=$1
+  if [[ "${ALLOWED_TYPES[*]}" != *"$TYPE"* ]] || [ "$TYPE" = "-h" ] || [ "$TYPE" = "--help" ]; then
+    echo -e "$HELP"
+    exit 1
+  fi
+
+  if [ "$TYPE" = "app" ]; then
+    HELP="Usage: juno create app <name> [options] \n \n Options: \n \t -h, --help \t Show help \n \t -e, --external \t Create an external app\n"
+  elif [ "$TYPE" = "lib" ]; then
+    HELP="Usage: juno create lib <name> [options] \n \n Options: \n \t -h, --help \t Show help \n \t -e, --external \t Create an external lib\n"
+  fi
+  shift
+  NAME=$1
+  shift
+  OPTIONS=$@
+  EXTERNAL=false
+  if [ "$OPTIONS" = "-e" ] || [ "$OPTIONS" = "--external" ]; then
+    EXTERNAL=true
+  fi
+
+  if [ -z "$NAME" ] || [ "$NAME" = "-h" ] || [ "$NAME" = "--help" ]; then
+    echo -e "$HELP"
+    exit 1
+  fi
+
+  if [ "$TYPE" = "app" ]; then
+    create_app $NAME $EXTERNAL
+  elif [ "$TYPE" = "lib" ]; then
+    create_lib $NAME
+  fi
+fi
+
+############# DELETE #############
+if [ "$COMMAND" = "delete" ]; then
+  HELP="Usage: juno delete <type> <name> [options] \n \n Types: \n \t app \t Delete an app \n \t lib \t Delete a lib \n \n Options: \n \t -h, --help \t Show help \n"
+  shift
+  TYPE=$1
+  if [[ "${ALLOWED_TYPES[*]}" != *"$TYPE"* ]] || [ "$TYPE" = "-h" ] || [ "$TYPE" = "--help" ]; then
+    echo -e "$HELP"
+    exit 1
+  fi
+
+  if [ "$TYPE" = "app" ]; then
+    HELP="Usage: juno delete app <name> [options] \n \n Options: \n \t -h, --help \t Show help \n"
+  elif [ "$TYPE" = "lib" ]; then
+    HELP="Usage: juno delete lib <name> [options] \n \n Options: \n \t -h, --help \t Show help \n"
+  fi
+  shift
+  NAME=$1
+
+  if [ -z "$NAME" ] || [ "$NAME" = "-h" ] || [ "$NAME" = "--help" ]; then
+    echo -e "$HELP"
+    exit 1
+  fi
+
+  # check if the app or lib exists
+  if [ ! -d "$SCRIPT_DIR/../$TYPE/$NAME" ]; then
+    echo "The $TYPE $NAME does not exist."
+    exit 1
+  fi
+  #ask user if he is sure and inform him that this action can be undone using git revert
+  echo "Deleting $TYPE $NAME. You can undo this action using git revert."
+  read -p "Are you sure? (y/n) " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    exit 1
+  fi
+
+  # delete the app or lib
+  if [ "$TYPE" = "app" ]; then
+    rm -rf "$SCRIPT_DIR/../apps/$NAME"
+  elif [ "$TYPE" = "lib" ]; then
+    rm -rf "$SCRIPT_DIR/../libs/$NAME"
+  fi
+fi
+
+# function create app
