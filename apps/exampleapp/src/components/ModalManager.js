@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from "react"
-import useStore from "../store"
-import { currentState, addOnChangeListener } from "url-state-provider"
-import LogInModal from "./LogInModal"
-import NewItemModal from "./NewItemModal"
+import React from "react"
+import { useGlobalsCurrentModal } from "./StoreProvider"
+import LogIn from "./auth/LogIn"
 
-const ModalManager = ({ currentModal }) => {
+const ModalManager = () => {
+  const currentModal = useGlobalsCurrentModal()
+
   switch (currentModal) {
     case "LogIn":
-      return <LogInModal />
-    case "NewPeaksItem":
-      return <NewItemModal />
+      return <LogIn />
     default:
       return null
   }

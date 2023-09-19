@@ -1,32 +1,23 @@
 import React, { useMemo } from "react"
 import { DataGridCell, DataGridRow, Icon, Stack } from "juno-ui-components"
-import useStore from "../../store"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { currentState, push } from "url-state-provider"
-import { deletePeak } from "../../actions"
+import { useGlobalsActions } from "../StoreProvider"
 
 const PeaksListItem = ({ peak }) => {
-  const urlStateKey = useStore((state) => state.urlStateKey)
-  const endpoint = useStore((state) => state.endpoint)
   const queryClient = useQueryClient()
+  const { setCurrentPanel } = useGlobalsActions()
 
   const { isLoading, isError, error, data, isSuccess, mutate } = useMutation({
-    mutationFn: ({ endpoint, id }) => deletePeak(endpoint, id),
+    mutationKey: ["peakDelete"],
   })
 
   const handleEditPeakClick = () => {
-    const urlState = currentState(urlStateKey)
-    push(urlStateKey, {
-      ...urlState,
-      currentPanel: "EditPeaksItem",
-      peakId: peak.id,
-    })
+    setCurrentPanel({ type: "PeaksEdit", itemId: peak.id })
   }
 
   const handleDeletePeakClick = () => {
     mutate(
       {
-        endpoint: endpoint,
         id: peak.id,
       },
       {
@@ -43,7 +34,6 @@ const PeaksListItem = ({ peak }) => {
 
   return (
     <DataGridRow>
-      <DataGridCell>{peak.id}</DataGridCell>
       <DataGridCell>
         <strong>{peak.name}</strong>
       </DataGridCell>
@@ -66,13 +56,15 @@ const PeaksListItem = ({ peak }) => {
             className="leading-none"
             onClick={handleDeletePeakClick}
           />
-          <Icon
-            icon="openInNew"
-            size="18"
-            href={peak.url}
-            target="_blank"
-            className="leading-none"
-          />
+          {peak?.url && (
+            <Icon
+              icon="openInNew"
+              size="18"
+              href={peak.url}
+              target="_blank"
+              className="leading-none"
+            />
+          )}
         </Stack>
       </DataGridCell>
     </DataGridRow>
