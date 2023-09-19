@@ -250,6 +250,7 @@ export const ComboBox = ({
             nullable={nullable}
             onChange={handleChange}
             value={selectedValue}
+            {...props}
           >
           
           <Float
@@ -299,7 +300,7 @@ export const ComboBox = ({
                   ${ hasError ? "juno-combobox-error jn-cursor-not-allowed" : "" }
                   ${className}
                 `} 
-                {...props}
+                
               />
               { 
                 isLoading || hasError ? 
