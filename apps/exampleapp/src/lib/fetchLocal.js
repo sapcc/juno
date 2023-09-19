@@ -104,7 +104,12 @@ const fetchLocal = (urlString, options) => {
           })
           // update object with the id
           if (index >= 0) {
-            newDb[object][index] = JSON.parse(body)
+            // merge existing object with new body without changing the id
+            newDb[object][index] = {
+              ...newDb[object][index],
+              ...JSON.parse(body),
+              id: newDb[object][index].id,
+            }
             resolve(resolveResponse(newDb[object][index]))
           } else {
             return resolve(
