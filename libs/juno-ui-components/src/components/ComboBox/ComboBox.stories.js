@@ -332,11 +332,11 @@ Error.args = {
 
 export const UncontrolledComboBox = Template.bind({})
 UncontrolledComboBox.args = {
-  defaultValue: "Caligari",
+  defaultValue: "Lencia",
   label: "An uncontrolled ComboBox",
   children: [
     <ComboBoxOption value="Caligari" key="1">Caligari</ComboBoxOption>,
     <ComboBoxOption value="Houdini" key="2">Houdini</ComboBoxOption>,
-    <ComboBoxOption value="Lencia" key="2"></ComboBoxOption>,
+    <ComboBoxOption value="Lencia" key="3"></ComboBoxOption>,
   ]
 }
