@@ -14,8 +14,6 @@ const Peaks = () => {
     enabled: !!queryClientFnReady,
   })
 
-  console.log("Peaks::", isLoading, defaultOptions, data)
-
   return (
     <>
       {isError && (
