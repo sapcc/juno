@@ -24,8 +24,6 @@ const rejectResponse = (error) => {
 }
 
 const fetchLocal = (urlString, options) => {
-  console.log("db", newDb)
-
   // get the path from the url
   const url = new URL(urlString)
   const path = url.pathname
@@ -35,7 +33,6 @@ const fetchLocal = (urlString, options) => {
   const id = path.split("/")[2]
 
   console.log("fetchLocal URL", url, path, object, id)
-  console.log("fetchLocal OPTIONS", options, options?.method)
 
   const method = options?.method
   const body = options?.body
