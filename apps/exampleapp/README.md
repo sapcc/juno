@@ -6,7 +6,7 @@ The example app serves as a demonstration application where we thoroughly test a
 
 - [React Zustand] implementation with React context
 - [React Zustand] store sliced and structured in lib folder.
-- [React Zustand] [Avoid Rerenders] Zustand export single States instead of the whole Store
+- [React Zustand] [Avoid Rerenders] Zustand export single States instead of the whole Store.
 - [React Query] [Avoid Rerenders] Use of hook `useQueryClilentFn` isolated in AsyncWorker component.
 - [React Query] use of hook `useQueryClilentFn` to encapsulate all queries and react to changes.
 - [Avoid Rerenders] use of hook `useUrlState` instead isolated in AsyncWorker component.
