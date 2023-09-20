@@ -71,81 +71,73 @@ const fetchLocal = (urlString, options) => {
       })
     case "POST":
       return new Promise((resolve, reject) => {
-        let newBody = JSON.parse(body)
-        if (object && newDb?.[object] && body) {
-          if (newDb?.[object]?.length > 0) {
-            // Use reduce to find the object with the highest id 'value'
-            const maxObject = newDb?.[object].reduce(
-              (max, obj) => (obj.id > max.id ? obj : max),
-              0
-            )
-            // set the id to the highest id + 1
-            newBody.id = maxObject.id + 1
-            newDb?.[object].push(newBody)
-            resolve(resolveResponse(newBody))
-          } else {
-            newDb?.[object].push(newBody)
-            resolve(resolveResponse(newBody))
-          }
-        } else {
-          return resolve(
-            rejectResponse(`No object ${object} or body ${body} given`)
+        if (!object || !body)
+          resolve(
+            rejectResponse(`No object '${object}' or body '${body}' given`)
           )
+        if (!newDb?.[object])
+          resolve(rejectResponse(`No object '${object}' found`))
+
+        let newBody = JSON.parse(body)
+        // set default id
+        newBody.id = 1
+        // if there are items find the item with the highest id
+        if (newDb?.[object]?.length > 0) {
+          // find the object with the highest id
+          const maxObject = newDb?.[object].reduce((max, obj) =>
+            obj.id > max.id ? obj : max
+          )
+          // set the id to the highest id + 1
+          newBody.id = (maxObject?.id || 0) + 1
         }
+        newDb?.[object].push(newBody)
+        resolve(resolveResponse(newBody))
       })
     case "PUT":
       return new Promise((resolve, reject) => {
-        if (object && newDb?.[object] && id && newDb?.[object]?.[id] && body) {
-          // find the object with the id
-          const index = newDb?.[object].findIndex((item) => {
-            // compare with just == because id is a string
-            // https://www.w3schools.com/js/js_comparisons.asp
-            return item.id == id
-          })
-          // update object with the id
-          if (index >= 0) {
-            // merge existing object with new body without changing the id
-            newDb[object][index] = {
-              ...newDb[object][index],
-              ...JSON.parse(body),
-              id: newDb[object][index].id,
-            }
-            resolve(resolveResponse(newDb[object][index]))
-          } else {
-            return resolve(
-              rejectResponse(`No object ${object} and id ${id} found`)
-            )
+        if (!object || !id)
+          resolve(rejectResponse(`No object '${object}' or id '${id}' given`))
+        if (!newDb?.[object])
+          resolve(rejectResponse(`No object '${object}' found`))
+
+        // find the object with the id
+        const index = newDb?.[object].findIndex((item) => {
+          // compare with just == because id is a string
+          // https://www.w3schools.com/js/js_comparisons.asp
+          return item.id == id
+        })
+        // update object with the id
+        if (index >= 0) {
+          // merge existing object with new body without changing the id
+          newDb[object][index] = {
+            ...newDb[object][index],
+            ...JSON.parse(body),
+            id: newDb[object][index].id,
           }
+          resolve(resolveResponse(newDb[object][index]))
         } else {
-          return resolve(
-            rejectResponse(
-              `No object ${object} or id ${id} or body ${body} given`
-            )
-          )
+          return resolve(rejectResponse(`No item with id '${id}' found`))
         }
       })
     case "DELETE":
       return new Promise((resolve, reject) => {
-        if (object && newDb?.[object] && id && newDb?.[object]?.[id]) {
-          // find the object with the id
-          const index = newDb?.[object].findIndex((item) => {
-            // compare with just == because id is a string
-            // https://www.w3schools.com/js/js_comparisons.asp
-            return item.id == id
-          })
-          // delete object with the id
-          if (index >= 0) {
-            newDb[object].splice(index, 1)
-            resolve(resolveResponse("Object deleted"))
-          } else {
-            return resolve(
-              rejectResponse(`No object ${object} and id ${id} found`)
-            )
-          }
+        if (!object || !id)
+          resolve(rejectResponse(`No object '${object}' or id '${id}' given`))
+        if (!newDb?.[object])
+          resolve(rejectResponse(`No object '${object}' found`))
+
+        // find the object with the id
+        const index = newDb?.[object].findIndex((item) => {
+          // compare with just == because id is a string
+          // https://www.w3schools.com/js/js_comparisons.asp
+          return item.id == id
+        })
+        // delete object with the id
+        if (index >= 0) {
+          newDb[object].splice(index, 1)
+          resolve(resolveResponse("Object deleted"))
         } else {
-          return resolve(
-            rejectResponse(`No object ${object} or id ${id} given`)
-          )
+          return resolve(rejectResponse(`No item with id '${id}' found`))
         }
       })
   }
