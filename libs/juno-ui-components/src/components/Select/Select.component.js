@@ -219,8 +219,7 @@ export const Select = ({
                 (!hasError && !isLoading) ?
                   <>
                     <span className={`${truncateStyles}`}>
-                      { value || selectedValue || placeholder }
-                      
+                      { value || placeholder }
                     </span>
                     <span className="jn-flex">
                       { isValid ? 
