@@ -161,7 +161,7 @@ export const ComboBox = ({
   const helptextId = "juno-combobox-helptext-" + useId()
   
   const [query, setQuery] = useState("")
-  const [selectedValue, setSelectedValue] = useState("")
+  const [selectedValue, setSelectedValue] = useState(value)
   const [isLoading, setIsLoading] = useState(false)
   const [hasError, setHasError] = useState(false)
   const [hasFocus, setFocus] = useState(false)
@@ -442,7 +442,7 @@ ComboBox.defaultProps = {
   ariaLabel: undefined,
   children: null,
   className: "",
-  defaultValue: undefined,
+  defaultValue: "",
   disabled: false,
   error: false,
   errortext: "",
@@ -462,6 +462,6 @@ ComboBox.defaultProps = {
   successtext: "",
   truncateOptions: false,
   valid: false,
-  value: undefined,
+  value: "",
   width: "full",
 }
