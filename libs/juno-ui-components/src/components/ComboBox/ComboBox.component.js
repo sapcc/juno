@@ -1,14 +1,22 @@
 import React, { useState, useEffect, useId, useMemo, createContext } from "react"
 import PropTypes from "prop-types"
 import { Combobox } from "@headlessui/react"
-import { Label } from "../Label/index.js"
-import { Icon } from "../Icon/index.js"
-import { FormHint } from "../FormHint/index.js"
-import { Spinner } from "../Spinner/index.js"
 import { Float } from "@headlessui-float/react"
+import { Label } from "../Label/index.js"
+import { FormHint } from "../FormHint/index.js"
+import { Icon } from "../Icon/index.js"
+import { Spinner } from "../Spinner/index.js"
+
+// STYLES
 
 const inputWrapperStyles = `
   jn-relative
+`
+
+const labelStyles = `
+  jn-pointer-events-none
+  jn-top-2
+  jn-left-[0.9375rem]
 `
 
 const inputStyles = `
@@ -22,6 +30,9 @@ const inputStyles = `
   jn-px-4
   jn-h-textinput
   jn-text-left
+  jn-overflow-hidden
+  jn-text-ellipsis
+  jn-whitespace-nowrap
   focus:jn-outline-none
   focus:jn-ring-2
   focus:jn-ring-theme-focus
@@ -52,12 +63,6 @@ const validStyles = `
 
 const invalidStyles = `
   jn-border-theme-error
-`
-
-const labelStyles = `
-  jn-pointer-events-none
-  jn-top-2
-  jn-left-[0.9375rem]
 `
 
 const buttonStyles = `
@@ -115,10 +120,10 @@ const centeredIconStyles = `
   jn-translate-x-[-0.75rem]
 `
 
-
-
+// CONTEXT
 export const ComboBoxContext = createContext()
 
+// COMBOBOX
 export const ComboBox = ({
   ariaLabel,
   children,
@@ -130,16 +135,16 @@ export const ComboBox = ({
   helptext,
   id,
   invalid,
-  label,
   loading,
+  label,
   name,
   nullable,
-  placeholder,
-  required,
   onBlur,
   onChange,
   onFocus,
   onInputChange,
+  placeholder,
+  required,
   successtext,
   truncateOptions,
   valid,
@@ -151,23 +156,18 @@ export const ComboBox = ({
   const isNotEmptyString = (str) => {
     return !(typeof str === 'string' && str.trim().length === 0)
   }
-  
-  const uniqueId = () => (
-    "juno-combobox-" + useId()
-  )
-  
-  const theId = id || uniqueId()
+    
+  const theId = id || "juno-combobox-" + useId()    
   const helptextId = "juno-combobox-helptext-" + useId()
   
-  const [selectedValue, setSelectedValue] = useState(false)
-  const [searchStr, setSearchStr] = useState("")
+  const [query, setQuery] = useState("")
+  const [selectedValue, setSelectedValue] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [hasError, setHasError] = useState(false)
+  const [hasFocus, setFocus] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
-  const [hasFocus, setFocus] = useState(false)
   
-    
   const invalidated = useMemo(
     () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
     [invalid, errortext]
@@ -182,14 +182,6 @@ export const ComboBox = ({
   }, [value] )
   
   useEffect(() => {
-    setIsInvalid(invalidated)
-  }, [invalidated])
-  
-  useEffect(() => {
-    setIsValid(validated)
-  }, [validated])
-  
-  useEffect(() => {
     setHasError(error)
   }, [error])
   
@@ -197,14 +189,22 @@ export const ComboBox = ({
     setIsLoading(loading)
   }, [loading])
   
-  const handleInputChange = (event) => {
-    setSearchStr(event.target.value)
-    onInputChange && onInputChange(event)
-  }
+  useEffect(() => {
+    setIsInvalid(invalidated)
+  }, [invalidated])
+  
+  useEffect(() => {
+    setIsValid(validated)
+  }, [validated])
   
   const handleChange = (value) => {
     setSelectedValue(value)
-    onChange && onChange(value)
+    onChange && onChange(event)
+  }
+  
+  const handleInputChange = (event) => {
+    setQuery(event.target.value)
+    onInputChange && onInputChange(event)
   }
   
   const handleFocus = (event) => {
@@ -217,52 +217,53 @@ export const ComboBox = ({
     onBlur && onBlur(event)
   }
   
-  
-  
   const filteredChildren = 
-    searchStr === ""
+    query === ""
     ? children
     : children.filter((child) => 
-        child.props.value?.toLowerCase().includes(searchStr.toLowerCase())
+        child.props.value?.toLowerCase().includes(query.toLowerCase())
       )
-      
+
   
   return (
     
-    <ComboBoxContext.Provider value={
-        {
-          selectedValue: selectedValue,
-          truncateOptions: truncateOptions
-        }
-      }
+    
+    <ComboBoxContext.Provider value={{
+        selectedValue: selectedValue,
+        truncateOptions: truncateOptions
+      }}
     >
-      <div className={`
-        juno-combobox-wrapper
-        jn-relative
-        ${ width == "auto" ? "jn-inline-block" : "jn-block" }
-        ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
-      `}>
+    
+      <div
+        className={`
+          juno-combobox-wrapper
+          jn-relative
+          ${ width == "auto" ? "jn-inline-block" : "jn-block" }
+          ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+        `}
+      >
+        <Combobox
+          defaultValue={defaultValue}
+          disabled={ disabled || isLoading || hasError }
+          name={name}
+          nullable={nullable}
+          onChange={handleChange}
+          value={selectedValue}
+          {...props}
+        >
         
-          <Combobox 
-
-            disabled={ disabled || isLoading || hasError }
-            name={name}
-            nullable={nullable}
-            onChange={handleChange}
-            value={selectedValue}
-            {...props}
-          >
-          
           <Float
             offset={4}
             adaptiveWidth
           >
           
-            <div className={`
+            <div
+              className={`
                 ${ inputWrapperStyles }
                 ${ disabled ? "jn-cursor-not-allowed" : "" }
-              `}>
-              
+              `}
+            >
+            
               { label && isNotEmptyString(label) && !isLoading && !hasError ?
                   <Label 
                     text={label}
@@ -271,23 +272,23 @@ export const ComboBox = ({
                     htmlFor={theId}
                     className={`${labelStyles}`}
                     floating
-                    minimized={ placeholder || hasFocus || (searchStr && isNotEmptyString(searchStr) || (selectedValue && isNotEmptyString(selectedValue)) ) ? true : false}
+                    minimized={ placeholder || hasFocus || (query && isNotEmptyString(query) || (selectedValue && isNotEmptyString(selectedValue)) ) ? true : false}
                   />
                 :
                   ""
               }
-              
-              <Combobox.Input 
+            
+              <Combobox.Input
                 autoComplete="off"
                 aria-label={ ariaLabel || label }
                 aria-describedby={ helptext ? helptextId : "" }
-                disabled={ disabled || isLoading || hasError } 
-                displayValue={selectedValue}
+                disabled={ disabled || isLoading || hasError }
                 id={theId}
                 onBlur={handleBlur}
                 onChange={handleInputChange}
                 onFocus={handleFocus}
                 placeholder={ !isLoading && !hasError ? placeholder : ""} 
+                displayValue={ (val) => val } // Headless-UI expects a callback here
                 className={`
                   juno-combobox-input 
                   ${inputStyles} 
@@ -299,9 +300,9 @@ export const ComboBox = ({
                   ${ isLoading ? "juno-combobox-loading jn-cursor-not-allowed" : "" }
                   ${ hasError ? "juno-combobox-error jn-cursor-not-allowed" : "" }
                   ${className}
-                `} 
-                
+                `}
               />
+              
               { 
                 isLoading || hasError ? 
                   <span className={`${centeredIconStyles}`}>
@@ -326,9 +327,9 @@ export const ComboBox = ({
                     :
                       ""
               }
-              {
-                !hasError && !isLoading ?
-                  <Combobox.Button 
+              
+              { !hasError && !isLoading ?
+                  <Combobox.Button
                     disabled={disabled} 
                     className={`
                       juno-combobox-toggle 
@@ -337,47 +338,52 @@ export const ComboBox = ({
                       ${ isInvalid ? "juno-combobox-toggle-invalid " + invalidButtonStyles : "" } 
                       ${ isValid ? "juno-combobox-toggle-valid " + validButtonStyles : "" }  
                       ${ isValid || isInvalid ? "" : defaultButtonStyles } 
-                    `}>
+                    `}
+                  >
                     {({open}) => (
                       <Icon icon={ open ? "expandLess": "expandMore"} />
                     )}
                   </Combobox.Button>
-                :
-                  ""
+                : ""
               }
-
             </div>
-            <Combobox.Options className={`juno-combobox-options ${menuStyles}`} >
+            <Combobox.Options
+              className={`
+                juno-combobox-options 
+                ${menuStyles}
+              `} 
+            >
               { filteredChildren }
             </Combobox.Options>
-            
+          
           </Float>
-            
-          </Combobox>
           
-          
-          { errortext && isNotEmptyString(errortext) ?
-              <FormHint text={errortext} variant="error"/>
-            :
-              ""
-          }
-          { successtext && isNotEmptyString(successtext) ?
-              <FormHint text={successtext} variant="success"/>
-            :
-              ""
-          }
-          { helptext && isNotEmptyString(helptext) ?
-              <FormHint text={helptext} id={helptextId} />
-            :
-              ""
-           }
-          
+        </Combobox>
+        
+        { errortext && isNotEmptyString(errortext) ?
+            <FormHint text={errortext} variant="error"/>
+          :
+            ""
+        }
+        { successtext && isNotEmptyString(successtext) ?
+            <FormHint text={successtext} variant="success"/>
+          :
+            ""
+        }
+        { helptext && isNotEmptyString(helptext) ?
+            <FormHint text={helptext} id={helptextId} />
+          :
+            ""
+         }
+        
       </div>
-    
+      
     </ComboBoxContext.Provider>
-    
+      
   )
+  
 }
+
 
 ComboBox.propTypes = {
   /** The aria-label of the ComboBox. Defaults to the label if label was passed. */
@@ -456,6 +462,6 @@ ComboBox.defaultProps = {
   successtext: "",
   truncateOptions: false,
   valid: false,
-  value: "",
+  value: undefined,
   width: "full",
 }
