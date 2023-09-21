@@ -150,7 +150,7 @@ export const Select = ({
   const handleChange = (value) => {
     setSelectedValue(value)
     onChange && onChange(value, event)
-    onValueChange && onValueChange(event)
+    onValueChange && onValueChange(value)
   }
   
   return (
