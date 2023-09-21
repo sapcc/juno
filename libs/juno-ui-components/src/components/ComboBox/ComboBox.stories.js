@@ -383,3 +383,15 @@ Error.args = {
   errortext: "ComboBox having trouble loading options"
 }
 
+
+export const ValueAndDefaultValue = Template.bind({})
+ValueAndDefaultValue.args = {
+  value: "Option 1",
+  defaultValue: "Option 2",
+  children: [
+    <ComboBoxOption value="Option 1" />,
+    <ComboBoxOption value="Option 2" />,
+    <ComboBoxOption value="Option 3" />
+  ]
+}
+
