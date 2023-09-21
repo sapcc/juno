@@ -248,7 +248,7 @@ export const ComboBox = ({
           name={name}
           nullable={nullable}
           onChange={handleChange}
-          value={selectedValue}
+          value={ selectedValue || defaultValue }
           {...props}
         >
         
