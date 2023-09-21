@@ -6,6 +6,7 @@ import { Select } from "./index"
 import { SelectOption } from "../SelectOption/index"
 
 const mockOnChange = jest.fn()
+const mockOnValueChange = jest.fn()
 
 const ControlledSelectParent = ({
   value,
@@ -248,6 +249,20 @@ describe("Select", () => {
     expect(screen.getByRole("listbox")).toBeInTheDocument()
     await userEvent.click(screen.getByRole("option"))
     expect(mockOnChange).toHaveBeenCalled()
+  })
+  
+  test("executes a legacy onValueChange handler when the Select value changes", async () => {
+    render(
+      <Select onValueChange={mockOnValueChange} >
+        <SelectOption value="Option-1">Option 1</SelectOption>
+      </Select>
+    )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    await userEvent.click(toggle)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    await userEvent.click(screen.getByRole("option"))
+    expect(mockOnValueChange).toHaveBeenCalled()
   })
   
   test("works as a controlled component", async () => {

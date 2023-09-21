@@ -89,6 +89,7 @@ export const Select = ({
   loading,
   name,
   onChange,
+  onValueChange,
   placeholder,
   required,
   successtext,
@@ -149,6 +150,7 @@ export const Select = ({
   const handleChange = (value) => {
     setSelectedValue(value)
     onChange && onChange(value, event)
+    onValueChange && onValueChange(event)
   }
   
   return (
@@ -311,6 +313,8 @@ Select.propTypes = {
   name: PropTypes.string,
   /** Handler to be executed when the selected value changes */
   onChange: PropTypes.func,
+  /** LEGACY: Handler to be executed when the Select value changes. Here for backwards compatibility with apps based on older versions of Select. Use onChange instead. */
+  onValueChange: PropTypes.func,
   /** A placeholder to render when no value has been selected. Default is "Select…". */
   placeholder: PropTypes.string,
   /** Whether a selection is required. Will show a small required marker next to the label. If no label is used, no marker will be visible. */
@@ -344,6 +348,7 @@ Select.defaultProps = {
   loading: false,
   name: undefined,
   onChange: undefined,
+  onValueChange: undefined,
   placeholder: "Select…",
   required: false,
   successtext: "",
