@@ -44,27 +44,8 @@ const useUrlState = () => {
 
     const unregisterGlobalChangeListener = urlStateManager.onGlobalChange(
       (state) => {
-        // start with default title
-        let title = "Greenhouse"
-        try {
-          // get active app name from url state
-          const activeApp = state?.[GREENHOUSE_STATE_KEY]?.[ACTIVE_APPS_KEY]
-          
-          if (activeApp) {
-            // add active app name and state
-            title += ` - ${activeApp}`
-            // get active app state from url state
-            // TODO: see if we can fix this to be prettier. the JSON stringify is pretty ugly
-            // let activeAppState = JSON.stringify(state?.[activeApp], (k, v) =>
-            //   v === null ? undefined : v
-            // )
-            // // add active app state to title
-            // if (activeAppState) title += `: ${activeAppState}`
-          }
-        } catch (e) {
-          console.debug("GREENHOUSE ERROR", e)
-        }
-        document.title = title
+        const url = new URL(window.location)
+        document.title = `Greenhouse - ${url.searchParams.get("__s")}`
       }
     )
 

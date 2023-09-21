@@ -1,7 +1,9 @@
 import LZString from "lz-string"
+import juriCutlery from "juri-cutlery"
 
-var SEARCH_KEY = "__s"
-var URL_REGEX = new RegExp("[?&]" + SEARCH_KEY + "=([^&#]*)")
+const jsonURLSerializer = juriCutlery()
+const SEARCH_KEY = "__s"
+const regex = new RegExp(SEARCH_KEY + "=([^&]+)")
 
 /**
  * Variable where to host listeners for history changes
@@ -10,29 +12,50 @@ var onHistoryChangeListeners = {}
 var onGlobalChangeListeners = []
 
 /**
- * Encode json data using lz-string
+ * Encode json data using json-url or lz-string. It automatically detects the best encoding.
  * @param {JSON} json data to be encoded
+ * @param {Object} options options for the encoding. Possible values: mode: "auto" or "humanize"
  * @returns encoded string
  */
-function encode(json) {
+function encode(json, options = {}) {
   try {
-    return LZString.compressToEncodedURIComponent(JSON.stringify(json))
+    let urlState = jsonURLSerializer.encode(json)
+
+    if (options?.mode === "humanize") return urlState
+
+    if (urlState.length > 1800) {
+      urlState = LZString.compressToEncodedURIComponent(JSON.stringify(json))
+    }
+
+    return urlState
   } catch (e) {
-    console.warn("URL State Router: Could not encode data", data)
+    console.warn("URL State Provider: Could not encode data", json, e)
     return ""
   }
 }
 
 /**
- * Decode using lz-string
+ * Decode using json-url or lz-string. It automatically detects the encoding.
  * @param {string} string to be decoded
  * @returns json
  */
 function decode(string) {
   try {
+    // try to decode using jsonURLSerializer
+    let json = jsonURLSerializer.decode(string)
+
+    // if parsed value is an object, return it
+    if (json && typeof json === "object") return json
+  } catch (e) {
+    // do nothing
+    // go to the next step try to decode using lz-string
+  }
+
+  try {
+    // try to decode as lz-string
     return JSON.parse(LZString.decompressFromEncodedURIComponent(string))
   } catch (e) {
-    console.warn("URL State Router: Could not decode string", string, e)
+    console.warn("URL State Provider: Could not decode string: ", string, e)
     return {}
   }
 }
@@ -43,9 +66,15 @@ function decode(string) {
  * @returns json
  */
 function URLToState() {
-  var match = window.location.href.match(URL_REGEX)
+  const match = window.location.href.match(regex)
   if (!match) return {}
-  return decode(match[1])
+  try {
+    // decodeURIComponent is needed to convert url encoded characters
+    return decode(decodeURIComponent(match[1]))
+  } catch (e) {
+    console.warn("URL State Provider: Could not decode string: ", match[1], e)
+    return {}
+  }
 }
 
 /**
@@ -65,18 +94,12 @@ function stateToQueryParam(state) {
  */
 function stateToURL(state) {
   var encodedState = encode(state)
-  var href = window.location.href
-  var match = href.match(URL_REGEX)
-
-  if (match) return href.replace(match[1], encodedState)
-
-  return (
-    href +
-    (href.indexOf("?") >= 0 ? "&" : "?") +
-    SEARCH_KEY +
-    "=" +
-    encodedState
-  )
+  // get current url
+  var newUrl = new URL(window.location.href)
+  // set new search params
+  newUrl.searchParams.set(SEARCH_KEY, encodedState)
+  // return new url string, decodeURIComponent is needed to convert url encoded characters
+  return decodeURIComponent(newUrl.toString())
 }
 
 /**
@@ -97,6 +120,8 @@ function currentState(stateID) {
 function updateState(stateID, state, options = {}) {
   // get current state from URL
   const newState = URLToState()
+  // URLToState should return an object, if not return empty object
+  if ("string" === typeof newState) return {}
   // change state, overwrite or merge if "merge" option is true
   newState[stateID] = options?.merge
     ? { ...newState[stateID], ...state }
@@ -279,4 +304,6 @@ export {
   stateToURL,
   stateToQueryParam,
   onGlobalChange,
+  decode,
+  encode,
 }

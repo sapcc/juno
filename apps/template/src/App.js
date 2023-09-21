@@ -1,7 +1,7 @@
 import React from "react"
 
-import useStore from "./store"
 import { AppShell, AppShellProvider } from "juno-ui-components"
+import StoreProvider, { useGlobalsActions } from "./components/StoreProvider"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
@@ -11,16 +11,24 @@ const URL_STATE_KEY = "template"
 /* --------------------------- */
 
 const App = (props = {}) => {
-  const setEndpoint = useStore((state) => state.setEndpoint)
-  const setUrlStateKey = useStore((state) => state.setUrlStateKey)
+  const { setUrlStateKey } = useGlobalsActions()
+
   // Create query client which it can be used from overall in the app
-  const queryClient = new QueryClient()
+  // set default endpoint to fetch data
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        meta: {
+          endpoint: props.endpoint || props.currentHost || "",
+        },
+      },
+    },
+  })
 
   // on app initial load save Endpoint and URL_STATE_KEY so it can be
   // used from overall in the application
   React.useEffect(() => {
     // set to empty string to fetch local test data in dev mode
-    setEndpoint(props.endpoint || props.currentHost || "")
     setUrlStateKey(URL_STATE_KEY)
   }, [])
 
@@ -42,7 +50,9 @@ const StyledApp = (props) => {
     <AppShellProvider theme={`${props.theme ? props.theme : "theme-dark"}`}>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
-      <App {...props} />
+      <StoreProvider>
+        <App {...props} />
+      </StoreProvider>
     </AppShellProvider>
   )
 }

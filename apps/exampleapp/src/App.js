@@ -1,30 +1,29 @@
-import React from "react"
+import React, { useEffect } from "react"
 
-import useStore from "./store"
-import { AppShell, AppShellProvider } from "juno-ui-components"
+import { AppShellProvider } from "juno-ui-components"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import styles from "./styles.scss"
-import AppContent from "./AppContent"
-
-// IMPORTANT: Replace this with your app's name
-const URL_STATE_KEY = "exampleapp"
+import AppShell from "./components/AppShell"
+import AppContent from "./components/AppContent"
+import AsyncWorker from "./components/AsyncWorker"
+import StoreProvider, { useGlobalsActions } from "./components/StoreProvider"
 
 const App = (props = {}) => {
-  const setEndpoint = useStore((state) => state.setEndpoint)
-  const setUrlStateKey = useStore((state) => state.setUrlStateKey)
+  const { setEndpoint } = useGlobalsActions()
+
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
 
   // on app initial load save Endpoint and URL_STATE_KEY so it can be
   // used from overall in the application
-  React.useEffect(() => {
-    // set to empty string to fetch local test data in dev mode
-    setEndpoint(props.endpoint || "")
-    setUrlStateKey(URL_STATE_KEY)
+  useEffect(() => {
+    // set default endpoint so the useQueryClientFn can be used
+    setEndpoint(props.endpoint || window.location.origin)
   }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
+      <AsyncWorker consumerId={props.id} />
       <AppShell
         pageHeader="Converged Cloud | Example App"
         contentHeading="Example App"
@@ -41,7 +40,9 @@ const StyledApp = (props) => {
     <AppShellProvider theme={`${props.theme ? props.theme : "theme-dark"}`}>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
-      <App {...props} />
+      <StoreProvider>
+        <App {...props} />
+      </StoreProvider>
     </AppShellProvider>
   )
 }
