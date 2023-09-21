@@ -33,6 +33,24 @@ const ConstrainedWidthTemplate = ({children, ...args}) => {
   )
 }
 
+const ControlledTemplate = ({value, children, ...args}) => {
+  const [v, setV] = useState(value)
+  
+  useEffect(() => {
+    setV(value)
+  }, [value])
+  
+  const handleChange = (val) => {
+    setV(val)
+  }
+  
+  return (
+    <Select value={v} onChange={handleChange}>
+      { children }
+    </Select>
+  )
+}
+
 
 export const Default = Template.bind({})
 Default.args = {
@@ -192,6 +210,16 @@ ManyOptions.args = {
     <SelectOption key="13" value="Option 13" />,
     <SelectOption key="14" value="Option 14" />,
     <SelectOption key="15" value="Option 15" />
+  ]
+}
+
+export const ControlledSelect = ControlledTemplate.bind({})
+ControlledSelect.args = {
+  value: "Option 3",
+  children: [
+    <SelectOption key="1" value="Option 1" />,
+    <SelectOption key="2" value="Option 2" />,
+    <SelectOption key="3" value="Option 3" />
   ]
 }
 
