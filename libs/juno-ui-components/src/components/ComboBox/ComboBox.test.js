@@ -277,8 +277,16 @@ describe("ComboBox", () => {
       </ComboBox>
     )
     const cbox = screen.getByRole("combobox")
+    const toggle = screen.getByRole("button")
     expect(cbox).toBeInTheDocument()
+    expect(toggle).toBeInTheDocument()
     expect(cbox).toHaveValue("aab")
+    await userEvent.click(toggle)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    const option123 = screen.getAllByRole("option")[3]
+    expect(option123).toHaveTextContent("123")
+    await userEvent.click(option123)
+    expect(cbox).toHaveValue("123")
   })
   
   test("works as an uncontrolled component with a defaultValue as passed", async () => {
@@ -291,8 +299,16 @@ describe("ComboBox", () => {
       </ComboBox>
     )
     const cbox = screen.getByRole("combobox")
+    const toggle = screen.getByRole("button")
     expect(cbox).toBeInTheDocument()
+    expect(toggle).toBeInTheDocument()
     expect(cbox).toHaveValue("abc")
+    await userEvent.click(toggle)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    const option123 = screen.getAllByRole("option")[3]
+    expect(option123).toHaveTextContent("123")
+    await userEvent.click(option123)
+    expect(cbox).toHaveValue("123")
   })
   
   // Caution: The below test basically tests headless-ui behaviour, not our logic. This is here only for testing consistency and so that we know should headless ever change their behaviour: 
