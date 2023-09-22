@@ -11,6 +11,9 @@ export default {
         options: ["head", "inline", "shadowRoot"],
       },
     },
+    children: {
+      control: false
+    },
   },
 }
 

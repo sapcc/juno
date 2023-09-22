@@ -5,7 +5,11 @@ import { PageFooter } from "./index.js"
 export default {
   title: "Layout/PageFooter",
   component: PageFooter,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => <PageFooter {...args}></PageFooter>

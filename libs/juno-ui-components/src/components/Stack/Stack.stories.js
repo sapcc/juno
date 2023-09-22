@@ -1,5 +1,5 @@
 import React from "react"
-import DummyComponentList from "../../dummyComponents/DummyComponentList"
+import DummyComponent from "../../dummyComponents/DummyComponent"
 
 import { Stack } from "./index.js"
 
@@ -7,6 +7,9 @@ export default {
   title: "Layout/Stack",
   component: Stack,
   argTypes: {
+    children: {
+      control: false
+    },
     gap: {
       options: [
         "0",
@@ -58,12 +61,28 @@ const docuClassnames = (direction) => {
 
 const Template = (args) => (
   <Stack className={docuClassnames(args.direction)} {...args}>
-    <DummyComponentList count={5} />
+    {[...Array(5)].map((_, i) => {
+        return (
+          <DummyComponent
+            key={i}
+            label={i}
+          />
+        )
+      })
+    }  
   </Stack>
 )
 const TemplateManyChildren = (args) => (
   <Stack className="jn-bg-theme-background-lvl-3" {...args}>
-    <DummyComponentList count={15} />
+        {[...Array(15)].map((_, i) => {
+        return (
+          <DummyComponent
+            key={i}
+            label={i}
+          />
+        )
+      })
+    }  
   </Stack>
 )
 

@@ -32,8 +32,10 @@ export const ContentAreaToolbar = ({
 ContentAreaToolbar.propTypes = {
   /** Add custom class name */
   className: PropTypes.string,
+  children: PropTypes.node,
 }
 
 ContentAreaToolbar.defaultProps = {
   className: "",
+  children: null,
 }

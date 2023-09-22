@@ -19,13 +19,14 @@ export const ContentAreaHeading = ({ heading, className, children, ...props }) =
       className={`juno-content-area-heading ${toolbarStyles} ${className}`}
       {...props}
     >
-      {heading}
-      {children}
+      {children || heading}
     </h1>
   )
 }
 
 ContentAreaHeading.propTypes = {
+  /** Optionally render children. If children are present, heading will be ignored */
+  children: PropTypes.node,
   /** Text to use as a title */
   heading: PropTypes.string,
   /** Add custom class name */
@@ -35,4 +36,5 @@ ContentAreaHeading.propTypes = {
 ContentAreaHeading.defaultProps = {
   heading: "",
   className: "",
+  children: null,
 }

@@ -4,7 +4,11 @@ import { TopNavigationItem } from "./index.js"
 export default {
   title: "Layout/TopNavigation/TopNavigationItem",
   component: TopNavigationItem,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
   parameters: { actions: { argTypesRegex: null } }
 }
 

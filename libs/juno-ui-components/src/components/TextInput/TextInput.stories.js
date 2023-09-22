@@ -4,7 +4,17 @@ import { TextInput } from "./index.js"
 export default {
   title: "Forms/TextInput",
   component: TextInput,
-  argTypes: {},
+  argTypes: {
+    errortext: {
+      control: false
+    },
+    helptext: {
+      control: false
+    },
+    successtext: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => <TextInput {...args} />

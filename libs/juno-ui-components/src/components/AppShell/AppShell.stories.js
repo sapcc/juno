@@ -9,7 +9,20 @@ import { TopNavigationItem } from "../TopNavigationItem/index"
 export default {
   title: "Layout/AppShell",
   component: AppShell,
-  argTypes: {},
+  argTypes: {
+    pageHeader: {
+      control: false
+    },
+    pageFooter: {
+      control: false
+    },
+    topNavigation: {
+      control: false
+    },
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => <AppShell {...args}>Content goes here</AppShell>

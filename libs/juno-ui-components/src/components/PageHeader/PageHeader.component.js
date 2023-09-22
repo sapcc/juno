@@ -66,11 +66,13 @@ PageHeader.propTypes = {
   /** Add custom class name */
   className: PropTypes.string,
   /** Optional: onClick handler for brand logo/page title. To be used to navigate to the home page.  */
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  children: PropTypes.node,
 }
 
 PageHeader.defaultProps = {
   heading: null,
   className: "",
-  onClick: undefined
+  onClick: undefined,
+  children: null,
 }

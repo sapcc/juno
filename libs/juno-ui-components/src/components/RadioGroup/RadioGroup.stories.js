@@ -10,7 +10,19 @@ export default {
       table: {
         disable: true
       }
-    }
+    },
+    errortext: {
+      control: false
+    },
+    helptext: {
+      control: false
+    },
+    successtext: {
+      control: false
+    },
+    children: {
+      control: false
+    },
   },
 }
 

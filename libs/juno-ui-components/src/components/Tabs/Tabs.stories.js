@@ -18,6 +18,19 @@ export default {
         type: "radio",
       },
     },
+    children: {
+      control: false
+    },
+    tabs: {
+      table: {
+        disable: true,
+      }
+    },
+    tabpanels: {
+      table: {
+        disable: true,
+      },
+    },
   },
 }
 

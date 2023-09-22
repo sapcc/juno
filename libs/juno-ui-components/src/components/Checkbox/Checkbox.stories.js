@@ -4,7 +4,17 @@ import { Checkbox } from "./index.js"
 export default {
   title: "Forms/Checkbox/Checkbox",
   component: Checkbox,
-  argTypes: {},
+  argTypes: {
+    errortext: {
+      control: false
+    },
+    helptext: {
+      control: false
+    },
+    successtext: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => <Checkbox {...args} />

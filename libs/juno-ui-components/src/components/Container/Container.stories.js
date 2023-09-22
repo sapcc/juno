@@ -5,7 +5,11 @@ import { Container } from "./index.js"
 export default {
   title: "Layout/Container",
   component: Container,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
   parameters: {
     docs: {
       description: {

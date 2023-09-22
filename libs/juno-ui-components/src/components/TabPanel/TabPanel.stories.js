@@ -4,7 +4,11 @@ import { TabPanel } from "./index.js"
 export default {
   title: "Layout/Tabs/TabPanel",
   component: TabPanel,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => <TabPanel { ...args } />

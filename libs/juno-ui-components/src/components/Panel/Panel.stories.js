@@ -8,7 +8,11 @@ import { ContentArea } from "../ContentArea/index.js"
 export default {
   title: "Layout/Panel/Panel",
   component: Panel,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
   decorators: [
     (story) => (
       <div className="jn-contrast-100">

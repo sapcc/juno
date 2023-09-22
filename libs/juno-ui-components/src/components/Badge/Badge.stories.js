@@ -10,6 +10,9 @@ export default {
       options: ["default", ...knownIcons],
       control: { type: "select" },
     },
+    children: {
+      control: false
+    },
   },
 }
 

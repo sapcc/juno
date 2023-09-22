@@ -6,7 +6,11 @@ import { Button } from "../Button/index.js"
 export default {
   title: "Layout/ContentAreaToolbar",
   component: ContentAreaToolbar,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => (

@@ -29,8 +29,10 @@ export const ContentArea = ({ className, children, ...props }) => {
 ContentArea.propTypes = {
   /** Add custom class name */
   className: PropTypes.string,
+  children: PropTypes.node.isRequired,
 }
 
 ContentArea.defaultProps = {
   className: "",
+  children: null,
 }

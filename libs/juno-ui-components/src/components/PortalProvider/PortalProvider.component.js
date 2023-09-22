@@ -65,12 +65,17 @@ PortalProvider.Portal = Portal
 Portal.displayName = "PortalProvider.Portal"
 
 PortalProvider.propTypes = {
+  /** Optionally a class name can be passed to the portal container which is the container where portals are created by PortalProvider */
   className: PropTypes.string,
+  /** Optionally an id can be passed to the portal container which is the container where portals are created by PortalProvider */
   id: PropTypes.string,
+  /** The PortalProvider must have children. It is typically used as a wrapper for the whole app. */
+  children: PropTypes.node.isRequired,
 }
 
 // define default values
 PortalProvider.defaultProps = {
   className: undefined,
   id: undefined,
+  children: null,
 }

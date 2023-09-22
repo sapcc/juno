@@ -5,7 +5,11 @@ import { AppBody } from "./index.js"
 export default {
   title: "Internal/AppBody",
   component: AppBody,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => <AppBody {...args}></AppBody>

@@ -6,7 +6,11 @@ import { DataGridCheckboxCell } from "./index.js"
 export default {
   title: "WiP/DataGrid/DataGridCheckboxCell",
   component: DataGridCheckboxCell,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
   decorators: [
     (story) => (
       <DataGrid columns={3}>
