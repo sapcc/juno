@@ -31,7 +31,7 @@ export const MainContainer = ({
 MainContainer.propTypes = {
   /** Add custom class name */
   className: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 }
 
 MainContainer.defaultProps = {

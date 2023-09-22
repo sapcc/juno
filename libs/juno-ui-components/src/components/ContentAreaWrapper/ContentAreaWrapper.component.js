@@ -26,7 +26,7 @@ export const ContentAreaWrapper = ({ className, children, ...props }) => {
 ContentAreaWrapper.propTypes = {
   /** Add custom class name */
   className: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 }
 
 ContentAreaWrapper.defaultProps = {
