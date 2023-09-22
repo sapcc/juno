@@ -70,7 +70,7 @@ PortalProvider.propTypes = {
   /** Optionally an id can be passed to the portal container which is the container where portals are created by PortalProvider */
   id: PropTypes.string,
   /** The PortalProvider must have children. It is typically used as a wrapper for the whole app. */
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 }
 
 // define default values
