@@ -7,7 +7,11 @@ import { Button } from "../Button/index.js"
 export default {
   title: "Internal/ContentAreaHeading",
   component: ContentAreaHeading,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => <ContentAreaHeading {...args} />

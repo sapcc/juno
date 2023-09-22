@@ -6,7 +6,11 @@ import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 export default {
   title: "Forms/Select/SelectOption",
   component: SelectOption,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
   decorators: [
     (story) => (
       <PortalProvider>

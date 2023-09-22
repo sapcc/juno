@@ -6,7 +6,11 @@ import { Default as GridColumn } from "../GridColumn/GridColumn.stories.js"
 export default {
   title: "Layout/Grid/Grid",
   component: Grid,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => <Grid {...args}></Grid>

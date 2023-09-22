@@ -18,7 +18,10 @@ export default {
       table: {
         disable: true
       }
-    }
+    },
+    children: {
+      control: false
+    },
   },
   decorators: [
     (Story) => (

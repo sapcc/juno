@@ -35,10 +35,12 @@ Container.propTypes = {
   py: PropTypes.bool,
   /** Add custom class name */
   className: PropTypes.string,
+  children: PropTypes.node,
 }
 
 Container.defaultProps = {
   px: true,
   py: false,
   className: "",
+  children: null,
 }

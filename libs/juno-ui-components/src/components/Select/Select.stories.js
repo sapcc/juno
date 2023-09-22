@@ -10,7 +10,20 @@ import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 export default {
   title: "Forms/Select/Select",
   component: Select,
-  argTypes: {},
+  argTypes: {
+    errortext: {
+      control: false
+    },
+    helptext: {
+      control: false
+    },
+    successtext: {
+      control: false
+    },
+    children: {
+      control: false
+    },
+  },
   decorators: [
     (story) => (
       <PortalProvider>

@@ -4,6 +4,11 @@ import { Message } from "./index.js"
 export default {
   title: "Components/Message",
   component: Message,
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => <Message {...args} />

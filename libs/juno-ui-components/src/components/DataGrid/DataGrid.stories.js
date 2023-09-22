@@ -15,7 +15,11 @@ import { Button } from "../Button/index.js"
 export default {
   title: "Components/DataGrid/DataGrid",
   component: DataGrid,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const defaultColumns = 3

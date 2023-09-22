@@ -5,7 +5,11 @@ import { ContentArea } from "./index.js"
 export default {
   title: "Internal/ContentArea",
   component: ContentArea,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => (

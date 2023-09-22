@@ -11,7 +11,10 @@ export default {
 		icon: {
 			options: [ 'default', ...knownIcons ],
 			control: { type: 'select' }
-		}
+		},
+		children: {
+      control: false
+    },
 	},
 }
 

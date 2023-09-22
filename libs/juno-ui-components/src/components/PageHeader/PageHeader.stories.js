@@ -5,7 +5,11 @@ import { PageHeader } from "./index.js"
 export default {
   title: "Layout/PageHeader",
   component: PageHeader,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    }
+  },
 }
 
 const Template = (args) => <PageHeader {...args}></PageHeader>

@@ -9,7 +9,11 @@ export default {
   component: PortalProvider,
   subcomponents: { "PortalProvider.Portal": PortalProvider.Portal },
   tags: ["autodocs"],
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Default = (args) => (

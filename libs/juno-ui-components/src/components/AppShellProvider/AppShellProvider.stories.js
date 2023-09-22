@@ -6,7 +6,11 @@ import { Message } from "../Message"
 export default {
   title: "Layout/AppShellProvider",
   component: AppShellProvider,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => (

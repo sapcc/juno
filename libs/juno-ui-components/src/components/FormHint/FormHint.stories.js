@@ -4,7 +4,12 @@ import { FormHint } from './index.js'
 export default {
   title: 'Forms/FormHint',
   component: FormHint,
-};
+  argTypes: {
+    children: {
+      control: false
+    },
+  }
+}
 
 const Template = ({ children, ...args}) => (
   <FormHint {...args}>

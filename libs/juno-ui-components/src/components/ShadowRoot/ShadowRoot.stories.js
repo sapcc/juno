@@ -10,6 +10,11 @@ const Template = (args) => (
 export default {
   title: "Layout/ShadowRoot",
   component: ShadowRoot,
+  argTypes: {
+    children: {
+      control: false,
+    },
+  },
 }
 
 export const EncapsulateStyles = Template.bind({})

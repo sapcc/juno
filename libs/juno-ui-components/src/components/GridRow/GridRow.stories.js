@@ -5,7 +5,11 @@ import { Default as GridColumn } from "../GridColumn/GridColumn.stories.js"
 export default {
   title: "Layout/Grid/GridRow",
   component: GridRow,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = ({ columns, ...args }) => <GridRow {...args}></GridRow>

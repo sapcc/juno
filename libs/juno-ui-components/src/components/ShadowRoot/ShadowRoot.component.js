@@ -65,10 +65,12 @@ export const ShadowRoot = ({ mode, delegatesFocus, children }) => {
 ShadowRoot.propTypes = {
   mode: PropTypes.oneOf(["open", "closed"]),
   delegatesFocus: PropTypes.bool,
+  children: PropTypes.node,
 }
 
 // default values for properties
 ShadowRoot.defaultProps = {
   mode: "open",
   delegatesFocus: false,
+  children: null,
 }

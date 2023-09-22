@@ -4,7 +4,11 @@ import { DataListCell } from "./index.js"
 export default {
   title: "Deprecated/DataList/DataListCell",
   component: DataListCell,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
   parameters: {
     docs: {
       description: {

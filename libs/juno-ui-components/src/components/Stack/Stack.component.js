@@ -154,6 +154,7 @@ export const Stack = ({
 }
 
 Stack.propTypes = {
+  children: PropTypes.node,
   /** Stack items horizontally or vertically */
   direction: PropTypes.oneOf(["horizontal", "vertical"]),
   /** Specify how items should be aligned on the cross axis (in a horizontal Stack this is the vertical alignment, in a vertical Stack it is the horizontal alignment) */
@@ -167,6 +168,7 @@ Stack.propTypes = {
 }
 
 Stack.defaultProps = {
+  children: null,
   direction: "horizontal",
   alignment: "stretch",
   distribution: "start",

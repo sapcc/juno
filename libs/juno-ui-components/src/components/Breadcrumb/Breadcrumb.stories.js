@@ -23,7 +23,11 @@ const Template = ({ children, ...args}) => {
 export default {
   title: "Components/Breadcrumb/Breadcrumb",
   component: Breadcrumb,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false,
+    },
+  },
 }
 
 export const Default = Template.bind({})
