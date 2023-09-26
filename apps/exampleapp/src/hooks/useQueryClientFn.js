@@ -4,7 +4,7 @@ import {
   useGlobalsEndpoint,
   useGlobalsActions,
 } from "../components/StoreProvider"
-import fetchLocal from "../lib/fetchLocal"
+import { fetch } from "utils"
 
 class HTTPError extends Error {
   constructor(code, message) {
@@ -53,7 +53,7 @@ const useQueryClientFn = () => {
       queryFn: ({ queryKey }) => {
         const [_key, id, params] = queryKey
         const query = encodeUrlParamsFromObject(params)
-        return fetchLocal(
+        return fetch(
           `${endpoint}/peaks${id ? "/" + id : ""}${query ? "" + query : ""}`,
           {
             method: "GET",
@@ -83,7 +83,7 @@ const useQueryClientFn = () => {
       mutationFn: ({ formState }) => {
         // Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
         const sendBody = JSON.stringify(formState)
-        return fetchLocal(`${endpoint}/peaks`, {
+        return fetch(`${endpoint}/peaks`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -102,7 +102,7 @@ const useQueryClientFn = () => {
       mutationFn: ({ id, formState }) => {
         // Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
         const sendBody = JSON.stringify(formState)
-        return fetchLocal(`${endpoint}/peaks/${id}`, {
+        return fetch(`${endpoint}/peaks/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -119,7 +119,7 @@ const useQueryClientFn = () => {
 
     queryClient.setMutationDefaults(["peakDelete"], {
       mutationFn: ({ id }) => {
-        return fetchLocal(`${endpoint}/peaks/${id}`, {
+        return fetch(`${endpoint}/peaks/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

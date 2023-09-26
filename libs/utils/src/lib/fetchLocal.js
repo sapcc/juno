@@ -18,20 +18,29 @@ const rejectResponse = (error) => {
   })
 }
 
+const DEFAULT_DB_PATH = "./db.js"
 let localDB = null
 export const initializeDB = (jsonDbPath) => {
   try {
-    const module = import(jsonDbPath)
-    localDB = module.default()
+    import(jsonDbPath)
+      .then((module) => module.default)
+      .then((db) => {
+        console.log("db", db)
+        localDB = db
+      })
   } catch (error) {
-    console.error("Error:", error)
+    console.error(
+      `Error, no db.json file found. Default path is '${jsonDbPath}':`,
+      error
+    )
   }
 }
 
 const fetch = (urlString, options) => {
   // if localDB is not initialized, trhow an error
   if (!localDB) {
-    throw new Error("Local DB is not initialized")
+    initializeDB(DEFAULT_DB_PATH)
+    // throw new Error("Local DB is not found")
   }
 
   // get the path from the url
