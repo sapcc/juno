@@ -4,7 +4,7 @@ import { ComboBoxOption } from "./index.js"
 
 export default {
   title: "Forms/ComboBox/ComboBoxOption",
-  component: ComboBox,
+  component: ComboBoxOption,
   argTypes: {},
 }
 

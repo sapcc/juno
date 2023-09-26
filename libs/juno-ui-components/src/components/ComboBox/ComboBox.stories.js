@@ -6,7 +6,20 @@ import { ComboBoxOption } from "../ComboBoxOption/index.js"
 export default {
   title: "Forms/ComboBox/ComboBox",
   component: ComboBox,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+    errortext: {
+      control: false
+    },
+    helptext: {
+      control: false
+    },
+    successtext: {
+      control: false
+    },
+  },
 }
 
 const Template = ({children, ...args}) => {
