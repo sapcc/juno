@@ -6,6 +6,7 @@ import { Label } from "../Label/index.js"
 import { FormHint } from "../FormHint/index.js"
 import { Icon } from "../Icon/index.js"
 import { Spinner } from "../Spinner/index.js"
+import { offset, shift, size } from '@floating-ui/react-dom'
 
 // STYLES
 
@@ -217,6 +218,21 @@ export const ComboBox = ({
     onBlur && onBlur(event)
   }
   
+  // Headless-UI-Float Middleware
+  const middleware = [
+    offset(4),
+    shift(),
+    size({
+      apply({availableWidth, availableHeight, elements}) {
+        Object.assign(elements.floating.style, {
+          maxWidth: `${availableWidth}px`,
+          maxHeight: `${availableHeight}px`,
+          overflowY: "auto"
+        })
+      }
+    })
+  ]
+  
   const filteredChildren = 
     query === ""
     ? children
@@ -253,8 +269,8 @@ export const ComboBox = ({
         >
         
           <Float
-            offset={4}
             adaptiveWidth
+            middleware={middleware}
           >
           
             <div

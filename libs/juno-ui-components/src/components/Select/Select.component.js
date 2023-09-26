@@ -7,6 +7,7 @@ import { Icon } from "../Icon/"
 import { Spinner } from "../Spinner/"
 import { FormHint } from "../FormHint/"
 import { Float } from "@headlessui-float/react"
+import { offset, shift, size } from '@floating-ui/react-dom'
 
 const labelStyles = `
   jn-no-wrap
@@ -57,6 +58,7 @@ const menuStyles = `
   jn-rounded
   jn-bg-theme-background-lvl-1
   jn-w-full
+  jn-overflow-y-auto
 `
 
 const truncateStyles = `
@@ -153,6 +155,21 @@ export const Select = ({
     onValueChange && onValueChange(value)
   }
   
+  // Headless-UI-Float Middleware
+  const middleware = [
+    offset(4),
+    shift(),
+    size({
+      apply({availableWidth, availableHeight, elements}) {
+        Object.assign(elements.floating.style, {
+          maxWidth: `${availableWidth}px`,
+          maxHeight: `${availableHeight}px`,
+          overflowY: "auto"
+        })
+      }
+    })
+  ]
+  
   return (
     <SelectContext.Provider value={
       {
@@ -191,8 +208,8 @@ export const Select = ({
           }
           
           <Float 
-            offset={4}
             adaptiveWidth
+            middleware={middleware}
           >
           
             <Listbox.Button 
