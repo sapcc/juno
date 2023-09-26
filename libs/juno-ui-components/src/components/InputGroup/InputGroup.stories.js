@@ -8,7 +8,11 @@ import { TextInput } from "../TextInput/index"
 export default {
   title: "WiP/InputGroup",
   component: InputGroup,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => <InputGroup {...args} />

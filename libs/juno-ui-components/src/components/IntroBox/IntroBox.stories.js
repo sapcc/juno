@@ -5,7 +5,11 @@ import heroImage from "../../img/app_bg_example.svg?url"
 export default {
   title: "Components/IntroBox",
   component: IntroBox,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => <IntroBox {...args} />

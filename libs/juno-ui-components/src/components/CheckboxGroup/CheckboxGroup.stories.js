@@ -11,8 +11,23 @@ export default {
     items: {
       table: {
         disable: true
-      }
-    }
+      },
+    },
+    errortext: {
+      control: false
+    },
+    helptext: {
+      control: false
+    },
+    successtext: {
+      control: false
+    },
+    children: {
+      control: false
+    },
+    selected: {
+      control: false
+    },
   }
 }
 

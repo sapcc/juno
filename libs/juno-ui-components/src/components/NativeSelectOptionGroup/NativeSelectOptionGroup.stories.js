@@ -10,7 +10,16 @@ import {
 export default {
   title: "Forms/NativeSelect/NativeSelectOptionGroup",
   component: NativeSelectOptionGroup,
-  argTypes: {},
+  argTypes: {
+    options: {
+      table: {
+        disable: true
+      }
+    },
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = ({ options, ...args }) => (

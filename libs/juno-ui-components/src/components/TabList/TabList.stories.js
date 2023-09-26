@@ -6,7 +6,16 @@ import { Default as DefaultTabStory } from "../Tab/Tab.stories.js"
 export default {
   title: "Layout/Tabs/TabList",
   component: TabList,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+    tabs: {
+      table: {
+        disable: true,
+      },
+    },
+  },
 }
 
 const Template = ({ tabs, ...args }) => (

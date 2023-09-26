@@ -1,11 +1,23 @@
 import React from "react"
 import { Select } from "../Select/"
 import { SelectOption } from "./index.js"
+import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 export default {
   title: "Forms/Select/SelectOption",
-  component: Select,
-  argTypes: {},
+  component: SelectOption,
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
+  decorators: [
+    (story) => (
+      <PortalProvider>
+        {story()}
+      </PortalProvider>
+    ),
+  ],
 }
 
 const Template = (args) => {

@@ -4,7 +4,17 @@ import { Radio } from "./index.js"
 export default {
   title: "Forms/Radio",
   component: Radio,
-  argTypes: {},
+  argTypes: {
+    errortext: {
+      control: false
+    },
+    helptext: {
+      control: false
+    },
+    successtext: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => <Radio {...args} />

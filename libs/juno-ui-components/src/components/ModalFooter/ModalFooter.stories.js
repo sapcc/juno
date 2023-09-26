@@ -15,7 +15,11 @@ const Template = (args) => {
 export default {
   title: "WiP/Modal/ModalFooter",
   component: ModalFooter,
-  argTypes: {},
+  argTypes: {
+		children: {
+      control: false
+    },
+	},
 	parameters: { actions: { argTypesRegex: null } },
 }
 

@@ -4,7 +4,18 @@ import { Textarea } from "./index.js"
 export default {
   title: "Forms/Textarea",
   component: Textarea,
-  argTypes: {},
+  argTypes: {
+    errortext: {
+      control: false
+    },
+    helptext: {
+      control: false
+    },
+    successtext: {
+      control: false
+    },
+    
+  },
 }
 
 const Template = (args) => <Textarea {...args} />

@@ -15,7 +15,16 @@ import {
 export default {
   title: "Forms/NativeSelect/NativeSelect",
   component: NativeSelect,
-  argTypes: {},
+  argTypes: {
+    options: {
+      table: {
+        disable: true
+      }
+    },
+    children: {
+      control: false
+    },
+  },
 }
 
 const NativeSelectTemplate = ({ options, ...args }) => (

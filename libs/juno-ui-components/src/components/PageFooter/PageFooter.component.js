@@ -40,8 +40,10 @@ export const PageFooter = ({ className, children, ...props }) => {
 PageFooter.propTypes = {
   /** Add custom class name */
   className: PropTypes.string,
+  children: PropTypes.node,
 }
 
 PageFooter.defaultProps = {
   className: "",
+  children: null,
 }

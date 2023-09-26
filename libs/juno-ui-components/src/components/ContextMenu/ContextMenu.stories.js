@@ -9,7 +9,11 @@ import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 export default {
   title: "WiP/ContextMenu/ContextMenu",
   component: ContextMenu,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = ({ children, ...args }) => (

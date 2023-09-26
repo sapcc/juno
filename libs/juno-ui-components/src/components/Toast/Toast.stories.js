@@ -4,7 +4,11 @@ import { Toast } from './index.js';
 export default {
   title: 'WiP/Toast',
   component: Toast,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 };
 
 const Template = (args) => <Toast {...args} />;

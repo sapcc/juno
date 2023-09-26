@@ -12,6 +12,17 @@ export default {
       },
     },
   },
+  argTypes: {
+    errortext: {
+      control: false
+    },
+    helptext: {
+      control: false
+    },
+    successtext: {
+      control: false
+    },
+  }
 }
 
 const Template = (args) => <Switch {...args} />

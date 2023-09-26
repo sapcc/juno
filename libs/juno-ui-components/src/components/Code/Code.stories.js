@@ -5,7 +5,11 @@ import { Code } from "./index.js"
 export default {
   title: "Components/Code",
   component: Code,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => <Code {...args} />

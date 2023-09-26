@@ -4,7 +4,11 @@ import { SideNavigationItem } from "./index.js"
 export default {
   title: "Layout/SideNavigation/SideNavigationItem",
   component: SideNavigationItem,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
   parameters: { actions: { argTypesRegex: null } }
 }
 

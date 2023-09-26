@@ -8,7 +8,14 @@ import { SearchInput } from "../SearchInput/SearchInput.component"
 export default {
   title: "Components/DataGrid/DataGridToolbar",
   component: DataGridToolbar,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+    search: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => 

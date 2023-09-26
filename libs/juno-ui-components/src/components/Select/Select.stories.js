@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Select } from "./index.js"
 import { SelectOption } from "../SelectOption/"
-
+import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 export default {
   title: "Forms/Select/Select",
@@ -10,9 +10,27 @@ export default {
     variant: {
       options: [ 'default', 'primary', 'primary-danger', 'subdued' ],
       control: { type: 'select' }
-    }
+    },
+    errortext: {
+      control: false
+    },
+    helptext: {
+      control: false
+    },
+    successtext: {
+      control: false
+    },
+    children: {
+      control: false
+    },
   },
-
+  decorators: [
+    (story) => (
+      <PortalProvider>
+        {story()}
+      </PortalProvider>
+    ),
+  ],
 }
 
 const Template = ({children, ...args}) => {
