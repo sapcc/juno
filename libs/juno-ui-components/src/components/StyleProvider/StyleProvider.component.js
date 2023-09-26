@@ -82,6 +82,7 @@ export const StyleProvider = ({
 }
 
 StyleProvider.propTypes = {
+  children: PropTypes.node,
   stylesWrapper: PropTypes.oneOfType([
     PropTypes.oneOf(["head", "inline", "shadowRoot"]),
   ]),
@@ -91,6 +92,7 @@ StyleProvider.propTypes = {
 
 // define default values
 StyleProvider.defaultProps = {
+  children: null,
   stylesWrapper: "inline",
   theme: undefined,
 }

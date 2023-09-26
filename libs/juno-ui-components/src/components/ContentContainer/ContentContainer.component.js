@@ -28,8 +28,10 @@ export const ContentContainer = ({ className, children, ...props }) => {
 ContentContainer.propTypes = {
   /** Add custom class name */
   className: PropTypes.string,
+  children: PropTypes.node,
 }
 
 ContentContainer.defaultProps = {
   className: "",
+  children: null,
 }

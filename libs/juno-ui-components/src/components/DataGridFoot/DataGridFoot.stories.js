@@ -6,7 +6,11 @@ import { Default as DataGridCellStory } from "../DataGridCell/DataGridCell.stori
 export default {
   title: "WiP/DataGrid/DataGridFoot",
   component: DataGridFoot,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
   decorators: [(story) => <table>{story()}</table>],
   parameters: {
     docs: {

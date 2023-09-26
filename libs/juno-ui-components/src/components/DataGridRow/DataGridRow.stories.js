@@ -9,7 +9,16 @@ const columns = 5
 export default {
   title: "Components/DataGrid/DataGridRow",
   component: DataGridRow,
-  argTypes: {},
+  argTypes: {
+    items: {
+      table: {
+        disable: true,
+      },
+    },
+    children: {
+      control: false
+    },
+  },
   decorators: [
     (story) => (
       <DataGrid columns={columns}>

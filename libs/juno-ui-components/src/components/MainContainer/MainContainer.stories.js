@@ -5,10 +5,14 @@ import { MainContainer } from "./index.js"
 export default {
   title: "Internal/MainContainer",
   component: MainContainer,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
-const Template = (args) => <MainContainer {...args}></MainContainer>
+const Template = (args) => <MainContainer {...args}>main content</MainContainer>
 
 export const Main = Template.bind({})
 Main.parameters = {

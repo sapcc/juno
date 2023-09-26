@@ -30,9 +30,11 @@ export const MainContainer = ({
 
 MainContainer.propTypes = {
   /** Add custom class name */
-  className: PropTypes.string
+  className: PropTypes.string,
+  children: PropTypes.node,
 }
 
 MainContainer.defaultProps = {
-  className: ""
+  className: "",
+  children: null,
 }

@@ -13,7 +13,10 @@ export default {
     size: {
       options: ["auto", "small", "medium", "large"],
       control: {type: "select"}
-    }
+    },
+    children: {
+      control: false
+    },
   },
 }
 

@@ -5,10 +5,14 @@ import { ContentContainer } from "./index.js"
 export default {
   title: "Internal/ContentContainer",
   component: ContentContainer,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
-const Template = (args) => <ContentContainer {...args}></ContentContainer>
+const Template = (args) => <ContentContainer {...args}>content</ContentContainer>
 
 export const Centered = Template.bind({})
 Centered.parameters = {

@@ -4,7 +4,11 @@ import { GridColumn } from "./index.js"
 export default {
   title: "Layout/Grid/GridColumn",
   component: GridColumn,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => (

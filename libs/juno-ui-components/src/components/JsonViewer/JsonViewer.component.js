@@ -515,9 +515,9 @@ JsonViewer.propTypes = {
     }),
     PropTypes.oneOf(["dark", "light"]),
   ]),
-  /** expanded can be true|false or a number */
+  /** expanded can be true|false or a number. The number denotes the hierarchy level to which the object is expanded. */
   expanded: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-  // cut strings after max length is reached */
+  // cut strings after max length is reached, default length is 100 characters, if set to true. Or specifcy a different character length. */
   truncate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   /* indent width */
   indentWidth: PropTypes.number,

@@ -5,7 +5,11 @@ import { AppIntro } from "./index.js"
 export default {
   title: "Layout/AppIntro",
   component: AppIntro,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => (

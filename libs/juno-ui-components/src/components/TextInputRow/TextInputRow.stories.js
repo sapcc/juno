@@ -16,6 +16,18 @@ export default {
       options: ["text", "password", "email", "tel", "url", "number"],
       control: { type: "select"}
     },
+    errortext: {
+      control: false
+    },
+    helptext: {
+      control: false
+    },
+    successtext: {
+      control: false
+    },
+    children: {
+      control: false
+    },
   }
 }
 

@@ -7,12 +7,26 @@ export default {
   title: "Forms/Select/Select",
   component: Select,
   argTypes: {
-    variant: {
-      options: [ 'default', 'primary', 'primary-danger', 'subdued' ],
-      control: { type: 'select' }
-    }
+    errortext: {
+      control: false
+    },
+    helptext: {
+      control: false
+    },
+    successtext: {
+      control: false
+    },
+    children: {
+      control: false
+    },
   },
-
+  decorators: [
+    (story) => (
+      <PortalProvider>
+        {story()}
+      </PortalProvider>
+    ),
+  ],
 }
 
 const Template = ({children, ...args}) => {

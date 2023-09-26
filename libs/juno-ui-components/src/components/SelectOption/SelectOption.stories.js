@@ -4,8 +4,19 @@ import { SelectOption } from "./index.js"
 
 export default {
   title: "Forms/Select/SelectOption",
-  component: Select,
-  argTypes: {},
+  component: SelectOption,
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
+  decorators: [
+    (story) => (
+      <PortalProvider>
+        {story()}
+      </PortalProvider>
+    ),
+  ],
 }
 
 const Template = (args) => {

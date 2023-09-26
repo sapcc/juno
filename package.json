@@ -1,4 +1,5 @@
 {
+  "name": "juno",
   "private": true,
   "workspaces": [
     "apps/*",

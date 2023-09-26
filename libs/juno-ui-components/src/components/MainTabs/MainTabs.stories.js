@@ -10,7 +10,21 @@ import { Default as TabPanelStory } from "../TabPanel/TabPanel.stories.js"
 export default {
 	title: "Layout/Tabs/MainTabs",
 	component: MainTabs,
-	argTypes: {},
+	argTypes: {
+		children: {
+      control: false
+    },
+		tabs: {
+      table: {
+        disable: true,
+      },
+    },
+		tabpanels: {
+      table: {
+        disable: true,
+      },
+    },
+	},
 }
 
 const Template = ({tabs, tabpanels, ...args}) => (

@@ -6,7 +6,11 @@ import { DataGridCell } from "./index.js"
 export default {
   title: "Components/DataGrid/DataGridCell",
   component: DataGridCell,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
   decorators: [
     (story) => (
       <DataGrid columns={3}>

@@ -11,7 +11,20 @@ export default {
       },
     },
   },
-  argTypes: {},
+  argTypes: {
+    errortext: {
+      control: false
+    },
+    helptext: {
+      control: false
+    },
+    successtext: {
+      control: false
+    },
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => <TextareaRow {...args} />

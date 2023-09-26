@@ -4,7 +4,11 @@ import { DataListCheckboxCell } from "./index.js"
 export default {
   title: "Deprecated/DataList/DataListCheckboxCell",
   component: DataListCheckboxCell,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
   parameters: {
     docs: {
       description: {

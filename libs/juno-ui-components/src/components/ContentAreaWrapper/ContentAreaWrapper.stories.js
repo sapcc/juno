@@ -8,7 +8,11 @@ import { Button } from "../Button/index.js"
 export default {
   title: "Internal/ContentAreaWrapper",
   component: ContentAreaWrapper,
-  argTypes: {},
+  argTypes: {
+    children: {
+      control: false
+    },
+  },
 }
 
 const Template = (args) => (
