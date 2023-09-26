@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Select } from "./index.js"
 import { SelectOption } from "../SelectOption/"
+import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 
 export default {
