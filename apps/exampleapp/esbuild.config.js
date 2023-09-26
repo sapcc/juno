@@ -81,7 +81,7 @@ const build = async () => {
         },
       },
 
-      // this custom plugin copies the db.json file to the build folder
+      // this custom plugin copies the db.js file to the build folder
       {
         name: "build-mock-db",
         setup(build) {
