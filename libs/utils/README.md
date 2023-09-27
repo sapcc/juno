@@ -116,6 +116,66 @@ Return object attributes
 
 ### Mock REST API
 
+1. Generate a `db.js` file containing your preferred JSON data within your project and export it as the default module.
+
+   ```js
+   // db.js
+   export default {
+     peaks: [{ id: 1, name: "Ama Dablam", height: "6814m", region: "Khumbu" }],
+     regions: [{ id: 1, name: "Khumbu", countries: "Nepal" }],
+   }
+   ```
+
+2. Add following esBuild plugin to your `esbuild.config.js.`. This plugin facilitates the copying of the 'db.js' file into the build folder, ensuring the application's access to the file during runtime.
+
+   ```js
+   // esbuild.config.js
+   ...
+   plugins: [
+     // this custom plugin copies the db.js file to the build folder
+     {
+       name: "build-mock-db",
+       setup(build) {
+         let src = "./db.js"
+         let dest = `./${outdir}/db.js`
+
+         build.onEnd(() =>
+           fs.cp(src, dest, {
+             dereference: true,
+             errorOnExist: false,
+             force: true,
+             preserveTimestamps: true,
+             recursive: true,
+           })
+         )
+       },
+     },
+   ]
+   ...
+   ```
+
+3. Import the library into your component and retrieve data in a manner similar to how you would with the fetch API.
+
+   ```react
+   // YourComponent.jsx
+   import {fetch} from "utils"
+
+   const YourComponent = () => {
+    fetch(
+      `${endpoint}/peaks`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    )
+   }
+
+   export default YourComponent
+   ```
+
 ## Testing
 
 To run tests, use the following command:
