@@ -41,7 +41,7 @@ const useQueryClientFn = (mockAPI) => {
   const endpoint = useGlobalsEndpoint()
   const { setQueryClientFnReady } = useGlobalsActions()
 
-  // generate proxy options if mockAPI is true
+  // generate proxy options
   const proxyOptions = {
     mock: mockAPI,
     dynamicImport: import("../../db.json"),

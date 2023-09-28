@@ -6,8 +6,8 @@
 
 ## Features
 
-- **Infinite scrolling**: react hook to facilitate the integration of an infinite scroll list.
-- **Mock REST API**: library designed to replicate the behavior of a REST API by utilizing a db.js file within your application.
+- **Infinite Scrolling**: react hook to facilitate the integration of an infinite scroll list.
+- **Mock Rest API**: library designed to replicate the behavior of a Fetch REST API. When a `mock` flag is provided, it makes use of a 'db.js' file within your application. If the mock flag is not set, it forwards the request to the Fetch REST API."
 
 ## Installation
 
@@ -116,61 +116,43 @@ Return object attributes
 
 ### Mock REST API
 
-1. Generate a `db.js` file containing your preferred JSON data within your project and export it as the default module.
+1. Generate a `db.json` file containing your preferred JSON data within your project.
 
-   ```js
-   // db.js
-   export default {
-     peaks: [{ id: 1, name: "Ama Dablam", height: "6814m", region: "Khumbu" }],
-     regions: [{ id: 1, name: "Khumbu", countries: "Nepal" }],
+   ```json
+   // db.json
+   {
+     "peaks": [
+       { "id": 1, "name": "Ama Dablam", "height": "6814m", "region": "Khumbu" }
+     ],
+     "regions": [{ "id": 1, "name": "Khumbu", "countries": "Nepal" }]
    }
    ```
 
-2. Add following esBuild plugin to your `esbuild.config.js.`. This plugin facilitates the copying of the 'db.js' file into the build folder, ensuring the application's access to the file during runtime.
+2. Use the `utils` lib within your component
+
+   1. Import the `fetchProxy` from the utils library
+   2. Create proxy options by specifying whether the API should be mocked. If the `mock` option is set to 'true,' include `dynamicImport` with the relative path to the 'db.json' file.
+   3. Add the proxy option to the fetch function.
 
    ```js
-   // esbuild.config.js
-   ...
-   plugins: [
-     // this custom plugin copies the db.js file to the build folder
-     {
-       name: "build-mock-db",
-       setup(build) {
-         let src = "./db.js"
-         let dest = `./${outdir}/db.js`
-
-         build.onEnd(() =>
-           fs.cp(src, dest, {
-             dereference: true,
-             errorOnExist: false,
-             force: true,
-             preserveTimestamps: true,
-             recursive: true,
-           })
-         )
-       },
-     },
-   ]
-   ...
-   ```
-
-3. Import the library into your component and retrieve data in a manner similar to how you would with the fetch API.
-
-   ```react
    // YourComponent.jsx
-   import {fetch} from "utils"
+   (i)import { fetchProxy as fetch } from "utils"
 
-   const YourComponent = () => {
-    fetch(
-      `${endpoint}/peaks`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      }
-    )
+   const YourComponent = ({ mock }) => {
+     // generate proxy options
+     (ii)const proxyOptions = {
+       mock,
+       dynamicImport: import("../../db.json"),
+     }
+     // fetch data giving the extra proxy options
+     (iii)fetch(`${endpoint}/peaks`, {
+       method: "GET",
+       headers: {
+         "Content-Type": "application/json",
+         Accept: "application/json",
+       },
+       ...proxyOptions,
+     })
    }
 
    export default YourComponent
