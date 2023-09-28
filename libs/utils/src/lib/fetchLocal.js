@@ -36,11 +36,33 @@ export const initializeDB = (jsonDbPath) => {
   }
 }
 
-const fetch = (urlString, options) => {
+// use a custom option to switch between real fetch and mock fetch since process.env.NODE_ENV
+// is set to production when building for browser platform: https://esbuild.github.io/api/#platform
+const fetchProxy = (urlString, options) => {
+  // split custom options from fetch options
+  const { mock, dynamicImport, ...fetchOptions } = options
+
+  // if not set explicitly to true or "true", use the real fetch
+  if (mock !== true && mock !== "true") {
+    console.log(`mock is not set or not set explicitly to true or "true"`)
+    return fetch(urlString, fetchOptions)
+  }
+
   // if localDB is not initialized, trhow an error
   if (!localDB) {
-    initializeDB(DEFAULT_DB_PATH)
-    // throw new Error("Local DB is not found")
+    try {
+      dynamicImport
+        .then((module) => module.default)
+        .then((db) => {
+          console.log("db", db)
+          localDB = db
+        })
+    } catch (error) {
+      console.error(
+        `Error, no db.json file found. Default path is '${jsonDbPath}':`,
+        error
+      )
+    }
   }
 
   // get the path from the url
@@ -162,4 +184,4 @@ const fetch = (urlString, options) => {
   }
 }
 
-export default fetch
+export default fetchProxy

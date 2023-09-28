@@ -73,6 +73,11 @@
     "embedded": {
       "value": "false",
       "description": "Set to true if app is to be embedded in another existing app or page, like e.g. Elektra.  If set to true the app won't render a page header/footer and instead render only the content"
+    },
+    "mockAPI": {
+      "value": "false",
+      "type": "optional",
+      "description": "use mocked API (only in dev)"
     }
   },
   "appPreview": true

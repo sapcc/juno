@@ -4,7 +4,7 @@ import {
   useGlobalsEndpoint,
   useGlobalsActions,
 } from "../components/StoreProvider"
-import { fetch } from "utils"
+import { fetchProxy as fetch } from "utils"
 
 class HTTPError extends Error {
   constructor(code, message) {
@@ -36,10 +36,18 @@ const checkStatus = (response) => {
 }
 
 // hook to register query defaults that depends on the queryClient and options
-const useQueryClientFn = () => {
+const useQueryClientFn = (mockAPI) => {
   const queryClient = useQueryClient()
   const endpoint = useGlobalsEndpoint()
   const { setQueryClientFnReady } = useGlobalsActions()
+
+  // generate proxy options if mockAPI is true
+  const proxyOptions = mockAPI
+    ? {
+        mock: true,
+        dynamicImport: import("../../db.js"),
+      }
+    : {}
 
   /*
   As stated in getQueryDefaults, the order of registration of query defaults does matter. Since the first matching defaults are returned by getQueryDefaults, the registration should be made in the following order: from the least generic key to the most generic one. This way, in case of specific key, the first matching one would be the expected one.
@@ -61,6 +69,7 @@ const useQueryClientFn = () => {
               "Content-Type": "application/json",
               Accept: "application/json",
             },
+            ...proxyOptions,
           }
         )
           .then(checkStatus)
@@ -89,6 +98,7 @@ const useQueryClientFn = () => {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
+          ...proxyOptions,
           body: sendBody,
         })
           .then(checkStatus)
@@ -108,6 +118,7 @@ const useQueryClientFn = () => {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
+          ...proxyOptions,
           body: sendBody,
         })
           .then(checkStatus)
@@ -125,6 +136,7 @@ const useQueryClientFn = () => {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
+          ...proxyOptions,
         })
           .then(checkStatus)
           .then((response) => {

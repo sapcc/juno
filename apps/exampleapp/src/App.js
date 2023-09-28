@@ -23,7 +23,7 @@ const App = (props = {}) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AsyncWorker consumerId={props.id} />
+      <AsyncWorker consumerId={props.id} mockAPI={props.mockAPI} />
       <AppShell
         pageHeader="Converged Cloud | Example App"
         contentHeading="Example App"
