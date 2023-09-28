@@ -42,12 +42,10 @@ const useQueryClientFn = (mockAPI) => {
   const { setQueryClientFnReady } = useGlobalsActions()
 
   // generate proxy options if mockAPI is true
-  const proxyOptions = mockAPI
-    ? {
-        mock: true,
-        dynamicImport: import("../../db.json"),
-      }
-    : {}
+  const proxyOptions = {
+    mock: mockAPI,
+    dynamicImport: import("../../db.json"),
+  }
 
   /*
   As stated in getQueryDefaults, the order of registration of query defaults does matter. Since the first matching defaults are returned by getQueryDefaults, the registration should be made in the following order: from the least generic key to the most generic one. This way, in case of specific key, the first matching one would be the expected one.
