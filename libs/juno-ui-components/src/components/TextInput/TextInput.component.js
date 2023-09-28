@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useId, useRef } from "react"
 import PropTypes from "prop-types"
 import { Label } from "../Label/index"
 import { Icon } from "../Icon/index"
-import { FormHint } from "../FormHint/"
+import { FormHint } from "../FormHint/FormHint.component"
 
 const textinputstyles = `
 	jn-bg-theme-textinput

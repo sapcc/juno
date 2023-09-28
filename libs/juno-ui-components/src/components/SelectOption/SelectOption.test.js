@@ -1,8 +1,8 @@
 import * as React from "react"
 import { cleanup, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { Select } from "../Select/"
-import { SelectOption } from "../SelectOption/"
+import { Select } from "../Select/Select.component"
+import { SelectOption } from "../SelectOption/SelectOption.component"
 
 
 describe("SelectOption", () => {

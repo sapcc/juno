@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { SelectRow } from "./index.js"
-import { SelectOption } from "../SelectOption/"
+import { SelectOption } from "../SelectOption/SelectOption.component"
 import { Default as DefaultSelectOptionStory } from "../SelectOption/SelectOption.stories"
-import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
+import { PortalProvider } from "../PortalProvider/PortalProvider.component"
 
 export default {
   title: "Deprecated/SelectRow",

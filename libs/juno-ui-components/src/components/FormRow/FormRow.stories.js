@@ -22,7 +22,7 @@ export const Default = Template.bind({});
 
 Default.args = {
   children: [
-    <TextInput label="TextInput in a FormRow" placeholder="Your input here…"/>
+    <TextInput label="TextInput in a FormRow" placeholder="Your input here…" key="1"/>
   ],
 }
 

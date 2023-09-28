@@ -1,14 +1,14 @@
 import React from "react"
-import { StyleProvider } from "."
+import { StyleProvider } from "./index"
 
 export default {
   title: "Layout/StyleProvider",
   component: StyleProvider,
   argTypes: {
     stylesWrapper: {
+      options: ["head", "inline", "shadowRoot"],
       control: {
         type: "radio",
-        options: ["head", "inline", "shadowRoot"],
       },
     },
     children: {

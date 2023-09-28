@@ -27,7 +27,7 @@ const Template = ({ currentPage, pages, ...args }) => {
       currentPage={page}
       onPressPrevious={prev}
       onPressNext={next}
-      pnPressNext={next}
+      onPressNext={next}
     />
   )
 }

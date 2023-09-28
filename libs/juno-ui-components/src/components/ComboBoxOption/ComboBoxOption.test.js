@@ -1,8 +1,8 @@
 import * as React from "react"
 import { cleanup, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { ComboBox } from "../ComboBox/"
-import { ComboBoxOption } from "../ComboBoxOption/"
+import { ComboBox } from "../ComboBox/ComboBox.component"
+import { ComboBoxOption } from "../ComboBoxOption/ComboBoxOption.component"
 
 
 describe("ComboBoxOption", () => {

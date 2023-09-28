@@ -1,8 +1,8 @@
 import React, { Fragment, useContext } from "react"
 import PropTypes from "prop-types"
 import { Listbox } from "@headlessui/react"
-import { SelectContext } from "../Select/Select.component.js"
-import { Icon } from "../Icon/"
+import { SelectContext } from "../Select/Select.component"
+import { Icon } from "../Icon/Icon.component"
 
 const optionStyles = `
   jn-flex

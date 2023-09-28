@@ -1,10 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Button } from "../Button/"
-import { Icon } from "../Icon/"
-import { TextInput } from "../TextInput"
-import { Select } from "../Select/"
-import { SelectOption } from "../SelectOption/"
+import { Button } from "../Button/Button.component"
+import { TextInput } from "../TextInput/TextInput.component"
+import { Select } from "../Select/Select.component"
+import { SelectOption } from "../SelectOption/SelectOption.component"
 
 const paginationStyles = `
   jn-flex

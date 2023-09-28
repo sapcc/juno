@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
-import { Select } from "./index.js"
-import { SelectOption } from "../SelectOption/"
-import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
+import { Select } from "./Select.component"
+import { SelectOption } from "../SelectOption/SelectOption.component"
+import { PortalProvider } from "../PortalProvider/PortalProvider.component"
 
 export default {
   title: "Forms/Select/Select",
@@ -291,11 +291,11 @@ NonTruncatedOptions.args = {
 export const WithChildrenOnly = Template.bind({})
 WithChildrenOnly.args = {
   children: [
-    <SelectOption>Option 1</SelectOption>,
-    <SelectOption>Option 2</SelectOption>,
-    <SelectOption>Option 3</SelectOption>,
-    <SelectOption>Option 4</SelectOption>,
-    <SelectOption>Option 5</SelectOption>
+    <SelectOption key="1">Option 1</SelectOption>,
+    <SelectOption key="2">Option 2</SelectOption>,
+    <SelectOption key="3">Option 3</SelectOption>,
+    <SelectOption key="4">Option 4</SelectOption>,
+    <SelectOption key="5">Option 5</SelectOption>
   ]
 }
 WithChildrenOnly.parameters = {
