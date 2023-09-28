@@ -81,25 +81,6 @@ const build = async () => {
         },
       },
 
-      // this custom plugin copies the db.js file to the build folder
-      {
-        name: "build-mock-db",
-        setup(build) {
-          let src = "./db.js"
-          let dest = `./${outdir}/db.js`
-
-          build.onEnd(() =>
-            fs.cp(src, dest, {
-              dereference: true,
-              errorOnExist: false,
-              force: true,
-              preserveTimestamps: true,
-              recursive: true,
-            })
-          )
-        },
-      },
-
       // this custom plugin rewrites SVG imports to
       // dataurls, paths or react components based on the
       // search param and size
