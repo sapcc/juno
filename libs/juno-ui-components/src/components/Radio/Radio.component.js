@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useMemo, useId, useContext } from "react"
 import PropTypes from "prop-types"
-import { RadioGroupContext } from "../RadioGroup/RadioGroup.component.js"
-import { Label } from "../Label/index.js"
-import { Icon } from "../Icon/"
-import { FormHint } from "../FormHint/"
+import { RadioGroupContext } from "../RadioGroup/RadioGroup.component"
+import { Label } from "../Label/index"
+import { Icon } from "../Icon/Icon.component"
+import { FormHint } from "../FormHint/FormHint.component"
 
 const wrapperStyles = `
 	jn-inline-flex

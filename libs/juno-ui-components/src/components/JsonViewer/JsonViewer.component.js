@@ -1,7 +1,7 @@
 import PropTypes, { exact } from "prop-types"
 import React, { useContext, useLayoutEffect } from "react"
 import * as themes from "./themes"
-import { SearchInput } from "../SearchInput"
+import { SearchInput } from "../SearchInput/SearchInput.component"
 
 // DEFAULT THEME (DARK)
 const DEFAULT_THEME = {

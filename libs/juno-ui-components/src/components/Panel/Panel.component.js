@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
-import { Icon } from "../Icon"
+import { Icon } from "../Icon/Icon.component"
 
 const panelClasses = (isOpen, isTransitioning, size) => {
   return `

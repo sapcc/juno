@@ -1,6 +1,6 @@
 import React from "react"
-import { Select } from "../Select/"
-import { SelectOption } from "./index.js"
+import { Select } from "../Select/Select.component"
+import { SelectOption } from "./SelectOption.component"
 import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
 export default {

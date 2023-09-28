@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Icon } from "../Icon/index.js"
-import { knownIcons } from "../Icon/Icon.component.js"
+
+import { Icon, knownIcons } from "../Icon/Icon.component.js"
 
 const badgeBaseStyles = `
 	jn-rounded

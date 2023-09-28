@@ -1,11 +1,10 @@
 import React, { Fragment, createContext, useEffect, useId, useMemo, useState } from "react"
 import PropTypes from "prop-types"
 import { Listbox } from "@headlessui/react"
-import { SelectOption } from "../SelectOption/"
-import { Label } from "../Label/"
-import { Icon } from "../Icon/"
-import { Spinner } from "../Spinner/"
-import { FormHint } from "../FormHint/"
+import { Label } from "../Label/Label.component"
+import { Icon } from "../Icon/Icon.component"
+import { Spinner } from "../Spinner/Spinner.component"
+import { FormHint } from "../FormHint/FormHint.component"
 import { Float } from "@headlessui-float/react"
 import { offset, shift, size } from '@floating-ui/react-dom'
 

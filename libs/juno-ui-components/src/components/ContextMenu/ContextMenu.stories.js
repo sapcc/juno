@@ -1,9 +1,9 @@
 import React from "react"
 import { ContextMenu } from "./index.js"
-import { MenuItem } from "../MenuItem/"
-import { Button } from "../Button/index.js"
+import { MenuItem } from "../MenuItem/MenuItem.component"
+import { Button } from "../Button/index"
 import { Default as MenuItemDefaultStory } from "../MenuItem/MenuItem.stories"
-import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
+import { PortalProvider } from "../PortalProvider/PortalProvider.component"
 
 
 export default {

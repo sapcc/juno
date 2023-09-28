@@ -1,6 +1,6 @@
 import React from "react"
-import { RadioGroup } from "./index.js"
-import { Radio } from "../Radio/"
+import { RadioGroup } from "./RadioGroup.component"
+import { Radio } from "../Radio/Radio.component"
 
 export default {
   title: "Forms/Radio/RadioGroup",

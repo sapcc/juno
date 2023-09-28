@@ -1,7 +1,7 @@
 import React from "react"
 import { AppShellProvider } from "."
 import { CodeBlock } from "../CodeBlock/index.js"
-import { Message } from "../Message"
+import { Message } from "../Message/Message.component"
 
 export default {
   title: "Layout/AppShellProvider",

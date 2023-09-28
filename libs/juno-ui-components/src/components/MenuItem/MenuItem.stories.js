@@ -1,8 +1,8 @@
 import React from "react"
-import { MenuItem } from "./index.js"
-import { Menu } from "../Menu/"
-import { Button } from "../Button/index.js"
-import { knownIcons } from "../Icon/Icon.component.js"
+import { MenuItem } from "./MenuItem.component"
+import { Menu } from "../Menu/Menu.component"
+import { Button } from "../Button/index"
+import { knownIcons } from "../Icon/Icon.component"
 
 
 export default {
@@ -53,7 +53,7 @@ AsButton.args = {
 export const WithChildren = Template.bind({})
 WithChildren.args = {
 	children: [
-		<Button label="Delete" size="small" variant="subdued" icon="deleteForever" className="jn-w-full" />
+		<Button label="Delete" size="small" variant="subdued" icon="deleteForever" className="jn-w-full" key="1" />
 	],
 }
 

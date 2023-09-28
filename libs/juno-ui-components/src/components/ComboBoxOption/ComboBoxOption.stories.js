@@ -1,6 +1,6 @@
 import React from "react"
-import { ComboBox } from "../ComboBox/"
-import { ComboBoxOption } from "./index.js"
+import { ComboBox } from "../ComboBox/ComboBox.component"
+import { ComboBoxOption } from "../ComboBoxOption/ComboBoxOption.component"
 
 export default {
   title: "Forms/ComboBox/ComboBoxOption",

@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useEffect, useContext } from "react"
 import PropTypes from "prop-types"
 import { Combobox } from "@headlessui/react"
-import { ComboBoxContext } from "../ComboBox/ComboBox.component.js"
-import { Icon } from "../Icon/" 
+import { ComboBoxContext } from "../ComboBox/ComboBox.component"
+import { Icon } from "../Icon/Icon.component" 
 
 
 const optionStyles = `

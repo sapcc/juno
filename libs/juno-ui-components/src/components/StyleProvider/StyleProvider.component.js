@@ -4,9 +4,9 @@
  * to place the ui-components styles.
  * @module StyleProvider
  */
-import React, { useCallback, useEffect, useRef } from "react"
+import React, { useCallback, useRef } from "react"
 import PropTypes from "prop-types"
-import { ShadowRoot } from "../ShadowRoot"
+import { ShadowRoot } from "../ShadowRoot/index"
 import theme from "../../../tailwind.config"
 import Fonts from "./Fonts"
 import GlobalStyles, { styles } from "./GlobalStyles"

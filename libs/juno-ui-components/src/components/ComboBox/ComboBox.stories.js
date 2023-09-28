@@ -402,9 +402,9 @@ ValueAndDefaultValue.args = {
   value: "Option 1",
   defaultValue: "Option 2",
   children: [
-    <ComboBoxOption value="Option 1" />,
-    <ComboBoxOption value="Option 2" />,
-    <ComboBoxOption value="Option 3" />
+    <ComboBoxOption value="Option 1" key="1" />,
+    <ComboBoxOption value="Option 2" key="2" />,
+    <ComboBoxOption value="Option 3" key="3" />
   ]
 }
 
