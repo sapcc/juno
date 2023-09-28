@@ -1,5 +1,6 @@
 import React from "react"
 import { MenuItem } from "./index.js"
+import { Menu } from "../Menu/"
 import { Button } from "../Button/index.js"
 import { knownIcons } from "../Icon/Icon.component.js"
 
@@ -18,12 +19,18 @@ export default {
 	},
 }
 
-const Template = (args) => <MenuItem {...args} />
+const Template = (args) => <Menu><MenuItem {...args} /></Menu>
+
+const SmallTemplate = (args) => <Menu variant="small"><MenuItem {...args} /></Menu>
 
 export const Default = Template.bind({})
 Default.args = {
 	label: "Menu Item",
-	onClick: null, // ???
+}
+
+export const SmallMenuItem = SmallTemplate.bind({})
+SmallMenuItem.args = {
+	label: "Small menu item"
 }
 
 export const WithIcon = Template.bind({})
@@ -48,5 +55,17 @@ WithChildren.args = {
 	children: [
 		<Button label="Delete" size="small" variant="subdued" icon="deleteForever" className="jn-w-full" />
 	],
-	onClick: null, // ???
+}
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+	disabled: true,
+	label: "Disabled Item"
+}
+
+export const DisabledLink = Template.bind({})
+DisabledLink.args = {
+	disabled: true,
+	label: "Disabled Item as Link",
+	href: "https://github.com/sapcc/juno",
 }

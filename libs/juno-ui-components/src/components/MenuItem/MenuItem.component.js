@@ -1,6 +1,9 @@
-import React from "react"
+import React, { Fragment, useContext } from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
+import { Button } from "../Button/index.js"
+import { Menu } from "@headlessui/react"
+import { MenuContext } from "../Menu/Menu.component.js"
 import { knownIcons } from "../Icon/Icon.component.js"
 
 const itemStyles = `
@@ -8,18 +11,30 @@ const itemStyles = `
 	jn-flex
 	jn-items-center
 	jn-w-full
-	jn-pt-[0.6875rem]
-	jn-pb-[0.5rem]
-	jn-px-[0.875rem]
 	cursor-pointer
 	bg-clip-padding
 	jn-truncate
 	jn-text-left
 	jn-bg-theme-background-lvl-1
+	disabled:jn-cursor-not-allowed
+	data-[headlessui-state="disabled"]:jn-cursor-not-allowed
+`
+
+const smallStyles = `
+	jn-text-sm
+	jn-p-2
+`
+
+const normalStyles = `
+	jn-text-base
+	jn-pt-[0.6875rem]
+	jn-pb-[0.5rem]
+	jn-px-[0.875rem]
 `
 
 const actionableItemStyles = `
 	hover:jn-bg-theme-background-lvl-3
+	data-[headlessui-state="disabled"]:jn-bg-theme-background-lvl-3
 `
 
 const iconStyles = `
@@ -28,11 +43,11 @@ const iconStyles = `
 /** 
 A menu item to be used inside Menu.
 Can render `<a>`, `<button>`, or generic elements to hold other interactive elements.
-Use MenuSection to structure items inside a menu if needed.
 */
 export const MenuItem = ({
 	label,
 	icon,
+	disabled,
 	children,
 	onClick,
 	href,
@@ -40,56 +55,56 @@ export const MenuItem = ({
 	...props
 }) => {
 	
-	const icn = icon ? <Icon icon={icon} size="18" className={`${iconStyles}`} /> : null
-	const content = label || children
+	const icn = icon ? <Icon icon={icon} size="18" className={`${iconStyles}`} /> : ""
 	
 	const handleClick = (event) => {
 		onClick && onClick(event)
 	}
 	
-	const anchor = (
-		<a 
-			href={href} 
-			className={`juno-menu-item juno-menu-item-anchor ${itemStyles} ${actionableItemStyles} ${className}`} 
-			role="menuitem"
-			{ ...props } 
-		>
-			{icn}
-			{content}
-		</a>
-	)
+	const menuContext = useContext(MenuContext)
+	const {
+		variant: variant,
+	} = menuContext || {}
 	
-	const button = (
-		<button 
-			onClick={handleClick} 
-			className={`juno-menu-item juno-menu-item-button ${itemStyles} ${actionableItemStyles} ${className}`}
-			role="menuitem"
-			{ ...props }
-		>
-			{icn}
-			{content}
-		</button>
+	return (
+
+				<Menu.Item 
+					disabled={disabled}
+					as={ href ? 
+						"a" : 
+						children ?
+							"div" :
+							"button"
+						}
+					href={ disabled ? undefined : href}
+					onClick={handleClick}
+					className={`
+						juno-menu-item 
+						${ href ? "juno-menu-item-anchor" : "juno-menu-item-button"} 
+						${ itemStyles } 
+						${ children ? "" : actionableItemStyles }
+						${ variant === "small" ? smallStyles : normalStyles }
+						${ disabled && href ? "jn-cursor-not-allowed" : "" }
+						${ className }
+					`}
+				>
+					<span className={`${ disabled ? "jn-opacity-50" : "" }`}>
+						{ icon ?
+							<Icon icon={icon} size="18" className="jn-inline-block jn-mr-2" /> : ""
+						}
+						{ children || label }
+					</span>
+				</Menu.Item>
+
+
 	)
-	
-	const plain = (
-		<div 
-			className={`juno-menu-item ${itemStyles} ${className}`} 
-			role="menuitem"
-			{ ...props } 
-		>
-			{icn}
-			{content}
-		</div>
-	)
-	
-	// render an anchor if an href prop was passed, otherwise render a button if onClick was passed, otherwise render non.interactive, plain element:
-	return href ? anchor : onClick ? button : plain
 
 }
 
 MenuItem.propTypes = {
 	/** The label of the menu item. Will take precedence over children passed to the component. */
 	label: PropTypes.string,
+	disabled: PropTypes.bool,
 	/** Pass the name of an icon the button should show. Can be any icon included with Juno. */
 	icon: PropTypes.oneOf(knownIcons),
 	/** Add a className to the menu item */
@@ -105,8 +120,9 @@ MenuItem.propTypes = {
 MenuItem.defaultProps = {
 	label: "",
 	className: "",
+	disabled: false,
 	icon: null,
 	children: null,
-	href: "",
+	href: undefined,
 	onClick: undefined,
 }

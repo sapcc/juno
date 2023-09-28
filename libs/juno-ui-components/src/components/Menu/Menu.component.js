@@ -1,5 +1,6 @@
-import React, { useEffect, useState} from "react"
+import React, { useEffect, useState, createContext } from "react"
 import PropTypes from "prop-types"
+import { Menu as HLMenu } from "@headlessui/react"
 
 const baseStyles = `
 	jn-overflow-hidden
@@ -26,6 +27,8 @@ const variantStyles = (variant) => {
 	}
 }
 
+export const MenuContext = createContext()
+
 /** A generic menu component */
 export const Menu = ({
 	children,
@@ -34,12 +37,28 @@ export const Menu = ({
 	...props
 }) => {
 	return (
-		<div className={`juno-menu juno-menu-${variant} ${baseStyles} ${variantStyles(variant)} ${className}`} 
-			role="menu" 
-			{...props} 
-		>
-			{ children }
-		</div>
+		<MenuContext.Provider value={
+			{
+				variant: variant
+			}
+		}>
+			<HLMenu>
+				<div 
+					className={`
+					juno-menu 
+					juno-menu-${variant} 
+					${baseStyles} 
+					${variantStyles(variant)} 
+					${className}
+				`
+				} 
+				role="menu" 
+				{...props} 
+			>
+					{ children }
+				</div>
+			</HLMenu>
+		</MenuContext.Provider>
 	)
 }
 

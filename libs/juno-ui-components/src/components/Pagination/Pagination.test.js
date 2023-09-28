@@ -34,9 +34,9 @@ describe("Pagination", () => {
     render(<Pagination variant="select" data-testid="my-pagination" />)
     expect(screen.getByTestId("my-pagination")).toBeInTheDocument()
     expect(screen.getByTestId("my-pagination")).toHaveClass("juno-pagination-select")
-    expect(screen.queryAllByRole("button")).toHaveLength(2)
-    expect(screen.queryAllByRole("combobox")).toHaveLength(1)
+    expect(screen.queryAllByRole("button")).toHaveLength(3)
     expect(screen.queryAllByRole("textbox")).toHaveLength(0)
+    expect(document.querySelector("button.juno-select-toggle")).toBeInTheDocument()
   })
   
   test("renders an input variant Pagination as passed", async () => {
@@ -68,7 +68,7 @@ describe("Pagination", () => {
     const { container } = render(
       <Pagination variant="select" currentPage={1} pages={6} onSelectChange={mockHandleChange} />
     )
-    const select = screen.getByRole('combobox')
+    const select = document.querySelector("button.juno-select-toggle")
     expect(select).toBeInTheDocument()
     expect(select).toHaveTextContent("1")
     await userEvent.click(select)

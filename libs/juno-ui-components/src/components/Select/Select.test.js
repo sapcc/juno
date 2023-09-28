@@ -5,29 +5,27 @@ import { act } from 'react-dom/test-utils'
 import { Select } from "./index"
 import { SelectOption } from "../SelectOption/index"
 
-const mockOnValueChange = jest.fn()
-const mockOnOpenChange = jest.fn()
 const mockOnChange = jest.fn()
+const mockOnValueChange = jest.fn()
 
-const SelectParent = ({
-    value, 
-    onChange,
-    children,
-    ...props
-  }) => {
+const ControlledSelectParent = ({
+  value,
+  children,
+  onChange,
+  ...props
+}) => {
   const [val, setVal] = React.useState(value)
   
   const handleChange = (v) => {
-    onChange()
     setVal(v)
+    onChange()
   }
   
   return (
-    <>
-      <Select value={val} onValueChange={handleChange} {...props}>
-        { children }
-      </Select>
-    </>
+    <Select value={val} onChange={handleChange} {...props}>
+      { children }
+    </Select>
+    
   )
 }
 
@@ -38,184 +36,95 @@ describe("Select", () => {
     jest.clearAllMocks()
   })
   
-  test("renders a Select", async () => {
+  test("renders a Select toggle", async () => {
     render(<Select />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveAttribute('type', "button")
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select")
+    expect(screen.getByRole("button")).toHaveAttribute('type', "button")
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveClass("juno-select-toggle")
   })
   
   test("renders a Select with a label as passed", async () => {
-    render(<Select label="My Label" id="my-select"/>)
+    render(<Select label="My Label" />)
     expect(document.querySelector(".juno-label")).toBeInTheDocument()
     expect(document.querySelector(".juno-label")).toHaveTextContent("My Label")
   })
   
-  test("renders a Select with an id as passed", async () => {
+  test("renders a placeholder as passed", async () => {
+    render(<Select placeholder="my-placeholder" />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveTextContent("my-placeholder")
+  })
+  
+  test("renders default placeholder if empty string or undefined were passed as value", async () => {
+    render(<Select value="" />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveTextContent("Select…")
+  })
+  
+  test("renders a Select toggle with an id as passed", async () => {
     render(<Select id="select-1" />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveAttribute("id", "select-1")
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute("id", "select-1")
   })
   
-  test("renders Select with a generated unique id if no id was passed", async () => {
+  test("renders a Select toggle with a generated unique id if no id was passed", async () => {
     render(<Select />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveAttribute("id")
-    expect(screen.getByRole("combobox").getAttribute("id")).toMatch("juno-select")
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute("id")
+    expect(screen.getByRole("button").getAttribute("id")).toMatch("juno-select-")
   })
   
-  test("renders a Select with an associated label with an id as passed", async () => {
+  test("renders a Select toggle with an associated label with an id as passed", async () => {
     render(<Select id="my-select" label="My Select"/>)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByLabelText("My Select")).toBeInTheDocument()
-    expect(document.querySelector(".juno-label")).toBeInTheDocument()
-    expect(document.querySelector(".juno-label")).toHaveTextContent("My Select")
+    expect(screen.getByLabelText("My Select")).toHaveClass("juno-select-toggle")
   })
   
-  test("renders a Select with a label associated by an auto-generated id if no id was passed ", async () => {
+  test("renders a Select toggle with a label associated by an auto-generated id if no id was passed ", async () => {
     render(<Select label="This is a Select" />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByLabelText("This is a Select")).toBeInTheDocument()
+    expect(screen.getByLabelText("This is a Select")).toHaveClass("juno-select-toggle")
   })
   
   test("renders a required marker as passed", async () => {
-    render(<Select label="My Label" required={true} />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
+    render(<Select label="My Select" required={true} />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(document.querySelector(".juno-label")).toHaveTextContent("My Select")
     expect(document.querySelector(".juno-required")).toBeInTheDocument()
   })
   
   test("renders an aria-label as passed", async () => {
     render(<Select ariaLabel="my-select" />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveAttribute('aria-label', "my-select")
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute('aria-label', "my-select")
   })
   
-  test("renders a custom className to the Select trigger", async () => {
+  test("renders a custom className to the Select toggle as passed", async () => {
     render(<Select className="my-class" />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveClass("my-class")
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveClass("my-class")
   })
   
   test("renders a disabled Select as passed", async () => {
     render(<Select disabled />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toBeDisabled()
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toBeDisabled()
   })
   
   test("renders a valid Select as passed", async () => {
     render(<Select valid />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select-valid")
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveClass("juno-select-valid")
     expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
   
   test("renders an invalid Select as passed", async () => {
     render(<Select invalid />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select-invalid")
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveClass("juno-select-invalid")
     expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
-  })
-  
-  test("renders loading Select with a Spinner as passed", async () => {
-    render(<Select loading />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select-loading")
-    // query the DOM directly as Radix-ui add aria-hidden to the icons in the select:
-    expect(document.querySelector(".juno-spinner")).toBeInTheDocument()
-  })
-  
-  test("renders a Select in error state as passed", async () => {
-    render(<Select error />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select-error")
-  })
-  
-  test("renders a subdued Select variant as passed", async () => {
-    render(<Select variant="subdued" />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select-subdued")
-  })
-  
-  test("renders a primary Select variant as passed", async () => {
-    render(<Select variant="primary" />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select-primary")
-  })
-  
-  test("renders a primary-danger Select variant as passed", async () => {
-    render(<Select variant="primary-danger" />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select-primary-danger")
-  })
-  
-  test("does not render semantic classes when in loading state as passed", async () => {
-    render(<Select variant="primary-danger" loading />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).not.toHaveClass("juno-select-primary-danger")
-  })
-  
-  test("does not render semantic classes when in error state as passed", async () => {
-    render(<Select variant="primary-danger" error />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).not.toHaveClass("juno-select-primary-danger")
-  })
-  
-  test("does not render semantic classes when validated as passed", async () => {
-    render(<Select variant="primary-danger" valid />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).not.toHaveClass("juno-select-primary-danger")
-  })
-  
-  test("does not render semantic classes when invalidated as passed", async () => {
-    render(<Select variant="primary-danger" invalid />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).not.toHaveClass("juno-select-primary-danger")
-  })
-  
-  test("renders an open Select as passed", async () => {
-    render(<Select open onOpenChange={ () => {} }>
-      <SelectOption value="1"></SelectOption>
-    </Select>)
-    expect(screen.getByRole("listbox")).toBeInTheDocument()
-  })
-  
-  test("renders a placeholder as passed", async () => {
-    render(<Select placeholder="my-placeholder" />)
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveTextContent("my-placeholder")
-  })
-  
-  test("sets a value for a controlled Select as passed", async () => {
-    render(
-      <Select value="2">
-        <SelectOption value="1">Option 1</SelectOption>
-        <SelectOption value="2">Option 2</SelectOption>
-        <SelectOption value="3">Option 3</SelectOption>
-      </Select>
-    )
-    expect(screen.getByRole("combobox")).not.toHaveTextContent("Option 1")
-    expect(screen.getByRole("combobox")).toHaveTextContent("Option 2")
-    expect(screen.getByRole("combobox")).not.toHaveTextContent("Option 3")    
-  })
-  
-  test("sets a defaultValue for an uncontrolled Select as passed", async () => {
-    render(
-      <Select defaultValue="2">
-        <SelectOption value="1">Option 1</SelectOption>
-        <SelectOption value="2">Option 2</SelectOption>
-        <SelectOption value="3">Option 3</SelectOption>
-      </Select>
-    )
-    expect(screen.getByRole("combobox")).not.toHaveTextContent("Option 1")
-    expect(screen.getByRole("combobox")).toHaveTextContent("Option 2")
-    expect(screen.getByRole("combobox")).not.toHaveTextContent("Option 3")    
-  })
-  
-  test("renders a helptext as passed", async () => {
-    render(<Select helptext="this is a helptext"/>)
-    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
-    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-help")
-    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is a helptext")
   })
   
   test("renders a successtext as passed and validates the Element", async () => {
@@ -223,7 +132,8 @@ describe("Select", () => {
     expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
     expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-success")
     expect(document.querySelector(".juno-form-hint")).toHaveTextContent("great success!")
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select-valid")
+    expect(screen.getByRole("button")).toHaveClass("juno-select-valid")
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
   
   test("renders an errortext as passed and invalidates the Element", async () => {
@@ -231,118 +141,188 @@ describe("Select", () => {
     expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
     expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-error")
     expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is an error!")
-    expect(screen.getByRole("combobox")).toHaveClass("juno-select-invalid")
+    expect(screen.getByRole("button")).toHaveClass("juno-select-invalid")
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+  })
+  
+  test("renders loading Select with a Spinner as passed", async () => {
+    render(<Select loading />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveClass("juno-select-loading")
+    expect(document.querySelector(".juno-spinner")).toBeInTheDocument()
+  })
+  
+  test("renders a Select in error state as passed", async () => {
+    render(<Select error />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveClass("juno-select-error")
   })
   
   test("renders non-truncated Select Options by default", async () => {
     render(
-      <Select open>
+      <Select>
         <SelectOption value="1">Option 1</SelectOption>
       </Select>
     )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    await userEvent.click(toggle)
     expect(screen.getByRole("option")).toBeInTheDocument()
     expect(screen.getByRole("option")).not.toHaveClass("juno-select-option-truncate")
   })
   
   test("renders truncated Select Options as passed", async () => {
     render(
-      <Select truncateOptions open>
+      <Select truncateOptions>
         <SelectOption value="1">Option 1</SelectOption>
       </Select>
     )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    await userEvent.click(toggle)
     expect(screen.getByRole("option")).toBeInTheDocument()
     expect(screen.getByRole("option")).toHaveClass("juno-select-option-truncate")
   })
   
-  test("allows user to open a Select by clicking on it", async () => {
+  test("renders a Select with a value selected as passed", async () => {
     render(
-      <Select onOpenChange={mockOnOpenChange}>
-        <SelectOption value="1">Option 1</SelectOption>
-        <SelectOption value="2">Option 2</SelectOption>
-        <SelectOption value="3">Option 3</SelectOption>
+      <Select value="Option 2">
+        <SelectOption value="Option 1" />
+        <SelectOption value="Option 2" />
+        <SelectOption value="Option 3" />
       </Select>
     )
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.queryByRole("listbox")).not.toBeInTheDocument()
-    await userEvent.click(screen.getByRole("combobox"))
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    expect(toggle).toHaveTextContent("Option 2")
+    await userEvent.click(toggle)
     expect(screen.getByRole("listbox")).toBeInTheDocument()
-    expect(mockOnOpenChange).toHaveBeenCalled()
+    expect(screen.getAllByRole("option")[1]).toHaveTextContent("Option 2")
+    expect(screen.getAllByRole("option")[1]).toHaveAttribute("aria-selected", "true")
   })
   
-  test("allows user to change a value on an uncontrolled Select", async () => {
+  test("opens the Select menu with options as passed when the user clicks the Select toggle", async () => {
     render(
-      <Select defaultValue="val-1" onValueChange={mockOnValueChange}>
-        <SelectOption value="val-1">Option 1</SelectOption>
-        <SelectOption value="val-2">Option 2</SelectOption>
-        <SelectOption value="val-3">Option 3</SelectOption>
+      <Select>
+        <SelectOption value="Option 1" />
+        <SelectOption value="Option 2" />
+        <SelectOption value="Option 3" />
       </Select>
     )
-    const select = screen.getByRole("combobox")
-    expect(select).toBeInTheDocument()
-    expect(select).toHaveTextContent("Option 1")
-    await userEvent.click(select)
-    expect(screen.getByRole("listbox")).toBeInTheDocument()
-    await userEvent.click(screen.getByRole("option", { name: "Option 2" }))
-    expect(select).toHaveTextContent("Option 2")
-    expect(mockOnValueChange).toHaveBeenCalledWith("val-2")
+   const toggle = screen.getByRole("button")
+   expect(toggle).toBeInTheDocument()
+   await userEvent.click(toggle)
+   expect(screen.getByRole("listbox")).toBeInTheDocument()
+   expect(screen.queryAllByRole("option")).toHaveLength(3)
+   expect(screen.getAllByRole("option")[0]).toHaveTextContent("Option 1")
+   expect(screen.getAllByRole("option")[1]).toHaveTextContent("Option 2")
+   expect(screen.getAllByRole("option")[2]).toHaveTextContent("Option 3")
   })
   
-  test("allows user to change a value on a controlled Select", async () => {
+  test("changes the selected value as clicked by a user", async () => {
     render(
-      <SelectParent value="val-2" onChange={mockOnValueChange}>
-        <SelectOption value="val-1">Option 1</SelectOption>
-        <SelectOption value="val-2">Option 2</SelectOption>
-        <SelectOption value="val-3">Option 3</SelectOption>
-      </SelectParent>
-    )
-    const select = screen.getByRole("combobox")
-    expect(select).toBeInTheDocument()
-    expect(select).toHaveTextContent("Option 2")
-    await userEvent.click(select)
-    expect(screen.getByRole("listbox")).toBeInTheDocument()
-    await userEvent.click(screen.getByRole("option", { name: "Option 3" }))
-    expect(select).toHaveTextContent("Option 3")
-    expect(mockOnValueChange).toHaveBeenCalled()
+        <Select>
+          <SelectOption value="Option 1" />
+          <SelectOption value="Option 2" />
+          <SelectOption value="Option 3" />
+        </Select>
+      )
+     const toggle = screen.getByRole("button")
+     expect(toggle).toBeInTheDocument()
+     expect(toggle).toHaveTextContent("Select…")
+     await userEvent.click(toggle)
+     expect(screen.getByRole("listbox")).toBeInTheDocument()
+     const option2 = screen.getAllByRole("option")[1]
+     await userEvent.click(option2)
+     expect(toggle).toHaveTextContent("Option 2")
   })
   
-  test("executes an onChange handler when selected value changes", async () => {
+  test("executes an onChange handler when the selected value changes", async () => {
     render(
-      <SelectParent onChange={mockOnChange} >
-        <SelectOption value="val-1">Option 1</SelectOption>
-        <SelectOption value="val-2">Option 2</SelectOption>
-      </SelectParent>
+      <Select onChange={mockOnChange} >
+        <SelectOption value="Option-1">Option 1</SelectOption>
+      </Select>
     )
-    const select = screen.getByRole("combobox")
-    expect(select).toBeInTheDocument()
-    await userEvent.click(select)
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    await userEvent.click(toggle)
     expect(screen.getByRole("listbox")).toBeInTheDocument()
-    await userEvent.click(screen.getByRole("option", { name: "Option 2" }))
+    await userEvent.click(screen.getByRole("option"))
     expect(mockOnChange).toHaveBeenCalled()
   })
   
-  
-  test("renders a className to the Select trigger button as passed", async () => {
+  test("executes a legacy onValueChange handler when the Select value changes", async () => {
     render(
-      <Select className="my-select-class">
-        <SelectOption value="1">Option 1</SelectOption>
-        <SelectOption value="2">Option 2</SelectOption>
-        <SelectOption value="3">Option 3</SelectOption>
+      <Select onValueChange={mockOnValueChange} >
+        <SelectOption value="Option-1">Option 1</SelectOption>
       </Select>
     )
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveClass("my-select-class")
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    await userEvent.click(toggle)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    await userEvent.click(screen.getByRole("option"))
+    expect(mockOnValueChange).toHaveBeenCalled()
   })
   
-  test("renders all props as passed", async () => {
+  test("works as a controlled component", async () => {
     render(
-      <Select data-lolol="123">
-        <SelectOption value="1">Option 1</SelectOption>
-        <SelectOption value="2">Option 2</SelectOption>
-        <SelectOption value="3">Option 3</SelectOption>
+      <ControlledSelectParent value="Option 1" onChange={mockOnChange} >
+        <SelectOption value="Option 1">Option 1</SelectOption>
+        <SelectOption value="Option 2">Option 2</SelectOption>
+        <SelectOption value="Option 3">Option 3</SelectOption>
+      </ControlledSelectParent>
+    )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    expect(toggle).toHaveTextContent("Option 1")
+    await userEvent.click(toggle)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    const option2 = screen.getAllByRole("option")[1]
+    await userEvent.click(option2)
+    expect(toggle).toHaveTextContent("Option 2")
+  })
+  
+  test("works as an uncontrolled component", async () => {
+    render(
+      <Select defaultValue="Option 2">
+        <SelectOption value="Option 1">Option 1</SelectOption>
+        <SelectOption value="Option 2">Option 2</SelectOption>
+        <SelectOption value="Option 3">Option 3</SelectOption>
       </Select>
     )
-    expect(screen.getByRole("combobox")).toBeInTheDocument()
-    expect(screen.getByRole("combobox")).toHaveAttribute("data-lolol", "123")
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    expect(toggle).toHaveTextContent("Option 2")
+    await userEvent.click(toggle)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    const option3 = screen.getAllByRole("option")[2]
+    await userEvent.click(option3)
+    expect(toggle).toHaveTextContent("Option 3")
+  })
+  
+  test("works when options are not passed a value prop but only children", async () => {
+    render(
+      <Select>
+        <SelectOption>Option 1</SelectOption>
+        <SelectOption>Option 2</SelectOption>
+        <SelectOption>Option 3</SelectOption>
+        <SelectOption>Option 4</SelectOption>
+        <SelectOption>Option 5</SelectOption>
+      </Select>
+    )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    expect(toggle).toHaveTextContent("Select…")
+    await userEvent.click(toggle)
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+    const option3 = screen.getAllByRole("option")[2]
+    await userEvent.click(option3)
+    expect(toggle).toHaveTextContent("Option 3")
+    await userEvent.click(toggle)
+    const option1 = screen.getAllByRole("option")[0]
+    await userEvent.click(option1)
+    expect(toggle).toHaveTextContent("Option 1")
   })
   
 })

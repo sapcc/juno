@@ -119,6 +119,11 @@ Cancel.args = {
   icon: "cancel",
 }
 
+export const Check = Template.bind({})
+Check.args = {
+  icon: "check",
+}
+
 export const CheckCircle = Template.bind({})
 CheckCircle.args = {
   icon: "checkCircle",

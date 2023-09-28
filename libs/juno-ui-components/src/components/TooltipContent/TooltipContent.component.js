@@ -1,6 +1,6 @@
 import React from "react"
-import { mergeRefs } from "react-merge-refs"
 import PropTypes from "prop-types"
+import { useMergeRefs } from "@floating-ui/react"
 
 import { Icon } from "../Icon/index.js"
 import { useTooltipState } from "../Tooltip/Tooltip.component.js"
@@ -38,17 +38,14 @@ const getIcon = (variant) => {
  * Put content for a tooltip here. See Tooltip for more in-depth explanation and examples.
  */
 export const TooltipContent = React.forwardRef(function TooltipContent(
-  {className, children, ...props},
+  { className, children, ...props },
   propRef
 ) {
   // get tooltip state
   const state = useTooltipState()
 
   // merge all refs
-  const ref = React.useMemo(() => mergeRefs([state.floating, propRef]), [
-    state.floating,
-    propRef
-  ])
+  const ref = useMergeRefs([state.refs.setFloating, propRef])
 
   const variant = state.variant
 
@@ -59,10 +56,7 @@ export const TooltipContent = React.forwardRef(function TooltipContent(
           className={`juno-tooltip juno-tooltip-${variant} ${popoverStyles} ${className}`}
           ref={ref}
           style={{
-            position: state.strategy,
-            top: state.y ?? 0,
-            left: state.x ?? 0,
-            visibility: state.x == null ? "hidden" : "visible"
+            ...state.floatingStyles,
           }}
           {...state.getFloatingProps(props)}
         >
@@ -89,6 +83,5 @@ TooltipContent.propTypes = {
 
 TooltipContent.defaultProps = {
   children: null,
-  className: ""
+  className: "",
 }
-
