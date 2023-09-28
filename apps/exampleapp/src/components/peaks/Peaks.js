@@ -16,7 +16,9 @@ const Peaks = () => {
     <>
       {isError && (
         <Message variant="danger">
-          {`${error.statusCode}, ${error.message}`}
+          {`${error.statusCode ? `${error.statusCode}, ` : ""}${
+            error?.message
+          }`}
         </Message>
       )}
       {/* Loading indicator for page content */}

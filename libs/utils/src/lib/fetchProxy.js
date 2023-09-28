@@ -18,23 +18,7 @@ const rejectResponse = (error) => {
   })
 }
 
-const DEFAULT_DB_PATH = "./db.js"
 let localDB = null
-export const initializeDB = (jsonDbPath) => {
-  try {
-    import(jsonDbPath)
-      .then((module) => module.default)
-      .then((db) => {
-        console.log("db", db)
-        localDB = db
-      })
-  } catch (error) {
-    console.error(
-      `Error, no db.json file found. Default path is '${jsonDbPath}':`,
-      error
-    )
-  }
-}
 
 // use a custom option to switch between real fetch and mock fetch since process.env.NODE_ENV
 // is set to production when building for browser platform: https://esbuild.github.io/api/#platform
@@ -58,10 +42,14 @@ const fetchProxy = (urlString, options) => {
           localDB = db
         })
     } catch (error) {
-      console.error(
-        `Error, no db.json file found. Default path is '${jsonDbPath}':`,
-        error
-      )
+      const errorText = `Error, dynamicImport not given or wrong.
+      Please add dynamicImport to the fetchProxy options like this:
+      fetchProxy(url, { dynamicImport: import("./db") })
+      ${error}`
+      // create a new custom error to return
+      const newError = new Error(errorText)
+      // throw the new error
+      throw newError
     }
   }
 
