@@ -19,6 +19,25 @@ const rejectResponse = (error) => {
 }
 
 let localDB = null
+const initializeLocalDB = (dynamicImport) => {
+  try {
+    dynamicImport
+      .then((module) => module.default)
+      .then((db) => {
+        console.log("db", db)
+        localDB = db
+      })
+  } catch (error) {
+    const errorText = `Error, dynamicImport not given or wrong.
+    Please add dynamicImport to the fetchProxy options like this:
+    fetchProxy(url, { dynamicImport: import("./db") })
+    ${error}`
+    // create a new custom error to return
+    const newError = new Error(errorText)
+    // throw the new error
+    throw newError
+  }
+}
 
 // use a custom option to switch between real fetch and mock fetch since process.env.NODE_ENV
 // is set to production when building for browser platform: https://esbuild.github.io/api/#platform
@@ -32,25 +51,9 @@ const fetchProxy = (urlString, options) => {
     return fetch(urlString, fetchOptions)
   }
 
-  // if localDB is not initialized, trhow an error
+  // initialize localDB
   if (!localDB) {
-    try {
-      dynamicImport
-        .then((module) => module.default)
-        .then((db) => {
-          console.log("db", db)
-          localDB = db
-        })
-    } catch (error) {
-      const errorText = `Error, dynamicImport not given or wrong.
-      Please add dynamicImport to the fetchProxy options like this:
-      fetchProxy(url, { dynamicImport: import("./db") })
-      ${error}`
-      // create a new custom error to return
-      const newError = new Error(errorText)
-      // throw the new error
-      throw newError
-    }
+    initializeLocalDB(dynamicImport)
   }
 
   // get the path from the url
