@@ -5,6 +5,7 @@ import { Button } from "../Button/index.js"
 import { Default as MenuItemDefaultStory } from "../MenuItem/MenuItem.stories"
 import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
+
 export default {
   title: "WiP/ContextMenu/ContextMenu",
   component: ContextMenu,
@@ -17,9 +18,7 @@ export default {
 
 const Template = ({ children, ...args }) => (
   <ContextMenu {...args}>
-    {children.map((item, i) => (
-      <MenuItem {...item} key={i} />
-    ))}
+    { children }
   </ContextMenu>
 )
 
@@ -27,9 +26,7 @@ const PortalTemplate = ({ children, ...args }) => (
   <PortalProvider>
     <PortalProvider.Portal>
       <ContextMenu {...args}>
-        {children.map((item, i) => (
-          <MenuItem {...item} key={i} />
-        ))}
+        { children }
       </ContextMenu>
     </PortalProvider.Portal>
   </PortalProvider>
@@ -38,59 +35,36 @@ const PortalTemplate = ({ children, ...args }) => (
 export const Default = Template.bind({})
 Default.args = {
   children: [
-    {
-      ...MenuItemDefaultStory.args,
-      label: "Juno on Github",
-      href: "https://github.com/sapcc/juno",
-    },
-    { ...MenuItemDefaultStory.args, label: "Item 2" },
-    {
-      ...MenuItemDefaultStory.args,
-      label: "Item 3",
-      icon: "deleteForever",
-    },
-    {
-      ...MenuItemDefaultStory.args,
-      label: null,
-      children: [
+    <MenuItem key="1" label="Juno on Github" href="https://github.com/sapcc/juno" />,
+    <MenuItem key="2" label="This item does nothing" icon="help" />,
+    <MenuItem key="3" label="Disabled Item" href="https://github.com/sapcc/juno" disabled />,
+    <MenuItem key="4" >
         <Button
-          key={0}
-          label="Child"
-          variant="subdued"
-          size="small"
-          className="jn-w-full"
-        />,
-      ],
-    },
+        key={0}
+        label="Button as Child of MenuItem"
+        variant="subdued"
+        size="small"
+        className="jn-w-full"
+      />
+    </MenuItem>,
+    <MenuItem key="5" onClick={ () => {} } label="Button as Item with OnClick" icon="help" />
   ],
 }
 
 export const InsidePortal = PortalTemplate.bind({})
 InsidePortal.args = {
   children: [
-    {
-      ...MenuItemDefaultStory.args,
-      label: "Juno on Github",
-      href: "https://github.com/sapcc/juno",
-    },
-    { ...MenuItemDefaultStory.args, label: "Item 2" },
-    {
-      ...MenuItemDefaultStory.args,
-      label: "Item 3",
-      icon: "deleteForever",
-    },
-    {
-      ...MenuItemDefaultStory.args,
-      label: null,
-      children: [
+    <MenuItem key="1" label="Juno on Github" href="https://github.com/sapcc/juno"/>,
+    <MenuItem key="2" label="This item does nothing" />,
+    <MenuItem key="3" label="Disabled Item" href="https://github.com/sapcc/juno" disabled />,
+    <MenuItem key="4" >
         <Button
-          key={0}
-          label="Child"
-          variant="subdued"
-          size="small"
-          className="jn-w-full"
-        />,
-      ],
-    },
-  ],
+        key={0}
+        label="Button as Child of MenuItem"
+        variant="subdued"
+        size="small"
+        className="jn-w-full"
+      />
+    </MenuItem>
+  ]
 }

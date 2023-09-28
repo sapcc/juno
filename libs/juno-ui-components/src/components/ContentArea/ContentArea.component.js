@@ -5,7 +5,6 @@ const containerStyles = `
   jn-bg-theme-content-area-bg
   jn-relative
   jn-grow
-  jn-overflow-hidden
 `
 
 

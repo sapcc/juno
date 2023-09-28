@@ -19,60 +19,50 @@ export default {
   }
 }
 
-const Template = ( {items, ...args} ) => (
+const Template = ( {children, ...args} ) => (
   <Menu { ...args } >
-    {items.map((item, i) => (
-      <MenuItem { ...item } key={ i } />
-    ))}
-  </Menu>
-)
-
-const WithSectionsTemplate = ( {sections, ...args} ) => (
-  <Menu { ...args }>
-    {sections.map((section, s) => (
-      <MenuSection {...section}>
-        {section.items.map((item, i) =>(
-          <MenuItem {...item} key={i} />
-        ))}
-      </MenuSection>
-    ))}
+    { children }
   </Menu>
 )
 
 export const Default = Template.bind({})
 Default.args = {
-  items: [
-    { ...MenuItemDefaultStory.args, onClick: () => {} }, 
-    { ...MenuItemDefaultStory.args, onClick: () => {} }, 
-    { ...MenuItemDefaultStory.args, onClick: () => {}, icon: "deleteForever" }, 
+  children: [
+    <MenuItem label="Label only" />,
+    <MenuItem label="Label with Icon" icon="help" />,
+    <MenuItem label="Item with a Link" href="https://github.com/sapcc/juno" />,
+    <MenuItem label="Item with a Link and icon" href="https://github.com/sapcc/juno" icon="help" />,
+    <MenuItem label="Item with OnClick" onClick={ () => {} } />, 
+    <MenuItem label="Item with OnClick and Icon" onClick={ () => {} } icon="deleteForever" />, 
   ]
 }
 
 export const Small = Template.bind({})
 Small.args = {
   variant: "small",
-  items: [
-    { ...MenuItemDefaultStory.args, onClick: () => {} }, 
-    { ...MenuItemDefaultStory.args, onClick: () => {} }, 
-    { ...MenuItemDefaultStory.args, onClick: () => {}, icon: "deleteForever"  }, 
+  children: [
+    <MenuItem label="Label only" />,
+    <MenuItem label="Label with Icon" icon="help" />,
+    <MenuItem label="Item with a Link" href="https://github.com/sapcc/juno" />,
+    <MenuItem label="Item with a Link and icon" href="https://github.com/sapcc/juno" icon="help" />,
+    <MenuItem label="Item with OnClick" onClick={ () => {} } />, 
+    <MenuItem label="Item with OnClick and Icon" onClick={ () => {} } icon="deleteForever" />, 
   ]
 }
 
-export const WithSections = WithSectionsTemplate.bind({})
-WithSections.args = {
-  sections: [
-    {
-      items: [
-        { ...MenuItemDefaultStory.args, onClick: () => {} }, 
-        { ...MenuItemDefaultStory.args, onClick: () => {} }, 
-        { ...MenuItemDefaultStory.args, onClick: () => {} }, 
-      ]
-    },
-    {
-      title: "DangerZone",
-      items: [
-        { ...MenuItemDefaultStory.args, onClick: () => {}, icon: "deleteForever"   }, 
-      ]
-    }
+export const WithASection = Template.bind({})
+WithASection.args = {
+  children: [
+    <MenuSection>
+      <MenuItem label="Label only" />
+      <MenuItem label="Label with Icon" icon="help" />
+    </MenuSection>,
+    <MenuSection title="Danger Zone">
+      <MenuItem label="Item with a Link" href="https://github.com/sapcc/juno" />
+      <MenuItem label="Item with a Link and icon" href="https://github.com/sapcc/juno" icon="help" />
+      <MenuItem label="Item with OnClick" onClick={ () => {} } /> 
+      <MenuItem label="Item with OnClick and Icon" onClick={ () => {} } icon="deleteForever" />
+    </MenuSection>
   ]
 }
+

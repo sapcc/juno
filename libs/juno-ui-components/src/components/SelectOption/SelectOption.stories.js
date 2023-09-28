@@ -1,5 +1,5 @@
 import React from "react"
-import { Select } from "../Select/index.js"
+import { Select } from "../Select/"
 import { SelectOption } from "./index.js"
 import { PortalProvider } from "../PortalProvider/PortalProvider.component.js"
 
@@ -20,23 +20,28 @@ export default {
   ],
 }
 
-const Template = ({children, ...args}) => {
+const Template = (args) => {
   return (
     <Select open>
-      <SelectOption {...args}>{children}</SelectOption>
+      <SelectOption {...args} />
     </Select>
   )
 }
 
 export const Default = Template.bind({})
 Default.args = {
-  value: "option",
-  label: "Option"
+  value: "Option 1"
 }
 
 export const Disabled = Template.bind({})
 Disabled.args = {
   disabled: true,
-  value: "disabled-option",
-  children: "Disabled Option"
+  value: "Disabled Option"
+}
+
+export const ChildrenOnly = Template.bind({})
+ChildrenOnly.args = {
+  children: [
+    "Option 1"
+  ]
 }
