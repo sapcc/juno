@@ -45,7 +45,7 @@ const useQueryClientFn = (mockAPI) => {
   const proxyOptions = mockAPI
     ? {
         mock: true,
-        dynamicImport: import("../../db.js"),
+        dynamicImport: import("../../db.json"),
       }
     : {}
 

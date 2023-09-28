@@ -30,7 +30,7 @@ const initializeLocalDB = (dynamicImport) => {
   } catch (error) {
     const errorText = `Error, dynamicImport not given or wrong.
     Please add dynamicImport to the fetchProxy options like this:
-    fetchProxy(url, { dynamicImport: import("./db") })
+    fetchProxy(url, { dynamicImport: import("./db.json") })
     ${error}`
     // create a new custom error to return
     const newError = new Error(errorText)
