@@ -73,7 +73,7 @@ const useQueryClientFn = (mockAPI) => {
               "Content-Type": "application/json",
               Accept: "application/json",
             },
-            ...{ mock: true },
+            ...{ mock: mockAPI },
           }
         )
           .then(checkStatus)
@@ -102,7 +102,7 @@ const useQueryClientFn = (mockAPI) => {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          ...{ mock: true },
+          ...{ mock: mockAPI },
           body: sendBody,
         })
           .then(checkStatus)
@@ -122,7 +122,7 @@ const useQueryClientFn = (mockAPI) => {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          ...{ mock: true },
+          ...{ mock: mockAPI },
           body: sendBody,
         })
           .then(checkStatus)
@@ -140,7 +140,7 @@ const useQueryClientFn = (mockAPI) => {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          ...{ mock: true },
+          ...{ mock: mockAPI },
         })
           .then(checkStatus)
           .then((response) => {
