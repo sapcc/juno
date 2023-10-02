@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react"
 import { createPortal } from "react-dom"
 import PropTypes from "prop-types"
 import { ModalFooter } from "../ModalFooter/index"
-import { knownIcons } from "../Icon/Icon.component.js"
-import { Icon } from "../Icon"
+import { Icon, knownIcons } from "../Icon/Icon.component"
 import { usePortalRef } from "../PortalProvider/PortalProvider.component"
 
 /*

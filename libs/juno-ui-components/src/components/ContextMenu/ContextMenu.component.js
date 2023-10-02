@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Icon } from "../Icon/index.js"
-import { Menu } from "../Menu/index.js"
+import { Menu } from "@headlessui/react"
+import { Float } from "@headlessui-float/react"
 
 /*
 TODO:
@@ -16,6 +17,14 @@ TODO:
 * don't ALWAYS render button!?!
 */
 
+const menuStyles = `
+  jn-overflow-hidden
+  jn-flex
+  jn-flex-col
+  jn-rounded
+  jn-bg-theme-background-lvl-1
+`
+
 const toggleStyles = `
 	hover:jn-text-theme-accent
 	active:jn-text-theme-accent
@@ -25,14 +34,15 @@ const toggleOpenStyle = `
 	jn-text-theme-accent
 `
 
-// TODO: add 	jn-absolute jn-top-0 jn-left-0 ?
-const menuStyles = `
-	jn-w-[11.25rem]
-`
-
 /** A context menu with a toggle. */
 
-export const ContextMenu = ({ icon, className, children, open, ...props }) => {
+export const ContextMenu = ({ 
+  icon, 
+  className, 
+  children, 
+  open,
+  ...props
+}) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleClick = (event) => {
@@ -43,25 +53,28 @@ export const ContextMenu = ({ icon, className, children, open, ...props }) => {
     setIsOpen(open)
   }, [open])
 
-  const menu = (
-    <Menu className={`juno-contextmenu-menu ${menuStyles}`} variant="small">
-      {children}
+  return (
+    <Menu>
+        <Float>
+          <Menu.Button 
+            onClick={handleClick} 
+            className={`
+              juno-contextmenu-toggle 
+              ${toggleStyles} 
+              ${ isOpen ? toggleOpenStyle : "" }
+            `}>
+            <Icon icon="moreVert"/>
+          </Menu.Button>
+          <Menu.Items 
+            className={`${menuStyles}`}
+          >
+            {children}
+          </Menu.Items> 
+        </Float>
     </Menu>
   )
-
-  return (
-    <>
-      <Icon
-        icon="moreVert"
-        className={`juno-contextmenu-toggle ${toggleStyles} ${
-          isOpen ? toggleOpenStyle : ""
-        }`}
-        onClick={handleClick}
-      />
-      {isOpen ? menu : null}
-    </>
-  )
 }
+
 
 ContextMenu.propTypes = {
   className: PropTypes.string,

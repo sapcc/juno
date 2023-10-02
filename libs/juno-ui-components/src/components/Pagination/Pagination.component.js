@@ -1,10 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Button } from "../Button/"
-import { Icon } from "../Icon/"
-import { Select } from "../Select/"
-import { SelectOption } from "../SelectOption/"
-import { TextInput } from "../TextInput"
+import { Button } from "../Button/Button.component"
+import { TextInput } from "../TextInput/TextInput.component"
+import { Select } from "../Select/Select.component"
+import { SelectOption } from "../SelectOption/SelectOption.component"
 
 const paginationStyles = `
   jn-flex
@@ -48,7 +47,7 @@ const renderPaginationInnards = (
           name="pages"
           width="auto"
           defaultValue={currentPage?.toString()} // here the same, defaultValue is of type string
-          onValueChange={handleSelectChange}
+          onChange={handleSelectChange}
         >
           {selectOptions(pages)}
         </Select>

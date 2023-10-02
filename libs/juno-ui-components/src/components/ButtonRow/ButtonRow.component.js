@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { Stack } from "../Stack"
+import { Stack } from "../Stack/Stack.component"
 
 const buttonrowstyles = `
 	jn-flex

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import PropTypes from "prop-types"
-import { JsonViewer } from "../JsonViewer"
-import { Icon } from "../Icon/index.js"
+import { JsonViewer } from "../JsonViewer/JsonViewer.component"
+import { Icon } from "../Icon/index"
 
 const wrapperStyles = `
   jn-bg-theme-code-block

@@ -1,9 +1,9 @@
 import * as React from "react"
 import { render, screen } from "@testing-library/react"
 import { AppShell } from "./index"
-import { PageHeader } from "../PageHeader"
-import { PageFooter } from "../PageFooter"
-import { TopNavigation } from "../TopNavigation"
+import { PageHeader } from "../PageHeader/PageHeader.component"
+import { PageFooter } from "../PageFooter/PageFooter.component"
+import { TopNavigation } from "../TopNavigation/TopNavigation.component"
 
 describe("AppShell", () => {
   test("renders an app shell", async () => {

@@ -1,24 +1,21 @@
-import React, { useState, useEffect, useMemo, useId, createContext } from "react"
-import * as RadixSelect from "@radix-ui/react-select"
-import { Label } from "../Label/index"
-import { Icon } from "../Icon/index.js"
-import { Spinner } from "../Spinner/index.js"
-import { usePortalRef } from "../PortalProvider/PortalProvider.component"
+import React, { Fragment, createContext, useEffect, useId, useMemo, useState } from "react"
 import PropTypes from "prop-types"
-import { FormHint } from "../FormHint/"
-import "./select.scss"
-
-const wrapperStyles = `
-  jn-relative
-`
+import { Listbox } from "@headlessui/react"
+import { Label } from "../Label/Label.component"
+import { Icon } from "../Icon/Icon.component"
+import { Spinner } from "../Spinner/Spinner.component"
+import { FormHint } from "../FormHint/FormHint.component"
+import { Float } from "@headlessui-float/react"
+import { offset, shift, size } from '@floating-ui/react-dom'
 
 const labelStyles = `
+  jn-no-wrap
   jn-pointer-events-none
   jn-top-2
   jn-left-4
 `
 
-const triggerStyles = `
+const toggleStyles = `
   jn-appearance-none
   jn-bg-theme-select
   jn-h-[2.375rem]
@@ -34,379 +31,346 @@ const triggerStyles = `
   focus:jn-ring-theme-focus
 `
 
-const triggerLabelStyles = `
-  jn-text-left
-  jn-pt-[0.4rem]
+const defaultToggleBorderStyles = `
+
 `
 
-const triggerErrorStyles = `
-  jn-border
-  jn-border-theme-error
-`
-
-const triggerValidStyles = `
+const validToggleStyles = `
   jn-border
   jn-border-theme-success
 `
 
-const contentStyles = `
+const invalidToggleStyles = `
+  jn-border
+  jn-border-theme-error
+`
+
+const centeredIconStyles = `
+  jn-absolute
+  jn-top-1/2
+  jn-left-1/2
+  jn-translate-y-[-50%]
+  jn-translate-x-[-0.75rem]
+`
+
+const menuStyles = `
   jn-rounded
   jn-bg-theme-background-lvl-1
-  jn-w-[var(--radix-select-trigger-width)]
-  jn-max-h-[var(--radix-select-content-available-height)]
-  jn-z-[9999]
+  jn-w-full
+  jn-overflow-y-auto
 `
 
-const scrollButtonStyles = `
-  jn-text-center
-  jn-py-1
+const truncateStyles = `
+  jn-block
+  jn-h-6
+  jn-overflow-hidden
+  jn-text-ellipsis
+  jn-whitespace-nowrap
 `
-
-const hintStyles = `
-  jn-mt-0
-`
-
-/** Wrap children in a Portal if portal option is set to true  */
-const PortalWrapper = ({ withPortal, children }) => {
-  
-  if (withPortal) {
-    const portalContainer = usePortalRef()
-    return (
-      <RadixSelect.Portal container={portalContainer}>
-        {children}
-      </RadixSelect.Portal>
-    )
-  } else {
-    return (
-      children
-    )
-  }
-  
-}
 
 export const SelectContext = createContext()
 
-
-/** A Select component for selecting a single item. Can be used controlled or uncontrolled. 
-    Used in Pagination, Filters, SelectRow.  
-    TODO: trigger active state styles (invert chevron?), menu theming, z-index, iframe / shadow dom, menu scrolling in popper mode -> make align-items default?, tests
+/** 
+  A Select component to allow selecting a single item (multi-select TBD).
+  Pass a `defaultValue` to render as an uncontrolled component that tracks its open state etc internally.
+  Also TBD: semantic variants.
 */
-export const Select = React.forwardRef(
-  ({
-    ariaLabel,
-    children,
-    className,
-    defaultOpen,
-    defaultValue,
-    disabled,
-    error,
-    id,
-    invalid,
-    label,
-    labelClassName,
-    loading,
-    name,
-    onChange,
-    onOpenChange,
-    onValueChange,
-    open,
-    placeholder, 
-    portal,
-    position,
-    required,
-    valid,
-    value,
-    variant,
-    width,
-    helptext,
-    errortext,
-    successtext,
-    truncateOptions,
-    ...props
-  }, 
-  forwardedRef ) => {
-    
-    const isNotEmptyString = (str) => {
-      return !(typeof str === 'string' && str.trim().length === 0)
-    }
-    
-    const uniqueId = () => (
-      "juno-select-" + useId()
-    )
-    
-    const [isOpen, setIsOpen] = useState(false)
-    const [hasError, setHasError] = useState(false)
-    const [isInvalid, setIsInvalid] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const [isValid, setIsValid] = useState(false)
-    
-    useEffect(() => {
-      setIsOpen(open)
-    }, [open])
-    
-    useEffect(() => {
-      setHasError(error)
-    }, [error])
-    
-    const invalidated = useMemo(
-      () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
-      [invalid, errortext]
-    )
-    const validated = useMemo(
-      () => valid || (successtext && isNotEmptyString(successtext) ? true : false),
-      [valid, successtext]
-    )
-    
-    useEffect(() => {
-      setIsInvalid(invalidated)
-    }, [invalidated])
-    
-    useEffect(() => {
-      setIsValid(validated)
-    }, [validated])
-    
-    useEffect(() => {
-      setIsLoading(loading)
-    }, [loading])
-    
-    const handleOpenChange = (event) => {
-      // change only when open state is uncontrolled:
-      if ( open === undefined ) {
-        setIsOpen(!isOpen)
-      }
-      onOpenChange && onOpenChange(event)
-    }
-    
-    const handleValueChange = (event) => {
-      onValueChange && onValueChange(event) 
-      onChange && onChange(event)
-    }
-    
-    const theVariant = variant || "default"
-    
-    const TriggerIcons = () => {
-      if (isLoading) {
-        return (<Spinner className="jn-mr-0"/>)
-      } else if (hasError){
-        return (<Icon icon="errorOutline" color="jn-text-theme-error" />)
-      } else if (isValid) {
-        return (<>
-          <Icon icon="checkCircle" color="jn-text-theme-success" className="jn-pointer-events-none"/>
-          { isOpen ? <Icon icon="expandLess" /> : <Icon icon="expandMore" /> }
-        </>)
-      } else if (isInvalid) {
-        return (<>
-          <Icon icon="dangerous" color="jn-text-theme-error" className="jn-pointer-events-none"/>
-          { isOpen ? <Icon icon="expandLess" /> : <Icon icon="expandMore" /> }
-        </>)
-      } else {
-        return (isOpen ? <Icon icon="expandLess" /> : <Icon icon="expandMore" />)
-      }
-    }
-    
-    const theId = id || uniqueId()
-    
-    return (
-      <SelectContext.Provider value={
-        {
-          truncateOptions: truncateOptions
-        }
-      }>
-        <div>
-          <span 
-            className={
-              `juno-select-wrapper 
-              ${wrapperStyles}
-              ${ width == "auto" ? "jn-inline-block" : "jn-block" }
-              ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
-              `
-            } 
-          >
-            {
-              label && isNotEmptyString(label) ?
-                <Label 
-                  text={label}
-                  htmlFor={theId}
-                  className={`${labelStyles}`}
-                  disabled={disabled}
-                  required={required}
-                  floating
-                  minimized
-                />
-              :
-                ""
-            }
-            <RadixSelect.Root 
-              defaultOpen={defaultOpen}
-              disabled={disabled || hasError || isLoading} 
-              name={name}
-              onOpenChange={handleOpenChange}
-              onValueChange={handleValueChange}
-              value={value}
-              open={isOpen}
-              defaultValue={defaultValue}
-            >
-              <RadixSelect.Trigger 
-                id={theId}
-                aria-label={ariaLabel}
-                className={`
-                  juno-select
-                  juno-select-trigger
-                  ${ triggerStyles }
-                  ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
-                  ${ hasError || isInvalid || isValid || isLoading ? "" : "juno-select-" + theVariant}
-                  ${ hasError || isInvalid ? triggerErrorStyles : "" }
-                  ${ hasError ? "juno-select-error jn-cursor-not-allowed" : "" }
-                  ${ isValid ? "juno-select-valid " + triggerValidStyles : "" } 
-                  ${ disabled ? "juno-select-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
-                  ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
-                  ${ isLoading ? "juno-select-loading jn-cursor-not-allowed" : "" }
-                  ${ isInvalid ? "juno-select-invalid" : "" }
-                  ${ className }
-                `}
-                ref={forwardedRef}
-                {...props}
-              >
-                { 
-                  isLoading || hasError ?
-                    ""
-                  :
-                  <span className={`
-                    ${labelClassName}
-                    ${ label ? triggerLabelStyles : "" }
-                  `}>
-                    <RadixSelect.Value placeholder={placeholder} style={{ overflow: "hidden"}} /> 
-                  </span>
-                }
-                <RadixSelect.Icon className="jn-inline-flex">
-                  <TriggerIcons />
-                </RadixSelect.Icon>
-              </RadixSelect.Trigger>
-              <PortalWrapper withPortal={portal}>
-                <RadixSelect.Content className={`juno-select-content ${contentStyles}`} position={position} sideOffset={2}>
-                  <RadixSelect.ScrollUpButton className={`${scrollButtonStyles}`}>
-                    <Icon icon="expandLess"/>
-                  </RadixSelect.ScrollUpButton>
-                  <RadixSelect.Viewport>
-                    { children }
-                  </RadixSelect.Viewport>
-                  <RadixSelect.ScrollDownButton className={`${scrollButtonStyles}`}>
-                    <Icon icon="expandMore"/>
-                  </RadixSelect.ScrollDownButton>
-                </RadixSelect.Content>
-              </PortalWrapper>
-            </RadixSelect.Root>
-          </span>
-          { errortext && isNotEmptyString(errortext) ?
-              <FormHint text={errortext} variant="error" className={`${hintStyles}`} />
-            :
-              ""
-          }
-          { successtext && isNotEmptyString(successtext) ?
-              <FormHint text={successtext} variant="success" className={`${hintStyles}`} />
-            :
-              ""
-          }
-          { helptext && isNotEmptyString(helptext) ?
-              <FormHint text={helptext} className={`${hintStyles}`} />
-            :
-              ""
-           }
-        </div>
-      </SelectContext.Provider>
-    )
+export const Select = ({
+  ariaLabel,
+  children,
+  className,
+  defaultValue,
+  disabled,
+  error,
+  errortext,
+  helptext,
+  id,
+  invalid,
+  label,
+  loading,
+  name,
+  onChange,
+  onValueChange,
+  placeholder,
+  required,
+  successtext,
+  truncateOptions,
+  valid,
+  value,
+  variant,
+  width,
+  ...props
+}) => {
+  
+  const isNotEmptyString = (str) => {
+    return !(typeof str === 'string' && str.trim().length === 0)
   }
-)
+  
+  const uniqueId = () => (
+    "juno-select-" + useId()
+  )
+  
+  const theId = id || uniqueId()
+  const helptextId = "juno-select-helptext-" + useId()
+  
+  const [selectedValue, setSelectedValue] = useState("")
+  const [hasError, setHasError] = useState(false)
+  const [isInvalid, setIsInvalid] = useState(false)
+  const [isValid, setIsValid] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  
+  const invalidated = useMemo(
+    () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
+    [invalid, errortext]
+  )
+  const validated = useMemo(
+    () => valid || (successtext && isNotEmptyString(successtext) ? true : false),
+    [valid, successtext]
+  )
+  
+  useEffect(() => {
+    setSelectedValue(value)
+  }, [value])
+  
+  useEffect(() => {
+    setHasError(error)
+  }, [error])
+  
+  useEffect(() => {
+    setIsInvalid(invalidated)
+  }, [invalidated])
+  
+  useEffect(() => {
+    setIsValid(validated)
+  }, [validated])
+  
+  useEffect(() => {
+    setIsLoading(loading)
+  }, [loading])
+  
+  const handleChange = (value) => {
+    setSelectedValue(value)
+    onChange && onChange(value, event)
+    onValueChange && onValueChange(value)
+  }
+  
+  // Headless-UI-Float Middleware
+  const middleware = [
+    offset(4),
+    shift(),
+    size({
+      apply({availableWidth, availableHeight, elements}) {
+        Object.assign(elements.floating.style, {
+          maxWidth: `${availableWidth}px`,
+          maxHeight: `${availableHeight}px`,
+          overflowY: "auto"
+        })
+      }
+    })
+  ]
+  
+  return (
+    <SelectContext.Provider value={
+      {
+        truncateOptions: truncateOptions
+      }
+    }>
+      <div
+        className={`
+          juno-select-wrapper 
+          jn-relative
+          ${ width == "auto" ? "jn-inline-block" : "jn-block" }
+          ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+        `}
+      >
+        <Listbox
+          disabled={ disabled || isLoading || hasError } 
+          name={name}
+          onChange={handleChange}
+          value={value}
+          defaultValue={defaultValue}
+          name={name}
+        >
+          { label && isNotEmptyString(label) ?
+              <Listbox.Label 
+                as={Label}
+                htmlFor={theId}
+                text={label}
+                className={`${labelStyles}`}
+                disabled={ disabled || isLoading || hasError } 
+                required={required}
+                floating
+                minimized
+              />
+            :
+              ""
+          }
+          
+          <Float 
+            adaptiveWidth
+            middleware={middleware}
+          >
+          
+            <Listbox.Button 
+              aria-describedby={ helptext ? helptextId : "" }
+              aria-label={ ariaLabel || label }
+              as="button" 
+              id={theId}
+              className={`
+                juno-select-toggle
+                ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+                ${ toggleStyles }
+                ${ label && isNotEmptyString(label) ? "jn-pt-[0.4rem]" : "" }
+                ${ disabled ? "juno-select-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
+                ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
+                ${ isInvalid ? "juno-select-invalid " + invalidToggleStyles : "" } 
+                ${ isValid ? "juno-select-valid " + validToggleStyles : "" }  
+                ${ isValid || isInvalid ? "" : defaultToggleBorderStyles } 
+                ${ isLoading ? "juno-select-loading jn-cursor-not-allowed" : "" }
+                ${ hasError ? "juno-select-error jn-cursor-not-allowed" : "" }
+                ${ className }
+              `}
+              {...props}
+            >
+              {({ open, value }) => (
+                
+                (!hasError && !isLoading) ?
+                  <>
+                    <span className={`${truncateStyles}`}>
+                      { value || placeholder }
+                    </span>
+                    <span className="jn-flex">
+                      { isValid ? 
+                          <Icon icon="checkCircle" color="jn-text-theme-success" />
+                        : ""
+                      }
+                      { isInvalid ? 
+                          <Icon icon="dangerous" color="jn-text-theme-error" />
+                        : ""
+                      }
+                      <span><Icon icon={ open ? "expandLess" : "expandMore" } /></span>
+                    </span>
+                  </>
+                :
+                  <span className={`${centeredIconStyles}`} >
+                    { hasError ?
+                       <Icon icon="errorOutline" color="jn-text-theme-error" className={"jn-cursor-not-allowed"} />
+                      :
+                        isLoading ?
+                          <Spinner className={"jn-cursor-not-allowed"} />
+                        :
+                          ""
+                    }
+                  </span>
+                
+              )}
+  
+            </Listbox.Button>
+            <Listbox.Options 
+              className={`
+                juno-select-menu
+                ${menuStyles}
+              `}
+            >
+              { children }
+            </Listbox.Options>
+          
+          </Float>
+          
+        </Listbox>
+        
+        { errortext && isNotEmptyString(errortext) ?
+            <FormHint text={errortext} variant="error"/>
+          :
+            ""
+        }
+        { successtext && isNotEmptyString(successtext) ?
+            <FormHint text={successtext} variant="success"/>
+          :
+            ""
+        }
+        { helptext && isNotEmptyString(helptext) ?
+            <FormHint text={helptext} id={helptextId} />
+          :
+            ""
+         }
+  
+      </div>
+    </SelectContext.Provider>
+  )
+}
 
 Select.propTypes = {
-  /** Pass an aria-label to the Select trigger */
+  /** Pass an aria-label to the Select toggle button */
   ariaLabel: PropTypes.string,
-  /** Pass a custom className */
-  className: PropTypes.string,
-  /** The children to render in the Menu. Should be SelectOption, SelectGroup, or SelectDivider. */
+  /** The children to render as options. Use the SelectOption component, and SelectDivider if needed. */
   children: PropTypes.node,
-  /** Whether the Select is open. Triggers uncontrolled mode. For controlled mode use `open` instead */
-  defaultOpen: PropTypes.bool,
-  /** Disable the Select */
-  disabled: PropTypes.bool,
-  /** Whether the Select has an error, e.g. when loading necessary option data failed. When the Select has been negatively validated, use `invalid` instead. */
-  error: PropTypes.bool,
-  /** Pass an id to the Select */
-  id: PropTypes.string,
-  /** Whether the Select has been negatively validated */
-  invalid: PropTypes.bool,
-  /** Pass a label */
-  label: PropTypes.string,
-  /** Pass custom classNames to the Select label and placeholder */
-  labelClassName: PropTypes.string,
-  /** Whether the Select is currently busy loading options. Will display a Spinner Icon. */
-  loading: PropTypes.bool,
-  /** The name of the Select. When a form is submitted, this will be posted as name:value. */
-  name: PropTypes.string,
-  /** Handler to be executed when the selected value changes. Alternative API to `onValueChange`. Both will work. */
-  onChange: PropTypes.func,
-  /** Handler to be executed when the open state a controlled Select changes */
-  onOpenChange: PropTypes.func,
-  /** Handler to be executed when the selected value changes. */
-  onValueChange: PropTypes.func,
-  /** Whether the Select is open. Triggers controlled mode, to be used with onOpenChange. */
-  open: PropTypes.bool,
-  /** Placeholder to display when no option is selected */
-  placeholder: PropTypes.string,
-  /** Whether the select options should be rendered in a portal. Default: true. If using the portal you must also wrap your app in an AppShellProvider (recommended) or PortalProvider! */
-  portal: PropTypes.bool,
-  /** The positioning mode of the Select menu. Defaults to 'popper' (below the trigger).  */
-  position: PropTypes.oneOf(["popper", "align-items"]),
-  /** Whether the Select is required */
-  required: PropTypes.bool,
-  /** Whether the Select has been positively validated */
-  valid: PropTypes.bool,
-  /** The default value of the uncontrolled Select */
+  /** Pass a custom className to the Select toggle button */
+  className: PropTypes.string,
+  /** Pass a defaultValue to use as an uncontrolled component that handles its state internally */
   defaultValue: PropTypes.string,
-  /** The value of the Select (controlled mode) */
-  value: PropTypes.string,
-  /** The semantic variant of the Select */
-  variant: PropTypes.oneOf(["", "primary", "primary-danger", "default", "subdued"]),
-  /** The width of the select. Either 'full' (default) or 'auto'. */
-  width: PropTypes.oneOf(["full", "auto"]),
-  /** A helptext to render to explain meaning and significance of the Select */
-  helptext: PropTypes.node,
-  /** A text to render when the Select was successfully validated */
+  /** Whether the Select is disabled */
+  disabled: PropTypes.bool,
+  /** Whether the Select has an error, e.g. when loading options. When validated negatively, use `invalid` instead. */
+  error: PropTypes.bool,
+  /** A small message rendered in red text below the Select toggle. */
   errortext: PropTypes.node,
-  /** A text to render when the Select has an error or could not be validated */
+  /** A small, neutral text rendered below the Select toggle to explain meaning and significance of the Select element */
+  helptext: PropTypes.node,
+  /** Pass an id to the Select toggle */
+  id: PropTypes.node,
+  /** Whether the Select has been validated unsuccessfully / negatively */
+  invalid: PropTypes.bool,
+  /** Pass a label to render in the Select toggle button */
+  label: PropTypes.string,
+  /** Whether the Select is busy loading options. Will show a Spinner in the Select toggle. */
+  loading: PropTypes.bool,
+  /** Pass a name attribute to the Select to be transmitted when used in a form. */
+  name: PropTypes.string,
+  /** Handler to be executed when the selected value changes */
+  onChange: PropTypes.func,
+  /** LEGACY: Handler to be executed when the Select value changes. Here for backwards compatibility with apps based on older versions of Select. Use onChange instead. */
+  onValueChange: PropTypes.func,
+  /** A placeholder to render when no value has been selected. Default is "Select…". */
+  placeholder: PropTypes.string,
+  /** Whether a selection is required. Will show a small required marker next to the label. If no label is used, no marker will be visible. */
+  required: PropTypes.bool,
+  /** A note to render below the Select toggle in case the selected value has been positively validated. Will set the visible state of the Select toggle to `valid`. */
   successtext: PropTypes.node,
-  /** Whether the option labels should be truncated in case they are longer/wider than the available space in an option or not. Default is FALSE. */
+  /** Whether long texts in options will be truncated with "…" or not. Default is false. The Select toggle label will always be truncated. */
   truncateOptions: PropTypes.bool,
+  /** Whether the Select was positively validated. Will show a green checkmark icon inside the Select toggle. */
+  valid: PropTypes.bool,
+  /** The currently (pre-)selected value of the Select. Will trigger controlled mode. */
+  value: PropTypes.string,
+  /** TBD: The semantic variant of the Select toggle button. Not implemented yet. */
+  variant: PropTypes.oneOf(["", "primary", "primary-danger", "default", "subdued"]),
+  /** Whether the Select toggle should consume the available width of its parent container (default), or render its "natural" width depending on the content and the currently selected value or state. */
+  width: PropTypes.oneOf(["full", "auto"])
 }
 
 Select.defaultProps = {
   ariaLabel: "",
-  className: "",
   children: null,
-  defaultOpen: undefined,
+  className: "",
+  defaultValue: undefined,
   disabled: false,
   error: false,
+  errortext: "",
+  helptext: "",
   id: "",
   invalid: false,
   label: undefined,
-  labelClassName: "",
   loading: false,
-  name: "",
+  name: undefined,
   onChange: undefined,
-  onOpenChange: undefined,
   onValueChange: undefined,
-  open: undefined,
   placeholder: "Select…",
-  portal: true,
-  position: "popper",
   required: false,
-  valid: false,
-  defaultValue: undefined,
-  value: undefined,
-  width: "full",
-  variant: undefined,
-  helptext: "",
-  errortext: "",
   successtext: "",
   truncateOptions: false,
+  valid: false,
+  value: undefined,
+  variant: undefined,
+  width: "full"
 }

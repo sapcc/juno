@@ -1,1 +1,1 @@
-export { Select } from "./Select.component"
+export { Select } from "./Select.component.js"

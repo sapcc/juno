@@ -1,22 +1,22 @@
 import * as React from "react"
 import { cleanup, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { Select } from "../Select/Select.component"
-import { SelectOption } from "../SelectOption/SelectOption.component"
+import { ComboBox } from "../ComboBox/ComboBox.component"
+import { ComboBoxOption } from "../ComboBoxOption/ComboBoxOption.component"
 
 
-describe("SelectOption", () => {
+describe("ComboBoxOption", () => {
   
   afterEach(() => {
     cleanup();
     jest.clearAllMocks();
   });
   
-  test("renders a SelectOption", async () => {
+  test("renders a ComboBoxOption", async () => {
     render(
-      <Select>
-        <SelectOption value="Option 1" />
-      </Select>
+      <ComboBox>
+        <ComboBoxOption value="Option 1" />
+      </ComboBox>
     )
     const toggle = screen.getByRole("button")
     expect(toggle).toBeInTheDocument()
@@ -27,9 +27,9 @@ describe("SelectOption", () => {
   
   test("renders a className as passed", async () => {
     render(
-      <Select open>
-        <SelectOption className="my-fancy-class"/>
-      </Select>
+      <ComboBox>
+        <ComboBoxOption className="my-fancy-class"/>
+      </ComboBox>
     )
     const toggle = screen.getByRole("button")
     expect(toggle).toBeInTheDocument()
@@ -40,9 +40,9 @@ describe("SelectOption", () => {
   
   test("renders all props as passed", async () => {
     render(
-      <Select open>
-        <SelectOption data-lolol="123"/>
-      </Select>
+      <ComboBox>
+        <ComboBoxOption data-lolol="123"/>
+      </ComboBox>
     )
     const toggle = screen.getByRole("button")
     expect(toggle).toBeInTheDocument()

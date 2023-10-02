@@ -1,7 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import { StyleProvider, ShadowRoot, PortalProvider } from "../../index"
+import { StyleProvider } from "../StyleProvider/StyleProvider.component"
+import { ShadowRoot } from "../ShadowRoot/ShadowRoot.component"
+import { PortalProvider } from "../PortalProvider/PortalProvider.component"
 
 /**
  * This provider acts as a wrapper for Juno apps. It renders a StyleProvider and PortalProvider

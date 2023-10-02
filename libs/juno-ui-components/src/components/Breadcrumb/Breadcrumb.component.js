@@ -1,8 +1,8 @@
 import React, { Children } from "react"
 import PropTypes from "prop-types"
 import { BreadcrumbItem } from "../BreadcrumbItem/index"
-import { Stack } from "../Stack/"
-import { Icon } from "../Icon/"
+import { Stack } from "../Stack/Stack.component"
+import { Icon } from "../Icon/Icon.component"
 
 const breadcrumbstyles = `
 

@@ -84,7 +84,7 @@ const Home = () => {
               <a
                 href="#"
                 onClick={handleDomainDeselect}
-                className="text-theme-default text-sm underline"
+                className="text-theme-default text-sm underline inline-flex items-center"
               >
                 <Icon icon="place" size="16" className="mr-1" />
                 Wrong domain?

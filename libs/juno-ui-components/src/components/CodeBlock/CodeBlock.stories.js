@@ -160,9 +160,9 @@ CodeBlocksWithTabs.parameters = {
 }
 CodeBlocksWithTabs.args = {
   tabs: [
-    { ...TabStory.args, children: "UserData.jsx"},
-    { ...TabStory.args, children: "data.json"},
-    { ...TabStory.args, children: "UserData.html"},
+    { ...TabStory.args, children: "UserData.jsx", key: "t-0"},
+    { ...TabStory.args, children: "data.json", key: "t-1"},
+    { ...TabStory.args, children: "UserData.html", key: "t-2"},
   ],
   codeBlocks: [
     { content: "<UserData name='User' data={data.json} />"},

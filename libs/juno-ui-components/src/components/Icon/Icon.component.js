@@ -9,6 +9,7 @@ import AutoAwesomeMosaic from "@material-design-icons/svg/filled/auto_awesome_mo
 import AutoAwesomeMotion from "@material-design-icons/svg/filled/auto_awesome_motion.svg"
 import Bolt from "@material-design-icons/svg/filled/bolt.svg"
 import Cancel from "@material-design-icons/svg/filled/cancel.svg"
+import Check from "@material-design-icons/svg/filled/check.svg"
 import CheckCircle from "@material-design-icons/svg/filled/check_circle.svg"
 import ChevronLeft from "@material-design-icons/svg/outlined/chevron_left.svg"
 import ChevronRight from "@material-design-icons/svg/outlined/chevron_right.svg"
@@ -87,6 +88,7 @@ export const knownIcons = [
   "autoAwesomeMotion",
   "bolt",
   "cancel",
+  "check",
   "checkCircle",
   "chevronLeft",
   "chevronRight",
@@ -211,6 +213,18 @@ const getColoredSizedIcon = ({
           {...iconProps}
         />
       )
+    case "check":
+    return (
+      <Check
+        width={size}
+        height={size}
+        className={iconClass}
+        alt="check"
+        title={title ? title : "Check"}
+        role="img"
+        {...iconProps}
+      />
+    )
     case "checkCircle":
       return (
         <CheckCircle
