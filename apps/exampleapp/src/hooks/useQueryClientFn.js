@@ -49,6 +49,7 @@ const useQueryClientFn = (mockAPI) => {
       // setup the mock db.json
       console.log("useQueryClientFn::: init mock db")
       fetchProxyInitDB(db)
+      setIsMockDBReady(true)
     }
   }, [mockAPI, isMockDBReady])
 
@@ -150,7 +151,7 @@ const useQueryClientFn = (mockAPI) => {
 
     // set queryClientFnReady to true once
     setQueryClientFnReady(true)
-  }, [queryClient, endpoint, setQueryClientFnReady, mockAPI])
+  }, [queryClient, endpoint, mockAPI, setQueryClientFnReady])
 }
 
 export default useQueryClientFn
