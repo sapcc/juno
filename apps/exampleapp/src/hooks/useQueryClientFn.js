@@ -4,7 +4,8 @@ import {
   useGlobalsEndpoint,
   useGlobalsActions,
 } from "../components/StoreProvider"
-import { fetchProxy as fetch } from "utils"
+import { fetchProxy as fetch, fetchProxyInitDB } from "utils"
+import db from "../../db.json"
 
 class HTTPError extends Error {
   constructor(code, message) {
@@ -40,12 +41,16 @@ const useQueryClientFn = (mockAPI) => {
   const queryClient = useQueryClient()
   const endpoint = useGlobalsEndpoint()
   const { setQueryClientFnReady } = useGlobalsActions()
+  const [isMockDBReady, setIsMockDBReady] = useState(false)
 
-  // generate proxy options
-  const proxyOptions = {
-    mock: mockAPI,
-    dynamicImport: import("../../db.json"),
-  }
+  // setup the mock db.json just once
+  useEffect(() => {
+    if (mockAPI && !isMockDBReady) {
+      // setup the mock db.json
+      console.log("useQueryClientFn::: init mock db")
+      fetchProxyInitDB(db)
+    }
+  }, [mockAPI, isMockDBReady])
 
   /*
   As stated in getQueryDefaults, the order of registration of query defaults does matter. Since the first matching defaults are returned by getQueryDefaults, the registration should be made in the following order: from the least generic key to the most generic one. This way, in case of specific key, the first matching one would be the expected one.
@@ -53,7 +58,7 @@ const useQueryClientFn = (mockAPI) => {
   useEffect(() => {
     if (!queryClient || !endpoint) return
 
-    console.log("useQueryClientFn setting defaults", endpoint)
+    console.log("useQueryClientFn::: setting defaults: ", endpoint)
 
     queryClient.setQueryDefaults(["peaks"], {
       queryFn: ({ queryKey }) => {
@@ -67,7 +72,7 @@ const useQueryClientFn = (mockAPI) => {
               "Content-Type": "application/json",
               Accept: "application/json",
             },
-            ...proxyOptions,
+            ...{ mock: true },
           }
         )
           .then(checkStatus)
@@ -96,7 +101,7 @@ const useQueryClientFn = (mockAPI) => {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          ...proxyOptions,
+          ...{ mock: true },
           body: sendBody,
         })
           .then(checkStatus)
@@ -116,7 +121,7 @@ const useQueryClientFn = (mockAPI) => {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          ...proxyOptions,
+          ...{ mock: true },
           body: sendBody,
         })
           .then(checkStatus)
@@ -134,7 +139,7 @@ const useQueryClientFn = (mockAPI) => {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-          ...proxyOptions,
+          ...{ mock: true },
         })
           .then(checkStatus)
           .then((response) => {
@@ -145,7 +150,7 @@ const useQueryClientFn = (mockAPI) => {
 
     // set queryClientFnReady to true once
     setQueryClientFnReady(true)
-  }, [queryClient, endpoint, setQueryClientFnReady])
+  }, [queryClient, endpoint, setQueryClientFnReady, mockAPI])
 }
 
 export default useQueryClientFn

@@ -19,23 +19,19 @@ const rejectResponse = (error) => {
 }
 
 let localDB = null
-const initializeLocalDB = (dynamicImport) => {
+export const fetchProxyInitDB = (jsonData) => {
+  // throw a warning if localDB is already initialized
+  if (localDB) {
+    console.warn("localDB already initialized")
+  }
+
   try {
-    dynamicImport
-      .then((module) => module.default)
-      .then((db) => {
-        console.log("db", db)
-        localDB = db
-      })
+    // check if jsonData is JSON
+    JSON.parse(JSON.stringify(jsonData))
+    localDB = jsonData
   } catch (error) {
-    const errorText = `Error, dynamicImport not given or wrong.
-    Please add dynamicImport to the fetchProxy options like this:
-    fetchProxy(url, { dynamicImport: import("./db.json") })
-    ${error}`
     // create a new custom error to return
-    const newError = new Error(errorText)
-    // throw the new error
-    throw newError
+    throw new Error(`It seems that jsonData is not JSON: ${error}`)
   }
 }
 
@@ -43,17 +39,18 @@ const initializeLocalDB = (dynamicImport) => {
 // is set to production when building for browser platform: https://esbuild.github.io/api/#platform
 const fetchProxy = (urlString, options) => {
   // split custom options from fetch options
-  const { mock, dynamicImport, ...fetchOptions } = options
+  const { mock, jsonData, ...fetchOptions } = options
 
   // if not set explicitly to true or "true", use the real fetch
   if (mock !== true && mock !== "true") {
-    console.log(`mock is not set or not set explicitly to true or "true"`)
     return fetch(urlString, fetchOptions)
   }
 
-  // initialize localDB
+  // warn localDB not initialized
   if (!localDB) {
-    initializeLocalDB(dynamicImport)
+    // create a new custom error to return
+    throw new Error(`localDB not initialized.
+    Please use fetchProxyInitDB(jsonData) to initialize the localDB.`)
   }
 
   // get the path from the url
@@ -64,7 +61,7 @@ const fetchProxy = (urlString, options) => {
   // get the id from the path
   const id = path.split("/")[2]
 
-  console.log("fetchLocal URL", url, path, object, id)
+  console.log("fetchLocal URL:::", url, path, object, id)
 
   const method = options?.method
   const body = options?.body

@@ -1,4 +1,4 @@
 import useEndlessScrollList from "./hooks/useEndlessScrollList"
-import fetchProxy from "./lib/fetchProxy"
+import fetchProxy, { fetchProxyInitDB } from "./lib/fetchProxy"
 
-export { useEndlessScrollList, fetchProxy }
+export { useEndlessScrollList, fetchProxy, fetchProxyInitDB }
