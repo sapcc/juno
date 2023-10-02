@@ -36,6 +36,7 @@ const DOMAINS = {
     "HCM",
     "HDA",
     "HEC",
+    "KYMA",
     "NEO",
     "S4",
     "WBS",
