@@ -128,30 +128,37 @@ Return object attributes
    }
    ```
 
-2. Use the `utils` lib within your component
+2. Use the `fetchProxy` and `fetchProxyInitDB` within your component to retrieve the mock JSON.
 
-   1. Import the `fetchProxy` from the utils library
-   2. Create proxy options by specifying whether the API should be mocked. If the `mock` option is set to 'true,' include `dynamicImport` with the relative path to the 'db.json' file.
-   3. Add the proxy option to the fetch function.
+   1. Import the `fetchProxy` and `fetchProxyInitDB` from the utils library.
+   2. Import the mocked JSON created in the step above.
+   3. Initialize the mocked database by setting the imported JSON data once. Optionally you can add the JSON directly as a parameter.
+   4. Add the `mock` option to the fetch function to determine whether the API should be mocked or not.
 
    ```js
    // YourComponent.jsx
-   (i)import { fetchProxy as fetch } from "utils"
+   import React { useEffect, useState } from "react"
+   (i)import { fetchProxy, fetchProxyInitDB } from "utils"
+   (ii)import db from "../../db.json"
 
-   const YourComponent = ({ mock }) => {
-     // generate proxy options
-     (ii)const proxyOptions = {
-       mock,
-       dynamicImport: import("../../db.json"),
-     }
+   const YourComponent = ({ mockAPI }) => {
+    const [isMockDB, setIsMockDB] = useState(false)
+
+    (iii)useEffect(() => {
+      if (mockAPI && !isMockDB) {
+        fetchProxyInitDB(db)
+        setIsMockDB(true)
+      }
+    }, [mockAPI, isMockDB])
+
      // fetch data giving the extra proxy options
-     (iii)fetch(`${endpoint}/peaks`, {
+     (iv)fetchProxy(`${endpoint}/peaks`, {
        method: "GET",
        headers: {
          "Content-Type": "application/json",
          Accept: "application/json",
        },
-       ...proxyOptions,
+       ...{ mock: mockAPI },
      })
    }
 
