@@ -7,7 +7,7 @@
 ## Features
 
 - **Infinite Scrolling**: react hook to facilitate the integration of an infinite scroll list.
-- **Mock Rest API**: library designed to replicate the behavior of a Fetch REST API. When a `mock` flag is provided, it makes use of a 'db.js' file within your application. If the mock flag is not set, it forwards the request to the Fetch REST API."
+- **Mock Rest API**: library designed to replicate the behavior of a Fetch REST API with mock data.
 
 ## Installation
 
@@ -116,7 +116,9 @@ Return object attributes
 
 ### Mock REST API
 
-1. Generate a `db.json` file containing your preferred JSON data within your project.
+Utilize this library for seamless development against mock data without requiring any code modifications.When utilizing fetchProxy with the `mock` flag, it utilizes previously provided mock data. If the mock flag is unset, the request is then forwarded to the actual Fetch REST API.
+
+1. Generate a `db.json` file containing your preferred JSON data within your project. Optionally, you can include the JSON directly as a parameter when initializing (see next step) the mock data. However, for code cleanliness, we recommend saving it in a separate file
 
    ```json
    // db.json
@@ -132,7 +134,7 @@ Return object attributes
 
    1. Import the `fetchProxy` and `fetchProxyInitDB` from the utils library.
    2. Import the mocked JSON created in the step above.
-   3. Initialize the mocked database by setting the imported JSON data once. Optionally you can add the JSON directly as a parameter.
+   3. Initialize the mocked database by setting the imported JSON data once. Ensure the mock db is initialized just once to not reset the content.
    4. Add the `mock` option to the fetch function to determine whether the API should be mocked or not.
 
    ```js
