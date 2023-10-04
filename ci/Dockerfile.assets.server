@@ -67,6 +67,7 @@ RUN \
 
 # Create importmaps and manifest
 RUN \
+  set -e ; \
   node /juno/ci/scripts/generate_importmap.mjs \
   --provider=$NPM_PROVIDER \
   --external-path=externals \
