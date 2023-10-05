@@ -116,12 +116,13 @@ Return object attributes
 
 ### Mock REST API
 
-Utilize this library for seamless development against mock data without requiring any code modifications.When utilizing fetchProxy with the `mock` flag, it utilizes previously provided mock data. If the mock flag is unset, the request is then forwarded to the actual Fetch REST API.
+Utilize this library to develop against mock data and without requiring any code modifications when switching to a real REST API. When utilizing fetchProxy with the `mock` flag, it utilizes a provided mock data. If the mock flag is unset, the request is then forwarded to the actual Fetch REST API.
 
-1. Generate a `db.json` file containing your preferred JSON data within your project. Optionally, you can include the JSON directly as a parameter when initializing (see next step) the mock data. However, for code cleanliness, we recommend saving it in a separate file
+#### Get started
+
+1. Define the JSON data to use when mocking the REST API.
 
    ```json
-   // db.json
    {
      "peaks": [
        { "id": 1, "name": "Ama Dablam", "height": "6814m", "region": "Khumbu" }
@@ -130,42 +131,148 @@ Utilize this library for seamless development against mock data without requirin
    }
    ```
 
-2. Use the `fetchProxy` and `fetchProxyInitDB` within your component to retrieve the mock JSON.
+2. Save the data into a file, such as `db.json`. While it's optional to include the JSON directly as a parameter when initializing `fetchProxy`, for the sake of code cleanliness, we recommend storing it in a separate file.
 
-   1. Import the `fetchProxy` and `fetchProxyInitDB` from the utils library.
-   2. Import the mocked JSON created in the step above.
-   3. Initialize the mocked database by setting the imported JSON data once. Ensure the mock db is initialized just once to not reset the content.
-   4. Add the `mock` option to the fetch function to determine whether the API should be mocked or not.
+3. Initialize the fetchProxy with the mock JSON data.
 
    ```js
-   // YourComponent.jsx
-   import React { useEffect, useState } from "react"
-   (i)import { fetchProxy, fetchProxyInitDB } from "utils"
-   (ii)import db from "../../db.json"
+   // App.jsx
+   import React { useEffect} from "react"
+   import AppContent from "./components/AppContent"
+   import { fetchProxyInitDB } from "utils"
+   import db from "../db.json"
 
-   const YourComponent = ({ mockAPI }) => {
-    const [isMockDB, setIsMockDB] = useState(false)
+   const App = (props = {}) => {
+     // setup the mock db.json
+     useEffect(() => {
+       if (props.mockAPI) {
+         fetchProxyInitDB(db)
+       }
+     }, [props.mockAPI])
 
-    (iii)useEffect(() => {
-      if (mockAPI && !isMockDB) {
-        fetchProxyInitDB(db)
-        setIsMockDB(true)
-      }
-    }, [mockAPI, isMockDB])
-
-     // fetch data giving the extra proxy options
-     (iv)fetchProxy(`${endpoint}/peaks`, {
-       method: "GET",
-       headers: {
-         "Content-Type": "application/json",
-         Accept: "application/json",
-       },
-       ...{ mock: mockAPI },
-     })
+     return <AppContent />
    }
-
-   export default YourComponent
    ```
+
+4. Use the `fetchProxy` within your components to retrieve the mock JSON. Add the `mock` option to determine whether the API should be mocked or not.
+
+   ```js
+   // AppContent.jsx
+   import React, { useEffect, useState } from "react"
+   import { fetchProxy } from "utils"
+
+   const AppContent = () => {
+     const [data, setData] = useState(null)
+
+     useEffect(() => {
+       fetchProxy(`${window.location.origin}/peaks`, {
+         method: "GET",
+         headers: {
+           "Content-Type": "application/json",
+           Accept: "application/json",
+         },
+         ...{ mock: true },
+       })
+         .then((response) => {
+           if (!response.ok) {
+             throw new Error("Network response was not ok")
+           }
+           return response.json()
+         })
+         .then((result) => {
+           setData(result)
+         })
+     }, [])
+
+     return <>{data && <pre>{JSON.stringify(data, null, 2)}</pre>}</>
+   }
+   ```
+
+#### Conditions and Limitations
+
+- fetchProxy
+
+  1. Provide a Browser-compatible URL ([WHATWG URL Standard](https://nodejs.org/api/url.html#the-whatwg-url-api)) as you would use with the fetch API as for example `http://localhost:3001/peaks`.
+  2. Additional query parameters will be disregarded. Currently, there is no functionality to paginate or sort based on query parameters yet.
+  3. No PATCH method defined yet.
+
+- Mock json data
+
+  1. Flat collection of key-value pairs
+  2. Key defines the name of the object category
+  3. Value muss be an array.
+  4. Each element in the array muss have the attribute id.
+
+```react {linenos=inline,hl_lines=[3,6,"13-15"],linenostart=1}
+// db.json
+(1){
+ (2)"peaks":
+ (3)[
+   {
+     (4)"id": 1,
+     "name": "Ama Dablam",
+     "height": "6814m",
+     "region": "Khumbu"
+   }
+ ]
+}
+```
+
+#### Routes
+
+Based on the previous mock JSON data, here are all the default routes. When making POST, PUT, or DELETE requests, any changes will be automatically saved to the 'db' object and reset upon browser reload.
+
+```bash
+GET    /peaks
+GET    /peaks/1
+POST   /peaks
+PUT    /peaks/1
+DELETE /peaks/1
+```
+
+#### Self Contained Running Example
+
+Simply copy the following example and run it to explore how to use this library.
+
+```js
+import React, { useEffect, useState } from "react"
+import { fetchProxy, fetchProxyInitDB } from "utils"
+
+const App = () => {
+  const [data, setData] = useState(null)
+
+  // setup the mock db.json
+  useEffect(() => {
+    fetchProxyInitDB({
+      peaks: [{ id: 1, name: "Ama Dablam", height: "6814m", region: "Khumbu" }],
+    })
+  }, [])
+
+  useEffect(() => {
+    fetchProxy(`${window.location.origin}/peaks`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      ...{ mock: true },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok")
+        }
+        return response.json()
+      })
+      .then((result) => {
+        setData(result)
+      })
+  }, [])
+
+  return <>{data && <pre>{JSON.stringify(data, null, 2)}</pre>}</>
+}
+
+export default App
+```
 
 ## Testing
 
