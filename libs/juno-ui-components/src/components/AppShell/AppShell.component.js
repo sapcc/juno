@@ -56,15 +56,17 @@ export const AppShell = ({ pageHeader, pageFooter, topNavigation, contentHeading
 }
 
 AppShell.propTypes = {
-  /** Pass either the PageHeader component or if you don't need to add any content to the page header pass a string to be used as the app name in the standard page header. */
+  /** Pass either the `<PageHeader>` component or if you don't need to add any content to the page header pass a string to be used as the app name in the standard page header. */
   pageHeader: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element
   ]),
-  /** Optional. If specified pass a PageFooter component. If undefined will use default PageFooter */
+  /** Optional. If specified pass a `<PageFooter>` component. If undefined will use default PageFooter */
   pageFooter: PropTypes.element,
-  /** Optional. If specified expects a TopNavigation component. If undefined no navigation is rendered. */
+  /** Optional. If specified expects a `<TopNavigation>` component. If undefined no top navigation is rendered. */
   topNavigation: PropTypes.element,
+  /** Optional. If specified expects a `<SideNavigation>` component. If undefined no side navigation is rendered. */ 
+  sideNavigation: PropTypes.element,
   /** Heading for the content area */
   contentHeading: PropTypes.string,
   /** Optional: Defaults to false. Set embedded to true if app is to be rendered embedded in another app/page. 
@@ -78,6 +80,7 @@ AppShell.defaultProps = {
   pageHeader: <PageHeader />,
   pageFooter: <PageFooter />,
   topNavigation: undefined,
+  sideNavigation: undefined,
   contentHeading: "",
   embedded: false,
   className: "",

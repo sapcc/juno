@@ -19,6 +19,9 @@ export default {
     topNavigation: {
       control: false
     },
+    sideNavigation: {
+      control: false
+    },
     children: {
       control: false
     },
