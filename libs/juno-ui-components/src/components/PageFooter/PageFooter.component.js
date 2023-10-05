@@ -4,6 +4,9 @@ import CCloudShape from "../../img/ccloud_shape.svg"
 
 const basePageFooter = `
   jn-flex
+  jn-shrink-0
+  jn-grow-0
+  jn-basis-auto
   jn-relative
   jn-bg-theme-global-bg
   jn-min-h-[3.25rem]
