@@ -7,18 +7,32 @@ import { ContentContainer } from "../ContentContainer/index"
 import { ContentAreaHeading } from "../ContentAreaHeading/index"
 import { ContentArea } from "../ContentArea/index"
 import { PageFooter } from "../PageFooter/index"
+import { SideNavigation } from "../SideNavigation/"
 
 /**
  * Body of the app. Treat this like the body tag of an html page.
  */
-export const AppShell = ({ pageHeader, pageFooter, topNavigation, contentHeading, embedded, className, children, ...props }) => {
+export const AppShell = ({ 
+  children, 
+  className,
+  contentHeading, 
+  embedded, 
+  pageHeader, 
+  pageFooter, 
+  sideNavigation,
+  topNavigation, 
+  ...props 
+}) => {
   return (
     <AppBody className={className} {...props}>
           
       { embedded ?
-        <ContentArea>
-          {children}
-        </ContentArea>
+        <MainContainer>
+          { sideNavigation && sideNavigation }
+          <ContentContainer>
+            {children}
+          </ContentContainer>
+        </MainContainer>
 
         :
 
@@ -28,18 +42,13 @@ export const AppShell = ({ pageHeader, pageFooter, topNavigation, contentHeading
             :
             pageHeader
           }
-          { topNavigation &&
-            topNavigation
-          }
-          {/* Wrap everything except page header and footer and navigations  in a main container */}
+          { topNavigation && topNavigation }
+          {/* Wrap everything except page header and footer and navigations  in a main container: */}
           <MainContainer>
-          
+            { sideNavigation && sideNavigation }
+            {/* Content Container. This is the place to add the app's main content */}
             <ContentContainer>
-              <ContentAreaHeading heading={contentHeading} />
-              {/* Content Area. This is the place to add the app's main content */}
-              <ContentArea>
-                {children}
-              </ContentArea>
+              {children}
             </ContentContainer>
           </MainContainer>
           

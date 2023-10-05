@@ -3,6 +3,8 @@ import React from "react"
 import { AppShell } from "./index.js"
 import { PageHeader } from "../PageHeader/index"
 import { PageFooter } from "../PageFooter/index"
+import { SideNavigation } from "../SideNavigation/"
+import { SideNavigationItem } from "../SideNavigationItem/"
 import { TopNavigation } from "../TopNavigation/index"
 import { TopNavigationItem } from "../TopNavigationItem/index"
 
@@ -93,6 +95,16 @@ CustomPageFooter.parameters = {
 CustomPageFooter.args = {
   ...Default.args,
   pageFooter: <PageFooter>My custom footer</PageFooter>,
+}
+
+export const WithSideNavigation = Template.bind({})
+WithSideNavigation.args = {
+  ...Default.args,
+  sideNavigation: <SideNavigation>
+                    <SideNavigationItem>Home</SideNavigationItem>
+                    <SideNavigationItem>Item 1</SideNavigationItem>
+                    <SideNavigationItem>Item 2</SideNavigationItem>
+                  </SideNavigation>
 }
 
 export const WithTopNavigation = Template.bind({})
