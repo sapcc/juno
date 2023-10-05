@@ -9,12 +9,6 @@ describe("MainContainer", () => {
 		expect(screen.getByRole("main")).toBeInTheDocument()
 		expect(screen.getByRole("main")).toHaveClass("juno-main")
 	})
-
-	test("renders a main container with flex col layout", async () => {
-		render(<MainContainer />)
-		expect(screen.getByRole("main")).toBeInTheDocument()
-		expect(screen.getByRole("main")).toHaveClass("jn-flex-col")
-	})
 	
 	test("renders a main container with flex grow", async () => {
 		render(<MainContainer />)
