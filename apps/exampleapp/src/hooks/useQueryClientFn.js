@@ -4,8 +4,7 @@ import {
   useGlobalsEndpoint,
   useGlobalsActions,
 } from "../components/StoreProvider"
-import { fetchProxy as fetch, fetchProxyInitDB } from "utils"
-import db from "../../db.json"
+import { fetchProxy as fetch } from "utils"
 
 class HTTPError extends Error {
   constructor(code, message) {
@@ -41,17 +40,6 @@ const useQueryClientFn = (mockAPI) => {
   const queryClient = useQueryClient()
   const endpoint = useGlobalsEndpoint()
   const { setQueryClientFnReady } = useGlobalsActions()
-  const [isMockDBReady, setIsMockDBReady] = useState(false)
-
-  // setup the mock db.json just once
-  useEffect(() => {
-    if (mockAPI && !isMockDBReady) {
-      // setup the mock db.json
-      console.log("useQueryClientFn::: init mock db")
-      fetchProxyInitDB(db)
-      setIsMockDBReady(true)
-    }
-  }, [mockAPI, isMockDBReady])
 
   /*
   As stated in getQueryDefaults, the order of registration of query defaults does matter. Since the first matching defaults are returned by getQueryDefaults, the registration should be made in the following order: from the least generic key to the most generic one. This way, in case of specific key, the first matching one would be the expected one.

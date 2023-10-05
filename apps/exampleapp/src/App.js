@@ -1,12 +1,20 @@
 import React, { useEffect } from "react"
-
-import { AppShellProvider } from "juno-ui-components"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import styles from "./styles.scss"
-import AppShell from "./components/AppShell"
+import {
+  AppShellProvider,
+  AppShell,
+  PageHeader,
+  Container,
+} from "juno-ui-components"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AppContent from "./components/AppContent"
+import HeaderUser from "./components/auth/HeaderUser"
 import AsyncWorker from "./components/AsyncWorker"
 import StoreProvider, { useGlobalsActions } from "./components/StoreProvider"
+
+// mock API
+import { fetchProxyInitDB } from "utils"
+import db from "../db.json"
 
 const App = (props = {}) => {
   const { setEndpoint } = useGlobalsActions()
@@ -21,15 +29,27 @@ const App = (props = {}) => {
     setEndpoint(props.endpoint || window.location.origin)
   }, [])
 
+  // setup the mock db.json
+  useEffect(() => {
+    if (props.mockAPI) {
+      fetchProxyInitDB(db)
+    }
+  }, [props.mockAPI])
+
   return (
     <QueryClientProvider client={queryClient}>
       <AsyncWorker consumerId={props.id} mockAPI={props.mockAPI} />
       <AppShell
-        pageHeader="Converged Cloud | Example App"
-        contentHeading="Example App"
+        pageHeader={
+          <PageHeader heading="Converged Cloud | Example App">
+            <HeaderUser />
+          </PageHeader>
+        }
         embedded={props.embedded === "true" || props.embedded === true}
       >
-        <AppContent props={props} />
+        <Container py>
+          <AppContent props={props} />
+        </Container>
       </AppShell>
     </QueryClientProvider>
   )
