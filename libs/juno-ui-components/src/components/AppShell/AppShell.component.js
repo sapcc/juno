@@ -25,6 +25,12 @@ export const AppShell = ({
 }) => {
   return (
     <AppBody className={className} {...props}>
+    
+      { contentHeading && contentHeading.length ? 
+          console.warn("AppShell: The contentHeading prop is obsolete and will be removed in a future version. In order to render a content heading, use a ContentHeading (TBD) element as a child in your main content.")
+        :
+          ""
+      }
           
       { embedded ?
         <MainContainer>
