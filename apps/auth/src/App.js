@@ -73,6 +73,13 @@ const App = (props = {}) => {
     debug: props.debug === "true" || props.debug === true,
   })
 
+  // return (
+  //   <div>
+  //     <button onClick={oidc.login}>Login</button>
+  //     <button onClick={oidc.logout}>Logout</button>
+  //     <button onClick={oidc.refresh}>Refresh</button>
+  //   </div>
+  // )
   return null
 }
 

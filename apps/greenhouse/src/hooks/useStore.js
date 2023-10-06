@@ -1,4 +1,5 @@
 import { create } from "zustand"
+import { devtools } from "zustand/middleware"
 
 const ACTIONS = {
   SIGN_ON: "signOn",
@@ -37,6 +38,7 @@ const createAuthDataSlice = (set, get) => ({
           false,
           "auth/setData"
         )
+        if (!data) get().auth.actions.setAction(ACTIONS.SIGN_OUT)
       },
       setAction: (name) =>
         set(
@@ -49,7 +51,11 @@ const createAuthDataSlice = (set, get) => ({
           false,
           "auth/setAction"
         ),
-      login: () => get().auth.actions.setAction(ACTIONS.SIGN_ON),
+      login: () => {
+        // logout
+        get().auth.actions.setAction(ACTIONS.SIGN_OUT)
+        get().auth.actions.setAction(ACTIONS.SIGN_ON)
+      },
       logout: () => get().auth.actions.setAction(ACTIONS.SIGN_OUT),
     },
   },
@@ -141,11 +147,13 @@ const createGlobalsSlice = (set, get) => ({
   },
 })
 
-const useStore = create((set, get) => ({
-  ...createAuthDataSlice(set, get),
-  ...createAppsDataSlice(set, get),
-  ...createGlobalsSlice(set, get),
-}))
+const useStore = create(
+  devtools((set, get) => ({
+    ...createAuthDataSlice(set, get),
+    ...createAppsDataSlice(set, get),
+    ...createGlobalsSlice(set, get),
+  }))
+)
 
 // AUTH
 export const useAuthData = () => useStore((s) => s.auth.data)

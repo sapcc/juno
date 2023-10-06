@@ -275,18 +275,13 @@ const oidcSession = (params) => {
     const refreshToken = state?.auth?.refreshToken
     if (refreshToken) {
       console.info("(OAUTH) refresh token now")
-      try {
-        const promise = refreshOidcToken({
-          issuerURL,
-          clientID,
-          flowType,
-          refreshToken,
-        })
-        receiveNewData(promise)
-      } catch (error) {
-        console.warn(error?.message || error)
-        logout()
-      }
+      const promise = refreshOidcToken({
+        issuerURL,
+        clientID,
+        flowType,
+        refreshToken,
+      })
+      receiveNewData(promise)
     }
   }
 
