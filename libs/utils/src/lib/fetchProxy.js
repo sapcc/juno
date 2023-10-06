@@ -19,20 +19,43 @@ const rejectResponse = (error) => {
 }
 
 let localDB = null
+
+// setup the mock db.json
 export const fetchProxyInitDB = (jsonData) => {
-  // throw a warning if localDB is already initialized
-  if (localDB) {
-    console.warn("localDB already initialized")
+  // set localDB to null to reset it
+  if (jsonData === null) {
+    localDB = null
+    return
   }
 
-  try {
-    // check if jsonData is JSON
-    JSON.parse(JSON.stringify(jsonData))
-    localDB = jsonData
-  } catch (error) {
+  // check if the localDB is initialized and warns if already initialized
+  if (localDB) {
     // create a new custom error to return
-    throw new Error(`It seems that jsonData is not JSON: ${error}`)
+    throw new Error(
+      `localDB already initialized. Please use fetchProxyInitDB(null) to reset the localDB.`
+    )
   }
+
+  // check if the given json is valid and also checks if the jsondata are a collection of key value pairs with values as arrays
+  if (typeof jsonData !== "object") {
+    // create a new custom error to return
+    throw new Error(`It seems that jsonData is not a valid JSON object.`)
+  }
+
+  // check if the given json is valid and also checks if the jsondata are a collection of key value pairs with values as arrays
+  if (
+    Object.keys(jsonData).some((key) => {
+      return !Array.isArray(jsonData[key])
+    })
+  ) {
+    // create a new custom error to return
+    throw new Error(
+      `It seems that jsonData is not a collection of key value pairs with values as arrays.`
+    )
+  }
+
+  // set the localDB
+  localDB = jsonData
 }
 
 // use a custom option to switch between real fetch and mock fetch since process.env.NODE_ENV
@@ -63,7 +86,10 @@ const fetchProxy = (urlString, options) => {
 
   console.log("fetchLocal URL:::", url, path, object, id)
 
-  const method = options?.method
+  // if method is not set, use GET as default
+  let method = options?.method
+  if (!method) method = "GET"
+
   const body = options?.body
   // switch over the header method
   switch (method) {
