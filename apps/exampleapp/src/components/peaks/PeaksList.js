@@ -10,7 +10,7 @@ import {
 import PeaksListItem from "./PeaksListItem"
 import HintNotFound from "../shared/HintNotFound"
 import { useGlobalsActions } from "../StoreProvider"
-import useEndlessScrollList from "../../hooks/useEndlessScrollList"
+import { useEndlessScrollList } from "utils"
 
 const LIST_COLUMNS = 6
 
