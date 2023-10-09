@@ -11,8 +11,6 @@ import React, { useRef, useEffect, useState, useCallback, useMemo } from "react"
     @param options.refFunction: the function to be used to render the ref element. It receives the ref as a parameter
   @return: an object with the following properties:
     @property scrollListItems: the items to be displayed
-    @property lastLisItemRef: the ref element to be used as the last item
-    @property isAddingItems: whether items are being added to the list
     @property iterator: an iterator to be used to render the list. It has a map function that receives a function to be used to render each item
  */
 const useEndlessScrollList = (items, options = {}) => {
@@ -69,7 +67,7 @@ const useEndlessScrollList = (items, options = {}) => {
                 {options?.loadingObject ? (
                   options.loadingObject
                 ) : (
-                  <span>Loading...</span>
+                  <span id="endlessScrollListLoading">Loading...</span>
                 )}
               </>
             )}
@@ -78,7 +76,10 @@ const useEndlessScrollList = (items, options = {}) => {
                 {options?.refFunction ? (
                   options.refFunction(lastLisItemRef)
                 ) : (
-                  <span ref={lastLisItemRef} />
+                  <span
+                    id="endlessScrollListLastItemRef"
+                    ref={lastLisItemRef}
+                  />
                 )}
               </>
             )}
@@ -88,7 +89,7 @@ const useEndlessScrollList = (items, options = {}) => {
     }
   }, [scrollListItems, lastLisItemRef])
 
-  return { scrollListItems, lastLisItemRef, isAddingItems, iterator }
+  return { scrollListItems, iterator }
 }
 
 export default useEndlessScrollList
