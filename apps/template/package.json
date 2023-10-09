@@ -36,7 +36,7 @@
     "tailwindcss": "^3.3.1",
     "url-state-provider": "*",
     "util": "^0.12.4",
-    "zustand": "^4.1.1"
+    "zustand": "4.3.7"
   },
   "scripts": {
     "test": "jest",
@@ -51,7 +51,10 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "url-state-provider": "*",
-    "zustand": "^4.1.1"
+    "zustand": "4.3.7"
+  },
+  "importmapExtras": {
+    "zustand/middleware": "4.3.7"
   },
   "appProps": {
     "theme": {
