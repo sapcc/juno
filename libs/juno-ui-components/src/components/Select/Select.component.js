@@ -150,7 +150,7 @@ export const Select = ({
   
   const handleChange = (value) => {
     setSelectedValue(value)
-    onChange && onChange(value, event)
+    onChange && onChange(value)
     onValueChange && onValueChange(value)
   }
   
@@ -189,7 +189,6 @@ export const Select = ({
           onChange={handleChange}
           value={value}
           defaultValue={defaultValue}
-          name={name}
         >
           { label && isNotEmptyString(label) ?
               <Listbox.Label 
@@ -318,7 +317,7 @@ Select.propTypes = {
   /** A small, neutral text rendered below the Select toggle to explain meaning and significance of the Select element */
   helptext: PropTypes.node,
   /** Pass an id to the Select toggle */
-  id: PropTypes.node,
+  id: PropTypes.string,
   /** Whether the Select has been validated unsuccessfully / negatively */
   invalid: PropTypes.bool,
   /** Pass a label to render in the Select toggle button */

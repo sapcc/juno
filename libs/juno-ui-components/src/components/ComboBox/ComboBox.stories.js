@@ -20,6 +20,13 @@ export default {
       control: false
     },
   },
+  decorators: [
+    (Story) => (
+      <div className="jn-pb-12">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 const Template = ({children, ...args}) => {
@@ -381,6 +388,22 @@ TruncatedOptions.args = {
   children: [
     <ComboBoxOption value="Option with a very long title that is so long it will most likely not fit into the menu width, not at all really." key="1"></ComboBoxOption>,
     <ComboBoxOption value="Yet another option with a very long title that is so long it will most likely not fit into the menu width, not at all really." key="2"></ComboBoxOption>
+  ]
+}
+
+
+export const OptionsWithLabels = Template.bind({})
+OptionsWithLabels.parameters = {
+  docs: {
+    description: {
+      story: "If an option has both a label and a child, then the child is displayed instead of the label"
+    }
+  },
+}
+OptionsWithLabels.args = {
+  children: [
+    <ComboBoxOption value="option1_value" label="Option 1 Label" key="1" />,
+    <ComboBoxOption value="option2_value" label="Option 2 Label" key="2">Option 2 child is displayed instead of label</ComboBoxOption>
   ]
 }
 
