@@ -16,6 +16,15 @@ const App = (props) => {
   // fetch the auth token and save the object globally
   // keep it in the app so the issuerurl and clientid have not to be saved on the state
   const oidc = React.useMemo(() => {
+    if (props.mock === "true" || props.mock === true) {
+      return mockedSession({
+        initialLogin: true,
+        onUpdate: (data) => {
+          setData(data)
+        },
+      })
+    }
+
     if (
       !props?.issuerurl ||
       props?.issuerurl?.length <= 0 ||
