@@ -31,9 +31,8 @@ export default {
   },
 }
 
-const Template = (args) => <AppShell {...args}>
-                              <ContentHeading>My Page</ContentHeading>
-                              Content goes here
+const Template = ({children, ...args}) => <AppShell {...args}>
+                              { children }
                             </AppShell>
 
 export const Default = Template.bind({})
@@ -45,9 +44,11 @@ Default.parameters = {
     },
   },
 }
-// TODO: remove
 Default.args = {
-
+  children: [
+      <ContentHeading>My Page</ContentHeading>,
+      <p>Content goes here</p>
+  ]
 }
 
 export const AppName = Template.bind({})
@@ -61,6 +62,10 @@ AppName.parameters = {
 }
 AppName.args = {
   pageHeader: "My App",
+  children: [
+      <ContentHeading>My Page</ContentHeading>,
+      <p>Content goes here</p>
+  ]
 }
 
 export const CustomPageHeader = Template.bind({})
@@ -74,6 +79,10 @@ CustomPageHeader.parameters = {
 }
 CustomPageHeader.args = {
   pageHeader: <PageHeader heading="My Custom Header" />,
+  children: [
+      <ContentHeading>My Page</ContentHeading>,
+      <p>Content goes here</p>
+  ]
 }
 
 export const CustomPageFooter = Template.bind({})
@@ -87,6 +96,10 @@ CustomPageFooter.parameters = {
 }
 CustomPageFooter.args = {
   pageFooter: <PageFooter>My custom footer</PageFooter>,
+  children: [
+      <ContentHeading>My Page</ContentHeading>,
+      <p>Content goes here</p>
+  ]
 }
 
 export const WithSideNavigation = Template.bind({})
@@ -103,7 +116,11 @@ WithSideNavigation.args = {
                     <SideNavigationItem>Home</SideNavigationItem>
                     <SideNavigationItem>Item 1</SideNavigationItem>
                     <SideNavigationItem>Item 2</SideNavigationItem>
-                  </SideNavigation>
+                  </SideNavigation>,
+  children: [
+      <ContentHeading>My Page</ContentHeading>,
+      <p>Content goes here</p>
+  ]
 }
 
 export const WithTopNavigation = Template.bind({})
@@ -126,6 +143,10 @@ WithTopNavigation.args = {
                       label="Navigation Item"
                     />
                   </TopNavigation>,
+  children: [
+      <ContentHeading>My Page</ContentHeading>,
+      <p>Content goes here</p>
+  ]
 }
 
 export const WithSideAndTopNavigation = Template.bind({})
@@ -152,5 +173,9 @@ WithSideAndTopNavigation.args = {
                     <SideNavigationItem>Home</SideNavigationItem>
                     <SideNavigationItem>Item 1</SideNavigationItem>
                     <SideNavigationItem>Item 2</SideNavigationItem>
-                  </SideNavigation>
+                  </SideNavigation>,
+  children: [
+      <ContentHeading>My Page</ContentHeading>,
+      <p>Content goes here</p>
+  ]
 }
