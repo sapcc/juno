@@ -11,7 +11,7 @@ import {
   useAppsConfig,
   useAppsActive,
   useAuthActions,
-} from "../../hooks/useStore"
+} from "../../components/StoreProvider"
 import Avatar from "../Avatar"
 
 const AppIcon = ({ name }) => {

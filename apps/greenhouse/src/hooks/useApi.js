@@ -4,7 +4,7 @@ import {
   useAuthData,
   useGlobalsApiEndpoint,
   useGlobalsAssetsHost,
-} from "./useStore"
+} from "../components/StoreProvider"
 
 // get plugin configs from k8s api
 const useApi = () => {
