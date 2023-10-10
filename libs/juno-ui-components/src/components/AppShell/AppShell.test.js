@@ -52,8 +52,23 @@ describe("AppShell", () => {
         sideNavigation={<SideNavigation />}
       />
     )
+    expect(screen.getByTestId("app-shell")).toBeInTheDocument()
     expect(screen.getByRole("navigation")).toBeInTheDocument()
     expect(screen.getByRole("navigation")).toHaveClass("juno-sidenavigation")
+  })
+  
+  test("renders an app shell with both a side and a top navigation as passed", async () => {
+    render(
+      <AppShell 
+        data-testid="app-shell"
+        sideNavigation={<SideNavigation data-testid="side-nav" />}
+        topNavigation={<TopNavigation data-testid="top-nav" />}
+      />
+    )
+    expect(screen.getByTestId("app-shell")).toBeInTheDocument()
+    expect(screen.getAllByRole("navigation")).toHaveLength(2)
+    expect(screen.getByTestId("side-nav")).toBeInTheDocument()
+    expect(screen.getByTestId("top-nav")).toBeInTheDocument()
   })
 
   test("renders an embeddable app shell without page heading or footer", async () => {
