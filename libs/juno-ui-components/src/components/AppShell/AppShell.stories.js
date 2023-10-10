@@ -43,7 +43,7 @@ Default.parameters = {
 }
 // TODO: remove
 Default.args = {
-  contentHeading: "Content Heading",
+
 }
 
 export const NoContentHeading = Template.bind({})
