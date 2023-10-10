@@ -3,7 +3,6 @@ import React, { useEffect, useLayoutEffect } from "react"
 import { AppShellProvider } from "juno-ui-components"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
-import useAlertmanagerAPI from "./hooks/useAlertmanagerAPI"
 import {
   useGlobalsActions,
   useFilterActions,
@@ -11,11 +10,9 @@ import {
   useAlertsActions,
   StoreProvider,
 } from "./hooks/useAppStore"
-import useCommunication from "./hooks/useCommunication"
+import AsyncWorker from "./components/AsyncWorker"
 import { MessagesProvider } from "messages-provider"
 import CustomAppShell from "./components/CustomAppShell"
-import useInitialFilters from "./hooks/useInitialFilters"
-import useUrlState from "./hooks/useUrlState"
 
 function App(props = {}) {
   const { setLabels, setPredefinedFilters, setActivePredefinedFilter } =
@@ -81,11 +78,6 @@ function App(props = {}) {
     setApiEndpoint(props.endpoint)
   }, [])
 
-  useCommunication()
-  useAlertmanagerAPI(props.endpoint)
-  useUrlState()
-  useInitialFilters()
-
   useLayoutEffect(() => {
     if (props.embedded === "true" || props.embedded === true) setEmbedded(true)
   }, [])
@@ -93,6 +85,7 @@ function App(props = {}) {
   return (
     <MessagesProvider>
       <CustomAppShell>
+        <AsyncWorker endpoint={props.endpoint} />
         <AppContent props={props} />
       </CustomAppShell>
     </MessagesProvider>
