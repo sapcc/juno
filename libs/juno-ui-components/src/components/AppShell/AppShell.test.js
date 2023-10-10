@@ -13,12 +13,6 @@ describe("AppShell", () => {
     expect(screen.getByTestId("app-shell")).toHaveClass("juno-body")
   })
 
-  test.skip("renders an app shell with content heading", async () => {
-    render(<AppShell data-testid="app-shell" contentHeading="My Heading" />)
-    expect(screen.getByTestId("app-shell")).toBeInTheDocument()
-    expect(screen.getByText("My Heading")).toBeInTheDocument()
-  })
-
   test("renders an app shell with page heading passed as String", async () => {
     render(<AppShell data-testid="app-shell" pageHeader="My Page Heading" />)
     expect(screen.getByTestId("app-shell")).toBeInTheDocument()
