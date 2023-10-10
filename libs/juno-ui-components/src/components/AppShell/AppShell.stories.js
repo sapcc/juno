@@ -129,3 +129,23 @@ WithTopNavigation.args = {
                     />
                   </TopNavigation>,
 }
+
+export const WithSideAndTopNavigation = Template.bind({})
+WithSideAndTopNavigation.args = {
+  ...Default.args,
+  topNavigation:  <TopNavigation>
+                    <TopNavigationItem
+                      icon="home"
+                      label="Home"
+                    />
+                    <TopNavigationItem
+                      active
+                      label="Navigation Item"
+                    />
+                  </TopNavigation>,
+  sideNavigation: <SideNavigation>
+                    <SideNavigationItem>Home</SideNavigationItem>
+                    <SideNavigationItem>Item 1</SideNavigationItem>
+                    <SideNavigationItem>Item 2</SideNavigationItem>
+                  </SideNavigation>
+}
