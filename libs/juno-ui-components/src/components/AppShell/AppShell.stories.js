@@ -7,6 +7,7 @@ import { SideNavigation } from "../SideNavigation/"
 import { SideNavigationItem } from "../SideNavigationItem/"
 import { TopNavigation } from "../TopNavigation/index"
 import { TopNavigationItem } from "../TopNavigationItem/index"
+import { ContentHeading } from "../ContentHeading/index"
 
 export default {
   title: "Layout/AppShell",
@@ -30,7 +31,10 @@ export default {
   },
 }
 
-const Template = (args) => <AppShell {...args}>Content goes here</AppShell>
+const Template = (args) => <AppShell {...args}>
+                              <ContentHeading>My Page</ContentHeading>
+                              Content goes here
+                            </AppShell>
 
 export const Default = Template.bind({})
 Default.parameters = {
@@ -45,16 +49,6 @@ Default.parameters = {
 Default.args = {
 
 }
-
-export const NoContentHeading = Template.bind({})
-NoContentHeading.parameters = {
-  docs: {
-    description: {
-      story: "Responsive shell for your application without content heading.",
-    },
-  },
-}
-NoContentHeading.args = {}
 
 export const AppName = Template.bind({})
 AppName.parameters = {

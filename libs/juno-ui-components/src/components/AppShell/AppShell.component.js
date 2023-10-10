@@ -4,7 +4,7 @@ import { AppBody } from "../AppBody/index"
 import { PageHeader } from "../PageHeader/index"
 import { MainContainer } from "../MainContainer/index"
 import { ContentContainer } from "../ContentContainer/index"
-import { ContentAreaHeading } from "../ContentAreaHeading/index"
+import { ContentHeading } from "../ContentHeading/index"
 import { ContentArea } from "../ContentArea/index"
 import { PageFooter } from "../PageFooter/index"
 import { SideNavigation } from "../SideNavigation/"
@@ -27,7 +27,7 @@ export const AppShell = ({
     <AppBody className={className} {...props}>
     
       { contentHeading && contentHeading.length ? 
-          console.warn("AppShell: The contentHeading prop is obsolete and will be removed in a future version. In order to render a content heading, use a ContentHeading (TBD) element as a child in your main content.")
+          console.warn("AppShell: The contentHeading prop is obsolete and will be removed in a future version. In order to render a content heading, use a ContentHeading element as a child in your main content.")
         :
           ""
       }
