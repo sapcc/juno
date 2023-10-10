@@ -51,6 +51,7 @@ export const SelectOption = ({
   className,
   disabled,
   value,
+  label,
   ...props
 }) => {
   
@@ -88,7 +89,7 @@ export const SelectOption = ({
             ${ truncateOptions ? truncateOptionStyles : "" }
           `}
         >
-          { value || children }
+          { children || label || value }
         </span>
       </li>
     )}
@@ -97,13 +98,17 @@ export const SelectOption = ({
 }
 
 SelectOption.propTypes = {
+  children: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   value: PropTypes.string,
+  label: PropTypes.string,
 }
 
 SelectOption.defaultProps = {
+  children: undefined,
   className: "",
   disabled: false,
   value: "",
+  label: undefined,
 }

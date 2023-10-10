@@ -200,11 +200,11 @@ export const ComboBox = ({
   
   const handleChange = (value) => {
     setSelectedValue(value)
-    onChange && onChange(event)
+    onChange && onChange(value)
   }
   
   const handleInputChange = (event) => {
-    setQuery(event.target.value)
+    setQuery(event?.target?.value)
     onInputChange && onInputChange(event)
   }
   
@@ -236,8 +236,12 @@ export const ComboBox = ({
   const filteredChildren = 
     query === ""
     ? children
-    : children.filter((child) => 
-        child.props.value?.toLowerCase().includes(query.toLowerCase())
+    : children.filter((child) => {
+        // ensure that we filter on the value that is displayed to the user. Apply the same logic as when rendering
+        // the options, i.e. match children if present, if not match label, lastly if neither label nor children exist, then check value
+        const optionDisplayValue = child.props.children?.toString() || child.props.label ||  child.props.value
+        return optionDisplayValue?.toLowerCase().includes(query.toLowerCase())
+      }
       )
 
   

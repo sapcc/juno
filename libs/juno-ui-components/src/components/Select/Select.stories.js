@@ -25,10 +25,12 @@ export default {
     },
   },
   decorators: [
-    (story) => (
-      <PortalProvider>
-        {story()}
-      </PortalProvider>
+    (Story) => (
+      <div className="jn-pb-12">
+        <PortalProvider>
+          <Story />
+        </PortalProvider>
+      </div>
     ),
   ],
 }
@@ -302,6 +304,21 @@ WithChildrenOnly.parameters = {
   docs: {
     description: {
       story: "Alernatively to using a `value`-prop, strings as children can be passed."
+    }
+  }
+}
+
+export const optionsWithLabels = Template.bind({})
+optionsWithLabels.args = {
+  children: [
+    <SelectOption value="option-1" label="Option 1" key="1" />,
+    <SelectOption value="option-2" label="Option 2" key="2">Option 2 child is displayed if present</SelectOption>,
+  ]
+}
+optionsWithLabels.parameters = {
+  docs: {
+    description: {
+      story: "Optionally the SelectOptions can be passed a `label`-prop if the value is not suitable for display. If in addition to the label prop the option has a child, then the child is displayed instead."
     }
   }
 }
