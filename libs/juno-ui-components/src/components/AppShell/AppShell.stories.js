@@ -41,6 +41,7 @@ Default.parameters = {
     },
   },
 }
+// TODO: remove
 Default.args = {
   contentHeading: "Content Heading",
 }
@@ -65,7 +66,6 @@ AppName.parameters = {
   },
 }
 AppName.args = {
-  ...Default.args,
   pageHeader: "My App",
 }
 
@@ -79,7 +79,6 @@ CustomPageHeader.parameters = {
   },
 }
 CustomPageHeader.args = {
-  ...Default.args,
   pageHeader: <PageHeader heading="My Custom Header" />,
 }
 
@@ -93,13 +92,19 @@ CustomPageFooter.parameters = {
   },
 }
 CustomPageFooter.args = {
-  ...Default.args,
   pageFooter: <PageFooter>My custom footer</PageFooter>,
 }
 
 export const WithSideNavigation = Template.bind({})
+WithSideNavigation.parameters = {
+  docs: {
+    description: {
+      story:
+        "Responsive shell for your application with a side navigation.",
+    },
+  },
+}
 WithSideNavigation.args = {
-  ...Default.args,
   sideNavigation: <SideNavigation>
                     <SideNavigationItem>Home</SideNavigationItem>
                     <SideNavigationItem>Item 1</SideNavigationItem>
@@ -117,7 +122,6 @@ WithTopNavigation.parameters = {
   },
 }
 WithTopNavigation.args = {
-  ...Default.args,
   topNavigation:  <TopNavigation>
                     <TopNavigationItem
                       icon="home"
@@ -131,8 +135,15 @@ WithTopNavigation.args = {
 }
 
 export const WithSideAndTopNavigation = Template.bind({})
+WithSideAndTopNavigation.parameters = {
+  docs: {
+    description: {
+      story:
+        "Responsive shell for your application with both a top navigation and side navigation.",
+    },
+  },
+}
 WithSideAndTopNavigation.args = {
-  ...Default.args,
   topNavigation:  <TopNavigation>
                     <TopNavigationItem
                       icon="home"
