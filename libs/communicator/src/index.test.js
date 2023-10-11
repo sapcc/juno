@@ -29,7 +29,10 @@ describe("Communicator", () => {
     })
     test("log warning on missing data", () => {
       broadcast("TEST")
-      expect(bc.postMessage).toHaveBeenCalledWith(null)
+      expect(bc.postMessage).toHaveBeenCalledWith({
+        payload: null,
+        source: expect.anything(),
+      })
     })
 
     test("unknown options", () => {
@@ -49,7 +52,10 @@ describe("Communicator", () => {
 
     test("include options in message payload", () => {
       broadcast("TEST", { name: "test" }, { debug: true })
-      expect(bc.postMessage).toHaveBeenCalledWith({ name: "test" })
+      expect(bc.postMessage).toHaveBeenCalledWith({
+        payload: { name: "test" },
+        source: expect.anything(),
+      })
     })
 
     test("log error if wrong debug value", () => {
@@ -168,14 +174,14 @@ describe("Communicator", () => {
     test("create request broadcast channel", () => {
       get("TEST_12345", () => null)
       expect(BroadcastChannel).toHaveBeenCalledWith(
-        expect.stringMatching(/#GET:TEST_12345$/)
+        expect.stringMatching(/#TEST_12345:GET.+/)
       )
     })
 
     test("create response broadcast channel", () => {
       get("TEST_12345", () => null)
       expect(BroadcastChannel).toHaveBeenCalledWith(
-        expect.stringMatching(/#GET:TEST_12345:RESPONSE:\d/)
+        expect.stringMatching(/#TEST_12345:GET:RESPONSE:.+/)
       )
     })
 
@@ -183,7 +189,7 @@ describe("Communicator", () => {
       get("TEST", () => null)
       expect(bc.postMessage).toHaveBeenCalledWith(
         expect.objectContaining({
-          receiverID: expect.anything(),
+          payload: { receiverID: expect.anything() },
         })
       )
     })
@@ -233,14 +239,14 @@ describe("Communicator", () => {
     test("create request broadcast channel", () => {
       onGet("TEST_12345", () => null)
       expect(BroadcastChannel).toHaveBeenCalledWith(
-        expect.stringMatching(/#GET:TEST_12345$/)
+        expect.stringMatching(/#TEST_12345:GET$/)
       )
     })
 
     test("create response broadcast channel", () => {
       get("TEST_12345", () => null)
       expect(BroadcastChannel).toHaveBeenCalledWith(
-        expect.stringMatching(/#GET:TEST_12345:RESPONSE:\d/)
+        expect.stringMatching(/#TEST_12345:GET:RESPONSE:.+/)
       )
     })
 
@@ -248,7 +254,7 @@ describe("Communicator", () => {
       get("TEST", () => null)
       expect(bc.postMessage).toHaveBeenCalledWith(
         expect.objectContaining({
-          receiverID: expect.anything(),
+          payload: { receiverID: expect.anything() },
         })
       )
     })
