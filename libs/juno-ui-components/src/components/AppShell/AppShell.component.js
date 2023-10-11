@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { AppBody } from "../AppBody/index"
 import { PageHeader } from "../PageHeader/index"
 import { MainContainer } from "../MainContainer/index"
+import { MainContainerInner } from "../MainContainerInner/index"
 import { ContentContainer } from "../ContentContainer/index"
 import { ContentHeading } from "../ContentHeading/index"
 import { ContentArea } from "../ContentArea/index"
@@ -17,6 +18,7 @@ export const AppShell = ({
   className,
   contentHeading, 
   embedded, 
+  fullWidthContent,
   pageHeader, 
   pageFooter, 
   sideNavigation,
@@ -34,10 +36,12 @@ export const AppShell = ({
           
       { embedded ?
         <MainContainer>
-          { sideNavigation && sideNavigation }
-          <ContentContainer>
-            {children}
-          </ContentContainer>
+          <MainContainerInner fullWidth={fullWidthContent} hasSideNav={ sideNavigation ? true : false }>
+            { sideNavigation && sideNavigation }
+            <ContentContainer>
+              {children}
+            </ContentContainer>
+          </MainContainerInner>
         </MainContainer>
 
         :
@@ -49,13 +53,15 @@ export const AppShell = ({
             pageHeader
           }
           { topNavigation && topNavigation }
-          {/* Wrap everything except page header and footer and navigations  in a main container: */}
+          {/* Wrap everything except page header and footer and navigations in a main container: */}
           <MainContainer>
-            { sideNavigation && sideNavigation }
-            {/* Content Container. This is the place to add the app's main content */}
-            <ContentContainer>
-              {children}
-            </ContentContainer>
+            <MainContainerInner fullWidth={fullWidthContent} hasSideNav={ sideNavigation ? true : false }>
+              { sideNavigation && sideNavigation }
+              {/* Content Container. This is the place to add the app's main content. Render left margin only if no SideNavigation is present. */}
+              <ContentContainer className={ sideNavigation ? "" : "jn-ml-8"}>
+                {children}
+              </ContentContainer>
+            </MainContainerInner>
           </MainContainer>
           
           { pageFooter ?
@@ -87,6 +93,8 @@ AppShell.propTypes = {
   /** Optional: Defaults to false. Set embedded to true if app is to be rendered embedded in another app/page. 
    * In this case only the content area and children are rendered, no header/footer or remaining layout components */
   embedded: PropTypes.bool,
+  /** Whether the main page / view content can spread over the full available width of the viewport or not. Default is `false`, resulting in a width-constrained, centered content column on very wide screens. */
+  fullWidthContent: PropTypes.bool,
   /** Add custom class name */
   className: PropTypes.string,
 }
@@ -98,5 +106,6 @@ AppShell.defaultProps = {
   sideNavigation: undefined,
   contentHeading: "",
   embedded: false,
+  fullWidthContent: false,
   className: "",
 }
