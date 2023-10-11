@@ -46,8 +46,8 @@ Default.parameters = {
 }
 Default.args = {
   children: [
-      <ContentHeading>My Page</ContentHeading>,
-      <p>Content goes here</p>
+      <ContentHeading key="1">My Page</ContentHeading>,
+      <p key="2">Content goes here</p>
   ]
 }
 
@@ -63,8 +63,8 @@ AppName.parameters = {
 AppName.args = {
   pageHeader: "My App",
   children: [
-      <ContentHeading>My Page</ContentHeading>,
-      <p>Content goes here</p>
+      <ContentHeading key="1">My Page</ContentHeading>,
+      <p key="2">Content goes here</p>
   ]
 }
 
@@ -80,8 +80,8 @@ CustomPageHeader.parameters = {
 CustomPageHeader.args = {
   pageHeader: <PageHeader heading="My Custom Header" />,
   children: [
-      <ContentHeading>My Page</ContentHeading>,
-      <p>Content goes here</p>
+      <ContentHeading key="1">My Page</ContentHeading>,
+      <p key="2">Content goes here</p>
   ]
 }
 
@@ -97,8 +97,8 @@ CustomPageFooter.parameters = {
 CustomPageFooter.args = {
   pageFooter: <PageFooter>My custom footer</PageFooter>,
   children: [
-      <ContentHeading>My Page</ContentHeading>,
-      <p>Content goes here</p>
+      <ContentHeading key="1">My Page</ContentHeading>,
+      <p key="2">Content goes here</p>
   ]
 }
 
@@ -118,8 +118,8 @@ WithSideNavigation.args = {
                     <SideNavigationItem>Item 2</SideNavigationItem>
                   </SideNavigation>,
   children: [
-      <ContentHeading>My Page</ContentHeading>,
-      <p>Content goes here</p>
+      <ContentHeading key="1">My Page</ContentHeading>,
+      <p key="2">Content goes here</p>
   ]
 }
 
@@ -144,8 +144,8 @@ WithTopNavigation.args = {
                     />
                   </TopNavigation>,
   children: [
-      <ContentHeading>My Page</ContentHeading>,
-      <p>Content goes here</p>
+      <ContentHeading key="1">My Page</ContentHeading>,
+      <p key="2">Content goes here</p>
   ]
 }
 
@@ -175,7 +175,7 @@ WithSideAndTopNavigation.args = {
                     <SideNavigationItem>Item 2</SideNavigationItem>
                   </SideNavigation>,
   children: [
-      <ContentHeading>My Page</ContentHeading>,
-      <p>Content goes here</p>
+      <ContentHeading key="1">My Page</ContentHeading>,
+      <p key="2">Content goes here</p>
   ]
 }
