@@ -1,7 +1,7 @@
 import "whatwg-fetch"
 import fetchProxy, { fetchProxyInitDB } from "./fetchProxy"
 
-describe("fetchProxy", () => {
+describe("fetchProxy lib", () => {
   describe("fetchProxyInitDB", () => {
     it("through an error if given data is not valid JSON", () => {
       // setup wrang json data
@@ -72,6 +72,36 @@ describe("fetchProxy", () => {
 
     it("through an error if given url is not conform", () => {
       expect(() => fetchProxy("/peaks", { mock: true })).toThrowError()
+    })
+
+    test("ignore api/v1", async () => {
+      const data = await fetchProxy("http://localhost:3000/api/v1/peaks", {
+        mock: true,
+      })
+      expect(await data.json()).toStrictEqual([
+        {
+          id: 1,
+          name: "Mont Blanc",
+          height: 4808,
+          country: "France",
+          range: "Alps",
+        },
+      ])
+    })
+
+    test("ignore api", async () => {
+      const data = await fetchProxy("http://localhost:3000/api/peaks", {
+        mock: true,
+      })
+      expect(await data.json()).toStrictEqual([
+        {
+          id: 1,
+          name: "Mont Blanc",
+          height: 4808,
+          country: "France",
+          range: "Alps",
+        },
+      ])
     })
 
     test("GET all peaks", async () => {
