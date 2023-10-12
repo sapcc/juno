@@ -4,7 +4,7 @@
  */
 
 // default value for watch interval
-const DEFAULT_INTERVAL = 300000
+const DEFAULT_INTERVAL = 10000
 
 /**
  * This function implements the actual service.
@@ -91,7 +91,6 @@ function ApiService(initialConfig) {
         `ApiService::${config.serviceName || ""}: new config: `,
         config
       )
-
     // update watcher will check the config relevant attribute changed to update the watcher
     updateWatcher(oldConfig)
     if (config.initialFetch && !initialFetchPerformed) update()

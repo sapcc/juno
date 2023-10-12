@@ -1,6 +1,6 @@
-import React, { useEffect, useLayoutEffect } from "react"
+import React, { useLayoutEffect, useState } from "react"
 
-import { AppShellProvider } from "juno-ui-components"
+import { AppShellProvider, Button } from "juno-ui-components"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
 import {
@@ -15,6 +15,8 @@ import { MessagesProvider } from "messages-provider"
 import CustomAppShell from "./components/CustomAppShell"
 
 function App(props = {}) {
+  const [test, setTest] = useState(true)
+
   const { setLabels, setPredefinedFilters, setActivePredefinedFilter } =
     useFilterActions()
   const { setEmbedded, setApiEndpoint } = useGlobalsActions()
@@ -85,8 +87,9 @@ function App(props = {}) {
 
   return (
     <MessagesProvider>
+      <Button label="Default" onClick={() => setTest(!test)} />
       <CustomAppShell>
-        <AsyncWorker endpoint={props.endpoint} />
+        {test && <AsyncWorker endpoint={props.endpoint} />}
         <AppContent props={props} />
       </CustomAppShell>
     </MessagesProvider>

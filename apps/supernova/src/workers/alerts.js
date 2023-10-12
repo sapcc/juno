@@ -62,8 +62,13 @@ const alertsService = new ApiService({
 self.onmessage = (e) => {
   const action = e.data.action
 
+  console.log("WAAAAAAAAAAAAAAAAAAAAA:::::", e)
+
   switch (action) {
     case "ALERTS_CONFIGURE":
+      console.log(
+        "ALERTS_CONFIGURE::ALERTS_CONFIGURE::ALERTS_CONFIGURE::ALERTS_CONFIGURE"
+      )
       // require at least apiEndpoint to update the fetch method
       if (e.data?.fetchVars?.apiEndpoint) {
         // update the fetch function
