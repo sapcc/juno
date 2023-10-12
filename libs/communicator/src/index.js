@@ -49,9 +49,9 @@ const broadcast = (name, data, options) => {
 
     if (debug)
       log(
-        `broadcast message ${name} ${
+        `broadcast ${
           crossWindow ? "cross-window" : "intra-window"
-        } with data `,
+        } message ${name} with data `,
         data
       )
 
@@ -113,7 +113,7 @@ const watch = (name, callback, options) => {
       `${window.__juno_communicator_tab_id}:${channelName}`
     )
     bcIntra.onmessage = (e) => {
-      callback(e.data, {
+      callback(e.data?.payload, {
         sourceWindowId: e.data?.source,
         thisWindowId: window.__juno_communicator_tab_id,
       })
