@@ -1,4 +1,5 @@
 import { DateTime } from "luxon"
+import { fetchProxy } from "utils"
 
 class HTTPError extends Error {
   constructor(code, message) {
@@ -31,12 +32,13 @@ const checkStatus = (response) => {
 
 export const cas = ({ queryKey }) => {
   const [_key, bearerToken, endpoint, disabledCAs] = queryKey
-  return fetch(`${endpoint}/cas`, {
+  return fetchProxy(`${endpoint}/cas`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${bearerToken}`,
     },
+    mock: true,
   })
     .then(checkStatus)
     .then((response) => {

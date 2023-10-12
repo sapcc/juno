@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect } from "react"
-import { oidcSession } from "oauth"
+import { oidcSession, mockedSession } from "oauth"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import styles from "./styles.scss"
 import { AppShellProvider } from "juno-ui-components"
@@ -7,11 +7,22 @@ import AppContent from "./AppContent"
 import { useActions, MessagesProvider } from "messages-provider"
 import { useGlobalsActions, useAuthActions } from "./hooks/useStore"
 
+import { fetchProxyInitDB } from "utils"
+import db from "../db.json"
+
 const App = (props) => {
   const { setData, setLogin, setLogout } = useAuthActions()
   const { setEndpoint, setDisabledCAs, setDocumentationLinks, setEmbedded } =
     useGlobalsActions()
   const { addMessage } = useActions()
+
+  // setup the mock db.json
+  useLayoutEffect(() => {
+    if (props.mock === "true" || props.mock === true) {
+      console.log("mocked db.json", db)
+      fetchProxyInitDB(db)
+    }
+  }, [])
 
   // fetch the auth token and save the object globally
   // keep it in the app so the issuerurl and clientid have not to be saved on the state

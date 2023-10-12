@@ -11,8 +11,8 @@ export const getCAs = (bearerToken, endpoint, disabledCAs) => {
   return useQuery({
     queryKey: ["cas", bearerToken, endpoint, disabledCAs],
     queryFn: cas,
-    // The query will not execute until the bearerToken exists
-    enabled: !!bearerToken,
+    // The query will not execute until the bearerToken exists and endpoint is set
+    enabled: !!bearerToken && !!endpoint,
   })
 }
 
@@ -21,8 +21,8 @@ export const getCertificates = (bearerToken, endpoint, ca, revokedList) => {
   return useQuery({
     queryKey: ["certificates", bearerToken, endpoint, ca],
     queryFn: certificates,
-    // The query will not execute until the bearerToken exists
-    enabled: !!bearerToken,
+    // The query will not execute until the bearerToken exists and endpoint is set
+    enabled: !!bearerToken && !!endpoint,
     // refetch until the list of revoked list is empty
     refetchInterval: () => {
       const count = revokedList.filter((obj) => obj.ca === ca)
