@@ -8,7 +8,7 @@ import {
   useAuthError,
   useAuthActions,
   useGlobalsActions,
-} from "../hooks/useStore"
+} from "../components/StoreProvider"
 import useAppLoader from "../hooks/useAppLoader"
 import { Transition } from "@tailwindui/react"
 
@@ -48,7 +48,7 @@ const Auth = ({
   demoOrg,
   demoUserToken,
 }) => {
-  const authData = useAuthData()
+  // const authData = useAuthData()
   const authAppLoaded = useAuthAppLoaded()
   const authLoggedIn = useAuthLoggedIn()
   const authIsProcessing = useAuthIsProcessing()
@@ -97,22 +97,22 @@ const Auth = ({
   }, [mount, clientId, issuerUrl, setDemoMode])
 
   // read org name from token and adjust url to contain the org name
-  useEffect(() => {
-    if (!authLoggedIn) return
+  // useEffect(() => {
+  //   if (!authLoggedIn) return
 
-    if (!orgName) {
-      const orgString = authData?.raw?.groups?.find(
-        (g) => g.indexOf("organization:") === 0
-      )
+  //   if (!orgName) {
+  //     const orgString = authData?.raw?.groups?.find(
+  //       (g) => g.indexOf("organization:") === 0
+  //     )
 
-      if (orgString) {
-        const name = orgString.split(":")[1]
-        let url = new URL(window.location.href)
-        url.searchParams.set("org", name)
-        window.history.replaceState(null, null, url.href)
-      }
-    }
-  }, [authLoggedIn, authData])
+  //     if (orgString) {
+  //       const name = orgString.split(":")[1]
+  //       let url = new URL(window.location.href)
+  //       url.searchParams.set("org", name)
+  //       window.history.replaceState(null, null, url.href)
+  //     }
+  //   }
+  // }, [authLoggedIn, authData])
 
   // timeout for waiting for auth
   useEffect(() => {

@@ -9,7 +9,7 @@ import {
   useAuthActions,
   useDemoMode,
   useDemoUserToken,
-} from "./useStore"
+} from "../components/StoreProvider"
 
 const useCommunication = () => {
   const authAppLoaded = useAuthAppLoaded()

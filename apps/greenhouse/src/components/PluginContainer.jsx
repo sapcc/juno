@@ -1,6 +1,10 @@
 import React from "react"
 import Plugin from "./Plugin"
-import { useAppsActions, useAppsActive, useAppsConfig } from "../hooks/useStore"
+import {
+  useAppsActions,
+  useAppsActive,
+  useAppsConfig,
+} from "../components/StoreProvider"
 import useApi from "../hooks/useApi"
 import { useLayoutEffect } from "react"
 
@@ -26,12 +30,14 @@ const PluginContainer = () => {
     const availableAppIds = Object.keys(appsConfig)
     if (availableAppIds.length === 0) return
     const active = activeApps.map((a) => availableAppIds.indexOf(a) >= 0)
-    
+
     if (active.length === 0) {
       // if there is no active app, then from appsConfig, get the app id of the app with the lowest weight and set it as active
-      const minWeightApp = Object.values(appsConfig).reduce((previous, current) => {
-        return current.weight < previous.weight ? current : previous
-      })
+      const minWeightApp = Object.values(appsConfig).reduce(
+        (previous, current) => {
+          return current.weight < previous.weight ? current : previous
+        }
+      )
       setActiveApps(minWeightApp.id)
     }
   }, [appsConfig, activeApps, setActiveApps])
