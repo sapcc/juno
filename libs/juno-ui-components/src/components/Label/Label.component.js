@@ -64,6 +64,7 @@ export const Label = React.forwardRef(
 				${ className }
 			`} 
 			htmlFor={htmlFor} 
+			ref={forwardedRef}
 			{...props}
 		>
 			{ text }
