@@ -36,20 +36,23 @@ const useCommunication = () => {
   useEffect(() => {
     if (!authAppLoaded || authIsProcessing || authError) return
     if (authLastAction?.name === "signOn" && !authLoggedIn) {
-      broadcast("AUTH_LOGIN", "greenhouse", { debug: false })
+      broadcast("AUTH_LOGIN", "greenhouse", { debug: true })
     } else if (authLastAction?.name === "signOut" && authLoggedIn) {
-      broadcast("AUTH_LOGOUT", "greenhouse")
+      broadcast("AUTH_LOGOUT", "greenhouse", { debug: true })
     }
   }, [authAppLoaded, authIsProcessing, authError, authLoggedIn, authLastAction])
 
   useEffect(() => {
     if (!authSetData || !authSetAppLoaded) return
-
     get("AUTH_APP_LOADED", authSetAppLoaded)
-    const unwatchLoaded = watch("AUTH_APP_LOADED", authSetAppLoaded)
+    const unwatchLoaded = watch("AUTH_APP_LOADED", authSetAppLoaded, {
+      debug: true,
+    })
 
     get("AUTH_GET_DATA", setAuthData)
-    const unwatchUpdate = watch("AUTH_UPDATE_DATA", setAuthData)
+    const unwatchUpdate = watch("AUTH_UPDATE_DATA", setAuthData, {
+      debug: true,
+    })
 
     return () => {
       if (unwatchLoaded) unwatchLoaded()
