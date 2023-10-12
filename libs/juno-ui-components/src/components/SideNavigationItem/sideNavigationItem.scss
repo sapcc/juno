@@ -12,7 +12,8 @@ padding: .375rem 2rem;
 
 &:hover {
   color: var(--color-text-high);
-
+  background-color: var(--color-background-lvl-1);
+  cursor: pointer;
   
   .juno-icon {
     color: var(--color-text-high);
