@@ -1,12 +1,30 @@
 // src/index.js
-var CHANNEL_PREFIX = "JUNO_COMMUNICATOR#";
 var uniqString = () => Math.random().toString(36).substring(2);
+window.__junoCommunicatorTabId = window.__junoCommunicatorTabId || uniqString();
+window.__junoEventListeners = window.__junoEventListeners || {
+  broadcast: {},
+  get: {}
+};
 var log = (...params) => console.log("Communicator Debug [" + CHANNEL_PREFIX + "]:", ...params);
 var warn = (...params) => console.warn("Communicator Warning:", ...params);
-var error = (...params) => console.error("Communicator Error:", ...params);
-window.__juno_communicator_tab_id = window.__juno_communicator_tab_id || uniqString();
-console.log("===", window.__juno_communicator_tab_id, "===");
-var broadcast = (name, data, options) => {
+var addListener = (type, event, listener) => {
+  if (!window.__junoEventListeners[type]?.[event]) {
+    window.__junoEventListeners[type][event] = [];
+  }
+  window.__junoEventListeners[type][event].push(listener);
+};
+var removeListener = (type, event, listener) => {
+  if (!window.__junoEventListeners[type]?.[event])
+    return;
+  window.__junoEventListeners[type][event] = window.__junoEventListeners[type][event].filter((l) => l !== listener);
+};
+var listenerWrapper = (callback) => (data, options = {}) => {
+  return new Promise(async (resolve) => {
+    callback(data, options);
+    resolve();
+  });
+};
+var broadcast = (name, data, options = {}) => {
   try {
     if (typeof name !== "string")
       throw new Error("(broadcast) the message name must be given.");
@@ -20,23 +38,23 @@ var broadcast = (name, data, options) => {
       warn("(broadcast) debug must be a boolean");
     if (typeof crossWindow !== "boolean")
       warn("(broadcast) crossWindow must be a boolean");
-    let channelName = CHANNEL_PREFIX + name;
-    if (crossWindow === false) {
-      channelName = `${window.__juno_communicator_tab_id}:${channelName}`;
-    }
-    let bc = new BroadcastChannel(channelName);
     if (debug)
       log(
-        `broadcast message ${name} ${crossWindow ? "cross-window" : "intra-window"} with data `,
+        `broadcast ${crossWindow ? "cross-window" : "intra-window"} message ${name} with data `,
         data
       );
-    bc.postMessage({ payload: data, source: window.__juno_communicator_tab_id });
-    bc.close();
+    window.__junoEventListeners["broadcast"]?.[name]?.forEach((listener) => {
+      try {
+        listener(data, options);
+      } catch (e) {
+        warn(e);
+      }
+    });
   } catch (e) {
-    error(e.message);
+    warn(e);
   }
 };
-var watch = (name, callback, options) => {
+var watch = (name, callback, options = {}) => {
   try {
     if (typeof name !== "string")
       throw new Error("(watch) the message name must be given.");
@@ -46,40 +64,17 @@ var watch = (name, callback, options) => {
     const unknownOptionsKeys = Object.keys(unknownOptions);
     if (unknownOptionsKeys.length > 0)
       warn(`(watch) unknown options: ${unknownOptionsKeys.join(", ")}`);
-    let channelName = CHANNEL_PREFIX + name;
     if (debug)
       log(
         `watch for ${crossWindow ? "cross-window" : "intra-window"} message ${name}`
       );
-    let bc;
-    if (crossWindow === true) {
-      bc = new BroadcastChannel(channelName);
-      bc.onmessage = (e) => {
-        callback(e.data?.payload, {
-          sourceWindowId: e.data?.source,
-          thisWindowId: window.__juno_communicator_tab_id
-        });
-      };
-    }
-    let bcIntra = new BroadcastChannel(
-      `${window.__juno_communicator_tab_id}:${channelName}`
-    );
-    bcIntra.onmessage = (e) => {
-      callback(e.data, {
-        sourceWindowId: e.data?.source,
-        thisWindowId: window.__juno_communicator_tab_id
-      });
-    };
-    return () => {
-      if (bc)
-        bc.close();
-      bcIntra.close();
-    };
+    addListener("broadcast", name, listenerWrapper(callback));
+    return () => removeListener("broadcast", name, listenerWrapper(callback));
   } catch (e) {
-    error(e.message);
+    warn(e);
   }
 };
-var get = (name, callback, options) => {
+var get = (name, callback, options = {}) => {
   try {
     if (typeof name !== "string")
       throw new Error("(get) the message name must be given.");
@@ -95,31 +90,21 @@ var get = (name, callback, options) => {
     if (unknownOptionsKeys.length > 0)
       warn(`(get) unknown options: ${unknownOptionsKeys.join(", ")}`);
     if (debug)
-      log(`get data for message ${name}`);
-    let channelName = CHANNEL_PREFIX + name;
-    if (crossWindow === false) {
-      channelName = `${window.__juno_communicator_tab_id}:${channelName}`;
-    }
-    const requesterID = channelName + ":GET";
-    const receiverID = channelName + requesterID + ":RESPONSE:" + uniqString();
-    let receiver = new BroadcastChannel(receiverID);
-    receiver.onmessage = (e) => {
-      callback(e.payload?.data, {
-        sourceWindowId: e.data?.source,
-        thisWindowId: window.__juno_communicator_tab_id
-      });
-    };
-    let requester = new BroadcastChannel(requesterID);
-    requester.postMessage({
-      payload: { receiverID, getOptions },
-      source: window.__juno_communicator_tab_id
+      log(
+        `get data for ${crossWindow ? "cross-window" : "intra-window"} message ${name}`
+      );
+    if (window.__junoEventListeners["get"]?.[name]?.length === 0)
+      return;
+    window.__junoEventListeners["get"][name]?.forEach((listener) => {
+      try {
+        const data = listener(options?.getOptions);
+        callback(data, {});
+      } catch (e) {
+        warn(e);
+      }
     });
-    requester.close();
-    return () => {
-      receiver.close();
-    };
   } catch (e) {
-    error(e.message);
+    warn(e);
   }
 };
 var onGet = (name, callback, options = {}) => {
@@ -133,33 +118,13 @@ var onGet = (name, callback, options = {}) => {
     if (unknownOptionsKeys.length > 0)
       warn(`(onGet) unknown options: ${unknownOptionsKeys.join(", ")}`);
     if (debug)
-      log(`send data for message ${name}`);
-    let channelName = CHANNEL_PREFIX + name;
-    if (crossWindow === false) {
-      channelName = `${window.__juno_communicator_tab_id}:${channelName}`;
-    }
-    const requesterID = channelName + ":GET";
-    const receiver = new BroadcastChannel(requesterID);
-    receiver.onmessage = (e) => {
-      if (!e.data?.payload?.receiverID)
-        return;
-      const { receiverID, getOptions } = e.data?.payload;
-      const data = callback(getOptions, {
-        sourceWindowId: e.data?.source,
-        thisWindowId: window.__juno_communicator_tab_id
-      });
-      const bc = new BroadcastChannel(receiverID);
-      bc.postMessage({
-        payload: data,
-        source: window.__juno_communicator_tab_id
-      });
-      bc.close();
-    };
-    return () => {
-      receiver.close();
-    };
+      log(
+        `send data for ${crossWindow ? "cross-window" : "intra-window"} message ${name}`
+      );
+    addListener("get", name, listenerWrapper(callback));
+    return () => removeListener("get", name, listenerWrapper(callback));
   } catch (e) {
-    error(e.message);
+    warn(e);
   }
 };
 export {
@@ -168,3 +133,4 @@ export {
   onGet,
   watch
 };
+//# sourceMappingURL=build.js.map
