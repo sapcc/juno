@@ -5,8 +5,9 @@ window.__junoEventListeners = window.__junoEventListeners || {
   broadcast: {},
   get: {}
 };
-var log = (...params) => console.log("Communicator Debug [" + CHANNEL_PREFIX + "]:", ...params);
+var log = (...params) => console.log("Communicator Debug:", ...params);
 var warn = (...params) => console.warn("Communicator Warning:", ...params);
+var error = (...params) => console.error("Communicator Error:", ...params);
 var addListener = (type, event, listener) => {
   if (!window.__junoEventListeners[type]?.[event]) {
     window.__junoEventListeners[type][event] = [];
@@ -24,6 +25,20 @@ var listenerWrapper = (callback) => (data, options = {}) => {
     resolve();
   });
 };
+if (typeof BroadcastChannel === "undefined") {
+  console.log(
+    "BroadcastChannel is not supported in this browser. Use fake BroadcastChannel."
+  );
+  window.BroadcastChannel = function() {
+    return {
+      postMessage: () => null,
+      onmessage: () => null,
+      close: () => null
+    };
+  };
+} else {
+  console.log("BroadcastChannel is supported in this browser.");
+}
 var crossWindowEventBridge = new BroadcastChannel(
   "__JUNO_CROSS_WINDOW_EVENT_BRIDGE__"
 );
@@ -57,11 +72,14 @@ var broadcast = (name, data, options = {}) => {
       warn("(broadcast) debug must be a boolean");
     if (typeof crossWindow2 !== "boolean")
       warn("(broadcast) crossWindow must be a boolean");
-    if (debug)
+    if (debug) {
+      console.log("===================1");
       log(
         `broadcast ${crossWindow2 ? "cross-window" : "intra-window"} message ${name} with data `,
         data
       );
+      console.log("===================2");
+    }
     window.__junoEventListeners["broadcast"]?.[name]?.forEach((listener) => {
       try {
         listener(data, {
@@ -81,7 +99,7 @@ var broadcast = (name, data, options = {}) => {
       });
     }
   } catch (e) {
-    warn(e);
+    error(e.message);
   }
 };
 var watch = (name, callback, options = {}) => {
@@ -101,7 +119,7 @@ var watch = (name, callback, options = {}) => {
     addListener("broadcast", name, listenerWrapper(callback));
     return () => removeListener("broadcast", name, listenerWrapper(callback));
   } catch (e) {
-    warn(e);
+    error(e.message);
   }
 };
 var get = (name, callback, options = {}) => {
@@ -130,7 +148,7 @@ var get = (name, callback, options = {}) => {
       }
     });
   } catch (e) {
-    warn(e);
+    error(e.message);
   }
 };
 var onGet = (name, callback, options = {}) => {
@@ -148,7 +166,7 @@ var onGet = (name, callback, options = {}) => {
     addListener("get", name, listenerWrapper(callback));
     return () => removeListener("get", name, listenerWrapper(callback));
   } catch (e) {
-    warn(e);
+    error(e.message);
   }
 };
 export {
