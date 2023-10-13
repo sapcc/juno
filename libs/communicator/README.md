@@ -90,7 +90,6 @@ Register a listener for a specific message. Messages are observed across context
 For the `options` object, you can mention that it includes the following properties:
 
 - `debug` (boolean, false by default): Set this to `true` for debugging purposes.
-- `crossWindow` (boolean, false by default): Set this to `true` to enable cross-window communication.
 
 Example:
 
@@ -105,7 +104,6 @@ const unwatch = watch(
   },
   {
     debug: false, // Default
-    crossWindow: true,
   }
 )
 
@@ -122,7 +120,6 @@ Request a message by name and receive the data with the callback.
 - `options` (optional): An object with the following properties:
   - `getOptions` (object): An object that allows customization of the get request.
   - `debug` (boolean, false by default): Set this to `true` for debugging purposes.
-  - `crossWindow` (boolean, false by default): Set this to `true` to enable cross-window communication.
 
 Example:
 
@@ -137,7 +134,6 @@ const cancel = get(
   },
   {
     debug: false, // Default
-    crossWindow: false,
   }
 )
 
@@ -154,7 +150,6 @@ Use this function to respond to get messages.
 - `options` (optional): An object with the following properties:
 
   - `debug` (boolean, false by default): Set this to `true` for debugging purposes.
-  - `crossWindow` (boolean, false by default): Set this to `true` to enable cross-window communication.
 
 Example:
 
@@ -169,7 +164,6 @@ const unwatch = onGet(
   },
   {
     debug: false, // Default
-    crossWindow: true,
   }
 )
 

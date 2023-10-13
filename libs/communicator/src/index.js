@@ -42,6 +42,28 @@ const listenerWrapper =
     })
   }
 
+const crossWindowEventBridge = new BroadcastChannel(
+  "__JUNO_CROSS_WINDOW_EVENT_BRIDGE__"
+)
+
+crossWindowEventBridge.onmessage = (e) => {
+  const { type, name, data, sourceWindowId } = e.data || {}
+
+  if (type === "broadcast") {
+    window.__junoEventListeners["broadcast"]?.[name]?.forEach((listener) => {
+      try {
+        listener(data, {
+          crossWindow: true,
+          sourceWindowId,
+          thisWindowId: window.__junoCommunicatorTabId,
+        })
+      } catch (e) {
+        warn(e)
+      }
+    })
+  }
+}
+
 /**
  * Send messages via BroadcastChannel across contexts (e.g. several tabs on
  * the same origin). The last message is stored by default. However, it
@@ -81,11 +103,23 @@ const broadcast = (name, data, options = {}) => {
 
     window.__junoEventListeners["broadcast"]?.[name]?.forEach((listener) => {
       try {
-        listener(data, options)
+        listener(data, {
+          sourceWindowId: window.__junoCommunicatorTabId,
+          thisWindowId: window.__junoCommunicatorTabId,
+        })
       } catch (e) {
         warn(e)
       }
     })
+
+    if (crossWindow) {
+      crossWindowEventBridge.postMessage({
+        type: "broadcast",
+        name,
+        data,
+        sourceWindowId: window.__junoCommunicatorTabId,
+      })
+    }
   } catch (e) {
     warn(e)
   }
@@ -111,7 +145,7 @@ const watch = (name, callback, options = {}) => {
     if (typeof callback !== "function")
       throw new Error("(watch) the callback parameter must be a function.")
 
-    const { debug, crossWindow = false, ...unknownOptions } = options || {}
+    const { debug, ...unknownOptions } = options || {}
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
       warn(`(watch) unknown options: ${unknownOptionsKeys.join(", ")}`)
@@ -144,21 +178,11 @@ const get = (name, callback, options = {}) => {
       throw new Error("(get) the message name must be given.")
     if (typeof callback !== "function")
       throw new Error("(get) the callback parameter must be a function.")
-    const {
-      debug,
-      getOptions,
-      crossWindow = false,
-      ...unknownOptions
-    } = options || {}
+    const { debug, getOptions, ...unknownOptions } = options || {}
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
       warn(`(get) unknown options: ${unknownOptionsKeys.join(", ")}`)
-    if (debug)
-      log(
-        `get data for ${
-          crossWindow ? "cross-window" : "intra-window"
-        } message ${name}`
-      )
+    if (debug) log(`get data for intra-window message ${name}`)
 
     if (window.__junoEventListeners["get"]?.[name]?.length === 0) return
 
@@ -166,7 +190,10 @@ const get = (name, callback, options = {}) => {
     window.__junoEventListeners["get"][name]?.forEach((listener) => {
       try {
         const data = listener(options?.getOptions)
-        callback(data, {})
+        callback(data, {
+          sourceWindowId: window.__junoCommunicatorTabId,
+          thisWindowId: window.__junoCommunicatorTabId,
+        })
       } catch (e) {
         warn(e)
       }
@@ -193,12 +220,7 @@ const onGet = (name, callback, options = {}) => {
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
       warn(`(onGet) unknown options: ${unknownOptionsKeys.join(", ")}`)
-    if (debug)
-      log(
-        `send data for ${
-          crossWindow ? "cross-window" : "intra-window"
-        } message ${name}`
-      )
+    if (debug) log(`send data for intra-window message ${name}`)
 
     addListener("get", name, listenerWrapper(callback))
 

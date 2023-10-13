@@ -82,7 +82,6 @@ const Auth = ({
       id: "auth",
       name: "auth",
       version: "latest",
-      url: "https://elektra.ap.ws2.eu-nl-1.cloud.sap/apps/auth@1.0.4/build/index.js",
       props: {
         issuerUrl: issuerUrl,
         clientId: clientId,
