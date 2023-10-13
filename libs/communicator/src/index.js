@@ -42,6 +42,21 @@ const listenerWrapper =
     })
   }
 
+if (typeof BroadcastChannel === "undefined") {
+  // BroadcastChannel is not available
+  console.log("BroadcastChannel is not supported in this browser.")
+  window.BroadcastChannel = function () {
+    return {
+      postMessage: () => null,
+      onmessage: () => null,
+      close: () => null,
+    }
+  }
+} else {
+  // BroadcastChannel is available
+  console.log("BroadcastChannel is supported in this browser.")
+}
+
 const crossWindowEventBridge = new BroadcastChannel(
   "__JUNO_CROSS_WINDOW_EVENT_BRIDGE__"
 )
@@ -121,7 +136,7 @@ const broadcast = (name, data, options = {}) => {
       })
     }
   } catch (e) {
-    warn(e)
+    error(e.message)
   }
 }
 
