@@ -308,14 +308,33 @@ WithChildrenOnly.parameters = {
   }
 }
 
-export const optionsWithLabels = Template.bind({})
-optionsWithLabels.args = {
+export const OptionsWithLabels = Template.bind({})
+OptionsWithLabels.args = {
+  placeholder: "Please select",
   children: [
     <SelectOption value="option-1" label="Option 1" key="1" />,
     <SelectOption value="option-2" label="Option 2" key="2">Option 2 child is displayed if present</SelectOption>,
   ]
 }
-optionsWithLabels.parameters = {
+OptionsWithLabels.parameters = {
+  docs: {
+    description: {
+      story: "Optionally the SelectOptions can be passed a `label`-prop if the value is not suitable for display. If in addition to the label prop the option has a child, then the child is displayed instead."
+    }
+  }
+}
+
+export const ControlledOptionsWithLabels = ControlledTemplate.bind({})
+ControlledOptionsWithLabels.args = {
+  placeholder: "Please select",
+  value: "option-3",
+  children: [
+    <SelectOption value="option-1" label="Option 1" key="1" />,
+    <SelectOption value="option-2" label="Option 2" key="2">Option 2 child is displayed if present</SelectOption>,
+    <SelectOption value="option-3" label="Option 3" key="3" />,
+  ]
+}
+ControlledOptionsWithLabels.parameters = {
   docs: {
     description: {
       story: "Optionally the SelectOptions can be passed a `label`-prop if the value is not suitable for display. If in addition to the label prop the option has a child, then the child is displayed instead."

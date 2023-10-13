@@ -59,6 +59,7 @@ export const SelectOption = ({
   const {
     truncateOptions: truncateOptions,
   } = selectContext || {}
+  // const valueObject = {val: value, label: label, children: children}
   
   return (
     <Listbox.Option 
