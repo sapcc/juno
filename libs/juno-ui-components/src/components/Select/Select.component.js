@@ -1,4 +1,4 @@
-import React, { Fragment, createContext, useEffect, useId, useMemo, useState } from "react"
+import React, { createContext, useEffect, useId, useMemo, useState } from "react"
 import PropTypes from "prop-types"
 import { Listbox } from "@headlessui/react"
 import { Label } from "../Label/Label.component"
@@ -110,10 +110,32 @@ export const Select = ({
     "juno-select-" + useId()
   )
   
+  // iterate over children to get option values and labels by reading the value and the label prop of each child and saving them in a map
+  const buildOptionValuesAndLabelMap = (options) => {
+    const optionMap = new Map()
+    if (options && Array.isArray(options)) {
+      options.map((option) => {
+        if (option.type.name === "SelectOption") {
+          optionMap.set(option.props.value || option.props.children, {
+            val: option.props.value,
+            label: option.props.label,
+            children: option.props.children
+          })
+        }
+      })
+    }
+    return optionMap
+  }
+  
   const theId = id || uniqueId()
   const helptextId = "juno-select-helptext-" + useId()
   
-  const [selectedValue, setSelectedValue] = useState("")
+  const optionValuesAndLabelMap = useMemo(
+    () => buildOptionValuesAndLabelMap(children),
+    [children]
+  )
+  
+  const [optionValuesAndLabels, setOptionValuesAndLabels] = useState(optionValuesAndLabelMap)
   const [hasError, setHasError] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
@@ -127,10 +149,11 @@ export const Select = ({
     () => valid || (successtext && isNotEmptyString(successtext) ? true : false),
     [valid, successtext]
   )
-  
+
+
   useEffect(() => {
-    setSelectedValue(value)
-  }, [value])
+    setOptionValuesAndLabels(buildOptionValuesAndLabelMap(children))
+  }, [children])
   
   useEffect(() => {
     setHasError(error)
@@ -149,7 +172,6 @@ export const Select = ({
   }, [loading])
   
   const handleChange = (value) => {
-    setSelectedValue(value)
     onChange && onChange(value)
     onValueChange && onValueChange(value)
   }
@@ -187,7 +209,7 @@ export const Select = ({
           disabled={ disabled || isLoading || hasError } 
           name={name}
           onChange={handleChange}
-          value={value}
+          value={ value }
           defaultValue={defaultValue}
         >
           { label && isNotEmptyString(label) ?
@@ -236,7 +258,9 @@ export const Select = ({
                 (!hasError && !isLoading) ?
                   <>
                     <span className={`${truncateStyles}`}>
-                      { value || placeholder }
+                      <>
+                        { optionValuesAndLabels.get(value)?.children || optionValuesAndLabels.get(value)?.label || optionValuesAndLabels.get(value)?.val || placeholder }
+                      </>
                     </span>
                     <span className="jn-flex">
                       { isValid ? 
