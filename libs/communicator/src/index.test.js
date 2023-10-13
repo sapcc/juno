@@ -1,3 +1,4 @@
+test("HI", () => expect(true).toEqual(true))
 // globalThis.console.error = jest.fn()
 // globalThis.console.warn = jest.fn()
 // globalThis.console.error = jest.fn()
