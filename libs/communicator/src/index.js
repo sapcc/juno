@@ -44,7 +44,9 @@ const listenerWrapper =
 
 if (typeof BroadcastChannel === "undefined") {
   // BroadcastChannel is not available
-  console.log("BroadcastChannel is not supported in this browser.")
+  console.log(
+    "BroadcastChannel is not supported in this browser. Use fake BroadcastChannel."
+  )
   window.BroadcastChannel = function () {
     return {
       postMessage: () => null,
