@@ -24,32 +24,62 @@ var listenerWrapper = (callback) => (data, options = {}) => {
     resolve();
   });
 };
+var crossWindowEventBridge = new BroadcastChannel(
+  "__JUNO_CROSS_WINDOW_EVENT_BRIDGE__"
+);
+crossWindowEventBridge.onmessage = (e) => {
+  const { type, name, data, sourceWindowId } = e.data || {};
+  if (type === "broadcast") {
+    window.__junoEventListeners["broadcast"]?.[name]?.forEach((listener) => {
+      try {
+        listener(data, {
+          crossWindow: true,
+          sourceWindowId,
+          thisWindowId: window.__junoCommunicatorTabId
+        });
+      } catch (e2) {
+        warn(e2);
+      }
+    });
+  }
+};
 var broadcast = (name, data, options = {}) => {
   try {
     if (typeof name !== "string")
       throw new Error("(broadcast) the message name must be given.");
     if (data === void 0)
       data = null;
-    const { debug, crossWindow = false, ...unknownOptions } = options || {};
+    const { debug, crossWindow: crossWindow2 = false, ...unknownOptions } = options || {};
     const unknownOptionsKeys = Object.keys(unknownOptions);
     if (unknownOptionsKeys.length > 0)
       warn(`(broadcast) unknown options: ${unknownOptionsKeys.join(", ")}`);
     if (debug != void 0 && typeof debug !== "boolean")
       warn("(broadcast) debug must be a boolean");
-    if (typeof crossWindow !== "boolean")
+    if (typeof crossWindow2 !== "boolean")
       warn("(broadcast) crossWindow must be a boolean");
     if (debug)
       log(
-        `broadcast ${crossWindow ? "cross-window" : "intra-window"} message ${name} with data `,
+        `broadcast ${crossWindow2 ? "cross-window" : "intra-window"} message ${name} with data `,
         data
       );
     window.__junoEventListeners["broadcast"]?.[name]?.forEach((listener) => {
       try {
-        listener(data, options);
+        listener(data, {
+          sourceWindowId: window.__junoCommunicatorTabId,
+          thisWindowId: window.__junoCommunicatorTabId
+        });
       } catch (e) {
         warn(e);
       }
     });
+    if (crossWindow2) {
+      crossWindowEventBridge.postMessage({
+        type: "broadcast",
+        name,
+        data,
+        sourceWindowId: window.__junoCommunicatorTabId
+      });
+    }
   } catch (e) {
     warn(e);
   }
@@ -60,7 +90,7 @@ var watch = (name, callback, options = {}) => {
       throw new Error("(watch) the message name must be given.");
     if (typeof callback !== "function")
       throw new Error("(watch) the callback parameter must be a function.");
-    const { debug, crossWindow = false, ...unknownOptions } = options || {};
+    const { debug, ...unknownOptions } = options || {};
     const unknownOptionsKeys = Object.keys(unknownOptions);
     if (unknownOptionsKeys.length > 0)
       warn(`(watch) unknown options: ${unknownOptionsKeys.join(", ")}`);
@@ -80,25 +110,21 @@ var get = (name, callback, options = {}) => {
       throw new Error("(get) the message name must be given.");
     if (typeof callback !== "function")
       throw new Error("(get) the callback parameter must be a function.");
-    const {
-      debug,
-      getOptions,
-      crossWindow = false,
-      ...unknownOptions
-    } = options || {};
+    const { debug, getOptions, ...unknownOptions } = options || {};
     const unknownOptionsKeys = Object.keys(unknownOptions);
     if (unknownOptionsKeys.length > 0)
       warn(`(get) unknown options: ${unknownOptionsKeys.join(", ")}`);
     if (debug)
-      log(
-        `get data for ${crossWindow ? "cross-window" : "intra-window"} message ${name}`
-      );
+      log(`get data for intra-window message ${name}`);
     if (window.__junoEventListeners["get"]?.[name]?.length === 0)
       return;
     window.__junoEventListeners["get"][name]?.forEach((listener) => {
       try {
         const data = listener(options?.getOptions);
-        callback(data, {});
+        callback(data, {
+          sourceWindowId: window.__junoCommunicatorTabId,
+          thisWindowId: window.__junoCommunicatorTabId
+        });
       } catch (e) {
         warn(e);
       }
@@ -113,14 +139,12 @@ var onGet = (name, callback, options = {}) => {
       throw new Error("(onGet) the message name must be given.");
     if (typeof callback !== "function")
       throw new Error("(onGet) the callback parameter must be a function.");
-    const { debug, crossWindow = false, ...unknownOptions } = options || {};
+    const { debug, crossWindow: crossWindow2 = false, ...unknownOptions } = options || {};
     const unknownOptionsKeys = Object.keys(unknownOptions);
     if (unknownOptionsKeys.length > 0)
       warn(`(onGet) unknown options: ${unknownOptionsKeys.join(", ")}`);
     if (debug)
-      log(
-        `send data for ${crossWindow ? "cross-window" : "intra-window"} message ${name}`
-      );
+      log(`send data for intra-window message ${name}`);
     addListener("get", name, listenerWrapper(callback));
     return () => removeListener("get", name, listenerWrapper(callback));
   } catch (e) {
