@@ -4,13 +4,19 @@ const CHANNEL_PREFIX = "JUNO_COMMUNICATOR#"
  *
  * @returns epoch timestamp (count of seconds since 1970)
  */
-const uniqString = () => Date.now() + ":" + Math.floor(Math.random() * 1000)
+const uniqString = () => Math.random().toString(36).substring(2)
 
 const log = (...params) =>
   console.log("Communicator Debug [" + CHANNEL_PREFIX + "]:", ...params)
 const warn = (...params) => console.warn("Communicator Warning:", ...params)
 const error = (...params) => console.error("Communicator Error:", ...params)
 
+// create an uniq id for current window (current context)
+// this id is used to identify the current when intra-window communication is used
+window.__juno_communicator_tab_id =
+  window.__juno_communicator_tab_id || uniqString()
+
+console.log("===", window.__juno_communicator_tab_id, "===")
 /**
  * Send messages via BroadcastChannel across contexts (e.g. several tabs on
  * the same origin). The last message is stored by default. However, it
@@ -26,17 +32,30 @@ const broadcast = (name, data, options) => {
       throw new Error("(broadcast) the message name must be given.")
     if (data === undefined) data = null
 
-    const { debug, ...unknownOptions } = options || {}
+    const { debug, crossWindow = false, ...unknownOptions } = options || {}
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
       warn(`(broadcast) unknown options: ${unknownOptionsKeys.join(", ")}`)
     if (debug != undefined && typeof debug !== "boolean")
       warn("(broadcast) debug must be a boolean")
-    const bc = new BroadcastChannel(CHANNEL_PREFIX + name)
-    if (debug) log(`broadcast message ${name} with data `, data)
+    if (typeof crossWindow !== "boolean")
+      warn("(broadcast) crossWindow must be a boolean")
 
-    // broadcast message
-    bc.postMessage(data)
+    let channelName = CHANNEL_PREFIX + name
+    if (crossWindow === false) {
+      channelName = `${window.__juno_communicator_tab_id}:${channelName}`
+    }
+    let bc = new BroadcastChannel(channelName)
+
+    if (debug)
+      log(
+        `broadcast ${
+          crossWindow ? "cross-window" : "intra-window"
+        } message ${name} with data `,
+        data
+      )
+
+    bc.postMessage({ payload: data, source: window.__juno_communicator_tab_id })
     bc.close()
   } catch (e) {
     error(e.message)
@@ -63,16 +82,47 @@ const watch = (name, callback, options) => {
     if (typeof callback !== "function")
       throw new Error("(watch) the callback parameter must be a function.")
 
-    const { debug, ...unknownOptions } = options || {}
+    const { debug, crossWindow = false, ...unknownOptions } = options || {}
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
       warn(`(watch) unknown options: ${unknownOptionsKeys.join(", ")}`)
 
-    const bc = new BroadcastChannel(CHANNEL_PREFIX + name)
-    if (debug) log(`watch for message ${name}`)
+    let channelName = CHANNEL_PREFIX + name
 
-    bc.onmessage = (e) => callback(e.data)
-    return () => bc.close()
+    if (debug)
+      log(
+        `watch for ${
+          crossWindow ? "cross-window" : "intra-window"
+        } message ${name}`
+      )
+
+    // listen to cross-window messages if crossWindow is true
+    let bc
+    if (crossWindow === true) {
+      bc = new BroadcastChannel(channelName)
+      bc.onmessage = (e) => {
+        callback(e.data?.payload, {
+          sourceWindowId: e.data?.source,
+          thisWindowId: window.__juno_communicator_tab_id,
+        })
+      }
+    }
+
+    // listen ever for intra-window messages
+    let bcIntra = new BroadcastChannel(
+      `${window.__juno_communicator_tab_id}:${channelName}`
+    )
+    bcIntra.onmessage = (e) => {
+      callback(e.data?.payload, {
+        sourceWindowId: e.data?.source,
+        thisWindowId: window.__juno_communicator_tab_id,
+      })
+    }
+
+    return () => {
+      if (bc) bc.close()
+      bcIntra.close()
+    }
   } catch (e) {
     error(e.message)
   }
@@ -91,23 +141,52 @@ const get = (name, callback, options) => {
       throw new Error("(get) the message name must be given.")
     if (typeof callback !== "function")
       throw new Error("(get) the callback parameter must be a function.")
-
-    const { debug, getOptions, ...unknownOptions } = options || {}
+    const {
+      debug,
+      getOptions,
+      crossWindow = false,
+      ...unknownOptions
+    } = options || {}
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
       warn(`(get) unknown options: ${unknownOptionsKeys.join(", ")}`)
+    if (debug)
+      log(
+        `get data for ${
+          crossWindow ? "cross-window" : "intra-window"
+        } message ${name}`
+      )
 
-    if (debug) log(`get data for message ${name}`)
+    let channelName = CHANNEL_PREFIX + name
+    if (crossWindow === false) {
+      channelName = `${window.__juno_communicator_tab_id}:${channelName}`
+    }
+    const requesterID = channelName + ":GET"
+    const receiverID = channelName + requesterID + ":RESPONSE:" + uniqString()
 
-    const requesterID = "GET:" + name
-    const receiverID = requesterID + ":RESPONSE:" + uniqString()
+    // create a listener for the response
+    let receiver = new BroadcastChannel(receiverID)
+    receiver.onmessage = (e) => {
+      callback(e.payload?.data, {
+        sourceWindowId: e.data?.source,
+        thisWindowId: window.__juno_communicator_tab_id,
+      })
+      //receiver.close()
+    }
 
-    let unwatch = watch(receiverID, (data) => {
-      callback(data)
-      unwatch()
+    // create broadcast channel for the request
+    let requester = new BroadcastChannel(requesterID)
+    requester.postMessage({
+      payload: { receiverID, getOptions },
+      source: window.__juno_communicator_tab_id,
     })
-    broadcast(requesterID, { receiverID, getOptions })
-    return unwatch
+    requester.close()
+
+    // return cancel function
+    // close receiver before his onmessage is called
+    return () => {
+      receiver.close()
+    }
   } catch (e) {
     error(e.message)
   }
@@ -126,21 +205,49 @@ const onGet = (name, callback, options = {}) => {
       throw new Error("(onGet) the message name must be given.")
     if (typeof callback !== "function")
       throw new Error("(onGet) the callback parameter must be a function.")
-
-    const { debug, ...unknownOptions } = options || {}
+    const { debug, crossWindow = false, ...unknownOptions } = options || {}
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
       warn(`(onGet) unknown options: ${unknownOptionsKeys.join(", ")}`)
+    if (debug)
+      log(
+        `send data for ${
+          crossWindow ? "cross-window" : "intra-window"
+        } message ${name}`
+      )
 
-    if (debug) log(`send data for message ${name}`)
+    let channelName = CHANNEL_PREFIX + name
+    if (crossWindow === false) {
+      channelName = `${window.__juno_communicator_tab_id}:${channelName}`
+    }
 
-    const requesterID = "GET:" + name
-    const unwatch = watch(requesterID, (data) => {
-      if (!data?.receiverID) return
-      broadcast(data.receiverID, callback())
-    })
+    // request channel name, should be the same as the one used in get
+    const requesterID = channelName + ":GET"
+    // create receiver broadcast channel
+    const receiver = new BroadcastChannel(requesterID)
 
-    return unwatch
+    receiver.onmessage = (e) => {
+      if (!e.data?.payload?.receiverID) return
+      const { receiverID, getOptions } = e.data?.payload
+      const data = callback(getOptions, {
+        sourceWindowId: e.data?.source,
+        thisWindowId: window.__juno_communicator_tab_id,
+      })
+
+      // send data back to get requester
+      const bc = new BroadcastChannel(receiverID)
+      bc.postMessage({
+        payload: data,
+        source: window.__juno_communicator_tab_id,
+      })
+      bc.close()
+    }
+
+    // return cancel function
+    // close receiver before his onmessage is called
+    return () => {
+      receiver.close()
+    }
   } catch (e) {
     error(e.message)
   }
