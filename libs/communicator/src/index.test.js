@@ -1,7 +1,16 @@
 test("HI", () => expect(true).toEqual(true))
-globalThis.console.error = jest.fn()
+globalThis.console.log = jest.fn()
 globalThis.console.warn = jest.fn()
 globalThis.console.error = jest.fn()
+
+const bc = {
+  postMessage: jest.fn(),
+  close: jest.fn(() => true),
+}
+
+globalThis.BroadcastChannel = jest.fn().mockImplementation(() => {
+  return bc
+})
 
 const { broadcast, watch, get, onGet } = require("./index")
 
@@ -29,233 +38,174 @@ describe("Communicator", () => {
       })
     })
 
-    // test("unknown options", () => {
-    //   broadcast("TEST", { test: "test" }, { unknownOption: true })
-    //   expect(globalThis.console.warn).toHaveBeenCalledWith(
-    //     "Communicator Warning:",
-    //     "(broadcast) unknown options: unknownOption"
-    //   )
-    // })
+    test("unknown options", () => {
+      broadcast("TEST", { test: "test" }, { unknownOption: true })
+      expect(globalThis.console.warn).toHaveBeenCalledWith(
+        "Communicator Warning:",
+        "(broadcast) unknown options: unknownOption"
+      )
+    })
 
-    //     test("create new broadcast channel", () => {
-    //       broadcast("TEST_12345", { name: "test" })
-    //       expect(BroadcastChannel).toHaveBeenCalledWith(
-    //         expect.stringContaining("TEST_12345")
-    //       )
-    //     })
+    test("create new broadcast channel", () => {
+      let callback = jest.fn()
+      watch("TEST_12345", callback)
+      broadcast("TEST_12345", { name: "test" })
+      expect(callback).toHaveBeenCalledWith({ name: "test" }, expect.anything())
+    })
 
-    //     test("include options in message payload", () => {
-    //       broadcast("TEST", { name: "test" }, { debug: true })
-    //       expect(bc.postMessage).toHaveBeenCalledWith({
-    //         payload: { name: "test" },
-    //         source: expect.anything(),
-    //       })
-    //     })
+    test("include options in message payload", () => {
+      let callback = jest.fn()
+      watch("TEST_123456", callback)
+      broadcast("TEST_123456", { name: "test" }, { debug: true })
+      expect(callback).toHaveBeenCalledWith(
+        { name: "test" },
+        { sourceWindowId: expect.anything(), thisWindowId: expect.anything() }
+      )
+    })
 
-    //     test("log error if wrong debug value", () => {
-    //       broadcast("TEST", { name: "test" }, { debug: "true" })
+    test("log error if wrong debug value", () => {
+      broadcast("TEST", { name: "test" }, { debug: "true" })
 
-    //       expect(globalThis.console.warn).toHaveBeenCalledWith(
-    //         "Communicator Warning:",
-    //         "(broadcast) debug must be a boolean"
-    //       )
-    //     })
+      expect(globalThis.console.warn).toHaveBeenCalledWith(
+        "Communicator Warning:",
+        "(broadcast) debug must be a boolean"
+      )
+    })
 
-    //     test("close channel after broadcast", () => {
-    //       broadcast("TEST", { name: "test" }, { debug: "true" })
+    test("close channel after broadcast", () => {
+      broadcast("TEST", { name: "test" }, { crossWindow: true })
 
-    //       expect(bc.close).toHaveBeenCalled()
-    //     })
+      expect(bc.postMessage).toHaveBeenCalled()
+    })
   })
 
-  //   // ################## WATCH ###################
-  //   describe("watch", () => {
-  //     test("log error on missing name", () => {
-  //       watch()
-  //       expect(globalThis.console.error).toHaveBeenCalledWith(
-  //         "Communicator Error:",
-  //         "(watch) the message name must be given."
-  //       )
-  //     })
-  //     test("log error on missing callback", () => {
-  //       watch("TEST")
-  //       expect(globalThis.console.error).toHaveBeenCalledWith(
-  //         "Communicator Error:",
-  //         "(watch) the callback parameter must be a function."
-  //       )
-  //     })
+  // ################## WATCH ###################
+  describe("watch", () => {
+    test("log error on missing name", () => {
+      watch()
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(watch) the message name must be given."
+      )
+    })
+    test("log error on missing callback", () => {
+      watch("TEST")
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(watch) the callback parameter must be a function."
+      )
+    })
 
-  //     test("log error if callback is not a function", () => {
-  //       watch("TEST", "callback")
-  //       expect(globalThis.console.error).toHaveBeenCalledWith(
-  //         "Communicator Error:",
-  //         "(watch) the callback parameter must be a function."
-  //       )
-  //     })
+    test("log error if callback is not a function", () => {
+      watch("TEST", "callback")
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(watch) the callback parameter must be a function."
+      )
+    })
 
-  //     test("unknown options", () => {
-  //       watch("TEST", () => null, { unknownOption: true })
-  //       expect(globalThis.console.warn).toHaveBeenCalledWith(
-  //         "Communicator Warning:",
-  //         "(watch) unknown options: unknownOption"
-  //       )
-  //     })
+    test("unknown options", () => {
+      watch("TEST", () => null, { unknownOption: true })
+      expect(globalThis.console.warn).toHaveBeenCalledWith(
+        "Communicator Warning:",
+        "(watch) unknown options: unknownOption"
+      )
+    })
 
-  //     test("create new broadcast channel", () => {
-  //       watch("TEST_12345", () => null)
-  //       expect(BroadcastChannel).toHaveBeenCalledWith(
-  //         expect.stringContaining("TEST_12345")
-  //       )
-  //     })
+    test("watch for events", () => {
+      let callback = jest.fn()
+      watch("TEST", callback)
+      broadcast("TEST")
+      expect(callback).toHaveBeenCalled()
+    })
 
-  //     test("set onmessage", () => {
-  //       const callback = () => null
-  //       bc.onmessage = undefined
-  //       watch("TEST", callback)
-  //       expect(bc.onmessage).not.toBeUndefined()
-  //     })
+    test("multiple watchers", () => {
+      let callback1 = jest.fn()
+      let callback2 = jest.fn()
+      watch("TEST", callback1)
+      watch("TEST", callback2)
+      broadcast("TEST")
+      expect(callback1).toHaveBeenCalled()
+      expect(callback2).toHaveBeenCalled()
+    })
+  })
 
-  //     test("do not call close on channel", () => {
-  //       watch("TEST_12345", () => null)
-  //       expect(bc.close).not.toHaveBeenCalled()
-  //     })
+  // ############### GET ##################
+  describe("get", () => {
+    test("log error on missing name", () => {
+      get()
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(get) the message name must be given."
+      )
+    })
+    test("log error on missing callback", () => {
+      get("TEST")
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(get) the callback parameter must be a function."
+      )
+    })
 
-  //     test("call close", () => {
-  //       const unregister = watch("TEST", () => null)
-  //       unregister()
-  //       expect(bc.close).toHaveBeenCalled()
-  //     })
-  //   })
+    test("log error if callback is not a function", () => {
+      get("TEST", "callback")
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(get) the callback parameter must be a function."
+      )
+    })
 
-  //   // ############### GET ##################
-  //   describe("get", () => {
-  //     test("log error on missing name", () => {
-  //       get()
-  //       expect(globalThis.console.error).toHaveBeenCalledWith(
-  //         "Communicator Error:",
-  //         "(get) the message name must be given."
-  //       )
-  //     })
-  //     test("log error on missing callback", () => {
-  //       get("TEST")
-  //       expect(globalThis.console.error).toHaveBeenCalledWith(
-  //         "Communicator Error:",
-  //         "(get) the callback parameter must be a function."
-  //       )
-  //     })
+    test("unknown options", () => {
+      get("TEST", () => null, { unknownOption: true })
+      expect(globalThis.console.warn).toHaveBeenCalledWith(
+        "Communicator Warning:",
+        "(get) unknown options: unknownOption"
+      )
+    })
 
-  //     test("log error if callback is not a function", () => {
-  //       get("TEST", "callback")
-  //       expect(globalThis.console.error).toHaveBeenCalledWith(
-  //         "Communicator Error:",
-  //         "(get) the callback parameter must be a function."
-  //       )
-  //     })
+    test("execute callback", () => {
+      let callback = jest.fn()
+      onGet("TEST_12345", callback)
+      get("TEST_12345", callback)
+      expect(callback).toHaveBeenCalled()
+    })
+  })
 
-  //     test("unknown options", () => {
-  //       get("TEST", () => null, { unknownOption: true })
-  //       expect(globalThis.console.warn).toHaveBeenCalledWith(
-  //         "Communicator Warning:",
-  //         "(get) unknown options: unknownOption"
-  //       )
-  //     })
+  // ############### ON GET ##################
+  describe("onGet", () => {
+    test("log error on missing name", () => {
+      onGet()
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(onGet) the message name must be given."
+      )
+    })
 
-  //     test("create two broadcast channels", () => {
-  //       get("TEST_12345", () => null)
-  //       expect(BroadcastChannel).toHaveBeenCalledTimes(2)
-  //     })
+    test("log error on missing callback", () => {
+      onGet("TEST")
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(onGet) the callback parameter must be a function."
+      )
+    })
+    test("log error if callback is not a function", () => {
+      onGet("TEST", "callback")
+      expect(globalThis.console.error).toHaveBeenCalledWith(
+        "Communicator Error:",
+        "(onGet) the callback parameter must be a function."
+      )
+    })
+    test("unknown options", () => {
+      onGet("TEST", () => null, { unknownOption: true })
+      expect(globalThis.console.warn).toHaveBeenCalledWith(
+        "Communicator Warning:",
+        "(onGet) unknown options: unknownOption"
+      )
+    })
 
-  //     test("create request broadcast channel", () => {
-  //       get("TEST_12345", () => null)
-  //       expect(BroadcastChannel).toHaveBeenCalledWith(
-  //         expect.stringMatching(/#TEST_12345:GET.+/)
-  //       )
-  //     })
-
-  //     test("create response broadcast channel", () => {
-  //       get("TEST_12345", () => null)
-  //       expect(BroadcastChannel).toHaveBeenCalledWith(
-  //         expect.stringMatching(/#TEST_12345:GET:RESPONSE:.+/)
-  //       )
-  //     })
-
-  //     test("broadcast get message on request channel", () => {
-  //       get("TEST", () => null)
-  //       expect(bc.postMessage).toHaveBeenCalledWith(
-  //         expect.objectContaining({
-  //           payload: { receiverID: expect.anything() },
-  //         })
-  //       )
-  //     })
-
-  //     test("returns a function", () => {
-  //       const cancel = get("TEST", () => null)
-  //       expect(typeof cancel).toEqual("function")
-  //     })
-  //   })
-
-  //   // ############### ON GET ##################
-  //   describe("onGet", () => {
-  //     test("log error on missing name", () => {
-  //       onGet()
-  //       expect(globalThis.console.error).toHaveBeenCalledWith(
-  //         "Communicator Error:",
-  //         "(onGet) the message name must be given."
-  //       )
-  //     })
-
-  //     test("log error on missing callback", () => {
-  //       onGet("TEST")
-  //       expect(globalThis.console.error).toHaveBeenCalledWith(
-  //         "Communicator Error:",
-  //         "(onGet) the callback parameter must be a function."
-  //       )
-  //     })
-  //     test("log error if callback is not a function", () => {
-  //       onGet("TEST", "callback")
-  //       expect(globalThis.console.error).toHaveBeenCalledWith(
-  //         "Communicator Error:",
-  //         "(onGet) the callback parameter must be a function."
-  //       )
-  //     })
-  //     test("unknown options", () => {
-  //       onGet("TEST", () => null, { unknownOption: true })
-  //       expect(globalThis.console.warn).toHaveBeenCalledWith(
-  //         "Communicator Warning:",
-  //         "(onGet) unknown options: unknownOption"
-  //       )
-  //     })
-  //     test("create one broadcast channel", () => {
-  //       onGet("TEST_12345", () => null)
-  //       expect(BroadcastChannel).toHaveBeenCalledTimes(1)
-  //     })
-
-  //     test("create request broadcast channel", () => {
-  //       onGet("TEST_12345", () => null)
-  //       expect(BroadcastChannel).toHaveBeenCalledWith(
-  //         expect.stringMatching(/#TEST_12345:GET$/)
-  //       )
-  //     })
-
-  //     test("create response broadcast channel", () => {
-  //       get("TEST_12345", () => null)
-  //       expect(BroadcastChannel).toHaveBeenCalledWith(
-  //         expect.stringMatching(/#TEST_12345:GET:RESPONSE:.+/)
-  //       )
-  //     })
-
-  //     test("broadcast get message on request channel", () => {
-  //       get("TEST", () => null)
-  //       expect(bc.postMessage).toHaveBeenCalledWith(
-  //         expect.objectContaining({
-  //           payload: { receiverID: expect.anything() },
-  //         })
-  //       )
-  //     })
-
-  //     test("returns a function", () => {
-  //       const cancel = get("TEST", () => null)
-  //       expect(typeof cancel).toEqual("function")
-  //     })
-  //   })
+    test("returns a function", () => {
+      const cancel = onGet("TEST", () => null)
+      expect(typeof cancel).toEqual("function")
+    })
+  })
 })

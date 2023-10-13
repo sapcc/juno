@@ -13,8 +13,7 @@ window.__junoEventListeners = window.__junoEventListeners || {
   get: {},
 }
 
-const log = (...params) =>
-  console.log("Communicator Debug [" + CHANNEL_PREFIX + "]:", ...params)
+const log = (...params) => console.log("Communicator Debug:", ...params)
 const warn = (...params) => console.warn("Communicator Warning:", ...params)
 const error = (...params) => console.error("Communicator Error:", ...params)
 
@@ -105,18 +104,16 @@ const broadcast = (name, data, options = {}) => {
     if (typeof crossWindow !== "boolean")
       warn("(broadcast) crossWindow must be a boolean")
 
-    if (debug)
+    if (debug) {
+      console.log("===================1")
       log(
         `broadcast ${
           crossWindow ? "cross-window" : "intra-window"
         } message ${name} with data `,
         data
       )
-
-    // console.log(
-    //   "==============broadcast",
-    //   window.__junoEventListeners["broadcast"]?.[name]
-    // )
+      console.log("===================2")
+    }
 
     window.__junoEventListeners["broadcast"]?.[name]?.forEach((listener) => {
       try {
@@ -178,7 +175,7 @@ const watch = (name, callback, options = {}) => {
 
     return () => removeListener("broadcast", name, listenerWrapper(callback))
   } catch (e) {
-    warn(e)
+    error(e.message)
   }
 }
 
@@ -216,7 +213,7 @@ const get = (name, callback, options = {}) => {
       }
     })
   } catch (e) {
-    warn(e)
+    error(e.message)
   }
 }
 
@@ -243,7 +240,7 @@ const onGet = (name, callback, options = {}) => {
 
     return () => removeListener("get", name, listenerWrapper(callback))
   } catch (e) {
-    warn(e)
+    error(e.message)
   }
 }
 
