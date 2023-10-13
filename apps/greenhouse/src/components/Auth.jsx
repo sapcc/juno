@@ -82,6 +82,7 @@ const Auth = ({
       id: "auth",
       name: "auth",
       version: "latest",
+      url: "https://elektra.ap.ws2.eu-nl-1.cloud.sap/apps/auth@1.0.4/build/index.js",
       props: {
         issuerUrl: issuerUrl,
         clientId: clientId,
@@ -121,7 +122,7 @@ const Auth = ({
       <div data-app="greenhouse-auth" ref={ref} />
 
       <Transition
-        show={authLoggedIn}
+        show={!!authLoggedIn}
         enter="transition-opacity duration-1000"
         enterFrom="opacity-0"
         enterTo="opacity-100"
