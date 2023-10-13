@@ -90,7 +90,7 @@ const Tester = (root) => {
         `${thisWindowId} (onGet): send data for event TEST_GET to ${sourceWindowId}`,
         getOptions
       )
-      return `Tab ${window.tab}: data for event TEST_GET`
+      return `data for event TEST_GET`
     },
     { crossWindow: true, debug: false }
   )
@@ -110,7 +110,7 @@ const Tester = (root) => {
 
   buttonGet.innerHTML = "GET (CROSS WINDOW)"
   buttonGet.addEventListener("click", () => {
-    console.log(`Tab ${window.tab}:`, `Requesting data for event TEST_GET`)
+    log("", "", `Requesting data for event TEST_GET`, "")
     get(
       "TEST_GET",
       (data, { sourceWindowId, thisWindowId }) =>
@@ -129,7 +129,8 @@ const Tester = (root) => {
 
   buttonBroadcast.innerHTML = "BROADCAST (CROSS WINDOW)"
   buttonBroadcast.addEventListener("click", () => {
-    broadcast("TEST_BROADCAST", `Tab ${window.tab}: TEST_BROADCAST_DATA`, {
+    log("", "", `Broadcasting data for event TEST_BROADCAST`, "")
+    broadcast("TEST_BROADCAST", `TEST_BROADCAST_DATA`, {
       debug: false,
       crossWindow: true,
     })
@@ -137,11 +138,12 @@ const Tester = (root) => {
 
   buttonGetIntraWindow.innerHTML = "GET (INTRA WINDOW)"
   buttonGetIntraWindow.addEventListener("click", () => {
+    log("", "", `Requesting data for event TEST_GET_INTRA_WINDOW`, "")
     get("TEST_GET_INTRA_WINDOW", (data, { sourceWindowId, thisWindowId }) =>
       log(
         sourceWindowId,
         thisWindowId,
-        `${thisWindowId} (get): receive data for event TEST_GET from ${sourceWindowId}`,
+        `${thisWindowId} (get): receive data for event TEST_GET_INTRA_WINDOW from ${sourceWindowId}`,
         data
       )
     )
@@ -149,10 +151,8 @@ const Tester = (root) => {
 
   buttonBroadcastIntraWindow.innerHTML = "BROADCAST (INTRA WINDOW)"
   buttonBroadcastIntraWindow.addEventListener("click", () => {
-    broadcast(
-      "TEST_BROADCAST_INTRA_WINDOW",
-      `Tab ${window.tab}: TEST_BROADCAST_INTRA_WINDOW_DATA`
-    )
+    log("", "", `Broadcasting data for event TEST_BROADCAST_INTRA_WINDOW`, "")
+    broadcast("TEST_BROADCAST_INTRA_WINDOW", `TEST_BROADCAST_INTRA_WINDOW_DATA`)
   })
 
   root.appendChild(buttonGet)
