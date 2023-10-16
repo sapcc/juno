@@ -1,3 +1,5 @@
+const CHANNEL_PREFIX = "JUNO_COMMUNICATOR#"
+
 /**
  *
  * @returns epoch timestamp (count of seconds since 1970)
@@ -113,6 +115,9 @@ const broadcast = (name, data, options = {}) => {
       )
     }
 
+    // backward compatibility
+    name = CHANNEL_PREFIX + name
+
     window.__junoEventListeners["broadcast"]?.[name]?.forEach((listener) => {
       try {
         listener(data, {
@@ -164,6 +169,8 @@ const watch = (name, callback, options = {}) => {
 
     if (debug) log(`watch for message ${name}`)
 
+    // backward compatibility
+    name = CHANNEL_PREFIX + name
     addListener("broadcast", name, listenerWrapper(callback))
 
     return () => removeListener("broadcast", name, listenerWrapper(callback))
@@ -193,6 +200,8 @@ const get = (name, callback, options = {}) => {
 
     if (window.__junoEventListeners["get"]?.[name]?.length === 0) return
 
+    // backward compatibility
+    name = CHANNEL_PREFIX + "GET:" + name
     // console.log("==============get", window.__junoEventListeners["get"]?.[name])
     window.__junoEventListeners["get"][name]?.forEach((listener) => {
       try {
@@ -229,6 +238,8 @@ const onGet = (name, callback, options = {}) => {
       warn(`(onGet) unknown options: ${unknownOptionsKeys.join(", ")}`)
     if (debug) log(`send data for intra-window message ${name}`)
 
+    // backward compatibility
+    name = CHANNEL_PREFIX + "GET:" + name
     addListener("get", name, listenerWrapper(callback))
 
     return () => removeListener("get", name, listenerWrapper(callback))
