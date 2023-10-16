@@ -105,14 +105,12 @@ const broadcast = (name, data, options = {}) => {
       warn("(broadcast) crossWindow must be a boolean")
 
     if (debug) {
-      console.log("===================1")
       log(
         `broadcast ${
           crossWindow ? "cross-window" : "intra-window"
         } message ${name} with data `,
         data
       )
-      console.log("===================2")
     }
 
     window.__junoEventListeners["broadcast"]?.[name]?.forEach((listener) => {
@@ -164,12 +162,7 @@ const watch = (name, callback, options = {}) => {
     if (unknownOptionsKeys.length > 0)
       warn(`(watch) unknown options: ${unknownOptionsKeys.join(", ")}`)
 
-    if (debug)
-      log(
-        `watch for ${
-          crossWindow ? "cross-window" : "intra-window"
-        } message ${name}`
-      )
+    if (debug) log(`watch for message ${name}`)
 
     addListener("broadcast", name, listenerWrapper(callback))
 
@@ -230,7 +223,7 @@ const onGet = (name, callback, options = {}) => {
       throw new Error("(onGet) the message name must be given.")
     if (typeof callback !== "function")
       throw new Error("(onGet) the callback parameter must be a function.")
-    const { debug, crossWindow = false, ...unknownOptions } = options || {}
+    const { debug, ...unknownOptions } = options || {}
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
       warn(`(onGet) unknown options: ${unknownOptionsKeys.join(", ")}`)
