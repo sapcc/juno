@@ -1,5 +1,4 @@
 const CHANNEL_PREFIX = "JUNO_COMMUNICATOR#"
-
 /**
  *
  * @returns epoch timestamp (count of seconds since 1970)
@@ -106,6 +105,9 @@ const broadcast = (name, data, options = {}) => {
     if (typeof crossWindow !== "boolean")
       warn("(broadcast) crossWindow must be a boolean")
 
+    // backward compatibility
+    name = CHANNEL_PREFIX + name
+
     if (debug) {
       log(
         `broadcast ${
@@ -113,10 +115,8 @@ const broadcast = (name, data, options = {}) => {
         } message ${name} with data `,
         data
       )
+      log("broadcast EVENT: " + name)
     }
-
-    // backward compatibility
-    name = CHANNEL_PREFIX + name
 
     window.__junoEventListeners["broadcast"]?.[name]?.forEach((listener) => {
       try {
@@ -167,10 +167,14 @@ const watch = (name, callback, options = {}) => {
     if (unknownOptionsKeys.length > 0)
       warn(`(watch) unknown options: ${unknownOptionsKeys.join(", ")}`)
 
-    if (debug) log(`watch for message ${name}`)
-
     // backward compatibility
     name = CHANNEL_PREFIX + name
+
+    if (debug) {
+      log(`watch for message ${name}`)
+      log("watch EVENT: " + name)
+    }
+
     addListener("broadcast", name, listenerWrapper(callback))
 
     return () => removeListener("broadcast", name, listenerWrapper(callback))
@@ -196,12 +200,17 @@ const get = (name, callback, options = {}) => {
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
       warn(`(get) unknown options: ${unknownOptionsKeys.join(", ")}`)
-    if (debug) log(`get data for intra-window message ${name}`)
-
-    if (window.__junoEventListeners["get"]?.[name]?.length === 0) return
 
     // backward compatibility
     name = CHANNEL_PREFIX + "GET:" + name
+
+    if (debug) {
+      log(`get data for intra-window message ${name}`)
+      log("get EVENT: " + name)
+    }
+
+    if (window.__junoEventListeners["get"]?.[name]?.length === 0) return
+
     // console.log("==============get", window.__junoEventListeners["get"]?.[name])
     window.__junoEventListeners["get"][name]?.forEach((listener) => {
       try {
@@ -236,10 +245,15 @@ const onGet = (name, callback, options = {}) => {
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
       warn(`(onGet) unknown options: ${unknownOptionsKeys.join(", ")}`)
-    if (debug) log(`send data for intra-window message ${name}`)
 
     // backward compatibility
     name = CHANNEL_PREFIX + "GET:" + name
+
+    if (debug) {
+      log(`send data for intra-window message ${name}`)
+      log("onGet EVENT: " + name)
+    }
+
     addListener("get", name, listenerWrapper(callback))
 
     return () => removeListener("get", name, listenerWrapper(callback))
