@@ -1,0 +1,19 @@
+{
+  "cas": [
+    {
+      "name": "2fa-pki",
+      "display_name": "MFA for Keystone API",
+      "description": "Required to enable MFA on the Keystone API"
+    },
+    {
+      "name": "galvani-pki",
+      "display_name": "MFA for Galvani Internet Access",
+      "description": "Required to access the Internet facing API endpoint"
+    },
+    {
+      "name": "mutual_tls-pki",
+      "display_name": "Mutual TLS for machine-to-machine trust relationship",
+      "description": "Required to establish a mutual TLS connection between two servers"
+    }
+  ]
+}

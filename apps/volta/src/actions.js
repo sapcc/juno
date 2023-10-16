@@ -1,4 +1,5 @@
 import { DateTime } from "luxon"
+import { fetchProxy } from "utils"
 
 class HTTPError extends Error {
   constructor(code, message) {

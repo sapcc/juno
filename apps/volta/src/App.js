@@ -1,11 +1,12 @@
 import React, { useEffect, useLayoutEffect } from "react"
-import { oidcSession } from "oauth"
+import { oidcSession, mockedSession } from "oauth"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import styles from "./styles.scss"
 import { AppShellProvider } from "juno-ui-components"
 import AppContent from "./AppContent"
 import { useActions, MessagesProvider } from "messages-provider"
 import { useGlobalsActions, useAuthActions } from "./hooks/useStore"
+// import db from "../db.json"
 
 const App = (props) => {
   const { setData, setLogin, setLogout } = useAuthActions()
@@ -13,9 +14,30 @@ const App = (props) => {
     useGlobalsActions()
   const { addMessage } = useActions()
 
+  // setup the mock db.json
+
+  useEffect(() => {
+    if (props.mock === true || props.mock === "true") {
+      fetchProxyInitDB({
+        peaks: [
+          { id: 1, name: "Ama Dablam", height: "6814m", region: "Khumbu" },
+        ],
+      })
+    }
+  }, [])
+
   // fetch the auth token and save the object globally
   // keep it in the app so the issuerurl and clientid have not to be saved on the state
   const oidc = React.useMemo(() => {
+    // Load mockSession if props.mock is set true
+    if (props.mock === true || props.mock === "true") {
+      return mockedSession({
+        initialLogin: true,
+        onUpdate: (data) => {
+          setData(data)
+        },
+      })
+    }
     if (
       !props?.issuerurl ||
       props?.issuerurl?.length <= 0 ||
