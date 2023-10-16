@@ -76,15 +76,28 @@ const fetchProxy = (urlString, options) => {
     Please use fetchProxyInitDB(jsonData) to initialize the localDB.`)
   }
 
-  // get the path from the url
-  const url = new URL(urlString)
-  const path = url.pathname
+  let url = null
+  try {
+    // get the path from the url
+    url = new URL(urlString)
+  } catch (error) {
+    throw new Error(`Invalid URL: ${urlString}`)
+  }
+
+  let path = url.pathname
+  // if the path starts with api/v with any version or just api, remove it
+  if (path.match(/^\/api\/v\d+\/?/)) {
+    path = path.replace(/^\/api\/v\d+\/?/, "/")
+  } else if (path.match(/^\/api\/?/)) {
+    path = path.replace(/^\/api\/?/, "/")
+  }
+
   // get the object from the path
   const object = path.split("/")[1]
   // get the id from the path
   const id = path.split("/")[2]
 
-  console.log("fetchLocal URL:::", url, path, object, id)
+  console.log("fetchLocal URL:::", urlString, path, object, id)
 
   // if method is not set, use GET as default
   let method = options?.method
@@ -122,7 +135,7 @@ const fetchProxy = (urlString, options) => {
             return resolve(rejectResponse(`No object ${object} found`))
           }
         }
-        resolveFetch(db)
+        resolve(resolveResponse(localDB))
       })
     case "POST":
       return new Promise((resolve, reject) => {

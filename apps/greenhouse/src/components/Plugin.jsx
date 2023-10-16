@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo } from "react"
 import useAppLoader from "../hooks/useAppLoader"
-import { useAppsConfig } from "../hooks/useStore"
-import { Spinner } from "juno-ui-components"
+import { useAppsConfig } from "../components/StoreProvider"
 import { useRef } from "react"
 
 const Plugin = ({ id, active }) => {

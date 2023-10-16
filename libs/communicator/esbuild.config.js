@@ -21,6 +21,7 @@ esbuild
     minify: isProduction,
     target: ["es2020"],
     format: "esm",
+    sourcemap: true,
     external:
       isProduction && !IGNORE_EXTERNALS
         ? Object.keys(pkg.peerDependencies || {})
