@@ -32,6 +32,8 @@ const removeListener = (type, event, listener) => {
   ].filter((l) => l !== listener)
 }
 
+// encapsulate the listener in a wrapper that returns a promise
+// we don't want to wait for the listener to be executed
 const listenerWrapper =
   (callback) =>
   (data, options = {}) => {
@@ -120,7 +122,7 @@ const broadcast = (name, data, options = {}) => {
         } message ${name} with data `,
         data
       )
-      log(`${consumerID ? `(${consumerID})` : ""} broadcast EVENT: ${name}`)
+      // log(`${consumerID ? `(${consumerID})` : ""} broadcast EVENT: ${name}`)
     }
 
     window.__junoEventListeners["broadcast"]?.[name]?.forEach((listener) => {
@@ -177,7 +179,7 @@ const watch = (name, callback, options = {}) => {
 
     if (debug) {
       log(`${consumerID ? `(${consumerID})` : ""} watch for message ${name}`)
-      log(`${consumerID ? `(${consumerID})` : ""} watch EVENT: ${name}`)
+      // log(`${consumerID ? `(${consumerID})` : ""} watch EVENT: ${name}`)
     }
 
     addListener("broadcast", name, listenerWrapper(callback))
@@ -215,7 +217,7 @@ const get = (name, callback, options = {}) => {
           consumerID ? `(${consumerID})` : ""
         } get data for intra-window message ${name}`
       )
-      log(`${consumerID ? `(${consumerID})` : ""} get EVENT: ${name}`)
+      // log(`${consumerID ? `(${consumerID})` : ""} get EVENT: ${name}`)
     }
 
     if (window.__junoEventListeners["get"]?.[name]?.length === 0) return
@@ -266,7 +268,7 @@ const onGet = (name, getDataCallback, options = {}) => {
           consumerID ? `(${consumerID})` : ""
         } send data for intra-window message ${name}`
       )
-      log(`${consumerID ? `(${consumerID})` : ""} onGet EVENT: ${name}`)
+      // log(`${consumerID ? `(${consumerID})` : ""} onGet EVENT: ${name}`)
     }
 
     // is a function (data, options = {}) => data
