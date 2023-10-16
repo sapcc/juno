@@ -37,8 +37,8 @@ const listenerWrapper =
   (data, options = {}) => {
     // Create a promise that will be resolved when the listener is executed
     return new Promise(async (resolve) => {
-      callback(data, options)
-      resolve()
+      const result = callback(data, options)
+      resolve(result)
     })
   }
 
@@ -96,7 +96,12 @@ const broadcast = (name, data, options = {}) => {
       throw new Error("(broadcast) the message name must be given.")
     if (data === undefined) data = null
 
-    const { debug, crossWindow = false, ...unknownOptions } = options || {}
+    const {
+      debug,
+      crossWindow = false,
+      consumerID,
+      ...unknownOptions
+    } = options || {}
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
       warn(`(broadcast) unknown options: ${unknownOptionsKeys.join(", ")}`)
@@ -110,12 +115,12 @@ const broadcast = (name, data, options = {}) => {
 
     if (debug) {
       log(
-        `broadcast ${
+        `${consumerID ? `(${consumerID})` : ""} broadcast ${
           crossWindow ? "cross-window" : "intra-window"
         } message ${name} with data `,
         data
       )
-      log("broadcast EVENT: " + name)
+      log(`${consumerID ? `(${consumerID})` : ""} broadcast EVENT: ${name}`)
     }
 
     window.__junoEventListeners["broadcast"]?.[name]?.forEach((listener) => {
@@ -162,7 +167,7 @@ const watch = (name, callback, options = {}) => {
     if (typeof callback !== "function")
       throw new Error("(watch) the callback parameter must be a function.")
 
-    const { debug, ...unknownOptions } = options || {}
+    const { debug, consumerID, ...unknownOptions } = options || {}
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
       warn(`(watch) unknown options: ${unknownOptionsKeys.join(", ")}`)
@@ -171,8 +176,8 @@ const watch = (name, callback, options = {}) => {
     name = CHANNEL_PREFIX + name
 
     if (debug) {
-      log(`watch for message ${name}`)
-      log("watch EVENT: " + name)
+      log(`${consumerID ? `(${consumerID})` : ""} watch for message ${name}`)
+      log(`${consumerID ? `(${consumerID})` : ""} watch EVENT: ${name}`)
     }
 
     addListener("broadcast", name, listenerWrapper(callback))
@@ -196,7 +201,7 @@ const get = (name, callback, options = {}) => {
       throw new Error("(get) the message name must be given.")
     if (typeof callback !== "function")
       throw new Error("(get) the callback parameter must be a function.")
-    const { debug, getOptions, ...unknownOptions } = options || {}
+    const { debug, getOptions, consumerID, ...unknownOptions } = options || {}
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
       warn(`(get) unknown options: ${unknownOptionsKeys.join(", ")}`)
@@ -205,19 +210,25 @@ const get = (name, callback, options = {}) => {
     name = CHANNEL_PREFIX + "GET:" + name
 
     if (debug) {
-      log(`get data for intra-window message ${name}`)
-      log("get EVENT: " + name)
+      log(
+        `${
+          consumerID ? `(${consumerID})` : ""
+        } get data for intra-window message ${name}`
+      )
+      log(`${consumerID ? `(${consumerID})` : ""} get EVENT: ${name}`)
     }
 
     if (window.__junoEventListeners["get"]?.[name]?.length === 0) return
 
     // console.log("==============get", window.__junoEventListeners["get"]?.[name])
-    window.__junoEventListeners["get"][name]?.forEach((listener) => {
+    window.__junoEventListeners["get"][name]?.forEach((onGetListener) => {
       try {
-        const data = listener(options?.getOptions)
-        callback(data, {
-          sourceWindowId: window.__junoCommunicatorTabId,
-          thisWindowId: window.__junoCommunicatorTabId,
+        // get data from onGetListener
+        onGetListener(options?.getOptions).then((data) => {
+          callback(data, {
+            sourceWindowId: window.__junoCommunicatorTabId,
+            thisWindowId: window.__junoCommunicatorTabId,
+          })
         })
       } catch (e) {
         warn(e)
@@ -235,13 +246,13 @@ const get = (name, callback, options = {}) => {
  * @param {object} options
  * @returns cancel function
  */
-const onGet = (name, callback, options = {}) => {
+const onGet = (name, getDataCallback, options = {}) => {
   try {
     if (typeof name !== "string")
       throw new Error("(onGet) the message name must be given.")
-    if (typeof callback !== "function")
+    if (typeof getDataCallback !== "function")
       throw new Error("(onGet) the callback parameter must be a function.")
-    const { debug, ...unknownOptions } = options || {}
+    const { debug, consumerID, ...unknownOptions } = options || {}
     const unknownOptionsKeys = Object.keys(unknownOptions)
     if (unknownOptionsKeys.length > 0)
       warn(`(onGet) unknown options: ${unknownOptionsKeys.join(", ")}`)
@@ -250,13 +261,20 @@ const onGet = (name, callback, options = {}) => {
     name = CHANNEL_PREFIX + "GET:" + name
 
     if (debug) {
-      log(`send data for intra-window message ${name}`)
-      log("onGet EVENT: " + name)
+      log(
+        `${
+          consumerID ? `(${consumerID})` : ""
+        } send data for intra-window message ${name}`
+      )
+      log(`${consumerID ? `(${consumerID})` : ""} onGet EVENT: ${name}`)
     }
 
-    addListener("get", name, listenerWrapper(callback))
+    // is a function (data, options = {}) => data
+    const onGetListener = listenerWrapper(getDataCallback)
 
-    return () => removeListener("get", name, listenerWrapper(callback))
+    addListener("get", name, onGetListener)
+
+    return () => removeListener("get", name, listenerWrapper(getDataCallback))
   } catch (e) {
     error(e.message)
   }
