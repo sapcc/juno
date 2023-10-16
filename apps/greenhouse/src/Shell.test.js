@@ -5,12 +5,19 @@ import { render, act } from "@testing-library/react"
 import { screen } from "shadow-dom-testing-library"
 import Shell from "./Shell"
 import Auth from "./components/Auth"
+import StoreProvider from "./components/StoreProvider"
 
 jest.mock("communicator")
 jest.mock("./components/Auth")
 
 test("renders app", async () => {
-  await act(() => render(<Shell />))
+  await act(() =>
+    render(
+      <StoreProvider>
+        <Shell />
+      </StoreProvider>
+    )
+  )
 
   expect(Auth).toHaveBeenCalled()
 })

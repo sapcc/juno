@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useState, useMemo, useRef } from "react"
-import { useGlobalsAssetsHost } from "./useStore"
+import { useGlobalsAssetsHost } from "../components/StoreProvider"
 
 // load widget-loader with importmap-only attribute to
 // ensure the importmap is loaded

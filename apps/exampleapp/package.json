@@ -38,7 +38,8 @@
     "tailwindcss": "^3.3.1",
     "url-state-provider": "*",
     "util": "^0.12.4",
-    "zustand": "^4.1.1"
+    "utils": "*",
+    "zustand": "4.3.7"
   },
   "scripts": {
     "test": "jest",
@@ -54,10 +55,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "url-state-provider": "*",
-    "zustand": "^4.1.1"
+    "utils": "*",
+    "zustand": "4.3.7"
   },
   "importmapExtras": {
-    "zustand/middleware": "^4.1.1"
+    "zustand/middleware": "4.3.7"
   },
   "appProps": {
     "theme": {
@@ -71,6 +73,11 @@
     "embedded": {
       "value": "false",
       "description": "Set to true if app is to be embedded in another existing app or page, like e.g. Elektra.  If set to true the app won't render a page header/footer and instead render only the content"
+    },
+    "mockAPI": {
+      "value": "false",
+      "type": "optional",
+      "description": "use mocked API (only in dev)"
     }
   },
   "appPreview": true

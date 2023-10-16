@@ -45,3 +45,9 @@ ChildrenOnly.args = {
     "Option 1"
   ]
 }
+
+export const withLabel = Template.bind({})
+withLabel.args = {
+  value: "option-1",
+  label: "Option 1"
+}
