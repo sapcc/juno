@@ -45,15 +45,10 @@ const useAlertmanagerAPI = (apiEndpoint) => {
     setIsLoading: setSilencesIsLoading,
   } = useSilencesActions()
 
-  // Create a web worker to get updates from the alert manager api
+  //Setup web workers
   useEffect(() => {
-    if (!apiEndpoint) return
-
     let cleanupAlertsWorker
     let cleanupSilencesWorker
-
-    // set alerts state to loading
-    setAlertsIsLoading(true)
 
     alertsWorker.then(({ createWorker, stopWorker }) => {
       const worker = createWorker()
@@ -78,23 +73,11 @@ const useAlertmanagerAPI = (apiEndpoint) => {
         }
       }
 
-      // initial config
-      worker.postMessage({
-        action: "ALERTS_CONFIGURE",
-        fetchVars: {
-          apiEndpoint,
-          options: {},
-        },
-        debug: true,
-      })
-
       cleanupAlertsWorker = () => {
         console.log("Worker::Terminating Alerts Worker")
         return stopWorker()
       }
     })
-
-    setSilencesIsLoading(true)
 
     silencesWorker.then(({ createWorker, stopWorker }) => {
       const worker = createWorker()
@@ -123,12 +106,6 @@ const useAlertmanagerAPI = (apiEndpoint) => {
         }
       }
 
-      // initial config
-      worker.postMessage({
-        action: "SILENCES_CONFIGURE",
-        apiEndpoint: apiEndpoint,
-      })
-
       cleanupSilencesWorker = () => {
         console.log("Worker::Terminating Silences Worker")
         return stopWorker()
@@ -139,60 +116,67 @@ const useAlertmanagerAPI = (apiEndpoint) => {
       cleanupAlertsWorker && cleanupAlertsWorker()
       cleanupSilencesWorker && cleanupSilencesWorker()
     }
+  }, [])
+
+  // Reconfigure the workers each time we get a new endpoint
+  useEffect(() => {
+    if (!apiEndpoint) return
+
+    // set alerts state to loading
+    setAlertsIsLoading(true)
+    alertsWorker.then(({ createWorker, stopWorker }) => {
+      const worker = createWorker()
+      // initial config
+      worker.postMessage({
+        action: "ALERTS_CONFIGURE",
+        fetchVars: {
+          apiEndpoint,
+          options: {},
+        },
+        debug: true,
+      })
+    })
+
+    setSilencesIsLoading(true)
+    silencesWorker.then(({ createWorker, stopWorker }) => {
+      const worker = createWorker()
+      // initial config
+      worker.postMessage({
+        action: "SILENCES_CONFIGURE",
+        apiEndpoint: apiEndpoint,
+      })
+    })
   }, [apiEndpoint])
 
-  // useEffect(() => {
-  //   if (!apiEndpoint) return
-
-  //   alertsWorker.then((worker) => {
-  //     console.log(
-  //       "worker::sending api endpoints!!!!!!!!!!!!!!!!",
-  //       apiEndpoint,
-  //       worker
-  //     )
-  //     worker.postMessage({
-  //       action: "ALERTS_CONFIGURE",
-  //       fetchVars: {
-  //         apiEndpoint,
-  //         options: {},
-  //       },
-  //       debug: true,
-  //     })
-  //   })
-  //   silencesWorker.then((worker) => {
-  //     worker.postMessage({
-  //       action: "SILENCES_CONFIGURE",
-  //       apiEndpoint: apiEndpoint,
-  //     })
-  //   })
-  // }, [apiEndpoint])
-
   // enable/disable watching in the workers
-  // useEffect(() => {
-  //   if (isUserActive === undefined) return
-  //   alertsWorker.then((worker) => {
-  //     worker.postMessage({
-  //       action: "ALERTS_CONFIGURE",
-  //       watch: isUserActive,
-  //     })
-  //   })
-  //   loadSilencesWorker.then((worker) => {
-  //     worker.postMessage({
-  //       action: "SILENCES_CONFIGURE",
-  //       watch: isUserActive,
-  //     })
-  //   })
-  // }, [isUserActive])
+  useEffect(() => {
+    if (isUserActive === undefined) return
+    alertsWorker.then(({ createWorker, stopWorker }) => {
+      const worker = createWorker()
+      worker.postMessage({
+        action: "ALERTS_CONFIGURE",
+        watch: isUserActive,
+      })
+    })
+    silencesWorker.then(({ createWorker, stopWorker }) => {
+      const worker = createWorker()
+      worker.postMessage({
+        action: "SILENCES_CONFIGURE",
+        watch: isUserActive,
+      })
+    })
+  }, [isUserActive])
 
   // as soon as we have locally some silences we refetch the them
-  // useEffect(() => {
-  //   if (!useSilencesLocalItems || useSilencesLocalItems?.length <= 0) return
-  //   loadSilencesWorker.then((worker) => {
-  //     worker.postMessage({
-  //       action: "SILENCES_FETCH",
-  //     })
-  //   })
-  // }, [useSilencesLocalItems])
+  useEffect(() => {
+    if (!useSilencesLocalItems || useSilencesLocalItems?.length <= 0) return
+    silencesWorker.then(({ createWorker, stopWorker }) => {
+      const worker = createWorker()
+      worker.postMessage({
+        action: "SILENCES_FETCH",
+      })
+    })
+  }, [useSilencesLocalItems])
 }
 
 export default useAlertmanagerAPI

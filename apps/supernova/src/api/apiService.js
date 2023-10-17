@@ -4,7 +4,7 @@
  */
 
 // default value for watch interval
-const DEFAULT_INTERVAL = 10000
+const DEFAULT_INTERVAL = 300000
 
 /**
  * This function implements the actual service.
