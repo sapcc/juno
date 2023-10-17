@@ -4,6 +4,7 @@ import { Stack } from "../Stack/index"
 import { Icon } from "../Icon/index.js";
 
 const topNavigationStyles = `
+  jn-bg-theme-global-bg
   jn-gap-6
   jn-px-6
   jn-py-1.5
