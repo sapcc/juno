@@ -135,7 +135,7 @@ const PluginNav = () => {
         {loggedIn ? (
           <>
             <Avatar
-              url={authData?.parsed?.avatarUrl.small}
+              url={authData?.parsed?.avatarUrl?.small}
               userID={authData?.parsed?.loginName}
             />
             <Button variant="subdued" size="small" onClick={() => logout()}>
