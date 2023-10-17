@@ -88,7 +88,7 @@ AppShell.propTypes = {
   topNavigation: PropTypes.element,
   /** Optional. If specified expects a `<SideNavigation>` component. If undefined no side navigation is rendered. */ 
   sideNavigation: PropTypes.element,
-  /** Heading for the content area */
+  /** OBSOLETE: The contentHeading prop is obsolete and will be removed in a future version. In order to render a content heading, use a `<ContentHeading>` element as a child in your main content. */
   contentHeading: PropTypes.string,
   /** Optional: Defaults to false. Set embedded to true if app is to be rendered embedded in another app/page. 
    * In this case only the content area and children are rendered, no header/footer or remaining layout components */
