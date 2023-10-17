@@ -178,8 +178,8 @@ describe("ComboBox", () => {
   test("fires an onChange handler as passed when the user selects an option", async () => {
     render(
       <ComboBox onChange={mockOnChange}>
-        <ComboBoxOption value="option 1" name="option 1">Option 1</ComboBoxOption>
-        <ComboBoxOption value="option 2" name="option 2">Option 2</ComboBoxOption>
+        <ComboBoxOption value="option 1">Option 1</ComboBoxOption>
+        <ComboBoxOption value="option 2">Option 2</ComboBoxOption>
       </ComboBox>
     )
     const cbox = screen.getByRole("combobox")
@@ -188,7 +188,7 @@ describe("ComboBox", () => {
     expect(cbutton).toBeInTheDocument()
     await userEvent.click(cbutton)
     expect(screen.getByRole("listbox")).toBeInTheDocument()
-    await userEvent.click(screen.getByRole("option", { name: "option 2" }))
+    await userEvent.click(screen.getByRole("option", { name: "Option 2" }))
     expect(mockOnChange).toHaveBeenCalled()
   })
   

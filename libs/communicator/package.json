@@ -1,6 +1,6 @@
 {
   "name": "communicator",
-  "version": "2.1.5",
+  "version": "2.2.5",
   "description": "Send and receive across tabs",
   "source": "src/index.js",
   "main": "build/index.js",

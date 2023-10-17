@@ -74,36 +74,6 @@ describe("fetchProxy lib", () => {
       expect(() => fetchProxy("/peaks", { mock: true })).toThrowError()
     })
 
-    test("ignore api/v1", async () => {
-      const data = await fetchProxy("http://localhost:3000/api/v1/peaks", {
-        mock: true,
-      })
-      expect(await data.json()).toStrictEqual([
-        {
-          id: 1,
-          name: "Mont Blanc",
-          height: 4808,
-          country: "France",
-          range: "Alps",
-        },
-      ])
-    })
-
-    test("ignore api", async () => {
-      const data = await fetchProxy("http://localhost:3000/api/peaks", {
-        mock: true,
-      })
-      expect(await data.json()).toStrictEqual([
-        {
-          id: 1,
-          name: "Mont Blanc",
-          height: 4808,
-          country: "France",
-          range: "Alps",
-        },
-      ])
-    })
-
     test("GET all peaks", async () => {
       const data = await fetchProxy("http://localhost:3000/peaks", {
         mock: true,
@@ -170,6 +140,103 @@ describe("fetchProxy lib", () => {
         mock: true,
       })
       expect(await data.json()).toStrictEqual("Object deleted")
+    })
+  })
+
+  describe("fetch with rewriteRoutes", () => {
+    beforeEach(() => {
+      // reset localDB
+      fetchProxyInitDB(null)
+
+      // setup mock db.json
+      const db = {
+        peaks: [
+          {
+            id: 1,
+            name: "Mont Blanc",
+            height: 4808,
+            country: "France",
+            range: "Alps",
+          },
+        ],
+      }
+
+      const rewriteRoutes = {
+        "/api/v1/(.*)": "/$1", // Replace '/api/v1' with an empty string
+        "^/api": "", // Replace '/api' with an empty string
+      }
+
+      const test = fetchProxyInitDB(db, { rewriteRoutes })
+    })
+
+    test("ignore prefix api/v1", async () => {
+      const data = await fetchProxy("http://localhost:3000/api/v1/peaks", {
+        mock: true,
+      })
+      expect(await data.json()).toStrictEqual([
+        {
+          id: 1,
+          name: "Mont Blanc",
+          height: 4808,
+          country: "France",
+          range: "Alps",
+        },
+      ])
+    })
+    test("ignore api", async () => {
+      const data = await fetchProxy("http://localhost:3000/api/peaks", {
+        mock: true,
+      })
+      expect(await data.json()).toStrictEqual([
+        {
+          id: 1,
+          name: "Mont Blanc",
+          height: 4808,
+          country: "France",
+          range: "Alps",
+        },
+      ])
+    })
+  })
+
+  describe("fetch with rewriteResponses", () => {
+    beforeEach(() => {
+      // reset localDB
+      fetchProxyInitDB(null)
+
+      // setup mock db.json
+      const db = {
+        peaks: [
+          {
+            id: 1,
+            name: "Mont Blanc",
+            height: 4808,
+            country: "France",
+            range: "Alps",
+          },
+        ],
+      }
+
+      const rewriteResponses = {
+        POST: {
+          "^/peaks": { certificate: "testCertificate" },
+        },
+      }
+
+      fetchProxyInitDB(db, { rewriteResponses })
+    })
+
+    test("POST", async () => {
+      const data = await fetchProxy("http://localhost:3000/peaks", {
+        method: "POST",
+        body: JSON.stringify({
+          name: "test",
+        }),
+        mock: true,
+      })
+      expect(await data.json()).toStrictEqual({
+        certificate: "testCertificate",
+      })
     })
   })
 })
