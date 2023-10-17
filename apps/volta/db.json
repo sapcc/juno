@@ -15,5 +15,27 @@
       "display_name": "Mutual TLS for machine-to-machine trust relationship",
       "description": "Required to establish a mutual TLS connection between two servers"
     }
+  ],
+  "2fa-pki": [
+    {
+      "serial": "03:05:4a:ed:6e:d5:00:9d:81:ce:de:cc:4e:92:36:62:8c:ba:19:fd",
+      "status": "Expired",
+      "email": "",
+      "identity": "D0123456",
+      "name": "test4444",
+      "description": "fasdfasdfa",
+      "not_after": "2022-10-03T12:27:03",
+      "not_before": "2022-09-30T12:26:33"
+    },
+    {
+      "serial": "05:41:6a:49:4d:de:14:03:70:5b:68:fc:fe:c4:ac:74:8b:57:cf:15",
+      "status": "Revoked",
+      "email": "",
+      "identity": "D0123456",
+      "name": "today2",
+      "description": "",
+      "not_after": "2023-07-07T14:16:44",
+      "not_before": "2023-05-08T14:16:14"
+    }
   ]
 }

@@ -6,7 +6,8 @@ import { AppShellProvider } from "juno-ui-components"
 import AppContent from "./AppContent"
 import { useActions, MessagesProvider } from "messages-provider"
 import { useGlobalsActions, useAuthActions } from "./hooks/useStore"
-// import db from "../db.json"
+import { fetchProxyInitDB } from "utils"
+import db from "../db.json"
 
 const App = (props) => {
   const { setData, setLogin, setLogout } = useAuthActions()
@@ -18,11 +19,7 @@ const App = (props) => {
 
   useEffect(() => {
     if (props.mock === true || props.mock === "true") {
-      fetchProxyInitDB({
-        peaks: [
-          { id: 1, name: "Ama Dablam", height: "6814m", region: "Khumbu" },
-        ],
-      })
+      fetchProxyInitDB(db)
     }
   }, [])
 

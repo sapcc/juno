@@ -12,7 +12,7 @@ export const getCAs = (bearerToken, endpoint, disabledCAs) => {
     queryKey: ["cas", bearerToken, endpoint, disabledCAs],
     queryFn: cas,
     // The query will not execute until the bearerToken exists
-    enabled: !!bearerToken,
+    enabled: !!bearerToken && !!endpoint,
   })
 }
 

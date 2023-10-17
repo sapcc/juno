@@ -6,13 +6,7 @@ import React, {
   forwardRef,
   useCallback,
 } from "react"
-import {
-  Button,
-  Stack,
-  TextInputRow,
-  TextareaRow,
-  Form,
-} from "juno-ui-components"
+import { Button, Stack, TextInput, Textarea, Form } from "juno-ui-components"
 import {
   generateKeys,
   pemEncodeKey,
@@ -128,7 +122,7 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
                 })
                 // return response to the parent
                 if (onFormSuccess) {
-                  onFormSuccess(pemPrivateKey, data?.certificate)
+                  onFormSuccess(pemPrivateKey, data?.csr)
                 }
                 // Invalidate every query with a key that starts with `certificates`
                 queryClient.invalidateQueries({ queryKey: ["certificates"] })
@@ -192,47 +186,51 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
 
   return (
     <Form autoComplete="off" onSubmit={(e) => e.preventDefault()}>
-      <TextInputRow
-        label="Name"
-        required
-        onChange={(e) => {
-          onAttrChanged("name", e.target.value)
-        }}
-        helptext={
-          showValidation["name"] && errorHelpText(showValidation["name"])
-        }
-        className={showValidation["name"] && "text-theme-danger border-2"}
-      />
-      <TextInputRow
-        label="Description"
-        onChange={(e) => {
-          onAttrChanged("description", e.target.value)
-        }}
-        helptext={
-          showValidation["description"] &&
-          errorHelpText(showValidation["description"])
-        }
-        className={
-          showValidation["description"] && "text-theme-danger border-2"
-        }
-      />
-      <TextInputRow
-        label="User ID"
-        value={formState.identity}
-        onChange={(e) => {
-          onAttrChanged("identity", e.target.value?.toUpperCase())
-        }}
-        helptext={
-          showValidation["identity"]
-            ? errorHelpText(showValidation["identity"])
-            : "Owner for whom the certificate will be issued. Owner can be also a technical user or technical team user which belongs to the user who is creating the SSO certificate."
-        }
-        className={showValidation["identity"] && "text-theme-danger border-2"}
-      />
+      <Stack gap="2" direction="vertical" distribution="end">
+        <TextInput
+          label="Name"
+          required
+          onChange={(e) => {
+            onAttrChanged("name", e.target.value)
+          }}
+          helptext={
+            showValidation["name"] && errorHelpText(showValidation["name"])
+          }
+          className={
+            showValidation["name"] && "text-theme-danger border-2 mb-2"
+          }
+        />
+        <TextInput
+          label="Description"
+          onChange={(e) => {
+            onAttrChanged("description", e.target.value)
+          }}
+          helptext={
+            showValidation["description"] &&
+            errorHelpText(showValidation["description"])
+          }
+          className={
+            showValidation["description"] && "text-theme-danger border-2"
+          }
+        />
+        <TextInput
+          label="User ID"
+          value={formState.identity}
+          onChange={(e) => {
+            onAttrChanged("identity", e.target.value?.toUpperCase())
+          }}
+          helptext={
+            showValidation["identity"]
+              ? errorHelpText(showValidation["identity"])
+              : "Owner for whom the certificate will be issued. Owner can be also a technical user or technical team user which belongs to the user who is creating the SSO certificate."
+          }
+          className={showValidation["identity"] && "text-theme-danger border-2"}
+        />
+      </Stack>
       <Stack alignment="center" className="mb-2" distribution="end">
         <Button label="Generate CSR" size="small" onClick={generateCSR} />
       </Stack>
-      <TextareaRow
+      <Textarea
         required
         label="Certificate sign request (CSR)"
         value={formState.csr}
@@ -246,6 +244,7 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
             : textAreaHelpText()
         }
         className={showValidation["csr"] && "text-theme-danger border-2"}
+        rows="8"
       />
     </Form>
   )
