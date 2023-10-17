@@ -62,8 +62,6 @@ const alertsService = new ApiService({
 self.onmessage = (e) => {
   const action = e.data.action
 
-  console.log("WAAAAAAAAAAAAAAAAAAAAA:::::", e)
-
   switch (action) {
     case "ALERTS_CONFIGURE":
       console.log(

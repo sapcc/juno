@@ -28,15 +28,9 @@ const createWorker = (path) => {
     })
 }
 
+// create workers
 const alertsWorker = createWorker("workers/alerts.js")
-
-const silencesWorker = fetch(new URL("workers/silences.js", import.meta.url))
-  .then((r) => r.blob())
-  .then((blob) => {
-    var blobUrl = window.URL.createObjectURL(blob)
-
-    return new Worker(blobUrl, { type: "module" })
-  })
+const silencesWorker = createWorker("workers/silences.js")
 
 const useAlertmanagerAPI = (apiEndpoint) => {
   const {
@@ -63,8 +57,8 @@ const useAlertmanagerAPI = (apiEndpoint) => {
 
     alertsWorker.then(({ createWorker, stopWorker }) => {
       const worker = createWorker()
-
       console.log("Worker::Setting up ALERTS worker", worker)
+
       // receive messages from worker
       worker.onmessage = (e) => {
         const action = e.data.action
@@ -102,8 +96,10 @@ const useAlertmanagerAPI = (apiEndpoint) => {
 
     setSilencesIsLoading(true)
 
-    silencesWorker.then((worker) => {
+    silencesWorker.then(({ createWorker, stopWorker }) => {
+      const worker = createWorker()
       console.log("Worker::Setting up SILENCES worker")
+
       // receive messages from worker
       worker.onmessage = (e) => {
         const action = e.data.action
@@ -135,7 +131,7 @@ const useAlertmanagerAPI = (apiEndpoint) => {
 
       cleanupSilencesWorker = () => {
         console.log("Worker::Terminating Silences Worker")
-        return worker.terminate()
+        return stopWorker()
       }
     })
 
