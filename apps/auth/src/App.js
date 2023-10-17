@@ -9,9 +9,10 @@ const enrichAuthData = (data) => {
   const enrichedAuth = { ...data }
   const userId = data.auth?.parsed?.loginName
 
-  enrichedAuth.auth.parsed["avatarUrl"] = {
-    small: `https://avatars.wdf.sap.corp/avatar/${userId}?size=24x24`,
-  }
+  if (enrichAuthData?.auth?.data?.parsed)
+    enrichedAuth.auth.parsed["avatarUrl"] = {
+      small: `https://avatars.wdf.sap.corp/avatar/${userId}?size=24x24`,
+    }
 
   return enrichedAuth
 }
