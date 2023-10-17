@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from "react"
 
-import { AppShellProvider, Button } from "juno-ui-components"
+import { AppShellProvider } from "juno-ui-components"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
 import {
@@ -85,7 +85,6 @@ function App(props = {}) {
 
   return (
     <MessagesProvider>
-      <Button label="Default" onClick={() => setTest(!test)} />
       <CustomAppShell>
         <AsyncWorker endpoint={props.endpoint} />
         <AppContent props={props} />
