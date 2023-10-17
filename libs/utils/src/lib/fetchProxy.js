@@ -19,9 +19,24 @@ const rejectResponse = (error) => {
 }
 
 let localDB = null
+let rewriteRoutes = null
+let rewriteResponses = null
 
-// setup the mock db.json
-export const fetchProxyInitDB = (jsonData) => {
+// fetchProxyInitDB is used to initialize the localDB
+// @jsonData: json object with the data to be used as localDB
+// @options: object with the options
+//   rewriteRoutes: object with the rewrite rules for the routes. Example:
+//     {
+//       "^/api/v1/peaks": "/peaks",
+//       "^/api/v1/peaks/([0-9]+)": "/peaks/$1",
+//     }
+//   rewriteResponses: object with the rewrite rules for the responses. Example:
+//     {
+//       POST: {
+//         "^/peaks": { certificate: "testCertificate" },
+//       },
+//     }
+export const fetchProxyInitDB = (jsonData, options = {}) => {
   // set localDB to null to reset it
   if (jsonData === null) {
     localDB = null
@@ -40,6 +55,67 @@ export const fetchProxyInitDB = (jsonData) => {
   if (typeof jsonData !== "object") {
     // create a new custom error to return
     throw new Error(`It seems that jsonData is not a valid JSON object.`)
+  }
+
+  // check if there are custom routes in the options
+  if (options?.rewriteRoutes) {
+    // Filter out non-regex rules
+    const regexRules = Object.fromEntries(
+      Object.entries(options?.rewriteRoutes).filter(([key]) => {
+        // check if key is a regex expresion
+        try {
+          new RegExp(key)
+          return true
+        } catch (error) {
+          // warn if expresion is not regex
+          console.warn(
+            `It seems that the given rewrite rule ${key} for routes is not a valid regex expresion.`
+          )
+          return false
+        }
+      })
+    )
+    // save them globally
+    rewriteRoutes = regexRules
+  }
+
+  if (options?.rewriteResponses) {
+    const allowedMethods = ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"] //'PATCH'
+    const regexResponses = {}
+
+    Object.keys(options?.rewriteResponses).forEach((key) => {
+      // check if method is allowed
+      if (!allowedMethods.includes(key)) {
+        // warn if method is not allowed
+        console.warn(
+          `It seems that the given rewrite rule ${key} for responses is not a valid method.`
+        )
+        return
+      }
+
+      // check for each method defined if the key is a regex expresion
+      const methodRegex = options?.rewriteResponses[key]
+      // Filter out non-regex rules
+      const methodRegexResponses = Object.fromEntries(
+        Object.entries(methodRegex).filter(([key]) => {
+          // check if key is a regex expresion
+          try {
+            new RegExp(key)
+            return true
+          } catch (error) {
+            // warn if expresion is not regex
+            console.warn(
+              `It seems that the given rewrite rule ${key} for responses is not a valid regex expresion.`
+            )
+            return false
+          }
+        })
+      )
+      regexResponses[key] = methodRegexResponses
+    })
+
+    // set the responseRewriteRules
+    rewriteResponses = regexResponses
   }
 
   // check if the given json is valid and also checks if the jsondata are a collection of key value pairs with values as arrays
@@ -84,24 +160,40 @@ const fetchProxy = (urlString, options) => {
     throw new Error(`Invalid URL: ${urlString}`)
   }
 
+  // if method is not set, use GET as default
+  let method = options?.method
+  if (!method) method = "GET"
+
   let path = url.pathname
-  // if the path starts with api/v with any version or just api, remove it
-  if (path.match(/^\/api\/v\d+\/?/)) {
-    path = path.replace(/^\/api\/v\d+\/?/, "/")
-  } else if (path.match(/^\/api\/?/)) {
-    path = path.replace(/^\/api\/?/, "/")
+
+  // check if there are custom responses for the given path and method and save it for later
+  let customResponse = null
+  if (rewriteResponses?.[method]) {
+    const customResponsePerMethod = rewriteResponses[method]
+    for (const regexPattern in customResponsePerMethod) {
+      const regex = new RegExp(regexPattern)
+      if (regex.test(path)) {
+        customResponse = resolveResponse(customResponsePerMethod[regexPattern])
+        break
+      }
+    }
+  }
+
+  // check if there are custom routes
+  if (rewriteRoutes) {
+    for (const regexPattern in rewriteRoutes) {
+      const regex = new RegExp(regexPattern)
+      if (regex.test(path)) {
+        path = path.replace(regex, rewriteRoutes[regexPattern])
+        break
+      }
+    }
   }
 
   // get the object from the path
   const object = path.split("/")[1]
   // get the id from the path
   const id = path.split("/")[2]
-
-  console.log("fetchLocal URL:::", urlString, path, object, id)
-
-  // if method is not set, use GET as default
-  let method = options?.method
-  if (!method) method = "GET"
 
   const body = options?.body
   // switch over the header method
@@ -123,19 +215,21 @@ const fetchProxy = (urlString, options) => {
               // id is given
               if (index >= 0) {
                 // id is found
-                resolve(resolveResponse(localDB?.[object]?.[index]))
+                resolve(
+                  customResponse || resolveResponse(localDB?.[object]?.[index])
+                )
               } else {
                 return resolve(
                   rejectResponse(`No id ${id} for object ${object} found`)
                 )
               }
             }
-            return resolve(resolveResponse(localDB?.[object]))
+            return resolve(customResponse || resolveResponse(localDB?.[object]))
           } else {
             return resolve(rejectResponse(`No object ${object} found`))
           }
         }
-        resolve(resolveResponse(localDB))
+        resolve(resolveResponse(customResponse || localDB))
       })
     case "POST":
       return new Promise((resolve, reject) => {
@@ -159,7 +253,7 @@ const fetchProxy = (urlString, options) => {
           newBody.id = (maxObject?.id || 0) + 1
         }
         localDB?.[object].push(newBody)
-        resolve(resolveResponse(newBody))
+        resolve(customResponse || resolveResponse(newBody))
       })
     case "PUT":
       return new Promise((resolve, reject) => {
@@ -182,7 +276,7 @@ const fetchProxy = (urlString, options) => {
             ...JSON.parse(body),
             id: localDB[object][index].id,
           }
-          resolve(resolveResponse(localDB[object][index]))
+          resolve(customResponse || resolveResponse(localDB[object][index]))
         } else {
           return resolve(rejectResponse(`No item with id '${id}' found`))
         }
@@ -203,7 +297,7 @@ const fetchProxy = (urlString, options) => {
         // delete object with the id
         if (index >= 0) {
           localDB[object].splice(index, 1)
-          resolve(resolveResponse("Object deleted"))
+          resolve(customResponse || resolveResponse("Object deleted"))
         } else {
           return resolve(rejectResponse(`No item with id '${id}' found`))
         }
