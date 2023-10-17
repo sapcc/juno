@@ -21,24 +21,24 @@ Default.args = {
 
 export const WithIcon = Template.bind({})
 WithIcon.args = {
-  label: "Navigation Item",
+  label: "Navigation Item With Icon",
   icon: "warning"
 }
 
 export const AsAnchor = Template.bind({})
 AsAnchor.args = {
-  label: "Navigation Item",
+  label: "Navigation Item as Anchor",
   href: "#"
 }
 
 export const AsButton = Template.bind({})
 AsButton.args = {
-  label: "Navigation Item",
+  label: "Navigation Item as Button",
   onClick: () => {console.log("clicked")}
 }
 
 export const Active = Template.bind({})
 Active.args = {
-  label: "Navigation Item",
+  label: "Active Navigation Item",
   active: true
 }
