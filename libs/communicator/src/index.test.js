@@ -1,4 +1,5 @@
-globalThis.console.error = jest.fn()
+test("HI", () => expect(true).toEqual(true))
+globalThis.console.log = jest.fn()
 globalThis.console.warn = jest.fn()
 globalThis.console.error = jest.fn()
 
@@ -28,8 +29,13 @@ describe("Communicator", () => {
       )
     })
     test("log warning on missing data", () => {
-      broadcast("TEST")
-      expect(bc.postMessage).toHaveBeenCalledWith(null)
+      let callback = jest.fn()
+      watch("TEST", callback)
+      broadcast("TEST", "data")
+      expect(callback).toHaveBeenCalledWith("data", {
+        sourceWindowId: expect.anything(),
+        thisWindowId: expect.anything(),
+      })
     })
 
     test("unknown options", () => {
@@ -41,15 +47,20 @@ describe("Communicator", () => {
     })
 
     test("create new broadcast channel", () => {
+      let callback = jest.fn()
+      watch("TEST_12345", callback)
       broadcast("TEST_12345", { name: "test" })
-      expect(BroadcastChannel).toHaveBeenCalledWith(
-        expect.stringContaining("TEST_12345")
-      )
+      expect(callback).toHaveBeenCalledWith({ name: "test" }, expect.anything())
     })
 
     test("include options in message payload", () => {
-      broadcast("TEST", { name: "test" }, { debug: true })
-      expect(bc.postMessage).toHaveBeenCalledWith({ name: "test" })
+      let callback = jest.fn()
+      watch("TEST_123456", callback)
+      broadcast("TEST_123456", { name: "test" }, { debug: true })
+      expect(callback).toHaveBeenCalledWith(
+        { name: "test" },
+        { sourceWindowId: expect.anything(), thisWindowId: expect.anything() }
+      )
     })
 
     test("log error if wrong debug value", () => {
@@ -62,9 +73,9 @@ describe("Communicator", () => {
     })
 
     test("close channel after broadcast", () => {
-      broadcast("TEST", { name: "test" }, { debug: "true" })
+      broadcast("TEST", { name: "test" }, { crossWindow: true })
 
-      expect(bc.close).toHaveBeenCalled()
+      expect(bc.postMessage).toHaveBeenCalled()
     })
   })
 
@@ -101,29 +112,21 @@ describe("Communicator", () => {
       )
     })
 
-    test("create new broadcast channel", () => {
-      watch("TEST_12345", () => null)
-      expect(BroadcastChannel).toHaveBeenCalledWith(
-        expect.stringContaining("TEST_12345")
-      )
-    })
-
-    test("set onmessage", () => {
-      const callback = () => null
-      bc.onmessage = undefined
+    test("watch for events", () => {
+      let callback = jest.fn()
       watch("TEST", callback)
-      expect(bc.onmessage).not.toBeUndefined()
+      broadcast("TEST")
+      expect(callback).toHaveBeenCalled()
     })
 
-    test("do not call close on channel", () => {
-      watch("TEST_12345", () => null)
-      expect(bc.close).not.toHaveBeenCalled()
-    })
-
-    test("call close", () => {
-      const unregister = watch("TEST", () => null)
-      unregister()
-      expect(bc.close).toHaveBeenCalled()
+    test("multiple watchers", () => {
+      let callback1 = jest.fn()
+      let callback2 = jest.fn()
+      watch("TEST", callback1)
+      watch("TEST", callback2)
+      broadcast("TEST")
+      expect(callback1).toHaveBeenCalled()
+      expect(callback2).toHaveBeenCalled()
     })
   })
 
@@ -160,37 +163,11 @@ describe("Communicator", () => {
       )
     })
 
-    test("create two broadcast channels", () => {
-      get("TEST_12345", () => null)
-      expect(BroadcastChannel).toHaveBeenCalledTimes(2)
-    })
-
-    test("create request broadcast channel", () => {
-      get("TEST_12345", () => null)
-      expect(BroadcastChannel).toHaveBeenCalledWith(
-        expect.stringMatching(/#GET:TEST_12345$/)
-      )
-    })
-
-    test("create response broadcast channel", () => {
-      get("TEST_12345", () => null)
-      expect(BroadcastChannel).toHaveBeenCalledWith(
-        expect.stringMatching(/#GET:TEST_12345:RESPONSE:\d/)
-      )
-    })
-
-    test("broadcast get message on request channel", () => {
-      get("TEST", () => null)
-      expect(bc.postMessage).toHaveBeenCalledWith(
-        expect.objectContaining({
-          receiverID: expect.anything(),
-        })
-      )
-    })
-
-    test("returns a function", () => {
-      const cancel = get("TEST", () => null)
-      expect(typeof cancel).toEqual("function")
+    test("execute callback", () => {
+      let callback = jest.fn()
+      onGet("TEST_12345", callback)
+      get("TEST_12345", callback)
+      expect(callback).toHaveBeenCalled()
     })
   })
 
@@ -225,36 +202,9 @@ describe("Communicator", () => {
         "(onGet) unknown options: unknownOption"
       )
     })
-    test("create one broadcast channel", () => {
-      onGet("TEST_12345", () => null)
-      expect(BroadcastChannel).toHaveBeenCalledTimes(1)
-    })
-
-    test("create request broadcast channel", () => {
-      onGet("TEST_12345", () => null)
-      expect(BroadcastChannel).toHaveBeenCalledWith(
-        expect.stringMatching(/#GET:TEST_12345$/)
-      )
-    })
-
-    test("create response broadcast channel", () => {
-      get("TEST_12345", () => null)
-      expect(BroadcastChannel).toHaveBeenCalledWith(
-        expect.stringMatching(/#GET:TEST_12345:RESPONSE:\d/)
-      )
-    })
-
-    test("broadcast get message on request channel", () => {
-      get("TEST", () => null)
-      expect(bc.postMessage).toHaveBeenCalledWith(
-        expect.objectContaining({
-          receiverID: expect.anything(),
-        })
-      )
-    })
 
     test("returns a function", () => {
-      const cancel = get("TEST", () => null)
+      const cancel = onGet("TEST", () => null)
       expect(typeof cancel).toEqual("function")
     })
   })

@@ -230,6 +230,42 @@ PUT    /peaks/1
 DELETE /peaks/1
 ```
 
+#### Extended Options
+
+**Rewrite Routes**
+
+Utilize the rewriteRoutes option when you wish to align URLs with the structure of your mock database. For instance, if the API URL includes /api/v1/peaks, but the corresponding JSON structure is {"peaks":[]}, you can add a rewrite rule to exclude the /api/v1 portion. This ensures seamless mapping between your API endpoints and the mock database structure. The option rewriteRoutes accepts a collection of key value pairs with key as regex expresion and value as string to rewrite the url path.
+
+```js
+const customRoutes = {
+  "/api/v1/(.*)": "/$1", // Replace '/api/v1' with an empty string
+  "^/api": "", // Replace '/api' with an empty string
+}
+
+fetchProxyInitDB(db, { rewriteRoutes: customRoutes })
+```
+
+Now you can access resources using following routes:
+
+```bash
+/api/v1/peaks # → /peaks
+/api/peaks    # → /peaks
+```
+
+**Rewrite Responses**
+
+Employ the rewriteResponses option when you intend to customize the response from the mock API. This flexibility is available on a per-API method and path basis. For instance, suppose you require a distinct response when making a POST request to /api/v1/peaks, deviating from the standard response that includes the posted object. In such cases, you can introduce a rewriteResponses rule, exemplified as follows: {"POST": {"/api/v1/peaks": {"test": "custom response"}}}. It's essential to note that rewriteResponses takes precedence over rewriteRoutes. Therefore, if you've altered the original path in rewriteRoutes, ensure it matches the original path for accurate execution.
+
+```js
+const customResponses = {
+  POST: {
+    "^/peaks": { certificate: "testCertificate" },
+  },
+}
+
+fetchProxyInitDB(db, { rewriteResponses: customResponses })
+```
+
 #### Self Contained Running Example
 
 Simply copy the following example and run it to explore how to use this library.
