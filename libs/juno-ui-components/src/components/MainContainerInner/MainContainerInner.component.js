@@ -4,7 +4,6 @@ import PropTypes from "prop-types"
 const mainInnerStyles = `
   jn-flex
   jn-grow
-  jn-mt-[3.875rem]
 `
 
 const constrainStyles = `

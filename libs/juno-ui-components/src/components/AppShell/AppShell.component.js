@@ -55,7 +55,7 @@ export const AppShell = ({
           { topNavigation && topNavigation }
           {/* Wrap everything except page header and footer and navigations in a main container: */}
           <MainContainer>
-            <MainContainerInner fullWidth={fullWidthContent} hasSideNav={ sideNavigation ? true : false }>
+            <MainContainerInner fullWidth={fullWidthContent} hasSideNav={ sideNavigation ? true : false } className="jn-mt-[3.875rem]">
               { sideNavigation && sideNavigation }
               {/* Content Container. This is the place to add the app's main content. Render left margin only if no SideNavigation is present. */}
               <ContentContainer className={ sideNavigation ? "" : "jn-ml-8"}>

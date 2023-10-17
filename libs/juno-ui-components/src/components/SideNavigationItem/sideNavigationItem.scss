@@ -12,7 +12,6 @@ padding: .375rem 2rem;
 
 &:hover {
   color: var(--color-text-high);
-  background-color: var(--color-background-lvl-1);
   cursor: pointer;
   
   .juno-icon {
@@ -23,10 +22,11 @@ padding: .375rem 2rem;
 
 &:active,
 &.juno-sidenavigation-item-active {
-  color: var(--color-navigation-active);
+  color: var(--color-sidenavigation-item-active);
+  background-color: var(--color-sidenavigation-item-active-bg);
   
   .juno-icon {
-    color: var(--color-navigation-active);
+    color: var(--color-sidenavigation-item-active);
   }
   
 }
