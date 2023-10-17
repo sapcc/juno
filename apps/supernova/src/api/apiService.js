@@ -91,6 +91,7 @@ function ApiService(initialConfig) {
         `ApiService::${config.serviceName || ""}: new config: `,
         config
       )
+
     // update watcher will check the config relevant attribute changed to update the watcher
     updateWatcher(oldConfig)
     if (config.initialFetch && !initialFetchPerformed) update()
