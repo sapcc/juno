@@ -28,7 +28,7 @@ export const TopNavigation = ({
 TopNavigation.propTypes = {
   /** The children of the Navigation. Typically these should be TopNavigationItem(s) */
   children: PropTypes.node,
-  /** Passa custom classname. */
+  /** Pass a custom classname. */
   className: PropTypes.string,
 }
 
