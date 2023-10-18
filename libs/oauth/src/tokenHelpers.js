@@ -71,7 +71,16 @@ export function parseIdTokenData(tokenData) {
     expiresAt: tokenData.exp * 1000,
     expiresAtDate: new Date(tokenData.exp * 1000),
     groups: tokenData.groups,
-    userId: userId || loginName,
+    userId: userId,
+    avatarUrl: {
+      small: `https://avatars.wdf.sap.corp/avatar/${
+        userId || loginName
+      }?size=24`,
+      large: `https://avatars.wdf.sap.corp/avatar/${
+        userId || loginName
+      }?size=256`,
+      default: `https://avatars.wdf.sap.corp/avatar/${userId || loginName}`,
+    },
   }
 
   if (Array.isArray(tokenData.groups)) {
