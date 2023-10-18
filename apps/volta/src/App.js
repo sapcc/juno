@@ -15,15 +15,15 @@ const App = (props) => {
     useGlobalsActions()
   const { addMessage } = useActions()
 
-  const customRoutes = {
-    "^/certificate": "", // Replace '/certificate' with an empty string
-  }
   // setup the mock db.json
-
   useEffect(() => {
     if (props.mock === true || props.mock === "true") {
       fetchProxyInitDB(db, {
-        rewriteRoutes: customRoutes,
+        rewriteRoutes: {
+          "/api/v1/(.*)/certificate": "/$1",
+          "/api/v1/(.*)": "/$1",
+          // "^/certificate": "", // Replace '/certificate' with an empty string
+        },
       })
     }
   }, [])
