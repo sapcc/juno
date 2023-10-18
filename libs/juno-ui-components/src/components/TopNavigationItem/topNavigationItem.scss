@@ -6,9 +6,11 @@
   gap: .25rem;
   padding-top: .125rem;
   padding-bottom: 0.3125rem;
+  background-color: var(--color-topnavigation-item-bg);
   
   &:hover {
     color: var(--color-text-high);
+    background-color: transparent;
     
     .juno-icon {
       color: var(--color-text-high);

@@ -26,9 +26,9 @@ const Template = ({children, ...args}) => (
 export const Default = Template.bind({})
 Default.args = {
   children: [
-    <TopNavigationItem label="Item 1" />,
-    <TopNavigationItem>Item 2</TopNavigationItem>,
-    <TopNavigationItem icon="warning" label="Item with Icon" />,
-    <TopNavigationItem alabel="Active Item" />
+    <TopNavigationItem key="1" label="Item 1" />,
+    <TopNavigationItem key="2" >Item 2</TopNavigationItem>,
+    <TopNavigationItem key="3" icon="warning" label="Item with Icon" />,
+    <TopNavigationItem key="4" label="Active Item" active/>
   ]
 }

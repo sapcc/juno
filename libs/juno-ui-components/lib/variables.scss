@@ -513,11 +513,15 @@
   --color-sidenavigation-item-active-bg: var(--color-background-lvl-0);
   // DT TopNavigation
   --color-topnavigation-item-active: var(--color-black);
-  // --color-topnavigation-item-active-bg
+  --color-topnavigation-item-bg: var(--color-sap-grey-1);
+  --color-topnavigation-item-active-bg: var(--color-sap-grey-3);
 }
 
 /* ----- LIGHT THEME END -----*/
-
+/* ----- */
+/* ----- */
+/* ----- */
+/* ----- */
 /* ----- DARK THEME ----- */
 
 .theme-dark {
@@ -720,10 +724,11 @@
   --color-box-border: var(--color-background-lvl-3);
   // DT SideNavigation
   --color-sidenavigation-item-active: var(--color-white);
-  // --color-sidenavigation-item-active-bg
+  --color-sidenavigation-item-active-bg: var(--color-background-lvl-0);
   // DT TopNavigation
   --color-topnavigation-item-active: var(--color-white);
-  // --color-topnavigation-item-active-bg
+  --color-topnavigation-item-bg: var(--color-juno-grey-blue-7);
+  --color-topnavigation-item-active-bg: var(--color-juno-grey-blue-2);
 }
 
 /* ----- DARK THEME END ----- */
