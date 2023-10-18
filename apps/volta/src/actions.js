@@ -60,7 +60,7 @@ export const cas = ({ queryKey }) => {
 
 export const certificates = ({ queryKey }) => {
   const [_key, bearerToken, endpoint, ca] = queryKey
-  return fetchProxy(`${endpoint}/${ca}`, {
+  return fetchProxy(`${endpoint}/${ca}/certificate`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -87,7 +87,7 @@ export const certificates = ({ queryKey }) => {
 export const createCertificate = (endpoint, ca, bearerToken, formState) => {
   // Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
   const sendBody = JSON.stringify(formState)
-  return fetchProxy(`${endpoint}/${ca}`, {
+  return fetchProxy(`${endpoint}/${ca}/certificate`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
