@@ -24,6 +24,11 @@ const App = (props) => {
           "/api/v1/(.*)": "/$1",
           // "^/certificate": "", // Replace '/certificate' with an empty string
         },
+        rewriteResponses: {
+          POST: {
+            "/api/v1/(.*)/certificate": { certificate: "testCertificate" },
+          },
+        },
       })
     }
   }, [])

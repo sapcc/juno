@@ -42,11 +42,9 @@ const NewCertificateResutls = ({ pk, ssoCert, onCopied }) => {
           onChange={(e) => {
             onCopied(e.target.checked)
           }}
-          label={
-            "I am sure I have copyed and stored the sso certificate " +
-            pk +
-            " and the provided private key"
-          }
+          label={`I am sure I have copyed and stored the sso certificate ${
+            pk && "and the provided private key"
+          }`}
         />
       </Stack>
     </div>
