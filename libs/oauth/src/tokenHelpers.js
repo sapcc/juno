@@ -71,7 +71,7 @@ export function parseIdTokenData(tokenData) {
     expiresAt: tokenData.exp * 1000,
     expiresAtDate: new Date(tokenData.exp * 1000),
     groups: tokenData.groups,
-    userId,
+    userId: userId || loginName,
   }
 
   if (Array.isArray(tokenData.groups)) {
