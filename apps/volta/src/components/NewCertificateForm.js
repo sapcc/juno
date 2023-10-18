@@ -122,7 +122,7 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
                 })
                 // return response to the parent
                 if (onFormSuccess) {
-                  onFormSuccess(pemPrivateKey, data?.csr)
+                  onFormSuccess(pemPrivateKey, data?.certificate)
                 }
                 // Invalidate every query with a key that starts with `certificates`
                 queryClient.invalidateQueries({ queryKey: ["certificates"] })
