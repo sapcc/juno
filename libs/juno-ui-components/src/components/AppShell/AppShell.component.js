@@ -53,7 +53,7 @@ export const AppShell = ({
             pageHeader
           }
           { topNavigation && topNavigation }
-          {/* Wrap everything except page header and footer and navigations in a main container: */}
+          {/* Wrap everything except page header and footer and navigations in a main container. Add top margin to MainContainerInner as we are not in embedded mode here. */}
           <MainContainer>
             <MainContainerInner fullWidth={fullWidthContent} hasSideNav={ sideNavigation ? true : false } className="jn-mt-[3.875rem]">
               { sideNavigation && sideNavigation }
