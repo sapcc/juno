@@ -24,6 +24,45 @@ describe("ComboBoxOption", () => {
     expect(screen.getByRole("option")).toBeInTheDocument()
     expect(screen.getByRole("option")).toHaveTextContent("Option 1")
   })
+
+  test("renders a ComboBoxOption with label as passed", async () => {
+    render(
+      <ComboBox>
+        <ComboBoxOption value="option 1 value" label="Option 1 Label" />
+      </ComboBox>
+    )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    await userEvent.click(toggle)
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveTextContent("Option 1 Label")
+  })
+
+  test("renders a ComboBoxOption with children as passed", async () => {
+    render(
+      <ComboBox>
+        <ComboBoxOption value="option 1 value">Option 1 child</ComboBoxOption>
+      </ComboBox>
+    )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    await userEvent.click(toggle)
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveTextContent("Option 1 child")
+  })
+
+  test("renders a ComboBoxOption with children if both label and children are passed", async () => {
+    render(
+      <ComboBox>
+        <ComboBoxOption value="option 1 value" label="Option 1 Label">Option 1 child</ComboBoxOption>
+      </ComboBox>
+    )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    await userEvent.click(toggle)
+    expect(screen.getByRole("option")).toBeInTheDocument()
+    expect(screen.getByRole("option")).toHaveTextContent("Option 1 child")
+  })
   
   test("renders a className as passed", async () => {
     render(

@@ -50,6 +50,7 @@ export const ComboBoxOption = ({
   children,
   disabled,
   value,
+  label,
   className,
   ...props
 }) => {
@@ -85,7 +86,7 @@ export const ComboBoxOption = ({
             ${ truncateOptions ? truncateOptionStyles : "" }
           `}
         >
-          { theValue }
+          { children || label || value }
         </span>
       </li>
 
@@ -98,6 +99,7 @@ ComboBoxOption.propTypes = {
   children: PropTypes.string,
   disabled: PropTypes.bool,
   value: PropTypes.string,
+  label: PropTypes.string,
   className: PropTypes.string,
 }
 
@@ -105,5 +107,6 @@ ComboBoxOption.defaultProps = {
   children: undefined,
   disabled: false,
   value: "",
+  label: undefined,
   className: "",
 }

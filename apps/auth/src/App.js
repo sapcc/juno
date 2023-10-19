@@ -3,20 +3,6 @@ import useCommunication from "./useCommunication"
 import { oidcSession, mockedSession } from "oauth"
 import { MOCKED_TOKEN } from "./mockedToken"
 
-const enrichAuthData = (data) => {
-  if (!data) return data
-
-  const enrichedAuth = { ...data }
-  const userId = data.auth?.parsed?.loginName
-
-  if (userId) {
-    enrichedAuth.auth.parsed["avatarUrl"] = {
-      small: `https://avatars.wdf.sap.corp/avatar/${userId}?size=24x24`,
-    }
-  }
-  return enrichedAuth
-}
-
 const App = (props = {}) => {
   const [authData, setAuthData] = React.useState()
 
@@ -42,8 +28,7 @@ const App = (props = {}) => {
         token,
         initialLogin: props.initialLogin,
         onUpdate: (authData) => {
-          let data = enrichAuthData(authData)
-          setAuthData(data)
+          setAuthData(authData)
         },
       })
     }
@@ -56,8 +41,7 @@ const App = (props = {}) => {
       requestParams: props.requestParams,
       flowType: "code",
       onUpdate: (authData) => {
-        let data = enrichAuthData(authData)
-        setAuthData(data)
+        setAuthData(authData)
       },
     })
   }, [setAuthData])
@@ -73,6 +57,13 @@ const App = (props = {}) => {
     debug: props.debug === "true" || props.debug === true,
   })
 
+  // return (
+  //   <div>
+  //     <button onClick={oidc.login}>Login</button>
+  //     <button onClick={oidc.logout}>Logout</button>
+  //     <button onClick={oidc.refresh}>Refresh</button>
+  //   </div>
+  // )
   return null
 }
 

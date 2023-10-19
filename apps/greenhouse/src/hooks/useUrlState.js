@@ -7,7 +7,7 @@ import {
   useAuthLoggedIn,
   useGlobalsIsUrlStateSetup,
   useGlobalsActions,
-} from "./useStore"
+} from "../components/StoreProvider"
 
 // url state manager
 const GREENHOUSE_STATE_KEY = "greenhouse"

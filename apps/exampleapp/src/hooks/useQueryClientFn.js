@@ -4,7 +4,7 @@ import {
   useGlobalsEndpoint,
   useGlobalsActions,
 } from "../components/StoreProvider"
-import fetchLocal from "../lib/fetchLocal"
+import { fetchProxy as fetch } from "utils"
 
 class HTTPError extends Error {
   constructor(code, message) {
@@ -36,7 +36,7 @@ const checkStatus = (response) => {
 }
 
 // hook to register query defaults that depends on the queryClient and options
-const useQueryClientFn = () => {
+const useQueryClientFn = (mockAPI) => {
   const queryClient = useQueryClient()
   const endpoint = useGlobalsEndpoint()
   const { setQueryClientFnReady } = useGlobalsActions()
@@ -47,13 +47,13 @@ const useQueryClientFn = () => {
   useEffect(() => {
     if (!queryClient || !endpoint) return
 
-    console.log("useQueryClientFn setting defaults", endpoint)
+    console.log("useQueryClientFn::: setting defaults: ", endpoint)
 
     queryClient.setQueryDefaults(["peaks"], {
       queryFn: ({ queryKey }) => {
         const [_key, id, params] = queryKey
         const query = encodeUrlParamsFromObject(params)
-        return fetchLocal(
+        return fetch(
           `${endpoint}/peaks${id ? "/" + id : ""}${query ? "" + query : ""}`,
           {
             method: "GET",
@@ -61,6 +61,7 @@ const useQueryClientFn = () => {
               "Content-Type": "application/json",
               Accept: "application/json",
             },
+            ...{ mock: mockAPI },
           }
         )
           .then(checkStatus)
@@ -83,12 +84,13 @@ const useQueryClientFn = () => {
       mutationFn: ({ formState }) => {
         // Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
         const sendBody = JSON.stringify(formState)
-        return fetchLocal(`${endpoint}/peaks`, {
+        return fetch(`${endpoint}/peaks`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
+          ...{ mock: mockAPI },
           body: sendBody,
         })
           .then(checkStatus)
@@ -102,12 +104,13 @@ const useQueryClientFn = () => {
       mutationFn: ({ id, formState }) => {
         // Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
         const sendBody = JSON.stringify(formState)
-        return fetchLocal(`${endpoint}/peaks/${id}`, {
+        return fetch(`${endpoint}/peaks/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
+          ...{ mock: mockAPI },
           body: sendBody,
         })
           .then(checkStatus)
@@ -119,12 +122,13 @@ const useQueryClientFn = () => {
 
     queryClient.setMutationDefaults(["peakDelete"], {
       mutationFn: ({ id }) => {
-        return fetchLocal(`${endpoint}/peaks/${id}`, {
+        return fetch(`${endpoint}/peaks/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
+          ...{ mock: mockAPI },
         })
           .then(checkStatus)
           .then((response) => {
@@ -135,7 +139,7 @@ const useQueryClientFn = () => {
 
     // set queryClientFnReady to true once
     setQueryClientFnReady(true)
-  }, [queryClient, endpoint, setQueryClientFnReady])
+  }, [queryClient, endpoint, mockAPI, setQueryClientFnReady])
 }
 
 export default useQueryClientFn

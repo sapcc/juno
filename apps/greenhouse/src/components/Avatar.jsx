@@ -9,12 +9,12 @@ rounded-full
 bg-cover 
 `
 
-const Avatar = ({ userName, userID, url }) => {
+const Avatar = ({ userName, url }) => {
   return (
     <Stack alignment="center">
       <div
         style={{
-          background: `url(https://avatars.wdf.sap.corp/avatar/${userID}?size=24x24) no-repeat`,
+          background: `url(${url}) no-repeat`,
           backgroundSize: `cover`,
         }}
         className={avatarCss}

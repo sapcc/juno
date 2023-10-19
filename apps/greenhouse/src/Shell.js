@@ -1,20 +1,16 @@
 import React, { useLayoutEffect } from "react"
 
-import { useGlobalsActions } from "./hooks/useStore"
 import ShellLayout from "./components/layout/ShellLayout"
 import Auth from "./components/Auth"
 import styles from "./styles.scss"
 import { AppShellProvider } from "juno-ui-components"
-import useCommunication from "./hooks/useCommunication"
 import PluginContainer from "./components/PluginContainer"
-import useUrlState from "./hooks/useUrlState"
+import AsyncWorker from "./components/AsyncWorker"
+import StoreProvider, { useGlobalsActions } from "./components/StoreProvider"
 
 const Shell = (props = {}) => {
   const { setApiEndpoint, setAssetsHost, setDemoUserToken } =
     useGlobalsActions()
-
-  useCommunication()
-  useUrlState()
 
   // INIT
   // on app initial load save Endpoint and URL_STATE_KEY so it can be
@@ -46,7 +42,10 @@ const StyledShell = (props) => {
     <AppShellProvider>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
-      <Shell {...props} />
+      <StoreProvider>
+        <AsyncWorker />
+        <Shell {...props} />
+      </StoreProvider>
     </AppShellProvider>
   )
 }

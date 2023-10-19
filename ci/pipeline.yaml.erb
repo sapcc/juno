@@ -24,6 +24,7 @@
     "communicator":         { type: "lib", path: "libs/communicator"},
     "url-state-provider":   { type: "lib", path: "libs/url-state-provider"},
     "url-state-router":     { type: "lib", path: "libs/url-state-router"},
+    "utils":                { type: "lib", path: "libs/utils"},
   }
   HA_REGIONS = ["eu-de-1","eu-de-2","eu-nl-1","ap-ae-1","ap-jp-2","ap-au-1","la-br-1","na-us-1","na-us-2"]
 %>
@@ -137,7 +138,7 @@ resources:
     source:
       uri: https://github.com/sapcc/juno.git
       branch: main
-      paths: ["<%=details[:path]%>","package.json","e2e", ".yarn"]
+      paths: ["<%=details[:path]%>","libs","package.json","e2e", ".yarn"]
       # "ci"
       # "ci/scripts"
       # "ci/shared"

@@ -11,7 +11,7 @@ import {
   useAppsConfig,
   useAppsActive,
   useAuthActions,
-} from "../../hooks/useStore"
+} from "../../components/StoreProvider"
 import Avatar from "../Avatar"
 
 const AppIcon = ({ name }) => {
@@ -134,10 +134,7 @@ const PluginNav = () => {
       >
         {loggedIn ? (
           <>
-            <Avatar
-              url={authData?.parsed?.avatarUrl.small}
-              userID={authData?.parsed?.loginName}
-            />
+            <Avatar url={authData?.parsed?.avatarUrl?.small} />
             <Button variant="subdued" size="small" onClick={() => logout()}>
               Logout
             </Button>

@@ -1,6 +1,6 @@
 {
   "name": "whois",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "author": "Juno team (SAP)",
   "license": "MIT",
   "source": "src/index.js",

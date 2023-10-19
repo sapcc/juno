@@ -83,6 +83,11 @@ describe("parseIdTokenData", () => {
         groups: ["test"],
         loginName: "test",
         userId: "P123456",
+        avatarUrl: {
+          small: `https://avatars.wdf.sap.corp/avatar/P123456?size=24`,
+          large: `https://avatars.wdf.sap.corp/avatar/P123456?size=256`,
+          default: `https://avatars.wdf.sap.corp/avatar/P123456`,
+        },
       })
     )
   })

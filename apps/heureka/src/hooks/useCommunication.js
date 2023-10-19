@@ -3,6 +3,8 @@ import { broadcast, get, watch } from "communicator"
 import useStore from "./useStore"
 
 const useCommunication = () => {
+  console.log("[heureka] useCommunication setup")
+
   const setAuth = useStore((state) => state.setAuth)
   const setLoggedIn = useStore((state) => state.setLoggedIn)
   const setLoggedOut = useStore((state) => state.setLoggedOut)
