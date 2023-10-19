@@ -38,7 +38,7 @@ const useUrlState = () => {
     if (!loggedIn || isURLRead) return
 
     console.log(
-      "SUPERNOVA:: setting up state from url::",
+      "SUPERNOVA:: setting up state from url with state::",
       urlStateManager.currentState()
     )
 
@@ -49,15 +49,15 @@ const useUrlState = () => {
     if (activeFiltersFromURL && Object.keys(activeFiltersFromURL).length > 0) {
       setActiveFilters(activeFiltersFromURL)
     } else {
-      console.log("auth data>>>>>>>>>>>>>>>>", authData)
       // otherwise set the support group filter
+      // we just add this default filter when no other filters are set per URL
       const label = "support_group"
       if (
         authData?.parsed?.teams?.length > 0 &&
         filterLabels?.length > 0 &&
         filterLabels.includes(label)
       ) {
-        // this will also trigger a filterItems() call
+        // this will also trigger a filterItems() call from the store self
         setActiveFilters({ [label]: [`${authData.parsed.teams}`] })
       }
     }
