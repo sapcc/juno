@@ -11,18 +11,24 @@ import db from "../db.json"
 
 const App = (props) => {
   const { setData, setLogin, setLogout } = useAuthActions()
-  const { setEndpoint, setDisabledCAs, setDocumentationLinks, setEmbedded } =
-    useGlobalsActions()
+  const {
+    setEndpoint,
+    setDisabledCAs,
+    setDocumentationLinks,
+    setEmbedded,
+    setMock,
+  } = useGlobalsActions()
   const { addMessage } = useActions()
 
   // setup the mock db.json
   useEffect(() => {
-    if (props.mock === true || props.mock === "true") {
+    if (props.isMock === true || props.isMock === "true") {
+      setMock(true)
+
       fetchProxyInitDB(db, {
         rewriteRoutes: {
           "/api/v1/(.*)/certificate": "/$1",
           "/api/v1/(.*)": "/$1",
-          // "^/certificate": "", // Replace '/certificate' with an empty string
         },
         rewriteResponses: {
           POST: {
@@ -37,7 +43,7 @@ const App = (props) => {
   // keep it in the app so the issuerurl and clientid have not to be saved on the state
   const oidc = React.useMemo(() => {
     // Load mockSession if props.mock is set true
-    if (props.mock === true || props.mock === "true") {
+    if (props.isMock === true || props.isMock === "true") {
       return mockedSession({
         initialLogin: true,
         onUpdate: (data) => {

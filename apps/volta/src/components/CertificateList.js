@@ -8,6 +8,7 @@ import {
   useAuthData,
   useGlobalsEndpoint,
   useGlobalsDocumentationLinks,
+  useGlobalsIsMock,
 } from "../hooks/useStore"
 import { parseError } from "../helpers"
 import {
@@ -38,13 +39,15 @@ const CertificateList = ({ ca }) => {
   const authData = useAuthData()
   const endpoint = useGlobalsEndpoint()
   const docuLinks = useGlobalsDocumentationLinks()
+  const isMock = useGlobalsIsMock()
 
   // fetch the certificates
   const { isLoading, isError, data, error } = getCertificates(
     authData?.JWT,
     endpoint,
     ca?.name,
-    revokedList
+    revokedList,
+    isMock
   )
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed

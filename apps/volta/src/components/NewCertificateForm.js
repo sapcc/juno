@@ -22,6 +22,7 @@ import {
   useCertActions,
   useAuthData,
   useGlobalsEndpoint,
+  useGlobalsIsMock,
 } from "../hooks/useStore"
 
 const ALGORITHM_KEY = "RSA-2048"
@@ -41,6 +42,7 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
   const authData = useAuthData()
   const endpoint = useGlobalsEndpoint()
   const queryClient = useQueryClient()
+  const isMock = useGlobalsIsMock()
 
   const [pemPrivateKey, setPemPrivateKey] = useState(null)
   const [showValidation, setShowValidation] = useState({})
@@ -113,6 +115,7 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
               ca: ca,
               bearerToken: authData?.JWT,
               formState: formState,
+              isMock: isMock,
             },
             {
               onSuccess: (data, variables, context) => {

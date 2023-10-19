@@ -31,14 +31,14 @@ const checkStatus = (response) => {
 }
 
 export const cas = ({ queryKey }) => {
-  const [_key, bearerToken, endpoint, disabledCAs] = queryKey
+  const [_key, bearerToken, endpoint, disabledCAs, isMock] = queryKey
   return fetchProxy(`${endpoint}/cas`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${bearerToken}`,
     },
-    mock: true,
+    mock: isMock,
   })
     .then(checkStatus)
     .then((response) => {
@@ -59,14 +59,14 @@ export const cas = ({ queryKey }) => {
 }
 
 export const certificates = ({ queryKey }) => {
-  const [_key, bearerToken, endpoint, ca] = queryKey
+  const [_key, bearerToken, endpoint, ca, isMock] = queryKey
   return fetchProxy(`${endpoint}/${ca}/certificate`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${bearerToken}`,
     },
-    mock: true,
+    mock: isMock,
   })
     .then(checkStatus)
     .then((response) => {
@@ -84,7 +84,13 @@ export const certificates = ({ queryKey }) => {
     })
 }
 
-export const createCertificate = (endpoint, ca, bearerToken, formState) => {
+export const createCertificate = (
+  endpoint,
+  ca,
+  bearerToken,
+  formState,
+  isMock
+) => {
   // Converts a JavaScript value to a JavaScript Object Notation (JSON) string.
   const sendBody = JSON.stringify(formState)
   return fetchProxy(`${endpoint}/${ca}/certificate`, {
@@ -94,7 +100,7 @@ export const createCertificate = (endpoint, ca, bearerToken, formState) => {
       Authorization: `Bearer ${bearerToken}`,
     },
     body: sendBody,
-    mock: true,
+    mock: isMock,
   })
     .then(checkStatus)
     .then((response) => {
