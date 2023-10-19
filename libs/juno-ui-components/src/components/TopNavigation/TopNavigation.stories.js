@@ -28,7 +28,7 @@ Default.args = {
   children: [
     <TopNavigationItem key="1" label="Item 1" />,
     <TopNavigationItem key="2" >Item 2</TopNavigationItem>,
-    <TopNavigationItem key="3" icon="warning" label="Item with Icon" />,
+    <TopNavigationItem key="3" icon="widgets" label="Item with Icon" />,
     <TopNavigationItem key="4" label="Active Item" active/>
   ]
 }

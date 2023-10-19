@@ -1,11 +1,17 @@
 .juno-topnavigation-item {
   color: var(--color-text-default);
   font-weight: bold;
+  font-size: 1rem;
+  line-height: 1.5rem;
   display: inline-flex;
   align-items: center;
-  gap: .25rem;
-  padding-top: .125rem;
-  padding-bottom: 0.3125rem;
+  flex-grow: 0;
+  justify-content: flex-start;
+  height: 2rem;
+  cursor: pointer;
+  
+
+  padding: .25rem .3125rem;
   background-color: var(--color-topnavigation-item-bg);
   
   &:hover {
