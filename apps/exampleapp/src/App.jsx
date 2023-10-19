@@ -6,11 +6,16 @@ import {
   PageHeader,
   Container,
 } from "juno-ui-components"
+import { oidcSession, mockedSession } from "oauth"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AppContent from "./components/AppContent"
 import HeaderUser from "./components/auth/HeaderUser"
 import AsyncWorker from "./components/AsyncWorker"
-import StoreProvider, { useGlobalsActions } from "./components/StoreProvider"
+import StoreProvider, {
+  useGlobalsActions,
+  useAuthActions,
+} from "./components/StoreProvider"
+import { useActions, MessagesProvider } from "messages-provider"
 
 // mock API
 import { fetchProxyInitDB } from "utils"
@@ -18,6 +23,7 @@ import db from "../db.json"
 
 const App = (props = {}) => {
   const { setEndpoint } = useGlobalsActions()
+  const { setData } = useAuthActions()
 
   // Create query client which it can be used from overall in the app
   const queryClient = new QueryClient()
@@ -29,20 +35,29 @@ const App = (props = {}) => {
     setEndpoint(props.endpoint || window.location.origin)
   }, [])
 
+  // fetch the mocked auth object and save it globally
+  const oidc = React.useMemo(() => {
+    // force fetch mocked session
+    return mockedSession({
+      initialLogin: true,
+      onUpdate: (data) => {
+        setData(data)
+      },
+    })
+  }, [])
+
   // setup the mock db.json
   useEffect(() => {
-    if (props.mockAPI) {
-      fetchProxyInitDB(db)
-    }
-  }, [props.mockAPI])
+    fetchProxyInitDB(db)
+  }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AsyncWorker consumerId={props.id} mockAPI={props.mockAPI} />
+      <AsyncWorker consumerId={props.id} mockAPI={true} />
       <AppShell
         pageHeader={
           <PageHeader heading="Converged Cloud | Example App">
-            <HeaderUser />
+            <HeaderUser login={oidc.login} logout={oidc.logout} />
           </PageHeader>
         }
         embedded={props.embedded === "true" || props.embedded === true}
@@ -60,9 +75,11 @@ const StyledApp = (props) => {
     <AppShellProvider theme={`${props.theme ? props.theme : "theme-dark"}`}>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
-      <StoreProvider>
-        <App {...props} />
-      </StoreProvider>
+      <MessagesProvider>
+        <StoreProvider>
+          <App {...props} />
+        </StoreProvider>
+      </MessagesProvider>
     </AppShellProvider>
   )
 }
