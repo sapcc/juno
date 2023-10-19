@@ -1,36 +1,31 @@
 import React from "react"
 import { Stack, Button } from "juno-ui-components"
 import Avatar from "./Avatar"
-import {
-  useAuthUser,
-  useGlobalsActions,
-  useAuthActions,
-} from "../StoreProvider"
+import { useAuthLoggedIn, useAuthData } from "../StoreProvider"
 
-const HeaderUser = () => {
-  const user = useAuthUser()
-  const { setCurrentModal } = useGlobalsActions()
-  const { setUser } = useAuthActions()
+const HeaderUser = ({ login, logout }) => {
+  const loggedIn = useAuthLoggedIn()
+  const authData = useAuthData()
 
   return (
     <Stack alignment="center" className="ml-auto" distribution="end">
-      {user ? (
+      {loggedIn ? (
         <>
           <div className="mr-4">
             <Avatar
-              user={{ Name: "Max Mustermann", SapID: "test" }}
-              displayName
+              userName={authData?.parsed?.fullName}
+              url={authData?.parsed?.avatarUrl?.small}
             />
           </div>
 
-          <Button label="Logout" size="small" onClick={() => setUser(null)} />
+          <Button
+            label="Logout"
+            size="small"
+            onClick={() => logout({ resetOIDCSession: false, silent: true })}
+          />
         </>
       ) : (
-        <Button
-          label="Login"
-          size="small"
-          onClick={() => setCurrentModal("LogIn")}
-        />
+        <Button label="Login" size="small" onClick={() => login()} />
       )}
     </Stack>
   )

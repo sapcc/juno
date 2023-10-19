@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useActions } from "messages-provider"
 import {
   PanelBody,
   PanelFooter,
@@ -11,6 +12,7 @@ import {
 const PeaksNew = ({ closeCallback }) => {
   const queryClient = useQueryClient()
   const [formState, setFormState] = useState({})
+  const { addMessage } = useActions()
 
   const { isLoading, isError, error, data, isSuccess, mutate } = useMutation({
     mutationKey: ["peakAdd"],
@@ -21,6 +23,10 @@ const PeaksNew = ({ closeCallback }) => {
       { formState: formState },
       {
         onSuccess: (data, variables, context) => {
+          addMessage({
+            variant: "success",
+            text: `Successfully added Peak`,
+          })
           closeCallback()
           // refetch peaks
           queryClient.invalidateQueries("peaks")

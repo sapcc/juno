@@ -1,19 +1,32 @@
+export const AUTH_ACTIONS = {
+  SIGN_ON: "signOn",
+  SIGN_OUT: "signOut",
+}
+
 const createAuthSlice = (set, get) => ({
   auth: {
-    user: null,
-
+    data: null,
+    isProcessing: false,
+    loggedIn: false,
+    error: null,
+    lastAction: {},
     actions: {
-      setUser: (user) =>
+      setData: (data) => {
+        if (!data) return
         set(
           (state) => ({
             auth: {
               ...state.auth,
-              user,
+              isProcessing: data?.isProcessing,
+              loggedIn: data?.loggedIn,
+              error: data?.error,
+              data: data?.auth,
             },
           }),
           false,
-          "auth.setUser"
-        ),
+          "auth/setData"
+        )
+      },
     },
   },
 })
