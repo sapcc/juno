@@ -316,14 +316,16 @@
   --color-background-lvl-0: var(--color-white);
   --color-background-lvl-1: var(--color-juno-grey-light-1);
   --color-background-lvl-2: var(--color-juno-grey-light-3);
-  --color-background-lvl-3: var(--color-juno-grey-light-4);
-  --color-background-lvl-4: var(--color-juno-grey-light-10);
+  --color-background-lvl-3: var(--color-juno-grey-light-7);
+  --color-background-lvl-4: var(--color-juno-grey-light-9);
+  --color-background-lvl-5: var(--color-juno-grey-light-10);
 
   --color-background-lvl-0-raw: var(--color-white-raw);
   --color-background-lvl-1-raw: var(--color-juno-grey-light-1-raw);
   --color-background-lvl-2-raw: var(--color-juno-grey-light-3-raw);
-  --color-background-lvl-3-raw: var(--color-juno-grey-light-4-raw);
-  --color-background-lvl-4-raw: var(--color-juno-grey-light-10-raw);
+  --color-background-lvl-3-raw: var(--color-juno-grey-light-7-raw);
+  --color-background-lvl-4-raw: var(--color-juno-grey-light-9-raw);
+  --color-background-lvl-5-raw: var(--color-juno-grey-light-10-raw);
 
   // LT Global
   --color-global-bg: var(--color-juno-grey-light-1);
@@ -518,17 +520,19 @@
 
 .theme-dark {
   // DT Background Colors
-  --color-background-lvl-0: var(--color-juno-grey-blue-7);
-  --color-background-lvl-1: var(--color-juno-grey-blue-5);
-  --color-background-lvl-2: var(--color-juno-grey-blue-3);
-  --color-background-lvl-3: var(--color-juno-grey-blue-2);
-  --color-background-lvl-4: var(--color-juno-grey-blue-1);
+  --color-background-lvl-0: var(--color-juno-grey-blue-9);
+  --color-background-lvl-1: var(--color-juno-grey-blue-7);
+  --color-background-lvl-2: var(--color-juno-grey-blue-5);
+  --color-background-lvl-3: var(--color-juno-grey-blue-3);
+  --color-background-lvl-4: var(--color-juno-grey-blue-2);
+  --color-background-lvl-5: var(--color-juno-grey-blue-1);
 
-  --color-background-lvl-0-raw: var(--color-juno-grey-blue-7-raw);
-  --color-background-lvl-1-raw: var(--color-juno-grey-blue-5-raw);
-  --color-background-lvl-2-raw: var(--color-juno-grey-blue-3-raw);
-  --color-background-lvl-3-raw: var(--color-juno-grey-blue-2-raw);
-  --color-background-lvl-4-raw: var(--color-juno-grey-blue-1-raw);
+  --color-background-lvl-0-raw: var(--color-juno-grey-blue-9-raw);
+  --color-background-lvl-1-raw: var(--color-juno-grey-blue-7-raw);
+  --color-background-lvl-2-raw: var(--color-juno-grey-blue-5-raw);
+  --color-background-lvl-3-raw: var(--color-juno-grey-blue-3-raw);
+  --color-background-lvl-4-raw: var(--color-juno-grey-blue-2-raw);
+  --color-background-lvl-5-raw: var(--color-juno-grey-blue-1-raw);
 
   // DT Global
   --color-global-bg: var(--color-juno-grey-blue-10);
