@@ -71,7 +71,16 @@ export function parseIdTokenData(tokenData) {
     expiresAt: tokenData.exp * 1000,
     expiresAtDate: new Date(tokenData.exp * 1000),
     groups: tokenData.groups,
-    userId,
+    userId: userId,
+    avatarUrl: {
+      small: `https://avatars.wdf.sap.corp/avatar/${
+        userId || loginName
+      }?size=24`,
+      large: `https://avatars.wdf.sap.corp/avatar/${
+        userId || loginName
+      }?size=256`,
+      default: `https://avatars.wdf.sap.corp/avatar/${userId || loginName}`,
+    },
   }
 
   if (Array.isArray(tokenData.groups)) {
@@ -83,6 +92,14 @@ export function parseIdTokenData(tokenData) {
       if (item.startsWith("team:")) {
         parsedData.teams = parsedData.teams || []
         parsedData.teams.push(item.substring("team:".length))
+      }
+      if (item.startsWith("role:")) {
+        parsedData.roles = parsedData.roles || []
+        parsedData.roles.push(item.substring("role:".length))
+      }
+      if (item.startsWith("support-group:")) {
+        parsedData.supportGroups = parsedData.supportGroups || []
+        parsedData.supportGroups.push(item.substring("support-group:".length))
       }
     })
   }
