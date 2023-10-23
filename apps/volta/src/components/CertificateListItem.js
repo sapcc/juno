@@ -7,6 +7,7 @@ import {
   useAuthData,
   useRevokedList,
   useCertActions,
+  useGlobalsIsMock,
 } from "../hooks/useStore"
 import { useQueryClient } from "@tanstack/react-query"
 import { parseError } from "../helpers"
@@ -57,6 +58,7 @@ const CertificateListItem = ({ item, ca }) => {
   const endpoint = useGlobalsEndpoint()
   const revokedList = useRevokedList()
   const { addRevokedCert, removeRevokedCert } = useCertActions()
+  const isMock = useGlobalsIsMock()
 
   const queryClient = useQueryClient()
   const [showConfirm, setShowConfirm] = useState(false)
@@ -126,6 +128,7 @@ const CertificateListItem = ({ item, ca }) => {
         ca: ca.name,
         bearerToken: authData?.JWT,
         serial: item.serial,
+        isMock: isMock,
       },
       {
         onSuccess: (data, variables, context) => {

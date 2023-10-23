@@ -11,6 +11,7 @@ import {
   useAuthError,
   useAuthLogin,
   useGlobalsSelectedCA,
+  useGlobalsIsMock,
 } from "./hooks/useStore"
 import useUrlState from "./hooks/useUrlState"
 
@@ -25,6 +26,7 @@ const AppContent = () => {
   const endpoint = useGlobalsEndpoint()
   const disabledCAs = useGlobalsDisabledCAs()
   const selectedCAName = useGlobalsSelectedCA()
+  const isMock = useGlobalsIsMock()
 
   const authData = useAuthData()
   const authIsProcessing = useAuthIsProcessing()
@@ -46,7 +48,7 @@ const AppContent = () => {
 
   // fetch the CAs
   // pass disabled cas to just fetch the ones that should be displayed
-  const cas = getCAs(authData?.JWT, endpoint, disabledCAs)
+  const cas = getCAs(authData?.JWT, endpoint, disabledCAs, isMock)
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   // TODO think about to add the message error with an onError callback directly on getCAs
