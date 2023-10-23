@@ -31,6 +31,7 @@ const createWorker = (path) => {
 // create workers
 const alertsWorker = createWorker("workers/alerts.js")
 const silencesWorker = createWorker("workers/silences.js")
+const alertsAndsilencesWorker = createWorker("workers/alertsAndSilences.js")
 
 const useAlertmanagerAPI = (apiEndpoint) => {
   const {
@@ -49,6 +50,10 @@ const useAlertmanagerAPI = (apiEndpoint) => {
   useEffect(() => {
     let cleanupAlertsWorker
     let cleanupSilencesWorker
+    let cleanupAlertsAndSilencesWorker
+
+    alertsAndsilencesWorker.then(({ createWorker, stopWorker }) => {
+      
 
     alertsWorker.then(({ createWorker, stopWorker }) => {
       const worker = createWorker()
