@@ -28,7 +28,7 @@ export const getCertificates = (
     queryKey: ["certificates", bearerToken, endpoint, ca, isMock],
     queryFn: certificates,
     // The query will not execute until the bearerToken exists
-    enabled: !!bearerToken,
+    enabled: !!bearerToken && !!endpoint,
     // refetch until the list of revoked list is empty
     refetchInterval: () => {
       const count = revokedList.filter((obj) => obj.ca === ca)
