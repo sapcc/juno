@@ -27,6 +27,7 @@ const App = (props) => {
 
       fetchProxyInitDB(db, {
         rewriteRoutes: {
+          "/api/v1/(.*)/certificate/(.*)": "/$1/$2",
           "/api/v1/(.*)/certificate": "/$1",
           "/api/v1/(.*)": "/$1",
         },

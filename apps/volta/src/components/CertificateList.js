@@ -25,6 +25,7 @@ import CertificateListItem from "./CertificateListItem"
 import AddNewSSOButton from "./AddNewSSOButton"
 import HintLoading from "./HintLoading"
 import useEndlessScrollList from "utils/src/hooks/useEndlessScrollList"
+import CAsListItem from "./CAsListItem"
 
 const Heading = `
 jn-font-bold
@@ -51,8 +52,6 @@ const CertificateList = ({ ca }) => {
     revokedList,
     isMock
   )
-
-  ///////
   const LIST_COLUMNS = 6
 
   const items = useMemo(() => {
@@ -76,7 +75,6 @@ const CertificateList = ({ ca }) => {
       </DataGridRow>
     ),
   })
-  //////
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {

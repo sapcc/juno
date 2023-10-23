@@ -49,7 +49,7 @@ export const newCertificateMutation = () => {
 // revoke cert
 export const revokeCertificateMutation = () => {
   return useMutation({
-    mutationFn: ({ endpoint, ca, bearerToken, serial }) =>
-      revokeCertificate(endpoint, ca, bearerToken, serial),
+    mutationFn: ({ endpoint, ca, bearerToken, serial, isMock }) =>
+      revokeCertificate(endpoint, ca, bearerToken, serial, isMock),
   })
 }

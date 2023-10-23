@@ -108,12 +108,19 @@ export const createCertificate = (
     })
 }
 
-export const revokeCertificate = (endpoint, ca, bearerToken, serial) => {
-  return fetch(`${endpoint}/${ca}/certificate/${serial}`, {
+export const revokeCertificate = (
+  endpoint,
+  ca,
+  bearerToken,
+  serial,
+  isMock
+) => {
+  return fetchProxy(`${endpoint}/${ca}/certificate/${serial}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${bearerToken}`,
     },
+    mock: isMock,
   }).then(checkStatus)
 }
