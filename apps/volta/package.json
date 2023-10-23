@@ -106,7 +106,7 @@
     "isMock": {
       "value": "false",
       "type": "optional",
-      "description": "use mocked data for authentication and API (only in dev). The default value is false."
+      "description": "Use mocked data for authentication and API (only in dev). The default value is false."
     }
   },
   "appPreview": true
