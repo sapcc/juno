@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useMemo } from "react"
 import { getCertificates } from "../queries"
 import { useActions } from "messages-provider"
 import {
@@ -8,11 +8,13 @@ import {
   useAuthData,
   useGlobalsEndpoint,
   useGlobalsDocumentationLinks,
+  useGlobalsIsMock,
 } from "../hooks/useStore"
 import { parseError } from "../helpers"
 import {
   DataGrid,
   DataGridRow,
+  DataGridCell,
   DataGridHeadCell,
   DataGridToolbar,
   ButtonRow,
@@ -22,6 +24,8 @@ import {
 import CertificateListItem from "./CertificateListItem"
 import AddNewSSOButton from "./AddNewSSOButton"
 import HintLoading from "./HintLoading"
+import useEndlessScrollList from "utils/src/hooks/useEndlessScrollList"
+import CAsListItem from "./CAsListItem"
 
 const Heading = `
 jn-font-bold
@@ -38,14 +42,39 @@ const CertificateList = ({ ca }) => {
   const authData = useAuthData()
   const endpoint = useGlobalsEndpoint()
   const docuLinks = useGlobalsDocumentationLinks()
+  const isMock = useGlobalsIsMock()
 
   // fetch the certificates
   const { isLoading, isError, data, error } = getCertificates(
     authData?.JWT,
     endpoint,
     ca?.name,
-    revokedList
+    revokedList,
+    isMock
   )
+  const LIST_COLUMNS = 6
+
+  const items = useMemo(() => {
+    if (!data) return []
+    return data
+  }, [data])
+
+  const { scrollListItems, iterator } = useEndlessScrollList(items, {
+    loadingObject: (
+      <DataGridRow>
+        <DataGridCell colSpan={LIST_COLUMNS}>
+          <span>Loading ...</span>
+        </DataGridCell>
+      </DataGridRow>
+    ),
+    refFunction: (ref) => (
+      <DataGridRow>
+        <DataGridCell colSpan={LIST_COLUMNS} className="border-b-0 py-0">
+          <span ref={ref} />
+        </DataGridCell>
+      </DataGridRow>
+    ),
+  })
 
   // dispatch error with useEffect because error variable will first set once all retries did not succeed
   useEffect(() => {
@@ -95,16 +124,21 @@ const CertificateList = ({ ca }) => {
                     <DataGridHeadCell>Expiration date</DataGridHeadCell>
                     <DataGridHeadCell></DataGridHeadCell>
                   </DataGridRow>
-                  {data.map((item, i) => (
-                    <CertificateListItem key={i} item={item} ca={ca} />
-                  ))}
+
+                  {scrollListItems?.length > 0 ? (
+                    <>
+                      {iterator.map((item, index) => (
+                        <CertificateListItem key={index} item={item} ca={ca} />
+                      ))}
+                    </>
+                  ) : (
+                    <DataGridRow>
+                      <DataGridCell colSpan={LIST_COLUMNS}>
+                        <HintNotFound text="No certificates found" />
+                      </DataGridCell>
+                    </DataGridRow>
+                  )}
                 </DataGrid>
-                {data?.length > 10 && (
-                  <Stack
-                    distribution="end"
-                    className="p-6"
-                  >{`${data?.length} Items`}</Stack>
-                )}
               </>
             )}
             {data && data.length === 0 && (
