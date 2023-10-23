@@ -9,7 +9,7 @@ import { Icon, Stack } from "juno-ui-components"
 const domainCardClasses = `
   group
   relative
-  bg-juno-grey-blue-9 
+  bg-theme-background-lvl-1
   text-theme-high
   p-4
   block

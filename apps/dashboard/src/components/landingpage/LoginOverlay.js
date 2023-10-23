@@ -61,7 +61,11 @@ const LoginOverlay = () => {
   const qaRegionKeys = useStore(useCallback((state) => state.qaRegionKeys))
 
   const isValidRegionSelected = useMemo(() => {
-    return selectedRegion !== null && (regionKeys.includes(selectedRegion) || qaRegionKeys.includes(selectedRegion))
+    return (
+      selectedRegion !== null &&
+      (regionKeys.includes(selectedRegion) ||
+        qaRegionKeys.includes(selectedRegion))
+    )
   }, [selectedRegion])
 
   return (
@@ -76,7 +80,7 @@ const LoginOverlay = () => {
             className="-mr-12"
           />
         </div>
-        <nav className="w-full border-b-2 border-juno-grey-light-8 mb-8">
+        <nav className="w-full border-b-2 border-text-theme-light mb-8">
           <Stack distribution="around">
             <a
               href="#"
@@ -97,7 +101,7 @@ const LoginOverlay = () => {
         </div>
       </div>
 
-      <div className="w-full bg-juno-grey-blue-10 mt-auto">
+      <div className="w-full bg-theme-background-lvl-0 mt-auto">
         <Stack
           alignment="center"
           className="documentation-banner max-w-screen-xl mx-auto py-10"
