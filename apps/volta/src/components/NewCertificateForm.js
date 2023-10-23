@@ -247,7 +247,7 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
             : textAreaHelpText()
         }
         className={showValidation["csr"] && "text-theme-danger border-2"}
-        rows="8"
+        rows="15"
       />
     </Form>
   )
