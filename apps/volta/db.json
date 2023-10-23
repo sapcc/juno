@@ -19,10 +19,10 @@
   "2fa-pki": [
     {
       "serial": "03:05:4a:ed:6e:d5:00:9d:81:ce:de:cc:4e:92:36:62:8c:ba:19:fd",
-      "status": "Expired",
+      "status": "Active",
       "email": "",
       "identity": "D0123456",
-      "name": "test4444",
+      "name": "Alpha",
       "description": "fasdfasdfa",
       "not_after": "2022-10-03T12:27:03",
       "not_before": "2022-09-30T12:26:33"
