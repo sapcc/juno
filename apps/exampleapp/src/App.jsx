@@ -15,7 +15,7 @@ import StoreProvider, {
   useGlobalsActions,
   useAuthActions,
 } from "./components/StoreProvider"
-import { useActions, MessagesProvider } from "messages-provider"
+import { MessagesProvider } from "messages-provider"
 
 // mock API
 import { fetchProxyInitDB } from "utils"
