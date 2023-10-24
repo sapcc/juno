@@ -24,7 +24,7 @@ import {
 import CertificateListItem from "./CertificateListItem"
 import AddNewSSOButton from "./AddNewSSOButton"
 import HintLoading from "./HintLoading"
-import useEndlessScrollList from "utils/src/hooks/useEndlessScrollList"
+import { useEndlessScrollList } from "utils"
 import CAsListItem from "./CAsListItem"
 
 const Heading = `
