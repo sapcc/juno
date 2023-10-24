@@ -6,7 +6,14 @@ import React, {
   forwardRef,
   useCallback,
 } from "react"
-import { Button, Stack, TextInput, Textarea, Form } from "juno-ui-components"
+import {
+  Button,
+  Stack,
+  TextInput,
+  Textarea,
+  Form,
+  FormRow,
+} from "juno-ui-components"
 import {
   generateKeys,
   pemEncodeKey,
@@ -189,7 +196,7 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
 
   return (
     <Form autoComplete="off" onSubmit={(e) => e.preventDefault()}>
-      <Stack gap="2" direction="vertical" distribution="end">
+      <FormRow>
         <TextInput
           label="Name"
           required
@@ -203,6 +210,8 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
             showValidation["name"] && "text-theme-danger border-2 mb-2"
           }
         />
+      </FormRow>
+      <FormRow>
         <TextInput
           label="Description"
           onChange={(e) => {
@@ -216,6 +225,8 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
             showValidation["description"] && "text-theme-danger border-2"
           }
         />
+      </FormRow>
+      <FormRow>
         <TextInput
           label="User ID"
           value={formState.identity}
@@ -229,7 +240,7 @@ const NewCertificateForm = ({ ca, onFormSuccess }, ref) => {
           }
           className={showValidation["identity"] && "text-theme-danger border-2"}
         />
-      </Stack>
+      </FormRow>
       <Stack alignment="center" className="mb-2" distribution="end">
         <Button label="Generate CSR" size="small" onClick={generateCSR} />
       </Stack>

@@ -6,7 +6,7 @@ import {
   Stack,
   Select,
   SelectOption,
-  Spinner,
+  FormRow,
 } from "juno-ui-components"
 import useStore from "../store"
 import Markdown from "./Markdown"
@@ -107,20 +107,22 @@ const Documentation = ({ isLoading, data }) => {
                 <Container>
                   {activeNavItem === "wigetLoader" && widgetLoaderVersions && (
                     <Stack distribution="end" className="w-full">
-                      <Select
-                        label="version"
-                        variant="floating"
-                        value={widgetLoaderVersion}
-                        onChange={(e) => changeVersion(e.target.value)}
-                      >
-                        {widgetLoaderVersions.map((version, i) => (
-                          <SelectOption
-                            key={i}
-                            label={version.label}
-                            value={version.value}
-                          />
-                        ))}
-                      </Select>
+                      <FormRow>
+                        <Select
+                          label="version"
+                          variant="floating"
+                          value={widgetLoaderVersion}
+                          onChange={(e) => changeVersion(e.target.value)}
+                        >
+                          {widgetLoaderVersions.map((version, i) => (
+                            <SelectOption
+                              key={i}
+                              label={version.label}
+                              value={version.value}
+                            />
+                          ))}
+                        </Select>
+                      </FormRow>
                     </Stack>
                   )}
                   <Markdown path={nav?.[activeNavItem]?.path} />
