@@ -29,29 +29,27 @@ describe("mount app", () => {
     apps.forEach(async (app) => {
       let appConf = { name: app.name, version: app.version, props: {} }
 
-      if (appConf.name === "exampleapp") {
-        if (app.appProps) {
-          Object.keys(app.appProps).forEach((key) => {
-            if (app.appProps[key]?.type === "required")
-              appConf.props[key] = "test"
-          })
-        }
-        cy.log("mount app: " + JSON.stringify(appConf))
-        let encodedAppConf = btoa(JSON.stringify(appConf))
-        // load module file (index.js)
-        cy.request(app.entryFile).should((response) => {
-          expect(response.status).to.eq(200)
-        })
-        cy.visit("/mount-test.html?config=" + encodedAppConf)
-        cy.wait(DELAY).then(() => {
-          cy.get(`[data-juno-app="${app.name}"]`).should("exist") // check if app is mounted)
-          cy.wait(DELAY).then(() => {
-            expect(windowErrorSpy).to.not.be.called
-            expect(windowWarnSpy).to.not.be.called
-          })
-          cy.log("\x1b[32mSUCCESS\x1b[37m")
+      if (app.appProps) {
+        Object.keys(app.appProps).forEach((key) => {
+          if (app.appProps[key]?.type === "required")
+            appConf.props[key] = "test"
         })
       }
+      cy.log("mount app: " + JSON.stringify(appConf))
+      let encodedAppConf = btoa(JSON.stringify(appConf))
+      // load module file (index.js)
+      cy.request(app.entryFile).should((response) => {
+        expect(response.status).to.eq(200)
+      })
+      cy.visit("/mount-test.html?config=" + encodedAppConf)
+      cy.wait(DELAY).then(() => {
+        cy.get(`[data-juno-app="${app.name}"]`).should("exist") // check if app is mounted)
+        cy.wait(DELAY).then(() => {
+          expect(windowErrorSpy).to.not.be.called
+          expect(windowWarnSpy).to.not.be.called
+        })
+        cy.log("\x1b[32mSUCCESS\x1b[37m")
+      })
     })
   })
 })
