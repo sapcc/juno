@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { Form, Stack, TextInputRow, Icon, Button } from "juno-ui-components"
+import { Form, Stack, TextInput, Icon, Button } from "juno-ui-components"
 
 const formAreaCss = (show) => {
   return `      
@@ -60,7 +60,7 @@ const PreviewAppPropsForm = ({ asset, onAppPropsChange }) => {
         <div className={formAreaCss(show)}>
           <Form className="p-1">
             {Object.keys(appProps).map((key) => (
-              <TextInputRow
+              <TextInput
                 key={key}
                 id={key}
                 label={key}

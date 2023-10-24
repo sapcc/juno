@@ -4,7 +4,7 @@ import {
   SideNavigation,
   SideNavigationItem,
   Stack,
-  SelectRow,
+  Select,
   SelectOption,
   Spinner,
 } from "juno-ui-components"
@@ -107,7 +107,7 @@ const Documentation = ({ isLoading, data }) => {
                 <Container>
                   {activeNavItem === "wigetLoader" && widgetLoaderVersions && (
                     <Stack distribution="end" className="w-full">
-                      <SelectRow
+                      <Select
                         label="version"
                         variant="floating"
                         value={widgetLoaderVersion}
@@ -120,7 +120,7 @@ const Documentation = ({ isLoading, data }) => {
                             value={version.value}
                           />
                         ))}
-                      </SelectRow>
+                      </Select>
                     </Stack>
                   )}
                   <Markdown path={nav?.[activeNavItem]?.path} />

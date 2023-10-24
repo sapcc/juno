@@ -11,7 +11,7 @@ import {
   TabList,
   Tab,
   TabPanel,
-  SelectRow,
+  Select,
   SelectOption,
   Pill,
 } from "juno-ui-components"
@@ -197,7 +197,7 @@ const AssetDetails = () => {
                   )}
                 </Stack>
 
-                <SelectRow
+                <Select
                   label="version"
                   variant="floating"
                   value={asset?.version}
@@ -212,7 +212,7 @@ const AssetDetails = () => {
                       value={version.value}
                     />
                   ))}
-                </SelectRow>
+                </Select>
               </Stack>
             )}
 
