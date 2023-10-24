@@ -65,6 +65,9 @@ const createAppsDataSlice = (set, get) => ({
   apps: {
     active: [],
     config: {},
+    isFetching: false,
+    error: null,
+    updatedAt: null,
     actions: {
       setActive: (active) =>
         set(
@@ -99,12 +102,30 @@ const createAppsDataSlice = (set, get) => ({
           false,
           "apps/removeActive"
         ),
-      setConfig: (config) =>
+      requestConfig: () =>
         set(
-          (state) => ({ apps: { ...state.apps, config } }),
+          (state) => ({ apps: { ...state.apps, isFetching: true } }),
           false,
-          "apps/setConfig"
+          "apps/requestConfig"
         ),
+      receiveConfig: (config) =>
+        set((state) => ({
+          apps: {
+            ...state.apps,
+            config,
+            isFetching: false,
+            error: null,
+            updatedAt: Date.now(),
+          },
+        })),
+      receiveConfigError: (error) =>
+        set((state) => ({
+          apps: {
+            ...state.apps,
+            isFetching: false,
+            error,
+          },
+        })),
     },
   },
 })
