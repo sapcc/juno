@@ -565,7 +565,7 @@ jobs:
       - in_parallel:
         - get: secrets.git
         - get: ui-storybook.version
-          trigger: false
+          trigger: true
           passed: [e2e-tests-storybook-s-qa-de-1]
         - get: ui-storybook.git
       - task: deploy

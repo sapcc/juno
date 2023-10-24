@@ -158,7 +158,7 @@ const Auth = ({
                 <>
                   <span>
                     {authError
-                      ? JSON.stringify(authError)
+                      ? "You have been logged out. Please sign in again."
                       : "Please sign in before you can use Greenhouse."}
                   </span>
                   <Button variant="primary" onClick={login} className="mt-3">
