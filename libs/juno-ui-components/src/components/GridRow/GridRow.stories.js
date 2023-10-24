@@ -1,6 +1,6 @@
 import React from "react"
 import { GridRow } from "./index.js"
-import { Default as GridColumn } from "../GridColumn/GridColumn.stories.js"
+import { GridColumn } from "../GridColumn/GridColumn.component.js"
 
 export default {
   title: "Layout/Grid/GridRow",
@@ -10,9 +10,16 @@ export default {
       control: false
     },
   },
+  decorators: [
+    (Story) => (
+      <Story className="jn-bg-juno-blue-3 jn-text-juno-grey-blue" />
+    ),
+  ],
 }
 
-const Template = ({ columns, ...args }) => <GridRow {...args}></GridRow>
+// for the decorator to work like this (passing props to the story) we have to access the passed props from the decorator
+// from the context. This might be storybook 6.x-specific. Double check when we upgrade to storybook 7.x
+const Template = ({ columns, ...args }, context) => <GridRow {...args} className={context.className}></GridRow>
 
 export const Default = Template.bind({})
 Default.args = {

@@ -93,6 +93,14 @@ export function parseIdTokenData(tokenData) {
         parsedData.teams = parsedData.teams || []
         parsedData.teams.push(item.substring("team:".length))
       }
+      if (item.startsWith("role:")) {
+        parsedData.roles = parsedData.roles || []
+        parsedData.roles.push(item.substring("role:".length))
+      }
+      if (item.startsWith("support-group:")) {
+        parsedData.supportGroups = parsedData.supportGroups || []
+        parsedData.supportGroups.push(item.substring("support-group:".length))
+      }
     })
   }
   // groups: ["organization:test-org", "team:test-team-1", "team:test-team-2"],

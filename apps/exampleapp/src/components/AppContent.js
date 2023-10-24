@@ -9,14 +9,34 @@ import {
   TabList,
   TabPanel,
 } from "juno-ui-components"
-import { useGlobalsActions, useGlobalsTabIndex } from "./StoreProvider"
+import {
+  useGlobalsActions,
+  useGlobalsTabIndex,
+  useAuthLoggedIn,
+  useAuthError,
+} from "./StoreProvider"
+import { useActions, Messages } from "messages-provider"
 import ModalManager from "./ModalManager"
 import PanelManager from "./PanelManager"
 import Peaks from "./peaks/Peaks"
+import WelcomeView from "./WelcomeView"
 
 const AppContent = (props) => {
-  const { setTabIndex, setEndpoint } = useGlobalsActions()
+  const { setTabIndex, setCurrentModal } = useGlobalsActions()
+  const loggedIn = useAuthLoggedIn()
+  const authError = useAuthError()
   const tabIndex = useGlobalsTabIndex()
+  const { addMessage } = useActions()
+
+  // set an error message when oidc fails
+  useEffect(() => {
+    if (authError) {
+      addMessage({
+        variant: "error",
+        text: parseError(authError),
+      })
+    }
+  }, [authError])
 
   const onTabSelected = (index) => {
     setTabIndex(index)
@@ -24,37 +44,47 @@ const AppContent = (props) => {
 
   return (
     <>
-      <Breadcrumb>
-        <BreadcrumbItem icon="home" label="Example App Home" />
-      </Breadcrumb>
+      {loggedIn && !authError ? (
+        <>
+          <Breadcrumb>
+            <BreadcrumbItem icon="home" label="Example App Home" />
+          </Breadcrumb>
 
-      {/* Modularize? -> create views/pages?*/}
-      <MainTabs selectedIndex={tabIndex} onSelect={onTabSelected}>
-        <TabList>
-          <Tab>Peaks</Tab>
-          <Tab>Tab Two</Tab>
-        </TabList>
+          <Container py>
+            <MainTabs selectedIndex={tabIndex} onSelect={onTabSelected}>
+              <TabList>
+                <Tab>Peaks</Tab>
+                <Tab>Tab Two</Tab>
+              </TabList>
 
-        <TabPanel>
-          {/* You'll normally want to use a Container as a wrapper for your content because it has padding that makes everything look nice */}
-          <Container py>
-            {/* Set the background graphic using tailwind background image syntax as below. The image must exist at the specified location in your app */}
-            {/*<IntroBox variant="hero" heroImage="bg-[url('img/app_bg_example.svg')]">
-              This is the fancy introbox variant for apps that have some app specific flavor branding with a special background graphic.
-            </IntroBox> */}
-            {/* Messages always at the top of the content area or if there is a hero introbox directly underneath that */}
-            <PanelManager />
-            <Peaks />
+              <TabPanel>
+                <Container py px={false}>
+                  {/* Set the background graphic using tailwind background image syntax as below. The image must exist at the specified location in your app */}
+                  {/*<IntroBox variant="hero" heroImage="bg-[url('img/app_bg_example.svg')]">
+                    This is the fancy introbox variant for apps that have some app specific flavor branding with a special background graphic.
+                  </IntroBox> */}
+                  {/* Messages always at the top of the content area or if there is a hero introbox directly underneath that */}
+                  <Messages className="pb-6" />
+                  <PanelManager />
+                  <Peaks />
+                </Container>
+              </TabPanel>
+              <TabPanel>
+                <Container py px={false}>
+                  <p>Test a panel pressing the Button</p>
+                  <Button
+                    label="Button"
+                    onClick={() => setCurrentModal("TestModal")}
+                  />
+                </Container>
+              </TabPanel>
+            </MainTabs>
+            <ModalManager />
           </Container>
-        </TabPanel>
-        <TabPanel>
-          <Container py>
-            Content Panel two. Normally you will probably want to put the
-            TabPanel content into separate components.
-          </Container>
-        </TabPanel>
-      </MainTabs>
-      <ModalManager />
+        </>
+      ) : (
+        <WelcomeView />
+      )}
     </>
   )
 }

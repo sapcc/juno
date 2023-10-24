@@ -12,14 +12,16 @@ bg-cover
 const Avatar = ({ userName, url }) => {
   return (
     <Stack alignment="center">
-      <div
-        style={{
-          background: `url(${url}) no-repeat`,
-          backgroundSize: `cover`,
-        }}
-        className={avatarCss}
-      />
-      {userName && <span>{userName}</span>}
+      {url && (
+        <div
+          style={{
+            background: `url(${url}) no-repeat`,
+            backgroundSize: `cover`,
+          }}
+          className={avatarCss}
+        />
+      )}
+      {userName && <span className="ml-2">{userName}</span>}
     </Stack>
   )
 }

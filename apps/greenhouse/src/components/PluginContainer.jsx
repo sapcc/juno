@@ -4,16 +4,23 @@ import {
   useAppsActions,
   useAppsActive,
   useAppsConfig,
+  useAppsIsFetching,
 } from "../components/StoreProvider"
 import useApi from "../hooks/useApi"
 import { useLayoutEffect } from "react"
 
 const PluginContainer = () => {
   const { getPluginConfigs } = useApi()
-  const { setConfig: setAppsConfig, setActive: setActiveApps } =
-    useAppsActions()
+  const {
+    setActive: setActiveApps,
+    requestConfig,
+    receiveConfig,
+    receiveConfigError,
+  } = useAppsActions()
   const activeApps = useAppsActive()
   const appsConfig = useAppsConfig()
+  const isFetching = useAppsIsFetching()
+
   const availableAppIds = React.useMemo(
     () => Object.keys(appsConfig),
     [appsConfig]
@@ -21,8 +28,11 @@ const PluginContainer = () => {
 
   useLayoutEffect(() => {
     if (!getPluginConfigs) return
-    getPluginConfigs().then((config) => setAppsConfig(config))
-  }, [getPluginConfigs, setAppsConfig])
+    requestConfig()
+    getPluginConfigs()
+      .then((config) => receiveConfig(config))
+      .catch((error) => receiveConfigError(error.message))
+  }, [getPluginConfigs, requestConfig, receiveConfig, receiveConfigError])
 
   // set first plugin in the list of plugin config as active unless active exists
   useLayoutEffect(() => {
@@ -42,6 +52,7 @@ const PluginContainer = () => {
     }
   }, [appsConfig, activeApps, setActiveApps])
 
+  if (isFetching) return "Loading plugins..."
   if (availableAppIds.length === 0) return "No plugins available"
   return availableAppIds.map((id, i) => (
     <Plugin id={id} key={i} active={activeApps.indexOf(id) >= 0} />

@@ -14,7 +14,6 @@ const widthColumnStyles = `
 
 const columnBaseStyles = `
 	jn-flex-grid-column
-	jn-w-grid-column-default
 	jn-p-grid-column
 `
 
@@ -92,7 +91,8 @@ const colsClass = (cols) => {
 			return cols_11
 		case 12:
 			return cols_12
-		default: null
+		default: 
+			return "jn-w-grid-column-default"
 	}
 }
 
@@ -119,7 +119,7 @@ export const GridColumn = ({
 	// width overrides auto:
 	const columnStyles = width ? widthStyles : ( auto ? autoStyles : {} )
 	return (
-		<div className={`juno-grid-column ${columnBaseStyles} ${cols ? colsClass(cols) : '' } ${className}`} style={columnStyles} {...props} >
+		<div className={`juno-grid-column ${columnBaseStyles} ${colsClass(cols)} ${className}`} style={columnStyles} {...props} >
 			{children}
 		</div>
 	)

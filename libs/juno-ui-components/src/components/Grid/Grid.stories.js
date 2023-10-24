@@ -1,7 +1,7 @@
 import React from "react"
 import { Grid } from "./index.js"
-import { Default as GridRow } from "../GridRow/GridRow.stories.js"
-import { Default as GridColumn } from "../GridColumn/GridColumn.stories.js"
+import { GridRow } from "../GridRow/GridRow.component.js"
+import { GridColumn } from "../GridColumn/GridColumn.component.js"
 
 export default {
   title: "Layout/Grid/Grid",
@@ -11,9 +11,16 @@ export default {
       control: false
     },
   },
+  decorators: [
+    (Story) => (
+      <Story className="jn-bg-juno-blue-3 jn-text-juno-grey-blue" />
+    ),
+  ],
 }
 
-const Template = (args) => <Grid {...args}></Grid>
+// for the decorator to work like this (passing props to the story) we have to access the passed props from the decorator
+// from the context. This might be storybook 6.x-specific. Double check when we upgrade to storybook 7.x
+const Template = (args, context) => <Grid {...args} className={context.className}></Grid>
 
 export const Default = Template.bind({})
 Default.parameters = {
@@ -43,7 +50,7 @@ Default.args = {
     <GridRow key="2">
       <GridColumn>Column</GridColumn>
       <GridColumn cols={3}>Column cols-3</GridColumn>
-      <GridColumn cols={5}>Column cols-5</GridColumn>
+      <GridColumn cols={5}>Column cols-6</GridColumn>
       <GridColumn cols={2}>Column cols-2</GridColumn>
     </GridRow>,
   ],
@@ -94,7 +101,7 @@ MixedGrid.args = {
       <GridColumn>Column</GridColumn>
       <GridColumn auto>Auto Column</GridColumn>
       <GridColumn width={10}>Column 10%</GridColumn>
-      <GridColumn cols={3}>Auto Column</GridColumn>
+      <GridColumn cols={3}>Column cols-3</GridColumn>
     </GridRow>
   ),
 }
@@ -107,7 +114,7 @@ MixedAutoGrid.args = {
       <GridColumn>Column</GridColumn>
       <GridColumn auto>Auto Column</GridColumn>
       <GridColumn width={10}>Column 10%</GridColumn>
-      <GridColumn cols={3}>Auto Column</GridColumn>
+      <GridColumn cols={3}>Column cols-3</GridColumn>
     </GridRow>
   ),
 }
