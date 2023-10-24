@@ -21,7 +21,7 @@ const pillStyles = (onClick) => {
 
 const pillKeyStyles = (onClick) => {
   return`
-    jn-bg-theme-background-lvl-3
+    jn-bg-theme-background-lvl-4
     ${onClick ? "group-hover:jn-text-theme-high" : ""}
     jn-px-1
     jn-py-0.5
