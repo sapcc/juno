@@ -26,6 +26,7 @@ const App = (props) => {
       setMock(true)
 
       fetchProxyInitDB(db, {
+        debug: true,
         rewriteRoutes: {
           "/api/v1/(.*)/certificate/(.*)": "/$1/$2",
           "/api/v1/(.*)/certificate": "/$1",
