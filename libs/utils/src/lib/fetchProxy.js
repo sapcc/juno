@@ -53,7 +53,7 @@ export const fetchProxyInitDB = (jsonData, options = {}) => {
   // check if the localDB is initialized and warns if already initialized
   if (localDB) {
     // create a new custom warning to return
-    return console.warn(
+    console.warn(
       `fetchProxyInitDB:: localDB already initialized. This typically occurs when the component or hook, responsible for local database initialization, is accidentally re-rendered. If you intend to reset the local database, please ensure to set localDB to null first by invoking fetchProxyInitDB(null) before providing new data."`
     )
   }
