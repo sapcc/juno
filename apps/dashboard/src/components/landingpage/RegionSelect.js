@@ -52,7 +52,7 @@ const RegionSelect = () => {
                   key={region}
                   onClick={() => selectRegion(region)}
                   alignment="center"
-                  className="bg-theme-background-lvl-1 py-3 px-5 cursor-pointer hover:bg-theme-accent hover:text-black"
+                  className="bg-theme-background-lvl-0 py-3 px-5 cursor-pointer hover:bg-theme-accent hover:text-black"
                 >
                   <div className="mr-8">
                     <span className="font-bold">{region}</span>
