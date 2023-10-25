@@ -11,9 +11,10 @@ import {
   TabList,
   Tab,
   TabPanel,
-  SelectRow,
+  Select,
   SelectOption,
   Pill,
+  FormRow,
 } from "juno-ui-components"
 import useStore from "../store"
 import { currentState, push, onGlobalChange } from "url-state-provider"
@@ -196,23 +197,24 @@ const AssetDetails = () => {
                     </div>
                   )}
                 </Stack>
-
-                <SelectRow
-                  label="version"
-                  variant="floating"
-                  value={asset?.version}
-                  onValueChange={(value) => {
-                    return changeVersion(value)
-                  }}
-                >
-                  {versions.map((version, i) => (
-                    <SelectOption
-                      key={i}
-                      label={version.label}
-                      value={version.value}
-                    />
-                  ))}
-                </SelectRow>
+                <FormRow>
+                  <Select
+                    label="version"
+                    variant="floating"
+                    value={asset?.version}
+                    onValueChange={(value) => {
+                      return changeVersion(value)
+                    }}
+                  >
+                    {versions.map((version, i) => (
+                      <SelectOption
+                        key={i}
+                        label={version.label}
+                        value={version.value}
+                      />
+                    ))}
+                  </Select>
+                </FormRow>
               </Stack>
             )}
 

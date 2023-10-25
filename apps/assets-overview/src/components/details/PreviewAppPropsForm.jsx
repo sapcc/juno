@@ -1,5 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { Form, Stack, TextInputRow, Icon, Button } from "juno-ui-components"
+import {
+  Form,
+  Stack,
+  TextInput,
+  Icon,
+  Button,
+  FormRow,
+} from "juno-ui-components"
 
 const formAreaCss = (show) => {
   return `      
@@ -60,15 +67,17 @@ const PreviewAppPropsForm = ({ asset, onAppPropsChange }) => {
         <div className={formAreaCss(show)}>
           <Form className="p-1">
             {Object.keys(appProps).map((key) => (
-              <TextInputRow
-                key={key}
-                id={key}
-                label={key}
-                required={appProps[key]?.type === "required"}
-                helptext={`${appProps[key]?.description}`}
-                onChange={(e) => onInputChanged(key, e?.target?.value)}
-                onKeyDown={handleKeyDown}
-              />
+              <FormRow>
+                <TextInput
+                  key={key}
+                  id={key}
+                  label={key}
+                  required={appProps[key]?.type === "required"}
+                  helptext={`${appProps[key]?.description}`}
+                  onChange={(e) => onInputChanged(key, e?.target?.value)}
+                  onKeyDown={handleKeyDown}
+                />
+              </FormRow>
             ))}
             <Stack className="mb-4" alignment="center" distribution="end">
               <Button

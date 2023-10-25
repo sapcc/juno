@@ -98,7 +98,7 @@ const ResultItem = ({ content, expand }) => {
           </>
         )}
       </div>
-      <div className={`${rightColumn} p-6 bg-juno-grey-blue-8`}>
+      <div className={`${rightColumn} p-6 bg-theme-background-lvl-2`}>
         {isExpanded && (
           <Stack
             gap="3"
