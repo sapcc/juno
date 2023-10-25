@@ -28,7 +28,7 @@ const AppIcon = ({ name }) => {
 }
 
 const navStyles = `
-bg-theme-background-level-0
+bg-juno-grey-blue-11
 py-4
 `
 
