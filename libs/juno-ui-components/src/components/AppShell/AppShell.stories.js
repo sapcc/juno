@@ -113,7 +113,7 @@ WithSideNavigation.parameters = {
 }
 WithSideNavigation.args = {
   sideNavigation: <SideNavigation>
-                    <SideNavigationItem>Home</SideNavigationItem>
+                    <SideNavigationItem active>Home</SideNavigationItem>
                     <SideNavigationItem>Item 1</SideNavigationItem>
                     <SideNavigationItem>Item 2</SideNavigationItem>
                   </SideNavigation>,
