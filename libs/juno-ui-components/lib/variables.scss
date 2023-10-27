@@ -60,22 +60,10 @@
     --color-sap-blue-7-raw: 0, 81, 120;
       
     // SAP GOLD
-    // RGB                                        // Corresponding SAP web brand color:
-    --color-sap-gold-1: rgb(251, 232, 188);     // --color-sap-gold-light
-    --color-sap-gold-2: rgb(248, 219, 150);     // --color-sap-gold-light-1
-    --color-sap-gold-3: rgb(246, 204, 108);     // --color-sap-gold-light-2
-    --color-sap-gold-4: rgb(243, 188, 58);      // --color-sap-gold-light-3
-    --color-sap-gold-5: rgb(240, 171, 0);       // --color-sap-gold
-    --color-sap-gold-6: rgb(217, 151, 0);       // --color-sap-gold-dark
-    --color-sap-gold-7: rgb(150, 105, 0);       // --color-sap-gold-dark-1
+    // RGB                                        // Corresponding SAP web brand color:  
+    --color-sap-gold: rgb(240, 171, 0);          // --color-sap-gold    
     // RAW
-    --color-sap-gold-1-raw: 251, 232, 188;
-    --color-sap-gold-2-raw: 248, 219, 150;
-    --color-sap-gold-3-raw: 246, 204, 108;
-    --color-sap-gold-4-raw: 243, 188, 58; 
-    --color-sap-gold-5-raw: 240, 171, 0;  
-    --color-sap-gold-6-raw: 217, 151, 0;  
-    --color-sap-gold-7-raw: 150, 105, 0;  
+    --color-sap-gold-raw: 240, 171, 0;  
     
     // SAP PURPLE
     // RGB                                        // Corresponding SAP web brand color:
@@ -479,8 +467,8 @@
   --color-syntax-highlight-base09: var(--color-juno-blue-4); // String value
   --color-syntax-highlight-base0A: var(--color-juno-grey-blue-6); // NaN
   --color-syntax-highlight-base0B: var(--color-juno-blue-4); // float value
-  --color-syntax-highlight-base0C: var(--color-sap-gold-5); // array index
-  --color-syntax-highlight-base0D: var(--color-sap-gold-5); // expanded icon
+  --color-syntax-highlight-base0C: var(--color-sap-gold); // array index
+  --color-syntax-highlight-base0D: var(--color-sap-gold); // expanded icon
   --color-syntax-highlight-base0E: var(--color-juno-blue-4); 
   // LT bool + collapsed icon
   --color-syntax-highlight-base0F: var(--color-juno-blue-4); // integer value
@@ -688,8 +676,8 @@
   --color-syntax-highlight-base09: var(--color-juno-blue-4); // String value
   --color-syntax-highlight-base0A: var(--color-juno-grey-blue-6); // NaN
   --color-syntax-highlight-base0B: var(--color-juno-blue-4); // float value
-  --color-syntax-highlight-base0C: var(--color-sap-gold-4); // array index
-  --color-syntax-highlight-base0D: var(--color-sap-gold-4); // DT expanded icon
+  --color-syntax-highlight-base0C: var(--color-sap-gold); // array index
+  --color-syntax-highlight-base0D: var(--color-sap-gold); // DT expanded icon
   --color-syntax-highlight-base0E: var(--color-juno-blue-4); // DT bool + collapsed icon
   --color-syntax-highlight-base0F: var(--color-juno-blue-4); // integer value
   // DT DataGrid

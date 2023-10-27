@@ -114,14 +114,7 @@ module.exports = {
         DEFAULT: withOpacity("--color-sap-blue-5-raw"),
       },
       "sap-gold": {
-        1: withOpacity("--color-sap-gold-1-raw"),
-        2: withOpacity("--color-sap-gold-2-raw"),
-        3: withOpacity("--color-sap-gold-3-raw"),
-        4: withOpacity("--color-sap-gold-4-raw"),
-        5: withOpacity("--color-sap-gold-5-raw"),
-        6: withOpacity("--color-sap-gold-6-raw"),
-        7: withOpacity("--color-sap-gold-7-raw"),
-        DEFAULT: withOpacity("--color-sap-gold-5-raw"),
+        DEFAULT: withOpacity("--color-sap-gold-raw"),
       },
       "sap-purple": {
         1: withOpacity("--color-sap-purple-1-raw"),
