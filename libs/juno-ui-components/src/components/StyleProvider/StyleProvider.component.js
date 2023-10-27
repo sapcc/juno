@@ -45,8 +45,11 @@ export const StyleProvider = ({
   // theme class default to theme-dark
   const themeClass = themeClassName || "theme-dark"
 
-  // manage custom css classes (useStyles)
-  const customCssClasses = useRef(APP_BODY_CSS_CLASS_NAME + " " + themeClass)
+  // store current theme. This is needed to remove the old theme class when the theme changes
+  const currentTheme = useRef(themeClass)
+  // store current container css classes. This is needed to update classes without loosing the old ones
+  const containerCssClasses = useRef(APP_BODY_CSS_CLASS_NAME + " " + themeClass)
+  // store the reference to the container element
   const container = useRef()
 
   // Deprecated!
@@ -62,22 +65,54 @@ export const StyleProvider = ({
     [stylesWrapper, shadowRootMode]
   )
 
-  // this function makes it possible to change container css class on the fly
-  const setCustomCssClasses = useCallback((value) => {
+  // this function makes it possible to add css class to the container on the fly
+  const addCssClass = useCallback((value) => {
     if (!container.current || typeof value !== "string") return
-    container.current.className = `${APP_BODY_CSS_CLASS_NAME} ${themeClass} ${value}`
+    container.current.classList.add(value)
+    containerCssClasses.current = container.current.className
   }, [])
 
-  return (
-    <Wrapper>
-      <Fonts inline={stylesWrapper !== "head"} />
-      <GlobalStyles inline={stylesWrapper !== "head"} />
-      <StylesContext.Provider value={{ styles, theme, setCustomCssClasses }}>
-        <div className={customCssClasses.current} ref={container}>
-          {children}
-        </div>
-      </StylesContext.Provider>
-    </Wrapper>
+  // this function makes it possible to remove css class from the container on the fly
+  const removeCssClass = useCallback((value) => {
+    if (!container.current || typeof value !== "string") return
+    container.current.classList.remove(value)
+    containerCssClasses.current = container.current.className
+  }, [])
+
+  // this function makes it possible to change the theme class on the fly
+  const setThemeClass = useCallback(
+    (value) => {
+      if (!container.current || typeof value !== "string") return
+      container.current.classList.remove(currentTheme.current)
+      container.current.classList.add(value)
+      currentTheme.current = value
+      containerCssClasses.current = container.current.className
+    },
+    [container.current, currentTheme.current]
+  )
+
+  // update the theme class when the theme changes
+  React.useEffect(() => {
+    if (!container.current) return
+    setThemeClass(themeClass)
+  }, [setThemeClass, themeClass])
+
+  // useMemo is used to avoid re-rendering the component when the theme changes
+  return React.useMemo(
+    () => (
+      <Wrapper>
+        <Fonts inline={stylesWrapper !== "head"} />
+        <GlobalStyles inline={stylesWrapper !== "head"} />
+        <StylesContext.Provider
+          value={{ styles, theme, setThemeClass, addCssClass, removeCssClass }}
+        >
+          <div className={containerCssClasses.current} ref={container}>
+            {children}
+          </div>
+        </StylesContext.Provider>
+      </Wrapper>
+    ),
+    [stylesWrapper, shadowRootMode]
   )
 }
 
