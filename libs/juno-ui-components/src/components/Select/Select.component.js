@@ -109,18 +109,20 @@ export const Select = ({
   const uniqueId = () => (
     "juno-select-" + useId()
   )
-  
+
   // iterate over children to get option values and labels by reading the value and the label prop of each child and saving them in a map
   const buildOptionValuesAndLabelMap = (options) => {
     const optionMap = new Map()
     if (options && Array.isArray(options)) {
       options.map((option) => {
-        if (option.type.name === "SelectOption") {
-          optionMap.set(option.props.value || option.props.children, {
-            val: option.props.value,
-            label: option.props.label,
-            children: option.props.children
+        if (option && React.isValidElement(option) && option.type?.name === "SelectOption") {
+          optionMap.set(option.props?.value || option.props?.children, {
+            val: option.props?.value,
+            label: option.props?.label,
+            children: option.props?.children
           })
+        } else {
+          console.warn("Select: at least one of the options is undefined or null or not of type SelectOption")
         }
       })
     }
@@ -130,12 +132,7 @@ export const Select = ({
   const theId = id || uniqueId()
   const helptextId = "juno-select-helptext-" + useId()
   
-  const optionValuesAndLabelMap = useMemo(
-    () => buildOptionValuesAndLabelMap(children),
-    [children]
-  )
-  
-  const [optionValuesAndLabels, setOptionValuesAndLabels] = useState(optionValuesAndLabelMap)
+  const [optionValuesAndLabels, setOptionValuesAndLabels] = useState(new Map())
   const [hasError, setHasError] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
@@ -172,8 +169,9 @@ export const Select = ({
   }, [loading])
   
   const handleChange = (value) => {
-    onChange && onChange(value)
-    onValueChange && onValueChange(value)
+    console.log("Select: handleChange: value: ", value || "")
+    onChange && onChange(value || "")
+    onValueChange && onValueChange(value || "")
   }
   
   // Headless-UI-Float Middleware

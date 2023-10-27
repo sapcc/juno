@@ -233,6 +233,18 @@ ManyOptions.args = {
   ]
 }
 
+export const EmptyOption = Template.bind({})
+EmptyOption.args = {
+  children: [
+    <SelectOption key="1" value="" label="" />,
+    <SelectOption key="2" value="Option 2" />,
+    <SelectOption key="3" value="Option 3" />,
+    <SelectOption key="4" value="Option 4" />,
+    <div>Option 6</div>,
+    undefined
+  ]
+}
+
 export const ControlledSelect = ControlledTemplate.bind({})
 ControlledSelect.args = {
   value: "Option 3",
