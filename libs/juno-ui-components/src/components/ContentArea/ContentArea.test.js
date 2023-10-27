@@ -10,6 +10,16 @@ describe("ContentArea", () => {
       "juno-content-area"
     )
   })
+  
+  test("renders a deprecation warning to the console", async () => {
+    const consoleWarnSpy = jest.spyOn(console, 'warn')
+    render(<ContentArea/>)
+    expect(consoleWarnSpy).toHaveBeenCalled()
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      "ContentArea is deprecated and will be removed in future versions. To be future-proof, use AppShell to scaffold an app layout."
+    )
+    consoleWarnSpy.mockRestore()
+  })
 
   test("renders a content area with content area background color", async () => {
     render(<ContentArea data-testid="content-area" />)
