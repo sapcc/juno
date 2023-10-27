@@ -159,17 +159,17 @@
     --color-juno-grey-blue-1: rgb(64, 70, 75);
     
     // RAW
-    --color-juno-grey-blue-11-raw: 0, 8, 16;
-    --color-juno-grey-blue-10-raw: 13, 20, 28;
-    --color-juno-grey-blue-9-raw: 18, 25, 32;
-    --color-juno-grey-blue-8-raw: 23, 30, 37;
-    --color-juno-grey-blue-7-raw: 28, 35, 42;
-    --color-juno-grey-blue-6-raw: 31, 38, 45;
-    --color-juno-grey-blue-5-raw: 36, 42, 49;
-    --color-juno-grey-blue-4-raw: 38, 44, 51;
-    --color-juno-grey-blue-3-raw: 41, 47, 54;
-    --color-juno-grey-blue-2-raw: 48, 54, 60;
-    --color-juno-grey-blue-1-raw: 64, 70, 75;
+    --color-juno-grey-blue-11-raw: rawColor(--color-juno-grey-blue-11);
+    --color-juno-grey-blue-10-raw: rawColor(--color-juno-grey-blue-10);
+    --color-juno-grey-blue-9-raw: rawColor(--color-juno-grey-blue-9);
+    --color-juno-grey-blue-8-raw: rawColor(--color-juno-grey-blue-8);
+    --color-juno-grey-blue-7-raw: rawColor(--color-juno-grey-blue-7);
+    --color-juno-grey-blue-6-raw: rawColor(--color-juno-grey-blue-6);
+    --color-juno-grey-blue-5-raw: rawColor(--color-juno-grey-blue-5);
+    --color-juno-grey-blue-4-raw: rawColor(--color-juno-grey-blue-4);
+    --color-juno-grey-blue-3-raw: rawColor(--color-juno-grey-blue-3);
+    --color-juno-grey-blue-2-raw: rawColor(--color-juno-grey-blue-2);
+    --color-juno-grey-blue-1-raw: rawColor(--color-juno-grey-blue-1);
     
     // Juno Grey Light
     // RGB
@@ -254,7 +254,7 @@
     // RGB
     --color-accent: rgb(21, 208, 224);
     // RAW
-    --color-accent-raw: 21, 208, 224;
+    --color-accent-raw: rawColor(--color-acent);
     
     // TEXT COLORS
     // RGB
@@ -292,7 +292,7 @@
     // RGB
     --color-accent: rgb(0, 118, 203);
     //RAW
-    --color-accent-raw: 0, 118, 203;
+    --color-accent-raw: rawColor(--color-accent);
     
     // TEXT COLORS
     // RGB
@@ -311,18 +311,18 @@
 
     // SEMANTIC COLORS
     // RGB
-    --color-info: var(--color-juno-blue-5);
+    --color-info: rgb(0, 118, 203);
     --color-success: rgb(22, 145, 43);
     --color-warning: rgb(255, 205, 0);
     --color-danger: rgb(187, 62, 15);
     --color-error: rgb(187, 62, 15);
 
     // RAW
-    --color-info-raw: var(--color-juno-blue-5-raw);
-    --color-success-raw: 22, 145, 43;
-    --color-warning-raw: 255, 205, 0;
-    --color-danger-raw: 187, 62, 15;
-    --color-error-raw: 187, 62, 15;
+    --color-info-raw: rawColor(--color-info);
+    --color-success-raw: rawColor(--color-success);
+    --color-warning-raw: rawColor(--color-warning);
+    --color-danger-raw: rawColor(--color-danger);
+    --color-error-raw: rawColor(--color-error);
     
   }
 
