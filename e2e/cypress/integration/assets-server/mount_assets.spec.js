@@ -29,7 +29,7 @@ describe("mount app", () => {
     apps.forEach(async (app) => {
       let appConf = { name: app.name, version: app.version, props: {} }
 
-      if (appConf.name === "exampleapp") {
+      if (appConf.name !== "auth") {
         if (app.appProps) {
           Object.keys(app.appProps).forEach((key) => {
             if (app.appProps[key]?.type === "required")

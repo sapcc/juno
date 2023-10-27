@@ -7,22 +7,28 @@ import {
 } from "./actions"
 
 // get all CAs
-export const getCAs = (bearerToken, endpoint, disabledCAs) => {
+export const getCAs = (bearerToken, endpoint, disabledCAs, isMock) => {
   return useQuery({
-    queryKey: ["cas", bearerToken, endpoint, disabledCAs],
+    queryKey: ["cas", bearerToken, endpoint, disabledCAs, isMock],
     queryFn: cas,
     // The query will not execute until the bearerToken exists
-    enabled: !!bearerToken,
+    enabled: !!bearerToken && !!endpoint,
   })
 }
 
 // get all certificates
-export const getCertificates = (bearerToken, endpoint, ca, revokedList) => {
+export const getCertificates = (
+  bearerToken,
+  endpoint,
+  ca,
+  revokedList,
+  isMock
+) => {
   return useQuery({
-    queryKey: ["certificates", bearerToken, endpoint, ca],
+    queryKey: ["certificates", bearerToken, endpoint, ca, isMock],
     queryFn: certificates,
     // The query will not execute until the bearerToken exists
-    enabled: !!bearerToken,
+    enabled: !!bearerToken && !!endpoint,
     // refetch until the list of revoked list is empty
     refetchInterval: () => {
       const count = revokedList.filter((obj) => obj.ca === ca)
@@ -35,15 +41,15 @@ export const getCertificates = (bearerToken, endpoint, ca, revokedList) => {
 // add new cert
 export const newCertificateMutation = () => {
   return useMutation({
-    mutationFn: ({ endpoint, ca, bearerToken, formState }) =>
-      createCertificate(endpoint, ca, bearerToken, formState),
+    mutationFn: ({ endpoint, ca, bearerToken, formState, isMock }) =>
+      createCertificate(endpoint, ca, bearerToken, formState, isMock),
   })
 }
 
 // revoke cert
 export const revokeCertificateMutation = () => {
   return useMutation({
-    mutationFn: ({ endpoint, ca, bearerToken, serial }) =>
-      revokeCertificate(endpoint, ca, bearerToken, serial),
+    mutationFn: ({ endpoint, ca, bearerToken, serial, isMock }) =>
+      revokeCertificate(endpoint, ca, bearerToken, serial, isMock),
   })
 }

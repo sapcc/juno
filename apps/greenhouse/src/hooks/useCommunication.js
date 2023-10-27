@@ -14,8 +14,6 @@ import {
 const useCommunication = () => {
   const authAppLoaded = useAuthAppLoaded()
   const authIsProcessing = useAuthIsProcessing()
-  const authError = useAuthError()
-  const authLoggedIn = useAuthLoggedIn()
   const authLastAction = useAuthLastAction()
   const { setData: authSetData, setAppLoaded: authSetAppLoaded } =
     useAuthActions()
@@ -28,25 +26,27 @@ const useCommunication = () => {
       if (data?.auth && demoMode && demoUserToken) {
         data.auth.JWT = demoUserToken
       }
+      if (data?.auth?.error)
+        console.warn("Greenhouse: Auth error: ", data?.auth?.error)
       authSetData(data)
     },
     [authSetData, demoMode, demoUserToken]
   )
 
   useEffect(() => {
-    if (!authAppLoaded || authIsProcessing || authError) return
-    if (authLastAction?.name === "signOn" && !authLoggedIn) {
+    if (!authAppLoaded || authIsProcessing) return
+    if (authLastAction?.name === "signOn") {
       broadcast("AUTH_LOGIN", "greenhouse", {
         debug: true,
         consumerID: "greenhouse",
       })
-    } else if (authLastAction?.name === "signOut" && authLoggedIn) {
+    } else if (authLastAction?.name === "signOut") {
       broadcast("AUTH_LOGOUT", "greenhouse", {
         debug: true,
         consumerID: "greenhouse",
       })
     }
-  }, [authAppLoaded, authIsProcessing, authError, authLoggedIn, authLastAction])
+  }, [authAppLoaded, authIsProcessing, authLastAction])
 
   useEffect(() => {
     if (!authSetData || !authSetAppLoaded) return

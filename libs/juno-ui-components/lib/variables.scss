@@ -316,14 +316,16 @@
   --color-background-lvl-0: var(--color-white);
   --color-background-lvl-1: var(--color-juno-grey-light-1);
   --color-background-lvl-2: var(--color-juno-grey-light-3);
-  --color-background-lvl-3: var(--color-juno-grey-light-4);
-  --color-background-lvl-4: var(--color-juno-grey-light-10);
+  --color-background-lvl-3: var(--color-juno-grey-light-7);
+  --color-background-lvl-4: var(--color-juno-grey-light-9);
+  --color-background-lvl-5: var(--color-juno-grey-light-10);
 
   --color-background-lvl-0-raw: var(--color-white-raw);
   --color-background-lvl-1-raw: var(--color-juno-grey-light-1-raw);
   --color-background-lvl-2-raw: var(--color-juno-grey-light-3-raw);
-  --color-background-lvl-3-raw: var(--color-juno-grey-light-4-raw);
-  --color-background-lvl-4-raw: var(--color-juno-grey-light-10-raw);
+  --color-background-lvl-3-raw: var(--color-juno-grey-light-7-raw);
+  --color-background-lvl-4-raw: var(--color-juno-grey-light-9-raw);
+  --color-background-lvl-5-raw: var(--color-juno-grey-light-10-raw);
 
   // LT Global
   --color-global-bg: var(--color-juno-grey-light-1);
@@ -526,17 +528,19 @@
 
 .theme-dark {
   // DT Background Colors
-  --color-background-lvl-0: var(--color-juno-grey-blue-7);
-  --color-background-lvl-1: var(--color-juno-grey-blue-5);
-  --color-background-lvl-2: var(--color-juno-grey-blue-3);
-  --color-background-lvl-3: var(--color-juno-grey-blue-2);
-  --color-background-lvl-4: var(--color-juno-grey-blue-1);
+  --color-background-lvl-0: var(--color-juno-grey-blue-9);
+  --color-background-lvl-1: var(--color-juno-grey-blue-7);
+  --color-background-lvl-2: var(--color-juno-grey-blue-5);
+  --color-background-lvl-3: var(--color-juno-grey-blue-3);
+  --color-background-lvl-4: var(--color-juno-grey-blue-2);
+  --color-background-lvl-5: var(--color-juno-grey-blue-1);
 
-  --color-background-lvl-0-raw: var(--color-juno-grey-blue-7-raw);
-  --color-background-lvl-1-raw: var(--color-juno-grey-blue-5-raw);
-  --color-background-lvl-2-raw: var(--color-juno-grey-blue-3-raw);
-  --color-background-lvl-3-raw: var(--color-juno-grey-blue-2-raw);
-  --color-background-lvl-4-raw: var(--color-juno-grey-blue-1-raw);
+  --color-background-lvl-0-raw: var(--color-juno-grey-blue-9-raw);
+  --color-background-lvl-1-raw: var(--color-juno-grey-blue-7-raw);
+  --color-background-lvl-2-raw: var(--color-juno-grey-blue-5-raw);
+  --color-background-lvl-3-raw: var(--color-juno-grey-blue-3-raw);
+  --color-background-lvl-4-raw: var(--color-juno-grey-blue-2-raw);
+  --color-background-lvl-5-raw: var(--color-juno-grey-blue-1-raw);
 
   // DT Global
   --color-global-bg: var(--color-juno-grey-blue-10);
@@ -582,8 +586,8 @@
   // DT Default Button
   --color-button-default-text: var(--color-text-high);
   --color-button-default-icon: var(--color-text-high);
-  --color-button-default-bg: var(--color-background-lvl-4);
-  --color-button-default-border: var(--color-background-lvl-4);
+  --color-button-default-bg: var(--color-background-lvl-5);
+  --color-button-default-border: var(--color-background-lvl-5);
   // |-- DT Default Button :hover
   --color-button-default-hover-text: var(--color-text-high);
   --color-button-default-hover-bg: var(--color-background-lvl-3);
@@ -663,12 +667,12 @@
   --color-textinput-placeholder-text: var(--color-juno-text-high-raw);
   --color-textinput-focus-border: var(--color-accent-raw);
   // DT Select
-  --color-select-bg: var(--color-background-lvl-3-raw);
+  --color-select-bg: var(--color-background-lvl-4-raw);
   // DT Checkbox
-  --color-checkbox-bg: var(--color-background-lvl-4-raw);
+  --color-checkbox-bg: var(--color-background-lvl-5-raw);
   --color-checkbox-checked-color: var(--color-accent-raw);
   // DT Radio
-  --color-radio-bg: var(--color-background-lvl-4-raw);
+  --color-radio-bg: var(--color-background-lvl-5-raw);
   --color-radio-checked-bg: var(--color-accent-raw);
   // DT Switch
   --color-switch-default-border: var(--color-juno-text-high-raw);

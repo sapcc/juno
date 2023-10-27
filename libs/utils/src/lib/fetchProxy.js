@@ -21,6 +21,7 @@ const rejectResponse = (error) => {
 let localDB = null
 let rewriteRoutes = null
 let rewriteResponses = null
+let debug = false
 
 // fetchProxyInitDB is used to initialize the localDB
 // @jsonData: json object with the data to be used as localDB
@@ -37,17 +38,23 @@ let rewriteResponses = null
 //       },
 //     }
 export const fetchProxyInitDB = (jsonData, options = {}) => {
+  // set the debug mode
+  if (options?.debug) {
+    debug = true
+  }
+
   // set localDB to null to reset it
   if (jsonData === null) {
+    if (debug) console.log(`fetchProxyInitDB:: Reset localDB`)
     localDB = null
     return
   }
 
   // check if the localDB is initialized and warns if already initialized
   if (localDB) {
-    // create a new custom error to return
-    throw new Error(
-      `localDB already initialized. Please use fetchProxyInitDB(null) to reset the localDB.`
+    // create a new custom warning to return
+    console.warn(
+      `fetchProxyInitDB:: localDB already initialized. This typically occurs when the component or hook, responsible for local database initialization, is accidentally re-rendered. If you intend to reset the local database, please ensure to set localDB to null first by invoking fetchProxyInitDB(null) before providing new data."`
     )
   }
 
@@ -59,6 +66,9 @@ export const fetchProxyInitDB = (jsonData, options = {}) => {
 
   // check if there are custom routes in the options
   if (options?.rewriteRoutes) {
+    if (debug)
+      console.log(`fetchProxyInitDB:: rewriteRoutes::`, options?.rewriteRoutes)
+
     // Filter out non-regex rules
     const regexRules = Object.fromEntries(
       Object.entries(options?.rewriteRoutes).filter(([key]) => {
@@ -82,6 +92,12 @@ export const fetchProxyInitDB = (jsonData, options = {}) => {
   if (options?.rewriteResponses) {
     const allowedMethods = ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"] //'PATCH'
     const regexResponses = {}
+
+    if (debug)
+      console.log(
+        `fetchProxyInitDB:: rewriteResponses::`,
+        options?.rewriteResponses
+      )
 
     Object.keys(options?.rewriteResponses).forEach((key) => {
       // check if method is allowed
@@ -130,6 +146,8 @@ export const fetchProxyInitDB = (jsonData, options = {}) => {
     )
   }
 
+  if (debug) console.log(`fetchProxyInitDB:: jsonData::`, jsonData)
+
   // set the localDB
   localDB = jsonData
 }
@@ -142,6 +160,7 @@ const fetchProxy = (urlString, options) => {
 
   // if not set explicitly to true or "true", use the real fetch
   if (mock !== true && mock !== "true") {
+    console.log(`fetchProxy:: real fetch for::`, urlString)
     return fetch(urlString, fetchOptions)
   }
 
@@ -163,7 +182,6 @@ const fetchProxy = (urlString, options) => {
   // if method is not set, use GET as default
   let method = options?.method
   if (!method) method = "GET"
-
   let path = url.pathname
 
   // check if there are custom responses for the given path and method and save it for later
@@ -194,6 +212,21 @@ const fetchProxy = (urlString, options) => {
   const object = path.split("/")[1]
   // get the id from the path
   const id = path.split("/")[2]
+
+  if (debug) {
+    console.log(
+      `fetchProxy:: mock fetch with method: `,
+      method,
+      ", path: ",
+      path,
+      ", object: ",
+      object,
+      ", id: ",
+      id,
+      ", customResponse: ",
+      customResponse
+    )
+  }
 
   const body = options?.body
   // switch over the header method

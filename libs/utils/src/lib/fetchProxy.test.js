@@ -1,6 +1,21 @@
 import "whatwg-fetch"
 import fetchProxy, { fetchProxyInitDB } from "./fetchProxy"
 
+const originalConsoleError = global.console.warn
+
+// catch consol WARNS: https://www.jackfranklin.co.uk/blog/failing-tests-on-react-proptypes/
+beforeEach(() => {
+  global.console.warn = (...args) => {
+    const fetchProxyWarns = [/localDB already initialized/]
+
+    if (fetchProxyWarns.some((p) => p.test(args[0]))) {
+      throw new Error(args[0])
+    }
+
+    originalConsoleError(...args)
+  }
+})
+
 describe("fetchProxy lib", () => {
   describe("fetchProxyInitDB", () => {
     it("through an error if given data is not valid JSON", () => {
@@ -23,7 +38,7 @@ describe("fetchProxy lib", () => {
         /not a collection of key value pairs with values as arrays/
       )
     })
-    it("through an error if localDB already initialized", () => {
+    it("through an warn if localDB already initialized", () => {
       // setup mock db.json
       const db = {
         peaks: [
@@ -37,7 +52,7 @@ describe("fetchProxy lib", () => {
         ],
       }
       fetchProxyInitDB(db)
-      expect(() => fetchProxyInitDB(db)).toThrowError(/already initialized/)
+      expect(() => fetchProxyInitDB(db)).toThrow(/already initialized/)
     })
   })
 

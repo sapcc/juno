@@ -108,6 +108,7 @@ const createGlobalsSlice = (set, get) => ({
     documentationLinks: {},
     selectedCA: "",
     embedded: false,
+    isMock: false,
     actions: {
       setEmbedded: (embedded) =>
         set(
@@ -157,6 +158,13 @@ const createGlobalsSlice = (set, get) => ({
           false,
           "globals/setDocumentationLinks"
         ),
+
+      setMock: (isMock) =>
+        set(
+          (state) => ({ globals: { ...state.globals, isMock } }),
+          false,
+          "globals/setMock"
+        ),
     },
   },
 })
@@ -183,7 +191,7 @@ export const useGlobalsSelectedCA = () =>
   useStore((state) => state.globals.selectedCA)
 export const useGlobalsEmbedded = () =>
   useStore((state) => state.globals.embedded)
-
+export const useGlobalsIsMock = () => useStore((state) => state.globals.isMock)
 export const useGlobalsActions = () =>
   useStore((state) => state.globals.actions)
 

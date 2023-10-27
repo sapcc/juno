@@ -1,21 +1,58 @@
 import React, { useEffect, useLayoutEffect } from "react"
-import { oidcSession } from "oauth"
+import { oidcSession, mockedSession } from "oauth"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import styles from "./styles.scss"
 import { AppShellProvider } from "juno-ui-components"
 import AppContent from "./AppContent"
 import { useActions, MessagesProvider } from "messages-provider"
 import { useGlobalsActions, useAuthActions } from "./hooks/useStore"
+import { fetchProxyInitDB } from "utils"
+import db from "../db.json"
 
 const App = (props) => {
   const { setData, setLogin, setLogout } = useAuthActions()
-  const { setEndpoint, setDisabledCAs, setDocumentationLinks, setEmbedded } =
-    useGlobalsActions()
+  const {
+    setEndpoint,
+    setDisabledCAs,
+    setDocumentationLinks,
+    setEmbedded,
+    setMock,
+  } = useGlobalsActions()
   const { addMessage } = useActions()
+
+  // setup the mock db.json
+  useEffect(() => {
+    if (props.isMock === true || props.isMock === "true") {
+      setMock(true)
+
+      fetchProxyInitDB(db, {
+        debug: true,
+        rewriteRoutes: {
+          "/api/v1/(.*)/certificate/(.*)": "/$1/$2",
+          "/api/v1/(.*)/certificate": "/$1",
+          "/api/v1/(.*)": "/$1",
+        },
+        rewriteResponses: {
+          POST: {
+            "/api/v1/(.*)/certificate": { certificate: "testCertificate" },
+          },
+        },
+      })
+    }
+  }, [])
 
   // fetch the auth token and save the object globally
   // keep it in the app so the issuerurl and clientid have not to be saved on the state
   const oidc = React.useMemo(() => {
+    // Load mockSession if props.mock is set true
+    if (props.isMock === true || props.isMock === "true") {
+      return mockedSession({
+        initialLogin: true,
+        onUpdate: (data) => {
+          setData(data)
+        },
+      })
+    }
     if (
       !props?.issuerurl ||
       props?.issuerurl?.length <= 0 ||
