@@ -28,7 +28,7 @@ const dark = create({
 
   // UI
   appBg: "rgb(36, 42, 49)",
-  appContentBg: "rgb(28, 35, 42)",
+  appContentBg: "rgb(18, 25, 32)",
   appBorderColor: "rgba(255,255,255,.1)",
   appBorderRadius: 4,
 
