@@ -13,14 +13,20 @@ const createFiltersSlice = (set, get) => ({
       setLabels: (labels) =>
         set(
           (state) => {
+            if (!labels) return state
+
             if (
-              !labels ||
               // check if labels is an array
               !Array.isArray(labels) ||
               // Check if every element in the array is a string
               !labels.some((element) => typeof element === "string")
-            )
+            ) {
+              console.warn(
+                "[supernova]::setLabels: labels object is not an array of strings",
+                labels
+              )
               return state
+            }
 
             return {
               filters: {
