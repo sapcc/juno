@@ -17,6 +17,7 @@ const createFiltersSlice = (set, get) => ({
             // check if the given labels are are an object which can be parsed with JSON.parse and if so, parse them. If not, return the state as is and log an error in the console
             try {
               const jsonLabels = JSON.parse(labels)
+              console.log("LABELS:::::::::::::::", labels)
               return {
                 filters: {
                   ...state.filters,
