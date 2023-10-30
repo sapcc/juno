@@ -64,7 +64,7 @@ const useUrlState = () => {
 
     return () => {
       unregisterStateListener()
-      unregisterGlobalChangeListener()
+      //unregisterGlobalChangeListener()
     }
   }, [])
 }
