@@ -7,7 +7,7 @@
 import React, { useCallback, useRef } from "react"
 import PropTypes from "prop-types"
 import { ShadowRoot } from "../ShadowRoot/index"
-import theme from "../../../tailwind.config"
+import tailwindTheme from "../../../tailwind.config"
 import Fonts from "./Fonts"
 import GlobalStyles, { styles } from "./GlobalStyles"
 
@@ -104,7 +104,13 @@ export const StyleProvider = ({
         <Fonts inline={stylesWrapper !== "head"} />
         <GlobalStyles inline={stylesWrapper !== "head"} />
         <StylesContext.Provider
-          value={{ styles, theme, setThemeClass, addCssClass, removeCssClass }}
+          value={{
+            styles,
+            theme: tailwindTheme,
+            setThemeClass,
+            addCssClass,
+            removeCssClass,
+          }}
         >
           <div className={containerCssClasses.current} ref={container}>
             {children}
@@ -112,7 +118,7 @@ export const StyleProvider = ({
         </StylesContext.Provider>
       </Wrapper>
     ),
-    [stylesWrapper, shadowRootMode]
+    [stylesWrapper, children, shadowRootMode, setThemeClass]
   )
 }
 

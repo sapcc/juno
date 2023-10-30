@@ -96,7 +96,7 @@ export const Badge = ({
         juno-badge-${variant} 
         ${badgeBaseStyles} 
         ${getVariantStyle(variant)}
-        ${ icon ? "jn-inline-flex" : "" }
+        ${icon ? "jn-inline-flex" : ""}
         ${className}`}
       {...props}
     >

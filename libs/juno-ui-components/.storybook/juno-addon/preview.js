@@ -2,7 +2,6 @@ import Decorator from "./Decorator"
 import { getCurrentTheme } from "./themes"
 import DocsContainer from "./DocsContainer"
 
-export const decorators = [Decorator]
 import {
   Title,
   Subtitle,
@@ -13,12 +12,13 @@ import {
   Stories,
 } from "@storybook/addon-docs"
 
+export const decorators = [Decorator]
+
 export default {
   parameters: {
     docs: {
       theme: getCurrentTheme(),
       container: DocsContainer,
-      // container: () => "TEST",
     },
   },
 }
