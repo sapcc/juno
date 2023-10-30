@@ -12,13 +12,20 @@ const createFiltersSlice = (set, get) => ({
     actions: {
       setLabels: (labels) =>
         set(
-          (state) => {            
-            if (!labels || typeof labels !== "string") return state
-            const filterLabels = labels.split(",")
+          (state) => {
+            if (
+              !labels ||
+              // check if labels is an array
+              !Array.isArray(labels) ||
+              // Check if every element in the array is a string
+              !labels.some((element) => typeof element === "string")
+            )
+              return state
+
             return {
               filters: {
                 ...state.filters,
-                labels: filterLabels,
+                labels: labels,
               },
             }
           },
@@ -178,9 +185,9 @@ const createFiltersSlice = (set, get) => ({
               ),
             ]
             // remove any "blank" values from the list, then sort
-            state.filters.filterLabelValues[filterLabel].values = values.filter(
-              (value) => (value ? true : false)
-            ).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+            state.filters.filterLabelValues[filterLabel].values = values
+              .filter((value) => (value ? true : false))
+              .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
 
             state.filters.filterLabelValues[filterLabel].isLoading = false
           }),
