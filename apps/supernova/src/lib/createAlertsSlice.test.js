@@ -8,7 +8,7 @@ import {
 
 describe("createAlertsSlice", () => {
   describe("setEnrichedLabels", () => {
-    it("return empty array as default", () => {
+    it("return status as default", () => {
       const wrapper = ({ children }) => (
         <StoreProvider>{children}</StoreProvider>
       )
