@@ -69,7 +69,7 @@
     // RGB                                        // Corresponding SAP web brand color:  
     --color-sap-gold: rgb(240, 171, 0);          // --color-sap-gold    
     // RAW
-    --color-sap-gold-raw: 240, 171, 0;  
+    --color-sap-gold-raw: rawColor(--color-sap-gold);  
     
     // SAP PURPLE
     // RGB                                        // Corresponding SAP web brand color:
@@ -185,16 +185,16 @@
     --color-juno-grey-light-10: rgb(215, 215, 215);
     
     // RAW
-    --color-juno-grey-light-1-raw: 249, 249, 249;
-    --color-juno-grey-light-2-raw: 247, 247, 247;
-    --color-juno-grey-light-3-raw: 244, 244, 244;
-    --color-juno-grey-light-4-raw: 241, 241, 241;
-    --color-juno-grey-light-5-raw: 238, 238, 238;
-    --color-juno-grey-light-6-raw: 235, 235, 235;
-    --color-juno-grey-light-7-raw: 233, 233, 233;
-    --color-juno-grey-light-8-raw: 230, 230, 230;
-    --color-juno-grey-light-9-raw: 227, 227, 227;
-    --color-juno-grey-light-10-raw: 215, 215, 215;
+    --color-juno-grey-light-1-raw: rawColor(--color-juno-grey-light-1);
+    --color-juno-grey-light-2-raw: rawColor(--color-juno-grey-light-2);
+    --color-juno-grey-light-3-raw: rawColor(--color-juno-grey-light-3);
+    --color-juno-grey-light-4-raw: rawColor(--color-juno-grey-light-4);
+    --color-juno-grey-light-5-raw: rawColor(--color-juno-grey-light-5);
+    --color-juno-grey-light-6-raw: rawColor(--color-juno-grey-light-6);
+    --color-juno-grey-light-7-raw: rawColor(--color-juno-grey-light-7);
+    --color-juno-grey-light-8-raw: rawColor(--color-juno-grey-light-8);
+    --color-juno-grey-light-9-raw: rawColor(--color-juno-grey-light-9);
+    --color-juno-grey-light-10-raw: rawColor(--color-juno-grey-light-10);
     
     // Juno Blue
     // The lighter shades of Juno Blue map to SAP Brand Blue shades:
@@ -211,16 +211,16 @@
     --color-juno-blue-1: rgb(203, 232, 247);
     
     // RAW
-    --color-juno-blue-10-raw: 3, 55, 84;
-    --color-juno-blue-9-raw: 5, 70, 105;
-    --color-juno-blue-8-raw: 7, 85, 128;
-    --color-juno-blue-7-raw: 10, 81, 120;
-    --color-juno-blue-6-raw: 30, 106, 146;
-    --color-juno-blue-5-raw: 0, 125, 184;
-    --color-juno-blue-4-raw: 67, 162, 208;
-    --color-juno-blue-3-raw: 137, 201, 232;
-    --color-juno-blue-2-raw: 165, 211, 234;
-    --color-juno-blue-1-raw: 203, 232, 247;
+    --color-juno-blue-10-raw: rawColor(--color-juno-blue-10);
+    --color-juno-blue-9-raw: rawColor(--color-juno-blue-9);
+    --color-juno-blue-8-raw: rawColor(--color-juno-blue-8);
+    --color-juno-blue-7-raw: rawColor(--color-juno-blue-7);
+    --color-juno-blue-6-raw: rawColor(--color-juno-blue-6);
+    --color-juno-blue-5-raw: rawColor(--color-juno-blue-5);
+    --color-juno-blue-4-raw: rawColor(--color-juno-blue-4);
+    --color-juno-blue-3-raw: rawColor(--color-juno-blue-3);
+    --color-juno-blue-2-raw: rawColor(--color-juno-blue-2);
+    --color-juno-blue-1-raw: rawColor(--color-juno-blue-1);
     
     // Juno Turquoise
     --color-juno-turquoise-1: rgb(197, 247, 255);
@@ -235,16 +235,16 @@
     --color-juno-turquoise-10: rgb(1, 41, 45);
     
     // RAW
-    --color-juno-turquoise-1-raw: 197, 247, 255;
-    --color-juno-turquoise-2-raw: 132, 241, 255;
-    --color-juno-turquoise-3-raw: 25, 232, 250;
-    --color-juno-turquoise-4-raw: 22, 217, 234;
-    --color-juno-turquoise-5-raw: 21, 208, 224;
-    --color-juno-turquoise-6-raw: 15, 167, 180;
-    --color-juno-turquoise-7-raw: 9, 133, 144;
-    --color-juno-turquoise-8-raw: 5, 100, 109;
-    --color-juno-turquoise-9-raw: 2, 69, 75;
-    --color-juno-turquoise-10-raw: 1, 41, 45;
+    --color-juno-turquoise-1-raw: rawColor(--color-juno-turquoise-1);
+    --color-juno-turquoise-2-raw: rawColor(--color-juno-turquoise-2);
+    --color-juno-turquoise-3-raw: rawColor(--color-juno-turquoise-3);
+    --color-juno-turquoise-4-raw: rawColor(--color-juno-turquoise-4);
+    --color-juno-turquoise-5-raw: rawColor(--color-juno-turquoise-5);
+    --color-juno-turquoise-6-raw: rawColor(--color-juno-turquoise-6);
+    --color-juno-turquoise-7-raw: rawColor(--color-juno-turquoise-7);
+    --color-juno-turquoise-8-raw: rawColor(--color-juno-turquoise-8);
+    --color-juno-turquoise-9-raw: rawColor(--color-juno-turquoise-9);
+    --color-juno-turquoise-10-raw: rawColor(--color-juno-turquoise-10);
         
   }
   
@@ -265,11 +265,11 @@
     --color-juno-text-disabled: rgb(92, 92, 92);
 
     // RAW
-    --color-juno-text-highest-raw: 253, 254, 255;
-    --color-juno-text-high-raw: 222, 223, 224;
-    --color-juno-text-default-raw: 187, 187, 187;
-    --color-juno-text-light-raw: 122, 122, 122;
-    --color-juno-text-disabled-raw: 92, 92, 92;
+    --color-juno-text-highest-raw: rawColor(--color-juno-text-highest);
+    --color-juno-text-high-raw: rawColor(--color-juno-text-high);
+    --color-juno-text-default-raw: rawColor(--color-juno-text-default);
+    --color-juno-text-light-raw: rawColor(--color-juno-text-light);
+    --color-juno-text-disabled-raw: rawColor(--color-juno-text-disabled);
 
     // SEMANTIC COLORS
     // RGB
@@ -280,11 +280,11 @@
     --color-error: rgb(255, 65, 11);
 
     // RAW
-    --color-info-raw: 21, 208, 224;
-    --color-success-raw: 59, 255, 91;
-    --color-warning-raw: 255, 198, 0;
-    --color-danger-raw: 255, 65, 11;
-    --color-error-raw: 255, 65, 11;
+    --color-info-raw: rawColor(--color-info);
+    --color-success-raw: rawColor(--color-success);
+    --color-warning-raw: rawColor(--color-warning);
+    --color-danger-raw: rawColor(--color-danger);
+    --color-error-raw: rawColor(--color-error);
   }
 
   .theme-light {
@@ -303,11 +303,11 @@
     --color-juno-text-disabled: rgb(183, 183, 183);
 
     // RAW
-    --color-juno-text-highest-raw: 0, 0, 0;
-    --color-juno-text-high-raw: 40, 40, 40;
-    --color-juno-text-default-raw: 76, 76, 76;
-    --color-juno-text-light-raw: 150, 150, 150;
-    --color-juno-text-disabled-raw: 183, 183, 183;
+    --color-juno-text-highest-raw: rawColor(--color-juno-text-highest);
+    --color-juno-text-high-raw: rawColor(--color-juno-text-high);
+    --color-juno-text-default-raw: rawColor(--color-juno-text-default);
+    --color-juno-text-light-raw: rawColor(--color-juno-text-light);
+    --color-juno-text-disabled-raw: rawColor(--color-juno-text-disabled);
 
     // SEMANTIC COLORS
     // RGB
