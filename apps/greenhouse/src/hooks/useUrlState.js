@@ -34,24 +34,37 @@ const useUrlState = () => {
   // sync URL state
   useEffect(() => {
     if (!loggedIn || !isUrlStateSetup) return
+
+    const newActiveApps = activeApps?.join(",")
+    // if the current state is the same as the new state, don't push
+    // this prevents the history from being filled with the same state
+    // and therefore prevents the forward button from being disabled
+    // This small optimization allows the user to go back and forth!
+    if (urlStateManager.currentState()?.[ACTIVE_APPS_KEY] === newActiveApps)
+      return
+
     urlStateManager.push({ [ACTIVE_APPS_KEY]: activeApps.join(",") })
   }, [loggedIn, activeApps])
 
   useEffect(() => {
-    const unregisterStateListener = urlStateManager.onChange((state) =>
-      setActiveApps(state[ACTIVE_APPS_KEY] || [])
-    )
+    const unregisterStateListener = urlStateManager.onChange((state) => {
+      const newActiveApps = state?.[ACTIVE_APPS_KEY]?.split(",")
+      setActiveApps(newActiveApps || [])
+    })
 
-    const unregisterGlobalChangeListener = urlStateManager.onGlobalChange(
-      (state) => {
-        const url = new URL(window.location)
-        document.title = `Greenhouse - ${url.searchParams.get("__s")}`
-      }
-    )
+    // disable this for now, it's annoying!
+    // This code sets the title of the page if URL changes.
+    // It was introduced to see different titles in the browser history.
+    // const unregisterGlobalChangeListener = urlStateManager.onGlobalChange(
+    //   (state) => {
+    //     const url = new URL(window.location)
+    //     document.title = `Greenhouse - ${url.searchParams.get("__s")}`
+    //   }
+    // )
 
     return () => {
       unregisterStateListener()
-      unregisterGlobalChangeListener()
+      //unregisterGlobalChangeListener()
     }
   }, [])
 }
