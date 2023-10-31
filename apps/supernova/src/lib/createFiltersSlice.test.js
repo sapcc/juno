@@ -8,22 +8,9 @@ import {
 
 const originalConsoleError = global.console.warn
 
-// catch consol WARNS: https://www.jackfranklin.co.uk/blog/failing-tests-on-react-proptypes/
-beforeEach(() => {
-  global.console.warn = (...args) => {
-    const fetchWarns = [/setLabels/]
-
-    if (fetchWarns.some((p) => p.test(args[0]))) {
-      throw new Error(args[0])
-    }
-
-    originalConsoleError(...args)
-  }
-})
-
 describe("createFiltersSlice", () => {
   describe("setLabels", () => {
-    it("return empty array as default", () => {
+    it("return default status label", () => {
       const wrapper = ({ children }) => (
         <StoreProvider>{children}</StoreProvider>
       )
@@ -34,7 +21,7 @@ describe("createFiltersSlice", () => {
         }),
         { wrapper }
       )
-      expect(store.result.current.filterLabels).toEqual([])
+      expect(store.result.current.filterLabels).toEqual(["status"])
     })
 
     it("just accepts array of strings", () => {
@@ -59,7 +46,6 @@ describe("createFiltersSlice", () => {
           "region",
           "service",
           "severity",
-          "status",
           "support_group",
           "tier",
           "type",
@@ -67,6 +53,7 @@ describe("createFiltersSlice", () => {
       })
 
       expect(store.result.current.filterLabels).toEqual([
+        "status",
         "app",
         "cluster",
         "cluster_type",
@@ -75,30 +62,37 @@ describe("createFiltersSlice", () => {
         "region",
         "service",
         "severity",
-        "status",
         "support_group",
         "tier",
         "type",
       ])
     })
-  })
 
-  it("warn the user if labels are different then an array of strings", () => {
-    const wrapper = ({ children }) => <StoreProvider>{children}</StoreProvider>
-    const store = renderHook(
-      () => ({
-        actions: useFilterActions(),
-        filterLabels: useFilterLabels(),
-      }),
-      { wrapper }
-    )
+    it("warn the user if labels are different then an array of strings", () => {
+      const spy = jest.spyOn(console, "warn").mockImplementation(() => {})
 
-    expect(() => {
+      const wrapper = ({ children }) => (
+        <StoreProvider>{children}</StoreProvider>
+      )
+      const store = renderHook(
+        () => ({
+          actions: useFilterActions(),
+          filterLabels: useFilterLabels(),
+        }),
+        { wrapper }
+      )
+
       act(() =>
         store.result.current.actions.setLabels(
           "app,cluster,cluster_type,context,job,region,service,severity,status,support_group,tier,type"
         )
       )
-    }).toThrow(/is not an array of strings/)
+
+      expect(spy).toHaveBeenCalledTimes(1)
+      expect(spy).toHaveBeenCalledWith(
+        "[supernova]::setLabels: labels object is not an array of strings"
+      )
+      spy.mockRestore()
+    })
   })
 })

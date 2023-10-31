@@ -1,37 +1,43 @@
 import produce from "immer"
 
+const initialFiltersState = {
+  labels: ["status"], // labels to be used for filtering: [ "label1", "label2", "label3"]
+  activeFilters: {}, // for each active filter key list the selected values: {key1: [value1], key2: [value2_1, value2_2], ...}
+  filterLabelValues: {}, // contains all possible values for filter labels: {label1: ["val1", "val2", "val3", ...], label2: [...]}, lazy loaded when a label is selected for filtering
+  predefinedFilters: [], // predefined complex filters that filter using regex: [{name: "filter1", displayName: "Filter 1", matchers: {"label1": "regex1", "label2": "regex2", ...}}, ...]
+  activePredefinedFilter: null, // the currently active predefined filter
+  searchTerm: "", // the search term used for full-text filtering
+}
+
 const createFiltersSlice = (set, get) => ({
   filters: {
-    labels: [], // labels to be used for filtering: [ "label1", "label2", "label3"]
-    activeFilters: {}, // for each active filter key list the selected values: {key1: [value1], key2: [value2_1, value2_2], ...}
-    filterLabelValues: {}, // contains all possible values for filter labels: {label1: ["val1", "val2", "val3", ...], label2: [...]}, lazy loaded when a label is selected for filtering
-    predefinedFilters: [], // predefined complex filters that filter using regex: [{name: "filter1", displayName: "Filter 1", matchers: {"label1": "regex1", "label2": "regex2", ...}}, ...]
-    activePredefinedFilter: null, // the currently active predefined filter
-    searchTerm: "", // the search term used for full-text filtering
-
+    ...initialFiltersState,
     actions: {
       setLabels: (labels) =>
         set(
           (state) => {
             if (!labels) return state
 
+            // check if labels is an array and if every element in the array is a string
             if (
-              // check if labels is an array
               !Array.isArray(labels) ||
-              // Check if every element in the array is a string
               !labels.some((element) => typeof element === "string")
             ) {
               console.warn(
-                "[supernova]::setLabels: labels object is not an array of strings",
-                labels
+                "[supernova]::setLabels: labels object is not an array of strings"
               )
               return state
             }
 
+            // merge given labels with the initial and make it unique
+            const uniqueLabels = Array.from(
+              new Set(initialFiltersState.labels.concat(labels))
+            )
+
             return {
               filters: {
                 ...state.filters,
-                labels: labels,
+                labels: uniqueLabels,
               },
             }
           },
