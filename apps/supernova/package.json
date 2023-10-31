@@ -85,7 +85,7 @@
     "silenceExcludedLabels": {
       "value": null,
       "type": "optional",
-      "description": "SilenceExcludedLabels are labels that are initially excluded by default when creating a silence. However, they can be added if necessary when utilizing the advanced options in the silence form. The labels must be separated by comma. Default labels are: pod, pod_name, instance"
+      "description": "SilenceExcludedLabels are labels that are initially excluded by default when creating a silence. However, they can be added if necessary when utilizing the advanced options in the silence form. The labels must be an array of strings. Example: [\"pod\", \"pod_name\", \"instance\"]"
     }
   },
   "appDependencies": {
