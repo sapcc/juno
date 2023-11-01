@@ -22,6 +22,7 @@ const filterkeyStyles = `
 	jn-px-1
 	jn-py-0.5
 	jn-rounded-sm
+  jn-text-theme-high
 	jn-inline-block
 `
 
