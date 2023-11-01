@@ -182,6 +182,7 @@ $dark-theme-color-map: (
 }
 
 
+/* Color Assignments */
 
 /* ----- LIGHT THEME ----- */
 .theme-light {
@@ -324,10 +325,10 @@ $dark-theme-color-map: (
   // LT Select
   --color-select-bg: var(--color-background-lvl-3-raw);
   // LT Checkbox
-  --color-checkbox-bg: var(--color-background-lvl-4-raw);
+  --color-checkbox-bg: var(--color-background-lvl-5-raw);
   --color-checkbox-checked-color: var(--color-accent-raw);
   // LT Radio
-  --color-radio-bg: var(--color-background-lvl-4-raw);
+  --color-radio-bg: var(--color-background-lvl-5-raw);
   --color-radio-checked-bg: var(--color-accent-raw);
   // LT Switch
   --color-switch-default-border: var(--color-juno-text-default-raw);
