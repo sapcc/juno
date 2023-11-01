@@ -241,6 +241,7 @@ const installPackage = async (name) => {
  */
 const downloadFile = (url, path) => {
   return new Promise((resolve, reject) => {
+    console.log("[generate_importmap]::downloadFile: url:", url)
     fs.mkdirSync(pathLib.dirname(path), { recursive: true })
     const file = fs.createWriteStream(path)
     https
