@@ -258,7 +258,8 @@ const downloadFile = (url, path, maxRetries = 10, currentRetry = 0) => {
         console.error(
           `[generate_importmap]::downloadFile: attempt ${
             currentRetry + 1
-          } failed. Retrying...`
+          } failed. Retrying:`,
+          url
         )
         // Retry after a delay (you can adjust the delay as needed)
         setTimeout(() => {
