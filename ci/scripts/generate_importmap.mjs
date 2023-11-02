@@ -239,7 +239,7 @@ const installPackage = async (name) => {
  * @param {string} path
  * @returns void
  */
-const downloadFile = (url, path, maxRetries = 5, currentRetry = 0) => {
+const downloadFile = (url, path, maxRetries = 10, currentRetry = 0) => {
   return new Promise((resolve, reject) => {
     fs.mkdirSync(pathLib.dirname(path), { recursive: true })
     const file = fs.createWriteStream(path)
@@ -263,12 +263,13 @@ const downloadFile = (url, path, maxRetries = 5, currentRetry = 0) => {
         // Retry after a delay (you can adjust the delay as needed)
         setTimeout(() => {
           resolve(downloadFile(url, path, maxRetries, currentRetry + 1))
-        }, 1000) // 1000 milliseconds (1 second) delay in this example
+        }, 2000) // 1000 milliseconds (1 second) delay in this example
       } else {
         // Maximum retries reached, reject the promise
-        reject(
+        console.error(
           `[generate_importmap]::downloadFile: max retries (${maxRetries}) reached. Error: ${error.message}`
         )
+        reject(error)
       }
     })
 
