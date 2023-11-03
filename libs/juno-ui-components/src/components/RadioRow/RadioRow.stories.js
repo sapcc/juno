@@ -1,93 +1,107 @@
-import React from "react"
-import { RadioRow } from "./index.js"
+import React from 'react';
+import { RadioRow } from './index.js';
 
 export default {
-  title: "Deprecated/RadioRow",
+  title: 'Deprecated/RadioRow',
   component: RadioRow,
   parameters: {
     docs: {
       description: {
-        component: "DEPRECATED: A radio row containing a radio, associated label, and structural markup. This component is DEPRECATED, use Radio instead."
+        component:
+          'DEPRECATED: A radio row containing a radio, associated label, and structural markup. This component is DEPRECATED, use Radio instead.',
       },
     },
   },
   argTypes: {},
-}
+};
 
-const Template = (args) => <RadioRow {...args} />
+export const Default = {
+  args: {
+    label: 'Default Radio Row',
+    id: 'radio-row-default',
+  },
+};
 
-export const Default = Template.bind({})
-Default.args = {
-  label: "Default Radio Row",
-  id: "radio-row-default",
-}
+export const Checked = {
+  args: {
+    label: 'Checked Radio Row',
+    checked: true,
+    id: 'radio-row-checked',
+  },
+};
 
-export const Checked = Template.bind({})
-Checked.args = {
-  label: "Checked Radio Row",
-  checked: true,
-  id: "radio-row-checked",
-}
+export const WithHelpText = {
+  args: {
+    name: 'my-input',
+    label: 'Radio Row with help text',
+    helptext: 'Oh so helpful helptext',
+    id: 'radio-row-withHelptext',
+  },
+};
 
-export const WithHelpText = Template.bind({})
-WithHelpText.args = {
-  name: "my-input",
-  label: "Radio Row with help text",
-  helptext: "Oh so helpful helptext",
-  id: "radio-row-withHelptext",
-}
+export const WithHelpTextWithLink = {
+  args: {
+    name: 'my-input',
+    label: 'Radio Row with help text',
+    helptext: (
+      <>
+        Helptext with a <a href="#">Link</a>
+      </>
+    ),
+    id: 'radio-row-withHelptext-WithLink',
+  },
+};
 
-export const WithHelpTextWithLink = Template.bind({})
-WithHelpTextWithLink.args = {
-  name: "my-input",
-  label: "Radio Row with help text",
-  helptext: <>Helptext with a <a href="#">Link</a></>,
-  id: "radio-row-withHelptext-WithLink",
-}
+export const Disabled = {
+  args: {
+    label: 'Disabled Radio',
+    id: 'radio-row-disabled',
+    disabled: true,
+  },
+};
 
-export const Disabled = Template.bind({})
-Disabled.args = {
-  label: "Disabled Radio",
-  id: "radio-row-disabled",
-  disabled: true,
-}
+export const Required = {
+  args: {
+    label: 'Required Radio',
+    id: 'required-radio',
+    required: true,
+  },
+};
 
-export const Required = Template.bind({})
-Required.args = {
-  label: "Required Radio",
-  id: "required-radio",
-  required: true,
-}
+export const Invalid = {
+  args: {
+    label: 'Invalid Option',
+    invalid: true,
+  },
+};
 
-export const Invalid = Template.bind({})
-Invalid.args = {
-  label: "Invalid Option",
-  invalid: true,
-}
+export const WithErrorText = {
+  args: {
+    label: 'Option with Error Text',
+    helptext: 'Oh so helpful helptext',
+    errortext: 'When passed an errortext prop, the RadioRow will be set to invalid automatically.',
+  },
 
-export const WithErrorText = Template.bind({})
-WithErrorText.args = {
-  label: "Option with Error Text",
-  helptext: "Oh so helpful helptext",
-  errortext: "When passed an errortext prop, the RadioRow will be set to invalid automatically.",
-}
-WithErrorText.parameters = {
-  docs: {
-    description: {
-      story:
-        "Passing an `errortext` prop to the RadioRow component will automatically invalidate it, so there is no need to explicitly set `invalid` as well.",
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Passing an `errortext` prop to the RadioRow component will automatically invalidate it, so there is no need to explicitly set `invalid` as well.',
+      },
     },
   },
-}
+};
 
-export const Valid = Template.bind({})
-Valid.args = {
-  label: "Valid Option",
-  valid: true,
-}
+export const Valid = {
+  args: {
+    label: 'Valid Option',
+    valid: true,
+  },
+};
 
-export const WithSuccessText = Template.bind({})
-WithSuccessText.args = {
-  label: "Radio validated by successtext",
-  successtext: "Pass a successtext to validate a CheckboxRow",
-}
+export const WithSuccessText = {
+  args: {
+    label: 'Radio validated by successtext',
+    successtext: 'Pass a successtext to validate a CheckboxRow',
+  },
+};

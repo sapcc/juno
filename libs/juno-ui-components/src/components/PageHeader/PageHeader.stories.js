@@ -1,36 +1,44 @@
-import React from "react"
+import React from 'react';
 
-import { PageHeader } from "./index.js"
+import { PageHeader } from './index.js';
 
 export default {
-  title: "Layout/PageHeader",
+  title: 'Layout/PageHeader',
   component: PageHeader,
   argTypes: {
     children: {
-      control: false
-    }
-  },
-}
-
-const Template = (args) => <PageHeader {...args}></PageHeader>
-
-export const Simple = Template.bind({})
-Simple.parameters = {
-  docs: {
-    description: {
-      story:
-        "The page header component renders a header at the top of the website. Place as first child of AppBody.",
+      control: false,
     },
   },
-}
-Simple.args = {}
+};
 
-export const WithHeading = Template.bind({})
-WithHeading.parameters = {
-  docs: {
-    description: { story: "PageHeader with Heading." },
+const Template = (args) => <PageHeader {...args}></PageHeader>;
+
+export const Simple = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The page header component renders a header at the top of the website. Place as first child of AppBody.',
+      },
+    },
   },
-}
-WithHeading.args = {
-  heading: "My Awesome App",
-}
+
+  args: {},
+};
+
+export const WithHeading = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: { story: 'PageHeader with Heading.' },
+    },
+  },
+
+  args: {
+    heading: 'My Awesome App',
+  },
+};

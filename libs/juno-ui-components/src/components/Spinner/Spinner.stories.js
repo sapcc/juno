@@ -1,9 +1,9 @@
-import React from "react"
+import React from 'react';
 
-import { Spinner } from "./index.js"
+import { Spinner } from './index.js';
 
 export default {
-  title: "Components/Spinner",
+  title: 'Components/Spinner',
   component: Spinner,
   argTypes: {
     // backgroundColor: { control: "color" },
@@ -11,38 +11,44 @@ export default {
     // hoverColor: { control: "color" },
     // outlineColor: { control: "color" },
   },
-}
+};
 
-const Template = (args) => <Spinner {...args} />
+export const Primary = {
+  args: {
+    variant: 'primary',
+  },
+};
 
-export const Primary = Template.bind({})
-Primary.args = {
-  variant: "primary",
-}
+export const Danger = {
+  args: { variant: 'danger' },
+};
 
-export const Danger = Template.bind({})
-Danger.args = { variant: "danger" }
+export const Success = {
+  args: { variant: 'success' },
+};
 
-export const Success = Template.bind({})
-Success.args = { variant: "success" }
+export const Warning = {
+  args: { variant: 'warning' },
+};
 
-export const Warning = Template.bind({})
-Warning.args = { variant: "warning" }
+export const Light = {
+  args: {},
+};
 
-export const Light = Template.bind({})
-Light.args = {}
+export const WithCustomColor = {
+  args: {
+    color: 'text-theme-button-primary',
+  },
+};
 
-export const WithCustomColor = Template.bind({})
-WithCustomColor.args = {
-  color: "text-theme-button-primary",
-}
+export const Small = {
+  args: {
+    size: 'small',
+  },
+};
 
-export const Small = Template.bind({})
-Small.args = {
-  size: "small",
-}
-
-export const Large = Template.bind({})
-Large.args = {
-  size: "large",
-}
+export const Large = {
+  args: {
+    size: 'large',
+  },
+};

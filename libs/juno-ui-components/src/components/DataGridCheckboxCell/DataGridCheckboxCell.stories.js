@@ -1,14 +1,14 @@
-import React from "react"
-import { DataGrid } from "../DataGrid/index.js"
-import { DataGridRow } from "../DataGridRow/index.js"
-import { DataGridCheckboxCell } from "./index.js"
+import React from 'react';
+import { DataGrid } from '../DataGrid/index.js';
+import { DataGridRow } from '../DataGridRow/index.js';
+import { DataGridCheckboxCell } from './index.js';
 
 export default {
-  title: "WiP/DataGrid/DataGridCheckboxCell",
+  title: 'WiP/DataGrid/DataGridCheckboxCell',
   component: DataGridCheckboxCell,
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
   },
   decorators: [
@@ -24,31 +24,37 @@ export default {
         excludeDecorators: false,
       },
     },
-  }
-}
+  },
+};
 
-const Template = (args) => (
-  <DataGridCheckboxCell {...args}></DataGridCheckboxCell>
-)
+const Template = (args) => <DataGridCheckboxCell {...args}></DataGridCheckboxCell>;
 
-export const Default = Template.bind({})
-Default.parameters = {
-  docs: {
-    description: {
-      story: "Juno DataGridCheckboxCell for use in DataGrid",
+export const Default = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story: 'Juno DataGridCheckboxCell for use in DataGrid',
+      },
     },
   },
-}
-Default.args = {}
 
-export const Disabled = Template.bind({})
-Disabled.parameters = {
-  docs: {
-    description: {
-      story: "Disabled Juno DataGridCheckboxCell for use in DataGrid",
+  args: {},
+};
+
+export const Disabled = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story: 'Disabled Juno DataGridCheckboxCell for use in DataGrid',
+      },
     },
   },
-}
-Disabled.args = {
-  disabled: true,
-}
+
+  args: {
+    disabled: true,
+  },
+};

@@ -1,23 +1,23 @@
-import React from "react"
-import { ButtonRow } from "./index.js"
-import { Button } from "../Button/index.js"
+import React from 'react';
+import { ButtonRow } from './index.js';
+import { Button } from '../Button/index.js';
 // import Button stories:
-import { Default as ButtonStory } from "../Button/Button.stories"
+import { Default as ButtonStory } from '../Button/Button.stories';
 
 export default {
-  title: "Forms/ButtonRow",
+  title: 'Forms/ButtonRow',
   component: ButtonRow,
   argTypes: {
     items: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     children: {
-      control: false
+      control: false,
     },
-  }
-}
+  },
+};
 
 const Template = ({ items, ...args }) => (
   <ButtonRow {...args}>
@@ -25,22 +25,25 @@ const Template = ({ items, ...args }) => (
       <Button {...item} key={`${i}`} />
     ))}
   </ButtonRow>
-)
+);
 
-export const Default = Template.bind({})
-Default.args = {
-  name: "Default ButtonRow",
-  items: [
-    {
-      ...ButtonStory.args,
-      label: "Cancel",
-      title: "Cancel whatever you're doing",
-    },
-    {
-      ...ButtonStory.args,
-      label: "Save",
-      title: "Save whatever you've been doing",
-      variant: "primary",
-    },
-  ],
-}
+export const Default = {
+  render: Template,
+
+  args: {
+    name: 'Default ButtonRow',
+    items: [
+      {
+        ...ButtonStory.args,
+        label: 'Cancel',
+        title: "Cancel whatever you're doing",
+      },
+      {
+        ...ButtonStory.args,
+        label: 'Save',
+        title: "Save whatever you've been doing",
+        variant: 'primary',
+      },
+    ],
+  },
+};
