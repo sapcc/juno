@@ -28,17 +28,6 @@ fi
 SKIP_DOWNLOADS=$1
 SKIP_BASE_IMAGE_BUILD=$2
 
-if [[ -z "$OS_AUTH_URL" ]]; then
-  echo "ERROR: no OS_AUTH_URL found, please logon to Swift first"
-  echo "you need to logon to"
-  echo "region: eu-de-1"
-  echo "domain: ccadmin"
-  echo "project master"
-  echo ""
-  echo "in workspaces use 'osl  --region eu-de-1 --domain ccadmin --project master'"
-  exit 1
-fi
-
 if [[ "$SKIP_BASE_IMAGE_BUILD" != "true" ]]; then
   echo "Build Base Image from local juno sources"
   # we need to build the base image localy to have the latest sources in the base image, this images is used for the assets server build
@@ -46,6 +35,43 @@ if [[ "$SKIP_BASE_IMAGE_BUILD" != "true" ]]; then
 fi
 
 if [[ "$SKIP_DOWNLOADS" != "true" ]]; then
+
+  if [ -f ~/.current_os_context ]; then
+    echo "Workspaces and openstack context found, will use it 🙂"
+    source ~/.current_os_context
+  fi
+
+  if [[ -z "$OS_STORAGE_URL" ]]; then
+    echo "ERROR: no OS_STORAGE_URL found, please logon to Swift first"
+    echo "you need to logon to"
+    echo "region: eu-de-1"
+    echo "domain: ccadmin"
+    echo "project master"
+    echo ""
+    echo "in workspaces use 'osl --region eu-de-1 --domain ccadmin --project master'"
+    exit 1
+  fi
+
+  if [[ "$OS_REGION_NAME" != "eu-de-1" ]]; then
+    echo "ERROR: Please logon to region eu-de-1"
+    echo ""
+    echo "in workspaces use 'osl  --region eu-de-1 --domain ccadmin --project master'"
+    exit 1
+  fi
+
+  if [[ "$OS_PROJECT_DOMAIN_NAME" != "ccadmin" ]]; then
+    echo "ERROR: Please logon to donain ccadmin"
+    echo ""
+    echo "in workspaces use 'osl --region eu-de-1 --domain ccadmin --project master'"
+    exit 1
+  fi
+
+  if [[ "$OS_PROJECT_NAME" != "master" ]]; then
+    echo "ERROR: Please logon to project master"
+    echo ""
+    echo "in workspaces use 'osl --region eu-de-1 --domain ccadmin --project master'"
+    exit 1
+  fi
 
   echo "Task download-assets"
 
