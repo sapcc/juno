@@ -264,7 +264,7 @@ const downloadFile = (url, path, maxRetries = 10, currentRetry = 0) => {
         // Retry after a delay (you can adjust the delay as needed)
         setTimeout(() => {
           resolve(downloadFile(url, path, maxRetries, currentRetry + 1))
-        }, 2000) // 1000 milliseconds (1 second) delay in this example
+        }, 2000) // 2000 milliseconds (2 second) delay in this example
       } else {
         // Maximum retries reached, reject the promise
         console.error(
