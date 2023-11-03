@@ -110,11 +110,27 @@ export const Select = ({
     "juno-select-" + useId()
   )
 
+  const recursivelyFindFirstChildrenArray = (children) => {
+    if (!children) { return [] }
+
+    if (Array.isArray(children)) {
+      return children
+    } else {
+      return recursivelyFindFirstChildrenArray(children.props?.children)
+    }
+  }
+
   // iterate over children to get option values and labels by reading the value and the label prop of each child and saving them in a map
   const buildOptionValuesAndLabelMap = (options) => {
     const optionMap = new Map()
-    if (options && Array.isArray(options)) {
-      options.map((option) => {
+    if (!options) { return optionMap }
+
+    // recursively find the first children that is an array (in case people wrap their options in a div or Fragment something)
+    const selectOptions = recursivelyFindFirstChildrenArray(options) //.filter((option) => React.isValidElement(option) && option.type?.name === "SelectOption")
+
+    if (selectOptions) {
+      // iterate over the children and if they are of type "SelectOption" save the value and label props in a map
+      selectOptions.map((option) => {
         if (option && React.isValidElement(option) && option.type?.name === "SelectOption") {
           optionMap.set(option.props?.value || option.props?.children, {
             val: option.props?.value,
@@ -122,7 +138,8 @@ export const Select = ({
             children: option.props?.children
           })
         } else {
-          console.warn("Select: at least one of the options is undefined or null or not of type SelectOption")
+          console.warn("Select: at least one of the options is not a valid SelectOption component:")
+          console.info(option)
         }
       })
     }
