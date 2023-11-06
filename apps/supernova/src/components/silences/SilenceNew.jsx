@@ -139,7 +139,6 @@ const SilenceNew = ({ alert, size, variant }) => {
         }
       })
       .catch((error) => {
-        console.log("submit error::::::::::::::;", error.message)
         setError(parseError(error))
       })
   }
