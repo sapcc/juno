@@ -202,6 +202,13 @@ export const Description = {
   },
 };
 
+export const DisplaySettings = {
+  args: {
+    ...Default.args,
+    icon: 'displaySettings',
+  },
+};
+
 export const DNS = {
   args: {
     ...Default.args,

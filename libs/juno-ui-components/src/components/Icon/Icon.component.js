@@ -42,6 +42,7 @@ import OpenInNew from "@material-design-icons/svg/outlined/open_in_new.svg"
 import Place from "./icons/place.svg"
 import Success from "@material-design-icons/svg/filled/check_box.svg"
 import Search from "@material-design-icons/svg/outlined/search.svg"
+import DisplaySettings from "@material-design-icons/svg/outlined/display_settings.svg"
 import SeverityLow from "./icons/juno_severity_low.svg"
 import SeverityMedium from "./icons/juno_severity_medium.svg"
 import SeverityHigh from "./icons/juno_severity_high.svg"
@@ -100,6 +101,7 @@ export const knownIcons = [
   "default",
   "deleteForever",
   "description",
+  "displaySettings",
   "dns",
   "download",
   "edit",
@@ -336,6 +338,18 @@ const getColoredSizedIcon = ({
     case "description":
       return (
         <Description
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="description"
+          title={title ? title : "Description"}
+          role="img"
+          {...iconProps}
+        />
+      )
+    case "displaySettings":
+      return (
+        <DisplaySettings
           width={size}
           height={size}
           className={iconClass}

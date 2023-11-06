@@ -18,7 +18,7 @@
     "@floating-ui/react": "^0.25.1",
     "@headlessui-float/react": "^0.11.2",
     "@headlessui/react": "^1.7.15",
-    "@material-design-icons/svg": "^0.14.4",
+    "@material-design-icons/svg": "^0.14.13",
     "@mdx-js/react": "^1.6.22",
     "@rollup/plugin-babel": "^6.0.3",
     "@rollup/plugin-commonjs": "^24.0.0",
