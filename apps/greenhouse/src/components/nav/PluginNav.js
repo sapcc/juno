@@ -87,7 +87,7 @@ const PluginNav = () => {
       alignment="center"
       className={`greenhouse-nav ${navStyles}`}
     >
-      <GreenhouseLogo className="mb-6" />
+      <GreenhouseLogo className="mb-6" title="Greenhouse" />
 
       {Object.values(appsConfig)
         .filter((a) => a.navigable)
@@ -121,7 +121,7 @@ const PluginNav = () => {
         direction="vertical"
         gap="3"
         alignment="center"
-        className="mt-4 py-4 border-theme-background-lvl-1 border-t-2"
+        className="mt-4 py-4 border-theme-background-lvl-1 border-y-2"
       >
         {loggedIn ? (
           <>
