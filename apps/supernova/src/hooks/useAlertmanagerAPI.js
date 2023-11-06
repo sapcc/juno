@@ -76,7 +76,7 @@ const useAlertmanagerAPI = (apiEndpoint) => {
             console.log("Worker::ALERTS_FETCH_ERROR::", e.data.error)
             setAlertsIsUpdating(false)
             // error comes as object string and have to be parsed
-            setAlertsError(JSON.parse(e.data.error))
+            setAlertsError(e.data.error)
             break
         }
       }
@@ -115,7 +115,7 @@ const useAlertmanagerAPI = (apiEndpoint) => {
             console.log("Worker::SILENCES_FETCH_ERROR::", e.data.error)
             setSilencesIsUpdating(false)
             // error comes as object string and have to be parsed
-            setSilencesError(JSON.parse(e.data.error))
+            setSilencesError(e.data.error)
             break
         }
       }

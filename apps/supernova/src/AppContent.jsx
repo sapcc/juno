@@ -46,26 +46,18 @@ const AppContent = (props) => {
   useEffect(() => {
     // since the API call is done in a web worker and not logging aware, we need to show the error just in case the user is logged in
     if (!alertsError || !loggedIn) return
-    const text =
-      alertsError?.code && alertsError?.message
-        ? `${alertsError?.code}, ${alertsError?.message}`
-        : alertsError?.message || JSON.stringify(alertsError)
     addMessage({
       variant: "error",
-      text: text,
+      text: parseError(alertsError),
     })
   }, [alertsError, loggedIn])
 
   useEffect(() => {
     // since the API call is done in a web worker and not logging aware, we need to show the error just in case the user is logged in
     if (!silencesError || !loggedIn) return
-    const text =
-      silencesError?.code && silencesError?.message
-        ? `${silencesError?.code}, ${silencesError?.message}`
-        : silencesError?.message || JSON.stringify(silencesError)
     addMessage({
       variant: "error",
-      text: text,
+      text: parseError(silencesError),
     })
   }, [silencesError, loggedIn])
 
