@@ -9,6 +9,7 @@ import {
   useAlertsTotalCounts,
   useAuthLoggedIn,
   useAuthError,
+  useSilencesError,
 } from "./hooks/useAppStore"
 import AlertsList from "./components/alerts/AlertsList"
 import RegionsList from "./components/regions/RegionsList"
@@ -24,11 +25,15 @@ const AppContent = (props) => {
   const loggedIn = useAuthLoggedIn()
   const authError = useAuthError()
 
+  // alerts
   const alertsError = useAlertsError()
   const isAlertsLoading = useAlertsIsLoading()
   const totalCounts = useAlertsTotalCounts()
   const isAlertsUpdating = useAlertsIsUpdating()
   const updatedAt = useAlertsUpdatedAt()
+
+  // silences
+  const silencesError = useSilencesError()
 
   useEffect(() => {
     if (!authError) return
@@ -40,24 +45,33 @@ const AppContent = (props) => {
 
   useEffect(() => {
     // since the API call is done in a web worker and not logging aware, we need to show the error just in case the user is logged in
-    if (!alertsError && !loggedIn) return
-
-    console.log("alertsError", alertsError)
-    // display error code and message if available, otherwise just the error message or in the last case the error complete
+    if (!alertsError || !loggedIn) return
     const text =
       alertsError?.code && alertsError?.message
         ? `${alertsError?.code}, ${alertsError?.message}`
         : alertsError?.message || JSON.stringify(alertsError)
-
     addMessage({
       variant: "error",
       text: text,
     })
-  }, [alertsError])
+  }, [alertsError, loggedIn])
+
+  useEffect(() => {
+    // since the API call is done in a web worker and not logging aware, we need to show the error just in case the user is logged in
+    if (!silencesError || !loggedIn) return
+    const text =
+      silencesError?.code && silencesError?.message
+        ? `${silencesError?.code}, ${silencesError?.message}`
+        : silencesError?.message || JSON.stringify(silencesError)
+    addMessage({
+      variant: "error",
+      text: text,
+    })
+  }, [silencesError, loggedIn])
 
   return (
     <Container px py className="h-full">
-      <Messages />
+      <Messages className="pb-6" />
       {loggedIn && !authError ? (
         <>
           <AlertDetail />

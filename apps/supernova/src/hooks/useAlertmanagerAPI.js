@@ -44,6 +44,7 @@ const useAlertmanagerAPI = (apiEndpoint) => {
     setSilences,
     setIsUpdating: setSilencesIsUpdating,
     setIsLoading: setSilencesIsLoading,
+    setError: setSilencesError,
   } = useSilencesActions()
 
   //Setup web workers
@@ -109,6 +110,12 @@ const useAlertmanagerAPI = (apiEndpoint) => {
           case "SILENCES_FETCH_END":
             console.log("Worker::SILENCES_FETCH_END::")
             setSilencesIsUpdating(false)
+            break
+          case "SILENCES_FETCH_ERROR":
+            console.log("Worker::SILENCES_FETCH_ERROR::", e.data.error)
+            setSilencesIsUpdating(false)
+            // error comes as object string and have to be parsed
+            setSilencesError(JSON.parse(e.data.error))
             break
         }
       }
