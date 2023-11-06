@@ -36,11 +36,7 @@ export default (Story, context) => {
   }, [])
 
   return (
-    <StyleProvider
-      key="juno-decorator"
-      stylesWrapper="shadowRoot"
-      theme={theme}
-    >
+    <StyleProvider stylesWrapper="head" theme={theme}>
       <ContentArea>
         <Container px py>
           <Story />
