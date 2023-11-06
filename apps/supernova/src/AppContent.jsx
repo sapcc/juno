@@ -39,10 +39,19 @@ const AppContent = (props) => {
   }, [authError])
 
   useEffect(() => {
-    if (!alertsError) return
+    // since the API call is done in a web worker and not logging aware, we need to show the error just in case the user is logged in
+    if (!alertsError && !loggedIn) return
+
+    console.log("alertsError", alertsError)
+    // display error code and message if available, otherwise just the error message or in the last case the error complete
+    const text =
+      alertsError?.code && alertsError?.message
+        ? `${alertsError?.code}, ${alertsError?.message}`
+        : alertsError?.message || JSON.stringify(alertsError)
+
     addMessage({
       variant: "error",
-      text: `${alertsError?.statusCode}, ${alertsError?.message}`,
+      text: text,
     })
   }, [alertsError])
 
