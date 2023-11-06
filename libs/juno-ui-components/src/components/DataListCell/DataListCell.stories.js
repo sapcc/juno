@@ -1,34 +1,37 @@
-import React from "react"
-import { DataListCell } from "./index.js"
+import React from 'react';
+import { DataListCell } from './index.js';
 
 export default {
-  title: "Deprecated/DataList/DataListCell",
+  title: 'Deprecated/DataList/DataListCell',
   component: DataListCell,
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
   },
   parameters: {
     docs: {
       description: {
-        component:
-          "DataList is deprecated and will be removed. Please use DataGrid instead.",
+        component: 'DataList is deprecated and will be removed. Please use DataGrid instead.',
       },
     },
   },
-}
+};
 
-const Template = (args) => <DataListCell {...args}></DataListCell>
+const Template = (args) => <DataListCell {...args}></DataListCell>;
 
-export const Default = Template.bind({})
-Default.parameters = {
-  docs: {
-    description: {
-      story: "Juno DataListCell for displaying data",
+export const Default = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story: 'Juno DataListCell for displaying data',
+      },
     },
   },
-}
-Default.args = {
-  children: ["DataListCell"],
-}
+
+  args: {
+    children: ['DataListCell'],
+  },
+};

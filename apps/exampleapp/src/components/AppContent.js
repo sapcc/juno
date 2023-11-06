@@ -8,6 +8,8 @@ import {
   Tab,
   TabList,
   TabPanel,
+  Select,
+  SelectOption,
 } from "juno-ui-components"
 import {
   useGlobalsActions,
@@ -76,6 +78,19 @@ const AppContent = (props) => {
                     label="Button"
                     onClick={() => setCurrentModal("TestModal")}
                   />
+                  <p>Test a select</p>
+                  <Select
+                    name="filter"
+                    className="filter-label-select w-64 mb-0"
+                    label="Filter"
+                    onChange={(e) => console.log(e)}
+                  >
+                    <SelectOption value="0" label="Option 0" />
+                    <SelectOption value="1" label="Option 1" />
+                    <SelectOption value="2" label="Option 2" />
+                    <SelectOption value="3" label="Option 3" />
+                    <SelectOption value="4" label="Option 4" />
+                  </Select>
                 </Container>
               </TabPanel>
             </MainTabs>

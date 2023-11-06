@@ -1,20 +1,23 @@
 import produce from "immer"
 import { countAlerts } from "./utils"
 
+const initialAlertsState = {
+  items: [],
+  itemsFiltered: [],
+  totalCounts: {}, // { total: number, critical: number, ...},
+  severityCountsPerRegion: {}, // {"eu-de-1": { total: number, critical: {total: number, suppressed: number}, warning: {...}, ...}
+  regions: [], // save all available regions from initial list here
+  regionsFiltered: [], // regions list filtered by active predefined filters
+  enrichedLabels: ["status"], // labels that are enriched by the alert worker
+  isLoading: false,
+  isUpdating: false,
+  updatedAt: null,
+  error: null,
+}
+
 const createAlertsSlice = (set, get) => ({
   alerts: {
-    items: [],
-    itemsFiltered: [],
-    totalCounts: {}, // { total: number, critical: number, ...},
-    severityCountsPerRegion: {}, // {"eu-de-1": { total: number, critical: {total: number, suppressed: number}, warning: {...}, ...}
-    regions: [], // save all available regions from initial list here
-    regionsFiltered: [], // regions list filtered by active predefined filters
-    enrichedLabels: [], // labels that are enriched by the alert worker
-    isLoading: false,
-    isUpdating: false,
-    updatedAt: null,
-    error: null,
-
+    ...initialAlertsState,
     actions: {
       setAlertsData: ({ items, counts }) => {
         set(
@@ -109,7 +112,7 @@ const createAlertsSlice = (set, get) => ({
               }
 
               // if the item is still visible check if it gets filtered out by a search term
-              // the search term is matched against the stringified item object
+              // the search term is matched against the stringified item object via regex
               // if the item object does not contain the search term, it is not visible
               if (
                 visible &&
@@ -117,7 +120,6 @@ const createAlertsSlice = (set, get) => ({
                 state.filters.searchTerm.length > 0
               ) {
                 const itemString = JSON.stringify(item).toLowerCase()
-
                 const re = new RegExp(state.filters.searchTerm.toLowerCase())
                 if (!itemString.match(re)) {
                   visible = false
@@ -187,20 +189,6 @@ const createAlertsSlice = (set, get) => ({
           (state) => ({ alerts: { ...state.alerts, isUpdating: value } }),
           false,
           "alerts.setIsUpdating"
-        )
-      },
-
-      setEnrichedLabels: (labels) => {
-        set(
-          (state) => {
-            if (!labels || typeof labels !== "string") return state
-            const newEnrichedLabels = labels.split(",")
-            return {
-              alerts: { ...state.alerts, enrichedLabels: newEnrichedLabels },
-            }
-          },
-          false,
-          "alerts.setEnrichedLabels"
         )
       },
 

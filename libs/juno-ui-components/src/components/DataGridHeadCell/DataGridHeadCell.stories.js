@@ -1,14 +1,14 @@
-import React from "react"
-import { DataGrid } from "../DataGrid/index.js"
-import { DataGridRow } from "../DataGridRow/index.js"
-import { DataGridHeadCell } from "./index.js"
+import React from 'react';
+import { DataGrid } from '../DataGrid/index.js';
+import { DataGridRow } from '../DataGridRow/index.js';
+import { DataGridHeadCell } from './index.js';
 
 export default {
-  title: "Components/DataGrid/DataGridHeadCell",
+  title: 'Components/DataGrid/DataGridHeadCell',
   component: DataGridHeadCell,
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
   },
   decorators: [
@@ -24,45 +24,57 @@ export default {
         excludeDecorators: false,
       },
     },
-  }
-}
+  },
+};
 
-const Template = (args) => <DataGridHeadCell {...args}></DataGridHeadCell>
+const Template = (args) => <DataGridHeadCell {...args}></DataGridHeadCell>;
 
-export const Default = Template.bind({})
-Default.parameters = {
-  docs: {
-    description: {
-      story: "Juno DataGridHeadCell for use in DataGrid",
+export const Default = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story: 'Juno DataGridHeadCell for use in DataGrid',
+      },
     },
   },
-}
-Default.args = {
-  children: ["DataGridHeadCell"],
-}
 
-export const NoWrap = Template.bind({})
-NoWrap.parameters = {
-  docs: {
-    description: {
-      story: "Juno DataGridHeadCell with nowrap option (content has white-space: nowrap;)",
+  args: {
+    children: ['DataGridHeadCell'],
+  },
+};
+
+export const NoWrap = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story: 'Juno DataGridHeadCell with nowrap option (content has white-space: nowrap;)',
+      },
     },
   },
-}
-NoWrap.args = {
-  nowrap: true,
-  children: ["DataGridHeadCell does not wrap"],
-}
 
-export const ColSpan = Template.bind({})
-ColSpan.parameters = {
-  docs: {
-    description: {
-      story: "Juno DataGridHeadCell with colspan",
+  args: {
+    nowrap: true,
+    children: ['DataGridHeadCell does not wrap'],
+  },
+};
+
+export const ColSpan = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story: 'Juno DataGridHeadCell with colspan',
+      },
     },
   },
-}
-ColSpan.args = {
-  colSpan: 3,
-  children: ["DataGridHeadCell with colspan"],
-}
+
+  args: {
+    colSpan: 3,
+    children: ['DataGridHeadCell with colspan'],
+  },
+};

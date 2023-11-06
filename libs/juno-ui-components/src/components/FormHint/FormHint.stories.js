@@ -1,45 +1,64 @@
 import React from 'react';
-import { FormHint } from './index.js'
+import { FormHint } from './index.js';
 
 export default {
   title: 'Forms/FormHint',
   component: FormHint,
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
-  }
-}
+  },
+};
 
-const Template = ({ children, ...args}) => (
-  <FormHint {...args}>
-    { children }
-  </FormHint>
-)
+const Template = ({ children, ...args }) => <FormHint {...args}>{children}</FormHint>;
 
-export const Default = Template.bind({})
-Default.args = {
-  text: "A simple hint to be associated with a form input"
-}
+export const Default = {
+  render: Template,
 
-export const WithChildren = Template.bind({})
-WithChildren.args = {
-  children: <>A FormHint with a <a href="#">Link</a>.</>
-}
+  args: {
+    text: 'A simple hint to be associated with a form input',
+  },
+};
 
-export const WithTextAsChildren = Template.bind({})
-WithTextAsChildren.args = {
-  text: <>A FormHint with a <a href="#">Link</a>.</>
-}
+export const WithChildren = {
+  render: Template,
 
-export const ErrorVariant = Template.bind({})
-ErrorVariant.args = {
-  variant: "error",
-  text: "A FormHint containing an error or invalidation message"
-}
+  args: {
+    children: (
+      <>
+        A FormHint with a <a href="#">Link</a>.
+      </>
+    ),
+  },
+};
 
-export const SuccessVariant = Template.bind({})
-SuccessVariant.args = {
-  variant: "success",
-  text: "A FormHint containg a success or validation message"
-}
+export const WithTextAsChildren = {
+  render: Template,
+
+  args: {
+    text: (
+      <>
+        A FormHint with a <a href="#">Link</a>.
+      </>
+    ),
+  },
+};
+
+export const ErrorVariant = {
+  render: Template,
+
+  args: {
+    variant: 'error',
+    text: 'A FormHint containing an error or invalidation message',
+  },
+};
+
+export const SuccessVariant = {
+  render: Template,
+
+  args: {
+    variant: 'success',
+    text: 'A FormHint containg a success or validation message',
+  },
+};

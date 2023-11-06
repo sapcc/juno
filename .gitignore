@@ -10,6 +10,9 @@ scripts/im.json
 scripts/manifest.json
 scripts/importmap.json
 
+# local assets-server build
+assets_server_build
+
 # testing
 /coverage
 
