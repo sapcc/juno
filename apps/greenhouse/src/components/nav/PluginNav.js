@@ -123,6 +123,11 @@ const PluginNav = () => {
         alignment="center"
         className="mt-4 py-4 border-theme-background-lvl-1 border-y-2"
       >
+        <Stack direction="vertical" alignment="center">
+          <Icon icon="displaySettings" size="36" />
+          <span className="text-xs">Organization</span>
+        </Stack>
+
         {loggedIn ? (
           <>
             <Avatar url={authData?.parsed?.avatarUrl?.small} />
