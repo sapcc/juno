@@ -124,7 +124,7 @@ const SilenceNew = ({ alert, size, variant }) => {
     }
 
     // submit silence
-    post(`${apiEndpoint}/silencesssss`, {
+    post(`${apiEndpoint}/silences`, {
       body: JSON.stringify(newSilence),
     })
       .then((data) => {
