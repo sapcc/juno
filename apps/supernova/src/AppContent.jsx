@@ -47,7 +47,7 @@ const AppContent = (props) => {
     // since the API call is done in a web worker and not logging aware, we need to show the error just in case the user is logged in
     if (!alertsError || !loggedIn) return
 
-    // if user uses firefox warn to activate `allow_client_cert`. Schould be enough to do it when getting the
+    // if user uses firefox warn to activate `allow_client_cert`. Should be enough to do it just here since the API call is done in a web worker and nothing else will be loaded until the alerts are loaded
     const isFirefox = navigator.userAgent.toLowerCase().includes("firefox")
     if (isFirefox) {
       addMessage({
