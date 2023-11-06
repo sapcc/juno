@@ -5,7 +5,6 @@ import PropTypes from "prop-types"
 const containerStyles = `
   jn-flex-col
   jn-grow
-  jn-px-7
   jn-bg-[right_top_1rem]
   jn-bg-no-repeat
   jn-bg-theme-content-area-bg
