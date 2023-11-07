@@ -109,18 +109,37 @@ export const Select = ({
   const uniqueId = () => (
     "juno-select-" + useId()
   )
-  
+
+  const recursivelyFindFirstChildrenArray = (children) => {
+    if (!children) { return [] }
+
+    if (Array.isArray(children)) {
+      return children
+    } else {
+      return recursivelyFindFirstChildrenArray(children.props?.children)
+    }
+  }
+
   // iterate over children to get option values and labels by reading the value and the label prop of each child and saving them in a map
   const buildOptionValuesAndLabelMap = (options) => {
     const optionMap = new Map()
-    if (options && Array.isArray(options)) {
-      options.map((option) => {
-        if (option.type.name === "SelectOption") {
-          optionMap.set(option.props.value || option.props.children, {
-            val: option.props.value,
-            label: option.props.label,
-            children: option.props.children
+    if (!options) { return optionMap }
+
+    // recursively find the first children that is an array (in case people wrap their options in a div or Fragment something)
+    const selectOptions = recursivelyFindFirstChildrenArray(options) //.filter((option) => React.isValidElement(option) && option.type?.name === "SelectOption")
+
+    if (selectOptions) {
+      // iterate over the children and if they are of type "SelectOption" save the value and label props in a map
+      selectOptions.map((option) => {
+        if (option && React.isValidElement(option) && option.type?.name === "SelectOption") {
+          optionMap.set(option.props?.value || option.props?.children, {
+            val: option.props?.value,
+            label: option.props?.label,
+            children: option.props?.children
           })
+        } else {
+          console.warn("Select: at least one of the options is not a valid SelectOption component:")
+          console.info(option)
         }
       })
     }
@@ -130,12 +149,7 @@ export const Select = ({
   const theId = id || uniqueId()
   const helptextId = "juno-select-helptext-" + useId()
   
-  const optionValuesAndLabelMap = useMemo(
-    () => buildOptionValuesAndLabelMap(children),
-    [children]
-  )
-  
-  const [optionValuesAndLabels, setOptionValuesAndLabels] = useState(optionValuesAndLabelMap)
+  const [optionValuesAndLabels, setOptionValuesAndLabels] = useState(new Map())
   const [hasError, setHasError] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
@@ -172,8 +186,9 @@ export const Select = ({
   }, [loading])
   
   const handleChange = (value) => {
-    onChange && onChange(value)
-    onValueChange && onValueChange(value)
+    console.log("Select: handleChange: value: ", value || "")
+    onChange && onChange(value || "")
+    onValueChange && onValueChange(value || "")
   }
   
   // Headless-UI-Float Middleware

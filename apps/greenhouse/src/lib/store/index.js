@@ -73,6 +73,10 @@ const createAppsDataSlice = (set, get) => ({
         set(
           (state) => {
             if (!Array.isArray(active)) active = [active]
+            // if the current state is the same as the new state, don't update
+            // it prevents an unnecessary re-render
+            if (JSON.stringify(state.apps.active) === JSON.stringify(active))
+              return state
             return { apps: { ...state.apps, active } }
           },
           false,

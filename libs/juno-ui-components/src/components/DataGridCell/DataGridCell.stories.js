@@ -1,14 +1,14 @@
-import React from "react"
-import { DataGrid } from "../DataGrid/index.js"
-import { DataGridRow } from "../DataGridRow/index.js"
-import { DataGridCell } from "./index.js"
+import React from 'react';
+import { DataGrid } from '../DataGrid/index.js';
+import { DataGridRow } from '../DataGridRow/index.js';
+import { DataGridCell } from './index.js';
 
 export default {
-  title: "Components/DataGrid/DataGridCell",
+  title: 'Components/DataGrid/DataGridCell',
   component: DataGridCell,
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
   },
   decorators: [
@@ -24,45 +24,57 @@ export default {
         excludeDecorators: false,
       },
     },
-  }
-}
+  },
+};
 
-const Template = (args) => <DataGridCell {...args}></DataGridCell>
+const Template = (args) => <DataGridCell {...args}></DataGridCell>;
 
-export const Default = Template.bind({})
-Default.parameters = {
-  docs: {
-    description: {
-      story: "Juno DataGridCell for use in DataGrid",
+export const Default = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story: 'Juno DataGridCell for use in DataGrid',
+      },
     },
   },
-}
-Default.args = {
-  children: ["DataGridCell"],
-}
 
-export const NoWrap = Template.bind({})
-NoWrap.parameters = {
-  docs: {
-    description: {
-      story: "Juno DataGridCell with nowrap option (content has white-space: nowrap;)",
+  args: {
+    children: ['DataGridCell'],
+  },
+};
+
+export const NoWrap = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story: 'Juno DataGridCell with nowrap option (content has white-space: nowrap;)',
+      },
     },
   },
-}
-NoWrap.args = {
-  nowrap: true,
-  children: ["DataGridCell does not wrap"],
-}
 
-export const ColSpan = Template.bind({})
-ColSpan.parameters = {
-  docs: {
-    description: {
-      story: "Juno DataGridCell with colspan",
+  args: {
+    nowrap: true,
+    children: ['DataGridCell does not wrap'],
+  },
+};
+
+export const ColSpan = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story: 'Juno DataGridCell with colspan',
+      },
     },
   },
-}
-ColSpan.args = {
-  colSpan: 3,
-  children: ["DataGridCell with colspan"],
-}
+
+  args: {
+    colSpan: 3,
+    children: ['DataGridCell with colspan'],
+  },
+};

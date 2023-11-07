@@ -1,36 +1,16 @@
+/** @type { import('@storybook/react-webpack5').StorybookConfig } */
+
 const path = require("path")
 const globImporter = require("node-sass-glob-importer")
 
-module.exports = {
-  core: {
-    builder: "webpack5",
-  },
-  stories: ["../src/**/*.stories.js"],
+const config = {
+  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
     "@storybook/addon-links",
-    // "@storybook/addon-essentials",
-    // "@storybook/addon-docs",
-    // Since storybook 6.5.* there is an issue that the 'Docs' tab isn't visible anymore, See: https://github.com/storybookjs/storybook/issues/18876
-    // the proposed workaround in the ticket is to include the 'addon-docs' addon as below (also need to set docs: false on 'addon-essentials')
-    {
-      name: path.dirname(require.resolve("@storybook/addon-docs/package.json")),
-      options: { transcludeMarkdown: true },
-    },
-    { name: "@storybook/addon-essentials", options: { docs: false } },
-    "@storybook/addon-controls",
-    // "@storybook/theming",
-    "storybook-dark-mode",
-    {
-      name: "@storybook/addon-postcss",
-      options: {
-        postcssLoaderOptions: {
-          // important! use local installed postcss (version 8)
-          implementation: require("postcss"),
-        },
-      },
-    },
+    "@storybook/addon-essentials",
+    "@storybook/addon-docs",
+    "./juno-addon",
   ],
-
   webpackFinal: async (config) => {
     // Default rule for images /\.(svg|ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/
     // Exclude SVG files so that they can be loaded via svgr
@@ -90,9 +70,18 @@ module.exports = {
           },
         },
       ],
-      include: path.resolve(__dirname, "../src"),
+      include: [path.resolve(__dirname, "../src")],
     })
 
     return config
   },
+
+  framework: {
+    name: "@storybook/react-webpack5",
+    options: {},
+  },
+  docs: {
+    autodocs: true,
+  },
 }
+export default config

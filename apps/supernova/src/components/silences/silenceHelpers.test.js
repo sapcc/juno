@@ -1,4 +1,4 @@
-import { setupMatchers } from "./helpers"
+import { setupMatchers } from "./silenceHelpers"
 
 describe("helpers", () => {
   describe("setupMatchers", () => {

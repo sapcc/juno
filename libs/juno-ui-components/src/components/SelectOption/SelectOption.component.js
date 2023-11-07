@@ -71,6 +71,7 @@ export const SelectOption = ({
       <li
         className={`
           juno-select-option 
+          jn-min-h-[2.5rem]
           ${ optionStyles }
           ${ selected ? "juno-select-option-selected " + selectedOptionStyles : unselectedOptionStyles }
           ${ disabled ? "juno-select-option-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }

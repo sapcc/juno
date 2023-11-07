@@ -1,25 +1,19 @@
-import React from "react"
+import React from 'react';
 
-import { PanelFooter } from "./index.js"
-import { ContentAreaWrapper } from "../ContentAreaWrapper/index.js"
-import { ContentArea } from "../ContentArea/index.js"
-import { Button } from "../Button/index.js"
-import { Panel } from "../Panel/index.js"
-import { PanelBody } from "../PanelBody/index.js"
+import { PanelFooter } from './index.js';
+import { ContentAreaWrapper } from '../ContentAreaWrapper/index.js';
+import { ContentArea } from '../ContentArea/index.js';
+import { Button } from '../Button/index.js';
+import { Panel } from '../Panel/index.js';
+import { PanelBody } from '../PanelBody/index.js';
 
 // the decorator captures the panel's fixed positioning within the iframe. otherwise it would be placed relative to the viewport which is unwieldy in storybook
 export default {
-  title: "Layout/Panel/PanelFooter",
+  title: 'Layout/Panel/PanelFooter',
   component: PanelFooter,
   argTypes: {},
-  decorators: [
-    (story) => (
-      <div className="jn-contrast-100">
-        {story()}
-      </div>
-    ),
-  ],
-}
+  decorators: [(story) => <div className="jn-contrast-100">{story()}</div>],
+};
 
 const Template = (args) => (
   <ContentAreaWrapper>
@@ -34,19 +28,21 @@ const Template = (args) => (
         This is the panel body
       </PanelBody>
     </Panel>
-    <ContentArea className="dummy-css-ignore jn-h-[250px]">
-      Content Area
-    </ContentArea>
+    <ContentArea className="dummy-css-ignore jn-h-[250px]">Content Area</ContentArea>
   </ContentAreaWrapper>
-)
+);
 
-export const Footer = Template.bind({})
-Footer.parameters = {
-  docs: {
-    description: {
-      story:
-        "A container for panel footer elements, typically buttons. Add the footer to the PanelBody component via its `footer` parameter.",
+export const Footer = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'A container for panel footer elements, typically buttons. Add the footer to the PanelBody component via its `footer` parameter.',
+      },
     },
   },
-}
-Footer.args = {}
+
+  args: {},
+};

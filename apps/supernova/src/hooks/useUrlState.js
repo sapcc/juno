@@ -45,12 +45,13 @@ const useUrlState = () => {
     // get active filters from url state
     const activeFiltersFromURL =
       urlStateManager.currentState()?.[ACTIVE_FILTERS]
+
     // check if there are active filters in the url state
     if (activeFiltersFromURL && Object.keys(activeFiltersFromURL).length > 0) {
       setActiveFilters(activeFiltersFromURL)
     } else {
       // otherwise set the support group filter
-      // we just add this default filter when no other filters are set per URL
+      // we just add this default filter when no other filters are set via URL
       const label = "support_group"
       if (
         authData?.parsed?.supportGroups?.length > 0 &&
@@ -58,7 +59,7 @@ const useUrlState = () => {
         filterLabels.includes(label)
       ) {
         // this will also trigger a filterItems() call from the store self
-        setActiveFilters({ [label]: [`${authData.parsed.supportGroups}`] })
+        setActiveFilters({ [label]: authData.parsed.supportGroups })
       }
     }
 
@@ -87,14 +88,38 @@ const useUrlState = () => {
     // do not synchronize the states until the url state is read and user logged in
     if (!loggedIn || !isURLRead) return
 
-    urlStateManager.push({
+    const newState = {
       ...urlStateManager.currentState(),
       [ACTIVE_FILTERS]: activeFilters,
       [SEARCH_TERM]: searchTerm,
       [ACTIVE_PREDEFINED_FILTER]: activePredefinedFilter,
       [DETAILS_FOR]: detailsFor,
-    })
+    }
+
+    // do not push the state if it is the same as the current one
+    // otherwise it will reset the browser history and the forward button will not work
+    if (
+      JSON.stringify(newState) ===
+      JSON.stringify(urlStateManager.currentState())
+    )
+      return
+
+    urlStateManager.push(newState)
   }, [loggedIn, activeFilters, searchTerm, activePredefinedFilter, detailsFor])
+
+  // Support for back button
+  useEffect(() => {
+    const unregisterStateListener = urlStateManager.onChange((state) => {
+      setActiveFilters(state?.[ACTIVE_FILTERS])
+      setSearchTerm(state?.[SEARCH_TERM])
+      setActivePredefinedFilter(state?.[ACTIVE_PREDEFINED_FILTER])
+      setShowDetailsFor(state?.[DETAILS_FOR])
+    })
+
+    return () => {
+      unregisterStateListener()
+    }
+  }, [])
 }
 
 export default useUrlState

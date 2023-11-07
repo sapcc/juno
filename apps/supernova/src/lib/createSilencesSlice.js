@@ -27,6 +27,7 @@ const createSilencesSlice = (set, get) => ({
             state.silences.isLoading = false
             state.silences.isUpdating = false
             state.silences.updatedAt = Date.now()
+            state.silences.error = null
           }),
           false,
           "silences.setSilencesData"
@@ -145,14 +146,25 @@ const createSilencesSlice = (set, get) => ({
       },
       setExcludedLabels: (labels) => {
         return set(
-          (state) => { 
-            if (!labels || typeof labels !== "string") return state
-            const newExcludedLabels = labels.split(",")
-            return { silences: {
-              ...state.silences,
-              excludedLabels: newExcludedLabels,
-            },
-          }},
+          (state) => {
+            // check if labels is an array and if every element in the array is a string
+            if (
+              !Array.isArray(labels) ||
+              !labels.some((element) => typeof element === "string")
+            ) {
+              console.warn(
+                "[supernova]::setExcludedLabels: labels object is not an array of strings"
+              )
+              return state
+            }
+
+            return {
+              silences: {
+                ...state.silences,
+                excludedLabels: labels,
+              },
+            }
+          },
           false,
           "silences.setExcludedLabels"
         )
@@ -211,6 +223,15 @@ const createSilencesSlice = (set, get) => ({
           false,
           "silences.setIsUpdating"
         ),
+      setError: (error) => {
+        set(
+          (state) => ({
+            silences: { ...state.silences, error, isLoading: false },
+          }),
+          false,
+          "silences.setError"
+        )
+      },
     },
   },
 })
