@@ -1,34 +1,44 @@
 import * as React from "react"
-import { render, screen } from "@testing-library/react"
+import { cleanup, render, screen } from "@testing-library/react"
 import { AppShell } from "./index"
 import { PageHeader } from "../PageHeader/PageHeader.component"
 import { PageFooter } from "../PageFooter/PageFooter.component"
 import { TopNavigation } from "../TopNavigation/TopNavigation.component"
+import { SideNavigation } from "../SideNavigation/SideNavigation.component"
 
 describe("AppShell", () => {
+  
+  afterEach(() => {
+    cleanup();
+    jest.clearAllMocks()
+  })
+  
   test("renders an app shell", async () => {
     render(<AppShell data-testid="app-shell" />)
     expect(screen.getByTestId("app-shell")).toBeInTheDocument()
     expect(screen.getByTestId("app-shell")).toHaveClass("juno-body")
   })
-
-  test("renders an app shell with content heading", async () => {
-    render(<AppShell data-testid="app-shell" contentHeading="My Heading" />)
-    expect(screen.getByTestId("app-shell")).toBeInTheDocument()
-    expect(screen.getByText("My Heading")).toBeInTheDocument()
+  
+  test("logs a deprecation warning to the console when user passed obsolete contentHeading prop", async () => {
+    const consoleWarnSpy = jest.spyOn(console, 'warn')
+    render(<AppShell contentHeading="My Content Heading" />)
+    expect(consoleWarnSpy).toHaveBeenCalled()
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      "AppShell: The contentHeading prop is obsolete and will be removed in a future version. In order to render a content heading, use a ContentHeading element as a child in your main content."
+    )
   })
 
-  test("renders an app shell with page heading passed as String", async () => {
-    render(<AppShell data-testid="app-shell" pageHeader="My Page Heading" />)
+  test("renders an app shell with page header passed as String", async () => {
+    render(<AppShell data-testid="app-shell" pageHeader="My Page Header" />)
     expect(screen.getByTestId("app-shell")).toBeInTheDocument()
-    expect(screen.getByText("My Page Heading")).toBeInTheDocument()
+    expect(screen.getByText("My Page Header")).toBeInTheDocument()
   })
 
-  test("renders an app shell with page heading passed as component", async () => {
-    render(<AppShell data-testid="app-shell" pageHeader={<PageHeader data-testid="page-header" heading="My Page Heading" />} />)
+  test("renders an app shell with page header passed as component", async () => {
+    render(<AppShell data-testid="app-shell" pageHeader={<PageHeader data-testid="page-header" heading="My Page Header" />} />)
     expect(screen.getByTestId("app-shell")).toBeInTheDocument()
     expect(screen.getByTestId("page-header")).toBeInTheDocument()
-    expect(screen.getByText("My Page Heading")).toBeInTheDocument()
+    expect(screen.getByText("My Page Header")).toBeInTheDocument()
   })
 
   test("renders an app shell with custom page footer passed as component", async () => {
@@ -42,6 +52,32 @@ describe("AppShell", () => {
     render(<AppShell data-testid="app-shell" topNavigation={<TopNavigation data-testid="top-navigation"></TopNavigation>} />)
     expect(screen.getByTestId("app-shell")).toBeInTheDocument()
     expect(screen.getByTestId("top-navigation")).toBeInTheDocument()
+  })
+  
+  test("renders an app shell with a side navigation passed as a component", async () => {
+    render(
+      <AppShell 
+        data-testid="app-shell" 
+        sideNavigation={<SideNavigation />}
+      />
+    )
+    expect(screen.getByTestId("app-shell")).toBeInTheDocument()
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.getByRole("navigation")).toHaveClass("juno-sidenavigation")
+  })
+  
+  test("renders an app shell with both a side and a top navigation as passed", async () => {
+    render(
+      <AppShell 
+        data-testid="app-shell"
+        sideNavigation={<SideNavigation data-testid="side-nav" />}
+        topNavigation={<TopNavigation data-testid="top-nav" />}
+      />
+    )
+    expect(screen.getByTestId("app-shell")).toBeInTheDocument()
+    expect(screen.getAllByRole("navigation")).toHaveLength(2)
+    expect(screen.getByTestId("side-nav")).toBeInTheDocument()
+    expect(screen.getByTestId("top-nav")).toBeInTheDocument()
   })
 
   test("renders an embeddable app shell without page heading or footer", async () => {

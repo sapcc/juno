@@ -1,26 +1,26 @@
 import * as React from "react"
 import { render, screen } from "@testing-library/react"
-import { ContentAreaHeading } from "./index"
+import { ContentHeading } from "./index"
 
-describe("ContentAreaHeading", () => {
-  test("renders a content area heading", async () => {
-    render(<ContentAreaHeading heading="My Heading" />)
+describe("ContentHeading", () => {
+  test("renders a content heading", async () => {
+    render(<ContentHeading heading="My Heading" />)
     expect(screen.getByRole("heading")).toBeInTheDocument()
     expect(screen.getByRole("heading")).toHaveClass(
-      "juno-content-area-heading"
+      "juno-content-heading"
     )
   })
   
-  test("renders a content area heading with the given text", async () => {
-    render(<ContentAreaHeading heading="My Heading" />)
+  test("renders a content heading with the given text", async () => {
+    render(<ContentHeading heading="My Heading" />)
     expect(screen.getByRole("heading")).toHaveTextContent("My Heading")
   })
 
   test("renders children as passed", async () => {
     render(
-      <ContentAreaHeading >
+      <ContentHeading >
         <button></button>
-      </ContentAreaHeading>
+      </ContentHeading>
     )
     expect(screen.getByRole("heading")).toBeInTheDocument()
     expect(screen.getByRole("button")).toBeInTheDocument()
@@ -28,7 +28,7 @@ describe("ContentAreaHeading", () => {
 
   test("renders a custom className", async () => {
     render(
-      <ContentAreaHeading
+      <ContentHeading
         className="my-custom-classname"
       />
     )
@@ -40,7 +40,7 @@ describe("ContentAreaHeading", () => {
 
   test("renders all props", async () => {
     render(
-      <ContentAreaHeading
+      <ContentHeading
         data-lolol="some-prop"
       />
     )

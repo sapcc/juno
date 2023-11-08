@@ -1,49 +1,44 @@
-import React from 'react';
-import { SideNavigationItem } from './index.js';
+import React from "react"
+import { SideNavigationItem } from "./index.js"
 
 export default {
-  title: 'Layout/SideNavigation/SideNavigationItem',
+  title: "Layout/SideNavigation/SideNavigationItem",
   component: SideNavigationItem,
   argTypes: {
     children: {
-      control: false,
+      control: false
     },
   },
-  parameters: { actions: { argTypesRegex: null } },
-};
+  parameters: { actions: { argTypesRegex: null } }
+}
 
-export const Default = {
-  args: {
-    label: 'Navigation Item',
-  },
-};
+const Template = (args) => <SideNavigationItem {...args} />
 
-export const WithIcon = {
-  args: {
-    label: 'Navigation Item',
-    icon: 'warning',
-  },
-};
+export const Default = Template.bind({})
+Default.args = {
+  label: "Navigation Item"
+}
 
-export const AsAnchor = {
-  args: {
-    label: 'Navigation Item',
-    href: '#',
-  },
-};
+export const WithIcon = Template.bind({})
+WithIcon.args = {
+  label: "Navigation Item With Icon",
+  icon: "warning"
+}
 
-export const AsButton = {
-  args: {
-    label: 'Navigation Item',
-    onClick: () => {
-      console.log('clicked');
-    },
-  },
-};
+export const AsAnchor = Template.bind({})
+AsAnchor.args = {
+  label: "Navigation Item as Anchor",
+  href: "#"
+}
 
-export const Active = {
-  args: {
-    label: 'Navigation Item',
-    active: true,
-  },
-};
+export const AsButton = Template.bind({})
+AsButton.args = {
+  label: "Navigation Item as Button",
+  onClick: () => {console.log("clicked")}
+}
+
+export const Active = Template.bind({})
+Active.args = {
+  label: "Active Navigation Item",
+  active: true
+}

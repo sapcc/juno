@@ -36,7 +36,6 @@ const App = (props = {}) => {
     <QueryClientProvider client={queryClient}>
       <AppShell
         pageHeader="Converged Cloud | App Template"
-        contentHeading="App template page title"
         embedded={props.embedded === "true" || props.embedded === true}
       >
         <AppContent props={props} />

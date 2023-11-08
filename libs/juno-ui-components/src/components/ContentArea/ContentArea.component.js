@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { withDeprecationWarning } from '../withDeprecationWarning/index.js'
 
 const containerStyles = `
   jn-bg-theme-content-area-bg
@@ -10,8 +11,7 @@ const containerStyles = `
 
 
 /**
- * Only needed if you want to build your app's scaffold manually. In most cases it is better to use the AppShell component instead.
- * This is the area in which the actual content of each page should be injected. 
+ * Deprecated: This component used to be used internally by AppShell but has been removed there since. It was only needed to manually scaffold an app. Use AppShell to scaffold an app layout.. 
  */
 export const ContentArea = ({ className, children, ...props }) => {
 
@@ -35,3 +35,5 @@ ContentArea.defaultProps = {
   className: "",
   children: null,
 }
+
+export default withDeprecationWarning(ContentArea, "ContentArea is deprecated and will be removed in future versions. To be future-proof, use AppShell to scaffold an app layout.")

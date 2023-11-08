@@ -1,16 +1,22 @@
 .juno-topnavigation-item {
   color: var(--color-text-default);
   font-weight: bold;
+  font-size: 1rem;
+  line-height: 1.5rem;
   display: inline-flex;
   align-items: center;
-  gap: .25rem;
-  border-bottom: 3px solid transparent;
-  padding-top: .125rem;
-  padding-bottom: 0.3125rem;
+  flex-grow: 0;
+  justify-content: flex-start;
+  height: 2rem;
+  cursor: pointer;
+  
+
+  padding: .25rem .3125rem;
+  background-color: var(--color-topnavigation-item-bg);
   
   &:hover {
     color: var(--color-text-high);
-    border-bottom: 3px solid var(--color-accent);
+    background-color: transparent;
     
     .juno-icon {
       color: var(--color-text-high);
@@ -20,11 +26,11 @@
   
   &:active,
   &.juno-topnavigation-item-active {
-    color: var(--color-navigation-active);
-    border-bottom: 3px solid var(--color-navigation-active);
+    color: var(--color-topnavigation-item-active);
+    background-color: var(--color-topnavigation-item-active-bg);
     
     .juno-icon {
-      color: var(--color-navigation-active);
+      color: var(--color-topnavigation-item-active);
     }
     
   }

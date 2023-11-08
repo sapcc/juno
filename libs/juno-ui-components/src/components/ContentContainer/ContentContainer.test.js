@@ -43,9 +43,4 @@ describe("ContentContainer", () => {
     expect(screen.getByTestId("content-container")).toHaveAttribute("data-lolol", "some-prop")
   })
 
-  test("renders a content container as container when largest breakpoint is reached", async () => {
-    render(<ContentContainer data-testid="content-container" />)
-    expect(screen.getByTestId("content-container")).toBeInTheDocument()
-    expect(screen.getByTestId("content-container")).toHaveClass("2xl:jn-container")
-  })
 })

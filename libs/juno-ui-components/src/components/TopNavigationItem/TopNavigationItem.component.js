@@ -20,7 +20,7 @@ export const TopNavigationItem = ({
   ...props
 }) => {
   
-  const icn = icon ? <Icon icon={icon} size="18" color="jn-text-theme-default" className={ label && label.length ? "jn-mr-1" : "" } /> : null
+  const icn = icon ? <Icon icon={icon} size="24" color="jn-text-theme-default" className={ label && label.length ? "jn-mr-1" : "" } /> : null
   
   const content = label || children
   

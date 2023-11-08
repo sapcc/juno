@@ -1,49 +1,45 @@
-import React from 'react';
-import { TopNavigationItem } from './index.js';
+import React from "react"
+import { TopNavigation } from "../TopNavigation/"
+import { TopNavigationItem } from "./index.js"
 
 export default {
-  title: 'Layout/TopNavigation/TopNavigationItem',
+  title: "Layout/TopNavigation/TopNavigationItem",
   component: TopNavigationItem,
   argTypes: {
     children: {
-      control: false,
+      control: false
     },
   },
-  parameters: { actions: { argTypesRegex: null } },
-};
+  parameters: { actions: { argTypesRegex: null } }
+}
 
-export const Default = {
-  args: {
-    label: 'Navigation Item',
-  },
-};
+const Template = (args) => <TopNavigation><TopNavigationItem {...args} /></TopNavigation>
 
-export const WithIcon = {
-  args: {
-    label: 'Navigation Item',
-    icon: 'warning',
-  },
-};
+export const Default = Template.bind({})
+Default.args = {
+  label: "Navigation Item"
+}
 
-export const AsAnchor = {
-  args: {
-    label: 'Navigation Item',
-    href: '#',
-  },
-};
+export const WithIcon = Template.bind({})
+WithIcon.args = {
+  label: "Navigation Item",
+  icon: "warning"
+}
 
-export const AsButton = {
-  args: {
-    label: 'Navigation Item',
-    onClick: () => {
-      console.log('clicked');
-    },
-  },
-};
+export const AsAnchor = Template.bind({})
+AsAnchor.args = {
+  label: "Navigation Item",
+  href: "#"
+}
 
-export const Active = {
-  args: {
-    label: 'Navigation Item',
-    active: true,
-  },
-};
+export const AsButton = Template.bind({})
+AsButton.args = {
+  label: "Navigation Item",
+  onClick: () => {console.log("clicked")}
+}
+
+export const Active = Template.bind({})
+Active.args = {
+  label: "Navigation Item",
+  active: true
+}
