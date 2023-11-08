@@ -379,15 +379,23 @@ $dark-theme-color-map: (
   --color-filter-pill-key-bg: var(--color-background-lvl-4-raw);
   // LT Modal
   --color-modal-backdrop-bg: rgba(0, 0, 0, 0.2);
-  // LT Navigation
-  --color-navigation-active: var(--color-black);
   // LT Box
   --color-box-bg: var(--color-background-lvl-1);
-  --color-box-border: var(--color-background-lvl-3)
+  --color-box-border: var(--color-background-lvl-3);
+  // DT SideNavigation
+  --color-sidenavigation-item-active: var(--color-black);
+  --color-sidenavigation-item-active-bg: var(--color-background-lvl-0);
+  // DT TopNavigation
+  --color-topnavigation-item-active: var(--color-black);
+  --color-topnavigation-item-bg: var(--color-sap-grey-1);
+  --color-topnavigation-item-active-bg: var(--color-sap-grey-3);
 }
 
 /* ----- LIGHT THEME END -----*/
-
+/* ----- */
+/* ----- */
+/* ----- */
+/* ----- */
 /* ----- DARK THEME ----- */
 
 .theme-dark {
@@ -586,11 +594,16 @@ $dark-theme-color-map: (
   --color-filter-pill-key-bg: var(--color-background-lvl-4-raw);
   // DT Modal
   --color-modal-backdrop-bg: rgba(60, 70, 75, 0.6);
-  // DT Navigation
-  --color-navigation-active: var(--color-white);
   // DT Box
   --color-box-bg: var(--color-background-lvl-1);
-  --color-box-border: var(--color-background-lvl-3)
+  --color-box-border: var(--color-background-lvl-3);
+  // DT SideNavigation
+  --color-sidenavigation-item-active: var(--color-white);
+  --color-sidenavigation-item-active-bg: var(--color-background-lvl-0);
+  // DT TopNavigation
+  --color-topnavigation-item-active: var(--color-white);
+  --color-topnavigation-item-bg: var(--color-juno-grey-blue-7);
+  --color-topnavigation-item-active-bg: var(--color-juno-grey-blue-2);
 }
 
 /* ----- DARK THEME END ----- */

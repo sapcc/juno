@@ -1,92 +1,103 @@
-import React from "react"
-import { Radio } from "./index.js"
+import React from 'react';
+import { Radio } from './index.js';
 
 export default {
-  title: "Forms/Radio",
+  title: 'Forms/Radio',
   component: Radio,
   argTypes: {
     errortext: {
-      control: false
+      control: false,
     },
     helptext: {
-      control: false
+      control: false,
     },
     successtext: {
-      control: false
+      control: false,
     },
   },
-}
+};
 
-const Template = (args) => <Radio {...args} />
+export const Default = {
+  args: {
+    value: '1',
+  },
+};
 
-export const Default = Template.bind({})
-Default.args = {
-  value: "1"
-}
+export const Checked = {
+  args: {
+    checked: true,
+  },
+};
 
-export const Checked = Template.bind({})
-Checked.args = {
-  checked: true,
-}
+export const WithLabel = {
+  args: {
+    id: 'radio-with-label',
+    label: 'Radio with label',
+  },
+};
 
-export const WithLabel = Template.bind({})
-WithLabel.args = {
-  id: "radio-with-label",
-  label: "Radio with label",
-}
+export const Required = {
+  args: {
+    required: true,
+    label: 'Required Radio',
+    helptext: 'Only a Radio with a label passed will render a required marker.',
+  },
+};
 
-export const Required = Template.bind({})
-Required.args = {
-  required: true,
-  label: "Required Radio",
-  helptext: "Only a Radio with a label passed will render a required marker."
-}
+export const WithHelptext = {
+  args: {
+    label: 'A Radio',
+    helptext: 'Never comes alone',
+  },
+};
 
-export const WithHelptext = Template.bind({})
-WithHelptext.args = {
-  label: "A Radio",
-  helptext: "Never comes alone"
-}
+export const WithHelpTextAsNode = {
+  args: {
+    label: 'A Radio',
+    helptext: (
+      <>
+        Helptext with a <a href="#">Link</a>
+      </>
+    ),
+  },
+};
 
-export const WithHelpTextAsNode = Template.bind({})
-WithHelpTextAsNode.args = {
-  label: "A Radio",
-  helptext: <>Helptext with a <a href="#">Link</a></>,
-}
+export const Disabled = {
+  args: {
+    checked: true,
+    disabled: true,
+    label: 'Disabled Radio with label',
+  },
+};
 
-export const Disabled = Template.bind({})
-Disabled.args = {
-  checked: true,
-  disabled: true,
-  label: "Disabled Radio with label",
-}
+export const Valid = {
+  args: {
+    valid: true,
+    label: 'This Radio is valid',
+  },
+};
 
-export const Valid = Template.bind({})
-Valid.args = {
-  valid: true,
-  label: "This Radio is valid",
-}
+export const Invalid = {
+  args: {
+    invalid: true,
+    label: 'This Radio is invalid',
+  },
+};
 
-export const Invalid = Template.bind({})
-Invalid.args = {
-  invalid: true,
-  label: "This Radio is invalid",
-}
+export const ValidWithLabel = {
+  args: {
+    valid: true,
+    label: 'Validated Radio with label and icon',
+    successtext: 'This option is valid',
+    helptext: 'Validation icons will only show when there is a label on the Radio',
+  },
+};
 
-export const ValidWithLabel = Template.bind({})
-ValidWithLabel.args = {
-  valid: true,
-  label: "Validated Radio with label and icon",
-  successtext: "This option is valid",
-  helptext: "Validation icons will only show when there is a label on the Radio",
-}
-
-export const InvalidWithLabel = Template.bind({})
-InvalidWithLabel.args = {
-  invalid: true,
-  label: "Invalidated Radio with label and icon",
-  helptext: "Validation icons will only show when there is a label on the Radio",
-  errortext: "This option is invalid.",
-}
-
-
+export const InvalidWithLabel = {
+  args: {
+    invalid: true,
+    label: 'Invalidated Radio with label and icon',
+    helptext: 'Validation icons will only show when there is a label on the Radio',
+    errortext: 'This option is invalid.',
+  },
+};

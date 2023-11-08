@@ -3,14 +3,12 @@ import PropTypes from "prop-types"
 
 
 const containerStyles = `
-  jn-flex
   jn-flex-col
   jn-grow
-  jn-ml-8
   jn-bg-[right_top_1rem]
   jn-bg-no-repeat
-  2xl:jn-container
-  2xl:jn-mx-auto
+  jn-bg-theme-content-area-bg
+  jn-relative
 `
 
 /**

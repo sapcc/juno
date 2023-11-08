@@ -1,1 +1,1 @@
-export { ContentArea } from "./ContentArea.component"
+export { default as ContentArea } from "./ContentArea.component"

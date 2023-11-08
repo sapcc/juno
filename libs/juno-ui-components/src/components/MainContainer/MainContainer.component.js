@@ -1,9 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const mainClasses = `
+const mainStyles = `
   jn-flex
-  jn-flex-col
   jn-grow
   jn-bg-theme-global-bg
 `
@@ -20,7 +19,7 @@ export const MainContainer = ({
 
   return (
     <main
-      className={`juno-main ${mainClasses} ${className}`}
+      className={`juno-main ${mainStyles} ${className}`}
       {...props}
     >
       {children}

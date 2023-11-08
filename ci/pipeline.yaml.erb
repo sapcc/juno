@@ -266,6 +266,7 @@ jobs:
   # ============================================================= 
   # BUILD ASSET SERVER IMAGE
 
+  # Assets build
   <% ASSETS.each do |name,details| %>
   - name: build-<%= details[:type] %>-<%= name %>
     public: true

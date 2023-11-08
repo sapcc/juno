@@ -4,6 +4,10 @@ import SAPLogo from "../../img/sap_logo.svg"
 
 const basePageHeader = `
   jn-flex
+  jn-shrink-0
+  jn-grow-0
+  jn-basis-auto
+  jn-min-h-[3.25rem]
   jn-items-center
   jn-bg-juno-grey-blue-11
   jn-sticky

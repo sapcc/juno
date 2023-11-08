@@ -3,8 +3,11 @@ import React from "react"
 import { AppShell } from "./index.js"
 import { PageHeader } from "../PageHeader/index"
 import { PageFooter } from "../PageFooter/index"
+import { SideNavigation } from "../SideNavigation/"
+import { SideNavigationItem } from "../SideNavigationItem/"
 import { TopNavigation } from "../TopNavigation/index"
 import { TopNavigationItem } from "../TopNavigationItem/index"
+import { ContentHeading } from "../ContentHeading/index"
 
 export default {
   title: "Layout/AppShell",
@@ -19,13 +22,18 @@ export default {
     topNavigation: {
       control: false
     },
+    sideNavigation: {
+      control: false
+    },
     children: {
       control: false
     },
   },
 }
 
-const Template = (args) => <AppShell {...args}>Content goes here</AppShell>
+const Template = ({children, ...args}) => <AppShell {...args}>
+                              { children }
+                            </AppShell>
 
 export const Default = Template.bind({})
 Default.parameters = {
@@ -37,18 +45,11 @@ Default.parameters = {
   },
 }
 Default.args = {
-  contentHeading: "Content Heading",
+  children: [
+      <ContentHeading key="1">My Page</ContentHeading>,
+      <p key="2">Content goes here</p>
+  ]
 }
-
-export const NoContentHeading = Template.bind({})
-NoContentHeading.parameters = {
-  docs: {
-    description: {
-      story: "Responsive shell for your application without content heading.",
-    },
-  },
-}
-NoContentHeading.args = {}
 
 export const AppName = Template.bind({})
 AppName.parameters = {
@@ -60,8 +61,11 @@ AppName.parameters = {
   },
 }
 AppName.args = {
-  ...Default.args,
   pageHeader: "My App",
+  children: [
+      <ContentHeading key="1">My Page</ContentHeading>,
+      <p key="2">Content goes here</p>
+  ]
 }
 
 export const CustomPageHeader = Template.bind({})
@@ -74,8 +78,11 @@ CustomPageHeader.parameters = {
   },
 }
 CustomPageHeader.args = {
-  ...Default.args,
   pageHeader: <PageHeader heading="My Custom Header" />,
+  children: [
+      <ContentHeading key="1">My Page</ContentHeading>,
+      <p key="2">Content goes here</p>
+  ]
 }
 
 export const CustomPageFooter = Template.bind({})
@@ -88,8 +95,32 @@ CustomPageFooter.parameters = {
   },
 }
 CustomPageFooter.args = {
-  ...Default.args,
   pageFooter: <PageFooter>My custom footer</PageFooter>,
+  children: [
+      <ContentHeading key="1">My Page</ContentHeading>,
+      <p key="2">Content goes here</p>
+  ]
+}
+
+export const WithSideNavigation = Template.bind({})
+WithSideNavigation.parameters = {
+  docs: {
+    description: {
+      story:
+        "Responsive shell for your application with a side navigation.",
+    },
+  },
+}
+WithSideNavigation.args = {
+  sideNavigation: <SideNavigation>
+                    <SideNavigationItem active>Home</SideNavigationItem>
+                    <SideNavigationItem>Item 1</SideNavigationItem>
+                    <SideNavigationItem>Item 2</SideNavigationItem>
+                  </SideNavigation>,
+  children: [
+      <ContentHeading key="1">My Page</ContentHeading>,
+      <p key="2">Content goes here</p>
+  ]
 }
 
 export const WithTopNavigation = Template.bind({})
@@ -102,7 +133,6 @@ WithTopNavigation.parameters = {
   },
 }
 WithTopNavigation.args = {
-  ...Default.args,
   topNavigation:  <TopNavigation>
                     <TopNavigationItem
                       icon="home"
@@ -113,4 +143,39 @@ WithTopNavigation.args = {
                       label="Navigation Item"
                     />
                   </TopNavigation>,
+  children: [
+      <ContentHeading key="1">My Page</ContentHeading>,
+      <p key="2">Content goes here</p>
+  ]
+}
+
+export const WithSideAndTopNavigation = Template.bind({})
+WithSideAndTopNavigation.parameters = {
+  docs: {
+    description: {
+      story:
+        "Responsive shell for your application with both a top navigation and side navigation.",
+    },
+  },
+}
+WithSideAndTopNavigation.args = {
+  topNavigation:  <TopNavigation>
+                    <TopNavigationItem
+                      icon="home"
+                      label="Home"
+                    />
+                    <TopNavigationItem
+                      active
+                      label="Navigation Item"
+                    />
+                  </TopNavigation>,
+  sideNavigation: <SideNavigation>
+                    <SideNavigationItem active >Home</SideNavigationItem>
+                    <SideNavigationItem>Item 1</SideNavigationItem>
+                    <SideNavigationItem>Item 2</SideNavigationItem>
+                  </SideNavigation>,
+  children: [
+      <ContentHeading key="1">My Page</ContentHeading>,
+      <p key="2">Content goes here</p>
+  ]
 }

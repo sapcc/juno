@@ -4,6 +4,7 @@ import { Stack } from "../Stack/index"
 import { Icon } from "../Icon/index.js";
 
 const topNavigationStyles = `
+  jn-bg-theme-global-bg
   jn-gap-6
   jn-px-6
   jn-py-1.5
@@ -28,7 +29,7 @@ export const TopNavigation = ({
 TopNavigation.propTypes = {
   /** The children of the Navigation. Typically these should be TopNavigationItem(s) */
   children: PropTypes.node,
-  /** Passa custom classname. */
+  /** Pass a custom classname. */
   className: PropTypes.string,
 }
 

@@ -1,28 +1,30 @@
-import React from "react"
-import { SearchInput } from "./index.js"
+import React from 'react';
+import { SearchInput } from './index.js';
 
 export default {
-  title: "Components/SearchInput",
+  title: 'Components/SearchInput',
   component: SearchInput,
   argTypes: {},
-}
+};
 
-const Template = (args) => <SearchInput {...args} />
+export const Default = {
+  args: {},
+};
 
-export const Default = Template.bind({})
-Default.args = {}
+export const Rounded = {
+  args: {
+    variant: 'rounded',
+  },
+};
 
-export const Rounded = Template.bind({})
-Rounded.args = {
-  variant: "rounded",
-}
+export const Hero = {
+  args: {
+    variant: 'hero',
+  },
+};
 
-export const Hero = Template.bind({})
-Hero.args = {
-  variant: "hero",
-}
-
-export const Disabled = Template.bind({})
-Disabled.args = {
-  disabled: true,
-}
+export const Disabled = {
+  args: {
+    disabled: true,
+  },
+};

@@ -280,6 +280,9 @@ module.exports = {
           focus: withOpacity("--color-global-bg-raw"),
         },
       },
+      screens: {
+        "3xl": "1856px",
+      },
       width: {
         "switch-default": "2.625rem",
         "switch-handle-default": "1.1875rem",

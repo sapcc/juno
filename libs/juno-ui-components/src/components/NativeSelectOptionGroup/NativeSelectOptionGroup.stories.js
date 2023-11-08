@@ -1,26 +1,26 @@
-import React from "react"
-import { NativeSelectOptionGroup } from "./index.js"
-import { NativeSelectOption } from "../NativeSelectOption/index.js"
+import React from 'react';
+import { NativeSelectOptionGroup } from './index.js';
+import { NativeSelectOption } from '../NativeSelectOption/index.js';
 
 import {
   Default as DefaultSelectOption,
   Disabled as DisabledSelectOption,
-} from "../NativeSelectOption/NativeSelectOption.stories"
+} from '../NativeSelectOption/NativeSelectOption.stories';
 
 export default {
-  title: "Forms/NativeSelect/NativeSelectOptionGroup",
+  title: 'Forms/NativeSelect/NativeSelectOptionGroup',
   component: NativeSelectOptionGroup,
   argTypes: {
     options: {
       table: {
-        disable: true
-      }
+        disable: true,
+      },
     },
     children: {
-      control: false
+      control: false,
     },
   },
-}
+};
 
 const Template = ({ options, ...args }) => (
   <NativeSelectOptionGroup {...args}>
@@ -28,17 +28,23 @@ const Template = ({ options, ...args }) => (
       <NativeSelectOption {...option} key={`option-${i}`} />
     ))}
   </NativeSelectOptionGroup>
-)
+);
 
-export const Default = Template.bind({})
-Default.args = {
-  label: "My option group",
-  options: [DefaultSelectOption.args, DisabledSelectOption.args],
-}
+export const Default = {
+  render: Template,
 
-export const Disabled = Template.bind({})
-Disabled.args = {
-  label: "My disabled option group",
-  options: [DefaultSelectOption.args, DisabledSelectOption.args],
-  disabled: true,
-}
+  args: {
+    label: 'My option group',
+    options: [DefaultSelectOption.args, DisabledSelectOption.args],
+  },
+};
+
+export const Disabled = {
+  render: Template,
+
+  args: {
+    label: 'My disabled option group',
+    options: [DefaultSelectOption.args, DisabledSelectOption.args],
+    disabled: true,
+  },
+};

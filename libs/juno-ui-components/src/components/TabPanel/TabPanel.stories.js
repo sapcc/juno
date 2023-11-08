@@ -1,19 +1,18 @@
-import React from "react"
-import { TabPanel } from "./index.js"
+import React from 'react';
+import { TabPanel } from './index.js';
 
 export default {
-  title: "Layout/Tabs/TabPanel",
+  title: 'Layout/Tabs/TabPanel',
   component: TabPanel,
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
   },
-}
+};
 
-const Template = (args) => <TabPanel { ...args } />
-
-export const Default = Template.bind({})
-Default.args = {
-  children: "Tab panel content goes here."
-}
+export const Default = {
+  args: {
+    children: 'Tab panel content goes here.',
+  },
+};

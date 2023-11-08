@@ -1,22 +1,21 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-const toolbarStyles = `
+const headingStyles = `
   jn-font-bold
   jn-text-lg
   jn-text-theme-high
   jn-pb-2
-  jn-pt-6
 `
 
 /**
- * Only needed if you want to build your app's scaffold manually. In most cases it is better to use the AppShell component instead.
- * This is the title of the content displayed in the content area.
+
+ *The main heading of a page/View. Pass as a child into `<AppShell>` or, when scaffolding manually, into `<ContentContainer>`.
  */
-export const ContentAreaHeading = ({ heading, className, children, ...props }) => {
+export const ContentHeading = ({ heading, className, children, ...props }) => {
   return (
     <h1
-      className={`juno-content-area-heading ${toolbarStyles} ${className}`}
+      className={`juno-content-heading ${headingStyles} ${className}`}
       {...props}
     >
       {children || heading}
@@ -24,7 +23,7 @@ export const ContentAreaHeading = ({ heading, className, children, ...props }) =
   )
 }
 
-ContentAreaHeading.propTypes = {
+ContentHeading.propTypes = {
   /** Optionally render children. If children are present, heading will be ignored */
   children: PropTypes.node,
   /** Text to use as a title */
@@ -33,7 +32,7 @@ ContentAreaHeading.propTypes = {
   className: PropTypes.string,
 }
 
-ContentAreaHeading.defaultProps = {
+ContentHeading.defaultProps = {
   heading: "",
   className: "",
   children: null,

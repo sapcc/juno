@@ -1,46 +1,56 @@
-import React from "react"
-import { StyleProvider } from "./index"
+import React from 'react';
+import { StyleProvider } from './index';
 
 export default {
-  title: "Layout/StyleProvider",
+  title: 'Layout/StyleProvider',
   component: StyleProvider,
   argTypes: {
     stylesWrapper: {
-      options: ["head", "inline", "shadowRoot"],
+      options: ['head', 'inline', 'shadowRoot'],
       control: {
-        type: "radio",
+        type: 'radio',
       },
     },
     children: {
-      control: false
+      control: false,
     },
   },
-}
+};
 
 const Template = (args) => (
-  <StyleProvider {...args}>
-    {args.children || args.stylesWrapper || "undefined"}
-  </StyleProvider>
-)
+  <StyleProvider {...args}>{args.children || args.stylesWrapper || 'undefined'}</StyleProvider>
+);
 
-export const AddStylesToHead = Template.bind({})
-AddStylesToHead.args = {
-  stylesWrapper: "head",
-}
+export const AddStylesToHead = {
+  render: Template,
 
-export const AddInlineStyles = Template.bind({})
-AddInlineStyles.args = {
-  stylesWrapper: "inline",
-}
+  args: {
+    stylesWrapper: 'head',
+  },
+};
 
-export const AddStylesToShadowRoot = Template.bind({})
-AddStylesToShadowRoot.args = {
-  stylesWrapper: "shadowRoot",
-}
+export const AddInlineStyles = {
+  render: Template,
 
-export const WithTheme = Template.bind({})
-WithTheme.args = {
-  stylesWrapper: "shadowRoot",
-  theme: "theme-light",
-  children: "Light Theme",
-}
+  args: {
+    stylesWrapper: 'inline',
+  },
+};
+
+export const AddStylesToShadowRoot = {
+  render: Template,
+
+  args: {
+    stylesWrapper: 'shadowRoot',
+  },
+};
+
+export const WithTheme = {
+  render: Template,
+
+  args: {
+    stylesWrapper: 'shadowRoot',
+    theme: 'theme-light',
+    children: 'Light Theme',
+  },
+};

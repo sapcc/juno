@@ -1,5 +1,6 @@
 import React from "react"
 import CCloudShape from "../../assets/ccloud_shape.svg"
+import GreenhouseLogo from "../../assets/greenhouse_logo.svg"
 import SupernovaIcon from "../../assets/juno_supernova.svg"
 import DoopIcon from "../../assets/juno_doop.svg"
 import HeurekaIcon from "../../assets/juno_heureka.svg"
@@ -86,18 +87,8 @@ const PluginNav = () => {
       alignment="center"
       className={`greenhouse-nav ${navStyles}`}
     >
-      <Stack
-        direction="vertical"
-        alignment="center"
-        className={`greenhouse-logo ${logoStyles}`}
-      >
-        <CCloudShape />
-        <span className={logoText}>
-          GREEN
-          <br />
-          HOUSE
-        </span>
-      </Stack>
+      <GreenhouseLogo className="mb-6" title="Greenhouse" />
+
       {Object.values(appsConfig)
         .filter((a) => a.navigable)
         .sort((a, b) => {
@@ -130,7 +121,7 @@ const PluginNav = () => {
         direction="vertical"
         gap="3"
         alignment="center"
-        className="mt-4 py-4 border-theme-background-lvl-1 border-t-2"
+        className="mt-4 py-4 border-theme-background-lvl-1 border-y-2"
       >
         {loggedIn ? (
           <>
