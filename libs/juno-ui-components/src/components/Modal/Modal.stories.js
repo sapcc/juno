@@ -7,6 +7,8 @@ import { TextInputRow } from "../TextInputRow/index"
 import { CheckboxRow } from "../CheckboxRow/index"
 import { Icon } from "../Icon/index"
 import { PortalProvider } from "../PortalProvider/index"
+import { Select } from "../Select/index"
+import { SelectOption } from "../SelectOption/index"
 
 
 const Template = ({closeOnConfirm, ...args}) => {
@@ -110,4 +112,18 @@ CustomModalFooter.args = {
         <Button>Button 3</Button>
       </ButtonRow>
     </ModalFooter>
+}
+
+export const TestSelectInModal = Template.bind({})
+TestSelectInModal.args = {
+  title: "Modal with Select inside",
+  size: "small",
+  children: 
+    <>
+      <Select>
+        <SelectOption value="1" label="Option 1" key="o-1"/>
+        <SelectOption value="2" label="Option 2" key="o-2"/>
+        <SelectOption value="3" label="Option 3" key="o-3"/>
+      </Select>
+    </>,
 }
