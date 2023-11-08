@@ -58,7 +58,7 @@ const AssetsListItem = ({ name, versions }) => {
             {latest.kind === "juno-3rd-party" && <Pill pillValueLabel="3rd" />}
           </Stack>
           {latest.author && (
-            <span className="text-xs text-juno-grey-light/30">
+            <span className="text-xs text-theme-light">
               powered by {latest.author}{" "}
             </span>
           )}

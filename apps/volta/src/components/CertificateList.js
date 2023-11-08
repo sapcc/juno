@@ -100,7 +100,7 @@ const CertificateList = ({ ca }) => {
         </a>
       )}
 
-      <Container px={false} py>
+      <Container px={false} py className="overflow-auto">
         {isLoading && !data ? (
           <HintLoading text="Loading certificates..." />
         ) : (
