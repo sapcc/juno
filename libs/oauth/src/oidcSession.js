@@ -218,7 +218,8 @@ const oidcSession = (params) => {
 
     if (!state?.auth?.refreshToken) return
 
-    const expiresAt = state.auth.parsed?.expiresAt
+    const expiresAt = state.auth?.parsed?.expiresAt
+
     if (expiresAt) {
       const expiresIn = expiresAt - Date.now() - 5000
       console.info(
@@ -234,7 +235,8 @@ const oidcSession = (params) => {
   let expirationTimer
   const updateExpirationTimer = () => {
     clearTimeout(expirationTimer)
-    if (state?.auth?.parsed?.expiresAt) {
+    const expiresAt = state.auth?.parsed?.expiresAt
+    if (expiresAt) {
       const expiresIn = expiresAt - Date.now() - 5000
       console.info(
         "(OAUTH) logout token in",

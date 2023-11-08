@@ -63,6 +63,11 @@
       "type": "required",
       "description": "OIDC client id"
     },
+    "oidcFlow": {
+      "value": "code",
+      "type": "optional",
+      "description": "OIDC flow, allowed values are 'code' (default) or 'implicit'"
+    },
     "requestParams": {
       "value": "{\"connector_id\": \"ccloud\"}"
     },

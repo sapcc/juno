@@ -39,7 +39,7 @@ const App = (props = {}) => {
       initialLogin: props.initialLogin,
       refresh: true,
       requestParams: props.requestParams,
-      flowType: "code",
+      flowType: props.oidcFlow || "code",
       onUpdate: (authData) => {
         setAuthData(authData)
       },
