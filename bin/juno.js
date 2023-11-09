@@ -167,6 +167,12 @@ const create = () => {
     console.log(`cd ${argv.name}`)
     console.log(`npm run start`)
   }
+  console.log("To build the project, run:")
+  console.log(`cd ${argv.name}`)
+  console.log(`npm run build`)
+  // test
+  console.log("To test the project, run:")
+  console.log(`npm run test`)
 }
 
 const readline = require("readline").createInterface({
