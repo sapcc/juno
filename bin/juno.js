@@ -29,6 +29,9 @@ Usage: $0 <command> <type> <name>
   })
   .help().argv
 
+const green = "\x1b[32m%s\x1b[0m"
+const yellow = "\x1b[33m%s\x1b[0m"
+
 const copyDir = function (src, dest) {
   fs.mkdirSync(dest)
   var files = fs.readdirSync(src)
@@ -161,18 +164,15 @@ const create = () => {
 
   npmInstall()
 
-  console.log(`Done!`)
+  console.log(green, `Done!`)
   if (argv.type === "app") {
-    console.log("To start the project, run:")
-    console.log(`cd ${argv.name}`)
-    console.log(`npm run start`)
+    console.log("Go to the project folder:")
+    console.log(yellow, `cd ${argv.name}`)
+    console.log(yellow, "To start a webserver: npm run start")
   }
-  console.log("To build the project, run:")
-  console.log(`cd ${argv.name}`)
-  console.log(`npm run build`)
-  // test
-  console.log("To test the project, run:")
-  console.log(`npm run test`)
+  console.log(yellow, "To build the project: npm run build")
+  console.log(yellow, "To test the project: npm run test")
+  console.log(green, "Enjoy!")
 }
 
 const readline = require("readline").createInterface({
