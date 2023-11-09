@@ -47,29 +47,33 @@ wb npm -w dashboard run start
 
 ## Juno CLI
 
-You can create an sceleton of an juno app or lib using our CLI.
+The Juno CLI facilitates the creation of a skeleton for a Juno app or library.
 
 ### Prerequisites
 
-You must have a node environment with npx installed.
+Ensure that you have a Node.js environment with `npx` installed.
 
 ### Installation
+
+Use the following commands to create a new Juno app or library:
 
 ```bash
 npx github:sapcc/juno create app myApp
 ```
 
-Or
+or
 
 ```bash
 npx github:sapcc/juno create lib myLib
 ```
 
-To create an app or lib inside the juno mono repo go to apps or libs in juno and call:
+If you wish to create an app or library within the Juno mono repository, navigate to the respective 'apps' or 'libs' directory in Juno and execute:
 
 ```bash
 npx github:sapcc/juno create app myApp --internal
 ```
+
+Feel free to replace `myApp` and `myLib` with your desired project names.
 
 # Debug
 
