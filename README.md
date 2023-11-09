@@ -45,6 +45,32 @@ npm -w dashboard run start
 wb npm -w dashboard run start
 ```
 
+## Juno CLI
+
+You can create an sceleton of an juno app or lib using our CLI.
+
+### Prerequisites
+
+You must have a node environment with npx installed.
+
+### Installation
+
+```bash
+npx github:sapcc/juno create app myApp
+```
+
+Or
+
+```bash
+npx github:sapcc/juno create lib myLib
+```
+
+To create an app or lib inside the juno mono repo go to apps or libs in juno and call:
+
+```bash
+npx github:sapcc/juno create app myApp --internal
+```
+
 # Debug
 
 If you want to run more the one Juno App/lib simultaneously you have then to assign different ports.
