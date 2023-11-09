@@ -78,6 +78,11 @@ const copyPropsHelper = function () {
   }
 }
 
+const npmInstall = function () {
+  var child_process = require("child_process")
+  child_process.execSync(`cd ${argv.name} && npm install`, { stdio: [0, 1, 2] })
+}
+
 const create = () => {
   console.log(`Creating ${argv.type} ${argv.name}...`)
   // determine template path
@@ -146,6 +151,15 @@ const create = () => {
       "utf8"
     )
   }
+
+  fs.rmSync(`./${argv.name}/.git`, { recursive: true, force: true })
+  fs.rmSync(`./${argv.name}/node_modules`, { recursive: true, force: true })
+  fs.rmSync(`./${argv.name}/package-lock.json`, {
+    recursive: true,
+    force: true,
+  })
+
+  npmInstall()
 
   console.log(`Done!`)
   if (argv.type === "app") {
