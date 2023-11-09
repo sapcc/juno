@@ -64,7 +64,6 @@ RUN \
   rm -rf externals_* importmap* importmap* ; \
   node /juno/ci/scripts/delete_obsolete_assets.js --manifest=/juno/ci/obsolete_assets.json --src=./
 
-
 # Create importmaps and manifest
 RUN \
   set -e ; \

@@ -36,11 +36,16 @@ const buildRequestUrl = async ({
 }) => {
   const config = await getOidcConfig(issuerURL)
 
+  let scope = "openid email profile offline_access"
+  if (config?.scopes_supported && Array.isArray(config.scopes_supported)) {
+    scope = config.scopes_supported.join(" ")
+  }
+
   const urlParams = paramsToUrl({
     response_type: "code",
     client_id: clientID,
     redirect_uri: callbackURL || window.location.origin,
-    scope: "openid email profile groups offline_access",
+    scope,
     state: oidcState.key,
     nonce: oidcState.nonce,
     code_challenge: oidcState.challenge,

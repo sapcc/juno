@@ -1,7 +1,6 @@
 import React from "react"
 import { TopNavigation } from "./index.js"
 import { TopNavigationItem } from "../TopNavigationItem/TopNavigationItem.component"
-import { Default as TopNavigationItemStory } from "../TopNavigationItem/TopNavigationItem.stories"
 
 export default {
   title: "Layout/TopNavigation/TopNavigation",
@@ -18,20 +17,18 @@ export default {
   }
 }
 
-const Template = ({items, ...args}) => (
+const Template = ({children, ...args}) => (
   <TopNavigation {...args}> 
-    {items.map((item, i) => (
-      <TopNavigationItem key={i} {...item} />
-    ))}
+    { children }
   </TopNavigation>
 )
 
 export const Default = Template.bind({})
 Default.args = {
-  items: [
-    {...TopNavigationItemStory.args},
-    {...TopNavigationItemStory.args},
-    {...TopNavigationItemStory.args, icon: "warning"},
-    {...TopNavigationItemStory.args, active: true},
+  children: [
+    <TopNavigationItem key="1" label="Item 1" />,
+    <TopNavigationItem key="2" >Item 2</TopNavigationItem>,
+    <TopNavigationItem key="3" icon="widgets" label="Item with Icon" />,
+    <TopNavigationItem key="4" label="Active Item" active/>
   ]
 }

@@ -1,314 +1,188 @@
-/* Colors */
+// Juno 
+
+/* Color Definitions */
+/* The Mother of Colors – The single source of truth of colors in Juno.
+   Here we define all relevant colors as triples of their rgb values.
+   We use these to generate CSS variables: one is the triple itself for use with tailwind opacity functions, one is the rgb( r, g, b) color definition for direct use.
+   
+*/
+
+/* Global Color Definitions */
+$color-map: (
+  
+  "white": (255, 255, 255),
+  "black": (0, 0, 0),
+  
+  "sap-grey-1": (255, 255, 255),
+  "sap-grey-2": (225, 225, 225),
+  "sap-grey-3": (204, 204, 204),
+  "sap-grey-4": (153, 153, 153),
+  "sap-grey-5": (127, 127, 127),
+  "sap-grey-6": (102, 102, 102),
+  "sap-grey-7": (75, 75, 75),
+  "sap-grey-8": (0, 0, 0),
+  
+  "sap-blue-1": (15, 170, 25),
+  "sap-blue-2": (0, 143, 211),
+  "sap-blue-3": (0, 118, 203),
+  "sap-blue-4": (15, 70, 167),
+  "sap-blue-5": (0, 50, 131),
+  "sap-blue-6": (0, 25, 90),
+  
+  "sap-gold": (240, 171, 0),
+  
+  "sap-purple-1": (220, 0, 150),
+  "sap-purple-2": (190, 0, 140),
+  "sap-purple-3": (151, 10, 130),
+  "sap-purple-4": (118, 10, 133),
+  "sap-purple-5": (69, 21, 126),
+  "sap-purple-6": (60, 20, 100),
+  
+  "sap-green-1": (188, 220, 80),
+  "sap-green-2": (147, 201, 57),
+  "sap-green-3": (79, 184, 28),
+  "sap-green-4": (52, 139, 38),
+  "sap-green-5": (36, 114, 48),
+  "sap-green-6": (15, 75, 60),
+  
+  "sap-orange-1": (255, 175, 0),
+  "sap-orange-2": (250, 145, 0),
+  "sap-orange-3": (235, 115, 0),
+  "sap-orange-4": (227, 85, 0),
+  "sap-orange-5": (208, 69, 18),
+  "sap-orange-6": (188, 54, 24),
+  
+  "juno-grey-blue-1":  (64, 70, 75),
+  "juno-grey-blue-2":  (48, 54, 60),
+  "juno-grey-blue-3":  (41, 47, 54),
+  "juno-grey-blue-4":  (38, 44, 51),
+  "juno-grey-blue-5":  (36, 42, 49),
+  "juno-grey-blue-6":  (31, 38, 45),
+  "juno-grey-blue-7":  (28, 35, 42),
+  "juno-grey-blue-8":  (23, 30, 37),
+  "juno-grey-blue-9":  (18, 25, 32),
+  "juno-grey-blue-10": (13, 20, 28),
+  "juno-grey-blue-11": (0, 8, 16),
+  
+  "juno-grey-light-1":  (249, 249, 249),
+  "juno-grey-light-2":  (247, 247, 247),
+  "juno-grey-light-3":  (244, 244, 244),
+  "juno-grey-light-4":  (241, 241, 241),
+  "juno-grey-light-5":  (238, 238, 238),
+  "juno-grey-light-6":  (235, 235, 235),
+  "juno-grey-light-7":  (233, 233, 233),
+  "juno-grey-light-8":  (230, 230, 230),
+  "juno-grey-light-9":  (227, 227, 227),
+  "juno-grey-light-10": (215, 215, 215),
+  
+  "juno-blue-1":  (203, 232, 247),
+  "juno-blue-2":  (165, 211, 234),
+  "juno-blue-3":  (137, 201, 232),
+  "juno-blue-4":  (67, 162, 208),
+  "juno-blue-5":  (0, 125, 184),
+  "juno-blue-6":  (30, 106, 146),
+  "juno-blue-7":  (10, 103, 153),
+  "juno-blue-8":  (7, 85, 128),
+  "juno-blue-9":  (5, 70, 105),
+  "juno-blue-10": (3, 55, 84),
+  
+  "juno-turquoise-1":  (197, 247, 255),
+  "juno-turquoise-2":  (132, 241, 255),
+  "juno-turquoise-3":  (25, 232, 250),
+  "juno-turquoise-4":  (22, 217, 234),
+  "juno-turquoise-5":  (21, 208, 224),
+  "juno-turquoise-6":  (15, 167, 180),
+  "juno-turquoise-7":  (9, 133, 144),
+  "juno-turquoise-8":  (5, 100, 109),
+  "juno-turquoise-9":  (2, 69, 75),
+  "juno-turquoise-10": (1, 41, 4),
+  
+  "juno-primary-blue-1": (15, 170, 255),
+  "juno-primary-blue-2": (0, 143, 211),
+  "juno-primary-blue-3": (0, 118, 203),
+  "juno-primary-blue-4": (15, 70, 167),
+  "juno-primary-blue-5": (0, 50, 131),
+  "juno-primary-blue-6": (0, 25, 90),
+  
+);
+
+/* Light Theme Color Definitions */
+$light-theme-color-map: (
+  "accent": (0, 118, 203),
+  
+  "info":    (0, 118, 203),
+  "success": (79, 184, 28),
+  "warning": (255, 175, 0),
+  "danger":  (199, 0, 0),
+  "error":   (199, 0, 0),
+  
+  "juno-text-light":    (150, 150, 150),
+  "juno-text-default":  (76, 76, 76),
+  "juno-text-high":     (64, 64, 64),
+  "juno-text-highest":  (0, 0, 0),
+  "juno-text-disabled": (183, 183, 183),
+  
+  "juno-primary-danger-1": (235, 146, 146),
+  "juno-primary-danger-2": (218, 93, 93),
+  "juno-primary-danger-3": (213, 64, 64),
+  "juno-primary-danger-4": (199, 0, 0),
+  "juno-primary-danger-5": (165,11,11),
+);
+
+/* Dark Theme Color Definitions */
+$dark-theme-color-map: (
+  "accent": (21, 208, 224),
+  
+  "info":    (21, 208, 224),
+  "success": (59, 255, 91),
+  "warning": (255, 198, 0),
+  "danger":  (255, 65, 16),
+  "error":   (255, 65, 16),
+  
+  "juno-text-light":    (122, 122, 122),
+  "juno-text-default":  (187, 187, 187),
+  "juno-text-high":     (222, 223, 224),
+  "juno-text-highest":  (255, 254, 253),
+  "juno-text-disabled": (92, 92, 92),
+  
+  "juno-primary-danger-1": (231, 163, 137),
+  "juno-primary-danger-2": (222, 126, 91),
+  "juno-primary-danger-3": (208, 69, 18),
+  "juno-primary-danger-4": (187, 62, 16),
+  "juno-primary-danger-5": (164, 54, 14),
+);
+
+
+
+/* Global Color Variables */
 :root,
 :host {
   
-  // SAP BRAND COLORS
-    // from https://sap.frontify.com/document/68#/identity/colors
-    // Refer to comments below for mapping to the above.
-    // When assigning colors to uses with tailwind transparency functions, use [color]"-raw" variables. 
-  
-    // SAP Brand Non-Colors
-    // RGB
-    --color-sap-grey-1: rgb(255, 255, 255);
-    --color-sap-grey-2: rgb(234, 234, 234);
-    --color-sap-grey-3: rgb(198, 198, 198);
-    --color-sap-grey-4: rgb(150, 150, 150);
-    --color-sap-grey-5: rgb(114, 114, 114);
-    --color-sap-grey-6: rgb(60, 60, 60);
-    --color-sap-grey-7: rgb(34, 34, 34);
-    --color-sap-grey-8: rgb(0, 0, 0);
-    
-  
-    // RAW
-    --color-sap-grey-1-raw: 255, 255, 255;
-    --color-sap-grey-2-raw: 234, 234, 234;
-    --color-sap-grey-3-raw: 198, 198, 198;
-    --color-sap-grey-4-raw: 150, 150, 150;
-    --color-sap-grey-5-raw: 114, 114, 114;
-    --color-sap-grey-6-raw: 60, 60, 60;
-    --color-sap-grey-7-raw: 34, 34, 34;
-    --color-sap-grey-8-raw: 0, 0, 0;
-  
-  
-  
-    // WHITE
-    --color-white: rgb(255, 255, 255);
-    --color-white-raw: 255, 255, 255;
-  
-    // BLACK
-    --color-black: rgb(0, 0, 0);
-    --color-black-raw: 0, 0, 0;
-    
-    // SAP BRAND COLORS 
-    
-    // SAP BLUE
-    // RGB                                        // Corresponding SAP web brand color:
-    --color-sap-blue-1: rgb(203, 232, 247);     // --color-sap-blue-light
-    --color-sap-blue-2: rgb(165, 211, 234);     // --color-sap-blue-light-1
-    --color-sap-blue-3: rgb(137, 201, 232);     // --color-sap-blue-light-2
-    --color-sap-blue-4: rgb(67, 162, 208);      // --color-sap-blue-light-3
-    --color-sap-blue-5: rgb(0, 125, 184);       // --color-sap-blue
-    --color-sap-blue-6: rgb(0, 103, 153);       // --color-sap-blue-dark
-    --color-sap-blue-7: rgb(0, 81, 120);        // --color-sap-blue-dark-1
-    // RAW
-    --color-sap-blue-1-raw: 203, 232, 247;
-    --color-sap-blue-2-raw: 165, 211, 234;
-    --color-sap-blue-3-raw: 137, 201, 232;
-    --color-sap-blue-4-raw: 67, 162, 208;
-    --color-sap-blue-5-raw: 0, 125, 184;
-    --color-sap-blue-6-raw: 0, 103, 153;
-    --color-sap-blue-7-raw: 0, 81, 120;
-      
-    // SAP GOLD
-    // RGB                                        // Corresponding SAP web brand color:
-    --color-sap-gold-1: rgb(251, 232, 188);     // --color-sap-gold-light
-    --color-sap-gold-2: rgb(248, 219, 150);     // --color-sap-gold-light-1
-    --color-sap-gold-3: rgb(246, 204, 108);     // --color-sap-gold-light-2
-    --color-sap-gold-4: rgb(243, 188, 58);      // --color-sap-gold-light-3
-    --color-sap-gold-5: rgb(240, 171, 0);       // --color-sap-gold
-    --color-sap-gold-6: rgb(217, 151, 0);       // --color-sap-gold-dark
-    --color-sap-gold-7: rgb(150, 105, 0);       // --color-sap-gold-dark-1
-    // RAW
-    --color-sap-gold-1-raw: 251, 232, 188;
-    --color-sap-gold-2-raw: 248, 219, 150;
-    --color-sap-gold-3-raw: 246, 204, 108;
-    --color-sap-gold-4-raw: 243, 188, 58; 
-    --color-sap-gold-5-raw: 240, 171, 0;  
-    --color-sap-gold-6-raw: 217, 151, 0;  
-    --color-sap-gold-7-raw: 150, 105, 0;  
-    
-    // SAP PURPLE
-    // RGB                                        // Corresponding SAP web brand color:
-    --color-sap-purple-1: rgb(235, 209, 232);   // --color-sap-purple-light
-    --color-sap-purple-2: rgb(223, 181, 218);   // --color-sap-purple-light-1
-    --color-sap-purple-3: rgb(209, 147, 201);   // --color-sap-purple-light-2
-    --color-sap-purple-4: rgb(190, 102, 178);   // --color-sap-purple-light-3
-    --color-sap-purple-5: rgb(151, 10, 130);    // --color-sap-purple
-    --color-sap-purple-6: rgb(118, 7, 103);     // --color-sap-purple-dark
-    --color-sap-purple-7: rgb(97, 6, 85);       // --color-sap-purple-dark-1
-    // RAW
-    --color-sap-purple-1-raw: 235, 209, 232;
-    --color-sap-purple-2-raw: 223, 181, 218;
-    --color-sap-purple-3-raw: 209, 147, 201;
-    --color-sap-purple-4-raw: 190, 102, 178;
-    --color-sap-purple-5-raw: 151, 10, 130; 
-    --color-sap-purple-6-raw: 118, 7, 103;  
-    --color-sap-purple-7-raw: 97, 6, 85;    
-    
-    // SAP GREEN
-    // RGB                                      // Corresponding SAP web brand color:
-    --color-sap-green-1: rgb(201, 238, 207);  // --color-sap-green-light
-    --color-sap-green-2: rgb(169, 228, 179);  // --color-sap-green-light-1
-    --color-sap-green-3: rgb(132, 216, 146);  // --color-sap-green-light-2
-    --color-sap-green-4: rgb(87, 202, 106);   // --color-sap-green-light-3
-    --color-sap-green-5: rgb(79, 184, 28);    // --color-sap-green
-    --color-sap-green-6: rgb(22, 145, 42);    // --color-sap-green-dark
-    --color-sap-green-7: rgb(18, 120, 35);    // --color-sap-green-dark-1
-    // RAW
-    --color-sap-green-1-raw: 201, 238, 207;
-    --color-sap-green-2-raw: 169, 228, 179;
-    --color-sap-green-3-raw: 132, 216, 146;
-    --color-sap-green-4-raw: 87, 202, 106; 
-    --color-sap-green-5-raw: 79, 184, 28;
-    --color-sap-green-6-raw: 22, 145, 42   ;  
-    --color-sap-green-7-raw: 18, 120, 35;  
-  
-    // SAP RED
-    
-    // RGB                                    // Corresponding SAP web brand color:
-    --color-sap-red-1: rgb(244, 215, 204);  // --color-red-light
-    --color-sap-red-2: rgb(238, 191, 174);  // --color-red-light-1
-    --color-sap-red-3: rgb(231, 163, 137);  // --color-red-light-2
-    --color-sap-red-4: rgb(222, 126, 91);   // --color-red-light-3
-    --color-sap-red-5: rgb(208, 69, 18);    // --color-sap-red
-    --color-sap-red-6: rgb(187, 62, 16);    // --color-sap-red-dark
-    --color-sap-red-7: rgb(164, 54, 14);    // --color-sap-red-dark-1
-    --color-sap-red-8: rgb(124, 37, 4);     // not in original SAP web brand colors, we had to add a darker shade for button primary dark active state
-    // RAW
-    --color-sap-red-1-raw: 244, 215, 204;
-    --color-sap-red-2-raw: 238, 191, 174;
-    --color-sap-red-3-raw: 231, 163, 137;
-    --color-sap-red-4-raw: 222, 126, 91; 
-    --color-sap-red-5-raw: 208, 69, 18;  
-    --color-sap-red-6-raw: 187, 62, 16;  
-    --color-sap-red-7-raw: 164, 54, 14;  
-    --color-sap-red-8-raw: 124, 37, 4;
-    
-    // JUNO COLORS
-    
-    // Juno Grey Blue
-    // RGB
-    --color-juno-grey-blue-11: rgb(0, 8, 16);
-    --color-juno-grey-blue-10: rgb(13, 20, 28);
-    --color-juno-grey-blue-9: rgb(18, 25, 32);
-    --color-juno-grey-blue-8: rgb(23, 30, 37);
-    --color-juno-grey-blue-7: rgb(28, 35, 42);
-    --color-juno-grey-blue-6: rgb(31, 38, 45);
-    --color-juno-grey-blue-5: rgb(36, 42, 49);
-    --color-juno-grey-blue-4: rgb(38, 44, 51);
-    --color-juno-grey-blue-3: rgb(41, 47, 54);
-    --color-juno-grey-blue-2: rgb(48, 54, 60);
-    --color-juno-grey-blue-1: rgb(64, 70, 75);
-    
-    // RAW
-    --color-juno-grey-blue-11-raw: 0, 8, 16;
-    --color-juno-grey-blue-10-raw: 13, 20, 28;
-    --color-juno-grey-blue-9-raw: 18, 25, 32;
-    --color-juno-grey-blue-8-raw: 23, 30, 37;
-    --color-juno-grey-blue-7-raw: 28, 35, 42;
-    --color-juno-grey-blue-6-raw: 31, 38, 45;
-    --color-juno-grey-blue-5-raw: 36, 42, 49;
-    --color-juno-grey-blue-4-raw: 38, 44, 51;
-    --color-juno-grey-blue-3-raw: 41, 47, 54;
-    --color-juno-grey-blue-2-raw: 48, 54, 60;
-    --color-juno-grey-blue-1-raw: 64, 70, 75;
-    
-    // Juno Grey Light
-    // RGB
-    --color-juno-grey-light-1: rgb(249, 249, 249);
-    --color-juno-grey-light-2: rgb(247, 247, 247);
-    --color-juno-grey-light-3: rgb(244, 244, 244);
-    --color-juno-grey-light-4: rgb(241, 241, 241);
-    --color-juno-grey-light-5: rgb(238, 238, 238);
-    --color-juno-grey-light-6: rgb(235, 235, 235);
-    --color-juno-grey-light-7: rgb(233, 233, 233);
-    --color-juno-grey-light-8: rgb(230, 230, 230);
-    --color-juno-grey-light-9: rgb(227, 227, 227);
-    --color-juno-grey-light-10: rgb(215, 215, 215);
-    
-    // RAW
-    --color-juno-grey-light-1-raw: 249, 249, 249;
-    --color-juno-grey-light-2-raw: 247, 247, 247;
-    --color-juno-grey-light-3-raw: 244, 244, 244;
-    --color-juno-grey-light-4-raw: 241, 241, 241;
-    --color-juno-grey-light-5-raw: 238, 238, 238;
-    --color-juno-grey-light-6-raw: 235, 235, 235;
-    --color-juno-grey-light-7-raw: 233, 233, 233;
-    --color-juno-grey-light-8-raw: 230, 230, 230;
-    --color-juno-grey-light-9-raw: 227, 227, 227;
-    --color-juno-grey-light-10-raw: 215, 215, 215;
-    
-    // Juno Blue
-    // The lighter shades of Juno Blue map to SAP Brand Blue shades:
-    // RGB
-    --color-juno-blue-10: rgb(3, 55, 84);
-    --color-juno-blue-9: rgb(5, 70, 105);
-    --color-juno-blue-8: rgb(7, 85, 128);
-    --color-juno-blue-7: var(--color-sap-blue-7);
-    --color-juno-blue-6: var(--color-sap-blue-6);
-    --color-juno-blue-5: var(--color-sap-blue-5);
-    --color-juno-blue-4: var(--color-sap-blue-4);
-    --color-juno-blue-3: var(--color-sap-blue-3);
-    --color-juno-blue-2: var(--color-sap-blue-2);
-    --color-juno-blue-1: var(--color-sap-blue-1);
-    
-    // RAW
-    --color-juno-blue-10-raw: 3, 55, 84;
-    --color-juno-blue-9-raw: 5, 70, 105;
-    --color-juno-blue-8-raw: 7, 85, 128;
-    --color-juno-blue-7-raw: var(--color-sap-blue-7-raw);
-    --color-juno-blue-6-raw: var(--color-sap-blue-6-raw);
-    --color-juno-blue-5-raw: var(--color-sap-blue-5-raw);
-    --color-juno-blue-4-raw: var(--color-sap-blue-4-raw);
-    --color-juno-blue-3-raw: var(--color-sap-blue-3-raw);
-    --color-juno-blue-2-raw: var(--color-sap-blue-2-raw);
-    --color-juno-blue-1-raw: var(--color-sap-blue-1-raw);
-    
-    // Juno Turquoise
-    --color-juno-turquoise-1: rgb(197, 247, 255);
-    --color-juno-turquoise-2: rgb(132, 241, 255);
-    --color-juno-turquoise-3: rgb(25, 232, 250);
-    --color-juno-turquoise-4: rgb(22, 217, 234);
-    --color-juno-turquoise-5: rgb(21, 208, 224);
-    --color-juno-turquoise-6: rgb(15, 167, 180);
-    --color-juno-turquoise-7: rgb(9, 133, 144);
-    --color-juno-turquoise-8: rgb(5, 100, 109);
-    --color-juno-turquoise-9: rgb(2, 69, 75);
-    --color-juno-turquoise-10: rgb(1, 41, 45);
-    
-    // RAW
-    --color-juno-turquoise-1-raw: 197, 247, 255;
-    --color-juno-turquoise-2-raw: 132, 241, 255;
-    --color-juno-turquoise-3-raw: 25, 232, 250;
-    --color-juno-turquoise-4-raw: 22, 217, 234;
-    --color-juno-turquoise-5-raw: 21, 208, 224;
-    --color-juno-turquoise-6-raw: 15, 167, 180;
-    --color-juno-turquoise-7-raw: 9, 133, 144;
-    --color-juno-turquoise-8-raw: 5, 100, 109;
-    --color-juno-turquoise-9-raw: 2, 69, 75;
-    --color-juno-turquoise-10-raw: 1, 41, 45;
-        
+  @each $name, $value in $color-map {
+      --color-#{$name}: rgb(#{$value});
+      --color-#{$name}-raw: #{$value};
   }
   
-  
-  .theme-dark {
-    // TEXT COLORS
-    // RGB
-    --color-juno-text-highest: rgb(253, 254, 255);
-    --color-juno-text-high: rgb(222, 223, 224);
-    --color-juno-text-default: rgb(187, 187, 187);
-    --color-juno-text-light: rgb(122, 122, 122);
-    --color-juno-text-disabled: rgb(92, 92, 92);
+}
 
-    // RAW
-    --color-juno-text-highest-raw: 253, 254, 255;
-    --color-juno-text-high-raw: 222, 223, 224;
-    --color-juno-text-default-raw: 187, 187, 187;
-    --color-juno-text-light-raw: 122, 122, 122;
-    --color-juno-text-disabled-raw: 92, 92, 92;
-
-    // SEMANTIC COLORS
-    // RGB
-    --color-info: var(--color-juno-turquoise-5);
-    --color-success: rgb(59, 255, 91);
-    --color-warning: rgb(255, 198, 0);
-    --color-danger: rgb(255, 65, 11);
-    --color-error: rgb(255, 65, 11);
-
-    // RAW
-    --color-info-raw: var(--color-juno-turquoise-5-raw);
-    --color-success-raw: 59, 255, 91;
-    --color-warning-raw: 255, 198, 0;
-    --color-danger-raw: 255, 65, 11;
-    --color-error-raw: 255, 65, 11;
+/* Light Theme Color Variables */
+.theme-light {
+  @each $name, $value in $light-theme-color-map {
+      --color-#{$name}: rgb(#{$value});
+      --color-#{$name}-raw: #{$value};
   }
+}
 
-  .theme-light {
-    // TEXT COLORS
-    // RGB
-    --color-juno-text-highest: rgb(0, 0, 0);
-    --color-juno-text-high: rgb(40, 40, 40);
-    --color-juno-text-default: rgb(76, 76, 76);
-    --color-juno-text-light: rgb(150, 150, 150);
-    --color-juno-text-disabled: rgb(183, 183, 183);
-
-    // RAW
-    --color-juno-text-highest-raw: 0, 0, 0;
-    --color-juno-text-high-raw: 40, 40, 40;
-    --color-juno-text-default-raw: 76, 76, 76;
-    --color-juno-text-light-raw: 150, 150, 150;
-    --color-juno-text-disabled-raw: 183, 183, 183;
-
-    // SEMANTIC COLORS
-    // RGB
-    --color-info: var(--color-juno-blue-5);
-    --color-success: rgb(22, 145, 43);
-    --color-warning: rgb(255, 205, 0);
-    --color-danger: rgb(187, 62, 15);
-    --color-error: rgb(187, 62, 15);
-
-    // RAW
-    --color-info-raw: var(--color-juno-blue-5-raw);
-    --color-success-raw: 22, 145, 43;
-    --color-warning-raw: 255, 205, 0;
-    --color-danger-raw: 187, 62, 15;
-    --color-error-raw: 187, 62, 15;
-    
+/* Dark Theme Color Variables */
+.theme-dark {
+  @each $name, $value in $dark-theme-color-map {
+      --color-#{$name}: rgb(#{$value});
+      --color-#{$name}-raw: #{$value};
   }
+}
 
-  
 
-
+/* Color Assignments */
 
 /* ----- LIGHT THEME ----- */
 .theme-light {
@@ -334,8 +208,6 @@
   --color-global-text: var(--color-juno-text-default-raw);
   --color-content-area-bg: var(--color-background-lvl-0);
   --color-content-area-bg-raw: var(--color-background-lvl-0-raw);
-  --color-accent: var(--color-juno-blue-5);
-  --color-accent-raw: var(--color-juno-blue-5-raw);
   // LT FOCUS
   --color-focus: var(--color-accent);
   --color-focus-raw: var(--color-accent-raw);
@@ -359,13 +231,13 @@
   // LT Button
   // LT Primary Button
   --color-button-primary-text: var(--color-white);
-  --color-button-primary-bg: var(--color-juno-blue-7);
+  --color-button-primary-bg: var(--color-juno-primary-blue-3);
   // |-- LT Primary Button :hover
-  --color-button-primary-hover-bg: var(--color-juno-blue-5);
   --color-button-primary-hover-text: var(--color-white);
+  --color-button-primary-hover-bg: var(--color-juno-primary-blue-2);
   // |-- LT Primary Button :active
-  --color-button-primary-active-bg: var(--color-juno-blue-8);
   --color-button-primary-active-text: var(--color-white);
+  --color-button-primary-active-bg: var(--color-juno-primary-blue-5);
   
   // LT Default Button
   --color-button-default-text: var(--color-text-high);
@@ -396,16 +268,16 @@
 
   // LT Primary Danger Button
   --color-button-primary-danger-text: var(--color-white);
-  --color-button-primary-danger-bg: var(--color-sap-red-7);
+  --color-button-primary-danger-bg: var(--color-juno-primary-danger-4);
   // |-- LT Primary Danger Button :hover
   --color-button-primary-danger-hover-text: var(--color-white);
-  --color-button-primary-danger-hover-bg: var(--color-sap-red-6);
+  --color-button-primary-danger-hover-bg: var(--color-juno-primary-danger-3);
   // |-- LT Primary Danger Button :active
   --color-button-primary-danger-active-text: var(--color-white);
-  --color-button-primary-danger-active-bg: var(--color-sap-red-8);
+  --color-button-primary-danger-active-bg: var(--color-juno-primary-danger-5);
 
   // LT Icon
-  --color-icon-danger: var(--color-sap-red-raw);
+  --color-icon-danger: var(--color-juno-red-raw);
   --color-icon-info: var(--color-accent-raw);
   --color-icon-success: var(--color-sap-green-raw);
   --color-icon-warning: var(--color-warning-raw);
@@ -453,10 +325,10 @@
   // LT Select
   --color-select-bg: var(--color-background-lvl-3-raw);
   // LT Checkbox
-  --color-checkbox-bg: var(--color-background-lvl-4-raw);
+  --color-checkbox-bg: var(--color-background-lvl-5-raw);
   --color-checkbox-checked-color: var(--color-accent-raw);
   // LT Radio
-  --color-radio-bg: var(--color-background-lvl-4-raw);
+  --color-radio-bg: var(--color-background-lvl-5-raw);
   --color-radio-checked-bg: var(--color-accent-raw);
   // LT Switch
   --color-switch-default-border: var(--color-juno-text-default-raw);
@@ -479,8 +351,8 @@
   --color-syntax-highlight-base09: var(--color-juno-blue-4); // String value
   --color-syntax-highlight-base0A: var(--color-juno-grey-blue-6); // NaN
   --color-syntax-highlight-base0B: var(--color-juno-blue-4); // float value
-  --color-syntax-highlight-base0C: var(--color-sap-gold-5); // array index
-  --color-syntax-highlight-base0D: var(--color-sap-gold-5); // expanded icon
+  --color-syntax-highlight-base0C: var(--color-sap-gold); // array index
+  --color-syntax-highlight-base0D: var(--color-sap-gold); // expanded icon
   --color-syntax-highlight-base0E: var(--color-juno-blue-4); 
   // LT bool + collapsed icon
   --color-syntax-highlight-base0F: var(--color-juno-blue-4); // integer value
@@ -504,18 +376,26 @@
   --color-filter-input-border: var(--color-background-lvl-4-raw);
   --color-filter-input-textinput-bg: transparent;
   --color-filter-pill-border: var(--color-background-lvl-4-raw);
-  --color-filter-pill-key-bg: var(--color-background-lvl-3-raw);
+  --color-filter-pill-key-bg: var(--color-background-lvl-4-raw);
   // LT Modal
   --color-modal-backdrop-bg: rgba(0, 0, 0, 0.2);
-  // LT Navigation
-  --color-navigation-active: var(--color-black);
   // LT Box
   --color-box-bg: var(--color-background-lvl-1);
-  --color-box-border: var(--color-background-lvl-3)
+  --color-box-border: var(--color-background-lvl-3);
+  // DT SideNavigation
+  --color-sidenavigation-item-active: var(--color-black);
+  --color-sidenavigation-item-active-bg: var(--color-background-lvl-0);
+  // DT TopNavigation
+  --color-topnavigation-item-active: var(--color-black);
+  --color-topnavigation-item-bg: var(--color-sap-grey-1);
+  --color-topnavigation-item-active-bg: var(--color-sap-grey-3);
 }
 
 /* ----- LIGHT THEME END -----*/
-
+/* ----- */
+/* ----- */
+/* ----- */
+/* ----- */
 /* ----- DARK THEME ----- */
 
 .theme-dark {
@@ -541,8 +421,7 @@
   --color-global-text: var(--color-juno-text-default-raw);
   --color-content-area-bg: var(--color-background-lvl-0);
   --color-content-area-bg-raw: var(--color-background-lvl-0-raw);
-  --color-accent: var(--color-juno-turquoise-5);
-  --color-accent-raw: var(--color-juno-turquoise-5-raw);
+
   // DT FOCUS
   --color-focus: var(--color-accent);
   --color-focus-raw: var(--color-accent-raw);
@@ -605,16 +484,16 @@
   
   // DT Primary-Danger Button
   --color-button-primary-danger-text: var(--color-white);
-  --color-button-primary-danger-bg: var(--color-sap-red-6);
+  --color-button-primary-danger-bg: var(--color-juno-primary-danger-4);
   // |-- DT Primary Danger Button :hover
   --color-button-primary-danger-hover-text: var(--color-white);
-  --color-button-primary-danger-hover-bg: var(--color-sap-red-5);
+  --color-button-primary-danger-hover-bg: var(--color-juno-primary-danger-3);
   // |-- DT Primary Danger Button :active
   --color-button-primary-danger-active-text: var(--color-white);
-  --color-button-primary-danger-active-bg: var(--color-sap-red-7);
+  --color-button-primary-danger-active-bg: var(--color-juno-primary-danger-5);
   
   // DT Icon
-  --color-icon-danger: var(--color-sap-red-5-raw);
+  --color-icon-danger: var(--color-juno-red-5-raw);
   --color-icon-info: var(--color-accent-raw);
   --color-icon-success: var(--color-sap-green-5-raw);
   --color-icon-warning: var(--color-warning-raw);
@@ -688,8 +567,8 @@
   --color-syntax-highlight-base09: var(--color-juno-blue-4); // String value
   --color-syntax-highlight-base0A: var(--color-juno-grey-blue-6); // NaN
   --color-syntax-highlight-base0B: var(--color-juno-blue-4); // float value
-  --color-syntax-highlight-base0C: var(--color-sap-gold-4); // array index
-  --color-syntax-highlight-base0D: var(--color-sap-gold-4); // DT expanded icon
+  --color-syntax-highlight-base0C: var(--color-sap-gold); // array index
+  --color-syntax-highlight-base0D: var(--color-sap-gold); // DT expanded icon
   --color-syntax-highlight-base0E: var(--color-juno-blue-4); // DT bool + collapsed icon
   --color-syntax-highlight-base0F: var(--color-juno-blue-4); // integer value
   // DT DataGrid
@@ -715,11 +594,16 @@
   --color-filter-pill-key-bg: var(--color-background-lvl-4-raw);
   // DT Modal
   --color-modal-backdrop-bg: rgba(60, 70, 75, 0.6);
-  // DT Navigation
-  --color-navigation-active: var(--color-white);
   // DT Box
   --color-box-bg: var(--color-background-lvl-1);
-  --color-box-border: var(--color-background-lvl-3)
+  --color-box-border: var(--color-background-lvl-3);
+  // DT SideNavigation
+  --color-sidenavigation-item-active: var(--color-white);
+  --color-sidenavigation-item-active-bg: var(--color-background-lvl-0);
+  // DT TopNavigation
+  --color-topnavigation-item-active: var(--color-white);
+  --color-topnavigation-item-bg: var(--color-juno-grey-blue-7);
+  --color-topnavigation-item-active-bg: var(--color-juno-grey-blue-2);
 }
 
 /* ----- DARK THEME END ----- */

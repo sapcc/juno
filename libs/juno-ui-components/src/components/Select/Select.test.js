@@ -339,7 +339,7 @@ describe("Select", () => {
       </Select>
     )
     expect(spy).toHaveBeenCalledTimes(2)
-    expect(spy).toHaveBeenCalledWith("Select: at least one of the options is undefined or null or not of type SelectOption")
+    expect(spy).toHaveBeenCalledWith("Select: at least one of the options is not a valid SelectOption component:")
     spy.mockRestore()
   })
   

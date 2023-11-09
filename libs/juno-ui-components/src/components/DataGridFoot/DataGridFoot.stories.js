@@ -1,14 +1,14 @@
-import React from "react"
-import { DataGridFoot } from "./index.js"
-import { DataGridCell } from "../DataGridCell/index.js"
-import { Default as DataGridCellStory } from "../DataGridCell/DataGridCell.stories.js"
+import React from 'react';
+import { DataGridFoot } from './index.js';
+import { DataGridCell } from '../DataGridCell/index.js';
+import { Default as DataGridCellStory } from '../DataGridCell/DataGridCell.stories.js';
 
 export default {
-  title: "WiP/DataGrid/DataGridFoot",
+  title: 'WiP/DataGrid/DataGridFoot',
   component: DataGridFoot,
   argTypes: {
     children: {
-      control: false
+      control: false,
     },
   },
   decorators: [(story) => <table>{story()}</table>],
@@ -18,8 +18,8 @@ export default {
         excludeDecorators: false,
       },
     },
-  }
-}
+  },
+};
 
 const Template = ({ items, ...args }) => (
   <DataGridFoot {...args}>
@@ -31,15 +31,18 @@ const Template = ({ items, ...args }) => (
       </DataGridFootRow>
     ))} */}
   </DataGridFoot>
-)
+);
 
-export const Default = Template.bind({})
-Default.parameters = {
-  docs: {
-    description: {
-      story: "Juno DataGridFoot for use in DataGrid",
+export const Default = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story: 'Juno DataGridFoot for use in DataGrid',
+      },
     },
   },
-}
-Default.args = {
-}
+
+  args: {},
+};

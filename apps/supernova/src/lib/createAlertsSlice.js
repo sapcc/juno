@@ -29,6 +29,7 @@ const createAlertsSlice = (set, get) => ({
             state.alerts.isLoading = false
             state.alerts.isUpdating = false
             state.alerts.updatedAt = Date.now()
+            state.alerts.error = null
 
             // on the initial fetch copy all items to the filtered items list once since
             // most views operate on the filtered items list
@@ -112,7 +113,7 @@ const createAlertsSlice = (set, get) => ({
               }
 
               // if the item is still visible check if it gets filtered out by a search term
-              // the search term is matched against the stringified item object
+              // the search term is matched against the stringified item object via regex
               // if the item object does not contain the search term, it is not visible
               if (
                 visible &&
@@ -120,9 +121,8 @@ const createAlertsSlice = (set, get) => ({
                 state.filters.searchTerm.length > 0
               ) {
                 const itemString = JSON.stringify(item).toLowerCase()
-                if (
-                  !itemString.includes(state.filters.searchTerm.toLowerCase())
-                ) {
+                const re = new RegExp(state.filters.searchTerm.toLowerCase())
+                if (!itemString.match(re)) {
                   visible = false
                 }
               }
@@ -190,6 +190,14 @@ const createAlertsSlice = (set, get) => ({
           (state) => ({ alerts: { ...state.alerts, isUpdating: value } }),
           false,
           "alerts.setIsUpdating"
+        )
+      },
+
+      setError: (error) => {
+        set(
+          (state) => ({ alerts: { ...state.alerts, error, isLoading: false } }),
+          false,
+          "alerts.setError"
         )
       },
 

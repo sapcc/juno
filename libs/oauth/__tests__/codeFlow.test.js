@@ -99,6 +99,33 @@ describe("buildRequestUrl", () => {
       )
     })
   })
+
+  test("should use scope from config", () => {
+    const org_scopes_supported = config.scopes_supported
+    config.scopes_supported = ["openid", "email"]
+
+    buildRequestUrl({
+      issuerURL: "http://issuer.com",
+      clientID: "12345",
+      callbackURL: "http://another-issuer.com",
+      params: { origanization: "test", project: "test" },
+      oidcState: {
+        nonce: "test",
+        key: "123456",
+        challenge: "12345",
+        verifier: "12345",
+      },
+    }).then((url) => {
+      expect(url).toEqual(
+        `${
+          config.authorization_endpoint
+        }?response_type=code&client_id=12345&redirect_uri=${encodeURIComponent(
+          "http://another-issuer.com"
+        )}&scope=openid+email&state=123456&nonce=test&code_challenge=12345&code_challenge_method=S256&origanization=test&project=test`
+      )
+      config.scopes_supported = org_scopes_supported
+    })
+  })
 })
 
 describe("handleResponse", () => {

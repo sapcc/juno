@@ -1,91 +1,105 @@
-import React from "react"
-import { BreadcrumbItem } from "./index"
-import { knownIcons } from "../Icon/Icon.component.js"
-
+import React from 'react';
+import { BreadcrumbItem } from './index';
+import { knownIcons } from '../Icon/Icon.component.js';
 
 const Template = (args) => {
-  return (<BreadcrumbItem {...args} />)
-}
+  return <BreadcrumbItem {...args} />;
+};
 
 export default {
-  title: "Components/Breadcrumb/BreadcrumbItem",
+  title: 'Components/Breadcrumb/BreadcrumbItem',
   component: BreadcrumbItem,
   argTypes: {
     icon: {
       options: ['default', ...knownIcons],
-      control: {type: 'select'}
+      control: { type: 'select' },
     },
     children: {
-      control: false
+      control: false,
     },
   },
-}
+};
 
-export const Default = Template.bind({})
-Default.parameters = {
-  docs: {
-    description: {
-      story:
-        "A default breadcrumb item",
-    },
-  },
-}
-Default.args = {
-  label: "Breadcrumb Item"
-}
+export const Default = {
+  render: Template,
 
-export const WithIcon = Template.bind({})
-WithIcon.parameters = {
-  docs: {
-    description: {
-      story:
-        "Pass any available icon name to render an additional icon for the item.",
+  parameters: {
+    docs: {
+      description: {
+        story: 'A default breadcrumb item',
+      },
     },
   },
-}
-WithIcon.args = {
-  icon: "place",
-  label: "Breadcrumb Item with Icon",
-}
 
-export const Active = Template.bind({})
-Active.parameters = {
-  docs: {
-    description: {
-      story:
-        "An active item represents the current page.",
-    },
+  args: {
+    label: 'Breadcrumb Item',
   },
-}
-Active.args = {
-  label: "Active Breadcrumb Item",
-  active: true,
-}
+};
 
-export const Disabled = Template.bind({})
-Disabled.parameters = {
-  docs: {
-    description: {
-      story:
-        "A disabled breadcrumb item.",
-    },
-  },
-}
-Disabled.args = {
-  label: "Disabled Breadcrumb Item",
-  disabled: true,
-}
+export const WithIcon = {
+  render: Template,
 
-export const Home = Template.bind({})
-Home.parameters = {
-  docs: {
-    description: {
-      story:
-        "Typically the first item in a breadcrumb.",
+  parameters: {
+    docs: {
+      description: {
+        story: 'Pass any available icon name to render an additional icon for the item.',
+      },
     },
   },
-}
-Home.args = {
-  label: "",
-  icon: "home",
-}
+
+  args: {
+    icon: 'place',
+    label: 'Breadcrumb Item with Icon',
+  },
+};
+
+export const Active = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story: 'An active item represents the current page.',
+      },
+    },
+  },
+
+  args: {
+    label: 'Active Breadcrumb Item',
+    active: true,
+  },
+};
+
+export const Disabled = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story: 'A disabled breadcrumb item.',
+      },
+    },
+  },
+
+  args: {
+    label: 'Disabled Breadcrumb Item',
+    disabled: true,
+  },
+};
+
+export const Home = {
+  render: Template,
+
+  parameters: {
+    docs: {
+      description: {
+        story: 'Typically the first item in a breadcrumb.',
+      },
+    },
+  },
+
+  args: {
+    label: '',
+    icon: 'home',
+  },
+};

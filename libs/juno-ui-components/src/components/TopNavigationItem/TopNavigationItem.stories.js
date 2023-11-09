@@ -1,4 +1,5 @@
 import React from "react"
+import { TopNavigation } from "../TopNavigation/"
 import { TopNavigationItem } from "./index.js"
 
 export default {
@@ -12,7 +13,7 @@ export default {
   parameters: { actions: { argTypesRegex: null } }
 }
 
-const Template = (args) => <TopNavigationItem {...args} />
+const Template = (args) => <TopNavigation><TopNavigationItem {...args} /></TopNavigation>
 
 export const Default = Template.bind({})
 Default.args = {

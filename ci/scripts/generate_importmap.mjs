@@ -239,28 +239,42 @@ const installPackage = async (name) => {
  * @param {string} path
  * @returns void
  */
-const downloadFile = (url, path) => {
+const downloadFile = (url, path, maxRetries = 10, currentRetry = 0) => {
   return new Promise((resolve, reject) => {
     fs.mkdirSync(pathLib.dirname(path), { recursive: true })
     const file = fs.createWriteStream(path)
-    https
-      .get(url, (response) => {
-        response.pipe(file)
-        console.log(
-          "[generate_importmap]::downloadFile: success with url:",
+    const req = https.get(url, (response) => {
+      console.log("[generate_importmap]::downloadFile: success with url:", url)
+      response.pipe(file)
+      // The whole response has been received. Print out the result.
+      response.on("end", () => {
+        file.close()
+        resolve()
+      })
+    })
+
+    req.on("error", (error) => {
+      if (currentRetry < maxRetries) {
+        console.error(
+          `[generate_importmap]::downloadFile: attempt ${
+            currentRetry + 1
+          } failed. Retrying:`,
           url
         )
+        // Retry after a delay (you can adjust the delay as needed)
+        setTimeout(() => {
+          resolve(downloadFile(url, path, maxRetries, currentRetry + 1))
+        }, 2000) // 2000 milliseconds (2 second) delay in this example
+      } else {
+        // Maximum retries reached, reject the promise
+        console.error(
+          `[generate_importmap]::downloadFile: max retries (${maxRetries}) reached. Error: ${error.message}`
+        )
+        reject(error)
+      }
+    })
 
-        // The whole response has been received. Print out the result.
-        response.on("end", () => {
-          file.close()
-          resolve()
-        })
-      })
-      .on("error", (err) => {
-        console.log("[generate_importmap]::downloadFile: error with url:", url)
-        reject(err)
-      })
+    req.end()
   })
 }
 

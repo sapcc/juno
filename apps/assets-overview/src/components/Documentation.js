@@ -1,12 +1,12 @@
 import React, { useState, useMemo, useEffect } from "react"
 import {
   Container,
+  FormRow,
   SideNavigation,
   SideNavigationItem,
   Stack,
-  SelectRow,
+  Select,
   SelectOption,
-  Spinner,
 } from "juno-ui-components"
 import useStore from "../store"
 import Markdown from "./Markdown"
@@ -107,20 +107,22 @@ const Documentation = ({ isLoading, data }) => {
                 <Container>
                   {activeNavItem === "wigetLoader" && widgetLoaderVersions && (
                     <Stack distribution="end" className="w-full">
-                      <SelectRow
-                        label="version"
-                        variant="floating"
-                        value={widgetLoaderVersion}
-                        onChange={(e) => changeVersion(e.target.value)}
-                      >
-                        {widgetLoaderVersions.map((version, i) => (
-                          <SelectOption
-                            key={i}
-                            label={version.label}
-                            value={version.value}
-                          />
-                        ))}
-                      </SelectRow>
+                      <FormRow>
+                        <Select
+                          label="version"
+                          variant="floating"
+                          value={widgetLoaderVersion}
+                          onChange={(e) => changeVersion(e.target.value)}
+                        >
+                          {widgetLoaderVersions.map((version, i) => (
+                            <SelectOption
+                              key={i}
+                              label={version.label}
+                              value={version.value}
+                            />
+                          ))}
+                        </Select>
+                      </FormRow>
                     </Stack>
                   )}
                   <Markdown path={nav?.[activeNavItem]?.path} />

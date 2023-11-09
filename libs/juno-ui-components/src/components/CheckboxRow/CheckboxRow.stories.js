@@ -1,88 +1,101 @@
-import React from "react"
-import { CheckboxRow } from "./index.js"
+import React from 'react';
+import { CheckboxRow } from './index.js';
 
 export default {
-  title: "Deprecated/CheckboxRow",
+  title: 'Deprecated/CheckboxRow',
   component: CheckboxRow,
   parameters: {
     docs: {
       description: {
-        component: "DEPRECATED: A radio row containing a radio, associated label, and structural markup. This component is DEPRECATED, use Radio instead."
+        component:
+          'DEPRECATED: A radio row containing a radio, associated label, and structural markup. This component is DEPRECATED, use Radio instead.',
       },
     },
   },
   argTypes: {},
-}
+};
 
-const Template = (args) => <CheckboxRow {...args} />
+export const Default = {
+  args: {
+    label: 'Default Checkbox Row',
+    id: 'default',
+  },
+};
 
-export const Default = Template.bind({})
-Default.args = {
-  label: "Default Checkbox Row",
-  id: "default",
-}
+export const Checked = {
+  args: {
+    label: 'Checked CheckboxRow',
+    id: 'checked',
+    checked: true,
+  },
+};
 
-export const Checked = Template.bind({})
-Checked.args = {
-  label: "Checked CheckboxRow",
-  id: "checked",
-  checked: true,
-}
+export const WithHelpText = {
+  args: {
+    name: 'my-input',
+    label: 'Checkbox Row with Help text',
+    helptext: 'Oh so helpful helptext',
+    id: 'withHelptext',
+  },
+};
 
-export const WithHelpText = Template.bind({})
-WithHelpText.args = {
-  name: "my-input",
-  label: "Checkbox Row with Help text",
-  helptext: "Oh so helpful helptext",
-  id: "withHelptext",
-}
+export const WithHelpTextWithLink = {
+  args: {
+    name: 'my-input',
+    label: 'Checkbox Row with Help text',
+    helptext: (
+      <>
+        Helptext with a <a href="#">Link</a>
+      </>
+    ),
+    id: 'withHelptext-withLink',
+  },
+};
 
-export const WithHelpTextWithLink = Template.bind({})
-WithHelpTextWithLink.args = {
-  name: "my-input",
-  label: "Checkbox Row with Help text",
-  helptext: <>Helptext with a <a href="#">Link</a></>,
-  id: "withHelptext-withLink",
-}
+export const Required = {
+  args: {
+    label: 'Required Checkbox Row',
+    required: true,
+    id: 'required',
+  },
+};
 
-export const Required = Template.bind({})
-Required.args = {
-  label: "Required Checkbox Row",
-  required: true,
-  id: "required",
-}
+export const Disabled = {
+  args: {
+    label: 'Disabled Checkbox Row',
+    id: 'disabled-checkbox-row',
+    disabled: true,
+  },
+};
 
-export const Disabled = Template.bind({})
-Disabled.args = {
-  label: "Disabled Checkbox Row",
-  id: "disabled-checkbox-row",
-  disabled: true,
-}
+export const Invalid = {
+  args: {
+    label: 'Invalid Checkbox',
+    id: 'invalid-checkbox-row',
+    invalid: true,
+  },
+};
 
-export const Invalid = Template.bind({})
-Invalid.args = {
-  label: "Invalid Checkbox",
-  id: "invalid-checkbox-row",
-  invalid: true,
-}
+export const WithErrorText = {
+  args: {
+    label: 'Checkbox invalidated by errortext',
+    id: 'invalid-checkbox-by-errortext',
+    errortext: 'Pass an errortext to invalidate a CheckboxRow',
+  },
+};
 
-export const WithErrorText = Template.bind({})
-WithErrorText.args = {
-  label: "Checkbox invalidated by errortext",
-  id: "invalid-checkbox-by-errortext",
-  errortext: "Pass an errortext to invalidate a CheckboxRow"
-}
+export const Valid = {
+  args: {
+    label: 'Valid Checkbox',
+    id: 'valid-checkbox-row',
+    valid: true,
+  },
+};
 
-export const Valid = Template.bind({})
-Valid.args = {
-  label: "Valid Checkbox",
-  id: "valid-checkbox-row",
-  valid: true,
-}
-
-export const WithSuccessText = Template.bind({})
-WithSuccessText.args = {
-  label: "Checkbox validated by successtext",
-  id: "valid-checkbox-by-successtext",
-  successtext: "Pass a successtext to validate a CheckboxRow"
-}
+export const WithSuccessText = {
+  args: {
+    label: 'Checkbox validated by successtext',
+    id: 'valid-checkbox-by-successtext',
+    successtext: 'Pass a successtext to validate a CheckboxRow',
+  },
+};

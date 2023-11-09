@@ -3,7 +3,7 @@ import React from "react"
 import { ContentArea } from "./index.js"
 
 export default {
-  title: "Internal/ContentArea",
+  title: "Deprecated/ContentArea",
   component: ContentArea,
   argTypes: {
     children: {
@@ -21,7 +21,7 @@ Basic.parameters = {
   docs: {
     description: {
       story:
-        "Only needed if you want to build your app's scaffold manually. In most cases it is better to use the AppShell component instead. This is the area in which the actual content of each page should be injected.",
+       "Deprecated: This component used to be used internally by AppShell but has been removed there since. It was only needed to manually scaffold an app. Use AppShell to scaffold an app layout.",
     },
   },
 }
