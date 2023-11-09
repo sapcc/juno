@@ -186,7 +186,6 @@ export const Select = ({
   }, [loading])
   
   const handleChange = (value) => {
-    console.log("Select: handleChange: value: ", value || "")
     onChange && onChange(value || "")
     onValueChange && onValueChange(value || "")
   }
