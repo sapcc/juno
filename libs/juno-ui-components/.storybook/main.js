@@ -9,6 +9,7 @@ const config = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-docs",
+    "@storybook/addon-mdx-gfm",
     "./juno-addon",
   ],
   webpackFinal: async (config) => {
