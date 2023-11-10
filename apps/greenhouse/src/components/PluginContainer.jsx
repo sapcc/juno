@@ -30,6 +30,24 @@ const PluginContainer = () => {
     if (!getPluginConfigs) return
     requestConfig()
     getPluginConfigs()
+      .then((config) => {
+        // predefined apps
+        const predefinedApps = {
+          exampleapp: {
+            displayName: "exampleapp",
+            id: "exampleapp",
+            name: "exampleapp",
+            version: "latest",
+            navigable: true,
+            props: {
+              theme: "theme-light",
+              id: "exampleapp",
+            },
+          },
+        }
+        // combine apps
+        return { ...config, ...predefinedApps }
+      })
       .then((config) => receiveConfig(config))
       .catch((error) => receiveConfigError(error.message))
   }, [getPluginConfigs, requestConfig, receiveConfig, receiveConfigError])
