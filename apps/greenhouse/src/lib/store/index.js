@@ -1,8 +1,184 @@
 import { createStore } from "zustand"
 import { devtools } from "zustand/middleware"
-import createAuthDataSlice from "./createAuthDataSlice"
-import createAppsDataSlice from "./createAppsDataSlice"
-import createGlobalsSlice from "./createGlobalsSlice"
+
+const ACTIONS = {
+  SIGN_ON: "signOn",
+  SIGN_OUT: "signOut",
+}
+
+const createAuthDataSlice = (set, get) => ({
+  auth: {
+    data: null,
+    isProcessing: false,
+    loggedIn: false,
+    error: null,
+    lastAction: {},
+    appLoaded: false,
+    appIsLoading: false,
+
+    actions: {
+      setAppLoaded: (appLoaded) => {
+        set(
+          (state) => ({ auth: { ...state.auth, appLoaded } }),
+          false,
+          "auth/setAppLoaded"
+        )
+      },
+      setData: (data = {}) => {
+        set(
+          (state) => ({
+            auth: {
+              ...state.auth,
+              isProcessing: data ? data.isProcessing : false,
+              loggedIn: data ? data.loggedIn : false,
+              error: data ? data.error : null,
+              data: data ? data.auth : null,
+            },
+          }),
+          false,
+          "auth/setData"
+        )
+        if (!data) get().auth.actions.setAction(ACTIONS.SIGN_OUT)
+      },
+      setAction: (name) =>
+        set(
+          (state) => ({
+            auth: {
+              ...state.auth,
+              lastAction: { name: name, updatedAt: Date.now() },
+            },
+          }),
+          false,
+          "auth/setAction"
+        ),
+      login: () => {
+        // logout
+        get().auth.actions.setAction(ACTIONS.SIGN_OUT)
+        get().auth.actions.setAction(ACTIONS.SIGN_ON)
+      },
+      logout: () => get().auth.actions.setAction(ACTIONS.SIGN_OUT),
+    },
+  },
+})
+
+const createAppsDataSlice = (set, get) => ({
+  apps: {
+    active: [],
+    config: {},
+    isFetching: false,
+    error: null,
+    updatedAt: null,
+    actions: {
+      setActive: (active) =>
+        set(
+          (state) => {
+            if (!Array.isArray(active)) active = [active]
+            // if the current state is the same as the new state, don't update
+            // it prevents an unnecessary re-render
+            if (JSON.stringify(state.apps.active) === JSON.stringify(active))
+              return state
+            return { apps: { ...state.apps, active } }
+          },
+          false,
+          "apps/setActive"
+        ),
+      addActive: (appName) =>
+        set(
+          (state) => {
+            const index = state.apps.active.findInde((i) => i === appName)
+            if (index >= 0) return state
+            const newActive = state.apps.active.slice()
+            newActive.push(appName)
+            return { apps: { ...state.apps, active: newActive } }
+          },
+          false,
+          "apps/addActive"
+        ),
+      removeActive: (appName) =>
+        set(
+          (state) => {
+            const index = state.apps.active.findInde((i) => i === appName)
+            if (index < 0) return state
+            let newActive = state.apps.active.slice()
+            newActive.splice(index, 1)
+            return { apps: { ...state.apps, active: newActive } }
+          },
+          false,
+          "apps/removeActive"
+        ),
+      requestConfig: () =>
+        set(
+          (state) => ({ apps: { ...state.apps, isFetching: true } }),
+          false,
+          "apps/requestConfig"
+        ),
+      receiveConfig: (config) =>
+        set((state) => ({
+          apps: {
+            ...state.apps,
+            config,
+            isFetching: false,
+            error: null,
+            updatedAt: Date.now(),
+          },
+        })),
+      receiveConfigError: (error) =>
+        set((state) => ({
+          apps: {
+            ...state.apps,
+            isFetching: false,
+            error,
+          },
+        })),
+    },
+  },
+})
+
+const createGlobalsSlice = (set, get) => ({
+  globals: {
+    apiEndpoint: "",
+    assetsHost: "",
+    environment: "",
+    isUrlStateSetup: false,
+    demoMode: false,
+    demoUserToken: null,
+
+    actions: {
+      setDemoMode: (demoMode) =>
+        set((state) => ({ globals: { ...state.globals, demoMode } })),
+      setDemoUserToken: (demoUserToken) =>
+        set((state) => ({ globals: { ...state.globals, demoUserToken } })),
+
+      setApiEndpoint: (value) =>
+        set(
+          (state) => ({ globals: { ...state.globals, apiEndpoint: value } }),
+          false,
+          "globals/setApiEndpoint"
+        ),
+
+      setEnvironment: (value) =>
+        set(
+          (state) => ({ globals: { ...state.globals, environment: value } }),
+          false,
+          "globals/setEnvironment"
+        ),
+      setAssetsHost: (value) =>
+        set(
+          (state) => ({ globals: { ...state.globals, assetsHost: value } }),
+          false,
+          "globals/setAssetsHost"
+        ),
+      setIsUrlStateSetup: (setup) =>
+        set(
+          (state) => ({
+            globals: { ...state.globals, isUrlStateSetup: setup },
+          }),
+          false,
+          "globals/setIsUrlStateSetup"
+        ),
+    },
+  },
+})
 
 export default () =>
   createStore(

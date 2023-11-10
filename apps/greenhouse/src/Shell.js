@@ -9,7 +9,7 @@ import AsyncWorker from "./components/AsyncWorker"
 import StoreProvider, { useGlobalsActions } from "./components/StoreProvider"
 
 const Shell = (props = {}) => {
-  const { setApiEndpoint, setAssetsHost, setDemoUserToken } =
+  const { setApiEndpoint, setAssetsHost, setDemoUserToken, setEnvironment } =
     useGlobalsActions()
 
   // INIT
@@ -18,6 +18,7 @@ const Shell = (props = {}) => {
   useLayoutEffect(() => {
     if (!setApiEndpoint || !setAssetsHost || !setDemoUserToken) return
     // set to empty string to fetch local test data in dev mode
+    setEnvironment(props.environment)
     setApiEndpoint(props.apiEndpoint)
     setAssetsHost(props.currentHost)
     setDemoUserToken(props.demoUserToken)
