@@ -133,16 +133,13 @@ export const Select = ({
     if (selectOptions) {
       // iterate over the children and if they are of type "SelectOption" save the value and label props in a map
       selectOptions.map((option) => {
-        if (option && React.isValidElement(option) && option.type?.name === "SelectOption") {
+        if (option && React.isValidElement(option) && (option.props?.value || option.props?.children)) {
           optionMap.set(option.props?.value || option.props?.children, {
             val: option.props?.value,
             label: option.props?.label,
             children: option.props?.children
           })
-        } else {
-          console.warn("Select: at least one of the options is not a valid SelectOption component:")
-          console.info(option)
-        }
+        } 
       })
     }
     return optionMap
