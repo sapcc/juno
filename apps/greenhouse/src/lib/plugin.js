@@ -1,3 +1,8 @@
+export const NAV_TYPES = {
+  APP: "app",
+  MNG: "management",
+}
+
 const pluginConfig = {
   id: "",
   name: "",
@@ -5,6 +10,7 @@ const pluginConfig = {
   version: "latest",
   url: null,
   weight: 0,
+  navType: NAV_TYPES.APP,
   navigable: true,
   props: {
     id: "",
