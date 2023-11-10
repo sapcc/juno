@@ -1,11 +1,11 @@
 const fs = require("fs")
-const tailwindConfig = require("../../tailwind.config")
+const tailwindConfig = require("../../../tailwind.config")
 
 // Beschreiben
 
-const generateTailwindClassJson = () => {
+const generateTailwindThemeClassesJson = () => {
   fs.writeFileSync(
-    "./src/docs/colors.js",
+    "./src/docs/ColorPalette/TailwindThemeColors.js",
     "module.exports=" + JSON.stringify(getColors(), null, 2)
   )
 }
@@ -19,4 +19,4 @@ const getColors = () => {
   return colors
 }
 
-module.exports = { generateTailwindClassJson }
+module.exports = { generateTailwindThemeClassesJson }

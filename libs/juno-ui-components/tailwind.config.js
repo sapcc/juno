@@ -15,7 +15,7 @@ module.exports = {
   content: [
     "./src/components/**/*.{js,jsx,ts,tsx,mdx}",
     "./src/dummyComponents/*.{js,jsx,ts,tsx,mdx}",
-    "./src/docs/*.{js,jsx,ts,tsx,mdx}",
+    "./src/docs/**/*.{js,jsx,ts,tsx,mdx}",
   ],
   prefix: "jn-",
   theme: {

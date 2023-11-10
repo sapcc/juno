@@ -1,6 +1,6 @@
 import { Meta, Canvas, Controls } from "@storybook/blocks"
 import * as Textarea from "../components/Textarea/Textarea.stories"
-import { ColorPalette } from "./ColorPalette.jsx"
+import { ColorPalette } from "./ColorPalette/ColorPalette.jsx"
 import imageUrl from "./img/Schwan.jpg"
 
 {/* The Metatag helps to sort the page in the Nav bar. Components/Introduction would name the page Introduction in the components folder */}
@@ -13,16 +13,20 @@ Juno is a powerful React library designed to streamline your web development pro
 
 Juno is extending W3C Standards to provide a more versatile and developer-friendly experience. Take the "textarea" component, for example. While Juno might not explicitly define the "rows" prop, Juno allows to use the props according to the standard.
 
+{/* Through a Canvas you can import Stories */}
+
 <Canvas of={Textarea.WithLabel} />
 
-<img src={imageUrl} alt="Image alt" />
-
 ## Componenten
+
+{/* You can also use the img tag or import other components */}
+
+<img src={imageUrl} alt="Image alt" />
 
 <ColorPalette theme="theme-dark" />
 
 <ColorPalette theme="theme-light" />
 
 {
-console.log("You can write JS in curly braces")
+console.log("You can write JS in mdx with curly braces")
 }

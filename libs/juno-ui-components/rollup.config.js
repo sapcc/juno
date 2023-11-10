@@ -10,11 +10,11 @@ const commonjs = require("@rollup/plugin-commonjs")
 const svgr = require("@svgr/rollup")
 const glob = require("glob")
 const {
-  generateTailwindClassJson,
-} = require("./src/docs/generateTailwindClassJson")
+  generateTailwindThemeClassesJson,
+} = require("./src/docs/ColorPalette/generateTailwindThemeClassesJson")
 
-// generates Tailwind classes for documentaion usages.
-generateTailwindClassJson()
+// generates tailwind classes for documentation usages.
+generateTailwindThemeClassesJson()
 
 // IMPORTANT!
 // package.json is single source of truth policy
