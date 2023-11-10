@@ -36,6 +36,8 @@ export const useGlobalsAssetsHost = () => useStore((s) => s.globals.assetsHost)
 export const useGlobalsIsUrlStateSetup = () =>
   useStore((state) => state.globals.isUrlStateSetup)
 export const useGlobalsActions = () => useStore((s) => s.globals.actions)
+export const useGlobalsEnvironment = () =>
+  useStore((s) => s.globals.environment)
 export const useDemoMode = () => useStore((s) => s.globals.demoMode)
 export const useDemoUserToken = () => useStore((s) => s.globals.demoUserToken)
 

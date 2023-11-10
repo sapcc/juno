@@ -98,6 +98,11 @@
       "value": "token for demo user",
       "type": "optional",
       "description": "if both demoOrg and demoUserToken are set and organization name is equal to demoOrg, then this token will be used for authentication."
+    },
+    "environment": {
+      "value": "production",
+      "type": "optional",
+      "description": "environment name, e.g. production, qa, development, etc. This property can be used to load different plugins for different environments."
     }
   },
   "appPreview": true

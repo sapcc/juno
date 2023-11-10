@@ -138,6 +138,7 @@ const createGlobalsSlice = (set, get) => ({
   globals: {
     apiEndpoint: "",
     assetsHost: "",
+    environment: "",
     isUrlStateSetup: false,
     demoMode: false,
     demoUserToken: null,
@@ -153,6 +154,13 @@ const createGlobalsSlice = (set, get) => ({
           (state) => ({ globals: { ...state.globals, apiEndpoint: value } }),
           false,
           "globals/setApiEndpoint"
+        ),
+
+      setEnvironment: (value) =>
+        set(
+          (state) => ({ globals: { ...state.globals, environment: value } }),
+          false,
+          "globals/setEnvironment"
         ),
       setAssetsHost: (value) =>
         set(
