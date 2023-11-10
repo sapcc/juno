@@ -7,6 +7,8 @@ import { Spinner } from "../Spinner/Spinner.component"
 import { FormHint } from "../FormHint/FormHint.component"
 import { Float } from "@headlessui-float/react"
 import { offset, shift, size } from '@floating-ui/react-dom'
+import { usePortalRef } from "../PortalProvider/index"
+import { createPortal } from "react-dom"
 
 const labelStyles = `
   jn-no-wrap
@@ -190,11 +192,14 @@ export const Select = ({
     onValueChange && onValueChange(value || "")
   }
   
+  const portalContainerRef = usePortalRef()
+  
   // Headless-UI-Float Middleware
   const middleware = [
     offset(4),
     shift(),
     size({
+      boundary: 'viewport',
       apply({availableWidth, availableHeight, elements}) {
         Object.assign(elements.floating.style, {
           maxWidth: `${availableWidth}px`,
@@ -204,6 +209,8 @@ export const Select = ({
       }
     })
   ]
+  
+  // const portalContainer = usePortalRef()
   
   return (
     <SelectContext.Provider value={
@@ -241,78 +248,94 @@ export const Select = ({
               ""
           }
           
-          <Float 
-            adaptiveWidth
-            middleware={middleware}
-          >
+         
           
-            <Listbox.Button 
-              aria-describedby={ helptext ? helptextId : "" }
-              aria-label={ ariaLabel || label }
-              as="button" 
-              id={theId}
-              className={`
-                juno-select-toggle
-                ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
-                ${ toggleStyles }
-                ${ label && isNotEmptyString(label) ? "jn-pt-[0.4rem]" : "" }
-                ${ disabled ? "juno-select-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
-                ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
-                ${ isInvalid ? "juno-select-invalid " + invalidToggleStyles : "" } 
-                ${ isValid ? "juno-select-valid " + validToggleStyles : "" }  
-                ${ isValid || isInvalid ? "" : defaultToggleBorderStyles } 
-                ${ isLoading ? "juno-select-loading jn-cursor-not-allowed" : "" }
-                ${ hasError ? "juno-select-error jn-cursor-not-allowed" : "" }
-                ${ className }
-              `}
-              {...props}
+          
+            <Float
+              composable
+              adaptiveWidth
+              middleware={middleware}
             >
-              {({ open, value }) => (
-                
-                (!hasError && !isLoading) ?
-                  <>
-                    <span className={`${truncateStyles}`}>
+              <Float.Reference>
+                <Listbox.Button 
+                  aria-describedby={ helptext ? helptextId : "" }
+                  aria-label={ ariaLabel || label }
+                  as="button" 
+                  id={theId}
+                  className={`
+                    juno-select-toggle
+                    ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+                    ${ toggleStyles }
+                    ${ label && isNotEmptyString(label) ? "jn-pt-[0.4rem]" : "" }
+                    ${ disabled ? "juno-select-disabled jn-opacity-50 jn-cursor-not-allowed" : "" }
+                    ${ isLoading || hasError ? "jn-justify-center" : "jn-justify-between" }
+                    ${ isInvalid ? "juno-select-invalid " + invalidToggleStyles : "" } 
+                    ${ isValid ? "juno-select-valid " + validToggleStyles : "" }  
+                    ${ isValid || isInvalid ? "" : defaultToggleBorderStyles } 
+                    ${ isLoading ? "juno-select-loading jn-cursor-not-allowed" : "" }
+                    ${ hasError ? "juno-select-error jn-cursor-not-allowed" : "" }
+                    ${ className }
+                  `}
+                  {...props}
+                >
+                  {({ open, value }) => (
+                    
+                    (!hasError && !isLoading) ?
                       <>
-                        { optionValuesAndLabels.get(value)?.children || optionValuesAndLabels.get(value)?.label || optionValuesAndLabels.get(value)?.val || placeholder }
+                        <span className={`${truncateStyles}`}>
+                          <>
+                            { optionValuesAndLabels.get(value)?.children || optionValuesAndLabels.get(value)?.label || optionValuesAndLabels.get(value)?.val || placeholder }
+                          </>
+                        </span>
+                        <span className="jn-flex">
+                          { isValid ? 
+                              <Icon icon="checkCircle" color="jn-text-theme-success" />
+                            : ""
+                          }
+                          { isInvalid ? 
+                              <Icon icon="dangerous" color="jn-text-theme-error" />
+                            : ""
+                          }
+                          <span><Icon icon={ open ? "expandLess" : "expandMore" } /></span>
+                        </span>
                       </>
-                    </span>
-                    <span className="jn-flex">
-                      { isValid ? 
-                          <Icon icon="checkCircle" color="jn-text-theme-success" />
-                        : ""
-                      }
-                      { isInvalid ? 
-                          <Icon icon="dangerous" color="jn-text-theme-error" />
-                        : ""
-                      }
-                      <span><Icon icon={ open ? "expandLess" : "expandMore" } /></span>
-                    </span>
-                  </>
-                :
-                  <span className={`${centeredIconStyles}`} >
-                    { hasError ?
-                       <Icon icon="errorOutline" color="jn-text-theme-error" className={"jn-cursor-not-allowed"} />
-                      :
-                        isLoading ?
-                          <Spinner className={"jn-cursor-not-allowed"} />
-                        :
-                          ""
-                    }
-                  </span>
-                
-              )}
-  
-            </Listbox.Button>
-            <Listbox.Options 
-              className={`
-                juno-select-menu
-                ${menuStyles}
-              `}
-            >
-              { children }
-            </Listbox.Options>
-          
-          </Float>
+                    :
+                      <span className={`${centeredIconStyles}`} >
+                        { hasError ?
+                           <Icon icon="errorOutline" color="jn-text-theme-error" className={"jn-cursor-not-allowed"} />
+                          :
+                            isLoading ?
+                              <Spinner className={"jn-cursor-not-allowed"} />
+                            :
+                              ""
+                        }
+                      </span>
+                    
+                  )}
+      
+                </Listbox.Button>
+              </Float.Reference>
+              
+                { createPortal(
+                  
+                  <Float.Content>
+                    <Listbox.Options 
+                      className={`
+                        juno-select-menu
+                        ${menuStyles}
+                      `}
+                    >
+                      { children }
+                    </Listbox.Options>
+                  </Float.Content>
+                  
+                , portalContainerRef ? portalContainerRef : document.body
+                )}
+              
+            </Float>
+            
+            
+            
           
         </Listbox>
         

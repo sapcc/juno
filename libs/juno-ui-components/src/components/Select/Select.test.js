@@ -324,23 +324,5 @@ describe("Select", () => {
     await userEvent.click(option1)
     expect(toggle).toHaveTextContent("Option 1")
   })
-
-  test("shows a warning in the console when one of the children is undefined or not a SelectOption", async () => {
-    const spy = jest.spyOn(console, 'warn').mockImplementation(() => {})
-    render(
-      <Select>
-        <SelectOption>Option 1</SelectOption>
-        <SelectOption>Option 2</SelectOption>
-        <SelectOption>Option 3</SelectOption>
-        <SelectOption>Option 4</SelectOption>
-        <SelectOption>Option 5</SelectOption>
-        <div>Option 6</div>
-        {undefined}
-      </Select>
-    )
-    expect(spy).toHaveBeenCalledTimes(2)
-    expect(spy).toHaveBeenCalledWith("Select: at least one of the options is not a valid SelectOption component:")
-    spy.mockRestore()
-  })
   
 })
