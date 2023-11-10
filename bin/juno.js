@@ -101,7 +101,6 @@ const create = () => {
   // replace template with name
   replaceInAllFiles(`./${argv.name}`, "template", argv.name)
   replaceInAllFiles(`./${argv.name}`, "template-lib", argv.name)
-  copyPropsHelper()
 
   // EXTERNAL
   if (!argv.internal) {
@@ -109,6 +108,7 @@ const create = () => {
       `External ${argv.type}:`,
       "replace dependencies in package.json"
     )
+    copyPropsHelper()
     // libs path
     const libsPath = path.resolve(__dirname, "../libs")
     // read package.json of all libs in juno
