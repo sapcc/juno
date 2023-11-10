@@ -1,8 +1,11 @@
 import { Meta, Canvas, Controls } from "@storybook/blocks"
 import * as Textarea from "../components/Textarea/Textarea.stories"
-import { Cat } from "./Cat.jsx"
+import { ColorPalette } from "./ColorPalette.jsx"
+import imageUrl from "./img/Schwan.jpg"
 
-<Meta title="Introduction" />
+{/* The Metatag helps to sort the page in the Nav bar. Components/Introduction would name the page Introduction in the components folder */}
+
+<Meta title="HowTo: mdx" />
 
 # Welcome
 
@@ -12,22 +15,14 @@ Juno is extending W3C Standards to provide a more versatile and developer-friend
 
 <Canvas of={Textarea.WithLabel} />
 
-{/* The 'of' prop in the prob is not supported in .stories.mdx files, only .mdx files! Same here with Canvas and image */}
+<img src={imageUrl} alt="Image alt" />
 
-## Colors
+## Componenten
+
+<ColorPalette theme="theme-dark" />
+
+<ColorPalette theme="theme-light" />
 
 {
-
-// fetch('../tailwind.config.js').then(response => response.text()).then(response => console.log(response))
-
+console.log("You can write JS in curly braces")
 }
-
-## Components
-
-<img
-  src="https://i.ebayimg.com/images/g/5qgAAOSwoBtW3zvq/s-l1600.jpg"
-  alt="A happy cat"
-  height="200px"
-/>
-
-<Cat />
