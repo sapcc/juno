@@ -4,6 +4,7 @@ import {
   useAuthData,
   useGlobalsApiEndpoint,
   useGlobalsAssetsHost,
+  usePlugin,
 } from "../components/StoreProvider"
 
 // get plugin configs from k8s api
@@ -42,47 +43,48 @@ const useApi = () => {
           limit: 500,
         }
       ),
-    ]).then(([manifest, configs]) => {
-      // console.log("::::::::::::::::::::::::manifest", manifest)
-      // console.log("::::::::::::::::::::::::configs", configs.items)
+    ])
+      .then(([manifest, configs]) => {
+        // console.log("::::::::::::::::::::::::manifest", manifest)
+        // console.log("::::::::::::::::::::::::configs", configs.items)
 
-      // create config map
-      const config = {}
-      configs.items.forEach((plugin) => {
-        const id = plugin.metadata?.name
-        const name = plugin.status?.uiApplication?.name
-        const displayName = plugin.spec?.displayName
-        const weight = plugin.status?.weight
-        const version = plugin.status?.uiApplication?.version
-        const url = plugin.status?.uiApplication?.url
+        // create config map
+        const config = {}
+        configs.items.forEach((conf) => {
+          const id = conf.metadata?.name
+          const name = conf.status?.uiApplication?.name
+          const displayName = conf.spec?.displayName
+          const weight = conf.status?.weight
+          const version = conf.status?.uiApplication?.version
+          const url = conf.status?.uiApplication?.url
 
-        // only add plugin if the url is from another host or the name with the given version is in the manifest!
-        if ((url && url.indexOf(assetsHost) < 0) || manifest[name]?.[version]) {
-          // config contains id, name, displayName, weight, version, url, props
-          // the id is added to the props by default
-          config[id] = {
-            id,
-            name,
-            displayName: displayName || name,
-            weight,
-            version,
-            url,
-            navigable: true,
-            props: plugin.spec?.optionValues?.reduce(
-              (map, item) => {
+          // only add plugin if the url is from another host or the name with the given version is in the manifest!
+          if (
+            (url && url.indexOf(assetsHost) < 0) ||
+            manifest[name]?.[version]
+          ) {
+            const newConf = usePlugin.actions.createConfig({
+              id,
+              name,
+              displayName,
+              weight,
+              version,
+              url,
+              props: conf.spec?.optionValues?.reduce((map, item) => {
                 map[item.name] = item.value
                 return map
-              },
-              { id } // add plugin id to props
-            ),
+              }, {}),
+            })
+            if (newConf) config[id] = newConf
           }
-        }
+        })
+
+        return config
       })
-
-      // console.log("::::::::::::::::::::::::config", config)
-
-      return config
-    })
+      .catch((error) => {
+        // TODO: display error to the user
+        console.warn(error)
+      })
   }, [client, assetsHost, namespace])
 
   return { client, getPluginConfigs }

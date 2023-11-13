@@ -12,6 +12,7 @@ import {
   useAppsConfig,
   useAppsActive,
   useAuthActions,
+  usePlugin,
 } from "../../components/StoreProvider"
 import Avatar from "../Avatar"
 
@@ -89,22 +90,35 @@ const PluginNav = () => {
     >
       <GreenhouseLogo className="mb-6" title="Greenhouse" />
 
-      {Object.values(appsConfig)
-        .filter((a) => a.navigable)
-        .sort((a, b) => {
-          // sort by weight, then by name
-          // if weight is not defined, app is sorted to the end
-          const w1 = a.weight === undefined ? Infinity : a.weight
-          const w2 = b.weight === undefined ? Infinity : b.weight
-          let weightSort = w1 - w2
-          weightSort = weightSort > 0 ? 1 : weightSort < 0 ? -1 : 0
-          return weightSort || a.displayName.localeCompare(b.displayName)
-        })
-        .map((appConf, i) => (
+      {usePlugin.appConfig().map((appConf, i) => (
+        <Stack
+          key={i}
+          direction="vertical"
+          alignment="center"
+          className={`greenhouse-nav-item ${navItem(
+            activeApps.indexOf(appConf.id) >= 0
+          )}`}
+          role="button"
+          tabIndex="0"
+          onClick={() => setActiveApps([appConf.id])}
+        >
+          <AppIcon name={appConf.name} />
+          <span className={appNameStyles}>{appConf.displayName}</span>
+        </Stack>
+      ))}
+
+      <Stack
+        direction="vertical"
+        gap="3"
+        alignment="center"
+        className="mt-4 py-4 border-theme-background-lvl-1 border-y-2"
+      >
+        {usePlugin.mngConfig().map((appConf, i) => (
           <Stack
-            key={i}
             direction="vertical"
+            gap="3"
             alignment="center"
+            // className="mt-4 py-4 border-theme-background-lvl-1 border-y-2"
             className={`greenhouse-nav-item ${navItem(
               activeApps.indexOf(appConf.id) >= 0
             )}`}
@@ -117,24 +131,20 @@ const PluginNav = () => {
           </Stack>
         ))}
 
-      <Stack
-        direction="vertical"
-        gap="3"
-        alignment="center"
-        className="mt-4 py-4 border-theme-background-lvl-1 border-y-2"
-      >
-        {loggedIn ? (
-          <>
-            <Avatar url={authData?.parsed?.avatarUrl?.small} />
-            <Button variant="subdued" size="small" onClick={() => logout()}>
-              Logout
+        <Stack direction="vertical" alignment="center">
+          {loggedIn ? (
+            <>
+              <Avatar url={authData?.parsed?.avatarUrl?.small} />
+              <Button variant="subdued" size="small" onClick={() => logout()}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <Button size="small" onClick={() => login()}>
+              Login
             </Button>
-          </>
-        ) : (
-          <Button size="small" onClick={() => login()}>
-            Login
-          </Button>
-        )}
+          )}
+        </Stack>
       </Stack>
     </Stack>
   )

@@ -5,6 +5,7 @@ import {
   useAppsActive,
   useAppsConfig,
   useAppsIsFetching,
+  usePlugin,
 } from "../components/StoreProvider"
 import useApi from "../hooks/useApi"
 import { useLayoutEffect } from "react"
@@ -33,17 +34,12 @@ const PluginContainer = () => {
       .then((config) => {
         // predefined apps
         const predefinedApps = {
-          exampleapp: {
-            displayName: "exampleapp",
-            id: "exampleapp",
-            name: "exampleapp",
-            version: "latest",
-            navigable: true,
-            props: {
-              theme: "theme-light",
-              id: "exampleapp",
-            },
-          },
+          [`greenhouse-management`]: usePlugin.actions.createConfig({
+            id: "greenhouse-management",
+            name: "greenhouse-management",
+            displayName: "Organization",
+            navType: usePlugin.navTypes.MNG,
+          }),
         }
         // combine apps
         return { ...config, ...predefinedApps }
