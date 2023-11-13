@@ -88,7 +88,7 @@ const PluginNav = () => {
 
       {usePlugin.appConfig().map((appConf, i) => (
         <Stack
-          key={i}
+          key={`apps-${i}`}
           direction="vertical"
           alignment="center"
           className={`greenhouse-nav-item ${navItem(
@@ -114,7 +114,7 @@ const PluginNav = () => {
             direction="vertical"
             gap="3"
             alignment="center"
-            // className="mt-4 py-4 border-theme-background-lvl-1 border-y-2"
+            key={`mng-apps-${i}`}
             className={`greenhouse-nav-item ${navItem(
               activeApps.indexOf(appConf.id) >= 0
             )}`}
