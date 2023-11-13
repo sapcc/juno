@@ -4,8 +4,8 @@ import {
   useAuthData,
   useGlobalsApiEndpoint,
   useGlobalsAssetsHost,
-  usePlugin,
 } from "../components/StoreProvider"
+import { createPluginConfig } from "../lib/plugin"
 
 // get plugin configs from k8s api
 const useApi = () => {
@@ -63,7 +63,7 @@ const useApi = () => {
             (url && url.indexOf(assetsHost) < 0) ||
             manifest[name]?.[version]
           ) {
-            const newConf = usePlugin.actions.createConfig({
+            const newConf = createPluginConfig({
               id,
               name,
               displayName,

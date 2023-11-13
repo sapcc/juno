@@ -24,12 +24,6 @@ export const useAuthActions = () => useStore((s) => s.auth.actions)
 
 // APPS
 export const usePlugin = Plugin(useStore)
-export const useAppsActive = () => useStore((s) => s.apps.active)
-export const useAppsConfig = () => useStore((s) => s.apps.config)
-export const useAppsActions = () => useStore((s) => s.apps.actions)
-export const useAppsIsFetching = () => useStore((s) => s.apps.isFetching)
-export const useAppsError = () => useStore((s) => s.apps.error)
-export const useAppsUpdatedAt = () => useStore((s) => s.apps.updatedAt)
 
 // GLOBAL
 export const useGlobalsApiEndpoint = () =>

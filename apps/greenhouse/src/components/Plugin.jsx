@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react"
 import useAppLoader from "../hooks/useAppLoader"
-import { useAppsConfig } from "../components/StoreProvider"
+import { usePlugin } from "../components/StoreProvider"
 import { useRef } from "react"
 
 const Plugin = ({ id, active }) => {
@@ -9,7 +9,7 @@ const Plugin = ({ id, active }) => {
   const el = document.createElement("div")
   el.classList.add("inline")
   const app = useRef(el)
-  const config = useAppsConfig()
+  const config = usePlugin.config()
   const mounted = useRef(false)
 
   // create a promise to mount the app

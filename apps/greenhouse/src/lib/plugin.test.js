@@ -1,13 +1,13 @@
-import Plugin from "./plugin"
+import { createPluginConfig } from "./plugin"
 
 describe("Plugin", () => {
   describe("createPluginConfig", () => {
     it("requires at least an id and name", () => {
       const spy = jest.spyOn(console, "warn").mockImplementation(() => {})
 
-      Plugin().actions.createConfig()
-      Plugin().actions.createConfig({ id: "test" })
-      Plugin().actions.createConfig({ name: "test" })
+      createPluginConfig()
+      createPluginConfig({ id: "test" })
+      createPluginConfig({ name: "test" })
 
       expect(spy).toHaveBeenCalledTimes(3)
       expect(spy).toHaveBeenCalledWith(
@@ -19,39 +19,37 @@ describe("Plugin", () => {
     })
 
     it("maps name to displayName if missing", () => {
-      expect(
-        Plugin().actions.createConfig({ id: "id_test", name: "name_test" })
-      ).toEqual(expect.objectContaining({ displayName: "name_test" }))
+      expect(createPluginConfig({ id: "id_test", name: "name_test" })).toEqual(
+        expect.objectContaining({ displayName: "name_test" })
+      )
     })
 
     it("sets weight to default 0 if missing", () => {
-      expect(
-        Plugin().actions.createConfig({ id: "id_test", name: "name_test" })
-      ).toEqual(expect.objectContaining({ weight: 0 }))
+      expect(createPluginConfig({ id: "id_test", name: "name_test" })).toEqual(
+        expect.objectContaining({ weight: 0 })
+      )
     })
 
     it("sets version to latest if missing", () => {
-      expect(
-        Plugin().actions.createConfig({ id: "id_test", name: "name_test" })
-      ).toEqual(expect.objectContaining({ version: "latest" }))
+      expect(createPluginConfig({ id: "id_test", name: "name_test" })).toEqual(
+        expect.objectContaining({ version: "latest" })
+      )
     })
 
     it("sets navigable to true if missing", () => {
-      expect(
-        Plugin().actions.createConfig({ id: "id_test", name: "name_test" })
-      ).toEqual(expect.objectContaining({ navigable: true }))
+      expect(createPluginConfig({ id: "id_test", name: "name_test" })).toEqual(
+        expect.objectContaining({ navigable: true })
+      )
     })
 
     it("sets navigation type to app", () => {
-      expect(
-        Plugin().actions.createConfig({ id: "id_test", name: "name_test" })
-      ).toEqual(expect.objectContaining({ navType: Plugin().navTypes.APP }))
+      expect(createPluginConfig({ id: "id_test", name: "name_test" })).toEqual(
+        expect.objectContaining({ navType: Plugin().navTypes.APP })
+      )
     })
 
     it("adds id to the props", () => {
-      expect(
-        Plugin().actions.createConfig({ id: "id_test", name: "name_test" })
-      ).toEqual(
+      expect(createPluginConfig({ id: "id_test", name: "name_test" })).toEqual(
         expect.objectContaining({
           props: expect.objectContaining({ id: "id_test" }),
         })
@@ -60,7 +58,7 @@ describe("Plugin", () => {
 
     it("does not save not known keys", () => {
       expect(
-        Plugin().actions.createConfig({
+        createPluginConfig({
           id: "id_test",
           name: "name_test",
           miau: "bup",
@@ -87,7 +85,7 @@ describe("Plugin", () => {
           test2: "test2",
         },
       }
-      expect(Plugin().actions.createConfig(config)).toEqual({
+      expect(createPluginConfig(config)).toEqual({
         ...config,
         props: { ...config.props, id: config.id },
       })

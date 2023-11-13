@@ -8,9 +8,6 @@ import { Icon, Stack, Button } from "juno-ui-components"
 import {
   useAuthData,
   useAuthLoggedIn,
-  useAppsActions,
-  useAppsConfig,
-  useAppsActive,
   useAuthActions,
   usePlugin,
 } from "../../components/StoreProvider"
@@ -78,9 +75,8 @@ const PluginNav = () => {
   const authData = useAuthData()
   const loggedIn = useAuthLoggedIn()
   const { login, logout } = useAuthActions()
-  const { setActive: setActiveApps } = useAppsActions()
-  const appsConfig = useAppsConfig()
-  const activeApps = useAppsActive()
+  const { setActive: setActiveApps } = usePlugin.actions()
+  const activeApps = usePlugin.active()
 
   return (
     <Stack

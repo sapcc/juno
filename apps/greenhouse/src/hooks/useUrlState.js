@@ -1,12 +1,10 @@
 import { useEffect, useLayoutEffect } from "react"
 import { registerConsumer } from "url-state-provider"
 import {
-  useAppsActions,
-  useAppsActive,
-  useAppsConfig,
   useAuthLoggedIn,
   useGlobalsIsUrlStateSetup,
   useGlobalsActions,
+  usePlugin,
 } from "../components/StoreProvider"
 
 // url state manager
@@ -15,9 +13,9 @@ const ACTIVE_APPS_KEY = "a"
 const urlStateManager = registerConsumer(GREENHOUSE_STATE_KEY)
 
 const useUrlState = () => {
-  const { setActive: setActiveApps } = useAppsActions()
-  const activeApps = useAppsActive()
-  const appsConfig = useAppsConfig()
+  const { setActive: setActiveApps } = usePlugin.actions()
+  const activeApps = usePlugin.active()
+  const appsConfig = usePlugin.config()
   const loggedIn = useAuthLoggedIn()
   const isUrlStateSetup = useGlobalsIsUrlStateSetup()
   const { setIsUrlStateSetup } = useGlobalsActions()

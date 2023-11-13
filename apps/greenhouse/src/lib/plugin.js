@@ -17,7 +17,7 @@ const pluginConfig = {
   },
 }
 
-const createPluginConfig = (config) => {
+export const createPluginConfig = (config) => {
   // check required attrs
   if (!config?.id || !config?.name) {
     console.warn(
@@ -72,10 +72,7 @@ const Plugin = (store) => {
     isFetching: () => store((s) => s.apps.isFetching),
     error: () => store((s) => s.apps.error),
     updatedAt: () => store((s) => s.apps.updatedAt),
-    actions: {
-      ...() => store((s) => s.apps.actions),
-      createConfig: (c) => createPluginConfig(c),
-    },
+    actions: () => store((s) => s.apps.actions),
     navTypes: NAV_TYPES,
   }
 }
