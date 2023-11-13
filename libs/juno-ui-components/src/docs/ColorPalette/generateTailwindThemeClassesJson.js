@@ -16,6 +16,7 @@ const getColors = () => {
   Object.keys(theme).forEach((colorName) => {
     colors[colorName] = `jn-bg-theme-${colorName}`
   })
+
   return colors
 }
 

@@ -22,11 +22,17 @@ export function ColorPalette(props) {
       stylesWrapper="shadowRoot"
       theme={props.theme}
     >
-      <ContentArea>
-        <h2>{props.theme}</h2>
-
+      <ContentArea
+        className={
+          "jn-p-2 jn-rounded-md jn-grid jn-gap-4 xl:jn-grid-cols-4 md:jn-grid-cols-3 jn-grid-cols-2"
+        }
+      >
         {Object.entries(colors).map((color) => (
-          <ColorCard key={color[0]} colorName={color[0]} />
+          <ColorCard
+            key={color[0]}
+            colorName={color[0]}
+            colorClass={color[1]}
+          />
         ))}
       </ContentArea>
     </StyleProvider>
