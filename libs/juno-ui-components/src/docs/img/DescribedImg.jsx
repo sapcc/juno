@@ -6,6 +6,10 @@ import { ContentArea } from "../../components/ContentArea/index"
 
 export function DescribedImg(props) {
   let paragraphs
+  let float = "jn-float-right jn-w-1/2 jn-p-2"
+  if (props.float == "left") {
+    float = "jn-float-left jn-w-1/2 jn-p-2"
+  }
 
   if (!props.text && !props.src) {
     console.warn("DescribedImg has no src and text")
@@ -23,13 +27,11 @@ export function DescribedImg(props) {
   return (
     <StyleProvider key="decorator" stylesWrapper="inline">
       {props.src && paragraphs && (
-        <ContentArea className={"jn-flex"}>
-          <div className="jn-w-1/2">
-            {paragraphs.map((p) => (
-              <p>{p}</p>
-            ))}
-          </div>
-          <img className="jn-w-1/2" src={props.src} alt="Ein Schwan" />
+        <ContentArea>
+          <img className={float} src={props.src} alt="Ein Schwan" />
+          {paragraphs.map((p) => (
+            <p>{p}</p>
+          ))}
         </ContentArea>
       )}
       {props.src && !paragraphs && (
