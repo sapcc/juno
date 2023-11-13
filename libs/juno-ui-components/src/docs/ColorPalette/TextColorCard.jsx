@@ -2,7 +2,7 @@ import React from "react"
 
 // Shows a color and a name, given through props.colorName
 // The Card is used by ColorPalette.jsx
-export function ColorCard(props) {
+export function TextColorCard(props) {
   if (!props.colorName) {
     console.warn("ColorCard has no color name")
     return (
@@ -13,7 +13,12 @@ export function ColorCard(props) {
   }
 
   const colorContainerStyle = `
-    jn-h-16 ${props.colorClass}
+    jn-h-16 
+    ${props.colorClass}
+    jn-font-extrabold
+    jn-text-6xl
+    jn-px-auto
+    jn-text-center
   `
 
   return (
@@ -21,9 +26,11 @@ export function ColorCard(props) {
       <div className="jn-p-3 jn-text-theme-highest">
         <p>{props.colorName}</p>
       </div>
-      <div className={colorContainerStyle}></div>
-      <div className="jn-px-3 jn-py-4 jn-bg-theme-light">
-        <p>bg-theme-{props.colorName}</p>
+      <div className={colorContainerStyle}>
+        <p>Juno</p>
+      </div>
+      <div className="jn-px-3 jn-py-4 jn-bg-light">
+        <p>text-theme-{props.colorName}</p>
       </div>
     </div>
   )
