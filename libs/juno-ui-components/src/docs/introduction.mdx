@@ -2,18 +2,27 @@ import { Meta, Canvas, Controls } from "@storybook/blocks"
 import * as Textarea from "../components/Textarea/Textarea.stories"
 import { ColorPalette } from "./ColorPalette/ColorPalette.jsx"
 import imageUrl from "./img/Schwan.jpg"
+import { DescribedImg } from "./img/DescribedImg.jsx"
 
 {/* The Metatag helps to sort the page in the Nav bar. Components/Introduction would name the page Introduction in the components folder */}
 
-<Meta title="HowTo: mdx" />
-
-<img src={imageUrl} alt="Ein Schwan" className="m-23" />
+<Meta title="Introduction" />
 
 # Welcome
 
-Juno is a powerful React library designed to streamline your web development projects. The library offers a wide range of components and tools to simplify the development process and enhance the user experience. With Juno, you can create modern and responsive user interfaces with ease.
+{/* Centered Images or images with description */}
 
-Juno is extending W3C Standards to provide a more versatile and developer-friendly experience. Take the "textarea" component, for example. While Juno might not explicitly define the "rows" prop, Juno allows to use the props according to the standard.
+<DescribedImg
+  src={imageUrl}
+  text='Juno is a powerful React library designed to streamline your web development projects. The library offers a wide range of components and tools to simplify the development process and enhance the user experience. With Juno, you can create modern and responsive user interfaces with ease.
+  \n Juno is extending W3C Standards to provide a more versatile and developer-friendly experience. Take the "textarea" component, for example. While Juno might not explicitly define the "rows" prop, Juno allows to use the props according to the standard.'
+/>
+
+<DescribedImg src={imageUrl} />
+
+<DescribedImg text='Juno is extending W3C Standards to provide a more versatile and developer-friendly experience. Take the "textarea" component, for example. While Juno might not explicitly define the "rows" prop, Juno allows to use the props according to the standard.' />
+
+<DescribedImg />
 
 {/* Through a Canvas you can import Stories */}
 
