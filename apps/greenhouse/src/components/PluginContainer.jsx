@@ -24,23 +24,31 @@ const PluginContainer = () => {
 
   useLayoutEffect(() => {
     if (!getPluginConfigs) return
+    // set loading state
     requestConfig()
+    // set the predefined config
+    let config = {
+      [`greenhouse-management`]: createPluginConfig({
+        id: "greenhouse-management",
+        name: "greenhouse-management",
+        displayName: "Organization",
+        navType: usePlugin.navTypes.MNG,
+      }),
+    }
+    // fetch configs from kubernetes
     getPluginConfigs()
-      .then((config) => {
-        // predefined apps
-        const predefinedApps = {
-          [`greenhouse-management`]: createPluginConfig({
-            id: "greenhouse-management",
-            name: "greenhouse-management",
-            displayName: "Organization",
-            navType: usePlugin.navTypes.MNG,
-          }),
-        }
-        // combine apps
-        return { ...config, ...predefinedApps }
+      .then((kubernetesConfig) => {
+        // add the configs to the object
+        config = { ...config, ...kubernetesConfig }
       })
-      .then((config) => receiveConfig(config))
-      .catch((error) => receiveConfigError(error.message))
+      .catch((error) => {
+        // TODO display this error
+        receiveConfigError(error.message)
+      })
+      .finally(() => {
+        // save config into zustand
+        receiveConfig(config)
+      })
   }, [getPluginConfigs, requestConfig, receiveConfig, receiveConfigError])
 
   // set first plugin in the list of plugin config as active unless active exists
