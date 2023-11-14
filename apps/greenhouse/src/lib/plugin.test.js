@@ -1,4 +1,7 @@
+import * as React from "react"
 import { createPluginConfig, NAV_TYPES } from "./plugin"
+import StoreProvider, { usePlugin } from "../components/StoreProvider"
+import { renderHook, act } from "@testing-library/react"
 
 describe("Plugin", () => {
   describe("createPluginConfig", () => {
@@ -88,6 +91,77 @@ describe("Plugin", () => {
       expect(createPluginConfig(config)).toEqual({
         ...config,
         props: { ...config.props, id: config.id },
+      })
+    })
+  })
+
+  describe("savePlugin", () => {
+    describe("set active plugin", () => {
+      it("keeps active plugin if existing in the config", () => {
+        const wrapper = ({ children }) => (
+          <StoreProvider>{children}</StoreProvider>
+        )
+
+        const store = renderHook(
+          () => ({
+            saveConfig: usePlugin.saveConfig(),
+            actions: usePlugin.actions(),
+            active: usePlugin.active(),
+          }),
+          { wrapper }
+        )
+
+        const configs = {
+          plugin1: createPluginConfig({
+            id: "plugin1",
+            name: "plugin1",
+            weight: 9,
+          }),
+          plugin2: createPluginConfig({
+            id: "plugin2",
+            name: "plugin2",
+            weight: 0,
+          }),
+        }
+
+        act(() => store.result.current.actions.setActive(["plugin1"]))
+        act(() => store.result.current.saveConfig(configs))
+        expect(store.result.current.active).toEqual(["plugin1"])
+      })
+      it("sets a new active plugin (from apps and not from mng) with the lowest weight", () => {
+        const wrapper = ({ children }) => (
+          <StoreProvider>{children}</StoreProvider>
+        )
+
+        const store = renderHook(
+          () => ({
+            saveConfig: usePlugin.saveConfig(),
+            active: usePlugin.active(),
+          }),
+          { wrapper }
+        )
+
+        const configs = {
+          plugin0: createPluginConfig({
+            id: "plugin0",
+            name: "plugin0",
+            weight: 0,
+            navType: NAV_TYPES.MNG,
+          }),
+          plugin1: createPluginConfig({
+            id: "plugin1",
+            name: "plugin1",
+            weight: 9,
+          }),
+          plugin2: createPluginConfig({
+            id: "plugin2",
+            name: "plugin2",
+            weight: 1,
+          }),
+        }
+
+        act(() => store.result.current.saveConfig(configs))
+        expect(store.result.current.active).toEqual(["plugin2"])
       })
     })
   })
