@@ -1,12 +1,13 @@
 import React from "react"
 import Plugin from "./Plugin"
-import { usePlugin } from "../components/StoreProvider"
+import { usePlugin, useGlobalsEnvironment } from "../components/StoreProvider"
 import useApi from "../hooks/useApi"
 import { useLayoutEffect } from "react"
 import { createPluginConfig, NAV_TYPES } from "../lib/plugin"
 
 const PluginContainer = () => {
   const { getPluginConfigs } = useApi()
+  const environment = useGlobalsEnvironment()
   const { requestConfig, receiveConfigError } = usePlugin.actions()
   const saveConfig = usePlugin.saveConfig()
   const activeApps = usePlugin.active()
@@ -29,6 +30,7 @@ const PluginContainer = () => {
         name: "greenhouse-management",
         displayName: "Organization",
         navType: NAV_TYPES.MNG,
+        navigable: environment !== "production",
       }),
     }
     // fetch configs from kubernetes
@@ -45,7 +47,7 @@ const PluginContainer = () => {
         // save config into zustand
         saveConfig(config)
       })
-  }, [getPluginConfigs])
+  }, [getPluginConfigs, environment])
 
   if (isFetching) return "Loading plugins..."
   if (availableAppIds.length === 0) return "No plugins available"

@@ -129,7 +129,7 @@ const PluginNav = () => {
           </Stack>
         ))}
 
-        <Stack direction="vertical" alignment="center">
+        <Stack direction="vertical" alignment="center" gap="3">
           {loggedIn ? (
             <>
               <Avatar url={authData?.parsed?.avatarUrl?.small} />
