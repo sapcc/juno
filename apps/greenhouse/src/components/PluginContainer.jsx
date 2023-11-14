@@ -7,12 +7,7 @@ import { createPluginConfig } from "../lib/plugin"
 
 const PluginContainer = () => {
   const { getPluginConfigs } = useApi()
-  const {
-    setActive: setActiveApps,
-    requestConfig,
-    receiveConfig,
-    receiveConfigError,
-  } = usePlugin.actions()
+  const { requestConfig, receiveConfigError } = usePlugin.actions()
   const saveConfig = usePlugin.saveConfig()
   const activeApps = usePlugin.active()
   const appsConfig = usePlugin.config()
@@ -50,25 +45,7 @@ const PluginContainer = () => {
         // save config into zustand
         saveConfig(config)
       })
-  }, [getPluginConfigs, requestConfig, receiveConfig, receiveConfigError])
-
-  // set first plugin in the list of plugin config as active unless active exists
-  useLayoutEffect(() => {
-    if (!appsConfig) return
-    const availableAppIds = Object.keys(appsConfig)
-    if (availableAppIds.length === 0) return
-    const active = activeApps.map((a) => availableAppIds.indexOf(a) >= 0)
-
-    if (active.length === 0) {
-      // if there is no active app, then from appsConfig, get the app id of the app with the lowest weight and set it as active
-      const minWeightApp = Object.values(appsConfig).reduce(
-        (previous, current) => {
-          return current.weight < previous.weight ? current : previous
-        }
-      )
-      setActiveApps(minWeightApp.id)
-    }
-  }, [appsConfig, activeApps, setActiveApps])
+  }, [getPluginConfigs])
 
   if (isFetching) return "Loading plugins..."
   if (availableAppIds.length === 0) return "No plugins available"

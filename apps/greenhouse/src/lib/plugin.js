@@ -41,7 +41,7 @@ export const createPluginConfig = (config) => {
   return newConfig
 }
 
-const getSortedConfig = (config, navtype) => {
+const filterAndSortConfigByType = (config, navtype) => {
   if (typeof config !== "object" || config === null) return []
   return Object.values(config)
     .filter((a) => a.navigable)
@@ -55,6 +55,18 @@ const getSortedConfig = (config, navtype) => {
       weightSort = weightSort > 0 ? 1 : weightSort < 0 ? -1 : 0
       return weightSort || a.displayName.localeCompare(b.displayName)
     })
+}
+
+// if no active app already set will set the app (no mng apps) with the lowest weight
+const findActiveAppId = (appConfig) => {
+  if (!appConfig || appConfig.length === 0) return null
+
+  // if there is no active app, then from appsConfig, get the app id of the app with the lowest weight and set it as active
+  const minWeightApp = appConfig.reduce((previous, current) => {
+    return current.weight < previous.weight ? current : previous
+  })
+
+  return [minWeightApp.id]
 }
 
 const Plugin = (store) => {
@@ -71,12 +83,23 @@ const Plugin = (store) => {
       const saveConfig = store((s) => s.apps.actions.receiveConfig)
       const saveAppConfig = store((s) => s.apps.actions.setAppConfig)
       const saveMngConfig = store((s) => s.apps.actions.setMngConfig)
-      return (c) => {
+      const setActive = store((s) => s.apps.actions.setActive)
+      const activeApps = store((s) => s.apps.active)
+      return (config) => {
         // save all configs
-        saveConfig(c)
+        saveConfig(config)
         // save configs splitted in mng and apps
-        saveAppConfig(getSortedConfig(c, NAV_TYPES.APP))
-        saveMngConfig(getSortedConfig(c, NAV_TYPES.MNG))
+        const appConfig = filterAndSortConfigByType(config, NAV_TYPES.APP)
+        saveAppConfig(appConfig)
+        saveMngConfig(filterAndSortConfigByType(config, NAV_TYPES.MNG))
+        // if no config found in the active apps set a new one but from the apps and not mng
+        if (
+          Object.keys(config).filter((key) => activeApps.includes(key))
+            .length === 0
+        ) {
+          const newActiveApp = findActiveAppId(appConfig)
+          setActive(newActiveApp)
+        }
       }
     },
     navTypes: NAV_TYPES,
