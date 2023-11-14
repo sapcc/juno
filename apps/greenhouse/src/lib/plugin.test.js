@@ -1,4 +1,4 @@
-import { createPluginConfig } from "./plugin"
+import { createPluginConfig, NAV_TYPES } from "./plugin"
 
 describe("Plugin", () => {
   describe("createPluginConfig", () => {
@@ -44,7 +44,7 @@ describe("Plugin", () => {
 
     it("sets navigation type to app", () => {
       expect(createPluginConfig({ id: "id_test", name: "name_test" })).toEqual(
-        expect.objectContaining({ navType: Plugin().navTypes.APP })
+        expect.objectContaining({ navType: NAV_TYPES.APP })
       )
     })
 
@@ -79,7 +79,7 @@ describe("Plugin", () => {
         url: "http://miau.bup",
         weight: 9,
         navigable: false,
-        navType: Plugin().navTypes.MNG,
+        navType: NAV_TYPES.MNG,
         props: {
           test1: "test1",
           test2: "test2",

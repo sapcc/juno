@@ -1,4 +1,4 @@
-const NAV_TYPES = {
+export const NAV_TYPES = {
   APP: "app",
   MNG: "management",
 }
@@ -102,7 +102,6 @@ const Plugin = (store) => {
         }
       }
     },
-    navTypes: NAV_TYPES,
   }
 }
 

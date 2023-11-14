@@ -3,7 +3,7 @@ import Plugin from "./Plugin"
 import { usePlugin } from "../components/StoreProvider"
 import useApi from "../hooks/useApi"
 import { useLayoutEffect } from "react"
-import { createPluginConfig } from "../lib/plugin"
+import { createPluginConfig, NAV_TYPES } from "../lib/plugin"
 
 const PluginContainer = () => {
   const { getPluginConfigs } = useApi()
@@ -28,7 +28,7 @@ const PluginContainer = () => {
         id: "greenhouse-management",
         name: "greenhouse-management",
         displayName: "Organization",
-        navType: usePlugin.navTypes.MNG,
+        navType: NAV_TYPES.MNG,
       }),
     }
     // fetch configs from kubernetes
