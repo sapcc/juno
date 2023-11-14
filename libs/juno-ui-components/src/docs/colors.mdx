@@ -1,0 +1,18 @@
+import { Meta, Controls } from "@storybook/blocks"
+import { ColorPalette } from "./ColorPalette/ColorPalette.jsx"
+
+<Meta title="Colors" />
+
+# Colors
+
+The Juno UI component library is based on Tailwind CSS which means that all Tailwind rules regarding colors apply (e.g. background colors are added by using a class name bg-COLOR_NAME, text colors via text-COLOR_NAME etc.). The difference is that the default Tailwind color names do not exist in the Juno design system. Instead we have our own colors and color naming scheme.
+
+## Theme Colors
+
+Theme colors adjust according to the chosen theme (dark or light) automatically. So unless you are creating something like a chart you should try to avoid the straight up colors like juno-grey-... and instead stick to the theme colors (they always contain the word theme somewhere in the name).
+
+<ColorPalette theme="theme-dark" />
+
+<ColorPalette theme="theme-light" />
+
+## Primary Colors

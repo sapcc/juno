@@ -18,42 +18,42 @@ export function ColorPalette(props) {
     )
   }
 
+  const theme = props.theme
+
   return (
-    <StyleProvider
-      key="decorator"
-      stylesWrapper="shadowRoot"
-      theme={props.theme}
-    >
-      <ContentArea className={"jn-p-4 jn-rounded-xl"}>
-        <h2 className="jn-text-xl jn-my-2 jn-font-semibold">Theme colors</h2>
-        <div
-          className={
-            "jn-grid jn-gap-4 xl:jn-grid-cols-4 md:jn-grid-cols-3 jn-grid-cols-2 jn-mb-6"
-          }
-        >
-          {Object.entries(colors).map((color) => (
-            <ColorCard
-              key={color[0]}
-              colorName={color[0]}
-              colorClass={color[1]}
-            />
-          ))}
-        </div>
-        <h2 className="jn-text-xl jn-my-2 jn-font-semibold">Font colos</h2>
-        <div
-          className={
-            "jn-grid jn-gap-4 xl:jn-grid-cols-4 md:jn-grid-cols-3 jn-grid-cols-2"
-          }
-        >
-          {Object.entries(textColors).map((textColor) => (
-            <TextColorCard
-              key={textColor[0]}
-              colorName={textColor[0]}
-              colorClass={textColor[1]}
-            />
-          ))}
-        </div>
-      </ContentArea>
-    </StyleProvider>
+    <div>
+      <StyleProvider key="decorator" stylesWrapper="shadowRoot">
+        <ContentArea className={`jn-p-4 jn-rounded-xl ${theme}`}>
+          <h2 className="jn-text-xl jn-my-2 jn-font-semibold">Theme colors</h2>
+          <div
+            className={
+              "jn-grid jn-gap-4 xl:jn-grid-cols-4 md:jn-grid-cols-3 jn-grid-cols-2 jn-mb-6"
+            }
+          >
+            {Object.entries(colors).map((color) => (
+              <ColorCard
+                key={color[0]}
+                colorName={color[0]}
+                colorClass={color[1]}
+              />
+            ))}
+          </div>
+          <h2 className="jn-text-xl jn-my-2 jn-font-semibold">Font colos</h2>
+          <div
+            className={
+              "jn-grid jn-gap-4 xl:jn-grid-cols-4 md:jn-grid-cols-3 jn-grid-cols-2"
+            }
+          >
+            {Object.entries(textColors).map((textColor) => (
+              <TextColorCard
+                key={textColor[0]}
+                colorName={textColor[0]}
+                colorClass={textColor[1]}
+              />
+            ))}
+          </div>
+        </ContentArea>
+      </StyleProvider>
+    </div>
   )
 }
