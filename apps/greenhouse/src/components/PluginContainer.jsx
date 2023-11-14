@@ -1,13 +1,9 @@
 import React from "react"
 import Plugin from "./Plugin"
-import {
-  useAppsActions,
-  useAppsActive,
-  useAppsConfig,
-  useAppsIsFetching,
-} from "../components/StoreProvider"
+import { usePlugin } from "../components/StoreProvider"
 import useApi from "../hooks/useApi"
 import { useLayoutEffect } from "react"
+import { createPluginConfig } from "../lib/plugin"
 
 const PluginContainer = () => {
   const { getPluginConfigs } = useApi()
@@ -16,10 +12,10 @@ const PluginContainer = () => {
     requestConfig,
     receiveConfig,
     receiveConfigError,
-  } = useAppsActions()
-  const activeApps = useAppsActive()
-  const appsConfig = useAppsConfig()
-  const isFetching = useAppsIsFetching()
+  } = usePlugin.actions()
+  const activeApps = usePlugin.active()
+  const appsConfig = usePlugin.config()
+  const isFetching = usePlugin.isFetching()
 
   const availableAppIds = React.useMemo(
     () => Object.keys(appsConfig),
@@ -30,6 +26,19 @@ const PluginContainer = () => {
     if (!getPluginConfigs) return
     requestConfig()
     getPluginConfigs()
+      .then((config) => {
+        // predefined apps
+        const predefinedApps = {
+          [`greenhouse-management`]: createPluginConfig({
+            id: "greenhouse-management",
+            name: "greenhouse-management",
+            displayName: "Organization",
+            navType: usePlugin.navTypes.MNG,
+          }),
+        }
+        // combine apps
+        return { ...config, ...predefinedApps }
+      })
       .then((config) => receiveConfig(config))
       .catch((error) => receiveConfigError(error.message))
   }, [getPluginConfigs, requestConfig, receiveConfig, receiveConfigError])
