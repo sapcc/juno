@@ -13,6 +13,7 @@ const PluginContainer = () => {
     receiveConfig,
     receiveConfigError,
   } = usePlugin.actions()
+  const saveConfig = usePlugin.saveConfig()
   const activeApps = usePlugin.active()
   const appsConfig = usePlugin.config()
   const isFetching = usePlugin.isFetching()
@@ -47,7 +48,7 @@ const PluginContainer = () => {
       })
       .finally(() => {
         // save config into zustand
-        receiveConfig(config)
+        saveConfig(config)
       })
   }, [getPluginConfigs, requestConfig, receiveConfig, receiveConfigError])
 

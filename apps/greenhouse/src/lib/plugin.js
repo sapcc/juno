@@ -61,18 +61,24 @@ const Plugin = (store) => {
   return {
     active: () => store((s) => s.apps.active),
     config: () => store((s) => s.apps.config),
-    appConfig: () => {
-      const config = store((s) => s.apps.config)
-      return getSortedConfig(config, NAV_TYPES.APP)
-    },
-    mngConfig: () => {
-      const config = store((s) => s.apps.config)
-      return getSortedConfig(config, NAV_TYPES.MNG)
-    },
+    appConfig: () => store((s) => s.apps.appConfig),
+    mngConfig: () => store((s) => s.apps.mngConfig),
     isFetching: () => store((s) => s.apps.isFetching),
     error: () => store((s) => s.apps.error),
     updatedAt: () => store((s) => s.apps.updatedAt),
     actions: () => store((s) => s.apps.actions),
+    saveConfig: () => {
+      const saveConfig = store((s) => s.apps.actions.receiveConfig)
+      const saveAppConfig = store((s) => s.apps.actions.setAppConfig)
+      const saveMngConfig = store((s) => s.apps.actions.setMngConfig)
+      return (c) => {
+        // save all configs
+        saveConfig(c)
+        // save configs splitted in mng and apps
+        saveAppConfig(getSortedConfig(c, NAV_TYPES.APP))
+        saveMngConfig(getSortedConfig(c, NAV_TYPES.MNG))
+      }
+    },
     navTypes: NAV_TYPES,
   }
 }

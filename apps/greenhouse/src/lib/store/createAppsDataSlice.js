@@ -2,6 +2,8 @@ const createAppsDataSlice = (set, get) => ({
   apps: {
     active: [],
     config: {},
+    appConfig: [], // plain app configs
+    mngConfig: [], // management app configs
     isFetching: false,
     error: null,
     updatedAt: null,
@@ -65,6 +67,20 @@ const createAppsDataSlice = (set, get) => ({
             ...state.apps,
             isFetching: false,
             error,
+          },
+        })),
+      setAppConfig: (appConfig) =>
+        set((state) => ({
+          apps: {
+            ...state.apps,
+            appConfig,
+          },
+        })),
+      setMngConfig: (mngConfig) =>
+        set((state) => ({
+          apps: {
+            ...state.apps,
+            mngConfig,
           },
         })),
     },

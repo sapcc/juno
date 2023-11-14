@@ -77,6 +77,8 @@ const PluginNav = () => {
   const { login, logout } = useAuthActions()
   const { setActive: setActiveApps } = usePlugin.actions()
   const activeApps = usePlugin.active()
+  const appConfig = usePlugin.appConfig()
+  const mngConfig = usePlugin.mngConfig()
 
   return (
     <Stack
@@ -86,7 +88,7 @@ const PluginNav = () => {
     >
       <GreenhouseLogo className="mb-6" title="Greenhouse" />
 
-      {usePlugin.appConfig().map((appConf, i) => (
+      {appConfig.map((appConf, i) => (
         <Stack
           key={`apps-${i}`}
           direction="vertical"
@@ -109,7 +111,7 @@ const PluginNav = () => {
         alignment="center"
         className="mt-4 py-4 border-theme-background-lvl-1 border-y-2"
       >
-        {usePlugin.mngConfig().map((appConf, i) => (
+        {mngConfig.map((appConf, i) => (
           <Stack
             direction="vertical"
             gap="3"
