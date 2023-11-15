@@ -1,9 +1,11 @@
 import React from "react"
 
-// Shows a color and a name, given through props.colorName
+// Shows a color from a tailwind class props.colorClass and the name the color given through props.colorName
+// Optional: A prefix like "theme-" can be used (props.prefix)
 // The Card is used by ColorPalette.jsx
+
 export function ColorCard(props) {
-  if (!props.colorName) {
+  if (!props.colorName || !props.colorClass) {
     console.warn("ColorCard has no color name")
     return (
       <>
@@ -17,13 +19,16 @@ export function ColorCard(props) {
   `
 
   return (
-    <div className="jn-rounded-lg jn-border jn-border-theme-light">
+    <div className="jn-rounded-lg jn-border ">
       <div className="jn-p-3 jn-text-theme-highest">
         <p>{props.colorName}</p>
       </div>
       <div className={colorContainerStyle}></div>
-      <div className="jn-px-3 jn-py-4 jn-bg-theme-light">
-        <p>bg-theme-{props.colorName}</p>
+      <div className="jn-px-3 jn-py-4 ">
+        <p>
+          {props.prefix ? props.prefix : ""}
+          {props.colorName}
+        </p>
       </div>
     </div>
   )

@@ -29,8 +29,8 @@ export function TextColorCard(props) {
       <div className={colorContainerStyle}>
         <p>Juno</p>
       </div>
-      <div className="jn-px-3 jn-py-4 jn-bg-light">
-        <p>text-theme-{props.colorName}</p>
+      <div className="jn-px-3 jn-py-4">
+        <p>theme-{props.colorName}</p>
       </div>
     </div>
   )

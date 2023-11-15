@@ -14,6 +14,11 @@ const generateTailwindThemeClassesJson = () => {
     "./src/docs/ColorPalette/TailwindThemeTextColors.js",
     "module.exports=" + JSON.stringify(getTextColors(), null, 2)
   )
+
+  fs.writeFileSync(
+    "./src/docs/ColorPalette/TailwindJunoColors.js",
+    "module.exports=" + JSON.stringify(getJunoColors(), null, 2)
+  )
 }
 
 const getColors = () => {
@@ -31,6 +36,33 @@ const getTextColors = () => {
   const colors = {}
   Object.keys(theme).forEach((colorName) => {
     colors[colorName] = `jn-text-theme-${colorName}`
+  })
+
+  return colors
+}
+
+const getJunoColors = () => {
+  const rejectList = ["theme", "current", "transparent"]
+  const colorList = tailwindConfig.theme.colors
+
+  let colors = {}
+
+  Object.keys(colorList).forEach((colorName) => {
+    if (!rejectList.includes(colorName)) {
+      colors[colorName] = `jn-bg-${colorName}`
+
+      const colorfam = Object.keys(colorList[colorName])
+
+      if (colorfam) {
+        colorfam.map((subcolor) => {
+          if (subcolor != "DEFAULT") {
+            colors[
+              `${colorName}-${subcolor}`
+            ] = `jn-bg-${colorName}-${subcolor}`
+          }
+        })
+      }
+    }
   })
 
   return colors
