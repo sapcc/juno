@@ -1,6 +1,9 @@
 import { Meta, Controls } from "@storybook/blocks"
 import { ColorPalette } from "./ColorPalette/ColorPalette.jsx"
 import { JunoColorPalette } from "./ColorPalette/JunoColorPalette.jsx"
+import { Message } from "../components/Message/Message.component.js"
+
+import { StyleProvider } from "../components/StyleProvider/StyleProvider.component.js"
 
 <Meta title="Colors" />
 
@@ -18,6 +21,14 @@ Theme colors adjust according to the chosen theme (dark or light) automatically.
 
 ## Primary Colors
 
-Do not use these colors!! They are listed mostly for informational purposes. The only use case where the base colors might be used is for charts and the like. Otherwise stick to the theme colors above!
+<div>
+  <StyleProvider key="juno-decorator" stylesWrapper="inline">
+    <Message
+      onDismiss={function noRefCheck() {}}
+      text="Do not use these colors! They are listed mostly for informational purposes. The only use case where the base colors might be used is for charts and the like. Otherwise stick to the theme colors above!"
+      variant="warning"
+    />
+  </StyleProvider>
+</div>
 
 <JunoColorPalette />

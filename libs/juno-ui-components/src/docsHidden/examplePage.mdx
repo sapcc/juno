@@ -3,6 +3,9 @@ import * as Textarea from "../components/Textarea/Textarea.stories"
 import { ColorPalette } from "../docs/ColorPalette/ColorPalette.jsx"
 import imageUrl from "../docs/img/Schwan.jpg"
 
+import { Message } from "../components/Message/Message.component.js"
+import { StyleProvider } from "../components/StyleProvider/StyleProvider.component.js"
+
 {/* The Metatag helps to sort the page in the Nav bar. Components/Introduction would name the page Introduction in the components folder */}
 
 <Meta title="Example Page" />
@@ -19,9 +22,17 @@ Juno is extending W3C Standards to provide a more versatile and developer-friend
 <Canvas of={Textarea.WithLabel} />
 ## Componenten
 
-{/* You can also use the img tag or import other components */}
+<div>
+  <StyleProvider key="juno-decorator" stylesWrapper="inline">
+    <Message
+      onDismiss={function noRefCheck() {}}
+      text="This is a component. Not a story."
+      variant="warning"
+    />
+  </StyleProvider>
+</div>
 
-<ColorPalette theme="theme-dark" />
+{/* You can also use the img tag or import other components */}
 
 <ColorPalette theme="theme-light" />
 
