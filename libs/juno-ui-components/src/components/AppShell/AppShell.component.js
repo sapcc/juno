@@ -98,7 +98,7 @@ AppShell.propTypes = {
   /** Optional: Defaults to false. Set embedded to true if app is to be rendered embedded in another app/page. 
    * In this case only the content area and children are rendered, no header/footer or remaining layout components */
   embedded: PropTypes.bool,
-  /** Whether the main page / view content can spread over the full available width of the viewport or not. Default is `false` (resulting in a width-constrained, centered content column on very wide screens) UNLESS the AppShell is rendered with embedded as true, then the main content will be full-width by default. In embedded mode, `fullWidthContnet` can still be passed as `false` explicitly. */
+  /** Whether the main page / view content can spread over the full available width of the viewport or not. Default is `false` (resulting in a width-constrained, centred content column on very wide screens) UNLESS the AppShell is rendered with embedded as true, then the main content will be full-width by default. In embedded mode, `fullWidthContent` can still be passed as `false` explicitly. */
   fullWidthContent: PropTypes.bool,
   /** Add a custom class name */
   className: PropTypes.string,
