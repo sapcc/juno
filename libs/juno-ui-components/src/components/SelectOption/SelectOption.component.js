@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from "react"
+import React, { Fragment, useContext, useEffect } from "react"
 import PropTypes from "prop-types"
 import { Listbox } from "@headlessui/react"
 import { SelectContext } from "../Select/Select.component"
@@ -58,8 +58,14 @@ export const SelectOption = ({
   const selectContext = useContext(SelectContext)
   const {
     truncateOptions: truncateOptions,
+    addOptionValueAndLabel: addOptionValueAndLabel,
   } = selectContext || {}
-  // const valueObject = {val: value, label: label, children: children}
+
+  // send option metadata to the Select component via Context
+  useEffect(() => {
+    addOptionValueAndLabel(value, label, children)
+  }, [value, label, children])
+
   
   return (
     <Listbox.Option 

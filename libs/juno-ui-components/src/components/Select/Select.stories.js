@@ -294,9 +294,9 @@ export const ControlledSelect = {
   args: {
     value: 'Option 3',
     children: [
-      <SelectOption key="1" value="Option 1" />,
-      <SelectOption key="2" value="Option 2" />,
-      <SelectOption key="3" value="Option 3" />,
+      <SelectOption key="1" value="Option 1" label="Option 1 Label" />,
+      <SelectOption key="2" value="Option 2" label="Option 2 Label" />,
+      <SelectOption key="3" value="Option 3" label="Option 3 Label" />,
     ],
   },
 };

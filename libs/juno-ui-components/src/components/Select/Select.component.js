@@ -111,39 +111,6 @@ export const Select = ({
   const uniqueId = () => (
     "juno-select-" + useId()
   )
-
-  const recursivelyFindFirstChildrenArray = (children) => {
-    if (!children) { return [] }
-
-    if (Array.isArray(children)) {
-      return children
-    } else {
-      return recursivelyFindFirstChildrenArray(children.props?.children)
-    }
-  }
-
-  // iterate over children to get option values and labels by reading the value and the label prop of each child and saving them in a map
-  const buildOptionValuesAndLabelMap = (options) => {
-    const optionMap = new Map()
-    if (!options) { return optionMap }
-
-    // recursively find the first children that is an array (in case people wrap their options in a div or Fragment something)
-    const selectOptions = recursivelyFindFirstChildrenArray(options) //.filter((option) => React.isValidElement(option) && option.type?.name === "SelectOption")
-
-    if (selectOptions) {
-      // iterate over the children and if they are of type "SelectOption" save the value and label props in a map
-      selectOptions.map((option) => {
-        if (option && React.isValidElement(option) && (option.props?.value || option.props?.children)) {
-          optionMap.set(option.props?.value || option.props?.children, {
-            val: option.props?.value,
-            label: option.props?.label,
-            children: option.props?.children
-          })
-        } 
-      })
-    }
-    return optionMap
-  }
   
   const theId = id || uniqueId()
   const helptextId = "juno-select-helptext-" + useId()
@@ -153,6 +120,16 @@ export const Select = ({
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+
+  // We are having all SelectOptions send us their value, label and children so we can save them in a map
+  // We need this because the Select component wants to display the selected value, label or children in the toggle button
+  // but from the eventHandler we only get the value, not the label or children 
+  const addOptionValueAndLabel = (value, label, children) => {
+    // append new entry to optionValuesAndLabels map containing the passed value, label and children
+    // use callback syntax of setState function here since we want to merge the old state with the new entry
+    setOptionValuesAndLabels(oldMap => (new Map(oldMap).set(value || children, { val: value, label: label, children: children })))
+  }
+  
   
   const invalidated = useMemo(
     () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
@@ -162,11 +139,6 @@ export const Select = ({
     () => valid || (successtext && isNotEmptyString(successtext) ? true : false),
     [valid, successtext]
   )
-
-
-  useEffect(() => {
-    setOptionValuesAndLabels(buildOptionValuesAndLabelMap(children))
-  }, [children])
   
   useEffect(() => {
     setHasError(error)
@@ -212,7 +184,8 @@ export const Select = ({
   return (
     <SelectContext.Provider value={
       {
-        truncateOptions: truncateOptions
+        truncateOptions: truncateOptions,
+        addOptionValueAndLabel: addOptionValueAndLabel
       }
     }>
       <div
@@ -280,9 +253,7 @@ export const Select = ({
                     (!hasError && !isLoading) ?
                       <>
                         <span className={`${truncateStyles}`}>
-                          <>
-                            { optionValuesAndLabels.get(value)?.children || optionValuesAndLabels.get(value)?.label || optionValuesAndLabels.get(value)?.val || placeholder }
-                          </>
+                          { optionValuesAndLabels.get(value)?.children || optionValuesAndLabels.get(value)?.label || optionValuesAndLabels.get(value)?.val || value || placeholder }
                         </span>
                         <span className="jn-flex">
                           { isValid ? 
@@ -316,11 +287,12 @@ export const Select = ({
                 { createPortal(
                   
                   <Float.Content>
-                    <Listbox.Options 
+                    <Listbox.Options
                       className={`
                         juno-select-menu
                         ${menuStyles}
                       `}
+                      static
                     >
                       { children }
                     </Listbox.Options>
@@ -350,7 +322,7 @@ export const Select = ({
             <FormHint text={helptext} id={helptextId} />
           :
             ""
-         }
+        }
   
       </div>
     </SelectContext.Provider>
@@ -400,6 +372,7 @@ Select.propTypes = {
   valid: PropTypes.bool,
   /** The currently (pre-)selected value of the Select. Will trigger controlled mode. */
   value: PropTypes.string,
+
   /** TBD: The semantic variant of the Select toggle button. Not implemented yet. */
   variant: PropTypes.oneOf(["", "primary", "primary-danger", "default", "subdued"]),
   /** Whether the Select toggle should consume the available width of its parent container (default), or render its "natural" width depending on the content and the currently selected value or state. */
