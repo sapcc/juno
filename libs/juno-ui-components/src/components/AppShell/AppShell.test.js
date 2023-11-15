@@ -98,6 +98,28 @@ describe("AppShell", () => {
     expect(screen.getByTestId("app-shell")).toBeInTheDocument()
     expect(screen.getByRole("button")).toBeInTheDocument()
   })
+  
+  
+  // The following test whether the MainContainerInner element rendered by AppShell does the right thing depending of props passed to AppShell:
+  test("does not render a fullwidth main container in non-embedded mode by default", async () => {
+    render(<AppShell><button></button></AppShell>)
+    expect(document.querySelector(".juno-main-inner")).not.toHaveClass("juno-main-inner-fullwidth")
+  })
+  
+  test("renders a fullwidth main container in non-embedded mode if passed explicitly", async () => {
+    render(<AppShell fullWidthContent={true}><button></button></AppShell>)
+    expect(document.querySelector(".juno-main-inner")).toHaveClass("juno-main-inner-fullwidth")
+  })
+  
+  test("renders a fullwidth main inner container in embedded mode by default", async () => {
+    render(<AppShell embedded><button></button></AppShell>)
+    expect(document.querySelector(".juno-main-inner")).toHaveClass("juno-main-inner-fullwidth")
+  })
+  
+  test("renders a non-fullwidth, size-restricted main inner container in embedded mode if passed explicitly", async () => {
+    render(<AppShell embedded fullWidthContent={false}><button></button></AppShell>)
+    expect(document.querySelector(".juno-main-inner")).not.toHaveClass("juno-main-inner-fullwidth")
+  })
 
   test("renders a custom className", async () => {
     render(<AppShell data-testid="app-shell" className="my-custom-classname" />)

@@ -32,7 +32,7 @@ export const MainContainerInner = ({
          ${ !fullWidth ? 
             ( hasSideNav ? constrainWithSideNavStyles : constrainStyles )
            :
-            ""
+            "juno-main-inner-fullwidth"
          }
          ${className}`
       }
