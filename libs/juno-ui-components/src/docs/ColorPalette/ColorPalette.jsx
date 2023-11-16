@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
-import colors from "./TailwindThemeColors"
-import textColors from "./TailwindThemeTextColors"
+import tailwindColors from "./TailwindColors"
 import { ColorCard } from "./ColorCard"
 import { TextColorCard } from "./TextColorCard"
 
@@ -51,7 +50,7 @@ export function ColorPalette(props) {
         <ContentArea className={`jn-p-4 jn-rounded-xl ${theme}`}>
           <h2 className={h2Style}>Theme colors</h2>
           <div className={gridStyle}>
-            {Object.entries(colors).map((color) => (
+            {Object.entries(tailwindColors.getThemeColors).map((color) => (
               <ColorCard
                 key={color[0]}
                 prefix="theme-"
@@ -62,13 +61,15 @@ export function ColorPalette(props) {
           </div>
           <h2 className={h2Style}>Font colors</h2>
           <div className={gridStyle}>
-            {Object.entries(textColors).map((textColor) => (
-              <TextColorCard
-                key={textColor[0]}
-                colorName={textColor[0]}
-                colorClass={textColor[1]}
-              />
-            ))}
+            {Object.entries(tailwindColors.getThemeTextColors).map(
+              (textColor) => (
+                <TextColorCard
+                  key={textColor[0]}
+                  colorName={textColor[0]}
+                  colorClass={textColor[1]}
+                />
+              )
+            )}
           </div>
         </ContentArea>
       </StyleProvider>

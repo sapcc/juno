@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import colors from "./TailwindJunoColors"
+import tailwindColors from "./TailwindColors"
 import { ColorCard } from "./ColorCard"
 
 import { StyleProvider } from "../../components/StyleProvider"
@@ -37,7 +37,7 @@ export function JunoColorPalette(props) {
       >
         <ContentArea className={`jn-p-4`}>
           <div className={gridStyle}>
-            {Object.entries(colors).map((color) => (
+            {Object.entries(tailwindColors.getJunoColors).map((color) => (
               <ColorCard
                 key={color[0]}
                 colorName={color[0]}
