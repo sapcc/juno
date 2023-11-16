@@ -25,6 +25,11 @@ export const AppShell = ({
   topNavigation, 
   ...props 
 }) => {
+  
+  // Determine whether to pass set fullWidth to true in embedded mode or not:
+  // In non-embedded mode, fullWidthContent should default to false, unless explicitly set to true.
+  // In embedded mode though, fullWidthContent should default to true, unless explicitly passed as false.
+  
   return (
     <AppBody className={className} {...props}>
     
@@ -36,7 +41,7 @@ export const AppShell = ({
           
       { embedded ?
         <MainContainer>
-          <MainContainerInner fullWidth={fullWidthContent} hasSideNav={ sideNavigation ? true : false }>
+          <MainContainerInner fullWidth={fullWidthContent === false ? false : true} hasSideNav={ sideNavigation ? true : false }>
             { sideNavigation && sideNavigation }
             <ContentContainer>
               {children}
@@ -55,7 +60,7 @@ export const AppShell = ({
           { topNavigation && topNavigation }
           {/* Wrap everything except page header and footer and navigations in a main container. Add top margin to MainContainerInner as we are not in embedded mode here. */}
           <MainContainer>
-            <MainContainerInner fullWidth={fullWidthContent} hasSideNav={ sideNavigation ? true : false } className="jn-mt-[3.875rem]">
+            <MainContainerInner fullWidth={fullWidthContent === true ? true : false } hasSideNav={ sideNavigation ? true : false } className="jn-mt-[3.875rem]">
               { sideNavigation && sideNavigation }
               {/* Content Container. This is the place to add the app's main content. Render left margin only if no SideNavigation is present. */}
               <ContentContainer className={ sideNavigation ? "" : "jn-ml-8"}>
@@ -93,9 +98,9 @@ AppShell.propTypes = {
   /** Optional: Defaults to false. Set embedded to true if app is to be rendered embedded in another app/page. 
    * In this case only the content area and children are rendered, no header/footer or remaining layout components */
   embedded: PropTypes.bool,
-  /** Whether the main page / view content can spread over the full available width of the viewport or not. Default is `false`, resulting in a width-constrained, centered content column on very wide screens. */
+  /** Whether the main page / view content can spread over the full available width of the viewport or not. Default is `false` (resulting in a width-constrained, centred content column on very wide screens) UNLESS the AppShell is rendered with embedded as true, then the main content will be full-width by default. In embedded mode, `fullWidthContent` can still be passed as `false` explicitly. */
   fullWidthContent: PropTypes.bool,
-  /** Add custom class name */
+  /** Add a custom class name */
   className: PropTypes.string,
 }
 
@@ -106,6 +111,6 @@ AppShell.defaultProps = {
   sideNavigation: undefined,
   contentHeading: "",
   embedded: false,
-  fullWidthContent: false,
+  fullWidthContent: undefined,
   className: "",
 }
