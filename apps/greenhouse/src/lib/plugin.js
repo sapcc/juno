@@ -1,3 +1,6 @@
+import { useStore } from "zustand"
+import produce from "immer"
+
 export const NAV_TYPES = {
   APP: "app",
   MNG: "management",
@@ -70,36 +73,140 @@ const findActiveAppId = (appConfig) => {
 }
 
 const Plugin = (store) => {
+  const { getState, setState, subscribe } = store
+
+  const setIsFetching = (newState) => {
+    setState(
+      produce((state) => {
+        state.plugin.isFetching = newState
+      }),
+      false,
+      "plugin/setIsFetching"
+    )
+  }
+
+  const setError = (error) =>
+    setState(
+      produce((state) => {
+        state.plugin.error = error
+      }),
+      false,
+      "plugin/setError"
+    )
+
+  const setActive = (active) =>
+    setState(
+      produce((state) => {
+        if (!Array.isArray(active)) active = [active]
+        // if the current state is the same as the new state, don't update
+        if (JSON.stringify(state.plugin.active) === JSON.stringify(active))
+          return
+        state.plugin.active = active
+      }),
+      false,
+      "plugin/setActive"
+    )
+
+  const selectActive = () => {}
+
+  // const addActive = (appName) =>
+  //   setState(
+  //     produce((state) => {
+  //       const index = getState().plugin.active.findIndex((i) => i === appName)
+  //       if (index >= 0) return
+  //       const newActive = getState().plugin.active.slice()
+  //       newActive.push(appName)
+  //       state.plugin.active = newActive
+  //     }),
+  //     false,
+  //     "plugin/addActive"
+  //   )
+
+  // const removeActive = (appName) =>
+  //   setState(
+  //     produce((state) => {
+  //       const index = getState().plugin.active.findIndex((i) => i === appName)
+  //       if (index < 0) return
+  //       let newActive = getState().plugin.active.slice()
+  //       newActive.splice(index, 1)
+  //       state.plugin.active = newActive
+  //     }),
+  //     false,
+  //     "plugin/removeActive"
+  //   )
+
+  const addConfig = (config) =>
+    setState(
+      produce((state) => {
+        state.plugin.config = { ...getState().plugin.config, ...config }
+      }),
+      false,
+      "plugin/addConfig"
+    )
+
+  const splitApps = () => {
+    const allConfig = getState().plugin.config
+    const appConfig = filterAndSortConfigByType(allConfig, NAV_TYPES.APP)
+    setAppConfig(appConfig)
+    const mngConfig = filterAndSortConfigByType(allConfig, NAV_TYPES.MNG)
+    setMngConfig(mngConfig)
+  }
+
+  const setAppConfig = (appConfig) =>
+    setState(
+      produce((state) => {
+        state.plugin.appConfig = appConfig
+      }),
+      false,
+      "plugin/setAppConfig"
+    )
+
+  const setMngConfig = (mngConfig) =>
+    setState(
+      produce((state) => {
+        state.plugin.mngConfig = mngConfig
+      }),
+      false,
+      "plugin/setMngConfig"
+    )
+
   return {
-    active: () => store((s) => s.apps.active),
-    config: () => store((s) => s.apps.config),
-    appConfig: () => store((s) => s.apps.appConfig),
-    mngConfig: () => store((s) => s.apps.mngConfig),
-    isFetching: () => store((s) => s.apps.isFetching),
-    error: () => store((s) => s.apps.error),
-    updatedAt: () => store((s) => s.apps.updatedAt),
-    actions: () => store((s) => s.apps.actions),
-    saveConfig: () => {
-      const saveConfig = store((s) => s.apps.actions.receiveConfig)
-      const saveAppConfig = store((s) => s.apps.actions.setAppConfig)
-      const saveMngConfig = store((s) => s.apps.actions.setMngConfig)
-      const setActive = store((s) => s.apps.actions.setActive)
-      const activeApps = store((s) => s.apps.active)
-      return (config) => {
-        // save all configs
-        saveConfig(config)
-        // save configs splitted in mng and apps
-        const appConfig = filterAndSortConfigByType(config, NAV_TYPES.APP)
-        saveAppConfig(appConfig)
-        saveMngConfig(filterAndSortConfigByType(config, NAV_TYPES.MNG))
-        // if no config found in the active apps set a new one but from the apps and not mng
-        if (
-          Object.keys(config).filter((key) => activeApps.includes(key))
-            .length === 0
-        ) {
-          const newActiveApp = findActiveAppId(appConfig)
-          setActive(newActiveApp)
-        }
+    active: () => useStore(store, (s) => s.plugin.active),
+    config: () => useStore(store, (s) => s.plugin.config),
+    appConfig: () => useStore(store, (s) => s.plugin.appConfig),
+    mngConfig: () => useStore(store, (s) => s.plugin.mngConfig),
+    isFetching: () => useStore(store, (s) => s.plugin.isFetching),
+    error: () => useStore(store, (s) => s.plugin.error),
+    updatedAt: () => useStore(store, (s) => s.plugin.updatedAt),
+    setActive: setActive,
+    requestConfig: () => {
+      setIsFetching(true)
+      setError(null)
+    },
+    receiveError: (error) => {
+      setIsFetching(false)
+      setError(error)
+      // on api error split then the preconfigured
+      splitApps()
+    },
+    receiveConfig: (kubeConfig) => {
+      // add config and other states
+      addConfig(kubeConfig)
+      setIsFetching(false)
+      setError(null)
+
+      // split apps in mng and apps
+      splitApps()
+
+      // if no config found in the active apps set a new one but from the apps and not mng
+      const allConfig = getState().plugin.config
+      const activeApps = getState().plugin.active
+      if (
+        Object.keys(allConfig).filter((key) => activeApps.includes(key))
+          .length === 0
+      ) {
+        const newActiveApp = findActiveAppId(appConfig)
+        setActive(newActiveApp)
       }
     },
   }

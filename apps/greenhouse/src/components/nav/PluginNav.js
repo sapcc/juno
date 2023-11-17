@@ -75,10 +75,15 @@ const PluginNav = () => {
   const authData = useAuthData()
   const loggedIn = useAuthLoggedIn()
   const { login, logout } = useAuthActions()
-  const { setActive: setActiveApps } = usePlugin.actions()
-  const activeApps = usePlugin.active()
-  const appConfig = usePlugin.appConfig()
-  const mngConfig = usePlugin.mngConfig()
+  const setActiveApps = usePlugin().setActive
+  const activeApps = usePlugin().active()
+  const appConfig = usePlugin().appConfig()
+  const mngConfig = usePlugin().mngConfig()
+
+  console.log(
+    "mngConfig::::::::::::::::::::::::::::::::::::::::::::::::::::::",
+    mngConfig
+  )
 
   return (
     <Stack

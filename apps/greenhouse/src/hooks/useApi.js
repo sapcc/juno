@@ -43,48 +43,40 @@ const useApi = () => {
           limit: 500,
         }
       ),
-    ])
-      .then(([manifest, configs]) => {
-        // console.log("::::::::::::::::::::::::manifest", manifest)
-        // console.log("::::::::::::::::::::::::configs", configs.items)
+    ]).then(([manifest, configs]) => {
+      // console.log("::::::::::::::::::::::::manifest", manifest)
+      // console.log("::::::::::::::::::::::::configs", configs.items)
 
-        // create config map
-        const config = {}
-        configs.items.forEach((conf) => {
-          const id = conf.metadata?.name
-          const name = conf.status?.uiApplication?.name
-          const displayName = conf.spec?.displayName
-          const weight = conf.status?.weight
-          const version = conf.status?.uiApplication?.version
-          const url = conf.status?.uiApplication?.url
+      // create config map
+      const config = {}
+      configs.items.forEach((conf) => {
+        const id = conf.metadata?.name
+        const name = conf.status?.uiApplication?.name
+        const displayName = conf.spec?.displayName
+        const weight = conf.status?.weight
+        const version = conf.status?.uiApplication?.version
+        const url = conf.status?.uiApplication?.url
 
-          // only add plugin if the url is from another host or the name with the given version is in the manifest!
-          if (
-            (url && url.indexOf(assetsHost) < 0) ||
-            manifest[name]?.[version]
-          ) {
-            const newConf = createPluginConfig({
-              id,
-              name,
-              displayName,
-              weight,
-              version,
-              url,
-              props: conf.spec?.optionValues?.reduce((map, item) => {
-                map[item.name] = item.value
-                return map
-              }, {}),
-            })
-            if (newConf) config[id] = newConf
-          }
-        })
-
-        return config
+        // only add plugin if the url is from another host or the name with the given version is in the manifest!
+        if ((url && url.indexOf(assetsHost) < 0) || manifest[name]?.[version]) {
+          const newConf = createPluginConfig({
+            id,
+            name,
+            displayName,
+            weight,
+            version,
+            url,
+            props: conf.spec?.optionValues?.reduce((map, item) => {
+              map[item.name] = item.value
+              return map
+            }, {}),
+          })
+          if (newConf) config[id] = newConf
+        }
       })
-      .catch((error) => {
-        // TODO: display error to the user
-        console.warn(error)
-      })
+
+      return config
+    })
   }, [client, assetsHost, namespace])
 
   return { client, getPluginConfigs }

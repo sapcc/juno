@@ -1,16 +1,16 @@
 import React, { createContext, useContext } from "react"
 import { useStore as create } from "zustand"
 import createStore from "../lib/store"
-import Plugin from "../lib/plugin"
 
 const StoreContext = createContext()
-const StoreProvider = ({ children }) => (
-  <StoreContext.Provider value={createStore()}>
+const StoreProvider = ({ environment, children }) => (
+  <StoreContext.Provider value={createStore(environment)}>
     {children}
   </StoreContext.Provider>
 )
 
-const useStore = (selector) => create(useContext(StoreContext), selector)
+// build a hook from the store
+const useStore = (selector) => create(useContext(StoreContext).store, selector)
 
 // AUTH
 export const useAuthData = () => useStore((s) => s.auth.data)
@@ -23,7 +23,7 @@ export const useAuthAppIsLoading = () => useStore((s) => s.auth.appIsLoading)
 export const useAuthActions = () => useStore((s) => s.auth.actions)
 
 // APPS
-export const usePlugin = Plugin(useStore)
+export const usePlugin = () => useContext(StoreContext).plugin
 
 // GLOBAL
 export const useGlobalsApiEndpoint = () =>

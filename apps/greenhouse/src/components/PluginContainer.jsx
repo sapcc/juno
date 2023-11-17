@@ -3,57 +3,44 @@ import Plugin from "./Plugin"
 import { usePlugin, useGlobalsEnvironment } from "../components/StoreProvider"
 import useApi from "../hooks/useApi"
 import { useLayoutEffect } from "react"
-import { createPluginConfig, NAV_TYPES } from "../lib/plugin"
+import HintLoading from "./shared/HintLoading"
+import { Message } from "juno-ui-components"
 
 const PluginContainer = () => {
   const { getPluginConfigs } = useApi()
   const environment = useGlobalsEnvironment()
-  const { requestConfig, receiveConfigError } = usePlugin.actions()
-  const saveConfig = usePlugin.saveConfig()
-  const activeApps = usePlugin.active()
-  const appsConfig = usePlugin.config()
-  const isFetching = usePlugin.isFetching()
+  const config = usePlugin().config()
+  const isFetching = usePlugin().isFetching()
+  const error = usePlugin().error()
 
-  const availableAppIds = React.useMemo(
-    () => Object.keys(appsConfig),
-    [appsConfig]
-  )
+  const requestConfig = usePlugin().requestConfig
+  const receiveConfig = usePlugin().receiveConfig
+  const receiveError = usePlugin().receiveError
+
+  const availableAppIds = React.useMemo(() => Object.keys(config), [config])
 
   useLayoutEffect(() => {
     if (!getPluginConfigs) return
-    // set loading state
     requestConfig()
-    // set the predefined config
-    let config = {
-      [`greenhouse-management`]: createPluginConfig({
-        id: "greenhouse-management",
-        name: "greenhouse-management",
-        displayName: "Organization",
-        navType: NAV_TYPES.MNG,
-        navigable: environment !== "production",
-      }),
-    }
     // fetch configs from kubernetes
     getPluginConfigs()
       .then((kubernetesConfig) => {
-        // add the configs to the object
-        config = { ...config, ...kubernetesConfig }
+        receiveConfig(kubernetesConfig)
       })
       .catch((error) => {
-        // TODO display this error
-        receiveConfigError(error.message)
-      })
-      .finally(() => {
-        // save config into zustand
-        saveConfig(config)
+        receiveError(error.message)
       })
   }, [getPluginConfigs, environment])
 
-  if (isFetching) return "Loading plugins..."
-  if (availableAppIds.length === 0) return "No plugins available"
-  return availableAppIds.map((id, i) => (
-    <Plugin id={id} key={i} active={activeApps.indexOf(id) >= 0} />
-  ))
+  return (
+    <>
+      {error && <Message text={error} variant="error" />}
+      {isFetching && <HintLoading text="Loading plugins..." />}
+      {availableAppIds.length > 0
+        ? availableAppIds.map((id, i) => <Plugin id={id} key={i} />)
+        : "No plugins available"}
+    </>
+  )
 }
 
 export default PluginContainer
