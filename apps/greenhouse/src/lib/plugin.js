@@ -1,4 +1,5 @@
-import { useStore } from "zustand"
+import { useStore, createStore } from "zustand"
+import { devtools } from "zustand/middleware"
 import produce from "immer"
 
 export const NAV_TYPES = {
@@ -72,13 +73,32 @@ const findActiveAppId = (appConfig) => {
   return [minWeightApp.id]
 }
 
-const Plugin = (store) => {
-  const { getState, setState, subscribe } = store
+const Plugin = (environment) => {
+  const store = createStore(
+    devtools((set, get) => ({
+      active: [],
+      config: {
+        [`greenhouse-management`]: createPluginConfig({
+          id: "greenhouse-management",
+          name: "greenhouse-management",
+          displayName: "Organization",
+          navType: NAV_TYPES.MNG,
+          navigable: environment !== "production",
+        }),
+      },
+      appConfig: [], // kube app configs
+      mngConfig: [], // management app configs
+      isFetching: false,
+      error: null,
+      updatedAt: null,
+    }))
+  )
+  const { getState, setState } = store
 
   const setIsFetching = (newState) => {
     setState(
       produce((state) => {
-        state.plugin.isFetching = newState
+        state.isFetching = newState
       }),
       false,
       "plugin/setIsFetching"
@@ -88,7 +108,7 @@ const Plugin = (store) => {
   const setError = (error) =>
     setState(
       produce((state) => {
-        state.plugin.error = error
+        state.error = error
       }),
       false,
       "plugin/setError"
@@ -99,24 +119,21 @@ const Plugin = (store) => {
       produce((state) => {
         if (!Array.isArray(active)) active = [active]
         // if the current state is the same as the new state, don't update
-        if (JSON.stringify(state.plugin.active) === JSON.stringify(active))
-          return
-        state.plugin.active = active
+        if (JSON.stringify(state.active) === JSON.stringify(active)) return
+        state.active = active
       }),
       false,
       "plugin/setActive"
     )
 
-  const selectActive = () => {}
-
   // const addActive = (appName) =>
   //   setState(
   //     produce((state) => {
-  //       const index = getState().plugin.active.findIndex((i) => i === appName)
+  //       const index = getState().active.findIndex((i) => i === appName)
   //       if (index >= 0) return
-  //       const newActive = getState().plugin.active.slice()
+  //       const newActive = getState().active.slice()
   //       newActive.push(appName)
-  //       state.plugin.active = newActive
+  //       state.active = newActive
   //     }),
   //     false,
   //     "plugin/addActive"
@@ -125,11 +142,11 @@ const Plugin = (store) => {
   // const removeActive = (appName) =>
   //   setState(
   //     produce((state) => {
-  //       const index = getState().plugin.active.findIndex((i) => i === appName)
+  //       const index = getState().active.findIndex((i) => i === appName)
   //       if (index < 0) return
-  //       let newActive = getState().plugin.active.slice()
+  //       let newActive = getState().active.slice()
   //       newActive.splice(index, 1)
-  //       state.plugin.active = newActive
+  //       state.active = newActive
   //     }),
   //     false,
   //     "plugin/removeActive"
@@ -138,14 +155,14 @@ const Plugin = (store) => {
   const addConfig = (config) =>
     setState(
       produce((state) => {
-        state.plugin.config = { ...getState().plugin.config, ...config }
+        state.config = { ...getState().config, ...config }
       }),
       false,
       "plugin/addConfig"
     )
 
   const splitApps = () => {
-    const allConfig = getState().plugin.config
+    const allConfig = getState().config
     const appConfig = filterAndSortConfigByType(allConfig, NAV_TYPES.APP)
     setAppConfig(appConfig)
     const mngConfig = filterAndSortConfigByType(allConfig, NAV_TYPES.MNG)
@@ -155,7 +172,7 @@ const Plugin = (store) => {
   const setAppConfig = (appConfig) =>
     setState(
       produce((state) => {
-        state.plugin.appConfig = appConfig
+        state.appConfig = appConfig
       }),
       false,
       "plugin/setAppConfig"
@@ -164,20 +181,20 @@ const Plugin = (store) => {
   const setMngConfig = (mngConfig) =>
     setState(
       produce((state) => {
-        state.plugin.mngConfig = mngConfig
+        state.mngConfig = mngConfig
       }),
       false,
       "plugin/setMngConfig"
     )
 
   return {
-    active: () => useStore(store, (s) => s.plugin.active),
-    config: () => useStore(store, (s) => s.plugin.config),
-    appConfig: () => useStore(store, (s) => s.plugin.appConfig),
-    mngConfig: () => useStore(store, (s) => s.plugin.mngConfig),
-    isFetching: () => useStore(store, (s) => s.plugin.isFetching),
-    error: () => useStore(store, (s) => s.plugin.error),
-    updatedAt: () => useStore(store, (s) => s.plugin.updatedAt),
+    active: () => useStore(store, (s) => s.active),
+    config: () => useStore(store, (s) => s.config),
+    appConfig: () => useStore(store, (s) => s.appConfig),
+    mngConfig: () => useStore(store, (s) => s.mngConfig),
+    isFetching: () => useStore(store, (s) => s.isFetching),
+    error: () => useStore(store, (s) => s.error),
+    updatedAt: () => useStore(store, (s) => s.updatedAt),
     setActive: setActive,
     requestConfig: () => {
       setIsFetching(true)
@@ -199,8 +216,8 @@ const Plugin = (store) => {
       splitApps()
 
       // if no config found in the active apps set a new one but from the apps and not mng
-      const allConfig = getState().plugin.config
-      const activeApps = getState().plugin.active
+      const allConfig = getState().config
+      const activeApps = getState().active
       if (
         Object.keys(allConfig).filter((key) => activeApps.includes(key))
           .length === 0
