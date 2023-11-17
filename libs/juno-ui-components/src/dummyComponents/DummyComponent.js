@@ -1,9 +1,8 @@
 import React from "react"
 
-const DummyComponent = ({label}) => {
-  
+const DummyComponent = ({ label }) => {
   return (
-    <div 
+    <div
       className="
         jn-flex
         jn-bg-juno-blue
@@ -13,7 +12,7 @@ const DummyComponent = ({label}) => {
         jn-py-3
         jn-border
         jn-border-juno-blue-7"
-      >
+    >
       <div className="jn-m-auto">{label}</div>
     </div>
   )

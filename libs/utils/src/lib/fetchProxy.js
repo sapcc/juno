@@ -248,7 +248,7 @@ const fetchProxy = (urlString, options) => {
               // id is given
               if (index >= 0) {
                 // id is found
-                resolve(
+                return resolve(
                   customResponse || resolveResponse(localDB?.[object]?.[index])
                 )
               } else {

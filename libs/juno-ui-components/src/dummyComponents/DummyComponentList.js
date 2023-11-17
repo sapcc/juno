@@ -1,18 +1,12 @@
 import React from "react"
 import DummyComponent from "./DummyComponent"
 
-
-const DummyComponentList = ({count}) => {
-
+const DummyComponentList = ({ count }) => {
   return (
     <>
-      {
-        [...Array(count)].map((_, i) => {
-          return (
-            <DummyComponent key={i} label={i} />
-          )
-        })
-      }
+      {[...Array(count)].map((_, i) => {
+        return <DummyComponent key={i} label={i} />
+      })}
     </>
   )
 }

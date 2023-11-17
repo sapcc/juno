@@ -20,6 +20,30 @@ describe("MainContainerInner", () => {
     expect(screen.getByRole("button")).toBeInTheDocument()
   })
   
+  test("renders the expected width-constraining responsive classes if not fullwidth and there is no sidenav", async () => {
+    render(<MainContainerInner data-testid="main-inner" fullWidth={false} hasSideNav={false} />)
+    expect(screen.getByTestId("main-inner")).toBeInTheDocument()
+    expect(screen.getByTestId("main-inner")).toHaveClass("2xl:jn-container")
+    expect(screen.getByTestId("main-inner")).toHaveClass("2xl:jn-mx-auto")
+  })
+  
+  test("renders the expected width-constraining responsive classes if not fullwidth and there is a sidenav", async () => {
+    render(<MainContainerInner data-testid="main-inner" fullWidth={false} hasSideNav={true} />)
+    expect(screen.getByTestId("main-inner")).toBeInTheDocument()
+    expect(screen.getByTestId("main-inner")).toHaveClass("3xl:jn-container")
+    expect(screen.getByTestId("main-inner")).toHaveClass("3xl:jn-mx-auto")
+  })
+  
+  test("does not render any width-constraining responsive classes if in fullwidth mode", async () => {
+    render(<MainContainerInner data-testid="main-inner" fullWidth={true} />)
+    expect(screen.getByTestId("main-inner")).toBeInTheDocument()
+    expect(screen.getByTestId("main-inner")).toHaveClass("juno-main-inner-fullwidth")
+    expect(screen.getByTestId("main-inner")).not.toHaveClass("2xl:jn-container")
+    expect(screen.getByTestId("main-inner")).not.toHaveClass("2xl:jn-mx-auto")
+    expect(screen.getByTestId("main-inner")).not.toHaveClass("3xl:jn-container")
+    expect(screen.getByTestId("main-inner")).not.toHaveClass("3xl:jn-mx-auto")
+  })
+  
   test("renders a custom className", async () => {
     render(<MainContainerInner data-testid="main-inner" className="my-custom-classname"/>)
     expect(screen.getByTestId("main-inner")).toBeInTheDocument()
