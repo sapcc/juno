@@ -9,6 +9,12 @@ const { nodeResolve } = require("@rollup/plugin-node-resolve")
 const commonjs = require("@rollup/plugin-commonjs")
 const svgr = require("@svgr/rollup")
 const glob = require("glob")
+const {
+  generateTailwindThemeClassesJson,
+} = require("./src/docs/ColorPalette/generateTailwindThemeClassesJson")
+
+// generates tailwind classes for documentation usages.
+generateTailwindThemeClassesJson()
 
 // IMPORTANT!
 // package.json is single source of truth policy

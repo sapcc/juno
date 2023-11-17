@@ -13,10 +13,11 @@ function withOpacity(variableName) {
 
 module.exports = {
   content: [
-    "./src/components/**/*.{js,jsx,ts,tsx}",
-    "./src/dummyComponents/*.{js,jsx,ts,tsx}",
+    "./src/components/**/*.{js,jsx,ts,tsx,mdx}",
+    "./src/dummyComponents/*.{js,jsx,ts,tsx,mdx}",
+    "./src/docs/**/*.{js,jsx,ts,tsx,mdx}",
   ],
-  prefix: 'jn-',
+  prefix: "jn-",
   theme: {
     fontFamily: {
       sans: [
@@ -208,7 +209,9 @@ module.exports = {
           "tab-navigation-top": withOpacity("--color-tabnavigation-top-bg"),
           filters: withOpacity("--color-filters-bg"),
           "filter-input": withOpacity("--color-filter-input-bg"),
-          "filter-input-textinput": withOpacity("--color-filter-input-textinput-bg"),
+          "filter-input-textinput": withOpacity(
+            "--color-filter-input-textinput-bg"
+          ),
           "filter-pill-key": withOpacity("--color-filter-pill-key-bg"),
           "modal-backdrop": "var(--color-modal-backdrop-bg)",
         },
@@ -237,9 +240,7 @@ module.exports = {
       borderColor: {
         theme: {
           default: withOpacity("--color-default-border"),
-          "codeblock-bar": withOpacity(
-            "--color-codeblock-bar-border"
-          ),
+          "codeblock-bar": withOpacity("--color-codeblock-bar-border"),
           "codeblock-tab-active": withOpacity("--color-text-default-raw"),
           "message-default": withOpacity("--color-message-default-border"),
           "message-danger": withOpacity("--color-message-danger-border"),
@@ -251,12 +252,14 @@ module.exports = {
           "switch-hover": withOpacity("--color-switch-hover-border"),
           "datalist-row": withOpacity("--color-datalist-row-border"),
           introbox: withOpacity("--color-introbox-border"),
-          "tab-navigation-content-bottom": withOpacity("--color-tabnavigation-content-bottom-border"),
+          "tab-navigation-content-bottom": withOpacity(
+            "--color-tabnavigation-content-bottom-border"
+          ),
           "tab-active-bottom": withOpacity("--color-text-default-raw"),
           "filter-input": withOpacity("--color-filter-input-border"),
           "filter-pill": withOpacity("--color-filter-pill-border"),
           "box-default": "var(--color-box-border)",
-          "textinput-default": withOpacity("--color-textinput-default-border")
+          "textinput-default": withOpacity("--color-textinput-default-border"),
         },
       },
       // backgroundImage: theme => ({
