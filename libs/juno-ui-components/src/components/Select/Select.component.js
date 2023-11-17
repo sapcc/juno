@@ -99,6 +99,7 @@ export const Select = ({
   truncateOptions,
   valid,
   value,
+  valueLabel,
   variant,
   width,
   ...props
@@ -121,7 +122,7 @@ export const Select = ({
   const [isValid, setIsValid] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  // We are having all SelectOptions send us their value, label and children so we can save them in a map
+  // This callback is for all SelectOptions to send us their value, label and children so we can save them in a map
   // We need this because the Select component wants to display the selected value, label or children in the toggle button
   // but from the eventHandler we only get the value, not the label or children 
   const addOptionValueAndLabel = (value, label, children) => {
@@ -253,7 +254,7 @@ export const Select = ({
                     (!hasError && !isLoading) ?
                       <>
                         <span className={`${truncateStyles}`}>
-                          { optionValuesAndLabels.get(value)?.children || optionValuesAndLabels.get(value)?.label || optionValuesAndLabels.get(value)?.val || value || placeholder }
+                          { optionValuesAndLabels.get(value)?.children || optionValuesAndLabels.get(value)?.label || valueLabel || value || placeholder }
                         </span>
                         <span className="jn-flex">
                           { isValid ? 
@@ -372,7 +373,9 @@ Select.propTypes = {
   valid: PropTypes.bool,
   /** The currently (pre-)selected value of the Select. Will trigger controlled mode. */
   value: PropTypes.string,
-
+  /** The label of the passed value or defaultValue. If you want to use controlled mode or pass as defaultValue in uncontrolled mode and additionally use labels for
+   *  human-readable SelectOptions you need to also pass the matching label for the passed value/defaultValue so that the Select component can render itself properly */
+  valueLabel: PropTypes.string,
   /** TBD: The semantic variant of the Select toggle button. Not implemented yet. */
   variant: PropTypes.oneOf(["", "primary", "primary-danger", "default", "subdued"]),
   /** Whether the Select toggle should consume the available width of its parent container (default), or render its "natural" width depending on the content and the currently selected value or state. */
@@ -401,6 +404,7 @@ Select.defaultProps = {
   truncateOptions: false,
   valid: false,
   value: undefined,
+  valueLabel: undefined,
   variant: undefined,
   width: "full"
 }
