@@ -290,11 +290,11 @@ export const Select = ({
                   
                   <Float.Content>
                     <Listbox.Options
+                      unmount={false}
                       className={`
                         juno-select-menu
                         ${menuStyles}
                       `}
-                      static
                     >
                       { children }
                     </Listbox.Options>
