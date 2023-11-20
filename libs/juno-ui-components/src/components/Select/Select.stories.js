@@ -59,7 +59,7 @@ const ControlledTemplate = ({ value, children, ...args }) => {
   };
 
   return (
-    <Select value={v} onChange={handleChange}>
+    <Select value={v} valueLabel={args.valueLabel} onChange={handleChange}>
       {children}
     </Select>
   );
@@ -288,6 +288,29 @@ export const EmptyOption = {
   },
 };
 
+export const OptionsWithLabels = {
+  render: Template,
+
+  args: {
+    placeholder: 'Please select',
+    children: [
+      <SelectOption value="option-1" label="Option 1" key="1" />,
+      <SelectOption value="option-2" label="Option 2" key="2">
+        Option 2 child is displayed if present
+      </SelectOption>,
+    ],
+  },
+
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Optionally the SelectOptions can be passed a `label`-prop if the value is not suitable for display. If in addition to the label prop the option has a child, then the child is displayed instead.',
+      },
+    },
+  },
+};
+
 export const ControlledSelect = {
   render: ControlledTemplate,
 
@@ -301,6 +324,24 @@ export const ControlledSelect = {
   },
 };
 
+/** 
+ * If you used the Select as a controlled component (by passing the `value` prop) and if your SelectOptions
+ * have labels, then you'll have to pass the `valueLabel` of the selected option as well.
+ * */
+export const ControlledSelectWithOptionLabels = {
+  render: ControlledTemplate,
+
+  args: {
+    value: 'Option 3',
+    valueLabel: 'Option 3 Label',
+    children: [
+      <SelectOption key="1" value="Option 1" label="Option 1 Label" />,
+      <SelectOption key="2" value="Option 2" label="Option 2 Label" />,
+      <SelectOption key="3" value="Option 3" label="Option 3 Label" />,
+    ],
+  },
+};
+
 export const UncontrolledSelect = {
   render: Template,
 
@@ -310,6 +351,24 @@ export const UncontrolledSelect = {
       <SelectOption key="1" value="Option 1" />,
       <SelectOption key="2" value="Option 2" />,
       <SelectOption key="3" value="Option 3" />,
+    ],
+  },
+};
+
+/**
+ * Similar to the controlled Select, if you used the Select as an uncontrolled component (by passing the `defaultValue` prop) and if your SelectOptions
+ * have labels, then you'll have to pass the `valueLabel` of the selected option as well.
+ */
+export const UncontrolledSelectWithOptionLabels = {
+  render: Template,
+
+  args: {
+    defaultValue: 'Option 2',
+    valueLabel: 'Option 2 Label',
+    children: [
+      <SelectOption key="1" value="Option 1" label="Option 1 Label" />,
+      <SelectOption key="2" value="Option 2" label="Option 2 Label" />,
+      <SelectOption key="3" value="Option 3" label="Option 3 Label" />,
     ],
   },
 };
@@ -357,6 +416,10 @@ export const NonTruncatedOptions = {
   },
 };
 
+/** 
+ * As an alernative to using a `value`-prop, strings as children can be passed. Though we don't recommend this approach
+ * as it will likely be deprecated or changed in the future.
+ * */
 export const WithChildrenOnly = {
   render: Template,
 
@@ -368,61 +431,5 @@ export const WithChildrenOnly = {
       <SelectOption key="4">Option 4</SelectOption>,
       <SelectOption key="5">Option 5</SelectOption>,
     ],
-  },
-
-  parameters: {
-    docs: {
-      description: {
-        story: 'Alernatively to using a `value`-prop, strings as children can be passed.',
-      },
-    },
-  },
-};
-
-export const OptionsWithLabels = {
-  render: Template,
-
-  args: {
-    placeholder: 'Please select',
-    children: [
-      <SelectOption value="option-1" label="Option 1" key="1" />,
-      <SelectOption value="option-2" label="Option 2" key="2">
-        Option 2 child is displayed if present
-      </SelectOption>,
-    ],
-  },
-
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'Optionally the SelectOptions can be passed a `label`-prop if the value is not suitable for display. If in addition to the label prop the option has a child, then the child is displayed instead.',
-      },
-    },
-  },
-};
-
-export const ControlledOptionsWithLabels = {
-  render: ControlledTemplate,
-
-  args: {
-    placeholder: 'Please select',
-    value: 'option-3',
-    children: [
-      <SelectOption value="option-1" label="Option 1" key="1" />,
-      <SelectOption value="option-2" label="Option 2" key="2">
-        Option 2 child is displayed if present
-      </SelectOption>,
-      <SelectOption value="option-3" label="Option 3" key="3" />,
-    ],
-  },
-
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'Optionally the SelectOptions can be passed a `label`-prop if the value is not suitable for display. If in addition to the label prop the option has a child, then the child is displayed instead.',
-      },
-    },
   },
 };

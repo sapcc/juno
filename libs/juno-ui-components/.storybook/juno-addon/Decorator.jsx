@@ -1,6 +1,6 @@
 import "../../src/global.scss"
 import { StyleProvider } from "../../src/components/StyleProvider"
-import { ContentArea } from "../../src/components/ContentArea/index"
+import { ContentContainer } from "../../src/components/ContentContainer/index"
 import { Container } from "../../src/components/Container/index"
 import React, { useEffect } from "react"
 import { useChannel, addons } from "@storybook/preview-api"
@@ -37,11 +37,11 @@ export default (Story, context) => {
 
   return (
     <StyleProvider stylesWrapper="head" theme={theme}>
-      <ContentArea>
+      <ContentContainer>
         <Container px py>
           <Story />
         </Container>
-      </ContentArea>
+      </ContentContainer>
     </StyleProvider>
   )
 }
