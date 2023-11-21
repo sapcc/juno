@@ -333,7 +333,7 @@ export const ComboBox = ({
                 placeholder={ !isLoading && !hasError ? placeholder : ""} 
                 displayValue={ 
                   (val) => 
-                  optionValuesAndLabels.get(val)?.children || optionValuesAndLabels.get(val)?.label || valueLabel || val || placeholder
+                  optionValuesAndLabels.get(val)?.children || optionValuesAndLabels.get(val)?.label || valueLabel || val 
                   
                   
                 } // Headless-UI expects a callback here
