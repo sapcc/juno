@@ -224,7 +224,6 @@ describe("ComboBox", () => {
     const user = userEvent.setup()
     const cbox = screen.getByRole("combobox")
     expect(cbox).toBeInTheDocument()
-    await user.clear(cbox)
     await user.type(cbox, "a")
     expect(screen.getByRole("listbox")).toBeInTheDocument()
     expect(screen.getByRole("option", { name: "aaa" })).toBeInTheDocument()
