@@ -4,6 +4,7 @@ import { Button } from "../Button/Button.component"
 import { TextInput } from "../TextInput/TextInput.component"
 import { Select } from "../Select/Select.component"
 import { SelectOption } from "../SelectOption/SelectOption.component"
+import { Stack } from "../Stack/Stack.component"
 
 const paginationStyles = `
   jn-flex
@@ -55,14 +56,15 @@ const renderPaginationInnards = (
       break
     case "input":
       return (
-        <span>
-          <TextInput
-            value={currentPage || ""}
-            onKeyPress={handleKeyPress}
-            className={`${inputStyles}`}
-          />
-          <span className="jn-ml-1">of {pages || "0"}</span>
-        </span>
+        <Stack gap="2" alignment="center">
+          <div className={`${inputStyles}`}>
+            <TextInput
+              value={currentPage || ""}
+              onKeyPress={handleKeyPress}
+            />
+          </div>
+          <span>of {pages || "0"}</span>
+        </Stack>
       )
       break
     default:

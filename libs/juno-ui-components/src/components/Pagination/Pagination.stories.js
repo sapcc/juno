@@ -1,8 +1,9 @@
-import React from 'react';
-import { Pagination } from './index.js';
+import React from 'react'
+import { Pagination } from './index.js'
+import { PortalProvider } from '../PortalProvider/PortalProvider.component'
 
 export default {
-  title: 'WiP/Pagination',
+  title: 'Components/Pagination',
   component: Pagination,
   argTypes: {
     variant: {
@@ -10,6 +11,15 @@ export default {
       control: { type: 'select' },
     },
   },
+  decorators: [
+    (Story) => (
+      <div className="jn-pb-12">
+        <PortalProvider>
+          <Story />
+        </PortalProvider>
+      </div>
+    ),
+  ],
 };
 
 const Template = ({ currentPage, pages, ...args }) => {
@@ -23,7 +33,6 @@ const Template = ({ currentPage, pages, ...args }) => {
       pages={pages}
       currentPage={page}
       onPressPrevious={prev}
-      onPressNext={next}
       onPressNext={next}
     />
   );
