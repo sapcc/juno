@@ -6,7 +6,9 @@ import { Label } from "../Label/index.js"
 import { FormHint } from "../FormHint/index.js"
 import { Icon } from "../Icon/index.js"
 import { Spinner } from "../Spinner/index.js"
-import { offset, shift, size } from '@floating-ui/react-dom'
+import { flip, offset, shift, size } from '@floating-ui/react-dom'
+import { usePortalRef } from "../PortalProvider/index"
+import { createPortal } from "react-dom"
 
 // STYLES
 
@@ -105,6 +107,8 @@ const disabledButtonStyles = `
 const menuStyles = `
   jn-rounded
   jn-bg-theme-background-lvl-1
+  jn-w-full
+  jn-overflow-y-auto
 `
 
 const iconContainerStyles = `
@@ -218,11 +222,15 @@ export const ComboBox = ({
     onBlur && onBlur(event)
   }
   
+  const portalContainerRef = usePortalRef()
+  
   // Headless-UI-Float Middleware
   const middleware = [
     offset(4),
     shift(),
+    flip(),
     size({
+      boundary: 'viewport',
       apply({availableWidth, availableHeight, elements}) {
         Object.assign(elements.floating.style, {
           maxWidth: `${availableWidth}px`,
@@ -273,12 +281,15 @@ export const ComboBox = ({
         >
         
           <Float
+            composable
             adaptiveWidth
             middleware={middleware}
           >
           
+          <Float.Reference>
             <div
               className={`
+                juno-combobox-input-wrapper
                 ${ inputWrapperStyles }
                 ${ disabled ? "jn-cursor-not-allowed" : "" }
               `}
@@ -349,33 +360,43 @@ export const ComboBox = ({
               }
               
               { !hasError && !isLoading ?
-                  <Combobox.Button
-                    disabled={disabled} 
-                    className={`
-                      juno-combobox-toggle 
-                      ${buttonStyles}
-                      ${ disabled ? disabledButtonStyles : "" }
-                      ${ isInvalid ? "juno-combobox-toggle-invalid " + invalidButtonStyles : "" } 
-                      ${ isValid ? "juno-combobox-toggle-valid " + validButtonStyles : "" }  
-                      ${ isValid || isInvalid ? "" : defaultButtonStyles } 
-                    `}
-                  >
-                    {({open}) => (
-                      <Icon icon={ open ? "expandLess": "expandMore"} />
-                    )}
-                  </Combobox.Button>
+                  
+                    <Combobox.Button
+                      disabled={disabled} 
+                      className={`
+                        juno-combobox-toggle 
+                        ${buttonStyles}
+                        ${ disabled ? disabledButtonStyles : "" }
+                        ${ isInvalid ? "juno-combobox-toggle-invalid " + invalidButtonStyles : "" } 
+                        ${ isValid ? "juno-combobox-toggle-valid " + validButtonStyles : "" }  
+                        ${ isValid || isInvalid ? "" : defaultButtonStyles } 
+                      `}
+                    >
+                      {({open}) => (
+                        <Icon icon={ open ? "expandLess": "expandMore"} />
+                      )}
+                    </Combobox.Button>
+                 
                 : ""
               }
             </div>
-            <Combobox.Options
-              className={`
-                juno-combobox-options 
-                ${menuStyles}
-              `} 
-            >
-              { filteredChildren }
-            </Combobox.Options>
-          
+          </Float.Reference>
+            
+            
+            { createPortal(
+              <Float.Content>
+                <Combobox.Options
+                  className={`
+                    juno-combobox-options 
+                    ${menuStyles}
+                  `} 
+                >
+                  { filteredChildren }
+                </Combobox.Options>
+              </Float.Content>
+            , portalContainerRef ? portalContainerRef : document.body
+            )}
+            
           </Float>
           
         </Combobox>
