@@ -104,9 +104,9 @@ describe("Plugin", () => {
 
         const store = renderHook(
           () => ({
-            saveConfig: usePlugin.saveConfig(),
-            actions: usePlugin.actions(),
-            active: usePlugin.active(),
+            setActive: usePlugin().setActive,
+            receiveConfig: usePlugin().receiveConfig,
+            active: usePlugin().active(),
           }),
           { wrapper }
         )
@@ -124,8 +124,8 @@ describe("Plugin", () => {
           }),
         }
 
-        act(() => store.result.current.actions.setActive(["plugin1"]))
-        act(() => store.result.current.saveConfig(configs))
+        act(() => store.result.current.setActive(["plugin1"]))
+        act(() => store.result.current.receiveConfig(configs))
         expect(store.result.current.active).toEqual(["plugin1"])
       })
       it("sets a new active plugin (from apps and not from mng) with the lowest weight", () => {
@@ -135,8 +135,8 @@ describe("Plugin", () => {
 
         const store = renderHook(
           () => ({
-            saveConfig: usePlugin.saveConfig(),
-            active: usePlugin.active(),
+            receiveConfig: usePlugin().receiveConfig,
+            active: usePlugin().active(),
           }),
           { wrapper }
         )
@@ -160,7 +160,7 @@ describe("Plugin", () => {
           }),
         }
 
-        act(() => store.result.current.saveConfig(configs))
+        act(() => store.result.current.receiveConfig(configs))
         expect(store.result.current.active).toEqual(["plugin2"])
       })
     })

@@ -80,11 +80,6 @@ const PluginNav = () => {
   const appConfig = usePlugin().appConfig()
   const mngConfig = usePlugin().mngConfig()
 
-  console.log(
-    "mngConfig::::::::::::::::::::::::::::::::::::::::::::::::::::::",
-    mngConfig
-  )
-
   return (
     <Stack
       direction="vertical"

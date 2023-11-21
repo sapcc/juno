@@ -216,13 +216,12 @@ const Plugin = (environment) => {
       splitApps()
 
       // if no config found in the active apps set a new one but from the apps and not mng
-      const allConfig = getState().config
-      const activeApps = getState().active
       if (
-        Object.keys(allConfig).filter((key) => activeApps.includes(key))
-          .length === 0
+        Object.keys(getState().config).filter((key) =>
+          getState().active.includes(key)
+        ).length === 0
       ) {
-        const newActiveApp = findActiveAppId(appConfig)
+        const newActiveApp = findActiveAppId(getState().appConfig)
         setActive(newActiveApp)
       }
     },
