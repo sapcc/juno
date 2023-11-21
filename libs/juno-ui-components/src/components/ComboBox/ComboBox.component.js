@@ -154,6 +154,7 @@ export const ComboBox = ({
   truncateOptions,
   valid,
   value,
+  valueLabel,
   width,
   ...props
 }) => {
@@ -165,6 +166,7 @@ export const ComboBox = ({
   const theId = id || "juno-combobox-" + useId()    
   const helptextId = "juno-combobox-helptext-" + useId()
   
+  const [optionValuesAndLabels, setOptionValuesAndLabels] = useState(new Map())
   const [query, setQuery] = useState("")
   const [selectedValue, setSelectedValue] = useState(value)
   const [isLoading, setIsLoading] = useState(false)
@@ -172,6 +174,15 @@ export const ComboBox = ({
   const [hasFocus, setFocus] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
+  
+  // This callback is for all ComboBoxOptions to send us their value, label and children so we can save them as a map in our state.
+  // We need this because the Select component wants to display the selected value, label or children in the ComboBox input field
+  // but from the eventHandler we only get the value, not the label or children 
+  const addOptionValueAndLabel = (value, label, children) => {
+    // append new entry to optionValuesAndLabels map containing the passed value, label and children
+    // use callback syntax of setState function here since we want to merge the old state with the new entry
+    setOptionValuesAndLabels(oldMap => (new Map(oldMap).set(value || children, { val: value, label: label, children: children })))
+  }
   
   const invalidated = useMemo(
     () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
@@ -258,7 +269,8 @@ export const ComboBox = ({
     
     <ComboBoxContext.Provider value={{
         selectedValue: selectedValue,
-        truncateOptions: truncateOptions
+        truncateOptions: truncateOptions,
+        addOptionValueAndLabel: addOptionValueAndLabel
       }}
     >
     
@@ -319,7 +331,12 @@ export const ComboBox = ({
                 onChange={handleInputChange}
                 onFocus={handleFocus}
                 placeholder={ !isLoading && !hasError ? placeholder : ""} 
-                displayValue={ (val) => val } // Headless-UI expects a callback here
+                displayValue={ 
+                  (val) => 
+                  optionValuesAndLabels.get(val)?.children || optionValuesAndLabels.get(val)?.label || valueLabel || val 
+                  
+                  
+                } // Headless-UI expects a callback here
                 className={`
                   juno-combobox-input 
                   ${inputStyles} 
@@ -386,6 +403,7 @@ export const ComboBox = ({
             { createPortal(
               <Float.Content>
                 <Combobox.Options
+                  unmount={false}
                   className={`
                     juno-combobox-options 
                     ${menuStyles}
@@ -475,6 +493,8 @@ ComboBox.propTypes = {
   valid: PropTypes.bool,
   /** The selected value of the ComboBox in Controlled Mode. */
   value: PropTypes.string,
+  /** The label of the passed value or defaultValue. If you want to use controlled mode or pass as defaultValue in uncontrolled mode and additionally use labels for human-readable SelectOptions, you need to also pass the matching label for the passed value/defaultValue so that the Select component can render itself properly */
+  valueLabel: PropTypes.string,
   /** The width of the text input. Either 'full' (default) or 'auto'. */
   width: PropTypes.oneOf(["full", "auto"])
 }
@@ -504,5 +524,6 @@ ComboBox.defaultProps = {
   truncateOptions: false,
   valid: false,
   value: "",
+  valueLabel: undefined,
   width: "full",
 }
