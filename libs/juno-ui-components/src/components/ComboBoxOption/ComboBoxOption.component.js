@@ -59,7 +59,13 @@ export const ComboBoxOption = ({
   const {
     selectedValue: selectedValue,
     truncateOptions: truncateOptions,
+    addOptionValueAndLabel: addOptionValueAndLabel
   } = comboBoxContext || {}
+  
+  // send option metadata to the ComboBox parent component via Context
+  useEffect(() => {
+    addOptionValueAndLabel(value, label, children)
+  }, [value, label, children])
   
   const theValue = value || children
   
