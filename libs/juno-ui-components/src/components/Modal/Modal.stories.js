@@ -9,6 +9,8 @@ import { Icon } from "../Icon/index"
 import { PortalProvider } from "../PortalProvider/index"
 import { Select } from "../Select/index"
 import { SelectOption } from "../SelectOption/index"
+import { ComboBox } from "../ComboBox/index"
+import { ComboBoxOption } from "../ComboBoxOption/index"
 
 
 const Template = ({closeOnConfirm, ...args}) => {
@@ -126,4 +128,27 @@ TestSelectInModal.args = {
         <SelectOption value="3" label="Option 3" key="o-3"/>
       </Select>
     </>,
+}
+
+export const TestComboBoxInModal = Template.bind({})
+TestComboBoxInModal.args = {
+  title: "Modal with CombBox inside",
+  size: "small",
+  children: 
+  <>
+    <ComboBox>
+      <ComboBoxOption value="Rhubarb" key="1">
+        Rhubarb
+      </ComboBoxOption>
+      <ComboBoxOption value="Carrots" key="2">
+        Carrots
+      </ComboBoxOption>
+      <ComboBoxOption value="Spinach" key="3">
+        Spinach
+      </ComboBoxOption>
+      <ComboBoxOption value="Tomatoes" key="4">
+        Tomatoes
+      </ComboBoxOption>
+    </ComboBox>
+  </>,
 }

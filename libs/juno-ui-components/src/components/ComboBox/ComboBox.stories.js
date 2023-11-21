@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ComboBox } from './index.js';
 import { ComboBoxOption } from '../ComboBoxOption/index.js';
+import { PortalProvider } from '../PortalProvider/PortalProvider.component';
 
 export default {
   title: 'Forms/ComboBox/ComboBox',
@@ -22,7 +23,9 @@ export default {
   decorators: [
     (Story) => (
       <div className="jn-pb-12">
-        <Story />
+        <PortalProvider>
+          <Story />
+        </PortalProvider>
       </div>
     ),
   ],
