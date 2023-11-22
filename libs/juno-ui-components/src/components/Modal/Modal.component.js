@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { createPortal } from "react-dom"
 import PropTypes from "prop-types"
 import FocusTrap from "focus-trap-react"
@@ -132,6 +132,8 @@ export const Modal = ({
 
 	const portalContainer = usePortalRef()
 	
+	const modalRef = useRef(null)
+	
 	return (
 		<>
 			{ isOpen && 
@@ -140,10 +142,11 @@ export const Modal = ({
 							
 							<FocusTrap
 								focusTrapOptions={{
-									clickOutsideDeactivates: isCloseabelOnBackdropClick
+									clickOutsideDeactivates: isCloseabelOnBackdropClick,
+									fallbackFocus: () => modalRef.current,
 								}}
 							>
-								<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" {...props} >
+								<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" {...props} ref={modalRef}>
 									<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
 										{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} >{ title || heading }</h1> : null }
 										{ isCloseable ? <Icon icon="close" onClick={ handleCancelClick }/> : null }
