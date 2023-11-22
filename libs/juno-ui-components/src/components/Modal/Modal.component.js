@@ -10,7 +10,6 @@ import { usePortalRef } from "../PortalProvider/PortalProvider.component"
 * handle height/scrolling TODO -> allow optional constrainHeight=false prop?
 * Spare "variant" prop for semantic variants later. 
 * a11y (voicereader, keyboard accessibilty) TODO
-* icon TODO
 */
 
 const modalcontainerstyles = `
@@ -73,6 +72,8 @@ For more complex use cases, more buttons, etc., an instance of `<ModalFooter>` w
 The Modal uses a boolean 'open' prop to determine whether it is open or not. Alternatively, the open state can be handled outside the component, e.g. in a global state. In this case the 'open' prop needs to be passed as true always, otherwise the Modal component will not render.
 
 By default, the modal will close (i.e. set its `open` state to false) once the user cancels the Modal. When confirming, you will have to either set the `open` to false to close the modal, or use whatever global state mechanism you have to handle modals.
+
+To make the modal less intrusive and effectively un-modal ist, pass `closeOnBackdropClick`. This will close the modal when the user clicks the modal backdrop.
 */
 export const Modal = ({
 	cancelButtonIcon,
