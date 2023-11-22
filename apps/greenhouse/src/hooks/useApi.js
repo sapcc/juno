@@ -5,6 +5,7 @@ import {
   useGlobalsApiEndpoint,
   useGlobalsAssetsHost,
 } from "../components/StoreProvider"
+import { createPluginConfig } from "../lib/plugin"
 
 // get plugin configs from k8s api
 const useApi = () => {
@@ -48,38 +49,31 @@ const useApi = () => {
 
       // create config map
       const config = {}
-      configs.items.forEach((plugin) => {
-        const id = plugin.metadata?.name
-        const name = plugin.status?.uiApplication?.name
-        const displayName = plugin.spec?.displayName
-        const weight = plugin.status?.weight
-        const version = plugin.status?.uiApplication?.version
-        const url = plugin.status?.uiApplication?.url
+      configs.items.forEach((conf) => {
+        const id = conf.metadata?.name
+        const name = conf.status?.uiApplication?.name
+        const displayName = conf.spec?.displayName
+        const weight = conf.status?.weight
+        const version = conf.status?.uiApplication?.version
+        const url = conf.status?.uiApplication?.url
 
         // only add plugin if the url is from another host or the name with the given version is in the manifest!
         if ((url && url.indexOf(assetsHost) < 0) || manifest[name]?.[version]) {
-          // config contains id, name, displayName, weight, version, url, props
-          // the id is added to the props by default
-          config[id] = {
+          const newConf = createPluginConfig({
             id,
             name,
-            displayName: displayName || name,
+            displayName,
             weight,
             version,
             url,
-            navigable: true,
-            props: plugin.spec?.optionValues?.reduce(
-              (map, item) => {
-                map[item.name] = item.value
-                return map
-              },
-              { id } // add plugin id to props
-            ),
-          }
+            props: conf.spec?.optionValues?.reduce((map, item) => {
+              map[item.name] = item.value
+              return map
+            }, {}),
+          })
+          if (newConf) config[id] = newConf
         }
       })
-
-      // console.log("::::::::::::::::::::::::config", config)
 
       return config
     })

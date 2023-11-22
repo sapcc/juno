@@ -3,13 +3,14 @@ import { useStore as create } from "zustand"
 import createStore from "../lib/store"
 
 const StoreContext = createContext()
-const StoreProvider = ({ children }) => (
-  <StoreContext.Provider value={createStore()}>
+const StoreProvider = ({ environment, children }) => (
+  <StoreContext.Provider value={createStore(environment)}>
     {children}
   </StoreContext.Provider>
 )
 
-const useStore = (selector) => create(useContext(StoreContext), selector)
+// build a hook from the store
+const useStore = (selector) => create(useContext(StoreContext).store, selector)
 
 // AUTH
 export const useAuthData = () => useStore((s) => s.auth.data)
@@ -22,12 +23,7 @@ export const useAuthAppIsLoading = () => useStore((s) => s.auth.appIsLoading)
 export const useAuthActions = () => useStore((s) => s.auth.actions)
 
 // APPS
-export const useAppsActive = () => useStore((s) => s.apps.active)
-export const useAppsConfig = () => useStore((s) => s.apps.config)
-export const useAppsActions = () => useStore((s) => s.apps.actions)
-export const useAppsIsFetching = () => useStore((s) => s.apps.isFetching)
-export const useAppsError = () => useStore((s) => s.apps.error)
-export const useAppsUpdatedAt = () => useStore((s) => s.apps.updatedAt)
+export const usePlugin = () => useContext(StoreContext).plugin
 
 // GLOBAL
 export const useGlobalsApiEndpoint = () =>

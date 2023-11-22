@@ -1,62 +1,46 @@
 import React from "react"
 import Plugin from "./Plugin"
-import {
-  useAppsActions,
-  useAppsActive,
-  useAppsConfig,
-  useAppsIsFetching,
-} from "../components/StoreProvider"
+import { usePlugin, useGlobalsEnvironment } from "../components/StoreProvider"
 import useApi from "../hooks/useApi"
 import { useLayoutEffect } from "react"
+import HintLoading from "./shared/HintLoading"
+import { Message } from "juno-ui-components"
 
 const PluginContainer = () => {
   const { getPluginConfigs } = useApi()
-  const {
-    setActive: setActiveApps,
-    requestConfig,
-    receiveConfig,
-    receiveConfigError,
-  } = useAppsActions()
-  const activeApps = useAppsActive()
-  const appsConfig = useAppsConfig()
-  const isFetching = useAppsIsFetching()
+  const environment = useGlobalsEnvironment()
+  const config = usePlugin().config()
+  const isFetching = usePlugin().isFetching()
+  const error = usePlugin().error()
 
-  const availableAppIds = React.useMemo(
-    () => Object.keys(appsConfig),
-    [appsConfig]
-  )
+  const requestConfig = usePlugin().requestConfig
+  const receiveConfig = usePlugin().receiveConfig
+  const receiveError = usePlugin().receiveError
+
+  const availableAppIds = React.useMemo(() => Object.keys(config), [config])
 
   useLayoutEffect(() => {
     if (!getPluginConfigs) return
     requestConfig()
+    // fetch configs from kubernetes
     getPluginConfigs()
-      .then((config) => receiveConfig(config))
-      .catch((error) => receiveConfigError(error.message))
-  }, [getPluginConfigs, requestConfig, receiveConfig, receiveConfigError])
+      .then((kubernetesConfig) => {
+        receiveConfig(kubernetesConfig)
+      })
+      .catch((error) => {
+        receiveError(error.message)
+      })
+  }, [getPluginConfigs, environment])
 
-  // set first plugin in the list of plugin config as active unless active exists
-  useLayoutEffect(() => {
-    if (!appsConfig) return
-    const availableAppIds = Object.keys(appsConfig)
-    if (availableAppIds.length === 0) return
-    const active = activeApps.map((a) => availableAppIds.indexOf(a) >= 0)
-
-    if (active.length === 0) {
-      // if there is no active app, then from appsConfig, get the app id of the app with the lowest weight and set it as active
-      const minWeightApp = Object.values(appsConfig).reduce(
-        (previous, current) => {
-          return current.weight < previous.weight ? current : previous
-        }
-      )
-      setActiveApps(minWeightApp.id)
-    }
-  }, [appsConfig, activeApps, setActiveApps])
-
-  if (isFetching) return "Loading plugins..."
-  if (availableAppIds.length === 0) return "No plugins available"
-  return availableAppIds.map((id, i) => (
-    <Plugin id={id} key={i} active={activeApps.indexOf(id) >= 0} />
-  ))
+  return (
+    <>
+      {error && <Message text={error} variant="error" />}
+      {isFetching && <HintLoading text="Loading plugins..." />}
+      {availableAppIds.length > 0
+        ? availableAppIds.map((id, i) => <Plugin id={id} key={i} />)
+        : "No plugins available"}
+    </>
+  )
 }
 
 export default PluginContainer

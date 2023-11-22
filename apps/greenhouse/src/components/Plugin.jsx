@@ -1,16 +1,18 @@
 import React, { useEffect, useMemo } from "react"
 import useAppLoader from "../hooks/useAppLoader"
-import { useAppsConfig } from "../components/StoreProvider"
+import { usePlugin } from "../components/StoreProvider"
 import { useRef } from "react"
 
-const Plugin = ({ id, active }) => {
+const Plugin = ({ id }) => {
   const { mount } = useAppLoader()
   const holder = useRef()
+  const mounted = useRef(false)
+  const config = usePlugin().config()
+  const activeApps = usePlugin().active()
+
   const el = document.createElement("div")
   el.classList.add("inline")
   const app = useRef(el)
-  const config = useAppsConfig()
-  const mounted = useRef(false)
 
   // create a promise to mount the app
   // this promise is resolved once
@@ -27,7 +29,7 @@ const Plugin = ({ id, active }) => {
   useEffect(() => {
     if (!config[id]) return
 
-    if (active) {
+    if (activeApps.indexOf(id) >= 0) {
       // load and add to holder
       mountApp.then((loaded) => {
         if (!loaded) return
@@ -38,7 +40,7 @@ const Plugin = ({ id, active }) => {
       if (holder.current.contains(app.current))
         holder.current.removeChild(app.current)
     }
-  }, [active])
+  }, [activeApps])
 
   return <div data-app={id} ref={holder} className="inline"></div>
 }
