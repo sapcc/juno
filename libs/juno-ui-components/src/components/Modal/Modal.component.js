@@ -138,7 +138,11 @@ export const Modal = ({
 					createPortal(
 						<div className={`juno-modal-container ${modalcontainerstyles}`} onClick={handleBackdropClick}>
 							
-							<FocusTrap>
+							<FocusTrap
+								focusTrapOptions={{
+									clickOutsideDeactivates: isCloseabelOnBackdropClick
+								}}
+							>
 								<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" {...props} >
 									<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
 										{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} >{ title || heading }</h1> : null }
