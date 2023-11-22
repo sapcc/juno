@@ -13,6 +13,7 @@ import { ComboBox } from "../ComboBox/index"
 import { ComboBoxOption } from "../ComboBoxOption/index"
 
 
+
 const Template = ({closeOnConfirm, ...args}) => {
 
   const [isOpen, setOpen] = useState(false)
@@ -81,6 +82,13 @@ NonCloseable.args = {
   title: "Non-Closeable Modal",
   children: "Use only if all else fails. If you need to inform users about something, in 99.9% of cases <Message> is the better choice.",
   closeable: false
+}
+
+export const CloseOnBackdropClick = Template.bind({})
+CloseOnBackdropClick.args = {
+  title: "Close on Backdrop Click",
+  children: <p>This Modal closes when clicking the backdrop.</p>,
+  closeOnBackdropClick: true,
 }
 
 export const Login = Template.bind({})

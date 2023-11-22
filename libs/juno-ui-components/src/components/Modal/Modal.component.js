@@ -7,13 +7,11 @@ import { usePortalRef } from "../PortalProvider/PortalProvider.component"
 
 /*
 * handle height/scrolling TODO -> allow optional constrainHeight=false prop?
-* Optional CloseOnBackdropClick -> NOT FOR NOW  ✓
 * Spare "variant" prop for semantic variants later. 
 * a11y (voicereader, keyboard accessibilty) TODO
 * autofocus ?
 * icon TODO
 * trap focus TODO
-* render in Portal (how to make sure we're always in scope of StyleProvider? TODO -> add element to styleprovider TODO, what if there are several StyleProvider on the page?
 */
 
 const modalcontainerstyles = `
@@ -78,26 +76,28 @@ The Modal uses a boolean 'open' prop to determine whether it is open or not. Alt
 By default, the modal will close (i.e. set its `open` state to false) once the user cancels the Modal. When confirming, you will have to either set the `open` to false to close the modal, or use whatever global state mechanism you have to handle modals.
 */
 export const Modal = ({
-	size,
-	title,
-	heading,
-	confirmButtonLabel,
+	cancelButtonIcon,
 	cancelButtonLabel,
 	confirmButtonIcon,
-	cancelButtonIcon,
-	open,
+	confirmButtonLabel,
 	children,
-	modalFooter,
 	closeable,
-	unpad,
+	closeOnBackdropClick,
+	heading,
+	modalFooter,
 	onConfirm,
 	onCancel,
+	open,
+	size,
+	title,
+	unpad,
 	className,
 	...props
 }) => {
 	
 	const [isOpen, setIsOpen] = useState(open)
 	const [isCloseable, setIsCloseable] = useState(closeable)
+	const [isCloseabelOnBackdropClick, setIsCloseableOnBackdropClick] = useState(closeOnBackdropClick)
 	
 	useEffect(() => {
 		setIsOpen(open)
@@ -107,6 +107,10 @@ export const Modal = ({
 		setIsCloseable(closeable)
 	}, [closeable])
 	
+	useEffect(() => {
+		setIsCloseableOnBackdropClick(closeOnBackdropClick)
+	}, [closeOnBackdropClick])
+	
 	const handleConfirmClick = (event) => {
 		onConfirm && onConfirm(event)
 	}
@@ -115,6 +119,15 @@ export const Modal = ({
 		setIsOpen(false)
 		onCancel && onCancel(event)
 	}
+	
+	const handleBackdropClick = (event) => {
+		if (isCloseabelOnBackdropClick) {
+			setIsOpen(false)
+			onCancel && onCancel(event)
+		} else {
+			event.stopPropagation()
+		}
+	}
 
 	const portalContainer = usePortalRef()
 	
@@ -122,7 +135,7 @@ export const Modal = ({
 		<>
 			{ isOpen && 
 					createPortal(
-						<div className={`juno-modal-container ${modalcontainerstyles}`} onClick={(e) => e.stopPropagation()}>
+						<div className={`juno-modal-container ${modalcontainerstyles}`} onClick={handleBackdropClick}>
 							<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" {...props} >
 								<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
 									{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} >{ title || heading }</h1> : null }
@@ -186,6 +199,8 @@ Modal.propTypes = {
 	onConfirm: PropTypes.func,
 	/** A handler to execute once the modal is cancelled or dismissed using the x-Close button,  Cancel-button or pressing ESC */
 	onCancel: PropTypes.func,
+	/** Whether the modal should be closed when the backdrop is clicked. Essentially 'un-modals' the modal. */
+	closeOnBackdropClick: PropTypes.bool,
 }
 
 Modal.defaultProps = {
@@ -204,4 +219,5 @@ Modal.defaultProps = {
 	className: "",
 	onConfirm: undefined,
 	onCancel: undefined,
+	closeOnBackdropClick: false,
 }
