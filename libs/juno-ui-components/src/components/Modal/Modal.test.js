@@ -4,13 +4,7 @@ import userEvent from "@testing-library/user-event"
 import { Modal } from "./index"
 import { PortalProvider, usePortalRef } from "../PortalProvider/PortalProvider.component"
 
-// const setup = ({ handleClick = null } = {}) => {
-//   const root = usePortalRef()
 
-//   const { container } = render(<PortalProvider><Modal open={true} /></PortalProvider>)
-
-//   return { ...within(root), root, container }
-// }
 
 describe("Modal", () => {
   test("renders a Modal", async () => {
@@ -53,13 +47,50 @@ describe("Modal", () => {
 	  expect(screen.queryAllByRole("button")).toHaveLength(0)
   })
   
-  // // button labels
+	test("renders a cancel button with a label as passed", async () => {
+		render(<PortalProvider><Modal open cancelButtonLabel="Click here to Cancel" /></PortalProvider>)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+		expect(screen.queryByRole("button", {name: "Click here to Cancel"})).toBeInTheDocument()
+	})
+	
+	test("renders a confirm button with a label as passed", async () => {
+		render(<PortalProvider><Modal open confirmButtonLabel="Click here to Proceed" /></PortalProvider>)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+		expect(screen.queryByRole("button", {name: "Click here to Proceed"})).toBeInTheDocument()
+		expect(screen.queryByRole("button", {name: "Click here to Proceed"})).toHaveClass("juno-button-primary")
+	})
   
-  // // icons
-  
-  // // handlers
-  
-  // // open close
+	test("closes the modal when clicking the close button in the title bar", async () => {
+		render(<PortalProvider><Modal open /></PortalProvider>)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+		const titleBarCloseButton = screen.queryAllByRole("button")[0]
+		expect(titleBarCloseButton).toHaveAttribute("aria-label", "close")
+		await userEvent.click(titleBarCloseButton)
+		expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+	})
+	
+	test("closes the modal when clicking the default close button in the modal footer", async () => {
+		render(<PortalProvider><Modal open cancelButtonLabel="Cancel all the things"/></PortalProvider>)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+		const footerCloseButton = screen.queryAllByRole("button")[1]
+		expect(footerCloseButton).toHaveTextContent("Cancel all the things")
+		await userEvent.click(footerCloseButton)
+		expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+	})
+	
+	test("closes the modal when clicking on the background and the modal is configured to do so", async () => {
+		render(<PortalProvider><Modal open closeOnBackdropClick/></PortalProvider>)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+		const backdrop = document.querySelector(".juno-modal-container")
+		await userEvent.click(backdrop)
+		expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+	})
+	
+	// confirm button closing, handlers
+	
+	// trap focus
+	
+	// initalFocus
 
   test("renders custom classNames as passed", async () => {
 	render(<PortalProvider><Modal open className="my-custom-class" /></PortalProvider>)
