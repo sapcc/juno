@@ -78,6 +78,14 @@ describe("Modal", () => {
 		expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
 	})
 	
+	test("does not close the modal when clicking on the backdrop by default", async () => {
+		render(<PortalProvider><Modal open c/></PortalProvider>)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+		const backdrop = document.querySelector(".juno-modal-container")
+		await userEvent.click(backdrop)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+	})
+	
 	test("closes the modal when clicking on the background and the modal is configured to do so", async () => {
 		render(<PortalProvider><Modal open closeOnBackdropClick/></PortalProvider>)
 		expect(screen.getByRole("dialog")).toBeInTheDocument()

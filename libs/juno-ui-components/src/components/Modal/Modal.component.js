@@ -221,7 +221,7 @@ Modal.propTypes = {
 	/** Whether the modal should be closed when the backdrop is clicked. Essentially 'un-modals' the modal. */
 	closeOnBackdropClick: PropTypes.bool,
 	/** By default, the first element in the tab order of the Modal content will be focussed. To specify an element to be focussed when the modal opens, pass an element, DOM node, or selector string. */
-	initialFocus: PropTypes.oneOf([PropTypes.element, PropTypes.string])
+	initialFocus: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
 }
 
 Modal.defaultProps = {
