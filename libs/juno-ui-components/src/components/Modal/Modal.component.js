@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { createPortal } from "react-dom"
 import PropTypes from "prop-types"
+import FocusTrap from "focus-trap-react"
 import { ModalFooter } from "../ModalFooter/index"
 import { Icon, knownIcons } from "../Icon/Icon.component"
 import { usePortalRef } from "../PortalProvider/PortalProvider.component"
@@ -136,30 +137,34 @@ export const Modal = ({
 			{ isOpen && 
 					createPortal(
 						<div className={`juno-modal-container ${modalcontainerstyles}`} onClick={handleBackdropClick}>
-							<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" {...props} >
-								<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
-									{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} >{ title || heading }</h1> : null }
-									{ isCloseable ? <Icon icon="close" onClick={ handleCancelClick }/> : null }
+							
+							<FocusTrap>
+								<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" {...props} >
+									<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
+										{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} >{ title || heading }</h1> : null }
+										{ isCloseable ? <Icon icon="close" onClick={ handleCancelClick }/> : null }
+									</div>
+									<div className={`juno-modal-content ${contentstyles} ${ unpad ? "" : contentpaddingstyles }`} >
+										{ children }
+									</div>
+									{ isCloseable ? 
+										modalFooter ?
+											modalFooter
+											:
+											<ModalFooter 
+												confirmButtonLabel={ confirmButtonLabel } 
+												cancelButtonLabel={ cancelButtonLabel } 
+												confirmButtonIcon={ confirmButtonIcon }
+												cancelButtonIcon={ cancelButtonIcon }
+												onConfirm={ onConfirm ? handleConfirmClick : null }
+												onCancel={ handleCancelClick }
+											/>
+										: 
+										null 
+									}
 								</div>
-								<div className={`juno-modal-content ${contentstyles} ${ unpad ? "" : contentpaddingstyles }`} >
-									{ children }
-								</div>
-								{ isCloseable ? 
-									modalFooter ?
-										modalFooter
-										:
-										<ModalFooter 
-											confirmButtonLabel={ confirmButtonLabel } 
-											cancelButtonLabel={ cancelButtonLabel } 
-											confirmButtonIcon={ confirmButtonIcon }
-											cancelButtonIcon={ cancelButtonIcon }
-											onConfirm={ onConfirm ? handleConfirmClick : null }
-											onCancel={ handleCancelClick }
-										/>
-									: 
-									null 
-								}
-							</div>
+							</FocusTrap>
+							
 						</div>
 						, portalContainer ? portalContainer : document.body
 					)	
