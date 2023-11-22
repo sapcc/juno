@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useId } from "react"
 import { createPortal } from "react-dom"
 import PropTypes from "prop-types"
 import FocusTrap from "focus-trap-react"
@@ -10,9 +10,7 @@ import { usePortalRef } from "../PortalProvider/PortalProvider.component"
 * handle height/scrolling TODO -> allow optional constrainHeight=false prop?
 * Spare "variant" prop for semantic variants later. 
 * a11y (voicereader, keyboard accessibilty) TODO
-* autofocus ?
 * icon TODO
-* trap focus TODO
 */
 
 const modalcontainerstyles = `
@@ -85,6 +83,7 @@ export const Modal = ({
 	closeable,
 	closeOnBackdropClick,
 	heading,
+	initialFocus,
 	modalFooter,
 	onConfirm,
 	onCancel,
@@ -95,6 +94,10 @@ export const Modal = ({
 	className,
 	...props
 }) => {
+	
+	const uniqueId = () => (
+		"juno-modal-" + useId()
+	)
 	
 	const [isOpen, setIsOpen] = useState(open)
 	const [isCloseable, setIsCloseable] = useState(closeable)
@@ -134,6 +137,8 @@ export const Modal = ({
 	
 	const modalRef = useRef(null)
 	
+	const modalTitleId = uniqueId()
+	
 	return (
 		<>
 			{ isOpen && 
@@ -142,13 +147,14 @@ export const Modal = ({
 							
 							<FocusTrap
 								focusTrapOptions={{
+									initialFocus: initialFocus,
 									clickOutsideDeactivates: isCloseabelOnBackdropClick,
 									fallbackFocus: () => modalRef.current,
 								}}
 							>
-								<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" {...props} ref={modalRef}>
+								<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" ref={modalRef} {...props} aria-labelledby={modalTitleId}>
 									<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
-										{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} >{ title || heading }</h1> : null }
+										{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} id={modalTitleId}>{ title || heading }</h1> : null }
 										{ isCloseable ? <Icon icon="close" onClick={ handleCancelClick }/> : null }
 									</div>
 									<div className={`juno-modal-content ${contentstyles} ${ unpad ? "" : contentpaddingstyles }`} >
@@ -213,6 +219,8 @@ Modal.propTypes = {
 	onCancel: PropTypes.func,
 	/** Whether the modal should be closed when the backdrop is clicked. Essentially 'un-modals' the modal. */
 	closeOnBackdropClick: PropTypes.bool,
+	/** By default, the first element in the tab order of the Modal content will be focussed. To specify an element to be focussed when the modal opens, pass an element, DOM node, or selector string. */
+	initialFocus: PropTypes.oneOf([PropTypes.element, PropTypes.string])
 }
 
 Modal.defaultProps = {
@@ -232,4 +240,5 @@ Modal.defaultProps = {
 	onConfirm: undefined,
 	onCancel: undefined,
 	closeOnBackdropClick: false,
+	initialFocus: undefined,
 }

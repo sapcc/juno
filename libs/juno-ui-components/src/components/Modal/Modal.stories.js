@@ -3,7 +3,8 @@ import { Modal } from "./Modal.component"
 import { ModalFooter } from "../ModalFooter/index"
 import { Button } from "../Button/index"
 import { ButtonRow } from "../ButtonRow/index"
-import { TextInputRow } from "../TextInputRow/index"
+import { FormRow } from "../FormRow/index"
+import { TextInput } from "../TextInput/index"
 import { CheckboxRow } from "../CheckboxRow/index"
 import { Icon } from "../Icon/index"
 import { PortalProvider } from "../PortalProvider/index"
@@ -94,10 +95,15 @@ CloseOnBackdropClick.args = {
 export const Login = Template.bind({})
 Login.args = {
   title: "Log In",
+  initialFocus: "#username",
   children:
     <>
-      <TextInputRow label="Username" name="username" id="username" />
-      <TextInputRow type="password" label="Password" name="password" id="password" />
+      <FormRow>
+        <TextInput label="Username" name="username" id="username" />
+      </FormRow>
+      <FormRow>
+       <TextInput type="password" label="Password" name="password" id="password" />
+      </FormRow>
       <CheckboxRow label="Remember Me" id="remember-me" />
     </>
   ,
