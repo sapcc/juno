@@ -5,7 +5,7 @@
 import React from "react"
 import Router from "./Router"
 import { useRouter } from "./RouterContext"
-import { renderHook } from "@testing-library/react-hooks"
+import { renderHook } from "@testing-library/react"
 
 describe("useRouter", () => {
   afterEach(() => {
