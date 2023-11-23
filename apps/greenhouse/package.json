@@ -38,6 +38,7 @@
     "tailwindcss": "^3.3.1",
     "url-state-provider": "*",
     "util": "^0.12.4",
+    "utils": "*",
     "zustand": "4.3.7"
   },
   "scripts": {
@@ -51,6 +52,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "url-state-provider": "*",
+    "utils": "*",
     "zustand": "4.3.7"
   },
   "importmapExtras": {

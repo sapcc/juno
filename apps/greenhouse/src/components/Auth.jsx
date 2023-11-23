@@ -7,8 +7,9 @@ import {
   useAuthError,
   useAuthActions,
   useGlobalsActions,
+  useGlobalsAssetsHost,
 } from "../components/StoreProvider"
-import useAppLoader from "../hooks/useAppLoader"
+import { useAppLoader } from "utils"
 import { Transition } from "@tailwindui/react"
 
 const currentUrl = new URL(window.location.href)
@@ -47,7 +48,7 @@ const Auth = ({
   demoOrg,
   demoUserToken,
 }) => {
-  // const authData = useAuthData()
+  const assetsHost = useGlobalsAssetsHost()
   const authAppLoaded = useAuthAppLoaded()
   const authLoggedIn = useAuthLoggedIn()
   const authIsProcessing = useAuthIsProcessing()
@@ -55,7 +56,7 @@ const Auth = ({
   const { login } = useAuthActions()
 
   const ref = React.createRef()
-  const { mount } = useAppLoader()
+  const { mount } = useAppLoader(assetsHost)
   const [loading, setLoading] = React.useState(!authAppLoaded)
   const [longLoading, setLongLoading] = React.useState(false)
 

@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo } from "react"
-import useAppLoader from "../hooks/useAppLoader"
-import { usePlugin } from "../components/StoreProvider"
+import { useAppLoader } from "utils"
+import { usePlugin, useGlobalsAssetsHost } from "../components/StoreProvider"
 import { useRef } from "react"
 
 const Plugin = ({ id }) => {
-  const { mount } = useAppLoader()
+  const assetsHost = useGlobalsAssetsHost()
+  const { mount } = useAppLoader(assetsHost)
   const holder = useRef()
-  const mounted = useRef(false)
   const config = usePlugin().config()
   const activeApps = usePlugin().active()
 
@@ -16,15 +16,7 @@ const Plugin = ({ id }) => {
 
   // create a promise to mount the app
   // this promise is resolved once
-  const mountApp = useMemo(
-    () =>
-      new Promise((resolve) => {
-        const a = mount(app.current, config[id])
-        if (!a) resolve(false)
-        else a.then(() => (mounted.current = true)).then(() => resolve(true))
-      }),
-    [mount]
-  )
+  const mountApp = useMemo(() => mount(app.current, config[id]), [mount])
 
   useEffect(() => {
     if (!config[id]) return
