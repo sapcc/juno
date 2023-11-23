@@ -311,46 +311,6 @@ const App = () => {
 export default App
 ```
 
-## Testing
-
-To run tests, use the following command:
-
-```bash
-npm run test
-```
-
-If you're working within the Juno monorepo using workspaces, you can use:
-
-```bash
-npm -w utils run test
-```
-
-Alternatively, from within the workspace:
-
-```bash
-wb npm -w utils run test
-```
-
-## Build
-
-To build your project, run:
-
-```bash
-npm run build
-```
-
-For Juno monorepo users within workspaces, you can use:
-
-```bash
-npm -w utils run build
-```
-
-Or, from within the workspace:
-
-```bash
-wb npm -w utils run build
-```
-
 ### Mount Juno Apps
 
 This react hook is designed for scenarios where you wish to embed a Juno application within another application, particularly useful when running multiple applications within a single environment.
@@ -448,4 +408,44 @@ const App = () => {
 }
 
 export default App
+```
+
+## Testing
+
+To run tests, use the following command:
+
+```bash
+npm run test
+```
+
+If you're working within the Juno monorepo using workspaces, you can use:
+
+```bash
+npm -w utils run test
+```
+
+Alternatively, from within the workspace:
+
+```bash
+wb npm -w utils run test
+```
+
+## Build
+
+To build your project, run:
+
+```bash
+npm run build
+```
+
+For Juno monorepo users within workspaces, you can use:
+
+```bash
+npm -w utils run build
+```
+
+Or, from within the workspace:
+
+```bash
+wb npm -w utils run build
 ```
