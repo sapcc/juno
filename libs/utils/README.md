@@ -8,6 +8,7 @@
 
 - **Infinite Scrolling**: react hook to facilitate the integration of an infinite scroll list.
 - **Mock Rest API**: library designed to replicate the behavior of a Fetch REST API with mock data.
+- **Mount Juno Apps**: react hook which enables mounting of Juno applications within other Juno applications.
 
 ## Installation
 
@@ -350,10 +351,101 @@ Or, from within the workspace:
 wb npm -w utils run build
 ```
 
-## Documentation
+### Mount Juno Apps
 
-For detailed documentation, refer to [link to documentation].
+This react hook is designed for scenarios where you wish to embed a Juno application within another application, particularly useful when running multiple applications within a single environment.
 
-## License
+#### How it Works
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+This hook uses our widget loader app, creating a runtime environment (shell) that ensures all dependencies required by the widget are available. To facilitate shared dependencies among multiple applications and optimize resource loading, the process unfolds in the following steps:
+
+**Loading ES Module Shim:**
+Initially, the hook loads the ES Module Shim, which supports import maps. This provides a foundation for efficient dependency management.
+
+**Import Maps:**
+In the second step, an importMap is loaded. This map serves as a blueprint, guiding the browser on the origin of package imports. This step ensures that all necessary dependencies are accessible at runtime.
+
+**Loading the target Application:**
+Finally, the target application is loaded into the environment. Thanks to the importMap, the browser intelligently retrieves packages, and shared dependencies are loaded only ONCE and not per application. The browser cache further optimizes performance by ensuring packages are not fetched with every page load.
+
+#### Prerequisites
+
+Ensure the following prerequisites are met before using this hook:
+
+**URL to Our Assets Host:**
+Provide the URL to our assets host, allowing the hook to fetch our widget loader.
+
+**Compiled as ES Module:**
+The application must be compiled as an ES module to accommodate the dependency on ES Module Shim.
+
+**Name and Version Information:**
+Specify the name and version (default is latest) of the application. If hosted on our assets server, include the relevant details. If hosted elsewhere, provide the complete URL path to the application.
+
+#### Get started
+
+1. Import the react hook useAppLoader.
+
+   ```js
+   import { useAppLoader } from "utils"
+   ```
+
+2. Invoke the use hook useAppLoader by providing the assets URL.
+
+   ```js
+   const { mount } = useAppLoader("https://assets.juno.qa-de-1.cloud.sap/")
+   ```
+
+3. Create a ref using the useRef hook.
+
+   ```js
+   const app = useRef(null)
+   ```
+
+4. Use the mount function to mount the application. The mount function accepts the following parameters:
+
+   - container: the ref to the container element which will host the application
+   - as options object with the following attributes:
+     - name: the name of the application
+     - version: the version of the application (default is latest)
+     - props: the props to be passed to the application
+
+   ```js
+   useEffect(() => {
+     if (!mount) return
+     mount(app, "app1", "latest", {
+       // additional options
+     })
+   }, [mount])
+   ```
+
+5. Use the ref to render the application.
+
+   ```js
+   <div ref={app} />
+   ```
+
+Simply copy the following example and run it to explore how to use this library.
+
+```js
+import React, { useEffect, useRef } from "react"
+import { useAppLoader } from "utils"
+
+const App = () => {
+  const { mount } = useAppLoader("https://assets.juno.qa-de-1.cloud.sap/")
+  const app = useRef()
+
+  useEffect(() => {
+    if (!mount || !app.current) return
+    mount(app.current, { name: "exampleapp" })
+  }, [mount, app])
+
+  return (
+    <>
+      <div>This is the root app responsible for loading the other apps.</div>
+      <div ref={app} />
+    </>
+  )
+}
+
+export default App
+```
