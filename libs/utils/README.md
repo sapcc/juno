@@ -8,6 +8,7 @@
 
 - **Infinite Scrolling**: react hook to facilitate the integration of an infinite scroll list.
 - **Mock Rest API**: library designed to replicate the behavior of a Fetch REST API with mock data.
+- **Mount Juno Apps**:
 
 ## Installation
 
