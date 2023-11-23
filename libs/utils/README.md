@@ -384,6 +384,8 @@ Specify the name and version (default is latest) of the application. If hosted o
    <div ref={app} />
    ```
 
+#### Self Contained Running Example
+
 Simply copy the following example and run it to explore how to use this library.
 
 ```js
