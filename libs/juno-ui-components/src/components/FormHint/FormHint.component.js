@@ -25,7 +25,7 @@ export const FormHint = ({
   ...props
 }) => {
   return (
-    <p 
+    <div 
       className={`
         juno-form-hint
         juno-form-hint-${variant}
@@ -36,7 +36,7 @@ export const FormHint = ({
       {...props} 
     >
       { children || text }
-    </p>
+    </div>
   )
 }
 
