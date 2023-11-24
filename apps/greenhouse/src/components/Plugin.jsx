@@ -14,8 +14,7 @@ const Plugin = ({ id }) => {
   el.classList.add("inline")
   const app = useRef(el)
 
-  // create a promise to mount the app
-  // this promise is resolved once
+  // this promise is resolved once per app(config[id])
   const mountApp = useMemo(() => mount(app.current, config[id]), [mount])
 
   useEffect(() => {

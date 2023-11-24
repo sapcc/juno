@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, LoadingIndicator, Spinner, Stack } from "juno-ui-components"
 import {
   useAuthAppLoaded,
@@ -54,19 +54,19 @@ const Auth = ({
   const authIsProcessing = useAuthIsProcessing()
   const authError = useAuthError()
   const { login } = useAuthActions()
+  const { setDemoMode } = useGlobalsActions()
 
   const ref = React.createRef()
   const { mount } = useAppLoader(assetsHost)
-  const [loading, setLoading] = React.useState(!authAppLoaded)
-  const [longLoading, setLongLoading] = React.useState(false)
-
-  const { setDemoMode } = useGlobalsActions()
+  const [loading, setLoading] = useState(!authAppLoaded)
+  const [longLoading, setLongLoading] = useState(false)
 
   // in this useEffect we load the auth app via import (see mount)
   // It should happen just once!
   // The connection to the auth events happens in the useCommunication hook!
+  // wait until assetsHost is set to avoid a warning on mount
   useEffect(() => {
-    if (!mount || !clientId || !issuerUrl) return
+    if (!assetsHost || !clientId || !issuerUrl) return
 
     // if current orgName is the demo org, we mock the auth app
     if (demoOrg === orgName) {
@@ -94,7 +94,8 @@ const Auth = ({
         }),
       },
     })
-  }, [mount, clientId, issuerUrl, setDemoMode])
+    // add mount to the dependencies since it changes depending on the assetsHost
+  }, [mount, clientId, issuerUrl, assetsHost])
 
   // timeout for waiting for auth
   useEffect(() => {
