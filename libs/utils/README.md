@@ -6,9 +6,9 @@
 
 ## Features
 
-- [**Infinite Scrolling (useEndlessScrollList)**](#useEndlessScrollList): react hook to facilitate the integration of an infinite scroll list.
-- [**Mock Rest API (fetchProxyInitDB, fetchProxy)**](#fetchProxy): library designed to replicate the behavior of a Fetch REST API with mock data.
-- [**Mount Juno Apps (useAppLoader)**](#useAppLoader): react hook which enables mounting of Juno applications within other Juno applications.
+- [**Infinite Scrolling (useEndlessScrollList)**](#usage-of-infinite-scrolling-useendlessscrolllist): react hook to facilitate the integration of an infinite scroll list.
+- [**Mock Rest API (fetchProxyInitDB, fetchProxy)**](#usage-of-mock-rest-api-fetchproxyinitdb-fetchproxy): library designed to replicate the behavior of a Fetch REST API with mock data.
+- [**Mount Juno Apps (useAppLoader)**](#mount-juno-apps-useapploader): react hook which enables mounting of Juno applications within other Juno applications.
 
 ## Installation
 
@@ -34,7 +34,7 @@ Outside juno
 
 ```
 
-## Usage of Infinite scrolling (useEndlessScrollList)<a name="useEndlessScrollList"></a>
+## Usage of Infinite scrolling (useEndlessScrollList)
 
 1. Import the react hook
 2. Invoke the useEndlessScrollList hook by providing the complete set of items and desired options as a custom loading object and a function to be used to render the ref element. Please see below for more options.
