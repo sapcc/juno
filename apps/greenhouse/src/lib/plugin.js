@@ -83,7 +83,7 @@ const Plugin = (environment) => {
           name: "greenhouse-management",
           displayName: "Organization",
           navType: NAV_TYPES.MNG,
-          navigable: environment === "qa" || environment === "dev",
+          navigable: environment === "qa" || environment === "development",
         }),
       },
       appConfig: [], // kube app configs
