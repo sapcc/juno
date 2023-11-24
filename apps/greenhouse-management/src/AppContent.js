@@ -11,7 +11,9 @@ const AppContent = (props) => {
         pageHeader="Example Management Plugin"
         embedded={true}
       >
-        <Container py>Example Plugin loaded here. Replace the AppShell with the plugin. Be sure to set embedded to true.</Container>
+        <Container py>
+          Example Plugin loaded here. Replace the complete AppShell with the plugin. Be sure to set embedded to true.
+        </Container>
       </AppShell>
     </>
   )
