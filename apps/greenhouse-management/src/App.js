@@ -5,6 +5,7 @@ import StoreProvider, { useGlobalsActions } from "./components/StoreProvider"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
+import SideNav from "./components/SideNav"
 
 /* IMPORTANT: Replace this with your app's name */
 const URL_STATE_KEY = "greenhouse-management"
@@ -37,6 +38,7 @@ const App = (props = {}) => {
       <AppShell
         pageHeader="Greenhouse Management"
         embedded={props.embedded === "true" || props.embedded === true}
+        sideNavigation={<SideNav />}
       >
         <AppContent props={props} />
       </AppShell>
