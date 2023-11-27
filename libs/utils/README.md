@@ -333,8 +333,15 @@ Provide the URL to our assets host, allowing the hook to fetch our widget loader
 **Compiled as ES Module:**
 The application must be compiled as an ES module to accommodate the dependency on ES Module Shim.
 
-**Name and Version Information:**
-Specify the name and version (default is latest) of the application. If hosted on our assets server, include the relevant details. If hosted elsewhere, provide the complete URL path to the application.
+**Name and Version or URL:**
+If the application is hosted in our assets sever you can choose between:
+
+1. Provide the name and version (default version is "latest") of the application. The hook will then fetch the application from our assets server.
+2. Provide the complete URL path to the application. The hook will then fetch the application from the provided URL.
+
+If the application is hosted in a different server you can choose between:
+
+1. Provide the complete URL path to the application, remember that the application must be compiled as an ES module. The hook will then fetch the application from the provided URL.
 
 ### Get started
 
@@ -356,19 +363,35 @@ Specify the name and version (default is latest) of the application. If hosted o
    const app = useRef(null)
    ```
 
-4. Use the mount function to mount the application. The mount function accepts the following parameters:
+4. Use the mount function to mount the application. The mount function accepts the following options:
 
    - container: the ref to the container element which will host the application
-   - as options object with the following attributes:
+   - options object with the following attributes:
      - name: the name of the application
      - version: the version of the application (default is latest)
      - props: the props to be passed to the application
 
+   Example using name and version and passing embedded as a prop to the target application:
+
    ```js
    useEffect(() => {
      if (!mount) return
-     mount(app, "app1", "latest", {
-       // additional options
+     mount(app.current, {
+       name: "exampleapp",
+       version: "latest",
+       props: { embedded: true },
+     })
+   }, [mount])
+   ```
+
+   Example using URL and passing embedded as a prop to the target application:
+
+   ```js
+   useEffect(() => {
+     if (!mount) return
+     mount(app.current, {
+       url: "https://assets.juno.global.cloud.sap/apps/exampleapp@latest/build/index.js",
+       props: { embedded: true },
      })
    }, [mount])
    ```
