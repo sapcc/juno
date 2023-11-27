@@ -22,6 +22,7 @@ import ModalManager from "./ModalManager"
 import PanelManager from "./PanelManager"
 import Peaks from "./peaks/Peaks"
 import WelcomeView from "./WelcomeView"
+import DynamicLoadIcon from "./DynamicLoadIcon"
 
 const AppContent = (props) => {
   const { setTabIndex, setCurrentModal } = useGlobalsActions()
@@ -57,6 +58,7 @@ const AppContent = (props) => {
               <TabList>
                 <Tab>Peaks</Tab>
                 <Tab>Tab Two</Tab>
+                <Tab>Tab Three</Tab>
               </TabList>
 
               <TabPanel>
@@ -92,6 +94,9 @@ const AppContent = (props) => {
                     <SelectOption value="4" label="Option 4" />
                   </Select>
                 </Container>
+              </TabPanel>
+              <TabPanel>
+                <DynamicLoadIcon />
               </TabPanel>
             </MainTabs>
             <ModalManager />
