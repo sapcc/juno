@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, createRef } from "react"
 import { Button, LoadingIndicator, Spinner, Stack } from "juno-ui-components"
 import {
   useAuthAppLoaded,
@@ -56,7 +56,7 @@ const Auth = ({
   const { login } = useAuthActions()
   const { setDemoMode } = useGlobalsActions()
 
-  const ref = React.createRef()
+  const ref = createRef()
   const { mount } = useAppLoader(assetsHost)
   const [loading, setLoading] = useState(!authAppLoaded)
   const [longLoading, setLongLoading] = useState(false)
