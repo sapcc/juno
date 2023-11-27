@@ -2,27 +2,27 @@
 It is needed for the ColorPalette and JunoColorPalette to show the documented colors.
 We need to do this because Tailwind classes can't be concatenated at runtime via String interpolation. It only works if you use the full class name.*/
 exports.getThemeColors = {
-  "accent": "jn-bg-theme-accent",
-  "danger": "jn-bg-theme-danger",
-  "error": "jn-bg-theme-error",
-  "info": "jn-bg-theme-info",
-  "success": "jn-bg-theme-success",
-  "warning": "jn-bg-theme-warning",
-  "focus": "jn-bg-theme-focus",
+  accent: "jn-bg-theme-accent",
+  danger: "jn-bg-theme-danger",
+  error: "jn-bg-theme-error",
+  info: "jn-bg-theme-info",
+  success: "jn-bg-theme-success",
+  warning: "jn-bg-theme-warning",
+  focus: "jn-bg-theme-focus",
   "background-lvl-0": "jn-bg-theme-background-lvl-0",
   "background-lvl-1": "jn-bg-theme-background-lvl-1",
   "background-lvl-2": "jn-bg-theme-background-lvl-2",
   "background-lvl-3": "jn-bg-theme-background-lvl-3",
   "background-lvl-4": "jn-bg-theme-background-lvl-4",
-  "background-lvl-5": "jn-bg-theme-background-lvl-5"
+  "background-lvl-5": "jn-bg-theme-background-lvl-5",
 }
 exports.getThemeTextColors = {
-  "highest": "jn-text-theme-highest",
-  "high": "jn-text-theme-high",
-  "default": "jn-text-theme-default",
-  "light": "jn-text-theme-light",
-  "disabled": "jn-text-theme-disabled",
-  "link": "jn-text-theme-link"
+  highest: "jn-text-theme-highest",
+  high: "jn-text-theme-high",
+  default: "jn-text-theme-default",
+  light: "jn-text-theme-light",
+  disabled: "jn-text-theme-disabled",
+  link: "jn-text-theme-link",
 }
 exports.getJunoColors = {
   "juno-grey-blue": "jn-bg-juno-grey-blue",
@@ -71,6 +71,15 @@ exports.getJunoColors = {
   "juno-grey-light-9": "jn-bg-juno-grey-light-9",
   "juno-grey-light-10": "jn-bg-juno-grey-light-10",
   "juno-grey-light-11": "jn-bg-juno-grey-light-11",
+  "juno-red": "jn-bg-juno-red",
+  "juno-red-1": "jn-bg-juno-red-1",
+  "juno-red-2": "jn-bg-juno-red-2",
+  "juno-red-3": "jn-bg-juno-red-3",
+  "juno-red-4": "jn-bg-juno-red-4",
+  "juno-red-5": "jn-bg-juno-red-5",
+  "juno-red-6": "jn-bg-juno-red-6",
+  "juno-red-7": "jn-bg-juno-red-7",
+  "juno-red-8": "jn-bg-juno-red-8",
   "sap-grey": "jn-bg-sap-grey",
   "sap-grey-1": "jn-bg-sap-grey-1",
   "sap-grey-2": "jn-bg-sap-grey-2",
@@ -102,6 +111,6 @@ exports.getJunoColors = {
   "sap-green-4": "jn-bg-sap-green-4",
   "sap-green-5": "jn-bg-sap-green-5",
   "sap-green-6": "jn-bg-sap-green-6",
-  "white": "jn-bg-white",
-  "black": "jn-bg-black"
+  white: "jn-bg-white",
+  black: "jn-bg-black",
 }

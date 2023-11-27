@@ -5,6 +5,7 @@ import { getCurrentThemeMode } from "../../../.storybook/juno-addon/themes"
 import { addons } from "@storybook/preview-api"
 
 // allows to implement themed components in the storybook
+// component adjusts to the selected theme and enables tailwind classes.
 export function JunoComponentParent(props) {
   // returns nothing if there is no child
   if (!props.children) {

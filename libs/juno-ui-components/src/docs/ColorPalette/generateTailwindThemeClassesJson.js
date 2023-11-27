@@ -64,6 +64,7 @@ const getJunoColors = () => {
   const allowList = [
     "juno-grey-blue",
     "juno-blue",
+    "juno-red",
     "juno-turquoise",
     "juno-grey-light",
     "sap-grey",
