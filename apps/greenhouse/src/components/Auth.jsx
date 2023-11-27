@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState, createRef } from "react"
 import { Button, LoadingIndicator, Spinner, Stack } from "juno-ui-components"
 import {
   useAuthAppLoaded,
@@ -7,8 +7,9 @@ import {
   useAuthError,
   useAuthActions,
   useGlobalsActions,
+  useGlobalsAssetsHost,
 } from "../components/StoreProvider"
-import useAppLoader from "../hooks/useAppLoader"
+import { useAppLoader } from "utils"
 import { Transition } from "@tailwindui/react"
 
 const currentUrl = new URL(window.location.href)
@@ -47,25 +48,25 @@ const Auth = ({
   demoOrg,
   demoUserToken,
 }) => {
-  // const authData = useAuthData()
+  const assetsHost = useGlobalsAssetsHost()
   const authAppLoaded = useAuthAppLoaded()
   const authLoggedIn = useAuthLoggedIn()
   const authIsProcessing = useAuthIsProcessing()
   const authError = useAuthError()
   const { login } = useAuthActions()
-
-  const ref = React.createRef()
-  const { mount } = useAppLoader()
-  const [loading, setLoading] = React.useState(!authAppLoaded)
-  const [longLoading, setLongLoading] = React.useState(false)
-
   const { setDemoMode } = useGlobalsActions()
+
+  const ref = createRef()
+  const { mount } = useAppLoader(assetsHost)
+  const [loading, setLoading] = useState(!authAppLoaded)
+  const [longLoading, setLongLoading] = useState(false)
 
   // in this useEffect we load the auth app via import (see mount)
   // It should happen just once!
   // The connection to the auth events happens in the useCommunication hook!
+  // wait until assetsHost is set to avoid a warning on mount
   useEffect(() => {
-    if (!mount || !clientId || !issuerUrl) return
+    if (!assetsHost || !clientId || !issuerUrl) return
 
     // if current orgName is the demo org, we mock the auth app
     if (demoOrg === orgName) {
@@ -93,7 +94,8 @@ const Auth = ({
         }),
       },
     })
-  }, [mount, clientId, issuerUrl, setDemoMode])
+    // add mount to the dependencies since it changes depending on the assetsHost
+  }, [mount, clientId, issuerUrl, assetsHost])
 
   // timeout for waiting for auth
   useEffect(() => {
