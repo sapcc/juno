@@ -14,9 +14,13 @@ The Juno UI component library is based on Tailwind CSS which means that all Tail
 
 Theme colors adjust according to the chosen theme (dark or light) automatically. So unless you are creating something like a chart you should try to avoid the straight up colors like juno-grey-... and instead stick to the theme colors (they always contain the word theme somewhere in the name).
 
-<ColorPalette theme="theme-dark" />
+<JunoComponentParent>
+  <ColorPalette theme="theme-dark" />
+</JunoComponentParent>
 
-<ColorPalette theme="theme-light" />
+<JunoComponentParent>
+  <ColorPalette theme="theme-light" />
+</JunoComponentParent>
 
 ## Primary Colors
 
@@ -27,4 +31,6 @@ Theme colors adjust according to the chosen theme (dark or light) automatically.
   />
 </JunoComponentParent>
 
-<JunoColorPalette />
+<JunoComponentParent>
+  <JunoColorPalette />
+</JunoComponentParent>
