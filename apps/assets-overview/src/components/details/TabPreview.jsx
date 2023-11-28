@@ -4,11 +4,13 @@ import { Box, Stack, Spinner, Message, Icon } from "juno-ui-components"
 import PreviewAppPropsForm from "./PreviewAppPropsForm"
 import useStore from "../../store"
 import { stateToURL } from "url-state-provider"
+import { useActions, Messages } from "messages-provider"
+import { parseError } from "../../helpers"
 
 const TabPreview = ({ asset }) => {
+  const { addMessage } = useActions()
   const assetsUrl = useStore((state) => state.assetsUrl)
   const { mount } = useAppLoader(assetsUrl)
-  const holder = useRef()
   const app = useRef(document.createElement("div"))
   const [isLoading, setIsLoading] = useState(false)
   const [appProps, setAppProps] = useState({})
@@ -30,36 +32,19 @@ const TabPreview = ({ asset }) => {
 
   useEffect(() => {
     if (!mount || !app.current || !config?.appPreview) return
+    setIsLoading(true)
     mount(app.current, config)
+      .then(() => {
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        setIsLoading(false)
+        addMessage({
+          variant: "error",
+          text: parseError(error),
+        })
+      })
   }, [mount, app, config])
-
-  // // create a promise to mount the app
-  // // this promise is resolved once
-  // const mountApp = useMemo(() => {
-  //   if (!config?.appPreview || !holder?.current) return
-  //   // mount the app
-  //   return new Promise((resolve) => {
-  //     const a = mount(app.current, config)
-  //     setIsLoading(true)
-  //     if (!a) resolve(false)
-  //     else
-  //       a.then(() => {
-  //         setIsLoading(false)
-  //         return resolve(true)
-  //       })
-  //   })
-  // }, [mount, config, holder])
-
-  // useEffect(() => {
-  //   if (!mountApp) return
-  //   if (config?.appPreview) {
-  //     // bind the app
-  //     mountApp.then((loaded) => {
-  //       if (!loaded || !holder.current) return
-  //       holder.current.appendChild(app.current)
-  //     })
-  //   }
-  // }, [config?.appPreview, mountApp])
 
   const onAppPropsChange = (newAppProps) => {
     setAppProps(newAppProps)
@@ -67,6 +52,7 @@ const TabPreview = ({ asset }) => {
 
   return (
     <>
+      <Messages className="mt-4" />
       {config?.appPreview ? (
         <>
           <PreviewAppPropsForm
