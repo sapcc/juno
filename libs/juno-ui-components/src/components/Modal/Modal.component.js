@@ -8,6 +8,7 @@ import { usePortalRef } from "../PortalProvider/PortalProvider.component"
 
 /*
 * handle height/scrolling TODO -> allow optional constrainHeight=false prop?
+* Unfocus element on ESC, close modal on ESC when no element is focussed
 * Spare "variant" prop for semantic variants later. 
 * a11y (voicereader, keyboard accessibilty) TODO
 */
@@ -73,7 +74,7 @@ The Modal uses a boolean 'open' prop to determine whether it is open or not. Alt
 
 By default, the modal will close (i.e. set its `open` state to false) once the user cancels the Modal. When confirming, you will have to either set the `open` to false to close the modal, or use whatever global state mechanism you have to handle modals.
 
-To make the modal less intrusive and effectively un-modal ist, pass `closeOnBackdropClick`. This will close the modal when the user clicks the modal backdrop.
+To make the modal less intrusive and effectively un-modal it, pass `closeOnBackdropClick`. This will close the modal when the user clicks the modal backdrop.
 */
 export const Modal = ({
 	cancelButtonIcon,
@@ -151,6 +152,7 @@ export const Modal = ({
 									initialFocus: initialFocus,
 									clickOutsideDeactivates: isCloseabelOnBackdropClick,
 									fallbackFocus: () => modalRef.current,
+									allowOutsideClick: true,
 								}}
 							>
 								<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" ref={modalRef} {...props} aria-labelledby={modalTitleId}>
