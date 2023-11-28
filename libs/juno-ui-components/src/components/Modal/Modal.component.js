@@ -84,6 +84,7 @@ export const Modal = ({
 	children,
 	closeable,
 	closeOnBackdropClick,
+	closeOnEsc,
 	heading,
 	initialFocus,
 	modalFooter,
@@ -104,6 +105,7 @@ export const Modal = ({
 	const [isOpen, setIsOpen] = useState(open)
 	const [isCloseable, setIsCloseable] = useState(closeable)
 	const [isCloseabelOnBackdropClick, setIsCloseableOnBackdropClick] = useState(closeOnBackdropClick)
+	const [isCloseableOnEsc, setisCloseableOnEsc] = useState(closeOnEsc)
 	
 	useEffect(() => {
 		setIsOpen(open)
@@ -117,6 +119,10 @@ export const Modal = ({
 		setIsCloseableOnBackdropClick(closeOnBackdropClick)
 	}, [closeOnBackdropClick])
 	
+	useEffect(() => {
+		setisCloseableOnEsc(closeOnEsc)
+	}, [closeOnEsc])
+	
 	const handleConfirmClick = (event) => {
 		onConfirm && onConfirm(event)
 	}
@@ -124,6 +130,13 @@ export const Modal = ({
 	const handleCancelClick = (event) => {
 		setIsOpen(false)
 		onCancel && onCancel(event)
+	}
+		
+	const handleEsc = (event) => {
+		if (isCloseable && isCloseableOnEsc) {
+			setIsOpen(false)
+			onCancel && onCancel(event)
+		}
 	}
 	
 	const handleBackdropClick = (event) => {
@@ -153,6 +166,7 @@ export const Modal = ({
 									clickOutsideDeactivates: isCloseabelOnBackdropClick,
 									fallbackFocus: () => modalRef.current,
 									allowOutsideClick: true,
+									escapeDeactivates: () => {handleEsc()},
 								}}
 							>
 								<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" ref={modalRef} {...props} aria-labelledby={modalTitleId}>
@@ -222,6 +236,8 @@ Modal.propTypes = {
 	onCancel: PropTypes.func,
 	/** Whether the modal should be closed when the backdrop is clicked. Essentially 'un-modals' the modal. */
 	closeOnBackdropClick: PropTypes.bool,
+	/** Whether the modal can be closed by hitting the ESC key */
+	 closeOnEsc: PropTypes.bool,
 	/** By default, the first element in the tab order of the Modal content will be focussed. To specify an element to be focussed when the modal opens, pass an element, DOM node, or selector string. */
 	initialFocus: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
 }
@@ -243,5 +259,6 @@ Modal.defaultProps = {
 	onConfirm: undefined,
 	onCancel: undefined,
 	closeOnBackdropClick: false,
+	closeOnEsc: true,
 	initialFocus: undefined,
 }
