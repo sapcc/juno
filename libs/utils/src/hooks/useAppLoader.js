@@ -55,7 +55,7 @@ const useAppLoader = (assetsHost) => {
           ? options.url
           : `@juno/${options.name}@${options.version || "latest"}`
         return importShim(url).then((app) => {
-          app.mount(container, { props: { ...options.props, embedded: true } })
+          app.mount(container, { props: { ...options.props } })
           return app.unmount
         })
       })
