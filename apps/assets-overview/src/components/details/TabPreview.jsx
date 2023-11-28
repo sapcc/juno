@@ -13,15 +13,16 @@ const TabPreview = ({ asset }) => {
   const { mount } = useAppLoader(assetsUrl)
   const app = useRef(document.createElement("div"))
   const [isLoading, setIsLoading] = useState(false)
-  const [appProps, setAppProps] = useState({})
+  const [appProps, setAppProps] = useState(null)
   const urlStateTestingKey = useStore((state) => state.urlStateTestingKey)
 
   useEffect(() => {
-    // reset app props on asset change
+    // reset app props on change asset
     setAppProps({})
   }, [asset])
 
   const config = useMemo(() => {
+    if (!asset || !appProps) return
     return {
       name: asset?.name,
       version: asset?.version,
@@ -44,7 +45,7 @@ const TabPreview = ({ asset }) => {
           text: parseError(error),
         })
       })
-  }, [mount, app, config])
+  }, [config])
 
   const onAppPropsChange = (newAppProps) => {
     setAppProps(newAppProps)
@@ -85,20 +86,20 @@ const TabPreview = ({ asset }) => {
                 <>
                   {Object.keys(appProps || {}).length <= 0 && (
                     <p className="mb-6">
-                      This is a preview of the <b>{config.name}</b> micro
+                      This is a preview of the <b>{config?.name}</b> micro
                       frontend without <b>any specific configuration.</b>
                     </p>
                   )}
                 </>
               )}
-              <div data-app={config.name} ref={app}></div>
+              <div data-app={config?.name} ref={app}></div>
             </div>
           </Box>
         </>
       ) : (
         <Message
           className="mt-8"
-          title={config.name}
+          title={config?.name}
           text="There is no preview available for this micro frontend"
         />
       )}
