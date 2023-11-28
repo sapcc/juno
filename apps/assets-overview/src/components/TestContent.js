@@ -1,59 +1,56 @@
-import React, { useMemo, useRef, useEffect } from "react"
+import React, { useMemo, useRef, useEffect, useState } from "react"
 import { currentState } from "url-state-provider"
 import useStore from "../store"
-import useAppLoader from "../hooks/useAppLoader"
+import { useAppLoader } from "utils"
 import { useActions, Messages } from "messages-provider"
-import { Stack } from "juno-ui-components"
+import { Stack, Spinner } from "juno-ui-components"
+import { parseError } from "../helpers"
 
 const TestContent = () => {
+  const assetsUrl = useStore((state) => state.assetsUrl)
+  const { mount } = useAppLoader(assetsUrl)
   const { addMessage } = useActions()
-  const { mount } = useAppLoader()
   const urlStateTestingKey = useStore((state) => state.urlStateTestingKey)
   const urlState = currentState(urlStateTestingKey)
-  const holder = useRef()
   const app = useRef(document.createElement("div"))
+  const [isLoading, setIsLoading] = useState(true)
+  const [isMounted, setIsMounted] = useState(false) // avoid rerenders when mounting the app
 
   const config = useMemo(() => {
     return urlState?.o || {}
   }, [urlState])
 
-  // create a promise to mount the app
-  // this promise is resolved once
-  const mountApp = useMemo(() => {
-    if (!config) return
-    return new Promise((resolve) => {
-      console.log("Mounting with config:", config)
-      const a = mount(app.current, config)
-      if (!a) resolve(false)
-      else
-        a.then(() => {
-          addMessage({
-            variant: "warning",
-            text: `This is a preview of ${config?.name}@${config?.version}. Not for productive use!`,
-            dismissible: false,
-          })
-          return resolve(true)
-        }).catch((e) => {
-          addMessage({
-            variant: "error",
-            text: e.message,
-          })
-        })
-    })
-  }, [mount, config])
-
   useEffect(() => {
-    mountApp.then((loaded) => {
-      if (!loaded || !holder.current) return
-      app.current.setAttribute("style", "display: inline;")
-      holder.current.appendChild(app.current)
-    })
-  }, [])
+    if (!app.current || !config || !assetsUrl || isMounted) return
+    mount(app.current, config)
+      .then(() => {
+        addMessage({
+          variant: "warning",
+          text: `This is a preview of ${config?.name}@${config?.version}. Not for productive use!`,
+          dismissible: false,
+        })
+        setIsLoading(false)
+        setIsMounted(true)
+      })
+      .catch((error) => {
+        setIsLoading(false)
+        addMessage({
+          variant: "error",
+          text: parseError(error),
+        })
+      })
+  }, [assetsUrl, app, config])
 
   return (
     <Stack className="h-full" direction="vertical">
       <Messages />
-      <div data-app={config.name} className="inline grow" ref={holder} />
+      {isLoading && (
+        <Stack alignment="center">
+          <Spinner variant="primary" />
+          Loading...
+        </Stack>
+      )}
+      <div data-app={config.name} className="inline grow" ref={app} />
     </Stack>
   )
 }
