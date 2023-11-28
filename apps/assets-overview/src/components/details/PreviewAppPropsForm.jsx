@@ -67,9 +67,8 @@ const PreviewAppPropsForm = ({ asset, onAppPropsChange }) => {
         <div className={formAreaCss(show)}>
           <Form className="p-1">
             {Object.keys(appProps).map((key) => (
-              <FormRow>
+              <FormRow key={key}>
                 <TextInput
-                  key={key}
                   id={key}
                   label={key}
                   required={appProps[key]?.type === "required"}

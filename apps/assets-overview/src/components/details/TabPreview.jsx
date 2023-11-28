@@ -1,24 +1,28 @@
 import React, { useEffect, useMemo, useState, useRef } from "react"
-import useAppLoader from "../../hooks/useAppLoader"
+import { useAppLoader } from "utils"
 import { Box, Stack, Spinner, Message, Icon } from "juno-ui-components"
 import PreviewAppPropsForm from "./PreviewAppPropsForm"
 import useStore from "../../store"
 import { stateToURL } from "url-state-provider"
+import { useActions, Messages } from "messages-provider"
+import { parseError } from "../../helpers"
 
 const TabPreview = ({ asset }) => {
-  const { mount } = useAppLoader()
-  const holder = useRef()
+  const { addMessage } = useActions()
+  const assetsUrl = useStore((state) => state.assetsUrl)
+  const { mount } = useAppLoader(assetsUrl)
   const app = useRef(document.createElement("div"))
   const [isLoading, setIsLoading] = useState(false)
-  const [appProps, setAppProps] = useState({})
+  const [appProps, setAppProps] = useState(null)
   const urlStateTestingKey = useStore((state) => state.urlStateTestingKey)
 
   useEffect(() => {
-    // reset app props on asset change
+    // reset app props on change asset
     setAppProps({})
   }, [asset])
 
   const config = useMemo(() => {
+    if (!asset || !appProps) return
     return {
       name: asset?.name,
       version: asset?.version,
@@ -27,33 +31,21 @@ const TabPreview = ({ asset }) => {
     }
   }, [asset, appProps])
 
-  // create a promise to mount the app
-  // this promise is resolved once
-  const mountApp = useMemo(() => {
-    if (!config?.appPreview || !holder?.current) return
-    // mount the app
-    return new Promise((resolve) => {
-      const a = mount(app.current, config)
-      setIsLoading(true)
-      if (!a) resolve(false)
-      else
-        a.then(() => {
-          setIsLoading(false)
-          return resolve(true)
-        })
-    })
-  }, [mount, config, holder])
-
   useEffect(() => {
-    if (!mountApp) return
-    if (config?.appPreview) {
-      // bind the app
-      mountApp.then((loaded) => {
-        if (!loaded || !holder.current) return
-        holder.current.appendChild(app.current)
+    if (!mount || !app.current || !config?.appPreview) return
+    setIsLoading(true)
+    mount(app.current, config)
+      .then(() => {
+        setIsLoading(false)
       })
-    }
-  }, [config?.appPreview, mountApp])
+      .catch((error) => {
+        setIsLoading(false)
+        addMessage({
+          variant: "error",
+          text: parseError(error),
+        })
+      })
+  }, [config])
 
   const onAppPropsChange = (newAppProps) => {
     setAppProps(newAppProps)
@@ -61,6 +53,7 @@ const TabPreview = ({ asset }) => {
 
   return (
     <>
+      <Messages className="mt-4" />
       {config?.appPreview ? (
         <>
           <PreviewAppPropsForm
@@ -93,20 +86,20 @@ const TabPreview = ({ asset }) => {
                 <>
                   {Object.keys(appProps || {}).length <= 0 && (
                     <p className="mb-6">
-                      This is a preview of the <b>{config.name}</b> micro
+                      This is a preview of the <b>{config?.name}</b> micro
                       frontend without <b>any specific configuration.</b>
                     </p>
                   )}
                 </>
               )}
-              <div data-app={config.name} ref={holder}></div>
+              <div data-app={config?.name} ref={app}></div>
             </div>
           </Box>
         </>
       ) : (
         <Message
           className="mt-8"
-          title={config.name}
+          title={config?.name}
           text="There is no preview available for this micro frontend"
         />
       )}
