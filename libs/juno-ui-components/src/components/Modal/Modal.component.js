@@ -230,7 +230,7 @@ Modal.propTypes = {
 	unpad: PropTypes.bool,
 	/** Custom className to add to the modal */
 	className: PropTypes.string,
-	/** A handler to execute once the modal is confirmed */
+	/** A handler to execute once the modal is confirmed by clicking the confrim button if exists. Note that we do not close the modal automatically. */
 	onConfirm: PropTypes.func,
 	/** A handler to execute once the modal is cancelled or dismissed using the x-Close button,  Cancel-button or pressing ESC */
 	onCancel: PropTypes.func,
