@@ -6,7 +6,7 @@ import { ButtonRow } from "../ButtonRow/index"
 import { Form } from "../Form/index"
 import { FormRow } from "../FormRow/index"
 import { TextInput } from "../TextInput/index"
-import { CheckboxRow } from "../CheckboxRow/index"
+import { Checkbox } from "../Checkbox/index"
 import { Icon } from "../Icon/index"
 import { PortalProvider } from "../PortalProvider/index"
 import { Select } from "../Select/index"
@@ -105,7 +105,9 @@ Login.args = {
       <FormRow>
        <TextInput type="password" label="Password" name="password" id="password" />
       </FormRow>
-      <CheckboxRow label="Remember Me" id="remember-me" />
+      <FormRow>
+        <Checkbox label="Remember Me" id="remember-me" />
+      </FormRow>
     </>
   ,
   modalFooter:  <ModalFooter confirmButtonLabel="Log In" confirmButtonIcon="accountCircle" cancelButtonLabel="Never Mind" />,
