@@ -3,6 +3,7 @@ import { Modal } from "./Modal.component"
 import { ModalFooter } from "../ModalFooter/index"
 import { Button } from "../Button/index"
 import { ButtonRow } from "../ButtonRow/index"
+import { Form } from "../Form/index"
 import { FormRow } from "../FormRow/index"
 import { TextInput } from "../TextInput/index"
 import { CheckboxRow } from "../CheckboxRow/index"
@@ -165,4 +166,49 @@ TestComboBoxInModal.args = {
       </ComboBoxOption>
     </ComboBox>
   </>,
+}
+
+export const ModalWithALargerForm = Template.bind({})
+ModalWithALargerForm.args = {
+  title: "Register",
+  initialFocus: "#firstname",
+  cancelButtonLabel: "Cancel",
+  confirmButtonLabel: "Register now",
+  children: 
+    <Form>
+      <FormRow>
+        <TextInput label="First Name" id="firstname"/>
+      </FormRow>
+      <FormRow>
+        <TextInput label="Last Name" id="lastname"/>
+      </FormRow>
+      <FormRow>
+        <TextInput label="Email" id="email" type="email" />
+      </FormRow>
+      <FormRow>
+        <TextInput label="Password" id="password" type="password" />
+      </FormRow>
+      <FormRow>
+        <TextInput label="Retype Password" id="retype-password" type="password" />
+      </FormRow>
+      <FormRow>
+        <Select label="Role">
+          <SelectOption>Private Person</SelectOption>
+          <SelectOption>Small Business</SelectOption>
+        </Select>
+      </FormRow>
+      <FormRow>
+        <ComboBox label="Country">
+          <ComboBoxOption value="germany" key="DE">
+            Germany
+          </ComboBoxOption>
+          <ComboBoxOption value="uk" key="UK">
+            United Kingdom
+          </ComboBoxOption>
+          <ComboBoxOption value="us" key="US">
+            USA
+          </ComboBoxOption>
+        </ComboBox>
+      </FormRow>
+    </Form>
 }
