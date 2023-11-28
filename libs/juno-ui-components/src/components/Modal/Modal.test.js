@@ -1,12 +1,20 @@
 import * as React from "react"
-import { render, screen, within } from "@testing-library/react"
+import { cleanup, render, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { Modal } from "./index"
 import { PortalProvider, usePortalRef } from "../PortalProvider/PortalProvider.component"
+import { TextInput } from "../TextInput/index.js"
 
-
+const mockOnConfirm = jest.fn()
+const mockOnCancel = jest.fn()
 
 describe("Modal", () => {
+	
+	afterEach(() => {
+		cleanup()
+		jest.clearAllMocks()
+	})
+	
   test("renders a Modal", async () => {
 		render(<PortalProvider><Modal open /></PortalProvider>)
 		expect(screen.getByRole("dialog")).toBeInTheDocument()
@@ -94,11 +102,88 @@ describe("Modal", () => {
 		expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
 	})
 	
-	// confirm button closing, handlers
+	// confirm button 
+	test("executes an onConfirm handler as passed and closes the modal when clicking the confirm button", async () => {
+		render(
+			<PortalProvider>
+				<Modal 
+					open 
+					onConfirm={mockOnConfirm} 
+					confirmButtonLabel={"OK"}/>
+				</PortalProvider>)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+		const confirmButton = screen.getByRole("button", {name: "OK"})
+		await userEvent.click(confirmButton)
+		expect(mockOnConfirm).toHaveBeenCalled()
+	})
+	
+	// cancel button
+	test("executes an onCancel handler as passed and closes the modal when clicking the cancel button", async () => {
+		render(
+			<PortalProvider>
+				<Modal 
+					open
+					onCancel={mockOnCancel}
+					cancelButtonLabel="Cancel"
+				/>
+			</PortalProvider>)
+			expect(screen.getByRole("dialog")).toBeInTheDocument()
+			const cancelButton = screen.getByRole("button", {name: "Cancel"})
+			await userEvent.click(cancelButton)
+			expect(mockOnCancel).toHaveBeenCalled()
+			expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+	})
+	
+	// cancel button
+	test("executes an onCancel handler as passed and closes the modal when clicking the close button in the modal header", async () => {
+		render(
+			<PortalProvider>
+				<Modal 
+					open
+					onCancel={mockOnCancel}
+				/>
+			</PortalProvider>)
+			expect(screen.getByRole("dialog")).toBeInTheDocument()
+			const closeButton = screen.getByRole("button", {name: "close"})
+			await userEvent.click(closeButton)
+			expect(mockOnCancel).toHaveBeenCalled()
+			expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+	})
+	
+	// close on ESC
+	test("executes an onCancel handler as passed and closes the modal when hitting the ESC key", async () => {
+		render(
+			<PortalProvider>
+				<Modal 
+					open 
+					onCancel={mockOnCancel}
+				/>
+			</PortalProvider>
+		)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+		await userEvent.keyboard("{Escape}")
+		expect(mockOnCancel).toHaveBeenCalled()
+		expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+	})
 	
 	// trap focus
 	
-	// initalFocus
+	// initialFocus
+	test.skip("focusses an element inside the modal as passed", async () => {
+		render(
+			<PortalProvider>
+				<Modal 
+					open 
+					initialFocus="#focusinput"
+				>
+					<TextInput id="focusinput" />
+				</Modal>
+			</PortalProvider>
+		)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+		expect(screen.getByRole("textbox")).toBeInTheDocument()
+		await waitFor(() => expect(screen.getByRole("textbox")).toHaveFocus(), {timeOut: 1000})
+	})
 
   test("renders custom classNames as passed", async () => {
 	render(<PortalProvider><Modal open className="my-custom-class" /></PortalProvider>)
