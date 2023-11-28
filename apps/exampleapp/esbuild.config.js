@@ -7,6 +7,7 @@ const { transform } = require("@svgr/core")
 const url = require("postcss-url")
 // this function generates app props based on package.json and propSecrets.json
 const appProps = require("../../helpers/appProps")
+const path = require("path")
 
 if (!/.+\/.+\.js/.test(pkg.module))
   throw new Error(
@@ -41,6 +42,23 @@ const build = async () => {
   // delete build folder and re-create it as an empty folder
   await fs.rm(outdir, { recursive: true, force: true })
   await fs.mkdir(outdir, { recursive: true })
+
+  // copy folder with fs.cpsync the material design icons to build folder
+  // we need to resolve the node package in node_modules
+
+  const iconsPath = path.resolve(
+    path.dirname(
+      require.resolve("@material-design-icons/svg/filled/account_circle.svg")
+    ),
+    "../"
+  )
+
+  await fs.cp(`${iconsPath}/filled`, `${outdir}/svg/filled`, {
+    recursive: true,
+  })
+  await fs.cp(`${iconsPath}/outlined`, `${outdir}/svg/outlined`, {
+    recursive: true,
+  })
 
   // build app
   let ctx = await esbuild.context({

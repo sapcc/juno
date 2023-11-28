@@ -41,7 +41,8 @@
     "url-state-provider": "*",
     "util": "^0.12.4",
     "utils": "*",
-    "zustand": "4.3.7"
+    "zustand": "4.3.7",
+    "@material-design-icons/svg": "^0.14.4"
   },
   "scripts": {
     "test": "jest",
