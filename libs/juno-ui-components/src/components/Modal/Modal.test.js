@@ -165,9 +165,7 @@ describe("Modal", () => {
 		expect(mockOnCancel).toHaveBeenCalled()
 		expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
 	})
-	
-	// trap focus
-	
+		
 	// initialFocus
 	test.skip("focusses an element inside the modal as passed", async () => {
 		render(
@@ -182,7 +180,25 @@ describe("Modal", () => {
 		)
 		expect(screen.getByRole("dialog")).toBeInTheDocument()
 		expect(screen.getByRole("textbox")).toBeInTheDocument()
-		await waitFor(() => expect(screen.getByRole("textbox")).toHaveFocus(), {timeOut: 1000})
+		await waitFor(() => expect(screen.getByRole("textbox")).toHaveFocus(), {timeOut: 50})
+	})
+	
+	// trap focus
+	test.skip("traps the focus in a modal", async () => {
+		render(<PortalProvider>
+			<Modal open cancelButtonLabel="Cancel"/>
+				<TextInput name="textinput"/>
+		</PortalProvider>)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+		await userEvent.keyboard("{Tab}")
+		//console.log("ACTIVE ELEMENT: ", document.activeElement)
+		expect(screen.getByRole("textbox")).toHaveFocus()
+		await userEvent.keyboard("{Tab}")
+		expect(screen.getByRole("button", {name: "Cancel"})).toHaveFocus()
+		await userEvent.keyboard("{Tab}")
+		expect(screen.getByRole("button", {name: "close"})).toHaveFocus()
+		await userEvent.keyboard("{Tab}")
+		expect(screen.getByRole("textbox")).toHaveFocus()
 	})
 
   test("renders custom classNames as passed", async () => {
