@@ -38,6 +38,7 @@ const headerstyles = `
 	jn-px-8
 	jn-border-b
 	jn-border-theme-background-lvl-4
+	jn-h-[2.8125rem]
 `
 
 const titlestyles = `
@@ -171,8 +172,8 @@ export const Modal = ({
 							>
 								<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" ref={modalRef} {...props} aria-labelledby={modalTitleId}>
 									<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
-										{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} id={modalTitleId}>{ title || heading }</h1> : null }
-										{ isCloseable ? <Icon icon="close" onClick={ handleCancelClick }/> : null }
+										{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} id={modalTitleId}>{ title || heading }</h1> : "" }
+										{ isCloseable ? <Icon icon="close" onClick={ handleCancelClick }/> : "" }
 									</div>
 									<div className={`juno-modal-content ${contentstyles} ${ unpad ? "" : contentpaddingstyles }`} >
 										{ children }
