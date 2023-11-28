@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo, useState, useRef } from "react"
-import useAppLoader from "../../hooks/useAppLoader"
+import { useAppLoader } from "utils"
 import { Box, Stack, Spinner, Message, Icon } from "juno-ui-components"
 import PreviewAppPropsForm from "./PreviewAppPropsForm"
 import useStore from "../../store"
 import { stateToURL } from "url-state-provider"
 
 const TabPreview = ({ asset }) => {
-  const { mount } = useAppLoader()
+  const assetsUrl = useStore((state) => state.assetsUrl)
+  const { mount } = useAppLoader(assetsUrl)
   const holder = useRef()
   const app = useRef(document.createElement("div"))
   const [isLoading, setIsLoading] = useState(false)
@@ -27,33 +28,38 @@ const TabPreview = ({ asset }) => {
     }
   }, [asset, appProps])
 
-  // create a promise to mount the app
-  // this promise is resolved once
-  const mountApp = useMemo(() => {
-    if (!config?.appPreview || !holder?.current) return
-    // mount the app
-    return new Promise((resolve) => {
-      const a = mount(app.current, config)
-      setIsLoading(true)
-      if (!a) resolve(false)
-      else
-        a.then(() => {
-          setIsLoading(false)
-          return resolve(true)
-        })
-    })
-  }, [mount, config, holder])
-
   useEffect(() => {
-    if (!mountApp) return
-    if (config?.appPreview) {
-      // bind the app
-      mountApp.then((loaded) => {
-        if (!loaded || !holder.current) return
-        holder.current.appendChild(app.current)
-      })
-    }
-  }, [config?.appPreview, mountApp])
+    if (!mount || !app.current || !config?.appPreview) return
+    mount(app.current, config)
+  }, [mount, app, config])
+
+  // // create a promise to mount the app
+  // // this promise is resolved once
+  // const mountApp = useMemo(() => {
+  //   if (!config?.appPreview || !holder?.current) return
+  //   // mount the app
+  //   return new Promise((resolve) => {
+  //     const a = mount(app.current, config)
+  //     setIsLoading(true)
+  //     if (!a) resolve(false)
+  //     else
+  //       a.then(() => {
+  //         setIsLoading(false)
+  //         return resolve(true)
+  //       })
+  //   })
+  // }, [mount, config, holder])
+
+  // useEffect(() => {
+  //   if (!mountApp) return
+  //   if (config?.appPreview) {
+  //     // bind the app
+  //     mountApp.then((loaded) => {
+  //       if (!loaded || !holder.current) return
+  //       holder.current.appendChild(app.current)
+  //     })
+  //   }
+  // }, [config?.appPreview, mountApp])
 
   const onAppPropsChange = (newAppProps) => {
     setAppProps(newAppProps)
@@ -99,7 +105,7 @@ const TabPreview = ({ asset }) => {
                   )}
                 </>
               )}
-              <div data-app={config.name} ref={holder}></div>
+              <div data-app={config.name} ref={app}></div>
             </div>
           </Box>
         </>
