@@ -9,6 +9,7 @@ const tabListStyles = `
 export const TabNavigationContext = createContext()
 
 /** A Tab Navigation parent component. Use to wrap `<TabNavigationItem>` elements inside. */
+/** TODO: keyboard accessibility */
 export const TabNavigation = ({
   activeTab,
   children,
@@ -47,7 +48,7 @@ export const TabNavigation = ({
         disabled: disabled,
       }}
     >
-      <ul className={`juno-tabnavigation ${tabListStyles} ${className}`} role="tablist">
+      <ul className={`juno-tabnavigation ${tabListStyles} ${className}`} role="tablist" {...props} >
         { children }
       </ul>
     </TabNavigationContext.Provider>
