@@ -81,7 +81,9 @@ export const TabNavigationItem = ({
         juno-tabnavigation-item
          ${ tabStyles } 
          ${ disabled || groupDisabled ? disabledTabStyles : ""}
+         ${ disabled || groupDisabled ? "juno-tabnavigation-item-disabled" : ""}
          ${ isActive ? activeTabStyles : ""}
+         ${ isActive ? "juno-tabnavigation-item-active" : "" }
          ${ className }
       `} 
       role="tab" 
