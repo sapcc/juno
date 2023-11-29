@@ -26,6 +26,7 @@ const activeTabStyles = `
 /** An individual Tab Navigation Item. Use wrapped in a `<TabNavigation>` parent component. */
 export const TabNavigationItem = ({
   active,
+  className,
   disabled,
   icon,
   label,
@@ -78,12 +79,16 @@ export const TabNavigationItem = ({
     <li 
       className={`
         juno-tabnavigation-item
-         ${tabStyles} 
+         ${ tabStyles } 
          ${ disabled || groupDisabled ? disabledTabStyles : ""}
          ${ isActive ? activeTabStyles : ""}
+         ${ className }
       `} 
       role="tab" 
       onClick={handleTabClick}
+      aria-selected={activeTab === label}
+      aria-disabled={ disabled || groupDisabled ? true : false}
+      {...props}
     >
       { icon ? <Icon icon={icon} size="18" className={`jn-mr-2`} /> : null }
       <span>
@@ -96,11 +101,13 @@ export const TabNavigationItem = ({
 TabNavigationItem.propTypes = {
   /** Whether the tab navigation item is active */
   active: PropTypes.bool,
+  /** Pass a custom className */
+  className: PropTypes.string,
   /** Whether the tab navigation item is disabled */
   disabled: PropTypes.bool,
   /** Pass the name of an icon to render in the Tab. Can be any icon included with Juno. */
   icon: PropTypes.oneOf(knownIcons),
-  /** The label of the tab navigation item */
+  /** The label of the tab navigation item. Must be unique within any given `<TabNavigation>` group. */
   label: PropTypes.string,
   /** Pass a custom handler to execute when the tab is clicked */
   onClick: PropTypes.func,
@@ -108,6 +115,7 @@ TabNavigationItem.propTypes = {
 
 TabNavigationItem.defaultProps = {
   active: false,
+  className: "",
   disabled: false,
   icon: undefined,
   label: "",
