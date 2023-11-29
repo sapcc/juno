@@ -15,7 +15,15 @@ const Plugin = ({ id }) => {
   const app = useRef(el)
 
   // this promise is resolved once per app(config[id])
-  const mountApp = useMemo(() => mount(app.current, config[id]), [mount])
+  // The embedded-prop should be true to secure the right display as embedded app.
+  const mountApp = useMemo(
+    () =>
+      mount(app.current, {
+        ...config[id],
+        props: { ...config[id]?.props, embedded: true },
+      }),
+    [mount]
+  )
 
   useEffect(() => {
     if (!config[id]) return
