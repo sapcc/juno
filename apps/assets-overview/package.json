@@ -43,6 +43,7 @@
     "url-state-provider": "*",
     "url-state-router": "*",
     "util": "^0.12.4",
+    "utils": "*",
     "zustand": "^4.3.2"
   },
   "scripts": {
@@ -62,6 +63,7 @@
     "react-dom": "^18.2.0",
     "url-state-provider": "*",
     "url-state-router": "*",
+    "utils": "*",
     "zustand": "^4.3.2"
   },
   "appProps": {

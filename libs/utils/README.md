@@ -6,8 +6,9 @@
 
 ## Features
 
-- **Infinite Scrolling**: react hook to facilitate the integration of an infinite scroll list.
-- **Mock Rest API**: library designed to replicate the behavior of a Fetch REST API with mock data.
+- [**Infinite Scrolling (useEndlessScrollList)**](#usage-of-infinite-scrolling-useendlessscrolllist): react hook to facilitate the integration of an infinite scroll list.
+- [**Mock Rest API (fetchProxyInitDB, fetchProxy)**](#usage-of-mock-rest-api-fetchproxyinitdb-fetchproxy): library designed to replicate the behavior of a Fetch REST API with mock data.
+- [**Mount Juno Apps (useAppLoader)**](#mount-juno-apps-useapploader): react hook which enables mounting of Juno applications within other Juno applications.
 
 ## Installation
 
@@ -33,11 +34,7 @@ Outside juno
 
 ```
 
-## Usage
-
-Here's how you can use **utils** in your project:
-
-### Infinite scrolling
+## Usage of Infinite scrolling (useEndlessScrollList)
 
 1. Import the react hook
 2. Invoke the useEndlessScrollList hook by providing the complete set of items and desired options as a custom loading object and a function to be used to render the ref element. Please see below for more options.
@@ -48,8 +45,7 @@ Here's how you can use **utils** in your project:
 //ViolationDetailsList.jsx
 (1) import {useEndlessScrollList} from "utils"
 
-const ViolationDetailsList = () => {
-  const items = useGlobalsDetailsViolationItems()
+const ViolationDetailsList = ({items}) => {
 
   (2) const { scrollListItems, iterator } = useEndlessScrollList(
     items,
@@ -114,11 +110,11 @@ Return object attributes
 | isAddingItems   | whether items are being added to the list                                                                                |
 | iterator        | an iterator to be used to render the list. It has a map function that receives a function to be used to render each item |
 
-### Mock REST API
+## Usage of Mock REST API (fetchProxyInitDB, fetchProxy)<a name="fetchProxy"></a>
 
 Utilize this library to develop against mock data and without requiring any code modifications when switching to a real REST API. When utilizing fetchProxy with the `mock` flag, it utilizes a provided mock data. If the mock flag is unset, the request is then forwarded to the actual Fetch REST API.
 
-#### Get started
+### Get started
 
 1. Define the JSON data to use when mocking the REST API.
 
@@ -188,7 +184,7 @@ Utilize this library to develop against mock data and without requiring any code
    }
    ```
 
-#### Conditions and Limitations
+### Conditions and Limitations
 
 - fetchProxy
 
@@ -218,7 +214,7 @@ Utilize this library to develop against mock data and without requiring any code
 }
 ```
 
-#### Routes
+### Routes
 
 Based on the previous mock JSON data, here are all the default routes. When making POST, PUT, or DELETE requests, any changes will be automatically saved to the 'db' object and reset upon browser reload.
 
@@ -230,7 +226,7 @@ PUT    /peaks/1
 DELETE /peaks/1
 ```
 
-#### Extended Options
+### Extended Options
 
 **Rewrite Routes**
 
@@ -266,7 +262,7 @@ const customResponses = {
 fetchProxyInitDB(db, { rewriteResponses: customResponses })
 ```
 
-#### Self Contained Running Example
+### Self Contained Running Example
 
 Simply copy the following example and run it to explore how to use this library.
 
@@ -305,6 +301,130 @@ const App = () => {
   }, [])
 
   return <>{data && <pre>{JSON.stringify(data, null, 2)}</pre>}</>
+}
+
+export default App
+```
+
+## Mount Juno Apps (useAppLoader)<a name="useAppLoader"></a>
+
+This react hook is designed for scenarios where you wish to embed a Juno application within another application, particularly useful when running multiple applications within a single environment.
+
+### How it Works
+
+This hook uses our widget loader app, creating a runtime environment (shell) that ensures all dependencies required by the widget are available. To facilitate shared dependencies among multiple applications and optimize resource loading, the process unfolds in the following steps:
+
+**Loading ES Module Shim:**
+Initially, the hook loads the ES Module Shim, which supports import maps. This provides a foundation for efficient dependency management.
+
+**Import Maps:**
+In the second step, an importMap is loaded. This map serves as a blueprint, guiding the browser on the origin of package imports. This step ensures that all necessary dependencies are accessible at runtime.
+
+**Loading the target Application:**
+Finally, the target application is loaded into the environment. Thanks to the importMap, the browser intelligently retrieves packages, and shared dependencies are loaded only ONCE and not per application. The browser cache further optimizes performance by ensuring packages are not fetched with every page load.
+
+### Prerequisites
+
+Ensure the following prerequisites are met before using this hook:
+
+**URL to Our Assets Host:**
+Provide the URL to our assets host, allowing the hook to fetch our widget loader.
+
+**Compiled as ES Module:**
+The application must be compiled as an ES module to accommodate the dependency on ES Module Shim.
+
+**Name and Version or URL:**
+If the application is hosted in our assets sever you can choose between:
+
+1. Provide the name and version (default version is "latest") of the application. The hook will then fetch the application from our assets server.
+2. Provide the complete URL path to the application. The hook will then fetch the application from the provided URL.
+
+If the application is hosted in a different server you can choose between:
+
+1. Provide the complete URL path to the application, remember that the application must be compiled as an ES module. The hook will then fetch the application from the provided URL.
+
+### Get started
+
+1. Import the react hook useAppLoader.
+
+   ```js
+   import { useAppLoader } from "utils"
+   ```
+
+2. Invoke the use hook useAppLoader by providing the assets URL.
+
+   ```js
+   const { mount } = useAppLoader("https://assets.juno.qa-de-1.cloud.sap/")
+   ```
+
+3. Create a ref using the useRef hook.
+
+   ```js
+   const app = useRef(null)
+   ```
+
+4. Use the mount function to mount the application. The mount function accepts the following options:
+
+   - container: the ref to the container element which will host the application
+   - options object with the following attributes:
+     - name: the name of the application
+     - version: the version of the application (default is latest)
+     - props: the props to be passed to the application
+
+   Example using name and version and passing embedded as a prop to the target application:
+
+   ```js
+   useEffect(() => {
+     if (!mount) return
+     mount(app.current, {
+       name: "exampleapp",
+       version: "latest",
+       props: { embedded: true },
+     })
+   }, [mount])
+   ```
+
+   Example using URL and passing embedded as a prop to the target application:
+
+   ```js
+   useEffect(() => {
+     if (!mount) return
+     mount(app.current, {
+       url: "https://assets.juno.global.cloud.sap/apps/exampleapp@latest/build/index.js",
+       props: { embedded: true },
+     })
+   }, [mount])
+   ```
+
+5. Use the ref to render the application.
+
+   ```js
+   <div ref={app} />
+   ```
+
+### Self Contained Running Example
+
+Simply copy the following example and run it to explore how to use this library.
+
+```js
+import React, { useEffect, useRef } from "react"
+import { useAppLoader } from "utils"
+
+const App = () => {
+  const { mount } = useAppLoader("https://assets.juno.qa-de-1.cloud.sap/")
+  const app = useRef()
+
+  useEffect(() => {
+    if (!mount || !app.current) return
+    mount(app.current, { name: "exampleapp" })
+  }, [mount, app])
+
+  return (
+    <>
+      <div>This is the root app responsible for loading the other apps.</div>
+      <div ref={app} />
+    </>
+  )
 }
 
 export default App
@@ -349,11 +469,3 @@ Or, from within the workspace:
 ```bash
 wb npm -w utils run build
 ```
-
-## Documentation
-
-For detailed documentation, refer to [link to documentation].
-
-## License
-
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.

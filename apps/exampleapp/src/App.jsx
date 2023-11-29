@@ -51,6 +51,8 @@ const App = (props = {}) => {
     fetchProxyInitDB(db)
   }, [])
 
+  console.log("[exampleapp] embedded mode:", props.embedded)
+
   return (
     <QueryClientProvider client={queryClient}>
       <AsyncWorker consumerId={props.id} mockAPI={true} />

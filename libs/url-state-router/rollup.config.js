@@ -50,9 +50,9 @@ const config = [
       },
     ],
     plugins: [
-      // nodeResolve(),
+      nodeResolve(),
       babel({
-        exclude: "node_modules/**",
+        //exclude: "node_modules/**",
         babelHelpers: "bundled",
       }),
       commonjs(),
@@ -60,10 +60,7 @@ const config = [
       terser(),
       analyze({ limit: 0, summaryOnly: true }),
     ],
-    external:
-      isProduction && !IGNORE_EXTERNALS
-        ? Object.keys(pkg.peerDependencies || {})
-        : [],
+    external: IGNORE_EXTERNALS ? [] : Object.keys(pkg.peerDependencies || {}),
   },
 ]
 

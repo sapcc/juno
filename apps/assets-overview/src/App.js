@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useLayoutEffect } from "react"
 
 import useStore from "./store"
 import { AppShellProvider } from "juno-ui-components"
@@ -21,7 +21,7 @@ const App = (props = {}) => {
   const queryClient = new QueryClient()
 
   // setup assets url and manifest url
-  React.useEffect(() => {
+  useEffect(() => {
     try {
       const url = new URL(
         "/manifest.json",
@@ -38,7 +38,7 @@ const App = (props = {}) => {
   }, [])
 
   // setup other props
-  React.useEffect(() => {
+  useLayoutEffect(() => {
     setEmbedded(props.embedded === "true" || props.embedded === true)
   }, [])
 
