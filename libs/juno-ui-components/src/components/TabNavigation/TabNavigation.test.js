@@ -60,6 +60,19 @@ describe("TabNavigation", () => {
     expect(screen.getByRole("tab", {name: "Item 2"})).toHaveAttribute("aria-selected", "true")
   })
   
+  test("renders the active tab as passed to the parent if conflicting with active prop passed to child item", async () => {
+    render(<TabNavigation activeTab="Item 2">
+      <TabNavigationItem label="Item 1" active/>
+      <TabNavigationItem label="Item 2" />
+    </TabNavigation>)
+    expect(screen.getByRole("tablist")).toBeInTheDocument()
+    expect(screen.queryAllByRole("tab")).toHaveLength(2)
+    expect(screen.getByRole("tab", {name: "Item 1"})).toBeInTheDocument()
+    expect(screen.getByRole("tab", {name: "Item 1"})).toHaveAttribute("aria-selected", "false")
+    expect(screen.getByRole("tab", {name: "Item 2"})).toBeInTheDocument()
+    expect(screen.getByRole("tab", {name: "Item 2"})).toHaveAttribute("aria-selected", "true")
+  })
+  
   test("changes the active tab when the user clicks", async () => {
     render(<TabNavigation activeTab="Item 1">
       <TabNavigationItem label="Item 1" />
