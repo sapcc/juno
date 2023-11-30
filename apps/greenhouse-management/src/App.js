@@ -1,18 +1,15 @@
-import React from "react"
+import React, { useLayoutEffect } from "react"
 
 import { AppShell, AppShellProvider } from "juno-ui-components"
-import StoreProvider, { useGlobalsActions } from "./components/StoreProvider"
+import StoreProvider, { useActions } from "./components/StoreProvider"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
 import SideNav from "./components/SideNav"
-
-/* IMPORTANT: Replace this with your app's name */
-const URL_STATE_KEY = "greenhouse-management"
-/* --------------------------- */
+import AsyncWorker from "./components/AsyncWorker"
 
 const App = (props = {}) => {
-  const { setUrlStateKey } = useGlobalsActions()
+  const { setApiEndpoint, setAssetsUrl } = useActions()
 
   // Create query client which it can be used from overall in the app
   // set default endpoint to fetch data
@@ -26,11 +23,19 @@ const App = (props = {}) => {
     },
   })
 
-  // on app initial load save Endpoint and URL_STATE_KEY so it can be
-  // used from overall in the application
-  React.useEffect(() => {
-    // set to empty string to fetch local test data in dev mode
-    setUrlStateKey(URL_STATE_KEY)
+  useLayoutEffect(() => {
+    if (!props.apiEndpoint)
+      console.warn("[greenhouse-management]: api endpoint not set")
+    if (!props.assetsUrl)
+      console.warn("[greenhouse-management]: assets url not set")
+
+    // Make this two props required
+    if (!props.apiEndpoint || !props.assetsUrl) return
+
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", props)
+
+    setApiEndpoint(props.apiEndpoint)
+    setAssetsUrl(props.assetsUrl)
   }, [])
 
   return (
@@ -52,6 +57,7 @@ const StyledApp = (props) => {
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <StoreProvider>
+        <AsyncWorker />
         <App {...props} />
       </StoreProvider>
     </AppShellProvider>
