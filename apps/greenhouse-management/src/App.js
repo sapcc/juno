@@ -9,10 +9,9 @@ import SideNav from "./components/SideNav"
 import AsyncWorker from "./components/AsyncWorker"
 
 const App = (props = {}) => {
-  const { setApiEndpoint, setAssetsUrl } = useActions()
+  const { setAssetsUrl } = useActions()
 
-  // Create query client which it can be used from overall in the app
-  // set default endpoint to fetch data
+  // to be deleted
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -29,17 +28,15 @@ const App = (props = {}) => {
     if (!props.assetsUrl)
       console.warn("[greenhouse-management]: assets url not set")
 
-    // Make this two props required
+    // Make these two props required
     if (!props.apiEndpoint || !props.assetsUrl) return
 
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", props)
-
-    setApiEndpoint(props.apiEndpoint)
     setAssetsUrl(props.assetsUrl)
   }, [])
 
   return (
     <QueryClientProvider client={queryClient}>
+      <AsyncWorker />
       <AppShell
         pageHeader="Greenhouse Management"
         embedded={props.embedded === "true" || props.embedded === true}
@@ -54,10 +51,8 @@ const App = (props = {}) => {
 const StyledApp = (props) => {
   return (
     <AppShellProvider theme={`${props.theme ? props.theme : "theme-dark"}`}>
-      {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
-      <StoreProvider>
-        <AsyncWorker />
+      <StoreProvider options={props}>
         <App {...props} />
       </StoreProvider>
     </AppShellProvider>

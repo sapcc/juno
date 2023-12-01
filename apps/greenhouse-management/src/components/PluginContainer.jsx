@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react"
 import { Container } from "juno-ui-components"
-import { usePluginConfig, useAssetsUrl, useApiEndpoint } from "./StoreProvider"
+import { usePluginConfig, useAssetsUrl } from "./StoreProvider"
 import Plugin from "./Plugin"
 import HintLoading from "./shared/HintLoading"
+import { MessagesProvider } from "messages-provider"
 
 const PluginContainer = () => {
   const pluginConfig = usePluginConfig()
   const assetsUrl = useAssetsUrl()
-  const apiEndpoint = useApiEndpoint()
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    if (!assetsUrl || !apiEndpoint) return
+    if (!assetsUrl) return
     setTimeout(() => {
       setIsLoading(false)
-    }, 1000)
-  }, [assetsUrl, apiEndpoint])
+    }, 500)
+  }, [assetsUrl])
 
   return (
     <Container py={true}>
@@ -24,9 +24,9 @@ const PluginContainer = () => {
       ) : (
         <>
           {Object.keys(pluginConfig).map((key, index) => (
-            
-            <Plugin key={index} config={pluginConfig[key]} />
-
+            <MessagesProvider key={index}>
+              <Plugin config={pluginConfig[key]} />
+            </MessagesProvider>
           ))}
         </>
       )}

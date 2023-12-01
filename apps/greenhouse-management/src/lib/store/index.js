@@ -1,11 +1,10 @@
 import { createStore } from "zustand"
 import { devtools } from "zustand/middleware"
 
-export default () =>
+export default (apiEndpoint) =>
   createStore(
     devtools((set, get) => ({
       isUrlStateSetup: false,
-      apiEndpoint: null,
       assetsUrl: null,
       pluginConfig: {
         clusters: {
@@ -21,7 +20,7 @@ export default () =>
         teams: {
           label: "Teams",
           name: "greenhouse-team-admin",
-          props: { embedded: true },
+          props: { endpoint: apiEndpoint, embedded: true },
         },
       },
       pluginActive: "clusters", // name of the active plugin default
@@ -42,14 +41,6 @@ export default () =>
             },
             false,
             "setIsUrlStateSetup"
-          ),
-        setApiEndpoint: (endpoint) =>
-          set(
-            (state) => {
-              state.apiEndpoint = endpoint
-            },
-            false,
-            "setApiEndpoint"
           ),
         setAssetsUrl: (url) =>
           set(
