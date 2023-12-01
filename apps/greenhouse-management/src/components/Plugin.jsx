@@ -61,7 +61,7 @@ const Plugin = ({ config }) => {
               className="my-[10vh]"
             >
               <p className="text-xl">
-                Uh-oh! Our plugin encountered a hiccup.{" "}
+                Uh-oh! Our plugin <b>{config?.name}</b> encountered a hiccup.{" "}
               </p>
               <p>
                 No worries, just give it a little nudge by clicking the{" "}
