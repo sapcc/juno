@@ -73,7 +73,7 @@ const findActiveAppId = (appConfig) => {
   return [minWeightApp.id]
 }
 
-const Plugin = (environment) => {
+const Plugin = ({ environment, apiEndpoint, currentHost }) => {
   const store = createStore(
     devtools((set, get) => ({
       active: [],
@@ -84,6 +84,10 @@ const Plugin = (environment) => {
           displayName: "Organization",
           navType: NAV_TYPES.MNG,
           navigable: environment === "qa" || environment === "development",
+          props: {
+            assetsUrl: currentHost,
+            apiEndpoint: apiEndpoint,
+          },
         }),
       },
       appConfig: [], // kube app configs
