@@ -1,16 +1,15 @@
-import React, { useLayoutEffect } from "react"
+import React from "react"
 
 import { AppShell, AppShellProvider } from "juno-ui-components"
-import StoreProvider, { useActions } from "./components/StoreProvider"
+import StoreProvider from "./components/StoreProvider"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
 import SideNav from "./components/SideNav"
 import AsyncWorker from "./components/AsyncWorker"
+import { MessagesProvider } from "messages-provider"
 
 const App = (props = {}) => {
-  const { setAssetsUrl } = useActions()
-
   // to be deleted
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -22,18 +21,6 @@ const App = (props = {}) => {
     },
   })
 
-  useLayoutEffect(() => {
-    if (!props.apiEndpoint)
-      console.warn("[greenhouse-management]: api endpoint not set")
-    if (!props.assetsUrl)
-      console.warn("[greenhouse-management]: assets url not set")
-
-    // Make these two props required
-    if (!props.apiEndpoint || !props.assetsUrl) return
-
-    setAssetsUrl(props.assetsUrl)
-  }, [])
-
   return (
     <QueryClientProvider client={queryClient}>
       <AsyncWorker />
@@ -42,7 +29,9 @@ const App = (props = {}) => {
         embedded={props.embedded === "true" || props.embedded === true}
         sideNavigation={<SideNav />}
       >
-        <AppContent props={props} />
+        <MessagesProvider>
+          <AppContent {...props} />
+        </MessagesProvider>
       </AppShell>
     </QueryClientProvider>
   )

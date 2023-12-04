@@ -21,6 +21,8 @@ const Plugin = ({ config }) => {
   // useMemo to not mount the app each time the component is reloaded losing the state
   // TODO: should we keep this apps also in memory??
   const mountApp = useMemo(() => {
+    // lets wait until the assetsUrl exists to create the mount function with the currect assets url
+    if (!assetsUrl) return
     return mount(app.current, config).catch((error) => {
       setDisplayReload(true)
       addMessage({
@@ -28,7 +30,7 @@ const Plugin = ({ config }) => {
         text: `${config?.name}: ` + parseError(error),
       })
     })
-  }, [mount, reload])
+  }, [mount, reload, assetsUrl])
 
   const displayPluging = useMemo(
     () => activePlugin === config?.name,
@@ -36,6 +38,9 @@ const Plugin = ({ config }) => {
   )
 
   useEffect(() => {
+    // if assetsUrl still null when rendering for first time the component then mountApp also return null and we skip here
+    if (!mountApp) return
+
     if (displayPluging) {
       mountApp.then((loaded) => {
         if (!loaded) return
@@ -61,7 +66,7 @@ const Plugin = ({ config }) => {
               className="my-[10vh]"
             >
               <p className="text-xl">
-                Uh-oh! Our plugin <b>{config?.name}</b> encountered a hiccup.{" "}
+                Uh-oh! Our plugin <b>{config?.label}</b> encountered a hiccup.{" "}
               </p>
               <p>
                 No worries, just give it a little nudge by clicking the{" "}
