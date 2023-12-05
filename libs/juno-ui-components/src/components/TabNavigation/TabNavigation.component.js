@@ -9,7 +9,6 @@ const tabListStyles = `
 export const TabNavigationContext = createContext()
 
 /** A Tab Navigation parent component. Use to wrap `<TabNavigationItem>` elements inside. */
-/** TODO: keyboard accessibility */
 export const TabNavigation = ({
   activeTab,
   children,
