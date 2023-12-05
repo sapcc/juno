@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef, useId } from "react"
 import { createPortal } from "react-dom"
 import PropTypes from "prop-types"
+import FocusTrap from "focus-trap-react"
 import { ModalFooter } from "../ModalFooter/index"
 import { Icon, knownIcons } from "../Icon/Icon.component"
 import { usePortalRef } from "../PortalProvider/PortalProvider.component"
 
 /*
 * handle height/scrolling TODO -> allow optional constrainHeight=false prop?
-* Optional CloseOnBackdropClick -> NOT FOR NOW  ✓
+* Unfocus element on ESC, close modal on ESC when no element is focussed
 * Spare "variant" prop for semantic variants later. 
 * a11y (voicereader, keyboard accessibilty) TODO
-* autofocus ?
-* icon TODO
-* trap focus TODO
-* render in Portal (how to make sure we're always in scope of StyleProvider? TODO -> add element to styleprovider TODO, what if there are several StyleProvider on the page?
 */
 
 const modalcontainerstyles = `
@@ -41,6 +38,7 @@ const headerstyles = `
 	jn-px-8
 	jn-border-b
 	jn-border-theme-background-lvl-4
+	jn-h-[2.8125rem]
 `
 
 const titlestyles = `
@@ -76,28 +74,39 @@ For more complex use cases, more buttons, etc., an instance of `<ModalFooter>` w
 The Modal uses a boolean 'open' prop to determine whether it is open or not. Alternatively, the open state can be handled outside the component, e.g. in a global state. In this case the 'open' prop needs to be passed as true always, otherwise the Modal component will not render.
 
 By default, the modal will close (i.e. set its `open` state to false) once the user cancels the Modal. When confirming, you will have to either set the `open` to false to close the modal, or use whatever global state mechanism you have to handle modals.
+
+To make the modal less intrusive and effectively un-modal it, pass `closeOnBackdropClick`. This will close the modal when the user clicks the modal backdrop.
 */
 export const Modal = ({
-	size,
-	title,
-	heading,
-	confirmButtonLabel,
+	cancelButtonIcon,
 	cancelButtonLabel,
 	confirmButtonIcon,
-	cancelButtonIcon,
-	open,
+	confirmButtonLabel,
 	children,
-	modalFooter,
 	closeable,
-	unpad,
+	closeOnBackdropClick,
+	closeOnEsc,
+	heading,
+	initialFocus,
+	modalFooter,
 	onConfirm,
 	onCancel,
+	open,
+	size,
+	title,
+	unpad,
 	className,
 	...props
 }) => {
 	
+	const uniqueId = () => (
+		"juno-modal-" + useId()
+	)
+	
 	const [isOpen, setIsOpen] = useState(open)
 	const [isCloseable, setIsCloseable] = useState(closeable)
+	const [isCloseabelOnBackdropClick, setIsCloseableOnBackdropClick] = useState(closeOnBackdropClick)
+	const [isCloseableOnEsc, setisCloseableOnEsc] = useState(closeOnEsc)
 	
 	useEffect(() => {
 		setIsOpen(open)
@@ -107,6 +116,14 @@ export const Modal = ({
 		setIsCloseable(closeable)
 	}, [closeable])
 	
+	useEffect(() => {
+		setIsCloseableOnBackdropClick(closeOnBackdropClick)
+	}, [closeOnBackdropClick])
+	
+	useEffect(() => {
+		setisCloseableOnEsc(closeOnEsc)
+	}, [closeOnEsc])
+	
 	const handleConfirmClick = (event) => {
 		onConfirm && onConfirm(event)
 	}
@@ -115,38 +132,70 @@ export const Modal = ({
 		setIsOpen(false)
 		onCancel && onCancel(event)
 	}
+		
+	const handleEsc = (event) => {
+		if (isCloseable && isCloseableOnEsc) {
+			setIsOpen(false)
+			onCancel && onCancel(event)
+		}
+	}
+	
+	const handleBackdropClick = (event) => {
+		if (isCloseabelOnBackdropClick) {
+			setIsOpen(false)
+			onCancel && onCancel(event)
+		} else {
+			event.stopPropagation()
+		}
+	}
 
 	const portalContainer = usePortalRef()
+	
+	const modalRef = useRef(null)
+	
+	const modalTitleId = uniqueId()
 	
 	return (
 		<>
 			{ isOpen && 
 					createPortal(
-						<div className={`juno-modal-container ${modalcontainerstyles}`} onClick={(e) => e.stopPropagation()}>
-							<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" {...props} >
-								<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
-									{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} >{ title || heading }</h1> : null }
-									{ isCloseable ? <Icon icon="close" onClick={ handleCancelClick }/> : null }
+						<div className={`juno-modal-container ${modalcontainerstyles}`} onClick={handleBackdropClick}>
+							
+							<FocusTrap
+								focusTrapOptions={{
+									initialFocus: initialFocus,
+									clickOutsideDeactivates: isCloseabelOnBackdropClick,
+									fallbackFocus: () => modalRef.current,
+									allowOutsideClick: true,
+									escapeDeactivates: () => {handleEsc()},
+								}}
+							>
+								<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" ref={modalRef} {...props} aria-labelledby={modalTitleId}>
+									<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
+										{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} id={modalTitleId}>{ title || heading }</h1> : "" }
+										{ isCloseable ? <Icon icon="close" onClick={ handleCancelClick }/> : "" }
+									</div>
+									<div className={`juno-modal-content ${contentstyles} ${ unpad ? "" : contentpaddingstyles }`} >
+										{ children }
+									</div>
+									{ isCloseable ? 
+										modalFooter ?
+											modalFooter
+											:
+											<ModalFooter 
+												confirmButtonLabel={ confirmButtonLabel } 
+												cancelButtonLabel={ cancelButtonLabel } 
+												confirmButtonIcon={ confirmButtonIcon }
+												cancelButtonIcon={ cancelButtonIcon }
+												onConfirm={ onConfirm ? handleConfirmClick : null }
+												onCancel={ handleCancelClick }
+											/>
+										: 
+										null 
+									}
 								</div>
-								<div className={`juno-modal-content ${contentstyles} ${ unpad ? "" : contentpaddingstyles }`} >
-									{ children }
-								</div>
-								{ isCloseable ? 
-									modalFooter ?
-										modalFooter
-										:
-										<ModalFooter 
-											confirmButtonLabel={ confirmButtonLabel } 
-											cancelButtonLabel={ cancelButtonLabel } 
-											confirmButtonIcon={ confirmButtonIcon }
-											cancelButtonIcon={ cancelButtonIcon }
-											onConfirm={ onConfirm ? handleConfirmClick : null }
-											onCancel={ handleCancelClick }
-										/>
-									: 
-									null 
-								}
-							</div>
+							</FocusTrap>
+							
 						</div>
 						, portalContainer ? portalContainer : document.body
 					)	
@@ -182,10 +231,16 @@ Modal.propTypes = {
 	unpad: PropTypes.bool,
 	/** Custom className to add to the modal */
 	className: PropTypes.string,
-	/** A handler to execute once the modal is confirmed */
+	/** A handler to execute once the modal is confirmed by clicking the confrim button if exists. Note that we do not close the modal automatically. */
 	onConfirm: PropTypes.func,
 	/** A handler to execute once the modal is cancelled or dismissed using the x-Close button,  Cancel-button or pressing ESC */
 	onCancel: PropTypes.func,
+	/** Whether the modal should be closed when the backdrop is clicked. Essentially 'un-modals' the modal. */
+	closeOnBackdropClick: PropTypes.bool,
+	/** Whether the modal can be closed by hitting the ESC key */
+	 closeOnEsc: PropTypes.bool,
+	/** By default, the first element in the tab order of the Modal content will be focussed. To specify an element to be focussed when the modal opens, pass an element, DOM node, or selector string. */
+	initialFocus: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
 }
 
 Modal.defaultProps = {
@@ -204,4 +259,7 @@ Modal.defaultProps = {
 	className: "",
 	onConfirm: undefined,
 	onCancel: undefined,
+	closeOnBackdropClick: false,
+	closeOnEsc: true,
+	initialFocus: undefined,
 }
