@@ -31,6 +31,12 @@ describe("TabNavigationItem", () => {
     expect(screen.getByRole("tab")).toHaveAttribute("aria-disabled", "true")
   })
   
+  test("renders an icon as passed", async () => {
+    render(<TabNavigationItem icon="warning" />)
+    expect(screen.getByRole("tab")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "warning")
+  })
+  
   test("executes an onClick handler as passed", async () => {
     render(
       <TabNavigation>
