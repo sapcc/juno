@@ -2,5 +2,7 @@
   "juno-ui-components": ["1.1.5"],
   "widget-loader": ["1.1.1"],
   "requests": ["*"],
-  "maintenance": ["*"]
+  "maintenance": ["*"],
+  "greenhouse-team-admin": ["*"],
+  "greenhouse-cluster-admin": ["*"]
 }
