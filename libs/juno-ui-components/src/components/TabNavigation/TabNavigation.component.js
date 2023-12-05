@@ -4,9 +4,6 @@ import PropTypes from "prop-types"
 
 const tabListStyles = `
   jn-flex
-  focus:jn-outline-none
-  focus:jn-ring-2
-  focus:jn-ring-theme-focus
 `
 
 export const TabNavigationContext = createContext()
@@ -51,7 +48,7 @@ export const TabNavigation = ({
         disabled: disabled,
       }}
     >
-      <ul className={`juno-tabnavigation ${tabListStyles} ${className}`} role="tablist" tabindex="0" {...props} >
+      <ul className={`juno-tabnavigation ${tabListStyles} ${className}`} role="navigation" {...props} >
         { children }
       </ul>
     </TabNavigationContext.Provider>

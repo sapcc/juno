@@ -14,49 +14,49 @@ describe("TabNavigationItem", () => {
   })
   
   test("renders a TabNavigationItem", async () => {
-    render(<TabNavigationItem />)
-    expect(screen.getByRole("tab")).toBeInTheDocument()
-    expect(screen.getByRole("tab")).toHaveClass("juno-tabnavigation-item")
+    render(<TabNavigationItem data-testid={"tab-nav-item"} />)
+    expect(screen.getByTestId("tab-nav-item")).toBeInTheDocument()
+    expect(screen.getByTestId("tab-nav-item")).toHaveClass("juno-tabnavigation-item")
   })
   
   test("renders a label as passed", async () => {
-    render(<TabNavigationItem label="Item" />)
-    expect(screen.getByRole("tab")).toBeInTheDocument()
-    expect(screen.getByRole("tab")).toHaveTextContent("Item")
+    render(<TabNavigationItem data-testid={"tab-nav-item"} label="Item" />)
+    expect(screen.getByTestId("tab-nav-item")).toBeInTheDocument()
+    expect(screen.getByTestId("tab-nav-item")).toHaveTextContent("Item")
   })
   
   test("renders a disabled tab navigation item as passed", async () => {
-    render(<TabNavigationItem disabled />)
-    expect(screen.getByRole("tab")).toBeInTheDocument()
-    expect(screen.getByRole("tab")).toHaveAttribute("aria-disabled", "true")
+    render(<TabNavigationItem data-testid={"tab-nav-item"} disabled />)
+    expect(screen.getByTestId("tab-nav-item")).toBeInTheDocument()
+    expect(screen.getByTestId("tab-nav-item")).toHaveAttribute("aria-disabled", "true")
   })
   
   test("renders an icon as passed", async () => {
     render(<TabNavigationItem icon="warning" />)
-    expect(screen.getByRole("tab")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "warning")
   })
   
   test("executes an onClick handler as passed", async () => {
     render(
       <TabNavigation>
-        <TabNavigationItem onClick={mockOnClick} />
+        <TabNavigationItem data-testid={"tab-nav-item"} onClick={mockOnClick} />
       </TabNavigation>)
-    expect(screen.getByRole("tab")).toBeInTheDocument()
-    await userEvent.click(screen.getByRole("tab"))
+    expect(screen.getByTestId("tab-nav-item")).toBeInTheDocument()
+    await userEvent.click(screen.getByTestId("tab-nav-item"))
     expect(mockOnClick).toHaveBeenCalled()
   })
   
   test("renders a className as passed", async () => {
-    render(<TabNavigationItem className="my-custom-class" />)
-    expect(screen.getByRole("tab")).toBeInTheDocument()
-    expect(screen.getByRole("tab")).toHaveClass("my-custom-class")
+    render(<TabNavigationItem data-testid={"tab-nav-item"} className="my-custom-class" />)
+    expect(screen.getByTestId("tab-nav-item")).toBeInTheDocument()
+    expect(screen.getByTestId("tab-nav-item")).toHaveClass("my-custom-class")
   })
   
   test("renders all props as passed", async () => {
-    render(<TabNavigationItem data-lol="lol-1-2-3" />)
-    expect(screen.getByRole("tab")).toBeInTheDocument()
-    expect(screen.getByRole("tab")).toHaveAttribute("data-lol", "lol-1-2-3")
+    render(<TabNavigationItem data-testid={"tab-nav-item"} data-lol="lol-1-2-3" />)
+    expect(screen.getByTestId("tab-nav-item")).toBeInTheDocument()
+    expect(screen.getByTestId("tab-nav-item")).toHaveAttribute("data-lol", "lol-1-2-3")
   })
   
 })

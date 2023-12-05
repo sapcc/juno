@@ -4,21 +4,23 @@ import { TabNavigationContext } from "../TabNavigation/TabNavigation.component"
 import { Icon } from "../Icon/index.js"
 import { knownIcons } from "../Icon/Icon.component.js"
 
-const tabStyles = `
+const itemStyles = `
   jn-flex
   jn-font-bold
   jn-px-[1.5625rem]
   jn-items-center
   jn-cursor-pointer
-  focus:jn-outline-none 
+  focus-visible:jn-outline-none
+  focus-visible:jn-ring-2
+  focus-visible:jn-ring-theme-focus
 `
 
-const disabledTabStyles = `
+const disabledItemStyles = `
   jn-pointer-events-none
   jn-opacity-50
 `
 
-const activeTabStyles = `
+const activeItemStyles = `
   jn-border-b-[3px]
   jn-border-theme-tab-active-bottom
 `
@@ -28,6 +30,7 @@ export const TabNavigationItem = ({
   active,
   className,
   disabled,
+  href,
   icon,
   label,
   onClick,
@@ -68,7 +71,7 @@ export const TabNavigationItem = ({
     }
   }, [activeTab, active])
 
-  const handleTabClick = (event) => {
+  const handleItemClick = (event) => {
     if (!isActive) {
       handleTabChange(label)
     }
@@ -76,26 +79,48 @@ export const TabNavigationItem = ({
   }
   
   return (
-    <li 
-      className={`
-        juno-tabnavigation-item
-         ${ tabStyles } 
-         ${ disabled || groupDisabled ? disabledTabStyles : ""}
-         ${ disabled || groupDisabled ? "juno-tabnavigation-item-disabled" : ""}
-         ${ isActive ? activeTabStyles : ""}
-         ${ isActive ? "juno-tabnavigation-item-active" : "" }
-         ${ className }
-      `} 
-      role="tab" 
-      onClick={handleTabClick}
-      aria-selected={activeTab === label}
-      aria-disabled={ disabled || groupDisabled ? true : false}
-      {...props}
-    >
-      { icon ? <Icon icon={icon} size="18" className={`jn-mr-2`} /> : null }
-      <span>
-        { label }
-      </span>
+    <li className={`jn-flex`}>
+    
+    { href ? 
+        <a 
+          className={`
+            juno-tabnavigation-item
+            ${ itemStyles } 
+            ${ disabled || groupDisabled ? disabledItemStyles : ""}
+            ${ disabled || groupDisabled ? "juno-tabnavigation-item-disabled" : ""}
+            ${ isActive ? activeItemStyles : ""}
+            ${ isActive ? "juno-tabnavigation-item-active" : "" }
+            ${ className }
+          `}
+          href={ href }
+          aria-selected={activeTab === label}
+          aria-disabled={ disabled || groupDisabled ? true : false}
+          {...props}
+        >
+          { icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : null }
+          <span>{ label }</span>
+        </a>
+      :
+        <button className={`
+            juno-tabnavigation-item
+            ${ itemStyles } 
+            ${ disabled || groupDisabled ? disabledItemStyles : ""}
+            ${ disabled || groupDisabled ? "juno-tabnavigation-item-disabled" : ""}
+            ${ isActive ? activeItemStyles : ""}
+            ${ isActive ? "juno-tabnavigation-item-active" : "" }
+            ${ className } 
+          `}
+          onClick={handleItemClick}
+          aria-selected={activeTab === label}
+          disabled={disabled}
+          aria-disabled={ disabled || groupDisabled ? true : false}
+          {...props}
+        >
+          { icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : null }
+          <span>{ label }</span>
+        </button>
+    }
+      
     </li>
   )
 }
@@ -107,6 +132,8 @@ TabNavigationItem.propTypes = {
   className: PropTypes.string,
   /** Whether the tab navigation item is disabled */
   disabled: PropTypes.bool,
+  /*+ Pass a href to render the item as an `<a>` */
+  href: PropTypes.string,
   /** Pass the name of an icon to render in the Tab. Can be any icon included with Juno. */
   icon: PropTypes.oneOf(knownIcons),
   /** The label of the tab navigation item. Must be unique within any given `<TabNavigation>` group. */
@@ -119,6 +146,7 @@ TabNavigationItem.defaultProps = {
   active: false,
   className: "",
   disabled: false,
+  href: undefined,
   icon: undefined,
   label: "",
   onClick: undefined,

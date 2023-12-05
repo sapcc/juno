@@ -37,3 +37,17 @@ export const Disabled = {
     disabled: true,
   }
 }
+
+export const WithIcon = {
+  args: {
+    icon: "warning",
+    label: "With Icon",
+  }
+}
+
+export const AsLink = {
+  args: {
+    label: "Item as Link",
+    href: "https://www.sap.com",
+  }
+}
