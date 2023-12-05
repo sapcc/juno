@@ -4,6 +4,9 @@ import PropTypes from "prop-types"
 
 const tabListStyles = `
   jn-flex
+  focus:jn-outline-none
+  focus:jn-ring-2
+  focus:jn-ring-theme-focus
 `
 
 export const TabNavigationContext = createContext()
