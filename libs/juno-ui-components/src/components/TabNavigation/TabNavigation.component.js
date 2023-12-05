@@ -48,7 +48,7 @@ export const TabNavigation = ({
         disabled: disabled,
       }}
     >
-      <ul className={`juno-tabnavigation ${tabListStyles} ${className}`} role="tablist" {...props} >
+      <ul className={`juno-tabnavigation ${tabListStyles} ${className}`} role="tablist" tabindex="0" {...props} >
         { children }
       </ul>
     </TabNavigationContext.Provider>
