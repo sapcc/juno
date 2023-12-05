@@ -3,7 +3,7 @@ import { TabNavigation } from './index.js'
 import { TabNavigationItem } from '../TabNavigationItem/index.js'
 
 export default {
-  title: 'Components/TabNavigation/TabNavigation',
+  title: 'Navigation/TabNavigation/TabNavigation',
   component: TabNavigation,
   argTypes: {
     children: {
