@@ -3,17 +3,20 @@ import { useStore as create } from "zustand"
 import createStore from "../lib/store"
 
 const StoreContext = createContext()
-const StoreProvider = ({ children }) => (
-  <StoreContext.Provider value={createStore()}>
+const StoreProvider = ({ options, children }) => (
+  <StoreContext.Provider value={createStore(options.apiEndpoint)}>
     {children}
   </StoreContext.Provider>
 )
 
 const useAppStore = (selector) => create(useContext(StoreContext), selector)
 
-export const useGlobalsUrlStateKey = () =>
-  useAppStore((state) => state.globals.urlStateKey)
-export const useGlobalsActions = () =>
-  useAppStore((state) => state.globals.actions)
+export const useIsUrlStateSetup = () =>
+  useAppStore((state) => state.isUrlStateSetup)
+export const useAssetsUrl = () => useAppStore((state) => state.assetsUrl)
+export const usePluginConfig = () => useAppStore((state) => state.pluginConfig)
+export const usePluginActive = () => useAppStore((state) => state.pluginActive)
+
+export const useActions = () => useAppStore((state) => state.actions)
 
 export default StoreProvider

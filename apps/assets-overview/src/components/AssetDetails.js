@@ -155,7 +155,6 @@ const AssetDetails = () => {
     [urlStateKey, currentState]
   )
   //########### END ##############
-
   return (
     <Panel heading={assetName} opened={opened} onClose={onClose} size="large">
       <PanelBody footer={<AssetDetailsFooter onCancelCallback={onClose} />}>
@@ -200,13 +199,12 @@ const AssetDetails = () => {
                 <FormRow>
                   <Select
                     label="version"
-                    variant="floating"
                     value={asset?.version}
                     onValueChange={(value) => {
                       return changeVersion(value)
                     }}
                   >
-                    {versions.map((version, i) => (
+                    {versions?.map((version, i) => (
                       <SelectOption
                         key={i}
                         label={version.label}

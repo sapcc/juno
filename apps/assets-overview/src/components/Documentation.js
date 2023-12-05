@@ -83,7 +83,6 @@ const Documentation = ({ isLoading, data }) => {
   )
 
   //############### END ###################
-
   return useMemo(() => {
     return (
       <>
@@ -110,11 +109,10 @@ const Documentation = ({ isLoading, data }) => {
                       <FormRow>
                         <Select
                           label="version"
-                          variant="floating"
                           value={widgetLoaderVersion}
-                          onChange={(e) => changeVersion(e.target.value)}
+                          onChange={(value) => changeVersion(value)}
                         >
-                          {widgetLoaderVersions.map((version, i) => (
+                          {widgetLoaderVersions?.map((version, i) => (
                             <SelectOption
                               key={i}
                               label={version.label}

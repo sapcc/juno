@@ -43,7 +43,7 @@ const StyledShell = (props) => {
     <AppShellProvider>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
-      <StoreProvider environment={props.environment}>
+      <StoreProvider options={props}>
         <AsyncWorker />
         <Shell {...props} />
       </StoreProvider>

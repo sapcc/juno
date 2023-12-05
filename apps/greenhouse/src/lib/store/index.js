@@ -4,7 +4,7 @@ import createAuthDataSlice from "./createAuthDataSlice"
 import createGlobalsSlice from "./createGlobalsSlice"
 import Plugin from "../plugin"
 
-export default (environment) => {
+export default (options) => {
   const store = createStore(
     devtools((set, get) => ({
       ...createAuthDataSlice(set, get),
@@ -12,7 +12,7 @@ export default (environment) => {
     }))
   )
 
-  const plugin = Plugin(environment)
+  const plugin = Plugin(options)
 
   return { store, plugin }
 }
