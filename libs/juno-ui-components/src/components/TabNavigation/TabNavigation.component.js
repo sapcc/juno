@@ -2,13 +2,13 @@ import React, { createContext, useState, useEffect, useContext } from "react"
 import PropTypes from "prop-types"
 
 
-const tabListStyles = `
+const tabNavStyles = `
   jn-flex
 `
 
 export const TabNavigationContext = createContext()
 
-/** A Tab Navigation parent component. Use to wrap `<TabNavigationItem>` elements inside. */
+/** A Tab Navigation parent component. Use to wrap `<TabNavigationItem>` elements inside. For tabs with corresponding tab panels, use <Tabs> instead. */
 export const TabNavigation = ({
   activeTab,
   children,
@@ -47,7 +47,7 @@ export const TabNavigation = ({
         disabled: disabled,
       }}
     >
-      <ul className={`juno-tabnavigation ${tabListStyles} ${className}`} role="navigation" {...props} >
+      <ul className={`juno-tabnavigation ${tabNavStyles} ${className}`} role="navigation" {...props} >
         { children }
       </ul>
     </TabNavigationContext.Provider>
