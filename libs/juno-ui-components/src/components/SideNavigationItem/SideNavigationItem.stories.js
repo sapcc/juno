@@ -8,6 +8,13 @@ export default {
   title: "Navigation/SideNavigation/SideNavigationItem",
   component: SideNavigationItem,
   argTypes: {
+    icon: {
+      options: [null, ...knownIcons],
+      control: { type: 'select' },
+    },
+    onClick: {
+      control: false,
+    },
     children: {
       control: false
     },
