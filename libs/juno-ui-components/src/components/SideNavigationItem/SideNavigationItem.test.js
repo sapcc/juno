@@ -1,9 +1,17 @@
 import * as React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { SideNavigation } from '../SideNavigation/index';
 import { SideNavigationItem } from './index';
 
-describe('SideNavigation', () => {
+const mockOnClick = jest.fn()
+
+describe('SideNavigationItem', () => {
+  
+  afterEach(() => {
+    cleanup();
+    jest.clearAllMocks();
+  })
   
   test('renders a SideNavigationItem', async () => {
     render(<SideNavigationItem data-testid="side-nav-item" />);
@@ -17,10 +25,10 @@ describe('SideNavigation', () => {
     expect(screen.getByRole("img")).toHaveAttribute("alt", "warning");
   })
   
-  test("renders a plain, non-interactive item when no href or onClick are passed", async () => {
-    render(<SideNavigationItem data-testid="side-nav-item" />);
-    expect(screen.queryByRole('link')).not.toBeInTheDocument();
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+  test("renders a label as passed", async () => {
+    render(<SideNavigationItem label="My Label" />)
+    expect(screen.getByRole("button")).toBeInTheDocument();
+    expect(screen.getByRole("button")).toHaveTextContent("My Label");
   })
   
   test("renders as a link when a href prop is passed", async () => {
@@ -47,17 +55,14 @@ describe('SideNavigation', () => {
     expect(screen.getByRole('link')).toHaveAttribute('aria-label', 'hey nav item!');
   });
   
-  test("renders children as passed", async () => {
-    render(<SideNavigationItem data-testid="side-nav-item" >Test</SideNavigationItem>)
-    expect(screen.getByTestId('side-nav-item')).toBeInTheDocument();
-    expect(screen.getByTestId('side-nav-item')).toHaveTextContent("Test");
-  })
-  
-  test("onClick handler is called as passed", () => {
-    const onClickSpy = jest.fn()
-    render(<SideNavigationItem onClick={onClickSpy} />)
-    screen.getByRole("button").click()
-    expect(onClickSpy).toHaveBeenCalled()
+  test("executes an onClick handler as passed", async () => {
+    render(
+      <SideNavigation>
+        <SideNavigationItem onClick={mockOnClick} label="My Item"/>
+      </SideNavigation>)
+    expect(screen.getByRole("button", {name: "My Item"})).toBeInTheDocument()
+    await userEvent.click(screen.getByRole("button", {name: "My Item"}))
+    expect(mockOnClick).toHaveBeenCalled()
   })
 
   test('renders custom classNames as passed', async () => {

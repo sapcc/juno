@@ -4,7 +4,7 @@ import { SideNavigationItem } from "../SideNavigationItem/SideNavigationItem.com
 
 
 export default {
-  title: "Layout/SideNavigation/SideNavigation",
+  title: "Navigation/SideNavigation/SideNavigation",
   component: SideNavigation,
   argTypes: {
     items: {
@@ -27,8 +27,19 @@ const Template = ( {children, ...args} ) => (
 export const Default = Template.bind({})
 Default.args = {
   children: [
-    <SideNavigationItem label="Item 1"/>,
-    <SideNavigationItem>Item 2</SideNavigationItem>,
-    <SideNavigationItem label="Active Item" active/>
+    <SideNavigationItem key="item-1" label="Item 1"/>,
+    <SideNavigationItem key="item-2" label="Item 2" active/>,
+    <SideNavigationItem key="item-3" label="Item with Icon"/>,
+    <SideNavigationItem key="item-4" label="Disabled Item" disabled/>,
+  ]
+}
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+  disabled: true,
+  children: [
+    <SideNavigationItem key="item-1" label="Item 1"/>,
+    <SideNavigationItem key="item-2" label="Item 2"/>,
+    <SideNavigationItem key="item-3" label="Active Item" active/>
   ]
 }

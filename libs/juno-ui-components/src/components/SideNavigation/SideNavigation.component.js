@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Stack } from "../Stack/index"
 
@@ -7,30 +7,78 @@ const sideNavStyles = `
   jn-max-w-[20rem]
 `
 
+export const NavigationContext = createContext()
+
 /**
 A generic vertical side navigation component.
-Place TopNavigationItem components as children.
+Place SideNavigationItem components as children.
 */
 export const SideNavigation = ({
+  activeItem,
   children,
   className,
+  disabled,
+  onActiveChange,
   ...props
 }) => {
+  
+  const [activeItm, setActiveItm] = useState("")
+  
+  useEffect(() => {
+    if (activeItem) {
+      setActiveItm(activeItem)
+    }
+  }, [activeItem])
+  
+  const updateActiveItem = (label) => {
+    setActiveItm(label)
+  }
+    
+  const handleActiveItemChange = (label) => {
+    setActiveItm(label)
+    onActiveChange && onActiveChange(label)
+  }
+  
   return (
-    <Stack direction="vertical" className={`juno-sidenavigation ${sideNavStyles} ${className}`} role="navigation" {...props} >
-      { children }
-    </Stack>
+    <NavigationContext.Provider
+      value={{
+        activeItem: activeItm,
+        updateActiveItem: updateActiveItem,
+        handleActiveItemChange: handleActiveItemChange,
+        disabled: disabled,
+      }}>
+      <ul 
+        className={`
+          juno-sidenavigation 
+          ${sideNavStyles} 
+          ${className}
+        `} 
+        role="navigation" 
+        {...props} 
+      >
+        { children }
+      </ul>
+    </NavigationContext.Provider>
   )
 }
 
 SideNavigation.propTypes = {
+  /** The active navigation item by key */
+  active: PropTypes.string,
   /** The children of the Navigation. Typically these should be SideNavigationItem(s) */
   children: PropTypes.node,
   /** Pass custom classname. */
   className: PropTypes.string,
+  /** Whether the navigation is disabled */
+  disabled: PropTypes.bool,
+  /** Handler to execute when the active item changes */
+  onActiveChange: PropTypes.func,
 }
 
 SideNavigation.defaultProps = {
+  active: "",
   children: null,
   className: "",
+  disabled: false,
+  onActiveChange: undefined,
 }

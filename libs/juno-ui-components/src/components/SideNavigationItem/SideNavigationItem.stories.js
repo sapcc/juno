@@ -1,15 +1,19 @@
 import React from "react"
 import { SideNavigationItem } from "./index.js"
+import { SideNavigation } from '../SideNavigation/index';
+import { knownIcons } from "../Icon/Icon.component.js"
+
 
 export default {
-  title: "Layout/SideNavigation/SideNavigationItem",
+  title: "Navigation/SideNavigation/SideNavigationItem",
   component: SideNavigationItem,
   argTypes: {
     children: {
       control: false
     },
   },
-  parameters: { actions: { argTypesRegex: null } }
+  parameters: { actions: { argTypesRegex: null } },
+  decorators: [(story) => <SideNavigation>{story()}</SideNavigation>],
 }
 
 const Template = (args) => <SideNavigationItem {...args} />
@@ -19,26 +23,28 @@ Default.args = {
   label: "Navigation Item"
 }
 
+export const Active = Template.bind({})
+Active.args = {
+  label: "Active Navigation Item",
+  active: true
+}
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+  label: "Disabled Navigation Item",
+  disabled: true,
+}
+
 export const WithIcon = Template.bind({})
 WithIcon.args = {
   label: "Navigation Item With Icon",
   icon: "warning"
 }
 
-export const AsAnchor = Template.bind({})
-AsAnchor.args = {
+export const AsLink = Template.bind({})
+AsLink.args = {
   label: "Navigation Item as Anchor",
   href: "#"
 }
 
-export const AsButton = Template.bind({})
-AsButton.args = {
-  label: "Navigation Item as Button",
-  onClick: () => {console.log("clicked")}
-}
 
-export const Active = Template.bind({})
-Active.args = {
-  label: "Active Navigation Item",
-  active: true
-}

@@ -1,9 +1,15 @@
 import * as React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SideNavigation } from './index';
 
 describe('SideNavigation', () => {
+  
+  afterEach(() => {
+    cleanup();
+    jest.clearAllMocks();
+  })
+  
   test('render a SideNavigation', async () => {
     render(<SideNavigation />);
     expect(screen.getByRole('navigation')).toBeInTheDocument();

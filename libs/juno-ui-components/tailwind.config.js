@@ -214,6 +214,7 @@ module.exports = {
           ),
           "filter-pill-key": withOpacity("--color-filter-pill-key-bg"),
           "modal-backdrop": "var(--color-modal-backdrop-bg)",
+          "sidenavigation-item-active": "var(--color-sidenavigation-item-active-bg)",
         },
       },
       backgroundImage: {
@@ -235,6 +236,7 @@ module.exports = {
           "on-default": withOpacity("--color-button-default-text"),
           textinput: withOpacity("--color-textinput-text"),
           "checkbox-checked": withOpacity("--color-checkbox-checked-color"),
+          "sidenavigation-item-active": "var(--color-sidenavigation-item-active)",
         },
       },
       borderColor: {
