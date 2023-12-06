@@ -3,7 +3,7 @@ import { TopNavigation } from "./index.js"
 import { TopNavigationItem } from "../TopNavigationItem/TopNavigationItem.component"
 
 export default {
-  title: "Layout/TopNavigation/TopNavigation",
+  title: "Navigation/TopNavigation/TopNavigation",
   component: TopNavigation,
   argTypes: {
     items: {
@@ -26,9 +26,21 @@ const Template = ({children, ...args}) => (
 export const Default = Template.bind({})
 Default.args = {
   children: [
-    <TopNavigationItem key="1" label="Item 1" />,
-    <TopNavigationItem key="2" >Item 2</TopNavigationItem>,
-    <TopNavigationItem key="3" icon="widgets" label="Item with Icon" />,
-    <TopNavigationItem key="4" label="Active Item" active/>
+    <TopNavigationItem label="Item 1" key="item-1" />,
+    <TopNavigationItem label="Item 2" key="item-2" active />,
+    <TopNavigationItem label="Item with Icon" key="item-3" icon="warning" />,
+    <TopNavigationItem label="Disabled Item" key="item-4" disabled />
   ]
+}
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+  disabled: true,
+  children: 
+    [
+      <TopNavigationItem label="Item 1" key="item-1" />,
+      <TopNavigationItem label="Item 2" key="item-2" />,
+      <TopNavigationItem label="Item 3" key="item-3" />,
+      <TopNavigationItem label="Item 4" key="item-4" />
+    ]
 }
