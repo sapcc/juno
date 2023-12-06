@@ -95,7 +95,7 @@ export const TabNavigationItem = ({
             ${ className }
           `}
           href={ href }
-          aria-selected={activeTab === label}
+          aria-selected={isActive}
           aria-disabled={ disabled || groupDisabled ? true : false}
           {...props}
         >
@@ -113,7 +113,7 @@ export const TabNavigationItem = ({
             ${ className } 
           `}
           onClick={handleItemClick}
-          aria-selected={activeTab === label}
+          aria-selected={isActive}
           disabled={disabled || groupDisabled ? true : false }
           aria-disabled={ disabled || groupDisabled ? true : false}
           {...props}
