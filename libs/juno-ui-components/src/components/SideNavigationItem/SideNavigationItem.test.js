@@ -17,18 +17,25 @@ describe('SideNavigationItem', () => {
     render(<SideNavigationItem data-testid="side-nav-item" />);
     expect(screen.getByTestId('side-nav-item')).toBeInTheDocument();
     expect(screen.getByTestId('side-nav-item')).toHaveClass("juno-sidenavigation-item");
-  });
-  
-  test("renders an icon as passed", async () => {
-    render(<SideNavigationItem icon="warning" />)
-    expect(screen.getByRole("img")).toBeInTheDocument();
-    expect(screen.getByRole("img")).toHaveAttribute("alt", "warning");
   })
   
   test("renders a label as passed", async () => {
     render(<SideNavigationItem label="My Label" />)
     expect(screen.getByRole("button")).toBeInTheDocument();
     expect(screen.getByRole("button")).toHaveTextContent("My Label");
+  })
+  
+  test("renders a disabled side navigation item as passed", async () => {
+    render(<SideNavigationItem disabled />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toBeDisabled();
+    expect(screen.getByRole("button")).toHaveAttribute("aria-disabled", "true");
+  })
+  
+  test("renders an icon as passed", async () => {
+    render(<SideNavigationItem icon="warning" />)
+    expect(screen.getByRole("img")).toBeInTheDocument();
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "warning");
   })
   
   test("renders as a link when a href prop is passed", async () => {
@@ -45,9 +52,10 @@ describe('SideNavigationItem', () => {
   
   test('renders an active ToppNavigationItem as passed', async () => {
     render(<SideNavigationItem data-testid="side-nav-item" active />);
-    expect(screen.getByTestId('side-nav-item')).toBeInTheDocument();
-    expect(screen.getByTestId('side-nav-item')).toHaveClass("juno-sidenavigation-item");
-    expect(screen.getByTestId('side-nav-item')).toHaveClass("juno-sidenavigation-item-active");
+    expect(screen.getByRole("button")).toBeInTheDocument();
+    expect(screen.getByRole("button")).toHaveClass("juno-sidenavigation-item");
+    expect(screen.getByRole("button")).toHaveClass("juno-sidenavigation-item-active");
+    expect(screen.getByRole("button")).toHaveAttribute("aria-selected", "true");
   });
   
   test('renders an aria-label as passed', async () => {

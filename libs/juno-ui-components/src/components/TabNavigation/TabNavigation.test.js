@@ -48,8 +48,10 @@ describe("TabNavigation", () => {
       expect(screen.getByRole("navigation")).toBeInTheDocument()
       expect(screen.queryAllByRole("button")).toHaveLength(2)
       expect(screen.getByRole("button", {name: "Item 1"})).toBeInTheDocument()
+      expect(screen.getByRole("button", {name: "Item 1"})).toBeDisabled()
       expect(screen.getByRole("button", {name: "Item 1"})).toHaveAttribute("aria-disabled", "true")
       expect(screen.getByRole("button", {name: "Item 2"})).toBeInTheDocument()
+      expect(screen.getByRole("button", {name: "Item 2"})).toBeDisabled()
       expect(screen.getByRole("button", {name: "Item 2"})).toHaveAttribute("aria-disabled", "true")
   })
   
@@ -62,8 +64,10 @@ describe("TabNavigation", () => {
     expect(screen.queryAllByRole("button")).toHaveLength(2)
     expect(screen.getByRole("button", {name: "Item 1"})).toBeInTheDocument()
     expect(screen.getByRole("button", {name: "Item 1"})).toHaveAttribute("aria-selected", "false")
+    expect(screen.getByRole("button", {name: "Item 1"})).not.toHaveClass("juno-tabnavigation-item-active")
     expect(screen.getByRole("button", {name: "Item 2"})).toBeInTheDocument()
     expect(screen.getByRole("button", {name: "Item 2"})).toHaveAttribute("aria-selected", "true")
+    expect(screen.getByRole("button", {name: "Item 2"})).toHaveClass("juno-tabnavigation-item-active")
   })
   
   test("renders the active tab as passed to the parent if conflicting with active prop passed to child item", async () => {

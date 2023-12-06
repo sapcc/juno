@@ -28,6 +28,7 @@ describe("TabNavigationItem", () => {
   test("renders a disabled tab navigation item as passed", async () => {
     render(<TabNavigationItem data-testid={"tab-nav-item"} disabled />)
     expect(screen.getByTestId("tab-nav-item")).toBeInTheDocument()
+    expect(screen.getByTestId("tab-nav-item")).toBeDisabled()
     expect(screen.getByTestId("tab-nav-item")).toHaveAttribute("aria-disabled", "true")
   })
   
@@ -35,6 +36,20 @@ describe("TabNavigationItem", () => {
     render(<TabNavigationItem icon="warning" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "warning")
+  })
+  
+  test("renders as a link when a href prop is passed", async () => {
+    render(<TabNavigationItem href="#"/>)
+    expect(screen.getByRole("link")).toBeInTheDocument();
+    expect(screen.getByRole("link")).toHaveClass("juno-tabnavigation-item");
+  })
+  
+  test("renders an active side navigation item as passed", async () => {
+    render(<TabNavigationItem active />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveClass("juno-tabnavigation-item")
+    expect(screen.getByRole("button")).toHaveClass("juno-tabnavigation-item-active")
+    expect(screen.getByRole("button")).toHaveAttribute("aria-selected", "true")
   })
   
   test("executes an onClick handler as passed", async () => {
