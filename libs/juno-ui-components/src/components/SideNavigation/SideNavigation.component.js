@@ -15,6 +15,7 @@ Place SideNavigationItem components as children.
 */
 export const SideNavigation = ({
   activeItem,
+  ariaLabel,
   children,
   className,
   disabled,
@@ -54,6 +55,7 @@ export const SideNavigation = ({
           ${className}
         `} 
         role="navigation" 
+        aria-label={ariaLabel}
         {...props} 
       >
         { children }
@@ -65,6 +67,8 @@ export const SideNavigation = ({
 SideNavigation.propTypes = {
   /** The active navigation item by key */
   active: PropTypes.string,
+  /** The aria-label of the navigation. Specify when there are more than one elements with an implicit or explicit `role="navigation"` on a page/view. */
+  ariaLabel: PropTypes.string,
   /** The children of the Navigation. Typically these should be SideNavigationItem(s) */
   children: PropTypes.node,
   /** Pass custom classname. */
@@ -77,6 +81,7 @@ SideNavigation.propTypes = {
 
 SideNavigation.defaultProps = {
   active: "",
+  ariaLabel: undefined,
   children: null,
   className: "",
   disabled: false,
