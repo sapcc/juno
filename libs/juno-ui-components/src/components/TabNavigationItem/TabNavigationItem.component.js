@@ -6,6 +6,7 @@ import { knownIcons } from "../Icon/Icon.component.js"
 
 const itemStyles = `
   jn-flex
+  jn-items-center
   jn-text-theme-default
   jn-font-bold
   jn-px-[1.5625rem]
