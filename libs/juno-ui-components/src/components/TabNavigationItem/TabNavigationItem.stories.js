@@ -4,7 +4,7 @@ import { TabNavigationItem } from './index.js'
 import { knownIcons } from "../Icon/Icon.component.js"
 
 export default {
-  title: 'Components/TabNavigation/TabNavigationItem',
+  title: 'Navigation/TabNavigation/TabNavigationItem',
   component: TabNavigationItem,
   argTypes: {
     icon: {
