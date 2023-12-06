@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Stack } from "../Stack/index"
 
 const sideNavStyles = `
   jn-min-w-[7.5rem]
@@ -65,8 +64,8 @@ export const SideNavigation = ({
 }
 
 SideNavigation.propTypes = {
-  /** The active navigation item by key */
-  active: PropTypes.string,
+  /** The active navigation item by label */
+  activeItem: PropTypes.string,
   /** The aria-label of the navigation. Specify when there are more than one elements with an implicit or explicit `role="navigation"` on a page/view. */
   ariaLabel: PropTypes.string,
   /** The children of the Navigation. Typically these should be SideNavigationItem(s) */
@@ -80,7 +79,7 @@ SideNavigation.propTypes = {
 }
 
 SideNavigation.defaultProps = {
-  active: "",
+  activeItem: "",
   ariaLabel: undefined,
   children: null,
   className: "",
