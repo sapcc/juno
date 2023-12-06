@@ -104,6 +104,7 @@ export const SideNavigationItem = ({
             href={href}
             aria-label={ariaLabel}
             aria-disabled={ disabled || groupDisabled ? true : false}
+            aria-selected={isActive}
             {...props}
           >
             { icon ? <Icon icon={icon} size="18" className={ label && label.length ? "jn-mr-2" : "" } /> : "" }
@@ -122,6 +123,7 @@ export const SideNavigationItem = ({
             `}
             aria-label={ariaLabel}
             aria-disabled={ disabled || groupDisabled ? true : false}
+            aria-selected={isActive}
             disabled={disabled || groupDisabled ? true : false }
             onClick={handleItemClick}
             {...props}
