@@ -6,10 +6,10 @@ import { knownIcons } from "../Icon/Icon.component.js"
 
 const itemStyles = `
   jn-flex
+  jn-text-theme-default
   jn-font-bold
   jn-px-[1.5625rem]
   jn-items-center
-  jn-cursor-pointer
   focus-visible:jn-outline-none
   focus-visible:jn-ring-2
   focus-visible:jn-ring-theme-focus
@@ -18,9 +18,11 @@ const itemStyles = `
 const disabledItemStyles = `
   jn-pointer-events-none
   jn-opacity-50
+  jn-cursor-not-allowed
 `
 
 const activeItemStyles = `
+  jn-text-theme-high
   jn-border-b-[3px]
   jn-border-theme-tab-active-bottom
 `
@@ -86,7 +88,7 @@ export const TabNavigationItem = ({
           className={`
             juno-tabnavigation-item
             ${ itemStyles } 
-            ${ disabled || groupDisabled ? disabledItemStyles : ""}
+            ${ disabled || groupDisabled ? disabledItemStyles : "" }
             ${ disabled || groupDisabled ? "juno-tabnavigation-item-disabled" : ""}
             ${ isActive ? activeItemStyles : ""}
             ${ isActive ? "juno-tabnavigation-item-active" : "" }
@@ -112,7 +114,7 @@ export const TabNavigationItem = ({
           `}
           onClick={handleItemClick}
           aria-selected={activeTab === label}
-          disabled={disabled}
+          disabled={disabled || groupDisabled ? true : false }
           aria-disabled={ disabled || groupDisabled ? true : false}
           {...props}
         >
