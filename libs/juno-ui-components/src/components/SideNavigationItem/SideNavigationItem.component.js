@@ -71,7 +71,7 @@ export const SideNavigationItem = ({
     }
   }, [])
   
-  // UPdate the parent state when in a navigation context, otherwise update item state directly:
+  // Update the parent state when in a navigation context, otherwise update item state directly:
   useEffect(() => {
     if (activeItem) {
       activeItem === label ? setIsActive(true) : setIsActive(false)
@@ -98,7 +98,7 @@ export const SideNavigationItem = ({
               ${ isActive ? "juno-sidenavigation-item-active" : ""}
               ${ isActive ? activeItemStyles : ""}
               ${ disabled || groupDisabled ? disabledItemStyles : ""}
-              ${ disabled || groupDisabled ? "juno-tabnavigation-item-disabled" : ""}
+              ${ disabled || groupDisabled ? "juno-sidenavigation-item-disabled" : ""}
               ${ className }
             `}
             href={href}
@@ -118,7 +118,7 @@ export const SideNavigationItem = ({
               ${ isActive ? "juno-sidenavigation-item-active" : ""}
               ${ isActive ? activeItemStyles : ""}
               ${ disabled || groupDisabled ? disabledItemStyles : ""}
-              ${ disabled || groupDisabled ? "juno-tabnavigation-item-disabled" : ""}
+              ${ disabled || groupDisabled ? "juno-sidenavigation-item-disabled" : ""}
               ${ className }
             `}
             aria-label={ariaLabel}
