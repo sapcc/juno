@@ -2,7 +2,7 @@ import { Meta, Controls } from "@storybook/blocks"
 import { ColorPalette } from "./ColorPalette/ColorPalette.jsx"
 import { JunoColorPalette } from "./ColorPalette/JunoColorPalette.jsx"
 import { Message } from "../components/Message/Message.component.js"
-import { JunoComponentParent } from "./JunoComponentParent/JunoComponentParent.jsx"
+import { JunoComponentWrapper } from "./JunoComponentWrapper/JunoComponentWrapper.jsx"
 
 <Meta title="Colors" />
 
@@ -14,17 +14,17 @@ The Juno UI component library is based on Tailwind CSS which means that all Tail
 
 Theme colors adjust according to the chosen theme (dark or light) automatically. So unless you are creating something like a chart you should try to avoid the straight up colors like juno-grey-... and instead stick to the theme colors (they always contain the word theme somewhere in the name).
 
-<JunoComponentParent>
+<JunoComponentWrapper>
   <ColorPalette theme="theme-dark" />
   <ColorPalette theme="theme-light" />
-</JunoComponentParent>
+</JunoComponentWrapper>
 
 ## Primary Colors
 
-<JunoComponentParent>
+<JunoComponentWrapper>
   <Message
     text="Do not use these colors! They are listed mostly for informational purposes. The only use case where the base colors might be used is for charts and the like. Otherwise stick to the theme colors above!"
     variant="warning"
   />
   <JunoColorPalette />
-</JunoComponentParent>
+</JunoComponentWrapper>
