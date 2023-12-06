@@ -33,6 +33,12 @@ describe("TabNavigation", () => {
       expect(screen.getByRole("button", {name: "Item 3"})).toBeInTheDocument()
   })
   
+  test("renders an aria-label as passed", async () => {
+    render(<TabNavigation ariaLabel="the relelvance of the navigation" />)
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.getByRole("navigation")).toHaveAttribute("aria-label", "the relelvance of the navigation")
+  })
+  
   test("renders disabled children as passed", async () => {
     render(
       <TabNavigation disabled>
@@ -100,7 +106,6 @@ describe("TabNavigation", () => {
     await userEvent.click(tab2)
     expect(mockOnTabChange).toHaveBeenCalled()
   })
-
 
   test("renders a custom classNames", async () => {
     render(<TabNavigation className="my-custom-class" />)
