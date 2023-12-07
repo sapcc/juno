@@ -9,7 +9,7 @@ export default {
     children: {
       control: false,
     },
-    onTabChange: {
+    onActiveItemChange: {
       control: false,
     }
   },
