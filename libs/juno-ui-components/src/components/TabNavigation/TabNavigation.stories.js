@@ -11,7 +11,11 @@ export default {
     },
     onActiveItemChange: {
       control: false,
-    }
+    },
+    tabStyle: {
+      options: ['main', 'content'],
+      control: { type: 'radio' },
+    },
   },
 };
 
