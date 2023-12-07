@@ -62,6 +62,24 @@ describe("TabNavigationItem", () => {
     expect(mockOnClick).toHaveBeenCalled()
   })
   
+  test("renders main style tab navigation items by default inside a TabNavigation", async() => {
+    render(
+    <TabNavigation>
+      <TabNavigationItem label="Item 1" />
+    </TabNavigation>)
+    expect(screen.getByRole("button", {name: "Item 1"})).toBeInTheDocument()
+    expect(screen.getByRole("button", {name: "Item 1"})).toHaveClass("juno-tabnavigation-item-main")
+  })
+  
+  test("renders content style tab navigation items as passed to the parent TabNavigation", async() => {
+    render(
+    <TabNavigation tabStyle="content">
+      <TabNavigationItem label="Item 1" />
+    </TabNavigation>)
+    expect(screen.getByRole("button", {name: "Item 1"})).toBeInTheDocument()
+    expect(screen.getByRole("button", {name: "Item 1"})).toHaveClass("juno-tabnavigation-item-content")
+  })
+  
   test("renders a className as passed", async () => {
     render(<TabNavigationItem data-testid={"tab-nav-item"} className="my-custom-class" />)
     expect(screen.getByTestId("tab-nav-item")).toBeInTheDocument()

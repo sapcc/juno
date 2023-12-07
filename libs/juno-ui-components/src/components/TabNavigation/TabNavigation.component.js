@@ -50,7 +50,17 @@ export const TabNavigation = ({
         tabStyle: tabStyle,
       }}
     >
-      <ul className={`juno-tabnavigation ${tabNavStyles} ${className}`} role="navigation" aria-label={ariaLabel} {...props} >
+      <ul 
+        className={`
+          juno-tabnavigation 
+          juno-tabnavigation-${tabStyle}
+          ${tabNavStyles} 
+          ${className}
+        `} 
+        role="navigation" 
+        aria-label={ariaLabel} 
+        {...props} 
+      >
         { children }
       </ul>
     </NavigationContext.Provider>

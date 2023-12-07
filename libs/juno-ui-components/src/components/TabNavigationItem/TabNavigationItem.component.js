@@ -119,6 +119,7 @@ export const TabNavigationItem = ({
       :
         <button className={`
             juno-tabnavigation-item
+            juno-tabnavigation-item-${tabStyle}
             ${ itemStyles } 
             ${ disabled || groupDisabled ? disabledItemStyles : ""}
             ${ disabled || groupDisabled ? "juno-tabnavigation-item-disabled" : ""}

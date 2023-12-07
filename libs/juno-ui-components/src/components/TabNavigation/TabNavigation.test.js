@@ -110,6 +110,26 @@ describe("TabNavigation", () => {
     await userEvent.click(tab2)
     expect(mockOnActiveItemChange).toHaveBeenCalled()
   })
+  
+  test("renders a main style tab navigation by default", async () => {
+    render(
+      <TabNavigation>
+        <TabNavigationItem label="Item 1"/>
+      </TabNavigation>
+    )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.getByRole("navigation")).toHaveClass("juno-tabnavigation-main")
+  })
+  
+  test("renders a content style tab navigation by passed", async () => {
+    render(
+      <TabNavigation tabStyle="content">
+        <TabNavigationItem label="Item 1"/>
+      </TabNavigation>
+    )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.getByRole("navigation")).toHaveClass("juno-tabnavigation-content")
+  })
 
   test("renders a custom classNames", async () => {
     render(<TabNavigation className="my-custom-class" />)
