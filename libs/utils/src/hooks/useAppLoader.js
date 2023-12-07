@@ -53,9 +53,14 @@ const useAppLoader = (assetsHost) => {
         console.log("useAppLoader: mount", options, assetsHost)
         let url = options.url
           ? options.url
-          : `@juno/${options.name}@${options.version || "latest"}`
-        return importShim(url).then((app) => {
-          app.mount(container, { props: { ...options.props } })
+          : `@juno/${options?.name}@${options?.version || "latest"}`
+        return importShim(url).then(async (app) => {
+          try {
+            await app.mount(container, { props: { ...options.props } })
+          } catch (error) {
+            throw new Error(`useAppLoader:: mount:: ${error}`)
+          }
+
           return app.unmount
         })
       })
