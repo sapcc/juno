@@ -28,13 +28,13 @@ const App = (props) => {
       fetchProxyInitDB(db, {
         debug: true,
         rewriteRoutes: {
-          "/api/v1/(.*)/certificate/(.*)": "/$1/$2",
-          "/api/v1/(.*)/certificate": "/$1",
-          "/api/v1/(.*)": "/$1",
+          "/(?:api/v1/)?(.*)/certificate/(.*)": "/$1/$2",
+          "/(?:api/v1/)?(.*)/certificate": "/$1",
+          "/(?:api/v1/)?(.*)": "/$1",
         },
         rewriteResponses: {
           POST: {
-            "/api/v1/(.*)/certificate": { certificate: "testCertificate" },
+            "/(?:api/v1/)?(.*)/certificate": { certificate: "testCertificate" },
           },
         },
       })
@@ -86,7 +86,7 @@ const App = (props) => {
 
   // on load application save the props to be used in oder components
   useLayoutEffect(() => {
-    if (props.endpoint) setEndpoint(props.endpoint)
+    setEndpoint(props?.isMock ? window.location.origin : props?.endpoint)
     if (props.disabledcas) setDisabledCAs(props.disabledcas)
     if (props.documentationlinks)
       setDocumentationLinks(props.documentationlinks)
