@@ -10,7 +10,7 @@ export default (apiEndpoint) =>
         clusters: {
           label: "Clusters",
           name: "greenhouse-cluster-admin",
-          props: { embedded: true },
+          props: { endpoint: apiEndpoint, embedded: true },
         },
         plugins: {
           label: "Plugins",
