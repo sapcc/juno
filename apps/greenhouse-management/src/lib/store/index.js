@@ -9,7 +9,7 @@ export default (apiEndpoint) =>
       pluginConfig: {
         clusters: {
           label: "Clusters",
-          name: "clusters",
+          name: "greenhouse-cluster-admin",
           props: { embedded: true },
         },
         plugins: {
