@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { SideNavigation } from './index';
 import { SideNavigationItem } from '../SideNavigationItem/index';
 
-const mockOnItemChange = jest.fn()
+const mockOnActiveItemChange = jest.fn()
 
 describe('SideNavigation', () => {
   
@@ -114,7 +114,7 @@ describe('SideNavigation', () => {
   
   test("executes a handler as passed when the selected item changes", async () => {
     render(
-      <SideNavigation activeItem="Item 1" onActiveChange={mockOnItemChange}>
+      <SideNavigation activeItem="Item 1" onActiveItemChange={mockOnActiveItemChange}>
         <SideNavigationItem label="Item 1" />
         <SideNavigationItem label="Item 2" />
       </SideNavigation>)
@@ -122,7 +122,7 @@ describe('SideNavigation', () => {
     expect(screen.queryAllByRole("button")).toHaveLength(2)
     const item2 = screen.getByRole("button", {name: "Item 2"})
     await userEvent.click(item2)
-    expect(mockOnItemChange).toHaveBeenCalled()
+    expect(mockOnActiveItemChange).toHaveBeenCalled()
   })
 
   test('renders custom classNames as passed', async () => {

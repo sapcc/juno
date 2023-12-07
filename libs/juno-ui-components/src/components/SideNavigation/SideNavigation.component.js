@@ -18,7 +18,7 @@ export const SideNavigation = ({
   children,
   className,
   disabled,
-  onActiveChange,
+  onActiveItemChange,
   ...props
 }) => {
   
@@ -36,7 +36,7 @@ export const SideNavigation = ({
     
   const handleActiveItemChange = (label) => {
     setActiveItm(label)
-    onActiveChange && onActiveChange(label)
+    onActiveItemChange && onActiveItemChange(label)
   }
   
   return (
@@ -75,7 +75,7 @@ SideNavigation.propTypes = {
   /** Whether the navigation is disabled */
   disabled: PropTypes.bool,
   /** Handler to execute when the active item changes */
-  onActiveChange: PropTypes.func,
+  onActiveItemChange: PropTypes.func,
 }
 
 SideNavigation.defaultProps = {
@@ -84,5 +84,5 @@ SideNavigation.defaultProps = {
   children: null,
   className: "",
   disabled: false,
-  onActiveChange: undefined,
+  onActiveItemChange: undefined,
 }

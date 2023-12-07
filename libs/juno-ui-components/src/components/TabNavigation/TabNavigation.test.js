@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event"
 import { TabNavigation } from "./index"
 import { TabNavigationItem } from "../TabNavigationItem/index"
 
-const mockOnTabChange = jest.fn()
+const mockOnActiveItemChange = jest.fn()
 
 describe("TabNavigation", () => {
   
@@ -56,7 +56,7 @@ describe("TabNavigation", () => {
   })
   
   test("renders an active tab as passed", async () => {
-    render(<TabNavigation activeTab="Item 2">
+    render(<TabNavigation activeItem="Item 2">
       <TabNavigationItem label="Item 1" />
       <TabNavigationItem label="Item 2" />
     </TabNavigation>)
@@ -71,7 +71,7 @@ describe("TabNavigation", () => {
   })
   
   test("renders the active tab as passed to the parent if conflicting with active prop passed to child item", async () => {
-    render(<TabNavigation activeTab="Item 2">
+    render(<TabNavigation activeItem="Item 2">
       <TabNavigationItem label="Item 1" active/>
       <TabNavigationItem label="Item 2" />
     </TabNavigation>)
@@ -84,7 +84,7 @@ describe("TabNavigation", () => {
   })
   
   test("changes the active tab when the user clicks", async () => {
-    render(<TabNavigation activeTab="Item 1">
+    render(<TabNavigation activeItem="Item 1">
       <TabNavigationItem label="Item 1" />
       <TabNavigationItem label="Item 2" />
     </TabNavigation>)
@@ -100,7 +100,7 @@ describe("TabNavigation", () => {
   })
   
   test("executes a handler as passed when the selected tab changes", async () => {
-    render(<TabNavigation activeTab="Item 1" onTabChange={mockOnTabChange}>
+    render(<TabNavigation activeItem="Item 1" onActiveItemChange={mockOnActiveItemChange}>
       <TabNavigationItem label="Item 1" />
       <TabNavigationItem label="Item 2" />
     </TabNavigation>)
@@ -108,7 +108,7 @@ describe("TabNavigation", () => {
     expect(screen.queryAllByRole("button")).toHaveLength(2)
     const tab2 = screen.getByRole("button", {name: "Item 2"})
     await userEvent.click(tab2)
-    expect(mockOnTabChange).toHaveBeenCalled()
+    expect(mockOnActiveItemChange).toHaveBeenCalled()
   })
 
   test("renders a custom classNames", async () => {

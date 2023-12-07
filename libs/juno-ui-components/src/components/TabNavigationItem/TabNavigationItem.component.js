@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react"
 import PropTypes from "prop-types"
-import { TabNavigationContext } from "../TabNavigation/TabNavigation.component"
+import { NavigationContext } from "../TabNavigation/TabNavigation.component"
 import { Icon } from "../Icon/index.js"
 import { knownIcons } from "../Icon/Icon.component.js"
 
@@ -40,18 +40,18 @@ export const TabNavigationItem = ({
   ...props
 }) => {
   
-  const tabNavigationContext = useContext(TabNavigationContext)
+  const navigationContext = useContext(NavigationContext)
   const {
-    activeTab: activeTab,
-    updateActiveTab: updateActiveTab,
-    handleTabChange: handleTabChange,
+    activeItem: activeItem,
+    updateActiveItem: updateActiveItem,
+    handleActiveItemChange: handleActiveItemChange,
     disabled: groupDisabled,
-  } = tabNavigationContext || {}
+  } = navigationContext || {}
   
   // Lazily init depending on parent context or tab's own prop:
   const initialActive = () => {
-    if (tabNavigationContext) {
-      activeTab === label ? true : false
+    if (navigationContext) {
+      activeItem === label ? true : false
     } else {
       return active
     }
@@ -61,22 +61,22 @@ export const TabNavigationItem = ({
   
   // Set the parent state once if not set on the parent, but a tab navigation item has been set to active via its own prop:
   useEffect(() => {
-    if (active && tabNavigationContext && !activeTab) {
-      updateActiveTab(label)
+    if (active && navigationContext && !activeItem) {
+      updateActiveItem(label)
     }
   }, [])
   
   useEffect(() => {
-    if (activeTab) {
-      activeTab === label ? setIsActive(true) : setIsActive(false)
+    if (activeItem) {
+      activeItem === label ? setIsActive(true) : setIsActive(false)
     } else {
       setIsActive(active)
     }
-  }, [activeTab, active])
+  }, [activeItem, active])
 
   const handleItemClick = (event) => {
     if (!isActive) {
-      handleTabChange(label)
+      handleActiveItemChange(label)
     }
     onClick && onClick(event)
   }

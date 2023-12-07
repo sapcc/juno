@@ -21,7 +21,7 @@ export const TopNavigation = ({
   children,
   className,
   disabled,
-  onActiveChange,
+  onActiveItemChange,
   ...props
 }) => {
   
@@ -39,7 +39,7 @@ export const TopNavigation = ({
     
   const handleActiveItemChange = (label) => {
     setActiveItm(label)
-    onActiveChange && onActiveChange(label)
+    onActiveItemChange && onActiveItemChange(label)
   }
   
   return (
@@ -78,7 +78,7 @@ TopNavigation.propTypes = {
   /** Whether the navigation is disabled */
   disabled: PropTypes.bool,
   /** Handler to execute when the active item changes */
-  onActiveChange: PropTypes.func,
+  onActiveItemChange: PropTypes.func,
 }
 
 TopNavigation.defaultProps = {
@@ -87,5 +87,5 @@ TopNavigation.defaultProps = {
   children: null,
   className: "",
   disabled: false,
-  onActiveChange: undefined,
+  onActiveItemChange: undefined,
 }
