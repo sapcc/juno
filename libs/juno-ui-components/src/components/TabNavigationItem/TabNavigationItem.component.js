@@ -9,11 +9,22 @@ const itemStyles = `
   jn-items-center
   jn-text-theme-default
   jn-font-bold
+  jn-py-[0.875rem]
   jn-px-[1.5625rem]
   jn-items-center
   focus-visible:jn-outline-none
   focus-visible:jn-ring-2
   focus-visible:jn-ring-theme-focus
+  
+`
+const defaultMainItemStyles = `
+  jn-border-b-[3px]
+  jn-border-transparent
+`
+
+const defaultContentItemStyles = `
+  jn-border-b-[3px]
+  jn-border-theme-tab-content-inactive-bottom
 `
 
 const disabledItemStyles = `
@@ -46,6 +57,7 @@ export const TabNavigationItem = ({
     updateActiveItem: updateActiveItem,
     handleActiveItemChange: handleActiveItemChange,
     disabled: groupDisabled,
+    tabStyle: tabStyle,
   } = navigationContext || {}
   
   // Lazily init depending on parent context or tab's own prop:
@@ -88,10 +100,11 @@ export const TabNavigationItem = ({
         <a 
           className={`
             juno-tabnavigation-item
+            juno-tabnavigation-item-${tabStyle}
             ${ itemStyles } 
             ${ disabled || groupDisabled ? disabledItemStyles : "" }
             ${ disabled || groupDisabled ? "juno-tabnavigation-item-disabled" : ""}
-            ${ isActive ? activeItemStyles : ""}
+            ${ isActive ? activeItemStyles : ( tabStyle === "content" ? defaultContentItemStyles : defaultMainItemStyles) }
             ${ isActive ? "juno-tabnavigation-item-active" : "" }
             ${ className }
           `}
@@ -109,7 +122,7 @@ export const TabNavigationItem = ({
             ${ itemStyles } 
             ${ disabled || groupDisabled ? disabledItemStyles : ""}
             ${ disabled || groupDisabled ? "juno-tabnavigation-item-disabled" : ""}
-            ${ isActive ? activeItemStyles : ""}
+            ${ isActive ? activeItemStyles : ( tabStyle === "content" ? defaultContentItemStyles : defaultMainItemStyles) }
             ${ isActive ? "juno-tabnavigation-item-active" : "" }
             ${ className } 
           `}

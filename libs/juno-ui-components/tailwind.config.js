@@ -262,6 +262,7 @@ module.exports = {
           "filter-pill": withOpacity("--color-filter-pill-border"),
           "box-default": "var(--color-box-border)",
           "textinput-default": withOpacity("--color-textinput-default-border"),
+          "tab-content-inactive-bottom": withOpacity("--color-background-lvl-4-raw"),
         },
       },
       // backgroundImage: theme => ({

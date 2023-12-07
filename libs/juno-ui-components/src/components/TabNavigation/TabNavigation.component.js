@@ -16,6 +16,7 @@ export const TabNavigation = ({
   className,
   disabled,
   onActiveItemChange,
+  tabStyle,
   ...props
 }) => {
   
@@ -46,6 +47,7 @@ export const TabNavigation = ({
         updateActiveItem: updateActiveItem,
         handleActiveItemChange: handleActiveItemChange,
         disabled: disabled,
+        tabStyle: tabStyle,
       }}
     >
       <ul className={`juno-tabnavigation ${tabNavStyles} ${className}`} role="navigation" aria-label={ariaLabel} {...props} >
@@ -68,6 +70,8 @@ TabNavigation.propTypes = {
   disabled: PropTypes.bool,
   /** A handler to execute when the active tab changes */
   onActiveItemChange: PropTypes.func,
+  /** The stylistic variant of the Tabs: Use `main` at the top inside a `ContentXYZ`, for tabs inside a `ContentXYZ` use "content". `<TabNavigation tabStyle="main">` will have no darkened border on the bottom of inactive tabs, `tabStyle="content"` will.*/
+  tabStyle: PropTypes.oneOf(["main", "content"]),
 }
 
 TabNavigation.defaultProps = {
@@ -77,4 +81,5 @@ TabNavigation.defaultProps = {
   className: "",
   disabled: false,
   onActiveItemChange: undefined,
+  tabStyle: "main",
 }
