@@ -14,7 +14,7 @@ export default (apiEndpoint) =>
         },
         plugins: {
           label: "Plugins",
-          name: "plugins",
+          name: "greenhouse-plugin-admin",
           props: { embedded: true },
         },
         teams: {
@@ -23,7 +23,7 @@ export default (apiEndpoint) =>
           props: { endpoint: apiEndpoint, embedded: true },
         },
       },
-      pluginActive: "clusters", // name of the active plugin default
+      pluginActive: "greenhouse-cluster-admin", // name of the active plugin default
 
       actions: {
         setPluginActive: (pluginId) =>
