@@ -74,7 +74,7 @@
       "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
     },
     "endpoint": {
-      "value": "https://the_endpoint/api/v1",
+      "value": "",
       "type": "required",
       "description": "Endpoint URL of the API"
     },
