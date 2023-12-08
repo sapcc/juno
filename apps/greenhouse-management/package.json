@@ -1,7 +1,7 @@
 {
   "name": "greenhouse-management",
   "version": "1.0.2",
-  "author": "REPLACE ME",
+  "author": "Juno team (SAP)",
   "license": "MIT",
   "source": "src/index.js",
   "module": "build/index.js",
