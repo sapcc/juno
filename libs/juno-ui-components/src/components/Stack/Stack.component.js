@@ -85,7 +85,7 @@ const gapSize = (gap) => {
 const baseStack = (direction, gap, wrap) => {
   return (
     `
-      ${direction === "vertical" ? 'jn-flex jn-flex-col' : 'md:jn-flex md:jn-flex-row'}
+      ${direction === "vertical" ? 'jn-flex jn-flex-col' : 'jn-flex jn-flex-row'}
       ${wrap && "jn-flex-wrap"}
       ${gapSize(gap)}
     `
