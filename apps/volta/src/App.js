@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from "react"
+import React, { useEffect, useLayoutEffect, useMemo } from "react"
 import { oidcSession, mockedSession } from "oauth"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import styles from "./styles.scss"
@@ -20,9 +20,14 @@ const App = (props) => {
   } = useGlobalsActions()
   const { addMessage } = useActions()
 
+  const isMock = useMemo(
+    () => props.isMock === true || props.isMock === "true",
+    [props.isMock]
+  )
+
   // setup the mock db.json
   useEffect(() => {
-    if (props.isMock === true || props.isMock === "true") {
+    if (isMock) {
       setMock(true)
 
       fetchProxyInitDB(db, {
@@ -45,7 +50,7 @@ const App = (props) => {
   // keep it in the app so the issuerurl and clientid have not to be saved on the state
   const oidc = React.useMemo(() => {
     // Load mockSession if props.mock is set true
-    if (props.isMock === true || props.isMock === "true") {
+    if (isMock) {
       return mockedSession({
         initialLogin: true,
         onUpdate: (data) => {
@@ -86,7 +91,7 @@ const App = (props) => {
 
   // on load application save the props to be used in oder components
   useLayoutEffect(() => {
-    setEndpoint(props?.isMock ? window.location.origin : props?.endpoint)
+    setEndpoint(isMock ? window.location.origin : props?.endpoint)
     if (props.disabledcas) setDisabledCAs(props.disabledcas)
     if (props.documentationlinks)
       setDocumentationLinks(props.documentationlinks)
