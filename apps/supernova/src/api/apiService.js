@@ -46,6 +46,11 @@ function ApiService(initialConfig) {
           if (config.onFetchEnd) config.onFetchEnd()
         })
         .catch((error) => {
+          console.log(error)
+          if (error.message == "Failed to fetch") {
+            error.message = "Could not reach endpoint."
+          }
+
           console.warn(`ApiService::${config.serviceName || ""}:`, error)
           if (config.onFetchError) config.onFetchError(error)
         })
