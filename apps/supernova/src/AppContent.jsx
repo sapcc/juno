@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import { useActions, Messages } from "messages-provider"
 import { Container, Spinner, Stack } from "juno-ui-components"
+import SilenceScheduled from "./components/silences/SilenceScheduled"
 import {
   useAlertsError,
   useAlertsIsLoading,
@@ -88,6 +89,7 @@ const AppContent = (props) => {
   return (
     <Container px py className="h-full">
       <Messages className="pb-6" />
+      <SilenceScheduled />
       {loggedIn && !authError ? (
         <>
           <AlertDetail />
