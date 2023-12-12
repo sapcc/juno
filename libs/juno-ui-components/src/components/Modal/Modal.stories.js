@@ -63,9 +63,17 @@ export default {
 
 export const Default = Template.bind({})
 Default.args = {
-  children: [
+  children:
     <p>A default modal.</p>
-  ],
+  ,
+}
+
+export const SimpleConfirmDialog = Template.bind({})
+SimpleConfirmDialog.args = {
+  children: 
+    <p>Are you sure you want to proceed?</p>,
+  cancelButtonLabel: "Cancel",
+  confirmButtonLabel: "Yes, Proceed"
 }
 
 export const LargeWithTitle = Template.bind({})
@@ -74,9 +82,8 @@ LargeWithTitle.args = {
   title: "Large Modal",
   confirmButtonLabel: "OK",
   closeOnConfirm: true, /* Only relevant for storybook, this is not a native prop of the component! */
-  children: [
-    <p>A large modal with a title</p>
-  ]
+  children: 
+    <p>A large modal with a title</p>,
 }
 
 export const NonCloseable = Template.bind({})
