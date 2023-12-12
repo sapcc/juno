@@ -74,9 +74,8 @@ LargeWithTitle.args = {
   title: "Large Modal",
   confirmButtonLabel: "OK",
   closeOnConfirm: true, /* Only relevant for storybook, this is not a native prop of the component! */
-  children: [
-    <p>A large modal with a title</p>
-  ]
+  children: 
+    <p>A large modal with a title</p>,
 }
 
 export const NonCloseable = Template.bind({})
