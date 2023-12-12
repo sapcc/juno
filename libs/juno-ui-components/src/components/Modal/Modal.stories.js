@@ -68,6 +68,14 @@ Default.args = {
   ,
 }
 
+export const SimpleConfirmDialog = Template.bind({})
+SimpleConfirmDialog.args = {
+  children: 
+    <p>Are you sure you want to proceed?</p>,
+  cancelButtonLabel: "Cancel",
+  confirmButtonLabel: "Yes, Proceed"
+}
+
 export const LargeWithTitle = Template.bind({})
 LargeWithTitle.args = {
   size: "large",
