@@ -1,0 +1,28 @@
+[
+  {
+    "description": "This is a fake silence",
+    "editable_labels": ["test"],
+    "fixed_labels": {
+      "testlabel": "exist",
+      "testlabel2": "exist"
+    },
+    "status": "active",
+    "title": "Fake silence"
+  },
+  {
+    "description": "This is a Test silence",
+    "editable_labels": ["test", "edit2"],
+    "fixed_labels": {
+      "fakelabel": "test"
+    },
+    "status": "active",
+    "title": "fake"
+  },
+  {
+    "description": "This is a no label",
+    "editable_labels": [],
+    "fixed_labels": {},
+    "status": "active",
+    "title": "no label"
+  }
+]

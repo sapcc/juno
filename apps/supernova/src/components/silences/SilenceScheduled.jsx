@@ -9,6 +9,8 @@ import {
   Select,
   SelectOption,
   Message,
+  FormRow,
+  Stack,
 } from "juno-ui-components"
 import {
   useAuthData,
@@ -28,6 +30,7 @@ import {
   setupMatchers,
 } from "./silenceHelpers"
 import { parseError } from "../../helpers"
+import fakesilence from "./fakesilence.json"
 
 const validateForm = (values) => {
   const invalidItems = {}
@@ -51,6 +54,10 @@ const SilenceScheduled = ({ alert, size, variant }) => {
   const [displayNewSilence, setDisplayNewSilence] = useState(false)
   const [success, setSuccess] = useState(null)
   const [error, setError] = useState(null)
+
+  const onInputChanged = ({ key, value }) => {
+    if (!value) return
+  }
 
   const onSubmitForm = () => {
     setSuccess(null)
@@ -88,13 +95,12 @@ const SilenceScheduled = ({ alert, size, variant }) => {
           size="large"
           open={true}
           confirmButtonLabel={success ? null : "Save"}
-          onCancel={() => setDisplayNewSilence(false)}
           onConfirm={success ? null : onSubmitForm}
         >
           {error && <Message text={error} variant="danger" />}
 
           {success && (
-            <Message className="mb-6" variant="info">
+            <Message className="mb-6" variant="success">
               A silence object with id <b>{success?.silenceID}</b> was created
               successfully. Please note that it may take up to 5 minutes for the
               alert to show up as silenced.
@@ -104,13 +110,48 @@ const SilenceScheduled = ({ alert, size, variant }) => {
           {!success && (
             <>
               <Form className="mt-6">
-                <TextInput
-                  className="mb-4"
-                  required
-                  label="Silenced by"
-                  value="Me"
-                  disabled
-                />
+                <FormRow>
+                  <Select
+                    required
+                    label="Silence Template"
+                    value="Select Template"
+                    onChange={(value) =>
+                      onInputChanged({
+                        key: "title",
+                        value,
+                      })
+                    }
+                  >
+                    {fakesilence?.map((option) => (
+                      <SelectOption
+                        key={option.title}
+                        label={option.title}
+                        value={option.title}
+                      />
+                    ))}
+                  </Select>
+                </FormRow>
+                <FormRow>
+                  <Message
+                    onDismiss={function noRefCheck() {}}
+                    text="Default Message."
+                  />
+                </FormRow>
+                <FormRow>
+                  <TextInput required label="Silenced by" value="Me" disabled />
+                </FormRow>
+                <FormRow>
+                  <TextInput required label="Label edit" value="Me" />
+                </FormRow>
+                <FormRow>
+                  <Stack gap="2" wrap>
+                    <TextInput required label="Label fix" value="Me" disabled />
+                    <TextInput required label="Label fix" value="Me" disabled />
+                  </Stack>
+                </FormRow>
+                <FormRow>
+                  <Textarea label="Comment"> </Textarea>
+                </FormRow>
               </Form>
             </>
           )}
