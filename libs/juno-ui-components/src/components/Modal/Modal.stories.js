@@ -107,7 +107,7 @@ Login.args = {
   children:
     <>
       <FormRow>
-        <TextInput label="Username" name="username" id="username" />
+        <TextInput label="Username" name="username" id="username" autoComplete="on"/>
       </FormRow>
       <FormRow>
        <TextInput type="password" label="Password" name="password" id="password" />
