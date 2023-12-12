@@ -63,9 +63,9 @@ export default {
 
 export const Default = Template.bind({})
 Default.args = {
-  children: [
+  children:
     <p>A default modal.</p>
-  ],
+  ,
 }
 
 export const LargeWithTitle = Template.bind({})
