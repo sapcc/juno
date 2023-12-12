@@ -41,7 +41,7 @@ const Template = ({closeOnConfirm, ...args}) => {
 }
  
 export default {
-  title: "WiP/Modal/Modal",
+  title: "Components/Modal/Modal",
   component: Modal,
   argTypes: {
     children: {
