@@ -322,6 +322,9 @@ $dark-theme-color-map: (
   --color-textinput-text: var(--color-juno-text-high-raw);
   --color-textinput-placeholder-text: var(--color-juno-text-high-raw);
   --color-textinput-focus-border: var(--color-accent-raw);
+  --color-textinput-autofill-text: var(--color-black);
+  --color-textinput-autofill-bg: var(--color-juno-blue-1);
+  --color-textinput-autofill-label: var(--color-juno-text-default);
   // LT Select
   --color-select-bg: var(--color-background-lvl-3-raw);
   // LT Checkbox
@@ -537,6 +540,9 @@ $dark-theme-color-map: (
   --color-textinput-text: var(--color-juno-text-high-raw);
   --color-textinput-placeholder-text: var(--color-juno-text-high-raw);
   --color-textinput-focus-border: var(--color-accent-raw);
+  --color-textinput-autofill-text: var(--color-black);
+  --color-textinput-autofill-bg: var(--color-juno-blue-1);
+  --color-textinput-autofill-label: var(--color-black);
   // DT Select
   --color-select-bg: var(--color-background-lvl-4-raw);
   // DT Checkbox
