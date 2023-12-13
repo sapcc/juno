@@ -54,10 +54,7 @@ const SilenceScheduled = ({ alert, size, variant }) => {
   const [displayNewSilence, setDisplayNewSilence] = useState(false)
   const [success, setSuccess] = useState(null)
   const [error, setError] = useState(null)
-
-  const onInputChanged = ({ key, value }) => {
-    if (!value) return
-  }
+  const [selected, setSelected] = useState(null)
 
   const onSubmitForm = () => {
     setSuccess(null)
@@ -114,19 +111,16 @@ const SilenceScheduled = ({ alert, size, variant }) => {
                   <Select
                     required
                     label="Silence Template"
-                    value="Select Template"
-                    onChange={(value) =>
-                      onInputChanged({
-                        key: "title",
-                        value,
-                      })
-                    }
+                    value={selected?.title || "Select"}
                   >
                     {fakesilence?.map((option) => (
                       <SelectOption
                         key={option.title}
                         label={option.title}
                         value={option.title}
+                        onClick={() => {
+                          setSelected(option)
+                        }}
                       />
                     ))}
                   </Select>
@@ -134,7 +128,7 @@ const SilenceScheduled = ({ alert, size, variant }) => {
                 <FormRow>
                   <Message
                     onDismiss={function noRefCheck() {}}
-                    text="Default Message."
+                    text={selected?.description}
                   />
                 </FormRow>
                 <FormRow>
