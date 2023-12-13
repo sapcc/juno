@@ -31,6 +31,8 @@ import {
 } from "./silenceHelpers"
 import { parseError } from "../../helpers"
 import fakesilence from "./fakesilence.json"
+import { e } from "juno-ui-components/build/floating-ui.dom-a8dd2d87"
+import { k } from "juno-ui-components/build/Icon.component-96dfa3a1"
 
 const validateForm = (values) => {
   const invalidItems = {}
@@ -125,28 +127,49 @@ const SilenceScheduled = ({ alert, size, variant }) => {
                     ))}
                   </Select>
                 </FormRow>
-                <FormRow>
-                  <Message
-                    onDismiss={function noRefCheck() {}}
-                    text={selected?.description}
-                  />
-                </FormRow>
-                <FormRow>
-                  <TextInput required label="Silenced by" value="Me" disabled />
-                </FormRow>
-                <FormRow>
-                  <TextInput required label="Label edit" value="Me" />
-                </FormRow>
-                <FormRow>
-                  <Stack gap="2" wrap>
-                    <TextInput required label="Label fix" value="Me" disabled />
-                    <TextInput required label="Label fix" value="Me" disabled />
-                  </Stack>
-                </FormRow>
-                <FormRow>
-                  <Textarea label="Comment"> </Textarea>
-                </FormRow>
               </Form>
+              {selected && (
+                <Form className="mt-6">
+                  <FormRow>
+                    <Message
+                      onDismiss={function noRefCheck() {}}
+                      text={selected?.description}
+                    />
+                  </FormRow>
+                  <FormRow>
+                    <TextInput
+                      required
+                      label="Silenced by"
+                      value="Me"
+                      disabled
+                    />
+                  </FormRow>
+                  <FormRow>
+                    <Stack gap="2" wrap>
+                      {selected?.editable_labels.map((editable_labels) => (
+                        <TextInput required label={editable_labels} />
+                      ))}
+                    </Stack>
+                  </FormRow>
+
+                  <FormRow>
+                    <Stack gap="2" wrap>
+                      {Object.keys(selected?.fixed_labels).map((key) => (
+                        <TextInput
+                          required
+                          label={key}
+                          value={selected?.fixed_labels[key]}
+                          disabled
+                        />
+                      ))}
+                    </Stack>
+                  </FormRow>
+
+                  <FormRow>
+                    <Textarea label="Comment"> </Textarea>
+                  </FormRow>
+                </Form>
+              )}
             </>
           )}
         </Modal>

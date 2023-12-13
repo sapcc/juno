@@ -4,7 +4,7 @@
     "editable_labels": ["test"],
     "fixed_labels": {
       "testlabel": "exist",
-      "testlabel2": "exist"
+      "testlabel2": "existent"
     },
     "status": "active",
     "title": "Fake silence"
