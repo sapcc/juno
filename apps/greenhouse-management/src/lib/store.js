@@ -12,11 +12,11 @@ export default (apiEndpoint) =>
           name: "greenhouse-cluster-admin",
           props: { endpoint: apiEndpoint, embedded: true },
         },
-        plugins: {
-          label: "Plugins",
-          name: "greenhouse-plugin-admin",
-          props: { embedded: true },
-        },
+        // plugins: {
+        //   label: "Plugins",
+        //   name: "greenhouse-plugin-admin",
+        //   props: { embedded: true },
+        // },
         teams: {
           label: "Teams",
           name: "greenhouse-team-admin",
