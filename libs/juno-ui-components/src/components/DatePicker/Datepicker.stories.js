@@ -4,7 +4,12 @@ import { Datepicker } from './index.js'
 export default {
   title: "WIP/Datepicker/Datepicker",
   component: Datepicker,
-  argTypes: {}
+  argTypes: {
+    mode: {
+      options: ["single", "multiple", "range", "time"],
+      control: { type: 'select' },
+    },
+  }
 }
 
 const Template = ({...args}) => (
