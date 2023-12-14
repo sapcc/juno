@@ -24,5 +24,17 @@
     "fixed_labels": {},
     "status": "active",
     "title": "no label"
+  },
+  {
+    "description": "Maintance für Spicesammler",
+    "editable_labels": [],
+    "fixed_labels": {
+      "Gerät": "Spicesammler",
+      "Personen": "Arbeitende",
+      "Planet": "Arrakis",
+      "Haus": "Atreides"
+    },
+    "status": "active",
+    "title": "Viele Fixed Labels"
   }
 ]
