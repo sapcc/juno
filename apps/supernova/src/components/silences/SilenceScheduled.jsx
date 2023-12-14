@@ -144,20 +144,20 @@ const SilenceScheduled = ({ alert, size, variant }) => {
                   {selected.editable_labels.length > 0 && (
                     <FormRow>
                       <div className="grid gap-2 grid-cols-3">
-                        {selected?.editable_labels.map((editable_labels) => (
+                        {selected.editable_labels.map((editable_labels) => (
                           <TextInput required label={editable_labels} />
                         ))}
                       </div>
                     </FormRow>
                   )}
-                  {selected.fixed_labels.length > 0 && (
+                  {Object.keys(selected.fixed_labels).length > 0 > 0 && (
                     <FormRow>
                       <div className="grid gap-2 grid-cols-3">
-                        {Object.keys(selected?.fixed_labels).map((key) => (
+                        {Object.keys(selected.fixed_labels).map((key) => (
                           <TextInput
                             required
                             label={key}
-                            value={selected?.fixed_labels[key]}
+                            value={selected.fixed_labels[key]}
                             disabled
                           />
                         ))}
