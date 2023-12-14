@@ -8,7 +8,7 @@ import "flatpickr/dist/themes/material_green.css" // use inbuilt flatpickr style
 
 /* Possible additional props:
   * icon (show a calendar icon)
-  * clear (show clear X), double-check w/ inbuuilt functionality
+  * clear (show clear X), double-check w/ inbuilt functionality
   * All props available for TextInput:
     * name (careful, might be used by Flatpickr internally)
     * id (same)
@@ -32,25 +32,51 @@ import "flatpickr/dist/themes/material_green.css" // use inbuilt flatpickr style
 
  */
  
-
+  // use a custom input:
+  // const CustomInput = ({ value, defaultValue, inputRef, ...props }) => {
+  //   return <input {...props} defaultValue={defaultValue} ref={inputRef} />
+  // }
+  /* 
+    // in <Flatpickr />:
+    render={
+      ({defaultValue, value, ...props}, ref) => {
+        return <CustomInput defaultValue={defaultValue} id="my-id" inputRef={ref} />
+      }
+    } 
+  */
 
 export const Datepicker = ({
   className,
+  defaultValue,
   enableTime,
   maxDate,
   minDate,
   mode,
   placeholder,
+  value,
   ...props
 }) => {
   return (
     <div className="juno-datepicker-wrapper">
       <Flatpickr 
         className={className}
+        defaultValue={defaultValue}
         enableTime={enableTime}
         mode={mode}
         placeholder={placeholder}
+        value={value}
         {...props}
+        
+        /* 
+          // use a custom input:
+          render={
+            ({defaultValue, value, ...props}, ref) => {
+              return <CustomInput defaultValue={defaultValue} id="my-id" inputRef={ref} />
+            }
+          } 
+        */
+
+
       />
     </div>
   )
