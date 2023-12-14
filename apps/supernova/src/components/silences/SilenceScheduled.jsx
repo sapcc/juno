@@ -127,15 +127,12 @@ const SilenceScheduled = ({ alert, size, variant }) => {
                     ))}
                   </Select>
                 </FormRow>
+                <FormRow>
+                  {selected && <Box>{selected?.description}</Box>}
+                </FormRow>
               </Form>
               {selected && (
-                <Form className="mt-6">
-                  <FormRow>
-                    <Message
-                      onDismiss={function noRefCheck() {}}
-                      text={selected?.description}
-                    />
-                  </FormRow>
+                <Form>
                   <FormRow>
                     <TextInput
                       required
@@ -144,26 +141,29 @@ const SilenceScheduled = ({ alert, size, variant }) => {
                       disabled
                     />
                   </FormRow>
-                  <FormRow>
-                    <Stack gap="2" wrap>
-                      {selected?.editable_labels.map((editable_labels) => (
-                        <TextInput required label={editable_labels} />
-                      ))}
-                    </Stack>
-                  </FormRow>
-
-                  <FormRow>
-                    <Stack gap="2" wrap>
-                      {Object.keys(selected?.fixed_labels).map((key) => (
-                        <TextInput
-                          required
-                          label={key}
-                          value={selected?.fixed_labels[key]}
-                          disabled
-                        />
-                      ))}
-                    </Stack>
-                  </FormRow>
+                  {selected.editable_labels.length > 0 && (
+                    <FormRow>
+                      <div className="grid gap-2 grid-cols-3">
+                        {selected?.editable_labels.map((editable_labels) => (
+                          <TextInput required label={editable_labels} />
+                        ))}
+                      </div>
+                    </FormRow>
+                  )}
+                  {selected.fixed_labels.length > 0 && (
+                    <FormRow>
+                      <div className="grid gap-2 grid-cols-3">
+                        {Object.keys(selected?.fixed_labels).map((key) => (
+                          <TextInput
+                            required
+                            label={key}
+                            value={selected?.fixed_labels[key]}
+                            disabled
+                          />
+                        ))}
+                      </div>
+                    </FormRow>
+                  )}
 
                   <FormRow>
                     <Textarea label="Comment"> </Textarea>
