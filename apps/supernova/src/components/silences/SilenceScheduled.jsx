@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Modal,
   Button,
@@ -31,38 +31,60 @@ import {
 } from "./silenceHelpers"
 import { parseError } from "../../helpers"
 import fakesilence from "./fakesilence.json"
-import { e } from "juno-ui-components/build/floating-ui.dom-a8dd2d87"
-import { k } from "juno-ui-components/build/Icon.component-96dfa3a1"
 
-const validateForm = (values) => {
-  const invalidItems = {}
-  if (values?.comment?.length <= 3) {
-    if (!invalidItems["comment"]) invalidItems["comment"] = []
-    invalidItems["comment"].push(`Description can't be blank`)
-  }
-
-  return invalidItems
+const DEFAULT_FORM_VALUES = {
+  startTime: "2012-12-20T13:37",
+  endTime: "2012-12-21T16:00",
+  comment: "",
 }
 
-const errorHelpText = (messages) => {
-  return messages.map((msg, i) => (
-    <span key={i} className="block text-theme-danger ">
-      {msg}
-    </span>
-  ))
+// Controls the Date if it is valid
+const validateDate = (date) => {
+  const dateRegex = new RegExp(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}$/)
+  return dateRegex.test(date)
 }
 
 const SilenceScheduled = ({ alert, size, variant }) => {
-  const [displayNewSilence, setDisplayNewSilence] = useState(false)
+  const authData = useAuthData()
+  const [formState, setFormState] = useState(DEFAULT_FORM_VALUES)
+
+  const [displayNewScheduledSilence, setDisplayNewScheduledSilence] =
+    useState(false)
+
   const [success, setSuccess] = useState(null)
   const [error, setError] = useState(null)
   const [selected, setSelected] = useState(null)
 
+  useEffect(() => {
+    if (!displayNewScheduledSilence) return
+
+    // reset form state with default values
+    setFormState({
+      ...formState,
+      ...DEFAULT_FORM_VALUES,
+      createdBy: authData?.parsed?.fullName,
+    })
+    // reset other states
+    setError(null)
+    setSuccess(null)
+  }, [displayNewScheduledSilence, selected])
+
   const onSubmitForm = () => {
     setSuccess(null)
+    setError(null)
 
-    const newSilence = "jo"
+    let labelValues = {}
 
+    // add fixed labels with values to the formState.labelValues object
+    Object.keys(selected.fixed_labels).forEach((label) => {
+      labelValues[label] = selected.fixed_labels[label]
+    })
+
+    console.log(labelValues)
+    console.log(formState)
+
+    let newSilence = { ...formState, labelValues: labelValues }
+    console.log(newSilence)
     // submit silence
     // post(`${apiEndpoint}/silences`, {
     post(`localhost/silences`, {
@@ -83,12 +105,12 @@ const SilenceScheduled = ({ alert, size, variant }) => {
         variant={variant}
         onClick={(e) => {
           e.stopPropagation()
-          setDisplayNewSilence(!displayNewSilence)
+          setDisplayNewScheduledSilence(!displayNewScheduledSilence)
         }}
       >
         Silence
       </Button>
-      {displayNewSilence && (
+      {displayNewScheduledSilence && (
         <Modal
           title="Schedule new silence"
           size="large"
@@ -137,15 +159,34 @@ const SilenceScheduled = ({ alert, size, variant }) => {
                     <TextInput
                       required
                       label="Silenced by"
-                      value="Me"
+                      value={formState.createdBy}
                       disabled
                     />
                   </FormRow>
+                  <FormRow>
+                    <div className="grid gap-2 grid-cols-2">
+                      <TextInput
+                        required
+                        label="Startzeit"
+                        value={formState.startTime}
+                      />
+                      <TextInput
+                        required
+                        label="Endzeit"
+                        value={formState.endTime}
+                      />
+                    </div>
+                  </FormRow>
+
                   {selected.editable_labels.length > 0 && (
                     <FormRow>
                       <div className="grid gap-2 grid-cols-3">
-                        {selected.editable_labels.map((editable_labels) => (
-                          <TextInput required label={editable_labels} />
+                        {selected.editable_labels.map((editable_label) => (
+                          <TextInput
+                            required
+                            label={editable_label}
+                            key={editable_label}
+                          />
                         ))}
                       </div>
                     </FormRow>
@@ -153,11 +194,12 @@ const SilenceScheduled = ({ alert, size, variant }) => {
                   {Object.keys(selected.fixed_labels).length > 0 > 0 && (
                     <FormRow>
                       <div className="grid gap-2 grid-cols-3">
-                        {Object.keys(selected.fixed_labels).map((key) => (
+                        {Object.keys(selected.fixed_labels).map((label) => (
                           <TextInput
                             required
-                            label={key}
-                            value={selected.fixed_labels[key]}
+                            label={label}
+                            value={selected.fixed_labels[label]}
+                            key={label}
                             disabled
                           />
                         ))}
@@ -166,7 +208,16 @@ const SilenceScheduled = ({ alert, size, variant }) => {
                   )}
 
                   <FormRow>
-                    <Textarea label="Comment"> </Textarea>
+                    <Textarea
+                      label="Comment"
+                      value={formState.comment}
+                      onChange={(e) =>
+                        setFormState({
+                          ...formState,
+                          comment: e.target.value,
+                        })
+                      }
+                    ></Textarea>
                   </FormRow>
                 </Form>
               )}
