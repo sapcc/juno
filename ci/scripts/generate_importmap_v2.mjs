@@ -13,6 +13,8 @@ import pathLib from "path"
 import url from "url"
 import https from "https"
 // import { exit } from "node:process"
+const importRegex =
+  /import\s*(?:(\w+)|\{([\s\w,]*)\})\s*from\s*"([^"]+)"|import\s+(\w+)\s*;/g
 
 // ignore-externals allows us to bundle all libs into one final file.
 // For the case the CDN with the external libs is unreachable, this flag must be set to true.
@@ -80,28 +82,89 @@ const packageRegistry = {}
 // this timestamp will be added to the index.js files for own libs
 const timestamp = Date.now()
 
-for (let file of files) {
-  // load and parse package.json
-  let pkg = JSON.parse(fs.readFileSync(file))
+// this function finds all imports in js files
+// and returns an object with all imports and their version.
+function findPeerDependecies(pkgFile) {
+  let pkg = JSON.parse(fs.readFileSync(pkgFile))
 
-  const entryFile = pkg.module || pkg.main || "index.js"
-  const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/") + 1) || "/"
-  const path = file.replace(pathRegex, "$1")
-  const version = path.indexOf("@latest") > 0 ? "latest" : pkg.version
-
-  packageRegistry[pkg.name] = { ...packageRegistry[pkg.name] }
-
-  packageRegistry[pkg.name][version] = {
-    name: pkg.name,
-    version,
-    path,
-    entryFile: entryFile + "?" + timestamp,
-    entryDir,
-    peerDependencies: options.ignoreExternals ? false : pkg.peerDependencies,
-    importmapExtras: pkg.importmapExtras || {},
+  const jsFiles = glob.sync(`${pkgFile}/../**/*.js`, {
+    ignore: [`node_modules/**`],
+  })
+  // get all depencies from package.json
+  // this includes devDependencies, dependencies and peerDependencies
+  // we need to check all of them for import versions
+  const dependencies = {
+    ...pkg.devDependencies,
+    ...pkg.dependencies,
+    ...pkg.peerDependencies,
   }
+
+  let imports
+  for (let f of jsFiles) {
+    // const res = await parse(fs.readFileSync(f))
+
+    // find all imports using regex
+    const content = fs.readFileSync(f, "utf-8")
+
+    for (const match of content.matchAll(importRegex)) {
+      const [, , , importName] = match
+      if (importName.startsWith("./")) continue
+      let dependency
+      if (dependencies[importName]) {
+        let version =
+          dependencies[importName] === "*" ? "latest" : dependencies[importName]
+        dependency = `${importName}@${version}`
+      }
+
+      if (!dependency) {
+        // while importName contains a slash try to find the package without last part
+        let name = importName
+        let lastIndex = name.lastIndexOf("/")
+        while (lastIndex >= 0) {
+          name = name.slice(0, lastIndex)
+          if (dependencies[name]) {
+            dependency = `${name}@${dependencies[name]}${importName.slice(
+              lastIndex
+            )}`
+            break
+          }
+          lastIndex = name.lastIndexOf("/")
+        }
+      }
+      if (!dependency) continue
+
+      imports = imports || []
+      if (imports.indexOf(dependency) < 0) imports.push(dependency)
+    }
+  }
+  return imports
 }
 
+const buildRegistry = async () => {
+  for (let file of files) {
+    // load and parse package.json
+    let pkg = JSON.parse(fs.readFileSync(file))
+
+    const entryFile = pkg.module || pkg.main || "index.js"
+    const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/") + 1) || "/"
+    const path = file.replace(pathRegex, "$1")
+    const version = path.indexOf("@latest") > 0 ? "latest" : pkg.version
+
+    const peerDependencies = findPeerDependecies(file)
+    packageRegistry[pkg.name] = { ...packageRegistry[pkg.name] }
+
+    packageRegistry[pkg.name][version] = {
+      name: pkg.name,
+      version,
+      path,
+      entryFile: entryFile + "?" + timestamp,
+      entryDir,
+      peerDependencies,
+    }
+  }
+  console.log("packageRegistry", JSON.stringify(packageRegistry, null, 2))
+}
+await buildRegistry()
 // console.log(packageRegistry)
 // process.exit(0)
 
@@ -295,8 +358,10 @@ const start = async () => {
       importMap.imports[pkgImportName] = pkgPath + regPkg.entryFile
       importMap.imports[pkgImportName + "/"] = pkgPath + regPkg.entryDir
 
+      // ######################## TEST ########################
+
       // move to the next item unless peer dependencies exist
-      if (!regPkg.peerDependencies && !regPkg.importmapExtras) continue
+      if (!regPkg.peerDependencies) continue
 
       // create scope for current package path
       importMap.scopes[pkgPath] = { ...importMap.scopes[pkgPath] }
@@ -304,8 +369,8 @@ const start = async () => {
       // container ro collect all dependency importmaps
       const pkgImportMaps = []
 
-      for (let depName in regPkg.peerDependencies) {
-        let depVersion = regPkg.peerDependencies[depName]
+      for (let dep of regPkg.peerDependencies) {
+        let [depName, depVersion] = dep.split("@")
 
         // in peer dependencies could our libs contain a url as version.
         // in this case we try to extract the version from url.
@@ -316,6 +381,8 @@ const start = async () => {
         }
         // ownPackage = juno lib
         const ownPackage = findRegisteredPackage(depName, depVersion)
+
+        console.log("========================", depName, depVersion, ownPackage)
 
         if (ownPackage) {
           /* OWN PACKAGE -> add it to the package dependencies
@@ -348,33 +415,10 @@ const start = async () => {
             const map = await installPackage(`${depName}@${depVersion}`)
             // save importmap
             pkgImportMaps.push(map)
-
-            // Fix react-dom/client dependency
-            if (depName === "react-dom" && depVersion >= "18.2") {
-              console.log(
-                "\x1b[33m%s\x1b[0m",
-                `(!) ${name}@${version} FIX react-dom, add react-dom/client`
-              )
-              const map = await installPackage(`react-dom@${depVersion}/client`)
-              pkgImportMaps.push(map)
-            }
           } catch (error) {
             console.log(error)
             if (options.exitOnError) process.exit(1)
           }
-        }
-      }
-
-      if (regPkg.importmapExtras) {
-        for (let dep in regPkg.importmapExtras) {
-          const version = regPkg.importmapExtras[dep]
-          const [_, name, subPath] = dep.match(/^(.+)\/([^\/]+)$/)
-          console.log(
-            "\x1b[33m%s\x1b[0m",
-            `(!) ${regPkg.name}@${regPkg.version} install extra package: ${name}@${version}/${subPath}`
-          )
-          const map = await installPackage(`${name}@${version}/${subPath}`)
-          pkgImportMaps.push(map)
         }
       }
 
