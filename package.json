@@ -24,6 +24,7 @@
   "devDependencies": {
     "@jspm/generator": "1.1.7",
     "@rollup/plugin-node-resolve": "^15.0.1",
+    "es-module-lexer": "^1.4.1",
     "glob": "^8.1.0",
     "google-protobuf": "^3.14.0",
     "json2md": "^2.0.0"
