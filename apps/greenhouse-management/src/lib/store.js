@@ -9,21 +9,21 @@ export default (apiEndpoint) =>
       pluginConfig: {
         clusters: {
           label: "Clusters",
-          name: "clusters",
-          props: { embedded: true },
+          name: "greenhouse-cluster-admin",
+          props: { endpoint: apiEndpoint, embedded: true },
         },
-        plugins: {
-          label: "Plugins",
-          name: "plugins",
-          props: { embedded: true },
-        },
+        // plugins: {
+        //   label: "Plugins",
+        //   name: "greenhouse-plugin-admin",
+        //   props: { embedded: true },
+        // },
         teams: {
           label: "Teams",
           name: "greenhouse-team-admin",
           props: { endpoint: apiEndpoint, embedded: true },
         },
       },
-      pluginActive: "clusters", // name of the active plugin default
+      pluginActive: "greenhouse-cluster-admin", // name of the active plugin default
 
       actions: {
         setPluginActive: (pluginId) =>

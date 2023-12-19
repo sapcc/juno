@@ -26,6 +26,36 @@ describe("Modal", () => {
 	  expect(screen.getByRole("dialog")).toBeInTheDocument()
 	  expect(screen.getByRole("dialog")).toHaveTextContent("My Modal")
   })
+	
+	test("renders a title when a 'heading' prop is passed", async () => {
+		render(<PortalProvider><Modal heading="My Modal Heading" open /></PortalProvider>)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+		expect(screen.getByRole("dialog")).toHaveTextContent("My Modal Heading")
+	})
+	
+	test("renders an aria-labelledby attribute referencing the title if passed", async () => {
+		render(<PortalProvider><Modal title="My a11y Modal" open /></PortalProvider>)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+		const modalTitle = screen.getByText("My a11y Modal")
+		expect(modalTitle).toHaveAttribute("id")
+		const modalTitleId = modalTitle.getAttribute("id")
+		expect(screen.getByRole("dialog")).toHaveAttribute("aria-labelledby", modalTitleId)
+	})
+	
+	test("renders an aria-labelledby attribute referencing the heading if passed", async () => {
+		render(<PortalProvider><Modal title="My other a11y Modal" open /></PortalProvider>)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+		const modalTitle = screen.getByText("My other a11y Modal")
+		expect(modalTitle).toHaveAttribute("id")
+		const modalTitleId = modalTitle.getAttribute("id")
+		expect(screen.getByRole("dialog")).toHaveAttribute("aria-labelledby", modalTitleId)
+	})
+	
+	test("renders an arial-label attribute as passed", async () => {
+		render(<PortalProvider><Modal ariaLabel="Otherwise unnamed modal" open /></PortalProvider>)
+		expect(screen.getByRole("dialog")).toBeInTheDocument()
+		expect(screen.getByRole("dialog")).toHaveAttribute("aria-label", "Otherwise unnamed modal")
+	})
   
   test("renders children as passed", async () => {
 	  render(

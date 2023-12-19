@@ -3,6 +3,5 @@
   "widget-loader": ["1.1.1"],
   "requests": ["*"],
   "maintenance": ["*"],
-  "greenhouse-team-admin": ["*"],
-  "greenhouse-cluster-admin": ["*"]
+  "greenhouse-cluster-admin": ["1.0"]
 }

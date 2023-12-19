@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { Label } from "../Label/index"
 import { Icon } from "../Icon/index"
 import { FormHint } from "../FormHint/FormHint.component"
+import "./textinput.scss"
 
 const textinputstyles = `
 	jn-bg-theme-textinput
@@ -17,6 +18,9 @@ const textinputstyles = `
 	focus:jn-ring-2
 	focus:jn-ring-theme-focus
 	disabled:jn-opacity-50
+  autofill:jn-bg-theme-textinput-autofill
+  autofill:jn-text-theme-textinput-autofill
+  peer
 `
 
 const defaultborderstyles = `
@@ -46,6 +50,7 @@ const wrapperStyles = `
 `
 
 const labelStyles = `
+  peer-autofill:jn-text-theme-textinput-autofill-label
   jn-pointer-events-none
   jn-top-2
   jn-left-[0.9375rem]
@@ -192,19 +197,6 @@ export const TextInput = ({
           ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
           `} 
         >
-        { label && label.length ?
-            <Label 
-              text={label}
-              htmlFor={theId}
-              className={`${labelStyles}`}
-              disabled={disabled}
-              required={required}
-              floating
-              minimized={ placeholder || hasFocus || val && val.length ? true : false}
-            />
-          :
-            ""
-        }
         <input
           type={type}
           name={name}
@@ -231,6 +223,19 @@ export const TextInput = ({
           `}
           {...props}
         />
+        { label && label.length ?
+            <Label 
+              text={label}
+              htmlFor={theId}
+              className={`${labelStyles}`}
+              disabled={disabled}
+              required={required}
+              floating
+              minimized={ placeholder || hasFocus || val && val.length ? true : false}
+            />
+          :
+            ""
+        }
         <Icons disabled={disabled} />
       </span>
       { errortext && isNotEmptyString(errortext) ?

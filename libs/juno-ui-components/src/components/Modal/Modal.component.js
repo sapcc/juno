@@ -20,7 +20,7 @@ const modalcontainerstyles = `
 	jn-items-center
 	jn-bg-theme-modal-backdrop
 	jn-backdrop-blur-[2px]
-	jn-z-[999]
+	jn-z-[9990]
 `
 
 const modalstyles = `
@@ -78,6 +78,7 @@ By default, the modal will close (i.e. set its `open` state to false) once the u
 To make the modal less intrusive and effectively un-modal it, pass `closeOnBackdropClick`. This will close the modal when the user clicks the modal backdrop.
 */
 export const Modal = ({
+	ariaLabel,
 	cancelButtonIcon,
 	cancelButtonLabel,
 	confirmButtonIcon,
@@ -153,6 +154,8 @@ export const Modal = ({
 	
 	const modalRef = useRef(null)
 	
+	const theTitle = title || heading
+	
 	const modalTitleId = uniqueId()
 	
 	return (
@@ -170,8 +173,8 @@ export const Modal = ({
 									escapeDeactivates: () => {handleEsc()},
 								}}
 							>
-								<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" ref={modalRef} {...props} aria-labelledby={modalTitleId}>
-									<div className={`juno-modal-header ${headerstyles} ${ title || heading ? `jn-justify-between` : `jn-justify-end` }`}>
+								<div className={`juno-modal ${sizeClass(size)} ${modalstyles} ${className}`} role="dialog" ref={modalRef} {...props} aria-labelledby={theTitle && theTitle.length ? modalTitleId : null} aria-label={ariaLabel}>
+									<div className={`juno-modal-header ${headerstyles} ${ theTitle && theTitle.length ? `jn-justify-between` : `jn-justify-end` }`}>
 										{ title || heading ? <h1 className={`juno-modal-title ${titlestyles}`} id={modalTitleId}>{ title || heading }</h1> : "" }
 										{ isCloseable ? <Icon icon="close" onClick={ handleCancelClick }/> : "" }
 									</div>
@@ -205,12 +208,14 @@ export const Modal = ({
 }
 
 Modal.propTypes = {
-	/** The Modal size */
-	size: PropTypes.oneOf(["small", "large"]),
-	/** The title of the modal */
+	/** The aria-label of the modal. Use only if the modal does NOT have a `title` or `heading`.  */
+	ariaLabel: PropTypes.string,
+	/** The title of the modal. This will be rendering as the heading of the modal, and the modal's `arial-labelledby` attribute will reference the title/heading element. If the modal does not have `title` or `heading`, use `ariaLabel` to provide an accessible name for the modal. */
 	title: PropTypes.string,
 	/** Also the title of the modal, just for API flexibility. If both `title` and `heading` are passed, `title` will win. */
 	heading: PropTypes.string,
+	/** The Modal size */
+	size: PropTypes.oneOf(["small", "large"]),
 	/** Pass a label to render a confirm button and a Cancel button */
 	confirmButtonLabel: PropTypes.string,
 	/** Pass a label for the cancel button. Defaults to "Cancel" */
@@ -244,6 +249,7 @@ Modal.propTypes = {
 }
 
 Modal.defaultProps = {
+	ariaLabel: undefined,
 	size: "small",
 	title: "",
 	heading: "",

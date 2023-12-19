@@ -10,7 +10,7 @@ const panelClasses = (isOpen, isTransitioning, size) => {
       jn-ease-out
       jn-duration-300
       jn-inset-y-0
-      jn-z-[51]
+      jn-z-[9989]
       jn-grid
       jn-grid-rows-[auto_1fr]
       jn-bg-theme-panel

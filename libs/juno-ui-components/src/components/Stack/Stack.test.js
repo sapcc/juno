@@ -8,7 +8,7 @@ describe("Stack", () => {
 		render(<Stack data-testid="my-stack"></Stack>)
 		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
 		expect(screen.getByTestId("my-stack")).toHaveClass(
-      "md:jn-flex"
+      "jn-flex"
     )
 	})
 
@@ -16,7 +16,7 @@ describe("Stack", () => {
 		render(<Stack data-testid="my-stack"></Stack>)
 		expect(screen.getByTestId("my-stack")).toBeInTheDocument()
     expect(screen.getByTestId("my-stack")).toHaveClass(
-      "md:jn-flex-row",
+      "jn-flex-row",
       "jn-gap-0"
     )
 	})
