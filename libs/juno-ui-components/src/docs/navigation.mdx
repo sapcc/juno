@@ -1,0 +1,88 @@
+import { Meta, Controls, Story } from "@storybook/blocks"
+import { LinkTo, hrefTo } from "@storybook/addon-links"
+import { Default as TopNavigationDefaultStory } from "../components/TopNavigation/TopNavigation.stories" 
+import { Default as SideNavigationDefaultStory } from "../components/SideNavigation/SideNavigation.stories" 
+import { Default as TabNavigationDefaultStory } from "../components/TabNavigation/TabNavigation.stories" 
+
+<Meta title="Navigation/Navigations" />
+
+# Navigation
+
+The Juno Design System comes with a variety of navigational elements. They are designed for different purposes and roles, but use a consistent API.
+
+As a minimum, each item in a navigation needs a `label` to render.
+
+```
+<TopNavigation>
+  <TopNavigationItem label="Item 1" />
+  <TopNavigationItem label="Item 2" />
+  <TopNavigationItem label="Item 3" />
+</TopNavigation>
+```
+
+In order to set an item as the active item, it can be set via an `active` prop on an individual item…
+
+```
+<TopNavigation>
+  <TopNavigationItem label="Item 1" active />
+  <TopNavigationItem label="Item 2" />
+  <TopNavigationItem label="Item 3" />
+</TopNavigation>
+```
+
+… or by passing an `activeItem` prop on the navigation parent:
+
+```
+<TopNavigation activeItem="Item 1" >
+  <TopNavigationItem label="Item 1" />
+  <TopNavigationItem label="Item 2" />
+  <TopNavigationItem label="Item 3" />
+</TopNavigation>
+```
+
+When both are being passed, the `activeItem` prop on the parent will take precedence.
+
+
+If application logic requires the use of more technical keys to identify any navigational item, it can accept an additional `value` prop:
+
+```
+<TopNavigation>
+  <TopNavigationItem label="Item 1" value="itm-1" />
+  <TopNavigationItem label="Item 2" value="itm-2" />
+  <TopNavigationItem label="Item 3" value="itm-3" />
+</TopNavigation>
+```
+
+NOTE: When using `value` props on the individual items, and the active item needs to be set on the parent, ONLY the value of the respective item can be used to set the `activeItem` on the parent. Passing the `label` to set the `activeItem`on the parent will NOT work when using values on the children.
+
+```
+<TopNavigation activeItem="itm-1">
+  <TopNavigationItem label="Item 1" value="itm-1" />
+  <TopNavigationItem label="Item 2" value="itm-2" />
+  <TopNavigationItem label="Item 3" value="itm-3" />
+</TopNavigation>
+```
+
+
+## TopNavigation
+
+<Story of={TopNavigationDefaultStory} />
+
+A can only be used underneath an application's header, and above any other content elements. When used, it is the primary, top-level navigation. There can only ever be one `TopNavigation` in an application. 
+
+For applications with a complex navigational or hierarchical structure, a `SideNavigation` and/or `TabNavigation` can be used as a secondary navigation.
+
+
+## SideNavigation
+
+<Story of={SideNavigationDefaultStory} />
+
+A `SideNavigation` lives on the left of a page's or view's content. It can serve as a primary navigation when used alone, or as a secondary navigation when a `TopNavigation` is being used as well.
+
+## TabNavigation
+
+<Story of={TabNavigationDefaultStory} />
+
+A TabNavigation visually comes across as an array of tabs, but it serves predominantly navigational purposes. It can live as the top element in the content of a page or view, or it can be used at any place inside the content.
+
+Even though a TabNavigation looks and, to the user, works identically to `Tabs`, it works differently: `TabNavigation`, consistent with the other types of navigations, expects an `onActiveItemChange`-handler, telling the application what to do when the user interacts with the navigation. It does not automatically handle any content panels on a page or view. This is what `Tabs` is for.
