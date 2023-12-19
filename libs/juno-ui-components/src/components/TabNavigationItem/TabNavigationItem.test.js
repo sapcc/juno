@@ -44,7 +44,7 @@ describe("TabNavigationItem", () => {
     expect(screen.getByRole("link")).toHaveClass("juno-tabnavigation-item");
   })
   
-  test("renders an active side navigation item as passed", async () => {
+  test("renders an active navigation item as passed", async () => {
     render(<TabNavigationItem active />)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveClass("juno-tabnavigation-item")

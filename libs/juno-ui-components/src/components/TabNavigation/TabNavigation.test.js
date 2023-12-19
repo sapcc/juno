@@ -55,10 +55,25 @@ describe("TabNavigation", () => {
       expect(screen.getByRole("button", {name: "Item 2"})).toHaveAttribute("aria-disabled", "true")
   })
   
-  test("renders an active tab as passed", async () => {
+  test("renders an active tab as passed by label", async () => {
     render(<TabNavigation activeItem="Item 2">
       <TabNavigationItem label="Item 1" />
       <TabNavigationItem label="Item 2" />
+    </TabNavigation>)
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.queryAllByRole("button")).toHaveLength(2)
+    expect(screen.getByRole("button", {name: "Item 1"})).toBeInTheDocument()
+    expect(screen.getByRole("button", {name: "Item 1"})).toHaveAttribute("aria-selected", "false")
+    expect(screen.getByRole("button", {name: "Item 1"})).not.toHaveClass("juno-tabnavigation-item-active")
+    expect(screen.getByRole("button", {name: "Item 2"})).toBeInTheDocument()
+    expect(screen.getByRole("button", {name: "Item 2"})).toHaveAttribute("aria-selected", "true")
+    expect(screen.getByRole("button", {name: "Item 2"})).toHaveClass("juno-tabnavigation-item-active")
+  })
+  
+  test("renders an active tab as passed by value", async () => {
+    render(<TabNavigation activeItem="item-2">
+      <TabNavigationItem value="item-1" label="Item 1" />
+      <TabNavigationItem value="item-2" label="Item 2" />
     </TabNavigation>)
     expect(screen.getByRole("navigation")).toBeInTheDocument()
     expect(screen.queryAllByRole("button")).toHaveLength(2)

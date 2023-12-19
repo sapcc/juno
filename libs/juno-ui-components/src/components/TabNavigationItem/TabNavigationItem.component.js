@@ -48,6 +48,7 @@ export const TabNavigationItem = ({
   icon,
   label,
   onClick,
+  value,
   ...props
 }) => {
   
@@ -60,10 +61,13 @@ export const TabNavigationItem = ({
     tabStyle: tabStyle,
   } = navigationContext || {}
   
+  // Use the value (if passed) or the label as identifying key or the tab:
+  const theKey = value || label
+  
   // Lazily init depending on parent context or tab's own prop:
   const initialActive = () => {
     if (navigationContext) {
-      activeItem === label ? true : false
+      activeItem === theKey ? true : false
     } else {
       return active
     }
@@ -74,13 +78,13 @@ export const TabNavigationItem = ({
   // Set the parent state once if not set on the parent, but a tab navigation item has been set to active via its own prop:
   useEffect(() => {
     if (active && navigationContext && !activeItem) {
-      updateActiveItem(label)
+      updateActiveItem(theKey)
     }
   }, [])
   
   useEffect(() => {
     if (activeItem) {
-      activeItem === label ? setIsActive(true) : setIsActive(false)
+      activeItem === theKey ? setIsActive(true) : setIsActive(false)
     } else {
       setIsActive(active)
     }
@@ -88,7 +92,7 @@ export const TabNavigationItem = ({
 
   const handleItemClick = (event) => {
     if (!isActive) {
-      handleActiveItemChange(label)
+      handleActiveItemChange(theKey)
     }
     onClick && onClick(event)
   }
@@ -114,7 +118,7 @@ export const TabNavigationItem = ({
           {...props}
         >
           { icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : null }
-          <span>{ label }</span>
+          <span>{ label || theKey }</span>
         </a>
       :
         <button className={`
@@ -134,7 +138,7 @@ export const TabNavigationItem = ({
           {...props}
         >
           { icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : null }
-          <span>{ label }</span>
+          <span>{ label || theKey }</span>
         </button>
     }
       
@@ -157,6 +161,8 @@ TabNavigationItem.propTypes = {
   label: PropTypes.string,
   /** Pass a custom handler to execute when the tab is clicked */
   onClick: PropTypes.func,
+  /** An optional technical identifier fort the tab. If not passed, the label will be used to identify the tab. NOTE: If value is passed, the value of the active tab MUST be used when setting the activeItem prop on the parent TabNavigation.*/ 
+  value: PropTypes.string,
 }
 
 TabNavigationItem.defaultProps = {
@@ -167,4 +173,5 @@ TabNavigationItem.defaultProps = {
   icon: undefined,
   label: "",
   onClick: undefined,
+  value: "",
 }
