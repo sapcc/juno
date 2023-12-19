@@ -73,6 +73,23 @@ describe('TopNavigation', () => {
     expect(screen.getByRole("button", {name: "Item 2"})).toHaveClass("juno-topnavigation-item-active")
   })
   
+  test("renders an active navigaiton item as passed by value", async () => {
+    render(
+      <TopNavigation activeItem="i-2">
+        <TopNavigationItem label="Item 1" value="i-1" />
+        <TopNavigationItem label="Item 2" value="i-2" />
+      </TopNavigation>
+    )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.queryAllByRole("button")).toHaveLength(2)
+    expect(screen.getByRole("button", {name: "Item 1"})).toBeInTheDocument()
+    expect(screen.getByRole("button", {name: "Item 1"})).toHaveAttribute("aria-selected", "false")
+    expect(screen.getByRole("button", {name: "Item 1"})).not.toHaveClass("juno-topnavigation-item-active")
+    expect(screen.getByRole("button", {name: "Item 2"})).toBeInTheDocument()
+    expect(screen.getByRole("button", {name: "Item 2"})).toHaveAttribute("aria-selected", "true")
+    expect(screen.getByRole("button", {name: "Item 2"})).toHaveClass("juno-topnavigation-item-active")
+  })
+  
   test("renders the active item as passed to the parent if conflicting with active prop passed to child item", async () => {
     render(
       <TopNavigation activeItem="Item 2">

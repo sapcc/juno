@@ -29,12 +29,13 @@ An individual item of a top level navigation. Place inside TopNavigation.
 export const TopNavigationItem = ({
   active,
   ariaLabel,
+  className,
   disabled,
   href,
   icon,
   label,
   onClick,
-  className,
+  value,
   ...props
 }) => {
   
@@ -47,9 +48,11 @@ export const TopNavigationItem = ({
     disabled: groupDisabled,
   } = navigationContext || {}
   
+  const theKey = value || label
+  
   const initialActive = () => {
     if (navigationContext) {
-      activeItem === label ? true : false
+      activeItem === theKey ? true : false
     } else {
       return active
     }
@@ -60,14 +63,14 @@ export const TopNavigationItem = ({
   // Set the parent state once if not set on the parent, but a navigation item has been set to active via its own prop:
   useEffect(() => {
     if (active && navigationContext && !activeItem) {
-      updateActiveItem(label)
+      updateActiveItem(theKey)
     }
   }, [])
   
   // Update the parent state when in a navigation context, otherwise update item state directly:
   useEffect(() => {
     if (activeItem) {
-      activeItem === label ? setIsActive(true) : setIsActive(false)
+      activeItem === theKey ? setIsActive(true) : setIsActive(false)
     } else {
       setIsActive(active)
     }
@@ -76,7 +79,7 @@ export const TopNavigationItem = ({
   
   const handleItemClick = (event) => {
     if (!isActive) {
-      handleActiveItemChange(label)
+      handleActiveItemChange(theKey)
     }
     onClick && onClick(event)
   }
@@ -103,7 +106,7 @@ export const TopNavigationItem = ({
             {...props}
           >
             { icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : null }
-            <span>{label}</span>
+            <span>{ label || theKey }</span>
           </a>
         :
           <button
@@ -124,55 +127,12 @@ export const TopNavigationItem = ({
             {...props}
           >
             { icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : null }
-            <span>{label}</span>
+            <span>{ label || theKey }</span>
           </button>
       }
     </ul>
     
   )
-  
-  // const icn = icon ? <Icon icon={icon} size="24" color="jn-text-theme-default" className={ label && label.length ? "jn-mr-1" : "" } /> : null
-  // 
-  // const content = label || children
-  // 
-  // const handleButtonClick = (event) => {
-  //   onClick && onClick(event)
-  // }
-  // 
-  // const anchor = (
-  //   <a className={`juno-topnavigation-item ${ active ? "juno-topnavigation-item-active" : ""} ${className}`} 
-  //     href={href} 
-  //     aria-label={ariaLabel}
-  //     {...props}
-  //   >
-  //     { icn }
-  //     { content }
-  //   </a>
-  // )
-  // 
-  // const button = (
-  //   <button 
-  //     className={`juno-topnavigation-item ${ active ? "juno-topnavigation-item-active" : ""} ${className}`} 
-  //     onClick={handleButtonClick}
-  //     aria-label={ariaLabel}
-  //     {...props}
-  //   >
-  //     { icn }
-  //     { content }
-  //   </button>
-  // )
-  // 
-  // const plain = (
-  //   <div className={`juno-topnavigation-item ${ active ? "juno-topnavigation-item-active" : ""} ${className}`}
-  //     aria-label={ariaLabel}
-  //     {...props}
-  //   >
-  //     { icn }
-  //     { label || children }
-  //   </div>
-  // )
-  // 
-  // return href ? anchor : onClick ? button : plain
 }
 
 TopNavigationItem.propTypes = {
@@ -190,8 +150,10 @@ TopNavigationItem.propTypes = {
   className: PropTypes.string,
   /** The link the item should point to. Will render the item as an anchor if passed */
   href: PropTypes.string,
-  /** A handler to execute once the item is clicked. Will render the item as a button element if passed */
+  /** A handler to execute once the navigation item is clicked. Will render the item as a button element if passed */
   onClick: PropTypes.func,
+  /** An optional technical identifier fort the tab. If not passed, the label will be used to identify the tab. NOTE: If value is passed, the value of the active tab MUST be used when setting the activeItem prop on the parent TabNavigation.*/ 
+  value: PropTypes.string,
 }
 
 TopNavigationItem.defaultProps = {
@@ -203,4 +165,5 @@ TopNavigationItem.defaultProps = {
   className: "",
   href: "",
   onClick: undefined,
+  value: "",
 }

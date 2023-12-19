@@ -13,7 +13,7 @@ export const NavigationContext = createContext()
 
 /**
 A generic horizontal top level navigation component. To be placed below the application header but above application content.
-Place TopNavigationItem elements as children.
+Place `TopNavigationItem` elements as children.
 */
 export const TopNavigation = ({
   activeItem,
