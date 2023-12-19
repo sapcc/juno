@@ -80,7 +80,7 @@ TabNavigation.propTypes = {
   disabled: PropTypes.bool,
   /** A handler to execute when the active tab changes */
   onActiveItemChange: PropTypes.func,
-  /** The stylistic variant of the Tabs: Use `main` at the top inside a `ContentXYZ`, for tabs inside a `ContentXYZ` use "content". `<TabNavigation tabStyle="main">` will have no darkened border on the bottom of inactive tabs, `tabStyle="content"` will.*/
+  /** The stylistic variant of the Tabs: Use `main` as the first child in an `Appshell` (when manually scaffolding, as first child of `juno-content-container`). For tabs inside the page content use "content". `<TabNavigation tabStyle="main">` will have no darkened border on the bottom of inactive tabs, `tabStyle="content"` will.*/
   tabStyle: PropTypes.oneOf(["main", "content"]),
 }
 
