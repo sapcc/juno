@@ -35,13 +35,14 @@ A SideNavigation item. To be used inside SideNavigation.
 */
 export const SideNavigationItem = ({
   active,
+  className,
   disabled,
   icon,
   label,
   ariaLabel,
   href,
   onClick,
-  className,
+  value,
   ...props
 }) => {
   
@@ -54,9 +55,11 @@ export const SideNavigationItem = ({
     disabled: groupDisabled,
   } = navigationContext || {}
   
+  const theKey = value || label
+  
   const initialActive = () => {
     if (navigationContext) {
-      activeItem === label ? true : false
+      activeItem === theKey ? true : false
     } else {
       return active
     }
@@ -67,14 +70,14 @@ export const SideNavigationItem = ({
   // Set the parent state once if not set on the parent, but a navigation item has been set to active via its own prop:
   useEffect(() => {
     if (active && navigationContext && !activeItem) {
-      updateActiveItem(label)
+      updateActiveItem(theKey)
     }
   }, [])
   
   // Update the parent state when in a navigation context, otherwise update item state directly:
   useEffect(() => {
     if (activeItem) {
-      activeItem === label ? setIsActive(true) : setIsActive(false)
+      activeItem === theKey ? setIsActive(true) : setIsActive(false)
     } else {
       setIsActive(active)
     }
@@ -83,7 +86,7 @@ export const SideNavigationItem = ({
   
   const handleItemClick = (event) => {
     if (!isActive) {
-      handleActiveItemChange(label)
+      handleActiveItemChange(theKey)
     }
     onClick && onClick(event)
   }
@@ -108,7 +111,7 @@ export const SideNavigationItem = ({
             {...props}
           >
             { icon ? <Icon icon={icon} size="18" className={ label && label.length ? "jn-mr-2" : "" } /> : "" }
-            <span>{label}</span>
+            <span>{ label || theKey }</span>
           </a>
         :
           <button
@@ -129,7 +132,7 @@ export const SideNavigationItem = ({
             {...props}
           >
             { icon ? <Icon icon={icon} size="18" className={ label && label.length ? "jn-mr-2" : "" } /> : "" }
-            <span>{label}</span>
+            <span>{ label || theKey }</span>
           </button>
       }
     </li>
@@ -154,6 +157,8 @@ SideNavigationItem.propTypes = {
   href: PropTypes.string,
   /** A handler to execute once the item is clicked. Will render the item as a button element if passed */
   onClick: PropTypes.func,
+  /** An optional technical identifier fort the tab. If not passed, the label will be used to identify the tab. NOTE: If value is passed, the value of the active tab MUST be used when setting the activeItem prop on the parent SideNavigation.*/ 
+  value: PropTypes.string,
 }
 
 SideNavigationItem.defaultProps = {
@@ -165,4 +170,5 @@ SideNavigationItem.defaultProps = {
   ariaLabel: "",
   href: "",
   onClick: undefined,
+  value: "",
 }

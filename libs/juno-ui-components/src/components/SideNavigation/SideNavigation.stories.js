@@ -35,11 +35,36 @@ Default.args = {
 }
 
 export const Disabled = Template.bind({})
+Disabled.parameters = {
+  docs: {
+    description: {
+      story: "All navigation items can be disabled by passing `disabled` to the `TabNavigation`."
+    }
+  }
+},
 Disabled.args = {
   disabled: true,
   children: [
     <SideNavigationItem key="item-1" label="Item 1"/>,
     <SideNavigationItem key="item-2" label="Item 2"/>,
     <SideNavigationItem key="item-3" label="Active Item" active/>
+  ]
+}
+
+export const WithValues = Template.bind({})
+WithValues.parameters = {
+  docs: {
+    description: {
+      story: "When needed, navigation items can take a `value` prop as a technical identifier that is different form the human-readable `label`. When using `value` on the navigation items, the respective `value`must be used when setting the `activeItem` prop on the SideNavigation. Alternatively, an individual `SideNavigationItem` can be set to `active`."
+    }
+  }
+}
+WithValues.args = {
+  activeItem: "i-3",
+  children: [
+    <SideNavigationItem label="Item 1" key="item-1" value="i-1"/>,
+    <SideNavigationItem label="Item 2" key="item-2" value="i-2"/>,
+    <SideNavigationItem label="Item 3" key="item-3" value="i-3"/>,
+    <SideNavigationItem label="Item 4" key="item-4" value="i-4"/>
   ]
 }
