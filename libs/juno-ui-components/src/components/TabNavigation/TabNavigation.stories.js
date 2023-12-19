@@ -68,6 +68,6 @@ WithValues.args = {
     <TabNavigationItem label="Item 1" key="i-1" value="item-1"></TabNavigationItem>,
     <TabNavigationItem label="Item 2" key="i-2" value="item-2"></TabNavigationItem>,
     <TabNavigationItem label="Item 3" key="i-3" value="item-3"></TabNavigationItem>,
-    <TabNavigationItem label="Item 4" key="i-4" value="item-4" active></TabNavigationItem>
+    <TabNavigationItem label="Item 4" key="i-4" value="item-4"></TabNavigationItem>
   ]
 }
