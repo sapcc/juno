@@ -113,9 +113,9 @@ WithSideNavigation.parameters = {
 }
 WithSideNavigation.args = {
   sideNavigation: <SideNavigation>
-                    <SideNavigationItem active>Home</SideNavigationItem>
-                    <SideNavigationItem>Item 1</SideNavigationItem>
-                    <SideNavigationItem>Item 2</SideNavigationItem>
+                    <SideNavigationItem active label="Item 1"/>
+                    <SideNavigationItem label="Item 2" />
+                    <SideNavigationItem label="Item 3" />
                   </SideNavigation>,
   children: [
       <ContentHeading key="1">My Page</ContentHeading>,
