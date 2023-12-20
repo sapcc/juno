@@ -7,8 +7,19 @@ import { knownIcons } from "../Icon/Icon.component.js"
 const itemStyles = `
   jn-flex
   jn-items-center
+  jn-grow-0
+  jn-justify-start
   jn-text-theme-default
   jn-font-bold
+  jn-text-base
+  jn-leading-6
+  jn-h-8
+  jn-py-1
+  jn-px-[.3125rem]
+  jn-text-theme-default
+  jn-bg-theme-topnavigation-item
+  active:jn-text-theme-high
+  active:jn-bg-theme-topnavigation-item-active
   focus-visible:jn-outline-none
   focus-visible:jn-ring-2
   focus-visible:jn-ring-theme-focus
@@ -18,9 +29,14 @@ const disabledItemStyles = `
   jn-opacity-50
   jn-cursor-not-allowed
 `
+const nonActiveItemStyles = `
+  hover:jn-text-theme-high
+  hover:jn-bg-transparent
+`
 
 const activeItemStyles = `
   jn-text-theme-high
+  jn-bg-theme-topnavigation-item-active
 `
 
 /**
@@ -95,7 +111,7 @@ export const TopNavigationItem = ({
               juno-topnavigation-item
               ${itemStyles}
               ${ isActive ? "juno-topnavigation-item-active" : ""}
-              ${ isActive ? activeItemStyles : ""}
+              ${ isActive ? activeItemStyles : nonActiveItemStyles }
               ${ disabled || groupDisabled ? disabledItemStyles : ""}
               ${ disabled || groupDisabled ? "juno-topnavigation-item-disabled" : ""}
               ${ className }
@@ -115,7 +131,7 @@ export const TopNavigationItem = ({
               juno-topnavigation-item
               ${itemStyles}
               ${ isActive ? "juno-topnavigation-item-active" : ""}
-              ${ isActive ? activeItemStyles : ""}
+              ${ isActive ? activeItemStyles : nonActiveItemStyles }
               ${ disabled || groupDisabled ? disabledItemStyles : ""}
               ${ disabled || groupDisabled ? "juno-topnavigation-item-disabled" : ""}
               ${ className }

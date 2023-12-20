@@ -216,6 +216,8 @@ module.exports = {
           "filter-pill-key": withOpacity("--color-filter-pill-key-bg"),
           "modal-backdrop": "var(--color-modal-backdrop-bg)",
           "sidenavigation-item-active": "var(--color-sidenavigation-item-active-bg)",
+          "topnavigation-item": "var(--color-topnavigation-item-bg)",
+          "topnavigation-item-active": "var(--color-topnavigation-item-active-bg)",
         },
       },
       backgroundImage: {
