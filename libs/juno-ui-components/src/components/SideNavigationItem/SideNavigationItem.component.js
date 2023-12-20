@@ -168,7 +168,7 @@ SideNavigationItem.propTypes = {
 
 SideNavigationItem.defaultProps = {
   active: false,
-  ariaLabel: "",
+  ariaLabel: undefined,
   children: null,
   disabled: false,
   icon: null,

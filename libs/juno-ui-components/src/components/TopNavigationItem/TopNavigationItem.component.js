@@ -161,7 +161,7 @@ TopNavigationItem.propTypes = {
 
 TopNavigationItem.defaultProps = {
   active: false,
-  ariaLabel: "",
+  ariaLabel: undefined,
   children: null,
   disabled: false,
   icon: null,

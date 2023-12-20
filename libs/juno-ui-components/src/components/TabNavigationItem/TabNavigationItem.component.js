@@ -175,7 +175,7 @@ TabNavigationItem.propTypes = {
 
 TabNavigationItem.defaultProps = {
   active: false,
-  ariaLabel: "",
+  ariaLabel: undefined,
   children: null,
   className: "",
   disabled: false,
