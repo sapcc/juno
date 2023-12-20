@@ -9,6 +9,7 @@ import {
   Select,
   SelectOption,
   Message,
+  FormRow,
 } from "juno-ui-components"
 import {
   useAuthData,
@@ -124,7 +125,9 @@ const SilenceNew = ({ alert, size, variant }) => {
     }
 
     // submit silence
-    post(`${apiEndpoint}/silences`, {
+    // post(`${apiEndpoint}/silences`, {
+
+    post(`localhost/silences`, {
       body: JSON.stringify(newSilence),
     })
       .then((data) => {
@@ -216,45 +219,50 @@ const SilenceNew = ({ alert, size, variant }) => {
               />
 
               <Form className="mt-6">
-                <TextInput
-                  className="mb-4"
-                  required
-                  label="Silenced by"
-                  value={formState.createdBy}
-                  disabled
-                />
-                <Textarea
-                  className="mb-3 h-20"
-                  label="Description"
-                  value={formState.comment}
-                  onChange={(e) =>
-                    onInputChanged({ key: "comment", value: e.target.value })
-                  }
-                  helptext={
-                    showValidation["comment"] &&
-                    errorHelpText(showValidation["comment"])
-                  }
-                  required
-                />
-                <Select
-                  required
-                  label="Duration"
-                  value={formState.duration}
-                  onChange={(value) =>
-                    onInputChanged({
-                      key: "duration",
-                      value,
-                    })
-                  }
-                >
-                  {durationOptions?.map((option) => (
-                    <SelectOption
-                      key={option.value}
-                      label={option.label}
-                      value={option.value}
-                    />
-                  ))}
-                </Select>
+                <FormRow>
+                  <TextInput
+                    required
+                    label="Silenced by"
+                    value={formState.createdBy}
+                    disabled
+                  />
+                </FormRow>
+                <FormRow>
+                  <Textarea
+                    className="h-20"
+                    label="Description"
+                    value={formState.comment}
+                    onChange={(e) =>
+                      onInputChanged({ key: "comment", value: e.target.value })
+                    }
+                    errortext={
+                      showValidation["comment"] &&
+                      errorHelpText(showValidation["comment"])
+                    }
+                    required
+                  />
+                </FormRow>
+                <FormRow>
+                  <Select
+                    required
+                    label="Duration"
+                    value={formState.duration}
+                    onChange={(value) =>
+                      onInputChanged({
+                        key: "duration",
+                        value,
+                      })
+                    }
+                  >
+                    {durationOptions?.map((option) => (
+                      <SelectOption
+                        key={option.value}
+                        label={option.label}
+                        value={option.value}
+                      />
+                    ))}
+                  </Select>
+                </FormRow>
               </Form>
             </>
           )}
