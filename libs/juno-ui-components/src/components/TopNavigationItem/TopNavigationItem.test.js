@@ -25,6 +25,12 @@ describe('TopNavigationItem', () => {
     expect(screen.getByRole("button")).toHaveTextContent("My Label");
   })
   
+  test("renders children as passed", async () => {
+    render(<TopNavigationItem>The Item Is A Child</TopNavigationItem>)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveTextContent("The Item Is A Child")
+  })
+  
   test("renders a disabled item as passed", async () => {
     render(<TopNavigationItem disabled />)
     expect(screen.getByRole("button")).toBeInTheDocument()

@@ -71,3 +71,21 @@ WithValues.args = {
     <TabNavigationItem label="Item 4" key="i-4" value="item-4"></TabNavigationItem>
   ]
 }
+
+export const WithChildren = Template.bind({})
+WithChildren.parameters = {
+  docs: {
+    description: {
+      story: "Alternatively, navigation items can render children passed to them. In order to get a working, self-managing navigation, each item must have a `value` or `label` prop."
+    }
+  }
+}
+WithChildren.args = {
+  activeItem: "item-1",
+  children: [
+    <TabNavigationItem key="i-1" value="item-1">Item 1</TabNavigationItem>,
+    <TabNavigationItem key="i-2" value="item-2">Item 2</TabNavigationItem>,
+    <TabNavigationItem key="i-3" value="item-3">Item 3</TabNavigationItem>,
+    <TabNavigationItem key="i-4" value="item-4">Item 4</TabNavigationItem>
+  ]
+}

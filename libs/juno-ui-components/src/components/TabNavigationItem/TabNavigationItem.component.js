@@ -42,6 +42,7 @@ const activeItemStyles = `
 /** An individual Tab Navigation Item. Use wrapped in a `<TabNavigation>` parent component. */
 export const TabNavigationItem = ({
   active,
+  children,
   className,
   disabled,
   href,
@@ -118,7 +119,7 @@ export const TabNavigationItem = ({
           {...props}
         >
           { icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : null }
-          <span>{ label || theKey }</span>
+          <span>{ children || label || theKey }</span>
         </a>
       :
         <button className={`
@@ -138,7 +139,7 @@ export const TabNavigationItem = ({
           {...props}
         >
           { icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : null }
-          <span>{ label || theKey }</span>
+          <span>{ children || label || theKey }</span>
         </button>
     }
       
@@ -149,6 +150,8 @@ export const TabNavigationItem = ({
 TabNavigationItem.propTypes = {
   /** Whether the tab navigation item is active */
   active: PropTypes.bool,
+  /** The children to render. In order to make the navigation work, you also need to pass a `value` or `label` prop, or both. */
+  children: PropTypes.node,
   /** Pass a custom className */
   className: PropTypes.string,
   /** Whether the tab navigation item is disabled */
@@ -167,6 +170,7 @@ TabNavigationItem.propTypes = {
 
 TabNavigationItem.defaultProps = {
   active: false,
+  children: null,
   className: "",
   disabled: false,
   href: undefined,

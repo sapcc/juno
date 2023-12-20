@@ -35,6 +35,7 @@ A SideNavigation item. To be used inside SideNavigation.
 */
 export const SideNavigationItem = ({
   active,
+  children,
   className,
   disabled,
   icon,
@@ -111,7 +112,7 @@ export const SideNavigationItem = ({
             {...props}
           >
             { icon ? <Icon icon={icon} size="18" className={ label && label.length ? "jn-mr-2" : "" } /> : "" }
-            <span>{ label || theKey }</span>
+            <span>{ children || label || theKey }</span>
           </a>
         :
           <button
@@ -132,7 +133,7 @@ export const SideNavigationItem = ({
             {...props}
           >
             { icon ? <Icon icon={icon} size="18" className={ label && label.length ? "jn-mr-2" : "" } /> : "" }
-            <span>{ label || theKey }</span>
+            <span>{ children || label || theKey }</span>
           </button>
       }
     </li>
@@ -143,6 +144,8 @@ export const SideNavigationItem = ({
 SideNavigationItem.propTypes = {
   /** Whether the item is the currently active item */
   active: PropTypes.bool,
+  /** The children to render. In order to make the navigation work, you also need to pass a `value` or `label` prop, or both. */
+  children: PropTypes.node,
   /** Whether the item is disabled */
   disabled: PropTypes.bool,
   /** pass an icon name */
@@ -163,6 +166,7 @@ SideNavigationItem.propTypes = {
 
 SideNavigationItem.defaultProps = {
   active: false,
+  children: null,
   disabled: false,
   icon: null,
   label: "",

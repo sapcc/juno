@@ -29,6 +29,7 @@ An individual item of a top level navigation. Place inside TopNavigation.
 export const TopNavigationItem = ({
   active,
   ariaLabel,
+  children,
   className,
   disabled,
   href,
@@ -106,7 +107,7 @@ export const TopNavigationItem = ({
             {...props}
           >
             { icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : null }
-            <span>{ label || theKey }</span>
+            <span>{ children || label || theKey }</span>
           </a>
         :
           <button
@@ -127,7 +128,7 @@ export const TopNavigationItem = ({
             {...props}
           >
             { icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : null }
-            <span>{ label || theKey }</span>
+            <span>{ children || label || theKey }</span>
           </button>
       }
     </ul>
@@ -140,6 +141,8 @@ TopNavigationItem.propTypes = {
   active: PropTypes.bool,
   /** The aria label of the item */
   ariaLabel: PropTypes.string,
+  /** The children to render. In order to make the navigation work, you also need to pass a `value` or `label` prop, or both. */
+  children: PropTypes.node,
   /** Whether the item is disabled */
   disabled: PropTypes.bool,
   /** pass an icon name */
@@ -159,6 +162,7 @@ TopNavigationItem.propTypes = {
 TopNavigationItem.defaultProps = {
   active: false,
   ariaLabel: "",
+  children: null,
   disabled: false,
   icon: null,
   label: "",

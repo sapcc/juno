@@ -51,3 +51,10 @@ export const AsLink = {
     href: "https://www.sap.com",
   }
 }
+
+export const WithChildren = {
+  args: {
+    value: "itm-1",
+    children: "Item 1"
+  }
+}

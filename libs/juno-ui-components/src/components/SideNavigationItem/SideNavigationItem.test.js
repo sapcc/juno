@@ -25,6 +25,12 @@ describe('SideNavigationItem', () => {
     expect(screen.getByRole("button")).toHaveTextContent("My Label");
   })
   
+  test("renders childrne as passed", async () => {
+    render(<SideNavigationItem>The Item Is A Child</SideNavigationItem>)
+    expect(screen.getByRole("button")).toBeInTheDocument();
+    expect(screen.getByRole("button")).toHaveTextContent("The Item Is A Child");
+  })
+  
   test("renders a disabled item as passed", async () => {
     render(<SideNavigationItem disabled />)
     expect(screen.getByRole("button")).toBeInTheDocument()

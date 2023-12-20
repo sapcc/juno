@@ -25,6 +25,12 @@ describe("TabNavigationItem", () => {
     expect(screen.getByTestId("tab-nav-item")).toHaveTextContent("Item")
   })
   
+  test("renders children as passed", async () => {
+    render(<TabNavigationItem>The Item Is A Child</TabNavigationItem>)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveTextContent("The Item Is A Child")
+  })
+  
   test("renders a disabled tab navigation item as passed", async () => {
     render(<TabNavigationItem data-testid={"tab-nav-item"} disabled />)
     expect(screen.getByTestId("tab-nav-item")).toBeInTheDocument()

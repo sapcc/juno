@@ -54,4 +54,10 @@ AsLink.args = {
   href: "#"
 }
 
+export const WithChildren = Template.bind({})
+WithChildren.args = {
+  value: "itm-1",
+  children: "Item 1"
+}
+
 

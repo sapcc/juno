@@ -22,9 +22,9 @@ describe("TabNavigation", () => {
   test("renders children as passed", async () => {
     render(
       <TabNavigation>
-        <TabNavigationItem label="Item 1" />
-        <TabNavigationItem label="Item 2" />
-        <TabNavigationItem label="Item 3" />
+        <TabNavigationItem>Item 1</TabNavigationItem>
+        <TabNavigationItem>Item 2</TabNavigationItem>
+        <TabNavigationItem>Item 3</TabNavigationItem>
       </TabNavigation>)
       expect(screen.getByRole("navigation")).toBeInTheDocument()
       expect(screen.queryAllByRole("button")).toHaveLength(3)
