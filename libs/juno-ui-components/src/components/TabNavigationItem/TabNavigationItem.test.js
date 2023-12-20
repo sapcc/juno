@@ -31,6 +31,12 @@ describe("TabNavigationItem", () => {
     expect(screen.getByRole("button")).toHaveTextContent("The Item Is A Child")
   })
   
+  test("renders an aria-label as passed", async () => {
+    render(<TabNavigationItem ariaLabel="My ARIA-Label" />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute("aria-label", "My ARIA-Label")
+  })
+  
   test("renders a disabled tab navigation item as passed", async () => {
     render(<TabNavigationItem data-testid={"tab-nav-item"} disabled />)
     expect(screen.getByTestId("tab-nav-item")).toBeInTheDocument()

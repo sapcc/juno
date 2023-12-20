@@ -42,6 +42,7 @@ const activeItemStyles = `
 /** An individual Tab Navigation Item. Use wrapped in a `<TabNavigation>` parent component. */
 export const TabNavigationItem = ({
   active,
+  ariaLabel,
   children,
   className,
   disabled,
@@ -114,6 +115,7 @@ export const TabNavigationItem = ({
             ${ className }
           `}
           href={ href }
+          aria-label={ariaLabel}
           aria-selected={isActive}
           aria-disabled={ disabled || groupDisabled ? true : false}
           {...props}
@@ -133,6 +135,7 @@ export const TabNavigationItem = ({
             ${ className } 
           `}
           onClick={handleItemClick}
+          aria-label={ariaLabel}
           aria-selected={isActive}
           disabled={disabled || groupDisabled ? true : false }
           aria-disabled={ disabled || groupDisabled ? true : false}
@@ -150,6 +153,8 @@ export const TabNavigationItem = ({
 TabNavigationItem.propTypes = {
   /** Whether the tab navigation item is active */
   active: PropTypes.bool,
+  /** The aria label of the item */
+  ariaLabel: PropTypes.string,
   /** The children to render. In order to make the navigation work, you also need to pass a `value` or `label` prop, or both. */
   children: PropTypes.node,
   /** Pass a custom className */
@@ -170,6 +175,7 @@ TabNavigationItem.propTypes = {
 
 TabNavigationItem.defaultProps = {
   active: false,
+  ariaLabel: "",
   children: null,
   className: "",
   disabled: false,

@@ -25,10 +25,16 @@ describe('SideNavigationItem', () => {
     expect(screen.getByRole("button")).toHaveTextContent("My Label");
   })
   
-  test("renders childrne as passed", async () => {
+  test("renders children as passed", async () => {
     render(<SideNavigationItem>The Item Is A Child</SideNavigationItem>)
     expect(screen.getByRole("button")).toBeInTheDocument();
     expect(screen.getByRole("button")).toHaveTextContent("The Item Is A Child");
+  })
+  
+  test("renders an aria-label as passed", async () => {
+    render(<SideNavigationItem ariaLabel="My ARIA-Label" />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute("aria-label", "My ARIA-Label")
   })
   
   test("renders a disabled item as passed", async () => {

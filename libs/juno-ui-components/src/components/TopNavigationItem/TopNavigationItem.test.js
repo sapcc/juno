@@ -31,6 +31,12 @@ describe('TopNavigationItem', () => {
     expect(screen.getByRole("button")).toHaveTextContent("The Item Is A Child")
   })
   
+  test("redners an aria-label attribute as passed", async () => {
+    render(<TopNavigationItem ariaLabel="My ARIA-Label" />)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveAttribute("aria-label", "My ARIA-Label")
+  })
+  
   test("renders a disabled item as passed", async () => {
     render(<TopNavigationItem disabled />)
     expect(screen.getByRole("button")).toBeInTheDocument()

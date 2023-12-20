@@ -35,12 +35,12 @@ A SideNavigation item. To be used inside SideNavigation.
 */
 export const SideNavigationItem = ({
   active,
+  ariaLabel,
   children,
   className,
   disabled,
   icon,
   label,
-  ariaLabel,
   href,
   onClick,
   value,
@@ -144,6 +144,8 @@ export const SideNavigationItem = ({
 SideNavigationItem.propTypes = {
   /** Whether the item is the currently active item */
   active: PropTypes.bool,
+  /** The aria label of the item */
+  ariaLabel: PropTypes.string,
   /** The children to render. In order to make the navigation work, you also need to pass a `value` or `label` prop, or both. */
   children: PropTypes.node,
   /** Whether the item is disabled */
@@ -166,6 +168,7 @@ SideNavigationItem.propTypes = {
 
 SideNavigationItem.defaultProps = {
   active: false,
+  ariaLabel: "",
   children: null,
   disabled: false,
   icon: null,
