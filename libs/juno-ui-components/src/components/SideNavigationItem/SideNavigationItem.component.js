@@ -109,6 +109,7 @@ export const SideNavigationItem = ({
             aria-label={ariaLabel}
             aria-disabled={ disabled || groupDisabled ? true : false}
             aria-selected={isActive}
+            onClick={handleItemClick}
             {...props}
           >
             { icon ? <Icon icon={icon} size="18" className={ label && label.length ? "jn-mr-2" : "" } /> : "" }

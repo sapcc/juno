@@ -112,6 +112,7 @@ export const TabNavigationItem = ({
             ${ isActive ? "juno-tabnavigation-item-active" : "" }
             ${ className }
           `}
+          onClick={handleItemClick}
           href={ href }
           aria-label={ariaLabel}
           aria-selected={isActive}

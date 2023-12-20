@@ -117,6 +117,7 @@ export const TopNavigationItem = ({
               ${ className }
             `}
             href={href}
+            onClick={handleItemClick}
             aria-label={ariaLabel}
             aria-disabled={ disabled || groupDisabled ? true : false}
             aria-selected={isActive}
