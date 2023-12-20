@@ -219,14 +219,10 @@ const SilenceScheduled = ({ alert, size, variant }) => {
                     <div className="grid gap-2 grid-cols-2">
                       <TextInput
                         required
-                        label="Startzeit"
+                        label="Start"
                         value={formState.startAt}
                       />
-                      <TextInput
-                        required
-                        label="Endzeit"
-                        value={formState.endAt}
-                      />
+                      <TextInput required label="End" value={formState.endAt} />
                     </div>
                   </FormRow>
 
