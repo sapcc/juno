@@ -10,7 +10,7 @@ import {
   SelectOption,
   Message,
   FormRow,
-  Stack,
+  Pill,
 } from "juno-ui-components"
 import {
   useAuthData,
@@ -33,15 +33,9 @@ import { parseError } from "../../helpers"
 import fakesilence from "./fakesilence.json"
 
 const DEFAULT_FORM_VALUES = {
-  startTime: "2012-12-20T13:37",
-  endTime: "2012-12-21T16:00",
+  startAt: "2012-12-20T13:37",
+  endAt: "2012-12-21T16:00",
   comment: "",
-}
-
-// Controls the Date if it is valid
-const validateDate = (date) => {
-  const dateRegex = new RegExp(/^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}$/)
-  return dateRegex.test(date)
 }
 
 const SilenceScheduled = ({ alert, size, variant }) => {
@@ -54,6 +48,7 @@ const SilenceScheduled = ({ alert, size, variant }) => {
   const [success, setSuccess] = useState(null)
   const [error, setError] = useState(null)
   const [selected, setSelected] = useState(null)
+  const [editableLabelValues, setEditableLabelValues] = useState({})
 
   useEffect(() => {
     if (!displayNewScheduledSilence) return
@@ -73,6 +68,10 @@ const SilenceScheduled = ({ alert, size, variant }) => {
     setSuccess(null)
     setError(null)
 
+    if (!validateForm()) {
+      return
+    }
+
     let labelValues = {}
 
     // add fixed labels with values to the formState.labelValues object
@@ -80,8 +79,7 @@ const SilenceScheduled = ({ alert, size, variant }) => {
       labelValues[label] = selected.fixed_labels[label]
     })
 
-    console.log(labelValues)
-    console.log(formState)
+    labelValues = { ...labelValues, ...editableLabelValues }
 
     let newSilence = { ...formState, labelValues: labelValues }
     console.log(newSilence)
@@ -96,6 +94,60 @@ const SilenceScheduled = ({ alert, size, variant }) => {
       .catch((error) => {
         setError(parseError(error))
       })
+  }
+
+  const handleEditableLabelChange = (event, editable_label) => {
+    setEditableLabelValues((prevValues) => ({
+      ...prevValues,
+      [editable_label]: event.target.value,
+    }))
+  }
+
+  const validateLabelValue = (value) => {
+    try {
+      return !!new RegExp(value)
+    } catch (e) {
+      return false
+    }
+  }
+
+  const validateForm = () => {
+    // validate if comment is at least 3 characters long
+    if (formState?.comment?.length < 3) {
+      setError("Comment must be at least 3 characters long")
+      return false
+    }
+
+    // All editable labels are valid regular expressions
+    const isLabelsValid = selected.editable_labels.every((editable_label) => {
+      const resolve = {}
+
+      if (!validateLabelValue(editableLabelValues[editable_label])) {
+        resolve[
+          editable_label
+        ] = `Value for ${editable_label} is not a valid regular expression`
+        setError(
+          `Value for ${editable_label} is not a valid regular expression`
+        )
+        return false
+      }
+
+      if (
+        !editableLabelValues[editable_label] ||
+        editableLabelValues[editable_label] === ""
+      ) {
+        setError(`Value for ${editable_label} is empty`)
+        return false
+      }
+
+      return true
+    })
+
+    if (!isLabelsValid) {
+      return false
+    }
+
+    return true
   }
 
   return (
@@ -168,15 +220,44 @@ const SilenceScheduled = ({ alert, size, variant }) => {
                       <TextInput
                         required
                         label="Startzeit"
-                        value={formState.startTime}
+                        value={formState.startAt}
                       />
                       <TextInput
                         required
                         label="Endzeit"
-                        value={formState.endTime}
+                        value={formState.endAt}
                       />
                     </div>
                   </FormRow>
+
+                  {Object.keys(selected.fixed_labels).length > 0 && (
+                    <FormRow>
+                      <p>Fixed Labels are labels that are not editable.</p>
+                    </FormRow>
+                  )}
+
+                  {Object.keys(selected.fixed_labels).length > 0 && (
+                    <FormRow>
+                      <div className="grid gap-2 grid-cols-3">
+                        {Object.keys(selected.fixed_labels).map((label) => (
+                          <Pill
+                            pillKey={label}
+                            pillKeyLabel={label}
+                            pillValue={selected.fixed_labels[label]}
+                            pillValueLabel={selected.fixed_labels[label]}
+                          />
+                        ))}
+                      </div>
+                    </FormRow>
+                  )}
+                  {selected.editable_labels.length > 0 && (
+                    <FormRow>
+                      <p>
+                        Editable Labels are labels that are editable. You can
+                        use regular expressions.
+                      </p>
+                    </FormRow>
+                  )}
 
                   {selected.editable_labels.length > 0 && (
                     <FormRow>
@@ -186,21 +267,10 @@ const SilenceScheduled = ({ alert, size, variant }) => {
                             required
                             label={editable_label}
                             key={editable_label}
-                          />
-                        ))}
-                      </div>
-                    </FormRow>
-                  )}
-                  {Object.keys(selected.fixed_labels).length > 0 > 0 && (
-                    <FormRow>
-                      <div className="grid gap-2 grid-cols-3">
-                        {Object.keys(selected.fixed_labels).map((label) => (
-                          <TextInput
-                            required
-                            label={label}
-                            value={selected.fixed_labels[label]}
-                            key={label}
-                            disabled
+                            id={editable_label}
+                            onChange={(e) =>
+                              handleEditableLabelChange(e, editable_label)
+                            }
                           />
                         ))}
                       </div>
