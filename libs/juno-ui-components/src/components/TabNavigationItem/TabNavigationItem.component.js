@@ -11,11 +11,9 @@ const itemStyles = `
   jn-font-bold
   jn-py-[0.875rem]
   jn-px-[1.5625rem]
-  jn-items-center
   focus-visible:jn-outline-none
   focus-visible:jn-ring-2
   focus-visible:jn-ring-theme-focus
-  
 `
 const defaultMainItemStyles = `
   jn-border-b-[3px]
