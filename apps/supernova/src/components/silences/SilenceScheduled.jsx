@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
+
+import { Messages, useActions } from "messages-provider"
 import {
   Modal,
-  Button,
   Box,
   Form,
   Textarea,
@@ -38,7 +39,7 @@ const DEFAULT_FORM_VALUES = {
   comment: "",
 }
 
-const SilenceScheduled = ({ alert, size, variant }) => {
+const SilenceScheduled = () => {
   const authData = useAuthData()
   const [formState, setFormState] = useState(DEFAULT_FORM_VALUES)
 
@@ -49,6 +50,7 @@ const SilenceScheduled = ({ alert, size, variant }) => {
   const [error, setError] = useState(null)
   const [selected, setSelected] = useState(null)
   const [editableLabelValues, setEditableLabelValues] = useState({})
+  const { addMessage } = useActions()
 
   useEffect(() => {
     if (!displayNewScheduledSilence) return
@@ -60,13 +62,11 @@ const SilenceScheduled = ({ alert, size, variant }) => {
       createdBy: authData?.parsed?.fullName,
     })
     // reset other states
-    setError(null)
     setSuccess(null)
   }, [displayNewScheduledSilence, selected])
 
   const onSubmitForm = () => {
     setSuccess(null)
-    setError(null)
 
     if (!validateForm()) {
       return
@@ -92,7 +92,10 @@ const SilenceScheduled = ({ alert, size, variant }) => {
         setSuccess(data)
       })
       .catch((error) => {
-        setError(parseError(error))
+        addMessage({
+          variant: "error",
+          text: parseError(error),
+        })
       })
   }
 
@@ -114,7 +117,10 @@ const SilenceScheduled = ({ alert, size, variant }) => {
   const validateForm = () => {
     // validate if comment is at least 3 characters long
     if (formState?.comment?.length < 3) {
-      setError("Comment must be at least 3 characters long")
+      addMessage({
+        variant: "error",
+        text: "Comment must be at least 3 characters long!",
+      })
       return false
     }
 
@@ -123,12 +129,10 @@ const SilenceScheduled = ({ alert, size, variant }) => {
       const resolve = {}
 
       if (!validateLabelValue(editableLabelValues[editable_label])) {
-        resolve[
-          editable_label
-        ] = `Value for ${editable_label} is not a valid regular expression`
-        setError(
-          `Value for ${editable_label} is not a valid regular expression`
-        )
+        addMessage({
+          variant: "error",
+          text: `Value for ${editable_label} is not a valid regular expression`,
+        })
         return false
       }
 
@@ -136,7 +140,10 @@ const SilenceScheduled = ({ alert, size, variant }) => {
         !editableLabelValues[editable_label] ||
         editableLabelValues[editable_label] === ""
       ) {
-        setError(`Value for ${editable_label} is empty`)
+        addMessage({
+          variant: "error",
+          text: `Value for ${editable_label} is empty`,
+        })
         return false
       }
 
@@ -151,147 +158,127 @@ const SilenceScheduled = ({ alert, size, variant }) => {
   }
 
   return (
-    <>
-      <Button
-        size={size}
-        variant={variant}
-        onClick={(e) => {
-          e.stopPropagation()
-          setDisplayNewScheduledSilence(!displayNewScheduledSilence)
-        }}
-      >
-        Silence
-      </Button>
-      {displayNewScheduledSilence && (
-        <Modal
-          title="Schedule new silence"
-          size="large"
-          open={true}
-          confirmButtonLabel={success ? null : "Save"}
-          onConfirm={success ? null : onSubmitForm}
-        >
-          {error && <Message text={error} variant="danger" />}
+    <Modal
+      title="Schedule new silence"
+      size="large"
+      open={true}
+      confirmButtonLabel={success ? null : "Save"}
+      onConfirm={success ? null : onSubmitForm}
+    >
+      <Messages />
 
-          {success && (
-            <Message className="mb-6" variant="success">
-              A silence object with id <b>{success?.silenceID}</b> was created
-              successfully. Please note that it may take up to 5 minutes for the
-              alert to show up as silenced.
-            </Message>
-          )}
+      {success && (
+        <Message className="mb-6" variant="success">
+          A silence object with id <b>{success?.silenceID}</b> was created
+          successfully. Please note that it may take up to 5 minutes for the
+          alert to show up as silenced.
+        </Message>
+      )}
 
-          {!success && (
-            <>
-              <Form className="mt-6">
+      {!success && (
+        <>
+          <Form className="mt-6">
+            <FormRow>
+              <Select
+                required
+                label="Silence Template"
+                value={selected?.title || "Select"}
+              >
+                {fakesilence?.map((option) => (
+                  <SelectOption
+                    key={option.title}
+                    label={option.title}
+                    value={option.title}
+                    onClick={() => {
+                      setSelected(option)
+                    }}
+                  />
+                ))}
+              </Select>
+            </FormRow>
+            <FormRow>{selected && <Box>{selected?.description}</Box>}</FormRow>
+          </Form>
+          {selected && (
+            <Form>
+              <FormRow>
+                <TextInput
+                  required
+                  label="Silenced by"
+                  value={formState.createdBy}
+                  disabled
+                />
+              </FormRow>
+              <FormRow>
+                <div className="grid gap-2 grid-cols-2">
+                  <TextInput required label="Start" value={formState.startAt} />
+                  <TextInput required label="End" value={formState.endAt} />
+                </div>
+              </FormRow>
+
+              {Object.keys(selected.fixed_labels).length > 0 && (
                 <FormRow>
-                  <Select
-                    required
-                    label="Silence Template"
-                    value={selected?.title || "Select"}
-                  >
-                    {fakesilence?.map((option) => (
-                      <SelectOption
-                        key={option.title}
-                        label={option.title}
-                        value={option.title}
-                        onClick={() => {
-                          setSelected(option)
-                        }}
+                  <p>Fixed Labels are labels that are not editable.</p>
+                </FormRow>
+              )}
+
+              {Object.keys(selected.fixed_labels).length > 0 && (
+                <FormRow>
+                  <div className="grid gap-2 grid-cols-3">
+                    {Object.keys(selected.fixed_labels).map((label) => (
+                      <Pill
+                        pillKey={label}
+                        pillKeyLabel={label}
+                        pillValue={selected.fixed_labels[label]}
+                        pillValueLabel={selected.fixed_labels[label]}
                       />
                     ))}
-                  </Select>
+                  </div>
                 </FormRow>
+              )}
+              {selected.editable_labels.length > 0 && (
                 <FormRow>
-                  {selected && <Box>{selected?.description}</Box>}
+                  <p>
+                    Editable Labels are labels that are editable. You can use
+                    regular expressions.
+                  </p>
                 </FormRow>
-              </Form>
-              {selected && (
-                <Form>
-                  <FormRow>
-                    <TextInput
-                      required
-                      label="Silenced by"
-                      value={formState.createdBy}
-                      disabled
-                    />
-                  </FormRow>
-                  <FormRow>
-                    <div className="grid gap-2 grid-cols-2">
+              )}
+
+              {selected.editable_labels.length > 0 && (
+                <FormRow>
+                  <div className="grid gap-2 grid-cols-3">
+                    {selected.editable_labels.map((editable_label) => (
                       <TextInput
                         required
-                        label="Start"
-                        value={formState.startAt}
+                        label={editable_label}
+                        key={editable_label}
+                        id={editable_label}
+                        onChange={(e) =>
+                          handleEditableLabelChange(e, editable_label)
+                        }
                       />
-                      <TextInput required label="End" value={formState.endAt} />
-                    </div>
-                  </FormRow>
-
-                  {Object.keys(selected.fixed_labels).length > 0 && (
-                    <FormRow>
-                      <p>Fixed Labels are labels that are not editable.</p>
-                    </FormRow>
-                  )}
-
-                  {Object.keys(selected.fixed_labels).length > 0 && (
-                    <FormRow>
-                      <div className="grid gap-2 grid-cols-3">
-                        {Object.keys(selected.fixed_labels).map((label) => (
-                          <Pill
-                            pillKey={label}
-                            pillKeyLabel={label}
-                            pillValue={selected.fixed_labels[label]}
-                            pillValueLabel={selected.fixed_labels[label]}
-                          />
-                        ))}
-                      </div>
-                    </FormRow>
-                  )}
-                  {selected.editable_labels.length > 0 && (
-                    <FormRow>
-                      <p>
-                        Editable Labels are labels that are editable. You can
-                        use regular expressions.
-                      </p>
-                    </FormRow>
-                  )}
-
-                  {selected.editable_labels.length > 0 && (
-                    <FormRow>
-                      <div className="grid gap-2 grid-cols-3">
-                        {selected.editable_labels.map((editable_label) => (
-                          <TextInput
-                            required
-                            label={editable_label}
-                            key={editable_label}
-                            id={editable_label}
-                            onChange={(e) =>
-                              handleEditableLabelChange(e, editable_label)
-                            }
-                          />
-                        ))}
-                      </div>
-                    </FormRow>
-                  )}
-
-                  <FormRow>
-                    <Textarea
-                      label="Comment"
-                      value={formState.comment}
-                      onChange={(e) =>
-                        setFormState({
-                          ...formState,
-                          comment: e.target.value,
-                        })
-                      }
-                    ></Textarea>
-                  </FormRow>
-                </Form>
+                    ))}
+                  </div>
+                </FormRow>
               )}
-            </>
+
+              <FormRow>
+                <Textarea
+                  label="Comment"
+                  value={formState.comment}
+                  onChange={(e) =>
+                    setFormState({
+                      ...formState,
+                      comment: e.target.value,
+                    })
+                  }
+                ></Textarea>
+              </FormRow>
+            </Form>
           )}
-        </Modal>
+        </>
       )}
-    </>
+    </Modal>
   )
 }
 
