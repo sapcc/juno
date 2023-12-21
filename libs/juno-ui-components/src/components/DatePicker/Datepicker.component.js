@@ -30,6 +30,22 @@ const defaultborderstyles = `
   jn-border-theme-textinput-default
 `
 
+const withLabelStyles = `
+  jn-pt-[1.125rem] 
+  jn-pb-1
+`
+
+const noLabelStyles = `
+  jn-py-4
+`
+
+const labelStyles = `
+  peer-autofill:jn-text-theme-textinput-autofill-label
+  jn-pointer-events-none
+  jn-top-2
+  jn-left-[0.9375rem]
+`
+
 /** A Datepicker component. Highly configurable, based on Flatpickr. */
 
 /* Possible additional props:
@@ -75,6 +91,7 @@ const defaultborderstyles = `
 export const Datepicker = ({
   className,
   defaultValue,
+  disabled,
   enableTime,
   id,
   label,
@@ -82,11 +99,13 @@ export const Datepicker = ({
   minDate,
   mode,
   placeholder,
+  required,
   value,
   width,
   ...props
 }) => {
   
+  const theId = id ||  "juno-textinput-" + useId()
   
   return (
     <div className={`
@@ -99,11 +118,25 @@ export const Datepicker = ({
         className={`
           juno-dateppicker-input
           ${inputStyles}
+          ${ label ? withLabelStyles : noLabelStyles }
           ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
           ${className}
         `}
         {...props}
       />
+      { label && label.length ?
+          <Label 
+            text={label}
+            htmlFor={theId}
+            className={`${labelStyles}`}
+            disabled={disabled}
+            required={required}
+            floating
+            minimized={true}
+          />
+        :
+          ""
+      }
     </div>
   )
 }
@@ -111,13 +144,14 @@ export const Datepicker = ({
 Datepicker.propTypes = {
   /** Pass custom classNames. These will be appended to the input element of the Datepicker. */
   className: PropTypes.string,
+  disabled: PropTypes.bool,
   /** The id of the datepicker input */
   id: PropTypes.string,
   /** The label of the datepicker */
   label: PropTypes.string,
   /** The mode of the Datepicker. */
   mode: PropTypes.oneOf(["single", "multiple", "range", "time"]),
-  /** The placeholder of the input element. Defaults to empty string `""`. */
+  /** The placeholder of the input element. Defaults to empty string `""`. TODO: default to expected date format */
   placeholder: PropTypes.string,
   /** The width of the datepicker input. Either 'full' (default) or 'auto'. */
   width: PropTypes.oneOf(["full", "auto"]),
@@ -125,6 +159,7 @@ Datepicker.propTypes = {
 
 Datepicker.defaultProps = {
   className: "",
+  disabled: false,
   id: "",
   label: "",
   mode: "single", 
