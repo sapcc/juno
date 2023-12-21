@@ -33,6 +33,7 @@ import {
 } from "./silenceHelpers"
 import { parseError } from "../../helpers"
 import fakesilence from "./fakesilence.json"
+import { C } from "juno-ui-components/build/ContentContainer.component-700aac71"
 
 const DEFAULT_FORM_VALUES = {
   startAt: "2012-12-20T13:37",
@@ -53,7 +54,6 @@ const SilenceScheduled = () => {
 
   const [success, setSuccess] = useState(null)
   const [selected, setSelected] = useState(null)
-  const [editableLabelValues, setEditableLabelValues] = useState({})
   const { addMessage } = useActions()
 
   useEffect(() => {
@@ -83,8 +83,6 @@ const SilenceScheduled = () => {
       labelValues[label] = formState.fixed_labels[label]
     })
 
-    labelValues = { ...labelValues, ...editableLabelValues }
-
     let newSilence = { ...formState, labelValues: labelValues }
     console.log(newSilence)
     // submit silence
@@ -104,10 +102,16 @@ const SilenceScheduled = () => {
   }
 
   const handleEditableLabelChange = (event, editable_label) => {
-    setEditableLabelValues((prevValues) => ({
-      ...prevValues,
-      [editable_label]: event.target.value,
-    }))
+    setFormState({
+      ...formState,
+      editable_labels: {
+        ...formState.editable_labels,
+        [editable_label]: {
+          value: event.target.value,
+          error: null,
+        },
+      },
+    })
   }
 
   const validateLabelValue = (value) => {
@@ -119,10 +123,10 @@ const SilenceScheduled = () => {
   }
 
   const validateForm = () => {
+    console.log("formState", formState)
     let errorexist = false
 
     // validate if comment is at least 3 characters long
-    console.log("formState", formState)
     if (formState?.comment?.value.length < 3) {
       setFormState({
         ...formState,
@@ -135,26 +139,42 @@ const SilenceScheduled = () => {
     }
 
     // All editable labels are valid regular expressions
-    formState.editable_labels.map((editable_label) => {
-      if (!validateLabelValue(editableLabelValues[editable_label])) {
-        addMessage({
-          variant: "error",
-          text: `Value for ${editable_label} is not a valid regular expression`,
+    console.log("formState.editable_labels", formState.editable_labels)
+    Object.keys(formState.editable_labels).map((editable_label) => {
+      console.log(formState.editable_labels[editable_label])
+
+      if (
+        !validateLabelValue(formState.editable_labels[editable_label].value)
+      ) {
+        setFormState({
+          ...formState,
+          editable_labels: {
+            ...formState.editable_labels,
+            [editable_label]: {
+              ...formState.editable_labels[editable_label],
+              error: `Value for ${editable_label} is not a valid regular expression`,
+            },
+          },
         })
         errorexist = true
       }
 
-      if (
-        !editableLabelValues[editable_label] ||
-        editableLabelValues[editable_label] === ""
-      ) {
-        addMessage({
-          variant: "error",
-          text: `Value for ${editable_label} is empty`,
+      if (!formState.editable_labels[editable_label].value) {
+        setFormState({
+          ...formState,
+          editable_labels: {
+            ...formState.editable_labels,
+            [editable_label]: {
+              ...formState.editable_labels[editable_label],
+              error: `Value for ${editable_label} is empty`,
+            },
+          },
         })
         errorexist = true
       }
     })
+
+    console.log("formState.editable_labels", formState.editable_labels)
 
     if (errorexist) {
       addMessage({
@@ -203,11 +223,20 @@ const SilenceScheduled = () => {
                       setSelected(option)
                       // reset formState with default values
                       setFormState({
-                        ...formState,
                         ...DEFAULT_FORM_VALUES,
                         fixed_labels: option?.fixed_labels || {},
-                        editable_labels: option?.editable_labels || [],
                         createdBy: authData?.parsed?.fullName,
+                        // Editlabels Object with empty values and errors null
+                        editable_labels: option?.editable_labels?.reduce(
+                          (acc, label) => ({
+                            ...acc,
+                            [label]: {
+                              value: "",
+                              error: null,
+                            },
+                          }),
+                          {}
+                        ),
                       })
                     }}
                   />
@@ -263,7 +292,7 @@ const SilenceScheduled = () => {
                 </FormRow>
               </FormSection>
               <FormSection>
-                {formState.editable_labels.length > 0 && (
+                {Object.keys(formState?.editable_labels).length > 0 && (
                   <FormRow>
                     <p>
                       Editable Labels are labels that are editable. You can use
@@ -272,20 +301,25 @@ const SilenceScheduled = () => {
                   </FormRow>
                 )}
 
-                {formState.editable_labels.length > 0 && (
+                {Object.keys(formState?.editable_labels).length > 0 && (
                   <FormRow>
                     <div className="grid gap-2 grid-cols-3">
-                      {formState.editable_labels.map((editable_label) => (
-                        <TextInput
-                          required
-                          label={editable_label}
-                          key={editable_label}
-                          id={editable_label}
-                          onChange={(e) =>
-                            handleEditableLabelChange(e, editable_label)
-                          }
-                        />
-                      ))}
+                      {Object.keys(formState.editable_labels).map(
+                        (editable_label) => (
+                          <TextInput
+                            required
+                            label={editable_label}
+                            key={editable_label}
+                            id={editable_label}
+                            errortext={
+                              formState?.editable_labels[editable_label]?.error
+                            }
+                            onChange={(e) =>
+                              handleEditableLabelChange(e, editable_label)
+                            }
+                          />
+                        )
+                      )}
                     </div>
                   </FormRow>
                 )}
