@@ -37,7 +37,11 @@ import fakesilence from "./fakesilence.json"
 const DEFAULT_FORM_VALUES = {
   startAt: "2012-12-20T13:37",
   endAt: "2012-12-21T16:00",
-  comment: "",
+  fixed_labels: {},
+  comment: {
+    value: "",
+    error: null,
+  },
 }
 
 const SilenceScheduled = () => {
@@ -48,7 +52,6 @@ const SilenceScheduled = () => {
     useState(false)
 
   const [success, setSuccess] = useState(null)
-  const [error, setError] = useState(null)
   const [selected, setSelected] = useState(null)
   const [editableLabelValues, setEditableLabelValues] = useState({})
   const { addMessage } = useActions()
@@ -76,8 +79,8 @@ const SilenceScheduled = () => {
     let labelValues = {}
 
     // add fixed labels with values to the formState.labelValues object
-    Object.keys(selected.fixed_labels).forEach((label) => {
-      labelValues[label] = selected.fixed_labels[label]
+    Object.keys(formState.fixed_labels).forEach((label) => {
+      labelValues[label] = formState.fixed_labels[label]
     })
 
     labelValues = { ...labelValues, ...editableLabelValues }
@@ -116,25 +119,29 @@ const SilenceScheduled = () => {
   }
 
   const validateForm = () => {
+    let errorexist = false
+
     // validate if comment is at least 3 characters long
-    if (formState?.comment?.length < 3) {
-      addMessage({
-        variant: "error",
-        text: "Comment must be at least 3 characters long!",
+    console.log("formState", formState)
+    if (formState?.comment?.value.length < 3) {
+      setFormState({
+        ...formState,
+        comment: {
+          ...formState.comment,
+          error: "Please enter at least 3 characters",
+        },
       })
-      return false
+      errorexist = true
     }
 
     // All editable labels are valid regular expressions
-    const isLabelsValid = selected.editable_labels.every((editable_label) => {
-      const resolve = {}
-
+    formState.editable_labels.map((editable_label) => {
       if (!validateLabelValue(editableLabelValues[editable_label])) {
         addMessage({
           variant: "error",
           text: `Value for ${editable_label} is not a valid regular expression`,
         })
-        return false
+        errorexist = true
       }
 
       if (
@@ -145,13 +152,15 @@ const SilenceScheduled = () => {
           variant: "error",
           text: `Value for ${editable_label} is empty`,
         })
-        return false
+        errorexist = true
       }
-
-      return true
     })
 
-    if (!isLabelsValid) {
+    if (errorexist) {
+      addMessage({
+        variant: "error",
+        text: parseError("Please fix the errors in the form"),
+      })
       return false
     }
 
@@ -192,6 +201,14 @@ const SilenceScheduled = () => {
                     value={option.title}
                     onClick={() => {
                       setSelected(option)
+                      // reset formState with default values
+                      setFormState({
+                        ...formState,
+                        ...DEFAULT_FORM_VALUES,
+                        fixed_labels: option?.fixed_labels || {},
+                        editable_labels: option?.editable_labels || [],
+                        createdBy: authData?.parsed?.fullName,
+                      })
                     }}
                   />
                 ))}
@@ -230,18 +247,23 @@ const SilenceScheduled = () => {
                 <FormRow>
                   <Textarea
                     label="Comment"
-                    value={formState.comment}
+                    value={formState.comment.value}
+                    errortext={formState.comment.error}
                     onChange={(e) =>
                       setFormState({
                         ...formState,
-                        comment: e.target.value,
+                        comment: {
+                          ...formState.comment,
+                          value: e.target.value,
+                          error: null,
+                        },
                       })
                     }
                   ></Textarea>
                 </FormRow>
               </FormSection>
               <FormSection>
-                {selected.editable_labels.length > 0 && (
+                {formState.editable_labels.length > 0 && (
                   <FormRow>
                     <p>
                       Editable Labels are labels that are editable. You can use
@@ -250,10 +272,10 @@ const SilenceScheduled = () => {
                   </FormRow>
                 )}
 
-                {selected.editable_labels.length > 0 && (
+                {formState.editable_labels.length > 0 && (
                   <FormRow>
                     <div className="grid gap-2 grid-cols-3">
-                      {selected.editable_labels.map((editable_label) => (
+                      {formState.editable_labels.map((editable_label) => (
                         <TextInput
                           required
                           label={editable_label}
@@ -270,21 +292,21 @@ const SilenceScheduled = () => {
               </FormSection>
 
               <FormSection>
-                {Object.keys(selected.fixed_labels).length > 0 && (
+                {Object.keys(formState?.fixed_labels).length > 0 && (
                   <FormRow>
                     <p>Fixed Labels are labels that are not editable.</p>
                   </FormRow>
                 )}
 
-                {Object.keys(selected.fixed_labels).length > 0 && (
+                {Object.keys(formState?.fixed_labels).length > 0 && (
                   <FormRow>
                     <div className="grid gap-2 grid-cols-3">
-                      {Object.keys(selected.fixed_labels).map((label) => (
+                      {Object.keys(formState.fixed_labels).map((label) => (
                         <Pill
                           pillKey={label}
                           pillKeyLabel={label}
-                          pillValue={selected.fixed_labels[label]}
-                          pillValueLabel={selected.fixed_labels[label]}
+                          pillValue={formState?.fixed_labels[label]}
+                          pillValueLabel={formState?.fixed_labels[label]}
                         />
                       ))}
                     </div>
