@@ -22,7 +22,7 @@ import AlertDetail from "./components/alerts/AlertDetail"
 import PredefinedFilters from "./components/filters/PredefinedFilters"
 
 const AppContent = (props) => {
-  const { addMessage } = useActions()
+  const { addMessage, resetMessages } = useActions()
   const loggedIn = useAuthLoggedIn()
   const authError = useAuthError()
 

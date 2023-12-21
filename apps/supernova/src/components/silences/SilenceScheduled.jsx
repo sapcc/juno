@@ -12,6 +12,7 @@ import {
   Message,
   FormRow,
   Pill,
+  FormSection,
 } from "juno-ui-components"
 import {
   useAuthData,
@@ -196,84 +197,100 @@ const SilenceScheduled = () => {
                 ))}
               </Select>
             </FormRow>
-            <FormRow>{selected && <Box>{selected?.description}</Box>}</FormRow>
+
+            {selected && (
+              <FormRow>
+                <Box>{selected?.description}</Box>
+              </FormRow>
+            )}
           </Form>
+
           {selected && (
             <Form>
-              <FormRow>
-                <TextInput
-                  required
-                  label="Silenced by"
-                  value={formState.createdBy}
-                  disabled
-                />
-              </FormRow>
-              <FormRow>
-                <div className="grid gap-2 grid-cols-2">
-                  <TextInput required label="Start" value={formState.startAt} />
-                  <TextInput required label="End" value={formState.endAt} />
-                </div>
-              </FormRow>
-
-              {Object.keys(selected.fixed_labels).length > 0 && (
+              <FormSection>
                 <FormRow>
-                  <p>Fixed Labels are labels that are not editable.</p>
+                  <TextInput
+                    required
+                    label="Silenced by"
+                    value={formState.createdBy}
+                    disabled
+                  />
                 </FormRow>
-              )}
-
-              {Object.keys(selected.fixed_labels).length > 0 && (
                 <FormRow>
-                  <div className="grid gap-2 grid-cols-3">
-                    {Object.keys(selected.fixed_labels).map((label) => (
-                      <Pill
-                        pillKey={label}
-                        pillKeyLabel={label}
-                        pillValue={selected.fixed_labels[label]}
-                        pillValueLabel={selected.fixed_labels[label]}
-                      />
-                    ))}
+                  <div className="grid gap-2 grid-cols-2">
+                    <TextInput
+                      required
+                      label="Start"
+                      value={formState.startAt}
+                    />
+                    <TextInput required label="End" value={formState.endAt} />
                   </div>
                 </FormRow>
-              )}
-              {selected.editable_labels.length > 0 && (
-                <FormRow>
-                  <p>
-                    Editable Labels are labels that are editable. You can use
-                    regular expressions.
-                  </p>
-                </FormRow>
-              )}
 
-              {selected.editable_labels.length > 0 && (
                 <FormRow>
-                  <div className="grid gap-2 grid-cols-3">
-                    {selected.editable_labels.map((editable_label) => (
-                      <TextInput
-                        required
-                        label={editable_label}
-                        key={editable_label}
-                        id={editable_label}
-                        onChange={(e) =>
-                          handleEditableLabelChange(e, editable_label)
-                        }
-                      />
-                    ))}
-                  </div>
+                  <Textarea
+                    label="Comment"
+                    value={formState.comment}
+                    onChange={(e) =>
+                      setFormState({
+                        ...formState,
+                        comment: e.target.value,
+                      })
+                    }
+                  ></Textarea>
                 </FormRow>
-              )}
+              </FormSection>
+              <FormSection>
+                {selected.editable_labels.length > 0 && (
+                  <FormRow>
+                    <p>
+                      Editable Labels are labels that are editable. You can use
+                      regular expressions.
+                    </p>
+                  </FormRow>
+                )}
 
-              <FormRow>
-                <Textarea
-                  label="Comment"
-                  value={formState.comment}
-                  onChange={(e) =>
-                    setFormState({
-                      ...formState,
-                      comment: e.target.value,
-                    })
-                  }
-                ></Textarea>
-              </FormRow>
+                {selected.editable_labels.length > 0 && (
+                  <FormRow>
+                    <div className="grid gap-2 grid-cols-3">
+                      {selected.editable_labels.map((editable_label) => (
+                        <TextInput
+                          required
+                          label={editable_label}
+                          key={editable_label}
+                          id={editable_label}
+                          onChange={(e) =>
+                            handleEditableLabelChange(e, editable_label)
+                          }
+                        />
+                      ))}
+                    </div>
+                  </FormRow>
+                )}
+              </FormSection>
+
+              <FormSection>
+                {Object.keys(selected.fixed_labels).length > 0 && (
+                  <FormRow>
+                    <p>Fixed Labels are labels that are not editable.</p>
+                  </FormRow>
+                )}
+
+                {Object.keys(selected.fixed_labels).length > 0 && (
+                  <FormRow>
+                    <div className="grid gap-2 grid-cols-3">
+                      {Object.keys(selected.fixed_labels).map((label) => (
+                        <Pill
+                          pillKey={label}
+                          pillKeyLabel={label}
+                          pillValue={selected.fixed_labels[label]}
+                          pillValueLabel={selected.fixed_labels[label]}
+                        />
+                      ))}
+                    </div>
+                  </FormRow>
+                )}
+              </FormSection>
             </Form>
           )}
         </>
