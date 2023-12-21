@@ -1,8 +1,34 @@
-import React from "react"
+import React, { useEffect, useId, useState } from "react"
 import PropTypes from "prop-types"
 import Flatpickr from "react-flatpickr"
 import { TextInput } from "../TextInput/index"
-import "flatpickr/dist/themes/material_green.css" // use inbuilt flatpickr styles for now
+import { Label } from "../Label/index"
+import "flatpickr/dist/themes/dark.css" // use inbuilt flatpickr styles for now
+
+const wrapperStyles = `
+  jn-relative
+`
+
+const inputStyles = `
+  jn-bg-theme-textinput
+  jn-text-theme-textinput
+  jn-border
+  jn-text-base
+  jn-leading-4
+  jn-px-4
+  jn-h-textinput
+  jn-rounded-3px
+  focus:jn-outline-none
+  focus:jn-ring-2
+  focus:jn-ring-theme-focus
+  disabled:jn-opacity-50
+  autofill:jn-bg-theme-textinput-autofill
+  autofill:jn-text-theme-textinput-autofill
+`
+
+const defaultborderstyles = `
+  jn-border-theme-textinput-default
+`
 
 /** A Datepicker component. Highly configurable, based on Flatpickr. */
 
@@ -44,39 +70,39 @@ import "flatpickr/dist/themes/material_green.css" // use inbuilt flatpickr style
       }
     } 
   */
+  
 
 export const Datepicker = ({
   className,
   defaultValue,
   enableTime,
+  id,
+  label,
   maxDate,
   minDate,
   mode,
   placeholder,
   value,
+  width,
   ...props
 }) => {
+  
+  
   return (
-    <div className="juno-datepicker-wrapper">
+    <div className={`
+      juno-datepicker-wrapper 
+      ${wrapperStyles}
+      ${ width == "auto" ? "jn-inline-block" : "jn-block" }
+      ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+    `}>
       <Flatpickr 
-        className={className}
-        defaultValue={defaultValue}
-        enableTime={enableTime}
-        mode={mode}
-        placeholder={placeholder}
-        value={value}
+        className={`
+          juno-dateppicker-input
+          ${inputStyles}
+          ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
+          ${className}
+        `}
         {...props}
-        
-        /* 
-          // use a custom input:
-          render={
-            ({defaultValue, value, ...props}, ref) => {
-              return <CustomInput defaultValue={defaultValue} id="my-id" inputRef={ref} />
-            }
-          } 
-        */
-
-
       />
     </div>
   )
@@ -85,16 +111,23 @@ export const Datepicker = ({
 Datepicker.propTypes = {
   /** Pass custom classNames. These will be appended to the input element of the Datepicker. */
   className: PropTypes.string,
-  enableTime: PropTypes.bool,
+  /** The id of the datepicker input */
+  id: PropTypes.string,
+  /** The label of the datepicker */
+  label: PropTypes.string,
   /** The mode of the Datepicker. */
   mode: PropTypes.oneOf(["single", "multiple", "range", "time"]),
   /** The placeholder of the input element. Defaults to empty string `""`. */
   placeholder: PropTypes.string,
+  /** The width of the datepicker input. Either 'full' (default) or 'auto'. */
+  width: PropTypes.oneOf(["full", "auto"]),
 }
 
 Datepicker.defaultProps = {
   className: "",
-  enableTime: false,
+  id: "",
+  label: "",
   mode: "single", 
   placeholder: "",
+  width: "full",
 }
