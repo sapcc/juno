@@ -30,7 +30,7 @@ const App = (props = {}) => {
       <AppBody data-testid="greenhouse-management">
         <OrgInfo />
         <MainContainer>
-          <MainContainerInner>
+          <MainContainerInner fullWidth={true}>
             <SideNav />
             <ContentContainer>
               <MessagesProvider>
