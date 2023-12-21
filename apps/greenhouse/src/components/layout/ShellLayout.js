@@ -4,7 +4,7 @@ import { useDemoMode } from "../../components/StoreProvider"
 
 const shellStyles = `
   grid
-  grid-cols-[80px_auto]
+  grid-cols-[max-content_auto]
   grid-rows-[minmax(100vh,100%)]
 `
 
