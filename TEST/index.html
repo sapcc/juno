@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Template Dev</title>
+    <script
+      async
+      src="https://ga.jspm.io/npm:es-module-shims@1.8.2/dist/es-module-shims.js"
+    ></script>
+    <style>
+      h1::before {
+        transform: scaleX(0);
+        transform-origin: bottom right;
+      }
+
+      h1:hover::before {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+
+      h1::before {
+        content: " ";
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        inset: 0 0 0 0;
+        background: hsl(200 100% 80%);
+        z-index: -1;
+        transition: transform 0.3s ease;
+      }
+
+      h1 {
+        position: relative;
+        font-size: 5rem;
+      }
+    </style>
+
+    <!-- https://generator.jspm.io/#U2NhYGBkDM0rySzJSU1hKEpNTC5xMLTQM9Az0C1K1jMAAKFS5w0gAA -->
+    <!-- <script type="importmap">
+      {
+        "imports": {
+          "react": "https:/esm.sh/react@18.2.0",
+          "@tanstack/react-query": "https://esm.sh/@tanstack/react-query@4.28.0",
+          "custom-event-polyfill": "https://esm.sh/custom-event-polyfill@^1.0.7",
+          "juno-ui-components": "https://assets.juno.global.cloud.sap/juno-ui-components@latest/build/index.js",
+          "luxon": "https://esm.sh/luxon@^2.3.0",
+          "prop-types": "https://esm.sh/prop-types@^15.8.1",
+          "react-dom": "https://esm.sh/react-dom@^18.2.0",
+          "zustand": "https://esm.sh/zustand@4.3.7",
+          "react-dom": "https://esm.sh/react-dom@^18",
+          "react-dom/": "https://esm.sh/react-dom@^18/"
+        }
+      }
+    </script> -->
+
+    <!-- <script type="importmap">
+      {
+        "imports": {
+          "react": "/build/esm/react@18.2.0.js",
+          "@tanstack/react-query": "https://esm.sh/@tanstack/react-query@4.28.0",
+          "custom-event-polyfill": "https://esm.sh/custom-event-polyfill@^1.0.7",
+          "juno-ui-components": "https://assets.juno.global.cloud.sap/juno-ui-components@latest/build/index.js",
+          "luxon": "https://esm.sh/luxon@^2.3.0",
+          "prop-types": "https://esm.sh/prop-types@^15.8.1",
+          "react-dom": "https://esm.sh/react-dom@^18.2.0",
+          "zustand": "https://esm.sh/zustand@4.3.7",
+          "react-dom": "/build/esm/react-dom@18.2.0",
+          "react-dom/": "https:/esm.sh/react-dom@18.2.0/"
+        }
+      }
+    </script> -->
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "/build/react@18.2.0/index.js",
+          "react/": "/build/react@18.2.0/",
+          "react-dom": "/build/react-dom@18.2.0/index.js",
+          "react-dom/client": "/build/react-dom@18.2.0/client.js",
+          "react-dom/": "/build/react-dom@18.2.0/",
+          "scheduler": "/build/scheduler@0.23.0/index.js",
+          "scheduler/": "/build/scheduler@0.20.2/",
+          "zustand": "/build/zustand@4.4.7/index.js",
+          "zustand/vanilla": "/build/zustand@4.4.7/vanilla.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <script type="module">
+      import React, { useState } from "react"
+      import { createRoot } from "react-dom/client"
+      import { create } from "zustand"
+
+      const useBearStore = create((set) => ({
+        bears: 0,
+        increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
+        removeAllBears: () => set({ bears: 0 }),
+      }))
+
+      const domNode = document.getElementById("root")
+      const root = createRoot(domNode)
+
+      // console.log(root, React.version)
+      // const App = () => {
+      //   const [greetings, updateGGreetings] = useState()
+      //   return React.createElement("h1", null, `Hello World`)
+      // }
+      const App = () => {
+        const bears = useBearStore((state) => state.bears)
+        const increasePopulation = useBearStore(
+          (state) => state.increasePopulation
+        )
+
+        const greetingsValues = [
+          "World",
+          "Universe",
+          "Galaxy",
+          "Solar System",
+          "Folks",
+          "People",
+          "Humans",
+          "Earth",
+          "Mars",
+          "Venus",
+        ]
+        const [greetings, updateGGreetings] = useState(greetingsValues[0])
+
+        // const [greetings, updateGreetings] = ["World"]
+        React.useEffect(() => {
+          let i = 0
+          const interval = setInterval(() => {
+            i++
+            updateGGreetings(greetingsValues[i % greetingsValues.length])
+          }, Math.random() * 10000)
+          return () => clearInterval(interval)
+        }, [])
+        return React.createElement("div", null, [
+          React.createElement("h1", { key: 0 }, `Hello ${greetings} ${bears}`),
+          React.createElement(
+            "button",
+            { onClick: increasePopulation, key: 1 },
+            "one up"
+          ),
+        ])
+      }
+      root.render(React.createElement(App))
+    </script>
+    <div id="root" data-juno-app="zt"></div>
+  </body>
+</html>
