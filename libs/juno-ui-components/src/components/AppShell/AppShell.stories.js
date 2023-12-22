@@ -7,6 +7,8 @@ import { SideNavigation } from "../SideNavigation/"
 import { SideNavigationItem } from "../SideNavigationItem/"
 import { TopNavigation } from "../TopNavigation/index"
 import { TopNavigationItem } from "../TopNavigationItem/index"
+import { TabNavigation } from "../TabNavigation/index"
+import { TabNavigationItem } from "../TabNavigationItem/index"
 import { ContentHeading } from "../ContentHeading/index"
 
 export default {
@@ -113,9 +115,9 @@ WithSideNavigation.parameters = {
 }
 WithSideNavigation.args = {
   sideNavigation: <SideNavigation>
-                    <SideNavigationItem active>Home</SideNavigationItem>
-                    <SideNavigationItem>Item 1</SideNavigationItem>
-                    <SideNavigationItem>Item 2</SideNavigationItem>
+                    <SideNavigationItem active label="Item 1"/>
+                    <SideNavigationItem label="Item 2" />
+                    <SideNavigationItem label="Item 3" />
                   </SideNavigation>,
   children: [
       <ContentHeading key="1">My Page</ContentHeading>,
@@ -170,12 +172,26 @@ WithSideAndTopNavigation.args = {
                     />
                   </TopNavigation>,
   sideNavigation: <SideNavigation>
-                    <SideNavigationItem active >Home</SideNavigationItem>
-                    <SideNavigationItem>Item 1</SideNavigationItem>
-                    <SideNavigationItem>Item 2</SideNavigationItem>
+                    <SideNavigationItem active label="Item 1"/>
+                    <SideNavigationItem label="Item 2" />
+                    <SideNavigationItem label="Item 3" />
                   </SideNavigation>,
   children: [
       <ContentHeading key="1">My Page</ContentHeading>,
       <p key="2">Content goes here</p>
   ]
+}
+
+export const WithTabNavigation = Template.bind({})
+WithTabNavigation.parameters = {}
+WithTabNavigation.args = {
+  children: [
+    <TabNavigation key="1">
+      <TabNavigationItem label="Item 1" active />
+      <TabNavigationItem label="Item 2" />
+      <TabNavigationItem label="Item 3" />
+    </TabNavigation>,
+    <ContentHeading key="2">My Page</ContentHeading>
+  ]
+
 }
