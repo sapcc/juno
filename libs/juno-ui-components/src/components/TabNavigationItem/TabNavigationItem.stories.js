@@ -4,7 +4,7 @@ import { TabNavigationItem } from './index.js'
 import { knownIcons } from "../Icon/Icon.component.js"
 
 export default {
-  title: 'Components/TabNavigation/TabNavigationItem',
+  title: 'Navigation/TabNavigation/TabNavigationItem',
   component: TabNavigationItem,
   argTypes: {
     icon: {
@@ -49,5 +49,12 @@ export const AsLink = {
   args: {
     label: "Item as Link",
     href: "https://www.sap.com",
+  }
+}
+
+export const WithChildren = {
+  args: {
+    value: "itm-1",
+    children: "Item 1"
   }
 }

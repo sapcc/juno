@@ -215,6 +215,9 @@ module.exports = {
           ),
           "filter-pill-key": withOpacity("--color-filter-pill-key-bg"),
           "modal-backdrop": "var(--color-modal-backdrop-bg)",
+          "sidenavigation-item-active": "var(--color-sidenavigation-item-active-bg)",
+          "topnavigation-item": "var(--color-topnavigation-item-bg)",
+          "topnavigation-item-active": "var(--color-topnavigation-item-active-bg)",
         },
       },
       backgroundImage: {
@@ -238,6 +241,7 @@ module.exports = {
           "textinput-autofill": withOpacity("--color-textinput-autofill-text"),
           "textinput-autofill-label": withOpacity("--color-textinput-autofill-label"),
           "checkbox-checked": withOpacity("--color-checkbox-checked-color"),
+          "sidenavigation-item-active": "var(--color-sidenavigation-item-active)",
         },
       },
       borderColor: {
@@ -263,6 +267,7 @@ module.exports = {
           "filter-pill": withOpacity("--color-filter-pill-border"),
           "box-default": "var(--color-box-border)",
           "textinput-default": withOpacity("--color-textinput-default-border"),
+          "tab-content-inactive-bottom": withOpacity("--color-background-lvl-4-raw"),
         },
       },
       // backgroundImage: theme => ({

@@ -1,9 +1,18 @@
 import * as React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SideNavigation } from './index';
+import { SideNavigationItem } from '../SideNavigationItem/index';
+
+const mockOnActiveItemChange = jest.fn()
 
 describe('SideNavigation', () => {
+  
+  afterEach(() => {
+    cleanup();
+    jest.clearAllMocks();
+  })
+  
   test('render a SideNavigation', async () => {
     render(<SideNavigation />);
     expect(screen.getByRole('navigation')).toBeInTheDocument();
@@ -11,8 +20,126 @@ describe('SideNavigation', () => {
   });
   
   test("renders children as passed", async () => {
-    render(<SideNavigation><button>Test</button></SideNavigation>)
-    expect(screen.getByRole('button', {name: "Test"})).toBeInTheDocument();
+    render(
+      <SideNavigation>
+        <SideNavigationItem label="Item 1" key="i-1" />
+        <SideNavigationItem label="Item 2" key="i-2" />
+        <SideNavigationItem label="Item 3" key="i-3" />
+      </SideNavigation>
+    )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.queryAllByRole("button")).toHaveLength(3)
+    expect(screen.getByRole("button", {name: "Item 1"})).toBeInTheDocument()
+    expect(screen.getByRole("button", {name: "Item 2"})).toBeInTheDocument()
+    expect(screen.getByRole("button", {name: "Item 3"})).toBeInTheDocument()
+  })
+  
+  test("renders an aria-label as passed", async () => {
+    render(<SideNavigation ariaLabel="describe the navigation" />)
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.getByRole("navigation")).toHaveAttribute("aria-label", "describe the navigation")
+  })
+  
+  test("renders disabled children as passed", async () => {
+    render(
+      <SideNavigation disabled>
+        <SideNavigationItem label="Item 1" />
+        <SideNavigationItem label="Item 2" />
+      </SideNavigation>)
+      expect(screen.getByRole("navigation")).toBeInTheDocument()
+      expect(screen.queryAllByRole("button")).toHaveLength(2)
+      expect(screen.getByRole("button", {name: "Item 1"})).toBeInTheDocument()
+      expect(screen.getByRole("button", {name: "Item 1"})).toBeDisabled()
+      expect(screen.getByRole("button", {name: "Item 1"})).toHaveAttribute("aria-disabled", "true")
+      expect(screen.getByRole("button", {name: "Item 2"})).toBeInTheDocument()
+      expect(screen.getByRole("button", {name: "Item 2"})).toBeDisabled()
+      expect(screen.getByRole("button", {name: "Item 2"})).toHaveAttribute("aria-disabled", "true")
+  })
+  
+  test("renders an active navigation item as passed", async () => {
+    render(
+      <SideNavigation activeItem="Item 2">
+        <SideNavigationItem label="Item 1" />
+        <SideNavigationItem label="Item 2" />
+      </SideNavigation>
+      )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.queryAllByRole("button")).toHaveLength(2)
+    expect(screen.getByRole("button", {name: "Item 1"})).toBeInTheDocument()
+    expect(screen.getByRole("button", {name: "Item 1"})).toHaveAttribute("aria-selected", "false")
+    expect(screen.getByRole("button", {name: "Item 1"})).not.toHaveClass("juno-sidenavigation-item-active")
+    expect(screen.getByRole("button", {name: "Item 2"})).toBeInTheDocument()
+    expect(screen.getByRole("button", {name: "Item 2"})).toHaveAttribute("aria-selected", "true")
+    expect(screen.getByRole("button", {name: "Item 2"})).toHaveClass("juno-sidenavigation-item-active")
+  })
+  
+  test("renders an active navigation item as passed by value", async () => {
+    render(
+      <SideNavigation activeItem="i-2">
+        <SideNavigationItem label="Item 1" value="i-1" />
+        <SideNavigationItem label="Item 2" value="i-2" />
+      </SideNavigation>
+    )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.queryAllByRole("button")).toHaveLength(2)
+    expect(screen.getByRole("button", {name: "Item 1"})).toBeInTheDocument()
+    expect(screen.getByRole("button", {name: "Item 1"})).toHaveAttribute("aria-selected", "false")
+    expect(screen.getByRole("button", {name: "Item 1"})).not.toHaveClass("juno-sidenavigation-item-active")
+    expect(screen.getByRole("button", {name: "Item 2"})).toBeInTheDocument()
+    expect(screen.getByRole("button", {name: "Item 2"})).toHaveAttribute("aria-selected", "true")
+    expect(screen.getByRole("button", {name: "Item 2"})).toHaveClass("juno-sidenavigation-item-active")
+  })
+  
+  test("renders the active item as passed to the parent if conflicting with active prop passed to child item", async () => {
+    render(
+      <SideNavigation activeItem="Item 2">
+        <SideNavigationItem label="Item 1" active/>
+        <SideNavigationItem label="Item 2" />
+        </SideNavigation>
+    )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.queryAllByRole("button")).toHaveLength(2)
+    expect(screen.getByRole("button", {name: "Item 1"})).toBeInTheDocument()
+    expect(screen.getByRole("button", {name: "Item 1"})).toHaveAttribute("aria-selected", "false")
+    expect(screen.getByRole("button", {name: "Item 1"})).not.toHaveClass("juno-sidenavigation-item-active")
+    expect(screen.getByRole("button", {name: "Item 2"})).toBeInTheDocument()
+    expect(screen.getByRole("button", {name: "Item 2"})).toHaveAttribute("aria-selected", "true")
+    expect(screen.getByRole("button", {name: "Item 2"})).toHaveClass("juno-sidenavigation-item-active")
+  })
+  
+  test("changes the active item when the user clicks", async () => {
+    render(
+      <SideNavigation activeItem="Item 1">
+        <SideNavigationItem label="Item 1" />
+        <SideNavigationItem label="Item 2" />
+      </SideNavigation>
+    )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.queryAllByRole("button")).toHaveLength(2)
+    const tab1 = screen.getByRole("button", {name: "Item 1"})
+    const tab2 = screen.getByRole("button", {name: "Item 2"})
+    expect(tab1).toHaveAttribute("aria-selected", "true")
+    expect(tab1).toHaveClass("juno-sidenavigation-item-active")
+    expect(tab2).toHaveAttribute("aria-selected", "false")
+    expect(tab2).not.toHaveClass("juno-sidenavigation-item-active")
+    await userEvent.click(tab2)
+    expect(tab1).toHaveAttribute("aria-selected", "false")
+    expect(tab1).not.toHaveClass("juno-sidenavigation-item-active")
+    expect(tab2).toHaveAttribute("aria-selected", "true")
+    expect(tab2).toHaveClass("juno-sidenavigation-item-active")
+  })
+  
+  test("executes a handler as passed when the selected item changes", async () => {
+    render(
+      <SideNavigation activeItem="Item 1" onActiveItemChange={mockOnActiveItemChange}>
+        <SideNavigationItem label="Item 1" />
+        <SideNavigationItem label="Item 2" />
+      </SideNavigation>)
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.queryAllByRole("button")).toHaveLength(2)
+    const item2 = screen.getByRole("button", {name: "Item 2"})
+    await userEvent.click(item2)
+    expect(mockOnActiveItemChange).toHaveBeenCalled()
   })
 
   test('renders custom classNames as passed', async () => {
