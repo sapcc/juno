@@ -152,11 +152,11 @@ export const Datepicker = ({
     `}>
       <Flatpickr 
         className={`
-          juno-dateppicker-input
+          juno-datepicker-input
           ${ inputStyles }
           ${ label ? withLabelStyles : noLabelStyles }
-          ${ isInvalid ? invalidStyles : "" } 
-          ${ isValid ? validStyles : "" }  
+          ${ isInvalid ? "juno-datepicker-input-invalid " + invalidStyles : "" } 
+          ${ isValid ? "juno-datepicker-input-valid" + validStyles : "" }  
           ${ isValid || isInvalid ? "" : defaultBorderStyles } 
           ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
           ${ className }

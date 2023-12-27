@@ -9,7 +9,7 @@ describe("Datepicker", () => {
     render(<Datepicker />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveAttribute("type", "text")
-    expect(screen.getByRole("textbox")).toHaveClass("juno-dateppicker-input")
+    expect(screen.getByRole("textbox")).toHaveClass("juno-datepicker-input")
   })
   
   test("renders a label as passed", async () => {
@@ -43,6 +43,47 @@ describe("Datepicker", () => {
     render(<Datepicker label="This is a Datepicker" />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByLabelText("This is a Datepicker")).toBeInTheDocument()
+  })
+  
+  test("renders a disabled datepicker as passed", async () => {
+    render(<Datepicker disabled />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toBeDisabled()
+  })
+  
+  test("renders a helptext as passed", async () => {
+    render(<Datepicker helptext="this is a helptext"/>)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-help")
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is a helptext")
+  })
+  
+  test("renders a valid datepicker as passed", async () => {
+    render(<Datepicker valid />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveClass("juno-datepicker-input-valid")
+  })
+  
+  test("renders an invalid datepicker as passed", async () => {
+    render(<Datepicker invalid />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveClass("juno-datepicker-input-invalid")
+  })
+  
+  test("renders a successtext as passed and validates the element", async () => {
+    render(<Datepicker successtext="great success!" />)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-success")
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("great success!")
+    expect(screen.getByRole("textbox")).toHaveClass("juno-datepicker-input-valid")
+  })
+  
+  test("renders an errortext as passed and invalidates the element", async () => {
+    render(<Datepicker errortext="this is an error!" />)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-error")
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is an error!")
+    expect(screen.getByRole("textbox")).toHaveClass("juno-datepicker-input-invalid")
   })
   
   test("renders a className as passed", async () => {
