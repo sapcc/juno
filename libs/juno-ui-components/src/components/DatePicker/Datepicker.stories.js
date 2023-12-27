@@ -18,3 +18,14 @@ const Template = ({...args}) => (
 
 export const Default = Template.bind({})
 Default.args = {}
+
+export const WithLabel = Template.bind({})
+WithLabel.args = {
+  label: "Datepicker Label"
+}
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+  disabled: true,
+  label: "Disabled Datepicker"
+}

@@ -22,6 +22,7 @@ const inputStyles = `
   focus:jn-ring-2
   focus:jn-ring-theme-focus
   disabled:jn-opacity-50
+  disabled:jn-cursor-not-allowed
   autofill:jn-bg-theme-textinput-autofill
   autofill:jn-text-theme-textinput-autofill
 `
@@ -44,6 +45,18 @@ const labelStyles = `
   jn-pointer-events-none
   jn-top-2
   jn-left-[0.9375rem]
+`
+
+const defaultBorderStyles = `
+  jn-border-theme-textinput-default
+`
+
+const invalidstyles = `
+  jn-border-theme-error
+`
+
+const validstyles = `
+  jn-border-theme-success
 `
 
 /** A Datepicker component. Highly configurable, based on Flatpickr. */
@@ -94,18 +107,25 @@ export const Datepicker = ({
   disabled,
   enableTime,
   id,
+  invalid,
   label,
   maxDate,
   minDate,
   mode,
+  onChange,
   placeholder,
   required,
+  valid,
   value,
   width,
   ...props
 }) => {
   
   const theId = id ||  "juno-textinput-" + useId()
+  
+  const handleChange = ( date ) => {
+    onChange && onChange(date)
+  }
   
   return (
     <div className={`
@@ -117,11 +137,14 @@ export const Datepicker = ({
       <Flatpickr 
         className={`
           juno-dateppicker-input
-          ${inputStyles}
+          ${ inputStyles }
+          ${ defaultBorderStyles }
           ${ label ? withLabelStyles : noLabelStyles }
           ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
-          ${className}
+          ${ className }
         `}
+        disabled={disabled}
+        onChange={handleChange}
         {...props}
       />
       { label && label.length ?
@@ -144,15 +167,22 @@ export const Datepicker = ({
 Datepicker.propTypes = {
   /** Pass custom classNames. These will be appended to the input element of the Datepicker. */
   className: PropTypes.string,
+  /** Whether the Datepicker is disabled */
   disabled: PropTypes.bool,
   /** The id of the datepicker input */
   id: PropTypes.string,
+  /** TODO: Whether the Datepicker has been unsuccessfully validated */
+  invalid: PropTypes.bool,
   /** The label of the datepicker */
   label: PropTypes.string,
   /** The mode of the Datepicker. */
   mode: PropTypes.oneOf(["single", "multiple", "range", "time"]),
+  /** A handler to be executed when the selected date or range changes */
+  onChange: PropTypes.func,
   /** The placeholder of the input element. Defaults to empty string `""`. TODO: default to expected date format */
   placeholder: PropTypes.string,
+  /** TODO: Whether the Datepicker has been successfully validated */
+  valid: PropTypes.bool,
   /** The width of the datepicker input. Either 'full' (default) or 'auto'. */
   width: PropTypes.oneOf(["full", "auto"]),
 }
@@ -161,8 +191,11 @@ Datepicker.defaultProps = {
   className: "",
   disabled: false,
   id: "",
+  invalid: false,
   label: "",
   mode: "single", 
+  onChange: undefined,
   placeholder: "",
+  valid: false,
   width: "full",
 }
