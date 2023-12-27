@@ -55,8 +55,16 @@ Required.args = {
 }
 
 export const WithClearButton = Template.bind({})
+WithClearButton.parameters = {
+  docs: {
+    description: {
+      story: "The clear button will only be visible when a date is selected."
+    }
+  }
+}
 WithClearButton.args = {
   clear: true,
+  value: "2024-01-01"
 }
 
 export const Valid = Template.bind({})
