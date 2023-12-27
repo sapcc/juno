@@ -9,6 +9,10 @@ export default {
       options: ["single", "multiple", "range", "time"],
       control: { type: 'select' },
     },
+    width: {
+      options: ["auto", "full"],
+      control: { type: "radio" },
+    }
   }
 }
 
@@ -28,6 +32,12 @@ export const Disabled = Template.bind({})
 Disabled.args = {
   disabled: true,
   label: "Disabled Datepicker"
+}
+
+export const Required = Template.bind({})
+Required.args = {
+  label: "Date is required",
+  required: true,
 }
 
 export const Valid = Template.bind({})

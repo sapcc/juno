@@ -66,21 +66,12 @@ const validStyles = `
     * id (same)
     * disabled (double-check/clarify so we can disable the input, not disable certain dates, disable ≠ disabled!)
     * readOnly
-    * label (try whether we can add a floating label using the existing wrapper, or need to add another one)
-    * valid
-    * invalid
-    * error (handle identically -> passing error message sets field to error)
-    * errortext
-    * success (see above)
-    * successtext
-    * required
     * autoFocus (if possible, determine whether this would open the calendar, too)
-    * helptext
-    * width
     * autoComplete
-    * onChange (used by Flatpickr?)
-    * onFocus (used by Flatpickr?)
-    * onBlur (used by Flatpickr?)
+    * mode
+    * options
+    * onFocus ( not exposed by Flatpickr )
+    * onBlur ( not exposed by Flatpickr )
 
  */
  
@@ -112,6 +103,7 @@ export const Datepicker = ({
   minDate,
   mode,
   onChange,
+  options,
   placeholder,
   required,
   successtext,
@@ -169,8 +161,12 @@ export const Datepicker = ({
           ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
           ${ className }
         `}
+        defaultValue={defaultValue}
         disabled={disabled}
+        mode={mode}
         onChange={handleChange}
+        options={options}
+        value={value}
         {...props}
       />
       { label && label.length ?
@@ -208,6 +204,8 @@ export const Datepicker = ({
 Datepicker.propTypes = {
   /** Pass custom classNames. These will be appended to the input element of the Datepicker. */
   className: PropTypes.string,
+  /** TODO: defaultValue -> proptypes ? */
+  defaultValue: PropTypes.string,
   /** Whether the Datepicker is disabled */
   disabled: PropTypes.bool,  
   /** A text to render when the Datepicker has an error or could not be validated */
@@ -224,18 +222,25 @@ Datepicker.propTypes = {
   mode: PropTypes.oneOf(["single", "multiple", "range", "time"]),
   /** A handler to be executed when the selected date or range changes */
   onChange: PropTypes.func,
+  /** Pass any Flatpickr options */
+  options: PropTypes.object,
   /** The placeholder of the input element. Defaults to empty string `""`. TODO: default to expected date format */
   placeholder: PropTypes.string,
+  /** Whether the datepicker should be marked as required. Requires a `Label` to be set. */
+  required: PropTypes.bool,
   /** A text to render when the Datepicker was successfully validated */
   successtext: PropTypes.node,
   /** TODO: Whether the Datepicker has been successfully validated */
   valid: PropTypes.bool,
+  /** TODO: value -> proptypes? */
+  value: PropTypes.oneOf([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
   /** The width of the datepicker input. Either 'full' (default) or 'auto'. */
   width: PropTypes.oneOf(["full", "auto"]),
 }
 
 Datepicker.defaultProps = {
   className: "",
+  defaultValue: undefined,
   disabled: false,
   errortext: "",
   helptext: "",
@@ -244,8 +249,11 @@ Datepicker.defaultProps = {
   label: "",
   mode: "single", 
   onChange: undefined,
+  options: {},
   placeholder: "",
+  required: false,
   successtext: "",
   valid: false,
+  value: undefined,
   width: "full",
 }
