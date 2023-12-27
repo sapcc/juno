@@ -51,6 +51,12 @@ describe("Datepicker", () => {
     expect(screen.getByRole("textbox")).toBeDisabled()
   })
   
+  test("renders a Clear button if passed and when a date is set", async () => {
+    render(<Datepicker clear value="2027-01-12" />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByTitle("Clear")).toBeInTheDocument()
+  })
+  
   test("renders a helptext as passed", async () => {
     render(<Datepicker helptext="this is a helptext"/>)
     expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
@@ -62,12 +68,14 @@ describe("Datepicker", () => {
     render(<Datepicker valid />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveClass("juno-datepicker-input-valid")
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
   
   test("renders an invalid datepicker as passed", async () => {
     render(<Datepicker invalid />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveClass("juno-datepicker-input-invalid")
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
   })
   
   test("renders a successtext as passed and validates the element", async () => {
@@ -76,6 +84,7 @@ describe("Datepicker", () => {
     expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-success")
     expect(document.querySelector(".juno-form-hint")).toHaveTextContent("great success!")
     expect(screen.getByRole("textbox")).toHaveClass("juno-datepicker-input-valid")
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
   })
   
   test("renders an errortext as passed and invalidates the element", async () => {
@@ -84,6 +93,7 @@ describe("Datepicker", () => {
     expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-error")
     expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is an error!")
     expect(screen.getByRole("textbox")).toHaveClass("juno-datepicker-input-invalid")
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
   })
   
   test("renders a className as passed", async () => {

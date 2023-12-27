@@ -58,10 +58,17 @@ const validStyles = `
 `
 
 const clearStyles = `
-  jn-absolute 
-  jn-inline-flex 
-  jn-right-5
+   
+  
+  
+`
+
+const iconContainerStyles = `
+  jn-absolute
+  jn-inline-flex
   jn-top-1.5
+  jn-right-5
+  jn-gap-1.5
 `
 
 /** A Datepicker component. Highly configurable, based on Flatpickr. */
@@ -241,18 +248,30 @@ export const Datepicker = ({
           ""
       }
       
-      { clear && theDate ?
-          <Icon 
-            icon="close"
-            title="Clear"
-            size="24"
-            onClick={handleClearClick}
-            disabled={disabled}
-            className={`${clearStyles}`}
-          />
-        :
-          ""
-      }
+      <div className={`juno-datepicker-icon-container ${iconContainerStyles}`}>
+        { clear && theDate ?
+            <Icon 
+              icon="close"
+              title="Clear"
+              size="24"
+              onClick={handleClearClick}
+              disabled={disabled}
+              className={`${clearStyles}`}
+            />
+          :
+            ""
+        }
+        { isInvalid ? 
+            <Icon icon="dangerous" color="jn-text-theme-error" />
+          : 
+            ""
+        }
+        { isValid ? 
+            <Icon icon="checkCircle" color="jn-text-theme-success" />
+          : 
+            ""
+        }
+      </div>
       
       { errortext && isNotEmptyString(errortext) ?
           <FormHint text={errortext} variant="error" className="jn-mt-0" />
