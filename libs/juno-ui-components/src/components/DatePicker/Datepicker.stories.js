@@ -12,7 +12,16 @@ export default {
     width: {
       options: ["auto", "full"],
       control: { type: "radio" },
-    }
+    },
+    errortext: {
+      control: false,
+    },
+    helptext: {
+      control: false,
+    },
+    successtext: {
+      control: false,
+    },
   }
 }
 
@@ -28,6 +37,11 @@ WithLabel.args = {
   label: "Datepicker Label"
 }
 
+export const WithPlaceholder = Template.bind({})
+WithPlaceholder.args = {
+  placeholder: "Select a date…"
+}
+
 export const Disabled = Template.bind({})
 Disabled.args = {
   disabled: true,
@@ -38,6 +52,11 @@ export const Required = Template.bind({})
 Required.args = {
   label: "Date is required",
   required: true,
+}
+
+export const WithClearButton = Template.bind({})
+WithClearButton.args = {
+  clear: true,
 }
 
 export const Valid = Template.bind({})
