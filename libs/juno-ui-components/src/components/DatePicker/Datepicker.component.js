@@ -117,7 +117,7 @@ export const Datepicker = ({
     return !(typeof str === 'string' && str.trim().length === 0)
   }
   
-  const theId = id ||  "juno-textinput-" + useId()
+  const theId = id ||  "juno-datepicker-" + useId()
   
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
@@ -163,6 +163,7 @@ export const Datepicker = ({
         `}
         defaultValue={defaultValue}
         disabled={disabled}
+        id={theId}
         mode={mode}
         onChange={handleChange}
         options={options}
