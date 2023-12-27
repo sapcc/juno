@@ -27,10 +27,10 @@ const App = (props = {}) => {
   return (
     <QueryClientProvider client={queryClient}>
       <AsyncWorker />
-      <AppBody>
+      <AppBody data-testid="greenhouse-management">
         <OrgInfo />
         <MainContainer>
-          <MainContainerInner>
+          <MainContainerInner fullWidth={true}>
             <SideNav />
             <ContentContainer>
               <MessagesProvider>
