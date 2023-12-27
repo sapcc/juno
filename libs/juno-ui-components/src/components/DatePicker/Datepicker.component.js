@@ -1,8 +1,9 @@
-import React, { useEffect, useId, useState } from "react"
+import React, { useEffect, useId, useMemo, useState } from "react"
 import PropTypes from "prop-types"
 import Flatpickr from "react-flatpickr"
 import { TextInput } from "../TextInput/index"
 import { Label } from "../Label/index"
+import { FormHint } from "../FormHint/FormHint.component"
 import "flatpickr/dist/themes/dark.css" // use inbuilt flatpickr styles for now
 
 const wrapperStyles = `
@@ -27,10 +28,6 @@ const inputStyles = `
   autofill:jn-text-theme-textinput-autofill
 `
 
-const defaultborderstyles = `
-  jn-border-theme-textinput-default
-`
-
 const withLabelStyles = `
   jn-pt-[1.125rem] 
   jn-pb-1
@@ -51,11 +48,11 @@ const defaultBorderStyles = `
   jn-border-theme-textinput-default
 `
 
-const invalidstyles = `
+const invalidStyles = `
   jn-border-theme-error
 `
 
-const validstyles = `
+const validStyles = `
   jn-border-theme-success
 `
 
@@ -106,6 +103,8 @@ export const Datepicker = ({
   defaultValue,
   disabled,
   enableTime,
+  errortext,
+  helptext,
   id,
   invalid,
   label,
@@ -115,13 +114,38 @@ export const Datepicker = ({
   onChange,
   placeholder,
   required,
+  successtext,
   valid,
   value,
   width,
   ...props
 }) => {
   
+  const isNotEmptyString = (str) => {
+    return !(typeof str === 'string' && str.trim().length === 0)
+  }
+  
   const theId = id ||  "juno-textinput-" + useId()
+  
+  const [isInvalid, setIsInvalid] = useState(false)
+  const [isValid, setIsValid] = useState(false)
+  
+  const invalidated = useMemo(
+    () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
+    [invalid, errortext]
+  )
+  const validated = useMemo(
+    () => valid || (successtext && isNotEmptyString(successtext) ? true : false),
+    [valid, successtext]
+  )
+  
+  useEffect(() => {
+    setIsInvalid(invalidated)
+  }, [invalidated])
+  
+  useEffect(() => {
+    setIsValid(validated)
+  }, [validated])
   
   const handleChange = ( date ) => {
     onChange && onChange(date)
@@ -138,8 +162,10 @@ export const Datepicker = ({
         className={`
           juno-dateppicker-input
           ${ inputStyles }
-          ${ defaultBorderStyles }
           ${ label ? withLabelStyles : noLabelStyles }
+          ${ isInvalid ? invalidStyles : "" } 
+          ${ isValid ? validStyles : "" }  
+          ${ isValid || isInvalid ? "" : defaultBorderStyles } 
           ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
           ${ className }
         `}
@@ -160,6 +186,21 @@ export const Datepicker = ({
         :
           ""
       }
+      { errortext && isNotEmptyString(errortext) ?
+          <FormHint text={errortext} variant="error" className="jn-mt-0" />
+        :
+          ""
+      }
+      { successtext && isNotEmptyString(successtext) ?
+          <FormHint text={successtext} variant="success" className="jn-mt-0"/>
+        :
+          ""
+      }
+      { helptext && isNotEmptyString(helptext) ?
+          <FormHint text={helptext} className="jn-mt-0" />
+        :
+          ""
+       }
     </div>
   )
 }
@@ -168,7 +209,11 @@ Datepicker.propTypes = {
   /** Pass custom classNames. These will be appended to the input element of the Datepicker. */
   className: PropTypes.string,
   /** Whether the Datepicker is disabled */
-  disabled: PropTypes.bool,
+  disabled: PropTypes.bool,  
+  /** A text to render when the Datepicker has an error or could not be validated */
+  errortext: PropTypes.node,
+  /** A helptext to render to explain meaning and significance of the Datepicker */
+  helptext: PropTypes.node,
   /** The id of the datepicker input */
   id: PropTypes.string,
   /** TODO: Whether the Datepicker has been unsuccessfully validated */
@@ -181,6 +226,8 @@ Datepicker.propTypes = {
   onChange: PropTypes.func,
   /** The placeholder of the input element. Defaults to empty string `""`. TODO: default to expected date format */
   placeholder: PropTypes.string,
+  /** A text to render when the Datepicker was successfully validated */
+  successtext: PropTypes.node,
   /** TODO: Whether the Datepicker has been successfully validated */
   valid: PropTypes.bool,
   /** The width of the datepicker input. Either 'full' (default) or 'auto'. */
@@ -190,12 +237,15 @@ Datepicker.propTypes = {
 Datepicker.defaultProps = {
   className: "",
   disabled: false,
+  errortext: "",
+  helptext: "",
   id: "",
   invalid: false,
   label: "",
   mode: "single", 
   onChange: undefined,
   placeholder: "",
+  successtext: "",
   valid: false,
   width: "full",
 }

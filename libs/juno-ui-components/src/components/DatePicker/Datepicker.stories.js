@@ -29,3 +29,28 @@ Disabled.args = {
   disabled: true,
   label: "Disabled Datepicker"
 }
+
+export const Valid = Template.bind({})
+Valid.args = {
+  valid: true,
+}
+
+export const Invalid = Template.bind({})
+Invalid.args = {
+  invalid: true,
+}
+
+export const WithHelptext = Template.bind({})
+WithHelptext.args = {
+  helptext: <>Helptext with a <a href="#">link</a></>
+}
+
+export const WithErrortext = Template.bind({})
+WithErrortext.args = {
+  errortext: "Some error occurred"
+}
+
+export const WithSuccesstext = Template.bind({})
+WithSuccesstext.args = {
+  successtext: "Some success!"
+}
