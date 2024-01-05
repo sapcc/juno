@@ -104,19 +104,6 @@ const SilenceScheduled = () => {
       })
   }
 
-  const handleEditableLabelChange = (event, editable_label) => {
-    setFormState({
-      ...formState,
-      editable_labels: {
-        ...formState.editable_labels,
-        [editable_label]: {
-          value: event.target.value,
-          error: null,
-        },
-      },
-    })
-  }
-
   const validateLabelValue = (value) => {
     try {
       return !!new RegExp(value)
@@ -131,13 +118,11 @@ const SilenceScheduled = () => {
 
     // validate if comment is at least 3 characters long
     if (formState?.comment?.value.length < 3) {
-      setFormState({
-        ...formState,
-        comment: {
-          ...formState.comment,
-          error: "Please enter at least 3 characters",
-        },
-      })
+      setFormState(
+        produce((formState) => {
+          formState.comment.error = "Please enter at least 3 characters"
+        })
+      )
       errorexist = true
     }
 
@@ -149,30 +134,24 @@ const SilenceScheduled = () => {
       if (
         !validateLabelValue(formState.editable_labels[editable_label].value)
       ) {
-        setFormState({
-          ...formState,
-          editable_labels: {
-            ...formState.editable_labels,
-            [editable_label]: {
-              ...formState.editable_labels[editable_label],
-              error: `Value for ${editable_label} is not a valid regular expression`,
-            },
-          },
-        })
+        setFormState(
+          produce((formState) => {
+            formState.editable_labels[
+              editable_label
+            ].error = `Value for ${editable_label} is not a valid regular expression`
+          })
+        )
         errorexist = true
       }
 
       if (!formState.editable_labels[editable_label].value) {
-        setFormState({
-          ...formState,
-          editable_labels: {
-            ...formState.editable_labels,
-            [editable_label]: {
-              ...formState.editable_labels[editable_label],
-              error: `Value for ${editable_label} is empty`,
-            },
-          },
-        })
+        setFormState(
+          produce((formState) => {
+            formState.editable_labels[
+              editable_label
+            ].error = `Value for ${editable_label} is empty`
+          })
+        )
         errorexist = true
       }
     })
@@ -282,14 +261,12 @@ const SilenceScheduled = () => {
                     value={formState.comment.value}
                     errortext={formState.comment.error}
                     onChange={(e) =>
-                      setFormState({
-                        ...formState,
-                        comment: {
-                          ...formState.comment,
-                          value: e.target.value,
-                          error: null,
-                        },
-                      })
+                      setFormState(
+                        produce((formState) => {
+                          formState.comment.value = e.target.value
+                          formState.comment.error = null
+                        })
+                      )
                     }
                   ></Textarea>
                 </FormRow>
@@ -318,7 +295,16 @@ const SilenceScheduled = () => {
                               formState?.editable_labels[editable_label]?.error
                             }
                             onChange={(e) =>
-                              handleEditableLabelChange(e, editable_label)
+                              setFormState(
+                                produce((formState) => {
+                                  formState.editable_labels[
+                                    editable_label
+                                  ].value = e.target.value
+                                  formState.editable_labels[
+                                    editable_label
+                                  ].error = null
+                                })
+                              )
                             }
                           />
                         )
