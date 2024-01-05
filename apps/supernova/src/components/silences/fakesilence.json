@@ -18,6 +18,16 @@
     "status": "active",
     "title": "fake"
   },
+
+  {
+    "description": "This is a Test silence",
+    "editable_labels": ["May", "The", "Force", "Be", "With", "You"],
+    "fixed_labels": {
+      "fakelabel": "fakelabel8000"
+    },
+    "status": "active",
+    "title": "This is another fake silence"
+  },
   {
     "description": "This is a no label",
     "editable_labels": [],
