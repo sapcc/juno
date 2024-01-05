@@ -360,7 +360,50 @@ Datepicker.defaultProps = {
   onOpen: undefined,
   onValueUpdate: undefined,
   onYearChange: undefined,
-  options: {},
+  options: {
+    altFormat: "F j, Y",
+    altInput: false,
+    altInputClass: "",
+    allowInput: false,
+    allowInvalidPreload: false,
+    //     appendTo: null,  --> error
+    ariaDateFormat: "F j, Y",
+    conjunction: null,
+    clickOpens: true,
+    dateFormat: "Y-m-d",
+    defaultDate: null,
+    defaultHour: 12,
+    defaultMinute: 0,
+    disable: [],
+    disableMobile: false,
+    // enable: undefined,  --> error
+    enableTime: false,
+    enableSeconds: false,
+    //formatDate: null,  --> error
+    hourIncrement: 1,
+    inline: false,
+    maxDate: null,
+    minDate: null,
+    mode: "single",
+    // nextArrow: ">", --> use ours, do not allow to customize?
+    noCalendar: false,
+    // onChange: null,  --> merge with explicit prop
+    // onClose: null,
+    // onOpen: null,
+    // onReady: null,
+    parseDate: false,
+    // Where the calendar is rendered relative to the input vertically and horizontally. In the format of "[vertical] [horizontal]". Vertical can be auto, above or below (required). Horizontal can be left, center or right.  e.g. "above" or "auto center"
+    position: "auto",
+    positionElement: null,
+    // prevArrow: ">", --> use ours, do not allow to customize?
+    shorthandCurrentMonth: false,
+    static: false,
+    showMonths: 1,
+    time_24hr: false,
+    weekNumbers: false,
+    // wrap: false, --> custom elements, do not expose
+    monthSelectorType: "dropdown",
+  },
   placeholder: "",
   required: false,
   successtext: "",
