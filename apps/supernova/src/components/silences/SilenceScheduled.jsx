@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import produce from "immer"
 
 import { Messages, useActions } from "messages-provider"
 import {
@@ -39,10 +40,12 @@ const DEFAULT_FORM_VALUES = {
   startAt: "2012-12-20T13:37",
   endAt: "2012-12-21T16:00",
   fixed_labels: {},
+  editable_labels: {},
   comment: {
     value: "",
     error: null,
   },
+  createdBy: "",
 }
 
 const SilenceScheduled = () => {
@@ -61,10 +64,10 @@ const SilenceScheduled = () => {
 
     // reset form state with default values
     setFormState({
-      ...formState,
-      ...DEFAULT_FORM_VALUES,
+      DEFAULT_FORM_VALUES,
       createdBy: authData?.parsed?.fullName,
     })
+
     // reset other states
     setSuccess(null)
   }, [displayNewScheduledSilence, selected])
