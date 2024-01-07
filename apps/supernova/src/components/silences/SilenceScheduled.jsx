@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useLayoutEffect } from "react"
 import produce from "immer"
 
 import { Messages, useActions } from "messages-provider"
@@ -15,26 +15,10 @@ import {
   Pill,
   FormSection,
 } from "juno-ui-components"
-import {
-  useAuthData,
-  useSilencesExcludedLabels,
-  useGlobalsApiEndpoint,
-  useSilencesActions,
-  useAlertEnrichedLabels,
-} from "../../hooks/useAppStore"
+import { useAuthData } from "../../hooks/useAppStore"
 import { post } from "../../api/client"
-import AlertDescription from "../alerts/shared/AlertDescription"
-import SilenceNewAdvanced from "./SilenceNewAdvanced"
-import { DateTime } from "luxon"
-import {
-  latestExpirationDate,
-  DEFAULT_DURATION_OPTIONS,
-  getSelectOptions,
-  setupMatchers,
-} from "./silenceHelpers"
 import { parseError } from "../../helpers"
 import fakesilence from "./fakesilence.json"
-import { C } from "juno-ui-components/build/ContentContainer.component-700aac71"
 
 const DEFAULT_FORM_VALUES = {
   startAt: "2012-12-20T13:37",
@@ -42,35 +26,19 @@ const DEFAULT_FORM_VALUES = {
   fixed_labels: {},
   editable_labels: {},
   comment: {
-    value: "",
+    value: " ",
     error: null,
   },
   createdBy: "",
 }
 
-const SilenceScheduled = () => {
+const SilenceScheduled = (props) => {
   const authData = useAuthData()
   const [formState, setFormState] = useState(DEFAULT_FORM_VALUES)
-
-  const [displayNewScheduledSilence, setDisplayNewScheduledSilence] =
-    useState(false)
 
   const [success, setSuccess] = useState(null)
   const [selected, setSelected] = useState(null)
   const { addMessage } = useActions()
-
-  useEffect(() => {
-    if (!displayNewScheduledSilence) return
-
-    // reset form state with default values
-    setFormState({
-      DEFAULT_FORM_VALUES,
-      createdBy: authData?.parsed?.fullName,
-    })
-
-    // reset other states
-    setSuccess(null)
-  }, [displayNewScheduledSilence, selected])
 
   const onSubmitForm = () => {
     setSuccess(null)
