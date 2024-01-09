@@ -15,8 +15,8 @@ import {
   Pill,
   FormSection,
 } from "juno-ui-components"
-import { useAuthData } from "../../hooks/useAppStore"
-import { post } from "../../api/client"
+import { useAuthData, useGlobalsApiEndpoint } from "../../hooks/useAppStore"
+import { post, get } from "../../api/client"
 import { parseError } from "../../helpers"
 import fakesilence from "./fakesilence.json"
 
@@ -37,7 +37,29 @@ const SilenceScheduled = (props) => {
   const [formState, setFormState] = useState(DEFAULT_FORM_VALUES)
   const [success, setSuccess] = useState(null)
   const [selected, setSelected] = useState(null)
-  const { addMessage } = useActions()
+  const { addMessage, resetMessages } = useActions()
+
+  const apiEndpoint = useGlobalsApiEndpoint()
+
+  /*
+
+  const [template, setTemplate] = useState(null)
+  useEffect(() => {
+    get(`${apiEndpoint}/silence-templates`)
+      .then((response) => response.json())
+      .then((templates) => {
+        console.log("templates", templates)
+        setTemplate(templates)
+      })
+      .catch((error) =>
+        addMessage({
+          variant: "error",
+          text: parseError(error),
+        })
+      )
+  }, [])
+
+  */
 
   // useEffect to init callback after rendering. This is needed to reopen the SilencedScheduledWrapper closing the modal
   const [closed, setClosed] = useState(false)
@@ -49,6 +71,9 @@ const SilenceScheduled = (props) => {
 
   // submit
   const onSubmitForm = () => {
+    // reset errors.
+    resetMessages()
+
     setSuccess(null)
 
     if (!validateForm()) {
