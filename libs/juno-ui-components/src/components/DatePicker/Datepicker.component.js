@@ -335,7 +335,7 @@ Datepicker.propTypes = {
   required: PropTypes.bool,
   /** A text to render when the Datepicker was successfully validated */
   successtext: PropTypes.node,
-  /** TODO: Whether the Datepicker has been successfully validated */
+  /** Whether the Datepicker has been successfully validated */
   valid: PropTypes.bool,
   /** The value of the datepicker. Date Objects, timestamps, ISO date strings, chronological date strings `YYYY-MM-DD HH:MM`, and the shortcut `today` are all accepted. */
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
@@ -401,7 +401,7 @@ Datepicker.defaultProps = {
     showMonths: 1,
     time_24hr: false,
     weekNumbers: false,
-    // wrap: false, --> custom elements, do not expose
+    // wrap: false, --> custom elements, do not expose?
     monthSelectorType: "dropdown",
   },
   placeholder: "",
