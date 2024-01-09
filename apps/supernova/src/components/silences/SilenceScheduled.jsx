@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react"
+import React, { useEffect, useState } from "react"
 import produce from "immer"
 
 import { Messages, useActions } from "messages-provider"
@@ -26,7 +26,7 @@ const DEFAULT_FORM_VALUES = {
   fixed_labels: {},
   editable_labels: {},
   comment: {
-    value: " ",
+    value: "",
     error: null,
   },
   createdBy: "",
@@ -35,11 +35,19 @@ const DEFAULT_FORM_VALUES = {
 const SilenceScheduled = (props) => {
   const authData = useAuthData()
   const [formState, setFormState] = useState(DEFAULT_FORM_VALUES)
-
   const [success, setSuccess] = useState(null)
   const [selected, setSelected] = useState(null)
   const { addMessage } = useActions()
 
+  // useEffect to init callback after rendering. This is needed to reopen the SilencedScheduledWrapper closing the modal
+  const [closed, setClosed] = useState(false)
+  useEffect(() => {
+    if (closed) {
+      props.callbackOnClose()
+    }
+  }, [closed])
+
+  // submit
   const onSubmitForm = () => {
     setSuccess(null)
 
@@ -47,19 +55,36 @@ const SilenceScheduled = (props) => {
       return
     }
 
-    let labelValues = {}
+    const silence = {
+      startAt: formState.startAt,
+      endAt: formState.endAt,
+      comment: formState.comment.value,
+      createdBy: formState.createdBy,
+      matcher: [],
+    }
 
-    // add fixed labels with values to the formState.labelValues object
-    Object.keys(formState.fixed_labels).forEach((label) => {
-      labelValues[label] = formState.fixed_labels[label]
-    })
+    for (const [key, value] of Object.entries(formState.editable_labels)) {
+      silence.matcher.push({
+        name: key,
+        value: value.value,
+        isRegex: true,
+      })
+    }
 
-    let newSilence = { ...formState, labelValues: labelValues }
-    console.log(newSilence)
+    for (const [key, value] of Object.entries(formState.fixed_labels)) {
+      silence.matcher.push({
+        name: key,
+        value: value,
+        isRegex: true,
+      })
+    }
+
+    console.log("silence", silence)
+
     // submit silence
     // post(`${apiEndpoint}/silences`, {
     post(`localhost/silences`, {
-      body: JSON.stringify(newSilence),
+      body: JSON.stringify(silence),
     })
       .then((data) => {
         setSuccess(data)
@@ -70,14 +95,6 @@ const SilenceScheduled = (props) => {
           text: parseError(error),
         })
       })
-  }
-
-  const validateLabelValue = (value) => {
-    try {
-      return !!new RegExp(value)
-    } catch (e) {
-      return false
-    }
   }
 
   const validateForm = () => {
@@ -137,6 +154,14 @@ const SilenceScheduled = (props) => {
     return true
   }
 
+  const validateLabelValue = (value) => {
+    try {
+      return !!new RegExp(value)
+    } catch (e) {
+      return false
+    }
+  }
+
   return (
     <Modal
       title="Schedule new silence"
@@ -144,6 +169,7 @@ const SilenceScheduled = (props) => {
       open={true}
       confirmButtonLabel={success ? null : "Save"}
       onConfirm={success ? null : onSubmitForm}
+      onCancel={() => setClosed(true)}
     >
       <Messages />
 
@@ -164,33 +190,38 @@ const SilenceScheduled = (props) => {
                 label="Silence Template"
                 value={selected?.title || "Select"}
               >
-                {fakesilence?.map((option) => (
-                  <SelectOption
-                    key={option.title}
-                    label={option.title}
-                    value={option.title}
-                    onClick={() => {
-                      setSelected(option)
-                      // reset formState with default values
-                      setFormState({
-                        ...DEFAULT_FORM_VALUES,
-                        fixed_labels: option?.fixed_labels || {},
-                        createdBy: authData?.parsed?.fullName,
-                        // Editlabels Object with empty values and errors null
-                        editable_labels: option?.editable_labels?.reduce(
-                          (acc, label) => ({
-                            ...acc,
-                            [label]: {
-                              value: "",
-                              error: null,
-                            },
-                          }),
-                          {}
-                        ),
-                      })
-                    }}
-                  />
-                ))}
+                {fakesilence?.map(
+                  (option, index) => (
+                    console.log("option", index),
+                    (
+                      <SelectOption
+                        key={index}
+                        label={option.title}
+                        value={option.title}
+                        onClick={() => {
+                          setSelected(option)
+                          // reset formState with default values
+                          setFormState({
+                            ...DEFAULT_FORM_VALUES,
+                            fixed_labels: option?.fixed_labels || {},
+                            createdBy: authData?.parsed?.fullName,
+                            // Editlabels Object with empty values and errors null
+                            editable_labels: option?.editable_labels?.reduce(
+                              (acc, label) => ({
+                                ...acc,
+                                [label]: {
+                                  value: "",
+                                  error: null,
+                                },
+                              }),
+                              {}
+                            ),
+                          })
+                        }}
+                      />
+                    )
+                  )
+                )}
               </Select>
             </FormRow>
 

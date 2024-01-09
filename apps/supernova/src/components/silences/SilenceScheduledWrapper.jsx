@@ -7,6 +7,11 @@ const SilenceScheduledWrapper = () => {
   const [displayNewScheduledSilence, setDisplayNewScheduledSilence] =
     useState(false)
 
+  // function which sets displayNewScheduledSilence to false
+  const callbackOnClose = () => {
+    setDisplayNewScheduledSilence(false)
+  }
+
   return (
     <>
       <MessagesProvider>
@@ -18,7 +23,9 @@ const SilenceScheduledWrapper = () => {
         >
           Silence
         </Button>
-        {displayNewScheduledSilence && <SilenceScheduled />}
+        {displayNewScheduledSilence && (
+          <SilenceScheduled callbackOnClose={callbackOnClose} />
+        )}
       </MessagesProvider>
     </>
   )
