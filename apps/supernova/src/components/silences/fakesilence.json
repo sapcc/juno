@@ -46,5 +46,16 @@
     },
     "status": "active",
     "title": "Viele Fixed Labels"
+  },
+  {
+    "description": "Maintance für Spicesammler",
+    "editable_labels": [],
+    "fixed_labels": {
+      "Gerät": "Spicesammler",
+      "Planet": "Arrakis",
+      "Haus": "Harkonnen"
+    },
+    "status": "active",
+    "title": "Viele Fixed Labels"
   }
 ]
