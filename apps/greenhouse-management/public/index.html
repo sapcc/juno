@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <meta charset="UTF-8"/>
+    <link rel="icon" href="favicon.ico" sizes="any"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
 
     <title>Template Dev</title>
     <style>
@@ -26,9 +26,7 @@
     </style>
     <script>
       // automatically reload on build changes
-      new EventSource("/esbuild").addEventListener("change", () =>
-        location.reload()
-      )
+      new EventSource("/esbuild").addEventListener("change", () => location.reload())
     </script>
   </head>
   <body>
@@ -39,14 +37,15 @@
       data-version="latest"
       data-props-debug="true"
       data-props-initial-login="true"
-      data-props-mock="true"
+      data-props-issuer-url="https://auth.greenhouse-qa.eu-nl-1.cloud.sap/"
+      data-props-client-id="greenhouse"
     ></script>
 
     <script type="module">
       // appProps are generated in development env and added to the build
       import appProps from "./build/appProps.js"
-      import("./build/index.js").then((app) => {
-        app.mount(document.getElementById("root"), { props: appProps })
+      import ("./build/index.js").then((app) => {
+        app.mount(document.getElementById("root"), {props: appProps})
       })
     </script>
     <div id="root" data-juno-app="greenhouse-management"></div>
