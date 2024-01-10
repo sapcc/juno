@@ -83,10 +83,10 @@ const Plugin = ({ environment, apiEndpoint, currentHost }) => {
           name: "greenhouse-management",
           displayName: "Organization",
           navType: NAV_TYPES.MNG,
-          navigable: environment === "qa" || environment === "development",
           props: {
             assetsUrl: currentHost,
             apiEndpoint: apiEndpoint,
+            environment: environment,
           },
         }),
       },
