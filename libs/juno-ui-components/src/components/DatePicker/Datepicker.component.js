@@ -233,7 +233,6 @@ export const Datepicker = ({
           ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
           ${ className }
         `}
-        dateFormat={dateFormat}
         disabled={disabled}
         id={theId}
         onChange={handleChange}
