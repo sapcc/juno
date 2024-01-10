@@ -91,3 +91,24 @@ export const WithSuccesstext = Template.bind({})
 WithSuccesstext.args = {
   successtext: "Some success!"
 }
+
+export const WithTime = Template.bind({})
+WithTime.args = {
+  enableTime: true,
+  dateFormat: "Y-m-d H:i",
+}
+
+export const WithTwoMonths = Template.bind({})
+WithTwoMonths.args = {
+  showMonths: 2,
+}
+
+export const MultipleMode = Template.bind({})
+MultipleMode.args = {
+  mode: "multiple",
+}
+
+export const RangeMode = Template.bind({})
+RangeMode.args = {
+  mode: "range",
+}

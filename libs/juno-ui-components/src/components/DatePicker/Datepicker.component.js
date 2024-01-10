@@ -108,6 +108,7 @@ const iconContainerStyles = `
 export const Datepicker = ({
   className,
   clear,
+  dateFormat,
   defaultValue,
   disabled,
   enableTime,
@@ -129,6 +130,7 @@ export const Datepicker = ({
   options,
   placeholder,
   required,
+  showMonths,
   successtext,
   valid,
   value,
@@ -142,10 +144,21 @@ export const Datepicker = ({
   
   const theId = id ||  "juno-datepicker-" + useId()
   
+  const theOptions = { 
+    dateFormat, 
+    enableTime,
+    mode,
+    showMonths,
+    ...options,
+  }
+  
+  console.log(theOptions)
+  
   const [theDate, setTheDate] = useState( new Date() )
   const [isOpen, setisOpen] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
+  
   
   useEffect( () => {
     setTheDate(value)
@@ -220,16 +233,16 @@ export const Datepicker = ({
           ${ width == "auto" ? "jn-w-auto" : "jn-w-full" }
           ${ className }
         `}
+        dateFormat={dateFormat}
         disabled={disabled}
         id={theId}
-        mode={mode}
         onChange={handleChange}
         onClose={handleClose}
         onMonthChange={handleMonthChange}
         onOpen={handleOpen}
         onValueUpdate={handleValueUpdate}
         onYearChange={handleYearChange}
-        options={options}
+        options={theOptions}
         placeholder={placeholder}
         value={theDate}
         {...props}
@@ -327,8 +340,14 @@ Datepicker.propTypes = {
   onValueUpdate: PropTypes.func,
   /** A handler to be executed when the selected year changes */
   onYearChange: PropTypes.func,
-  /** Pass a Flatpickr options object. For available options, consult https://flatpickr.js.org/ */
-  options: PropTypes.object,
+  /** Pass a Flatpickr options object. For available options, consult https://flatpickr.js.org/. 
+  When an available key can also be passed explicitly as an individual prop, the latter will take precedence over the corresponding key in the `options` object. */
+  options: PropTypes.shape({
+    /** The format of the date to be displayed in the input field */
+    dateFormat: PropTypes.string,
+    enableTime: PropTypes.bool,
+    showMonths: PropTypes.number,
+  }),
   /** The placeholder of the input element. Defaults to empty string `""`. TODO: default to expected date format */
   placeholder: PropTypes.string,
   /** Whether the datepicker should be marked as required. Requires a `Label` to be set. */
@@ -346,8 +365,10 @@ Datepicker.propTypes = {
 Datepicker.defaultProps = {
   className: "",
   clear: false,
+  dateFormat: "Y-m-d",
   defaultValue: undefined,
   disabled: false,
+  enableTime: false,
   errortext: "",
   helptext: "",
   id: "",
@@ -361,51 +382,52 @@ Datepicker.defaultProps = {
   onValueUpdate: undefined,
   onYearChange: undefined,
   options: {
-    altFormat: "F j, Y",
-    altInput: false,
-    altInputClass: "",
-    allowInput: false,
-    allowInvalidPreload: false,
-    //     appendTo: null,  --> error
-    ariaDateFormat: "F j, Y",
-    conjunction: null,
-    clickOpens: true,
-    dateFormat: "Y-m-d",
-    defaultDate: null,
-    defaultHour: 12,
-    defaultMinute: 0,
-    disable: [],
-    disableMobile: false,
-    // enable: undefined,  --> error
-    enableTime: false,
-    enableSeconds: false,
-    //formatDate: null,  --> error
-    hourIncrement: 1,
-    inline: false,
-    maxDate: null,
-    minDate: null,
-    mode: "single",
-    // nextArrow: ">", --> use ours, do not allow to customize?
-    noCalendar: false,
-    // onChange: null,  --> merge with explicit prop
-    // onClose: null,
-    // onOpen: null,
-    // onReady: null,
-    parseDate: false,
-    // Where the calendar is rendered relative to the input vertically and horizontally. In the format of "[vertical] [horizontal]". Vertical can be auto, above or below (required). Horizontal can be left, center or right.  e.g. "above" or "auto center"
-    position: "auto",
-    positionElement: null,
-    // prevArrow: ">", --> use ours, do not allow to customize?
-    shorthandCurrentMonth: false,
-    static: false,
-    showMonths: 1,
-    time_24hr: false,
-    weekNumbers: false,
-    // wrap: false, --> custom elements, do not expose?
-    monthSelectorType: "dropdown",
+    // altFormat: "F j, Y",
+    // altInput: false,
+    // altInputClass: "",
+    // allowInput: false,
+    // allowInvalidPreload: false,
+    // //     appendTo: null,  --> error
+    // ariaDateFormat: "F j, Y",
+    // conjunction: null,
+    // clickOpens: true,
+    // dateFormat: "Y-m-d",
+    // defaultDate: null,
+    // defaultHour: 12,
+    // defaultMinute: 0,
+    // disable: [],
+    // disableMobile: false,
+    // // enable: undefined,  --> error
+    // enableTime: false,
+    // enableSeconds: false,
+    // //formatDate: null,  --> error
+    // hourIncrement: 1,
+    // inline: false,
+    // maxDate: null,
+    // minDate: null,
+    // mode: "single",
+    // // nextArrow: ">", --> use ours, do not allow to customize?
+    // noCalendar: false,
+    // // onChange: null,  --> merge with explicit prop
+    // // onClose: null,
+    // // onOpen: null,
+    // // onReady: null,
+    // parseDate: false,
+    // // Where the calendar is rendered relative to the input vertically and horizontally. In the format of "[vertical] [horizontal]". Vertical can be auto, above or below (required). Horizontal can be left, center or right.  e.g. "above" or "auto center"
+    // position: "auto",
+    // positionElement: null,
+    // // prevArrow: ">", --> use ours, do not allow to customize?
+    // shorthandCurrentMonth: false,
+    // static: false,
+    // showMonths: 1,
+    // time_24hr: false,
+    // weekNumbers: false,
+    // // wrap: false, --> custom elements, do not expose?
+    // monthSelectorType: "dropdown",
   },
   placeholder: "",
   required: false,
+  showMonths: 1,
   successtext: "",
   valid: false,
   value: undefined,
