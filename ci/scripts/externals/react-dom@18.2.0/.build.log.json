@@ -1,0 +1,22 @@
+{
+  "built": true,
+  "buildName": "react-dom@18.2.0",
+  "main": "index.js",
+  "dependencies": {
+    "react-dom": "react-dom@18.2.0/index.js",
+    "react": {
+      "main": "react@18.2.0/index.js",
+      "dependencies": {
+        "react": "react@18.2.0/index.js",
+        "react/index": "react@18.2.0/index.js",
+        "react/jsx-dev-runtime": "react@18.2.0/jsx-dev-runtime.js",
+        "react/jsx-runtime": "react@18.2.0/jsx-runtime.js"
+      }
+    },
+    "react-dom/index": "react-dom@18.2.0/index.js",
+    "react-dom/client": "react-dom@18.2.0/client.js",
+    "react-dom/profiling": "react-dom@18.2.0/profiling.js",
+    "react-dom/server.browser": "react-dom@18.2.0/server.browser.js",
+    "react-dom/test-utils": "react-dom@18.2.0/test-utils.js"
+  }
+}

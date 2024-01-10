@@ -1,0 +1,30 @@
+{
+  "built": true,
+  "buildName": "zustand@4.4.7",
+  "main": "./index.js",
+  "dependencies": {
+    "zustand": "zustand@4.4.7/./index.js",
+    "immer": {
+      "main": "immer@10.0.3/./dist/cjs/index.js",
+      "dependencies": {
+        "immer": "immer@10.0.3/./dist/cjs/index.js",
+        "immer/dist/cjs/index": "immer@10.0.3/dist/cjs/index.js"
+      }
+    },
+    "react": {
+      "main": "react@18.2.0/index.js",
+      "dependencies": {
+        "react": "react@18.2.0/index.js",
+        "react/index": "react@18.2.0/index.js",
+        "react/jsx-dev-runtime": "react@18.2.0/jsx-dev-runtime.js",
+        "react/jsx-runtime": "react@18.2.0/jsx-runtime.js"
+      }
+    },
+    "zustand/index": "zustand@4.4.7/index.js",
+    "zustand/context": "zustand@4.4.7/context.js",
+    "zustand/middleware": "zustand@4.4.7/middleware.js",
+    "zustand/shallow": "zustand@4.4.7/shallow.js",
+    "zustand/traditional": "zustand@4.4.7/traditional.js",
+    "zustand/vanilla": "zustand@4.4.7/vanilla.js"
+  }
+}

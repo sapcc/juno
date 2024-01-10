@@ -5,17 +5,7 @@ import esbuild from "esbuild"
 import cjsToEsm from "./cjs_to_esm_esbuild_plugin.js"
 import requireToImport from "./require_to_import_esbuild_plugin.js"
 import glob from "glob"
-
-// helpers for console log
-function colorize(color, output) {
-  return ["\x1b[", color, "m", output, "\x1b[0m"].join("")
-}
-const clear = "\x1b[2J\x1b[H"
-const green = (text) => colorize(32, text)
-const yellow = (text) => colorize(33, text)
-const red = (text) => colorize(31, text)
-const blue = (text) => colorize(34, text)
-const cyan = (text) => colorize(36, text)
+import { green, red, yellow, blue, cyan } from "./colors.mjs"
 
 function log(...args) {
   process.stdout.write(...args)
@@ -115,8 +105,7 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
   )
 
   if (fs.existsSync(buildLogPath)) {
-    log(" " + green("ALREADY PROCESSED"))
-    return JSON.parse(fs.readFileSync(buildLogPath))
+    return JSON.parse(fs.readFileSync(buildLogPath).toString())
   }
 
   const pkgPath = installNpmPackage(packageName, currentVersion, {
@@ -137,13 +126,16 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
   }
 
   for (let external in externals) {
-    const { built, buildName, main } = await convertToEsm(
+    const { built, buildName, main, dependencies } = await convertToEsm(
       external,
       externals[external],
       { buildDir, nodeModulesDir, indent: indent + "  ", verbose }
     )
     if (built) {
-      externalPackages[external] = `${buildName}/${main}`
+      externalPackages[external] = {
+        main: `${buildName}/${main}`,
+        dependencies,
+      }
     } else delete externals[external]
   }
 
@@ -153,7 +145,10 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
     const entryPointName = entryPoint
       .replace(pkgPath, packageName)
       .replace(/\.js$/, "")
-    externalPackages[entryPointName] = entryPoint.replace(pkgPath, packageName)
+    externalPackages[entryPointName] = entryPoint.replace(
+      pkgPath,
+      `${packageName}@${currentVersion}`
+    )
   })
 
   if (verbose)
@@ -195,6 +190,10 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
           cyan(" -> build in! ") +
           green("DONE")
       )
+      // remove it from externalPackages
+      delete externalPackages[
+        entryPoint.replace(pkgPath, packageName).replace(/\.js$/, "")
+      ]
     }
   }
 
@@ -211,24 +210,26 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
   return result
 }
 
-const start = Date.now()
-const buildDir = "./TEST/build"
-const nodeModulesDir = "./TEST/tmp"
-fs.rmSync(buildDir, { recursive: true, force: true })
-console.log(clear)
-console.log(yellow("========================START========================"))
-const packages = {
-  "react-dom": "18.2.0",
-  react: "18.2.0",
-  zustand: "*",
-  "@tanstack/react-query": "4.28.0",
-  "custom-event-polyfill": "^1.0.7",
-  luxon: "^2.3.0",
-  "prop-types": "^15.8.1",
-}
-for (let packageName in packages) {
-  const packageVersion = packages[packageName]
-  await convertToEsm(packageName, packageVersion, { buildDir, nodeModulesDir })
-}
+export default convertToEsm
 
-console.log("\n" + yellow("Done in " + (Date.now() - start) / 1000 + "s"))
+// const start = Date.now()
+// const buildDir = "./TEST/build"
+// const nodeModulesDir = "./TEST/tmp"
+// fs.rmSync(buildDir, { recursive: true, force: true })
+// console.log(clear)
+// console.log(yellow("========================START========================"))
+// const packages = {
+//   "react-dom": "18.2.0",
+//   react: "18.2.0",
+//   zustand: "*",
+//   "@tanstack/react-query": "4.28.0",
+//   "custom-event-polyfill": "^1.0.7",
+//   luxon: "^2.3.0",
+//   "prop-types": "^15.8.1",
+// }
+// for (let packageName in packages) {
+//   const packageVersion = packages[packageName]
+//   await convertToEsm(packageName, packageVersion, { buildDir, nodeModulesDir })
+// }
+
+// console.log("\n" + yellow("Done in " + (Date.now() - start) / 1000 + "s"))

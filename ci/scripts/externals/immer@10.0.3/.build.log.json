@@ -1,0 +1,9 @@
+{
+  "built": true,
+  "buildName": "immer@10.0.3",
+  "main": "./dist/cjs/index.js",
+  "dependencies": {
+    "immer": "immer@10.0.3/./dist/cjs/index.js",
+    "immer/dist/cjs/index": "immer@10.0.3/dist/cjs/index.js"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "built": true,
+  "buildName": "custom-event-polyfill@1.0.7",
+  "main": "polyfill.js",
+  "dependencies": {
+    "custom-event-polyfill": "custom-event-polyfill@1.0.7/polyfill.js",
+    "custom-event-polyfill/polyfill": "custom-event-polyfill@1.0.7/polyfill.js"
+  }
+}

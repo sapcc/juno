@@ -1,0 +1,56 @@
+{
+  "built": true,
+  "buildName": "@tanstack/react-query@4.28.0",
+  "main": "build/lib/index.js",
+  "dependencies": {
+    "@tanstack/react-query": "@tanstack/react-query@4.28.0/build/lib/index.js",
+    "react": {
+      "main": "react@18.2.0/index.js",
+      "dependencies": {
+        "react": "react@18.2.0/index.js",
+        "react/index": "react@18.2.0/index.js",
+        "react/jsx-dev-runtime": "react@18.2.0/jsx-dev-runtime.js",
+        "react/jsx-runtime": "react@18.2.0/jsx-runtime.js"
+      }
+    },
+    "react-dom": {
+      "main": "react-dom@18.2.0/index.js",
+      "dependencies": {
+        "react-dom": "react-dom@18.2.0/index.js",
+        "react": {
+          "main": "react@18.2.0/index.js",
+          "dependencies": {
+            "react": "react@18.2.0/index.js",
+            "react/index": "react@18.2.0/index.js",
+            "react/jsx-dev-runtime": "react@18.2.0/jsx-dev-runtime.js",
+            "react/jsx-runtime": "react@18.2.0/jsx-runtime.js"
+          }
+        },
+        "react-dom/index": "react-dom@18.2.0/index.js",
+        "react-dom/client": "react-dom@18.2.0/client.js",
+        "react-dom/profiling": "react-dom@18.2.0/profiling.js",
+        "react-dom/server.browser": "react-dom@18.2.0/server.browser.js",
+        "react-dom/test-utils": "react-dom@18.2.0/test-utils.js"
+      }
+    },
+    "react-native": {
+      "main": "react-native@0.73.2/undefined",
+      "dependencies": {
+        "react-native": "react-native@0.73.2/undefined",
+        "react": {
+          "main": "react@18.2.0/index.js",
+          "dependencies": {
+            "react": "react@18.2.0/index.js",
+            "react/index": "react@18.2.0/index.js",
+            "react/jsx-dev-runtime": "react@18.2.0/jsx-dev-runtime.js",
+            "react/jsx-runtime": "react@18.2.0/jsx-runtime.js"
+          }
+        },
+        "react-native/jest-preset": "react-native@0.73.2/jest-preset.js",
+        "react-native/rn-get-polyfills": "react-native@0.73.2/rn-get-polyfills.js",
+        "react-native/template.config": "react-native@0.73.2/template.config.js"
+      }
+    },
+    "@tanstack/react-query/build/lib/index": "@tanstack/react-query@4.28.0/build/lib/index.js"
+  }
+}

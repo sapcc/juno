@@ -1,0 +1,8 @@
+{
+  "built": true,
+  "buildName": "lodash.uniqueid@4.0.1",
+  "dependencies": {
+    "lodash.uniqueid": "lodash.uniqueid@4.0.1/undefined",
+    "lodash.uniqueid/index": "lodash.uniqueid@4.0.1/index.js"
+  }
+}

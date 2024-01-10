@@ -1,0 +1,15 @@
+{
+  "built": true,
+  "buildName": "prop-types@15.8.1",
+  "main": "index.js",
+  "dependencies": {
+    "prop-types": "prop-types@15.8.1/index.js",
+    "prop-types/index": "prop-types@15.8.1/index.js",
+    "prop-types/checkPropTypes": "prop-types@15.8.1/checkPropTypes.js",
+    "prop-types/factory": "prop-types@15.8.1/factory.js",
+    "prop-types/factoryWithThrowingShims": "prop-types@15.8.1/factoryWithThrowingShims.js",
+    "prop-types/factoryWithTypeCheckers": "prop-types@15.8.1/factoryWithTypeCheckers.js",
+    "prop-types/prop-types": "prop-types@15.8.1/prop-types.js",
+    "prop-types/prop-types.min": "prop-types@15.8.1/prop-types.min.js"
+  }
+}

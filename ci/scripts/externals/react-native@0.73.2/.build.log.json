@@ -1,0 +1,19 @@
+{
+  "built": true,
+  "buildName": "react-native@0.73.2",
+  "dependencies": {
+    "react-native": "react-native@0.73.2/undefined",
+    "react": {
+      "main": "react@18.2.0/index.js",
+      "dependencies": {
+        "react": "react@18.2.0/index.js",
+        "react/index": "react@18.2.0/index.js",
+        "react/jsx-dev-runtime": "react@18.2.0/jsx-dev-runtime.js",
+        "react/jsx-runtime": "react@18.2.0/jsx-runtime.js"
+      }
+    },
+    "react-native/jest-preset": "react-native@0.73.2/jest-preset.js",
+    "react-native/rn-get-polyfills": "react-native@0.73.2/rn-get-polyfills.js",
+    "react-native/template.config": "react-native@0.73.2/template.config.js"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "built": true,
+  "buildName": "luxon@3.4.4",
+  "main": "build/node/luxon.js",
+  "dependencies": {
+    "luxon": "luxon@3.4.4/build/node/luxon.js",
+    "luxon/build/node/luxon": "luxon@3.4.4/build/node/luxon.js"
+  }
+}

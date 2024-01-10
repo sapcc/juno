@@ -1,0 +1,11 @@
+{
+  "built": true,
+  "buildName": "react@18.2.0",
+  "main": "index.js",
+  "dependencies": {
+    "react": "react@18.2.0/index.js",
+    "react/index": "react@18.2.0/index.js",
+    "react/jsx-dev-runtime": "react@18.2.0/jsx-dev-runtime.js",
+    "react/jsx-runtime": "react@18.2.0/jsx-runtime.js"
+  }
+}
