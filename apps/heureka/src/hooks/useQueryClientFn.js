@@ -56,6 +56,10 @@ const useQueryClientFn = () => {
           options?.paginationParams
         )
       },
+      // The data from the last successful fetch available while new data is being requested, even though the query key has changed.
+      // When the new data arrives, the previous data is seamlessly swapped to show the new data.
+      // isPreviousData is made available to know what data the query is currently providing you
+      keepPreviousData: true,
     })
 
     // set queryClientFnReady to true once

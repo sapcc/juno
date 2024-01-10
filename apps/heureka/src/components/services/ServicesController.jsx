@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { useQueryClientFnReady } from "../StoreProvider"
 import Pagination from "../../shared/Pagination"
+import ServicesList from "./servicesList"
 
 const ServicesController = () => {
   const queryClientFnReady = useQueryClientFnReady()
@@ -24,8 +25,7 @@ const ServicesController = () => {
 
   return (
     <>
-      <div>ServicesController</div>
-
+      <ServicesList services={data?.Services?.edges} isLoading={isLoading} />
       <Pagination
         count={data?.Services?.totalCount}
         limit={paginationParams?.first}

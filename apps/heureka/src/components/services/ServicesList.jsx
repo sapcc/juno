@@ -1,0 +1,47 @@
+import React, { useMemo } from "react"
+import {
+  Stack,
+  DataGrid,
+  DataGridRow,
+  DataGridHeadCell,
+  DataGridCell,
+} from "juno-ui-components"
+import HintNotFound from "../shared/HintNotFound"
+import ServicesListItem from "./ServicesListItem"
+import HintLoading from "../shared/HintLoading"
+
+const ServicesList = ({ services, isLoading }) => {
+  return (
+    <>
+      <DataGrid gridColumnTemplate="2fr 3fr 2fr 2fr 1fr">
+        <DataGridRow>
+          <DataGridHeadCell>Name</DataGridHeadCell>
+          <DataGridHeadCell>Support group</DataGridHeadCell>
+          <DataGridHeadCell>Operators</DataGridHeadCell>
+          <DataGridHeadCell>Vulnerabilities</DataGridHeadCell>
+          <DataGridHeadCell>Components</DataGridHeadCell>
+        </DataGridRow>
+        {isLoading && !services ? (
+          <HintLoading text="Loading services..." />
+        ) : (
+          <>
+            {services && services.length > 0 ? (
+              <>
+                {services.map((item, i) => (
+                  <ServicesListItem key={i} item={item} />
+                ))}
+              </>
+            ) : (
+              <DataGridRow>
+                <DataGridCell colSpan={5}>
+                  <HintNotFound text="No services found" />
+                </DataGridCell>
+              </DataGridRow>
+            )}
+          </>
+        )}
+      </DataGrid>
+    </>
+  )
+}
+export default ServicesList
