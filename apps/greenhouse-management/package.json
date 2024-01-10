@@ -1,6 +1,6 @@
 {
   "name": "greenhouse-management",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Juno team (SAP)",
   "license": "MIT",
   "source": "src/index.js",
@@ -43,7 +43,7 @@
   },
   "scripts": {
     "test": "jest",
-    "start": "PORT=$APP_PORT NODE_ENV=development node esbuild.config.js --serve --watch",
+    "start": "NODE_ENV=development node esbuild.config.js --port=${APP_PORT:-3000} --serve --watch",
     "build": "NODE_ENV=production node esbuild.config.js"
   },
   "peerDependencies": {

@@ -7,7 +7,7 @@
   "source": "src/index.js",
   "main": "build/app.js",
   "scripts": {
-    "start": "NODE_ENV=development node esbuild.config.js --serve --watch",
+    "start": "NODE_ENV=development node esbuild.config.js --port=${APP_PORT:-3000} --serve --watch",
     "build": "NODE_ENV=production node ./esbuild.config.js",
     "test": "jest"
   },

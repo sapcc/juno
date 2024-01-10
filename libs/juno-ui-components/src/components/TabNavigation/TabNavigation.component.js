@@ -6,57 +6,72 @@ const tabNavStyles = `
   jn-flex
 `
 
-export const TabNavigationContext = createContext()
+export const NavigationContext = createContext()
 
-/** A Tab Navigation parent component. Use to wrap `<TabNavigationItem>` elements inside. For tabs with corresponding tab panels, use <Tabs> instead. */
+/** A Tab Navigation parent component. Use to wrap `<TabNavigationItem>` elements inside. For tabs with corresponding tab panels, use `<Tabs>` instead. */
 export const TabNavigation = ({
-  activeTab,
+  activeItem,
+  ariaLabel,
   children,
   className,
   disabled,
-  onTabChange,
+  onActiveItemChange,
+  tabStyle,
   ...props
 }) => {
   
-  const [ activeT, setActiveT ] = useState("")
+  const [ activeItm, setActiveItm ] = useState("")
   
-  // Update state whenever activeTab prop on parent changes:
+  // Update state whenever activeItem prop on parent changes:
   useEffect(() => {
-    if (activeTab) {
-      setActiveT(activeTab)
+    if (activeItem) {
+      setActiveItm(activeItem)
     }
-  }, [activeTab])
+  }, [activeItem])
   
   // Callback to pass to the child tab navigation items to set the state on the parent. This is used only once when initializing to prevent any onChange handlers to run:
-  const updateActiveTab = (label) => {
-    setActiveT(label)
+  const updateActiveItem = (label) => {
+    setActiveItm(label)
   }
   
   // Callback to pass to child tab navigation items to execute whenever they change:
-  const handleTabChange = (label) => {
-    setActiveT(label)
-    onTabChange && onTabChange(label)
+  const handleActiveItemChange = (label) => {
+    setActiveItm(label)
+    onActiveItemChange && onActiveItemChange(label)
   }
 
   return (
-    <TabNavigationContext.Provider 
+    <NavigationContext.Provider 
       value = {{
-        activeTab: activeT,
-        updateActiveTab: updateActiveTab,
-        handleTabChange: handleTabChange,
+        activeItem: activeItm,
+        updateActiveItem: updateActiveItem,
+        handleActiveItemChange: handleActiveItemChange,
         disabled: disabled,
+        tabStyle: tabStyle,
       }}
     >
-      <ul className={`juno-tabnavigation ${tabNavStyles} ${className}`} role="navigation" {...props} >
+      <ul 
+        className={`
+          juno-tabnavigation 
+          juno-tabnavigation-${tabStyle}
+          ${tabNavStyles} 
+          ${className}
+        `} 
+        role="navigation" 
+        aria-label={ariaLabel} 
+        {...props} 
+      >
         { children }
       </ul>
-    </TabNavigationContext.Provider>
+    </NavigationContext.Provider>
   )
 }
 
 TabNavigation.propTypes = {
-  /** The label of the selected tab. The `activeTab` prop set on the parent will override / take precedence over any `active` prop that may be set on a child. */
-  activeTab: PropTypes.string,
+  /** The label of the selected tab. The `activeItem` prop set on the parent will override / take precedence over any `active` prop that may be set on a child. */
+  activeItem: PropTypes.string,
+  /** The aria-label of the navigation. Specify when there are more than one elements with an implicit or explicit `role="navigation"` on a page/view. */
+  ariaLabel: PropTypes.string,
   /** The child `<TabNavigationItem>` elements to render. */
   children: PropTypes.node,
   /** A custom className to be rendered on the tab navigation */
@@ -64,13 +79,17 @@ TabNavigation.propTypes = {
   /** Whether the tab navigation is disabled. If set to `true`, all child tab navigation item elements will be disabled. */
   disabled: PropTypes.bool,
   /** A handler to execute when the active tab changes */
-  onTabChange: PropTypes.func,
+  onActiveItemChange: PropTypes.func,
+  /** The stylistic variant of the Tabs: Use `main` as the first child in an `Appshell` (when manually scaffolding, as first child of `juno-content-container`). For tabs inside the page content use "content". `<TabNavigation tabStyle="main">` will have no darkened border on the bottom of inactive tabs, `tabStyle="content"` will.*/
+  tabStyle: PropTypes.oneOf(["main", "content"]),
 }
 
 TabNavigation.defaultProps = {
-  activeTab: "",
+  activeItem: "",
+  ariaLabel: undefined,
   children: null,
   className: "",
   disabled: false,
-  onTabChange: undefined,
+  onActiveItemChange: undefined,
+  tabStyle: "main",
 }

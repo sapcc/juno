@@ -190,6 +190,7 @@ groups:
       <% end %>
       - build-assets-server-image
       - deploy-assets-server-to-s-qa-de-1
+      - deploy-assets-server-to-qa-de-2
       - e2e-tests-assets-server-s-qa-de-1
       - promote-prod-assets-server
       <%HA_REGIONS.each do |region|%>
@@ -624,7 +625,7 @@ jobs:
 
 
   ############ ASSETS SERVER  #########
-  # DEPLOY ASSETS SERVER TO QA 
+  # DEPLOY ASSETS SERVER TO S-QA-DE-1 
   - name: deploy-assets-server-to-s-qa-de-1
     serial: true
     plan:
@@ -651,6 +652,37 @@ jobs:
           CONTEXT: s-qa-de-1
           TAG_VARIABLE:       image.tag
           VALUES: local:globals s-local:juno 
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))
+
+  # DEPLOY ASSETS SERVER TO QA-DE-2 
+  - name: deploy-assets-server-to-qa-de-2
+    serial: true
+    plan:
+      - in_parallel:
+        - get: juno.git
+        - get: secrets.git
+          params:
+            depth: 100 
+        - get: assets-server.version
+          trigger: true
+          passed: [build-assets-server-image]
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          app.version: assets-server.version
+          helm-charts.git: juno.git
+
+        params:
+          HELM_MAJOR_VERSION: '3'
+          CHART_PATH: ci/helm-charts/assets_server
+          RELEASE: juno-v3-assets-server
+          NAMESPACE: juno
+          REGION: qa-de-2
+          TAG_VARIABLE:       image.tag
+          VALUES: local:globals
           KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))
