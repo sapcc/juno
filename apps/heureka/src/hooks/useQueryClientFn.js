@@ -1,7 +1,8 @@
 import { useEffect, useMemo } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEndpoint, useActions } from "../components/StoreProvider"
-import { GraphQLClient, gql } from "graphql-request"
+import { request } from "graphql-request"
+import sevicesQuery from "../lib/queries/services"
 
 class HTTPError extends Error {
   constructor(code, message) {
@@ -38,85 +39,28 @@ const useQueryClientFn = () => {
   const endpoint = useEndpoint()
   const { setQueryClientFnReady } = useActions()
 
-  const graphQLClient = useMemo(() => {
-    if (!endpoint) return null
-    console.log("useQueryClientFn::: creating GraphQLClient: ", endpoint)
-    return new GraphQLClient(endpoint, {
-      headers: {
-        // Authorization: `Bearer ${token}`
-      },
-    })
-  }, [endpoint])
-
   /*
   As stated in getQueryDefaults, the order of registration of query defaults does matter. Since the first matching defaults are returned by getQueryDefaults, the registration should be made in the following order: from the least generic key to the most generic one. This way, in case of specific key, the first matching one would be the expected one.
   */
   useEffect(() => {
-    if (!queryClient || !graphQLClient) return
-
-    console.log("useQueryClientFn::: setting defaults ")
+    if (!queryClient || !endpoint) return
+    console.log("useQueryClientFn::: setting defaults")
 
     queryClient.setQueryDefaults(["services"], {
       queryFn: async ({ queryKey }) => {
-        //     const [_key, id, params] = queryKey
-        //     const query = encodeUrlParamsFromObject(params)
-        return await graphQLClient.request(gql`
-          query ($filter: ServiceFilter, $first: Int, $after: String) {
-            Services(filter: $filter, first: $first, after: $after) {
-              __typename
-              totalCount
-              edges {
-                node {
-                  id
-                  name
-                  owners {
-                    totalCount
-                    edges {
-                      node {
-                        id
-                        sapID
-                        name
-                      }
-                      cursor
-                    }
-                    pageInfo {
-                      hasNextPage
-                      startCursor
-                      endCursor
-                    }
-                  }
-                  supportGroups {
-                    totalCount
-                    edges {
-                      node {
-                        id
-                        name
-                      }
-                      cursor
-                    }
-                    pageInfo {
-                      hasNextPage
-                      startCursor
-                      endCursor
-                    }
-                  }
-                }
-                cursor
-              }
-              pageInfo {
-                hasNextPage
-                startCursor
-                endCursor
-              }
-            }
-          }
-        `)
+        const [_key, options] = queryKey
+        console.log("useQueryClientFn::: queryKey: ", queryKey)
+        return await request(
+          endpoint,
+          sevicesQuery(),
+          options?.paginationParams
+        )
       },
     })
 
     // set queryClientFnReady to true once
     setQueryClientFnReady(true)
-  }, [queryClient, graphQLClient])
+  }, [queryClient, endpoint])
 }
 
 export default useQueryClientFn
