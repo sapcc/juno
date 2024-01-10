@@ -1,8 +1,12 @@
 import { createStore } from "zustand"
 import { devtools } from "zustand/middleware"
 
-export default (apiEndpoint) =>
-  createStore(
+export default (options) => {
+  const clustersVersion =
+    options.environment === "qa" || options.environment === "development"
+      ? "0.0.1-dev"
+      : "1.5"
+  return createStore(
     devtools((set, get) => ({
       isUrlStateSetup: false,
       assetsUrl: null,
@@ -10,7 +14,8 @@ export default (apiEndpoint) =>
         clusters: {
           label: "Clusters",
           name: "greenhouse-cluster-admin",
-          props: { endpoint: apiEndpoint, embedded: true },
+          version: clustersVersion,
+          props: { endpoint: options.apiEndpoint, embedded: true },
         },
         // plugins: {
         //   label: "Plugins",
@@ -20,7 +25,7 @@ export default (apiEndpoint) =>
         teams: {
           label: "Teams",
           name: "greenhouse-team-admin",
-          props: { endpoint: apiEndpoint, embedded: true },
+          props: { endpoint: options.apiEndpoint, embedded: true },
         },
       },
       pluginActive: "greenhouse-cluster-admin", // name of the active plugin default
@@ -53,3 +58,4 @@ export default (apiEndpoint) =>
       },
     }))
   )
+}
