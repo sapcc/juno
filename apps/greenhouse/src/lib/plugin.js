@@ -83,6 +83,7 @@ const Plugin = ({ environment, apiEndpoint, currentHost }) => {
           name: "greenhouse-management",
           displayName: "Organization",
           navType: NAV_TYPES.MNG,
+          version: "1.0.5",
           props: {
             assetsUrl: currentHost,
             apiEndpoint: apiEndpoint,
