@@ -1,6 +1,18 @@
 {
   "name": "greenhouse-management",
-  "version": "1.0.5",
+  "version": "1.0.6",
+  "managementPluginConfig": {
+    "clusters": {
+      "label": "Clusters",
+      "name": "greenhouse-cluster-admin",
+      "version": "1.6"
+    },
+    "teams": {
+      "label": "Teams",
+      "name": "greenhouse-team-admin",
+      "version": "1.0"
+    }
+  },
   "author": "Juno team (SAP)",
   "license": "MIT",
   "source": "src/index.js",
