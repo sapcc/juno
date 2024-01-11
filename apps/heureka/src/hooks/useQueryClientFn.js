@@ -60,6 +60,7 @@ const useQueryClientFn = () => {
       // When the new data arrives, the previous data is seamlessly swapped to show the new data.
       // isPreviousData is made available to know what data the query is currently providing you
       keepPreviousData: true,
+      refetchOnWindowFocus: false, // default: true
     })
 
     // set queryClientFnReady to true once

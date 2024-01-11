@@ -8,15 +8,12 @@ const ServicesController = () => {
   const queryClientFnReady = useQueryClientFnReady()
   const [paginationParams, setPaginationParams] = useState({
     first: 10,
-    // after: "", // id of the last item
   })
 
   const { isLoading, isFetching, isError, data, error } = useQuery({
     queryKey: [`services`, { paginationParams }],
     enabled: !!queryClientFnReady,
   })
-
-  console.log("ServicesController data>>>>>>>>>>>>>>>>>>", data)
 
   const onPaginationChanged = (offset) => {
     console.log("ServicesController onPaginationChanged", offset)

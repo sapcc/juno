@@ -5,6 +5,14 @@ const cellClasses = `
 justify-start
 `
 
+const listOfSGs = (sgs) => {
+  sgs = sgs?.edges || []
+  return sgs
+    .filter((sg) => sg?.node?.name)
+    .map((sg) => sg?.node?.name)
+    .join(", ")
+}
+
 const ServicesListItem = ({ item }) => {
   const service = useMemo(() => {
     if (!item) return {}
@@ -14,7 +22,9 @@ const ServicesListItem = ({ item }) => {
   return (
     <DataGridRow>
       <DataGridCell className={cellClasses}>{service?.name}</DataGridCell>
-      <DataGridCell className={cellClasses}></DataGridCell>
+      <DataGridCell className={cellClasses}>
+        {listOfSGs(service?.supportGroups)}
+      </DataGridCell>
       <DataGridCell className={cellClasses}></DataGridCell>
       <DataGridCell className={cellClasses}></DataGridCell>
       <DataGridCell className={cellClasses}></DataGridCell>

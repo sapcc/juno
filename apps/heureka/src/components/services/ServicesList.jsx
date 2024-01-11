@@ -16,7 +16,7 @@ const ServicesList = ({ services, isLoading }) => {
       <DataGrid gridColumnTemplate="2fr 3fr 2fr 2fr 1fr">
         <DataGridRow>
           <DataGridHeadCell>Name</DataGridHeadCell>
-          <DataGridHeadCell>Support group</DataGridHeadCell>
+          <DataGridHeadCell>Support Groups</DataGridHeadCell>
           <DataGridHeadCell>Operators</DataGridHeadCell>
           <DataGridHeadCell>Vulnerabilities</DataGridHeadCell>
           <DataGridHeadCell>Components</DataGridHeadCell>
