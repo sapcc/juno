@@ -1,11 +1,13 @@
 import { createStore } from "zustand"
 import { devtools } from "zustand/middleware"
 
+const PLUGIN_CLUSTERS_VERSION = "1.5"
+const PLUGIN_TEAMS_VERSION = "1.0"
+
 export default (options) => {
-  const clustersVersion =
-    options.environment === "qa" || options.environment === "development"
-      ? "0.0.1-dev"
-      : "1.5"
+  const isProd =
+    options?.environment !== "qa" && options?.environment !== "development"
+
   return createStore(
     devtools((set, get) => ({
       isUrlStateSetup: false,
@@ -14,18 +16,14 @@ export default (options) => {
         clusters: {
           label: "Clusters",
           name: "greenhouse-cluster-admin",
-          version: clustersVersion,
           props: { endpoint: options.apiEndpoint, embedded: true },
+          ...(isProd && { version: PLUGIN_CLUSTERS_VERSION }),
         },
-        // plugins: {
-        //   label: "Plugins",
-        //   name: "greenhouse-plugin-admin",
-        //   props: { embedded: true },
-        // },
         teams: {
           label: "Teams",
           name: "greenhouse-team-admin",
           props: { endpoint: options.apiEndpoint, embedded: true },
+          ...(isProd && { version: PLUGIN_TEAMS_VERSION }),
         },
       },
       pluginActive: "greenhouse-cluster-admin", // name of the active plugin default
