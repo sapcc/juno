@@ -5,10 +5,6 @@ const Pagination = ({ count, limit, onChanged, isFetching, disabled }) => {
   const [offset, setOffset] = useState(0)
   const [actualPage, setactualPage] = useState(1)
 
-  useEffect(() => {
-    if (onChanged) onChanged(offset)
-  }, [offset])
-
   count = useMemo(() => {
     if (!count) return 0
     return count
@@ -25,13 +21,17 @@ const Pagination = ({ count, limit, onChanged, isFetching, disabled }) => {
 
   const onPrevChanged = () => {
     if (actualPage === 1) return
-    setOffset(offset - limit)
+    const newOffset = offset - limit
+    setOffset(newOffset)
+    if (onChanged) onChanged(newOffset)
     setactualPage(actualPage - 1)
   }
 
   const onNextChanged = () => {
     if (actualPage === pages) return
-    setOffset(offset + limit)
+    const newOffset = offset + limit
+    setOffset(newOffset)
+    if (onChanged) onChanged(newOffset)
     setactualPage(actualPage + 1)
   }
 
