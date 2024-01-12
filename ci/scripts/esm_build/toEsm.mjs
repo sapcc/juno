@@ -8,7 +8,7 @@ import glob from "glob"
 import { green, red, yellow, blue, cyan } from "./colors.mjs"
 
 function log(...args) {
-  process.stdout.write(...args)
+  process.stdout.write(args.join(" "))
 }
 
 function getEntryPoints(packagePath) {
@@ -86,17 +86,18 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
   const nodeModulesDir = path.resolve(options.nodeModulesDir || "/tmp")
   const indent = options.indent || ""
 
-  const verbose = options.verbose || false
+  const verbose = (options.verbose || false)
 
   log("\n" + indent + green("PROCESS: ") + packageName + "@" + packageVersion)
 
   const currentVersion = getFixPackageVersion(packageName, packageVersion)
 
   if (verbose)
-    console.log(
+    log(
       indent,
       blue("INFO:"),
-      `current version of ${packageName} is ${currentVersion}`
+      `current version of ${packageName} is ${currentVersion}`,
+      "\n",
     )
 
   const buildLogPath = path.join(
