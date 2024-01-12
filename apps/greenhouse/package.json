@@ -1,7 +1,7 @@
 {
   "name": "greenhouse",
-  "version": "0.1.9",
-  "managementVersion": "1.0.6",
+  "version": "0.1.10",
+  "managementVersion": "latest",
   "author": "Juno team (SAP)",
   "license": "MIT",
   "source": "src/index.js",
