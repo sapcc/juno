@@ -86,7 +86,7 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
   const nodeModulesDir = path.resolve(options.nodeModulesDir || "/tmp")
   const indent = options.indent || ""
 
-  const verbose = (options.verbose || false)
+  const verbose = options.verbose || false
 
   log("\n" + indent + green("PROCESS: ") + packageName + "@" + packageVersion)
 
@@ -97,7 +97,7 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
       indent,
       blue("INFO:"),
       `current version of ${packageName} is ${currentVersion}`,
-      "\n",
+      "\n"
     )
 
   const buildLogPath = path.join(
@@ -147,16 +147,6 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
     } else delete externals[depResult.name]
   })
 
-  // for (let external in externals) {
-  //   const { built, ...depResult } = await convertToEsm(
-  //     external,
-  //     externals[external],
-  //     { buildDir, nodeModulesDir, indent: indent + "  ", verbose }
-  //   )
-  //   if (built) {
-  //     result.dependencies[external] = depResult
-  //   } else delete externals[external]
-  // }
   if (verbose) console.log(blue("INFO:"), "externals are", externals)
 
   for (let entryPoint of entryPoints) {
@@ -170,34 +160,58 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
           " to esm "
       )
 
-      const buildResults = await esbuild.build({
-        entryPoints: [entryPoint],
-        bundle: true,
-        // minify: true,
-        metafile: true,
-        format: "esm",
-        platform: "browser",
-        outdir: path.join(buildDir, `${packageName}@${currentVersion}`),
-        external: Object.keys(externals || {}),
-        plugins: [cjsToEsm, requireToImport],
-        target: "esnext",
-        keepNames: true,
-        ignoreAnnotations: true,
-        logLevel: "silent",
-      })
+      const packagesToIgnore = [
+        ...Object.keys(externals || {}),
+        ...entryPoints.map((e) =>
+          e.replace(pkgPath, packageName).replace(/\.m?js$/, "")
+        ),
+      ]
+      let entryPointPath
+
+      // handle type="module" (already esm module)
+      if (pkgJson.type === "module") {
+        const entryPointName = entryPoint.replace(
+          pkgPath,
+          `${packageName}@${currentVersion}`
+        )
+        fs.mkdirSync(path.join(buildDir, path.dirname(entryPointName)), {
+          recursive: true,
+        })
+        fs.copyFileSync(entryPoint, path.join(buildDir, entryPointName))
+        entryPointPath = path.join(path.basename(buildDir), entryPointName)
+      } else {
+        const buildResults = await esbuild.build({
+          entryPoints: [entryPoint],
+          bundle: true,
+          minify: true,
+          metafile: true,
+          format: "esm",
+          platform: "browser",
+          outdir: path.join(buildDir, `${packageName}@${currentVersion}`),
+          external: packagesToIgnore,
+          plugins: [cjsToEsm, requireToImport],
+          target: "esnext",
+          keepNames: true,
+          ignoreAnnotations: true,
+          logLevel: "silent",
+        })
+        entryPointPath = Object.keys(buildResults.metafile?.outputs)?.[0]
+      }
       result.built = true
 
       const entryPointFile = entryPoint.replace(pkgPath, packageName)
       const entryPointName = entryPointFile.replace(/\.m?js$/, "")
-      const entryPointPath = Object.keys(buildResults.metafile?.outputs)?.[0]
       // add entrypoint to result without .js extension
       result.entryPoints[entryPointName] = entryPointPath
 
       if (
-        entryPointFile === path.join(packageName, pkgJson.main || "") ||
-        entryPoint === path.join(packageName, pkgJson.main || "")
+        entryPointFile ===
+          path.join(packageName, pkgJson.main || pkgJson.module || "") ||
+        entryPoint ===
+          path.join(packageName, pkgJson.main || pkgJson.module || "")
       ) {
         result.entryPoints[packageName] = entryPointPath
+        result.main = entryPointName
       }
 
       process.stdout.write(green("DONE"))

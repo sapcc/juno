@@ -14,7 +14,7 @@ import convertToEsm from "./toEsm.mjs"
 import { green, red, yellow, blue, cyan } from "./colors.mjs"
 
 function log(...args) {
-  process.stdout.write(...args)
+  process.stdout.write(args.join(" "))
 }
 
 // import { exit } from "node:process"
@@ -107,9 +107,23 @@ for (let file of files) {
   }
 }
 
-// console.log("===", packageRegistry)
-
 const importMap = { scopes: {}, imports: {} }
+
+// Due to the backward compatibility, we need to add the "old" url to importmap
+// to link it to the built version.
+// download convert es-module-shim to esm
+const buildResult = await convertToEsm("es-module-shims", "1.6.2", {
+  buildDir: options.externalPath,
+  verbose: options.verbose,
+  nodeModulesPath: "./tmp2",
+})
+
+fs.cpSync(
+  pathLib.join(options.externalPath, buildResult.buildName),
+  pathLib.join(options.externalPath, `npm:${buildResult.buildName}`),
+  { recursive: true, overwrite: true }
+)
+// end add es-module-shim
 
 for (let name in packageRegistry) {
   for (let version in packageRegistry[name]) {
@@ -118,12 +132,12 @@ for (let name in packageRegistry) {
     // console.log(pkg.name, pkg.version, pkg.path)
 
     log(cyan(`add ${pkg.name}@${pkg.version} to import map` + "\n"))
-    importMap.scopes[pkgScopeKey] = importMap.scopes[pkgScopeKey] || {}
+
     importMap.imports[
-      `@${pkg.name}@${pkg.version}/`
+      `@juno/${pkg.name}@${pkg.version}/`
     ] = `${options.baseUrl}/${pkg.path}/${pkg.entryDir}`
     importMap.imports[
-      `@${pkg.name}@${pkg.version}/`
+      `@juno/${pkg.name}@${pkg.version}`
     ] = `${options.baseUrl}/${pkg.path}/${pkg.entryFile}`
 
     if (!pkg.peerDependencies) {
@@ -143,10 +157,13 @@ for (let name in packageRegistry) {
           )
         )
 
-        importMap.scopes[pkgScopeKey][
+        importMap.scopes[`${pkgScopeKey}/`] = {
+          ...importMap.scopes[`${pkgScopeKey}/`],
+        }
+        importMap.scopes[`${pkgScopeKey}/`][
           `${ownPackage.name}/`
         ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryDir}`
-        importMap.scopes[pkgScopeKey][
+        importMap.scopes[`${pkgScopeKey}/`][
           ownPackage.name
         ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryFile}`
         continue
@@ -168,9 +185,13 @@ for (let name in packageRegistry) {
 
       const addDependenciesRecursive = (externalDependency = {}) => {
         if (externalDependency.entryPoints) {
-          importMap.scopes[pkgScopeKey] = {
-            ...importMap.scopes[pkgScopeKey],
-            ...externalDependency.entryPoints,
+          for (let entryPoint in externalDependency.entryPoints) {
+            importMap.scopes[`${pkgScopeKey}/`] = {
+              ...importMap.scopes[`${pkgScopeKey}/`],
+            }
+            importMap.scopes[`${pkgScopeKey}/`][
+              entryPoint
+            ] = `${options.baseUrl}/${externalDependency.entryPoints[entryPoint]}`
           }
         }
         if (externalDependency.dependencies) {
