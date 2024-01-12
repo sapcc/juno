@@ -1,9 +1,12 @@
 {
   "built": true,
+  "name": "luxon",
+  "entryPoints": {
+    "luxon/build/node/luxon": "externals/luxon@3.4.4/luxon.js",
+    "luxon": "externals/luxon@3.4.4/luxon.js",
+    "luxon/": "externals/luxon@3.4.4/"
+  },
+  "dependencies": {},
   "buildName": "luxon@3.4.4",
-  "main": "build/node/luxon.js",
-  "dependencies": {
-    "luxon": "luxon@3.4.4/build/node/luxon.js",
-    "luxon/build/node/luxon": "luxon@3.4.4/build/node/luxon.js"
-  }
+  "path": "externals/luxon@3.4.4"
 }

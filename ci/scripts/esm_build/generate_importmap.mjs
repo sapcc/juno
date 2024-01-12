@@ -26,6 +26,7 @@ const availableArgs = [
   "--exit-on-error=[true|false]",
   "--src=DIR_PATH",
   "--output=FILE_PATH",
+  "--minify=true|false",
   "--ignore-externals=true|false",
   "--base-url=URL_OF_ASSETS_SERVER",
   "--external-path=PATH_TO_EXTERNALS_ON_LOCAL_MACHINE",
@@ -40,6 +41,7 @@ const options = {
   src: pathLib.dirname(url.fileURLToPath(import.meta.url)),
   baseUrl: "%BASE_URL%",
   output: "./importmap.json",
+  minify: false,
   ignoreExternals: false,
   externalPath: "externals",
   local: true,
@@ -117,11 +119,11 @@ for (let name in packageRegistry) {
 
     log(cyan(`add ${pkg.name}@${pkg.version} to import map` + "\n"))
     importMap.scopes[pkgScopeKey] = importMap.scopes[pkgScopeKey] || {}
-    importMap.scopes[pkgScopeKey][
-      `${pkg.name}/`
+    importMap.imports[
+      `@${pkg.name}@${pkg.version}/`
     ] = `${options.baseUrl}/${pkg.path}/${pkg.entryDir}`
-    importMap.scopes[pkgScopeKey][
-      pkg.name
+    importMap.imports[
+      `@${pkg.name}@${pkg.version}/`
     ] = `${options.baseUrl}/${pkg.path}/${pkg.entryFile}`
 
     if (!pkg.peerDependencies) {
@@ -163,23 +165,26 @@ for (let name in packageRegistry) {
         nodeModulesPath: "./tmp2",
       })
       // console.log(JSON.stringify(buildResult, null, 2))
-      if (!buildResult.dependencies) continue
 
-      const addDependenciesRecursive = (dependencies) => {
-        for (let externalDep in dependencies) {
-          const value = dependencies[externalDep]
-          if (typeof value !== "string") addDependenciesRecursive(value)
-
-          importMap.scopes[pkgScopeKey][
-            externalDep
-          ] = `${options.baseUrl}/${options.externalPath}/${value}`
+      const addDependenciesRecursive = (externalDependency = {}) => {
+        if (externalDependency.entryPoints) {
+          importMap.scopes[pkgScopeKey] = {
+            ...importMap.scopes[pkgScopeKey],
+            ...externalDependency.entryPoints,
+          }
+        }
+        if (externalDependency.dependencies) {
+          for (let dep in externalDependency.dependencies) {
+            addDependenciesRecursive(externalDependency.dependencies[dep])
+          }
         }
       }
 
-      addDependenciesRecursive(buildResult.dependencies)
+      addDependenciesRecursive(buildResult)
     }
   }
   //  const packageRegistry[pkg] = Object.values(packageRegistry[pkg])
 }
 
-console.log(importMap)
+if (options.verbose) console.log(importMap)
+fs.writeFileSync(options.output, JSON.stringify(importMap, null, 2))

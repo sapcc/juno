@@ -1,15 +1,18 @@
 {
   "built": true,
+  "name": "prop-types",
+  "entryPoints": {
+    "prop-types/index": "externals/prop-types@15.8.1/index.js",
+    "prop-types": "externals/prop-types@15.8.1/index.js",
+    "prop-types/checkPropTypes": "externals/prop-types@15.8.1/checkPropTypes.js",
+    "prop-types/factory": "externals/prop-types@15.8.1/factory.js",
+    "prop-types/factoryWithThrowingShims": "externals/prop-types@15.8.1/factoryWithThrowingShims.js",
+    "prop-types/factoryWithTypeCheckers": "externals/prop-types@15.8.1/factoryWithTypeCheckers.js",
+    "prop-types/prop-types": "externals/prop-types@15.8.1/prop-types.js",
+    "prop-types/prop-types.min": "externals/prop-types@15.8.1/prop-types.min.js",
+    "prop-types/": "externals/prop-types@15.8.1/"
+  },
+  "dependencies": {},
   "buildName": "prop-types@15.8.1",
-  "main": "index.js",
-  "dependencies": {
-    "prop-types": "prop-types@15.8.1/index.js",
-    "prop-types/index": "prop-types@15.8.1/index.js",
-    "prop-types/checkPropTypes": "prop-types@15.8.1/checkPropTypes.js",
-    "prop-types/factory": "prop-types@15.8.1/factory.js",
-    "prop-types/factoryWithThrowingShims": "prop-types@15.8.1/factoryWithThrowingShims.js",
-    "prop-types/factoryWithTypeCheckers": "prop-types@15.8.1/factoryWithTypeCheckers.js",
-    "prop-types/prop-types": "prop-types@15.8.1/prop-types.js",
-    "prop-types/prop-types.min": "prop-types@15.8.1/prop-types.min.js"
-  }
+  "path": "externals/prop-types@15.8.1"
 }

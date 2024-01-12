@@ -1,0 +1,12 @@
+{
+  "built": true,
+  "name": "luxon",
+  "entryPoints": {
+    "luxon/build/node/luxon": "externals/luxon@3.3.0/luxon.js",
+    "luxon": "externals/luxon@3.3.0/luxon.js",
+    "luxon/": "externals/luxon@3.3.0/"
+  },
+  "dependencies": {},
+  "buildName": "luxon@3.3.0",
+  "path": "externals/luxon@3.3.0"
+}

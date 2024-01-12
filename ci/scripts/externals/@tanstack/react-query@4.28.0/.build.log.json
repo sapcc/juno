@@ -1,56 +1,81 @@
 {
   "built": true,
-  "buildName": "@tanstack/react-query@4.28.0",
-  "main": "build/lib/index.js",
+  "name": "@tanstack/react-query",
+  "entryPoints": {
+    "@tanstack/react-query/build/lib/index": "externals/@tanstack/react-query@4.28.0/index.js",
+    "@tanstack/react-query": "externals/@tanstack/react-query@4.28.0/index.js",
+    "@tanstack/react-query/": "externals/@tanstack/react-query@4.28.0/"
+  },
   "dependencies": {
-    "@tanstack/react-query": "@tanstack/react-query@4.28.0/build/lib/index.js",
     "react": {
-      "main": "react@18.2.0/index.js",
-      "dependencies": {
-        "react": "react@18.2.0/index.js",
-        "react/index": "react@18.2.0/index.js",
-        "react/jsx-dev-runtime": "react@18.2.0/jsx-dev-runtime.js",
-        "react/jsx-runtime": "react@18.2.0/jsx-runtime.js"
-      }
+      "name": "react",
+      "entryPoints": {
+        "react/index": "externals/react@18.2.0/index.js",
+        "react": "externals/react@18.2.0/index.js",
+        "react/jsx-dev-runtime": "externals/react@18.2.0/jsx-dev-runtime.js",
+        "react/jsx-runtime": "externals/react@18.2.0/jsx-runtime.js",
+        "react/": "externals/react@18.2.0/"
+      },
+      "dependencies": {},
+      "buildName": "react@18.2.0",
+      "path": "externals/react@18.2.0"
     },
     "react-dom": {
-      "main": "react-dom@18.2.0/index.js",
+      "name": "react-dom",
+      "entryPoints": {
+        "react-dom/index": "externals/react-dom@18.2.0/index.js",
+        "react-dom": "externals/react-dom@18.2.0/index.js",
+        "react-dom/client": "externals/react-dom@18.2.0/client.js",
+        "react-dom/profiling": "externals/react-dom@18.2.0/profiling.js",
+        "react-dom/server.browser": "externals/react-dom@18.2.0/server.browser.js",
+        "react-dom/test-utils": "externals/react-dom@18.2.0/test-utils.js",
+        "react-dom/": "externals/react-dom@18.2.0/"
+      },
       "dependencies": {
-        "react-dom": "react-dom@18.2.0/index.js",
         "react": {
-          "main": "react@18.2.0/index.js",
-          "dependencies": {
-            "react": "react@18.2.0/index.js",
-            "react/index": "react@18.2.0/index.js",
-            "react/jsx-dev-runtime": "react@18.2.0/jsx-dev-runtime.js",
-            "react/jsx-runtime": "react@18.2.0/jsx-runtime.js"
-          }
-        },
-        "react-dom/index": "react-dom@18.2.0/index.js",
-        "react-dom/client": "react-dom@18.2.0/client.js",
-        "react-dom/profiling": "react-dom@18.2.0/profiling.js",
-        "react-dom/server.browser": "react-dom@18.2.0/server.browser.js",
-        "react-dom/test-utils": "react-dom@18.2.0/test-utils.js"
-      }
+          "name": "react",
+          "entryPoints": {
+            "react/index": "externals/react@18.2.0/index.js",
+            "react": "externals/react@18.2.0/index.js",
+            "react/jsx-dev-runtime": "externals/react@18.2.0/jsx-dev-runtime.js",
+            "react/jsx-runtime": "externals/react@18.2.0/jsx-runtime.js",
+            "react/": "externals/react@18.2.0/"
+          },
+          "dependencies": {},
+          "buildName": "react@18.2.0",
+          "path": "externals/react@18.2.0"
+        }
+      },
+      "buildName": "react-dom@18.2.0",
+      "path": "externals/react-dom@18.2.0"
     },
     "react-native": {
-      "main": "react-native@0.73.2/undefined",
+      "name": "react-native",
+      "entryPoints": {
+        "react-native/jest-preset": "externals/react-native@0.73.2/jest-preset.js",
+        "react-native/rn-get-polyfills": "externals/react-native@0.73.2/rn-get-polyfills.js",
+        "react-native/template.config": "externals/react-native@0.73.2/template.config.js",
+        "react-native/": "externals/react-native@0.73.2/"
+      },
       "dependencies": {
-        "react-native": "react-native@0.73.2/undefined",
         "react": {
-          "main": "react@18.2.0/index.js",
-          "dependencies": {
-            "react": "react@18.2.0/index.js",
-            "react/index": "react@18.2.0/index.js",
-            "react/jsx-dev-runtime": "react@18.2.0/jsx-dev-runtime.js",
-            "react/jsx-runtime": "react@18.2.0/jsx-runtime.js"
-          }
-        },
-        "react-native/jest-preset": "react-native@0.73.2/jest-preset.js",
-        "react-native/rn-get-polyfills": "react-native@0.73.2/rn-get-polyfills.js",
-        "react-native/template.config": "react-native@0.73.2/template.config.js"
-      }
-    },
-    "@tanstack/react-query/build/lib/index": "@tanstack/react-query@4.28.0/build/lib/index.js"
-  }
+          "name": "react",
+          "entryPoints": {
+            "react/index": "externals/react@18.2.0/index.js",
+            "react": "externals/react@18.2.0/index.js",
+            "react/jsx-dev-runtime": "externals/react@18.2.0/jsx-dev-runtime.js",
+            "react/jsx-runtime": "externals/react@18.2.0/jsx-runtime.js",
+            "react/": "externals/react@18.2.0/"
+          },
+          "dependencies": {},
+          "buildName": "react@18.2.0",
+          "path": "externals/react@18.2.0"
+        }
+      },
+      "buildName": "react-native@0.73.2",
+      "path": "externals/react-native@0.73.2"
+    }
+  },
+  "buildName": "@tanstack/react-query@4.28.0",
+  "path": "externals/@tanstack/react-query@4.28.0"
 }

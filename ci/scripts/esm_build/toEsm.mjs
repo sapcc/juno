@@ -56,6 +56,7 @@ function getFixPackageVersion(name, version = "*") {
       "failed to get version of " + name + "@" + version
     )
   }
+
   if (!result) return "latest"
   if (typeof result === "string") return result.trim()
   if (Array.isArray(result)) return result.pop().trim()
@@ -119,42 +120,43 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
   if (verbose) console.log(blue("INFO:"), "entrypoints are", entryPoints)
 
   const externals = { ...pkgJson.peerDependencies } //{ ...pkgJson.peerDependencies, ...pkgJson.dependencies }
-  let externalPackages = {
-    [packageName]: `${packageName}@${currentVersion}/${
-      pkgJson.main || pkgJson.module
-    }`,
+
+  const result = {
+    built: false,
+    name: packageName,
+    entryPoints: {},
+    dependencies: {},
   }
 
-  for (let external in externals) {
-    const { built, buildName, main, dependencies } = await convertToEsm(
-      external,
-      externals[external],
-      { buildDir, nodeModulesDir, indent: indent + "  ", verbose }
+  // convert externals parallel
+  const results = await Promise.all(
+    Object.keys(externals).map((external) =>
+      convertToEsm(external, externals[external], {
+        buildDir,
+        nodeModulesDir,
+        indent: indent + "  ",
+        verbose,
+      })
     )
+  )
+
+  results.forEach(({ built, ...depResult }) => {
     if (built) {
-      externalPackages[external] = {
-        main: `${buildName}/${main}`,
-        dependencies,
-      }
-    } else delete externals[external]
-  }
-
-  // extend externals to avoid dynamic imports
-  // which are handled by requireToImport plugin
-  entryPoints.forEach((entryPoint) => {
-    const entryPointName = entryPoint
-      .replace(pkgPath, packageName)
-      .replace(/\.js$/, "")
-    externalPackages[entryPointName] = entryPoint.replace(
-      pkgPath,
-      `${packageName}@${currentVersion}`
-    )
+      result.dependencies[depResult.name] = depResult
+    } else delete externals[depResult.name]
   })
 
-  if (verbose)
-    console.log(indent, blue("INFO:"), "externals are", externalPackages)
-
-  let built = false
+  // for (let external in externals) {
+  //   const { built, ...depResult } = await convertToEsm(
+  //     external,
+  //     externals[external],
+  //     { buildDir, nodeModulesDir, indent: indent + "  ", verbose }
+  //   )
+  //   if (built) {
+  //     result.dependencies[external] = depResult
+  //   } else delete externals[external]
+  // }
+  if (verbose) console.log(blue("INFO:"), "externals are", externals)
 
   for (let entryPoint of entryPoints) {
     try {
@@ -167,69 +169,61 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
           " to esm "
       )
 
-      await esbuild.build({
+      const buildResults = await esbuild.build({
         entryPoints: [entryPoint],
         bundle: true,
         // minify: true,
+        metafile: true,
         format: "esm",
         platform: "browser",
         outdir: path.join(buildDir, `${packageName}@${currentVersion}`),
-        external: Object.keys(externalPackages),
+        external: Object.keys(externals || {}),
         plugins: [cjsToEsm, requireToImport],
         target: "esnext",
         keepNames: true,
         ignoreAnnotations: true,
         logLevel: "silent",
       })
-      built = true
+      result.built = true
+
+      const entryPointFile = entryPoint.replace(pkgPath, packageName)
+      const entryPointName = entryPointFile.replace(/\.m?js$/, "")
+      const entryPointPath = Object.keys(buildResults.metafile?.outputs)?.[0]
+      // add entrypoint to result without .js extension
+      result.entryPoints[entryPointName] = entryPointPath
+
+      if (
+        entryPointFile === path.join(packageName, pkgJson.main || "") ||
+        entryPoint === path.join(packageName, pkgJson.main || "")
+      ) {
+        result.entryPoints[packageName] = entryPointPath
+      }
+
       process.stdout.write(green("DONE"))
     } catch (e) {
       log(
         yellow("FAILED") +
           (verbose ? e.message : "") +
-          cyan(" -> build in! ") +
+          cyan(" -> ignore this entrypoint ") +
           green("DONE")
       )
-      // remove it from externalPackages
-      delete externalPackages[
-        entryPoint.replace(pkgPath, packageName).replace(/\.js$/, "")
-      ]
+      if (verbose) console.log(e)
     }
   }
 
-  const result = {
-    built,
-    buildName: `${packageName}@${currentVersion}`,
-    main: pkgJson.main || pkgJson.module,
-    dependencies: externalPackages,
-  }
+  if (result.built) {
+    result.buildName = `${packageName}@${currentVersion}`
+    result.path = path.join(
+      path.basename(buildDir),
+      `${packageName}@${currentVersion}`
+    )
+    result.entryPoints[`${packageName}/`] = path.join(result.path, "/")
 
-  if (built) {
+    if (verbose) console.log(cyan(JSON.stringify(result, null, 2)))
+
     fs.writeFileSync(buildLogPath, JSON.stringify(result, null, 2))
   }
   return result
 }
 
 export default convertToEsm
-
-// const start = Date.now()
-// const buildDir = "./TEST/build"
-// const nodeModulesDir = "./TEST/tmp"
-// fs.rmSync(buildDir, { recursive: true, force: true })
-// console.log(clear)
-// console.log(yellow("========================START========================"))
-// const packages = {
-//   "react-dom": "18.2.0",
-//   react: "18.2.0",
-//   zustand: "*",
-//   "@tanstack/react-query": "4.28.0",
-//   "custom-event-polyfill": "^1.0.7",
-//   luxon: "^2.3.0",
-//   "prop-types": "^15.8.1",
-// }
-// for (let packageName in packages) {
-//   const packageVersion = packages[packageName]
-//   await convertToEsm(packageName, packageVersion, { buildDir, nodeModulesDir })
-// }
-
-// console.log("\n" + yellow("Done in " + (Date.now() - start) / 1000 + "s"))

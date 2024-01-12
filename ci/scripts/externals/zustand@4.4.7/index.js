@@ -11,6 +11,10 @@ var __esm = (fn, res) => function __init() {
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
     for (let key of __getOwnPropNames(from))
@@ -30,12 +34,52 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// external:zustand/vanilla
+// ../../../tmp/node_modules/zustand/esm/vanilla.js
 var vanilla_exports = {};
-import * as vanilla_star from "zustand/vanilla";
+__export(vanilla_exports, {
+  createStore: () => createStore,
+  default: () => vanilla
+});
+var createStoreImpl, createStore, vanilla;
 var init_vanilla = __esm({
-  "external:zustand/vanilla"() {
-    __reExport(vanilla_exports, vanilla_star);
+  "../../../tmp/node_modules/zustand/esm/vanilla.js"() {
+    createStoreImpl = /* @__PURE__ */ __name((createState) => {
+      let state;
+      const listeners = /* @__PURE__ */ new Set();
+      const setState = /* @__PURE__ */ __name((partial, replace) => {
+        const nextState = typeof partial === "function" ? partial(state) : partial;
+        if (!Object.is(nextState, state)) {
+          const previousState = state;
+          state = (replace != null ? replace : typeof nextState !== "object" || nextState === null) ? nextState : Object.assign({}, state, nextState);
+          listeners.forEach((listener) => listener(state, previousState));
+        }
+      }, "setState");
+      const getState = /* @__PURE__ */ __name(() => state, "getState");
+      const subscribe = /* @__PURE__ */ __name((listener) => {
+        listeners.add(listener);
+        return () => listeners.delete(listener);
+      }, "subscribe");
+      const destroy = /* @__PURE__ */ __name(() => {
+        if (true) {
+          console.warn(
+            "[DEPRECATED] The `destroy` method will be unsupported in a future version. Instead use unsubscribe function returned by subscribe. Everything will be garbage-collected if store is garbage-collected."
+          );
+        }
+        listeners.clear();
+      }, "destroy");
+      const api = { setState, getState, subscribe, destroy };
+      state = createState(setState, getState, api);
+      return api;
+    }, "createStoreImpl");
+    createStore = /* @__PURE__ */ __name((createState) => createState ? createStoreImpl(createState) : createStoreImpl, "createStore");
+    vanilla = /* @__PURE__ */ __name((createState) => {
+      if (true) {
+        console.warn(
+          "[DEPRECATED] Default export is deprecated. Instead use import { createStore } from 'zustand/vanilla'."
+        );
+      }
+      return createStore(createState);
+    }, "vanilla");
   }
 });
 
@@ -296,7 +340,7 @@ var require_with_selector = __commonJS({
 var require_zustand = __commonJS({
   "../../../tmp/node_modules/zustand/index.js"(exports, module) {
     "use strict";
-    var vanilla = (init_vanilla(), __toCommonJS(vanilla_exports));
+    var vanilla2 = (init_vanilla(), __toCommonJS(vanilla_exports));
     var ReactExports = (init_react(), __toCommonJS(react_exports));
     var useSyncExternalStoreExports = require_with_selector();
     var useDebugValue = ReactExports.useDebugValue;
@@ -319,7 +363,7 @@ var require_zustand = __commonJS({
       if (typeof createState !== "function") {
         console.warn("[DEPRECATED] Passing a vanilla store will be unsupported in a future version. Instead use `import { useStore } from 'zustand'`.");
       }
-      var api = typeof createState === "function" ? vanilla.createStore(createState) : createState;
+      var api = typeof createState === "function" ? vanilla2.createStore(createState) : createState;
       var useBoundStore = /* @__PURE__ */ __name(function useBoundStore2(selector, equalityFn) {
         return useStore2(api, selector, equalityFn);
       }, "useBoundStore");
@@ -338,19 +382,19 @@ var require_zustand = __commonJS({
     exports.create = create2;
     exports.default = react;
     exports.useStore = useStore2;
-    Object.keys(vanilla).forEach(function(k) {
+    Object.keys(vanilla2).forEach(function(k) {
       if (k !== "default" && !Object.prototype.hasOwnProperty.call(exports, k))
         Object.defineProperty(exports, k, {
           enumerable: true,
           get: function() {
-            return vanilla[k];
+            return vanilla2[k];
           }
         });
     });
     module.exports = react;
     module.exports.create = create2;
     module.exports.useStore = useStore2;
-    module.exports.createStore = vanilla.createStore;
+    module.exports.createStore = vanilla2.createStore;
     exports.default = module.exports;
   }
 });

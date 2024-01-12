@@ -1,30 +1,42 @@
 {
   "built": true,
-  "buildName": "zustand@4.4.7",
-  "main": "./index.js",
+  "name": "zustand",
+  "entryPoints": {
+    "zustand/index": "externals/zustand@4.4.7/index.js",
+    "zustand": "externals/zustand@4.4.7/index.js",
+    "zustand/context": "externals/zustand@4.4.7/context.js",
+    "zustand/middleware": "externals/zustand@4.4.7/middleware.js",
+    "zustand/shallow": "externals/zustand@4.4.7/shallow.js",
+    "zustand/traditional": "externals/zustand@4.4.7/traditional.js",
+    "zustand/vanilla": "externals/zustand@4.4.7/vanilla.js",
+    "zustand/": "externals/zustand@4.4.7/"
+  },
   "dependencies": {
-    "zustand": "zustand@4.4.7/./index.js",
     "immer": {
-      "main": "immer@10.0.3/./dist/cjs/index.js",
-      "dependencies": {
-        "immer": "immer@10.0.3/./dist/cjs/index.js",
-        "immer/dist/cjs/index": "immer@10.0.3/dist/cjs/index.js"
-      }
+      "name": "immer",
+      "entryPoints": {
+        "immer/dist/cjs/index": "externals/immer@10.0.3/index.js",
+        "immer": "externals/immer@10.0.3/index.js",
+        "immer/": "externals/immer@10.0.3/"
+      },
+      "dependencies": {},
+      "buildName": "immer@10.0.3",
+      "path": "externals/immer@10.0.3"
     },
     "react": {
-      "main": "react@18.2.0/index.js",
-      "dependencies": {
-        "react": "react@18.2.0/index.js",
-        "react/index": "react@18.2.0/index.js",
-        "react/jsx-dev-runtime": "react@18.2.0/jsx-dev-runtime.js",
-        "react/jsx-runtime": "react@18.2.0/jsx-runtime.js"
-      }
-    },
-    "zustand/index": "zustand@4.4.7/index.js",
-    "zustand/context": "zustand@4.4.7/context.js",
-    "zustand/middleware": "zustand@4.4.7/middleware.js",
-    "zustand/shallow": "zustand@4.4.7/shallow.js",
-    "zustand/traditional": "zustand@4.4.7/traditional.js",
-    "zustand/vanilla": "zustand@4.4.7/vanilla.js"
-  }
+      "name": "react",
+      "entryPoints": {
+        "react/index": "externals/react@18.2.0/index.js",
+        "react": "externals/react@18.2.0/index.js",
+        "react/jsx-dev-runtime": "externals/react@18.2.0/jsx-dev-runtime.js",
+        "react/jsx-runtime": "externals/react@18.2.0/jsx-runtime.js",
+        "react/": "externals/react@18.2.0/"
+      },
+      "dependencies": {},
+      "buildName": "react@18.2.0",
+      "path": "externals/react@18.2.0"
+    }
+  },
+  "buildName": "zustand@4.4.7",
+  "path": "externals/zustand@4.4.7"
 }

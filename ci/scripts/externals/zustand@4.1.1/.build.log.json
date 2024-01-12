@@ -1,0 +1,37 @@
+{
+  "built": true,
+  "name": "zustand",
+  "entryPoints": {
+    "zustand/context": "externals/zustand@4.1.1/context.js",
+    "zustand/middleware": "externals/zustand@4.1.1/middleware.js",
+    "zustand/": "externals/zustand@4.1.1/"
+  },
+  "dependencies": {
+    "immer": {
+      "name": "immer",
+      "entryPoints": {
+        "immer/dist/cjs/index": "externals/immer@10.0.3/index.js",
+        "immer": "externals/immer@10.0.3/index.js",
+        "immer/": "externals/immer@10.0.3/"
+      },
+      "dependencies": {},
+      "buildName": "immer@10.0.3",
+      "path": "externals/immer@10.0.3"
+    },
+    "react": {
+      "name": "react",
+      "entryPoints": {
+        "react/index": "externals/react@18.2.0/index.js",
+        "react": "externals/react@18.2.0/index.js",
+        "react/jsx-dev-runtime": "externals/react@18.2.0/jsx-dev-runtime.js",
+        "react/jsx-runtime": "externals/react@18.2.0/jsx-runtime.js",
+        "react/": "externals/react@18.2.0/"
+      },
+      "dependencies": {},
+      "buildName": "react@18.2.0",
+      "path": "externals/react@18.2.0"
+    }
+  },
+  "buildName": "zustand@4.1.1",
+  "path": "externals/zustand@4.1.1"
+}

@@ -12,11 +12,11 @@
     "test": "jest"
   },
   "devDependencies": {
-    "babel-jest": "^29.3.1",
-    "esbuild": "^0.17.8",
-    "jest": "^29.3.1",
-    "jest-environment-jsdom": "^29.3.1",
-    "custom-event-polyfill": "^1.0.7"
+    "babel-jest": "29.3.1",
+    "esbuild": "0.17.8",
+    "jest": "29.3.1",
+    "jest-environment-jsdom": "29.3.1",
+    "custom-event-polyfill": "1.0.7"
   },
   "peerDependencies": {
     "es-module-shims": "1.6.2"

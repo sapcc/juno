@@ -1,8 +1,11 @@
 {
   "built": true,
+  "name": "lodash.uniqueid",
+  "entryPoints": {
+    "lodash.uniqueid/index": "externals/lodash.uniqueid@4.0.1/index.js",
+    "lodash.uniqueid/": "externals/lodash.uniqueid@4.0.1/"
+  },
+  "dependencies": {},
   "buildName": "lodash.uniqueid@4.0.1",
-  "dependencies": {
-    "lodash.uniqueid": "lodash.uniqueid@4.0.1/undefined",
-    "lodash.uniqueid/index": "lodash.uniqueid@4.0.1/index.js"
-  }
+  "path": "externals/lodash.uniqueid@4.0.1"
 }
