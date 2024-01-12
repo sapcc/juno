@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { MessagesProvider } from "messages-provider"
 import AsyncWorker from "./components/AsyncWorker"
 import StoreProvider, { useActions } from "./components/StoreProvider"
-import AppContent from "./components/AppContent"
+import AppRouter from "./components/AppRouter"
 
 const App = (props) => {
   const { setEndpoint } = useActions()
@@ -26,7 +26,7 @@ const App = (props) => {
         pageHeader="Converged Cloud | Heureka"
         embedded={props.embedded === "true" || props.embedded === true}
       >
-        <AppContent />
+        <AppRouter />
       </AppShell>
     </QueryClientProvider>
   )
