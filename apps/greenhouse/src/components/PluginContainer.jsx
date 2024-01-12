@@ -4,14 +4,15 @@ import { usePlugin, useGlobalsEnvironment } from "../components/StoreProvider"
 import useApi from "../hooks/useApi"
 import { useLayoutEffect } from "react"
 import HintLoading from "./shared/HintLoading"
-import { Message } from "juno-ui-components"
+import { parseError } from "../lib/helpers"
+import { useActions, MessagesProvider } from "messages-provider"
 
 const PluginContainer = () => {
   const { getPluginConfigs } = useApi()
   const environment = useGlobalsEnvironment()
   const config = usePlugin().config()
   const isFetching = usePlugin().isFetching()
-  const error = usePlugin().error()
+  const { addMessage } = useActions()
 
   const requestConfig = usePlugin().requestConfig
   const receiveConfig = usePlugin().receiveConfig
@@ -28,16 +29,24 @@ const PluginContainer = () => {
         receiveConfig(kubernetesConfig)
       })
       .catch((error) => {
+        // error fetching configs
         receiveError(error.message)
+        addMessage({
+          variant: "error",
+          text: parseError(error),
+        })
       })
   }, [getPluginConfigs, environment])
 
   return (
     <>
-      {error && <Message text={error} variant="error" />}
       {isFetching && <HintLoading text="Loading plugins..." />}
       {availableAppIds.length > 0
-        ? availableAppIds.map((id, i) => <Plugin id={id} key={i} />)
+        ? availableAppIds.map((id, i) => (
+            <MessagesProvider key={i}>
+              <Plugin id={id} />
+            </MessagesProvider>
+          ))
         : "No plugins available"}
     </>
   )
