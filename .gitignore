@@ -4,11 +4,11 @@
 node_modules
 
 .npm/*
-scripts/test_data
-scripts/externals
-scripts/im.json
-scripts/manifest.json
-scripts/importmap.json
+ci/scripts/test_data
+ci/scripts/externals
+ci/scripts/im.json
+ci/scripts/manifest.json
+ci/scripts/importmap.json
 
 # local assets-server build
 assets_server_build
@@ -20,8 +20,6 @@ assets_server_build
 build
 /build
 /ci/pipeline.yaml
-
-test_data
 
 # misc
 .DS_Store
