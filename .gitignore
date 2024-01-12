@@ -21,7 +21,7 @@ build
 /build
 /ci/pipeline.yaml
 
-scripts/test_data
+test_data
 
 # misc
 .DS_Store

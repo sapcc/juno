@@ -35,10 +35,10 @@ for (let file of files) {
   fs.mkdirSync(`${testDir}@latest`, { recursive: true })
   fs.copyFileSync(file, `${testDir}@${pkg.version}/package.json`)
   fs.copyFileSync(file, `${testDir}@latest/package.json`)
-  fs.cpSync(`${assetPath}/build`, `${testDir}@${pkg.version}/build`, {
+  fs.cpSync(path.join(rootPath,assetPath,'build'),`${testDir}@${pkg.version}/build`, {
     recursive: true,
   })
-  fs.cpSync(`${assetPath}/build`, `${testDir}@latest/build`, {
+  fs.cpSync(path.join(rootPath,assetPath,'build'), `${testDir}@latest/build`, {
     recursive: true,
   })
 }
