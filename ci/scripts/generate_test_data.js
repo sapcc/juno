@@ -49,10 +49,26 @@ for (let file of files) {
       recursive: true,
     }
   )
-  fs.rmSync(path.join(rootPath, assetPath, "build"), {
-    recursive: true,
-    force: true,
-  })
+  for (let file of ["README.md", "LICENSE", "COMMUNICATOR.md"]) {
+    if (fs.existsSync(path.join(rootPath, assetPath, file))) {
+      fs.cpSync(
+        path.join(rootPath, assetPath, file),
+        `${testDir}@${pkg.version}/${file}`,
+        { overwrite: true }
+      )
+      fs.cpSync(
+        path.join(rootPath, assetPath, file),
+        `${testDir}@latest/${file}`
+      )
+    }
+  }
+
+  if (assetPath.includes("apps")) {
+    fs.rmSync(path.join(rootPath, assetPath, "build"), {
+      recursive: true,
+      force: true,
+    })
+  }
 }
 
 console.log("DONE!")

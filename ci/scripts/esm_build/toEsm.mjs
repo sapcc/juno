@@ -116,6 +116,8 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
   const pkgJson = JSON.parse(
     fs.readFileSync(path.join(pkgPath, "package.json"))
   )
+  const mainFile = pkgJson.main || "index.js"
+  const moduleFile = pkgJson.module || "index.mjs"
 
   const entryPoints = getEntryPoints(pkgPath)
   if (verbose) console.log(blue("INFO:"), "entrypoints are", entryPoints)
@@ -206,9 +208,8 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
 
       if (
         entryPointFile ===
-          path.join(packageName, pkgJson.main || pkgJson.module || "") ||
-        entryPoint ===
-          path.join(packageName, pkgJson.main || pkgJson.module || "")
+          path.join(packageName, mainFile || moduleFile || "") ||
+        entryPoint === path.join(packageName, mainFile || moduleFile || "")
       ) {
         result.entryPoints[packageName] = entryPointPath
         result.main = entryPointName

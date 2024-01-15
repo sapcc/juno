@@ -183,20 +183,40 @@ for (let name in packageRegistry) {
       })
       // console.log(JSON.stringify(buildResult, null, 2))
 
-      const addDependenciesRecursive = (externalDependency = {}) => {
+      // add external dependency to import map, key is the path to the package
+      const addDependenciesRecursive = (
+        externalDependency = {},
+        key = `${pkgScopeKey}/`
+      ) => {
+        // if entryPoints are defined, we need to add them to the import map
         if (externalDependency.entryPoints) {
+          // create scope if not exists
+          importMap.scopes[key] = { ...importMap.scopes[key] }
+
+          // add entry points to scope
           for (let entryPoint in externalDependency.entryPoints) {
-            importMap.scopes[`${pkgScopeKey}/`] = {
-              ...importMap.scopes[`${pkgScopeKey}/`],
-            }
-            importMap.scopes[`${pkgScopeKey}/`][
+            importMap.scopes[key][
+              entryPoint
+            ] = `${options.baseUrl}/${externalDependency.entryPoints[entryPoint]}`
+
+            // add entrypoints of the package itself to the import map for this package
+            importMap.scopes[`${options.baseUrl}/${externalDependency.path}/`] =
+              importMap.scopes[
+                `${options.baseUrl}/${externalDependency.path}/`
+              ] || {}
+            importMap.scopes[`${options.baseUrl}/${externalDependency.path}/`][
               entryPoint
             ] = `${options.baseUrl}/${externalDependency.entryPoints[entryPoint]}`
           }
         }
+        // if dependencies are defined, we need to add them to the import map
         if (externalDependency.dependencies) {
+          // add dependencies to import map
           for (let dep in externalDependency.dependencies) {
-            addDependenciesRecursive(externalDependency.dependencies[dep])
+            addDependenciesRecursive(
+              externalDependency.dependencies[dep],
+              `${options.baseUrl}/${externalDependency.path}/`
+            )
           }
         }
       }
