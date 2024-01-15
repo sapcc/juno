@@ -106,6 +106,7 @@ const iconContainerStyles = `
   
 
 export const Datepicker = ({
+  allowInput,
   className,
   clear,
   dateFormat,
@@ -145,6 +146,7 @@ export const Datepicker = ({
   const theId = id ||  "juno-datepicker-" + useId()
   
   const theOptions = { 
+    allowInput,
     dateFormat, 
     enableTime,
     mode,
@@ -305,6 +307,8 @@ export const Datepicker = ({
 }
 
 Datepicker.propTypes = {
+  /** Whether the Datepicker allows direct keyboard input. Default is `false`. */
+  allowInput: PropTypes.bool,
   /** Pass custom classNames. These will be appended to the input element of the Datepicker. */
   className: PropTypes.string,
   /** Whether the datepicker should render a Clear icon */
@@ -362,6 +366,7 @@ Datepicker.propTypes = {
 }
 
 Datepicker.defaultProps = {
+  allowInput: false,
   className: "",
   clear: false,
   dateFormat: "Y-m-d",

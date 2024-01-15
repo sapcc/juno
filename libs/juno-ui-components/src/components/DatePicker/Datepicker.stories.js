@@ -112,3 +112,8 @@ export const RangeMode = Template.bind({})
 RangeMode.args = {
   mode: "range",
 }
+
+export const AllowInput = Template.bind({})
+AllowInput.args = {
+  allowInput: true,
+}
