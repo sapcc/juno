@@ -132,6 +132,7 @@ export const Datepicker = ({
   options,
   placeholder,
   required,
+  shorthandCurrentMonth,
   showMonths,
   successtext,
   time_24hr,
@@ -156,6 +157,7 @@ export const Datepicker = ({
     maxDate,
     minDate,
     mode,
+    shorthandCurrentMonth,
     showMonths,
     time_24hr,
     weekNumbers,
@@ -371,6 +373,10 @@ Datepicker.propTypes = {
   placeholder: PropTypes.string,
   /** Whether the datepicker should be marked as required. Requires a `Label` to be set. */
   required: PropTypes.bool,
+  /**  */
+  shorthandCurrentMonth: PropTypes.bool,
+  /** The number of months to show in the date picker */
+  showMonths: PropTypes.number,
   /** A text to render when the Datepicker was successfully validated */
   successtext: PropTypes.node,
   /** Displays time picker in 24 hour mode without AM/PM selection when enabled. Requires `enableTime` to be set, too. Default is `false`. */
@@ -433,7 +439,7 @@ Datepicker.defaultProps = {
     // DONE maxDate: null,
     // DONE minDate: null,
     // DONE mode: "single",
-    // WON'T DO nextArrow: ">", --> use ours, do not allow to customize?
+    // WON'T DO nextArrow: ">", --> use ours, do not allow to customize
     // ??? noCalendar: false,
     // // onChange: null,  --> merge with explicit prop
     // // onClose: null,
@@ -454,6 +460,7 @@ Datepicker.defaultProps = {
   },
   placeholder: "",
   required: false,
+  shorthandCurrentMonth: false,
   showMonths: 1,
   successtext: "",
   time_24hr: false,

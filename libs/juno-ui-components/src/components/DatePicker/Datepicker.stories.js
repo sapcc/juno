@@ -145,6 +145,7 @@ WithWeekNumbers.args = {
   weekNumbers: true,
 }
 
-
-
-
+export const WithShorthandCurrentMonth = Template.bind({})
+WithShorthandCurrentMonth.args = {
+  shorthandCurrentMonth: true,
+}
