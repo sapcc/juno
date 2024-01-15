@@ -149,6 +149,8 @@ export const Datepicker = ({
     allowInput,
     dateFormat, 
     enableTime,
+    maxDate,
+    minDate,
     mode,
     showMonths,
     ...options,
@@ -327,6 +329,10 @@ Datepicker.propTypes = {
   invalid: PropTypes.bool,
   /** The label of the datepicker */
   label: PropTypes.string,
+  /** The maximum / latest date a user can select (inclusive). */
+  maxDate: PropTypes.string,
+  /** The minimum / earliest date a user can select (inclusive). */
+  minDate: PropTypes.string, 
   /** The mode of the Datepicker. */
   mode: PropTypes.oneOf(["single", "multiple", "range", "time"]),
   /** A handler to be executed when the selected date or range changes */
@@ -378,6 +384,8 @@ Datepicker.defaultProps = {
   id: "",
   invalid: false,
   label: "",
+  maxDate: null,
+  minDate: null,
   mode: "single", 
   onChange: undefined,
   onFocus: undefined,
@@ -407,9 +415,9 @@ Datepicker.defaultProps = {
     // //formatDate: null,  --> error
     // hourIncrement: 1,
     // inline: false,
-    // maxDate: null,
-    // minDate: null,
-    // mode: "single",
+    // DONE maxDate: null,
+    // DONE minDate: null,
+    // DONE mode: "single",
     // // nextArrow: ">", --> use ours, do not allow to customize?
     // noCalendar: false,
     // // onChange: null,  --> merge with explicit prop

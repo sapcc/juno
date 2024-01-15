@@ -117,3 +117,15 @@ export const AllowInput = Template.bind({})
 AllowInput.args = {
   allowInput: true,
 }
+
+export const WithMinDate = Template.bind({})
+WithMinDate.args = {
+  minDate: new Date(),
+}
+
+export const WithMaxDate = Template.bind({})
+WithMaxDate.args = {
+  maxDate: new Date(),
+}
+
+
