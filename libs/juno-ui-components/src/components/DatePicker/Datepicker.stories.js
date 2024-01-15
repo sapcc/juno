@@ -98,6 +98,18 @@ WithTime.args = {
   dateFormat: "Y-m-d H:i",
 }
 
+export const WithTimeWithSeconds = Template.bind({})
+WithTimeWithSeconds.args = {
+  enableTime: true,
+  enableSeconds: true,
+}
+
+export const With24hTime = Template.bind({})
+With24hTime.args = {
+  enableTime: true,
+  time_24hr: true,
+}
+
 export const WithTwoMonths = Template.bind({})
 WithTwoMonths.args = {
   showMonths: 2,
@@ -127,5 +139,12 @@ export const WithMaxDate = Template.bind({})
 WithMaxDate.args = {
   maxDate: new Date(),
 }
+
+export const WithWeekNumbers = Template.bind({})
+WithWeekNumbers.args = {
+  weekNumbers: true,
+}
+
+
 
 

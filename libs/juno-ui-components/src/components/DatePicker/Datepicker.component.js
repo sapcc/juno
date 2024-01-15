@@ -112,6 +112,7 @@ export const Datepicker = ({
   dateFormat,
   defaultValue,
   disabled,
+  enableSeconds,
   enableTime,
   errortext,
   helptext,
@@ -133,8 +134,10 @@ export const Datepicker = ({
   required,
   showMonths,
   successtext,
+  time_24hr,
   valid,
   value,
+  weekNumbers,
   width,
   ...props
 }) => {
@@ -148,11 +151,14 @@ export const Datepicker = ({
   const theOptions = { 
     allowInput,
     dateFormat, 
+    enableSeconds,
     enableTime,
     maxDate,
     minDate,
     mode,
     showMonths,
+    time_24hr,
+    weekNumbers,
     ...options,
   }
   
@@ -319,6 +325,10 @@ Datepicker.propTypes = {
   defaultValue: PropTypes.string,
   /** Whether the Datepicker is disabled */
   disabled: PropTypes.bool,  
+  /** Whether to show seconds when showing a time picker. */
+  enableSeconds: PropTypes.bool,
+  /** Whether to show a time picker.  */
+  enableTime: PropTypes.bool,
   /** A text to render when the Datepicker has an error or could not be validated */
   errortext: PropTypes.node,
   /** A helptext to render to explain meaning and significance of the Datepicker */
@@ -363,10 +373,14 @@ Datepicker.propTypes = {
   required: PropTypes.bool,
   /** A text to render when the Datepicker was successfully validated */
   successtext: PropTypes.node,
+  /** Displays time picker in 24 hour mode without AM/PM selection when enabled. Requires `enableTime` to be set, too. Default is `false`. */
+  time_24hr: PropTypes.bool,
   /** Whether the Datepicker has been successfully validated */
   valid: PropTypes.bool,
   /** The value of the datepicker. Date Objects, timestamps, ISO date strings, chronological date strings `YYYY-MM-DD HH:MM`, and the shortcut `today` are all accepted. */
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
+  /** Whether to render week numbers. Default is `false`. */
+  weekNumbers: PropTypes.bool,
   /** The width of the datepicker input. Either 'full' (default) or 'auto'. */
   width: PropTypes.oneOf(["full", "auto"]),
 }
@@ -378,6 +392,7 @@ Datepicker.defaultProps = {
   dateFormat: "Y-m-d",
   defaultValue: undefined,
   disabled: false,
+  enableSeconds: false,
   enableTime: false,
   errortext: "",
   helptext: "",
@@ -394,32 +409,32 @@ Datepicker.defaultProps = {
   onValueUpdate: undefined,
   onYearChange: undefined,
   options: {
-    // altFormat: "F j, Y",
-    // altInput: false,
-    // altInputClass: "",
-    // allowInput: false,
+    // WON'T DO altFormat: "F j, Y",
+    // WON'T DO altInput: false,
+    // WON'T DO altInputClass: "",
+    // DONE: allowInput: false,
     // allowInvalidPreload: false,
-    // //     appendTo: null,  --> error
+    // WON'T DO     appendTo: null,  --> error
     // ariaDateFormat: "F j, Y",
     // conjunction: null,
     // clickOpens: true,
-    // dateFormat: "Y-m-d",
+    // DONE dateFormat: "Y-m-d",
     // defaultDate: null,
     // defaultHour: 12,
     // defaultMinute: 0,
     // disable: [],
     // disableMobile: false,
     // // enable: undefined,  --> error
-    // enableTime: false,
-    // enableSeconds: false,
+    // DONE enableTime: false,
+    // DONE enableSeconds: false,
     // //formatDate: null,  --> error
     // hourIncrement: 1,
     // inline: false,
     // DONE maxDate: null,
     // DONE minDate: null,
     // DONE mode: "single",
-    // // nextArrow: ">", --> use ours, do not allow to customize?
-    // noCalendar: false,
+    // WON'T DO nextArrow: ">", --> use ours, do not allow to customize?
+    // ??? noCalendar: false,
     // // onChange: null,  --> merge with explicit prop
     // // onClose: null,
     // // onOpen: null,
@@ -431,9 +446,9 @@ Datepicker.defaultProps = {
     // // prevArrow: ">", --> use ours, do not allow to customize?
     // shorthandCurrentMonth: false,
     // static: false,
-    // showMonths: 1,
-    // time_24hr: false,
-    // weekNumbers: false,
+    // DONE showMonths: 1,
+    // DONE time_24hr: false,
+    // DONE weekNumbers: false,
     // // wrap: false, --> custom elements, do not expose?
     // monthSelectorType: "dropdown",
   },
@@ -441,7 +456,9 @@ Datepicker.defaultProps = {
   required: false,
   showMonths: 1,
   successtext: "",
+  time_24hr: false,
   valid: false,
   value: undefined,
+  weekNumbers: false,
   width: "full",
 }
