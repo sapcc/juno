@@ -145,12 +145,12 @@ AllowInput.args = {
 
 export const WithMinDate = Template.bind({})
 WithMinDate.args = {
-  minDate: new Date(),
+  minDate: "today",
 }
 
 export const WithMaxDate = Template.bind({})
 WithMaxDate.args = {
-  maxDate: new Date(),
+  maxDate: "today",
 }
 
 export const WithWeekNumbers = Template.bind({})
@@ -171,4 +171,9 @@ WithStaticMonthSelector.args = {
 export const StaticPosition = Template.bind({})
 StaticPosition.args = {
   staticPosition: true,
+}
+
+export const WithValue = Template.bind({})
+WithValue.args = {
+  value: "today"
 }

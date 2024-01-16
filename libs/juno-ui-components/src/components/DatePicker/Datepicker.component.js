@@ -104,6 +104,8 @@ const iconContainerStyles = `
     } 
   */
   
+  /* TODO: enable, disable */
+  
 
 export const Datepicker = ({
   allowInput,
@@ -170,8 +172,6 @@ export const Datepicker = ({
     ...options,
   }
   
-  console.log(theOptions)
-  
   const [theDate, setTheDate] = useState( { date: "" } )
   const [isOpen, setisOpen] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
@@ -199,9 +199,9 @@ export const Datepicker = ({
     setIsValid(validated)
   }, [validated])
   
-  const handleChange = ( [date] ) => {
-    setTheDate( {date: date} )
-    onChange && onChange([date])
+  const handleChange = ( date ) => {
+    setTheDate( { date: date } )
+    onChange && onChange(date)
   }
   
   const handleClose = (date) => {
@@ -350,10 +350,10 @@ Datepicker.propTypes = {
   invalid: PropTypes.bool,
   /** The label of the datepicker */
   label: PropTypes.string,
-  /** The maximum / latest date a user can select (inclusive). */
-  maxDate: PropTypes.string,
-  /** The minimum / earliest date a user can select (inclusive). */
-  minDate: PropTypes.string, 
+  /** The maximum / latest date a user can select (inclusive). TODO: allow number, date object. */
+  maxDate: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
+  /** The minimum / earliest date a user can select (inclusive). TODO: allow number, date object. */
+  minDate: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]), 
   /** The mode of the Datepicker. */
   mode: PropTypes.oneOf(["single", "multiple", "range", "time"]),
   /** Whether to show a dropdown to select the current month. If `showMonths` is set to be greater than 1, it will always be displayed as static. Arrows to scroll through the months as well as through years will still be displayed and working. */
@@ -382,8 +382,8 @@ Datepicker.propTypes = {
     dateFormat:             PropTypes.string,
     enableSeconds:          PropTypes.bool,
     enableTime:             PropTypes.bool,
-    maxDate:                PropTypes.string,
-    minDate:                PropTypes.string,
+    maxDate:                PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
+    minDate:                PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
     mode:                   PropTypes.oneOf(["single", "multiple", "range", "time"]),
     monthSelectorType:      PropTypes.oneOf(["dropdown", "static"]),
     shorthandCurrentMonth:  PropTypes.bool,
@@ -420,7 +420,7 @@ Datepicker.defaultProps = {
   allowInput: false,
   className: "",
   clear: false,
-  conjunction: null,
+  conjunction: ", ",
   dateFormat: "Y-m-d",
   defaultValue: undefined,
   disabled: false,
