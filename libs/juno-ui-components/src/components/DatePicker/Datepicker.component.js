@@ -168,14 +168,14 @@ export const Datepicker = ({
   
   console.log(theOptions)
   
-  const [theDate, setTheDate] = useState( new Date() )
+  const [theDate, setTheDate] = useState( { date: "" } )
   const [isOpen, setisOpen] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
   
   
   useEffect( () => {
-    setTheDate(value)
+    setTheDate({date: value})
   }, [value])
   
   const invalidated = useMemo(
@@ -196,8 +196,7 @@ export const Datepicker = ({
   }, [validated])
   
   const handleChange = ( [date] ) => {
-    setTheDate( date )
-    console.log(theDate)
+    setTheDate( {date: newDate} )
     onChange && onChange([date])
   }
   
@@ -226,7 +225,7 @@ export const Datepicker = ({
   }
   
   const handleClearClick = () => {
-    setTheDate( "" )
+    setTheDate( { date: ""} )
   }
   
   return (
@@ -257,7 +256,7 @@ export const Datepicker = ({
         onYearChange={handleYearChange}
         options={theOptions}
         placeholder={placeholder}
-        value={theDate}
+        value={theDate.date}
         {...props}
       />
       { label && label.length ?
