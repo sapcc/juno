@@ -41,26 +41,6 @@ const SilenceScheduled = (props) => {
 
   const apiEndpoint = useGlobalsApiEndpoint()
 
-  /*
-
-  const [template, setTemplate] = useState(null)
-  useEffect(() => {
-    get(`${apiEndpoint}/silence-templates`)
-      .then((response) => response.json())
-      .then((templates) => {
-        console.log("templates", templates)
-        setTemplate(templates)
-      })
-      .catch((error) =>
-        addMessage({
-          variant: "error",
-          text: parseError(error),
-        })
-      )
-  }, [])
-
-  */
-
   // useEffect to init callback after rendering. This is needed to reopen the SilencedScheduledWrapper closing the modal
   const [closed, setClosed] = useState(false)
   useEffect(() => {
@@ -121,6 +101,9 @@ const SilenceScheduled = (props) => {
         })
       })
   }
+
+  //////
+  ////// Form Validation
 
   const validateForm = () => {
     console.log("formState", formState)
@@ -187,6 +170,54 @@ const SilenceScheduled = (props) => {
     }
   }
 
+  //////
+  ////// OnClick
+
+  const onChangeTemplate = (value) => {
+    const newSelectedOption = fakesilence.find(
+      (option) => option.title === value
+    )
+
+    const newFormState = {
+      ...DEFAULT_FORM_VALUES,
+      fixed_labels: newSelectedOption?.fixed_labels || {},
+      createdBy: authData?.parsed?.fullName,
+      editable_labels: newSelectedOption?.editable_labels?.reduce(
+        (acc, label) => ({
+          ...acc,
+          [label]: {
+            value: "",
+            error: null,
+          },
+        }),
+        {}
+      ),
+    }
+    console.log("newFormState", newFormState)
+    setFormState(newFormState)
+
+    setSelected(newSelectedOption)
+  }
+
+  const onChangeLabelValue = (e) => {
+    const editable_label = e.target.id
+    setFormState(
+      produce((formState) => {
+        formState.editable_labels[editable_label].value = e.target.value
+        formState.editable_labels[editable_label].error = null
+      })
+    )
+  }
+
+  const onChangeComment = (e) => {
+    setFormState(
+      produce((formState) => {
+        formState.comment.value = e.target.value
+        formState.comment.error = null
+      })
+    )
+  }
+
   return (
     <Modal
       title="Schedule new silence"
@@ -214,39 +245,17 @@ const SilenceScheduled = (props) => {
                 required
                 label="Silence Template"
                 value={selected?.title || "Select"}
+                onValueChange={(value) => {
+                  onChangeTemplate(value)
+                }}
               >
-                {fakesilence?.map(
-                  (option, index) => (
-                    console.log("option", index),
-                    (
-                      <SelectOption
-                        key={index}
-                        label={option.title}
-                        value={option.title}
-                        onClick={() => {
-                          setSelected(option)
-                          // reset formState with default values
-                          setFormState({
-                            ...DEFAULT_FORM_VALUES,
-                            fixed_labels: option?.fixed_labels || {},
-                            createdBy: authData?.parsed?.fullName,
-                            // Editlabels Object with empty values and errors null
-                            editable_labels: option?.editable_labels?.reduce(
-                              (acc, label) => ({
-                                ...acc,
-                                [label]: {
-                                  value: "",
-                                  error: null,
-                                },
-                              }),
-                              {}
-                            ),
-                          })
-                        }}
-                      />
-                    )
-                  )
-                )}
+                {fakesilence?.map((option, index) => (
+                  <SelectOption
+                    key={index}
+                    label={option.title}
+                    value={option.title}
+                  />
+                ))}
               </Select>
             </FormRow>
 
@@ -284,82 +293,69 @@ const SilenceScheduled = (props) => {
                     label="Comment"
                     value={formState.comment.value}
                     errortext={formState.comment.error}
-                    onChange={(e) =>
-                      setFormState(
-                        produce((formState) => {
-                          formState.comment.value = e.target.value
-                          formState.comment.error = null
-                        })
-                      )
-                    }
+                    onChange={onChangeComment}
                   ></Textarea>
                 </FormRow>
               </FormSection>
-              <FormSection>
-                {Object.keys(formState?.editable_labels).length > 0 && (
-                  <FormRow>
-                    <p>
-                      Editable Labels are labels that are editable. You can use
-                      regular expressions.
-                    </p>
-                  </FormRow>
+
+              {formState?.editable_labels &&
+                Object.keys(formState?.editable_labels).length > 0 && (
+                  <FormSection>
+                    <FormRow>
+                      <p>
+                        Editable Labels are labels that are editable. You can
+                        use regular expressions.
+                      </p>
+                    </FormRow>
+
+                    <FormRow>
+                      <div className="grid gap-2 grid-cols-3">
+                        {Object.keys(formState.editable_labels).map(
+                          (editable_label, index) => (
+                            <TextInput
+                              required
+                              label={editable_label}
+                              key={index}
+                              id={editable_label}
+                              value={
+                                formState?.editable_labels[editable_label].value
+                              }
+                              errortext={
+                                formState?.editable_labels[editable_label]
+                                  ?.error
+                              }
+                              onChange={onChangeLabelValue}
+                            />
+                          )
+                        )}
+                      </div>
+                    </FormRow>
+                  </FormSection>
                 )}
 
-                {Object.keys(formState?.editable_labels).length > 0 && (
+              {Object.keys(formState?.fixed_labels).length > 0 && (
+                <FormSection>
+                  <FormRow>
+                    <p>Fixed Labels are labels that are not editable.</p>
+                  </FormRow>
+
                   <FormRow>
                     <div className="grid gap-2 grid-cols-3">
-                      {Object.keys(formState.editable_labels).map(
-                        (editable_label) => (
-                          <TextInput
-                            required
-                            label={editable_label}
-                            key={editable_label}
-                            id={editable_label}
-                            errortext={
-                              formState?.editable_labels[editable_label]?.error
-                            }
-                            onChange={(e) =>
-                              setFormState(
-                                produce((formState) => {
-                                  formState.editable_labels[
-                                    editable_label
-                                  ].value = e.target.value
-                                  formState.editable_labels[
-                                    editable_label
-                                  ].error = null
-                                })
-                              )
-                            }
+                      {Object.keys(formState.fixed_labels).map(
+                        (label, index) => (
+                          <Pill
+                            key={index}
+                            pillKey={label}
+                            pillKeyLabel={label}
+                            pillValue={formState?.fixed_labels[label]}
+                            pillValueLabel={formState?.fixed_labels[label]}
                           />
                         )
                       )}
                     </div>
                   </FormRow>
-                )}
-              </FormSection>
-
-              <FormSection>
-                {Object.keys(formState?.fixed_labels).length > 0 && (
-                  <FormRow>
-                    <p>Fixed Labels are labels that are not editable.</p>
-                  </FormRow>
-                )}
-
-                {Object.keys(formState?.fixed_labels).length > 0 && (
-                  <FormRow>
-                    <div className="grid gap-2 grid-cols-3">
-                      {Object.keys(formState.fixed_labels).map((label) => (
-                        <Pill
-                          pillKey={label}
-                          pillKeyLabel={label}
-                          pillValue={formState?.fixed_labels[label]}
-                          pillValueLabel={formState?.fixed_labels[label]}
-                        />
-                      ))}
-                    </div>
-                  </FormRow>
-                )}
-              </FormSection>
+                </FormSection>
+              )}
             </Form>
           )}
         </>
