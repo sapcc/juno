@@ -12,6 +12,7 @@ import {
   SelectOption,
   Message,
   FormRow,
+  Stack,
   Pill,
   FormSection,
 } from "juno-ui-components"
@@ -65,11 +66,11 @@ const SilenceScheduled = (props) => {
       endAt: formState.endAt,
       comment: formState.comment.value,
       createdBy: formState.createdBy,
-      matcher: [],
+      matchers: [],
     }
 
     for (const [key, value] of Object.entries(formState.editable_labels)) {
-      silence.matcher.push({
+      silence.matchers.push({
         name: key,
         value: value.value,
         isRegex: true,
@@ -77,7 +78,7 @@ const SilenceScheduled = (props) => {
     }
 
     for (const [key, value] of Object.entries(formState.fixed_labels)) {
-      silence.matcher.push({
+      silence.matchers.push({
         name: key,
         value: value,
         isRegex: true,
@@ -149,8 +150,6 @@ const SilenceScheduled = (props) => {
       }
     })
 
-    console.log("formState.editable_labels", formState.editable_labels)
-
     if (errorexist) {
       addMessage({
         variant: "error",
@@ -193,7 +192,6 @@ const SilenceScheduled = (props) => {
         {}
       ),
     }
-    console.log("newFormState", newFormState)
     setFormState(newFormState)
 
     setSelected(newSelectedOption)
@@ -340,7 +338,7 @@ const SilenceScheduled = (props) => {
                   </FormRow>
 
                   <FormRow>
-                    <div className="grid gap-2 grid-cols-3">
+                    <Stack gap="2" wrap={true}>
                       {Object.keys(formState.fixed_labels).map(
                         (label, index) => (
                           <Pill
@@ -352,7 +350,7 @@ const SilenceScheduled = (props) => {
                           />
                         )
                       )}
-                    </div>
+                    </Stack>
                   </FormRow>
                 </FormSection>
               )}
