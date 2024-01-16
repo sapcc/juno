@@ -136,6 +136,7 @@ export const Datepicker = ({
   required,
   shorthandCurrentMonth,
   showMonths,
+  staticPosition,
   successtext,
   time_24hr,
   valid,
@@ -163,6 +164,7 @@ export const Datepicker = ({
     monthSelectorType,
     shorthandCurrentMonth,
     showMonths,
+    static: staticPosition, // rename since "static" is a reserved word in JS
     time_24hr,
     weekNumbers,
     ...options,
@@ -328,6 +330,8 @@ Datepicker.propTypes = {
   clear: PropTypes.bool,
   /** A custom string to separate individual dates in `multiple` mode. */
   conjunction: PropTypes.string,
+  /** A string of characters to define how a date will be formatted in the input field. Available options: https://flatpickr.js.org/formatting/ */
+  dateFormat: PropTypes.string,
   /** TODO: defaultValue -> proptypes ? */
   defaultValue: PropTypes.string,
   /** Whether the Datepicker is disabled */
@@ -369,12 +373,24 @@ Datepicker.propTypes = {
   /** A handler to be executed when the selected year changes */
   onYearChange: PropTypes.func,
   /** Pass a Flatpickr options object. For available options, consult https://flatpickr.js.org/. 
-  When an available key can also be passed explicitly as an individual prop, the latter will take precedence over the corresponding key in the `options` object. */
+  When an available key can also be passed explicitly as an individual prop, the latter will take precedence over the corresponding key in the `options` object. Note: The `static` key in the options object is represented by the `staticPosition` prop. */
+  
+  /* TODO: Suppress other keys? Use .exact instead of .shape */
   options: PropTypes.shape({
-    /** The format of the date to be displayed in the input field */
-    dateFormat: PropTypes.string,
-    enableTime: PropTypes.bool,
-    showMonths: PropTypes.number,
+    allowInput:             PropTypes.bool,
+    conjunction:            PropTypes.string,
+    dateFormat:             PropTypes.string,
+    enableSeconds:          PropTypes.bool,
+    enableTime:             PropTypes.bool,
+    maxDate:                PropTypes.string,
+    minDate:                PropTypes.string,
+    mode:                   PropTypes.oneOf(["single", "multiple", "range", "time"]),
+    monthSelectorType:      PropTypes.oneOf(["dropdown", "static"]),
+    shorthandCurrentMonth:  PropTypes.bool,
+    showMonths:             PropTypes.number,
+    static:                 PropTypes.bool,
+    time_24hr:              PropTypes.bool,
+    weekNumbers:            PropTypes.bool,
   }),
   /** The placeholder of the input element. Defaults to empty string `""`. TODO: default to expected date format */
   placeholder: PropTypes.string,
@@ -384,6 +400,8 @@ Datepicker.propTypes = {
   shorthandCurrentMonth: PropTypes.bool,
   /** The number of months to show in the date picker */
   showMonths: PropTypes.number,
+  /** Render the calendar inside the wrapper of the datepicker component. */
+  staticPosition: PropTypes.bool,
   /** A text to render when the Datepicker was successfully validated */
   successtext: PropTypes.node,
   /** Displays time picker in 24 hour mode without AM/PM selection when enabled. Requires `enableTime` to be set, too. Default is `false`. */
@@ -428,39 +446,39 @@ Datepicker.defaultProps = {
     // WON'T DO altInput: false,
     // WON'T DO altInputClass: "",
     // DONE: allowInput: false,
-    // allowInvalidPreload: false,
+    // ??? allowInvalidPreload: false,
     // WON'T DO     appendTo: null,  --> error
     // ariaDateFormat: "F j, Y",
     // DONE conjunction: null,
     // ??? clickOpens: true,
-    // dateFormat: "Y-m-d",
-    // defaultDate: null,
-    // defaultHour: 12,
-    // defaultMinute: 0,
-    // disable: [],
-    // disableMobile: false,
-    // // enable: undefined,  --> error
+    // DONE dateFormat: "Y-m-d",
+    // ??? defaultDate: null,
+    // ??? defaultHour: 12,
+    // ??? defaultMinute: 0,
+    // TODO disable: [],
+    // ??? disableMobile: false,
+    // ??? enable: undefined,  --> error
     // DONE enableTime: false,
     // DONE enableSeconds: false,
-    // //formatDate: null,  --> error
-    // hourIncrement: 1,
-    // inline: false,
+    // ??? formatDate: null,  --> error
+    // TODO hourIncrement: 1,
+    // TODO inline: false,
     // DONE maxDate: null,
     // DONE minDate: null,
     // DONE mode: "single",
     // WON'T DO nextArrow: ">", --> use ours, do not allow to customize
     // ??? noCalendar: false,
-    // // onChange: null,  --> merge with explicit prop
-    // // onClose: null,
-    // // onOpen: null,
-    // // onReady: null,
+    // ??? onChange: null,  --> merge with explicit prop
+    // ??? onClose: null,
+    // ??? onOpen: null,
+    // ??? onReady: null,
     // ??? parseDate: false,
     // // Where the calendar is rendered relative to the input vertically and horizontally. In the format of "[vertical] [horizontal]". Vertical can be auto, above or below (required). Horizontal can be left, center or right.  e.g. "above" or "auto center"
     // ??? position: "auto", --> discuss whether customizing makes any sense?
     // ??? positionElement: null,
     // WON'T DO:  prevArrow: ">", --> use ours, do not allow to customize
     // DONE shorthandCurrentMonth: false,
-    // static: false,
+    // DONE static: false,
     // DONE showMonths: 1,
     // DONE time_24hr: false,
     // DONE weekNumbers: false,
@@ -471,6 +489,7 @@ Datepicker.defaultProps = {
   required: false,
   shorthandCurrentMonth: false,
   showMonths: 1,
+  staticPosition: false,
   successtext: "",
   time_24hr: false,
   valid: false,

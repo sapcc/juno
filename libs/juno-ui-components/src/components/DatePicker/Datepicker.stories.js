@@ -167,3 +167,8 @@ export const WithStaticMonthSelector = Template.bind({})
 WithStaticMonthSelector.args = {
   monthSelectorType: "static",
 }
+
+export const StaticPosition = Template.bind({})
+StaticPosition.args = {
+  staticPosition: true,
+}
