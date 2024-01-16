@@ -1,61 +1,189 @@
 [
   {
-    "description": "This is a fake silence",
-    "editable_labels": ["test"],
+    "description": "This silence can be used during non-business hours! It's about Garnder Networks.",
+    "editable_labels": ["region"],
     "fixed_labels": {
-      "testlabel": "exist",
-      "testlabel2": "existent"
+      "alertname": "NetworkNamespaceProbesFailed",
+      "network_name": "shoot--it--.*",
+      "severity": "critical"
     },
     "status": "active",
-    "title": "Fake silence"
+    "title": "API - Shoot Networks - NetworkNamespaceProbesFailed"
   },
   {
-    "description": "This is a Test silence",
-    "editable_labels": ["test", "edit2"],
+    "description": "Silences alerts and all severity for given vccluster",
+    "editable_labels": ["region", "vccluster"],
     "fixed_labels": {
-      "fakelabel": "test"
+      "tier": "vmware"
     },
     "status": "active",
-    "title": "fake"
+    "title": "VMware maintenance - Master Template ESXi Upgrade"
   },
-
   {
-    "description": "This is a Test silence",
-    "editable_labels": ["May", "The", "Force", "Be", "With", "You"],
+    "description": "Silences the CinderBackend on shard (e.g. vc-a-1).",
+    "editable_labels": ["region", "shard"],
     "fixed_labels": {
-      "fakelabel": "fakelabel8000"
+      "alertname": "CinderBackendStorageEmptyCritical",
+      "service": "vcenter",
+      "tier": "vmware"
     },
     "status": "active",
-    "title": "This is another fake silence"
+    "title": "VMware maintenance - CinderBackendStorageEmptyCritical"
   },
   {
-    "description": "This is a no label",
-    "editable_labels": [],
-    "fixed_labels": {},
-    "status": "active",
-    "title": "no label"
-  },
-  {
-    "description": "Maintance für Spicesammler",
-    "editable_labels": [],
+    "description": "Silences the blackbox tests on Openstack VCenter API.",
+    "editable_labels": ["region", "check"],
     "fixed_labels": {
-      "Gerät": "Spicesammler",
-      "Personen": "Arbeitende",
-      "Planet": "Arrakis",
-      "Haus": "Atreides"
+      "alertname": "OpenstackVcenterApiDown",
+      "service": "vcenter",
+      "severity": "critical",
+      "tier": "vmware"
     },
     "status": "active",
-    "title": "Viele Fixed Labels"
+    "title": "VMware maintenance - OpenstackVcenterApiDown"
   },
   {
-    "description": "Maintance für Spicesammler",
-    "editable_labels": [],
+    "description": "VCenter exporter alert suppression.",
+    "editable_labels": ["region", "vccluster"],
     "fixed_labels": {
-      "Gerät": "Spicesammler",
-      "Planet": "Arrakis",
-      "Haus": "Harkonnen"
+      "alertname": "VCenterRedundancyLostHAPolicyNotConfigured",
+      "service": "compute",
+      "severity": "critical",
+      "tier": "vmware"
     },
     "status": "active",
-    "title": "Viele Fixed Labels"
+    "title": "VMware maintenance - VCenterRedundancyLostHAPolicyNotConfigured"
+  },
+  {
+    "description": "VCenter exporter alert suppression.",
+    "editable_labels": ["region", "vccluster"],
+    "fixed_labels": {
+      "alertname": "VCenterRedundancyLostHAPolicyFaulty",
+      "service": "compute",
+      "severity": "critical",
+      "tier": "vmware"
+    },
+    "status": "active",
+    "title": "VMware maintenance - VCenterRedundancyLostHAPolicyFaulty"
+  },
+  {
+    "description": "Silence integrity blackbox tests.",
+    "editable_labels": ["region", "meta"],
+    "fixed_labels": {
+      "alertname": "ESXiHostNotResponding.",
+      "service": "compute",
+      "severity": "critical",
+      "tier": "vmware"
+    },
+    "status": "active",
+    "title": "VMware maintenance - ESXiHostNotResponding"
+  },
+  {
+    "description": "Silence integrity blackbox tests.",
+    "editable_labels": ["region", "meta"],
+    "fixed_labels": {
+      "alertname": "ESXiHostWithAssociatedVMsNotResponding",
+      "service": "compute",
+      "severity": "critical",
+      "tier": "vmware"
+    },
+    "status": "active",
+    "title": "VMware maintenance - ESXiHostWithAssociatedVMsNotResponding"
+  },
+  {
+    "description": "VCenter exporter alert suppression.",
+    "editable_labels": ["region", "vccluster"],
+    "fixed_labels": {
+      "alertname": "VCClusterDRSNotFullyAutomated",
+      "service": "compute",
+      "tier": "vmware"
+    },
+    "status": "active",
+    "title": "VMware maintenance - VCClusterDRSNotFullyAutomated"
+  },
+  {
+    "description": "Silence all alerts based on host and vccluster - use regex and bbxxx.",
+    "editable_labels": ["region", "vccluster"],
+    "fixed_labels": {
+      "tier": "vmware"
+    },
+    "status": "active",
+    "title": "VMware maintenance - vPod Build Up"
+  },
+  {
+    "description": "Silence all alerts based on nsxt_transport_node - use regex like 'nodexxx-bbxxx.*'",
+    "editable_labels": ["region", "nsxt_transport_node"],
+    "fixed_labels": {
+      "alertname": "NSXTTransportNodeConnectivityNotUP",
+      "tier": "vmware"
+    },
+    "status": "active",
+    "title": "VMware maintenance - NSXTTransportNodeConnectivityNotUP"
+  },
+  {
+    "description": "Silence NSXTManagementNodeOffline based on the region and nsxv3_manager_hostname - use regex like 'nsx-ctl-bb305.*'",
+    "editable_labels": ["region", "nsxv3_manager_hostname"],
+    "fixed_labels": {
+      "alertname": "NSXTManagementNodeOffline",
+      "tier": "vmware"
+    },
+    "status": "active",
+    "title": "VMware maintenance - NSXTManagementNodeOffline"
+  },
+  {
+    "description": "Silence VVol alerts during VVol maintenance by VVol Name, like 'vVOL_BBxxx.'",
+    "editable_labels": ["region", "name"],
+    "fixed_labels": {
+      "alertname": "VVolDatastoreNotAccessibleFromHost",
+      "service": "compute",
+      "severity": "critical",
+      "tier": "vmware"
+    },
+    "status": "active",
+    "title": "VMware maintenance - VVol alert silence by VVol Name"
+  },
+  {
+    "description": "Silence VVol alerts during VVol maintenance or VASA Provider maintenance by DataCenter, like eu-de-1a",
+    "editable_labels": ["region", "datacenter"],
+    "fixed_labels": {
+      "alertname": "VVolDatastoreNotAccessibleFromHost",
+      "service": "compute",
+      "severity": "critical",
+      "tier": "vmware"
+    },
+    "status": "active",
+    "title": "VMware maintenance - VVols alert silence by Datacenter (aka: VASA Provider maintenance)"
+  },
+  {
+    "description": "This silence silences some other VmWare related alerts and this description should also be better",
+    "editable_labels": ["vccluster", "cluster"],
+    "fixed_labels": {
+      "service": "compute",
+      "tier": "vmware"
+    },
+    "status": "disabled",
+    "title": "VmWare silence other"
+  },
+  {
+    "description": "This silence can be used during non-business hours! It's about Garnder Networks.",
+    "fixed_labels": {
+      "alertname": "NetworkNamespaceProbesFailed",
+      "network_name": "shoot--it--.*",
+      "severity": "critical"
+    },
+    "status": "active",
+    "title": "API - Shoot Networks - NetworkNamespaceProbesFailed - Test: empty"
+  },
+  {
+    "description": "This silence can be used during non-business hours! It's about Garnder Networks.",
+    "editable_labels": ["region", "meta"],
+    "editable_labels_default_values": [".*", ".*"],
+    "fixed_labels": {
+      "alertname": "NetworkNamespaceProbesFailed",
+      "network_name": "shoot--it--.*",
+      "severity": "critical"
+    },
+    "status": "active",
+    "title": "API - Shoot Networks - NetworkNamespaceProbesFailed - Test: defaults"
   }
 ]
