@@ -149,3 +149,8 @@ export const WithShorthandCurrentMonth = Template.bind({})
 WithShorthandCurrentMonth.args = {
   shorthandCurrentMonth: true,
 }
+
+export const WithStaticMonthSelector = Template.bind({})
+WithStaticMonthSelector.args = {
+  monthSelectorType: "static",
+}

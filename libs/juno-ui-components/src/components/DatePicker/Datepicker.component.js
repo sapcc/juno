@@ -122,6 +122,7 @@ export const Datepicker = ({
   maxDate,
   minDate,
   mode,
+  monthSelectorType,
   onChange,
   onClose,
   onFocus,
@@ -157,6 +158,7 @@ export const Datepicker = ({
     maxDate,
     minDate,
     mode,
+    monthSelectorType,
     shorthandCurrentMonth,
     showMonths,
     time_24hr,
@@ -347,6 +349,8 @@ Datepicker.propTypes = {
   minDate: PropTypes.string, 
   /** The mode of the Datepicker. */
   mode: PropTypes.oneOf(["single", "multiple", "range", "time"]),
+  /** Whether to show a dropdown to select the current month. If `showMonths` is set to be greater than 1, it will always be displayed as static. Arrows to scroll through the months as well as through years will still be displayed and working. */
+  monthSelectorType: PropTypes.oneOf(["dropdown", "static"]),
   /** A handler to be executed when the selected date or range changes */
   onChange: PropTypes.func,
   /** A handler to be executed when the datepicker inout field is focussed */
@@ -373,7 +377,7 @@ Datepicker.propTypes = {
   placeholder: PropTypes.string,
   /** Whether the datepicker should be marked as required. Requires a `Label` to be set. */
   required: PropTypes.bool,
-  /**  */
+  /** Whether the current month in the date picker should be displayed as shorthand, e.g. "Jan" instead of "January" */
   shorthandCurrentMonth: PropTypes.bool,
   /** The number of months to show in the date picker */
   showMonths: PropTypes.number,
@@ -408,6 +412,7 @@ Datepicker.defaultProps = {
   maxDate: null,
   minDate: null,
   mode: "single", 
+  monthSelectorType: "dropdown",
   onChange: undefined,
   onFocus: undefined,
   onMonthChange: undefined,
@@ -423,7 +428,7 @@ Datepicker.defaultProps = {
     // WON'T DO     appendTo: null,  --> error
     // ariaDateFormat: "F j, Y",
     // conjunction: null,
-    // clickOpens: true,
+    // ??? clickOpens: true,
     // DONE dateFormat: "Y-m-d",
     // defaultDate: null,
     // defaultHour: 12,
@@ -445,18 +450,18 @@ Datepicker.defaultProps = {
     // // onClose: null,
     // // onOpen: null,
     // // onReady: null,
-    // parseDate: false,
+    // ??? parseDate: false,
     // // Where the calendar is rendered relative to the input vertically and horizontally. In the format of "[vertical] [horizontal]". Vertical can be auto, above or below (required). Horizontal can be left, center or right.  e.g. "above" or "auto center"
-    // position: "auto",
-    // positionElement: null,
-    // // prevArrow: ">", --> use ours, do not allow to customize?
-    // shorthandCurrentMonth: false,
+    // ??? position: "auto", --> discuss whether customizing makes any sense?
+    // ??? positionElement: null,
+    // WON'T DO:  prevArrow: ">", --> use ours, do not allow to customize
+    // DONE shorthandCurrentMonth: false,
     // static: false,
     // DONE showMonths: 1,
     // DONE time_24hr: false,
     // DONE weekNumbers: false,
-    // // wrap: false, --> custom elements, do not expose?
-    // monthSelectorType: "dropdown",
+    // WON't DO wrap: false, --> custom elements, do not expose?
+    // DONE monthSelectorType: "dropdown", 
   },
   placeholder: "",
   required: false,
