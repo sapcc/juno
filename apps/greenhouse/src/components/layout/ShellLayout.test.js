@@ -5,15 +5,18 @@ import { render, act, renderHook } from "@testing-library/react"
 import { screen } from "shadow-dom-testing-library"
 import ShellLayout from "./ShellLayout"
 import StoreProvider from "../StoreProvider"
+import { MessagesProvider } from "messages-provider"
 
 jest.mock("communicator")
 
 test("renders app", async () => {
   await act(() =>
     render(
-      <StoreProvider>
-        <ShellLayout />
-      </StoreProvider>
+      <MessagesProvider>
+        <StoreProvider>
+          <ShellLayout />
+        </StoreProvider>
+      </MessagesProvider>
     )
   )
 
