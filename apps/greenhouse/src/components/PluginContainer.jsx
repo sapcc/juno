@@ -14,6 +14,9 @@ const PluginContainer = () => {
   const isFetching = usePlugin().isFetching()
   const { addMessage } = useActions()
 
+  // prevent to load a plugin before the config is fetched to avoid rerendering do tue the default plugin greenhouse-mng
+  const [displayPlugin, setDisplayPlugin] = React.useState(false)
+
   const requestConfig = usePlugin().requestConfig
   const receiveConfig = usePlugin().receiveConfig
   const receiveError = usePlugin().receiveError
@@ -23,6 +26,7 @@ const PluginContainer = () => {
   useLayoutEffect(() => {
     if (!getPluginConfigs) return
     requestConfig()
+
     // fetch configs from kubernetes
     getPluginConfigs()
       .then((kubernetesConfig) => {
@@ -36,12 +40,15 @@ const PluginContainer = () => {
           text: parseError(error),
         })
       })
+      .finally(() => {
+        setDisplayPlugin(true)
+      })
   }, [getPluginConfigs, environment])
 
   return (
     <>
       {isFetching && <HintLoading text="Loading plugins..." />}
-      {availableAppIds.length > 0
+      {displayPlugin && availableAppIds.length > 0
         ? availableAppIds.map((id, i) => (
             <MessagesProvider key={i}>
               <Plugin id={id} />
