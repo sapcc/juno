@@ -198,7 +198,7 @@ export const Datepicker = ({
   }, [validated])
   
   const handleChange = ( [date] ) => {
-    setTheDate( {date: newDate} )
+    setTheDate( {date: date} )
     onChange && onChange([date])
   }
   
@@ -431,9 +431,9 @@ Datepicker.defaultProps = {
     // allowInvalidPreload: false,
     // WON'T DO     appendTo: null,  --> error
     // ariaDateFormat: "F j, Y",
-    // conjunction: null,
+    // DONE conjunction: null,
     // ??? clickOpens: true,
-    // DONE dateFormat: "Y-m-d",
+    // dateFormat: "Y-m-d",
     // defaultDate: null,
     // defaultHour: 12,
     // defaultMinute: 0,
