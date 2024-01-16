@@ -120,6 +120,12 @@ MultipleMode.args = {
   mode: "multiple",
 }
 
+export const MultipleModeWithCustomConjunction = Template.bind({})
+MultipleModeWithCustomConjunction.args = {
+  mode: "multiple",
+  conjunction: " || ",
+}
+
 export const RangeMode = Template.bind({})
 RangeMode.args = {
   mode: "range",

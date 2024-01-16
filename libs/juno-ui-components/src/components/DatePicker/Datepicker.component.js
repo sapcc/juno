@@ -109,6 +109,7 @@ export const Datepicker = ({
   allowInput,
   className,
   clear,
+  conjunction,
   dateFormat,
   defaultValue,
   disabled,
@@ -152,6 +153,7 @@ export const Datepicker = ({
   
   const theOptions = { 
     allowInput,
+    conjunction,
     dateFormat, 
     enableSeconds,
     enableTime,
@@ -324,6 +326,8 @@ Datepicker.propTypes = {
   className: PropTypes.string,
   /** Whether the datepicker should render a Clear icon */
   clear: PropTypes.bool,
+  /** A custom string to separate individual dates in `multiple` mode. */
+  conjunction: PropTypes.string,
   /** TODO: defaultValue -> proptypes ? */
   defaultValue: PropTypes.string,
   /** Whether the Datepicker is disabled */
@@ -398,6 +402,7 @@ Datepicker.defaultProps = {
   allowInput: false,
   className: "",
   clear: false,
+  conjunction: null,
   dateFormat: "Y-m-d",
   defaultValue: undefined,
   disabled: false,
