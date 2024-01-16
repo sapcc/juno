@@ -290,6 +290,9 @@ export const Datepicker = ({
           :
             ""
         }
+        {
+          // TODO: calendar icon goes here
+        }
         { isInvalid ? 
             <Icon icon="dangerous" color="jn-text-theme-error" />
           : 
