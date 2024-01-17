@@ -27,32 +27,28 @@ function log(...args) {
 const availableArgs = [
   "--exit-on-error=[true|false]",
   "--src=DIR_PATH",
-  "--output=FILE_PATH",
-  "--minify=true|false",
+  "--importmap-path=FILE_PATH",
   "--ignore-externals=true|false",
   "--base-url=URL_OF_ASSETS_SERVER",
   "--external-path=PATH_TO_EXTERNALS_ON_LOCAL_MACHINE",
-  "--verbose|-v",
+  "--verbose",
   "--env=[production|development]",
   "--help|-h",
 ]
+
+const args = process.argv.slice(2)
 
 // default argument values
 const options = {
   exitOnError: true,
   src: pathLib.dirname(url.fileURLToPath(import.meta.url)),
   baseUrl: "%BASE_URL%",
-  output: "./importmap.json",
-  minify: true,
-  ignoreExternals: false,
+  importmapPath: "./importmap.json",
   externalPath: "externals",
-  local: true,
+  ignoreExternals: false,
   verbose: false,
-  v: false,
   env: "production",
 }
-
-const args = process.argv.slice(2)
 
 // PARSE ARGS
 for (let arg of args) {
@@ -70,8 +66,11 @@ for (let arg of args) {
     continue
   }
 }
+
 if (options.help || options.h) {
-  console.log(`Usage: node ${process.argv[1]} ` + availableArgs.join(" "))
+  console.log(
+    green(`Usage: node ${process.argv[1]} ` + availableArgs.join(" "))
+  )
 }
 
 // #########################################################################
@@ -239,9 +238,8 @@ for (let name in packageRegistry) {
 
 if (options.verbose) console.log(importMap)
 
-fs.writeFileSync(options.output, JSON.stringify(importMap))
-// only for tests
-// fs.writeFileSync(
-//   options.output.replace(".json", ".debug.json"),
-//   JSON.stringify(importMap, null, 2)
-// )
+if (options.env === "development") {
+  fs.writeFileSync(options.importmapPath, JSON.stringify(importMap, null, 2))
+} else {
+  fs.writeFileSync(options.importmapPath, JSON.stringify(importMap))
+}
