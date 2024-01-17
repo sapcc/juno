@@ -5,12 +5,16 @@ import esbuild from "esbuild"
 import cjsToEsm from "./cjs_to_esm_esbuild_plugin.js"
 import requireToImport from "./require_to_import_esbuild_plugin.js"
 import glob from "glob"
+import https from "node:https"
+import semver from "semver"
 import { green, red, yellow, blue, cyan } from "./colors.mjs"
 
 function log(...args) {
   process.stdout.write(args.join(" "))
 }
 
+// all js files found in the package root directory are potential entry points
+// files pointed to by the main and module fields in the package.json are also entry points
 function getEntryPoints(packagePath) {
   let files = []
   let pkgJson
@@ -18,6 +22,7 @@ function getEntryPoints(packagePath) {
     pkgJson = JSON.parse(
       fs.readFileSync(path.join(packagePath, "package.json"))
     )
+    // add main and module entry points
     if (pkgJson.main) {
       files.push(path.join(packagePath, pkgJson.main))
     } else if (pkgJson.module) {
@@ -27,6 +32,7 @@ function getEntryPoints(packagePath) {
     console.log(red("ERROR:"), "failed to parse package.json of", packagePath)
     return files
   }
+  // add all js files in the package root directory
   files = files.concat(
     glob.sync(path.join(packagePath, "*.js"), {
       ignore: "node_modules/**",
@@ -35,7 +41,9 @@ function getEntryPoints(packagePath) {
   return files
 }
 
-function getFixPackageVersion(name, version = "*") {
+// get fix version of a package
+async function getFixPackageVersion(name, version = "*") {
+  // return version if version is not a range
   if (
     version !== "" &&
     version !== "*" &&
@@ -44,27 +52,50 @@ function getFixPackageVersion(name, version = "*") {
   )
     return version.trim()
 
-  let result
-  try {
-    result = child_process
-      .execSync(`npm show "${name}@${version}" version --json`)
-      .toString()
-    result = JSON.parse(result)
-  } catch (e) {
-    console.log(
-      red("ERROR:"),
-      "failed to get version of " + name + "@" + version
-    )
-  }
+  // make an api call to npm to get the latest version
+  return new Promise((resolve, reject) => {
+    const req = https
+      .get(
+        `https://registry.npmjs.org/${name}`,
+        {
+          headers: {
+            Accept: "application/vnd.npm.install-v1+json",
+            timeout: 300000,
+          },
+        }, // this header makes the response smaller
+        (res) => {
+          // iniiialize data
+          let data = ""
 
-  if (!result) return "latest"
-  if (typeof result === "string") return result.trim()
-  if (Array.isArray(result)) return result.pop().trim()
+          // add received data to data
+          res.on("data", (d) => (data += d))
+          // resolve the promise when the response ends
+          res.on("end", () => {
+            // get all versions
+            const versions = Object.keys(JSON.parse(data).versions)
+            // get the latest version that satisfies the version range
+            const currentVersion = semver.maxSatisfying(versions, version)
+            // resolve the promise
+            resolve(currentVersion)
+          })
+        }
+      )
+      .on("error", (e) => {
+        console.log("\n=========================ERROR:", name, version)
+        console.error(e)
+        //reject(e)
+        return version
+      })
+
+    req.end()
+  })
 }
 
+// use npm to install a package
 function installNpmPackage(name, version = "latest", options = {}) {
   const verbose = options.verbose || false
 
+  // cached downloaded packages default to /tmp
   const nodeModulesDir = options.nodeModulesDir || "/tmp"
   if (version === "*") version = "latest"
   if (!fs.existsSync(nodeModulesDir))
@@ -90,7 +121,7 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
 
   log("\n" + indent + green("PROCESS: ") + packageName + "@" + packageVersion)
 
-  const currentVersion = getFixPackageVersion(packageName, packageVersion)
+  const currentVersion = await getFixPackageVersion(packageName, packageVersion)
 
   if (verbose)
     log(
@@ -203,9 +234,10 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
 
       const entryPointFile = entryPoint.replace(pkgPath, packageName)
       const entryPointName = entryPointFile.replace(/\.m?js$/, "")
-      // add entrypoint to result without .js extension
-      result.entryPoints[entryPointName] = entryPointPath
 
+      // handle main entrypoint
+      // if entrypoint matches main or module file then add
+      // the package name as entrypoint pointing to the main file
       if (
         entryPointFile ===
           path.join(packageName, mainFile || moduleFile || "") ||
@@ -213,6 +245,10 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
       ) {
         result.entryPoints[packageName] = entryPointPath
         result.main = entryPointName
+      } else {
+        // else add entrypoint to result without .js extension
+        // add entrypoint to result without .js extension
+        result.entryPoints[entryPointName] = entryPointPath
       }
 
       process.stdout.write(green("DONE"))
@@ -233,7 +269,6 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
       path.basename(buildDir),
       `${packageName}@${currentVersion}`
     )
-    result.entryPoints[`${packageName}/`] = path.join(result.path, "/")
 
     if (verbose) console.log(cyan(JSON.stringify(result, null, 2)))
 

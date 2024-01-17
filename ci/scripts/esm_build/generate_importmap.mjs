@@ -13,6 +13,8 @@ import url from "url"
 import convertToEsm from "./toEsm.mjs"
 import { green, red, yellow, blue, cyan } from "./colors.mjs"
 
+// this log function allows us to output to stdout without a newline
+// if a new line is needed, it must be added to the end of the string "\n"
 function log(...args) {
   process.stdout.write(args.join(" "))
 }
@@ -41,7 +43,7 @@ const options = {
   src: pathLib.dirname(url.fileURLToPath(import.meta.url)),
   baseUrl: "%BASE_URL%",
   output: "./importmap.json",
-  minify: false,
+  minify: true,
   ignoreExternals: false,
   externalPath: "externals",
   local: true,
@@ -73,11 +75,14 @@ if (options.help || options.h) {
 }
 
 // #########################################################################
-
 const PACKAGES_PATHS = ["apps", "libs"]
+// determine the assets source directory
 const rootPath = pathLib.resolve(options.src)
+// pattern to find all package.json files in the juno packages
 const globPattern = `${rootPath}/@(${PACKAGES_PATHS.join("|")})/**/package.json`
+// regex to extract the package name from the path
 const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
+// find all package.json files, except in node_modules
 const files = glob.sync(globPattern, { ignore: [`node_modules/**`] })
 
 // build package registry based on juno packages
@@ -86,6 +91,7 @@ const packageRegistry = {}
 // this timestamp will be added to the index.js files for own libs
 const timestamp = Date.now()
 
+// pro
 for (let file of files) {
   // load and parse package.json
   let pkg = JSON.parse(fs.readFileSync(file))
@@ -109,8 +115,8 @@ for (let file of files) {
 
 const importMap = { scopes: {}, imports: {} }
 
-// Due to the backward compatibility, we need to add the "old" url to importmap
-// to link it to the built version.
+// Due to the backward compatibility, we need to add the "old" url of the es-module-shims
+// to importmap to link it to the built version.
 // download convert es-module-shim to esm
 const buildResult = await convertToEsm("es-module-shims", "1.6.2", {
   buildDir: options.externalPath,
@@ -133,9 +139,11 @@ for (let name in packageRegistry) {
 
     log(cyan(`add ${pkg.name}@${pkg.version} to import map` + "\n"))
 
-    importMap.imports[
-      `@juno/${pkg.name}@${pkg.version}/`
-    ] = `${options.baseUrl}/${pkg.path}/${pkg.entryDir}`
+    // // add package to import map with slash at the end
+    // // to support import from directory
+    // importMap.imports[
+    //   `@juno/${pkg.name}@${pkg.version}/`
+    // ] = `${options.baseUrl}/${pkg.path}/${pkg.entryDir}`
     importMap.imports[
       `@juno/${pkg.name}@${pkg.version}`
     ] = `${options.baseUrl}/${pkg.path}/${pkg.entryFile}`
@@ -160,9 +168,11 @@ for (let name in packageRegistry) {
         importMap.scopes[`${pkgScopeKey}/`] = {
           ...importMap.scopes[`${pkgScopeKey}/`],
         }
-        importMap.scopes[`${pkgScopeKey}/`][
-          `${ownPackage.name}/`
-        ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryDir}`
+        // // add package to import map with slash at the end
+        // // to support import from directory
+        // importMap.scopes[`${pkgScopeKey}/`][
+        //   `${ownPackage.name}/`
+        // ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryDir}`
         importMap.scopes[`${pkgScopeKey}/`][
           ownPackage.name
         ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryFile}`
@@ -228,4 +238,10 @@ for (let name in packageRegistry) {
 }
 
 if (options.verbose) console.log(importMap)
-fs.writeFileSync(options.output, JSON.stringify(importMap, null, 2))
+
+fs.writeFileSync(options.output, JSON.stringify(importMap))
+// only for tests
+// fs.writeFileSync(
+//   options.output.replace(".json", ".debug.json"),
+//   JSON.stringify(importMap, null, 2)
+// )
