@@ -142,4 +142,9 @@ if (options.verbose || options.v) {
   console.log("==============MANIFEST==============")
   console.log(JSON.stringify(manifest, null, 2))
 }
-fs.writeFileSync(options.output, JSON.stringify(manifest, null, 2))
+
+console.log("===", path.resolve(options.output))
+fs.writeFileSync(
+  path.resolve(options.output),
+  JSON.stringify(manifest, null, 2)
+)
