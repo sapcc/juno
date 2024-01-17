@@ -483,14 +483,15 @@ Datepicker.defaultProps = {
     // ??? defaultDate: null,
     // ??? defaultHour: 12,
     // ??? defaultMinute: 0,
-    // TODO disable: [],
+    // DONE disable: [],
     // ??? disableMobile: false,
-    // ??? enable: undefined,  --> error
+    // DONE enable: undefined,
     // DONE enableTime: false,
     // DONE enableSeconds: false,
     // ??? formatDate: null,  --> error
     //  hourIncrement: 1,
     // TODO inline: false,
+    // DONE locale
     // DONE maxDate: null,
     // DONE minDate: null,
     // DONE mode: "single",
