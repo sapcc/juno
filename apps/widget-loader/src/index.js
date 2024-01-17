@@ -1,3 +1,4 @@
+import maxSatisfying from "semver/ranges/max-satisfying"
 ;(async function () {
   window.process = { env: { NODE_ENV: "production" } }
   window.esmsInitOptions = {
@@ -77,19 +78,49 @@
           )
           // this works too
           // importShim.addImportMap(importmap)
+
           return importmap
         })
     })
 
+  // create load Available Versions Promise and cache it
+  store.loadAvailableVersions =
+    store.loadAvailableVersions ||
+    function (importmap) {
+      return new Promise((resolve, reject) => {
+        const result = {}
+        // extract all avail
+        Object.keys(importmap.imports).forEach((key) => {
+          const match = key.match(/^@(?:juno|asset)\/([^@]+)@([^\/]+).*$/)
+          if (match) {
+            const version = match[2] === "latest" ? "*" : match[2]
+            result[match[1]] = result[match[1]] || []
+            if (result[match[1]].indexOf(version) === -1)
+              result[match[1]].push(version)
+          }
+        })
+        resolve(result)
+      })
+    }
+
   // wait until the loadImportmap promise is resolved
   const importmap = await store.loadImportmap
   // console.log("===============shim loaded", name)
+  const availableVersions = await store.loadAvailableVersions(importmap)
 
   // broadcast custom event
   window.dispatchEvent(new CustomEvent(JUNO_IMPORTMAP_LOADED_EVENT))
 
   if (importmapOnly === "true" || importmap === true) return
+
   // APP LOADER
+  // determine the version
+  console.debug("availableVersions", availableVersions)
+  version = maxSatisfying(
+    availableVersions[name],
+    version === "latest" ? "*" : version
+  )
+
   // get the app URL
   // from given url or from importmap based on name and version
   let appURL = url || importmap.imports[`@juno/${name}@${version}`]
