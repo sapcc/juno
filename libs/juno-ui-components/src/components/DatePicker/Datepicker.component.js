@@ -119,6 +119,7 @@ export const Datepicker = ({
   enableTime,
   errortext,
   helptext,
+  hourIncrement,
   id,
   invalid,
   label,
@@ -160,6 +161,7 @@ export const Datepicker = ({
     dateFormat, 
     enableSeconds,
     enableTime,
+    hourIncrement,
     maxDate,
     minDate,
     mode,
@@ -347,6 +349,8 @@ Datepicker.propTypes = {
   errortext: PropTypes.node,
   /** A helptext to render to explain meaning and significance of the Datepicker */
   helptext: PropTypes.node,
+  /** The step for the hour input. Only has an effect when a time picker is enabled via `enableTime`. */
+  hourIncrement: PropTypes.number,
   /** The id of the datepicker input */
   id: PropTypes.string,
   /** Whether the Datepicker has been unsuccessfully validated */
@@ -431,6 +435,7 @@ Datepicker.defaultProps = {
   enableTime: false,
   errortext: "",
   helptext: "",
+  hourIncrement: 1,
   id: "",
   invalid: false,
   label: "",
@@ -464,7 +469,7 @@ Datepicker.defaultProps = {
     // DONE enableTime: false,
     // DONE enableSeconds: false,
     // ??? formatDate: null,  --> error
-    // TODO hourIncrement: 1,
+    //  hourIncrement: 1,
     // TODO inline: false,
     // DONE maxDate: null,
     // DONE minDate: null,

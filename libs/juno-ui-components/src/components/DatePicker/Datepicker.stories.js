@@ -109,6 +109,14 @@ export const WithTimeWithSeconds = Template.bind({})
 WithTimeWithSeconds.args = {
   enableTime: true,
   enableSeconds: true,
+  dateFormat: "Y-m-d H:i:S",
+}
+
+export const WithTimeWithCustomHourIncrement = Template.bind({})
+WithTimeWithCustomHourIncrement.args = {
+  enableTime: true,
+  hourIncrement: 6,
+  dateFormat: "Y-m-d H:i",
 }
 
 export const With24hTime = Template.bind({})
