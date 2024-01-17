@@ -35,12 +35,40 @@ for (let file of files) {
   fs.mkdirSync(`${testDir}@latest`, { recursive: true })
   fs.copyFileSync(file, `${testDir}@${pkg.version}/package.json`)
   fs.copyFileSync(file, `${testDir}@latest/package.json`)
-  fs.cpSync(`${assetPath}/build`, `${testDir}@${pkg.version}/build`, {
-    recursive: true,
-  })
-  fs.cpSync(`${assetPath}/build`, `${testDir}@latest/build`, {
-    recursive: true,
-  })
+  fs.cpSync(
+    path.join(rootPath, assetPath, "build"),
+    `${testDir}@${pkg.version}/build`,
+    {
+      recursive: true,
+    }
+  )
+  fs.cpSync(
+    path.join(rootPath, assetPath, "build"),
+    `${testDir}@latest/build`,
+    {
+      recursive: true,
+    }
+  )
+  for (let file of ["README.md", "LICENSE", "COMMUNICATOR.md"]) {
+    if (fs.existsSync(path.join(rootPath, assetPath, file))) {
+      fs.cpSync(
+        path.join(rootPath, assetPath, file),
+        `${testDir}@${pkg.version}/${file}`,
+        { overwrite: true }
+      )
+      fs.cpSync(
+        path.join(rootPath, assetPath, file),
+        `${testDir}@latest/${file}`
+      )
+    }
+  }
+
+  if (assetPath.includes("apps")) {
+    fs.rmSync(path.join(rootPath, assetPath, "build"), {
+      recursive: true,
+      force: true,
+    })
+  }
 }
 
 console.log("DONE!")

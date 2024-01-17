@@ -1,0 +1,18 @@
+{
+  "name": "toEsm",
+  "dependencies": {
+    "@tanstack/react-query": "4.28.0",
+    "@types/react": "16.14.54",
+    "custom-event-polyfill": "1.0.7",
+    "immer": "10.0.3",
+    "js-tokens": "^3.0.2",
+    "loose-envify": "1.4.0",
+    "luxon": "2.5.2",
+    "prop-types": "15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-native": "0.73.1",
+    "scheduler": "0.23.0",
+    "zustand": "4.4.7"
+  }
+}
