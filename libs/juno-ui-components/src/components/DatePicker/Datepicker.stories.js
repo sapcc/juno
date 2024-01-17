@@ -22,6 +22,9 @@ export default {
     successtext: {
       control: false,
     },
+    value: {
+      control: false,
+    },
     monthSelectorType: {
       options: ["dropdown", "static"],
       control: { type: "radio" },
