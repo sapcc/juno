@@ -114,7 +114,9 @@ export const Datepicker = ({
   conjunction,
   dateFormat,
   defaultValue,
+  disable,
   disabled,
+  enable,
   enableSeconds,
   enableTime,
   errortext,
@@ -123,6 +125,7 @@ export const Datepicker = ({
   id,
   invalid,
   label,
+  locale,
   maxDate,
   minDate,
   mode,
@@ -159,9 +162,11 @@ export const Datepicker = ({
     allowInput,
     conjunction,
     dateFormat, 
+    disable,
     enableSeconds,
     enableTime,
     hourIncrement,
+    locale,
     maxDate,
     minDate,
     mode,
@@ -171,6 +176,7 @@ export const Datepicker = ({
     static: staticPosition, // rename since "static" is a reserved word in JS
     time_24hr,
     weekNumbers,
+    ...( enable && enable.length ? { enable } : {}  ), // ONLY add 'enable' key if defined and has at least one value, otherwise there will be errors
     ...options,
   }
   
@@ -339,8 +345,13 @@ Datepicker.propTypes = {
   dateFormat: PropTypes.string,
   /** TODO: defaultValue -> proptypes ? */
   defaultValue: PropTypes.string,
+  /** Pass an array of dates, date strings, date ranges or functions to disable dates. More on disabling dates: https://flatpickr.js.org/examples/#disabling-specific-dates */
+  disable: PropTypes.array,
   /** Whether the Datepicker is disabled */
   disabled: PropTypes.bool,  
+  /** Disable all dates except specifed dates, date strings, date ranges of functions. More on enabling dates: 
+  https://flatpickr.js.org/examples/#disabling-all-dates-except-select-few */
+  enable: PropTypes.array,
   /** Whether to show seconds when showing a time picker. */
   enableSeconds: PropTypes.bool,
   /** Whether to show a time picker.  */
@@ -357,6 +368,8 @@ Datepicker.propTypes = {
   invalid: PropTypes.bool,
   /** The label of the datepicker */
   label: PropTypes.string,
+  /** Localization string or object. Can be used to set starting day of the week, e.g. Mondays instead of Sundays. More on localization: https://flatpickr.js.org/localization/ */
+  locale: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   /** The maximum / latest date a user can select (inclusive). TODO: allow number, date object. */
   maxDate: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
   /** The minimum / earliest date a user can select (inclusive). TODO: allow number, date object. */
@@ -387,8 +400,12 @@ Datepicker.propTypes = {
     allowInput:             PropTypes.bool,
     conjunction:            PropTypes.string,
     dateFormat:             PropTypes.string,
+    disable:                PropTypes.array,
+    enable:                 PropTypes.array,
     enableSeconds:          PropTypes.bool,
     enableTime:             PropTypes.bool,
+    hourIncrement:          PropTypes.number,
+    locale:                 PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     maxDate:                PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
     minDate:                PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
     mode:                   PropTypes.oneOf(["single", "multiple", "range", "time"]),
@@ -430,7 +447,9 @@ Datepicker.defaultProps = {
   conjunction: ", ",
   dateFormat: "Y-m-d",
   defaultValue: undefined,
+  disable: [],
   disabled: false,
+  enable: [],
   enableSeconds: false,
   enableTime: false,
   errortext: "",
@@ -439,6 +458,7 @@ Datepicker.defaultProps = {
   id: "",
   invalid: false,
   label: "",
+  locale: "",
   maxDate: null,
   minDate: null,
   mode: "single", 

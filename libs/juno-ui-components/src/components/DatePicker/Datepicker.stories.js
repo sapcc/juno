@@ -39,6 +39,12 @@ const Template = ({...args}) => (
   <Datepicker {...args} /> 
 )
 
+
+const daysFromToday = (n) => {
+  const today = new Date()
+  return new Date(today.setDate(today.getDate() + n ))
+}
+
 export const Default = Template.bind({})
 Default.args = {}
 
@@ -187,4 +193,40 @@ StaticPosition.args = {
 export const WithValue = Template.bind({})
 WithValue.args = {
   value: "today"
+}
+
+export const EnableDate = Template.bind({})
+EnableDate.args = {
+  enable: [ new Date() ],
+  helptext: "Only the current date can be selected"
+}
+
+export const EnableDateRange = Template.bind({})
+EnableDateRange.args = {
+  enable: [
+    {
+      from: new Date(),
+      to: daysFromToday(7),
+    }
+  ],
+  helptext: "Only the current date and the next six days can be selected",
+}
+
+export const DisableDate = Template.bind({})
+DisableDate.args = {
+  disable: [ new Date() ],
+  helptext: "The current date can not be selected",
+}
+
+export const DisableByFunction = Template.bind({})
+DisableByFunction.args = {
+  disable: [
+    function(date) {
+      return (date.getDay() === 0 || date.getDay() === 6)
+    }
+  ],
+  locale: {
+    firstDayOfWeek: 1, // set week to start on Monday
+  },
+  helptext: "Only work days can be selected",
 }
