@@ -13,10 +13,10 @@
   },
   "devDependencies": {
     "babel-jest": "^29.3.1",
+    "custom-event-polyfill": "^1.0.7",
     "esbuild": "^0.17.8",
     "jest": "^29.3.1",
-    "jest-environment-jsdom": "^29.3.1",
-    "custom-event-polyfill": "^1.0.7"
+    "jest-environment-jsdom": "^29.3.1"
   },
   "peerDependencies": {
     "es-module-shims": "1.6.2"
@@ -71,5 +71,8 @@
       "description": "if true then only the importmap is loaded, all other props except importmap-url and debug are ignored!"
     }
   },
-  "appPreview": false
+  "appPreview": false,
+  "dependencies": {
+    "semver": "^7.5.4"
+  }
 }
