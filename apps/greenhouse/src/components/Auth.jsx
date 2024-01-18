@@ -11,6 +11,7 @@ import {
 } from "../components/StoreProvider"
 import { useAppLoader } from "utils"
 import { Transition } from "@tailwindui/react"
+import { useActions } from "messages-provider"
 
 const currentUrl = new URL(window.location.href)
 let match = currentUrl.host.match(/^(.+)\.dashboard\..+/)
@@ -55,6 +56,7 @@ const Auth = ({
   const authError = useAuthError()
   const { login } = useAuthActions()
   const { setDemoMode } = useGlobalsActions()
+  const { addMessage } = useActions()
 
   const ref = createRef()
   const { mount } = useAppLoader(assetsHost)
@@ -75,8 +77,14 @@ const Auth = ({
         groups: ["organization:demo", "role:ccloud:admin"],
       })
       // set demo mode
-      setDemoMode(true)
       // see in useCommunication hook, there we redefine  the authData.JWT wit demoUserToken if demo mode is set
+      setDemoMode(true)
+
+      // add message to inform the user about the demo mode
+      addMessage({
+        variant: "warning",
+        text: "Welcome to the Greenhouse demo system! We're glad you're here! Just a quick heads up: you won't find any live data here. Enjoy exploring!",
+      })
     }
 
     mount(ref.current, {

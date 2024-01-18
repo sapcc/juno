@@ -1,28 +1,20 @@
 import { createStore } from "zustand"
 import { devtools } from "zustand/middleware"
+import { managementPluginConfig } from "../../package.json"
 
-export default (apiEndpoint) =>
-  createStore(
+export default (options) => {
+  Object.keys(managementPluginConfig).forEach((key) => {
+    managementPluginConfig[key].props = {
+      endpoint: options.apiEndpoint,
+      embedded: true,
+    }
+  })
+
+  return createStore(
     devtools((set, get) => ({
       isUrlStateSetup: false,
       assetsUrl: null,
-      pluginConfig: {
-        clusters: {
-          label: "Clusters",
-          name: "greenhouse-cluster-admin",
-          props: { endpoint: apiEndpoint, embedded: true },
-        },
-        // plugins: {
-        //   label: "Plugins",
-        //   name: "greenhouse-plugin-admin",
-        //   props: { embedded: true },
-        // },
-        teams: {
-          label: "Teams",
-          name: "greenhouse-team-admin",
-          props: { endpoint: apiEndpoint, embedded: true },
-        },
-      },
+      pluginConfig: managementPluginConfig,
       pluginActive: "greenhouse-cluster-admin", // name of the active plugin default
 
       actions: {
@@ -53,3 +45,4 @@ export default (apiEndpoint) =>
       },
     }))
   )
+}

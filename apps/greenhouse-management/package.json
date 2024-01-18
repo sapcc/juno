@@ -1,6 +1,18 @@
 {
   "name": "greenhouse-management",
-  "version": "1.0.3",
+  "version": "1.0.7",
+  "managementPluginConfig": {
+    "clusters": {
+      "label": "Clusters",
+      "name": "greenhouse-cluster-admin",
+      "version": "latest"
+    },
+    "teams": {
+      "label": "Teams",
+      "name": "greenhouse-team-admin",
+      "version": "latest"
+    }
+  },
   "author": "Juno team (SAP)",
   "license": "MIT",
   "source": "src/index.js",
@@ -81,6 +93,11 @@
       "value": "false",
       "type": "optional",
       "description": "Set to true if app is to be embedded in another existing app or page, like e.g. Elektra.  If set to true the app won't render a page header/footer and instead render only the content. The default value is false."
+    },
+    "environment": {
+      "value": "production",
+      "type": "optional",
+      "description": "environment name, e.g. production, qa, development, etc. This property can be used to load different plugins for different environments."
     }
   },
   "appPreview": true

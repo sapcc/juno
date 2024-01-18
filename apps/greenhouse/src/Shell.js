@@ -7,6 +7,7 @@ import { AppShellProvider } from "juno-ui-components"
 import PluginContainer from "./components/PluginContainer"
 import AsyncWorker from "./components/AsyncWorker"
 import StoreProvider, { useGlobalsActions } from "./components/StoreProvider"
+import { MessagesProvider } from "messages-provider"
 
 const Shell = (props = {}) => {
   const { setApiEndpoint, setAssetsHost, setDemoUserToken, setEnvironment } =
@@ -44,8 +45,10 @@ const StyledShell = (props) => {
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <StoreProvider options={props}>
-        <AsyncWorker />
-        <Shell {...props} />
+        <MessagesProvider>
+          <AsyncWorker />
+          <Shell {...props} />
+        </MessagesProvider>
       </StoreProvider>
     </AppShellProvider>
   )

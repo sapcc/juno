@@ -21,7 +21,6 @@ const serve = args.indexOf("--serve") >= 0
 // helpers for console log
 const green = "\x1b[32m%s\x1b[0m"
 const yellow = "\x1b[33m%s\x1b[0m"
-const clear = "\033c"
 
 esbuild
   .context({
@@ -40,7 +39,7 @@ esbuild
         name: "start/end",
         setup(build) {
           build.onStart(() => {
-            console.log(clear)
+            console.clear()
             console.log(yellow, "Compiling...")
           })
           build.onEnd(() => console.log(green, "Done!"))
