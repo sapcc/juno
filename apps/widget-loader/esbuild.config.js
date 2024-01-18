@@ -64,7 +64,7 @@ esbuild
 
         let { host, port } = await ctx.serve({
           host: "0.0.0.0",
-          port: parseInt(process.env.APP_PORT),
+          port: parseInt(process.env.APP_PORT || 3000),
           servedir: "public",
         })
         console.log("serve on", `${host}:${port}`)
