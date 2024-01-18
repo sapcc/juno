@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { useQueryClientFnReady } from "../StoreProvider"
 import Pagination from "../../shared/Pagination"
-import ServicesList from "./servicesList"
+import ServicesList from "./ServicesList"
 
 const ServicesController = () => {
   const queryClientFnReady = useQueryClientFnReady()
