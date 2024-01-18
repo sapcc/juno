@@ -22,13 +22,13 @@
     "babel-jest": "^29.3.1",
     "babel-plugin-transform-import-meta": "^2.2.0",
     "communicator": "*",
+    "graphql-request": "^6.0.0",
+    "graphql": "*",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
     "juno-ui-components": "*",
-    "lodash.uniqueid": "^4.0.1",
     "luxon": "^2.3.0",
     "messages-provider": "*",
-    "oauth": "*",
     "postcss": "^8.4.21",
     "postcss-url": "^10.1.3",
     "prop-types": "^15.8.1",
@@ -50,10 +50,8 @@
   "peerDependencies": {
     "@tanstack/react-query": "4.28.0",
     "juno-ui-components": "*",
-    "lodash.uniqueid": "^4.0.1",
     "luxon": "^2.3.0",
     "messages-provider": "*",
-    "oauth": "*",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -69,8 +67,8 @@
       "type": "optional",
       "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
     },
-    "endpoint": {
-      "value": "https://the_endpoint/api/v1",
+    "apiEndpoint": {
+      "value": "",
       "type": "required",
       "description": "Endpoint URL of the API"
     },
