@@ -28,6 +28,7 @@ const availableArgs = [
   "--exit-on-error=[true|false]",
   "--src=DIR_PATH",
   "--importmap-path=FILE_PATH",
+  "--node-modules-path=DIR_PATH",
   "--ignore-externals=true|false",
   "--base-url=URL_OF_ASSETS_SERVER",
   "--external-path=PATH_TO_EXTERNALS_ON_LOCAL_MACHINE",
@@ -44,6 +45,7 @@ const options = {
   src: pathLib.dirname(url.fileURLToPath(import.meta.url)),
   baseUrl: "%BASE_URL%",
   importmapPath: "./importmap.json",
+  nodeModulesPath: "./tmp",
   externalPath: "externals",
   ignoreExternals: false,
   verbose: false,
@@ -120,7 +122,7 @@ const importMap = { scopes: {}, imports: {} }
 const buildResult = await convertToEsm("es-module-shims", "1.6.2", {
   buildDir: options.externalPath,
   verbose: options.verbose,
-  nodeModulesPath: "./tmp2",
+  nodeModulesPath: options.nodeModulesPath,
 })
 
 fs.cpSync(
@@ -188,7 +190,7 @@ for (let name in packageRegistry) {
       const buildResult = await convertToEsm(depName, depVersion, {
         buildDir: options.externalPath,
         verbose: options.verbose,
-        nodeModulesPath: "./tmp2",
+        nodeModulesPath: options.nodeModulesPath,
       })
       // console.log(JSON.stringify(buildResult, null, 2))
 

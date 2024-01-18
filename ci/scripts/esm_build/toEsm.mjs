@@ -71,12 +71,19 @@ async function getFixPackageVersion(name, version = "*") {
           res.on("data", (d) => (data += d))
           // resolve the promise when the response ends
           res.on("end", () => {
-            // get all versions
-            const versions = Object.keys(JSON.parse(data).versions)
-            // get the latest version that satisfies the version range
-            const currentVersion = semver.maxSatisfying(versions, version)
-            // resolve the promise
-            resolve(currentVersion)
+            try {
+              // get all versions
+              const versions = Object.keys(JSON.parse(data).versions)
+              // get the latest version that satisfies the version range
+              const currentVersion = semver.maxSatisfying(versions, version)
+              // resolve the promise
+              resolve(currentVersion)
+            } catch (e) {
+              console.error("\n=========================ERROR:", name, version)
+              console.error(e)
+              //reject(e)
+              return version
+            }
           })
         }
       )
@@ -86,8 +93,6 @@ async function getFixPackageVersion(name, version = "*") {
         //reject(e)
         return version
       })
-
-    req.end()
   })
 }
 
@@ -103,7 +108,7 @@ function installNpmPackage(name, version = "latest", options = {}) {
   if (!fs.existsSync(path.join(nodeModulesDir, "package.json")))
     fs.writeFileSync(
       path.join(nodeModulesDir, "package.json"),
-      JSON.stringify({ name: "toEsm" }, null, 2)
+      JSON.stringify({ name: "esmBuild", version: "1.0.0" }, null, 2)
     )
   if (verbose) console.log(blue("INFO:"), `install npm "${name}@${version}"`)
   child_process.execSync(`npm install "${name}@${version}" --save-exact`, {
