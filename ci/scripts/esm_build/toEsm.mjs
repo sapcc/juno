@@ -79,7 +79,11 @@ async function getFixPackageVersion(name, version = "*") {
               // resolve the promise
               resolve(currentVersion)
             } catch (e) {
-              console.error("\n=========================ERROR:", name, version)
+              console.error(
+                "\n=========================ERROR: parse version",
+                name,
+                version
+              )
               console.error(e)
               //reject(e)
               return version
@@ -88,7 +92,11 @@ async function getFixPackageVersion(name, version = "*") {
         }
       )
       .on("error", (e) => {
-        console.log("\n=========================ERROR:", name, version)
+        console.log(
+          "\n=========================ERROR: connection error",
+          name,
+          version
+        )
         console.error(e)
         //reject(e)
         return version
