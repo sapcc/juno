@@ -80,6 +80,7 @@ replace APP_NAME with your app name, e.g. whois
 External assets are loaded by specifying the data-url option. However, the asset must implement the widget interface.
 
 `async function mount (container, options = {}) -> Promise`
+
 `function unmount ()`
 
 **Params**
