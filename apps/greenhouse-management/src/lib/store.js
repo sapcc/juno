@@ -13,7 +13,8 @@ export default (options) => {
   return createStore(
     devtools((set, get) => ({
       isUrlStateSetup: false,
-      assetsUrl: null,
+      assetsUrl: options.assetsUrl,
+      apiEndpoint: options.apiEndpoint,
       pluginConfig: managementPluginConfig,
       pluginActive: "greenhouse-cluster-admin", // name of the active plugin default
 
@@ -33,14 +34,6 @@ export default (options) => {
             },
             false,
             "setIsUrlStateSetup"
-          ),
-        setAssetsUrl: (url) =>
-          set(
-            (state) => {
-              state.assetsUrl = url
-            },
-            false,
-            "setAssetsUrl"
           ),
       },
     }))

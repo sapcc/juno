@@ -1,21 +1,32 @@
 import React, { useMemo } from "react"
 import { Stack } from "juno-ui-components"
+import { createClient } from "sapcc-k8sclient"
+import { useApiEndpoint } from "./StoreProvider"
 
 const OrgInfo = () => {
-  // temporay fix to display org name until we have the k8sclient to fetch the metadata
-  const orgName = useMemo(() => {
-    const currentUrl = new URL(window.location.href)
-    let match = currentUrl.host.match(/^(.+)\.dashboard\..+/)
-    return match ? match[1] : currentUrl.searchParams.get("org")
-  }, [])
+  const apiEndpoint = useApiEndpoint()
+  console.log(apiEndpoint, "apiEndpoint")
+
+  // const client = useMemo(() => {
+  //   if (!endpoint || !authData?.JWT) return null
+  //   return createClient({ endpoint, token: authData?.JWT })
+  // }, [endpoint, authData?.JWT])
+
+  // const orgName = useMemo(() => {
+  //   // plugin configs
+  //   client
+  //     .get(`/apis/greenhouse.sap/v1alpha1/organizations/${namespace}`)
+  //     .then((res) => {
+  //       console.log(res)
+  //     })
+  //   return "ababa"
+  // }, [])
 
   return (
     <div className="org-info p-8 mb-8 bg-theme-background-lvl-0">
       <div className="org-name">
         <p className="text-xs">Organization</p>
-        {orgName?.length > 0 && (
-          <h1 className="text-xl font-bold">{orgName}</h1>
-        )}
+        <h1 className="text-xl font-bold">sssss</h1>
       </div>
       {/* <p className="org-description">Org description here</p> */}
       {/* <div className="grid grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))] auto-rows-[minmax(8rem,_1fr)] gap-6 pt-8">
