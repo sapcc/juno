@@ -16,6 +16,7 @@ export const useIsUrlStateSetup = () =>
 export const useAssetsUrl = () => useAppStore((state) => state.assetsUrl)
 export const usePluginConfig = () => useAppStore((state) => state.pluginConfig)
 export const usePluginActive = () => useAppStore((state) => state.pluginActive)
+export const useApiEndpoint = () => useAppStore((state) => state.apiEndpoint)
 
 export const useActions = () => useAppStore((state) => state.actions)
 
