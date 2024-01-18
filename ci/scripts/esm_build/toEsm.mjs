@@ -119,9 +119,12 @@ function installNpmPackage(name, version = "latest", options = {}) {
       JSON.stringify({ name: "esmBuild", version: "1.0.0" }, null, 2)
     )
   if (verbose) console.log(blue("INFO:"), `install npm "${name}@${version}"`)
-  child_process.execSync(`npm install "${name}@${version}" --save-exact`, {
-    cwd: nodeModulesDir,
-  })
+  child_process.execSync(
+    `npm install "${name}@${version}" --save-exact --force`,
+    {
+      cwd: nodeModulesDir,
+    }
+  )
   return path.join(nodeModulesDir, "node_modules", name)
 }
 
