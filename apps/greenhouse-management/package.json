@@ -1,16 +1,16 @@
 {
   "name": "greenhouse-management",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "managementPluginConfig": {
     "clusters": {
       "label": "Clusters",
       "name": "greenhouse-cluster-admin",
-      "version": "latest"
+      "version": "1.6.1"
     },
     "teams": {
       "label": "Teams",
       "name": "greenhouse-team-admin",
-      "version": "latest"
+      "version": "1.0"
     }
   },
   "author": "Juno team (SAP)",
