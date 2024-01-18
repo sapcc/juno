@@ -2,7 +2,7 @@ import React from "react"
 import { Router, Route, Redirect, Switch } from "url-state-router"
 
 import TabsContainer from "./TabsContainer"
-import ServicesController from "./services/servicesController"
+import ServicesController from "./services/ServicesController"
 import VulnerabilitiesController from "./vulnerabilities/vulnerabilitiesController"
 
 export const HOME_PATH = "/home"
