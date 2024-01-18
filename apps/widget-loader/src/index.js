@@ -1,4 +1,5 @@
 import maxSatisfying from "semver/ranges/max-satisfying"
+import coerce from "semver/functions/coerce"
 ;(async function () {
   window.process = { env: { NODE_ENV: "production" } }
   window.esmsInitOptions = {
@@ -115,11 +116,29 @@ import maxSatisfying from "semver/ranges/max-satisfying"
 
   // APP LOADER
   // determine the version
-  console.debug("availableVersions", availableVersions)
-  version = maxSatisfying(
-    availableVersions[name],
-    version === "latest" ? "*" : version
-  )
+  console.debug("availableVersions", version, availableVersions)
+
+  // if version is not included in the available versions
+  // then try to find the closest version
+  if (!availableVersions[name]?.includes(version)) {
+    let versions = availableVersions[name] || []
+    // parse versions using semver to support versions like 1.1 or 1.1.0-beta
+    // store the original version as the value
+    const parsedVersions = versions.reduce((map, v) => {
+      map[coerce(v)?.version || v] = v
+      return map
+    }, {})
+    // find the closest version
+    const parsedVersion = maxSatisfying(
+      Object.keys(versions),
+      version === "latest" ? "*" : version
+    )
+    // use the original version of the parsed version
+    if (parsedVersion) {
+      version = parsedVersions[parsedVersion]
+    }
+    // else the version is not changed
+  }
 
   // get the app URL
   // from given url or from importmap based on name and version
