@@ -8,16 +8,8 @@ import StoreProvider, { useActions } from "./components/StoreProvider"
 import AppRouter from "./components/AppRouter"
 
 const App = (props) => {
-  const { setEndpoint } = useActions()
-
   // Create a client
   const queryClient = new QueryClient()
-
-  useEffect(() => {
-    if (props.apiEndpoint) {
-      setEndpoint(props.apiEndpoint)
-    }
-  }, [props])
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -38,7 +30,7 @@ const StyledApp = (props) => {
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <MessagesProvider>
-        <StoreProvider>
+        <StoreProvider options={props}>
           <App {...props} />
         </StoreProvider>
       </MessagesProvider>
