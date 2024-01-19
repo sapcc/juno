@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { useMemo, useEffect, useState } from "react"
 import { Stack } from "juno-ui-components"
 import { createClient } from "sapcc-k8sclient"
 import { useApiEndpoint, useAuthData } from "./StoreProvider"
@@ -6,9 +6,10 @@ import { C } from "juno-ui-components/build/ContentContainer.component-700aac71"
 
 const OrgInfo = () => {
   const apiEndpoint = useApiEndpoint()
+  const [org, setOrg] = useState(null)
   console.log(apiEndpoint, "apiEndpoint")
 
-  const authData = useAuthData()?.auth
+  const authData = useAuthData()
 
   const namespace = useMemo(() => {
     if (!authData?.raw?.groups) return null
@@ -26,23 +27,29 @@ const OrgInfo = () => {
 
   console.log(client, "client")
 
-  // const orgName = useMemo(() => {
-  //   // plugin configs
-  //   client
-  //     .get(`/apis/greenhouse.sap/v1alpha1/organizations/${namespace}`)
-  //     .then((res) => {
-  //       console.log(res, "asfadsfadsfaafaffafaafaf  ")
-  //     })
-  //   return "ababa"
-  // }, [])
+  useEffect(() => {
+    if (!client || !namespace) return
+    // plugin configs
+    client
+      .get(`/apis/greenhouse.sap/v1alpha1/organizations/${namespace}`)
+      .then((res) => {
+        console.log(res, "res")
+        setOrg({
+          name: res?.spec?.displayName,
+          description: res?.spec?.description,
+        })
+      })
+  }, [client, namespace])
 
   return (
     <div className="org-info p-8 mb-8 bg-theme-background-lvl-0">
       <div className="org-name">
         <p className="text-xs">Organization</p>
-        {namespace && <h1 className="text-xl font-bold">{namespace}</h1>}
+        {org?.name && <h1 className="text-xl font-bold">{org?.name}</h1>}
       </div>
-      {/* <p className="org-description">Org description here</p> */}
+      {org?.description && (
+        <p className="org-description">{org?.description}</p>
+      )}
       {/* <div className="grid grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))] auto-rows-[minmax(8rem,_1fr)] gap-6 pt-8">
         <Stack
           direction="vertical"
