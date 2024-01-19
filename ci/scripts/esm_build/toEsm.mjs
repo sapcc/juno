@@ -120,7 +120,7 @@ function installNpmPackage(name, version = "latest", options = {}) {
     )
   if (verbose) console.log(blue("INFO:"), `install npm "${name}@${version}"`)
   child_process.execSync(
-    `npm install "${name}@${version}" --save-exact --force`,
+    `npm install "${name}@${version}" --save-exact --force --legacy-peer-deps`,
     {
       cwd: nodeModulesDir,
     }
