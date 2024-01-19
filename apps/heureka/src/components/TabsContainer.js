@@ -28,7 +28,7 @@ const TabsContainer = ({ tabsConfig, component, children }) => {
       </TabNavigation>
 
       <Container py>
-        <Messages />
+        <Messages className="mb-4" />
         {component || children}
       </Container>
     </>

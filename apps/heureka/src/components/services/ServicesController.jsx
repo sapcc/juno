@@ -3,8 +3,10 @@ import { useQuery } from "@tanstack/react-query"
 import { useQueryClientFnReady } from "../StoreProvider"
 import Pagination from "../../shared/Pagination"
 import ServicesList from "./ServicesList"
+import { Messages, useActions as messageActions } from "messages-provider"
 
 const ServicesController = () => {
+  const { addMessage, resetMessages } = messageActions()
   const queryClientFnReady = useQueryClientFnReady()
   const [paginationParams, setPaginationParams] = useState({
     first: 10,
@@ -14,6 +16,14 @@ const ServicesController = () => {
     queryKey: [`services`, { paginationParams }],
     enabled: !!queryClientFnReady,
   })
+
+  useEffect(() => {
+    if (!error) {
+      resetMessages()
+      return
+    }
+    addMessage({ variant: "danger", text: error?.message })
+  }, [error])
 
   const onPaginationChanged = (offset) => {
     console.log("ServicesController onPaginationChanged", offset)
