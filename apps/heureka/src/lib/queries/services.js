@@ -25,8 +25,7 @@ export default () => gql`
             }
             pageInfo {
               hasNextPage
-              startCursor
-              endCursor
+              nextPageAfter
             }
           }
           supportGroups {
@@ -40,8 +39,40 @@ export default () => gql`
             }
             pageInfo {
               hasNextPage
-              startCursor
-              endCursor
+              nextPageAfter
+            }
+          }
+          activities {
+            totalCount
+            edges {
+              node {
+                id
+              }
+              cursor
+            }
+            pageInfo {
+              hasNextPage
+              nextPageAfter
+            }
+          }
+          advisoryRepositories {
+            totalCount
+            edges {
+              node {
+                id
+                name
+                url
+                created_at
+                updated_at
+              }
+              cursor
+              priority
+              created_at
+              updated_at
+            }
+            pageInfo {
+              hasNextPage
+              nextPageAfter
             }
           }
         }
@@ -49,8 +80,7 @@ export default () => gql`
       }
       pageInfo {
         hasNextPage
-        startCursor
-        endCursor
+        nextPageAfter
       }
     }
   }
