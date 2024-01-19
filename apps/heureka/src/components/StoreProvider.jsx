@@ -3,8 +3,8 @@ import { useStore as create } from "zustand"
 import createStore from "../lib/store"
 
 const StoreContext = createContext()
-const StoreProvider = ({ children }) => (
-  <StoreContext.Provider value={createStore()}>
+const StoreProvider = ({ options, children }) => (
+  <StoreContext.Provider value={createStore(options)}>
     {children}
   </StoreContext.Provider>
 )

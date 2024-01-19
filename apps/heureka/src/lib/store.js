@@ -1,22 +1,14 @@
 import { createStore } from "zustand"
 import { devtools } from "zustand/middleware"
 
-export default () =>
+export default (options) =>
   createStore(
     devtools((set, get) => ({
       isUrlStateSetup: false,
       queryClientFnReady: false,
-      endpoint: "",
+      endpoint: options?.apiEndpoint,
 
       actions: {
-        setEndpoint: (newEndpoint) =>
-          set(
-            (state) => {
-              state.endpoint = newEndpoint
-            },
-            false,
-            "setEndpoint"
-          ),
         setQueryClientFnReady: (readiness) =>
           set(
             (state) => {
