@@ -22,7 +22,7 @@ const ServicesList = ({ services, isLoading }) => {
           <DataGridHeadCell>Components</DataGridHeadCell>
         </DataGridRow>
         {isLoading && !services ? (
-          <HintLoading text="Loading services..." />
+          <HintLoading className="my-4" text="Loading services..." />
         ) : (
           <>
             {services && services.length > 0 ? (
