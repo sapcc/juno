@@ -3,6 +3,9 @@ import { Spinner, Stack } from "juno-ui-components"
 import { useAuthAppLoaded, useIsLoggedIn } from "./StoreProvider"
 import { Transition } from "@tailwindui/react"
 
+// Adds a loading screen while during auth
+// Shows children when auth is complete
+
 const Auth = ({ children }) => {
   const authAppLoaded = useAuthAppLoaded()
   const authLoggedIn = useIsLoggedIn()
