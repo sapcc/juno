@@ -1,8 +1,8 @@
 import React, { useMemo, useEffect, useState } from "react"
-import { Stack } from "juno-ui-components"
 import { createClient } from "sapcc-k8sclient"
 import { useApiEndpoint, useAuthData } from "./StoreProvider"
-import { C } from "juno-ui-components/build/ContentContainer.component-700aac71"
+
+// Shows organization info
 
 const OrgInfo = () => {
   const apiEndpoint = useApiEndpoint()
