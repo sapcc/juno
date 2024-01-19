@@ -16,6 +16,8 @@ export default (options) => {
       assetsUrl: options.assetsUrl,
       apiEndpoint: options.apiEndpoint,
       pluginConfig: managementPluginConfig,
+      authData: null,
+      authAppLoaded: false,
       pluginActive: "greenhouse-cluster-admin", // name of the active plugin default
 
       actions: {
@@ -34,6 +36,22 @@ export default (options) => {
             },
             false,
             "setIsUrlStateSetup"
+          ),
+        setAuthData: (data) =>
+          set(
+            (state) => {
+              state.authData = data
+            },
+            false,
+            "setAuthData"
+          ),
+        setAuthAppLoaded: (loaded) =>
+          set(
+            (state) => {
+              state.authAppLoaded = loaded
+            },
+            false,
+            "setAuthAppLoaded"
           ),
       },
     }))

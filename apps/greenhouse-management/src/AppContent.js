@@ -1,17 +1,15 @@
 import React, { useLayoutEffect, useState } from "react"
 import PluginContainer from "./components/PluginContainer"
-import {
-  useActions,
-  useApiEndpoint,
-  useAssetsUrl,
-} from "./components/StoreProvider"
+import { useApiEndpoint, useAssetsUrl } from "./components/StoreProvider"
 import { Messages, useActions as messageActions } from "messages-provider"
 import { Container } from "juno-ui-components"
+import useCommunication from "./hooks/useCommunication"
 
 const AppContent = () => {
   const { addMessage } = messageActions()
   const apiEndpoint = useApiEndpoint()
   const assetsUrl = useAssetsUrl()
+  useCommunication()
 
   useLayoutEffect(() => {
     if (!apiEndpoint) {
