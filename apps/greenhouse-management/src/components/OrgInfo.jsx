@@ -1,23 +1,37 @@
 import React, { useMemo } from "react"
 import { Stack } from "juno-ui-components"
 import { createClient } from "sapcc-k8sclient"
-import { useApiEndpoint } from "./StoreProvider"
+import { useApiEndpoint, useAuthData } from "./StoreProvider"
+import { C } from "juno-ui-components/build/ContentContainer.component-700aac71"
 
 const OrgInfo = () => {
   const apiEndpoint = useApiEndpoint()
   console.log(apiEndpoint, "apiEndpoint")
 
-  // const client = useMemo(() => {
-  //   if (!endpoint || !authData?.JWT) return null
-  //   return createClient({ endpoint, token: authData?.JWT })
-  // }, [endpoint, authData?.JWT])
+  const authData = useAuthData()?.auth
+
+  const namespace = useMemo(() => {
+    if (!authData?.raw?.groups) return null
+    const orgString = authData?.raw?.groups.find(
+      (g) => g.indexOf("organization:") === 0
+    )
+    if (!orgString) return null
+    return orgString.split(":")[1]
+  }, [authData?.raw?.groups])
+
+  const client = useMemo(() => {
+    if (!apiEndpoint || !authData?.JWT) return null
+    return createClient({ apiEndpoint, token: authData?.JWT })
+  }, [apiEndpoint, authData?.JWT])
+
+  console.log(client, "client")
 
   // const orgName = useMemo(() => {
   //   // plugin configs
   //   client
   //     .get(`/apis/greenhouse.sap/v1alpha1/organizations/${namespace}`)
   //     .then((res) => {
-  //       console.log(res)
+  //       console.log(res, "asfadsfadsfaafaffafaafaf  ")
   //     })
   //   return "ababa"
   // }, [])
@@ -26,7 +40,7 @@ const OrgInfo = () => {
     <div className="org-info p-8 mb-8 bg-theme-background-lvl-0">
       <div className="org-name">
         <p className="text-xs">Organization</p>
-        <h1 className="text-xl font-bold">sssss</h1>
+        {namespace && <h1 className="text-xl font-bold">{namespace}</h1>}
       </div>
       {/* <p className="org-description">Org description here</p> */}
       {/* <div className="grid grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))] auto-rows-[minmax(8rem,_1fr)] gap-6 pt-8">
