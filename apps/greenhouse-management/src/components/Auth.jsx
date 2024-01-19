@@ -3,12 +3,21 @@ import { Button, LoadingIndicator, Spinner, Stack } from "juno-ui-components"
 import { useAuthAppLoaded, useIsLoggedIn } from "./StoreProvider"
 import { Transition } from "@tailwindui/react"
 
+import { useActions as messageActions } from "messages-provider"
+
 const Auth = ({ children }) => {
   const authAppLoaded = useAuthAppLoaded()
   const authLoggedIn = useIsLoggedIn()
 
   const [loading, setLoading] = useState(!authAppLoaded)
   const [longLoading, setLongLoading] = useState(false)
+
+  const { addMessage } = messageActions()
+
+  addMessage({
+    variant: "error",
+    text: "hilfe hilfe hilfe",
+  })
 
   // timeout for waiting for auth
   useEffect(() => {
