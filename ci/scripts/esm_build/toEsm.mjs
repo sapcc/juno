@@ -84,7 +84,7 @@ async function getFixPackageVersion(name, version = "*") {
                 name,
                 version
               )
-              console.error(e)
+              console.warn(e)
               //reject(e)
               return version
             }
