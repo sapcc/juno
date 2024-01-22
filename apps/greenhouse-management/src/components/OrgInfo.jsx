@@ -7,11 +7,10 @@ import { useApiEndpoint, useAuthData } from "./StoreProvider"
 const OrgInfo = () => {
   const apiEndpoint = useApiEndpoint()
   const [org, setOrg] = useState(null)
-  console.log(apiEndpoint, "apiEndpoint")
 
   const authData = useAuthData()
 
-  const namespace = useMemo(() => {
+  const orgName = useMemo(() => {
     if (!authData?.raw?.groups) return null
     const orgString = authData?.raw?.groups.find(
       (g) => g.indexOf("organization:") === 0
@@ -25,21 +24,18 @@ const OrgInfo = () => {
     return createClient({ apiEndpoint, token: authData?.JWT })
   }, [apiEndpoint, authData?.JWT])
 
-  console.log(client, "client")
-
   useEffect(() => {
-    if (!client || !namespace) return
+    if (!client || !orgName) return
     // plugin configs
     client
-      .get(`/apis/greenhouse.sap/v1alpha1/organizations/${namespace}`)
+      .get(`/apis/greenhouse.sap/v1alpha1/organizations/${orgName}`)
       .then((res) => {
-        console.log(res, "res")
         setOrg({
           name: res?.spec?.displayName,
           description: res?.spec?.description,
         })
       })
-  }, [client, namespace])
+  }, [client, orgName])
 
   return (
     <div className="org-info p-8 mb-8 bg-theme-background-lvl-0">

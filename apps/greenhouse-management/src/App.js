@@ -41,7 +41,7 @@ const App = (props = {}) => {
 
       <AppBody data-testid="greenhouse-management">
         <MessagesProvider>
-          <Messages py px />
+          <Messages />
           <Auth>
             <OrgInfo />
             <MainContainer>
