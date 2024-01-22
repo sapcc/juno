@@ -79,12 +79,6 @@ const Auth = ({
       // set demo mode
       // see in useCommunication hook, there we redefine  the authData.JWT wit demoUserToken if demo mode is set
       setDemoMode(true)
-
-      // add message to inform the user about the demo mode
-      addMessage({
-        variant: "warning",
-        text: "Welcome to the Greenhouse demo system! We're glad you're here! Just a quick heads up: you won't find any live data here. Enjoy exploring!",
-      })
     }
 
     mount(ref.current, {
