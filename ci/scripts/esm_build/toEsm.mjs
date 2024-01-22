@@ -86,7 +86,7 @@ async function getFixPackageVersion(name, version = "*") {
               )
               console.warn(e)
               //reject(e)
-              return version
+              resolve(version)
             }
           })
         }
@@ -99,7 +99,7 @@ async function getFixPackageVersion(name, version = "*") {
         )
         console.error(e)
         //reject(e)
-        return version
+        resolve(version)
       })
     req.end()
   })

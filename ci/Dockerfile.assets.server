@@ -37,7 +37,8 @@ RUN mkdir -p /tmp/final
 #       comment out this line for the first run
 COPY --from=lastbuild /usr/share/nginx/html /tmp/final
 
-RUN rm -rf /tmp/final/externals/*
+# delete old assets. Use it once to clean up the old assets.
+# RUN rm -rf /tmp/final/externals/*
 
 # merge latest assets over the old assets 
 RUN \
