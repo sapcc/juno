@@ -69,8 +69,8 @@ RUN \
 # Create importmaps and manifest
 RUN \
   set -e ; \
-  node /juno/ci/scripts/generate_importmap.mjs \
-  --provider=$NPM_PROVIDER \
+  node /juno/ci/scripts/esm_build/generate_importmap.mjs \
+  --node-modules-path=/tmp/ \
   --external-path=externals \
   --exit-on-error=$EXIT_ON_ERROR \
   --src=./ \

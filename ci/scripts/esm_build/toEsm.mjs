@@ -101,6 +101,7 @@ async function getFixPackageVersion(name, version = "*") {
         //reject(e)
         return version
       })
+    req.end()
   })
 }
 
