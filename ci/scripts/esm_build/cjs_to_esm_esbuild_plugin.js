@@ -1,11 +1,7 @@
-// const fs = require("fs")
-// const path = require("path")
-// // const { parse } = require("cjs-module-lexer")
-// const { parse } = require("esm-cjs-lexer")
-// const { resolve } = require("path")
-// const { parseCjsExports } = require("./helper")
-
 // convert named cjs exports to esm
+// resolve named exports using node's require
+// then get all keys from the required module
+// and export them as named exports in the esm format
 const cjs_to_esm_plugin = {
   name: "cjs-to-esm",
   setup(build) {
