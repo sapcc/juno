@@ -70,19 +70,35 @@ const AppContent = (props) => {
       })
     }
 
-    addMessage({
-      variant: "error",
-      text: parseError(alertsError),
-    })
+    console.log(alertsError)
+
+    if (parseError(alertsError) === "Failed to fetch") {
+      addMessage({
+        variant: "error",
+        text: "Sorry, there was an issue fetching the data. Possible causes could include network issues, incorrect URL, or server outages. ",
+      })
+    } else {
+      addMessage({
+        variant: "error",
+        text: "Error " + parseError(alertsError),
+      })
+    }
   }, [alertsError, loggedIn])
 
   useEffect(() => {
     // since the API call is done in a web worker and not logging aware, we need to show the error just in case the user is logged in
     if (!silencesError || !loggedIn) return
-    addMessage({
-      variant: "error",
-      text: parseError(silencesError),
-    })
+    if (parseError(silencesError) === "Failed to fetch") {
+      addMessage({
+        variant: "error",
+        text: "Sorry, there was an issue fetching the data. Possible causes could include network issues, incorrect URL, or server outages. ",
+      })
+    } else {
+      addMessage({
+        variant: "error",
+        text: "Error " + parseError(silencesError),
+      })
+    }
   }, [silencesError, loggedIn])
 
   return (
