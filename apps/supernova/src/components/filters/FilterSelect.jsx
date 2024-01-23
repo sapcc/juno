@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import {
   Button,
@@ -80,17 +80,20 @@ const FilterSelect = () => {
         <Select
           name="filter"
           className="filter-label-select w-64 mb-0"
-          label="Filter"
+          label="Filterrrrr"
           value={filterLabel}
           onChange={(val) => handleFilterLabelChange(val)}
         >
-          {filterLabels?.map((filter) => (
-            <SelectOption
-              value={filter}
-              label={humanizeString(filter)}
-              key={filter}
-            />
-          ))}
+          {[].slice
+            .call(filterLabels)
+            .sort()
+            ?.map((filter) => (
+              <SelectOption
+                value={filter}
+                label={humanizeString(filter)}
+                key={filter}
+              />
+            ))}
         </Select>
         <Select
           name="filterValue"
