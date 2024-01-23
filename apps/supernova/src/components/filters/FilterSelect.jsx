@@ -80,7 +80,7 @@ const FilterSelect = () => {
         <Select
           name="filter"
           className="filter-label-select w-64 mb-0"
-          label="Filterrrrr"
+          label="Filter"
           value={filterLabel}
           onChange={(val) => handleFilterLabelChange(val)}
         >
