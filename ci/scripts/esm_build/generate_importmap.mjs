@@ -92,7 +92,7 @@ const packageRegistry = {}
 // this timestamp will be added to the index.js files for own libs
 const timestamp = Date.now()
 
-// pro
+// build package registry by parsing all package.json files
 for (let file of files) {
   // load and parse package.json
   let pkg = JSON.parse(fs.readFileSync(file))
@@ -114,7 +114,8 @@ for (let file of files) {
   }
 }
 
-const importMap = { scopes: {}, imports: {} }
+// initialize an empty importmap
+const importMap = { imports: {}, scopes: {} }
 
 // Due to the backward compatibility, we need to add the "old" url of the es-module-shims
 // to importmap to link it to the built version.
@@ -132,6 +133,7 @@ fs.cpSync(
 )
 // end add es-module-shim
 
+// for each package in the registry, add it to the importmap
 for (let name in packageRegistry) {
   for (let version in packageRegistry[name]) {
     const pkg = packageRegistry[name][version]
@@ -140,19 +142,19 @@ for (let name in packageRegistry) {
 
     log(cyan(`add ${pkg.name}@${pkg.version} to import map` + "\n"))
 
-    // // add package to import map with slash at the end
-    // // to support import from directory
-    // importMap.imports[
-    //   `@juno/${pkg.name}@${pkg.version}/`
-    // ] = `${options.baseUrl}/${pkg.path}/${pkg.entryDir}`
+    // since package regisrty contains only juno packages,
+    // we need to add this package to the importmap's imports section under the
+    // @juno scope
     importMap.imports[
       `@juno/${pkg.name}@${pkg.version}`
     ] = `${options.baseUrl}/${pkg.path}/${pkg.entryFile}`
 
+    // if the package has no peer dependencies, we can skip further processing
     if (!pkg.peerDependencies) {
       continue
     }
 
+    // if the package has peer dependencies, we need to add them to the importmap's scopes section
     for (let depName in pkg.peerDependencies) {
       const depVersion = pkg.peerDependencies[depName]
       const ownPackage =
@@ -166,17 +168,16 @@ for (let name in packageRegistry) {
           )
         )
 
+        // initialize the scope if it does not exist
         importMap.scopes[`${pkgScopeKey}/`] = {
           ...importMap.scopes[`${pkgScopeKey}/`],
         }
-        // // add package to import map with slash at the end
-        // // to support import from directory
-        // importMap.scopes[`${pkgScopeKey}/`][
-        //   `${ownPackage.name}/`
-        // ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryDir}`
+
+        // the peer dependency is a juno package, so we need to add it to the importmap's scopes section
         importMap.scopes[`${pkgScopeKey}/`][
           ownPackage.name
         ] = `${options.baseUrl}/${ownPackage.path}/${ownPackage.entryFile}`
+        // we can skip further processing
         continue
       }
 
@@ -187,12 +188,12 @@ for (let name in packageRegistry) {
         )
       )
 
+      // the peer dependency is an external package, so we need to convert it to esm
       const buildResult = await convertToEsm(depName, depVersion, {
         buildDir: options.externalPath,
         verbose: options.verbose,
         nodeModulesPath: options.nodeModulesPath,
       })
-      // console.log(JSON.stringify(buildResult, null, 2))
 
       // add external dependency to import map, key is the path to the package
       const addDependenciesRecursive = (
@@ -204,7 +205,7 @@ for (let name in packageRegistry) {
           // create scope if not exists
           importMap.scopes[key] = { ...importMap.scopes[key] }
 
-          // add entry points to scope
+          // add entry points to the scope. E.g. "react": "/externals/react/index.js"
           for (let entryPoint in externalDependency.entryPoints) {
             importMap.scopes[key][
               entryPoint
@@ -235,7 +236,48 @@ for (let name in packageRegistry) {
       addDependenciesRecursive(buildResult)
     }
   }
-  //  const packageRegistry[pkg] = Object.values(packageRegistry[pkg])
+}
+
+// ############### OPTIMIZE: remove duplicates from import map
+// count how often a path is used for a key
+// same key can have multiple paths (different versions)
+const counts = {}
+for (let key in importMap.scopes) {
+  for (let subkey in importMap.scopes[key]) {
+    const path = importMap.scopes[key][subkey]
+    counts[subkey] = counts[subkey] || {}
+    counts[subkey][path] = (counts[subkey][path] || 0) + 1
+  }
+}
+
+// find the most common path for each key
+// and add them to the import map as imports
+for (let key in counts) {
+  const paths = counts[key]
+  // if key already exists in import map, skip
+  if (importMap.imports[key]) continue
+  // find the most common path for this key (path with most counts)
+  importMap.imports[key] = Object.keys(paths).reduce((maxPath, currentPath) => {
+    const currentCount = paths[currentPath]
+    const maxCount = paths[maxPath] || 0
+
+    return currentCount > maxCount ? currentPath : maxPath
+  }, null)
+}
+
+// remove all paths from all scopes that are already defined as imports
+for (let key in importMap.scopes) {
+  for (let subkey in importMap.scopes[key]) {
+    const path = importMap.scopes[key][subkey]
+    // if path is already defined as import, remove it from scope
+    if (path === importMap.imports[subkey]) {
+      delete importMap.scopes[key][subkey]
+    }
+  }
+  // if scope is empty, remove it
+  if (Object.keys(importMap.scopes[key]).length === 0) {
+    delete importMap.scopes[key]
+  }
 }
 
 if (options.verbose) console.log(importMap)

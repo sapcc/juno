@@ -112,14 +112,23 @@ function installNpmPackage(name, version = "latest", options = {}) {
   // cached downloaded packages default to /tmp
   const nodeModulesDir = options.nodeModulesDir || "/tmp"
   if (version === "*") version = "latest"
+  // create the node_modules parent directory if it doesn't exist
   if (!fs.existsSync(nodeModulesDir))
     fs.mkdirSync(nodeModulesDir, { recursive: true })
+
+  // create a package.json file if it doesn't exist
+  // this is needed only for npm to install the package
+  // so we can just create a dummy package.json file
   if (!fs.existsSync(path.join(nodeModulesDir, "package.json")))
     fs.writeFileSync(
       path.join(nodeModulesDir, "package.json"),
       JSON.stringify({ name: "esmBuild", version: "1.0.0" }, null, 2)
     )
   if (verbose) console.log(blue("INFO:"), `install npm "${name}@${version}"`)
+  // use npm to install the package
+  // attention: --legacy-peer-deps option is needed to avoid warnings while overwriting
+  // packages with the same name but different versions
+  // --save-exact option is needed to install the exact version
   child_process.execSync(
     `npm install "${name}@${version}" --save-exact --legacy-peer-deps`,
     {
@@ -129,15 +138,20 @@ function installNpmPackage(name, version = "latest", options = {}) {
   return path.join(nodeModulesDir, "node_modules", name)
 }
 
+// convert a package to esm. This function is recursive, it converts all dependencies recursively
 async function convertToEsm(packageName, packageVersion, options = {}) {
+  // determine the package build directory
   const buildDir = path.resolve(options.buildDir || "./build")
+  // determine the node_modules parent directory
   const nodeModulesDir = path.resolve(options.nodeModulesDir || "/tmp")
+  // the indent string is used for logging. It gets a space added to it for each recursive call
   const indent = options.indent || ""
 
   const verbose = options.verbose || false
 
   log("\n" + indent + green("PROCESS: ") + packageName + "@" + packageVersion)
 
+  // get the current version of the package
   const currentVersion = await getFixPackageVersion(packageName, packageVersion)
 
   if (verbose)
@@ -148,30 +162,39 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
       "\n"
     )
 
+  // determine the build log path. We log the build result to this file.
+  // This file is used to avoid rebuilding the same package again.
   const buildLogPath = path.join(
     buildDir,
     `${packageName}@${currentVersion}`,
     ".build.log.json"
   )
 
+  // caching: if the build result file exists, we read it and return the result. We are done!
   if (fs.existsSync(buildLogPath)) {
     return JSON.parse(fs.readFileSync(buildLogPath).toString())
   }
 
+  // install package
   const pkgPath = installNpmPackage(packageName, currentVersion, {
     nodeModulesDir,
   })
+  // read package.json
   const pkgJson = JSON.parse(
     fs.readFileSync(path.join(pkgPath, "package.json"))
   )
+  // get the main and module files
   const mainFile = pkgJson.main || "index.js"
   const moduleFile = pkgJson.module || "index.mjs"
 
+  // determine the entry points
   const entryPoints = getEntryPoints(pkgPath)
   if (verbose) console.log(blue("INFO:"), "entrypoints are", entryPoints)
 
+  // to speed up, we consider only the peerDependencies!
   const externals = { ...pkgJson.peerDependencies } //{ ...pkgJson.peerDependencies, ...pkgJson.dependencies }
 
+  // initialize the result object
   const result = {
     built: false,
     name: packageName,
@@ -179,7 +202,8 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
     dependencies: {},
   }
 
-  // convert externals parallel
+  // start the recursive conversion of the dependencies
+  // convert externals in parallel
   const results = await Promise.all(
     Object.keys(externals).map((external) =>
       convertToEsm(external, externals[external], {
@@ -194,13 +218,16 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
   results.forEach(({ built, ...depResult }) => {
     if (built) {
       result.dependencies[depResult.name] = depResult
-    } else delete externals[depResult.name]
+    } else delete externals[depResult.name] // Important: remove externals that are not built!
   })
+  // all dependencies which could not be converted to esm are removed from externals
+  // esbuild will NOT handle them as external dependencies and will bundle them into the build
 
   if (verbose) console.log(blue("INFO:"), "externals are", externals)
 
   for (let entryPoint of entryPoints) {
     try {
+      // log the current entry point
       process.stdout.write(
         "\n" +
           indent +
@@ -210,6 +237,7 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
           " to esm "
       )
 
+      // add entry points to externals
       const packagesToIgnore = [
         ...Object.keys(externals || {}),
         ...entryPoints.map((e) =>
@@ -220,16 +248,22 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
 
       // handle type="module" (already esm module)
       if (pkgJson.type === "module") {
+        // replace entry point name with build name and entrypoint, like "NAME@VERSION/ENTRYPOINT"
         const entryPointName = entryPoint.replace(
           pkgPath,
           `${packageName}@${currentVersion}`
         )
+        // create the directory in build folder
         fs.mkdirSync(path.join(buildDir, path.dirname(entryPointName)), {
           recursive: true,
         })
+        // copy the file to the build folder
         fs.copyFileSync(entryPoint, path.join(buildDir, entryPointName))
         entryPointPath = path.join(path.basename(buildDir), entryPointName)
       } else {
+        // entry point is a commonjs module
+        // convert to esm
+        // bundle all previous failed dependencies into the build (external)
         const buildResults = await esbuild.build({
           entryPoints: [entryPoint],
           bundle: true,
@@ -245,6 +279,8 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
           ignoreAnnotations: true,
           logLevel: "silent",
         })
+        // if metafile option is set, we get the output file name from the metafile
+        // this file already contains the build directory
         entryPointPath = Object.keys(buildResults.metafile?.outputs)?.[0]
       }
       result.built = true
@@ -289,6 +325,7 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
 
     if (verbose) console.log(cyan(JSON.stringify(result, null, 2)))
 
+    // IMPORTANT: write the build result to the build log file
     fs.writeFileSync(buildLogPath, JSON.stringify(result, null, 2))
   }
   return result
