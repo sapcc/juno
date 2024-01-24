@@ -124,17 +124,7 @@ const Auth = ({
     <>
       <div data-app="greenhouse-auth" ref={ref} />
 
-      <Transition
-        show={!!authLoggedIn}
-        enter="transition-opacity duration-1000"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity duration-0"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      >
-        {children}
-      </Transition>
+      {!!authLoggedIn && children}
 
       {!authLoggedIn && (
         <Stack
