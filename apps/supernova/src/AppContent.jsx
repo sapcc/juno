@@ -70,8 +70,6 @@ const AppContent = (props) => {
       })
     }
 
-    console.log(alertsError)
-
     if (parseError(alertsError) === "Failed to fetch") {
       addMessage({
         variant: "error",
