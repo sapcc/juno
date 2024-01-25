@@ -138,6 +138,6 @@ docker run --rm -it --volume "$E2E_PATH:/e2e" \
   --env CYPRESS_BASE_URL="$HOST" \
   --entrypoint $CY_CMD \
   --network=host \
-  run keppel.eu-de-1.cloud.sap/ccloud/cypress-client:latest "${CY_OPTIONS[@]}" --spec "$SPECS_FOLDER" --browser $CYPRESS_BROWSER
+  keppel.eu-de-1.cloud.sap/ccloud/cypress-client:latest run "${CY_OPTIONS[@]}" --spec "$SPECS_FOLDER" --browser $CYPRESS_BROWSER
 # https://github.wdf.sap.corp/cc/secrets/tree/master/ci/cypress-dashboard/Dockerfile
 # https://main.ci.eu-de-2.cloud.sap/teams/services/pipelines/cypress-dashboard/jobs/build-cypress-client-image/
