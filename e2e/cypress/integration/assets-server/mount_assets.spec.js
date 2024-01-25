@@ -33,11 +33,14 @@ describe("mount app", () => {
 
       if (appConf.name !== "auth") {
         if (app.appProps) {
+          // default prop values
+          const defaultPropValues = {currentHost: "https://localhost"}
+
           Object.keys(app.appProps).forEach((key) => {
             if (app.appProps[key]?.type === "required")
-              appConf.props[key] = "test"
+              // use default prop vaue or "test"
+              appConf.props[key] = defaultPropValues[key] || "test"
           })
-
         }
         cy.log("mount app: " + JSON.stringify(appConf))
         let encodedAppConf = btoa(JSON.stringify(appConf))
