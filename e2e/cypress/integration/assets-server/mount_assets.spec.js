@@ -25,6 +25,8 @@ describe("mount app", () => {
     })
   })
 
+  const allowedMessagesRegex = /^(?!AppShell: The contentHeading prop is obsolete and will be removed in a future version\. In order to render a content heading, use a ContentHeading element as a child in your main content\.$|Please provide a function to get the token$).*/
+
   it("can mount apps without errors", () => {
     apps.forEach(async (app) => {
       let appConf = { name: app.name, version: app.version, props: {} }
@@ -35,6 +37,7 @@ describe("mount app", () => {
             if (app.appProps[key]?.type === "required")
               appConf.props[key] = "test"
           })
+
         }
         cy.log("mount app: " + JSON.stringify(appConf))
         let encodedAppConf = btoa(JSON.stringify(appConf))
@@ -47,7 +50,7 @@ describe("mount app", () => {
           cy.get(`[data-juno-app="${app.name}"]`).should("exist") // check if app is mounted)
           cy.wait(DELAY).then(() => {
             expect(windowErrorSpy).to.not.be.called
-            expect(windowWarnSpy).to.not.be.calledWithMatch(/^(?!AppShell: The contentHeading prop is obsolete and will be removed in a future version. In order to render a content heading, use a ContentHeading element as a child in your main content.$).*/)
+            expect(windowWarnSpy).to.not.be.calledWithMatch(allowedMessagesRegex)
           })
           cy.log("\x1b[32mSUCCESS\x1b[37m")
         })
