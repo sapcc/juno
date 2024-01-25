@@ -10,7 +10,6 @@ import {
   useGlobalsAssetsHost,
 } from "../components/StoreProvider"
 import { useAppLoader } from "utils"
-import { Transition } from "@tailwindui/react"
 import { useActions } from "messages-provider"
 
 const currentUrl = new URL(window.location.href)
