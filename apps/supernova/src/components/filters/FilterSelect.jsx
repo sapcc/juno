@@ -84,17 +84,13 @@ const FilterSelect = () => {
           value={filterLabel}
           onChange={(val) => handleFilterLabelChange(val)}
         >
-          {filterLabels &&
-            [].slice
-              .call(filterLabels)
-              .sort()
-              .map((filter) => (
-                <SelectOption
-                  value={filter}
-                  label={humanizeString(filter)}
-                  key={filter}
-                />
-              ))}
+          {filterLabels?.map((filter) => (
+            <SelectOption
+              value={filter}
+              label={humanizeString(filter)}
+              key={filter}
+            />
+          ))}
         </Select>
         <Select
           name="filterValue"
