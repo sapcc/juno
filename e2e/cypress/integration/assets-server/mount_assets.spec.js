@@ -47,7 +47,7 @@ describe("mount app", () => {
           cy.get(`[data-juno-app="${app.name}"]`).should("exist") // check if app is mounted)
           cy.wait(DELAY).then(() => {
             expect(windowErrorSpy).to.not.be.called
-            expect(windowWarnSpy).to.not.be.called
+            expect(windowWarnSpy).to.not.be.calledWithMatch(/^(?!AppShell: The contentHeading prop is obsolete and will be removed in a future version. In order to render a content heading, use a ContentHeading element as a child in your main content.$).*/)
           })
           cy.log("\x1b[32mSUCCESS\x1b[37m")
         })
