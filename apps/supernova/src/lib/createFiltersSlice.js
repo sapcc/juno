@@ -29,7 +29,7 @@ const createFiltersSlice = (set, get) => ({
               return state
             }
 
-            // merge given labels with the initial and make it unique and sort alphabettically
+            // merge given labels with the initial, make it unique and sort it alphabetically
             const uniqueLabels = Array.from(
               new Set(initialFiltersState.labels.concat(labels))
             ).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
