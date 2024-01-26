@@ -171,37 +171,134 @@ WithMaxDate.args = {
 }
 
 export const WithWeekNumbers = Template.bind({})
+WithWeekNumbers.parameters = {
+  docs: {
+    description: {
+      story: "Set `weekNumbers` to `true` to display week numbers in the calendar."
+    }
+  }
+}
 WithWeekNumbers.args = {
   weekNumbers: true,
 }
 
 export const WithShorthandCurrentMonth = Template.bind({})
+WithShorthandCurrentMonth.parameters = {
+  docs: {
+    description: {
+      story: "Set `shorthandCurrentMonth` to `true` to show shorthand month names, e.g. 'Jan' instead of 'January'."
+    }
+  }
+}
 WithShorthandCurrentMonth.args = {
   shorthandCurrentMonth: true,
 }
 
 export const WithStaticMonthSelector = Template.bind({})
+WithStaticMonthSelector.parameters = {
+  docs: {
+    description: {
+      story: "Set `monthSelectorType` to `\"static\"` to not show a dropdown/select element to navigate months. Default is `\"dropdown\"`. "
+    }
+  }
+}
 WithStaticMonthSelector.args = {
   monthSelectorType: "static",
 }
 
 export const StaticPosition = Template.bind({})
+StaticPosition.parameters = {
+  docs: {
+    description: {
+      story: "Set to `true` to render the calendar inside the component wrapper, right next/after the input element."
+    }
+  }
+}
 StaticPosition.args = {
   staticPosition: true,
 }
 
-export const WithValue = Template.bind({})
-WithValue.args = {
+export const WithValueAsDateObject = Template.bind({})
+WithValueAsDateObject.parameters = {
+  docs: {
+    description: {
+      story: "Pass a JS date object as `value`."
+    }
+  }
+}
+WithValueAsDateObject.args = {
+  value: new Date()
+}
+
+export const WithValueAsDateString = Template.bind({})
+WithValueAsDateString.parameters = {
+  docs: {
+    description: {
+      story: "Pass a string as a `value` that is compatible with the current `dateFormat` prop, e.g. `\"2024-01-24\"` if the current `dateFormat` is `\"Y-m-d\"` (as is the default). The Datepicker component will not convert these."
+    }
+  }
+}
+WithValueAsDateString.args = {
+  value: "2024-01-24"
+}
+
+export const WithValueAsIsoDateString = Template.bind({})
+WithValueAsIsoDateString.parameters = {
+  docs: {
+    description: {
+      story: "Pass an ISO-compatible date string to display the corresponding date in the Datepicker."
+    }
+  }
+}
+WithValueAsIsoDateString.args = {
+  value: "2034-02-26T19:40:03.243Z"
+}
+
+export const WithValueAsTimestamp = Template.bind({})
+WithValueAsTimestamp.parameters = {
+  docs: {
+    description: {
+      story: "Pass a timestamp with milliseconds as `value` to display the corresponding date in the Datepicker."
+    }
+  }
+}
+WithValueAsTimestamp.args = {
+  value: 1706273787000
+}
+
+export const WithValueAsTodayShortcut = Template.bind({})
+WithValueAsTodayShortcut.parameters = {
+  docs: {
+    description: {
+      story: "Pass `\"today\"` as `value` as a shortcut to display the current Date in the Datepicker."
+    }
+  }
+}
+WithValueAsTodayShortcut.args = {
   value: "today"
 }
 
 export const EnableDate = Template.bind({})
+EnableDate.parameters = {
+  docs: {
+    description: {
+      story: "Pass an array of dates to be enabled, making it impossible for the user to select any other dates."
+    }
+  }
+}
 EnableDate.args = {
   enable: [ new Date() ],
   helptext: "Only the current date can be selected"
 }
 
 export const EnableDateRange = Template.bind({})
+EnableDateRange.parameters = {
+  docs: {
+    description: {
+      story: "Pass an array of objects with a `from` and a `to` key each, making it impossible for the user to select any date outside the specified ranges."
+    }
+  }
+}
 EnableDateRange.args = {
   enable: [
     {
@@ -213,12 +310,26 @@ EnableDateRange.args = {
 }
 
 export const DisableDate = Template.bind({})
+DisableDate.parameters = {
+  docs: {
+    description: {
+      story: "Pass an array of dates to be disabled, making it impossible for the user to select these dates."
+    }
+  }
+},
 DisableDate.args = {
   disable: [ new Date() ],
   helptext: "The current date can not be selected",
 }
 
 export const DisableByFunction = Template.bind({})
+DisableByFunction.parameters = {
+  docs: {
+    description: {
+      story: "Pass an array of functions such as `function(date) {// return true to disable date}` as `disable` to be run for each date in the calendar in order to disable dates that match custom criteria."
+    }
+  }
+}
 DisableByFunction.args = {
   disable: [
     function(date) {
