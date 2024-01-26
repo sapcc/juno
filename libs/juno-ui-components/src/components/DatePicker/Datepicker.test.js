@@ -45,6 +45,12 @@ describe("Datepicker", () => {
     expect(screen.getByLabelText("This is a Datepicker")).toBeInTheDocument()
   })
   
+  test("renders a datepicker with a placholder as passed", async () => {
+    render(<Datepicker placeholder="This is a placeholder" />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveAttribute("placeholder", "This is a placeholder")
+  })
+  
   test("renders a disabled datepicker as passed", async () => {
     render(<Datepicker disabled />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
@@ -55,6 +61,12 @@ describe("Datepicker", () => {
     render(<Datepicker clear value="2027-01-12" />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByTitle("Clear")).toBeInTheDocument()
+  })
+  
+  test("renders a Datepicker marked as required", async () => {
+    // Datepicker needs a label passed since the Label subcomponent is responsible for rendering the Required marker:
+    render(<Datepicker label="Required Datepicker" required />)
+    expect(document.querySelector(".juno-required")).toBeInTheDocument()
   })
   
   test("renders a helptext as passed", async () => {
@@ -94,6 +106,24 @@ describe("Datepicker", () => {
     expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is an error!")
     expect(screen.getByRole("textbox")).toHaveClass("juno-datepicker-input-invalid")
     expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+  })
+  
+  test("renders a Datepicker with a time picker as passed", async () => {
+    render(<Datepicker enableTime={true} dateFormat="Y-m-d H:i:S"/>)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(document.querySelector(".flatpickr-time")).toBeInTheDocument()
+    expect(screen.getByLabelText("Hour")).toBeInTheDocument()
+    expect(screen.getByLabelText("Minute")).toBeInTheDocument()
+  })
+  
+  test("renders a Datepicker with a time picker with seconds as passed", async () => {
+    render(<Datepicker enableTime={true} enableSeconds={true} dateFormat="Y-m-d H:i:S"/>)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(document.querySelector(".flatpickr-time")).toBeInTheDocument()
+    expect(screen.getByLabelText("Hour")).toBeInTheDocument()
+    expect(screen.getByLabelText("Minute")).toBeInTheDocument()
+    // We need to check for the flatpickr className as flatpickr does not assign an aria-label to teh seconds input:
+    expect(document.querySelector(".flatpickr-second")).toBeInTheDocument()
   })
   
   test("renders a className as passed", async () => {
