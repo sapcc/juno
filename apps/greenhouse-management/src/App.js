@@ -15,13 +15,10 @@ import styles from "./styles.scss"
 import OrgInfo from "./components/OrgInfo"
 import SideNav from "./components/SideNav"
 import AsyncWorker from "./components/AsyncWorker"
-import { MessagesProvider, Messages, useActions } from "messages-provider"
-import useCommunication from "./hooks/useCommunication"
+import { MessagesProvider, Messages } from "messages-provider"
 import Auth from "./components/Auth"
 
 const App = (props = {}) => {
-  useCommunication()
-
   // to be deleted
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -38,7 +35,6 @@ const App = (props = {}) => {
   return (
     <QueryClientProvider client={queryClient}>
       <AsyncWorker />
-
       <AppBody data-testid="greenhouse-management">
         <MessagesProvider>
           <Messages className="mb-4" />
