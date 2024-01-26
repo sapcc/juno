@@ -77,13 +77,10 @@ const iconContainerStyles = `
   * icon (show a calendar icon)
   * All props available for TextInput:
     * what to do with defaultValue? Was this ever intended to work uncontrolled? defaultVlaue accepts only a string, value accepts a variety of formats?
-    * name (careful, might be used by Flatpickr internally)
-    * disabled (double-check/clarify so we can disable the input, not disable certain dates, disable ≠ disabled!)
-    * readOnly
+    * clarify use of value, defaultValue, defaultDate?
+    * name (careful, might be used by Flatpickr internally)?
+    * readOnly?
     * autoFocus (if possible, determine whether this would open the calendar, too)
-    * autoComplete
-    * mode
-    * options
     * use onFocus? we could want to add it for consistency, although flatpickr comes with an onOpen handler which shoudl be/do the same. onFocus would need to return the event though, onOpen returns the date. Alternatively, we could expose onFocus but run it inside Faltpickr's onOpen. 
     * onBlur ( not exposed by Flatpickr )
     * autoFocus and minimizing the label when the field is focussed my be tricky? Canb we create a ref fot eh field?
@@ -103,8 +100,7 @@ const iconContainerStyles = `
       }
     } 
   */
-  
-  /* TODO: enable, disable */
+
   
 
 export const Datepicker = ({
@@ -395,7 +391,7 @@ Datepicker.propTypes = {
   /** Pass a Flatpickr options object. For available options, consult https://flatpickr.js.org/. 
   When an available key can also be passed explicitly as an individual prop, the latter will take precedence over the corresponding key in the `options` object. Note: The `static` key in the options object is represented by the `staticPosition` prop. */
   
-  /* TODO: Suppress other keys? Use .exact instead of .shape */
+  /* TODO: Suppress other keys? Use .exact instead of .shape? */
   options: PropTypes.shape({
     allowInput:             PropTypes.bool,
     conjunction:            PropTypes.string,

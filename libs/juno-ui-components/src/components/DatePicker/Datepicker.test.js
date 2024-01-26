@@ -126,6 +126,44 @@ describe("Datepicker", () => {
     expect(document.querySelector(".flatpickr-second")).toBeInTheDocument()
   })
   
+  test("displays the date as passed as a date object", async () => {
+    render(<Datepicker value={ new Date(2099, 0, 1) }/>)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2099-01-01")
+  })
+  
+  test("displays the date as passed as a date string", async () => {
+    render(<Datepicker value="2024-01-26" />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2024-01-26")
+  })
+  
+  test("diplays the date as passed as an ISO date string", async () => {
+    render(<Datepicker value="2034-02-26T19:40:03.243Z" />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2034-02-26")
+  })
+  
+  test("displays the date as passed as a timestamp", async () => {
+    render(<Datepicker value={1706273787000} />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2024-01-26")
+  })
+  
+  test("displays the date as passed by shortcut 'today'", async () => {
+    render(<Datepicker value="today" />)
+    const todaysDate = new Date()
+    const todaysDateAsString = todaysDate.getFullYear() + "-" + todaysDate.getMonth() + 1 + "-" + todaysDate.getDate()
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue(todaysDateAsString)
+  })
+  
+  test("displays the date in a custom format as passed", async () => {
+    render(<Datepicker dateFormat="F d Y" value={1706273787000} />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("January 26 2024")
+  })
+  
   test("renders a className as passed", async () => {
     render(<Datepicker className="my-custom-class" />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
