@@ -1,12 +1,14 @@
 import React, { useMemo, useEffect, useState } from "react"
 import { createClient } from "sapcc-k8sclient"
 import { useApiEndpoint, useAuthData } from "./StoreProvider"
+import { useActions } from "messages-provider"
 
 // Shows organization info
 
 const OrgInfo = () => {
   const apiEndpoint = useApiEndpoint()
   const [org, setOrg] = useState(null)
+  const { addMessage } = useActions()
 
   const authData = useAuthData()
 
@@ -35,6 +37,12 @@ const OrgInfo = () => {
           description: res?.spec?.description,
         })
       })
+      .catch((err) => {
+        addMessage({
+          variant: "error",
+          text: `Failed to fetch organization info. ${err.message}`,
+        })
+      })
   }, [client, orgName])
 
   return (
@@ -42,10 +50,12 @@ const OrgInfo = () => {
       <div className="org-name">
         <p className="text-xs">Organization</p>
         {org?.name && <h1 className="text-xl font-bold">{org?.name}</h1>}
+        {!org?.name && <h1 className="text-xl font-bold">Loading...</h1>}
       </div>
       {org?.description && (
         <p className="org-description">{org?.description}</p>
       )}
+      {!org?.name && <p className="org-description"></p>}
       {/* <div className="grid grid-cols-[repeat(auto-fit,_minmax(20rem,_1fr))] auto-rows-[minmax(8rem,_1fr)] gap-6 pt-8">
         <Stack
           direction="vertical"
