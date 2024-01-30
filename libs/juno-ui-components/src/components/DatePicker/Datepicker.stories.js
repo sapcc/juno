@@ -407,3 +407,18 @@ Timepicker.args = {
   noCalendar: true,
   enableTime: true,
 }
+
+export const InvalidPreload = Template.bind({})
+InvalidPreload.parameters = {
+  docs: {
+    description: {
+      story: "Normally, the text input element oif the datepicker would be cleared when passing a date as `value` or `defaultDate` that is disabled from selection. By setting `allowInvalidPreload` such dates can be initially displayed in the datepicker, even though they are not available for user selection in the calendar."
+    }
+  }
+}
+InvalidPreload.args = {
+  allowInvalidPreload: true,
+  value: "2024-01-30",
+  disable: [ "2024-01-30" ],
+  helptext: "The datpicker initially shows Jan 30, 2024 as value even though this date has been disabled and thus excleded from selection."
+}

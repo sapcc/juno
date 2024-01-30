@@ -105,6 +105,7 @@ const iconContainerStyles = `
 
 export const Datepicker = ({
   allowInput,
+  allowInvalidPreload,
   ariaDateFormat,
   className,
   clear,
@@ -162,6 +163,7 @@ export const Datepicker = ({
   
   const theOptions = { 
     allowInput,
+    allowInvalidPreload,
     ariaDateFormat,
     conjunction,
     dateFormat, 
@@ -186,6 +188,34 @@ export const Datepicker = ({
     ...( enable && enable.length ? { enable } : {}  ), // ONLY add 'enable' key if defined and has at least one value, otherwise there will be errors
     ...options,
   }
+  
+  // Options available in Flatpickr that we won't support for one reason or another: 
+  const unavailableOptions = [
+    "altFormat",
+    "altInput",
+    "altInputClass",
+    "appendTo",
+    "clickOpens",
+    "disableMobile",
+    "formatDate",
+    "nextArrow",
+    "positionElement",
+    "prevArrow",
+    "wrap",
+  ]
+  
+  // Remove all the keys we do not want or cannot support from the options object in case they were supplied:
+  const cleanUpOptions = (opts, keysToRemove) => {
+    Object.keys(opts).forEach( key => {
+      if (keysToRemove.includes(key)) {
+        delete opts[key]
+      }
+    })
+    return opts
+  }
+  
+  const theCleanedOptions = cleanUpOptions(theOptions, unavailableOptions)
+  
   
   const [theDate, setTheDate] = useState( { date: "" } )
   const [isOpen, setisOpen] = useState(false)
@@ -274,7 +304,7 @@ export const Datepicker = ({
         onOpen={handleOpen}
         onValueUpdate={handleValueUpdate}
         onYearChange={handleYearChange}
-        options={theOptions}
+        options={theCleanedOptions}
         placeholder={placeholder}
         value={theDate.date}
         {...props}
@@ -343,6 +373,8 @@ export const Datepicker = ({
 Datepicker.propTypes = {
   /** Whether the Datepicker allows direct keyboard input. Default is `false`. */
   allowInput: PropTypes.bool,
+  /** Allows the preloading of an invalid date (e.g. a date that hass been disable by passing `disable`). When disabled, the field will be cleared if the provided date is invalid */
+  allowInvalidPreload: PropTypes.bool,
   /** How the `aria-label` date for each day in the calendar will be formed. Uses the same rules/tokens as `dateFormat´ as described here: https://flatpickr.js.org/formatting/. When changing this, make sure the outcome makes sense when using a screenreader.*/
   ariaDateFormat: PropTypes.string,
   /** Pass custom classNames. These will be appended to the input element of the Datepicker. */
@@ -416,6 +448,7 @@ Datepicker.propTypes = {
   /* TODO: Suppress other keys? Use .exact instead of .shape? */
   options: PropTypes.shape({
     allowInput:             PropTypes.bool,
+    allowInvalidPreload:    PropTypes.bool,
     ariaDateFormat:         PropTypes.string,
     conjunction:            PropTypes.string,
     dateFormat:             PropTypes.string,
@@ -465,6 +498,7 @@ Datepicker.propTypes = {
 
 Datepicker.defaultProps = {
   allowInput: false,
+  allowInvalidPreload: false,
   ariaDateFormat: "F j, Y",
   className: "",
   clear: false,
@@ -503,21 +537,21 @@ Datepicker.defaultProps = {
     // WON'T DO altInput: false,
     // WON'T DO altInputClass: "",
     // DONE: allowInput: false,
-    // ??? allowInvalidPreload: false,
+    // DONE allowInvalidPreload: false,
     // WON'T DO     appendTo: null,  --> error
     // DONE ariaDateFormat: "F j, Y",
     // DONE conjunction: null,
-    // ??? clickOpens: true,
+    // NOT NOW clickOpens: true,
     // DONE dateFormat: "Y-m-d",
     // DONE defaultDate: null,
     // DONE defaultHour: 12,
     // DONE defaultMinute: 0,
     // DONE disable: [],
-    // ??? disableMobile: false,
+    // WON'T DO disableMobile: false,
     // DONE enable: undefined,
     // DONE enableTime: false,
     // DONE enableSeconds: false,
-    // ??? formatDate: null,  --> error
+    // WON'T DO formatDate: null,  --> error
     // DONE hourIncrement: 1,
     // DONE inline: false,
     // DONE locale
@@ -525,7 +559,7 @@ Datepicker.defaultProps = {
     // DONE minDate: null,
     // DONE mode: "single",
     // WON'T DO nextArrow: ">", --> use ours, do not allow to customize
-    // ??? noCalendar: false,
+    // DONE noCalendar: false,
     // ??? onChange: null,  --> merge with explicit prop
     // ??? onClose: null,
     // ??? onOpen: null,
@@ -533,14 +567,14 @@ Datepicker.defaultProps = {
     // ??? parseDate: false,
     // // Where the calendar is rendered relative to the input vertically and horizontally. In the format of "[vertical] [horizontal]". Vertical can be auto, above or below (required). Horizontal can be left, center or right.  e.g. "above" or "auto center"
     // ??? position: "auto", --> discuss whether customizing makes any sense?
-    // ??? positionElement: null,
+    // WON'T DO: positionElement: null,
     // WON'T DO:  prevArrow: ">", --> use ours, do not allow to customize
     // DONE shorthandCurrentMonth: false,
     // DONE static: false,
     // DONE showMonths: 1,
     // DONE time_24hr: false,
     // DONE weekNumbers: false,
-    // WON't DO wrap: false, --> custom elements, do not expose?
+    // WON'T DO wrap: false, --> custom elements, do not expose?
     // DONE monthSelectorType: "dropdown", 
   },
   placeholder: "",
