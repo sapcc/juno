@@ -1,6 +1,7 @@
 import React from "react"
-import { Spinner, Stack } from "juno-ui-components"
+import { Stack } from "juno-ui-components"
 import { useIsLoggedIn } from "./StoreProvider"
+import HintLoading from "./shared/HintLoading"
 
 // Adds a loading screen while during auth
 // Shows children when auth is complete
@@ -18,9 +19,7 @@ const Auth = ({ children }) => {
           direction="vertical"
           className="h-screen"
         >
-          <Spinner className="mx-6 mb-3" variant="primary" size="1.5rem" />
-
-          <p>Loading...</p>
+          <HintLoading />
         </Stack>
       )}
     </>
