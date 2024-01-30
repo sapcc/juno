@@ -23,7 +23,6 @@ const AppContent = () => {
         text: "required assets url not set",
       })
     }
-
     // Make these two props required
     // if a required prop is missing do not set the assetsUrl and no plugin will be loaded
     if (!apiEndpoint || !assetsUrl) return
