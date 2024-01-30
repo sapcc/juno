@@ -109,6 +109,7 @@ export const Datepicker = ({
   clear,
   conjunction,
   dateFormat,
+  defaultDate,
   defaultValue,
   disable,
   disabled,
@@ -181,10 +182,11 @@ export const Datepicker = ({
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
   
+  const theValue = value || defaultDate
   
   useEffect( () => {
-    setTheDate({date: value})
-  }, [value])
+    setTheDate({date: theValue})
+  }, [theValue])
   
   const invalidated = useMemo(
     () => invalid || (errortext && isNotEmptyString(errortext) ? true : false),
@@ -339,6 +341,8 @@ Datepicker.propTypes = {
   conjunction: PropTypes.string,
   /** A string of characters to define how a date will be formatted in the input field. Available options: https://flatpickr.js.org/formatting/ */
   dateFormat: PropTypes.string,
+  /** Sets the default date of the datepicker. Same as `value`, only here for compatibility with the original Flatpickr library. If both `value` and `defaultDate` are being passed, `value` will win. Date Objects, timestamps, ISO date strings, chronological date strings `YYYY-MM-DD HH:MM` (must be compatible to current `dateFormat`), and the shortcut `today` are all accepted. */
+  defaultDate:  PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]), 
   /** TODO: defaultValue -> proptypes ? */
   defaultValue: PropTypes.string,
   /** Pass an array of dates, date strings, date ranges or functions to disable dates. More on disabling dates: https://flatpickr.js.org/examples/#disabling-specific-dates */
@@ -428,7 +432,7 @@ Datepicker.propTypes = {
   time_24hr: PropTypes.bool,
   /** Whether the Datepicker has been successfully validated */
   valid: PropTypes.bool,
-  /** The value of the datepicker. Date Objects, timestamps, ISO date strings, chronological date strings `YYYY-MM-DD HH:MM`, and the shortcut `today` are all accepted. */
+  /** The value of the datepicker. Date Objects, timestamps, ISO date strings, chronological date strings `YYYY-MM-DD HH:MM` (must be compatible to current `dateFormat`), and the shortcut `today` are all accepted. */
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
   /** Whether to render week numbers. Default is `false`. */
   weekNumbers: PropTypes.bool,
@@ -442,6 +446,7 @@ Datepicker.defaultProps = {
   clear: false,
   conjunction: ", ",
   dateFormat: "Y-m-d",
+  defaultDate: null,
   defaultValue: undefined,
   disable: [],
   disabled: false,
@@ -476,7 +481,7 @@ Datepicker.defaultProps = {
     // DONE conjunction: null,
     // ??? clickOpens: true,
     // DONE dateFormat: "Y-m-d",
-    // ??? defaultDate: null,
+    // DONE defaultDate: null,
     // ??? defaultHour: 12,
     // ??? defaultMinute: 0,
     // DONE disable: [],

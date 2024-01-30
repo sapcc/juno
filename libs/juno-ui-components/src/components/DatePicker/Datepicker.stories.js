@@ -278,6 +278,18 @@ WithValueAsTodayShortcut.args = {
   value: "today"
 }
 
+export const WithDefaultDate = Template.bind({})
+WithDefaultDate.parameters = {
+  docs: {
+    description: {
+      story: "Pass a `defaultDate` instead of `value`. "
+    }
+  }
+}
+WithDefaultDate.args = {
+  defaultDate: "2024-01-30"
+}
+
 export const EnableDate = Template.bind({})
 EnableDate.parameters = {
   docs: {
