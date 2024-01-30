@@ -73,6 +73,54 @@ const iconContainerStyles = `
 
 /** A Datepicker component. Highly configurable, based on Flatpickr, and supports most of Flatpickr's options. */
 
+/* Flatpickr options: 
+
+  WON'T DO altFormat: "F j, Y",
+  WON'T DO altInput: false,
+  WON'T DO altInputClass: "",
+  DONE: allowInput: false,
+  DONE allowInvalidPreload: false,
+  WON'T DO     appendTo: null,  --> error
+  DONE ariaDateFormat: "F j, Y",
+  DONE conjunction: null,
+  NOT NOW clickOpens: true,
+  DONE dateFormat: "Y-m-d",
+  DONE defaultDate: null,
+  DONE defaultHour: 12,
+  DONE defaultMinute: 0,
+  DONE disable: [],
+  WON'T DO disableMobile: false,
+  DONE enable: undefined,
+  DONE enableTime: false,
+  DONE enableSeconds: false,
+  WON'T DO formatDate: null,  --> error
+  DONE hourIncrement: 1,
+  DONE inline: false,
+  DONE locale
+  DONE maxDate: null,
+  DONE minDate: null,
+  DONE mode: "single",
+  WON'T DO nextArrow: ">", --> use ours, do not allow to customize
+  DONE noCalendar: false,
+  ??? onChange: null,  --> merge with explicit prop
+  ??? onClose: null,
+  ??? onOpen: null,
+  ??? onReady: null,
+  ??? parseDate: false,
+  DONE position: "auto",
+  WON'T DO: positionElement: null,
+  WON'T DO:  prevArrow: ">", --> use ours, do not allow to customize
+  DONE shorthandCurrentMonth: false,
+  DONE static: false,
+  DONE showMonths: 1,
+  DONE time_24hr: false,
+  DONE weekNumbers: false,
+  WON'T DO wrap: false, --> custom elements, do not expose?
+  DONE monthSelectorType: "dropdown", 
+
+*/
+
+
 /* Possible additional props:
   * icon (show a calendar icon)
   * All props available for TextInput:
@@ -453,19 +501,19 @@ Datepicker.propTypes = {
     monthSelectorType:      PropTypes.oneOf(["dropdown", "static"]),
     noCalendar:             PropTypes.bool,
     position:               PropTypes.oneOf([
-                            "auto",
-                            "above",
-                            "below",
-                            "auto left",
-                            "auto center",
-                            "auto right",
-                            "above left",
-                            "above center",
-                            "above right",
-                            "below left",
-                            "below center",
-                            "below right",
-                          ]),
+                              "auto",
+                              "above",
+                              "below",
+                              "auto left",
+                              "auto center",
+                              "auto right",
+                              "above left",
+                              "above center",
+                              "above right",
+                              "below left",
+                              "below center",
+                              "below right",
+                            ]),
     shorthandCurrentMonth:  PropTypes.bool,
     showMonths:             PropTypes.number,
     static:                 PropTypes.bool,
@@ -547,50 +595,7 @@ Datepicker.defaultProps = {
   onOpen: undefined,
   onValueUpdate: undefined,
   onYearChange: undefined,
-  options: {
-    // WON'T DO altFormat: "F j, Y",
-    // WON'T DO altInput: false,
-    // WON'T DO altInputClass: "",
-    // DONE: allowInput: false,
-    // DONE allowInvalidPreload: false,
-    // WON'T DO     appendTo: null,  --> error
-    // DONE ariaDateFormat: "F j, Y",
-    // DONE conjunction: null,
-    // NOT NOW clickOpens: true,
-    // DONE dateFormat: "Y-m-d",
-    // DONE defaultDate: null,
-    // DONE defaultHour: 12,
-    // DONE defaultMinute: 0,
-    // DONE disable: [],
-    // WON'T DO disableMobile: false,
-    // DONE enable: undefined,
-    // DONE enableTime: false,
-    // DONE enableSeconds: false,
-    // WON'T DO formatDate: null,  --> error
-    // DONE hourIncrement: 1,
-    // DONE inline: false,
-    // DONE locale
-    // DONE maxDate: null,
-    // DONE minDate: null,
-    // DONE mode: "single",
-    // WON'T DO nextArrow: ">", --> use ours, do not allow to customize
-    // DONE noCalendar: false,
-    // ??? onChange: null,  --> merge with explicit prop
-    // ??? onClose: null,
-    // ??? onOpen: null,
-    // ??? onReady: null,
-    // ??? parseDate: false,
-    // DONE position: "auto",
-    // WON'T DO: positionElement: null,
-    // WON'T DO:  prevArrow: ">", --> use ours, do not allow to customize
-    // DONE shorthandCurrentMonth: false,
-    // DONE static: false,
-    // DONE showMonths: 1,
-    // DONE time_24hr: false,
-    // DONE weekNumbers: false,
-    // WON'T DO wrap: false, --> custom elements, do not expose?
-    // DONE monthSelectorType: "dropdown", 
-  },
+  options: {},
   placeholder: "",
   position: "auto",
   required: false,
