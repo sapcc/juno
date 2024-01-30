@@ -32,6 +32,23 @@ export default {
     options: {
       control: false,
     },
+    position: {
+      options: [
+        "auto",
+        "above",
+        "below",
+        "auto left",
+        "auto center",
+        "auto right",
+        "above left",
+        "above center",
+        "above right",
+        "below left",
+        "below center",
+        "below right",
+      ],
+      control: { type: 'select' },
+    }
   }
 }
 

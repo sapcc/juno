@@ -142,6 +142,7 @@ export const Datepicker = ({
   onYearChange,
   options,
   placeholder,
+  position,
   required,
   shorthandCurrentMonth,
   showMonths,
@@ -180,6 +181,7 @@ export const Datepicker = ({
     mode,
     monthSelectorType,
     noCalendar,
+    position,
     shorthandCurrentMonth,
     showMonths,
     static: staticPosition, // rename since "static" is a reserved word in JS
@@ -444,7 +446,6 @@ Datepicker.propTypes = {
   onYearChange: PropTypes.func,
   /** Pass a Flatpickr options object. For available options, consult https://flatpickr.js.org/. 
   When an available key can also be passed explicitly as an individual prop, the latter will take precedence over the corresponding key in the `options` object. Note: The `static` key in the options object is represented by the `staticPosition` prop. */
-  
   /* TODO: Suppress other keys? Use .exact instead of .shape? */
   options: PropTypes.shape({
     allowInput:             PropTypes.bool,
@@ -474,6 +475,21 @@ Datepicker.propTypes = {
   }),
   /** The placeholder of the input element. Defaults to empty string `""`. TODO: default to expected date format */
   placeholder: PropTypes.string,
+  /** Where the calendar should be rendered in relation to the text input element in the format "[horizontal , vertical]". Vertical can be `auto`, `above`, `below` (required, default is `auto`); Horizontal can be `left`, `center`, `right`. */
+  position: PropTypes.oneOf([
+    "auto",
+    "above",
+    "below",
+    "auto left",
+    "auto center",
+    "auto right",
+    "above left",
+    "above center",
+    "above right",
+    "below left",
+    "below center",
+    "below right",
+  ]),
   /** Whether the datepicker should be marked as required. Requires a `Label` to be set. */
   required: PropTypes.bool,
   /** Whether the current month in the date picker should be displayed as shorthand, e.g. "Jan" instead of "January" */
@@ -565,8 +581,7 @@ Datepicker.defaultProps = {
     // ??? onOpen: null,
     // ??? onReady: null,
     // ??? parseDate: false,
-    // // Where the calendar is rendered relative to the input vertically and horizontally. In the format of "[vertical] [horizontal]". Vertical can be auto, above or below (required). Horizontal can be left, center or right.  e.g. "above" or "auto center"
-    // ??? position: "auto", --> discuss whether customizing makes any sense?
+    // DONE position: "auto",
     // WON'T DO: positionElement: null,
     // WON'T DO:  prevArrow: ">", --> use ours, do not allow to customize
     // DONE shorthandCurrentMonth: false,
@@ -578,6 +593,7 @@ Datepicker.defaultProps = {
     // DONE monthSelectorType: "dropdown", 
   },
   placeholder: "",
+  position: "auto",
   required: false,
   shorthandCurrentMonth: false,
   showMonths: 1,
