@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useMemo } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { useQueryClientFnReady } from "../StoreProvider"
-import Pagination from "../../shared/Pagination"
+import Pagination from "../shared/Pagination"
 import ServicesList from "./ServicesList"
 import { Messages, useActions as messageActions } from "messages-provider"
 
@@ -17,10 +17,15 @@ const ServicesController = () => {
     enabled: !!queryClientFnReady,
   })
 
+  const services = useMemo(() => {
+    if (!data) return []
+    return data?.Services?.edges
+  }, [data])
+
   useEffect(() => {
+    // on error reset messages
     if (!error) {
-      resetMessages()
-      return
+      return resetMessages()
     }
     addMessage({ variant: "danger", text: error?.message })
   }, [error])
@@ -32,13 +37,13 @@ const ServicesController = () => {
 
   return (
     <>
-      <ServicesList services={data?.Services?.edges} isLoading={isLoading} />
+      <ServicesList services={services} isLoading={isLoading} />
       <Pagination
         count={data?.Services?.totalCount}
         limit={paginationParams?.first}
         onChanged={onPaginationChanged}
         isFetching={isFetching}
-        disabled={isError}
+        disabled={isError || services.length === 0}
       />
     </>
   )

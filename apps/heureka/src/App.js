@@ -5,11 +5,20 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { MessagesProvider } from "messages-provider"
 import AsyncWorker from "./components/AsyncWorker"
 import StoreProvider, { useActions } from "./components/StoreProvider"
-import AppRouter from "./components/AppRouter"
+import TabContext from "./components/tabs/TabContext"
 
 const App = (props) => {
   // Create a client
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      // global default options that apply to all queries
+      queries: {
+        // staleTime: Infinity, // if you wish to keep data from the keys until reload
+        keepPreviousData: true, // nice when paginating
+        refetchOnWindowFocus: false, // default: true
+      },
+    },
+  })
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -18,7 +27,7 @@ const App = (props) => {
         pageHeader="Converged Cloud | Heureka"
         embedded={props.embedded === "true" || props.embedded === true}
       >
-        <AppRouter />
+        <TabContext />
       </AppShell>
     </QueryClientProvider>
   )

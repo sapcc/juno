@@ -7,6 +7,7 @@ export default (options) =>
       isUrlStateSetup: false,
       queryClientFnReady: false,
       endpoint: options?.apiEndpoint,
+      tabIndex: 0,
 
       actions: {
         setQueryClientFnReady: (readiness) =>
@@ -15,7 +16,15 @@ export default (options) =>
               state.queryClientFnReady = readiness
             },
             false,
-            "globals.setQueryClientFnReady"
+            "setQueryClientFnReady"
+          ),
+        setTabIndex: (index) =>
+          set(
+            (state) => {
+              state.tabIndex = index
+            },
+            false,
+            "setTabIndex"
           ),
       },
     }))

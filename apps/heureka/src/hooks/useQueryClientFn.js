@@ -3,6 +3,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import { useEndpoint, useActions } from "../components/StoreProvider"
 import { request } from "graphql-request"
 import sevicesQuery from "../lib/queries/services"
+import vulnerabilityMatchesQuery from "../lib/queries/vulnerabilityMatches"
 
 class HTTPError extends Error {
   constructor(code, message) {
@@ -18,19 +19,6 @@ const encodeUrlParamsFromObject = (options) => {
     .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(options[k])}`)
     .join("&")
   return `&${encodedOptions}`
-}
-
-// Check response status
-const checkStatus = (response) => {
-  if (response.status < 400) {
-    return response
-  } else {
-    return response.text().then((message) => {
-      var error = new HTTPError(response.status, message || response.statusText)
-      error.statusCode = response.status
-      return Promise.reject(error)
-    })
-  }
 }
 
 // hook to register query defaults that depends on the queryClient and options
@@ -56,8 +44,22 @@ const useQueryClientFn = () => {
           options?.paginationParams
         )
       },
-      keepPreviousData: true,
-      refetchOnWindowFocus: false, // default: true
+      // keepPreviousData: true,
+      // refetchOnWindowFocus: false, // default: true
+    })
+
+    queryClient.setQueryDefaults(["vulnerabilityMatches"], {
+      queryFn: async ({ queryKey }) => {
+        const [_key, options] = queryKey
+        console.log("useQueryClientFn::: queryKey: ", queryKey)
+        return await request(
+          endpoint,
+          vulnerabilityMatchesQuery(),
+          options?.paginationParams
+        )
+      },
+      // keepPreviousData: true,
+      // refetchOnWindowFocus: false, // default: true
     })
 
     // set queryClientFnReady to true once

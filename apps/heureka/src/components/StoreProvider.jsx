@@ -13,6 +13,7 @@ const useStore = (selector) => create(useContext(StoreContext), selector)
 
 export const useEndpoint = () => useStore((s) => s.endpoint)
 export const useQueryClientFnReady = () => useStore((s) => s.queryClientFnReady)
+export const useTabIndex = () => useStore((s) => s.tabIndex)
 export const useActions = () => useStore((s) => s.actions)
 
 export default StoreProvider
