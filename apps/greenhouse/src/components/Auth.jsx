@@ -32,8 +32,7 @@ let orgName = match ? match[1] : currentUrl.searchParams.get("org")
  *
  * The Auth component renders three main sections:
  * 1. A div element with a data-app attribute set to "greenhouse-auth" and a ref for loading the authentication app.
- * 2. A Transition component that displays the children (content) when the user is logged in, applying a smooth fade-in
- *    and fade-out transition effect.
+ * 2. If the user is logged in, the children are rendered.
  * 3. If the user is not logged in, a stack containing loading indicators, messages, and a "Sign in" button is rendered.
  *    The component handles various loading states, shows a long loading indicator after 5 seconds, and displays specific
  *    messages based on the authentication status.
