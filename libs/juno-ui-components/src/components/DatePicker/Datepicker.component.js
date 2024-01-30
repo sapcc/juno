@@ -105,6 +105,7 @@ const iconContainerStyles = `
 
 export const Datepicker = ({
   allowInput,
+  ariaDateFormat,
   className,
   clear,
   conjunction,
@@ -157,6 +158,7 @@ export const Datepicker = ({
   
   const theOptions = { 
     allowInput,
+    ariaDateFormat,
     conjunction,
     dateFormat, 
     disable,
@@ -333,6 +335,8 @@ export const Datepicker = ({
 Datepicker.propTypes = {
   /** Whether the Datepicker allows direct keyboard input. Default is `false`. */
   allowInput: PropTypes.bool,
+  /** How the `aria-label` date for each day in the calendar will be formed. Uses the same rules/tokens as `dateFormat´ as described here: https://flatpickr.js.org/formatting/. When changing this, make sure the outcome makes sense when using a screenreader.*/
+  ariaDateFormat: PropTypes.string,
   /** Pass custom classNames. These will be appended to the input element of the Datepicker. */
   className: PropTypes.string,
   /** Whether the datepicker should render a Clear icon */
@@ -398,6 +402,7 @@ Datepicker.propTypes = {
   /* TODO: Suppress other keys? Use .exact instead of .shape? */
   options: PropTypes.shape({
     allowInput:             PropTypes.bool,
+    ariaDateFormat:         PropTypes.string,
     conjunction:            PropTypes.string,
     dateFormat:             PropTypes.string,
     disable:                PropTypes.array,
@@ -442,6 +447,7 @@ Datepicker.propTypes = {
 
 Datepicker.defaultProps = {
   allowInput: false,
+  ariaDateFormat: "F j, Y",
   className: "",
   clear: false,
   conjunction: ", ",

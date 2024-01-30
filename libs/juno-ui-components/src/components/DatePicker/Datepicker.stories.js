@@ -353,3 +353,16 @@ DisableByFunction.args = {
   },
   helptext: "Only work days can be selected",
 }
+
+export const CustomAriaDateFormat = Template.bind({})
+CustomAriaDateFormat.parameters = {
+  docs: {
+    description: {
+      story: "A custom `ariaDateFormat` can be passed to set the format for the aria-label property of each day in the calendar. This will be used by screenreaders, so make sure it makes sense and contains all necessary information so a user can sensibly choose a date based on the format. This example sets a weekday, full month, day, and year."
+    }
+  }
+}
+CustomAriaDateFormat.args = {
+  helptext: "👉 Open the calendar and inspect the aria-label property of a day to see the result!",
+  ariaDateFormat: "l, F j, Y"
+}
