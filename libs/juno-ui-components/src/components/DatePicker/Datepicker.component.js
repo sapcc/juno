@@ -87,21 +87,6 @@ const iconContainerStyles = `
     * allow passing a className to the wrapper? Precedent risk!
 
  */
- 
-  // use a custom input:
-  // const CustomInput = ({ value, defaultValue, inputRef, ...props }) => {
-  //   return <input {...props} defaultValue={defaultValue} ref={inputRef} />
-  // }
-  /* 
-    // in <Flatpickr />:
-    render={
-      ({defaultValue, value, ...props}, ref) => {
-        return <CustomInput defaultValue={defaultValue} id="my-id" inputRef={ref} />
-      }
-    } 
-  */
-
-  
 
 export const Datepicker = ({
   allowInput,
