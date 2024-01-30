@@ -71,7 +71,7 @@ const iconContainerStyles = `
   jn-gap-1.5
 `
 
-/** A Datepicker component. Highly configurable, based on Flatpickr. */
+/** A Datepicker component. Highly configurable, based on Flatpickr, and supports most of Flatpickr's options. */
 
 /* Possible additional props:
   * icon (show a calendar icon)
@@ -85,7 +85,6 @@ const iconContainerStyles = `
     * onBlur ( not exposed by Flatpickr )
     * autoFocus and minimizing the label when the field is focussed my be tricky? Canb we create a ref fot eh field?
     * allow passing a className to the wrapper? Precedent risk!
-
  */
 
 export const Datepicker = ({
@@ -203,12 +202,13 @@ export const Datepicker = ({
   
   const theCleanedOptions = cleanUpOptions(theOptions, unavailableOptions)
   
-  
+  // State variables
   const [theDate, setTheDate] = useState( { date: "" } )
   const [isOpen, setisOpen] = useState(false)
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
   
+  // both `value` and `defaultDate` are valid options, make sure `value` wins:
   const theValue = value || defaultDate
   
   useEffect( () => {
@@ -452,6 +452,20 @@ Datepicker.propTypes = {
     mode:                   PropTypes.oneOf(["single", "multiple", "range", "time"]),
     monthSelectorType:      PropTypes.oneOf(["dropdown", "static"]),
     noCalendar:             PropTypes.bool,
+    position:               PropTypes.oneOf([
+                            "auto",
+                            "above",
+                            "below",
+                            "auto left",
+                            "auto center",
+                            "auto right",
+                            "above left",
+                            "above center",
+                            "above right",
+                            "below left",
+                            "below center",
+                            "below right",
+                          ]),
     shorthandCurrentMonth:  PropTypes.bool,
     showMonths:             PropTypes.number,
     static:                 PropTypes.bool,
