@@ -290,6 +290,21 @@ WithDefaultDate.args = {
   defaultDate: "2024-01-30"
 }
 
+export const WithDefaultDateAndTime = Template.bind({})
+WithDefaultDateAndTime.parameters = {
+  docs: {
+    description: {
+      story: "Pass `defaultHour` and `defaultMinute` to set default values for the date and time elements. "
+    }
+  }
+}
+WithDefaultDateAndTime.args = {
+  defaultHour: 9,
+  defaultMinute: 13,
+  enableTime: true,
+  dateFormat: "Y-m-d H:i",
+}
+
 export const EnableDate = Template.bind({})
 EnableDate.parameters = {
   docs: {
