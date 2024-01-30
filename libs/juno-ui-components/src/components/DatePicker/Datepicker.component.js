@@ -123,6 +123,7 @@ export const Datepicker = ({
   helptext,
   hourIncrement,
   id,
+  inline,
   invalid,
   label,
   locale,
@@ -130,6 +131,7 @@ export const Datepicker = ({
   minDate,
   mode,
   monthSelectorType,
+  noCalendar,
   onChange,
   onClose,
   onFocus,
@@ -169,11 +171,13 @@ export const Datepicker = ({
     enableSeconds,
     enableTime,
     hourIncrement,
+    inline,
     locale,
     maxDate,
     minDate,
     mode,
     monthSelectorType,
+    noCalendar,
     shorthandCurrentMonth,
     showMonths,
     static: staticPosition, // rename since "static" is a reserved word in JS
@@ -374,6 +378,8 @@ Datepicker.propTypes = {
   hourIncrement: PropTypes.number,
   /** The id of the datepicker input */
   id: PropTypes.string,
+  /** Whether to display the calendar inline. */
+  inline: PropTypes.bool,
   /** Whether the Datepicker has been unsuccessfully validated */
   invalid: PropTypes.bool,
   /** The label of the datepicker */
@@ -388,6 +394,8 @@ Datepicker.propTypes = {
   mode: PropTypes.oneOf(["single", "multiple", "range", "time"]),
   /** Whether to show a dropdown to select the current month. If `showMonths` is set to be greater than 1, it will always be displayed as static. Arrows to scroll through the months as well as through years will still be displayed and working. */
   monthSelectorType: PropTypes.oneOf(["dropdown", "static"]),
+  /** Set to `true` to not display a calendar. Set `enableTime` to create a time picker. */
+  noCalendar: PropTypes.bool,
   /** A handler to be executed when the selected date or range changes */
   onChange: PropTypes.func,
   /** A handler to be executed when the datepicker inout field is focussed */
@@ -418,11 +426,13 @@ Datepicker.propTypes = {
     enableSeconds:          PropTypes.bool,
     enableTime:             PropTypes.bool,
     hourIncrement:          PropTypes.number,
+    inline:                 PropTypes.bool,
     locale:                 PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     maxDate:                PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
     minDate:                PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
     mode:                   PropTypes.oneOf(["single", "multiple", "range", "time"]),
     monthSelectorType:      PropTypes.oneOf(["dropdown", "static"]),
+    noCalendar:             PropTypes.bool,
     shorthandCurrentMonth:  PropTypes.bool,
     showMonths:             PropTypes.number,
     static:                 PropTypes.bool,
@@ -473,6 +483,7 @@ Datepicker.defaultProps = {
   helptext: "",
   hourIncrement: 1,
   id: "",
+  inline: false,
   invalid: false,
   label: "",
   locale: "",
@@ -480,6 +491,7 @@ Datepicker.defaultProps = {
   minDate: null,
   mode: "single", 
   monthSelectorType: "dropdown",
+  noCalendar: false,
   onChange: undefined,
   onFocus: undefined,
   onMonthChange: undefined,
@@ -507,7 +519,7 @@ Datepicker.defaultProps = {
     // DONE enableSeconds: false,
     // ??? formatDate: null,  --> error
     // DONE hourIncrement: 1,
-    // TODO inline: false,
+    // DONE inline: false,
     // DONE locale
     // DONE maxDate: null,
     // DONE minDate: null,

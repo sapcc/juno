@@ -83,6 +83,18 @@ WithClearButton.args = {
   value: "2024-01-01"
 }
 
+export const Inline = Template.bind({})
+Inline.parameters = {
+  docs: {
+    description: {
+      story: "Set `inline` to `true` in order to render the calendar inline."
+    }
+  }
+}
+Inline.args = {
+  inline: true
+}
+
 export const Valid = Template.bind({})
 Valid.args = {
   valid: true,
@@ -380,4 +392,18 @@ CustomAriaDateFormat.parameters = {
 CustomAriaDateFormat.args = {
   helptext: "👉 Open the calendar and inspect the aria-label property of a day to see the result!",
   ariaDateFormat: "l, F j, Y"
+}
+
+export const Timepicker = Template.bind({})
+Timepicker.parameters = {
+  docs: {
+    description: {
+      story: "In order to create a pure timepicker, set `dateFormat` accordingly, and set `noCalendar` and `enableTime` to `true`. "
+    }
+  }
+}
+Timepicker.args = {
+  dateFormat: "H:i",
+  noCalendar: true,
+  enableTime: true,
 }
