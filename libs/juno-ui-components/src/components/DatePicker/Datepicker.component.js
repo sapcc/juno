@@ -337,6 +337,7 @@ export const Datepicker = ({
         options={theCleanedOptions}
         placeholder={placeholder}
         value={theDate.date}
+        data-mode={mode}
         {...props}
       />
       { label && label.length ?
@@ -448,9 +449,9 @@ Datepicker.propTypes = {
   label: PropTypes.string,
   /** Localization string or object. Can be used to set starting day of the week, e.g. Mondays instead of Sundays. More on localization: https://flatpickr.js.org/localization/ */
   locale: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  /** The maximum / latest date a user can select (inclusive). TODO: allow number, date object. */
+  /** The maximum / latest date a user can select (inclusive). */
   maxDate: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
-  /** The minimum / earliest date a user can select (inclusive). TODO: allow number, date object. */
+  /** The minimum / earliest date a user can select (inclusive). */
   minDate: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]), 
   /** The mode of the Datepicker. */
   mode: PropTypes.oneOf(["single", "multiple", "range", "time"]),
