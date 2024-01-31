@@ -7,7 +7,7 @@ export default (options) =>
       isUrlStateSetup: false,
       queryClientFnReady: false,
       endpoint: options?.apiEndpoint,
-      tabIndex: 0,
+      tabIndex: "0",
 
       actions: {
         setQueryClientFnReady: (readiness) =>

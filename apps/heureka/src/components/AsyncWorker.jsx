@@ -1,9 +1,9 @@
 import React from "react"
-// import useUrlState from "../hooks/useUrlState"
+import useUrlState from "../hooks/useUrlState"
 import useQueryClientFn from "../hooks/useQueryClientFn"
 
 const AsyncWorker = () => {
-  // useUrlState()
+  useUrlState()
   useQueryClientFn()
   return null
 }
