@@ -58,9 +58,6 @@ const validStyles = `
 `
 
 const clearStyles = `
-   
-  
-  
 `
 
 const iconContainerStyles = `
@@ -75,15 +72,15 @@ const iconContainerStyles = `
 
 /* Flatpickr options: 
 
-  WON'T DO altFormat: "F j, Y",
-  WON'T DO altInput: false,
-  WON'T DO altInputClass: "",
+  NOT NOW altFormat: "F j, Y",
+  NOT NOW altInput: false,
+  NOT NOW altInputClass: "",
   DONE: allowInput: false,
   DONE allowInvalidPreload: false,
-  WON'T DO     appendTo: null,  --> error
+  WON'T DO / NOT NOW    appendTo: null,  --> error
   DONE ariaDateFormat: "F j, Y",
   DONE conjunction: null,
-  NOT NOW clickOpens: true,
+  WON'T DO / NOT NOW  clickOpens: true,
   DONE dateFormat: "Y-m-d",
   DONE defaultDate: null,
   DONE defaultHour: 12,
@@ -93,7 +90,7 @@ const iconContainerStyles = `
   DONE enable: undefined,
   DONE enableTime: false,
   DONE enableSeconds: false,
-  WON'T DO formatDate: null,  --> error
+  WON'T DO / NOT NOW  formatDate: null,  --> error
   DONE hourIncrement: 1,
   DONE inline: false,
   DONE locale
@@ -102,36 +99,34 @@ const iconContainerStyles = `
   DONE mode: "single",
   WON'T DO nextArrow: ">", --> use ours, do not allow to customize
   DONE noCalendar: false,
-  ??? onChange: null,  --> merge with explicit prop
+  ??? onChange: null,
   ??? onClose: null,
   ??? onOpen: null,
   ??? onReady: null,
   ??? parseDate: false,
   DONE position: "auto",
-  WON'T DO: positionElement: null,
+  WON'T DO:  positionElement: null,
   WON'T DO:  prevArrow: ">", --> use ours, do not allow to customize
   DONE shorthandCurrentMonth: false,
   DONE static: false,
   DONE showMonths: 1,
   DONE time_24hr: false,
   DONE weekNumbers: false,
-  WON'T DO wrap: false, --> custom elements, do not expose?
+  WON'T DO / NOT NOW  wrap: false, --> custom elements, do not expose?
   DONE monthSelectorType: "dropdown", 
-
 */
 
 
-/* Possible additional props:
+/* Possible additional props, props in question, consitency issues:
   * icon (show a calendar icon)
   * All props available for TextInput:
-    * what to do with defaultValue? Was this ever intended to work uncontrolled? defaultVlaue accepts only a string, value accepts a variety of formats?
-    * clarify use of value, defaultValue, defaultDate?
+    * we use defaultValue in most components, Flatpickr uses defaultDate, should we expose defaultValue  for consistency reasons, too, and forward to defaultDate? 
     * name (careful, might be used by Flatpickr internally)?
     * readOnly?
     * autoFocus (if possible, determine whether this would open the calendar, too)
-    * use onFocus? we could want to add it for consistency, although flatpickr comes with an onOpen handler which shoudl be/do the same. onFocus would need to return the event though, onOpen returns the date. Alternatively, we could expose onFocus but run it inside Faltpickr's onOpen. 
+    * use onFocus? we could want to add it for consistency, although flatpickr comes with an onOpen handler which should be/do the same. onFocus would need to return the event though, onOpen returns the date. Alternatively, we could expose onFocus but run it inside Faltpickr's onOpen (which might backfire once we enable setting clickOpens to false by the user, the field may be focussed but the event will never fire?. 
     * onBlur ( not exposed by Flatpickr )
-    * autoFocus and minimizing the label when the field is focussed my be tricky? Canb we create a ref fot eh field?
+    * autoFocus and minimizing the label when the field is focussed my be tricky? Canb we create a ref for the field?
     * allow passing a className to the wrapper? Precedent risk!
  */
 
