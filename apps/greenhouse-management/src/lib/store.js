@@ -13,8 +13,15 @@ export default (options) => {
   return createStore(
     devtools((set, get) => ({
       isUrlStateSetup: false,
-      assetsUrl: null,
+      assetsUrl: options.assetsUrl,
+      apiEndpoint: options.apiEndpoint,
       pluginConfig: managementPluginConfig,
+      authData: {
+        loggedIn: false,
+        error: null,
+        data: null,
+      },
+      authAppLoaded: false,
       pluginActive: "greenhouse-cluster-admin", // name of the active plugin default
 
       actions: {
@@ -34,13 +41,26 @@ export default (options) => {
             false,
             "setIsUrlStateSetup"
           ),
-        setAssetsUrl: (url) =>
+        setAuthData: (data) =>
+          set(
+            (state) => ({
+              authData: {
+                ...state.auth,
+                loggedIn: data ? data.loggedIn : false,
+                error: data ? data.error : null,
+                data: data ? data.auth : null,
+              },
+            }),
+            false,
+            "setAuthData"
+          ),
+        setAuthAppLoaded: (loaded) =>
           set(
             (state) => {
-              state.assetsUrl = url
+              state.authAppLoaded = loaded
             },
             false,
-            "setAssetsUrl"
+            "setAuthAppLoaded"
           ),
       },
     }))
