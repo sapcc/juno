@@ -1,33 +1,51 @@
-import React from "react"
+import React, { useMemo } from "react"
 import { Container, TabNavigation, TabNavigationItem } from "juno-ui-components"
-import ServicesController from "../services/ServicesController"
-import VulnerabilitiesController from "../vulnerabilities/VulnerabilitiesController"
 import TabPanel from "./TabPanel"
-import { useActions } from "../StoreProvider"
+import { useActions, useActiveTab } from "../StoreProvider"
+
+import ServicesTab from "../services/ServicesTab"
+import VulnerabilitiesController from "../vulnerabilities/VulnerabilitiesController"
+
+const TAB_CONFIG = [
+  {
+    label: "Services",
+    value: "services",
+    icon: "dns",
+    component: ServicesTab,
+  },
+  {
+    label: "Vulnerabilities",
+    value: "vulnerabilities",
+    icon: "autoAwesomeMotion",
+    component: VulnerabilitiesController,
+  },
+]
 
 const TabContext = () => {
-  const { setTabIndex } = useActions()
+  const { setActiveTab } = useActions()
+  const activeTab = useActiveTab()
 
   return (
     <>
       <TabNavigation
-        activeItem={"0"}
-        onActiveItemChange={(value) => setTabIndex(value)}
+        activeItem={activeTab}
+        onActiveItemChange={(value) => setActiveTab(value)}
       >
-        <TabNavigationItem icon="dns" label="Services" value="0" />
-        <TabNavigationItem
-          icon="autoAwesomeMotion"
-          label="Vulnerabilities"
-          value="1"
-        />
+        {TAB_CONFIG.map((tab) => (
+          <TabNavigationItem
+            key={tab.value}
+            icon={tab.icon}
+            label={tab.label}
+            value={tab.value}
+          />
+        ))}
       </TabNavigation>
       <Container py>
-        <TabPanel value="0">
-          <ServicesController />
-        </TabPanel>
-        <TabPanel value="1">
-          <VulnerabilitiesController />
-        </TabPanel>
+        {TAB_CONFIG.map((tab) => (
+          <TabPanel key={tab.value} value={tab.value}>
+            <tab.component />
+          </TabPanel>
+        ))}
       </Container>
     </>
   )

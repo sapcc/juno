@@ -4,16 +4,17 @@ import { useQueryClientFnReady } from "../StoreProvider"
 import Pagination from "../shared/Pagination"
 import ServicesList from "./ServicesList"
 import { Messages, useActions as messageActions } from "messages-provider"
+import Filters from "../filters/Filters"
 
 const ServicesController = () => {
   const { addMessage, resetMessages } = messageActions()
   const queryClientFnReady = useQueryClientFnReady()
-  const [paginationParams, setPaginationParams] = useState({
-    first: 10,
+  const [queryOptions, setQueryOptions] = useState({
+    first: 20,
   })
 
   const { isLoading, isFetching, isError, data, error } = useQuery({
-    queryKey: [`services`, { paginationParams }],
+    queryKey: [`services`, queryOptions],
     enabled: !!queryClientFnReady,
   })
 
@@ -23,16 +24,12 @@ const ServicesController = () => {
   }, [data])
 
   useEffect(() => {
-    // on error reset messages
-    if (!error) {
-      return resetMessages()
-    }
+    if (!error) return
     addMessage({ variant: "danger", text: error?.message })
   }, [error])
 
   const onPaginationChanged = (offset) => {
-    console.log("ServicesController onPaginationChanged", offset)
-    setPaginationParams({ ...paginationParams, after: `${offset}` })
+    setQueryOptions({ ...queryOptions, after: `${offset}` })
   }
 
   return (
@@ -40,7 +37,7 @@ const ServicesController = () => {
       <ServicesList services={services} isLoading={isLoading} />
       <Pagination
         count={data?.Services?.totalCount}
-        limit={paginationParams?.first}
+        limit={queryOptions?.first}
         onChanged={onPaginationChanged}
         isFetching={isFetching}
         disabled={isError || services.length === 0}

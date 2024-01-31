@@ -1,5 +1,6 @@
 import { createStore } from "zustand"
 import { devtools } from "zustand/middleware"
+import produce from "immer"
 
 export default (options) =>
   createStore(
@@ -7,7 +8,20 @@ export default (options) =>
       isUrlStateSetup: false,
       queryClientFnReady: false,
       endpoint: options?.apiEndpoint,
-      tabIndex: "0",
+
+      activeTab: "services",
+      tabs: {
+        services: {
+          queryOptions: {
+            first: 20,
+          },
+        },
+        vulnerabilities: {
+          queryOptions: {
+            first: 20,
+          },
+        },
+      },
 
       actions: {
         setQueryClientFnReady: (readiness) =>
@@ -18,13 +32,21 @@ export default (options) =>
             false,
             "setQueryClientFnReady"
           ),
-        setTabIndex: (index) =>
+        setActiveTab: (index) =>
           set(
             (state) => {
-              state.tabIndex = index
+              state.activeTab = index
             },
             false,
-            "setTabIndex"
+            "setActiveTab"
+          ),
+        setQueryOptions: (tab, options) =>
+          set(
+            produce((state) => {
+              state.tabs[tab].queryOptions = options
+            }),
+            false,
+            "setQueryOptions"
           ),
       },
     }))

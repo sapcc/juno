@@ -13,7 +13,9 @@ const useStore = (selector) => create(useContext(StoreContext), selector)
 
 export const useEndpoint = () => useStore((s) => s.endpoint)
 export const useQueryClientFnReady = () => useStore((s) => s.queryClientFnReady)
-export const useTabIndex = () => useStore((s) => s.tabIndex)
+export const useActiveTab = () => useStore((s) => s.activeTab)
+export const useQueryOptions = (tab) =>
+  useStore((s) => s.tabs[tab].queryOptions)
 export const useActions = () => useStore((s) => s.actions)
 
 export default StoreProvider

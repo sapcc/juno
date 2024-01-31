@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 import { registerConsumer } from "url-state-provider"
-import { useActions, useTabIndex } from "../components/StoreProvider"
+import { useActions, useActiveTab } from "../components/StoreProvider"
 
 const DEFAULT_KEY = "heureka"
-const TAB_INDEX = "t"
+const ACTIVE_TAB = "t"
 
 const useUrlState = (key) => {
   const [isURLRead, setIsURLRead] = useState(false)
@@ -11,8 +11,8 @@ const useUrlState = (key) => {
   // int his case the key should be different per app
   const urlStateManager = registerConsumer(key || DEFAULT_KEY)
 
-  const { setTabIndex } = useActions()
-  const tabIndex = useTabIndex()
+  const { setActiveTab } = useActions()
+  const activeTab = useActiveTab()
 
   // Set initial state from URL (on login)
   useEffect(() => {
@@ -23,19 +23,19 @@ const useUrlState = (key) => {
     )
 
     // READ the url state and set the state
-    const newTabIndex = urlStateManager.currentState()?.[TAB_INDEX]
+    const newTabIndex = urlStateManager.currentState()?.[ACTIVE_TAB]
     // SAVE the state
-    if (newTabIndex) setTabIndex(newTabIndex)
+    if (newTabIndex) setActiveTab(newTabIndex)
     setIsURLRead(true)
-  }, [isURLRead, setTabIndex])
+  }, [isURLRead])
 
   // SYNC states to URL state
   useEffect(() => {
     if (!isURLRead) return
     urlStateManager.push({
-      [TAB_INDEX]: tabIndex,
+      [ACTIVE_TAB]: activeTab,
     })
-  }, [isURLRead, tabIndex])
+  }, [isURLRead, activeTab])
 }
 
 export default useUrlState

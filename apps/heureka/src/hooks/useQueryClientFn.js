@@ -4,22 +4,7 @@ import { useEndpoint, useActions } from "../components/StoreProvider"
 import { request } from "graphql-request"
 import sevicesQuery from "../lib/queries/services"
 import vulnerabilityMatchesQuery from "../lib/queries/vulnerabilityMatches"
-
-class HTTPError extends Error {
-  constructor(code, message) {
-    super(message || code)
-    this.name = "HTTPError"
-    this.statusCode = code
-  }
-}
-
-const encodeUrlParamsFromObject = (options) => {
-  if (!options || Object.keys(options) <= 0) return ""
-  let encodedOptions = Object.keys(options)
-    .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(options[k])}`)
-    .join("&")
-  return `&${encodedOptions}`
-}
+import ServiceFilterQuery from "../lib/queries/serviceFilters"
 
 // hook to register query defaults that depends on the queryClient and options
 const useQueryClientFn = () => {
@@ -37,15 +22,9 @@ const useQueryClientFn = () => {
     queryClient.setQueryDefaults(["services"], {
       queryFn: async ({ queryKey }) => {
         const [_key, options] = queryKey
-        console.log("useQueryClientFn::: queryKey: ", queryKey)
-        return await request(
-          endpoint,
-          sevicesQuery(),
-          options?.paginationParams
-        )
+        console.log("useQueryClientFn::: queryKey: ", queryKey, options)
+        return await request(endpoint, sevicesQuery(), options)
       },
-      // keepPreviousData: true,
-      // refetchOnWindowFocus: false, // default: true
     })
 
     queryClient.setQueryDefaults(["vulnerabilityMatches"], {
@@ -58,8 +37,14 @@ const useQueryClientFn = () => {
           options?.paginationParams
         )
       },
-      // keepPreviousData: true,
-      // refetchOnWindowFocus: false, // default: true
+    })
+
+    queryClient.setQueryDefaults(["serviceFilters"], {
+      queryFn: async ({ queryKey }) => {
+        console.log("useQueryClientFn::: queryKey: ", queryKey)
+        return await request(endpoint, ServiceFilterQuery())
+      },
+      staleTime: Infinity, // this do not change often keep it until reload
     })
 
     // set queryClientFnReady to true once
