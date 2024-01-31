@@ -1,5 +1,6 @@
 import * as React from "react"
 import { render, screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { Datepicker } from "./index"
 
 
@@ -122,7 +123,7 @@ describe("Datepicker", () => {
     expect(document.querySelector(".flatpickr-time")).toBeInTheDocument()
     expect(screen.getByLabelText("Hour")).toBeInTheDocument()
     expect(screen.getByLabelText("Minute")).toBeInTheDocument()
-    // We need to check for the flatpickr className as flatpickr does not assign an aria-label to teh seconds input:
+    // We need to check for the flatpickr className as flatpickr does not assign an aria-label to the seconds input:
     expect(document.querySelector(".flatpickr-second")).toBeInTheDocument()
   })
   
@@ -162,6 +163,93 @@ describe("Datepicker", () => {
     render(<Datepicker dateFormat="F d Y" value={1706273787000} />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveValue("January 26 2024")
+  })
+  
+  test("allows typing in the field when configured to do so", async () => {
+    render(<Datepicker allowInput />)
+    const input = screen.getByRole("textbox")
+    const user = userEvent.setup()
+    expect(input).toBeInTheDocument()
+    expect(input).toHaveValue("")
+    await userEvent.click(input)
+    await user.type(input, "12")
+    expect(input).toHaveValue("12")
+  })
+  
+  test("renders a Datepicker in single mode per default", async () => {
+    render(<Datepicker />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveAttribute("data-mode", "single")
+  })
+  
+  test("renders a Datepicker in multiple mode as passed", async () => {
+    render(<Datepicker mode="multiple" />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveAttribute("data-mode", "multiple")
+  })
+  
+  test("renders a Datepicker in range mode as passed", async () => {
+    render(<Datepicker mode="range" />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveAttribute("data-mode", "range")
+  })
+  
+  test("allows setting an otherwise invalid value on first load as configured ", async () => {
+    render(<Datepicker value="2024-01-30" disable={[ "2024-01-30" ]} allowInvalidPreload />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2024-01-30")
+  })
+  
+  test.skip("sets a custom aria-label format for calendar dates as passed", async () => {
+    
+  })
+  
+  test("clears the input when clicking the clear button", async () => {
+    render(<Datepicker value="2024-01-31" clear />)
+    const input = screen.getByRole("textbox")
+    const clearButton = screen.getByTitle("Clear")
+    const user = userEvent.setup()
+    expect(input).toBeInTheDocument()
+    expect(input).toHaveValue("2024-01-31")
+    expect(clearButton).toBeInTheDocument()
+    await user.click(clearButton)
+    expect(input).toHaveValue("")
+  })
+  
+  test.skip("uses a custom conjunction between dates in multiple mode as passed", async () => {
+    
+  })
+  
+  test.skip("sets a default hour as passed", async () => {
+    
+  })
+  
+  test.skip("sets a default minute as passed", async () => {
+    
+  })
+  
+  test.skip("opens a calendar when clicking in the field", async () => {
+    
+  })
+  
+  test.skip("uses a custom hour increment as passed", async () => {
+    
+  })
+  
+  test.skip("renders an inline calender as passed", async () => {
+    
+  })
+  
+  test.skip("accepts and respects a custom locale as passed", async () => {
+    
+  })
+  
+  test.skip("allows only selection of dates after a minDate as passed", async () => {
+    
+  })
+  
+  test.skip("allows only selection of dates before a maxDate as passed", async () => {
+    
   })
   
   test("renders a className as passed", async () => {
