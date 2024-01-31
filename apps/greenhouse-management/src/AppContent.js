@@ -29,7 +29,6 @@ const AppContent = () => {
     if (!apiEndpoint || !assetsUrl) return
   }, [])
 
-  // TODO: Fix the Messages style mt-4
   return (
     <Container py={true}>
       <PluginContainer />
