@@ -157,6 +157,7 @@ export const Datepicker = ({
   locale,
   maxDate,
   minDate,
+  minuteIncrement,
   mode,
   monthSelectorType,
   noCalendar,
@@ -205,6 +206,7 @@ export const Datepicker = ({
     locale,
     maxDate,
     minDate,
+    minuteIncrement,
     mode,
     monthSelectorType,
     noCalendar,
@@ -453,6 +455,8 @@ Datepicker.propTypes = {
   maxDate: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
   /** The minimum / earliest date a user can select (inclusive). */
   minDate: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]), 
+  /**  The step for the minute input. Only has an effect when a time picker is enabled via `enableTime`.  */
+  minuteIncrement: PropTypes.number,
   /** The mode of the Datepicker. */
   mode: PropTypes.oneOf(["single", "multiple", "range", "time"]),
   /** Whether to show a dropdown to select the current month. If `showMonths` is set to be greater than 1, it will always be displayed as static. Arrows to scroll through the months as well as through years will still be displayed and working. */
@@ -493,6 +497,7 @@ Datepicker.propTypes = {
     locale:                 PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     maxDate:                PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
     minDate:                PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
+    minuteIncrement:        PropTypes.number,
     mode:                   PropTypes.oneOf(["single", "multiple", "range", "time"]),
     monthSelectorType:      PropTypes.oneOf(["dropdown", "static"]),
     noCalendar:             PropTypes.bool,
@@ -582,6 +587,7 @@ Datepicker.defaultProps = {
   locale: "",
   maxDate: null,
   minDate: null,
+  minuteIncrement: 5,
   mode: "single", 
   monthSelectorType: "dropdown",
   noCalendar: false,

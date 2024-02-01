@@ -157,6 +157,13 @@ WithTimeWithCustomHourIncrement.args = {
   dateFormat: "Y-m-d H:i",
 }
 
+export const WithTimeWithCustomMinuteIncrement = Template.bind({})
+WithTimeWithCustomMinuteIncrement.args = {
+  enableTime: true,
+  minuteIncrement: 1,
+  dateFormat: "Y-m-d H:i",
+}
+
 export const With24hTime = Template.bind({})
 With24hTime.args = {
   enableTime: true,
