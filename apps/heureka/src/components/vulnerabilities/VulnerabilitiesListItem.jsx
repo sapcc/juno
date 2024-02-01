@@ -12,8 +12,6 @@ flex
 `
 
 const VulnerabilitiesListItem = ({ item }) => {
-  console.log(">>>>>>>>>>>>>>item", item)
-
   return (
     <DataGridRow>
       <DataGridCell>

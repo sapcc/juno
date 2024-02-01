@@ -6,6 +6,7 @@ import {
   useActions,
 } from "../StoreProvider"
 import VulnerabilitiesList from "./VulnerabilitiesList"
+import PaginationV2 from "../shared/PaginationV2"
 
 const VulnerabilitiesListController = () => {
   const queryClientFnReady = useQueryClientFnReady()
@@ -22,11 +23,26 @@ const VulnerabilitiesListController = () => {
     return data?.VulnerabilityMatches?.edges
   }, [data])
 
+  const pageInfo = useMemo(() => {
+    if (!data) return null
+    return data?.VulnerabilityMatches?.pageInfo
+  }, [data])
+
+  console.log("VulnerabilitiesListController::: pageInfo: ", pageInfo)
+
   return (
-    <VulnerabilitiesList
-      vulnerabilities={vulnerabilities}
-      isLoading={isLoading}
-    />
+    <>
+      <VulnerabilitiesList
+        vulnerabilities={vulnerabilities}
+        isLoading={isLoading}
+      />
+      <PaginationV2
+        pagesInfo={pageInfo}
+        isFetching={isFetching}
+        isLoading={isLoading}
+        disabled={isError || !vulnerabilities || vulnerabilities?.length === 0}
+      />
+    </>
   )
 }
 
