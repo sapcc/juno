@@ -174,6 +174,26 @@ describe("Datepicker", () => {
     expect(screen.getByRole("textbox")).toHaveValue("January 26 2024")
   })
   
+  test("displays the date as passed as defaultDate instead of value", async () => {
+    render(<Datepicker defaultDate={ new Date(2099, 0, 1) }/>)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2099-01-01")
+  })
+  
+  test("displays the date as passed as defaultValue instead of value or defaultDate", async () => {
+    render(<Datepicker defaultValue={ new Date(2099, 0, 1) }/>)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2099-01-01")
+  })
+  
+  test("updates the date accordingly when value changes", async () => {
+    const { rerender } = render(<Datepicker value={ new Date( 2024, 0, 12) } />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2024-01-12")
+    rerender(<Datepicker value={ new Date(2025, 7, 18) } />)
+    expect(screen.getByRole("textbox")).toHaveValue("2025-08-18")
+  })
+  
   test("allows typing in the field when configured to do so", async () => {
     render(<Datepicker allowInput />)
     const input = screen.getByRole("textbox")

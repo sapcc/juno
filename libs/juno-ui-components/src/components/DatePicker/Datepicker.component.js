@@ -252,8 +252,8 @@ export const Datepicker = ({
   const [isInvalid, setIsInvalid] = useState(false)
   const [isValid, setIsValid] = useState(false)
   
-  // both `value` and `defaultDate` are valid options, make sure `value` wins:
-  const theValue = value || defaultDate
+  // All `value`, `defaultDate`, and `defaultValue` are valid options, make sure `value` wins over `defaultDate` wins over `defaultValue`:
+  const theValue = value || defaultDate || defaultValue
   
   useEffect( () => {
     setTheDate({date: theValue})
@@ -422,7 +422,7 @@ Datepicker.propTypes = {
   defaultDate:  PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]), 
   /** The initial vlaue of the hour element. Only effective if time is enabled. */
   defaultHour: PropTypes.number,
-  /** TODO: defaultValue -> proptypes ? */
+  /** Same as value, defaultDate */
   defaultValue: PropTypes.string,
   /** Pass an array of dates, date strings, date ranges or functions to disable dates. More on disabling dates: https://flatpickr.js.org/examples/#disabling-specific-dates */
   disable: PropTypes.array,
