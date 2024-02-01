@@ -25,7 +25,7 @@ const ServicesList = ({ services, isLoading }) => {
           <HintLoading className="my-4" text="Loading services..." />
         ) : (
           <>
-            {services && services.length > 0 ? (
+            {services?.length > 0 ? (
               <>
                 {services.map((item, i) => (
                   <ServicesListItem key={i} item={item} />

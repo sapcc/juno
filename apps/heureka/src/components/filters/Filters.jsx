@@ -22,24 +22,14 @@ const Filters = ({ queryKey }) => {
   })
 
   const filters = useMemo(() => {
-    if (isLoading || isFetching || isError) return []
-    // collect data
-    return data?.__type?.inputFields?.map((field) => {
-      console.log(
-        "field::",
-        field,
-        field?.name,
-        field?.type?.kind,
-        field?.type?.ofType?.name
-      )
-      return {
-        label: field?.name,
-        kind: field?.type?.kind,
-        ofType: field?.type?.ofType?.name,
-        enumValues: field?.type?.ofType?.enumValues,
-      }
-    })
-  }, [isLoading, isFetching, isError, data])
+    if (!data) return []
+    return data?.__type?.inputFields?.map((field) => ({
+      label: field?.name,
+      kind: field?.type?.kind,
+      ofType: field?.type?.ofType?.name,
+      enumValues: field?.type?.ofType?.enumValues,
+    }))
+  }, [data])
 
   return (
     <Stack direction="vertical" gap="4" className={`filters ${filtersStyles}`}>

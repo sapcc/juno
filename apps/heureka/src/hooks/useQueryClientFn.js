@@ -27,15 +27,11 @@ const useQueryClientFn = () => {
       },
     })
 
-    queryClient.setQueryDefaults(["vulnerabilityMatches"], {
+    queryClient.setQueryDefaults(["vulnerabilities"], {
       queryFn: async ({ queryKey }) => {
         const [_key, options] = queryKey
         console.log("useQueryClientFn::: queryKey: ", queryKey)
-        return await request(
-          endpoint,
-          vulnerabilityMatchesQuery(),
-          options?.paginationParams
-        )
+        return await request(endpoint, vulnerabilityMatchesQuery(), options)
       },
     })
 

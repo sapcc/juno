@@ -1,17 +1,19 @@
 import React, { useEffect, useState, useMemo } from "react"
 import { useQuery } from "@tanstack/react-query"
-import { useQueryClientFnReady } from "../StoreProvider"
+import {
+  useQueryClientFnReady,
+  useQueryOptions,
+  useActions,
+} from "../StoreProvider"
 import Pagination from "../shared/Pagination"
 import ServicesList from "./ServicesList"
 import { Messages, useActions as messageActions } from "messages-provider"
-import Filters from "../filters/Filters"
 
-const ServicesController = () => {
+const ServicesListController = () => {
   const { addMessage, resetMessages } = messageActions()
   const queryClientFnReady = useQueryClientFnReady()
-  const [queryOptions, setQueryOptions] = useState({
-    first: 20,
-  })
+  const queryOptions = useQueryOptions("services")
+  const { setQueryOptions } = useActions()
 
   const { isLoading, isFetching, isError, data, error } = useQuery({
     queryKey: [`services`, queryOptions],
@@ -19,7 +21,8 @@ const ServicesController = () => {
   })
 
   const services = useMemo(() => {
-    if (!data) return []
+    // return null so that the component can handle the loading state at the beginning
+    if (!data) return null
     return data?.Services?.edges
   }, [data])
 
@@ -29,7 +32,7 @@ const ServicesController = () => {
   }, [error])
 
   const onPaginationChanged = (offset) => {
-    setQueryOptions({ ...queryOptions, after: `${offset}` })
+    setQueryOptions("services", { ...queryOptions, after: `${offset}` })
   }
 
   return (
@@ -40,10 +43,10 @@ const ServicesController = () => {
         limit={queryOptions?.first}
         onChanged={onPaginationChanged}
         isFetching={isFetching}
-        disabled={isError || services.length === 0}
+        disabled={isError || !services || services?.length === 0}
       />
     </>
   )
 }
 
-export default ServicesController
+export default ServicesListController
