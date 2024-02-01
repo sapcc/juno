@@ -285,16 +285,69 @@ describe("Datepicker", () => {
     expect(document.querySelector(".flatpickr-calendar.inline")).toBeInTheDocument()
   })
   
-  test.skip("accepts and respects a custom locale as passed", async () => {
-    
+  test("does not allow selection of dates before a minDate as passed", async () => {
+    // Select yesterday element in calendar by label (formed like "January 31, 2024"), and test if disabled.
+    const user = userEvent.setup()
+    const today = new Date()
+    const yesterday = new Date()
+    yesterday.setDate(yesterday.getDate() -1)
+    const fullMonth = yesterday.toLocaleString('default', { month: 'long' })
+    const day = yesterday.getDate()
+    const fullYear = yesterday.getFullYear()
+    const yesterdayLabel = `${fullMonth} ${day}, ${fullYear}`
+    render(<Datepicker minDate={today} />)
+    const input = screen.getByRole("textbox")
+    await user.click(input)
+    const yesterdayEl = screen.getByLabelText(yesterdayLabel)
+    expect(yesterdayEl).toHaveClass("flatpickr-disabled")
   })
   
-  test.skip("allows only selection of dates after a minDate as passed", async () => {
-    
+  test("allows selection of dates after a minDate as passed", async () => {
+    const user = userEvent.setup()
+    const today = new Date()
+    const tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() +1)
+    const fullMonth = tomorrow.toLocaleString('default', { month: 'long' })
+    const day = tomorrow.getDate()
+    const fullYear = tomorrow.getFullYear()
+    const tomorrowLabel = `${fullMonth} ${day}, ${fullYear}`
+    render(<Datepicker minDate={today} />)
+    const input = screen.getByRole("textbox")
+    await user.click(input)
+    const yesterdayEl = screen.getByLabelText(tomorrowLabel)
+    expect(yesterdayEl).not.toHaveClass("flatpickr-disabled")
   })
   
-  test.skip("allows only selection of dates before a maxDate as passed", async () => {
-    
+  test("does not allow selection of dates after a maxDate as passed", async () => {
+    const user = userEvent.setup()
+    const today = new Date()
+    const tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() +1)
+    const tomorrowFullMonth = tomorrow.toLocaleString('default', { month: 'long' })
+    const tomorrowDay = tomorrow.getDate()
+    const tomorrowFullYear = tomorrow.getFullYear()
+    const tomorrowLabel = `${tomorrowFullMonth} ${tomorrowDay}, ${tomorrowFullYear}`
+    render(<Datepicker maxDate={today} />)
+    const input = screen.getByRole("textbox")
+    await user.click(input)
+    const tomorrowEl = screen.getByLabelText(tomorrowLabel)
+    expect(tomorrowEl).toHaveClass("flatpickr-disabled")
+  })
+  
+  test("allows selection of dates before a maxDate as passed", async () => {
+    const user = userEvent.setup()
+    const today = new Date()
+    const tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    const todayFullMonth = today.toLocaleString('default', { month: 'long' })
+    const todayDay = today.getDate()
+    const todayFullYear = today.getFullYear()
+    const todayLabel = `${todayFullMonth} ${todayDay}, ${todayFullYear}`
+    render(<Datepicker maxDate={tomorrow} />)
+    const input = screen.getByRole("textbox")
+    await user.click(input)
+    const todayEl = screen.getByLabelText(todayLabel)
+    expect(todayEl).not.toHaveClass("flatpickr-disabled")
   })
   
   test("renders a className as passed", async () => {
