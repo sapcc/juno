@@ -116,7 +116,6 @@ const iconContainerStyles = `
   DONE monthSelectorType: "dropdown", 
 */
 
-
 /* Possible additional props, props in question, consitency issues:
   * icon (show a calendar icon)
   * All props available for TextInput:
@@ -203,7 +202,6 @@ export const Datepicker = ({
     enableTime,
     hourIncrement,
     inline,
-    locale,
     maxDate,
     minDate,
     minuteIncrement,
@@ -216,7 +214,8 @@ export const Datepicker = ({
     static: staticPosition, // rename since "static" is a reserved word in JS
     time_24hr,
     weekNumbers,
-    ...( enable && enable.length ? { enable } : {}  ), // ONLY add 'enable' key if defined and has at least one value, otherwise there will be errors
+    ...( locale && locale.length ? { locale } : {} ), // ONLY add 'locale' key if defined and has a length to prevent errors
+    ...( enable && enable.length ? { enable } : {} ), // ONLY add 'enable' key if defined and has at least one value, otherwise there will be errors
     ...options,
   }
   
