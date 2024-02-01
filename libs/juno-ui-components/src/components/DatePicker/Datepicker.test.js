@@ -350,6 +350,13 @@ describe("Datepicker", () => {
     expect(todayEl).not.toHaveClass("flatpickr-disabled")
   })
   
+  test("renders a time picker only if configured to do so", async () => {
+    render(<Datepicker enableTime noCalendar />)
+    expect(document.querySelector(".flatpickr-days")).not.toBeInTheDocument()
+    expect(document.querySelector("input.flatpickr-hour")).toBeInTheDocument()
+    expect(document.querySelector("input.flatpickr-minute")).toBeInTheDocument()
+  })
+  
   test("renders a className as passed", async () => {
     render(<Datepicker className="my-custom-class" />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
