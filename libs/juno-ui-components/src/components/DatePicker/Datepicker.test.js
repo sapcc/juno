@@ -153,10 +153,13 @@ describe("Datepicker", () => {
   
   test("displays the date as passed by shortcut 'today'", async () => {
     render(<Datepicker value="today" />)
-    const todaysDate = new Date()
-    const todaysDateAsString = todaysDate.getFullYear() + "-" + todaysDate.getMonth() + 1 + "-" + todaysDate.getDate()
+    const today = new Date()
+    const year = today.getFullYear()
+    const month = (today.getMonth() + 1).toString().padStart(2, "0")
+    const day = today.getDate().toString().padStart(2, "0")
+    const todayAsString = `${year}-${month}-${day}`
     expect(screen.getByRole("textbox")).toBeInTheDocument()
-    expect(screen.getByRole("textbox")).toHaveValue(todaysDateAsString)
+    expect(screen.getByRole("textbox")).toHaveValue(todayAsString)
   })
   
   test("displays the date in a custom format as passed", async () => {
@@ -200,10 +203,6 @@ describe("Datepicker", () => {
     expect(screen.getByRole("textbox")).toHaveValue("2024-01-30")
   })
   
-  test.skip("sets a custom aria-label format for calendar dates as passed", async () => {
-    
-  })
-  
   test("clears the input when clicking the clear button", async () => {
     render(<Datepicker value="2024-01-31" clear />)
     const input = screen.getByRole("textbox")
@@ -216,8 +215,22 @@ describe("Datepicker", () => {
     expect(input).toHaveValue("")
   })
   
-  test.skip("uses a custom conjunction between dates in multiple mode as passed", async () => {
-    
+  test("sets a custom aria-label format for calendar dates as passed", async () => {
+    render(<Datepicker ariaDateFormat="l, F j, Y"/>)
+    const input = screen.getByRole("textbox")
+    const user = userEvent.setup()
+    expect(input).toBeInTheDocument()
+    // click to open the calendar:
+    await user.click(input)
+    //Match something like "Monday, January 31, 2024" to pattern like [word, comma, space, word, space, one or two-digit number, comma, space, four-digit number] assuming this is precise enough:
+    expect(document.querySelectorAll(".flatpickr-day")[0].getAttribute("aria-label")).toMatch( new RegExp(/^\b\w+\b, \b\w+\b \d{1,2}, \d{4}$/) )
+  })
+  
+  test("uses a custom conjunction between dates in multiple mode as passed", async () => {
+    render(<Datepicker mode="multiple" conjunction=" || " value={["2024-02-01", "2099-03-12"]}/>)
+    const input = screen.getByRole("textbox")
+    expect(input).toBeInTheDocument()
+    expect(input).toHaveValue("2024-02-01 || 2099-03-12")
   })
   
   test.skip("sets a default hour as passed", async () => {
