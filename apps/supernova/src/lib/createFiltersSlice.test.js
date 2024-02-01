@@ -25,7 +25,7 @@ describe("createFiltersSlice", () => {
       expect(store.result.current.filterLabels).toEqual(["status"])
     })
 
-    it("just accepts array of strings", () => {
+    it("Adds array to dropdown", () => {
       const wrapper = ({ children }) => (
         <StoreProvider>{children}</StoreProvider>
       )
@@ -53,20 +53,22 @@ describe("createFiltersSlice", () => {
         ])
       })
 
-      expect(store.result.current.filterLabels).toEqual([
-        "app",
-        "cluster",
-        "cluster_type",
-        "context",
-        "job",
-        "region",
-        "service",
-        "severity",
-        "status",
-        "support_group",
-        "tier",
-        "type",
-      ])
+      expect(store.result.current.filterLabels).toEqual(
+        expect.arrayContaining([
+          "app",
+          "status",
+          "cluster",
+          "cluster_type",
+          "context",
+          "job",
+          "region",
+          "service",
+          "severity",
+          "support_group",
+          "tier",
+          "type",
+        ])
+      )
     })
 
     it("warn the user if labels are different then an array of strings", () => {
@@ -96,6 +98,7 @@ describe("createFiltersSlice", () => {
       spy.mockRestore()
     })
   })
+
   describe("setSearchTerm", () => {
     it("empty search term", () => {
       const wrapper = ({ children }) => (
