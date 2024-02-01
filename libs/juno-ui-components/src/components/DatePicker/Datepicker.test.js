@@ -233,24 +233,56 @@ describe("Datepicker", () => {
     expect(input).toHaveValue("2024-02-01 || 2099-03-12")
   })
   
-  test.skip("sets a default hour as passed", async () => {
-    
+  test("sets a default hour as passed", async () => {
+    render(<Datepicker enableTime={true} dateFormat="Y-m-d H:i" defaultHour={5}/>)
+    const input = screen.getByRole("textbox")
+    const user = userEvent.setup()
+    expect(input).toBeInTheDocument()
+    await user.click(input)
+    // const hourInput = screen.getByRole("textbox", {name: "Hour"})
+    // const hourInput = screen.getByRole("textbox", {selector: "input.flatpickr-hour"})
+    const hourInput = document.querySelector("input.flatpickr-hour")
+    expect(hourInput).toHaveValue(5)
   })
   
-  test.skip("sets a default minute as passed", async () => {
-    
+  test("sets a default minute as passed", async () => {
+    render(<Datepicker enableTime dateFormat="Y-m-d H:i" defaultMinute={13} />)
+    const input = screen.getByRole("textbox")
+    const user = userEvent.setup()
+    expect(input).toBeInTheDocument()
+    await user.click(input)
+    const minuteInput = document.querySelector("input.flatpickr-minute")
+    expect(minuteInput).toHaveValue(13)
   })
   
-  test.skip("opens a calendar when clicking in the field", async () => {
-    
+  test("opens a calendar when clicking in the datepicker field", async () => {
+    render(<Datepicker />)
+    const input = screen.getByRole("textbox")
+    const calendar = document.querySelector(".flatpickr-calendar")
+    const user = userEvent.setup()
+    expect(input).toBeInTheDocument()
+    expect(calendar).toBeInTheDocument()
+    expect(calendar).not.toHaveClass("open") 
+    await user.click(input)
+    expect(calendar).toHaveClass("open")
   })
   
-  test.skip("uses a custom hour increment as passed", async () => {
-    
+  test("uses a custom hour increment as passed", async () => {
+    render(<Datepicker enableTime dateFormat="Y-m-d H:i" hourIncrement={6} />)
+    const hourInput = document.querySelector("input.flatpickr-hour")
+    expect(hourInput).toHaveAttribute("step", "6")
   })
   
-  test.skip("renders an inline calender as passed", async () => {
-    
+  test("uses a custom minute increment as passed", async () => {
+    render(<Datepicker enableTime dateFormat="Y-m-d H:i" minuteIncrement={7} />)
+    const hourInput = document.querySelector("input.flatpickr-minute")
+    expect(hourInput).toHaveAttribute("step", "7")
+  })
+  
+  test("renders an inline calender as passed", async () => {
+    render(<Datepicker inline />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(document.querySelector(".flatpickr-calendar.inline")).toBeInTheDocument()
   })
   
   test.skip("accepts and respects a custom locale as passed", async () => {
