@@ -25,6 +25,12 @@ describe("Datepicker", () => {
     expect(screen.getByRole("textbox")).toHaveAttribute('id', "my-datepicker")
   })
   
+  test("renders a name as passed", async () => {
+    render(<Datepicker name="my-name" />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveAttribute('name', "my-name")
+  })
+  
   test("renders a datepicker with an auto-generated id if no id is passed", async () => {
     render(<Datepicker />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()

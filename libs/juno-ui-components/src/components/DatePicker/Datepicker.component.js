@@ -116,17 +116,16 @@ const iconContainerStyles = `
   DONE monthSelectorType: "dropdown", 
 */
 
-/* Possible additional props, props in question, consitency issues:
+/* Possible additional props, props in question, consistency issues:
   * icon (show a calendar icon)
   * All props available for TextInput:
-    * we use defaultValue in most components, Flatpickr uses defaultDate, should we expose defaultValue  for consistency reasons, too, and forward to defaultDate? 
-    * name (careful, might be used by Flatpickr internally)?
+    * we use defaultValue in most components, Flatpickr uses defaultDate, should we expose defaultValue  for consistency reasons, too, and forward to defaultDate? -> TODO: MAP TO DEfaultDate
     * readOnly?
     * autoFocus (if possible, determine whether this would open the calendar, too)
     * use onFocus? we could want to add it for consistency, although flatpickr comes with an onOpen handler which should be/do the same. onFocus would need to return the event though, onOpen returns the date. Alternatively, we could expose onFocus but run it inside Faltpickr's onOpen (which might backfire once we enable setting clickOpens to false by the user, the field may be focussed but the event will never fire?. 
     * onBlur ( not exposed by Flatpickr )
-    * autoFocus and minimizing the label when the field is focussed my be tricky? Canb we create a ref for the field?
-    * allow passing a className to the wrapper? Precedent risk!
+    * autoFocus and minimizing the label when the field is focussed my be tricky? Can we create a ref for the field?
+    * allow passing a className to the wrapper? Precedent risk! => later, for all relevant components
  */
 
 export const Datepicker = ({
@@ -159,6 +158,7 @@ export const Datepicker = ({
   minuteIncrement,
   mode,
   monthSelectorType,
+  name,
   noCalendar,
   onChange,
   onClose,
@@ -329,6 +329,7 @@ export const Datepicker = ({
         `}
         disabled={disabled}
         id={theId}
+        name={name}
         onChange={handleChange}
         onClose={handleClose}
         onMonthChange={handleMonthChange}
@@ -460,6 +461,8 @@ Datepicker.propTypes = {
   mode: PropTypes.oneOf(["single", "multiple", "range", "time"]),
   /** Whether to show a dropdown to select the current month. If `showMonths` is set to be greater than 1, it will always be displayed as static. Arrows to scroll through the months as well as through years will still be displayed and working. */
   monthSelectorType: PropTypes.oneOf(["dropdown", "static"]),
+  /** The name of the datepicker input element */
+  name: PropTypes.string,
   /** Set to `true` to not display a calendar. Set `enableTime` to create a time picker. */
   noCalendar: PropTypes.bool,
   /** A handler to be executed when the selected date or range changes */
@@ -589,6 +592,7 @@ Datepicker.defaultProps = {
   minuteIncrement: 5,
   mode: "single", 
   monthSelectorType: "dropdown",
+  name: "",
   noCalendar: false,
   onChange: undefined,
   onFocus: undefined,
