@@ -5,7 +5,7 @@ import { TextInput } from "../TextInput/index"
 import { Label } from "../Label/index"
 import { FormHint } from "../FormHint/FormHint.component"
 import { Icon } from "../Icon/index"
-import "flatpickr/dist/themes/dark.css" // use inbuilt flatpickr styles for now
+import "./datepicker.scss"
 
 const wrapperStyles = `
   jn-relative

@@ -392,6 +392,10 @@ $dark-theme-color-map: (
   --color-topnavigation-item-active: var(--color-black);
   --color-topnavigation-item-bg: var(--color-sap-grey-1);
   --color-topnavigation-item-active-bg: var(--color-sap-grey-3);
+  
+  // DT Datepicker
+  --color-datepicker-calendar-bg: var(--color-background-lvl-1);
+  
 }
 
 /* ----- LIGHT THEME END -----*/
@@ -610,6 +614,8 @@ $dark-theme-color-map: (
   --color-topnavigation-item-active: var(--color-white);
   --color-topnavigation-item-bg: var(--color-juno-grey-blue-7);
   --color-topnavigation-item-active-bg: var(--color-juno-grey-blue-2);
+  // DT Datepicker
+  --color-datepicker-calendar-bg: var(--color-background-lvl-1);
 }
 
 /* ----- DARK THEME END ----- */
