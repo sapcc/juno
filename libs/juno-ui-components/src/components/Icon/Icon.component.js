@@ -8,6 +8,7 @@ import AddCircle from "@material-design-icons/svg/filled/add_circle.svg"
 import AutoAwesomeMosaic from "@material-design-icons/svg/filled/auto_awesome_mosaic.svg"
 import AutoAwesomeMotion from "@material-design-icons/svg/filled/auto_awesome_motion.svg"
 import Bolt from "@material-design-icons/svg/filled/bolt.svg"
+import CalendarToday from "@material-design-icons/svg/filled/calendar_today.svg"
 import Cancel from "@material-design-icons/svg/filled/cancel.svg"
 import Check from "@material-design-icons/svg/filled/check.svg"
 import CheckCircle from "@material-design-icons/svg/filled/check_circle.svg"
@@ -87,6 +88,7 @@ export const knownIcons = [
   "autoAwesomeMosaic",
   "autoAwesomeMotion",
   "bolt",
+  "calendarToday",
   "cancel",
   "check",
   "checkCircle",
@@ -201,6 +203,18 @@ const getColoredSizedIcon = ({
           {...iconProps}
         />
       )
+    case "calendarToday":
+    return (
+      <CalendarToday
+        width={size}
+        height={size}
+        className={iconClass}
+        alt="calendar"
+        title={title ? title : "Calendar"}
+        role="img"
+        {...iconProps}
+      />
+    )
     case "cancel":
       return (
         <Cancel

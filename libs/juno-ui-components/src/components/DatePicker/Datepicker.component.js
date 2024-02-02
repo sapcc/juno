@@ -119,13 +119,11 @@ const iconContainerStyles = `
 /* Possible additional props, props in question, consistency issues:
   * icon (show a calendar icon)
   * All props available for TextInput:
-    * we use defaultValue in most components, Flatpickr uses defaultDate, should we expose defaultValue  for consistency reasons, too, and forward to defaultDate? -> TODO: MAP TO DEfaultDate
     * readOnly?
     * autoFocus (if possible, determine whether this would open the calendar, too)
     * use onFocus? we could want to add it for consistency, although flatpickr comes with an onOpen handler which should be/do the same. onFocus would need to return the event though, onOpen returns the date. Alternatively, we could expose onFocus but run it inside Faltpickr's onOpen (which might backfire once we enable setting clickOpens to false by the user, the field may be focussed but the event will never fire?. 
     * onBlur ( not exposed by Flatpickr )
     * autoFocus and minimizing the label when the field is focussed my be tricky? Can we create a ref for the field?
-    * allow passing a className to the wrapper? Precedent risk! => later, for all relevant components
  */
 
 export const Datepicker = ({
@@ -370,7 +368,7 @@ export const Datepicker = ({
             ""
         }
         {
-          // TODO: calendar icon goes here
+        <Icon icon="calendarToday" className="jn-pointer-events-none" />
         }
         { isInvalid ? 
             <Icon icon="dangerous" color="jn-text-theme-error" />

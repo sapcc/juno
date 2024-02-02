@@ -13,6 +13,11 @@ describe("Datepicker", () => {
     expect(screen.getByRole("textbox")).toHaveClass("juno-datepicker-input")
   })
   
+  test("renders a calendar icon", async () => {
+    render(<Datepicker />)
+    expect(screen.getByTitle("Calendar")).toBeInTheDocument()
+  })
+  
   test("renders a label as passed", async () => {
     render(<Datepicker label="The Datepicker Label" id="my-textinput"/>)
     expect(document.querySelector(".juno-label")).toBeInTheDocument()
