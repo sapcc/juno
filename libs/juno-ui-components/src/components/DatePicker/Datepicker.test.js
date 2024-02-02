@@ -452,7 +452,7 @@ describe("Datepicker", () => {
     expect(mockOnYearChange).toHaveBeenCalled()
   })
   
-  test("executes an onMonthChange handler when the user changes the year", async () => {
+  test("executes an onMonthChange handler when the user changes the month by clicking an arrow", async () => {
     const user = userEvent.setup()
     render(<Datepicker onMonthChange={mockOnMonthChange} />)
     const input = screen.getByRole("textbox")
