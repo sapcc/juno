@@ -160,7 +160,6 @@ export const Datepicker = ({
   noCalendar,
   onChange,
   onClose,
-  onFocus,
   onMonthChange,
   onOpen,
   onValueUpdate,
@@ -281,10 +280,6 @@ export const Datepicker = ({
   
   const handleClose = (date) => {
     onClose && onClose(date)
-  }
-  
-  const handleFocus = (event) => {
-    onFocus && onFocus(event)
   }
   
   const handleOpen = (date) => {
@@ -465,8 +460,6 @@ Datepicker.propTypes = {
   noCalendar: PropTypes.bool,
   /** A handler to be executed when the selected date or range changes */
   onChange: PropTypes.func,
-  /** A handler to be executed when the datepicker inout field is focussed */
-  onFocus: PropTypes.func,
   /** A handler to be executed when the datepicker calendar closes */
   onClose: PropTypes.func,
   /** A handler to be executed when the selected month changes */
@@ -593,7 +586,6 @@ Datepicker.defaultProps = {
   name: "",
   noCalendar: false,
   onChange: undefined,
-  onFocus: undefined,
   onMonthChange: undefined,
   onOpen: undefined,
   onValueUpdate: undefined,
