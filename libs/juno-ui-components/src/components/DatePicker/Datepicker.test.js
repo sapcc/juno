@@ -1,10 +1,21 @@
 import * as React from "react"
-import { render, screen } from "@testing-library/react"
+import { cleanup, render, screen, fireEvent } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { Datepicker } from "./index"
 
+const mockOnOpen = jest.fn()
+const mockOnClose = jest.fn()
+const mockOnChange = jest.fn()
+const mockOnMonthChange = jest.fn()
+const mockOnYearChange = jest.fn()
+const mockOnValueUpdate = jest.fn()
 
 describe("Datepicker", () => {
+  
+  afterEach(() => {
+    cleanup()
+    jest.clearAllMocks()
+  })
   
   test("renders a Datepicker", async () => {
     render(<Datepicker />)
@@ -386,6 +397,69 @@ describe("Datepicker", () => {
     expect(document.querySelector(".flatpickr-days")).not.toBeInTheDocument()
     expect(document.querySelector("input.flatpickr-hour")).toBeInTheDocument()
     expect(document.querySelector("input.flatpickr-minute")).toBeInTheDocument()
+  })
+  
+  test("executes an onOpen handler when the user clicks the Datepicker and the calendar opens", async () => {
+    const user = userEvent.setup()
+    render(<Datepicker onOpen={mockOnOpen}/>)
+    const input = screen.getByRole("textbox")
+    await user.click(input)
+    expect(mockOnOpen).toHaveBeenCalled()
+  })
+  
+  test("closes the calendar and executes an onClose handler when the user clicks outside the calendar", async () => {
+    const user = userEvent.setup()
+    render(<Datepicker onClose={mockOnClose}/>)
+    const input = screen.getByRole("textbox")
+    await user.click(input)
+    await user.click(document.body)
+    expect(mockOnClose).toHaveBeenCalled()
+  })
+  
+  test("executes an onChange handler when the user changes the selected date", async () => {
+    const user = userEvent.setup()
+    const today = new Date()
+    const tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() +1)
+    const tomorrowFullMonth = tomorrow.toLocaleString('default', { month: 'long' })
+    const tomorrowDay = tomorrow.getDate()
+    const tomorrowFullYear = tomorrow.getFullYear()
+    const tomorrowLabel = `${tomorrowFullMonth} ${tomorrowDay}, ${tomorrowFullYear}`
+    render(<Datepicker value={today} onChange={mockOnChange}/>)
+    const input = screen.getByRole("textbox")
+    await user.click(input)
+    const tomorrowEl = screen.getByLabelText(tomorrowLabel)
+    await user.click(tomorrowEl)
+    expect(mockOnChange).toHaveBeenCalled()
+  })
+  
+  test("executes an onValueUpdate handler when the value of the Datepicker changes", async () => {
+    const today = new Date()
+    const tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() +1)
+    const { rerender } = render(<Datepicker value={today} onValueUpdate={mockOnValueUpdate}/>)
+    rerender(<Datepicker value={tomorrow} />)
+    expect(mockOnValueUpdate).toHaveBeenCalled()
+  })
+  
+  test("executes an onYearChange handler when the user changes the year", async () => {
+    const user = userEvent.setup()
+    render(<Datepicker onYearChange={mockOnYearChange} />)
+    const input = screen.getByRole("textbox")
+    await user.click(input)
+    const yearInputUp = document.querySelector(".numInputWrapper > .arrowUp")
+    await user.click(yearInputUp)
+    expect(mockOnYearChange).toHaveBeenCalled()
+  })
+  
+  test("executes an onMonthChange handler when the user changes the year", async () => {
+    const user = userEvent.setup()
+    render(<Datepicker onMonthChange={mockOnMonthChange} />)
+    const input = screen.getByRole("textbox")
+    await user.click(input)
+    const nextMonthButton = document.querySelector(".flatpickr-next-month")
+    await user.click(nextMonthButton)
+    expect(mockOnMonthChange).toHaveBeenCalled()
   })
   
   test("renders a className as passed", async () => {
