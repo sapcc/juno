@@ -71,7 +71,7 @@ describe("createFiltersSlice", () => {
       )
     })
 
-    it("Adds empty array to dropdown", () => {
+    it("Adds empty array to select", () => {
       const wrapper = ({ children }) => (
         <StoreProvider>{children}</StoreProvider>
       )
