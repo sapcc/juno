@@ -8,6 +8,7 @@ import url from "url"
 
 const availableArgs = [
   "--base-url=URL_OF_ASSETS_SERVER",
+  "--assets-build-log=JSON_FILE_PATH",
   "--widget-loader-name=NAME",
   "--src=DIR_PATH",
   "--output=FILE_PATH",
@@ -17,6 +18,7 @@ const availableArgs = [
 
 const options = {
   baseUrl: "%BASE_URL%",
+  assetsBuildLog: false,
   widgetLoaderName: "widget-loader",
   src: path.dirname(url.fileURLToPath(import.meta.url)),
   output: "./manifest.json",
@@ -54,21 +56,24 @@ const files = glob.sync(globPattern, { ignore: [`node_modules/**`,'**/node_modul
 
 const manifest = {
   _global: {
+    buildDate: new Date(),
     baseUrl: options.baseUrl,
-    importMap: {},
   },
 }
 
-if (fs.existsSync(`${rootPath}/importmap.json`)) {
-  manifest["_global"]["importMap"]["prod"] = `/importmap.json`
-}
-
-if (fs.existsSync(`${rootPath}/importmap.dev.json`)) {
-  manifest["_global"]["importMap"]["dev"] = `/importmap.dev.json`
-}
-
+// add README.md from juno to global
 if (fs.existsSync(`${rootPath}/global/README.md`)) {
   manifest["_global"]["readme"] = "/global/README.md"
+}
+
+console.log("=========================MANIFEST1")
+
+// add passed and failed assets from build log to global
+if (options.assetsBuildLog && fs.existsSync(options.assetsBuildLog)) {
+  console.log("=========================MANIFEST2")
+  manifest["_global"]["assetsBuildLog"] = JSON.parse(
+    fs.readFileSync(options.assetsBuildLog, "utf-8")
+  )
 }
 
 // console.log(files)
