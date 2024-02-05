@@ -119,7 +119,7 @@ describe("createFiltersSlice", () => {
       spy.mockRestore()
     })
 
-    it("warns the user if labels also includes non-strings", () => {
+    it("warns the user if labels array also includes non-strings and adds the valid labels", () => {
       const spy = jest.spyOn(console, "warn").mockImplementation(() => {})
 
       const wrapper = ({ children }) => (
@@ -135,11 +135,17 @@ describe("createFiltersSlice", () => {
 
       act(() => store.result.current.actions.setLabels(["app", 1, 9]))
 
+      // Is the warning called?
       expect(spy).toHaveBeenCalledTimes(1)
       expect(spy).toHaveBeenCalledWith(
         "[supernova]::setLabels: Some elements of the array are not strings."
       )
       spy.mockRestore()
+
+      // Are valid labels still set?
+      expect(store.result.current.filterLabels).toEqual(
+        expect.arrayContaining(["app", "status"])
+      )
     })
   })
 
