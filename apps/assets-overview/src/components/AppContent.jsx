@@ -11,6 +11,7 @@ import { useActions } from "messages-provider"
 import { parseError } from "../helpers"
 import Documentation from "./Documentation"
 import CustomPageHeader from "./CustomPageHeader"
+import BuildLog from "./BuildLog"
 
 const AppContent = (props) => {
   const { addMessage } = useActions()
@@ -91,6 +92,7 @@ const AppContent = (props) => {
           <Tab>Documentation</Tab>
           <Tab>Apps</Tab>
           <Tab>Libs</Tab>
+          {globals?.assetsBuildLog && <Tab>Build Log</Tab>}
         </TabList>
         <TabPanel>
           <TabContainer>
@@ -119,6 +121,13 @@ const AppContent = (props) => {
             />
           </TabContainer>
         </TabPanel>
+        {globals?.assetsBuildLog && (
+          <TabPanel>
+            <TabContainer>
+              <BuildLog data={globals.assetsBuildLog} />
+            </TabContainer>
+          </TabPanel>
+        )}
       </MainTabs>
     </AppShell>
   )
