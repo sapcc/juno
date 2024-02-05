@@ -29,7 +29,7 @@ const createFiltersSlice = (set, get) => ({
             // check if all elements in the array are strings delete the ones that are not
             if (!labels.every((element) => typeof element === "string")) {
               console.warn(
-                "[supernova]::setLabels: Some Array elements are not strings."
+                "[supernova]::setLabels: Some elements of the array are not strings."
               )
               labels = labels.filter((element) => typeof element === "string")
             }
