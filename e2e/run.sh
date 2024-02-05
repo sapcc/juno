@@ -83,7 +83,7 @@ else
       shift # past argument
       ;;
     *) # test folder
-      if [[ -z "$JUNO_APP" ]]; then
+      if [ -z $JUNO_APP ]; then
         SPECS_FOLDER="cypress/integration/$1/*"
       else
         SPECS_FOLDER="cypress/integration/$JUNO_APP/$1/*"
