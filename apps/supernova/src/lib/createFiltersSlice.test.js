@@ -25,7 +25,7 @@ describe("createFiltersSlice", () => {
       expect(store.result.current.filterLabels).toEqual(["status"])
     })
 
-    it("Adds array to dropdown", () => {
+    it("Adds array with strings to dropdown", () => {
       const wrapper = ({ children }) => (
         <StoreProvider>{children}</StoreProvider>
       )
@@ -71,7 +71,28 @@ describe("createFiltersSlice", () => {
       )
     })
 
-    it("warn the user if labels are different then an array of strings", () => {
+    it("Adds empty array to dropdown", () => {
+      const wrapper = ({ children }) => (
+        <StoreProvider>{children}</StoreProvider>
+      )
+      const store = renderHook(
+        () => ({
+          actions: useFilterActions(),
+          filterLabels: useFilterLabels(),
+        }),
+        { wrapper }
+      )
+
+      act(() => {
+        store.result.current.actions.setLabels([])
+      })
+
+      expect(store.result.current.filterLabels).toEqual(
+        expect.arrayContaining(["status"])
+      )
+    })
+
+    it("warn the user if labels are not an array", () => {
       const spy = jest.spyOn(console, "warn").mockImplementation(() => {})
 
       const wrapper = ({ children }) => (
@@ -93,7 +114,30 @@ describe("createFiltersSlice", () => {
 
       expect(spy).toHaveBeenCalledTimes(1)
       expect(spy).toHaveBeenCalledWith(
-        "[supernova]::setLabels: labels object is not an array of strings"
+        "[supernova]::setLabels: labels object is not an array"
+      )
+      spy.mockRestore()
+    })
+
+    it("warn the user if labels have also interger instead of an array of strings", () => {
+      const spy = jest.spyOn(console, "warn").mockImplementation(() => {})
+
+      const wrapper = ({ children }) => (
+        <StoreProvider>{children}</StoreProvider>
+      )
+      const store = renderHook(
+        () => ({
+          actions: useFilterActions(),
+          filterLabels: useFilterLabels(),
+        }),
+        { wrapper }
+      )
+
+      act(() => store.result.current.actions.setLabels(["app", 1, 9]))
+
+      expect(spy).toHaveBeenCalledTimes(1)
+      expect(spy).toHaveBeenCalledWith(
+        "[supernova]::setLabels: Some Array elements are not strings."
       )
       spy.mockRestore()
     })
