@@ -92,7 +92,7 @@ describe("createFiltersSlice", () => {
       )
     })
 
-    it("warn the user if labels are not an array", () => {
+    it("warns the user if labels are not an array", () => {
       const spy = jest.spyOn(console, "warn").mockImplementation(() => {})
 
       const wrapper = ({ children }) => (
@@ -119,7 +119,7 @@ describe("createFiltersSlice", () => {
       spy.mockRestore()
     })
 
-    it("warn the user if labels have also interger instead of an array of strings", () => {
+    it("warns the user if labels also includes non-strings", () => {
       const spy = jest.spyOn(console, "warn").mockImplementation(() => {})
 
       const wrapper = ({ children }) => (
@@ -137,7 +137,7 @@ describe("createFiltersSlice", () => {
 
       expect(spy).toHaveBeenCalledTimes(1)
       expect(spy).toHaveBeenCalledWith(
-        "[supernova]::setLabels: Some Array elements are not strings."
+        "[supernova]::setLabels: Some elements of the array are not strings."
       )
       spy.mockRestore()
     })
