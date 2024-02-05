@@ -41,6 +41,8 @@ function getEntryPoints(packagePath) {
   return files
 }
 
+const VERSION_RANGE_REGEX = /^([><]=?|~|\^)/
+
 // get fix version of a package
 async function getFixPackageVersion(name, version = "*") {
   // return version if version is not a range
@@ -48,7 +50,7 @@ async function getFixPackageVersion(name, version = "*") {
     version !== "" &&
     version !== "*" &&
     version !== "latest" &&
-    !version.match(/^([><]=?|~|\^)/)
+    !version.match(VERSION_RANGE_REGEX)
   )
     return version.trim()
 
@@ -86,7 +88,7 @@ async function getFixPackageVersion(name, version = "*") {
               )
               console.warn(e)
               //reject(e)
-              resolve(version)
+              resolve(version.replace(VERSION_RANGE_REGEX, ""))
             }
           })
         }
@@ -99,7 +101,7 @@ async function getFixPackageVersion(name, version = "*") {
         )
         console.error(e)
         //reject(e)
-        resolve(version)
+        resolve(version.replace(VERSION_RANGE_REGEX, ""))
       })
     req.end()
   })
