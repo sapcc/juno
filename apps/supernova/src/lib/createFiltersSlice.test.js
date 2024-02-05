@@ -25,7 +25,7 @@ describe("createFiltersSlice", () => {
       expect(store.result.current.filterLabels).toEqual(["status"])
     })
 
-    it("Adds array with strings to dropdown", () => {
+    it("Adds array with strings to select", () => {
       const wrapper = ({ children }) => (
         <StoreProvider>{children}</StoreProvider>
       )
