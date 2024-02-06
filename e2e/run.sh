@@ -12,7 +12,7 @@ function help_me() {
   echo "       run.sh --host https://juno.qa-de-1.cloud.sap/ dashboard         # run dashboard tests"
   echo "       run.sh --host http://localhost:3000 --debug 'cypress:network:*' # will show debug information about the networking"
   echo "       run.sh --e2e_path                                               # this optional if not set \$PWD is used"
-  echo "       run.sh --record                                                 # record your test in cypress-dashboard"
+  echo "       run.sh --record (Not Supported!)                                # record your test in cypress-dashboard"
   echo "       run.sh --browser chrome                                         # choose browser to test (default is chrome)"
   echo "       run.sh --app JUNO_APP                                           # this is optional and specify the specfile to run"
   echo ""
@@ -83,7 +83,11 @@ else
       shift # past argument
       ;;
     *) # test folder
-      SPECS_FOLDER="cypress/integration/$JUNO_APP/$1*"
+      if [[ -z "$JUNO_APP" ]]; then
+        SPECS_FOLDER="cypress/integration/$1/*"
+      else
+        SPECS_FOLDER="cypress/integration/$JUNO_APP/$1/*"
+      fi
       shift # past argument
       ;;
     esac
