@@ -28,9 +28,9 @@ run:
     - -c
     - |
       set -e
+      export VERSION=$(cat version/version)
       cd ./upload
       export UPLOAD_DIR=$(pwd)
-      export VERSION=$(cat version/version)
       # TODO: this needs to be changed, we need to move the swift scripts outside from juno to use this also in elektra!
       cd /juno
       ./ci/scripts/cypress_storage.sh --container $CONTAINER --root-path $UPLOAD_DIR --project $PROJECT --name $NAME --version $VERSION
