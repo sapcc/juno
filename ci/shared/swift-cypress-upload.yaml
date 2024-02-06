@@ -23,6 +23,7 @@ params:
   OS_PROJECT_NAME: master
   DEBUG: "false" # enable debug
   DRY_RUN: "false" # this is only valid if you use the sync mode and is useful to prevent data loss 😉
+  BUILD_NUMBER: ((BUILD_ID))
 
 run:
   path: /bin/bash
@@ -35,4 +36,4 @@ run:
       # TODO: this needs to be changed, we need to move the swift scripts outside from juno to use this also in elektra!
       cd /juno
       exit 1
-      #./ci/scripts/cypress_storage.sh --container $CONTAINER --root-path $UPLOAD_DIR --cypress-path e2e/cypress --project $PROJECT
+      #./ci/scripts/cypress_storage.sh --container $CONTAINER --root-path $UPLOAD_DIR --project $PROJECT

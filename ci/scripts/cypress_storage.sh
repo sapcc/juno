@@ -9,11 +9,11 @@ if [ ! -f "CODEOWNERS" ]; then
 fi
 
 function help() {
-  echo "Usage: asset_storage.sh --asset-name||-am --asset-path||-ap --asset-type||-at --action|-a --container||-c --root-path||-rp --debug||-d --dry-run||-dr
+  echo "Usage: swift_storage.sh --container||-c --root-path||-rp --project||-p
   example: ./ci/scripts/asset_storage.sh --asset-name assets-overview --asset-type apps --action upload --root-path ../build_result
-  --container  -> where to upload or download assets
-  --root-path  -> default is /tmp/build_result
-  --project    -> project name (this is used as root folder in the swift container)
+  --container    -> where to upload or download assets
+  --root-path    -> absolute path to the root where the cypress folder is located
+  --project      -> project name (this is used as root folder in the swift container)
 
   possible ENV Vars:
   * OS_USER_DOMAIN_NAME: per default this is not set 
@@ -37,11 +37,6 @@ fi
 
 while [[ $# -gt 0 ]]; do
   case $1 in
-  --cypress-path | -sp)
-    CYPRESS_PATH="$2"
-    shift # past argument
-    shift # past value
-    ;;
   --root-path | -rp)
     ROOT_PATH="$2"
     shift # past argument
@@ -133,21 +128,33 @@ function upload() {
     echo "The directory $CYPRESS_PATH is empty, noting upload to swift..."
   else
     # create a new directory with the current date and time to upload the screenshots and videos
-    mkdir -p /tmp/$PROJECT/"$(date +%m%d%y-%H%M%S)"/
+    UPLOAD_DIR="$PROJECT/$(date +%m%d%y-%H%M%S)/"
+    mkdir -p /tmp/$UPLOAD_DIR
     cd "$CYPRESS_PATH"
-    if [ -n "$(ls -A screenshots/)" ]; then
-      cp -R screenshots/ /tmp/$PROJECT/"$(date +%m%d%y-%H%M%S)"/
+
+    if [ -d "screenshots/" ]; then
+      # check also if the directory is not empty
+      if [ -n "$(ls -A screenshots/)" ]; then
+        # prepare the screenshots for upload
+        cp -R screenshots/ /tmp/$UPLOAD_DIR
+      fi
     fi
-    if [ -n "$(ls -A videos/)" ]; then
-      cp -R videos/ /tmp/$PROJECT/"$(date +%m%d%y-%H%M%S)"/
+
+    if [ -d "videos/" ]; then
+      # check also if the directory is not empty
+      if [ -n "$(ls -A videos/)" ]; then
+        # prepare the videos for upload
+        cp -R videos/ /tmp/$UPLOAD_DIR
+      fi
     fi
     cd /tmp/
-    swift upload --skip-identical --changed "$CONTAINER" $PROJECT/"$(date +%m%d%y-%H%M%S)"/ &&
+    swift upload --skip-identical --changed "$CONTAINER" $UPLOAD_DIR &&
       echo "----------------------------------" &&
       echo "upload done 🙂"
   fi
 }
 
+CYPRESS_PATH="cypress/"
 cd "$ROOT_PATH"
 if [ ! -d "$CYPRESS_PATH" ]; then
   echo "Error: directory CYPRESS_PATH $CYPRESS_PATH does not exist 😐"
