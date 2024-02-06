@@ -9,12 +9,13 @@ if [ ! -f "CODEOWNERS" ]; then
 fi
 
 function help() {
-  echo "Usage: swift_storage.sh --container||-c --root-path||-rp --project||-p
+  echo "Usage: swift_storage.sh --container||-c --root-path||-rp --project||-p version||-v --name||-n
   example: ./ci/scripts/asset_storage.sh --asset-name assets-overview --asset-type apps --action upload --root-path ../build_result
   --container    -> where to upload or download assets
   --root-path    -> absolute path to the root where the cypress folder is located
   --project      -> project name (this is used as root folder in the swift container)
   --name         -> name of the cypress test run
+  --version      -> optional, if set it is used as a subfolder in the swift container  
 
   possible ENV Vars:
   * OS_USER_DOMAIN_NAME: per default this is not set 
@@ -40,6 +41,11 @@ while [[ $# -gt 0 ]]; do
   case $1 in
   --root-path | -rp)
     ROOT_PATH="$2"
+    shift # past argument
+    shift # past value
+    ;;
+  --version | -v)
+    VERSION="$2"
     shift # past argument
     shift # past value
     ;;
@@ -134,7 +140,11 @@ function upload() {
     echo "The directory $CYPRESS_PATH is empty, noting upload to swift..."
   else
     # create a new directory with the current date and time to upload the screenshots and videos
-    UPLOAD_DIR="$PROJECT/$NAME/$(date +%m%d%y-%H%M%S)/"
+    if [[ -n "${VERSION}" ]]; then
+      UPLOAD_DIR="$PROJECT/$NAME/$VERSION/"
+    else
+      UPLOAD_DIR="$PROJECT/$NAME/$(date +%m%d%y-%H%M%S)/"
+    fi
     mkdir -p /tmp/$UPLOAD_DIR
     cd "$CYPRESS_PATH"
 
