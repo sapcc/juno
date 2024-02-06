@@ -30,8 +30,9 @@ run:
     - -c
     - |
       set -e
-      cd ./cypress
+      cd ./upload
       export UPLOAD_DIR=$(pwd)
+      # TODO: this needs to be changed, we need to move the swift scripts outside from juno to use this also in elektra!
       cd /juno
       exit 1
       #./ci/scripts/cypress_storage.sh --container $CONTAINER --root-path $UPLOAD_DIR --cypress-path e2e/cypress --project $PROJECT
