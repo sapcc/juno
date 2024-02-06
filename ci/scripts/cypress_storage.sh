@@ -16,6 +16,7 @@ function help() {
   --project      -> project name (this is used as root folder in the swift container)
   --name         -> name of the cypress test run
   --version      -> optional, if set it is used as a subfolder in the swift container  
+  --cypress-path -> optional, default is cypress/
 
   possible ENV Vars:
   * OS_USER_DOMAIN_NAME: per default this is not set 
@@ -44,6 +45,11 @@ while [[ $# -gt 0 ]]; do
     shift # past argument
     shift # past value
     ;;
+  --cypress-path | -cp)
+    CYPRESS_PATH="$2"
+    shift # past argument
+    shift # past value
+    ;;
   --version | -v)
     VERSION="$2"
     shift # past argument
@@ -59,7 +65,7 @@ while [[ $# -gt 0 ]]; do
     shift # past argument
     shift # past value
     ;;
-  --project | -c)
+  --project | -p)
     PROJECT="$2"
     shift # past argument
     shift # past value
@@ -73,6 +79,10 @@ while [[ $# -gt 0 ]]; do
     ;;
   esac
 done
+
+if [[ -z "$CYPRESS_PATH" ]]; then
+  CYPRESS_PATH="cypress/"
+fi
 
 if [[ -z "$CONTAINER" ]]; then
   echo "Error: no CONTAINER given 😐"
@@ -135,9 +145,15 @@ echo "----------------------------------"
 
 # https://docs.openstack.org/ocata/cli-reference/swift.html
 function upload() {
-  echo "Swift upload from $ROOT_PATH to container $CONTAINER and destination $CYPRESS_PATH"
+
+  cd "$ROOT_PATH"
+  if [ ! -d "$CYPRESS_PATH" ]; then
+    echo "Error: directory CYPRESS_PATH $CYPRESS_PATH does not exist 😐"
+    exit 1
+  fi
+
   if [ -z "$(ls -A "$CYPRESS_PATH")" ]; then
-    echo "The directory $CYPRESS_PATH is empty, noting upload to swift..."
+    echo "The directory $ROOT_PATH/$CYPRESS_PATH is empty, noting upload to swift..."
   else
     # create a new directory with the current date and time to upload the screenshots and videos
     if [[ -n "${VERSION}" ]]; then
@@ -164,17 +180,11 @@ function upload() {
       fi
     fi
     cd /tmp/
+    echo "Swift upload from $ROOT_PATH to container $CONTAINER and destination $UPLOAD_DIR"
     swift upload --skip-identical --changed "$CONTAINER" $UPLOAD_DIR &&
       echo "----------------------------------" &&
       echo "upload done 🙂"
   fi
 }
-
-CYPRESS_PATH="cypress/"
-cd "$ROOT_PATH"
-if [ ! -d "$CYPRESS_PATH" ]; then
-  echo "Error: directory CYPRESS_PATH $CYPRESS_PATH does not exist 😐"
-  exit 1
-fi
 
 upload
