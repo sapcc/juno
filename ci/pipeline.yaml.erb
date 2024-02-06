@@ -704,8 +704,8 @@ jobs:
             - name: juno.git
               path: /app/juno
           outputs:
-            - name: cypress
-              path: /app/juno/e2e/cypress/
+            - name: upload
+              path: /upload
 
           run:
             path: /bin/sh
@@ -714,17 +714,13 @@ jobs:
               - |
                 cd /app/juno/e2e
                 CYPRESS_BASE_URL=https://assets.juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/assets-server/*"
-      - task: sync
-        file: <%=details[:type]%>-<%= name %>.git/ci/shared/swift-upload.yaml
+                mv /app/juno/e2e/cypress /upload
+      - task: upload-cypress-result
+        file: juno.git/ci/shared/swift-cypress-upload.yaml
         input_mapping:
-          upload: build_result
+          version: assets-server.version
         params:
-          ACTION: sync
-          DRY_RUN: "false"
-          DEBUG: "true"
-          CONTAINER: "juno-assets"
-          ASSET_NAME: <%= name %>
-          ASSET_TYPE: <%= details[:type] %>
+          NAME: "asset-server"
 
   # PROMOTE TO PROD  
   - name: promote-prod-assets-server
