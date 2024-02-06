@@ -558,6 +558,7 @@ jobs:
                 cd /app/juno/e2e
                 CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/ui-storybook/*" 
 
+
   # DEPLOY STORYBOOK TO PROD
   - name: deploy-storybook-to-s-eu-nl-1
     serial: true
@@ -702,6 +703,9 @@ jobs:
           inputs:
             - name: juno.git
               path: /app/juno
+          outputs:
+            - name: cypress
+              path: /app/juno/e2e/cypress/
 
           run:
             path: /bin/sh
@@ -710,7 +714,17 @@ jobs:
               - |
                 cd /app/juno/e2e
                 CYPRESS_BASE_URL=https://assets.juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/assets-server/*"
-
+      - task: sync
+        file: <%=details[:type]%>-<%= name %>.git/ci/shared/swift-upload.yaml
+        input_mapping:
+          upload: build_result
+        params:
+          ACTION: sync
+          DRY_RUN: "false"
+          DEBUG: "true"
+          CONTAINER: "juno-assets"
+          ASSET_NAME: <%= name %>
+          ASSET_TYPE: <%= details[:type] %>
 
   # PROMOTE TO PROD  
   - name: promote-prod-assets-server

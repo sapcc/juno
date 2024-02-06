@@ -1,0 +1,157 @@
+#!/bin/bash
+
+# exit on error
+set -e
+
+if [ ! -f "CODEOWNERS" ]; then
+  echo "This script must run from root of juno repo"
+  exit 1
+fi
+
+function help() {
+  echo "Usage: asset_storage.sh --asset-name||-am --asset-path||-ap --asset-type||-at --action|-a --container||-c --root-path||-rp --debug||-d --dry-run||-dr
+  example: ./ci/scripts/asset_storage.sh --asset-name assets-overview --asset-type apps --action upload --root-path ../build_result
+  --container  -> where to upload or download assets
+  --root-path  -> default is /tmp/build_result
+  --project    -> project name (this is used as root folder in the swift container)
+
+  possible ENV Vars:
+  * OS_USER_DOMAIN_NAME: per default this is not set 
+  * OS_PROJECT_DOMAIN_NAME: default is ccadmin
+  * OS_PROJECT_NAME: default is master
+  * OS_PROJECT_ID: per default this is not set 
+  * OS_AUTH_URL: default is https://identity-3.qa-de-1.cloud.sap/v3
+  * OS_USERNAME: this is not optional
+  * OS_PASSWORD: this is not optional"
+  exit
+}
+
+if [[ "$1" == "--help" ]]; then
+  help
+fi
+
+if [[ -z "$OS_USERNAME" ]]; then
+  echo "no OS_USERNAME given"
+  exit 1
+fi
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+  --cypress-path | -sp)
+    CYPRESS_PATH="$2"
+    shift # past argument
+    shift # past value
+    ;;
+  --root-path | -rp)
+    ROOT_PATH="$2"
+    shift # past argument
+    shift # past value
+    ;;
+  --container | -c)
+    CONTAINER="$2"
+    shift # past argument
+    shift # past value
+    ;;
+  --project | -c)
+    PROJECT="$2"
+    shift # past argument
+    shift # past value
+    ;;
+  --help)
+    help
+    ;;
+  *)
+    echo "$1 unkown option!"
+    exit 1
+    ;;
+  esac
+done
+
+if [[ -z "$CONTAINER" ]]; then
+  echo "Error: no CONTAINER given 😐"
+  exit 1
+fi
+
+if [[ -z "$PROJECT" ]]; then
+  echo "Error: no PROJECT given 😐"
+  exit 1
+fi
+
+if [ ! -d "$ROOT_PATH" ]; then
+  echo "Error: directory ROOT_PATH $ROOT_PATH does not exist 😐"
+  exit 1
+fi
+
+if [[ -z "$OS_AUTH_URL" ]]; then
+  OS_AUTH_URL="https://identity-3.qa-de-1.cloud.sap/v3"
+fi
+
+if [[ -z "$OS_PROJECT_DOMAIN_NAME" ]]; then
+  OS_PROJECT_DOMAIN_NAME="ccadmin"
+fi
+
+if [[ -z "$OS_PROJECT_NAME" ]]; then
+  OS_PROJECT_NAME="master"
+fi
+
+export OS_AUTH_VERSION=3
+echo "OS_AUTH_URL: $OS_AUTH_URL"
+export OS_AUTH_URL=$OS_AUTH_URL
+
+if [[ -n "$OS_PROJECT_DOMAIN_NAME" ]]; then
+  echo "OS_PROJECT_DOMAIN_NAME: $OS_PROJECT_DOMAIN_NAME"
+  export OS_PROJECT_DOMAIN_NAME=$OS_PROJECT_DOMAIN_NAME
+fi
+
+echo "OS_USER_DOMAIN_NAME: $OS_USER_DOMAIN_NAME"
+export OS_USER_DOMAIN_NAME=$OS_USER_DOMAIN_NAME
+
+echo "OS_PROJECT_NAME: $OS_PROJECT_NAME"
+export OS_PROJECT_NAME=$OS_PROJECT_NAME
+
+if [[ -n "$OS_PROJECT_ID" ]]; then
+  export OS_PROJECT_ID=$OS_PROJECT_ID
+  echo "OS_PROJECT_ID: $OS_PROJECT_ID"
+fi
+
+echo "OS_PROJECT_ID: $OS_PROJECT_ID"
+echo "OS_USERNAME: $OS_USERNAME"
+export OS_USERNAME=$OS_USERNAME
+export OS_PASSWORD=$OS_PASSWORD
+
+# auth swift and set OS_STORAGE_URL and OS_AUTH_TOKEN
+eval "$(swift auth)"
+
+echo "----------------------------------"
+echo "use CONTAINER   = $CONTAINER"
+echo "----------------------------------"
+
+# https://docs.openstack.org/ocata/cli-reference/swift.html
+function upload() {
+  echo "Swift upload from $ROOT_PATH to container $CONTAINER and destination $CYPRESS_PATH"
+  if [ -z "$(ls -A "$CYPRESS_PATH")" ]; then
+    echo "The directory $CYPRESS_PATH is empty, noting upload to swift..."
+  else
+    # create a new directory with the current date and time to upload the screenshots and videos
+    mkdir -p /tmp/$PROJECT/"$(date +%m%d%y-%H%M%S)"/
+    cd "$CYPRESS_PATH"
+    if [ -n "$(ls -A screenshots/)" ]; then
+      cp -R screenshots/ /tmp/$PROJECT/"$(date +%m%d%y-%H%M%S)"/
+    fi
+    if [ -n "$(ls -A videos/)" ]; then
+      cp -R videos/ /tmp/$PROJECT/"$(date +%m%d%y-%H%M%S)"/
+    fi
+    cd /tmp/
+    swift upload --skip-identical --changed "$CONTAINER" $PROJECT/"$(date +%m%d%y-%H%M%S)"/ &&
+      echo "----------------------------------" &&
+      echo "upload done 🙂"
+  fi
+}
+
+cd "$ROOT_PATH"
+if [ ! -d "$CYPRESS_PATH" ]; then
+  echo "Error: directory CYPRESS_PATH $CYPRESS_PATH does not exist 😐"
+  exit 1
+fi
+
+upload
