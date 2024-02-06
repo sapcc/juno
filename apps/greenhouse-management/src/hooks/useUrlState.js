@@ -1,7 +1,8 @@
-import { useEffect, useLayoutEffect } from "react"
+import { useEffect, useState, useLayoutEffect } from "react"
 import { registerConsumer } from "url-state-provider"
 import {
   useActions,
+  useIsLoggedIn,
   useIsUrlStateSetup,
   usePluginActive,
 } from "../components/StoreProvider"
@@ -13,22 +14,23 @@ const urlStateManager = registerConsumer(URL_APP_STATE_KEY)
 
 const useUrlState = () => {
   const { setPluginActive, setIsUrlStateSetup } = useActions()
+  const [isURLRead, setIsURLRead] = useState(false)
   const isUrlStateSetup = useIsUrlStateSetup()
   const pluginActive = usePluginActive()
+  const isLoggedIn = useIsLoggedIn()
 
-  // Initial state from URL AFTER
-  // WARNING. To get the right state from the URL do following:
-  // If this app is embbeded in another app with authentication
-  //  - Mount this app after the login is success in the parent app
-  // or
-  //  - Wait here until you get logged in
   useLayoutEffect(() => {
+    // just read the url state once, after the user is logged in
+    if (!isLoggedIn || isURLRead) return
+
     if (isUrlStateSetup) return
 
     let active = urlStateManager.currentState()?.[ACTIVE_APP_KEY]
     if (active) setPluginActive(active)
     setIsUrlStateSetup(true)
-  }, [isUrlStateSetup])
+
+    setIsURLRead(true)
+  }, [isUrlStateSetup, isLoggedIn])
 
   // sync URL state
   useEffect(() => {
