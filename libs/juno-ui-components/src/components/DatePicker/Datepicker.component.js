@@ -186,6 +186,35 @@ export const Datepicker = ({
   
   const theId = id ||  "juno-datepicker-" + useId()
   
+  // Handle the options:
+  
+  // Options available in Flatpickr that we won't support for one reason or another: 
+  const unavailableOptions = [
+    "altFormat",
+    "altInput",
+    "altInputClass",
+    "appendTo",
+    "clickOpens",
+    "disableMobile",
+    "formatDate",
+    "nextArrow",
+    "positionElement",
+    "prevArrow",
+    "wrap",
+  ]
+  
+  // Remove all the keys we do not want or cannot support from the options object in case they were supplied:
+  const cleanUpOptions = (opts, keysToRemove) => {
+    Object.keys(opts).forEach( key => {
+      if (keysToRemove.includes(key)) {
+        delete opts[key]
+      }
+    })
+    return opts
+  }
+  
+  const cleanedOptions = cleanUpOptions(options, unavailableOptions)
+  
   const theOptions = { 
     allowInput,
     allowInvalidPreload,
@@ -213,35 +242,10 @@ export const Datepicker = ({
     weekNumbers,
     ...( locale && locale.length ? { locale } : {} ), // ONLY add 'locale' key if defined and has a length to prevent errors
     ...( enable && enable.length ? { enable } : {} ), // ONLY add 'enable' key if defined and has at least one value, otherwise there will be errors
-    ...options,
+    ...cleanedOptions,
   }
   
-  // Options available in Flatpickr that we won't support for one reason or another: 
-  const unavailableOptions = [
-    "altFormat",
-    "altInput",
-    "altInputClass",
-    "appendTo",
-    "clickOpens",
-    "disableMobile",
-    "formatDate",
-    "nextArrow",
-    "positionElement",
-    "prevArrow",
-    "wrap",
-  ]
-  
-  // Remove all the keys we do not want or cannot support from the options object in case they were supplied:
-  const cleanUpOptions = (opts, keysToRemove) => {
-    Object.keys(opts).forEach( key => {
-      if (keysToRemove.includes(key)) {
-        delete opts[key]
-      }
-    })
-    return opts
-  }
-  
-  const theCleanedOptions = cleanUpOptions(theOptions, unavailableOptions)
+
   
   // State variables
   const [theDate, setTheDate] = useState( { date: "" } )
@@ -329,7 +333,7 @@ export const Datepicker = ({
         onOpen={handleOpen}
         onValueUpdate={handleValueUpdate}
         onYearChange={handleYearChange}
-        options={theCleanedOptions}
+        options={theOptions}
         placeholder={placeholder}
         value={theDate.date}
         data-mode={mode}
@@ -416,7 +420,7 @@ Datepicker.propTypes = {
   /** The initial vlaue of the hour element. Only effective if time is enabled. */
   defaultHour: PropTypes.number,
   /** Same as value, defaultDate */
-  defaultValue: PropTypes.string,
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number]),
   /** Pass an array of dates, date strings, date ranges or functions to disable dates. More on disabling dates: https://flatpickr.js.org/examples/#disabling-specific-dates */
   disable: PropTypes.array,
   /** Whether the Datepicker is disabled */
