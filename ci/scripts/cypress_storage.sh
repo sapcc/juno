@@ -14,6 +14,7 @@ function help() {
   --container    -> where to upload or download assets
   --root-path    -> absolute path to the root where the cypress folder is located
   --project      -> project name (this is used as root folder in the swift container)
+  --name         -> name of the cypress test run
 
   possible ENV Vars:
   * OS_USER_DOMAIN_NAME: per default this is not set 
@@ -39,6 +40,11 @@ while [[ $# -gt 0 ]]; do
   case $1 in
   --root-path | -rp)
     ROOT_PATH="$2"
+    shift # past argument
+    shift # past value
+    ;;
+  --name | -n)
+    NAME="$2"
     shift # past argument
     shift # past value
     ;;
@@ -128,7 +134,7 @@ function upload() {
     echo "The directory $CYPRESS_PATH is empty, noting upload to swift..."
   else
     # create a new directory with the current date and time to upload the screenshots and videos
-    UPLOAD_DIR="$PROJECT/$(date +%m%d%y-%H%M%S)/"
+    UPLOAD_DIR="$PROJECT/$NAME/$(date +%m%d%y-%H%M%S)/"
     mkdir -p /tmp/$UPLOAD_DIR
     cd "$CYPRESS_PATH"
 
