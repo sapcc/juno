@@ -1,6 +1,7 @@
 # prettier-ignore
 <%
   # supported asset types
+  SWIFT_CONTAINER_PENDING_ASSETS = "juno-pending-assets"
   ASSETS_SOURCE = { 
     "juno-assets": ["app","lib"],
     "juno-3rd-party": ["app"],
@@ -46,14 +47,14 @@ resources:
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-ci-helper
 
-  - name: secrets.git
-    type: git-proxy
-    webhook_token: lfkhslkfhs
-    check_every: 6h
-    source:
-      uri: git@github.wdf.sap.corp:cc/secrets.git
-      branch: "master"
-      private_key: ((github-private-key/cc-secrets))
+  #- name: secrets.git
+  #  type: git-proxy
+  #  webhook_token: lfkhslkfhs
+  #  check_every: 6h
+  #  source:
+  #    uri: git@github.wdf.sap.corp:cc/secrets.git
+  #    branch: "master"
+  #    private_key: ((github-private-key/cc-secrets))
   
   <%# ASSETS SOURCE GIT %>
   <% ASSETS.each do |name,details| %>
@@ -70,12 +71,6 @@ resources:
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
   
-  - name: <%= details[:type] %>-<%= name %>.version
-    type: time-version-resource
-    icon: lock
-    check_every: 525600h
-    source: { key: "<%= details[:type] %>-<%= name %>" } # disambiguate from other time-version resources
-
   <% end %>
 
 resource_types:
@@ -93,19 +88,11 @@ resource_types:
       repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-git-resource-proxy
       tag: latest
 
-  - name: time-version-resource
-    type: docker-image
-    check_every: 24h
-    source:
-      repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-time-version-resource
-      tag: v2
-
 groups: 
   - name: assets 
     jobs:
       <% ASSETS.each do |name,details| %>
-      - build-<%= details[:type] %>-<%= name %>
-      #- upload-<%= details[:type] %>-<%= name %>
+      - build-upload-<%= details[:type] %>-<%= name %>
       <% end %>
 
 jobs:
@@ -114,27 +101,14 @@ jobs:
 
   # Assets build
   <% ASSETS.each do |name,details| %>
-  - name: build-<%= details[:type] %>-<%= name %>
+  - name: build-upload-<%= details[:type] %>-<%= name %>
     public: true
     plan:
       - get: <%= details[:type] %>-<%= name %>.git
         trigger: true
       - get: base.image
       - get: ci-helper.image
-      - put: <%= details[:type] %>-<%= name %>.version
 
-      <% if details[:type] == "lib" %>
-      # this is used to get the last version, only libs with new versions will be deployed
-      - task: download-last-build
-        file: <%=details[:type]%>-<%= name %>.git/ci/shared/swift-download.yaml
-        output_mapping:
-          download: last_build
-        params:
-          DEBUG: "true"
-          CONTAINER: "juno-assets"
-          ASSET_NAME: <%= name %>
-          ASSET_TYPE: lib
-      <% end %>  
       - task: build
         image: base.image
         input_mapping: 
@@ -142,9 +116,6 @@ jobs:
         config:
           inputs:
             - name: latest
-            <% if details[:type] == "lib" %>
-            - name: last_build
-            <% end %>
           outputs:
             - name: build_result
           platform: linux
@@ -164,7 +135,7 @@ jobs:
                 npm install --silent
                 echo ""
                 ./ci/scripts/asset_build.sh --asset-name <%= name %> --asset-type <%= details[:type] %> --output-path ../build_result <% if details[:type] == "lib" %> --last-build-path ../last_build <% end %>
-      - task: sync-to-juno-pending-assets
+      - task: sync-to-<%=SWIFT_CONTAINER_PENDING_ASSETS%>
         file: <%=details[:type]%>-<%= name %>.git/ci/shared/swift-upload.yaml
         input_mapping:
           upload: build_result
@@ -172,15 +143,8 @@ jobs:
           ACTION: sync
           DRY_RUN: "false"
           DEBUG: "true"
-          CONTAINER: "juno-pending-assets"
+          CONTAINER: "<%=SWIFT_CONTAINER_PENDING_ASSETS%>"
           ASSET_NAME: <%= name %>
           ASSET_TYPE: <%= details[:type] %>
-          
-  #- name: upload-<%= details[:type] %>-<%= name %>
-  #  public: true
-  #  plan:
-  #    - get: <%= details[:type] %>-<%= name %>.version
-  #      trigger: true
-  #      passed: [build-<%= details[:type] %>-<%= name %>]
 
   <% end %> 
