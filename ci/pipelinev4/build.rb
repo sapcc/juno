@@ -32,7 +32,7 @@ pipeline_config_paths.each do |pipeline_config_path|
       result[key] = [] if result[key].nil?
       result[key].concat(pipeline_config[key])
       # remove duplicates
-      result[key].uniq! { |x| x["name"] }
+      # result[key].uniq! { |x| x["name"] }
     end
     # groups need to be merged differently
     # it is a list of groups, each group has a name and a list of jobs
@@ -48,7 +48,7 @@ pipeline_config_paths.each do |pipeline_config_path|
           existing_group["jobs"] = [] if existing_group["jobs"].nil?
           existing_group["jobs"].concat(group["jobs"])
           # remove duplicates
-          existing_group["jobs"].uniq!
+          # existing_group["jobs"].uniq!
         else
           # if the group does not exist, add it to the result
           result["groups"] << group
