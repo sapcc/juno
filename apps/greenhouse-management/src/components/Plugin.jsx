@@ -41,22 +41,10 @@ const Plugin = ({ config }) => {
     // if assetsUrl still null when rendering for first time the component then mountApp also return null and we skip here
     if (!mountApp) return
 
-    if (config?.name === "greenhouse-cluster-admin") {
-      console.log(
-        "Plugin",
-        config?.name,
-        "displayPluging",
-        displayPluging,
-        "activePlugin",
-        activePlugin
-      )
-    }
-
     if (displayPluging) {
       mountApp.then((loaded) => {
         if (!loaded) return
         holder.current.appendChild(app.current)
-        console.log("Plugin mounted: ", config?.name)
       })
     } else {
       // remove from holder
@@ -66,8 +54,6 @@ const Plugin = ({ config }) => {
         if (holder.current.contains(app.current))
           holder.current.removeChild(app.current)
       })
-
-      console.log("Plugin unmounted: ", config?.name)
     }
   }, [mountApp, displayPluging])
 
