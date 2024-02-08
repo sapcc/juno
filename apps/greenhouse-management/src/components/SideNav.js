@@ -5,15 +5,16 @@ import { usePluginConfig, usePluginActive, useActions } from "./StoreProvider"
 const SideNav = () => {
   const pluginConfig = usePluginConfig()
   const pluginActive = usePluginActive()
+
   const { setPluginActive } = useActions()
 
   return (
-    <SideNavigation>
+    <SideNavigation activeItem={pluginActive}>
       {Object.keys(pluginConfig).map((key, index) => (
         <SideNavigationItem
           key={index}
           label={pluginConfig[key]?.label}
-          active={pluginConfig[key]?.name === pluginActive}
+          value={pluginConfig[key]?.name}
           onClick={() => setPluginActive(pluginConfig[key]?.name)}
         />
       ))}
