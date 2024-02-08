@@ -5,7 +5,6 @@ import { usePluginConfig, usePluginActive, useActions } from "./StoreProvider"
 const SideNav = () => {
   const pluginConfig = usePluginConfig()
   const pluginActive = usePluginActive()
-
   const { setPluginActive } = useActions()
 
   return (

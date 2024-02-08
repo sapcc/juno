@@ -50,7 +50,6 @@ const Plugin = ({ config }) => {
       // remove from holder
       mountApp.then((loaded) => {
         if (!loaded) return
-
         if (holder.current.contains(app.current))
           holder.current.removeChild(app.current)
       })
