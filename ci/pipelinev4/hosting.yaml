@@ -1,0 +1,143 @@
+# prettier-ignore
+
+resources:
+  - name: secrets.git
+    type: git-proxy
+    webhook_token: lfkhslkfhs
+    check_every: 6h
+    source:
+      uri: git@github.wdf.sap.corp:cc/secrets.git
+      branch: "master"
+      private_key: ((github-private-key/cc-secrets))
+
+  - name: hosting.git
+    type: git
+    icon: github
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["ci/helm-charts/hosting","e2e/cypress/integration/hosting"]
+      username: sapcc-bot
+      password: ((github-access-token/sapcc-bot))
+
+groups: 
+  - name: hosting 
+    jobs:
+      - deploy-hosting-to-s-qa-de-1
+      - e2e-tests-hosting-s-qa-de-1
+      - deploy-hosting-to-s-eu-nl-1     
+      - e2e-tests-hosting-s-eu-nl-1
+
+jobs:
+  # ======================== HOSTING =====================
+  # DEPLOY HOSTING TO QA 
+  - name: deploy-hosting-to-s-qa-de-1
+    serial: true
+    plan:
+      - in_parallel:
+        - get: hosting.git
+          trigger: true
+        - get: secrets.git
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          helm-charts.git: hosting.git
+
+        params:
+          HELM_MAJOR_VERSION: '3'
+          CHART_PATH: ci/helm-charts/hosting
+          RELEASE: juno-v3-hosting
+          NAMESPACE: juno
+          REGION: qa-de-1
+          CONTEXT: s-qa-de-1
+          VALUES: local:globals s-local:juno
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))
+
+  # RUN CYPRESS TESTS FOR HOSTING IN QA 
+  - name: e2e-tests-hosting-s-qa-de-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: hosting.git
+            trigger: true
+            passed: [deploy-hosting-to-s-qa-de-1]   
+      - task: cypress
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud/cypress-client
+              tag: "latest"
+          inputs:
+            - name: hosting.git
+              path: /app/juno
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd /app/juno/e2e
+                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/hosting/dashboard*" && \
+                CYPRESS_BASE_URL=https://exampleapp.juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/hosting/exampleapp*"
+
+  # DEPLOY HOSTING TO PROD
+  - name: deploy-hosting-to-s-eu-nl-1
+    serial: true
+    plan:
+      - in_parallel:
+        - get: secrets.git 
+        - get: hosting.git
+          trigger: false
+          passed: [e2e-tests-hosting-s-qa-de-1]  
+
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          helm-charts.git: hosting.git
+        params:
+          HELM_MAJOR_VERSION: '3'
+          CHART_PATH: ci/helm-charts/hosting
+          RELEASE: juno-v3-hosting
+          NAMESPACE: juno
+          REGION: eu-nl-1
+          CONTEXT: s-eu-nl-1
+          VALUES: local:globals s-local:juno 
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))            
+
+  # RUN CYPRESS TESTS FOR HOSTING IN PROD 
+  - name: e2e-tests-hosting-s-eu-nl-1
+    serial: true
+    plan:
+      - in_parallel:
+          - get: hosting.git
+            trigger: true
+            passed: [deploy-hosting-to-s-eu-nl-1]   
+      - task: cypress
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud/cypress-client
+              tag: "latest"
+          inputs:
+            - name: hosting.git
+              path: /app/juno
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd /app/juno/e2e
+                CYPRESS_BASE_URL=https://juno.global.cloud.sap cypress run --browser chrome --spec "cypress/integration/hosting/dashboard*" && \
+                CYPRESS_BASE_URL=https://ccloud.juno.global.cloud.sap cypress run --browser chrome --spec "cypress/integration/hosting/dashboard*" && \
+                CYPRESS_BASE_URL=https://convergedcloud.juno.global.cloud.sap cypress run --browser chrome --spec "cypress/integration/hosting/dashboard*" 

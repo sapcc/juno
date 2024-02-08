@@ -1,0 +1,187 @@
+# prettier-ignore
+<%
+  # supported asset types
+  ASSETS_SOURCE = { 
+    "juno-assets": ["app","lib"],
+    "juno-3rd-party": ["app"],
+  }
+  ASSETS = {
+    # "auth":                 { type: "app", path: "apps/auth" },
+    # "assets-overview":      { type: "app", path: "apps/assets-overview"},
+    # "user-activity":        { type: "app", path: "apps/user-activity"},
+    # "volta":                { type: "app", path: "apps/volta"},
+    "whois":                { type: "app", path: "apps/whois"},
+    # "widget-loader":        { type: "app", path: "apps/widget-loader"},
+    # "dashboard":            { type: "app", path: "apps/dashboard"},
+    # "supernova":            { type: "app", path: "apps/supernova"},
+    # "exampleapp":           { type: "app", path: "apps/exampleapp"},
+    # "greenhouse":           { type: "app", path: "apps/greenhouse" },
+    # "greenhouse-management":{ type: "app", path: "apps/greenhouse-management" },
+    # "heureka":              { type: "app", path: "apps/heureka"},
+    # "juno-ui-components":   { type: "lib", path: "libs/juno-ui-components"},
+    # "messages-provider":    { type: "lib", path: "libs/messages-provider"},
+    # "oauth":                { type: "lib", path: "libs/oauth"},
+    # "policy-engine":        { type: "lib", path: "libs/policy-engine"},
+    # "communicator":         { type: "lib", path: "libs/communicator"},
+    # "url-state-provider":   { type: "lib", path: "libs/url-state-provider"},
+    # "url-state-router":     { type: "lib", path: "libs/url-state-router"},
+    # "utils":                { type: "lib", path: "libs/utils"},
+  }
+%>
+
+resources:
+  - name: base.image
+    type: docker-image
+    icon: docker
+    source:
+      username: ((registry-user/keppel-ccloud.username))
+      password: ((registry-user/keppel-ccloud.password))
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base
+
+  - name: ci-helper.image
+    type: docker-image
+    icon: docker
+    source:
+      username: ((registry-user/keppel-ccloud.username))
+      password: ((registry-user/keppel-ccloud.password))
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-ci-helper
+
+  - name: secrets.git
+    type: git-proxy
+    webhook_token: lfkhslkfhs
+    check_every: 6h
+    source:
+      uri: git@github.wdf.sap.corp:cc/secrets.git
+      branch: "master"
+      private_key: ((github-private-key/cc-secrets))
+  
+  <%# ASSETS SOURCE GIT %>
+  <% ASSETS.each do |name,details| %>
+  - name: <%=details[:type]%>-<%= name %>.git
+    type: git
+    icon: github
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["<%=details[:path]%>","libs","package.json","e2e", ".yarn"]
+      # "ci"
+      # "ci/scripts"
+      # "ci/shared"
+      username: sapcc-bot
+      password: ((github-access-token/sapcc-bot))
+  
+  - name: <%= details[:type] %>-<%= name %>.version
+    type: time-version-resource
+    icon: lock
+    check_every: 525600h
+    source: { key: "<%= details[:type] %>-<%= name %>" } # disambiguate from other time-version resources
+
+  <% end %>
+
+resource_types:
+  - name: http-resource
+    type: docker-image
+    check_every: 20m
+    source:
+      repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/jgriff/http-resource
+      tag: latest
+
+  - name: git-proxy
+    type: registry-image
+    check_every: 24h
+    source:
+      repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-git-resource-proxy
+      tag: latest
+
+  - name: time-version-resource
+    type: docker-image
+    check_every: 24h
+    source:
+      repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-time-version-resource
+      tag: v2
+
+groups: 
+  - name: assets 
+    jobs:
+      <% ASSETS.each do |name,details| %>
+      - build-<%= details[:type] %>-<%= name %>
+      - upload-<%= details[:type] %>-<%= name %>
+      <% end %>
+
+jobs:
+  # ============================================================= 
+  # BUILD ASSETS IMAGES
+
+  # Assets build
+  <% ASSETS.each do |name,details| %>
+  - name: build-<%= details[:type] %>-<%= name %>
+    public: true
+    plan:
+      - get: <%= details[:type] %>-<%= name %>.git
+        trigger: true
+      - get: base.image
+      - get: ci-helper.image
+      - put: <%= details[:type] %>-<%= name %>.version
+
+      <% if details[:type] == "lib" %>
+      # this is used to get the last version, only libs with new versions will be deployed
+      - task: download-last-build
+        file: <%=details[:type]%>-<%= name %>.git/ci/shared/swift-download.yaml
+        output_mapping:
+          download: last_build
+        params:
+          DEBUG: "true"
+          CONTAINER: "juno-assets"
+          ASSET_NAME: <%= name %>
+          ASSET_TYPE: lib
+      <% end %>  
+      - task: build
+        image: base.image
+        input_mapping: 
+          latest: <%= details[:type] %>-<%= name %>.git
+        config:
+          inputs:
+            - name: latest
+            <% if details[:type] == "lib" %>
+            - name: last_build
+            <% end %>
+          outputs:
+            - name: build_result
+          platform: linux
+          run:
+            path: /bin/sh
+            # NOTE use -cx for debugging, than you can see the commands that where tirggered in the log
+            args:
+              - -c
+              - |
+                set -e 
+                ls -la
+                # TODO: this need a lot of runtime, move that stuff into asset_build.sh after version check
+                echo "sync all node_modules from /juno/ to ./latest/"
+                rsync -am --include='*/' --include='node_modules/***' --exclude='*' /juno/ ./latest
+                cd ./latest
+                echo "update node modules -> npm install --silent"
+                npm install --silent
+                echo ""
+                ./ci/scripts/asset_build.sh --asset-name <%= name %> --asset-type <%= details[:type] %> --output-path ../build_result <% if details[:type] == "lib" %> --last-build-path ../last_build <% end %>
+      - task: sync
+        file: <%=details[:type]%>-<%= name %>.git/ci/shared/swift-upload.yaml
+        input_mapping:
+          upload: build_result
+        params:
+          ACTION: sync
+          DRY_RUN: "false"
+          DEBUG: "true"
+          CONTAINER: "juno-assets"
+          ASSET_NAME: <%= name %>
+          ASSET_TYPE: <%= details[:type] %>
+
+
+  - name: upload-<%= details[:type] %>-<%= name %>
+    public: true
+    plan:
+      - get: <%= details[:type] %>-<%= name %>.version
+        trigger: true
+        passed: [build-<%= details[:type] %>-<%= name %>]
+
+  <% end %> 

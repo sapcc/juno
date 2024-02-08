@@ -1,0 +1,115 @@
+# prettier-ignore
+<%
+  HA_REGIONS = [
+    "eu-de-1",
+    "eu-de-2",
+    "eu-nl-1",
+    "ap-ae-1",
+    "ap-jp-2",
+    "ap-au-1",
+    "la-br-1",
+    "na-us-1",
+    "na-us-2"
+  ]
+%>
+
+resources:
+  - name: juno.git
+    type: git
+    icon: github
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      username: sapcc-bot
+      password: ((github-access-token/sapcc-bot))   
+
+<% 
+  # this step combines all assets that where build and uploaded before to swift
+  # for that we use nginx image and copy all assets (that where build in the step before) into /usr/share/nginx/html/
+  # this image will be deployed as asset server 
+
+  # Important! 
+  # If the asset-server.image was not build before 
+  # 1) comment the parts in the dockerfile where the image is needed to copy old stuff over
+  # 2) you need first build the libs otherwise the build importmap step will fail because 
+  #    it will not find the libs
+  # 3) if the libs are build and uploaded to swift you can add the apps
+  # 4) when the apps are build without problems you can uncomment the parts in 
+  #    the dockerfile to store the old versions 
+  %>
+  
+
+groups: 
+  - name: assets-server 
+    jobs:
+      - download-pending-assets
+      - validate-pending-assets
+      - upload-valid-assets-to-final
+      - download-all-final-assets
+      - build-assets-server-image
+      - deploy-assets-server-to-s-qa-de-1
+      - deploy-assets-server-to-qa-de-2
+      - e2e-tests-assets-server-s-qa-de-1
+      - promote-prod-assets-server
+      <%HA_REGIONS.each do |region|%>
+      - deploy-assets-server-to-<%= region %>
+      - e2e-tests-assets-server-<%= region %>
+      <% end %> 
+
+jobs:
+  - name: download-pending-assets
+    plan:
+      - get: juno.git
+        trigger: true  
+  - name: validate-pending-assets
+    plan:
+      - get: juno.git
+        trigger: true
+        passed: [download-pending-assets]
+  - name: upload-valid-assets-to-final
+    plan:
+    - get: juno.git
+      trigger: true
+      passed: [validate-pending-assets]
+  - name: download-all-final-assets
+    plan:
+    - get: juno.git
+      trigger: true
+      passed: [upload-valid-assets-to-final]
+  - name: build-assets-server-image
+    plan:
+    - get: juno.git
+      trigger: true
+      passed: [download-all-final-assets]
+  - name: deploy-assets-server-to-s-qa-de-1
+    plan:
+    - get: juno.git
+      trigger: true
+      passed: [build-assets-server-image]
+  - name: deploy-assets-server-to-qa-de-2
+    plan:
+      - get: juno.git
+        trigger: true  
+        passed: [build-assets-server-image]
+  - name: e2e-tests-assets-server-s-qa-de-1
+    plan:
+      - get: juno.git
+        trigger: true  
+        passed: [deploy-assets-server-to-s-qa-de-1]
+  - name: promote-prod-assets-server
+    plan:
+      - get: juno.git
+        trigger: false  
+        passed: [e2e-tests-assets-server-s-qa-de-1]
+  <%HA_REGIONS.each do |region|%>
+  - name: deploy-assets-server-to-<%= region %>
+    plan:
+      - get: juno.git
+        trigger: true  
+        passed: [promote-prod-assets-server]
+  - name: e2e-tests-assets-server-<%= region %>
+    plan:
+      - get: juno.git
+        trigger: true  
+        passed: [deploy-assets-server-to-<%= region %>]
+  <% end %>  

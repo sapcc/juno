@@ -1,0 +1,91 @@
+resources:
+  - name: base.image
+    type: docker-image
+    icon: docker
+    source:
+      username: ((registry-user/keppel-ccloud.username))
+      password: ((registry-user/keppel-ccloud.password))
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base
+
+  - name: ci-helper.image
+    type: docker-image
+    icon: docker
+    source:
+      username: ((registry-user/keppel-ccloud.username))
+      password: ((registry-user/keppel-ccloud.password))
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-ci-helper
+
+  - name: juno.git
+    type: git
+    icon: github
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      username: sapcc-bot
+      password: ((github-access-token/sapcc-bot))      
+
+  - name: juno-ci-helper.git
+    type: git
+    icon: github
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      username: sapcc-bot
+      paths: ["ci/Dockerfile.ci-helper","ci/scripts"]
+      password: ((github-access-token/sapcc-bot))
+
+groups: 
+  - name: base
+    jobs:
+      - readme
+      - build-base-image
+      - build-ci-helper-image  
+
+jobs:
+  - name: readme
+    serial: true
+    plan:
+      - task: describe-this-pipeline
+        config:
+          platform: "linux"
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/alpine
+              tag: latest
+          run:
+            path: /bin/echo
+            args:
+              - -e
+              - '\tThis pipeline is defined at: https://github.com/sapcc/juno/ci/\n\n'
+              - '\tManage Juno images: https://keppel.eu-de-1.cloud.sap/ccloud/juno\n'
+
+  # =============================================================
+  # BUILD BASE IMAGES
+  - name: build-base-image
+    public: true
+    plan:
+      - get: juno.git
+        trigger: true
+
+      - put: base.image
+        params:
+          tag_as_latest: true
+          cache: true
+          cache_tag: "latest"
+          build: juno.git
+          dockerfile: juno.git/ci/Dockerfile.base
+
+  - name: build-ci-helper-image
+    public: true
+    plan:
+      - get: juno-ci-helper.git
+        trigger: true
+
+      - put: ci-helper.image
+        params:
+          tag_as_latest: true
+          cache: true
+          cache_tag: "latest"
+          build: juno-ci-helper.git
+          dockerfile: juno-ci-helper.git/ci/Dockerfile.ci-helper

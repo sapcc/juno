@@ -1,0 +1,178 @@
+# prettier-ignore
+
+resources:
+  - name: ui-storybook.git
+    type: git
+    icon: github
+    source:
+      uri: https://github.com/sapcc/juno.git
+      branch: main
+      paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.ui.storybook","e2e","ci/helm-charts/ui_storybook"]
+      username: sapcc-bot
+      password: ((github-access-token/sapcc-bot))
+  
+  - name: ui-storybook.version
+    type: time-version-resource
+    icon: lock
+    check_every: 525600h
+    source: { key: juno-ui-storybook-version } # disambiguate from other time-version resources
+
+  - name: ui-storybook.image
+    type: docker-image
+    icon: docker
+    source:
+      username: ((registry-user/keppel-ccloud.username))
+      password: ((registry-user/keppel-ccloud.password))
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-ui-storybook
+
+groups:
+  - name: storybook
+    jobs:
+      - build-ui-storybook-image
+      - deploy-storybook-to-s-qa-de-1
+      - e2e-tests-storybook-s-qa-de-1
+      - deploy-storybook-to-s-eu-nl-1 
+      - e2e-tests-storybook-s-eu-nl-1  
+
+jobs:
+  # ======================== STORYBOOK ==========================
+  # BUILD STORYBOOK IMAGE
+  - name: build-ui-storybook-image
+    serial: true
+    plan:
+      - in_parallel:
+        - get: ui-storybook.git
+          trigger: true
+        - put: ui-storybook.version
+      - in_parallel:  
+        - put: ui-storybook.image
+          params:
+            tag_as_latest: true
+            # cache: true
+            cache_tag: "latest"
+            build: ui-storybook.git
+            build_args: 
+              KEPPEL_HOSTNAME: keppel.eu-de-1.cloud.sap
+            dockerfile: ui-storybook.git/ci/Dockerfile.ui.storybook
+            tag: ui-storybook.version/version
+          get_params:
+            skip_download: true   
+
+  # DEPLOY STORYBOOK TO QA 
+  - name: deploy-storybook-to-s-qa-de-1
+    serial: true
+    plan:
+      - in_parallel:
+        - get: secrets.git
+        - get: ui-storybook.git
+        - get: ui-storybook.version
+          trigger: true
+          passed: [build-ui-storybook-image]
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          app.version: ui-storybook.version
+          helm-charts.git: ui-storybook.git
+
+        params:
+          HELM_MAJOR_VERSION: '3'
+          CHART_PATH: ci/helm-charts/ui_storybook
+          RELEASE: juno-v3-storybook
+          NAMESPACE: juno
+          REGION: qa-de-1
+          CONTEXT: s-qa-de-1
+          TAG_VARIABLE:  image.tag
+          VALUES: local:globals s-local:juno 
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))            
+
+  # RUN CYPRESS TESTS FOR STORYBOOK IN QA 
+  - name: e2e-tests-storybook-s-qa-de-1
+    serial: true
+    plan:
+      - in_parallel:
+        - get: ui-storybook.git
+        - get: ui-storybook.version
+          trigger: true
+          passed: [deploy-storybook-to-s-qa-de-1]   
+      - task: cypress
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud/cypress-client
+              tag: "latest"
+          inputs:
+            - name: ui-storybook.git
+              path: /app/juno
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd /app/juno/e2e
+                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/ui-storybook/*" 
+
+
+  # DEPLOY STORYBOOK TO PROD
+  - name: deploy-storybook-to-s-eu-nl-1
+    serial: true
+    plan:
+      - in_parallel:
+        - get: secrets.git
+        - get: ui-storybook.version
+          trigger: true
+          passed: [e2e-tests-storybook-s-qa-de-1]
+        - get: ui-storybook.git
+      - task: deploy
+        file: secrets.git/ci/shared/task-helm-upgrade.yaml
+        input_mapping:
+          app.version: ui-storybook.version
+          helm-charts.git: ui-storybook.git
+
+        params:
+          HELM_MAJOR_VERSION: '3'
+          CHART_PATH: ci/helm-charts/ui_storybook
+          RELEASE: juno-v3-storybook
+          NAMESPACE: juno
+          REGION: eu-nl-1
+          CONTEXT: s-eu-nl-1
+          TAG_VARIABLE:  image.tag
+          VALUES: local:globals s-local:juno 
+          KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
+          KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
+          VAULT_ROLE_ID:      ((auth.role_id))
+          VAULT_SECRET_ID:    ((auth.secret_id))  
+
+  # RUN CYPRESS TESTS FOR STORYBOOK IN QA 
+  - name: e2e-tests-storybook-s-eu-nl-1
+    serial: true
+    plan:
+      - in_parallel:
+        - get: ui-storybook.git
+        - get: ui-storybook.version
+          trigger: true
+          passed: [deploy-storybook-to-s-eu-nl-1]   
+      - task: cypress
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud/cypress-client
+              tag: "latest"
+          inputs:
+            - name: ui-storybook.git
+              path: /app/juno
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd /app/juno/e2e
+                CYPRESS_BASE_URL=https://ui.juno.eu-nl-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/ui-storybook/*" 
