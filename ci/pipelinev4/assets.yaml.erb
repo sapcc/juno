@@ -105,7 +105,7 @@ groups:
     jobs:
       <% ASSETS.each do |name,details| %>
       - build-<%= details[:type] %>-<%= name %>
-      - upload-<%= details[:type] %>-<%= name %>
+      #- upload-<%= details[:type] %>-<%= name %>
       <% end %>
 
 jobs:
@@ -164,7 +164,7 @@ jobs:
                 npm install --silent
                 echo ""
                 ./ci/scripts/asset_build.sh --asset-name <%= name %> --asset-type <%= details[:type] %> --output-path ../build_result <% if details[:type] == "lib" %> --last-build-path ../last_build <% end %>
-      - task: sync
+      - task: sync-to-juno-pending-assets
         file: <%=details[:type]%>-<%= name %>.git/ci/shared/swift-upload.yaml
         input_mapping:
           upload: build_result
@@ -172,16 +172,15 @@ jobs:
           ACTION: sync
           DRY_RUN: "false"
           DEBUG: "true"
-          CONTAINER: "juno-assets"
+          CONTAINER: "juno-pending-assets"
           ASSET_NAME: <%= name %>
           ASSET_TYPE: <%= details[:type] %>
-
-
-  - name: upload-<%= details[:type] %>-<%= name %>
-    public: true
-    plan:
-      - get: <%= details[:type] %>-<%= name %>.version
-        trigger: true
-        passed: [build-<%= details[:type] %>-<%= name %>]
+          
+  #- name: upload-<%= details[:type] %>-<%= name %>
+  #  public: true
+  #  plan:
+  #    - get: <%= details[:type] %>-<%= name %>.version
+  #      trigger: true
+  #      passed: [build-<%= details[:type] %>-<%= name %>]
 
   <% end %> 
