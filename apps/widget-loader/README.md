@@ -169,3 +169,56 @@ const App = ({}) => {
 
 export default App
 ```
+
+## Adding an App within Another App using Widget Loader
+
+To integrate another app within your main app using the widget loader, follow these steps:
+
+First, load the import map using the widget loader with the `data-importmap-only="true"` property. Example:
+
+```html
+<script
+  defer
+  src="https://assets.juno.global.cloud.sap/apps/widget-loader@latest/build/app.js"
+  data-importmap-only="true"
+></script>
+
+Then, wait until the import map is loaded, and import the desired app alongside
+the main app as shown in the following example, which imports the authentication
+(auth) app from the import map and mounts it inside the root app:
+
+<body>
+  <script type="module">
+    // appProps are generated in the development environment and added to the build
+    import appProps from "./build/appProps.js"
+    // import the main app and mount it
+    import("./build/index.js").then((app) => {
+      app.mount(document.getElementById("root"), { props: appProps })
+    })
+    // wait until the import map is loaded and then mount the auth widget
+    window.addEventListener("JUNO_IMPORTMAP_LOADED", () => {
+      // import the auth app and mount it
+      importShim("@juno/auth@latest").then((auth) => {
+        // use appProps to pass the issuerUrl and clientId to the auth app from secretProps
+        // to use secrets without saving them in GitHub
+        auth.mount(document.getElementById("auth"), {
+          props: {
+            debug: true,
+            initialLogin: true,
+            issuerUrl: appProps.authIssuerUrl,
+            clientId: appProps.authClientId,
+          },
+        })
+      })
+    })
+  </script>
+  <!-- This div with auth id is a container where the authentication app is loaded -->
+  <div id="auth" data-juno-app="template"></div>
+  <!-- This div with root id is a container where the main app is loaded -->
+  <div id="root" data-juno-app="template"></div>
+</body>
+
+Replace appProps with the appropriate props for your application. This method
+enables seamless integration of additional apps within your main app, leveraging
+the capabilities of the widget loader.
+```
