@@ -136,6 +136,9 @@ echo "----------------------------------"
 echo "generate COMMUNICATOR.md in $ASSET_PATH"
 node ci/scripts/generate_communication_readme.mjs --path="$ASSET_PATH"
 
+############# build required libs ##############
+# jq '(.devDependencies // {}, .dependencies // {} | keys ) - (.peerDependencies // {} | keys) | flatten[]' "$ASSET_PATH/package.json"
+
 # install and build libs
 npm run build-libs
 
