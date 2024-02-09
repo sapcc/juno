@@ -22,7 +22,6 @@ resources:
       branch: main
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))   
-
 <% 
   # this step combines all assets that where build and uploaded before to swift
   # for that we use nginx image and copy all assets (that where build in the step before) into /usr/share/nginx/html/
@@ -42,9 +41,7 @@ resources:
 groups: 
   - name: assets-server 
     jobs:
-      - download-pending-assets
-      - validate-pending-assets
-      - upload-valid-assets-to-final
+      - download-validate-pending-assets
       - download-all-final-assets
       - build-assets-server-image
       - deploy-assets-server-to-s-qa-de-1
@@ -57,25 +54,97 @@ groups:
       <% end %> 
 
 jobs:
-  - name: download-pending-assets
-    plan:
-      - get: juno.git
-        trigger: true  
-  - name: validate-pending-assets
+  - name: download-validate-pending-assets
     plan:
       - get: juno.git
         trigger: true
-        passed: [download-pending-assets]
-  - name: upload-valid-assets-to-final
-    plan:
-    - get: juno.git
-      trigger: true
-      passed: [validate-pending-assets]
+
+      - task: download-from-juno-pending-assets
+        file: juno.git/ci/shared/swift-download.yaml
+        output_mapping:
+          download: pending_assets
+        params:
+          DEBUG: "true"
+          CONTAINER: "juno-pending-assets"
+
+      - task: generate-import-map-and-co
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base
+              tag: "latest"    
+          inputs:
+            - name: pending_assets
+          outputs:
+            - name: importmap_data
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                WORKDIR=$(pwd)
+                echo "==========WORKDIR: $WORKDIR"
+                cd /juno 
+                npm run build-libs
+                cd $WORKDIR
+                mkdir -p ./pending_assets/libs
+                # copy libs to pending_assets 
+                # some apps are using the libs and we need to have them in the same folder
+                for lib in /juno/libs/*; do
+                  name=$(basename $lib)
+                  cp -r $lib ./pending_assets/libs/"${name}@latest"
+                done
+                cd pending_assets
+
+                # Generate importmap and manifest only for pending apps and libs
+                # this step also generates the externals esm packages
+                node /juno/ci/scripts/esm_build/generate_importmap.mjs \
+                --node-modules-path=/tmp/ \
+                --external-path=./externals \
+                --exit-on-error=false \
+                --src=./ \
+                --base-url="http://localhost:3000" \
+                --ignore-externals=false \
+                --output=./importmap.json  \
+                --verbose=false ; \
+                \
+                node /juno/ci/scripts/generate_manifest.mjs \
+                --src=./ \
+                --output=./manifest.json \
+                --base-url="http://localhost:3000" \
+                --verbose=false ;
+
+                exit 1
+
+      - task: test
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/alpine
+              tag: "latest"    
+          inputs:
+            - name: importmap_data
+
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd importmap_data
+                pwd
+                ls -la
+        
+      <%# - task: upload-to-final %>
+
   - name: download-all-final-assets
     plan:
     - get: juno.git
       trigger: true
-      passed: [upload-valid-assets-to-final]
+      passed: [download-validate-pending-assets]
   - name: build-assets-server-image
     plan:
     - get: juno.git
