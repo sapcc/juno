@@ -110,6 +110,8 @@ export const unmount = () => mount.root && mount.root.unmount()
 
 ### Best Practise
 
+These best practices refer to the implementation of an app hosted on the Assets Server and loaded via Widget Loader.
+
 1. exclude packages like react, react-dom, zustand ect. from bundle
 
 - in esbuild use `external: []`
@@ -170,7 +172,7 @@ const App = ({}) => {
 export default App
 ```
 
-## Adding an App within Another App using Widget Loader
+## Adding an App within Another App using Widget Loader in Dev Mode
 
 To integrate another app within your main app using the widget loader, follow these steps:
 
