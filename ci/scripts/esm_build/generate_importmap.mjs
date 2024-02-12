@@ -84,7 +84,7 @@ const globPattern = `${rootPath}/@(${PACKAGES_PATHS.join("|")})/**/package.json`
 // regex to extract the package name from the path
 const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
 // find all package.json files, except in node_modules
-const files = glob.sync(globPattern, { ignore: [`node_modules/**`] })
+const files = glob.sync(globPattern, { ignore: [`node_modules/**`,'**/node_modules/**'] })
 
 // build package registry based on juno packages
 const packageRegistry = {}
