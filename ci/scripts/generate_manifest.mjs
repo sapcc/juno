@@ -52,8 +52,9 @@ const PACKAGES_PATHS = ["apps", "libs"]
 const rootPath = path.resolve(options.src)
 const globPattern = `${rootPath}/@(${PACKAGES_PATHS.join("|")})/**/package.json`
 const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
-const files = glob.sync(globPattern, { ignore: [`node_modules/**`,'**/node_modules/**'] })
-
+const files = glob.sync(globPattern, {
+  ignore: [`node_modules/**`, "**/node_modules/**"],
+})
 const manifest = {
   _global: {
     buildDate: new Date(),
@@ -84,7 +85,7 @@ files.sort().forEach(async (file) => {
   let type = PACKAGES_PATHS.find((p) => path.indexOf(p) >= 0)
   type = type && type.slice(0, -1)
   const entryFile = pkg.module || pkg.main
-  // console.log(":::", pkg.name, entryFile)
+  //console.log(":::", pkg.name, entryFile)
   const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/"))
   const meta = fs.statSync(`${rootPath}/${path}`)
 

@@ -119,6 +119,7 @@ for (let file of files) {
 // initialize an empty importmap
 const importMap = { imports: {}, scopes: {} }
 
+// TODO: once the pipeline is stable, we can remove this hack
 // Due to the backward compatibility, we need to add the "old" url of the es-module-shims
 // to importmap to link it to the built version.
 // download convert es-module-shim to esm

@@ -19,7 +19,7 @@ resources:
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: main
+      branch: pipelineV4
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))   
 <% 
@@ -85,7 +85,6 @@ jobs:
               - -c
               - |
                 WORKDIR=$(pwd)
-                echo "==========WORKDIR: $WORKDIR"
                 cd /juno 
                 npm run build-libs
                 cd $WORKDIR
@@ -114,9 +113,9 @@ jobs:
                 --src=./ \
                 --output=./manifest.json \
                 --base-url="http://localhost:3000" \
-                --verbose=false ;
+                --verbose=false 
 
-                exit 1
+                cp -r ./* ../importmap_data/
 
       - task: test
         config:
@@ -124,9 +123,10 @@ jobs:
           image_resource:
             type: docker-image
             source:
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/alpine
+              repository: keppel.eu-de-1.cloud.sap/ccloud/cypress-client
               tag: "latest"    
           inputs:
+            - name: juno.git
             - name: importmap_data
 
           run:
@@ -134,10 +134,40 @@ jobs:
             args:
               - -c
               - |
-                cd importmap_data
-                pwd
-                ls -la
-        
+                mkdir -p /tmp/passed /tmp/build 
+                cp -r ./juno.git/e2e .
+                cp ./juno.git/ci/scripts/assets-server/mount-test.html ./importmap_data/      
+                echo '[]' > /tmp/build/log.json
+                echo '{"cleanUrls": false}' > /tmp/serve.config.json
+                echo "=== RUN MOUNT TESTS ===\n"
+                # run server in importmap_data
+                serve -c /tmp/serve.config.json ./importmap_data & sleep 5  
+                
+                cd e2e
+                for f in ../importmap_data/**/*/package.json; do 
+                NAME=$(cat $f | jq -r '.name') 
+                VERSION=$(cat $f | jq -r '.version') 
+                echo "$NAME@$VERSION" 
+                mkdir -p "/tmp/build/$NAME@$VERSION" 
+                TYPE_FOLDER=$(basename $(dirname $(dirname $f)))
+                cypress run --spec "cypress/integration/assets-server/mount_asset.spec.js" \
+                --browser chrome \
+                --env APP_NAME=$NAME,APP_VERSION=$VERSION \
+                --config baseUrl="http://localhost:3000" , screenshotsFolder="/tmp/build/$NAME@$VERSION" 
+                # Check the exit status of the cp command \
+                if [ $? -eq 0 ]; then 
+                cp -r $(dirname $f) /tmp/passed/$TYPE_FOLDER/ && \
+                STATUS="passed" ; \
+                else \
+                STATUS="failed" ; \
+                fi 
+                echo "$NAME@$VERSION $STATUS" && \
+                jq --arg n "$NAME" --arg v "$VERSION" --arg s "$STATUS" --arg l "/build-log/$NAME@$VERSION" \
+                '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' /tmp/build/log.json > /tmp/build/log.json.temp && \
+                mv /tmp/build/log.json.temp /tmp/build/log.json ; \
+                done
+                done
+                exit 1
       <%# - task: upload-to-final %>
 
   - name: download-all-final-assets
