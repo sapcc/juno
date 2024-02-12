@@ -6,31 +6,31 @@ export async function transformCode(codeString) {
     await module.default()
     swc = module
   }
-  return swc.transform(codeString, {
-    filename: "index.jsx",
-    // jsc: {
-    //   parser: {
-    //     syntax: "typescript",
-    //     tsx: true,
-    //     decorators: true,
-    //   },
-    //   target: "commonjs",
-    // },
+  return swc.transformSync(codeString, {
+    filename: "index.tsx",
+    jsc: {
+      parser: {
+        syntax: "typescript",
+        tsx: true,
+      },
+    },
+    module: {
+      type: "commonjs",
+    },
   }).code
 }
 
 export async function executeCode(codeString, dependencies) {
   const transformedCode = await transformCode(codeString)
   const exports = {}
-
   const require = (path) => {
     if (dependencies[path]) {
       return dependencies[path]
     }
-    throw Error(`Module not found: ${path}. `)
+    throw Error(`Module not found: ${path}.`)
   }
-
   const result = new Function("exports", "require", transformedCode)
+
   result(exports, require)
 
   return exports.default

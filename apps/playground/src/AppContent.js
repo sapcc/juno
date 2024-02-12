@@ -3,13 +3,11 @@ import { Stack, Textarea } from "juno-ui-components"
 import Preview from "./components/Preview"
 
 const initialCodeString = `
-import React from 'react'
+import { LoadingIndicator } from "juno-ui-components"
 
-export default function App() {
+const App = () => {
   return (
-    <div>
-      <h1>Hello Playground</h1>
-    </div>
+    <LoadingIndicator />
   )
 }
 `.trim()
