@@ -13,7 +13,6 @@
     "@svgr/core": "^7.0.0",
     "@svgr/plugin-jsx": "^7.0.0",
     "@swc/wasm-web": "^1.3.107",
-    "@tanstack/react-query": "4.28.0",
     "@testing-library/dom": "^8.19.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -45,7 +44,6 @@
     "build": "NODE_ENV=production node esbuild.config.js"
   },
   "peerDependencies": {
-    "@tanstack/react-query": "4.28.0",
     "juno-ui-components": "*",
     "prop-types": "^15.8.1",
     "react": "18.2.0",

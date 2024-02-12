@@ -2,32 +2,17 @@ import React from "react"
 
 import { AppShell, AppShellProvider } from "juno-ui-components"
 import StoreProvider from "./components/StoreProvider"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
 
 const App = (props = {}) => {
-  // Create query client which it can be used from overall in the app
-  // set default endpoint to fetch data
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        meta: {
-          endpoint: props.endpoint || props.currentHost || "",
-        },
-      },
-    },
-  })
-
   return (
-    <QueryClientProvider client={queryClient}>
-      <AppShell
-        pageHeader="Converged Cloud | Playground"
-        embedded={props.embedded === "true" || props.embedded === true}
-      >
-        <AppContent props={props} />
-      </AppShell>
-    </QueryClientProvider>
+    <AppShell
+      pageHeader="Converged Cloud | Playground"
+      embedded={props.embedded === "true" || props.embedded === true}
+    >
+      <AppContent props={props} />
+    </AppShell>
   )
 }
 
