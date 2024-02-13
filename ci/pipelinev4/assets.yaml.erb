@@ -119,10 +119,14 @@ jobs:
                 cd ./latest
                 echo "update node modules -> npm install --silent"
                 npm install --silent
-                echo "build app <%details[:type]%>-<%= name %> and write to build_result/"
+                echo "build app <%= details[:type] %>-<%= name %> and write to build_result/"
                 ./ci/scripts/asset_build.sh --asset-name <%= name %> --asset-type <%= details[:type] %> --output-path ../build_result <% if details[:type] == "lib" %> --last-build-path ../last_build <% end %>
+                CHECKSUM="$(find ../build_result -type f -exec sha512sum {} \; | sort | sha512sum)"
+                echo "build checksum: $CHECKSUM"
+                echo "write checksum to build_result/<%= details[:type] %>s/<%= name %>/checksum"
+                echo $CHECKSUM > ../build_result/<%= details[:type] %>s/<%= name %>/checksum
       - task: sync-to-<%=SWIFT_CONTAINER_PENDING_ASSETS%>
-        file: <%=details[:type]%>-<%= name %>.git/ci/shared/swift-upload.yaml
+        file: <%= details[:type] %>-<%= name %>.git/ci/shared/swift-upload.yaml
         input_mapping:
           upload: build_result
         params:
