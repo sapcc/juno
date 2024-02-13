@@ -15,9 +15,10 @@ function help() {
                   defined with the --asset-type option is downloaded
   --asset-path -> optional like apps/asset-name, if set --asset-type is ingnored
   --asset-type -> app || lib
-  --action     -> upload ||download || sync
+  --action     -> upload ||download || sync || delete
   --container  -> where to upload or download assets
-  --root-path  -> default is /tmp/build_result
+  --root-path  -> this is needed for upload, download and sync and is the absolute path where the asset-path is located
+                  default is /tmp/build_result (download,upload,sync from this root-path to the container)
   --debug      -> default is 'false'
   --dry-run    -> default is 'false', this is only valid if you use the sync mode and is useful to prevent data loss 😉
 
@@ -119,9 +120,11 @@ if [[ -z "$ROOT_PATH" ]]; then
   ROOT_PATH="/tmp/build_result"
 fi
 
-if [ ! -d "$ROOT_PATH" ]; then
-  echo "Error: directory ROOT_PATH $ROOT_PATH does not exist 😐"
-  exit 1
+if [[ "$ACTION" == "upload" ]] || [[ "$ACTION" == "sync" ]] || [[ "$ACTION" == "download" ]]; then
+  if [ ! -d "$ROOT_PATH" ]; then
+    echo "Error: directory ROOT_PATH $ROOT_PATH does not exist 😐"
+    exit 1
+  fi
 fi
 
 if [[ -z "$OS_AUTH_URL" ]]; then
@@ -232,11 +235,25 @@ function download() {
     echo "download done 🙂"
 }
 
-cd "$ROOT_PATH"
-if [[ "$ACTION" == "upload" ]] || [[ "$ACTION" == "sync" ]]; then
-  if [ ! -d "$ASSET_PATH" ]; then
-    echo "Error: directory ASSET_PATH $ASSET_PATH does not exist 😐"
+function delete() {
+  echo "Swift delete from container $CONTAINER $ASSET_PATH"
+  if [[ -z "$ASSET_PATH" ]]; then
+    echo "Error: no ASSET_PATH given 😐"
     exit 1
+  fi
+  #echo "swift delete $CONTAINER --prefix $ASSET_PATH"
+  swift delete "$CONTAINER" --prefix "$ASSET_PATH" &>$OUTPUT &&
+    echo "----------------------------------" &&
+    echo "delete done 🙂"
+}
+
+if [[ "$ACTION" == "upload" ]] || [[ "$ACTION" == "sync" ]] || [[ "$ACTION" == "download" ]]; then
+  cd "$ROOT_PATH"
+  if [[ "$ACTION" != "download" ]]; then
+    if [ ! -d "$ASSET_PATH" ]; then
+      echo "Error: directory ASSET_PATH $ASSET_PATH does not exist 😐"
+      exit 1
+    fi
   fi
 fi
 
@@ -250,6 +267,9 @@ if [[ "$ACTION" == "download" ]]; then
 fi
 if [[ "$ACTION" == "sync" ]]; then
   sync
+fi
+if [[ "$ACTION" == "delete" ]]; then
+  delete
 fi
 
 echo ""
