@@ -101,8 +101,11 @@ jobs:
                 # copy libs to pending_assets 
                 # some apps are using the libs and we need to have them in the same folder
                 for lib in /juno/libs/*; do
-                  name=$(basename $lib)
-                  cp -r $lib ./pending_assets/libs/"${name}@latest"
+                name=$(basename $lib)
+                if [ ! -d "./pending_assets/libs/${name}@latest" ]; then
+                cp -r $lib ./pending_assets/libs/"${name}@latest"
+                fi
+              
                 done
                 cd pending_assets
 
@@ -137,6 +140,7 @@ jobs:
           inputs:
             - name: juno.git
             - name: importmap_data
+            - name: pending_assets
           outputs:
             - name: passed 
             - name: test_results  
@@ -156,7 +160,8 @@ jobs:
                 serve ./importmap_data -n -c /tmp/serve.config.json & sleep 5  
                 
                 cd e2e
-                for f in ../importmap_data/**/*/package.json; do 
+                # loop over assets in pending_assets to avoid unnesseray tests
+                for f in ../pending_assets/**/*/package.json; do 
                 NAME=$(cat $f | jq -r '.name') 
                 VERSION=$(cat $f | jq -r '.version') 
                 echo "$NAME@$VERSION" 

@@ -20,7 +20,8 @@ describe("Preflight", () => {
 
     cy.request("/manifest.json").then((response) => {
       let manifest = response.body
-      const app = manifest[name][version]
+      const versions = manifest[name]
+      const app = Object.values(versions).find((v) => v.version === version)
 
       expect(app).to.not.be.undefined
       expect(app).to.have.property("name")
@@ -29,7 +30,7 @@ describe("Preflight", () => {
         expect(response.status).to.eq(200)
       })
 
-      if (name === "auth" || manifest[name][version].type !== "app") return
+      if (name === "auth" || app.type !== "app") return
 
       cy.log("MOUNT")
       let appConf = { name: app.name, version: app.version, props: {} }
