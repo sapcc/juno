@@ -26,6 +26,7 @@
           importShim.addImportMap(importmap)
           importShim(`@juno/${name}@${version}`).then((app) => {
             const appWrapper = document.createElement("div")
+            appWrapper.setAttribute("data-juno-app", name)
             const mount = app.mount || app.default
             mount(appWrapper, { props })
             document.body.appendChild(appWrapper)
