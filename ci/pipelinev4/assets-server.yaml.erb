@@ -22,6 +22,13 @@ resources:
       branch: pipelineV4
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))   
+
+  - name: assets-server.version
+    type: time-version-resource
+    icon: lock
+    check_every: 525600h
+    source: { key: "juno-assets-server-version" } # disambiguate from other time-version resources
+
 <% 
   # this step combines all assets that where build and uploaded before to swift
   # for that we use nginx image and copy all assets (that where build in the step before) into /usr/share/nginx/html/
@@ -58,6 +65,8 @@ jobs:
     plan:
       - get: juno.git
         trigger: true
+
+      - get: assets-server.version  
 
       - task: download-from-juno-pending-assets
         file: juno.git/ci/shared/swift-download.yaml
@@ -128,6 +137,9 @@ jobs:
           inputs:
             - name: juno.git
             - name: importmap_data
+          outputs:
+            - name: passed 
+            - name: test_results  
 
           run:
             path: /bin/sh
@@ -153,21 +165,28 @@ jobs:
                 cypress run --spec "cypress/integration/assets-server/mount_asset.spec.js" \
                 --browser chrome \
                 --env APP_NAME=$NAME,APP_VERSION=$VERSION \
-                --config baseUrl="http://localhost:3000" , screenshotsFolder="/tmp/build/$NAME@$VERSION" 
-                # Check the exit status of the cp command \
+                --config baseUrl="http://127.0.0.1:3000" , screenshotsFolder="/tmp/build/$NAME@$VERSION" 
+                # Check the exit status of the cp command 
                 if [ $? -eq 0 ]; then 
-                cp -r $(dirname $f) /tmp/passed/$TYPE_FOLDER/ && \
-                STATUS="passed" ; \
-                else \
-                STATUS="failed" ; \
+                cp -r $(dirname $f) /tmp/passed/$TYPE_FOLDER/ 
+                STATUS="passed"
+                else 
+                STATUS="failed"
                 fi 
-                echo "$NAME@$VERSION $STATUS" && \
+                echo "$NAME@$VERSION $STATUS" 
                 jq --arg n "$NAME" --arg v "$VERSION" --arg s "$STATUS" --arg l "/build-log/$NAME@$VERSION" \
-                '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' /tmp/build/log.json > /tmp/build/log.json.temp && \
-                mv /tmp/build/log.json.temp /tmp/build/log.json ; \
+                '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' /tmp/build/log.json > /tmp/build/log.json.temp 
+                mv /tmp/build/log.json.temp /tmp/build/log.json 
                 done
-                done
-                exit 1
+                cp -r cypress ../test_results/cypress
+      - task: upload-cypress-result
+        file: juno.git/ci/shared/swift-cypress-upload.yaml
+        input_mapping:
+          version: assets-server.version
+          upload: test_results
+        params:
+          NAME: "pending-assets-tests"
+
       <%# - task: upload-to-final %>
 
   - name: download-all-final-assets
