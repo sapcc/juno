@@ -170,10 +170,11 @@ jobs:
                 cypress run --spec "cypress/integration/assets-server/mount_asset.spec.js" \
                 --browser chrome \
                 --env APP_NAME=$NAME,APP_VERSION=$VERSION \
-                --config baseUrl="http://127.0.0.1:3000" , screenshotsFolder="/tmp/build/$NAME@$VERSION" 
+                --config baseUrl="http://127.0.0.1:3000" , screenshotsFolder="/tmp/build/$NAME@$VERSION"
+                echo "EXIT CODE $?" 
                 # Check the exit status of the cp command 
                 if [ $? -eq 0 ]; then 
-                cp -r $(dirname $f) /tmp/passed/$TYPE_FOLDER/ 
+                cp -r $(dirname $f) "../passed/$TYPE_FOLDER/$NAME@$VERSION" 
                 STATUS="passed"
                 else 
                 STATUS="failed"
@@ -192,7 +193,7 @@ jobs:
         params:
           NAME: "pending-assets-tests"
 
-      - task: generate-import-map-and-co
+      - task: exit
         config:
           platform: linux
           image_resource:
@@ -209,7 +210,7 @@ jobs:
 
       <%# - task: upload-to-final %>
 
-  - name: exit-with-error
+  - name: download-all-final-assets
     plan:
     - get: juno.git
       trigger: true
