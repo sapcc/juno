@@ -136,12 +136,12 @@ jobs:
               - |
                 mkdir -p /tmp/passed /tmp/build 
                 cp -r ./juno.git/e2e .
-                cp ./juno.git/ci/scripts/assets-server/mount-test.html ./importmap_data/      
+                cp ./juno.git/ci/assets-server/mount-test.html ./importmap_data/      
                 echo '[]' > /tmp/build/log.json
                 echo '{"cleanUrls": false}' > /tmp/serve.config.json
                 echo "=== RUN MOUNT TESTS ===\n"
                 # run server in importmap_data
-                serve -c /tmp/serve.config.json ./importmap_data & sleep 5  
+                serve ./importmap_data -c /tmp/serve.config.json & sleep 5  
                 
                 cd e2e
                 for f in ../importmap_data/**/*/package.json; do 
