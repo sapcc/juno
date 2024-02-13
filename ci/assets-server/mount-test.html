@@ -3,28 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <title>Assets Test</title>
-    <script
-      async
-      src="/externals/npm:es-module-shims@1.6.2/dist/es-module-shims.js"
-    ></script>
-    <script type="esms-options">
-      {
-        "shimMode": true
-      }
-    </script>
   </head>
   <body>
     Asset mount test
-    <script>
+    <script defer>
       const params = new URLSearchParams(window.location.search)
       const { name, version, props } = JSON.parse(atob(params.get("config")))
       window.process = { env: { NODE_ENV: "production" } }
+      window.esmsInitOptions = {
+        shimMode: true,
+        mapOverrides: true,
+      }
+      new Promise((resolve, reject) => {
+        const shimUrl =
+          "/externals/npm:es-module-shims@1.6.2/dist/es-module-shims.js"
+        if (document.querySelector(`script[src="${shimUrl}"]`)) {
+          return resolve(true)
+        } else {
+          document.head.appendChild(
+            Object.assign(document.createElement("script"), {
+              async: true,
+              src: shimUrl,
+              onload: resolve,
+              onerror: reject,
+            })
+          )
+        }
+      })
+        .then(() => {
+          //######################## Load Importmap
+          // console.log("load importmap", origin)
 
-      fetch(`/importmap.json`)
-        .then((r) => r.json())
+          return fetch("/importmap.json")
+            .then((r) => r.json())
+            .then((importmap) => {
+              importShim.addImportMap(importmap)
+
+              return importmap
+            })
+        })
         .then((importmap) => {
-          importShim.addImportMap(importmap)
-          importShim(`@juno/${name}@${version}`).then((app) => {
+          //######################## Load App
+          // console.log("load app", origin)
+
+          return importShim(`@juno/${name}@${version}`).then((app) => {
             const appWrapper = document.createElement("div")
             appWrapper.setAttribute("data-juno-app", name)
             const mount = app.mount || app.default

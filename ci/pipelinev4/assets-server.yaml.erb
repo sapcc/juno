@@ -153,7 +153,7 @@ jobs:
                 echo '{"cleanUrls": false}' > /tmp/serve.config.json
                 echo "=== RUN MOUNT TESTS ===\n"
                 # run server in importmap_data
-                serve ./importmap_data -c /tmp/serve.config.json & sleep 5  
+                serve ./importmap_data -n -c /tmp/serve.config.json & sleep 5  
                 
                 cd e2e
                 for f in ../importmap_data/**/*/package.json; do 
@@ -178,7 +178,7 @@ jobs:
                 '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' /tmp/build/log.json > /tmp/build/log.json.temp 
                 mv /tmp/build/log.json.temp /tmp/build/log.json 
                 done
-                cp -r cypress ../test_results/cypress
+                mv cypress ../test_results/cypress
       - task: upload-cypress-result
         file: juno.git/ci/shared/swift-cypress-upload.yaml
         input_mapping:
@@ -187,9 +187,24 @@ jobs:
         params:
           NAME: "pending-assets-tests"
 
+      - task: generate-import-map-and-co
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node
+              tag: "18-alpine"   
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                exit 1
+
       <%# - task: upload-to-final %>
 
-  - name: download-all-final-assets
+  - name: exit-with-error
     plan:
     - get: juno.git
       trigger: true
