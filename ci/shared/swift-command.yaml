@@ -1,0 +1,33 @@
+platform: linux
+
+image_resource:
+  type: registry-image
+  source:
+    repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-ci-helper
+    tag: "latest"
+
+inputs:
+  - name: upload
+outputs:
+  - name: download # where do you want to download
+
+params:
+  COMMAND:
+  OS_USERNAME: concourse
+  OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
+  OS_AUTH_URL: https://identity-3.eu-de-1.cloud.sap/v3
+  OS_USER_DOMAIN_NAME: Default
+  OS_PROJECT_DOMAIN_NAME: ccadmin
+  OS_PROJECT_NAME: master
+
+run:
+  path: /bin/bash
+  args:
+    - -c
+    - |
+      set -e
+      cd ./download
+      DOWNLOAD_DIR=$(pwd)
+      cd /juno
+      eval "$(swift auth)"
+      swift $COMMAND
