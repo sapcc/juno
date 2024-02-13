@@ -3,35 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <title>Assets Test</title>
-    <style>
-      .blured {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        backdrop-filter: blur(10px);
-        z-index: 1000;
+    <script
+      async
+      src="/externals/npm:es-module-shims@1.6.2/dist/es-module-shims.js"
+    ></script>
+    <script type="esms-options">
+      {
+        "shimMode": true
       }
-    </style>
+    </script>
   </head>
   <body>
     Asset mount test
     <script>
       const params = new URLSearchParams(window.location.search)
       const { name, version, props } = JSON.parse(atob(params.get("config")))
-      const script = document.createElement("script")
-      script.src = "/apps/widget-loader@latest/build/app.js"
-      script.setAttribute("data-name", name)
-      script.setAttribute("data-version", version)
-      if (props) {
-        Object.keys(props).forEach((key) => {
-          const propKey = key.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase())
-          script.setAttribute(`data-props-${propKey}`, props[key])
+      window.process = { env: { NODE_ENV: "production" } }
+
+      fetch(`/importmap.json`)
+        .then((r) => r.json())
+        .then((importmap) => {
+          importShim.addImportMap(importmap)
+          importShim(`@juno/${name}@${version}`).then((app) => {
+            const appWrapper = document.createElement("div")
+            const mount = app.mount || app.default
+            mount(appWrapper, { props })
+            document.body.appendChild(appWrapper)
+          })
         })
-      }
-      document.currentScript.replaceWith(script)
     </script>
-    <div class="blured"></div>
   </body>
 </html>
