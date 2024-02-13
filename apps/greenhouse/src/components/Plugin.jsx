@@ -15,6 +15,11 @@ const Plugin = ({ id }) => {
   const [displayReload, setDisplayReload] = useState(false)
   const [reload, setReload] = useState(0)
 
+  /* State isMounted is to ensure that plugin isMounted before unmounting.
+   * Otherwise delays in mountApp can overtake the unmounting resulting in not unmounting the plugin in edgecases.
+   */
+  const [isMounted, setMounted] = useState(false)
+
   const el = document.createElement("div")
   el.classList.add("inline")
   const app = useRef(el)
@@ -50,13 +55,16 @@ const Plugin = ({ id }) => {
       mountApp.then((loaded) => {
         if (!loaded) return
         holder.current.appendChild(app.current)
+        setMounted(true)
       })
     } else {
       // remove from holder
-      if (holder.current.contains(app.current))
+      if (holder.current.contains(app.current) && !isMounted)
         holder.current.removeChild(app.current)
+
+      setMounted(false)
     }
-  }, [mountApp, displayPluging])
+  }, [mountApp, displayPluging, isMounted])
 
   return (
     <div data-app={id} ref={holder} className="inline">

@@ -13,6 +13,10 @@ const Plugin = ({ config }) => {
   const activePlugin = usePluginActive()
   const [displayReload, setDisplayReload] = useState(false)
   const [reload, setReload] = useState(0)
+  /* State isMounted is to ensure that plugin isMounted before unmounting.
+   * Otherwise delays in mountApp can overtake the unmounting resulting in not unmounting the plugin.
+   */
+  const [isMounted, setMounted] = useState(false)
 
   const el = document.createElement("div")
   el.classList.add("inline")
@@ -40,21 +44,19 @@ const Plugin = ({ config }) => {
   useEffect(() => {
     // if assetsUrl still null when rendering for first time the component then mountApp also return null and we skip here
     if (!mountApp) return
-
     if (displayPluging) {
       mountApp.then((loaded) => {
         if (!loaded) return
         holder.current.appendChild(app.current)
+        setMounted(true)
       })
     } else {
       // remove from holder
-      mountApp.then((loaded) => {
-        if (!loaded) return
-        if (holder.current.contains(app.current))
-          holder.current.removeChild(app.current)
-      })
+      if (holder.current.contains(app.current) && isMounted)
+        holder.current.removeChild(app.current)
+      setMounted(false)
     }
-  }, [mountApp, displayPluging])
+  }, [mountApp, displayPluging, isMounted])
 
   return (
     <div data-app={config?.name} ref={holder} className="inline">
