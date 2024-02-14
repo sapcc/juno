@@ -19,3 +19,11 @@ resource_types:
     source:
       repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-time-version-resource
       tag: v2
+
+  - name: meta
+    type: docker-image
+    source:
+      repository: swce/metadata-resource
+# display:
+#   background_image: https://imgur.ksv.app/Z2gWNkb.jpg
+#   brand_color: '#5a5a5a'

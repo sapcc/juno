@@ -29,6 +29,8 @@ resources:
     check_every: 525600h
     source: { key: "juno-assets-server-version" } # disambiguate from other time-version resources
 
+  - name: meta
+    type: meta
 <% 
   # this step combines all assets that where build and uploaded before to swift
   # for that we use nginx image and copy all assets (that where build in the step before) into /usr/share/nginx/html/
@@ -65,6 +67,7 @@ jobs:
     plan:
       - get: juno.git
         trigger: true
+      - get: meta  
 
       - get: assets-server.version  
 
@@ -141,6 +144,7 @@ jobs:
             - name: juno.git
             - name: importmap_data
             - name: pending_assets
+            - name: meta
           outputs:
             - name: passed 
             - name: test_results  
@@ -150,41 +154,62 @@ jobs:
             args:
               - -c
               - |
-                mkdir -p /tmp/passed /tmp/build 
+                FAIL='\033[0;31m'
+                SUCCESS='\033[0;32m'
+                INFO='\033[0;36m'
+                NC='\033[0m' # No Color
+                URL="$(cat meta/atc-external-url)/teams/$(cat meta/build-team-name)/pipelines/$(cat meta/build-pipeline-name)/jobs/$(cat meta/build-job-name)/builds/$(cat meta/build-name)"
+
+                echo -e "${INFO}copy e2e tests from juno.git to ./e2e ${NC}"
                 cp -r ./juno.git/e2e .
+                echo -e "${INFO}copy mount-test.html to importmap_data ${NC}"
                 cp ./juno.git/ci/assets-server/mount-test.html ./importmap_data/      
-                echo '[]' > /tmp/build/log.json
+                echo -e "${INFO}create empty build-log.json ${NC}"
+                echo '[]' > test_results/build-log.json
+                echo -e "${INFO}create serve.config.json ${NC}"
+                echo -e "${INFO}this is needed to avoid clean urls, we want to have extensions like .html ${NC}"
                 echo '{"cleanUrls": false}' > /tmp/serve.config.json
-                echo "=== RUN MOUNT TESTS ===\n"
-                # run server in importmap_data
-                serve ./importmap_data -n -c /tmp/serve.config.json & sleep 5  
-                
+                echo -e "${INFO}run server in importmap_data ${NC}"
+                serve ./importmap_data -n -u -p 3000 -c /tmp/serve.config.json & 
+
+                echo -e "${INFO}=== RUN MOUNT TESTS ===\n ${NC}"
                 cd e2e
-                # loop over assets in pending_assets to avoid unnesseray tests
+                # loop over assets in pending_assets to avoid unnesseray tests                
                 for f in ../pending_assets/**/*/package.json; do 
                 NAME=$(cat $f | jq -r '.name') 
                 VERSION=$(cat $f | jq -r '.version') 
-                echo "$NAME@$VERSION" 
-                mkdir -p "/tmp/build/$NAME@$VERSION" 
                 TYPE_FOLDER=$(basename $(dirname $(dirname $f)))
+                echo -e "${INFO}===TEST $NAME@$VERSION ($TYPE_FOLDER)${NC}" 
+                
+                mkdir -p "../test_results/cypress/screenshots/$NAME@$VERSION" \
+                "../test_results/cypress/videos/$NAME@$VERSION" \
+                "../test_results/cypress/text/$NAME@$VERSION" \
+                
                 cypress run --spec "cypress/integration/assets-server/mount_asset.spec.js" \
                 --browser chrome \
                 --env APP_NAME=$NAME,APP_VERSION=$VERSION \
-                --config baseUrl="http://127.0.0.1:3000" , screenshotsFolder="/tmp/build/$NAME@$VERSION"
-                echo "EXIT CODE $?" 
+                --config '{"baseUrl":"http://127.0.0.1:3000"}'
+
                 # Check the exit status of the cp command 
                 if [ $? -eq 0 ]; then 
-                cp -r $(dirname $f) "../passed/$TYPE_FOLDER/$NAME@$VERSION" 
                 STATUS="passed"
+                mkdir -p "../passed/$TYPE_FOLDER" && \
+                cp -r $(dirname $f) "../passed/$TYPE_FOLDER/$NAME@$VERSION" 
                 else 
                 STATUS="failed"
                 fi 
-                echo "$NAME@$VERSION $STATUS" 
-                jq --arg n "$NAME" --arg v "$VERSION" --arg s "$STATUS" --arg l "/build-log/$NAME@$VERSION" \
-                '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' /tmp/build/log.json > /tmp/build/log.json.temp 
-                mv /tmp/build/log.json.temp /tmp/build/log.json 
+                echo -e "${INFO}===RESULT: $NAME@$VERSION $STATUS ${NC}"
+
+                jq --arg n "$NAME" --arg v "$VERSION" --arg s "$STATUS" --arg l "$URL" \
+                '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' ../test_results/build-log.json > ../test_results/build-log.json.temp 
+                mv ../test_results/build-log.json.temp ../test_results/build-log.json 
+
+                # copy screenshots and videos of current test to test_results
+                cp -rf cypress/videos/* "../test_results/cypress/videos/$NAME@$VERSION" 2>/dev/null
+                cp -rf cypress/screenshots/* "../test_results/cypress/screenshots/$NAME@$VERSION" 2>/dev/null
+                
                 done
-                cp -r cypress ../test_results/cypress
+
       - task: upload-cypress-result
         file: juno.git/ci/shared/swift-cypress-upload.yaml
         input_mapping:
