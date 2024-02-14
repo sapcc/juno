@@ -23,6 +23,14 @@ resources:
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))   
 
+  - name: swift-juno-pending-assets.version
+    type: http-resource
+    source:
+      url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/juno-pending-assets
+      method: HEAD
+      version: 
+        header: x-container-bytes-used
+
   - name: assets-server.version
     type: time-version-resource
     icon: lock
@@ -66,10 +74,9 @@ jobs:
   - name: download-validate-pending-assets
     plan:
       - get: juno.git
-        trigger: true
       - get: meta  
-
-      - get: assets-server.version  
+      - get: swift-juno-pending-assets.version
+        trigger: true 
 
       - task: download-from-juno-pending-assets
         file: juno.git/ci/shared/swift-download.yaml
@@ -197,26 +204,40 @@ jobs:
                 cp -r $(dirname $f) "../passed/$TYPE_FOLDER/$NAME@$VERSION" 
                 else 
                 STATUS="failed"
+                # copy screenshots and videos of current test to test_results
+                cp -rf cypress/videos/* "../test_results/cypress/videos/$NAME@$VERSION" 2>/dev/null
+                cp -rf cypress/screenshots/* "../test_results/cypress/screenshots/$NAME@$VERSION" 2>/dev/null
                 fi 
                 echo -e "${INFO}===RESULT: $NAME@$VERSION $STATUS ${NC}"
 
                 jq --arg n "$NAME" --arg v "$VERSION" --arg s "$STATUS" --arg l "$URL" \
                 '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' ../test_results/build-log.json > ../test_results/build-log.json.temp 
                 mv ../test_results/build-log.json.temp ../test_results/build-log.json 
-
-                # copy screenshots and videos of current test to test_results
-                cp -rf cypress/videos/* "../test_results/cypress/videos/$NAME@$VERSION" 2>/dev/null
-                cp -rf cypress/screenshots/* "../test_results/cypress/screenshots/$NAME@$VERSION" 2>/dev/null
-                
                 done
-
-      - task: upload-cypress-result
-        file: juno.git/ci/shared/swift-cypress-upload.yaml
+                exit 0
+      # - task: upload-test-result
+      #   file: juno.git/ci/shared/swift-cypress-upload.yaml
+      #   input_mapping:
+      #     version: assets-server.version
+      #     upload: test_results
+      #   params:
+      #     NAME: "pending-assets-tests"
+      - task: upload-test-result
+        file: juno.git/ci/shared/swift-command.yaml
         input_mapping:
-          version: assets-server.version
-          upload: test_results
+          input: test_results
         params:
-          NAME: "pending-assets-tests"
+          PRE_COMMAND: 
+            mkdir -p juno/pending-assets-test && \ 
+            cp -r input/* juno/pending-assets-test/
+          COMMAND: upload --skip-identical --changed cypress juno
+          
+      - task: upload-passed-and-cleanup
+        file: juno.git/ci/shared/swift-command.yaml
+        input_mapping:
+          input: passed
+        params:
+          COMMAND: "upload juno-final-assets upload"
 
       - task: exit
         config:
@@ -240,6 +261,7 @@ jobs:
     - get: juno.git
       trigger: true
       passed: [download-validate-pending-assets]
+    - get: assets-server.version    
   - name: build-assets-server-image
     plan:
     - get: juno.git

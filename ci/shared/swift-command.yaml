@@ -7,11 +7,12 @@ image_resource:
     tag: "latest"
 
 inputs:
-  - name: upload
+  - name: input
 outputs:
-  - name: download # where do you want to download
+  - name: output # where do you want to download
 
 params:
+  PRE_COMMAND: echo "precommand"
   COMMAND:
   OS_USERNAME: concourse
   OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
@@ -26,8 +27,5 @@ run:
     - -c
     - |
       set -e
-      cd ./download
-      DOWNLOAD_DIR=$(pwd)
-      cd /juno
       eval "$(swift auth)"
       swift $COMMAND
