@@ -28,4 +28,5 @@ run:
     - |
       set -e
       eval "$(swift auth)"
+      eval "$PRE_COMMAND"
       swift $COMMAND
