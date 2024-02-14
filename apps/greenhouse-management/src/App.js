@@ -8,6 +8,7 @@ import {
   ContentContainer,
 } from "juno-ui-components"
 import StoreProvider from "./components/StoreProvider"
+import UrlState from "./components/UrlState"
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AppContent from "./AppContent"
@@ -39,15 +40,17 @@ const App = (props = {}) => {
         <MessagesProvider>
           <Messages className="mb-4" />
           <Auth>
-            <OrgInfo />
-            <MainContainer>
-              <MainContainerInner fullWidth={true}>
-                <SideNav />
-                <ContentContainer>
-                  <AppContent {...props} />
-                </ContentContainer>
-              </MainContainerInner>
-            </MainContainer>
+            <UrlState>
+              <OrgInfo />
+              <MainContainer>
+                <MainContainerInner fullWidth={true}>
+                  <SideNav />
+                  <ContentContainer>
+                    <AppContent {...props} />
+                  </ContentContainer>
+                </MainContainerInner>
+              </MainContainer>
+            </UrlState>
           </Auth>
         </MessagesProvider>
       </AppBody>
