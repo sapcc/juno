@@ -48,13 +48,17 @@ const PluginContainer = () => {
   return (
     <>
       {isFetching && <HintLoading text="Loading plugins..." />}
-      {displayPlugin && availableAppIds.length > 0
-        ? availableAppIds.map((id, i) => (
-            <MessagesProvider key={i}>
-              <Plugin id={id} />
-            </MessagesProvider>
-          ))
-        : "No plugins available"}
+      {displayPlugin &&
+        availableAppIds.length > 0 &&
+        availableAppIds.map((id, i) => (
+          <MessagesProvider key={i}>
+            <Plugin id={id} />
+          </MessagesProvider>
+        ))}
+      {!isFetching &&
+        !displayPlugin &&
+        availableAppIds.length <= 0 &&
+        "No plugins available."}
     </>
   )
 }
