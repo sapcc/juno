@@ -11,8 +11,8 @@ const DELAY = 1000
 const allowedMessagesRegex =
   /^(?!AppShell: The contentHeading prop is obsolete and will be removed in a future version\. In order to render a content heading, use a ContentHeading element as a child in your main content\.$|Please provide a function to get the token$).*/
 
-describe("Preflight", () => {
-  it("can mount apps without errors", () => {
+describe(`Preflight ${Cypress.env["APP_NAME"]}@${Cypress.env["APP_VERSION"]}`, () => {
+  it("loads the asset and mounts if type is app", () => {
     const name = Cypress.env("APP_NAME")
     const version = Cypress.env("APP_VERSION")
 

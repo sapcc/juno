@@ -184,7 +184,7 @@ jobs:
                 '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' /tmp/build/log.json > /tmp/build/log.json.temp 
                 mv /tmp/build/log.json.temp /tmp/build/log.json 
                 done
-                mv cypress ../test_results/cypress
+                cp -r cypress ../test_results/cypress
       - task: upload-cypress-result
         file: juno.git/ci/shared/swift-cypress-upload.yaml
         input_mapping:
