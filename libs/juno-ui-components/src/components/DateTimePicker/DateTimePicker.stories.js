@@ -10,6 +10,9 @@ export default {
       options: ["single", "multiple", "range", "time"],
       control: { type: "select" },
     },
+    value: {
+      control: false,
+    },
   },
 }
 
@@ -53,6 +56,16 @@ WithTimeAndSeconds.args = {
   dateFormat: "Y-m-d H:i:S",
 }
 
+export const ShowTwoMonths = Template.bind({})
+ShowTwoMonths.args = {
+  showMonths: 2,
+}
+
+export const WithWeekNumbers = Template.bind({})
+WithWeekNumbers.args = {
+  weekNumbers: true,
+}
+
 export const AllowInput = Template.bind({})
 AllowInput.args = {
   allowInput: true,
@@ -68,7 +81,11 @@ Range.args = {
   mode: "range",
 }
 
+// BUG: not rendering time-only calendar:
 export const TimePicker = Template.bind({})
 TimePicker.args = {
-  mode: "time",
+  enableTime: true,
+  noCalendar: true,
+  enableSeconds: true,
+  dateFormat: "H:i:S",
 }

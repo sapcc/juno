@@ -19,7 +19,14 @@ export const DateTimePicker = ({
   enable,
   enableSeconds,
   enableTime,
+  hourIncrement,
+  id,
+  maxDate,
+  minDate,
+  minuteIncrement,
   mode,
+  name,
+  noCalendar,
   onBlur,
   onChange,
   onClose,
@@ -30,9 +37,18 @@ export const DateTimePicker = ({
   onValueUpdate,
   onYearChange,
   placeholder,
+  position, // TODO -> CSS?
+  shorthandCurrentMonth,
+  showMonths,
+  time_24hr,
   value,
+  weekNumbers,
   ...props
 }) => {
+  // always generate auto-id string using the useId hook to avoid "more hooks than in previous render" error when removing custom id:
+  const autoId = "juno-datepicker-" + useId()
+  const theId = id && id.length ? id : autoId
+
   const fpRef = useRef(null) // the dom node flatpickr instance will be bound to
   let flatpickrInstanceRef = useRef({}) // The actual flatpickr instance
   const calendarTargetRef = useRef(null) // The DOM node the flatpickr calendar should be rendered to
@@ -101,6 +117,11 @@ export const DateTimePicker = ({
       disable: disable,
       enableSeconds: enableSeconds,
       enableTime: enableTime,
+      hourIncrement: hourIncrement,
+      noCalendar: noCalendar,
+      maxDate: maxDate,
+      minDate: minDate,
+      minuteIncrement: minuteIncrement,
       mode: mode,
       onChange: handleChange,
       onClose: handleClose,
@@ -110,6 +131,10 @@ export const DateTimePicker = ({
       onValueUpdate: handleValueUpdate,
       onYearChange: handleYearChange,
       positionElement: calendarTargetRef.current,
+      shorthandCurrentMonth: shorthandCurrentMonth,
+      showMonths: showMonths,
+      time_24hr: time_24hr,
+      weekNumbers: weekNumbers,
     }
     const FP =
       calendarTargetRef && fpRef.current && flatpickr(fpRef.current, options)
@@ -137,7 +162,18 @@ export const DateTimePicker = ({
   useEffect(() => {
     flatpickrInstanceRef?.current?.destroy()
     createFlatpickrInstance()
-  }, [allowInput, mode, defaultHour, defaultMinute, enableTime, enableSeconds])
+  }, [
+    allowInput,
+    mode,
+    defaultHour,
+    defaultMinute,
+    enableTime,
+    enableSeconds,
+    hourIncrement,
+    minuteIncrement,
+    noCalendar,
+    weekNumbers,
+  ])
 
   // TODO: check whether the update is actually in effect in the component:
   useEffect(() => {
@@ -158,8 +194,36 @@ export const DateTimePicker = ({
   // TODO: disable
 
   useEffect(() => {
+    flatpickrInstanceRef.current?.set("hourIncrement", hourIncrement)
+  }, [hourIncrement])
+
+  useEffect(() => {
+    flatpickrInstanceRef.current?.set("maxDate", maxDate)
+  }, [maxDate])
+
+  useEffect(() => {
+    flatpickrInstanceRef.current?.set("minDate", minDate)
+  }, [minDate])
+
+  useEffect(() => {
+    flatpickrInstanceRef.current?.set(
+      "shorthandCurrentMonth",
+      shorthandCurrentMonth
+    )
+  }, [shorthandCurrentMonth])
+
+  // Will update properly but only apply at next change/user click; not worth destroying and creating a new instance IMO?:
+  useEffect(() => {
+    flatpickrInstanceRef.current?.set("time_24hr", time_24hr)
+  }, [time_24hr])
+
+  useEffect(() => {
     flatpickrInstanceRef.current?.setDate(value, true)
   }, [value])
+
+  useEffect(() => {
+    flatpickrInstanceRef.current?.set("weekNumbers", true)
+  }, [weekNumbers])
 
   return (
     <div>
@@ -167,11 +231,13 @@ export const DateTimePicker = ({
         <input
           className={`juno-datetimepicker-input ${className}`}
           disabled={disabled}
-          type="text"
+          id={theId}
+          name={name && name.length ? name : null}
           onChange={onChange}
           onFocus={handleInputFocus}
           placeholder={placeholder}
           ref={fpRef}
+          type="text"
         />
       </div>
       <div>
@@ -208,7 +274,14 @@ DateTimePicker.propTypes = {
   disabled: PropTypes.bool,
   enableSeconds: PropTypes.bool,
   enableTime: PropTypes.bool,
-  mode: PropTypes.oneOf(["single", "multiple", "range", "time"]),
+  hourIncrement: PropTypes.number,
+  id: PropTypes.string,
+  maxDate: datePropType,
+  minDate: datePropType,
+  minuteIncrement: PropTypes.number,
+  mode: PropTypes.oneOf(["single", "multiple", "range"]),
+  name: PropTypes.string,
+  noCalendar: PropTypes.bool,
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onClose: PropTypes.func,
@@ -219,7 +292,11 @@ DateTimePicker.propTypes = {
   onValueUpdate: PropTypes.func,
   onYearChange: PropTypes.func,
   placeholder: PropTypes.string,
+  shorthandCurrentMonth: PropTypes.bool,
+  showMonths: PropTypes.number,
+  time_24hr: PropTypes.bool,
   value: datePropType,
+  weekNumbers: PropTypes.bool,
 }
 
 DateTimePicker.defaultProps = {
@@ -236,7 +313,14 @@ DateTimePicker.defaultProps = {
   disabled: false,
   enableSeconds: false,
   enableTime: false,
+  hourIncrement: 1,
+  id: "",
+  maxDate: null,
+  minDate: null,
+  minuteIncrement: 5,
   mode: "single",
+  name: "",
+  noCalendar: false,
   onBlur: undefined,
   onChange: undefined,
   onClose: undefined,
@@ -247,5 +331,9 @@ DateTimePicker.defaultProps = {
   onValueUpdate: undefined,
   onYearChange: undefined,
   placeholder: "",
+  shorthandCurrentMonth: false,
+  showMonths: 1,
+  time_24hr: false,
   value: "",
+  weekNumbers: false,
 }
