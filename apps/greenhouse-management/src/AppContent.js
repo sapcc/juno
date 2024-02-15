@@ -30,7 +30,7 @@ const AppContent = () => {
   }, [])
 
   return (
-    <Container py={true}>
+    <Container py={true} className="h-full">
       <PluginContainer />
     </Container>
   )

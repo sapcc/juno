@@ -4,6 +4,7 @@ import { useAssetsUrl, usePluginActive } from "./StoreProvider"
 import { Messages, useActions } from "messages-provider"
 import { parseError } from "../lib/helpers"
 import { Stack, Button } from "juno-ui-components"
+import HintLoading from "./shared/HintLoading"
 
 const Plugin = ({ config }) => {
   const { addMessage } = useActions()
@@ -11,26 +12,34 @@ const Plugin = ({ config }) => {
   const { mount } = useAppLoader(assetsUrl)
   const holder = useRef()
   const activePlugin = usePluginActive()
+
+  // local state
   const [displayReload, setDisplayReload] = useState(false)
   const [reload, setReload] = useState(0)
+  const [isMountedApp, setIsMountedApp] = useState(false)
 
+  // element to mount the app
   const el = document.createElement("div")
   el.classList.add("inline")
   const app = useRef(el)
 
-  // useMemo to not mount the app each time the component is reloaded losing the state
-  // TODO: should we keep this apps also in memory??
-  const mountApp = useMemo(() => {
-    // lets wait until the assetsUrl exists to create the mount function with the currect assets url
-    if (!assetsUrl) return
-    return mount(app.current, config).catch((error) => {
-      setDisplayReload(true)
-      addMessage({
-        variant: "error",
-        text: `${config?.name}: ` + parseError(error),
+  // mount the app each time the component is reloaded losing the state
+  useEffect(() => {
+    if (!mount || !assetsUrl || !config) return
+    // mount the app
+    mount(app.current, config)
+      .then((loaded) => {
+        if (!loaded) return
+        setIsMountedApp(true)
       })
-    })
-  }, [mount, reload, assetsUrl])
+      .catch((error) => {
+        setDisplayReload(true)
+        addMessage({
+          variant: "error",
+          text: `${config?.name}: ` + parseError(error),
+        })
+      })
+  }, [mount, reload, config, assetsUrl])
 
   const displayPluging = useMemo(
     () => activePlugin === config?.name,
@@ -39,25 +48,24 @@ const Plugin = ({ config }) => {
 
   useEffect(() => {
     // if assetsUrl still null when rendering for first time the component then mountApp also return null and we skip here
-    if (!mountApp) return
+    if (!isMountedApp) return
 
     if (displayPluging) {
-      mountApp.then((loaded) => {
-        if (!loaded) return
-        holder.current.appendChild(app.current)
-      })
+      // append to holder
+      holder.current.appendChild(app.current)
     } else {
       // remove from holder
       if (holder.current.contains(app.current))
         holder.current.removeChild(app.current)
     }
-  }, [mountApp, displayPluging])
+  }, [isMountedApp, displayPluging])
 
   return (
     <div data-app={config?.name} ref={holder} className="inline">
       {displayPluging && (
         <>
           <Messages />
+          {!isMountedApp && <HintLoading centered />}
           {displayReload && (
             <Stack
               alignment="center"
