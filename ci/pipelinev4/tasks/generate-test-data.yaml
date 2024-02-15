@@ -3,16 +3,25 @@ platform: linux
 image_resource:
   type: docker-image
   source:
+    # we use our own base image which contains all the necessary tools
     repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base
     tag: "latest"
 
 inputs:
+  # whre new apps and libs are located
   - name: pending_assets
 outputs:
-  - name: test_data # where do you want to download
+  # where the importmap, manifest and externals are written to
+  - name: test_data
 
 params:
 
+# description of the algorithmus:
+# 1. build the libs
+# 2. copy the libs to the pending_assets folder
+# 3. generate the importmap and manifest only for pending apps and libs
+#    (write them to test_data)
+# 4. generate the externals esm packages (write them to test_data)
 run:
   path: /bin/sh
   args:
@@ -45,7 +54,7 @@ run:
       --verbose=false ; \
       \
       node /juno/ci/scripts/generate_manifest.mjs \
-      --src=./test_data \
+      --src=./pending_assets \
       --output=./test_data/manifest.json \
       --base-url="http://localhost:3000" \
       --verbose=false

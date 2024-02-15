@@ -86,7 +86,7 @@ jobs:
           DEBUG: "true"
           CONTAINER: "juno-pending-assets"
 
-      - task: upload-test-result
+      - task: generate-import-map-and-co
         file: juno.git/ci/pipelinev4/tasks/generate-test-data.yaml
         input_mapping:
           pending_assets: pending_assets
@@ -183,7 +183,7 @@ jobs:
                 echo -e "${INFO}this is needed to avoid clean urls, we want to have extensions like .html ${NC}"
                 echo '{"cleanUrls": false}' > /tmp/serve.config.json
                 echo -e "${INFO}run server in test_data ${NC}"
-                serve ./test_data -n -u -p 3000 -c /tmp/serve.config.json & 
+                serve ./test_data -n -u -p 3000 -c /tmp/serve.config.json & sleep 3 
 
                 echo -e "${INFO}=== RUN MOUNT TESTS ===\n ${NC}"
                 cd e2e
@@ -193,17 +193,11 @@ jobs:
                 VERSION=$(cat $f | jq -r '.version') 
                 TYPE_FOLDER=$(basename $(dirname $(dirname $f)))
                 echo -e "${INFO}===TEST $NAME@$VERSION ($TYPE_FOLDER)${NC}" 
-                
-                # mkdir -p "../test_results/cypress/screenshots/$NAME@$VERSION" \
-                # "../test_results/cypress/videos/$NAME@$VERSION" \
-                # "../test_results/cypress/text/$NAME@$VERSION" \
-                
+
                 cypress run --spec "cypress/integration/assets-server/mount_asset.spec.js" \
                 --browser chrome \
                 --env APP_NAME=$NAME,APP_VERSION=$VERSION \
-                --config '{"baseUrl":"http://127.0.0.1:3000",\
-                "screenshotsFolder":"$WORKDIR/test_results/$BUILD_NAME/$NAME@$VERSION/screenshots",\
-                "videosFolder":"$WORKDIR/test_results/$BUILD_NAME/$NAME@$VERSION/videos"}'
+                --config '{"baseUrl":"http://127.0.0.1:3000","screenshotsFolder":"$WORKDIR/test_results/$BUILD_NAME/$NAME@$VERSION/screenshots","videosFolder":"$WORKDIR/test_results/$BUILD_NAME/$NAME@$VERSION/videos"}'
 
                 # Check the exit status of the cp command 
                 if [ $? -eq 0 ]; then 
@@ -213,7 +207,7 @@ jobs:
                 else 
                 STATUS="failed"
                 echo -e "${INFO}===RESULT: $NAME@$VERSION $STATUS ${NC}"
-
+                fi
                 jq --arg n "$NAME" --arg v "$VERSION" --arg s "$STATUS" --arg l "$URL" \
                 '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' ../test_results/build-log.json > ../test_results/build-log.json.temp 
                 mv ../test_results/build-log.json.temp ../test_results/build-log.json 
