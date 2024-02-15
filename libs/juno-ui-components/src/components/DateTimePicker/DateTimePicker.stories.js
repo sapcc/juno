@@ -5,7 +5,12 @@ import { PortalProvider } from "../PortalProvider/PortalProvider.component"
 export default {
   title: "WIP/DateTimePicker/DateTimePicker",
   component: DateTimePicker,
-  argTypes: {},
+  argTypes: {
+    mode: {
+      options: ["single", "multiple", "range", "time"],
+      control: { type: "select" },
+    },
+  },
 }
 
 const Template = ({ ...args }) => <DateTimePicker {...args} />
@@ -20,6 +25,11 @@ const PotalTemplate = ({ ...args }) => (
 
 export const Default = Template.bind({})
 Default.args = {}
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+  disabled: true,
+}
 
 export const WithPlaceholder = Template.bind({})
 WithPlaceholder.args = {
@@ -36,7 +46,29 @@ WithDefaultValue.args = {
   defaultValue: new Date(),
 }
 
+export const WithTimeAndSeconds = Template.bind({})
+WithTimeAndSeconds.args = {
+  enableTime: true,
+  enableSeconds: true,
+  dateFormat: "Y-m-d H:i:S",
+}
+
 export const AllowInput = Template.bind({})
 AllowInput.args = {
   allowInput: true,
+}
+
+export const Multiple = Template.bind({})
+Multiple.args = {
+  mode: "multiple",
+}
+
+export const Range = Template.bind({})
+Range.args = {
+  mode: "range",
+}
+
+export const TimePicker = Template.bind({})
+TimePicker.args = {
+  mode: "time",
 }

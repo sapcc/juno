@@ -5,10 +5,21 @@ import { Icon } from "../Icon/"
 
 export const DateTimePicker = ({
   allowInput,
+  allowInvalidPreload,
+  ariaDateFormat,
   className,
+  conjunction,
+  dateFormat,
+  defaultHour,
+  defaultMinute,
   defaultDate,
   defaultValue,
+  disable,
   disabled,
+  enable,
+  enableSeconds,
+  enableTime,
+  mode,
   onBlur,
   onChange,
   onClose,
@@ -19,6 +30,7 @@ export const DateTimePicker = ({
   onValueUpdate,
   onYearChange,
   placeholder,
+  value,
   ...props
 }) => {
   const fpRef = useRef(null) // the dom node flatpickr instance will be bound to
@@ -79,8 +91,17 @@ export const DateTimePicker = ({
   const createFlatpickrInstance = () => {
     const options = {
       allowInput: allowInput,
+      allowInvalidPreload: allowInvalidPreload,
       appendTo: calendarTargetRef.current,
+      conjunction: conjunction,
+      dateFormat: dateFormat,
       defaultDate: defaultDate || defaultValue,
+      defaultHour: defaultHour,
+      defaultMinute: defaultMinute,
+      disable: disable,
+      enableSeconds: enableSeconds,
+      enableTime: enableTime,
+      mode: mode,
       onChange: handleChange,
       onClose: handleClose,
       onMonthChange: handleMonthChange,
@@ -112,13 +133,33 @@ export const DateTimePicker = ({
     }
   }, [])
 
-  // Updating allowInput in config options on the instance via 'set()' seems to work, however flatpickr doesn't appear to properly update the rendered input? -> This may require destroying the current instance and creating a new one?
+  // All props that refer to config options that require a rerender of the flatpickr are here:
   useEffect(() => {
-    // console.log(flatpickrInstanceRef.current?.config.allowInput)
-    // console.log(flatpickrInstanceRef.current?.config.allowInput)
-    flatpickrInstanceRef.current.destroy()
+    flatpickrInstanceRef?.current?.destroy()
     createFlatpickrInstance()
-  }, [allowInput])
+  }, [allowInput, mode, defaultHour, defaultMinute, enableTime, enableSeconds])
+
+  // TODO: check whether the update is actually in effect in the component:
+  useEffect(() => {
+    flatpickrInstanceRef.current?.set(
+      "allowInvalidPreload",
+      allowInvalidPreload
+    )
+  }, [allowInvalidPreload])
+
+  useEffect(() => {
+    flatpickrInstanceRef.current?.set("conjunction", conjunction)
+  }, [conjunction])
+
+  useEffect(() => {
+    flatpickrInstanceRef.current?.set("dateFormat", dateFormat)
+  }, [dateFormat])
+
+  // TODO: disable
+
+  useEffect(() => {
+    flatpickrInstanceRef.current?.setDate(value, true)
+  }, [value])
 
   return (
     <div>
@@ -136,7 +177,7 @@ export const DateTimePicker = ({
       <div>
         <Icon icon="close" onClick={handleClearIconClick} disabled={disabled} />
         <Icon
-          icon="calendarToday"
+          icon="calendarToday" // TODO: show clock icon if mode="time"
           onClick={handleCalendarIconClick}
           disabled={disabled}
         />
@@ -155,10 +196,19 @@ const datePropType = PropTypes.oneOfType([
 
 DateTimePicker.propTypes = {
   allowInput: PropTypes.bool,
+  allowInvalidPreload: PropTypes.bool,
   className: PropTypes.string,
+  conjunction: PropTypes.string,
+  dateFormat: PropTypes.string,
   defaultDate: datePropType,
+  defaultHour: PropTypes.number,
+  defaultMinute: PropTypes.number,
   defaultValue: datePropType,
+  disable: PropTypes.array,
   disabled: PropTypes.bool,
+  enableSeconds: PropTypes.bool,
+  enableTime: PropTypes.bool,
+  mode: PropTypes.oneOf(["single", "multiple", "range", "time"]),
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onClose: PropTypes.func,
@@ -174,10 +224,19 @@ DateTimePicker.propTypes = {
 
 DateTimePicker.defaultProps = {
   allowInput: false,
+  allowInvalidPreload: false,
   className: "",
+  conjunction: ", ",
+  dateFormat: "Y-m-d",
+  defaultHour: 12,
+  defaultMinute: 0,
   defaultDate: null,
   defaultValue: "",
+  disable: [],
   disabled: false,
+  enableSeconds: false,
+  enableTime: false,
+  mode: "single",
   onBlur: undefined,
   onChange: undefined,
   onClose: undefined,
