@@ -58,3 +58,5 @@ run:
       --output=./test_data/manifest.json \
       --base-url="http://localhost:3000" \
       --verbose=false
+
+      cp -r pending_assets/* ./test_data/
