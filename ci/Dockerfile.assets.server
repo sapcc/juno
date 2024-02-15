@@ -37,6 +37,9 @@ RUN mkdir -p /tmp/final
 #       comment out this line for the first run
 COPY --from=lastbuild /usr/share/nginx/html /tmp/final
 
+# delete old assets. Use it once to clean up the old assets.
+# RUN rm -rf /tmp/final/externals/*
+
 # merge latest assets over the old assets 
 RUN \
   for PACKAGE in ./**/*/package.json; do \
@@ -69,8 +72,8 @@ RUN \
 # Create importmaps and manifest
 RUN \
   set -e ; \
-  node /juno/ci/scripts/generate_importmap.mjs \
-  --provider=$NPM_PROVIDER \
+  node /juno/ci/scripts/esm_build/generate_importmap.mjs \
+  --node-modules-path=/tmp/ \
   --external-path=externals \
   --exit-on-error=$EXIT_ON_ERROR \
   --src=./ \

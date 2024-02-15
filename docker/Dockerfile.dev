@@ -1,4 +1,4 @@
-FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:18.18-alpine 
+FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:18-alpine 
 
 RUN apk add git
 RUN npm install -g serve concurrently glob @jspm/generator depcheck

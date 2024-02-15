@@ -50,7 +50,7 @@ const PACKAGES_PATHS = ["apps", "libs"]
 const rootPath = path.resolve(options.src)
 const globPattern = `${rootPath}/@(${PACKAGES_PATHS.join("|")})/**/package.json`
 const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
-const files = glob.sync(globPattern, { ignore: [`node_modules/**`] })
+const files = glob.sync(globPattern, { ignore: [`node_modules/**`,'**/node_modules/**'] })
 
 const manifest = {
   _global: {
@@ -142,4 +142,9 @@ if (options.verbose || options.v) {
   console.log("==============MANIFEST==============")
   console.log(JSON.stringify(manifest, null, 2))
 }
-fs.writeFileSync(options.output, JSON.stringify(manifest, null, 2))
+
+console.log("===", path.resolve(options.output))
+fs.writeFileSync(
+  path.resolve(options.output),
+  JSON.stringify(manifest, null, 2)
+)

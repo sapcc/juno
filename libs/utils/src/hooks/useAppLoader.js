@@ -4,6 +4,11 @@ import { useCallback } from "react"
 // ensure the importmap is loaded
 const importmaps = {}
 const loadWidgetLoaderWithImportmap = (assetsHost) => {
+  if(!assetsHost) {
+    console.warn("utils#useAppLoader: assetsHost is undefined. Please prove a valid assetsHost")
+    return Promise.resolve(false)
+  }
+
   importmaps[assetsHost] =
     importmaps[assetsHost] ||
     // this promise is resolved once!

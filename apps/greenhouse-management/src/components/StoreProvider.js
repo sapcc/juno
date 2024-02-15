@@ -4,7 +4,7 @@ import createStore from "../lib/store"
 
 const StoreContext = createContext()
 const StoreProvider = ({ options, children }) => (
-  <StoreContext.Provider value={createStore(options.apiEndpoint)}>
+  <StoreContext.Provider value={createStore(options)}>
     {children}
   </StoreContext.Provider>
 )
@@ -16,6 +16,12 @@ export const useIsUrlStateSetup = () =>
 export const useAssetsUrl = () => useAppStore((state) => state.assetsUrl)
 export const usePluginConfig = () => useAppStore((state) => state.pluginConfig)
 export const usePluginActive = () => useAppStore((state) => state.pluginActive)
+export const useApiEndpoint = () => useAppStore((state) => state.apiEndpoint)
+export const useAuthData = () => useAppStore((state) => state.authData.data)
+export const useAuthAppLoaded = () =>
+  useAppStore((state) => state.authAppLoaded)
+export const useIsLoggedIn = () =>
+  useAppStore((state) => state.authData.loggedIn)
 
 export const useActions = () => useAppStore((state) => state.actions)
 

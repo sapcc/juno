@@ -110,8 +110,8 @@ if [[ -z "$ASSET_PATH" ]]; then
   if [[ -n "$ASSET_TYPE" ]]; then
     ASSET_PATH="$ASSET_TYPE/$ASSET_NAME"
   else
-    echo "Error: no ASSET_PATH given 😐"
-    exit 1
+    echo "Warning: no ASSET_PATH given 😐"
+    #exit 1
   fi
 fi
 
@@ -217,7 +217,17 @@ function upload() {
 
 function download() {
   echo "Swift download from container $CONTAINER $ASSET_PATH to $ASSET_PATH"
-  swift download --skip-identical "$CONTAINER" -p "$ASSET_PATH" &>$OUTPUT &&
+
+  # ignore path args if ASSET_PATH is empty
+  # reason to download the whole container
+  PATH_ARG="-p $ASSET_PATH"
+  if [[ -z "$ASSET_PATH" ]]; then
+    PATH_ARG=""
+  fi
+
+  ls -all
+  echo "swift download --skip-identical $CONTAINER $PATH_ARG"
+  swift download --skip-identical "$CONTAINER" $PATH_ARG &>$OUTPUT &&
     echo "----------------------------------" &&
     echo "download done 🙂"
 }

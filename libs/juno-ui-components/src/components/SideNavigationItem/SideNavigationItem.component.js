@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState} from "react";
-import PropTypes from "prop-types";
+import React, { useContext, useEffect, useState } from "react"
+import PropTypes from "prop-types"
 import { NavigationContext } from "../SideNavigation/SideNavigation.component"
-import { Icon } from "../Icon/index.js";
+import { Icon } from "../Icon/index.js"
 import { knownIcons } from "../Icon/Icon.component.js"
-
 
 const itemStyles = `
   jn-flex
@@ -46,100 +45,114 @@ export const SideNavigationItem = ({
   value,
   ...props
 }) => {
-  
   const navigationContext = useContext(NavigationContext)
-  
+
   const {
     activeItem: activeItem,
     updateActiveItem: updateActiveItem,
     handleActiveItemChange: handleActiveItemChange,
     disabled: groupDisabled,
   } = navigationContext || {}
-  
+
   const theKey = value || label
-  
+
   const initialActive = () => {
-    if (navigationContext) {
-      activeItem === theKey ? true : false
+    if (navigationContext?.activeItem?.length > 0) {
+      return activeItem === theKey
     } else {
       return active
     }
   }
-  
-  const [isActive, setIsActive] = useState( () => initialActive() )
-  
-  // Set the parent state once if not set on the parent, but a navigation item has been set to active via its own prop:
-  useEffect(() => {
-    if (active && navigationContext && !activeItem) {
-      updateActiveItem(theKey)
-    }
-  }, [])
-  
+
+  const [isActive, setIsActive] = useState(() => initialActive())
+
   // Update the parent state when in a navigation context, otherwise update item state directly:
   useEffect(() => {
     if (activeItem) {
       activeItem === theKey ? setIsActive(true) : setIsActive(false)
-    } else {
-      setIsActive(active)
+      return
     }
+    setIsActive(active)
   }, [activeItem, active])
-  
-  
+
   const handleItemClick = (event) => {
     if (!isActive) {
       handleActiveItemChange(theKey)
     }
     onClick && onClick(event)
   }
-  
+
   return (
     <li className="jn-flex">
-      { href ? 
-          <a 
-            className={`
+      {href ? (
+        <a
+          className={`
               juno-sidenavigation-item
-              ${ itemStyles}
-              ${ isActive ? "juno-sidenavigation-item-active" : ""}
-              ${ isActive ? activeItemStyles : ""}
-              ${ disabled || groupDisabled ? disabledItemStyles : ""}
-              ${ disabled || groupDisabled ? "juno-sidenavigation-item-disabled" : ""}
-              ${ className }
+              ${itemStyles}
+              ${isActive ? "juno-sidenavigation-item-active" : ""}
+              ${isActive ? activeItemStyles : ""}
+              ${disabled || groupDisabled ? disabledItemStyles : ""}
+              ${
+                disabled || groupDisabled
+                  ? "juno-sidenavigation-item-disabled"
+                  : ""
+              }
+              ${className}
             `}
-            href={href}
-            aria-label={ariaLabel}
-            aria-disabled={ disabled || groupDisabled ? true : false}
-            aria-selected={isActive}
-            onClick={handleItemClick}
-            {...props}
-          >
-            { icon ? <Icon icon={icon} size="18" className={ label && label.length ? "jn-mr-2" : "" } /> : "" }
-            <span>{ children || label || theKey }</span>
-          </a>
-        :
-          <button
-            className={`
+          href={href}
+          aria-label={ariaLabel}
+          aria-disabled={disabled || groupDisabled ? true : false}
+          aria-selected={isActive}
+          onClick={handleItemClick}
+          {...props}
+        >
+          {icon ? (
+            <Icon
+              icon={icon}
+              size="18"
+              className={label && label.length ? "jn-mr-2" : ""}
+            />
+          ) : (
+            ""
+          )}
+          <span>{children || label || theKey}</span>
+        </a>
+      ) : (
+        <button
+          className={`
               juno-sidenavigation-item
-              ${ itemStyles}
-              ${ isActive ? "juno-sidenavigation-item-active" : ""}
-              ${ isActive ? activeItemStyles : ""}
-              ${ disabled || groupDisabled ? disabledItemStyles : ""}
-              ${ disabled || groupDisabled ? "juno-sidenavigation-item-disabled" : ""}
-              ${ className }
+              ${itemStyles}
+              ${isActive ? "juno-sidenavigation-item-active" : ""}
+              ${isActive ? activeItemStyles : ""}
+              ${disabled || groupDisabled ? disabledItemStyles : ""}
+              ${
+                disabled || groupDisabled
+                  ? "juno-sidenavigation-item-disabled"
+                  : ""
+              }
+              ${className}
             `}
-            aria-label={ariaLabel}
-            aria-disabled={ disabled || groupDisabled ? true : false}
-            aria-selected={isActive}
-            disabled={disabled || groupDisabled ? true : false }
-            onClick={handleItemClick}
-            {...props}
-          >
-            { icon ? <Icon icon={icon} size="18" className={ label && label.length ? "jn-mr-2" : "" } /> : "" }
-            <span>{ children || label || theKey }</span>
-          </button>
-      }
+          aria-label={ariaLabel}
+          aria-disabled={disabled || groupDisabled ? true : false}
+          aria-selected={isActive}
+          disabled={disabled || groupDisabled ? true : false}
+          onClick={handleItemClick}
+          {...props}
+        >
+          {icon ? (
+            <Icon
+              icon={icon}
+              size="18"
+              className={label && label.length ? "jn-mr-2" : ""}
+            />
+          ) : (
+            ""
+          )}
+          <span>{children || label || theKey}</span>
+        </button>
+      )}
     </li>
   )
-  
 }
 
 SideNavigationItem.propTypes = {
@@ -163,7 +176,7 @@ SideNavigationItem.propTypes = {
   href: PropTypes.string,
   /** A handler to execute once the item is clicked. Will render the item as a button element if passed */
   onClick: PropTypes.func,
-  /** An optional technical identifier fort the tab. If not passed, the label will be used to identify the tab. NOTE: If value is passed, the value of the active tab MUST be used when setting the activeItem prop on the parent SideNavigation.*/ 
+  /** An optional technical identifier fort the tab. If not passed, the label will be used to identify the tab. NOTE: If value is passed, the value of the active tab MUST be used when setting the activeItem prop on the parent SideNavigation.*/
   value: PropTypes.string,
 }
 

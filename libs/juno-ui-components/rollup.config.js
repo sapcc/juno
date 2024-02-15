@@ -31,20 +31,68 @@ const filename = pkg.module.slice(
   pkg.module.lastIndexOf(".")
 )
 
-const input = {
-  [filename]: pkg.source,
-}
-
-fs.readdirSync("./src/components").forEach((file) => {
-  input[file] = `src/components/${file}/index.js`
-})
-
 const isProduction = process.env.NODE_ENV === "production"
 const IGNORE_EXTERNALS = process.env.IGNORE_EXTERNALS === "true"
 
+// define plugins here to use it in different configs
+const plugins = [
+  svgr({
+    svgo: false,
+    titleProp: true,
+  }),
+  postcss({
+    config: {
+      path: "./postcss.config.js",
+    },
+    extract: false,
+    minimize: false, //true,
+    inject: false,
+    extensions: [".scss", ".css"],
+    use: ["sass", "glob-imports"],
+    loaders: [
+      // custom loader!!! to load all scss files in globals.scss
+      {
+        name: "glob-imports",
+        test: /\.(sass|scss)$/,
+        process({ code }) {
+          // handle glob import
+          return new Promise((resolve, reject) => {
+            const match = [...code.matchAll(/@import\s+(.*\*+.*);/g)]
+            match.forEach((m) => {
+              const files = glob.sync("./src/" + m[1].replace(/"|'/g, ""))
+              let result = files.map((f) => `@import "${f}";`).join("\n")
+              code = code.replace(m[0], result)
+            })
+            resolve({ code })
+          })
+        },
+      },
+    ],
+  }),
+
+  nodeResolve(),
+  babel({
+    // babelrc: false,
+    // // exclude: "node_modules/**",
+    // presets: ["@babel/preset-react"],
+    babelHelpers: "bundled",
+  }),
+  commonjs(),
+
+  minify({ comments: false }),
+  analyze({
+    summaryOnly: true,
+    limit: 0,
+  }),
+]
+
 const config = [
+  // bundle all components
   {
-    input,
+    input: fs.readdirSync("./src/components").reduce((map, file) => {
+      map[file] = `src/components/${file}/index.js`
+      return map
+    }, {}),
     output: [
       // { dir: "lib", format: "cjs", preserveModules: false },
       {
@@ -55,85 +103,29 @@ const config = [
       },
     ],
 
-    plugins: [
-      del({ targets: [`${buildDir}/**/*`] }),
-      svgr({
-        svgo: false,
-        titleProp: true,
-      }),
-      postcss({
-        config: {
-          path: "./postcss.config.js",
-        },
-        extract: false,
-        minimize: false, //true,
-        inject: false,
-        extensions: [".scss", ".css"],
-        use: ["sass", "glob-imports"],
-        loaders: [
-          // custom loader!!! to load all scss files in globals.scss
-          {
-            name: "glob-imports",
-            test: /\.(sass|scss)$/,
-            process({ code }) {
-              // handle glob import
-              return new Promise((resolve, reject) => {
-                const match = [...code.matchAll(/@import\s+(.*\*+.*);/g)]
-                match.forEach((m) => {
-                  const files = glob.sync("./src/" + m[1].replace(/"|'/g, ""))
-                  let result = files.map((f) => `@import "${f}";`).join("\n")
-                  code = code.replace(m[0], result)
-                })
-                resolve({ code })
-              })
-            },
-          },
-        ],
-      }),
-
-      nodeResolve(),
-      babel({
-        // babelrc: false,
-        // // exclude: "node_modules/**",
-        // presets: ["@babel/preset-react"],
-        babelHelpers: "bundled",
-      }),
-      commonjs(),
-
-      minify({ comments: false }),
-      analyze({
-        summaryOnly: true,
-        limit: 0,
-      }),
-    ],
-
-    external: ["react", "react-dom", "prop-types"].concat(
-      isProduction && !IGNORE_EXTERNALS
-        ? Object.keys(pkg.peerDependencies || {})
-        : []
-    ),
-  },
-  {
-    input: "lib/variables.scss",
-    output: {
-      file: `${buildDir}/lib/variables.css`,
-    },
-    plugins: [
-      postcss({
-        config: {
-          path: "./postcss.config.js",
-        },
-        extract: true,
-        minimize: true,
-        inject: false,
-      }),
-    ],
+    plugins: [del({ targets: [`${buildDir}/**/*`] }), ...plugins],
   },
   {
     input: "tailwind.config.js",
     output: {
       file: `${buildDir}/lib/tailwind.config.js`,
     },
+  },
+  {
+    input: pkg.source,
+    output: {
+      file: `${buildDir}/index.js`,
+      format: "esm",
+      preserveModules: false,
+      compact: true,
+    },
+    plugins,
+
+    external: ["react", "react-dom", "prop-types"].concat(
+      isProduction && !IGNORE_EXTERNALS
+        ? Object.keys(pkg.peerDependencies || {})
+        : []
+    ),
   },
 ]
 

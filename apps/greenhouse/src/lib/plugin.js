@@ -1,6 +1,7 @@
 import { useStore, createStore } from "zustand"
 import { devtools } from "zustand/middleware"
 import produce from "immer"
+import { managementVersion } from "../../package.json"
 
 export const NAV_TYPES = {
   APP: "app",
@@ -82,11 +83,12 @@ const Plugin = ({ environment, apiEndpoint, currentHost }) => {
           id: "greenhouse-management",
           name: "greenhouse-management",
           displayName: "Organization",
+          version: managementVersion,
           navType: NAV_TYPES.MNG,
-          navigable: environment === "qa" || environment === "development",
           props: {
             assetsUrl: currentHost,
             apiEndpoint: apiEndpoint,
+            environment: environment,
           },
         }),
       },

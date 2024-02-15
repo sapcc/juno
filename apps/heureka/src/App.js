@@ -1,43 +1,33 @@
 import React, { useEffect } from "react"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import useStore from "./hooks/useStore"
-import AppRouter from "./components/AppRouter"
-import { MessagesProvider } from "messages-provider"
-import { AppShell, AppShellProvider } from "juno-ui-components"
 import styles from "./styles.scss"
-import useCommunication from "./hooks/useCommunication"
-import CustomPageHeader from "./components/CustomPageHeader"
-
-const URL_STATE_KEY = "heureka"
+import { AppShell, AppShellProvider } from "juno-ui-components"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { MessagesProvider } from "messages-provider"
+import AsyncWorker from "./components/AsyncWorker"
+import StoreProvider, { useActions } from "./components/StoreProvider"
+import TabContext from "./components/tabs/TabContext"
 
 const App = (props) => {
-  const setEndpoint = useStore((state) => state.setEndpoint)
-  const setUrlStateKey = useStore((state) => state.setUrlStateKey)
-  const setEmbedded = useStore((state) => state.setEmbedded)
-
-  useCommunication()
-
-  useEffect(() => {
-    if (props.endpoint) {
-      setEndpoint(props.endpoint)
-    }
-    setEmbedded(props?.embedded === true || props?.embedded === "true")
-  }, [props])
-
-  useEffect(() => {
-    setUrlStateKey(URL_STATE_KEY)
-  }, [])
-
   // Create a client
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      // global default options that apply to all queries
+      queries: {
+        // staleTime: Infinity, // if you wish to keep data from the keys until reload
+        keepPreviousData: true, // nice when paginating
+        refetchOnWindowFocus: false, // default: true
+      },
+    },
+  })
 
   return (
     <QueryClientProvider client={queryClient}>
+      <AsyncWorker consumerId={props.id} />
       <AppShell
-        pageHeader={<CustomPageHeader />}
-        embedded={props.embedded === true || props.embedded === "true"}
+        pageHeader="Converged Cloud | Heureka"
+        embedded={props.embedded === "true" || props.embedded === true}
       >
-        <AppRouter props={props} />
+        <TabContext />
       </AppShell>
     </QueryClientProvider>
   )
@@ -49,7 +39,9 @@ const StyledApp = (props) => {
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <MessagesProvider>
-        <App {...props} />
+        <StoreProvider options={props}>
+          <App {...props} />
+        </StoreProvider>
       </MessagesProvider>
     </AppShellProvider>
   )
