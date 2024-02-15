@@ -12,7 +12,6 @@ outputs:
   - name: output # where do you want to download
 
 params:
-  PRE_COMMAND: echo "precommand"
   COMMAND:
   OS_USERNAME: concourse
   OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
@@ -28,5 +27,4 @@ run:
     - |
       set -e
       eval "$(swift auth)"
-      eval "$PRE_COMMAND"
-      swift $COMMAND
+      $COMMAND

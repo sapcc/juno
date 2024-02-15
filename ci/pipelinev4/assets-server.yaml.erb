@@ -227,17 +227,16 @@ jobs:
         input_mapping:
           input: test_results
         params:
-          PRE_COMMAND: 
-            mkdir -p juno/pending-assets-test && \ 
-            cp -r input/* juno/pending-assets-test/
-          COMMAND: upload --skip-identical --changed cypress juno
-          
+          COMMAND: 
+            mkdir -p juno/pending-assets-tests && cp -r input/* juno/pending-assets-tests/
+            swift upload --skip-identical --changed cypress juno
+
       - task: upload-passed-and-cleanup
         file: juno.git/ci/shared/swift-command.yaml
         input_mapping:
           input: passed
         params:
-          COMMAND: "upload juno-final-assets upload"
+          COMMAND: "swift upload juno-final-assets input"
 
       - task: exit
         config:
