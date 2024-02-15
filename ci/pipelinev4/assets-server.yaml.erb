@@ -227,9 +227,7 @@ jobs:
         input_mapping:
           input: test_results
         params:
-          COMMAND: 
-            mkdir -p juno/pending-assets-tests && cp -r input/* juno/pending-assets-tests/
-            swift upload --skip-identical --changed cypress juno
+          COMMAND: "mkdir -p juno/pending-assets-tests && cp -r input/* juno/pending-assets-tests/ && swift upload --skip-identical --changed cypress juno"
 
       - task: upload-passed-and-cleanup
         file: juno.git/ci/pipelinev4/tasks/swift.yaml

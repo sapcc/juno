@@ -26,5 +26,7 @@ run:
     - -c
     - |
       set -e
+      env
       eval "$(swift auth)"
+      echo "executing $COMMAND"
       $COMMAND
