@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# exit on error
-set -e
+# exit on error commended because we want to print the debug log
+# set -e
 
 if [ ! -f "CODEOWNERS" ]; then
   echo "This script must run from root of juno repo"
@@ -9,18 +9,33 @@ if [ ! -f "CODEOWNERS" ]; then
 fi
 
 function help() {
-  echo "Usage: asset_storage.sh --asset-name||-am --asset-path||-ap --asset-type||-at --action|-a --container||-c --root-path||-rp --debug||-d --dry-run||-dr
-  example: ./ci/scripts/asset_storage.sh --asset-name assets-overview --asset-type apps --action upload --root-path ../build_result
+  echo "Usage: asset_storage.sh --asset-name||-am --asset-path||-ap --asset-type||-at --action|-a --container||-c --root-path||-rp --debug||-d --dry-run||-dr --checksum||-cs
   --asset-name -> if no asset-name is fiven the whole folder that is 
                   defined with the --asset-type option is downloaded
   --asset-path -> optional like apps/asset-name, if set --asset-type is ingnored
   --asset-type -> app || lib
-  --action     -> upload ||download || sync || delete
+  --action     -> upload ||download || sync || delete || create-checksum
+                  * upload -> upload assets to swift/asset-path from given root-path/asset-path/
+                  * download -> download assets from swift to the current path
+                  * sync -> sync assets to swift/asset-path from given root-path/asset-path/
+                  * delete -> delete assets from swift/asset-path
+                  * create-checksum -> create a checksum for the given asset-path
   --container  -> where to upload or download assets
-  --root-path  -> this is needed for upload, download and sync and is the absolute path where the asset-path is located
-                  default is /tmp/build_result (download,upload,sync from this root-path to the container)
+  --root-path  -> this is needed for upload, download and sync and create-checksum and is the path where the asset-path is located
+                  in other words the complete path is root path + asset-path
+                  default is /tmp/build_result
   --debug      -> default is 'false'
   --dry-run    -> default is 'false', this is only valid if you use the sync mode and is useful to prevent data loss 😉
+  --checksum   -> optional, if set it is used to check if the asset hase changed before delete
+
+  # Examples for apps/whois
+
+  * create-checksum: ./ci/scripts/asset_storage.sh --action create-checksum --asset-path apps/whois/ --root-path .
+  * delete ./ci/scripts/asset_storage.sh --container juno-pending-assets --action delete --asset-path apps/whois/ --debug true
+  * delete with check: ./ci/scripts/asset_storage.sh --container juno-pending-assets --action delete --asset-path apps/whois/ --debug true --checksum 123456789
+  * upload: ./ci/scripts/asset_storage.sh --container juno-pending-assets --action upload --asset-path apps/auth/ --root-path . --debug true
+  * download: ./ci/scripts/asset_storage.sh --container juno-pending-assets --action download --asset-path apps/auth/ --root-path . --debug true
+  * sync: ./ci/scripts/asset_storage.sh --container juno-pending-assets --action sync --asset-path apps/auth/ --root-path . --debug true --dry-run true
 
   possible ENV Vars:
   * OS_USER_DOMAIN_NAME: per default this is not set 
@@ -29,7 +44,9 @@ function help() {
   * OS_PROJECT_ID: per default this is not set 
   * OS_AUTH_URL: default is https://identity-3.qa-de-1.cloud.sap/v3
   * OS_USERNAME: this is not optional
-  * OS_PASSWORD: this is not optional"
+  * OS_PASSWORD: this is not optional
+  "
+
   exit
 }
 
@@ -77,6 +94,11 @@ while [[ $# -gt 0 ]]; do
     shift # past argument
     shift # past value
     ;;
+  --checksum | -cs)
+    GIVEN_CHECKSUM="$2"
+    shift # past argument
+    shift # past value
+    ;;
   --debug | -d)
     DEBUG="$2"
     shift # past argument
@@ -97,13 +119,15 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ -z "$CONTAINER" ]]; then
-  echo "Error: no CONTAINER given 😐"
-  exit 1
+if [[ "$ACTION" != "create-checksum" ]]; then
+  if [[ -z "$CONTAINER" ]]; then
+    echo "Error: no CONTAINER given"
+    exit 1
+  fi
 fi
 
 if [[ -z "$ACTION" ]]; then
-  echo "Error: no ACTION given 😐"
+  echo "Error: no ACTION given"
   exit 1
 fi
 
@@ -111,7 +135,7 @@ if [[ -z "$ASSET_PATH" ]]; then
   if [[ -n "$ASSET_TYPE" ]]; then
     ASSET_PATH="$ASSET_TYPE/$ASSET_NAME"
   else
-    echo "Warning: no ASSET_PATH given 😐"
+    echo "Warning: no ASSET_PATH given"
     #exit 1
   fi
 fi
@@ -122,7 +146,7 @@ fi
 
 if [[ "$ACTION" == "upload" ]] || [[ "$ACTION" == "sync" ]] || [[ "$ACTION" == "download" ]]; then
   if [ ! -d "$ROOT_PATH" ]; then
-    echo "Error: directory ROOT_PATH $ROOT_PATH does not exist 😐"
+    echo "Error: directory ROOT_PATH $ROOT_PATH does not exist"
     exit 1
   fi
 fi
@@ -139,57 +163,61 @@ if [[ -z "$OS_PROJECT_NAME" ]]; then
   OS_PROJECT_NAME="master"
 fi
 
-echo "=================================="
-if [[ -n "$ASSET_NAME" ]]; then
-  echo "### $ACTION asset $ASSET_NAME ###"
-fi
-echo "----------------------------------"
+if [[ "$ACTION" != "create-checksum" ]]; then
 
-export OS_AUTH_VERSION=3
-echo "OS_AUTH_URL: $OS_AUTH_URL"
-export OS_AUTH_URL=$OS_AUTH_URL
+  echo "=================================="
+  if [[ -n "$ASSET_NAME" ]]; then
+    echo "### $ACTION asset $ASSET_NAME ###"
+    echo "----------------------------------"
+  fi
 
-if [[ -n "$OS_PROJECT_DOMAIN_NAME" ]]; then
-  echo "OS_PROJECT_DOMAIN_NAME: $OS_PROJECT_DOMAIN_NAME"
-  export OS_PROJECT_DOMAIN_NAME=$OS_PROJECT_DOMAIN_NAME
-fi
+  export OS_AUTH_VERSION=3
+  echo "OS_AUTH_URL: $OS_AUTH_URL"
+  export OS_AUTH_URL=$OS_AUTH_URL
 
-echo "OS_USER_DOMAIN_NAME: $OS_USER_DOMAIN_NAME"
-export OS_USER_DOMAIN_NAME=$OS_USER_DOMAIN_NAME
+  if [[ -n "$OS_PROJECT_DOMAIN_NAME" ]]; then
+    echo "OS_PROJECT_DOMAIN_NAME: $OS_PROJECT_DOMAIN_NAME"
+    export OS_PROJECT_DOMAIN_NAME=$OS_PROJECT_DOMAIN_NAME
+  fi
 
-echo "OS_PROJECT_NAME: $OS_PROJECT_NAME"
-export OS_PROJECT_NAME=$OS_PROJECT_NAME
+  echo "OS_USER_DOMAIN_NAME: $OS_USER_DOMAIN_NAME"
+  export OS_USER_DOMAIN_NAME=$OS_USER_DOMAIN_NAME
 
-if [[ -n "$OS_PROJECT_ID" ]]; then
-  export OS_PROJECT_ID=$OS_PROJECT_ID
+  echo "OS_PROJECT_NAME: $OS_PROJECT_NAME"
+  export OS_PROJECT_NAME=$OS_PROJECT_NAME
+
+  if [[ -n "$OS_PROJECT_ID" ]]; then
+    export OS_PROJECT_ID=$OS_PROJECT_ID
+    echo "OS_PROJECT_ID: $OS_PROJECT_ID"
+  fi
+
   echo "OS_PROJECT_ID: $OS_PROJECT_ID"
-fi
+  echo "OS_USERNAME: $OS_USERNAME"
+  export OS_USERNAME=$OS_USERNAME
+  export OS_PASSWORD=$OS_PASSWORD
 
-echo "OS_PROJECT_ID: $OS_PROJECT_ID"
-echo "OS_USERNAME: $OS_USERNAME"
-export OS_USERNAME=$OS_USERNAME
-export OS_PASSWORD=$OS_PASSWORD
+  # auth swift and set OS_STORAGE_URL and OS_AUTH_TOKEN
+  eval "$(swift auth)"
 
-# auth swift and set OS_STORAGE_URL and OS_AUTH_TOKEN
-eval "$(swift auth)"
+  echo "----------------------------------"
+  echo "use ACTION      = $ACTION"
+  if [[ -n "$ASSET_TYPE" ]]; then
+    echo "use ASSET_TYPE  = $ASSET_TYPE"
+  fi
+  echo "use ASSET_PATH  = $ASSET_PATH"
+  echo "use ASSET_NAME  = $ASSET_NAME"
+  echo "use CONTAINER   = $CONTAINER"
+  echo "----------------------------------"
 
-echo "----------------------------------"
-echo "use ACTION      = $ACTION"
-if [[ -n "$ASSET_TYPE" ]]; then
-  echo "use ASSET_TYPE  = $ASSET_TYPE"
-fi
-echo "use ASSET_PATH  = $ASSET_PATH"
-echo "use ASSET_NAME  = $ASSET_NAME"
-echo "use CONTAINER   = $CONTAINER"
-echo "----------------------------------"
-
-OUTPUT="/dev/null"
-if [[ "$DEBUG" == "true" ]]; then
-  OUTPUT="/tmp/swift-debug.log"
+  OUTPUT="/dev/null"
+  if [[ "$DEBUG" == "true" ]]; then
+    echo "Log for $ACTION:" >/tmp/swift-debug.log
+    OUTPUT="/tmp/swift-debug.log"
+  fi
 fi
 
 function sync() {
-  echo "Swift sync from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
+  echo "Swift sync from $ROOT_PATH/$ASSET_PATH to container $CONTAINER and destination $ASSET_PATH"
   # https://rclone.org/commands/rclone_sync/
   # Important: Since this can cause data loss, test first with the --dry-run or the --interactive/-i flag.
   # use "rclone sync --dry-run  "$ASSET_PATH" juno:$CONTAINER/$ASSET_PATH" for a dry run
@@ -199,7 +227,7 @@ function sync() {
     if [[ "$DRY_RUN" == "true" ]]; then
       rclone sync --dry-run "$ASSET_PATH" "juno:$CONTAINER/$ASSET_PATH"
     else
-      rclone sync --verbose "$ASSET_PATH" "juno:$CONTAINER/$ASSET_PATH" &>$OUTPUT &&
+      rclone sync --verbose "$ASSET_PATH" "juno:$CONTAINER/$ASSET_PATH" &>>$OUTPUT &&
         echo "----------------------------------" &&
         echo "sync done 🙂"
     fi
@@ -208,18 +236,18 @@ function sync() {
 
 # https://docs.openstack.org/ocata/cli-reference/swift.html
 function upload() {
-  echo "Swift upload from $ROOT_PATH to container $CONTAINER and destination $ASSET_PATH"
+  echo "Swift upload from $ROOT_PATH/$ASSET_PATH to container $CONTAINER and destination $ASSET_PATH"
   if [ -z "$(ls -A "$ASSET_PATH")" ]; then
     echo "The directory $ASSET_PATH is empty, noting upload to swift..."
   else
-    swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" &>$OUTPUT &&
+    swift upload --skip-identical --changed "$CONTAINER" "$ASSET_PATH" &>>$OUTPUT &&
       echo "----------------------------------" &&
       echo "upload done 🙂"
   fi
 }
 
 function download() {
-  echo "Swift download from container $CONTAINER $ASSET_PATH to $ASSET_PATH"
+  echo "Swift download from container $CONTAINER and path $ASSET_PATH to $ROOT_PATH/$ASSET_PATH"
 
   # ignore path args if ASSET_PATH is empty
   # reason to download the whole container
@@ -228,30 +256,88 @@ function download() {
     PATH_ARG=""
   fi
 
-  ls -all
-  echo "swift download --skip-identical $CONTAINER $PATH_ARG"
-  swift download --skip-identical "$CONTAINER" $PATH_ARG &>$OUTPUT &&
+  #echo "swift download --skip-identical $CONTAINER $PATH_ARG"
+  swift download --skip-identical "$CONTAINER" $PATH_ARG &>>$OUTPUT &&
     echo "----------------------------------" &&
     echo "download done 🙂"
 }
 
 function delete() {
+  if [[ -n "$GIVEN_CHECKSUM" ]]; then
+    delete_check
+  fi
   echo "Swift delete from container $CONTAINER $ASSET_PATH"
   if [[ -z "$ASSET_PATH" ]]; then
-    echo "Error: no ASSET_PATH given 😐"
+    echo "Error: no ASSET_PATH given"
     exit 1
   fi
-  #echo "swift delete $CONTAINER --prefix $ASSET_PATH"
-  swift delete "$CONTAINER" --prefix "$ASSET_PATH" &>$OUTPUT &&
+  echo "swift delete $CONTAINER --prefix $ASSET_PATH"
+  swift delete "$CONTAINER" --prefix "$ASSET_PATH" &>>$OUTPUT &&
     echo "----------------------------------" &&
     echo "delete done 🙂"
 }
 
+function delete_check() {
+  ROOT_PATH="/tmp/asset_storage"
+  mkdir -p $ROOT_PATH
+  echo "Check delete - first download to $ROOT_PATH"
+  echo "first download to $ROOT_PATH" &>>$OUTPUT
+  cd $ROOT_PATH || exit
+  download
+  echo "create checksum for $ROOT_PATH/$ASSET_PATH" &>>$OUTPUT
+  create_checksum
+  echo "generated checksum: $CHECKSUM" &>>$OUTPUT
+  echo "given checksum: $GIVEN_CHECKSUM" &>>$OUTPUT
+  if [[ "$CHECKSUM" != "$GIVEN_CHECKSUM" ]]; then
+    echo "Error: checksums are not equal, remote changed cowardly refuse to delete 🫣"
+    print_debug
+    # for debugging: print all hidden chars
+    # cat -A <<<"$GIVEN_CHECKSUM"
+    # cat -A <<<"$CHECKSUM"
+    exit 1
+  fi
+}
+
+function create_checksum() {
+
+  if [ ! -d "$ROOT_PATH/$ASSET_PATH" ]; then
+    echo "ERROR: PATH $ROOT_PATH/$ASSET_PATH not found"
+    exit 1
+  fi
+
+  CHECKSUM="$(find $ROOT_PATH/$ASSET_PATH -type f -exec sha512sum {} \; | sort | sha512sum)"
+  CHECKSUM=${CHECKSUM::-3} #remove last two chars (" -") from string
+  if [[ "$ACTION" == "create-checksum" ]]; then
+    echo "$CHECKSUM"
+  else
+    echo "----------------------------------"
+    echo "create checksum for $ROOT_PATH/$ASSET_PATH"
+    echo "$CHECKSUM"
+    echo "----------------------------------"
+    echo "cleanup $ROOT_PATH"
+    rm -rf "$ROOT_PATH"
+  fi
+}
+
+function print_debug() {
+  if [[ "$DEBUG" == "true" ]]; then
+    if [ -f "/tmp/swift-debug.log" ]; then
+      echo "----------------------------------"
+      cat /tmp/swift-debug.log
+      echo "----------------------------------"
+      rm -f /tmp/swift-debug.log
+    else
+      echo "Note: no debug log file found"
+    fi
+    echo "=================================="
+  fi
+}
+
 if [[ "$ACTION" == "upload" ]] || [[ "$ACTION" == "sync" ]] || [[ "$ACTION" == "download" ]]; then
-  cd "$ROOT_PATH"
+  cd "$ROOT_PATH" || exit
   if [[ "$ACTION" != "download" ]]; then
     if [ ! -d "$ASSET_PATH" ]; then
-      echo "Error: directory ASSET_PATH $ASSET_PATH does not exist 😐"
+      echo "Error: directory ASSET_PATH $ASSET_PATH does not exist"
       exit 1
     fi
   fi
@@ -271,15 +357,8 @@ fi
 if [[ "$ACTION" == "delete" ]]; then
   delete
 fi
-
-echo ""
-if [[ "$DEBUG" == "true" ]]; then
-  if [ -f "/tmp/swift-debug.log" ]; then
-    echo "Log for $ACTION:"
-    echo "----------------"
-    cat /tmp/swift-debug.log
-    echo "----------------"
-  else
-    echo "Note: no debug log file found"
-  fi
+if [[ "$ACTION" == "create-checksum" ]]; then
+  create_checksum
 fi
+
+print_debug
