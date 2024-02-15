@@ -12,30 +12,36 @@ const Plugin = ({ id }) => {
   const config = usePlugin().config()
   const activeApps = usePlugin().active()
   const { addMessage } = useActions()
+
   const [displayReload, setDisplayReload] = useState(false)
   const [reload, setReload] = useState(0)
+  const [isMounted, setIsMounted] = useState(false)
 
+  // element to mount the app
   const el = document.createElement("div")
   el.classList.add("inline")
   const app = useRef(el)
 
-  // this promise is resolved once per app(config[id])
-  // The embedded-prop should be true to secure the right display as embedded app.
-  const mountApp = useMemo(() => {
-    // lets wait until the assetsUrl exists to create the mount function with the correct assets url
-    if (!assetsHost) return
-
-    return mount(app.current, {
+  // mount the app each time the component is reloaded losing the state
+  useEffect(() => {
+    if (!mount || !assetsHost || !config) return
+    // mount the app
+    mount(app.current, {
       ...config[id],
       props: { ...config[id]?.props, embedded: true },
-    }).catch((error) => {
-      setDisplayReload(true)
-      addMessage({
-        variant: "error",
-        text: `${config[id]?.name}: ` + parseError(error),
-      })
     })
-  }, [mount, reload, assetsHost, addMessage])
+      .then((loaded) => {
+        if (!loaded) return
+        setIsMounted(true)
+      })
+      .catch((error) => {
+        setDisplayReload(true)
+        addMessage({
+          variant: "error",
+          text: `${config?.name}: ` + parseError(error),
+        })
+      })
+  }, [mount, reload, config, assetsHost])
 
   const displayPluging = useMemo(
     () => activeApps.indexOf(id) >= 0,
@@ -43,20 +49,17 @@ const Plugin = ({ id }) => {
   )
 
   useEffect(() => {
-    if (!config[id] || !mountApp) return
+    if (!config[id] || !isMounted) return
 
     if (displayPluging) {
-      // load and add to holder
-      mountApp.then((loaded) => {
-        if (!loaded) return
-        holder.current.appendChild(app.current)
-      })
+      //  add to holder
+      holder.current.appendChild(app.current)
     } else {
       // remove from holder
       if (holder.current.contains(app.current))
         holder.current.removeChild(app.current)
     }
-  }, [mountApp, displayPluging])
+  }, [isMounted, displayPluging])
 
   return (
     <div data-app={id} ref={holder} className="inline">
