@@ -29,4 +29,4 @@ run:
       env
       eval "$(swift auth)"
       echo "executing $COMMAND"
-      "$COMMAND"
+      eval "$COMMAND"
