@@ -37,22 +37,20 @@ const App = (props = {}) => {
     <QueryClientProvider client={queryClient}>
       <AsyncWorker />
       <AppBody data-testid="greenhouse-management">
-        <MessagesProvider>
-          <Messages className="mb-4" />
-          <Auth>
-            <UrlState>
-              <OrgInfo />
-              <MainContainer>
-                <MainContainerInner fullWidth={true}>
-                  <SideNav />
-                  <ContentContainer>
-                    <AppContent {...props} />
-                  </ContentContainer>
-                </MainContainerInner>
-              </MainContainer>
-            </UrlState>
-          </Auth>
-        </MessagesProvider>
+        <Messages className="mb-4" />
+        <Auth>
+          {/* <UrlState> */}
+          <OrgInfo />
+          <MainContainer>
+            <MainContainerInner fullWidth={true}>
+              <SideNav />
+              <ContentContainer>
+                <AppContent {...props} />
+              </ContentContainer>
+            </MainContainerInner>
+          </MainContainer>
+          {/* </UrlState> */}
+        </Auth>
       </AppBody>
     </QueryClientProvider>
   )
@@ -62,9 +60,11 @@ const StyledApp = (props) => {
   return (
     <AppShellProvider theme={`${props.theme ? props.theme : "theme-dark"}`}>
       <style>{styles.toString()}</style>
-      <StoreProvider options={props}>
-        <App {...props} />
-      </StoreProvider>
+      <MessagesProvider>
+        <StoreProvider options={props}>
+          <App {...props} />
+        </StoreProvider>
+      </MessagesProvider>
     </AppShellProvider>
   )
 }
