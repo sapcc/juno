@@ -290,7 +290,13 @@ for (let key in importMap.scopes) {
 if (options.verbose) console.log(importMap)
 
 if (options.env === "development") {
-  fs.writeFileSync(options.importmapPath, JSON.stringify(importMap, null, 2))
+  fs.writeFileSync(
+    pathLib.resolve(options.importmapPath),
+    JSON.stringify(importMap, null, 2)
+  )
 } else {
-  fs.writeFileSync(options.importmapPath, JSON.stringify(importMap))
+  fs.writeFileSync(
+    pathLib.resolve(options.importmapPath),
+    JSON.stringify(importMap)
+  )
 }

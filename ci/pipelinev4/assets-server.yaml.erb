@@ -86,58 +86,62 @@ jobs:
           DEBUG: "true"
           CONTAINER: "juno-pending-assets"
 
-      - task: generate-import-map-and-co
-        config:
-          platform: linux
-          image_resource:
-            type: docker-image
-            source:
-              repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base
-              tag: "latest"    
-          inputs:
-            - name: pending_assets
-          outputs:
-            - name: importmap_data
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                WORKDIR=$(pwd)
-                cd /juno 
-                npm run build-libs
-                cd $WORKDIR
-                mkdir -p ./pending_assets/libs
-                # copy libs to pending_assets 
-                # some apps are using the libs and we need to have them in the same folder
-                for lib in /juno/libs/*; do
-                name=$(basename $lib)
-                if [ ! -d "./pending_assets/libs/${name}@latest" ]; then
-                cp -r $lib ./pending_assets/libs/"${name}@latest"
-                fi
+      - task: upload-test-result
+        file: juno.git/ci/pipelinev4/tasks/generate-test-data.yaml
+        input_mapping:
+          pending_assets: pending_assets
+        output_mapping:
+          test_data: test_data
+
+      # - task: generate-import-map-and-co
+      #   config:
+      #     platform: linux
+      #     image_resource:
+      #       type: docker-image
+      #       source:
+      #         repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base
+      #         tag: "latest"    
+      #     inputs:
+      #       - name: pending_assets
+      #     outputs:
+      #       - name: importmap_data
+      #     run:
+      #       path: /bin/sh
+      #       args:
+      #         - -c
+      #         - |
+      #           WORKDIR=$(pwd)
+      #           cd /juno 
+      #           npm run build-libs
+      #           cd $WORKDIR
+      #           mkdir -p ./pending_assets/libs
+      #           # copy libs to pending_assets 
+      #           # some apps are using the libs and we need to have them in the same folder
+      #           for lib in /juno/libs/*; do
+      #           name=$(basename $lib)
+      #           if [ ! -d "./pending_assets/libs/${name}@latest" ]; then
+      #           cp -r $lib ./pending_assets/libs/"${name}@latest"
+      #           fi
               
-                done
-                cd pending_assets
+      #           done
 
-                # Generate importmap and manifest only for pending apps and libs
-                # this step also generates the externals esm packages
-                node /juno/ci/scripts/esm_build/generate_importmap.mjs \
-                --node-modules-path=/tmp/ \
-                --external-path=./externals \
-                --exit-on-error=false \
-                --src=./ \
-                --base-url="http://localhost:3000" \
-                --ignore-externals=false \
-                --output=./importmap.json  \
-                --verbose=false ; \
-                \
-                node /juno/ci/scripts/generate_manifest.mjs \
-                --src=./ \
-                --output=./manifest.json \
-                --base-url="http://localhost:3000" \
-                --verbose=false 
-
-                cp -r ./* ../importmap_data/
+      #           # Generate importmap and manifest only for pending apps and libs
+      #           # this step also generates the externals esm packages
+      #           node /juno/ci/scripts/esm_build/generate_importmap.mjs \
+      #           --node-modules-path=/tmp/ \
+      #           --external-path=./importmap_data/externals \
+      #           --exit-on-error=false \
+      #           --src=./pending_assets \
+      #           --base-url="http://localhost:3000" \
+      #           --ignore-externals=false \
+      #           --importmap-path=./importmap_data/importmap.json  \
+      #           --verbose=false ; \
+      #           \
+      #           node /juno/ci/scripts/generate_manifest.mjs \
+      #           --src=./importmap_data \
+      #           --output=./importmap_data/manifest.json \
+      #           --base-url="http://localhost:3000" \
+      #           --verbose=false 
 
       - task: test
         config:
@@ -149,7 +153,7 @@ jobs:
               tag: "latest"    
           inputs:
             - name: juno.git
-            - name: importmap_data
+            - name: test_data
             - name: pending_assets
             - name: meta
           outputs:
@@ -161,23 +165,25 @@ jobs:
             args:
               - -c
               - |
+                WORKDIR=$(pwd)
                 FAIL='\033[0;31m'
                 SUCCESS='\033[0;32m'
                 INFO='\033[0;36m'
                 NC='\033[0m' # No Color
+                BUILD_NAME="$(cat meta/build-name)"
                 URL="$(cat meta/atc-external-url)/teams/$(cat meta/build-team-name)/pipelines/$(cat meta/build-pipeline-name)/jobs/$(cat meta/build-job-name)/builds/$(cat meta/build-name)"
 
                 echo -e "${INFO}copy e2e tests from juno.git to ./e2e ${NC}"
                 cp -r ./juno.git/e2e .
-                echo -e "${INFO}copy mount-test.html to importmap_data ${NC}"
-                cp ./juno.git/ci/assets-server/mount-test.html ./importmap_data/      
+                echo -e "${INFO}copy mount-test.html to test_data ${NC}"
+                cp ./juno.git/ci/assets-server/mount-test.html ./test_data/      
                 echo -e "${INFO}create empty build-log.json ${NC}"
                 echo '[]' > test_results/build-log.json
                 echo -e "${INFO}create serve.config.json ${NC}"
                 echo -e "${INFO}this is needed to avoid clean urls, we want to have extensions like .html ${NC}"
                 echo '{"cleanUrls": false}' > /tmp/serve.config.json
-                echo -e "${INFO}run server in importmap_data ${NC}"
-                serve ./importmap_data -n -u -p 3000 -c /tmp/serve.config.json & 
+                echo -e "${INFO}run server in test_data ${NC}"
+                serve ./test_data -n -u -p 3000 -c /tmp/serve.config.json & 
 
                 echo -e "${INFO}=== RUN MOUNT TESTS ===\n ${NC}"
                 cd e2e
@@ -188,14 +194,16 @@ jobs:
                 TYPE_FOLDER=$(basename $(dirname $(dirname $f)))
                 echo -e "${INFO}===TEST $NAME@$VERSION ($TYPE_FOLDER)${NC}" 
                 
-                mkdir -p "../test_results/cypress/screenshots/$NAME@$VERSION" \
-                "../test_results/cypress/videos/$NAME@$VERSION" \
-                "../test_results/cypress/text/$NAME@$VERSION" \
+                # mkdir -p "../test_results/cypress/screenshots/$NAME@$VERSION" \
+                # "../test_results/cypress/videos/$NAME@$VERSION" \
+                # "../test_results/cypress/text/$NAME@$VERSION" \
                 
                 cypress run --spec "cypress/integration/assets-server/mount_asset.spec.js" \
                 --browser chrome \
                 --env APP_NAME=$NAME,APP_VERSION=$VERSION \
-                --config '{"baseUrl":"http://127.0.0.1:3000"}'
+                --config '{"baseUrl":"http://127.0.0.1:3000",\
+                "screenshotsFolder":"$WORKDIR/test_results/$BUILD_NAME/$NAME@$VERSION/screenshots",\
+                "videosFolder":"$WORKDIR/test_results/$BUILD_NAME/$NAME@$VERSION/videos"}'
 
                 # Check the exit status of the cp command 
                 if [ $? -eq 0 ]; then 
@@ -204,10 +212,6 @@ jobs:
                 cp -r $(dirname $f) "../passed/$TYPE_FOLDER/$NAME@$VERSION" 
                 else 
                 STATUS="failed"
-                # copy screenshots and videos of current test to test_results
-                cp -rf cypress/videos/* "../test_results/cypress/videos/$NAME@$VERSION" 2>/dev/null
-                cp -rf cypress/screenshots/* "../test_results/cypress/screenshots/$NAME@$VERSION" 2>/dev/null
-                fi 
                 echo -e "${INFO}===RESULT: $NAME@$VERSION $STATUS ${NC}"
 
                 jq --arg n "$NAME" --arg v "$VERSION" --arg s "$STATUS" --arg l "$URL" \
@@ -215,6 +219,7 @@ jobs:
                 mv ../test_results/build-log.json.temp ../test_results/build-log.json 
                 done
                 exit 0
+
       # - task: upload-test-result
       #   file: juno.git/ci/shared/swift-cypress-upload.yaml
       #   input_mapping:

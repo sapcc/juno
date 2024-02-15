@@ -1,0 +1,51 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base
+    tag: "latest"
+
+inputs:
+  - name: pending_assets
+outputs:
+  - name: test_data # where do you want to download
+
+params:
+
+run:
+  path: /bin/sh
+  args:
+    - -c
+    - |
+      WORKDIR=$(pwd)
+      cd /juno 
+      npm run build-libs
+      cd $WORKDIR
+      mkdir -p ./pending_assets/libs
+      # copy libs to pending_assets 
+      # some apps are using the libs and we need to have them in the same folder
+      for lib in /juno/libs/*; do
+      name=$(basename $lib)
+      if [ ! -d "./pending_assets/libs/${name}@latest" ]; then
+      cp -r $lib ./pending_assets/libs/"${name}@latest"
+      fi
+      done
+
+      # Generate importmap and manifest only for pending apps and libs
+      # this step also generates the externals esm packages
+      node /juno/ci/scripts/esm_build/generate_importmap.mjs \
+      --node-modules-path=/tmp/ \
+      --external-path=./test_data/externals \
+      --exit-on-error=false \
+      --src=./pending_assets \
+      --base-url="http://localhost:3000" \
+      --ignore-externals=false \
+      --importmap-path=./test_data/importmap.json  \
+      --verbose=false ; \
+      \
+      node /juno/ci/scripts/generate_manifest.mjs \
+      --src=./test_data \
+      --output=./test_data/manifest.json \
+      --base-url="http://localhost:3000" \
+      --verbose=false
