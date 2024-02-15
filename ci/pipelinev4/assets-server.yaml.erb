@@ -223,7 +223,7 @@ jobs:
       #   params:
       #     NAME: "pending-assets-tests"
       - task: upload-test-result
-        file: juno.git/ci/shared/swift-command.yaml
+        file: juno.git/ci/pipelinev4/tasks/swift.yaml
         input_mapping:
           input: test_results
         params:
@@ -232,7 +232,7 @@ jobs:
             swift upload --skip-identical --changed cypress juno
 
       - task: upload-passed-and-cleanup
-        file: juno.git/ci/shared/swift-command.yaml
+        file: juno.git/ci/pipelinev4/tasks/swift.yaml
         input_mapping:
           input: passed
         params:
