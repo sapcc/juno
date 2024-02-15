@@ -143,6 +143,7 @@ jobs:
       #           --base-url="http://localhost:3000" \
       #           --verbose=false 
 
+           
       - task: test
         config:
           platform: linux
@@ -197,7 +198,7 @@ jobs:
                 cypress run --spec "cypress/integration/assets-server/mount_asset.spec.js" \
                 --browser chrome \
                 --env APP_NAME=$NAME,APP_VERSION=$VERSION \
-                --config '{"baseUrl":"http://127.0.0.1:3000","screenshotsFolder":"$WORKDIR/test_results/$BUILD_NAME/$NAME@$VERSION/screenshots","videosFolder":"$WORKDIR/test_results/$BUILD_NAME/$NAME@$VERSION/videos"}'
+                --config "{\"baseUrl\":\"http://127.0.0.1:3000\",\"screenshotsFolder\":\"$WORKDIR/test_results/$BUILD_NAME/$NAME@$VERSION/screenshots\",\"videosFolder\":\"$WORKDIR/test_results/$BUILD_NAME/$NAME@$VERSION/videos\"}'
 
                 # Check the exit status of the cp command 
                 if [ $? -eq 0 ]; then 

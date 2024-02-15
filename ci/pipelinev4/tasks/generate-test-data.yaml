@@ -40,23 +40,22 @@ run:
       cp -r $lib ./pending_assets/libs/"${name}@latest"
       fi
       done
+      cp -r pending_assets/* ./test_data/ && cd ./test_data
 
       # Generate importmap and manifest only for pending apps and libs
       # this step also generates the externals esm packages
       node /juno/ci/scripts/esm_build/generate_importmap.mjs \
       --node-modules-path=/tmp/ \
-      --external-path=./test_data/externals \
+      --external-path=./externals \
       --exit-on-error=false \
-      --src=./pending_assets \
+      --src=./ \
       --base-url="http://localhost:3000" \
       --ignore-externals=false \
-      --importmap-path=./test_data/importmap.json  \
+      --importmap-path=./importmap.json  \
       --verbose=false ; \
       \
       node /juno/ci/scripts/generate_manifest.mjs \
-      --src=./pending_assets \
-      --output=./test_data/manifest.json \
+      --src=./ \
+      --output=./manifest.json \
       --base-url="http://localhost:3000" \
       --verbose=false
-
-      cp -r pending_assets/* ./test_data/
