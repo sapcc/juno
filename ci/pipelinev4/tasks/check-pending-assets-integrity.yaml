@@ -35,7 +35,7 @@ run:
         # loop over keys name, repository and version
         for key in name version repository; do
           echo -ne "${INFO}  $key ${NC}"
-          VALUE=$(grep "\"$key\":" $f | cut -d\" -f4)
+          VALUE=$(grep -o "\"$key\":\\s*\"[^\"]*" $f | grep -o '[^"]*$')
           # get the value of the key
           # in one line
 
@@ -52,9 +52,9 @@ run:
           continue
         fi
 
-        MAIN=$(grep "\"main\":" $f | cut -d\" -f4)
+        MAIN=$(grep -o '"main":\s*"[^"]*' $f | grep -o '[^"]*$')
         if [ -z $MAIN ]; then 
-          MAIN=$(grep "\"module\":" $f | cut -d\" -f4)
+          MAIN=$(grep -o '"module":\s*"[^"]*' $f | grep -o '[^"]*$')
           if [ -z $MAIN ] || [ ! -f "./input/$TYPE/$NAME/$MAIN" ]; then
             echo -e "${INFO}  main file ${FAIL}missing${NC}"
             PASSED=false
