@@ -133,7 +133,9 @@ echo "use ACTION      = $ACTION"
 echo "use CONTAINER   = $CONTAINER"
 echo "use ROOT_PATH   = $ROOT_PATH"
 echo "use TARGET      = $TARGET"
-echo "use OPTIONS     = $OPTIONS"
+if [[ -n "$OPTIONS" ]]; then
+  echo "use OPTIONS     = $OPTIONS"
+fi
 echo "----------------------------------"
 
 function upload() {
