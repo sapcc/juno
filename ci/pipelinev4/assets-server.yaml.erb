@@ -139,10 +139,10 @@ jobs:
           inputs:
             - name: juno.git
             - name: test_data
-            - name: passed_check_name_and_version
+            - name: passed_check_name_uniqueness
             - name: meta
           input_mapping:
-            passed: passed_check_name_and_version
+            passed: passed_check_name_uniqueness
           outputs:
             - name: passed_check_asset_mountable 
             - name: test_results  
