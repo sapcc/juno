@@ -53,6 +53,7 @@ run:
         fi
 
         MAIN=$(grep -o '"main":\s*"[^"]*' $f | grep -o '[^"]*$')
+
         if [ -z $MAIN ]; then 
           MAIN=$(grep -o '"module":\s*"[^"]*' $f | grep -o '[^"]*$')
           if [ -z $MAIN ] || [ ! -f "./input/$TYPE/$NAME/$MAIN" ]; then

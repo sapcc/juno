@@ -99,7 +99,7 @@ jobs:
           DEBUG: "true"
           CONTAINER: "juno-final-assets"    
 
-      - task: check-name-and-version 
+      - task: check-name-uniqueness
         config:
           platform: "linux"
           image_resource:
@@ -111,19 +111,20 @@ jobs:
             - name: passed_check_integrity
             - name: final_assets  
           outputs:
-            - name: passed_check_name_and_version
+            - name: passed_check_name_uniqueness
           run:
             path: /bin/sh
             args:
               - -c
               - |
                 echo "3. check if a asset is new or the version is higher than the one in the final-assets"
+                cp -r passed_check_integrity/* passed_check_name_uniqueness/
 
 
       - task: generate-data-for-mount-test
         file: juno.git/ci/pipelinev4/tasks/generate-test-data.yaml
         input_mapping:
-          pending_assets: passed_check_integrity_and_version
+          pending_assets: passed_check_name_uniqueness
         output_mapping:
           test_data: test_data
 
