@@ -65,11 +65,12 @@ run:
         
         if $PASSED; then 
           echo -e "${SUCCESS}  PASSED${NC}"
-          EXIT_CODE=0
+          EXIT_CODE=0 # success, we have at least one valid asset
           cp -r $(dirname $f) ./output/$TYPE/$NAME
         else 
           echo -e "${FAIL}  FAILED${NC}"
         fi
 
-        exit $EXIT_CODE
       done
+      # exit with the code 
+      exit $EXIT_CODE
