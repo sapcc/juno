@@ -1,0 +1,71 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/alpine
+    tag: "latest"
+
+inputs:
+  - name: input
+outputs:
+  - name: output # where do you want to download
+
+params:
+
+# describe the code
+# 1. check if the name, version and repository are set in the package.json file
+# 2. check if the file defined in main or module exists
+run:
+  path: /bin/sh
+  args:
+    - -c
+    - |
+      FAIL='\033[0;31m'
+      SUCCESS='\033[0;32m'
+      INFO='\033[0;36m'
+      NC='\033[0m' # No Color
+
+      for f in ./input/**/*/package.json; do 
+        PASSED=true
+        NAME=$(basename $(dirname $f))
+        TYPE=$(basename $(dirname $(dirname $f)))
+        echo -e "${INFO}found $NAME in $TYPE, checking... ${NC}"
+        # loop over keys name, repository and version
+        for key in name version repository; do
+          echo -ne "${INFO}  $key ${NC}"
+          VALUE=$(grep "\"$key\":" $f | cut -d\" -f4)
+          # get the value of the key
+          # in one line
+
+          if [ -z "$VALUE" ]; then
+            echo -e "${FAIL}missing${NC}"
+            PASSED=false
+          else 
+            echo -e "${SUCCESS}${VALUE}${NC}"
+          fi
+        done
+        
+        if [ $TYPE == "libs" ]; then
+          echo -e "${INFO}  main file ${SUCCESS}not applicable${NC}"
+          continue
+        fi
+
+        MAIN=$(grep "\"main\":" $f | cut -d\" -f4)
+        if [ -z $MAIN ]; then 
+          MAIN=$(grep "\"module\":" $f | cut -d\" -f4)
+          if [ -z $MAIN ] || [ ! -f "./input/$TYPE/$NAME/$MAIN" ]; then
+            echo -e "${INFO}  main file ${FAIL}missing${NC}"
+            PASSED=false
+          else
+            echo -e "${INFO}  main file ${SUCCESS}$MAIN${NC}"  
+          fi  
+        fi  
+        
+        if $PASSED; then 
+          echo -e "${SUCCESS}  PASSED${NC}"
+          cp -r $(dirname $f) ./output/$TYPE/$NAME
+        else 
+          echo -e "${FAIL}  FAILED${NC}"
+        fi
+      done
