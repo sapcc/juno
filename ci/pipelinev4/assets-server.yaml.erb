@@ -1,5 +1,6 @@
 # prettier-ignore
 <%
+  # High Availability Regions
   HA_REGIONS = [
     "eu-de-1",
     "eu-de-2",
@@ -14,6 +15,7 @@
 %>
 
 resources:
+  # juno repository
   - name: juno.git
     type: git
     icon: github
@@ -22,6 +24,7 @@ resources:
       branch: pipelineV4
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))   
+
 
   - name: swift-juno-pending-assets.version
     type: http-resource
@@ -37,24 +40,19 @@ resources:
     check_every: 525600h
     source: { key: "juno-assets-server-version" } # disambiguate from other time-version resources
 
+  # meta is used to store/access metadata about the build
   - name: meta
     type: meta
-<% 
-  # this step combines all assets that where build and uploaded before to swift
-  # for that we use nginx image and copy all assets (that where build in the step before) into /usr/share/nginx/html/
-  # this image will be deployed as asset server 
 
-  # Important! 
-  # If the asset-server.image was not build before 
-  # 1) comment the parts in the dockerfile where the image is needed to copy old stuff over
-  # 2) you need first build the libs otherwise the build importmap step will fail because 
-  #    it will not find the libs
-  # 3) if the libs are build and uploaded to swift you can add the apps
-  # 4) when the apps are build without problems you can uncomment the parts in 
-  #    the dockerfile to store the old versions 
-  %>
-  
-
+# algorithm: 
+# 1. download all pending assets from swift
+# 2. validate the assets
+# 3. build the assets-server image
+# 4. deploy the assets-server to s-qa-de-1 and s-qa-de-2
+# 5. run e2e tests on s-qa-de-1
+# 6. promote the assets-server to prod
+# 7. deploy the assets-server to all HA regions
+# 8. run e2e tests on all HA regions
 groups: 
   - name: assets-server 
     jobs:
@@ -86,65 +84,105 @@ jobs:
           DEBUG: "true"
           CONTAINER: "juno-pending-assets"
 
-      - task: generate-import-map-and-co
+      - task: check-integrity 
+        config:
+          platform: "linux"
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/alpine
+              tag: latest
+          inputs:
+            - name: pending_assets  
+          outputs:
+            - name: passed_check_integrity
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                FAIL='\033[0;31m'
+                SUCCESS='\033[0;32m'
+                INFO='\033[0;36m'
+                NC='\033[0m' # No Color
+                echo "1. check if the name and repository are set in the package.json file"
+                echo "2. check if the value of main or module is set in the package.json file and the file exists"
+                for f in ./pending_assets/**/*/package.json; do 
+                  PASSED=true
+                  NAME=$(basename $(dirname $f))
+                  TYPE=$(basename $(dirname $(dirname $f)))
+                  echo -e "${INFO}found $NAME in $TYPE, checking... ${NC}"
+                  # loop over keys name, repository and version
+                  for key in name version repository; do
+                    echo -ne "${INFO} $key ${NC}"
+                    if ! grep -q "\"$key\":" $f; then
+                      echo -e "${FAIL}missing${NC}"
+                      PASSED=false
+                    else 
+                      echo -e "${SUCCESS}OK${NC}"
+                    fi  
+                  done 
+                  if $PASSED; then
+                    echo -e "${SUCCESS} PASSED${NC}"
+                  else  
+                    echo -e "${FAIL} FAILED${NC}"
+                  fi
+
+                  # if main or module exists, check if the file exists
+                  if grep -q "\"main\":" $f; then
+                    echo -ne "${INFO} main ${NC}"
+                    if [ -f ./pending_assets/$TYPE/$NAME/$(grep -o "\"main\":" $f | cut -d\" -f4) ]; then
+                      echo -e "${SUCCESS}OK${NC}"
+                    else
+                      echo -e "${FAIL}missing${NC}"
+                    fi
+                  elif grep -q "\"module\":" $f; then
+                    echo -ne "${INFO} module ${NC}"
+                    if [ -f ./pending_assets/$TYPE/$NAME/$(grep -o "\"module\":" $f | cut -d\" -f4) ]; then
+                      echo -e "${SUCCESS}OK${NC}"
+                    else
+                      echo -e "${FAIL}missing${NC}"
+                    fi  
+                  fi
+                done
+
+      - task: download-metadata-from-juno-final-assets
+        file: juno.git/ci/shared/swift-download.yaml
+        output_mapping:
+          download: final_assets
+        params:
+          DEBUG: "true"
+          CONTAINER: "juno-final-assets"    
+
+      - task: check-name-and-version 
+        config:
+          platform: "linux"
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/alpine
+              tag: latest
+          inputs:
+            - name: passed_check_integrity
+            - name: final_assets  
+          outputs:
+            - name: passed_check_name_and_version
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                echo "3. check if a asset is new or the version is higher than the one in the final-assets"
+
+
+      - task: generate-data-for-mount-test
         file: juno.git/ci/pipelinev4/tasks/generate-test-data.yaml
         input_mapping:
-          pending_assets: pending_assets
+          pending_assets: passed_check_integrity_and_version
         output_mapping:
           test_data: test_data
 
-      # - task: generate-import-map-and-co
-      #   config:
-      #     platform: linux
-      #     image_resource:
-      #       type: docker-image
-      #       source:
-      #         repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base
-      #         tag: "latest"    
-      #     inputs:
-      #       - name: pending_assets
-      #     outputs:
-      #       - name: importmap_data
-      #     run:
-      #       path: /bin/sh
-      #       args:
-      #         - -c
-      #         - |
-      #           WORKDIR=$(pwd)
-      #           cd /juno 
-      #           npm run build-libs
-      #           cd $WORKDIR
-      #           mkdir -p ./pending_assets/libs
-      #           # copy libs to pending_assets 
-      #           # some apps are using the libs and we need to have them in the same folder
-      #           for lib in /juno/libs/*; do
-      #           name=$(basename $lib)
-      #           if [ ! -d "./pending_assets/libs/${name}@latest" ]; then
-      #           cp -r $lib ./pending_assets/libs/"${name}@latest"
-      #           fi
-              
-      #           done
-
-      #           # Generate importmap and manifest only for pending apps and libs
-      #           # this step also generates the externals esm packages
-      #           node /juno/ci/scripts/esm_build/generate_importmap.mjs \
-      #           --node-modules-path=/tmp/ \
-      #           --external-path=./importmap_data/externals \
-      #           --exit-on-error=false \
-      #           --src=./pending_assets \
-      #           --base-url="http://localhost:3000" \
-      #           --ignore-externals=false \
-      #           --importmap-path=./importmap_data/importmap.json  \
-      #           --verbose=false ; \
-      #           \
-      #           node /juno/ci/scripts/generate_manifest.mjs \
-      #           --src=./importmap_data \
-      #           --output=./importmap_data/manifest.json \
-      #           --base-url="http://localhost:3000" \
-      #           --verbose=false 
-
-           
-      - task: test
+      - task: check-asset-mountable
         config:
           platform: linux
           image_resource:
@@ -155,10 +193,12 @@ jobs:
           inputs:
             - name: juno.git
             - name: test_data
-            - name: pending_assets
+            - name: passed_check_name_and_version
             - name: meta
+          input_mapping:
+            passed: passed_check_name_and_version
           outputs:
-            - name: passed 
+            - name: passed_check_asset_mountable 
             - name: test_results  
 
           run:
@@ -166,6 +206,17 @@ jobs:
             args:
               - -c
               - |
+                # 1. check if name and repository are set 
+                # 1.1 if not set, throw error (FAILED)
+                # 2. check if the such an asset exists in the swift container final-assets
+                # 2.1 yes: we are in the update mode, check the version
+                # 2.1.1 if the version is the same as the one in the swift container final-assets, throw error (FAILED)
+                # 2.2 no: we are in the create mode (first run, new asset!)
+                # 3. check main or module entry in package.json and if the entry file exists
+                # 3.1 if not, throw error (FAILED)
+
+                # 4. check if the asset can be mounted in the mount-test.html
+
                 WORKDIR=$(pwd)
                 FAIL='\033[0;31m'
                 SUCCESS='\033[0;32m'
@@ -173,6 +224,8 @@ jobs:
                 NC='\033[0m' # No Color
                 BUILD_NAME="$(cat meta/build-name)"
                 URL="$(cat meta/atc-external-url)/teams/$(cat meta/build-team-name)/pipelines/$(cat meta/build-pipeline-name)/jobs/$(cat meta/build-job-name)/builds/$(cat meta/build-name)"
+                BUILD_RESULTS="$WORKDIR/test_results/build-$BUILD_NAME"
+                mkdir -p "$BUILD_RESULTS"
 
                 echo -e "${INFO}copy e2e tests from juno.git to ./e2e ${NC}"
                 cp -r ./juno.git/e2e .
@@ -193,12 +246,13 @@ jobs:
                 NAME=$(cat $f | jq -r '.name') 
                 VERSION=$(cat $f | jq -r '.version') 
                 TYPE_FOLDER=$(basename $(dirname $(dirname $f)))
+                ASSET_TEST_RESULTS="$BUILD_RESULTS/$TYPE_FOLDER/$NAME@$VERSION"
                 echo -e "${INFO}===TEST $NAME@$VERSION ($TYPE_FOLDER)${NC}" 
 
                 cypress run --spec "cypress/integration/assets-server/mount_asset.spec.js" \
                 --browser chrome \
                 --env APP_NAME=$NAME,APP_VERSION=$VERSION \
-                --config "{\"baseUrl\":\"http://127.0.0.1:3000\",\"screenshotsFolder\":\"$WORKDIR/test_results/$BUILD_NAME/$NAME@$VERSION/screenshots\",\"videosFolder\":\"$WORKDIR/test_results/$BUILD_NAME/$NAME@$VERSION/videos\"}'
+                --config "{\"baseUrl\":\"http://127.0.0.1:3000\",\"screenshotsFolder\":\"$ASSET_TEST_RESULTS/screenshots\",\"videosFolder\":\"$ASSET_TEST_RESULTS/videos\"}"
 
                 # Check the exit status of the cp command 
                 if [ $? -eq 0 ]; then 
@@ -210,18 +264,11 @@ jobs:
                 echo -e "${INFO}===RESULT: $NAME@$VERSION $STATUS ${NC}"
                 fi
                 jq --arg n "$NAME" --arg v "$VERSION" --arg s "$STATUS" --arg l "$URL" \
-                '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' ../test_results/build-log.json > ../test_results/build-log.json.temp 
-                mv ../test_results/build-log.json.temp ../test_results/build-log.json 
+                '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' "$ASSET_TEST_RESULTS/build-log.json" > "$ASSET_TEST_RESULTS/build-log.json.temp" 
+                mv "$ASSET_TEST_RESULTS/build-log.json.temp" "$ASSET_TEST_RESULTS/build-log.json" 
                 done
                 exit 0
 
-      # - task: upload-test-result
-      #   file: juno.git/ci/shared/swift-cypress-upload.yaml
-      #   input_mapping:
-      #     version: assets-server.version
-      #     upload: test_results
-      #   params:
-      #     NAME: "pending-assets-tests"
       - task: upload-test-result
         file: juno.git/ci/pipelinev4/tasks/swift.yaml
         input_mapping:
@@ -229,12 +276,34 @@ jobs:
         params:
           COMMAND: "mkdir -p juno/pending-assets-tests && cp -r input/* juno/pending-assets-tests/ && swift upload --skip-identical --changed cypress juno"
 
+      # - task: upload-test-result
+      #   file: juno.git/ci/pipelinev4/tasks/swift.yaml
+      #   input_mapping:
+      #     input: test_results
+      #   params:
+      #     COMMAND: "UPLOAD"
+      #     OPTIONS: "--skip-identical --changed"
+      #     CONTAINER: "cypress"
+      #     TARGET: "juno/pending-assets-tests"
+
+      # - task: download-test-result
+      #   file: juno.git/ci/pipelinev4/tasks/swift.yaml
+      #   output_mapping:
+      #     output: test_results
+      #   params:
+      #     COMMAND: "DOWNLOAD"
+      #     CONTAINER: "juno-final-assets"
+      #     TARGETS: 
+      #       - "manifest.json"          
+      #       - "build-log.json"          
+
+
       - task: upload-passed-and-cleanup
         file: juno.git/ci/pipelinev4/tasks/swift.yaml
         input_mapping:
           input: passed
         params:
-          COMMAND: "swift upload juno-final-assets input"
+          COMMAND: "cd input && swift upload juno-final-assets ."
 
       - task: exit
         config:
