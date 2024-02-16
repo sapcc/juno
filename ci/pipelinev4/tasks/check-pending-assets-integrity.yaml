@@ -26,6 +26,7 @@ run:
       INFO='\033[0;36m'
       NC='\033[0m' # No Color
 
+      EXIT_CODE=1 # error
       for f in ./input/**/*/package.json; do 
         PASSED=true
         NAME=$(basename $(dirname $f))
@@ -64,8 +65,11 @@ run:
         
         if $PASSED; then 
           echo -e "${SUCCESS}  PASSED${NC}"
+          EXIT_CODE=0
           cp -r $(dirname $f) ./output/$TYPE/$NAME
         else 
           echo -e "${FAIL}  FAILED${NC}"
         fi
+
+        exit $EXIT_CODE
       done

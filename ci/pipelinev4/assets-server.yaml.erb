@@ -85,12 +85,12 @@ jobs:
           CONTAINER: "juno-pending-assets"
 
       - task: check-integrity 
-        file: juno.git/ci/shared/check-pending-assets-integrity.yaml
+        file: juno.git/ci/pipelinev4/tasks/check-pending-assets-integrity.yaml
         input_mapping:
           input: pending_assets
         output_mapping:
           output: passed_check_integrity
-            
+
         # config:
         #   platform: "linux"
         #   image_resource:
