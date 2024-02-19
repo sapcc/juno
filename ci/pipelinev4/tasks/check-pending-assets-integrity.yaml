@@ -28,11 +28,14 @@ run:
 
       EXIT_CODE=1 # error
 
+      # create the build-log file 
+      rm output/build-log.xt && touch output/build-log.xt
       for f in ./input/**/*/package.json; do
         ERROR=""
         PASSED=true
         NAME=$(basename $(dirname $f))
         TYPE=$(basename $(dirname $(dirname $f)))
+        VERSION=""
         echo -e "${INFO}found $NAME in $TYPE, checking... ${NC}"
         
         if [ "$TYPE" != "libs" ] && [ "$TYPE" != "apps" ]; then
@@ -45,6 +48,9 @@ run:
         for key in name version repository; do
           echo -ne "${INFO}  $key ${NC}"
           VALUE=$(grep -o "\"$key\":\\s*\"[^\"]*" $f | grep -o '[^"]*$')
+          if [ "$key" == "version" ]; then
+            VERSION=$VALUE
+          fi
           # get the value of the key
           # in one line
 
@@ -83,7 +89,7 @@ run:
           echo -e "${FAIL}  FAILED${NC}"
         fi
 
-        echo "type:$TYPE,name:$NAME,date:$(date +%s),passed:$PASSED,error:$ERROR" > ./output/build-log.xt
+        echo "type:$TYPE,name:$NAME,version:$VERSION,date:$(date +%s),passed:$PASSED,error:$ERROR" >> ./output/build-log.xt
       done
 
       # exit with the code 
