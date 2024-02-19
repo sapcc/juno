@@ -129,91 +129,102 @@ jobs:
           test_data: test_data
 
       - task: check-asset-mountable
-        config:
-          platform: linux
-          image_resource:
-            type: docker-image
-            source:
-              repository: keppel.eu-de-1.cloud.sap/ccloud/cypress-client
-              tag: "latest"    
-          inputs:
-            - name: juno.git
-            - name: test_data
-            - name: passed_check_name_uniqueness
-            - name: meta
-          input_mapping:
-            passed: passed_check_name_uniqueness
-          outputs:
-            - name: passed_check_asset_mountable 
-            - name: test_results  
+        file: juno.git/ci/pipelinev4/tasks/check-asset-mountable.yaml
+        input_mapping:
+          passed: passed_check_name_uniqueness
+          test_data: test_data
+          meta: meta
+          juno.git: juno.git
+        output_mapping:
+          passed_check_asset_mountable: passed_check_asset_mountable
+          test_results: test_results
 
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                # 1. check if name and repository are set 
-                # 1.1 if not set, throw error (FAILED)
-                # 2. check if the such an asset exists in the swift container final-assets
-                # 2.1 yes: we are in the update mode, check the version
-                # 2.1.1 if the version is the same as the one in the swift container final-assets, throw error (FAILED)
-                # 2.2 no: we are in the create mode (first run, new asset!)
-                # 3. check main or module entry in package.json and if the entry file exists
-                # 3.1 if not, throw error (FAILED)
+      # - task: check-asset-mountable
+      #   config:
+      #     platform: linux
+      #     image_resource:
+      #       type: docker-image
+      #       source:
+      #         repository: keppel.eu-de-1.cloud.sap/ccloud/cypress-client
+      #         tag: "latest"    
+      #     inputs:
+      #       - name: juno.git
+      #       - name: test_data
+      #       - name: passed_check_name_uniqueness
+      #       - name: meta
+      #     input_mapping:
+      #       passed: passed_check_name_uniqueness
+      #     outputs:
+      #       - name: passed_check_asset_mountable 
+      #       - name: test_results  
 
-                # 4. check if the asset can be mounted in the mount-test.html
+      #     run:
+      #       path: /bin/sh
+      #       args:
+      #         - -c
+      #         - |
+      #           # 1. check if name and repository are set 
+      #           # 1.1 if not set, throw error (FAILED)
+      #           # 2. check if the such an asset exists in the swift container final-assets
+      #           # 2.1 yes: we are in the update mode, check the version
+      #           # 2.1.1 if the version is the same as the one in the swift container final-assets, throw error (FAILED)
+      #           # 2.2 no: we are in the create mode (first run, new asset!)
+      #           # 3. check main or module entry in package.json and if the entry file exists
+      #           # 3.1 if not, throw error (FAILED)
 
-                WORKDIR=$(pwd)
-                FAIL='\033[0;31m'
-                SUCCESS='\033[0;32m'
-                INFO='\033[0;36m'
-                NC='\033[0m' # No Color
-                BUILD_NAME="$(cat meta/build-name)"
-                URL="$(cat meta/atc-external-url)/teams/$(cat meta/build-team-name)/pipelines/$(cat meta/build-pipeline-name)/jobs/$(cat meta/build-job-name)/builds/$(cat meta/build-name)"
-                BUILD_RESULTS="$WORKDIR/test_results/build-$BUILD_NAME"
-                mkdir -p "$BUILD_RESULTS"
+      #           # 4. check if the asset can be mounted in the mount-test.html
 
-                echo -e "${INFO}copy e2e tests from juno.git to ./e2e ${NC}"
-                cp -r ./juno.git/e2e .
-                echo -e "${INFO}copy mount-test.html to test_data ${NC}"
-                cp ./juno.git/ci/assets-server/mount-test.html ./test_data/      
-                echo -e "${INFO}create empty build-log.json ${NC}"
-                echo '[]' > test_results/build-log.json
-                echo -e "${INFO}create serve.config.json ${NC}"
-                echo -e "${INFO}this is needed to avoid clean urls, we want to have extensions like .html ${NC}"
-                echo '{"cleanUrls": false}' > /tmp/serve.config.json
-                echo -e "${INFO}run server in test_data ${NC}"
-                serve ./test_data -n -u -p 3000 -c /tmp/serve.config.json & sleep 3 
+      #           WORKDIR=$(pwd)
+      #           FAIL='\033[0;31m'
+      #           SUCCESS='\033[0;32m'
+      #           INFO='\033[0;36m'
+      #           NC='\033[0m' # No Color
+      #           BUILD_NAME="$(cat meta/build-name)"
+      #           URL="$(cat meta/atc-external-url)/teams/$(cat meta/build-team-name)/pipelines/$(cat meta/build-pipeline-name)/jobs/$(cat meta/build-job-name)/builds/$(cat meta/build-name)"
+      #           BUILD_RESULTS="$WORKDIR/test_results/build-$BUILD_NAME"
+      #           mkdir -p "$BUILD_RESULTS"
 
-                echo -e "${INFO}=== RUN MOUNT TESTS ===\n ${NC}"
-                cd e2e
-                # loop over assets in pending_assets to avoid unnesseray tests                
-                for f in ../pending_assets/**/*/package.json; do 
-                NAME=$(cat $f | jq -r '.name') 
-                VERSION=$(cat $f | jq -r '.version') 
-                TYPE_FOLDER=$(basename $(dirname $(dirname $f)))
-                ASSET_TEST_RESULTS="$BUILD_RESULTS/$TYPE_FOLDER/$NAME@$VERSION"
-                echo -e "${INFO}===TEST $NAME@$VERSION ($TYPE_FOLDER)${NC}" 
+      #           echo -e "${INFO}copy e2e tests from juno.git to ./e2e ${NC}"
+      #           cp -r ./juno.git/e2e .
+      #           echo -e "${INFO}copy mount-test.html to test_data ${NC}"
+      #           cp ./juno.git/ci/assets-server/mount-test.html ./test_data/      
+      #           echo -e "${INFO}create empty build-log.json ${NC}"
+      #           echo '[]' > test_results/build-log.json
+      #           echo -e "${INFO}create serve.config.json ${NC}"
+      #           echo -e "${INFO}this is needed to avoid clean urls, we want to have extensions like .html ${NC}"
+      #           echo '{"cleanUrls": false}' > /tmp/serve.config.json
+      #           echo -e "${INFO}run server in test_data ${NC}"
+      #           serve ./test_data -n -u -p 3000 -c /tmp/serve.config.json & sleep 3 
 
-                cypress run --spec "cypress/integration/assets-server/mount_asset.spec.js" \
-                --browser chrome \
-                --env APP_NAME=$NAME,APP_VERSION=$VERSION \
-                --config "{\"baseUrl\":\"http://127.0.0.1:3000\",\"screenshotsFolder\":\"$ASSET_TEST_RESULTS/screenshots\",\"videosFolder\":\"$ASSET_TEST_RESULTS/videos\"}"
+      #           echo -e "${INFO}=== RUN MOUNT TESTS ===\n ${NC}"
+      #           cd e2e
+      #           # loop over assets in pending_assets to avoid unnesseray tests                
+      #           for f in ../pending_assets/**/*/package.json; do 
+      #           NAME=$(cat $f | jq -r '.name') 
+      #           VERSION=$(cat $f | jq -r '.version') 
+      #           TYPE_FOLDER=$(basename $(dirname $(dirname $f)))
+      #           ASSET_TEST_RESULTS="$BUILD_RESULTS/$TYPE_FOLDER/$NAME@$VERSION"
+      #           echo -e "${INFO}===TEST $NAME@$VERSION ($TYPE_FOLDER)${NC}" 
 
-                # Check the exit status of the cp command 
-                if [ $? -eq 0 ]; then 
-                STATUS="passed"
-                mkdir -p "../passed/$TYPE_FOLDER" && \
-                cp -r $(dirname $f) "../passed/$TYPE_FOLDER/$NAME@$VERSION" 
-                else 
-                STATUS="failed"
-                echo -e "${INFO}===RESULT: $NAME@$VERSION $STATUS ${NC}"
-                fi
-                jq --arg n "$NAME" --arg v "$VERSION" --arg s "$STATUS" --arg l "$URL" \
-                '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' "$ASSET_TEST_RESULTS/build-log.json" > "$ASSET_TEST_RESULTS/build-log.json.temp" 
-                mv "$ASSET_TEST_RESULTS/build-log.json.temp" "$ASSET_TEST_RESULTS/build-log.json" 
-                done
-                exit 0
+      #           cypress run --spec "cypress/integration/assets-server/mount_asset.spec.js" \
+      #           --browser chrome \
+      #           --env APP_NAME=$NAME,APP_VERSION=$VERSION \
+      #           --config "{\"baseUrl\":\"http://127.0.0.1:3000\",\"screenshotsFolder\":\"$ASSET_TEST_RESULTS/screenshots\",\"videosFolder\":\"$ASSET_TEST_RESULTS/videos\"}"
+
+      #           # Check the exit status of the cp command 
+      #           if [ $? -eq 0 ]; then 
+      #           STATUS="passed"
+      #           mkdir -p "../passed/$TYPE_FOLDER" && \
+      #           cp -r $(dirname $f) "../passed/$TYPE_FOLDER/$NAME@$VERSION" 
+      #           else 
+      #           STATUS="failed"
+      #           echo -e "${INFO}===RESULT: $NAME@$VERSION $STATUS ${NC}"
+      #           fi
+      #           jq --arg n "$NAME" --arg v "$VERSION" --arg s "$STATUS" --arg l "$URL" \
+      #           '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' "$ASSET_TEST_RESULTS/build-log.json" > "$ASSET_TEST_RESULTS/build-log.json.temp" 
+      #           mv "$ASSET_TEST_RESULTS/build-log.json.temp" "$ASSET_TEST_RESULTS/build-log.json" 
+      #           done
+      #           exit 0
 
       - task: upload-test-result
         file: juno.git/ci/pipelinev4/tasks/swift.yaml
