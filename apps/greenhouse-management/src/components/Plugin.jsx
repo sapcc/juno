@@ -65,7 +65,7 @@ const Plugin = ({ config }) => {
       {displayPluging && (
         <>
           <Messages />
-          {!isMountedApp && <HintLoading centered />}
+          {!isMountedApp && !displayReload && <HintLoading centered />}
           {displayReload && (
             <Stack
               alignment="center"
