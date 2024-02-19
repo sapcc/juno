@@ -1,0 +1,35 @@
+platform: linux
+
+image_resource:
+  type: registry-image
+  source:
+    repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-ci-helper
+    tag: "latest"
+
+outputs:
+  - name: output
+
+params:
+  CONTAINER:
+  OPTIONS:
+  TARGET: "/"
+  OS_USERNAME: concourse
+  OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
+  OS_AUTH_URL: https://identity-3.eu-de-1.cloud.sap/v3
+  OS_USER_DOMAIN_NAME: Default
+  OS_PROJECT_DOMAIN_NAME: ccadmin
+  OS_PROJECT_NAME: master
+
+run:
+  path: /bin/bash
+  args:
+    - -c
+    - |
+      set -e
+      env
+      eval "$(swift auth)"
+      cd ./output
+      # loop over targets
+      for TARGET in $TARGET; do
+        swift download $CONTAINER $OPTIONS $TARGET
+      done

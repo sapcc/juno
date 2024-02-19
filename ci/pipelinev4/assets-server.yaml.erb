@@ -92,11 +92,12 @@ jobs:
           output: passed_check_integrity
 
       - task: download-metadata-from-juno-final-assets
-        file: juno.git/ci/pipelinev4/tasks/swift.yaml
+        file: juno.git/ci/pipelinev4/tasks/swift_download.yaml
         output_mapping:
           output: final_assets_metadata
         params:
-          COMMAND: "cd ./output && swift download juno-final-assets --prefix=juno-final-assets/manifest.json"   
+          CONTAINER: "juno-final-assets"
+          TARGET: "manifest.json"
 
       - task: check-name-uniqueness
         config:
