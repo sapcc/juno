@@ -1,7 +1,12 @@
 {
   "name": "assets-overview",
   "version": "1.0.2",
-  "author": "Juno team (SAP)",
+  "author": "UI-Team",
+  "contributors": [
+    "Andreas Pfau",
+    "Arturo Reuschenbach Pucernau"
+  ],
+  "repository": "https://github.com/sapcc/juno/tree/main/apps/assets-overview",
   "license": "MIT",
   "source": "src/index.js",
   "module": "build/index.js",

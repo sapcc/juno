@@ -1,7 +1,11 @@
 {
   "name": "heureka",
   "version": "2.0.3",
-  "author": "Juno team (SAP)",
+  "author": "UI-Team",
+  "contributors": [
+    "Arturo Reuschenbach Pucernau"
+  ],
+  "repository": "https://github.com/sapcc/juno/tree/main/apps/heureka",
   "license": "MIT",
   "module": "build/index.js",
   "source": "src/index.js",

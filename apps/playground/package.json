@@ -1,7 +1,11 @@
 {
   "name": "playground",
   "version": "1.0.1",
-  "author": "REPLACE ME",
+  "author": "UI-Team",
+  "contributors": [
+    "Arturo Reuschenbach Pucernau"
+  ],
+  "repository": "https://github.com/sapcc/juno/tree/main/apps/playground",
   "license": "MIT",
   "source": "src/index.js",
   "module": "build/index.js",

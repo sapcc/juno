@@ -1,7 +1,11 @@
 {
   "name": "user-activity",
   "version": "1.0.2",
-  "author": "Juno team (SAP)",
+  "author": "UI-Team",
+  "contributors": [
+    "Arturo Reuschenbach Pucernau"
+  ],
+  "repository": "https://github.com/sapcc/juno/tree/main/apps/user-activity",
   "license": "MIT",
   "source": "src/index.js",
   "module": "build/index.js",
