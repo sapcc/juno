@@ -2,6 +2,11 @@
   "name": "oauth",
   "version": "1.2.1",
   "description": "Authenticates user via OIDC",
+  "author": "UI-Team",
+  "contributors": [
+    "Andreas Pfau"
+  ],
+  "repository": "https://github.com/sapcc/juno/tree/main/libs/oauth",
   "source": "src/index.js",
   "main": "build/index.js",
   "module": "build/index.js",

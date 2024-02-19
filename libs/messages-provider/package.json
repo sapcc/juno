@@ -2,6 +2,11 @@
   "name": "messages-provider",
   "version": "0.1.9",
   "description": "Messages provider",
+  "author": "UI-Team",
+  "contributors": [
+    "Arturo Reuschenbach Pucernau"
+  ],
+  "repository": "https://github.com/sapcc/juno/tree/main/libs/messages-provider",
   "source": "src/index.js",
   "main": "build/index.js",
   "module": "build/index.js",

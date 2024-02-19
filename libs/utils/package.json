@@ -2,6 +2,12 @@
   "name": "utils",
   "version": "1.1.6",
   "description": "Description of utils",
+  "author": "UI-Team",
+  "contributors": [
+    "Andreas Pfau",
+    "Arturo Reuschenbach Pucernau"
+  ],
+  "repository": "https://github.com/sapcc/juno/tree/main/libs/utils",
   "source": "src/index.js",
   "main": "build/index.js",
   "module": "build/index.js",

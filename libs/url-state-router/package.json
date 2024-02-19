@@ -2,6 +2,11 @@
   "name": "url-state-router",
   "version": "1.0.3",
   "description": "Router",
+  "author": "UI-Team",
+  "contributors": [
+    "Andreas Pfau"
+  ],
+  "repository": "https://github.com/sapcc/juno/tree/main/libs/url-state-router",
   "source": "src/index.js",
   "main": "build/index.js",
   "module": "build/index.js",
