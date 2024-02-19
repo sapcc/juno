@@ -39,17 +39,17 @@ const App = (props = {}) => {
       <AppBody data-testid="greenhouse-management">
         <Messages className="mb-4" />
         <Auth>
-          {/* <UrlState> */}
-          <OrgInfo />
-          <MainContainer>
-            <MainContainerInner fullWidth={true}>
-              <SideNav />
-              <ContentContainer>
-                <AppContent {...props} />
-              </ContentContainer>
-            </MainContainerInner>
-          </MainContainer>
-          {/* </UrlState> */}
+          <UrlState>
+            <OrgInfo />
+            <MainContainer>
+              <MainContainerInner fullWidth={true}>
+                <SideNav />
+                <ContentContainer>
+                  <AppContent {...props} />
+                </ContentContainer>
+              </MainContainerInner>
+            </MainContainer>
+          </UrlState>
         </Auth>
       </AppBody>
     </QueryClientProvider>
