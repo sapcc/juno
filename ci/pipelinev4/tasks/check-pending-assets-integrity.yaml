@@ -27,11 +27,20 @@ run:
       NC='\033[0m' # No Color
 
       EXIT_CODE=1 # error
-      for f in ./input/**/*/package.json; do 
+
+      for f in ./input/**/*/package.json; do
+        ERROR=""
         PASSED=true
         NAME=$(basename $(dirname $f))
         TYPE=$(basename $(dirname $(dirname $f)))
         echo -e "${INFO}found $NAME in $TYPE, checking... ${NC}"
+        
+        if [ "$TYPE" != "libs" ] && [ "$TYPE" != "apps" ]; then
+          echo -e "${FAIL}  parent folder should be apps or libs, found $TYPE${NC}"
+          ERROR="${ERROR} $invalid parent folder $TYPE,"
+          PASSED=false
+        fi
+
         # loop over keys name, repository and version
         for key in name version repository; do
           echo -ne "${INFO}  $key ${NC}"
@@ -41,6 +50,7 @@ run:
 
           if [ -z "$VALUE" ]; then
             echo -e "${FAIL}missing${NC}"
+            ERROR="${ERROR} $key is missing,"
             PASSED=false
           else 
             echo -e "${SUCCESS}${VALUE}${NC}"
@@ -58,12 +68,13 @@ run:
           MAIN=$(grep -o '"module":\s*"[^"]*' $f | grep -o '[^"]*$')
           if [ -z $MAIN ] || [ ! -f "./input/$TYPE/$NAME/$MAIN" ]; then
             echo -e "${INFO}  main file ${FAIL}missing${NC}"
+            ERROR="${ERROR} main file is missing,"
             PASSED=false
           else
             echo -e "${INFO}  main file ${SUCCESS}$MAIN${NC}"  
           fi  
         fi  
-        
+
         if $PASSED; then 
           echo -e "${SUCCESS}  PASSED${NC}"
           EXIT_CODE=0 # success, we have at least one valid asset
@@ -72,6 +83,8 @@ run:
           echo -e "${FAIL}  FAILED${NC}"
         fi
 
+        echo "type:$TYPE,name:$NAME,date:$(date +%s),passed:$PASSED,error:$ERROR" > ./output/build-log.xt
       done
+
       # exit with the code 
       exit $EXIT_CODE
