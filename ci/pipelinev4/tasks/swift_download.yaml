@@ -36,4 +36,4 @@ run:
         echo $PATH_ARG
         swift download $OPTIONS $CONTAINER $PATH_ARG &>> $OUTPUT
       done
-      echo "$OUTPUT"
+      tail $OUTPUT

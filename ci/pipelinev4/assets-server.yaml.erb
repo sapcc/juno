@@ -77,11 +77,10 @@ jobs:
         trigger: true 
 
       - task: download-from-juno-pending-assets
-        file: juno.git/ci/shared/swift-download.yaml
+        file: juno.git/ci/pipelinev4/tasks/swift_download.yaml
         output_mapping:
-          download: pending_assets
+          output: pending_assets
         params:
-          DEBUG: "true"
           CONTAINER: "juno-pending-assets"
 
       - task: check-integrity 
