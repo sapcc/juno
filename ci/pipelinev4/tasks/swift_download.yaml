@@ -30,6 +30,8 @@ run:
       eval "$(swift auth)"
       cd ./output
       # loop over targets
-      for TARGET in $TARGET; do
-        swift download $CONTAINER $OPTIONS $TARGET
+      for T in $TARGET; do
+        PATH_ARG="$(if [ -n "$T" ]; then echo "-p $T"; fi)"
+        echo $PATH_ARG
+        swift download $OPTIONS $CONTAINER $PATH_ARG &> /dev/null
       done
