@@ -9,18 +9,21 @@ const useCommunication = () => {
   useEffect(() => {
     if (!setAuthData || !setAuthAppLoaded) return
     get("AUTH_APP_LOADED", setAuthAppLoaded, {
-      consumerID: "greenhouse",
+      consumerID: "greenhouse-management",
       debug: true,
     })
     const unwatchLoaded = watch("AUTH_APP_LOADED", setAuthAppLoaded, {
       debug: true,
-      consumerID: "greenhouse",
+      consumerID: "greenhouse-management",
     })
 
-    get("AUTH_GET_DATA", setAuthData, { consumerID: "greenhouse", debug: true })
+    get("AUTH_GET_DATA", setAuthData, {
+      consumerID: "greenhouse-management",
+      debug: true,
+    })
     const unwatchUpdate = watch("AUTH_UPDATE_DATA", setAuthData, {
       debug: true,
-      consumerID: "greenhouse",
+      consumerID: "greenhouse-management",
     })
 
     return () => {
