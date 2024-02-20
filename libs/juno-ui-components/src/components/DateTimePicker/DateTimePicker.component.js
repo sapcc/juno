@@ -6,10 +6,8 @@ import { Icon } from "../Icon/"
 /* 
 TODO:
 * add styles (comment out in other components, wrap in our own selector to safeguard for calendar, use tw-stuff for our stuff)
-* add state (date, dateStr), so we can use to decide whether to render clear button or not, handle the state correctly
 * add enable prop (or leave out if no success)
 * add position prop (if possible, otherwise leave out)
-* minimize onValueChange calls if possible
 */
 
 /** A all-purpose date and time picker component. Highly configurable, based on Flatpickr. */
@@ -337,7 +335,7 @@ export const DateTimePicker = ({
           ""
         )}
         <Icon
-          icon="calendarToday" // TODO: show clock icon if mode="time"
+          icon={enableTime && noCalendar ? "accessTime" : "calendarToday"}
           onClick={handleCalendarIconClick}
           disabled={disabled}
         />
