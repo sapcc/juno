@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="favicon.ico" sizes="any" />
+    <meta charset="UTF-8"/>
+    <link rel="icon" href="favicon.ico" sizes="any"/>
     <title>Auth Dev</title>
     <style>
       html {
@@ -23,9 +23,7 @@
     </style>
     <script>
       // automatically reload on build changes
-      new EventSource("/esbuild").addEventListener("change", () =>
-        location.reload()
-      )
+      new EventSource("/esbuild").addEventListener("change", () => location.reload())
     </script>
   </head>
   <body>
@@ -53,9 +51,9 @@
 
     <script type="module">
       // appProps are generated in development env and added to the build
-      import appProps from "./build/appProps.js"
-      import("./build/index.js").then((app) => {
-        app.mount(document.getElementById("root"), { props: appProps })
+      import allProps from "./build/appProps.js"
+      import ("./build/index.js").then((app) => {
+        app.mount(document.getElementById("root"), {props: allProps.appProps})
       })
     </script>
     <div id="root" data-juno-app="assets-overview"></div>
