@@ -28,22 +28,13 @@
         location.reload()
       )
     </script>
-    <!-- Needs to load the auth App. See in your .env.local file -->
   </head>
   <body>
-    <script
-      defer
-      src="https://assets.juno.global.cloud.sap/apps/widget-loader@latest/build/app.js"
-      data-name="auth"
-      data-version="latest"
-      data-props-initial-login="true"
-      data-props-mock="true"
-    ></script>
     <script type="module">
       // appProps are generated in development env and added to the build
-      import appProps from "./build/appProps.js"
+      import allProps from "./build/appProps.js"
       import("./build/index.js").then((app) => {
-        app.mount(document.getElementById("root"), { props: appProps })
+        app.mount(document.getElementById("root"), { props: allProps.appProps })
       })
     </script>
     <div id="root" data-juno-app="heureka"></div>
