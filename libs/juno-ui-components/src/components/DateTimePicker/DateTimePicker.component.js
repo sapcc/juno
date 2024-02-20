@@ -3,6 +3,15 @@ import PropTypes from "prop-types"
 import flatpickr from "flatpickr"
 import { Icon } from "../Icon/"
 
+/* 
+TODO:
+* add styles (comment out in other components, wrap in our own selector to safeguard for calendar, use tw-stuff for our stuff)
+* add state (date, dateStr), so we can use to decide whether to render clear button or not, handle the state correctly
+* add enable prop (or leave out if no success)
+* add position prop (if possible, otherwise leave out)
+* make re-rendering more efficient -> only re-render if there was an actual change compared with what is in fp config, do this separately for each prop to reduce the number of re-renders
+*/
+
 export const DateTimePicker = ({
   allowInput,
   allowInvalidPreload,
@@ -16,7 +25,7 @@ export const DateTimePicker = ({
   defaultValue,
   disable,
   disabled,
-  enable,
+  enable, // TODO
   enableSeconds,
   enableTime,
   hourIncrement,
@@ -158,19 +167,85 @@ export const DateTimePicker = ({
     }
   }, [])
 
-  // All props that refer to config options that require a rerender of the flatpickr are here:
+  /* 
+  Some config options on the flatpickr instance can not be set with immediate effect, a new instance needs to be created.
+  For the corresponding props we have some logic that makes sure we destroy the current instance and create a new one only when absolutely necessary. Also, we need to reduce doing that to only once, even if multiple of the props were updated at the same time for the sake of efficiency, and to make sure we do not call event handlers more often than needed and expected by the user.
+  */
+
+  // Store current props that will require creating a new instance when their value changes:
+  const prevRerenderingProps = useRef({
+    allowInput: allowInput,
+    defaultHour: defaultHour,
+    defaultMinute: defaultMinute,
+    enableTime: enableTime,
+    enableSeconds: enableSeconds,
+    hourIncrement: hourIncrement,
+    minuteIncrement: minuteIncrement,
+    mode: mode,
+    noCalendar: noCalendar,
+    weekNumbers: weekNumbers,
+  })
+
+  // Apply a use effect to handle the logic bound to the props that require creating a new faltpickr instance:
   useEffect(() => {
-    flatpickrInstanceRef?.current?.destroy()
-    createFlatpickrInstance()
+    // set a variable to be set to true once we know we need to destroy the current instance and create  a new one:
+    let hasChanged = false
+
+    // For each of the props…
+    Object.keys(prevRerenderingProps.current).forEach((propKey) => {
+      const prevValue = prevRerenderingProps.current[propKey]
+      const currentValue = {
+        allowInput,
+        defaultHour,
+        defaultMinute,
+        enableTime,
+        enableSeconds,
+        hourIncrement,
+        minuteIncrement,
+        mode,
+        noCalendar,
+        weekNumbers,
+      }[propKey]
+
+      //console.log(propKey + ": ", prevValue + " || " + currentValue)
+
+      // … we need to check whether their value has actually changed
+      if (prevValue !== currentValue) {
+        hasChanged = true
+        // console.log("previous " + propKey + ": ", prevValue)
+        // console.log("current " + propKey + ": ", currentValue)
+      }
+    })
+
+    // After we have checked if any one or multiple of the relevant props have changed, we actually destroy the curent instance and create a new one:
+    if (hasChanged) {
+      flatpickrInstanceRef?.current?.destroy()
+      createFlatpickrInstance()
+      console.log("flatpickr instance was destroyed and recreated")
+    }
+
+    // Also make sure we update our stored props in order to be ready for the next update:
+    prevRerenderingProps.current = {
+      allowInput: allowInput,
+      defaultHour: defaultHour,
+      defaultMinute: defaultMinute,
+      enableTime: enableTime,
+      enableSeconds: enableSeconds,
+      hourIncrement: hourIncrement,
+      minuteIncrement: minuteIncrement,
+      mode: mode,
+      noCalendar: noCalendar,
+      weekNumbers: weekNumbers,
+    }
   }, [
     allowInput,
-    mode,
     defaultHour,
     defaultMinute,
     enableTime,
     enableSeconds,
     hourIncrement,
     minuteIncrement,
+    mode,
     noCalendar,
     weekNumbers,
   ])
@@ -212,17 +287,20 @@ export const DateTimePicker = ({
     )
   }, [shorthandCurrentMonth])
 
-  // Will update properly but only apply at next change/user click; not worth destroying and creating a new instance IMO?:
+  // TODO: Will update properly but only apply at next change/user click; not worth destroying and creating a new instance IMO?:
   useEffect(() => {
     flatpickrInstanceRef.current?.set("time_24hr", time_24hr)
   }, [time_24hr])
 
   useEffect(() => {
-    flatpickrInstanceRef.current?.setDate(value, true)
-  }, [value])
+    flatpickrInstanceRef.current?.setDate(
+      value || defaultDate || defaultValue,
+      true
+    )
+  }, [value, defaultDate, defaultValue])
 
   useEffect(() => {
-    flatpickrInstanceRef.current?.set("weekNumbers", true)
+    flatpickrInstanceRef.current?.set("weekNumbers", weekNumbers)
   }, [weekNumbers])
 
   return (
