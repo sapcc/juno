@@ -77,7 +77,7 @@ jobs:
         trigger: true 
 
       - task: download-from-juno-pending-assets
-        file: juno.git/ci/pipelinev4/tasks/swift_download.yaml
+        file: juno.git/ci/pipelinev4/tasks/swift-download.yaml
         output_mapping:
           output: pending_assets
         params:
@@ -91,7 +91,7 @@ jobs:
           output: passed_check_integrity
 
       - task: download-metadata-from-juno-final-assets
-        file: juno.git/ci/pipelinev4/tasks/swift_download.yaml
+        file: juno.git/ci/pipelinev4/tasks/swift-download.yaml
         output_mapping:
           output: final_assets_metadata
         params:

@@ -26,11 +26,10 @@ run:
     - -c
     - |
       set -e
-      env
       eval "$(swift auth)"
       OUTPUT=/tmp/log.txt
       cd ./output
-      if [ -z "$TARGET" ]; then
+      if [ -n "$TARGET" ]; then
       # loop over targets
       for T in $TARGET; do
         PATH_ARG="$(if [ -n "$T" ]; then echo "-p $T"; fi)"
@@ -40,5 +39,4 @@ run:
       else
         swift download $OPTIONS $CONTAINER &>> $OUTPUT
       fi
-      ls -la
-      tail $OUTPUT
+      cat $OUTPUT 2>&- || false
