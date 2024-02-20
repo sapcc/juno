@@ -31,7 +31,7 @@ run:
       # 5. if the name is present in manifest.json AND the repository is the same AND the version is the same, THEN it is not allowed to be published (FAILURE)
 
       # 1. check
-      if [ ! -f assets/manifest.json ]; then
+      if [ ! -f final_metadata/manifest.json ]; then
         # initial state
         echo "manifest.json is not present, assets are new"
         cp -r assets/* passed/
