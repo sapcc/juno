@@ -2,7 +2,7 @@ const esbuild = require("esbuild")
 const fs = require("node:fs/promises")
 const pkg = require("./package.json")
 // this function generates app props based on package.json and propSecrets.json
-const appProps = require("../../helpers/appProps")
+const appProps = require("../../helpers/appPropsV2")
 
 if (!/.+\/.+\.js/.test(pkg.main))
   throw new Error(
