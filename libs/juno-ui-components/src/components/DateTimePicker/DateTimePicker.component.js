@@ -12,6 +12,8 @@ TODO:
 * minimize onValueChange calls if possible
 */
 
+/** A all-purpose date and time picker component. Highly configurable, based on Flatpickr. */
+
 export const DateTimePicker = ({
   allowInput,
   allowInvalidPreload,
@@ -44,7 +46,6 @@ export const DateTimePicker = ({
   onMonthChange,
   onOpen,
   onReady,
-  onValueUpdate,
   onYearChange,
   placeholder,
   position, // TODO -> CSS?
@@ -72,6 +73,10 @@ export const DateTimePicker = ({
       }, {}),
     })
 
+  const handleBlur = (event) => {
+    onBlur && onBlur(event)
+  }
+
   const handleChange = (selectedDate, dateStr, instance) => {
     console.log(selectedDate)
     console.log(dateStr)
@@ -92,10 +97,6 @@ export const DateTimePicker = ({
 
   const handleReady = (selectedDate, dateStr, instance) => {
     onReady && onReady(selectedDate, dateStr)
-  }
-
-  const handleValueUpdate = (selectedDate, dateStr, instance) => {
-    onValueUpdate && onValueUpdate(selectedDate, dateStr)
   }
 
   const handleYearChange = (selectedDate, dateStr, instance) => {
@@ -139,7 +140,7 @@ export const DateTimePicker = ({
       onMonthChange: handleMonthChange,
       onOpen: handleOpen,
       onReady: handleReady,
-      onValueUpdate: handleValueUpdate,
+      // onValueUpdate: handleValueUpdate,
       onYearChange: handleYearChange,
       positionElement: calendarTargetRef.current,
       shorthandCurrentMonth: shorthandCurrentMonth,
@@ -312,6 +313,7 @@ export const DateTimePicker = ({
           disabled={disabled}
           id={theId}
           name={name && name.length ? name : null}
+          onBlur={onBlur}
           onChange={onChange}
           onFocus={handleInputFocus}
           placeholder={placeholder}
@@ -369,7 +371,6 @@ DateTimePicker.propTypes = {
   onMonthChange: PropTypes.func,
   onOpen: PropTypes.func,
   onReady: PropTypes.func,
-  onValueUpdate: PropTypes.func,
   onYearChange: PropTypes.func,
   placeholder: PropTypes.string,
   shorthandCurrentMonth: PropTypes.bool,
@@ -409,7 +410,6 @@ DateTimePicker.defaultProps = {
   onMonthChange: undefined,
   onOpen: undefined,
   onReady: undefined,
-  onValueUpdate: undefined,
   onYearChange: undefined,
   placeholder: "",
   shorthandCurrentMonth: false,
