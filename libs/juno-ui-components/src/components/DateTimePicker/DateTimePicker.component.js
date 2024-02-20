@@ -64,6 +64,8 @@ export const DateTimePicker = ({
   let flatpickrInstanceRef = useRef({}) // The actual flatpickr instance
   const calendarTargetRef = useRef(null) // The DOM node the flatpickr calendar should be rendered to
 
+  const [theDate, setTheDate] = useState({})
+
   const updateFlatpickrInstance = (newKeys) =>
     (flatpickrInstanceRef.current = {
       ...flatpickrInstanceRef.current,
@@ -78,8 +80,7 @@ export const DateTimePicker = ({
   }
 
   const handleChange = (selectedDate, dateStr, instance) => {
-    console.log(selectedDate)
-    console.log(dateStr)
+    setTheDate({ selectedDate: selectedDate, selectedDateStr: dateStr })
     onChange && onChange(selectedDate, dateStr)
   }
 
@@ -88,6 +89,7 @@ export const DateTimePicker = ({
   }
 
   const handleMonthChange = (selectedDate, dateStr, instance) => {
+    setTheDate({ selectedDate: selectedDate, selectedDateStr: dateStr })
     onMonthChange && onMonthChange(selectedDate, dateStr)
   }
 
@@ -100,6 +102,7 @@ export const DateTimePicker = ({
   }
 
   const handleYearChange = (selectedDate, dateStr, instance) => {
+    setTheDate({ selectedDate: selectedDate, selectedDateStr: dateStr })
     onYearChange && onYearChange(selectedDate, dateStr)
   }
 
@@ -112,6 +115,7 @@ export const DateTimePicker = ({
   }
 
   const handleClearIconClick = () => {
+    setTheDate({})
     flatpickrInstanceRef.current?.clear()
   }
 
@@ -155,6 +159,7 @@ export const DateTimePicker = ({
 
   const destroyFlatpickrInstance = () => {
     flatpickrInstanceRef.current.destroy()
+    setTheDate({})
     flatpickrInstanceRef = null // Not sure if this is actually necessary?
   }
 
@@ -322,7 +327,15 @@ export const DateTimePicker = ({
         />
       </div>
       <div>
-        <Icon icon="close" onClick={handleClearIconClick} disabled={disabled} />
+        {theDate.selectedDate?.length || theDate.selectedDateStr?.length ? (
+          <Icon
+            icon="close"
+            onClick={handleClearIconClick}
+            disabled={disabled}
+          />
+        ) : (
+          ""
+        )}
         <Icon
           icon="calendarToday" // TODO: show clock icon if mode="time"
           onClick={handleCalendarIconClick}
