@@ -99,25 +99,32 @@ jobs:
           TARGET: "manifest.json"
 
       - task: check-name-uniqueness
-        config:
-          platform: "linux"
-          image_resource:
-            type: docker-image
-            source:
-              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/alpine
-              tag: latest
-          inputs:
-            - name: passed_check_integrity
-            - name: final_assets_metadata  
-          outputs:
-            - name: passed_check_name_uniqueness
-          run:
-            path: /bin/sh
-            args:
-              - -c
-              - |
-                echo "3. check if a asset is new or the version is higher than the one in the final-assets"
-                cp -r passed_check_integrity/* passed_check_name_uniqueness/
+        file: juno.git/ci/pipelinev4/tasks/check-name-uniqueness.yaml
+        input_mapping:
+          final_metadata: final_assets_metadata
+          assets: pending_assets
+        output_mapping:
+          output: passed_check_name_uniqueness
+
+        # config:
+        #   platform: "linux"
+        #   image_resource:
+        #     type: docker-image
+        #     source:
+        #       repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/alpine
+        #       tag: latest
+        #   inputs:
+        #     - name: passed_check_integrity
+        #     - name: final_assets_metadata  
+        #   outputs:
+        #     - name: passed_check_name_uniqueness
+        #   run:
+        #     path: /bin/sh
+        #     args:
+        #       - -c
+        #       - |
+        #         echo "3. check if a asset is new or the version is higher than the one in the final-assets"
+        #         cp -r passed_check_integrity/* passed_check_name_uniqueness/
 
 
       - task: generate-data-for-mount-test

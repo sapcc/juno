@@ -1,0 +1,27 @@
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/alpine
+    tag: "latest"
+
+inputs:
+  - name: assets
+  - name: final_metadata
+outputs:
+  - name: passed
+  - name: test_results
+
+params:
+
+# describe the code
+# 1. check if the name, version and repository are set in the package.json file
+# 2. check if the file defined in main or module exists
+run:
+  path: /bin/sh
+  args:
+    - -c
+    - |
+      echo "3. check if a asset is new or the version is higher than the one in the final-assets"
+      ls -la
