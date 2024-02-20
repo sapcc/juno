@@ -130,12 +130,12 @@ jobs:
       - task: check-asset-mountable
         file: juno.git/ci/pipelinev4/tasks/check-asset-mountable.yaml
         input_mapping:
-          passed: passed_check_name_uniqueness
+          assets: passed_check_name_uniqueness
           test_data: test_data
           meta: meta
           juno.git: juno.git
         output_mapping:
-          passed_check_asset_mountable: passed_check_asset_mountable
+          passed: passed_check_asset_mountable
           test_results: test_results
 
       # - task: check-asset-mountable
