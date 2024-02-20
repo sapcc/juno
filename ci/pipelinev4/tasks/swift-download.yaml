@@ -12,7 +12,7 @@ outputs:
 params:
   CONTAINER:
   OPTIONS:
-  TARGET: "/"
+  TARGET:
   OS_USERNAME: concourse
   OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
   OS_AUTH_URL: https://identity-3.eu-de-1.cloud.sap/v3
@@ -30,11 +30,15 @@ run:
       eval "$(swift auth)"
       OUTPUT=/tmp/log.txt
       cd ./output
+      if [ -z "$TARGET" ]; then
       # loop over targets
       for T in $TARGET; do
         PATH_ARG="$(if [ -n "$T" ]; then echo "-p $T"; fi)"
         echo $PATH_ARG
         swift download $OPTIONS $CONTAINER $PATH_ARG &>> $OUTPUT
       done
+      else
+        swift download $OPTIONS $CONTAINER &>> $OUTPUT
+      fi
       ls -la
       tail $OUTPUT
