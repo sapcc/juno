@@ -73,8 +73,8 @@ export const DateTimePicker = ({
       }, {}),
     })
 
-  const handleBlur = (event) => {
-    onBlur && onBlur(event)
+  const handleBlur = () => {
+    onBlur && onBlur(theDate.selectedDate, theDate.selectedDateStr)
   }
 
   const handleChange = (selectedDate, dateStr, instance) => {
@@ -104,8 +104,8 @@ export const DateTimePicker = ({
     onYearChange && onYearChange(selectedDate, dateStr)
   }
 
-  const handleInputFocus = (event) => {
-    onFocus && onFocus(event)
+  const handleInputFocus = () => {
+    onFocus && onFocus(theDate.selectedDate, theDate.selectedDateStr)
   }
 
   const handleCalendarIconClick = () => {
@@ -316,8 +316,8 @@ export const DateTimePicker = ({
           disabled={disabled}
           id={theId}
           name={name && name.length ? name : null}
-          onBlur={onBlur}
-          onChange={onChange}
+          onBlur={handleBlur}
+          onChange={handleChange}
           onFocus={handleInputFocus}
           placeholder={placeholder}
           ref={fpRef}
