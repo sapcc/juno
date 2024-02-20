@@ -62,28 +62,28 @@ run:
       cd e2e
       # loop over assets in pending_assets to avoid unnesseray tests                
       for f in ../assets/**/*/package.json; do 
-      NAME=$(cat $f | jq -r '.name') 
-      VERSION=$(cat $f | jq -r '.version') 
-      TYPE_FOLDER=$(basename $(dirname $(dirname $f)))
-      ASSET_TEST_RESULTS="$BUILD_RESULTS/$TYPE_FOLDER/$NAME@$VERSION"
-      echo -e "${INFO}===TEST $NAME@$VERSION ($TYPE_FOLDER)${NC}" 
+        NAME=$(cat $f | jq -r '.name') 
+        VERSION=$(cat $f | jq -r '.version') 
+        TYPE_FOLDER=$(basename $(dirname $(dirname $f)))
+        ASSET_TEST_RESULTS="$BUILD_RESULTS/$TYPE_FOLDER/$NAME@$VERSION"
+        echo -e "${INFO}===TEST $NAME@$VERSION ($TYPE_FOLDER)${NC}" 
 
-      cypress run --spec "cypress/integration/assets-server/mount_asset.spec.js" \
-      --browser chrome \
-      --env APP_NAME=$NAME,APP_VERSION=$VERSION \
-      --config "{\"baseUrl\":\"http://127.0.0.1:3000\",\"screenshotsFolder\":\"$ASSET_TEST_RESULTS/screenshots\",\"videosFolder\":\"$ASSET_TEST_RESULTS/videos\"}"
+        cypress run --spec "cypress/integration/assets-server/mount_asset.spec.js" \
+        --browser chrome \
+        --env APP_NAME=$NAME,APP_VERSION=$VERSION \
+        --config "{\"baseUrl\":\"http://127.0.0.1:3000\",\"screenshotsFolder\":\"$ASSET_TEST_RESULTS/screenshots\",\"videosFolder\":\"$ASSET_TEST_RESULTS/videos\"}"
 
-      # Check the exit status of the cp command 
-      if [ $? -eq 0 ]; then 
-      STATUS="passed"
-      mkdir -p "../passed/$TYPE_FOLDER" && \
-      cp -r $(dirname $f) "../passed/$TYPE_FOLDER/$NAME@$VERSION" 
-      else 
-      STATUS="failed"
-      echo -e "${INFO}===RESULT: $NAME@$VERSION $STATUS ${NC}"
-      fi
-      jq --arg n "$NAME" --arg v "$VERSION" --arg s "$STATUS" --arg l "$URL" \
-      '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' "$ASSET_TEST_RESULTS/build-log.json" > "$ASSET_TEST_RESULTS/build-log.json.temp" 
-      mv "$ASSET_TEST_RESULTS/build-log.json.temp" "$ASSET_TEST_RESULTS/build-log.json" 
+        # Check the exit status of the cp command 
+        if [ $? -eq 0 ]; then 
+          STATUS="passed"
+          mkdir -p "../passed/$TYPE_FOLDER" && \
+          cp -r $(dirname $f) "../passed/$TYPE_FOLDER/$NAME@$VERSION" 
+        else 
+          STATUS="failed"
+          echo -e "${INFO}===RESULT: $NAME@$VERSION $STATUS ${NC}"
+        fi
+        jq --arg n "$NAME" --arg v "$VERSION" --arg s "$STATUS" --arg l "$URL" \
+        '. += [{"name": $n, "version": $v, "status": $s, "log": $l}]' "$ASSET_TEST_RESULTS/build-log.json" > "$ASSET_TEST_RESULTS/build-log.json.temp" 
+        mv "$ASSET_TEST_RESULTS/build-log.json.temp" "$ASSET_TEST_RESULTS/build-log.json" 
       done
       exit 0
