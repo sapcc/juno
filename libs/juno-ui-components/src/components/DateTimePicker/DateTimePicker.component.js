@@ -9,7 +9,7 @@ TODO:
 * add state (date, dateStr), so we can use to decide whether to render clear button or not, handle the state correctly
 * add enable prop (or leave out if no success)
 * add position prop (if possible, otherwise leave out)
-* make re-rendering more efficient -> only re-render if there was an actual change compared with what is in fp config, do this separately for each prop to reduce the number of re-renders
+* minimize onValueChange calls if possible
 */
 
 export const DateTimePicker = ({
@@ -34,6 +34,7 @@ export const DateTimePicker = ({
   minDate,
   minuteIncrement,
   mode,
+  monthSelectorType,
   name,
   noCalendar,
   onBlur,
@@ -132,6 +133,7 @@ export const DateTimePicker = ({
       minDate: minDate,
       minuteIncrement: minuteIncrement,
       mode: mode,
+      monthSelectorType,
       onChange: handleChange,
       onClose: handleClose,
       onMonthChange: handleMonthChange,
@@ -203,17 +205,14 @@ export const DateTimePicker = ({
         hourIncrement,
         minuteIncrement,
         mode,
+        monthSelectorType,
         noCalendar,
         weekNumbers,
       }[propKey]
 
-      //console.log(propKey + ": ", prevValue + " || " + currentValue)
-
       // … we need to check whether their value has actually changed
       if (prevValue !== currentValue) {
         hasChanged = true
-        // console.log("previous " + propKey + ": ", prevValue)
-        // console.log("current " + propKey + ": ", currentValue)
       }
     })
 
@@ -234,6 +233,7 @@ export const DateTimePicker = ({
       hourIncrement: hourIncrement,
       minuteIncrement: minuteIncrement,
       mode: mode,
+      monthSelectorType: monthSelectorType,
       noCalendar: noCalendar,
       weekNumbers: weekNumbers,
     }
@@ -246,6 +246,7 @@ export const DateTimePicker = ({
     hourIncrement,
     minuteIncrement,
     mode,
+    monthSelectorType,
     noCalendar,
     weekNumbers,
   ])
@@ -358,6 +359,7 @@ DateTimePicker.propTypes = {
   minDate: datePropType,
   minuteIncrement: PropTypes.number,
   mode: PropTypes.oneOf(["single", "multiple", "range"]),
+  monthSelectorType: PropTypes.oneOf(["static", "dropdown"]),
   name: PropTypes.string,
   noCalendar: PropTypes.bool,
   onBlur: PropTypes.func,
@@ -397,6 +399,7 @@ DateTimePicker.defaultProps = {
   minDate: null,
   minuteIncrement: 5,
   mode: "single",
+  monthSelectorType: "static",
   name: "",
   noCalendar: false,
   onBlur: undefined,

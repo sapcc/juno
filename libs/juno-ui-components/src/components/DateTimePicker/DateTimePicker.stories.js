@@ -66,6 +66,11 @@ WithWeekNumbers.args = {
   weekNumbers: true,
 }
 
+export const MonthSelectorDropdown = Template.bind({})
+MonthSelectorDropdown.args = {
+  monthSelectorType: "dropdown",
+}
+
 export const AllowInput = Template.bind({})
 AllowInput.args = {
   allowInput: true,
