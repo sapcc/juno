@@ -41,6 +41,7 @@ run:
       apk add jq 
 
       for f in assets/**/*/package.json; do
+      echo "=====================================$f"
         PASSED=true
         NAME=$(jq -r '.name' $f)
         REPOSITORY=$(jq -r '.repository' $f)
