@@ -306,6 +306,7 @@ export const DateTimePicker = ({
         mode,
         monthSelectorType,
         noCalendar,
+        showMonths,
         weekNumbers,
       }[propKey]
 
@@ -334,6 +335,7 @@ export const DateTimePicker = ({
       mode: mode,
       monthSelectorType: monthSelectorType,
       noCalendar: noCalendar,
+      showMonths: showMonths,
       weekNumbers: weekNumbers,
     }
   }, [
@@ -347,6 +349,7 @@ export const DateTimePicker = ({
     mode,
     monthSelectorType,
     noCalendar,
+    showMonths,
     weekNumbers,
   ])
 
