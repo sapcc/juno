@@ -55,7 +55,7 @@ export const DateTimePicker = ({
   ...props
 }) => {
   // always generate auto-id string using the useId hook to avoid "more hooks than in previous render" error when removing custom id:
-  const autoId = "juno-datepicker-" + useId()
+  const autoId = "juno-datetimepicker-" + useId()
   const theId = id && id.length ? id : autoId
 
   const fpRef = useRef(null) // the dom node flatpickr instance will be bound to
@@ -330,6 +330,7 @@ export const DateTimePicker = ({
             icon="close"
             onClick={handleClearIconClick}
             disabled={disabled}
+            title="Clear"
           />
         ) : (
           ""
