@@ -52,6 +52,7 @@ export const DateTimePicker = ({
   time_24hr,
   value,
   weekNumbers,
+  width,
   ...props
 }) => {
   // always generate auto-id string using the useId hook to avoid "more hooks than in previous render" error when removing custom id:
@@ -313,6 +314,7 @@ export const DateTimePicker = ({
       <div className={`juno-datetimepicker-wrapper`}>
         <input
           className={`juno-datetimepicker-input ${className}`}
+          data-mode={mode}
           disabled={disabled}
           id={theId}
           name={name && name.length ? name : null}
@@ -322,6 +324,7 @@ export const DateTimePicker = ({
           placeholder={placeholder}
           ref={fpRef}
           type="text"
+          {...props}
         />
       </div>
       <div>
@@ -390,6 +393,8 @@ DateTimePicker.propTypes = {
   time_24hr: PropTypes.bool,
   value: datePropType,
   weekNumbers: PropTypes.bool,
+  /** The width of the datepicker input. Either 'full' (default) or 'auto'. */
+  width: PropTypes.oneOf(["full", "auto"]),
 }
 
 DateTimePicker.defaultProps = {
@@ -429,4 +434,5 @@ DateTimePicker.defaultProps = {
   time_24hr: false,
   value: "",
   weekNumbers: false,
+  width: "full",
 }
