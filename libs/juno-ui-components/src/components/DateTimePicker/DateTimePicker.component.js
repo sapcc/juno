@@ -10,6 +10,7 @@ TODO:
 * add styles (comment out in other components, wrap in our own selector to safeguard for calendar, use tw-stuff for our stuff)
 * add enable prop (or leave out if no success)
 * add position prop (if possible, otherwise leave out)
+* Allow to use the expected date format as a placeholder in the input element
 * test whether to make Label minimizing dependent on IsOpen or on theDate is better
 */
 
@@ -103,6 +104,7 @@ export const DateTimePicker = ({
   noCalendar,
   onBlur,
   onChange,
+  onClear,
   onClose,
   onFocus,
   onMonthChange,
@@ -207,6 +209,7 @@ export const DateTimePicker = ({
   const handleClearIconClick = () => {
     setTheDate({})
     flatpickrInstanceRef.current?.clear()
+    onClear && onClear([], "")
   }
 
   const createFlatpickrInstance = () => {
@@ -347,7 +350,7 @@ export const DateTimePicker = ({
     weekNumbers,
   ])
 
-  // TODO: check whether the update is actually in effect in the component:
+  // useEffects for props that represent config options that can be set on an existing flatpickr instance iwht immediate effect:
   useEffect(() => {
     flatpickrInstanceRef.current?.set(
       "allowInvalidPreload",
@@ -526,49 +529,95 @@ const datePropType = PropTypes.oneOfType([
 ])
 
 DateTimePicker.propTypes = {
+  /** Whether the DateTimePicker input element allows direct user keyboard input. Default is `false`. */
   allowInput: PropTypes.bool,
+  /** Allows the preloading of an invalid date (e.g. a date that hass been disable by passing `disable`). When disabled, the field will be cleared if the provided date is invalid */
   allowInvalidPreload: PropTypes.bool,
+  /** How the `aria-label` date for each day in the calendar will be formed. Uses the same rules/tokens as `dateFormat´ as described here: https://flatpickr.js.org/formatting/. When changing this, make sure the outcome makes sense when using a screenreader.*/
   ariaDateFormat: PropTypes.string,
+  /** Pass custom classNames. These will be appended to the input element of the DateTimePicker. */
   className: PropTypes.string,
+  /** A custom string to separate individual dates in `multiple` mode. */
   conjunction: PropTypes.string,
+  /** A string of characters to define how a date will be formatted in the input field. Available options: https://flatpickr.js.org/formatting/ */
   dateFormat: PropTypes.string,
+  /** Sets the default date of the DateTimePicker. Same as `value`, only here for compatibility with the original Flatpickr library. If both `value` and `defaultDate` are being passed, `value` will win. Date Objects, timestamps, ISO date strings, chronological date strings `YYYY-MM-DD HH:MM` (must be compatible to current `dateFormat`), and the shortcut `today` are all accepted. */
   defaultDate: datePropType,
+  /** The initial value of the hour input element. Only effective if time is enabled. */
   defaultHour: PropTypes.number,
+  /** The initial value of the minute input element. Only effective if time is enabled. */
   defaultMinute: PropTypes.number,
+  /** Same as value, defaultDate */
   defaultValue: datePropType,
+  /** Pass an array of dates, date strings, date ranges or functions to disable dates. More on disabling dates: https://flatpickr.js.org/examples/#disabling-specific-dates */
   disable: PropTypes.array,
+  /** Whether the DateTimePicker is disabled */
   disabled: PropTypes.bool,
+  /** Whether to show seconds when showing a time picker. */
   enableSeconds: PropTypes.bool,
+  /** Whether to show a time picker.  */
   enableTime: PropTypes.bool,
+  /** A text to render when the DateTimePicker has an error or could not be validated. */
   errortext: PropTypes.string,
+  /** A helptext to render to explain meaning and significance of the DateTimePicker. */
   helptext: PropTypes.string,
+  /** The step for the hour input. Only has an effect when a time picker is enabled via `enableTime`. */
   hourIncrement: PropTypes.number,
+  /** The id of the DateTimePicker input element. If none is passed, an automatically generated id will be used. */
   id: PropTypes.string,
+  /** Whether the DateTimePicker selected date was negatively validated.  */
   invalid: PropTypes.bool,
+  /** The label of the DateTimePicker input element. */
   label: PropTypes.string,
+  /** The maximum / latest date a user can select (inclusive). */
   maxDate: datePropType,
+  /** The minimum / earliest date a user can select (inclusive). */
   minDate: datePropType,
+  /**  The step for the minute input. Only has an effect when a time picker is enabled via `enableTime`.  */
   minuteIncrement: PropTypes.number,
+  /** The mode of the Datepicker. */
   mode: PropTypes.oneOf(["single", "multiple", "range"]),
+  /** Whether to show a dropdown to select the current month. Default is "static". If `showMonths` is set to be greater than 1, it will always be displayed as static. Arrows to scroll through the months as well as through years will still be displayed and working. */
   monthSelectorType: PropTypes.oneOf(["static", "dropdown"]),
+  /** The name of the DateTimePicker input element */
   name: PropTypes.string,
+  /** Set to `true` to not display a calendar at all. To create a time picker, set `enableTime` to true, too. */
   noCalendar: PropTypes.bool,
+  /** A handler to be executed when the DateTimePicker input element looses focus. */
   onBlur: PropTypes.func,
+  /** A handler to be executed when the selected date(s), date range or time changes */
   onChange: PropTypes.func,
+  /** A handler to be executed when the DateTimePicker value is reset by clicking the clear icon. The onChnage handler will be fired in this event too, onClear is more specific. */
+  onClear: PropTypes.func,
+  /** A handler to be executed when the DateTimePicker calendar closes */
   onClose: PropTypes.func,
+  /** A handler to be executed when the DateTimePicker input element receives focus. */
   onFocus: PropTypes.func,
+  /** A handler to be executed when the selected month changes */
   onMonthChange: PropTypes.func,
+  /** A handler to be executed when the DateTimePicker calendar opens */
   onOpen: PropTypes.func,
+  /** A handler to be executed when the DateTimePicker component is ready */
   onReady: PropTypes.func,
+  /** A handler to be executed when the selected year changes */
   onYearChange: PropTypes.func,
+  /** The placeholder of the DateTimePicker input element */
   placeholder: PropTypes.string,
+  /** Whether the DateTimePicker should be marked as required. Requires a `Label` to be set. */
   required: PropTypes.bool,
+  /** Whether the current month in the date picker should be displayed as shorthand, e.g. "Jan" instead of "January" */
   shorthandCurrentMonth: PropTypes.bool,
+  /** The number of months to show in the date picker */
   showMonths: PropTypes.number,
+  /** A text to render when the DateTimePicker was successfully validated */
   successtext: PropTypes.string,
+  /** Displays time picker in 24 hour mode without AM/PM selection when enabled. Requires `enableTime` to be set, too. Default is `false`. */
   time_24hr: PropTypes.bool,
+  /** Whether the DateTimePicker has been successfully validated */
   valid: PropTypes.bool,
+  /** The value of the datepicker. Date Objects, timestamps, ISO date strings, chronological date strings `YYYY-MM-DD HH:MM` (must be compatible to current `dateFormat`), and the shortcut `today` are all accepted. */
   value: datePropType,
+  /** Whether to render week numbers. Default is `false`. */
   weekNumbers: PropTypes.bool,
   /** The width of the datepicker input. Either 'full' (default) or 'auto'. */
   width: PropTypes.oneOf(["full", "auto"]),
@@ -604,6 +653,7 @@ DateTimePicker.defaultProps = {
   noCalendar: false,
   onBlur: undefined,
   onChange: undefined,
+  onClear: undefined,
   onClose: undefined,
   onFocus: undefined,
   onMonthChange: undefined,

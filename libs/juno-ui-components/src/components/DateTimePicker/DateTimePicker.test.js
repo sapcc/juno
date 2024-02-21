@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event"
 import { DateTimePicker } from "./index"
 
 const mockOnOpen = jest.fn()
+const mockOnClear = jest.fn()
 const mockOnClose = jest.fn()
 const mockOnChange = jest.fn()
 const mockOnMonthChange = jest.fn()
@@ -297,7 +298,7 @@ describe("DateTimePicker", () => {
   })
 
   test("clicking the clear button clears the input", async () => {
-    render(<DateTimePicker value="2024-01-31" clear />)
+    render(<DateTimePicker value="2024-01-31" />)
     const input = screen.getByRole("textbox")
     const clearButton = screen.getByTitle("Clear")
     const user = userEvent.setup()
@@ -487,6 +488,18 @@ describe("DateTimePicker", () => {
     await user.click(input)
     await user.click(document.body)
     expect(mockOnClose).toHaveBeenCalled()
+  })
+
+  test("executes an onClear handler when the user clears the DateTimePicker by clicking the clear icon", async () => {
+    render(<DateTimePicker value="2024-01-31" onClear={mockOnClear} />)
+    const input = screen.getByRole("textbox")
+    const clearButton = screen.getByTitle("Clear")
+    const user = userEvent.setup()
+    expect(input).toBeInTheDocument()
+    expect(input).toHaveValue("2024-01-31")
+    expect(clearButton).toBeInTheDocument()
+    await user.click(clearButton)
+    expect(mockOnClear).toHaveBeenCalled()
   })
 
   test("executes an onChange handler when the user changes the selected date", async () => {
