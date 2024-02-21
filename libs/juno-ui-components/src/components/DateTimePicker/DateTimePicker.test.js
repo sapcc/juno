@@ -28,12 +28,16 @@ describe("DateTimePicker", () => {
     expect(screen.getByTitle("Calendar")).toBeInTheDocument()
   })
 
-  // test("renders a label as passed", async () => {
-  //   render(<DateTimePicker label="The DateTimePicker Label" id="my-textinput"/>)
-  //   expect(document.querySelector(".juno-label")).toBeInTheDocument()
-  //   expect(document.querySelector(".juno-label")).toHaveTextContent("The DateTimePicker Label")
-  // })
-  //
+  test("renders a label as passed", async () => {
+    render(
+      <DateTimePicker label="The DateTimePicker Label" id="my-textinput" />
+    )
+    expect(document.querySelector(".juno-label")).toBeInTheDocument()
+    expect(document.querySelector(".juno-label")).toHaveTextContent(
+      "The DateTimePicker Label"
+    )
+  })
+
   test("renders an id as passed", async () => {
     render(<DateTimePicker id="my-datetimepicker" />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
@@ -58,19 +62,23 @@ describe("DateTimePicker", () => {
     )
   })
 
-  // test("renders a DateTimePicker with a label associated by an id as passed", async () => {
-  //   render(<DateTimePicker label="The DateTimePicker Label" id="dp-1"/>)
-  //   expect(screen.getByRole("textbox")).toBeInTheDocument()
-  //   expect(screen.getByRole("textbox")).toHaveAttribute("id")
-  //   expect(screen.getByRole("textbox").getAttribute("id")).toMatch("dp-1")
-  //   expect(screen.getByLabelText("The DateTimePicker Label")).toBeInTheDocument()
-  // })
-  //
-  // test("renders a DateTimePicker with a label associated by an auto-generated id if no id was passed ", async () => {
-  //   render(<DateTimePicker label="This is a DateTimePicker" />)
-  //   expect(screen.getByRole("textbox")).toBeInTheDocument()
-  //   expect(screen.getByLabelText("This is a DateTimePicker")).toBeInTheDocument()
-  // })
+  test("renders a DateTimePicker with a label associated by an id as passed", async () => {
+    render(<DateTimePicker label="The DateTimePicker Label" id="dp-1" />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveAttribute("id")
+    expect(screen.getByRole("textbox").getAttribute("id")).toMatch("dp-1")
+    expect(
+      screen.getByLabelText("The DateTimePicker Label")
+    ).toBeInTheDocument()
+  })
+
+  test("renders a DateTimePicker with a label associated by an auto-generated id if no id was passed ", async () => {
+    render(<DateTimePicker label="This is a DateTimePicker" />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(
+      screen.getByLabelText("This is a DateTimePicker")
+    ).toBeInTheDocument()
+  })
 
   test("renders a DateTimePicker with a placholder as passed", async () => {
     render(<DateTimePicker placeholder="This is a placeholder" />)
@@ -93,50 +101,70 @@ describe("DateTimePicker", () => {
     expect(screen.getByTitle("Clear")).toBeInTheDocument()
   })
 
-  // test("renders a DateTimePicker marked as required", async () => {
-  //   // DateTimePicker needs a label passed since the Label subcomponent is responsible for rendering the Required marker:
-  //   render(<DateTimePicker label="Required DateTimePicker" required />)
-  //   expect(document.querySelector(".juno-required")).toBeInTheDocument()
-  // })
+  test("renders a DateTimePicker marked as required", async () => {
+    // DateTimePicker needs a label passed since the Label subcomponent is responsible for rendering the Required marker:
+    render(<DateTimePicker label="Required DateTimePicker" required />)
+    expect(document.querySelector(".juno-required")).toBeInTheDocument()
+  })
 
-  // test("renders a helptext as passed", async () => {
-  //   render(<DateTimePicker helptext="this is a helptext"/>)
-  //   expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
-  //   expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-help")
-  //   expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is a helptext")
-  // })
-  //
-  // test("renders a valid DateTimePicker as passed", async () => {
-  //   render(<DateTimePicker valid />)
-  //   expect(screen.getByRole("textbox")).toBeInTheDocument()
-  //   expect(screen.getByRole("textbox")).toHaveClass("juno-datetimepicker-input-valid")
-  //   expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
-  // })
-  //
-  // test("renders an invalid DateTimePicker as passed", async () => {
-  //   render(<DateTimePicker invalid />)
-  //   expect(screen.getByRole("textbox")).toBeInTheDocument()
-  //   expect(screen.getByRole("textbox")).toHaveClass("juno-datetimepicker-input-invalid")
-  //   expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
-  // })
-  //
-  // test("renders a successtext as passed and validates the element", async () => {
-  //   render(<DateTimePicker successtext="great success!" />)
-  //   expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
-  //   expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-success")
-  //   expect(document.querySelector(".juno-form-hint")).toHaveTextContent("great success!")
-  //   expect(screen.getByRole("textbox")).toHaveClass("juno-DateTimePicker-input-valid")
-  //   expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
-  // })
-  //
-  // test("renders an errortext as passed and invalidates the element", async () => {
-  //   render(<DateTimePicker errortext="this is an error!" />)
-  //   expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
-  //   expect(document.querySelector(".juno-form-hint")).toHaveClass("juno-form-hint-error")
-  //   expect(document.querySelector(".juno-form-hint")).toHaveTextContent("this is an error!")
-  //   expect(screen.getByRole("textbox")).toHaveClass("juno-datetimepicker-input-invalid")
-  //   expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
-  // })
+  test("renders a helptext as passed", async () => {
+    render(<DateTimePicker helptext="this is a helptext" />)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass(
+      "juno-form-hint-help"
+    )
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent(
+      "this is a helptext"
+    )
+  })
+
+  test("renders a valid DateTimePicker as passed", async () => {
+    render(<DateTimePicker valid />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveClass(
+      "juno-datetimepicker-input-valid"
+    )
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
+  })
+
+  test("renders an invalid DateTimePicker as passed", async () => {
+    render(<DateTimePicker invalid />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveClass(
+      "juno-datetimepicker-input-invalid"
+    )
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+  })
+
+  test("renders a successtext as passed and validates the element", async () => {
+    render(<DateTimePicker successtext="great success!" />)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass(
+      "juno-form-hint-success"
+    )
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent(
+      "great success!"
+    )
+    expect(screen.getByRole("textbox")).toHaveClass(
+      "juno-datetimepicker-input-valid"
+    )
+    expect(screen.getByTitle("CheckCircle")).toBeInTheDocument()
+  })
+
+  test("renders an errortext as passed and invalidates the element", async () => {
+    render(<DateTimePicker errortext="this is an error!" />)
+    expect(document.querySelector(".juno-form-hint")).toBeInTheDocument()
+    expect(document.querySelector(".juno-form-hint")).toHaveClass(
+      "juno-form-hint-error"
+    )
+    expect(document.querySelector(".juno-form-hint")).toHaveTextContent(
+      "this is an error!"
+    )
+    expect(screen.getByRole("textbox")).toHaveClass(
+      "juno-datetimepicker-input-invalid"
+    )
+    expect(screen.getByTitle("Dangerous")).toBeInTheDocument()
+  })
 
   test("renders a DateTimePicker with a time picker as passed", async () => {
     render(<DateTimePicker enableTime={true} dateFormat="Y-m-d H:i:S" />)

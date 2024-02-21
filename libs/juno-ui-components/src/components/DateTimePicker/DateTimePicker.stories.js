@@ -29,8 +29,20 @@ const PotalTemplate = ({ ...args }) => (
 export const Default = Template.bind({})
 Default.args = {}
 
+export const WithLabel = Template.bind({})
+WithLabel.args = {
+  label: "Select a date",
+}
+
+export const Required = Template.bind({})
+Required.args = {
+  label: "Select a date",
+  required: true,
+}
+
 export const Disabled = Template.bind({})
 Disabled.args = {
+  label: "Select a date",
   disabled: true,
 }
 

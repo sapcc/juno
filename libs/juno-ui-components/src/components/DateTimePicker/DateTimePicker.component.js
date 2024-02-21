@@ -1,14 +1,75 @@
 import React, { useEffect, useRef, useId, useMemo, useState } from "react"
 import PropTypes from "prop-types"
 import flatpickr from "flatpickr"
+import { FormHint } from "../FormHint/"
 import { Icon } from "../Icon/"
+import { Label } from "../Label/"
 
 /* 
 TODO:
 * add styles (comment out in other components, wrap in our own selector to safeguard for calendar, use tw-stuff for our stuff)
 * add enable prop (or leave out if no success)
 * add position prop (if possible, otherwise leave out)
+* test whether to make Label minimizing dependent on IsOpen or on theDate is better
 */
+
+const inputWrapperStyles = `
+  jn-relative
+`
+
+const inputStyles = `
+  jn-bg-theme-textinput
+  jn-text-theme-textinput
+  jn-border
+  jn-text-base
+  jn-leading-4
+  jn-px-4
+  jn-h-textinput
+  jn-rounded-3px
+  focus:jn-outline-none
+  focus:jn-ring-2
+  focus:jn-ring-theme-focus
+  disabled:jn-opacity-50
+  disabled:jn-cursor-not-allowed
+  autofill:jn-bg-theme-textinput-autofill
+  autofill:jn-text-theme-textinput-autofill
+`
+
+const inputWithLabelStyles = `
+  jn-pt-[1.125rem] 
+  jn-pb-1
+`
+
+const inputWithoutLabelStyles = `
+  jn-py-4
+`
+
+const inputDefaultBorderStyles = `
+  jn-border-theme-textinput-default
+`
+
+const inputInvalidStyles = `
+  jn-border-theme-error
+`
+
+const inputValidStyles = `
+  jn-border-theme-success
+`
+
+const labelStyles = `
+  peer-autofill:jn-text-theme-textinput-autofill-label
+  jn-pointer-events-none
+  jn-top-2
+  jn-left-[0.9375rem]
+`
+
+const iconContainerStyles = `
+  jn-absolute
+  jn-inline-flex
+  jn-top-1.5
+  jn-right-5
+  jn-gap-1.5
+`
 
 /** A all-purpose date and time picker component. Highly configurable, based on Flatpickr. */
 
@@ -25,11 +86,14 @@ export const DateTimePicker = ({
   defaultValue,
   disable,
   disabled,
-  enable, // TODO
   enableSeconds,
   enableTime,
+  errortext,
+  helptext,
   hourIncrement,
   id,
+  invalid,
+  label,
   maxDate,
   minDate,
   minuteIncrement,
@@ -46,10 +110,12 @@ export const DateTimePicker = ({
   onReady,
   onYearChange,
   placeholder,
-  position, // TODO -> CSS?
+  required,
   shorthandCurrentMonth,
   showMonths,
+  successtext,
   time_24hr,
+  valid,
   value,
   weekNumbers,
   width,
@@ -64,6 +130,10 @@ export const DateTimePicker = ({
   const calendarTargetRef = useRef(null) // The DOM node the flatpickr calendar should be rendered to
 
   const [theDate, setTheDate] = useState({})
+  const [hasFocus, setHasFocus] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const [isInvalid, setIsInvalid] = useState(false)
+  const [isValid, setIsValid] = useState(false)
 
   const updateFlatpickrInstance = (newKeys) =>
     (flatpickrInstanceRef.current = {
@@ -74,7 +144,25 @@ export const DateTimePicker = ({
       }, {}),
     })
 
+  const invalidated = useMemo(
+    () => (invalid || (errortext && errortext.length) ? true : false),
+    [invalid, errortext]
+  )
+  const validated = useMemo(
+    () => (valid || (successtext && successtext.length) ? true : false),
+    [valid, successtext]
+  )
+
+  useEffect(() => {
+    setIsInvalid(invalidated)
+  }, [invalidated])
+
+  useEffect(() => {
+    setIsValid(validated)
+  }, [validated])
+
   const handleBlur = () => {
+    setHasFocus(false)
     onBlur && onBlur(theDate.selectedDate, theDate.selectedDateStr)
   }
 
@@ -84,6 +172,7 @@ export const DateTimePicker = ({
   }
 
   const handleClose = (selectedDate, dateStr, instance) => {
+    setIsOpen(false)
     onClose && onClose(selectedDate, dateStr)
   }
 
@@ -93,6 +182,7 @@ export const DateTimePicker = ({
   }
 
   const handleOpen = (selectedDate, dateStr, instance) => {
+    setIsOpen(true)
     onOpen && onOpen(selectedDate, dateStr)
   }
 
@@ -106,6 +196,7 @@ export const DateTimePicker = ({
   }
 
   const handleInputFocus = () => {
+    setHasFocus(true)
     onFocus && onFocus(theDate.selectedDate, theDate.selectedDateStr)
   }
 
@@ -144,7 +235,6 @@ export const DateTimePicker = ({
       onMonthChange: handleMonthChange,
       onOpen: handleOpen,
       onReady: handleReady,
-      // onValueUpdate: handleValueUpdate,
       onYearChange: handleYearChange,
       positionElement: calendarTargetRef.current,
       shorthandCurrentMonth: shorthandCurrentMonth,
@@ -226,7 +316,7 @@ export const DateTimePicker = ({
     if (hasChanged) {
       flatpickrInstanceRef?.current?.destroy()
       createFlatpickrInstance()
-      console.log("flatpickr instance was destroyed and recreated")
+      //console.log("flatpickr instance was destroyed and recreated")
     }
 
     // Also make sure we update our stored props in order to be ready for the next update:
@@ -298,7 +388,6 @@ export const DateTimePicker = ({
     )
   }, [shorthandCurrentMonth])
 
-  // TODO: Will update properly but only apply at next change/user click; not worth destroying and creating a new instance IMO?:
   useEffect(() => {
     flatpickrInstanceRef.current?.set("time_24hr", time_24hr)
   }, [time_24hr])
@@ -315,10 +404,35 @@ export const DateTimePicker = ({
   }, [weekNumbers])
 
   return (
-    <div>
-      <div className={`juno-datetimepicker-wrapper`}>
+    <div
+      className={`
+      juno-datetimepicker-wrapper
+      ${width == "auto" ? "jn-inline-block" : "jn-block"}
+      ${width == "auto" ? "jn-w-auto" : "jn-w-full"}
+    `}
+    >
+      <div
+        className={`juno-datetimepicker-input-wrapper ${inputWrapperStyles}`}
+      >
         <input
-          className={`juno-datetimepicker-input ${className}`}
+          className={`
+            juno-datetimepicker-input 
+            ${inputStyles}
+            ${label ? inputWithLabelStyles : inputWithoutLabelStyles}
+            ${
+              isInvalid
+                ? "juno-datetimepicker-input-invalid " + inputInvalidStyles
+                : ""
+            } 
+            ${
+              isValid
+                ? "juno-datetimepicker-input-valid" + inputValidStyles
+                : ""
+            }  
+            ${isValid || isInvalid ? "" : inputDefaultBorderStyles} 
+            ${width == "auto" ? "jn-w-auto" : "jn-w-full"}
+            ${className}
+          `}
           data-mode={mode}
           disabled={disabled}
           id={theId}
@@ -331,25 +445,75 @@ export const DateTimePicker = ({
           type="text"
           {...props}
         />
-      </div>
-      <div>
-        {theDate.selectedDate?.length || theDate.selectedDateStr?.length ? (
-          <Icon
-            icon="close"
-            onClick={handleClearIconClick}
+
+        {label && label.length ? (
+          <Label
+            text={label}
+            htmlFor={theId}
+            className={`${labelStyles}`}
             disabled={disabled}
-            title="Clear"
+            required={required}
+            floating
+            minimized={
+              placeholder ||
+              isOpen ||
+              theDate.selectedDate?.length ||
+              theDate.selectedDateStr?.length
+                ? true
+                : false
+            }
           />
         ) : (
           ""
         )}
-        <Icon
-          icon={enableTime && noCalendar ? "accessTime" : "calendarToday"}
-          onClick={handleCalendarIconClick}
-          disabled={disabled}
-        />
+
+        <div
+          className={`juno-datetimepicker-icon-container ${iconContainerStyles}`}
+        >
+          {theDate.selectedDate?.length || theDate.selectedDateStr?.length ? (
+            <Icon
+              icon="close"
+              onClick={handleClearIconClick}
+              disabled={disabled}
+              title="Clear"
+            />
+          ) : (
+            ""
+          )}
+          <Icon
+            icon={enableTime && noCalendar ? "accessTime" : "calendarToday"}
+            onClick={handleCalendarIconClick}
+            disabled={disabled}
+          />
+          {isInvalid ? (
+            <Icon icon="dangerous" color="jn-text-theme-error" />
+          ) : (
+            ""
+          )}
+          {isValid ? (
+            <Icon icon="checkCircle" color="jn-text-theme-success" />
+          ) : (
+            ""
+          )}
+        </div>
       </div>
       <div ref={calendarTargetRef}></div>
+
+      {errortext && errortext.length ? (
+        <FormHint text={errortext} variant="error" className="jn-mt-0" />
+      ) : (
+        ""
+      )}
+      {successtext && successtext.length ? (
+        <FormHint text={successtext} variant="success" className="jn-mt-0" />
+      ) : (
+        ""
+      )}
+      {helptext && helptext.length ? (
+        <FormHint text={helptext} className="jn-mt-0" />
+      ) : (
+        ""
+      )}
     </div>
   )
 }
@@ -376,8 +540,12 @@ DateTimePicker.propTypes = {
   disabled: PropTypes.bool,
   enableSeconds: PropTypes.bool,
   enableTime: PropTypes.bool,
+  errortext: PropTypes.string,
+  helptext: PropTypes.string,
   hourIncrement: PropTypes.number,
   id: PropTypes.string,
+  invalid: PropTypes.bool,
+  label: PropTypes.string,
   maxDate: datePropType,
   minDate: datePropType,
   minuteIncrement: PropTypes.number,
@@ -394,9 +562,12 @@ DateTimePicker.propTypes = {
   onReady: PropTypes.func,
   onYearChange: PropTypes.func,
   placeholder: PropTypes.string,
+  required: PropTypes.bool,
   shorthandCurrentMonth: PropTypes.bool,
   showMonths: PropTypes.number,
+  successtext: PropTypes.string,
   time_24hr: PropTypes.bool,
+  valid: PropTypes.bool,
   value: datePropType,
   weekNumbers: PropTypes.bool,
   /** The width of the datepicker input. Either 'full' (default) or 'auto'. */
@@ -418,8 +589,12 @@ DateTimePicker.defaultProps = {
   disabled: false,
   enableSeconds: false,
   enableTime: false,
+  errortext: "",
+  helptext: "",
   hourIncrement: 1,
   id: "",
+  invalid: false,
+  label: "",
   maxDate: null,
   minDate: null,
   minuteIncrement: 5,
@@ -436,9 +611,12 @@ DateTimePicker.defaultProps = {
   onReady: undefined,
   onYearChange: undefined,
   placeholder: "",
+  required: false,
   shorthandCurrentMonth: false,
   showMonths: 1,
+  successtext: "",
   time_24hr: false,
+  valid: false,
   value: "",
   weekNumbers: false,
   width: "full",
