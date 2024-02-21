@@ -164,6 +164,69 @@ describe("DateTimePicker", () => {
 
   // TODO: PASS AND UPDATE DATES IN VARIOUS FORMATS HERE:
 
+  test("displays the date as passed as a date object", async () => {
+    render(<DateTimePicker value={new Date(2099, 0, 1)} />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2099-01-01")
+  })
+
+  test("displays the date as passed as a date string", async () => {
+    render(<DateTimePicker value="2024-01-26" />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2024-01-26")
+  })
+
+  test("diplays the date as passed as an ISO date string", async () => {
+    render(<DateTimePicker value="2034-02-26T19:40:03.243Z" />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2034-02-26")
+  })
+
+  test("displays the date as passed as a timestamp", async () => {
+    render(<DateTimePicker value={1706273787000} />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2024-01-26")
+  })
+
+  test("displays the date as passed by shortcut 'today'", async () => {
+    render(<DateTimePicker value="today" />)
+    const today = new Date()
+    const year = today.getFullYear()
+    const month = (today.getMonth() + 1).toString().padStart(2, "0")
+    const day = today.getDate().toString().padStart(2, "0")
+    const todayAsString = `${year}-${month}-${day}`
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue(todayAsString)
+  })
+
+  test("displays the date in a custom format as passed", async () => {
+    render(<DateTimePicker dateFormat="F d Y" value={1706273787000} />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("January 26 2024")
+  })
+
+  test("displays the date as passed as defaultDate instead of value", async () => {
+    render(<DateTimePicker defaultDate={new Date(2099, 0, 1)} />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2099-01-01")
+  })
+
+  test("displays the date as passed as defaultValue instead of value or defaultDate", async () => {
+    render(<DateTimePicker defaultValue={new Date(2099, 0, 1)} />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2099-01-01")
+  })
+
+  test("updates the date accordingly when value changes", async () => {
+    const { rerender } = render(
+      <DateTimePicker value={new Date(2024, 0, 12)} />
+    )
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2024-01-12")
+    rerender(<DateTimePicker value={new Date(2025, 7, 18)} />)
+    expect(screen.getByRole("textbox")).toHaveValue("2025-08-18")
+  })
+
   test("allows typing in the field when configured to do so", async () => {
     render(<DateTimePicker allowInput />)
     const input = screen.getByRole("textbox")
