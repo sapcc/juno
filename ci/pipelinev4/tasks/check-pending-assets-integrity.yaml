@@ -29,7 +29,7 @@ run:
       EXIT_CODE=1 # error
 
       # create the build-log file 
-      rm output/build-log.xt && touch output/build-log.xt
+      rm -f output/build-log.json && touch output/build-log.json && jq -n '[]' > output/build-log.json
       for f in ./input/**/*/package.json; do
         ERROR=""
         PASSED=true
@@ -84,12 +84,12 @@ run:
         if $PASSED; then 
           echo -e "${SUCCESS}  PASSED${NC}"
           EXIT_CODE=0 # success, we have at least one valid asset
-          mkdir -p ./output/$TYPE/$NAME && cp -r $(dirname $f) ./output/$TYPE/$NAME
+          mkdir -p ./output/$TYPE/$NAME && cp -r $(dirname $f) ./output/$TYPE/
         else 
           echo -e "${FAIL}  FAILED${NC}"
         fi
 
-        echo "type:$TYPE,name:$NAME,version:$VERSION,date:$(date +%s),passed:$PASSED,error:$ERROR" >> ./output/build-log.xt
+        jq ". += [{\"name\":\"$NAME\",\"type\":\"$TYPE\",\"version\":\"$VERSION\",\"date\":\"$(date +%s)\",\"passed\":$PASSED,\"error\":\"$ERROR\" }]" output/build-log.json > tmp.json && mv tmp.json output/build-log.json 
       done
 
       # exit with the code 
