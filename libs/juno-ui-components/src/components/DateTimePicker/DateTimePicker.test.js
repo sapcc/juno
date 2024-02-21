@@ -217,23 +217,31 @@ describe("DateTimePicker", () => {
     expect(input).toHaveValue("")
   })
 
-  // test("sets a custom aria-label format for calendar dates as passed", async () => {
-  //   render(<Datepicker ariaDateFormat="l, F j, Y"/>)
-  //   const input = screen.getByRole("textbox")
-  //   const user = userEvent.setup()
-  //   expect(input).toBeInTheDocument()
-  //   // click to open the calendar:
-  //   await user.click(input)
-  //   //Match something like "Monday, January 31, 2024" to pattern like [word, comma, space, word, space, one or two-digit number, comma, space, four-digit number] assuming this is precise enough:
-  //   expect(document.querySelectorAll(".flatpickr-day")[0].getAttribute("aria-label")).toMatch( new RegExp(/^\b\w+\b, \b\w+\b \d{1,2}, \d{4}$/) )
-  // })
+  test("sets a custom aria-label format for calendar dates as passed", async () => {
+    render(<DateTimePicker ariaDateFormat="l, F j, Y" />)
+    const input = screen.getByRole("textbox")
+    const user = userEvent.setup()
+    expect(input).toBeInTheDocument()
+    // click to open the calendar:
+    await user.click(input)
+    //Match something like "Monday, January 31, 2024" to pattern like [word, comma, space, word, space, one or two-digit number, comma, space, four-digit number] assuming this is precise enough:
+    expect(
+      document.querySelectorAll(".flatpickr-day")[0].getAttribute("aria-label")
+    ).toMatch(new RegExp(/^\b\w+\b, \b\w+\b \d{1,2}, \d{4}$/))
+  })
 
-  // test("uses a custom conjunction between dates in multiple mode as passed", async () => {
-  //   render(<Datepicker mode="multiple" conjunction=" || " value={["2024-02-01", "2099-03-12"]}/>)
-  //   const input = screen.getByRole("textbox")
-  //   expect(input).toBeInTheDocument()
-  //   expect(input).toHaveValue("2024-02-01 || 2099-03-12")
-  // })
+  test("uses a custom conjunction between dates in multiple mode as passed", async () => {
+    render(
+      <DateTimePicker
+        mode="multiple"
+        conjunction=" || "
+        value={["2024-02-01", "2099-03-12"]}
+      />
+    )
+    const input = screen.getByRole("textbox")
+    expect(input).toBeInTheDocument()
+    expect(input).toHaveValue("2024-02-01 || 2099-03-12")
+  })
 
   test("sets a default hour as passed", async () => {
     render(

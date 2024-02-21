@@ -122,6 +122,7 @@ export const DateTimePicker = ({
     const options = {
       allowInput: allowInput,
       allowInvalidPreload: allowInvalidPreload,
+      ariaDateFormat: ariaDateFormat,
       appendTo: calendarTargetRef.current,
       conjunction: conjunction,
       dateFormat: dateFormat,
@@ -265,6 +266,10 @@ export const DateTimePicker = ({
   }, [allowInvalidPreload])
 
   useEffect(() => {
+    flatpickrInstanceRef.current?.set("ariaDateFormat", ariaDateFormat)
+  }, [ariaDateFormat])
+
+  useEffect(() => {
     flatpickrInstanceRef.current?.set("conjunction", conjunction)
   }, [conjunction])
 
@@ -359,6 +364,7 @@ const datePropType = PropTypes.oneOfType([
 DateTimePicker.propTypes = {
   allowInput: PropTypes.bool,
   allowInvalidPreload: PropTypes.bool,
+  ariaDateFormat: PropTypes.string,
   className: PropTypes.string,
   conjunction: PropTypes.string,
   dateFormat: PropTypes.string,
@@ -400,6 +406,7 @@ DateTimePicker.propTypes = {
 DateTimePicker.defaultProps = {
   allowInput: false,
   allowInvalidPreload: false,
+  ariaDateFormat: "F j, Y",
   className: "",
   conjunction: ", ",
   dateFormat: "Y-m-d",
