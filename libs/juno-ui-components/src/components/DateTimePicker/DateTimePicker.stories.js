@@ -13,6 +13,23 @@ export default {
     value: {
       control: false,
     },
+    errortext: {
+      control: false,
+    },
+    helptext: {
+      control: false,
+    },
+    successtext: {
+      control: false,
+    },
+    monthSelectorType: {
+      options: ["dropdown", "static"],
+      control: { type: "radio" },
+    },
+    width: {
+      options: ["auto", "full"],
+      control: { type: "radio" },
+    },
   },
 }
 
@@ -105,4 +122,51 @@ TimePicker.args = {
   noCalendar: true,
   enableSeconds: true,
   dateFormat: "H:i:S",
+}
+
+export const DisableByFunction = Template.bind({})
+DisableByFunction.parameters = {
+  docs: {
+    description: {
+      story:
+        "Pass an array of functions such as `function(date) {// return true to disable date}` as `disable` to be run for each date in the calendar in order to disable dates that match custom criteria. Pass a locale string or object to modify the sequence of week days rendered in the calendar.",
+    },
+  },
+}
+DisableByFunction.args = {
+  disable: [
+    function (date) {
+      return date.getDay() === 0 || date.getDay() === 6
+    },
+  ],
+  locale: {
+    firstDayOfWeek: 1, // set week to start on Monday
+  },
+  helptext:
+    "Only work days can be selected, week in calendar starts with Monday.",
+}
+
+export const Valid = Template.bind({})
+Valid.args = {
+  valid: true,
+}
+
+export const Invalid = Template.bind({})
+Invalid.args = {
+  invalid: true,
+}
+
+export const WithErrortext = Template.bind({})
+WithErrortext.args = {
+  errortext: "This DateTimePicker has an error or is invalid.",
+}
+
+export const WithSuccesstext = Template.bind({})
+WithSuccesstext.args = {
+  successtext: "This DateTimePicker was susccessfully validated.",
+}
+
+export const WithHelptext = Template.bind({})
+WithHelptext.args = {
+  helptext: "Some useful information goes here.",
 }
