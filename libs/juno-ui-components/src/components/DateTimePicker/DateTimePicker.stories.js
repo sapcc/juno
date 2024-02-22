@@ -124,6 +124,58 @@ WithDefaultValue.args = {
   defaultValue: new Date(),
 }
 
+export const WithValueAsDateString = Template.bind({})
+WithValueAsDateString.parameters = {
+  docs: {
+    description: {
+      story:
+        'Pass a string as a `value`, `defaultValue`, or `defaultDate` that is compatible with the current `dateFormat` prop, e.g. `"2024-01-24"` if the current `dateFormat` is `"Y-m-d"` (as is the default). The Datepicker component will not convert these.',
+    },
+  },
+}
+WithValueAsDateString.args = {
+  value: "2024-01-24",
+}
+
+export const WithValueAsIsoDateString = Template.bind({})
+WithValueAsIsoDateString.parameters = {
+  docs: {
+    description: {
+      story:
+        "Pass an ISO-compatible date string to display the corresponding date in the Datepicker.",
+    },
+  },
+}
+WithValueAsIsoDateString.args = {
+  value: "2034-02-26T19:40:03.243Z",
+}
+
+export const WithValueAsTimestamp = Template.bind({})
+WithValueAsTimestamp.parameters = {
+  docs: {
+    description: {
+      story:
+        "Pass a timestamp with milliseconds as `value` to display the corresponding date in the Datepicker.",
+    },
+  },
+}
+WithValueAsTimestamp.args = {
+  value: 1706273787000,
+}
+
+export const WithValueAsTodayShortcut = Template.bind({})
+WithValueAsTodayShortcut.parameters = {
+  docs: {
+    description: {
+      story:
+        'Pass `"today"` as `value` as a shortcut to display the current Date in the Datepicker.',
+    },
+  },
+}
+WithValueAsTodayShortcut.args = {
+  value: "today",
+}
+
 export const WithTime = Template.bind({})
 WithTime.parameters = {
   docs: {
