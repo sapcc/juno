@@ -369,7 +369,6 @@ export const DateTimePicker = ({
     flatpickrInstanceRef.current?.set("dateFormat", dateFormat)
   }, [dateFormat])
 
-  // TODO: disable
   useEffect(() => {
     flatpickrInstanceRef.current?.set("disable", disable)
   }, [disable])
