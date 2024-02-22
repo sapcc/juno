@@ -70,11 +70,27 @@ WithPlaceholder.args = {
 }
 
 export const WithValue = Template.bind({})
+WithValue.parameters = {
+  docs: {
+    description: {
+      story:
+        "Set the selected date of the datePicker. `value`, `defaultValue`, and `defaultDate` do the exact same thing and can be used interchangeably.",
+    },
+  },
+}
 WithValue.args = {
   value: new Date(),
 }
 
 export const WithDefaultDate = Template.bind({})
+WithDefaultDate.parameters = {
+  docs: {
+    description: {
+      story:
+        "Set the selected date of the datePicker. `value`, `defaultValue`, and `defaultDate` do the exact same thing and can be used interchangeably.",
+    },
+  },
+}
 WithDefaultDate.args = {
   defaultDate: new Date(),
 }
@@ -84,7 +100,7 @@ WithDefaultDateAndTime.parameters = {
   docs: {
     description: {
       story:
-        "Pass `defaultHour` and `defaultMinute` to set default values for the date and time input elements. NOte this willnot set a selected date with these values in the DateTimePicker input element, the user still has to make a selection.",
+        "Pass `defaultHour` and `defaultMinute` to set default values for the date and time input elements. Note this will not set a selected date with these values in the DateTimePicker input element, the user still has to make a selection.",
     },
   },
 }
@@ -96,17 +112,41 @@ WithDefaultDateAndTime.args = {
 }
 
 export const WithDefaultValue = Template.bind({})
+WithDefaultValue.parameters = {
+  docs: {
+    description: {
+      story:
+        "Set the selected date of the datePicker. `value`, `defaultValue`, and `defaultDate` do the exact same thing and can be used interchangeably.",
+    },
+  },
+}
 WithDefaultValue.args = {
   defaultValue: new Date(),
 }
 
 export const WithTime = Template.bind({})
+WithTime.parameters = {
+  docs: {
+    description: {
+      story:
+        "To also show a time picker to allow users to select a date and a time, set `enableTime` to `true`. Set the `dateFormat` accordingly to have the selected time reflected in the DateTimePicker input element. More about formatting dates here: https://flatpickr.js.org/formatting/.",
+    },
+  },
+}
 WithTime.args = {
   enableTime: true,
   dateFormat: "Y-m-d H:i",
 }
 
 export const WithTimeAndSeconds = Template.bind({})
+WithTimeAndSeconds.parameters = {
+  docs: {
+    description: {
+      story:
+        "To allow selecting seconds when showing a time picker, set `enableSeconds` to `true`. To reflect seconds in the selected date in the DateTimePicker, adjust the `dateFormat` accordingly: https://flatpickr.js.org/formatting/.",
+    },
+  },
+}
 WithTimeAndSeconds.args = {
   enableTime: true,
   enableSeconds: true,
@@ -114,6 +154,14 @@ WithTimeAndSeconds.args = {
 }
 
 export const WithTimeWithCustomHourIncrement = Template.bind({})
+WithTimeWithCustomHourIncrement.parameters = {
+  docs: {
+    description: {
+      story:
+        "Set a custom hour increment by which to change the hour in the respective element.",
+    },
+  },
+}
 WithTimeWithCustomHourIncrement.args = {
   enableTime: true,
   hourIncrement: 6,
@@ -121,6 +169,14 @@ WithTimeWithCustomHourIncrement.args = {
 }
 
 export const WithTimeWithCustomMinuteIncrement = Template.bind({})
+WithTimeWithCustomMinuteIncrement.parameters = {
+  docs: {
+    description: {
+      story:
+        "Set a custom minute increment by which to change the minute in the respective element.",
+    },
+  },
+}
 WithTimeWithCustomMinuteIncrement.args = {
   enableTime: true,
   minuteIncrement: 1,
@@ -134,36 +190,104 @@ With24hTime.args = {
 }
 
 export const ShowTwoMonths = Template.bind({})
+ShowTwoMonths.parameters = {
+  docs: {
+    description: {
+      story:
+        "Setr the number of months to be displayed side by side in the calendar.",
+    },
+  },
+}
 ShowTwoMonths.args = {
   showMonths: 2,
 }
 
 export const WithWeekNumbers = Template.bind({})
+WithWeekNumbers.parameters = {
+  docs: {
+    description: {
+      story:
+        "Set `weekNumbers` to `true` to display week numbers in the calendar.",
+    },
+  },
+}
 WithWeekNumbers.args = {
   weekNumbers: true,
 }
 
-export const MonthSelectorDropdown = Template.bind({})
-MonthSelectorDropdown.args = {
+export const WithShorthandCurrentMonth = Template.bind({})
+WithShorthandCurrentMonth.parameters = {
+  docs: {
+    description: {
+      story:
+        "Set `shorthandCurrentMonth` to `true` to show shorthand month names, e.g. 'Jan' instead of 'January'.",
+    },
+  },
+}
+WithShorthandCurrentMonth.args = {
+  shorthandCurrentMonth: true,
+}
+
+export const WithMonthSelectorDropdown = Template.bind({})
+WithMonthSelectorDropdown.parameters = {
+  docs: {
+    description: {
+      story:
+        'Set `monthSelectorType` to "dropdown" in order to show a select element to switch months in the calndar.',
+    },
+  },
+}
+WithMonthSelectorDropdown.args = {
   monthSelectorType: "dropdown",
 }
 
 export const AllowInput = Template.bind({})
+AllowInput.parameters = {
+  docs: {
+    description: {
+      story:
+        "Set `allowInput` to `true` to allow direct user input by typing into the DateTimePicker input element.",
+    },
+  },
+}
 AllowInput.args = {
   allowInput: true,
 }
 
 export const Multiple = Template.bind({})
+Multiple.parameters = {
+  docs: {
+    description: {
+      story: 'To select multiple dates, set `mode` to "multiple".',
+    },
+  },
+}
 Multiple.args = {
   mode: "multiple",
 }
 
 export const Range = Template.bind({})
+Range.parameters = {
+  docs: {
+    description: {
+      story:
+        'To select a date range instead of individual date(s), set `mode` to "range".',
+    },
+  },
+}
 Range.args = {
   mode: "range",
 }
 
 export const TimePicker = Template.bind({})
+TimePicker.parameters = {
+  docs: {
+    description: {
+      story:
+        "In order to create a pure timepicker, set the `dateFormat` accordingly, and set `noCalendar` and `enableTime` to `true`. If seconds are required, set `enableSeconds` to `true`.",
+    },
+  },
+}
 TimePicker.args = {
   enableTime: true,
   noCalendar: true,
@@ -172,12 +296,26 @@ TimePicker.args = {
 }
 
 export const WithMinDate = Template.bind({})
+WithMinDate.parameters = {
+  docs: {
+    description: {
+      story: "Set a `minDate` to allow selecting only later dates.",
+    },
+  },
+}
 WithMinDate.args = {
   minDate: new Date(),
   helptext: "Only dates in the future including today can be selected.",
 }
 
 export const WithMaxDate = Template.bind({})
+WithMaxDate.parameters = {
+  docs: {
+    description: {
+      story: "Set a `maxDate` to allow selecting only earlier dates.",
+    },
+  },
+}
 WithMaxDate.args = {
   maxDate: new Date(),
   helptext: "Only dates in the past including today can be selected.",
