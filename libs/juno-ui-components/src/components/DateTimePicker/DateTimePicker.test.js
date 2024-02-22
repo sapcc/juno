@@ -102,6 +102,12 @@ describe("DateTimePicker", () => {
     expect(screen.getByTitle("Clear")).toBeInTheDocument()
   })
 
+  test("does not render a Clear button when no date is set", async () => {
+    render(<DateTimePicker />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.queryByTitle("Clear")).not.toBeInTheDocument()
+  })
+
   test("renders a DateTimePicker marked as required", async () => {
     // DateTimePicker needs a label passed since the Label subcomponent is responsible for rendering the Required marker:
     render(<DateTimePicker label="Required DateTimePicker" required />)
@@ -191,8 +197,6 @@ describe("DateTimePicker", () => {
     expect(document.querySelector(".flatpickr-second")).toBeInTheDocument()
   })
 
-  // TODO: PASS AND UPDATE DATES IN VARIOUS FORMATS HERE:
-
   test("displays the date as passed as a date object", async () => {
     render(<DateTimePicker value={new Date(2099, 0, 1)} />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
@@ -234,7 +238,7 @@ describe("DateTimePicker", () => {
     expect(screen.getByRole("textbox")).toHaveValue("January 26 2024")
   })
 
-  test("displays the date as passed as defaultDate instead of value", async () => {
+  test("displays the date as passed as defaultDate instead of value or defaultDate", async () => {
     render(<DateTimePicker defaultDate={new Date(2099, 0, 1)} />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveValue("2099-01-01")
@@ -256,6 +260,26 @@ describe("DateTimePicker", () => {
     expect(screen.getByRole("textbox")).toHaveValue("2025-08-18")
   })
 
+  test("updates the date accordingly when defaultValue changes", async () => {
+    const { rerender } = render(
+      <DateTimePicker defaultValue={new Date(2024, 0, 12)} />
+    )
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2024-01-12")
+    rerender(<DateTimePicker defaultValue={new Date(2025, 7, 18)} />)
+    expect(screen.getByRole("textbox")).toHaveValue("2025-08-18")
+  })
+
+  test("updates the date accordingly when defaultDate changes", async () => {
+    const { rerender } = render(
+      <DateTimePicker defaultDate={new Date(2024, 0, 12)} />
+    )
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue("2024-01-12")
+    rerender(<DateTimePicker defaultDate={new Date(2025, 7, 18)} />)
+    expect(screen.getByRole("textbox")).toHaveValue("2025-08-18")
+  })
+
   test("allows typing in the field when configured to do so", async () => {
     render(<DateTimePicker allowInput />)
     const input = screen.getByRole("textbox")
@@ -265,6 +289,36 @@ describe("DateTimePicker", () => {
     await userEvent.click(input)
     await user.type(input, "12")
     expect(input).toHaveValue("12")
+  })
+
+  test("updates accordingly when the allowInput prop changes", async () => {
+    const { rerender } = render(<DateTimePicker />)
+    const input = screen.getByRole("textbox")
+    const user = userEvent.setup()
+    expect(input).toBeInTheDocument()
+    expect(input).toHaveValue("")
+    expect(input).toHaveAttribute("readonly", "readonly")
+    rerender(<DateTimePicker allowInput />)
+    expect(input).toBeInTheDocument()
+    expect(input).toHaveValue("")
+    expect(input).not.toHaveAttribute("readonly")
+    await userEvent.click(input)
+    await user.type(input, "123")
+    expect(input).toHaveValue("123")
+  })
+
+  test("renders a DateTimePicker with week numbers as passed", async () => {
+    render(<DateTimePicker weekNumbers />)
+    const input = screen.getByRole("textbox")
+    const user = userEvent.setup()
+    expect(input).toBeInTheDocument()
+    // click to open the calendar:
+    await user.click(input)
+    expect(document.querySelector(".flatpickr-weekwrapper")).toBeInTheDocument()
+    expect(document.querySelector(".flatpickr-weekday")).toBeInTheDocument()
+    expect(document.querySelector(".flatpickr-weekday")).toHaveTextContent("Wk")
+    expect(document.querySelector(".flatpickr-weeks")).toBeInTheDocument()
+    expect(document.querySelector(".flatpickr-weeks").childElementCount).toBe(6)
   })
 
   test("renders a DateTimePicker in single mode per default", async () => {
@@ -281,6 +335,15 @@ describe("DateTimePicker", () => {
 
   test("renders a DateTimePicker in range mode as passed", async () => {
     render(<DateTimePicker mode="range" />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveAttribute("data-mode", "range")
+  })
+
+  test("Updates the mode accordingly when the mode prop changes", async () => {
+    const { rerender } = render(<DateTimePicker />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveAttribute("data-mode", "single")
+    rerender(<DateTimePicker mode="range" />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveAttribute("data-mode", "range")
   })
@@ -333,6 +396,23 @@ describe("DateTimePicker", () => {
     const input = screen.getByRole("textbox")
     expect(input).toBeInTheDocument()
     expect(input).toHaveValue("2024-02-01 || 2099-03-12")
+  })
+
+  test("updates the displayed value accordingly when the conjunction prop changes", async () => {
+    const { rerender } = render(
+      <DateTimePicker mode="multiple" value={["2024-02-01", "2099-03-12"]} />
+    )
+    const input = screen.getByRole("textbox")
+    expect(input).toBeInTheDocument()
+    expect(input).toHaveValue("2024-02-01, 2099-03-12")
+    rerender(
+      <DateTimePicker
+        mode="multiple"
+        value={["2024-02-01", "2099-03-12"]}
+        conjunction=" --- "
+      />
+    )
+    expect(input).toHaveValue("2024-02-01 --- 2099-03-12")
   })
 
   test("sets a default hour as passed", async () => {
