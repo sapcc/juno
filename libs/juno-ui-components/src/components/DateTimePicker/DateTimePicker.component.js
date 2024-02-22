@@ -259,10 +259,6 @@ export const DateTimePicker = ({
 
   useEffect(() => {
     createFlatpickrInstance()
-    console.log(
-      "newly created flatpickr instance: ",
-      flatpickrInstanceRef.current
-    )
 
     return () => {
       destroyFlatpickrInstance()
@@ -321,7 +317,6 @@ export const DateTimePicker = ({
     if (hasChanged) {
       flatpickrInstanceRef?.current?.destroy()
       createFlatpickrInstance()
-      //console.log("flatpickr instance was destroyed and recreated")
     }
 
     // Also make sure we update our stored props in order to be ready for the next update:
