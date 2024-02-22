@@ -1,7 +1,11 @@
 {
   "name": "dashboard",
   "version": "1.0.1",
-  "author": "Juno team (SAP)",
+  "author": "UI-Team",
+  "contributors": [
+    "Esther Schmitz"
+  ],
+  "repository": "https://github.com/sapcc/juno/tree/main/apps/dashboard",
   "license": "MIT",
   "private": true,
   "source": "src/index.js",

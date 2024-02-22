@@ -1,8 +1,14 @@
 {
   "name": "greenhouse",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "managementVersion": "latest",
-  "author": "Juno team (SAP)",
+  "author": "UI-Team",
+  "contributors": [
+    "Andreas Pfau",
+    "Arturo Reuschenbach Puncernau",
+    "Esther Schmitz"
+  ],
+  "repository": "https://github.com/sapcc/juno/tree/main/apps/greenhouse",
   "license": "MIT",
   "source": "src/index.js",
   "module": "build/index.js",

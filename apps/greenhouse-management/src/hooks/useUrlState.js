@@ -4,6 +4,7 @@ import {
   useActions,
   useIsUrlStateSetup,
   usePluginActive,
+  useIsLoggedIn,
 } from "../components/StoreProvider"
 
 // url state manager
@@ -15,6 +16,7 @@ const useUrlState = () => {
   const { setPluginActive, setIsUrlStateSetup } = useActions()
   const isUrlStateSetup = useIsUrlStateSetup()
   const pluginActive = usePluginActive()
+  const isLoggedIn = useIsLoggedIn()
 
   // Initial state from URL AFTER
   // WARNING. To get the right state from the URL do following:
@@ -23,12 +25,12 @@ const useUrlState = () => {
   // or
   //  - Wait here until you get logged in
   useLayoutEffect(() => {
-    if (isUrlStateSetup) return
+    if (!isLoggedIn || isUrlStateSetup) return
 
     let active = urlStateManager.currentState()?.[ACTIVE_APP_KEY]
     if (active) setPluginActive(active)
     setIsUrlStateSetup(true)
-  }, [isUrlStateSetup])
+  }, [isUrlStateSetup, isLoggedIn])
 
   // sync URL state
   useEffect(() => {

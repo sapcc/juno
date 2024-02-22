@@ -1,10 +1,29 @@
 import { createStore } from "zustand"
 import { devtools } from "zustand/middleware"
 import { managementPluginConfig } from "../../package.json"
+import { useActions as messageActions } from "messages-provider"
 
 export default (options) => {
-  Object.keys(managementPluginConfig).forEach((key) => {
-    managementPluginConfig[key].props = {
+  // check the managementPluginConfig is an object and not array or string
+  const { addMessage } = messageActions()
+  let configs = managementPluginConfig
+
+  // check if the managementPluginConfig is an object with key values
+  if (
+    typeof configs !== "object" ||
+    Array.isArray(configs) ||
+    Object.keys(configs).length === 0
+  ) {
+    configs = {}
+    addMessage({
+      variant: "error",
+      text: "managementPluginConfig is not an object with key values in the package.json",
+    })
+  }
+
+  // set the endpoint and embedded props for the management plugin coming from the package.json
+  Object.keys(configs).forEach((key) => {
+    configs[key].props = {
       endpoint: options.apiEndpoint,
       embedded: true,
     }
@@ -15,7 +34,7 @@ export default (options) => {
       isUrlStateSetup: false,
       assetsUrl: options.assetsUrl,
       apiEndpoint: options.apiEndpoint,
-      pluginConfig: managementPluginConfig,
+      pluginConfig: configs,
       authData: {
         loggedIn: false,
         error: null,
@@ -25,14 +44,21 @@ export default (options) => {
       pluginActive: "greenhouse-cluster-admin", // name of the active plugin default
 
       actions: {
-        setPluginActive: (pluginId) =>
+        setPluginActive: (pluginId) => {
+          // find the pluginConfig which plugin name matches the plugin id
+          const plugin = Object.values(get().pluginConfig).find(
+            (plugin) => plugin.name === pluginId
+          )
+          if (!plugin) return
+
           set(
             (state) => {
-              state.pluginActive = pluginId
+              state.pluginActive = plugin.name
             },
             false,
             "setPluginActive"
-          ),
+          )
+        },
         setIsUrlStateSetup: (isSetup) =>
           set(
             (state) => {
