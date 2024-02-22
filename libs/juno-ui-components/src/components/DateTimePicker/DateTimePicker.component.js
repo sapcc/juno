@@ -10,7 +10,7 @@ import "./datetimepicker.scss"
 TODO:
 * add enable prop (or leave out if no success)
 * add position prop (if possible, otherwise leave out)
-* Allow to use the expected date format as a placeholder in the input element (placeholder="dateFormat" or smth similar?)
+* Allow to use the expected date format as a placeholder in the input element (placeholder="dateFormat" or smth similar?) when direct input is enabled?
 */
 
 const inputWrapperStyles = `
