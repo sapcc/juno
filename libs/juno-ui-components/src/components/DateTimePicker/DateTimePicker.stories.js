@@ -30,18 +30,19 @@ export default {
       options: ["auto", "full"],
       control: { type: "radio" },
     },
+    disable: {
+      control: false,
+    },
   },
 }
 
-const Template = ({ ...args }) => <DateTimePicker {...args} />
+// Not in use yet, useful for "enable" story once we have it, pls leave here:
+const daysFromToday = (n) => {
+  const today = new Date()
+  return new Date(today.setDate(today.getDate() + n))
+}
 
-const PotalTemplate = ({ ...args }) => (
-  <div>
-    <PortalProvider>
-      <DateTimePicker {...args} />
-    </PortalProvider>
-  </div>
-)
+const Template = ({ ...args }) => <DateTimePicker {...args} />
 
 export const Default = Template.bind({})
 Default.args = {}
@@ -68,9 +69,30 @@ WithPlaceholder.args = {
   placeholder: "Select a date…",
 }
 
+export const WithValue = Template.bind({})
+WithValue.args = {
+  value: new Date(),
+}
+
 export const WithDefaultDate = Template.bind({})
 WithDefaultDate.args = {
   defaultDate: new Date(),
+}
+
+export const WithDefaultDateAndTime = Template.bind({})
+WithDefaultDateAndTime.parameters = {
+  docs: {
+    description: {
+      story:
+        "Pass `defaultHour` and `defaultMinute` to set default values for the date and time input elements. NOte this willnot set a selected date with these values in the DateTimePicker input element, the user still has to make a selection.",
+    },
+  },
+}
+WithDefaultDateAndTime.args = {
+  defaultHour: 9,
+  defaultMinute: 13,
+  enableTime: true,
+  dateFormat: "Y-m-d H:i",
 }
 
 export const WithDefaultValue = Template.bind({})
@@ -78,11 +100,37 @@ WithDefaultValue.args = {
   defaultValue: new Date(),
 }
 
+export const WithTime = Template.bind({})
+WithTime.args = {
+  enableTime: true,
+  dateFormat: "Y-m-d H:i",
+}
+
 export const WithTimeAndSeconds = Template.bind({})
 WithTimeAndSeconds.args = {
   enableTime: true,
   enableSeconds: true,
   dateFormat: "Y-m-d H:i:S",
+}
+
+export const WithTimeWithCustomHourIncrement = Template.bind({})
+WithTimeWithCustomHourIncrement.args = {
+  enableTime: true,
+  hourIncrement: 6,
+  dateFormat: "Y-m-d H:i",
+}
+
+export const WithTimeWithCustomMinuteIncrement = Template.bind({})
+WithTimeWithCustomMinuteIncrement.args = {
+  enableTime: true,
+  minuteIncrement: 1,
+  dateFormat: "Y-m-d H:i",
+}
+
+export const With24hTime = Template.bind({})
+With24hTime.args = {
+  enableTime: true,
+  time_24hr: true,
 }
 
 export const ShowTwoMonths = Template.bind({})
@@ -115,7 +163,6 @@ Range.args = {
   mode: "range",
 }
 
-// BUG: not rendering time-only calendar:
 export const TimePicker = Template.bind({})
 TimePicker.args = {
   enableTime: true,
@@ -123,6 +170,32 @@ TimePicker.args = {
   enableSeconds: true,
   dateFormat: "H:i:S",
 }
+
+export const WithMinDate = Template.bind({})
+WithMinDate.args = {
+  minDate: new Date(),
+  helptext: "Only dates in the future including today can be selected.",
+}
+
+export const WithMaxDate = Template.bind({})
+WithMaxDate.args = {
+  maxDate: new Date(),
+  helptext: "Only dates in the past including today can be selected.",
+}
+
+export const DisableDate = Template.bind({})
+;(DisableDate.parameters = {
+  docs: {
+    description: {
+      story:
+        "Pass an array of dates to be disabled, making it impossible for the user to select these dates.",
+    },
+  },
+}),
+  (DisableDate.args = {
+    disable: [new Date()],
+    helptext: "The current date (today) can not be selected.",
+  })
 
 export const DisableByFunction = Template.bind({})
 DisableByFunction.parameters = {
@@ -169,4 +242,21 @@ WithSuccesstext.args = {
 export const WithHelptext = Template.bind({})
 WithHelptext.args = {
   helptext: "Some useful information goes here.",
+}
+
+export const InvalidPreload = Template.bind({})
+InvalidPreload.parameters = {
+  docs: {
+    description: {
+      story:
+        "Normally, the text input element oif the datepicker would be cleared when passing a date as `value` or `defaultDate` that is disabled from selection. By setting `allowInvalidPreload` such dates can be initially displayed in the datepicker, even though they are not available for user selection in the calendar.",
+    },
+  },
+}
+InvalidPreload.args = {
+  allowInvalidPreload: true,
+  value: "2024-01-30",
+  disable: ["2024-01-30"],
+  helptext:
+    "The datpicker initially shows Jan 30, 2024 as value even though this date has been set as disabled and thus can not be selected by a user.",
 }
