@@ -347,8 +347,6 @@ describe("DateTimePicker", () => {
     const user = userEvent.setup()
     expect(input).toBeInTheDocument()
     await user.click(input)
-    // const hourInput = screen.getByRole("textbox", {name: "Hour"})
-    // const hourInput = screen.getByRole("textbox", {selector: "input.flatpickr-hour"})
     const hourInput = document.querySelector("input.flatpickr-hour")
     expect(hourInput).toHaveValue(5)
   })
