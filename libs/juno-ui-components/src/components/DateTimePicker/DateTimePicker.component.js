@@ -354,7 +354,7 @@ export const DateTimePicker = ({
     weekNumbers,
   ])
 
-  // useEffects for props that represent config options that can be set on an existing flatpickr instance iwht immediate effect:
+  // useEffects for props that represent config options that can be set on an existing flatpickr instance with immediate effect:
   useEffect(() => {
     flatpickrInstanceRef.current?.set(
       "allowInvalidPreload",
