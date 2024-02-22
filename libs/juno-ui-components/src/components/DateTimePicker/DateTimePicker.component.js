@@ -4,6 +4,7 @@ import flatpickr from "flatpickr"
 import { FormHint } from "../FormHint/"
 import { Icon } from "../Icon/"
 import { Label } from "../Label/"
+import "./datetimepicker.scss"
 
 /* 
 TODO:
@@ -95,6 +96,7 @@ export const DateTimePicker = ({
   id,
   invalid,
   label,
+  locale,
   maxDate,
   minDate,
   minuteIncrement,
@@ -227,12 +229,13 @@ export const DateTimePicker = ({
       enableSeconds: enableSeconds,
       enableTime: enableTime,
       hourIncrement: hourIncrement,
-      noCalendar: noCalendar,
+      locale: locale,
       maxDate: maxDate,
       minDate: minDate,
       minuteIncrement: minuteIncrement,
       mode: mode,
       monthSelectorType,
+      noCalendar: noCalendar,
       onChange: handleChange,
       onClose: handleClose,
       onMonthChange: handleMonthChange,
@@ -378,6 +381,10 @@ export const DateTimePicker = ({
   useEffect(() => {
     flatpickrInstanceRef.current?.set("hourIncrement", hourIncrement)
   }, [hourIncrement])
+
+  useEffect(() => {
+    flatpickrInstanceRef.current?.set("locale", locale)
+  }, [locale])
 
   useEffect(() => {
     flatpickrInstanceRef.current?.set("maxDate", maxDate)
@@ -561,9 +568,9 @@ DateTimePicker.propTypes = {
   /** Whether to show a time picker.  */
   enableTime: PropTypes.bool,
   /** A text to render when the DateTimePicker has an error or could not be validated. */
-  errortext: PropTypes.string,
+  errortext: PropTypes.node,
   /** A helptext to render to explain meaning and significance of the DateTimePicker. */
-  helptext: PropTypes.string,
+  helptext: PropTypes.node,
   /** The step for the hour input. Only has an effect when a time picker is enabled via `enableTime`. */
   hourIncrement: PropTypes.number,
   /** The id of the DateTimePicker input element. If none is passed, an automatically generated id will be used. */
@@ -572,6 +579,8 @@ DateTimePicker.propTypes = {
   invalid: PropTypes.bool,
   /** The label of the DateTimePicker input element. */
   label: PropTypes.string,
+  /** Localization string or object. Can be used to set starting day of the week, e.g. Mondays instead of Sundays. More on localization: https://flatpickr.js.org/localization/ */
+  locale: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   /** The maximum / latest date a user can select (inclusive). */
   maxDate: datePropType,
   /** The minimum / earliest date a user can select (inclusive). */
@@ -613,7 +622,7 @@ DateTimePicker.propTypes = {
   /** The number of months to show in the date picker */
   showMonths: PropTypes.number,
   /** A text to render when the DateTimePicker was successfully validated */
-  successtext: PropTypes.string,
+  successtext: PropTypes.node,
   /** Displays time picker in 24 hour mode without AM/PM selection when enabled. Requires `enableTime` to be set, too. Default is `false`. */
   time_24hr: PropTypes.bool,
   /** Whether the DateTimePicker has been successfully validated */
@@ -647,6 +656,7 @@ DateTimePicker.defaultProps = {
   id: "",
   invalid: false,
   label: "",
+  locale: null,
   maxDate: null,
   minDate: null,
   minuteIncrement: 5,
