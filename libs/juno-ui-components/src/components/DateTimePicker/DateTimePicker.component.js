@@ -8,11 +8,9 @@ import "./datetimepicker.scss"
 
 /* 
 TODO:
-* add styles (comment out in other components, wrap in our own selector to safeguard for calendar, use tw-stuff for our stuff)
 * add enable prop (or leave out if no success)
 * add position prop (if possible, otherwise leave out)
-* Allow to use the expected date format as a placeholder in the input element
-* test whether to make Label minimizing dependent on IsOpen or on theDate is better
+* Allow to use the expected date format as a placeholder in the input element (placeholder="dateFormat" or smth similar?)
 */
 
 const inputWrapperStyles = `
@@ -377,6 +375,9 @@ export const DateTimePicker = ({
   }, [dateFormat])
 
   // TODO: disable
+  useEffect(() => {
+    flatpickrInstanceRef.current?.set("disable", disable)
+  }, [disable])
 
   useEffect(() => {
     flatpickrInstanceRef.current?.set("hourIncrement", hourIncrement)
