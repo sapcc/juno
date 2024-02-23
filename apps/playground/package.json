@@ -21,6 +21,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
+    "@uiw/react-textarea-code-editor": "^3.0.2",
     "assert": "^2.0.0",
     "autoprefixer": "^10.4.2",
     "babel-jest": "^29.3.1",
