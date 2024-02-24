@@ -4,8 +4,16 @@ import {
   DataGridHeadCell,
   DataGridCell,
   Icon,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
 } from "juno-ui-components"
 import React from "react"
+
+const DateString = ({ date }) => {
+  const d = new Date(parseInt(date) * 1000)
+  return d.toLocaleDateString() + " " + d.toLocaleTimeString()
+}
 
 const BuildLog = ({ data }) => {
   // unique list of data by name and version
@@ -14,39 +22,58 @@ const BuildLog = ({ data }) => {
       (v, i, a) =>
         a.findIndex((t) => t.name === v.name && t.version === v.version) === i
     )
+    .filter((i) => i.name !== null && i.name !== "")
     .sort((a, b) => a.name.localeCompare(b.name))
 
   return (
     <div>
-      <DataGrid columns={4} minContentColumns={[0]}>
+      <DataGrid columns={5} minContentColumns={[0]}>
         <DataGridRow>
-          <DataGridHeadCell></DataGridHeadCell>
           <DataGridHeadCell>Name</DataGridHeadCell>
           <DataGridHeadCell>Version</DataGridHeadCell>
+          <DataGridHeadCell>Date</DataGridHeadCell>
           <DataGridHeadCell>Status</DataGridHeadCell>
+          <DataGridHeadCell>Build Url</DataGridHeadCell>
           {/* <DataGridHeadCell>Files</DataGridHeadCell> */}
         </DataGridRow>
         {data &&
           data.map((asset, i) => (
             <DataGridRow key={i}>
-              <DataGridCell>
-                {asset.status === "passed" ? (
-                  <Icon
-                    color="jn-text-theme-success"
-                    icon="success"
-                    onClick={function noRefCheck() {}}
-                  />
-                ) : (
-                  <Icon
-                    color="jn-text-theme-warning"
-                    icon="warning"
-                    onClick={function noRefCheck() {}}
-                  />
-                )}
-              </DataGridCell>
               <DataGridCell>{asset.name}</DataGridCell>
               <DataGridCell>{asset.version}</DataGridCell>
-              <DataGridCell>{asset.status}</DataGridCell>
+              <DataGridCell>
+                <DateString date={asset.date} />
+              </DataGridCell>
+              <DataGridCell>
+                <Tooltip
+                  triggerEvent="hover"
+                  variant={asset.passed ? "success" : "warning"}
+                >
+                  <TooltipTrigger asChild>
+                    {asset.passed ? (
+                      <Icon
+                        color="jn-text-theme-success"
+                        icon="success"
+                        onClick={function noRefCheck() {}}
+                      />
+                    ) : (
+                      <Icon
+                        color="jn-text-theme-warning"
+                        icon="warning"
+                        onClick={function noRefCheck() {}}
+                      />
+                    )}
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    {asset.check} check: {asset.passed ? "passed" : asset.error}
+                  </TooltipContent>
+                </Tooltip>
+              </DataGridCell>
+              <DataGridCell>
+                <a href={asset.buildUrl} target="_blank">
+                  Show Details
+                </a>
+              </DataGridCell>
               {/* <DataGridCell>
                 <ul>
                   <li>
