@@ -19,23 +19,37 @@ const Documentation = ({ isLoading, data }) => {
   const urlStateKey = useStore((state) => state.urlStateKey)
   const urlState = currentState(urlStateKey)
   const [activeNavItem, setActiveNavItem] = useState("about")
-  const [widgetLoaderVersion, setWidgetLoaderVersion] = useState()
+  const [widgetLoaderVersion, setWidgetLoaderVersion] = useState("")
 
   const nav = useMemo(() => {
-    if (!data?.readme || !origin) return
-    return {
-      about: {
-        label: "About",
-        path: `${origin}${data?.readme}`,
-      },
-      wigetLoader: {
-        label: "Widget Loader",
-        path: `${origin}${
-          data["widget-loader"]?.[widgetLoaderVersion || "latest"]?.readme
-        }`,
-      },
+    if (!origin) return null
+    let config = null
+
+    if (data?.readme) {
+      config = {
+        about: {
+          label: "About",
+          path: `${origin}${data?.readme}`,
+        },
+      }
     }
-  }, [data, origin, widgetLoaderVersion])
+
+    if (data?.["widget-loader"]) {
+      config = {
+        ...config,
+        wigetLoader: {
+          label: "Widget Loader",
+          path: `${origin}${
+            data["widget-loader"]?.[widgetLoaderVersion || "latest"]?.readme
+          }`,
+        },
+      }
+    }
+
+    if (config) setActiveNavItem(Object.keys(config)[0])
+
+    return config
+  }, [data, origin, widgetLoaderVersion, setActiveNavItem])
 
   useEffect(() => {
     if (urlState?.navItem) setActiveNavItem(urlState?.navItem)
@@ -81,7 +95,6 @@ const Documentation = ({ isLoading, data }) => {
     },
     [urlStateKey, currentState]
   )
-
   //############### END ###################
   return useMemo(() => {
     return (
