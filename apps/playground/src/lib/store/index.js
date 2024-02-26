@@ -1,4 +1,9 @@
 import { createStore } from "zustand"
 import { devtools } from "zustand/middleware"
 
-export default () => createStore(devtools((set, get) => ({})))
+export default (options) =>
+  createStore(
+    devtools((set, get) => ({
+      theme: options?.theme || "theme-dark",
+    }))
+  )

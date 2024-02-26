@@ -1,5 +1,12 @@
-import React, { useMemo, useState } from "react"
-import { Stack, DataGridToolbar, ButtonRow, Button } from "juno-ui-components"
+import React, { useState } from "react"
+import {
+  Stack,
+  DataGridToolbar,
+  ButtonRow,
+  Button,
+  Container,
+} from "juno-ui-components"
+import { useTheme } from "./components/StoreProvider"
 import Preview from "./components/Preview"
 import CodeEditor from "@uiw/react-textarea-code-editor"
 import { ErrorBoundary, useErrorBoundary } from "react-error-boundary"
@@ -16,13 +23,19 @@ export default function App() {
 }
 `.trim()
 
-const fallbackRender = ({ error, resetErrorBoundary }) => {
-  // Call resetErrorBoundary() to reset the error boundary and retry the render.
+const editorStyles = {
+  width: "100%",
+  height: "100%",
+  fontFamily:
+    "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+}
 
+const fallbackRender = ({ error, resetErrorBoundary }) => {
   return <Error error={error} />
 }
 
 const AppContent = (props) => {
+  const theme = useTheme()
   const [editorCode, setEditorCode] = useState(initialEditorCodeString)
   const [compiledCode, setCompiledCode] = useState(initialEditorCodeString)
 
@@ -36,7 +49,7 @@ const AppContent = (props) => {
 
   return (
     <Stack className="h-full">
-      <div className="editor-wrapper w-full h-full">
+      <Stack direction="vertical" className="w-full">
         <DataGridToolbar>
           <ButtonRow>
             <Button
@@ -52,14 +65,13 @@ const AppContent = (props) => {
           placeholder="Please enter JSX code."
           onChange={onCodeChange}
           padding={15}
-          style={{
-            width: "100%",
-            height: "100%",
-            fontFamily:
-              "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-          }}
+          style={
+            theme === "theme-dark"
+              ? editorStyles
+              : { ...editorStyles, backgroundColor: "#f5f5f5" }
+          }
         />
-      </div>
+      </Stack>
 
       <ErrorBoundary fallbackRender={fallbackRender} resetKeys={[compiledCode]}>
         <Preview code={compiledCode} />

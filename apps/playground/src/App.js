@@ -18,8 +18,10 @@ const App = (props = {}) => {
 }
 
 const StyledApp = (props) => {
+  const theme = props?.theme || "theme-dark"
+
   return (
-    <AppShellProvider theme={`${props.theme ? props.theme : "theme-dark"}`}>
+    <AppShellProvider theme={theme}>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <style>{editorStyles.toString()}</style>
@@ -31,7 +33,7 @@ const StyledApp = (props) => {
           height: 100%;
         }
       `}</style>
-      <StoreProvider>
+      <StoreProvider options={{ ...props, theme: theme }}>
         <App {...props} />
       </StoreProvider>
     </AppShellProvider>
