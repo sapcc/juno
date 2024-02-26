@@ -1,21 +1,14 @@
 import React, { useState } from "react"
 import { Stack, Button, Container } from "juno-ui-components"
-import { useTheme, useReadOnly } from "./components/StoreProvider"
+import {
+  useTheme,
+  useReadOnly,
+  useInitialEditorCode,
+} from "./components/StoreProvider"
 import Preview from "./components/Preview"
 import CodeEditor from "@uiw/react-textarea-code-editor"
 import { ErrorBoundary } from "react-error-boundary"
 import Error from "./components/Error"
-
-const initialEditorCodeString = `
-import React from "react"
-import { LoadingIndicator } from "juno-ui-components"
-
-export default function App() {
-  return (
-    <LoadingIndicator />
-  )
-}
-`.trim()
 
 const editorStyles = {
   width: "100%",
@@ -31,6 +24,7 @@ const fallbackRender = ({ error, resetErrorBoundary }) => {
 const AppContent = (props) => {
   const theme = useTheme()
   const readOnly = useReadOnly()
+  const initialEditorCodeString = useInitialEditorCode()
   const [editorCode, setEditorCode] = useState(initialEditorCodeString)
   const [compiledCode, setCompiledCode] = useState(initialEditorCodeString)
 

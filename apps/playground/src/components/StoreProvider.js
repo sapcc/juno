@@ -13,5 +13,7 @@ const useAppStore = (selector) => create(useContext(StoreContext), selector)
 
 export const useTheme = () => useAppStore((s) => s.theme)
 export const useReadOnly = () => useAppStore((s) => s.readOnly)
+export const useInitialEditorCode = () =>
+  useAppStore((s) => s.initialEditorCode)
 
 export default StoreProvider

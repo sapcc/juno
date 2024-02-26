@@ -75,6 +75,11 @@
       "value": "false",
       "type": "optional",
       "description": "Set to true if app is to be read only. The default value is false."
+    },
+    "initialEditorCode": {
+      "value": "",
+      "type": "optional",
+      "description": "Initial code string to be displayed in the code editor. The default value is an empty string."
     }
   },
   "appPreview": true
