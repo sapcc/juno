@@ -1,7 +1,7 @@
 {
   "name": "greenhouse",
-  "version": "0.1.15",
-  "managementVersion": "latest",
+  "version": "0.1.16",
+  "managementVersion": "1.1.8",
   "author": "UI-Team",
   "contributors": [
     "Andreas Pfau",

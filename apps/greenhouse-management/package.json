@@ -1,16 +1,16 @@
 {
   "name": "greenhouse-management",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "managementPluginConfig": {
     "clusters": {
       "label": "Clusters",
       "name": "greenhouse-cluster-admin",
-      "version": "latest"
+      "version": "1.6.2"
     },
     "teams": {
       "label": "Teams",
       "name": "greenhouse-team-admin",
-      "version": "latest"
+      "version": "1.2.0"
     }
   },
   "author": "UI-Team",
