@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react"
 import * as junoUIComponents from "juno-ui-components"
 import { executeCode } from "../lib/executeCode"
 import PreviewShell from "./PreviewShell"
+import Error from "./Error"
 
 const Preview = ({ code }) => {
   const [preview, setPreview] = useState(null)
 
   useEffect(() => {
     if (!code) return
+
     executeCode(code, {
       react: React,
       "juno-ui-components": junoUIComponents,
@@ -20,23 +22,15 @@ const Preview = ({ code }) => {
         )
       })
       .catch((err) => {
-        console.error(">>>>>>>>>>>>>>>>>>>.", err)
         setPreview(
           <PreviewShell>
-            <div className="cutom-wrapperfor-textarea h-full">
-              <junoUIComponents.Textarea
-                readOnly
-                invalid
-                className="h-full"
-                value={err}
-              ></junoUIComponents.Textarea>
-            </div>
+            <Error error={err} />
           </PreviewShell>
         )
       })
   }, [code])
 
-  return <>{preview}</>
+  return <div className="w-full">{preview}</div>
 }
 
 export default Preview

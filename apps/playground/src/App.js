@@ -23,6 +23,14 @@ const StyledApp = (props) => {
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
       <style>{editorStyles.toString()}</style>
+      <style>{`
+        .cutom-wrapper-textarea > div:first-child {
+          height: 100%;
+        }
+        .cutom-wrapper-textarea > div:first-child > .juno-textarea-wrapper {
+          height: 100%;
+        }
+      `}</style>
       <StoreProvider>
         <App {...props} />
       </StoreProvider>

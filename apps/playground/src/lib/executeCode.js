@@ -1,6 +1,6 @@
 let swc = null
 
-export async function transformCode(codeString) {
+async function transformCode(codeString) {
   if (swc === null) {
     const module = await import("@swc/wasm-web")
     await module.default()
@@ -29,8 +29,11 @@ export async function executeCode(codeString, dependencies) {
     }
     throw Error(`Module not found: ${path}.`)
   }
-  const result = new Function("exports", "require", transformedCode)
 
+  // create dinamically a function with the transformed having as
+  // arguments the exports and require and return the default export
+  // of the transformed code
+  const result = new Function("exports", "require", transformedCode)
   result(exports, require)
 
   return exports.default

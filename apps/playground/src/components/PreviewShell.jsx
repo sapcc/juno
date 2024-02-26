@@ -7,11 +7,11 @@ export default ({ children }) => {
     <AppShellProvider theme="theme-dark">
       <style>{styles.toString()}</style>
       {/* override the styles of a first div child from cutom-wrapperfor-textarea */}
-      <style jsx>{`
-        .cutom-wrapperfor-textarea > div:first-child {
+      <style>{`
+        .cutom-wrapper-textarea > div:first-child {
           height: 100%;
         }
-        .cutom-wrapperfor-textarea > div:first-child > .juno-textarea-wrapper {
+        .cutom-wrapper-textarea > div:first-child > .juno-textarea-wrapper {
           height: 100%;
         }
       `}</style>
