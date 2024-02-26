@@ -12,5 +12,6 @@ const StoreProvider = ({ options, children }) => (
 const useAppStore = (selector) => create(useContext(StoreContext), selector)
 
 export const useTheme = () => useAppStore((s) => s.theme)
+export const useReadOnly = () => useAppStore((s) => s.readOnly)
 
 export default StoreProvider

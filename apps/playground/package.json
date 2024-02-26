@@ -70,6 +70,11 @@
       "value": "false",
       "type": "optional",
       "description": "Set to true if app is to be embedded in another existing app or page, like e.g. Elektra.  If set to true the app won't render a page header/footer and instead render only the content. The default value is false."
+    },
+    "readOnly": {
+      "value": "false",
+      "type": "optional",
+      "description": "Set to true if app is to be read only. The default value is false."
     }
   },
   "appPreview": true

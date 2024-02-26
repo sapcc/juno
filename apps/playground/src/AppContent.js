@@ -1,15 +1,9 @@
 import React, { useState } from "react"
-import {
-  Stack,
-  DataGridToolbar,
-  ButtonRow,
-  Button,
-  Container,
-} from "juno-ui-components"
-import { useTheme } from "./components/StoreProvider"
+import { Stack, Button, Container } from "juno-ui-components"
+import { useTheme, useReadOnly } from "./components/StoreProvider"
 import Preview from "./components/Preview"
 import CodeEditor from "@uiw/react-textarea-code-editor"
-import { ErrorBoundary, useErrorBoundary } from "react-error-boundary"
+import { ErrorBoundary } from "react-error-boundary"
 import Error from "./components/Error"
 
 const initialEditorCodeString = `
@@ -36,6 +30,7 @@ const fallbackRender = ({ error, resetErrorBoundary }) => {
 
 const AppContent = (props) => {
   const theme = useTheme()
+  const readOnly = useReadOnly()
   const [editorCode, setEditorCode] = useState(initialEditorCodeString)
   const [compiledCode, setCompiledCode] = useState(initialEditorCodeString)
 
@@ -48,35 +43,47 @@ const AppContent = (props) => {
   }
 
   return (
-    <Stack className="h-full">
-      <Stack direction="vertical" className="w-full">
-        <DataGridToolbar>
-          <ButtonRow>
-            <Button
-              icon="chevronRight"
-              variant="primary"
-              onClick={onCompileClick}
-            />
-          </ButtonRow>
-        </DataGridToolbar>
-        <CodeEditor
-          value={editorCode}
-          language="jsx"
-          placeholder="Please enter JSX code."
-          onChange={onCodeChange}
-          padding={15}
-          style={
-            theme === "theme-dark"
-              ? editorStyles
-              : { ...editorStyles, backgroundColor: "#f5f5f5" }
-          }
-        />
-      </Stack>
+    <Container py className="h-full">
+      <Stack className="h-full">
+        <Stack direction="vertical" className="w-full">
+          <Stack
+            direction="horizontal"
+            alignment="center"
+            className="p-4 bg-theme-background-lvl-1"
+          >
+            <span className="w-full font-bold">Juno Playground</span>
+            {!readOnly && (
+              <Button
+                icon="chevronRight"
+                variant="primary"
+                onClick={onCompileClick}
+              />
+            )}
+          </Stack>
 
-      <ErrorBoundary fallbackRender={fallbackRender} resetKeys={[compiledCode]}>
-        <Preview code={compiledCode} />
-      </ErrorBoundary>
-    </Stack>
+          <CodeEditor
+            value={editorCode}
+            language="jsx"
+            placeholder="Please enter JSX code."
+            onChange={onCodeChange}
+            padding={15}
+            readOnly={readOnly}
+            style={
+              theme === "theme-dark"
+                ? editorStyles
+                : { ...editorStyles, backgroundColor: "#f5f5f5" }
+            }
+          />
+        </Stack>
+
+        <ErrorBoundary
+          fallbackRender={fallbackRender}
+          resetKeys={[compiledCode]}
+        >
+          <Preview code={compiledCode} />
+        </ErrorBoundary>
+      </Stack>
+    </Container>
   )
 }
 

@@ -1,5 +1,4 @@
 import React from "react"
-
 import { AppShell, AppShellProvider } from "juno-ui-components"
 import StoreProvider from "./components/StoreProvider"
 import AppContent from "./AppContent"
@@ -9,7 +8,7 @@ import editorStyles from "@uiw/react-textarea-code-editor/dist.css"
 const App = (props = {}) => {
   return (
     <AppShell
-      pageHeader="Converged Cloud | Playground"
+      pageHeader="Converged Cloud | Juno Playground"
       embedded={props.embedded === "true" || props.embedded === true}
     >
       <AppContent props={props} />

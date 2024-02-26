@@ -4,6 +4,7 @@ import { devtools } from "zustand/middleware"
 export default (options) =>
   createStore(
     devtools((set, get) => ({
-      theme: options?.theme || "theme-dark",
+      theme: options?.theme,
+      readOnly: options?.readOnly === true || options?.readOnly === "true",
     }))
   )
