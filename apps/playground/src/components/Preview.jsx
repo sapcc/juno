@@ -17,14 +17,18 @@ const Preview = ({ code }) => {
       .then((Preview) => {
         setPreview(
           <PreviewShell>
-            <Preview />
+            <junoUIComponents.Container>
+              <Preview />
+            </junoUIComponents.Container>
           </PreviewShell>
         )
       })
       .catch((err) => {
         setPreview(
           <PreviewShell>
-            <Error error={err} />
+            <junoUIComponents.Container className="h-full">
+              <Error error={err} />
+            </junoUIComponents.Container>
           </PreviewShell>
         )
       })

@@ -43,7 +43,7 @@ const AppContent = (props) => {
           <Stack
             direction="horizontal"
             alignment="center"
-            className="p-4 bg-theme-background-lvl-1"
+            className="p-2 bg-theme-background-lvl-1"
           >
             <span className="w-full font-bold">Juno Playground</span>
             {!readOnly && (
@@ -54,7 +54,6 @@ const AppContent = (props) => {
               />
             )}
           </Stack>
-
           <CodeEditor
             value={editorCode}
             language="jsx"
@@ -69,7 +68,7 @@ const AppContent = (props) => {
             }
           />
         </Stack>
-
+        <div className="separator border-r border-theme-background-lvl-4 mx-4" />
         <ErrorBoundary
           fallbackRender={fallbackRender}
           resetKeys={[compiledCode]}
