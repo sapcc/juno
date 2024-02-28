@@ -18,7 +18,11 @@ const editorStyles = {
 }
 
 const fallbackRender = ({ error, resetErrorBoundary }) => {
-  return <Error error={error} />
+  return (
+    <div className="w-1/2">
+      <Error error={error} />
+    </div>
+  )
 }
 
 const AppContent = (props) => {
@@ -39,7 +43,7 @@ const AppContent = (props) => {
   return (
     <Container py className="h-full">
       <Stack className="h-full">
-        <Stack direction="vertical" className="w-full">
+        <Stack direction="vertical" className="w-1/2">
           <Stack
             direction="horizontal"
             alignment="center"

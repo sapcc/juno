@@ -24,17 +24,11 @@ const Preview = ({ code }) => {
         )
       })
       .catch((err) => {
-        setPreview(
-          <PreviewShell>
-            <junoUIComponents.Container className="h-full">
-              <Error error={err} />
-            </junoUIComponents.Container>
-          </PreviewShell>
-        )
+        setPreview(<Error error={err} />)
       })
   }, [code])
 
-  return <div className="w-full">{preview}</div>
+  return <div className="w-1/2">{preview}</div>
 }
 
 export default Preview
