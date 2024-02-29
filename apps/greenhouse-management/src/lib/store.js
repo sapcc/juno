@@ -24,7 +24,7 @@ export default (options) => {
   // set the endpoint and embedded props for the management plugin coming from the package.json
   Object.keys(configs).forEach((key) => {
     // pull latest version in dev and qa
-    configs[key].version = options.environment =='qa' || options.environment == 'dev' ? 'latest' : configs[key].version
+    configs[key].version = options.environment =='qa' || options.environment == 'development' ? 'latest' : configs[key].version
     configs[key].props = {
       endpoint: options.apiEndpoint,
       embedded: true,
@@ -36,7 +36,6 @@ export default (options) => {
       isUrlStateSetup: false,
       assetsUrl: options.assetsUrl,
       apiEndpoint: options.apiEndpoint,
-      environment: options.environment,
       pluginConfig: configs,
       authData: {
         loggedIn: false,

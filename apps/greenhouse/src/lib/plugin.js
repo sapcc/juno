@@ -83,7 +83,7 @@ const Plugin = ({ environment, apiEndpoint, currentHost }) => {
           id: "greenhouse-management",
           name: "greenhouse-management",
           displayName: "Organization",
-          version: environment =='qa' || environment == 'dev' ? 'latest' : managementVersion, // pull latest version in dev and qa
+          version: environment =='qa' || environment == 'development' ? 'latest' : managementVersion, // pull latest version in dev and qa
           navType: NAV_TYPES.MNG,
           props: {
             assetsUrl: currentHost,
