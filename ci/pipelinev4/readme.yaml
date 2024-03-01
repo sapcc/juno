@@ -1,0 +1,23 @@
+groups: 
+  - name: info
+    jobs:
+      - readme
+
+jobs:
+  - name: readme
+    serial: true
+    plan:
+      - task: describe-this-pipeline
+        config:
+          platform: "linux"
+          image_resource:
+            type: docker-image
+            source:
+              repository: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/alpine
+              tag: latest
+          run:
+            path: /bin/echo
+            args:
+              - -e
+              - '\tThis pipeline is defined at: https://github.com/sapcc/juno/ci/\n\n'
+              - '\tManage Juno images: https://keppel.eu-de-1.cloud.sap/ccloud/juno\n'
