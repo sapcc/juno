@@ -13,7 +13,7 @@ ci-clean:
 	if [ -e pipeline.yaml ]; then rm pipeline.yaml; fi
 
 ci-create: 
-	docker run --rm -v "${CURDIR}":/myapp -w /myapp keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/ruby:3-alpine ruby pipelinev4/build.rb > pipeline.yaml 
+	docker run --rm -v "${CURDIR}/..":/myapp -w /myapp keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/ruby:3-alpine ruby ci/pipelinev4/build.rb > pipeline.yaml 
 
 # Generate helm charts for hosting an app
 # Usage: make generate-hosting NAME=dashboard PROPS='{"region": "eu-de-1"}'

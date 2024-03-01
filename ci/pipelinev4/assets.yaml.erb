@@ -2,28 +2,15 @@
 <%
   # supported asset types
   SWIFT_CONTAINER_PENDING_ASSETS = "juno-pending-assets"
-  ASSETS = {
-    # "auth":                 { type: "app", path: "apps/auth" },
-    "assets-overview":      { type: "app", path: "apps/assets-overview"},
-    # "user-activity":        { type: "app", path: "apps/user-activity"},
-    # "volta":                { type: "app", path: "apps/volta"},
-    "whois":                { type: "app", path: "apps/whois"},
-    # "widget-loader":        { type: "app", path: "apps/widget-loader"},
-    # "dashboard":            { type: "app", path: "apps/dashboard"},
-    # "supernova":            { type: "app", path: "apps/supernova"},
-    # "exampleapp":           { type: "app", path: "apps/exampleapp"},
-    # "greenhouse":           { type: "app", path: "apps/greenhouse" },
-    # "greenhouse-management":{ type: "app", path: "apps/greenhouse-management" },
-    # "heureka":              { type: "app", path: "apps/heureka"},
-    # "juno-ui-components":   { type: "lib", path: "libs/juno-ui-components"},
-    # "messages-provider":    { type: "lib", path: "libs/messages-provider"},
-    # "oauth":                { type: "lib", path: "libs/oauth"},
-    # "policy-engine":        { type: "lib", path: "libs/policy-engine"},
-    # "communicator":         { type: "lib", path: "libs/communicator"},
-    # "url-state-provider":   { type: "lib", path: "libs/url-state-provider"},
-    # "url-state-router":     { type: "lib", path: "libs/url-state-router"},
-    # "utils":                { type: "lib", path: "libs/utils"},
-  }
+
+  # Blacklisted assets e.g. ["whois"]
+  BLACKLISTED = []
+  ASSETS = Dir["{apps,libs}/**"].map do |file| 
+    type,name = file.split("/").last(2)
+    [name,{type: type, path: file}]
+  end.to_h
+
+  ASSETS = ASSETS.reject{|name,details| BLACKLISTED.include?(name) }
 %>
 
 resources:
