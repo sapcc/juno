@@ -56,6 +56,7 @@ const AssetsListItem = ({ name, versions }) => {
           <Stack direction="horizontal" gap="1.5">
             {name}{" "}
             {latest.kind === "juno-3rd-party" && <Pill pillValueLabel="3rd" />}
+            {latest.kind === "juno" && <Pill pillValueLabel="Juno" />}
           </Stack>
           {latest.author && (
             <span className="text-xs text-theme-light">
