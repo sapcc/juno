@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from "react"
 import * as junoUIComponents from "juno-ui-components"
-import { executeCode, compilerLoader } from "../lib/executeCode"
+import { executeCode } from "../lib/executeCode"
 import PreviewShell from "./PreviewShell"
 import Error from "./Error"
 import HintLoading from "./HintLoading"
+
+// display if no code is provided
+const compilerPlaceHolder = `
+import React from "react"
+
+export default function App() {
+  return (
+    <>Nothing to display</>
+  )
+}
+`.trim()
 
 const Preview = ({ code }) => {
   const [preview, setPreview] = useState(null)
   const [isCompilerLoading, setIsCompilerLoading] = useState(true)
 
-  // display loading until the compiler is loaded
   useEffect(() => {
-    compilerLoader().then(() => {
-      setIsCompilerLoading(false)
-    })
-  }, [])
+    const compileCode = code || compilerPlaceHolder
 
-  useEffect(() => {
-    if (!code) return
-
-    executeCode(code, {
+    executeCode(compileCode, {
       react: React,
       "juno-ui-components": junoUIComponents,
     })
@@ -35,6 +39,7 @@ const Preview = ({ code }) => {
       .catch((err) => {
         setPreview(<Error error={err} />)
       })
+    setIsCompilerLoading(false)
   }, [code])
 
   return (

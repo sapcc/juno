@@ -10,11 +10,13 @@ import CodeEditor from "@uiw/react-textarea-code-editor"
 import { ErrorBoundary } from "react-error-boundary"
 import Error from "./components/Error"
 
+// By default, the dark-mode is automatically switched according to the system. If you need to switch manually, just set the data-color-mode="dark" parameter for html Element.
 const editorStyles = {
   width: "100%",
   height: "100%",
-  fontFamily:
-    "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+  // text-sm
+  fontSize: "0.875rem" /* 14px */,
+  lineHeight: "1.25rem" /* 20px */,
 }
 
 const fallbackRender = ({ error, resetErrorBoundary }) => {
@@ -65,11 +67,8 @@ const AppContent = (props) => {
             onChange={onCodeChange}
             padding={15}
             readOnly={readOnly}
-            style={
-              theme === "theme-dark"
-                ? editorStyles
-                : { ...editorStyles, backgroundColor: "#f5f5f5" }
-            }
+            data-color-mode={theme === "theme-dark" ? "dark" : "light"}
+            style={editorStyles}
           />
         </Stack>
         <div className="separator border-r border-theme-background-lvl-4 mx-4" />

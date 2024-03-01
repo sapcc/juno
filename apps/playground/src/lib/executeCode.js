@@ -1,21 +1,12 @@
 let swc = null
 
-export const compilerLoader = () => {
-  if (swc === null) {
-    console.log("Loading SWC compiler...")
-    return import("@swc/wasm-web").then((module) =>
-      module.default().then(() => {
-        swc = module
-      })
-    )
-  }
-  return Promise.resolve()
-}
-
 async function transformCode(codeString) {
   if (swc === null) {
-    await compilerLoader()
+    const module = await import("@swc/wasm-web")
+    await module.default()
+    swc = module
   }
+
   return swc.transformSync(codeString, {
     filename: "index.tsx",
     jsc: {
