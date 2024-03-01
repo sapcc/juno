@@ -157,6 +157,8 @@ NODE_ENV=production IGNORE_EXTERNALS=false npm --workspace "$ASSET_NAME" run bui
 # echo build/esm/index.js | sed -e 's/^\///' | cut -d/ -f1
 # Result: build
 echo "----------------------------------"
+jq '.kind = "juno"' "$ASSET_PATH/package.json" >"/tmp/package_new.json" && mv "/tmp/package_new.json" "$ASSET_PATH/package.json"
+
 if [[ -z "$BUILD_DIR" ]]; then
   echo "Look for module in package.json"
   BUILD_DIR=$(jq -r .module "$ASSET_PATH/package.json")

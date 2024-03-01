@@ -2,10 +2,6 @@
 <%
   # supported asset types
   SWIFT_CONTAINER_PENDING_ASSETS = "juno-pending-assets"
-  ASSETS_SOURCE = { 
-    "juno-assets": ["app","lib"],
-    "juno-3rd-party": ["app"],
-  }
   ASSETS = {
     # "auth":                 { type: "app", path: "apps/auth" },
     "assets-overview":      { type: "app", path: "apps/assets-overview"},
@@ -31,30 +27,14 @@
 %>
 
 resources:
-  - name: base.image
-    type: docker-image
-    icon: docker
+  - name: juno-assets-server.git
+    type: git
+    icon: github
     source:
-      username: ((registry-user/keppel-ccloud.username))
-      password: ((registry-user/keppel-ccloud.password))
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base
-
-  - name: ci-helper.image
-    type: docker-image
-    icon: docker
-    source:
-      username: ((registry-user/keppel-ccloud.username))
-      password: ((registry-user/keppel-ccloud.password))
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-ci-helper
-
-  #- name: secrets.git
-  #  type: git-proxy
-  #  webhook_token: lfkhslkfhs
-  #  check_every: 6h
-  #  source:
-  #    uri: git@github.wdf.sap.corp:cc/secrets.git
-  #    branch: "master"
-  #    private_key: ((github-private-key/cc-secrets))
+      uri: https://github.com/sapcc/juno-assets-server.git
+      branch: main
+      username: sapcc-bot
+      password: ((github-access-token/sapcc-bot))
   
   <%# ASSETS SOURCE GIT %>
   <% ASSETS.each do |name,details| %>
@@ -90,10 +70,10 @@ jobs:
   - name: build-upload-<%= details[:type] %>-<%= name %>
     public: true
     plan:
+      - get: juno-assets-server.git
       - get: <%= details[:type] %>-<%= name %>.git
         trigger: true
       - get: base.image
-      - get: ci-helper.image
 
       - task: build
         image: base.image
@@ -121,16 +101,13 @@ jobs:
                 npm install --silent
                 echo "build app <%= details[:type] %>-<%= name %> and write to build_result/"
                 ./ci/scripts/asset_build.sh --asset-name <%= name %> --asset-type <%= details[:type] %> --output-path ../build_result <% if details[:type] == "lib" %> --last-build-path ../last_build <% end %>
-      - task: sync-to-<%=SWIFT_CONTAINER_PENDING_ASSETS%>
-        file: <%= details[:type] %>-<%= name %>.git/ci/shared/swift-upload.yaml
+                
+      
+      - task: upload-to-<%=SWIFT_CONTAINER_PENDING_ASSETS%>
+        file: juno-assets-server.git/pipeline/tasks/swift-upload.yaml
         input_mapping:
-          upload: build_result
+          input: build_result
         params:
-          ACTION: sync
-          DRY_RUN: "false"
-          DEBUG: "true"
           CONTAINER: "<%=SWIFT_CONTAINER_PENDING_ASSETS%>"
-          ASSET_NAME: <%= name %>
-          ASSET_TYPE: <%= details[:type] %>
 
   <% end %> 
