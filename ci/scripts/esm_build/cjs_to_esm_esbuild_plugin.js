@@ -9,11 +9,17 @@ const cjs_to_esm_plugin = {
       if (args.importer === "") return { path: args.path, namespace: "c2e" }
     })
     build.onLoad({ filter: /.*/, namespace: "c2e" }, (args) => {
-      const keys = Object.keys(require(args.path)).join(", ")
+      let keys = []
+      try {
+        keys = Object.keys(require(args.path))
+      } catch (e) {}
+
+      if (!keys.includes("default")) keys.unshift("default")
+      keys = keys.join(", ")
       const path = JSON.stringify(args.path)
       const resolveDir = __dirname
       return {
-        contents: `export { default, ${keys} } from ${path}`,
+        contents: `export { ${keys} } from ${path}`,
         resolveDir,
       }
     })

@@ -7,6 +7,7 @@
  */
 
 import glob from "glob"
+import semver from "semver"
 import fs from "fs"
 import pathLib from "path"
 import url from "url"
@@ -102,10 +103,9 @@ for (let file of files) {
   const entryFile = pkg.module || pkg.main || "index.js"
   const entryDir = entryFile.slice(0, entryFile.lastIndexOf("/") + 1) || "/"
   const path = file.replace(pathRegex, "$1")
-  const version = path.indexOf("@latest") > 0 ? "latest" : pkg.version
+  const version = pkg.version
 
   packageRegistry[pkg.name] = packageRegistry[pkg.name] || {}
-
   packageRegistry[pkg.name][version] = {
     name: pkg.name,
     version,
@@ -114,7 +114,17 @@ for (let file of files) {
     entryDir,
     peerDependencies: options.ignoreExternals ? false : pkg.peerDependencies,
   }
+
+  // if the current version is greater than the latest, update the latest
+  let latest = packageRegistry[pkg.name]["latest"] || { version: "0.0.0" }
+  if (semver.gt(version, latest.version))
+    packageRegistry[pkg.name]["latest"] = {
+      ...packageRegistry[pkg.name][version],
+      version: "latest",
+    }
 }
+
+// console.log(packageRegistry)
 
 // initialize an empty importmap
 const importMap = { imports: {}, scopes: {} }
@@ -199,7 +209,7 @@ for (let name in packageRegistry) {
       const buildResult = await convertToEsm(depName, depVersion, {
         buildDir: options.externalPath,
         verbose: options.verbose,
-        nodeModulesPath: options.nodeModulesPath,
+        nodeModulesDir: options.nodeModulesPath,
       })
 
       // add external dependency to import map, key is the path to the package

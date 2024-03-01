@@ -82,6 +82,7 @@ jobs:
           output: pending_assets
         params:
           CONTAINER: "juno-pending-assets"
+          DELETE_AFTER_DOWNLOAD: "true"
 
       - task: check-integrity 
         file: juno.git/ci/pipelinev4/tasks/check-pending-assets-integrity.yaml

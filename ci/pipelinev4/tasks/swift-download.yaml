@@ -13,6 +13,7 @@ params:
   CONTAINER:
   OPTIONS:
   TARGET:
+  DELETE_AFTER_DOWNLOAD: "false"
   OS_USERNAME: concourse
   OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
   OS_AUTH_URL: https://identity-3.eu-de-1.cloud.sap/v3
@@ -25,6 +26,7 @@ run:
   args:
     - -c
     - |
+      # TODO: Implement DELETE_AFTER_DOWNLOAD 
       set -e
       eval "$(swift auth)"
       OUTPUT=/tmp/log.txt

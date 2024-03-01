@@ -23,34 +23,33 @@ run:
   args:
     - -c
     - |
-      echo "3. check if a asset is new or the version is higher than the one in the final-assets"
       # 1. if manifest.json is not present, then the asset is new (SUCCESS)
       # 2. if the name is not present in manifest.json, then the asset is new (SUCCESS)
       # 3. if the name is present in manifest.json AND the repository is different, THEN it is not allowed to be published (FAILURE)
       # 4. if the name is present in manifest.json AND the repository is the same AND the version is higher, THEN it is an update (SUCCESS)
       # 5. if the name is present in manifest.json AND the repository is the same AND the version is the same, THEN it is not allowed to be published (FAILURE)
 
+
       # 1. check
       if [ ! -f final_metadata/manifest.json ]; then
         # initial state
-        echo "manifest.json is not present, assets are new"
+        echo "${SUCCESS}manifest.json is not present, assets are new ${NC}"
         cp -r assets/* passed/
         exit 0
       fi
 
       for f in assets/**/*/package.json; do
-      echo "=====================================$f"
         PASSED=true
         NAME=$(jq -r '.name' $f)
         REPOSITORY=$(jq -r '.repository' $f)
         VERSION=$(jq -r '.version' $f)
         TYPE_FOLDER=$(basename $(dirname $(dirname $f)))
-        echo "NAME: $NAME, REPOSITORY: $REPOSITORY, VERSION: $VERSION"
+        echo "${INFO} NAME: $NAME, REPOSITORY: $REPOSITORY, VERSION: $VERSION ${NC}"
 
         # 2. check 
         if [ $(jq "has(\"$NAME\")" final_metadata/manifest.json) == "false" ]; then
           # initial state
-          echo "name is not present in manifest.json, asset is new"
+          echo "${SUCCESS}name is not present in manifest.json, asset is new ${NC}"
           mkdir -p passed/$TYPE_FOLDER/$NAME && cp -r $(dirname $f) passed/$TYPE_FOLDER/$NAME
           continue
         fi
@@ -66,7 +65,7 @@ run:
         LATEST_VERSION=$(echo $latest_package | jq -r '.version')
 
         if [ "$REPOSITORY" != "$LATEST_REPOSITORY" ]; then
-          echo "repository is different, asset is not allowed to be published"
+          echo "${FAIL}repository is different, asset is not allowed to be published ${NC}"
           PASSED=false
           continue
         fi
@@ -76,7 +75,7 @@ run:
         max_version=$( echo $latest_current | tr ' ' '\n' | sort -t. -k1,1n -k2,2n -k3,3n -k4,4n | tr '\n' ' ' | awk '{print $NF}')
         
         if [ "$VERSION" != "$LATEST_VERSION" ] && [ "$max_version" == "$VERSION" ] ; then
-          echo "version is higher, asset is an update"
+          echo "${SUCCESS}version is higher, asset is an update ${NC}"
           mkdir -p passed/$TYPE_FOLDER/$NAME && cp -r $(dirname $f) passed/$TYPE_FOLDER/$NAME
           continue
         else
@@ -87,7 +86,7 @@ run:
         
         # 5. check
         if [ "$VERSION" == "$LATEST_VERSION" ]; then
-          echo "version is the same, asset is not allowed to be published"
+          echo "${FAIL}version is the same, asset is not allowed to be published ${NC}"
           PASSED=false
           continue
         fi

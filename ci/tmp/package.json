@@ -1,0 +1,7 @@
+{
+  "name": "esmBuild",
+  "version": "1.0.0",
+  "dependencies": {
+    "es-module-shims": "1.6.2"
+  }
+}
