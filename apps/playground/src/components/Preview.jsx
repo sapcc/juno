@@ -39,7 +39,7 @@ const Preview = ({ code }) => {
       .catch((err) => {
         setPreview(<Error error={err} />)
       })
-    setIsCompilerLoading(false)
+      .finally(() => setIsCompilerLoading(false))
   }, [code])
 
   return (
