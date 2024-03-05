@@ -3,11 +3,13 @@ import PropTypes from "prop-types"
 
 /* Import Icons here. The icon svgs in the icons folder correspond to the respective "xyz_24px.svg" from material-ui icons.
  */
+import AccessTime from "@material-design-icons/svg/filled/access_time.svg"
 import AccountCircle from "@material-design-icons/svg/filled/account_circle.svg"
 import AddCircle from "@material-design-icons/svg/filled/add_circle.svg"
 import AutoAwesomeMosaic from "@material-design-icons/svg/filled/auto_awesome_mosaic.svg"
 import AutoAwesomeMotion from "@material-design-icons/svg/filled/auto_awesome_motion.svg"
 import Bolt from "@material-design-icons/svg/filled/bolt.svg"
+import CalendarToday from "@material-design-icons/svg/filled/calendar_today.svg"
 import Cancel from "@material-design-icons/svg/filled/cancel.svg"
 import Check from "@material-design-icons/svg/filled/check.svg"
 import CheckCircle from "@material-design-icons/svg/filled/check_circle.svg"
@@ -34,7 +36,7 @@ import Home from "./icons/home_sharp.svg"
 import Info from "@material-design-icons/svg/filled/info.svg"
 import Comment from "@material-design-icons/svg/filled/comment.svg"
 import ManageAccounts from "@material-design-icons/svg/filled/manage_accounts.svg"
-import MonitorHeart from '@material-design-icons/svg/outlined/monitor_heart.svg'
+import MonitorHeart from "@material-design-icons/svg/outlined/monitor_heart.svg"
 import MoreVert from "@material-design-icons/svg/outlined/more_vert.svg"
 import NotificationsOff from "@material-design-icons/svg/outlined/notifications_off.svg"
 import OpenInBrowser from "@material-design-icons/svg/outlined/open_in_browser.svg"
@@ -82,11 +84,13 @@ const wrapperStyles = `
 `
 // export all known icons as an array of their names to be used with PropTypes here and from other components:
 export const knownIcons = [
+  "accessTime",
   "accountCircle",
   "addCircle",
   "autoAwesomeMosaic",
   "autoAwesomeMotion",
   "bolt",
+  "calendarToday",
   "cancel",
   "check",
   "checkCircle",
@@ -141,6 +145,18 @@ const getColoredSizedIcon = ({
   const iconClass = `juno-icon juno-icon-${icon} jn-fill-current ${color} ${iconClassName}`
 
   switch (icon) {
+    case "accessTime":
+      return (
+        <AccessTime
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="time"
+          title={title ? title : "Time"}
+          role="img"
+          {...iconProps}
+        />
+      )
     case "accountCircle":
       return (
         <AccountCircle
@@ -201,6 +217,18 @@ const getColoredSizedIcon = ({
           {...iconProps}
         />
       )
+    case "calendarToday":
+      return (
+        <CalendarToday
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="calendar"
+          title={title ? title : "Calendar"}
+          role="img"
+          {...iconProps}
+        />
+      )
     case "cancel":
       return (
         <Cancel
@@ -214,17 +242,17 @@ const getColoredSizedIcon = ({
         />
       )
     case "check":
-    return (
-      <Check
-        width={size}
-        height={size}
-        className={iconClass}
-        alt="check"
-        title={title ? title : "Check"}
-        role="img"
-        {...iconProps}
-      />
-    )
+      return (
+        <Check
+          width={size}
+          height={size}
+          className={iconClass}
+          alt="check"
+          title={title ? title : "Check"}
+          role="img"
+          {...iconProps}
+        />
+      )
     case "checkCircle":
       return (
         <CheckCircle

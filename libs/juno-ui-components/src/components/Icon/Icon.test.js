@@ -63,6 +63,12 @@ describe("Icon", () => {
 
   // Test individual icons:
 
+  test("renders an accessTime icon", async () => {
+    render(<Icon icon="accessTime" />)
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "time")
+  })
+
   test("renders an accountCircle icon", async () => {
     render(<Icon icon="accountCircle" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
@@ -101,7 +107,7 @@ describe("Icon", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute("alt", "cancel")
   })
-  
+
   test("renders a check icon", async () => {
     render(<Icon icon="check" />)
     expect(screen.getByRole("img")).toBeInTheDocument()
