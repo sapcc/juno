@@ -1,5 +1,7 @@
 import maxSatisfying from "semver/ranges/max-satisfying"
 import coerce from "semver/functions/coerce"
+const ESM_SHIM_URL = "/externals/es-module-shims@1.8.3/dist/es-module-shims.js"
+
 ;(async function () {
   window.process = { env: { NODE_ENV: "production" } }
   window.esmsInitOptions = {
@@ -46,10 +48,7 @@ import coerce from "semver/functions/coerce"
     store.loadImportmap ||
     new Promise((resolve, reject) => {
       // console.log("load shim", origin)
-      const shimUrl = new URL(
-        "/externals/npm:es-module-shims@1.6.2/dist/es-module-shims.js",
-        origin
-      )
+      const shimUrl = new URL(ESM_SHIM_URL, origin)
 
       if (document.querySelector(`script[src="${shimUrl}"]`)) {
         return resolve(true)

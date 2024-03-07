@@ -84,7 +84,9 @@ const globPattern = `${rootPath}/@(${PACKAGES_PATHS.join("|")})/**/package.json`
 // regex to extract the package name from the path
 const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
 // find all package.json files, except in node_modules
-const files = glob.sync(globPattern, { ignore: [`node_modules/**`,'**/node_modules/**'] })
+const files = glob.sync(globPattern, {
+  ignore: [`node_modules/**`, "**/node_modules/**"],
+})
 
 // build package registry based on juno packages
 const packageRegistry = {}
@@ -120,17 +122,21 @@ const importMap = { imports: {}, scopes: {} }
 // Due to the backward compatibility, we need to add the "old" url of the es-module-shims
 // to importmap to link it to the built version.
 // download convert es-module-shim to esm
-const buildResult = await convertToEsm("es-module-shims", "1.6.2", {
-  buildDir: options.externalPath,
-  verbose: options.verbose,
-  nodeModulesPath: options.nodeModulesPath,
-})
+// support multiple versions of es-module-shims
+const esModuleShimVersions = ["1.6.2", "1.8.3"]
+for (let version of esModuleShimVersions) {
+  const buildResult = await convertToEsm("es-module-shims", version, {
+    buildDir: options.externalPath,
+    verbose: options.verbose,
+    nodeModulesPath: options.nodeModulesPath,
+  })
 
-fs.cpSync(
-  pathLib.join(options.externalPath, buildResult.buildName),
-  pathLib.join(options.externalPath, `npm:${buildResult.buildName}`),
-  { recursive: true, overwrite: true }
-)
+  fs.cpSync(
+    pathLib.join(options.externalPath, buildResult.buildName),
+    pathLib.join(options.externalPath, `npm:${buildResult.buildName}`),
+    { recursive: true, overwrite: true }
+  )
+}
 // end add es-module-shim
 
 // for each package in the registry, add it to the importmap
