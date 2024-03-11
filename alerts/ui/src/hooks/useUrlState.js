@@ -91,7 +91,6 @@ const useUrlState = () => {
 
     // encode searchTerm before pushing it to the URL to avoid missinterpretation of special characters
     const encodedSearchTerm = window.btoa(searchTerm)
-    console.log("enc", encodedSearchTerm)
 
     const newState = {
       ...urlStateManager.currentState(),
