@@ -1,5 +1,6 @@
 {
   "name": "juno",
+  "license": "Apache-2.0",
   "private": true,
   "workspaces": [
     "apps/*",

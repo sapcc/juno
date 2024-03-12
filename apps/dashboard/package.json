@@ -1,12 +1,12 @@
 {
   "name": "dashboard",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "UI-Team",
   "contributors": [
     "Esther Schmitz"
   ],
   "repository": "https://github.com/sapcc/juno/tree/main/apps/dashboard",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "private": true,
   "source": "src/index.js",
   "module": "build/index.js",

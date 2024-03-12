@@ -1,12 +1,12 @@
 {
   "name": "exampleapp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "UI-Team",
   "contributors": [
     "Arturo Reuschenbach Pucernau"
   ],
   "repository_backup": "https://github.com/sapcc/juno/tree/main/apps/exampleapp",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "module": "build/index.js",
   "source": "src/index.js",
   "private": true,

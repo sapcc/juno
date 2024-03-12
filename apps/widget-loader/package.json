@@ -1,13 +1,13 @@
 {
   "name": "widget-loader",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "author": "UI-Team",
   "contributors": [
     "Andreas Pfau"
   ],
   "mountable": false,
   "repository": "https://github.com/sapcc/juno/tree/main/apps/widget-loader",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "description": "This app presets the juno environment on the host and loads other apps",
   "source": "src/index.js",
   "main": "build/app.js",
