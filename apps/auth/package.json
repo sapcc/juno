@@ -1,13 +1,13 @@
 {
   "name": "auth",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "UI-Team",
   "contributors": [
     "Andreas Pfau"
   ],
   "repository": "https://github.com/sapcc/juno/tree/main/apps/auth",
   "mountable": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "source": "src/index.js",
   "module": "build/index.js",
   "private": true,

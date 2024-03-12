@@ -1,13 +1,13 @@
 {
   "name": "volta",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "UI-Team",
   "contributors": [
     "Arturo Reuschenbach Pucernau",
     "Tillman Haupt"
   ],
   "repository": "https://github.com/sapcc/juno/tree/main/apps/volta",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "source": "src/index.js",
   "module": "build/index.js",
   "private": true,
