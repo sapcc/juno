@@ -83,17 +83,17 @@ npm -v
    ```
 
    We recommend referencing a specific version of each lib as shown above, rather than `latest`, which would also be possible. If you do want to reference `latest`, please be aware that upgrading to a newer version later then requires you to clean your npm cache first via `npm cache clean`. To see the newest available versions of the Juno libs check our [overview app](https://assets.juno.global.cloud.sap/?__s=N4IghgzhCmAuEFoD2A3aAnFBLaB3EAXKLGAEYCSAdgCbQAehATADQiVgrmzQC2hIIVgAcwlaABsA8kOhjqhAGZhxMAL6qgA). E.g.: `https://assets.juno.global.cloud.sap/libs/juno-ui-components@1.5.9/package.tgz`
-   
+
 4. In `package.json` update your app name, i.e. replace `"template"` with your app's name:
    ```js
     "name": "template",
    ```
-   to 
+   to
    ```js
     "name": "myapp",
    ```
-   
 5. In `src/App.js` also update the `URL_STATE_KEY` constant with your app name.
+
    ```js
    /* IMPORTANT: Replace this with your app's name */
    const URL_STATE_KEY = "template"
