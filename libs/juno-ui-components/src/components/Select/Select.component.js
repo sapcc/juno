@@ -399,14 +399,8 @@ Select.propTypes = {
   /** The label of the passed value or defaultValue. If you want to use controlled mode or pass as defaultValue in uncontrolled mode and additionally use labels for
    *  human-readable SelectOptions you need to also pass the matching label for the passed value/defaultValue so that the Select component can render itself properly */
   valueLabel: PropTypes.string,
-  /** TBD: The semantic variant of the Select toggle button. Not implemented yet. */
-  variant: PropTypes.oneOf([
-    "",
-    "primary",
-    "primary-danger",
-    "default",
-    "subdued",
-  ]),
+  /** The semantic variant of the Select toggle button.*/
+  variant: PropTypes.oneOf(["default", "primary", "primary-danger", "subdued"]),
   /** Whether the Select toggle should consume the available width of its parent container (default), or render its "natural" width depending on the content and the currently selected value or state. */
   width: PropTypes.oneOf(["full", "auto"]),
 }
@@ -434,6 +428,6 @@ Select.defaultProps = {
   valid: false,
   value: undefined,
   valueLabel: undefined,
-  variant: undefined,
+  variant: "default",
   width: "full",
 }
