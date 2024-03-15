@@ -8,12 +8,16 @@
   ASSETS = Dir["{apps,libs}/**"].map do |file| 
     type,name = file.split("/").last(2)
     [name,{type: type, path: file}]
-  end.to_h
-
-  ASSETS = ASSETS.reject{|name,details| BLACKLISTED.include?(name) }
+  end.to_h.reject{|name,details| BLACKLISTED.include?(name) }
 %>
 
 resources:
+  - name: build-all.version
+    type: time-version-resource
+    icon: lock
+    check_every: 525600h
+    source: { key: "juno-v4-build-all-version" } # disambiguate from other time-version resources
+
   - name: juno-assets-server.git
     type: git
     icon: github
@@ -44,11 +48,16 @@ resources:
 groups: 
   - name: assets 
     jobs:
+      - build-all
       <% ASSETS.each do |name,details| %>
       - build-upload-<%= details[:type] %>-<%= name %>
       <% end %>
 
 jobs:
+  - name: build-all
+    plan:
+      - put: build-all.version
+
   # ============================================================= 
   # BUILD ASSETS IMAGES
 
@@ -57,6 +66,8 @@ jobs:
   - name: build-upload-<%= details[:type] %>-<%= name %>
     public: true
     plan:
+      - get: build-all.version 
+        trigger: true
       - get: juno-assets-server.git
       - get: <%= details[:type] %>-<%= name %>.git
         trigger: true
