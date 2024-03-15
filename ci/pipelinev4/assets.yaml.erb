@@ -26,6 +26,7 @@ resources:
       branch: main
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
+      paths: ["pipeline/tasks/swift-upload.yaml"]
   
   <%# ASSETS SOURCE GIT %>
   <% ASSETS.each do |name,details| %>
