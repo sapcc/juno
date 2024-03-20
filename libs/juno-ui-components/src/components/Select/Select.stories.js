@@ -59,7 +59,7 @@ const ControlledTemplate = ({ value, children, ...args }) => {
   }
 
   return (
-    <Select value={v} onChange={handleChange} {...args}>
+    <Select {...args} value={v} onChange={handleChange}>
       {children}
     </Select>
   )
