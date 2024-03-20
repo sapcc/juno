@@ -6,4 +6,4 @@ dependencies:
   repository: oci://keppel.eu-de-1.cloud.sap/ccloud-helm
   version: 0.1.4
 digest: sha256:38fbf802b5c5ad42a79f102c43ec8d237ba3bbf89bbbab77ac20d1ffcf4c1cf8
-generated: "2024-03-20T14:27:49.326043+01:00"
+generated: "2024-03-20T14:36:07.039667+01:00"
