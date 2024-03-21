@@ -15,6 +15,7 @@ import {
   Stack,
   Pill,
   FormSection,
+  DateTimePicker,
 } from "juno-ui-components"
 import { useAuthData, useGlobalsApiEndpoint } from "../../hooks/useAppStore"
 import { post, get } from "../../api/client"
@@ -22,8 +23,6 @@ import { parseError } from "../../helpers"
 import fakesilence from "./fakesilence.json"
 
 const DEFAULT_FORM_VALUES = {
-  startAt: "2012-12-20T13:37",
-  endAt: "2012-12-21T16:00",
   fixed_labels: {},
   editable_labels: {},
   comment: {
@@ -39,8 +38,6 @@ const SilenceScheduled = (props) => {
   const [success, setSuccess] = useState(null)
   const [selected, setSelected] = useState(null)
   const { addMessage, resetMessages } = useActions()
-
-  const apiEndpoint = useGlobalsApiEndpoint()
 
   // useEffect to init callback after rendering. This is needed to reopen the SilencedScheduledWrapper closing the modal
   const [closed, setClosed] = useState(false)
@@ -216,6 +213,14 @@ const SilenceScheduled = (props) => {
     )
   }
 
+  const setStartDate = (e) => {
+    formState.startAt = new Date(e).toISOString()
+  }
+
+  const setEndDate = (e) => {
+    formState.endAt = new Date(e).toISOString()
+  }
+
   return (
     <Modal
       title="Schedule new silence"
@@ -277,12 +282,22 @@ const SilenceScheduled = (props) => {
                 </FormRow>
                 <FormRow>
                   <div className="grid gap-2 grid-cols-2">
-                    <TextInput
+                    <DateTimePicker
+                      defaultValue={new Date()}
+                      dateFormat="Y-m-d H:i"
+                      label="Select a date"
+                      enableTime
                       required
-                      label="Start"
-                      value={formState.startAt}
+                      onChange={setStartDate}
                     />
-                    <TextInput required label="End" value={formState.endAt} />
+                    <DateTimePicker
+                      defaultValue={new Date()}
+                      dateFormat="Y-m-d H:i"
+                      label="Select a date"
+                      enableTime
+                      required
+                      onChange={setEndDate}
+                    />
                   </div>
                 </FormRow>
 
