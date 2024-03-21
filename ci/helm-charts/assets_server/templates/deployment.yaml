@@ -26,9 +26,6 @@ spec:
         # we use timestamp to pull latest image without downtime
         # https://github.com/helm/helm/issues/5218
         # timestamp: "{{ now | date "20060102150405" }}"
-        {{- if and $.Values.global.linkerd_enabled $.Values.global.linkerd_requested }}
-        linkerd.io/inject: enabled
-        {{- end }}
     spec:
       # The preStop hook below sleeps 30 seconds, extend the gracePeriod accordingly
       terminationGracePeriodSeconds: 60

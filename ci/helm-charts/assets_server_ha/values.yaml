@@ -9,6 +9,3 @@ owner-info:
     - Hoda Noori
   helm-chart-url: https://github.com/sapcc/juno/tree/main/ci/helm-charts
 
-global:
-  # No Linkerd annotations will be rendered unless this flag is set to true. This allows you to control when to add your service to the mesh.
-  linkerd_requested: true
