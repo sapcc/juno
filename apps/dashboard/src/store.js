@@ -29,6 +29,7 @@ const DOMAINS = {
   ],
   special: [
     "BS",
+    "BTP_FP",
     "CCADMIN",
     "CIS",
     "CP",
