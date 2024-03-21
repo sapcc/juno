@@ -12,10 +12,6 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-origin: "*"
     ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/enable-cors: "true"
-    {{- if and $.Values.global.linkerd_enabled $.Values.global.linkerd_requested }}
-    ingress.kubernetes.io/service-upstream: "true"
-    nginx.ingress.kubernetes.io/service-upstream: "true"
-    {{- end }}
 
   name: ingress-assets-server
   namespace: juno

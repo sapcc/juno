@@ -8,11 +8,6 @@ metadata:
     # disable the idle http timeout check
     # https://operations.global.cloud.sap/docs/support/playbook/kubernetes/idle_http_keep_alive_timeout.html
     cloud.sap/no-http-keep-alive-monitor: "true"
-    {{- if and $.Values.global.linkerd_enabled $.Values.global.linkerd_requested }}
-    ingress.kubernetes.io/service-upstream: "true"
-    nginx.ingress.kubernetes.io/service-upstream: "true"
-    {{- end }}
-
   name: ingress-ui-storybook
   namespace: juno
 spec:

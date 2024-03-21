@@ -23,9 +23,6 @@ spec:
       annotations:
         checksum/index-html-configmap: {{ include (print $.Template.BasePath "/index-html-configmap.yaml") . | sha256sum }}
         checksum/nginx-configmap: {{ include (print $.Template.BasePath "/nginx-configmap.yaml") . | sha256sum }}
-        {{- if and $.Values.global.linkerd_enabled $.Values.global.linkerd_requested }}
-        linkerd.io/inject: enabled
-        {{- end }}     
     spec:
       # The preStop hook below sleeps 30 seconds, extend the gracePeriod accordingly
       terminationGracePeriodSeconds: 60
