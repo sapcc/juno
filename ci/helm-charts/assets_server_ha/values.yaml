@@ -8,3 +8,4 @@ owner-info:
     - Arturo Reuschenbach Puncernau
     - Hoda Noori
   helm-chart-url: https://github.com/sapcc/juno/tree/main/ci/helm-charts
+

@@ -20,6 +20,7 @@ spec:
     metadata:
       labels:
         app: ui-storybook
+
     spec:
       # The preStop hook below sleeps 30 seconds, extend the gracePeriod accordingly
       terminationGracePeriodSeconds: 60
