@@ -185,7 +185,8 @@ export const Select = ({
     }),
   ]
 
-  // const portalContainer = usePortalRef()
+  // This function is used to determine what to render for the selected options in the Select Toggle in multi-select case.
+  // For each of the values, we get the respective element from the optionValuesAndLabels map, get the corresponding label or children, and filter these for empty elements to make sure we do not include any empty strings in the returned array.
   const getMultipleDisplayValues = (values) => {
     const getChildrenOrLabel = (key) => {
       const element = optionValuesAndLabels.get(key)
@@ -295,7 +296,6 @@ export const Select = ({
                             value ||
                             placeholder}
                       </span>
-                      {/* <span>Value: {value}</span> */}
                       <span className="jn-flex">
                         {isValid ? (
                           <Icon
