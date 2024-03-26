@@ -654,7 +654,7 @@ DateTimePicker.defaultProps = {
   locale: null,
   maxDate: null,
   minDate: null,
-  minuteIncrement: 5,
+  minuteIncrement: 1,
   mode: "single",
   monthSelectorType: "static",
   name: "",
