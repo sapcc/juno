@@ -7,7 +7,7 @@ export default {
   component: Pagination,
   argTypes: {
     variant: {
-      options: ['"" (default)', "number", "select", "input"],
+      options: ["default", "number", "select", "input"],
       control: { type: "select" },
     },
   },
@@ -34,7 +34,7 @@ const UncontrolledTemplate = ({ currentPage, pages, ...args }) => {
   return (
     <Pagination
       {...args}
-      pages={pages}
+      totalPages={pages}
       currentPage={page}
       onPressPrevious={prev}
       onPressNext={next}
@@ -44,7 +44,7 @@ const UncontrolledTemplate = ({ currentPage, pages, ...args }) => {
 
 export const Default = {
   render: Template,
-  args: {},
+  args: { variant: "default" },
 }
 
 export const PaginationWithNumber = {
@@ -94,7 +94,7 @@ export const ProgressPagination = {
 
 export const UncontrolledDefault = {
   render: UncontrolledTemplate,
-  args: {},
+  args: { variant: "default" },
 }
 
 export const UncontrolledPaginationWithNumber = {

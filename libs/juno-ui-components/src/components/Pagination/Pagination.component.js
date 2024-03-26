@@ -12,27 +12,26 @@ const paginationStyles = `
   jn-gap-[0.375rem]
   jn-items-center
 `
-
 const numberStyles = `
-
-`
-
-const inputStyles = `
-  jn-w-[3.125rem]
 
 `
 const spinnerStyles = `
   jn-ml-3
 `
-// style for disabled button. Must be changed in Button component?
+
 const buttonStyles = ` 
   disabled:jn-cursor-not-allowed
 `
 
-// const selectOptions = (controlPages) => {
+const inputStyles = `
+  justify-normal
+  
+`
+
+// const selectOptions = (controlTotalPage) => {
 //   let opts = []
-//   if (controlPages) {
-//     for (let i = 0; i < controlPages; i++) {
+//   if (controlTotalPage) {
+//     for (let i = 0; i < controlTotalPage; i++) {
 //       const p = (i + 1).toString() // SelectOption requires strings for value and label
 //       opts.push(<SelectOption value={p} label={p} key={p} />)
 //     }
@@ -44,6 +43,7 @@ const buttonStyles = `
 export const Pagination = ({
   variant,
   currentPage,
+  totalPages,
   pages,
   disabled,
   isFirstPage,
@@ -52,41 +52,67 @@ export const Pagination = ({
   onPressNext,
   onSelectChange,
   onKeyPress,
+  onBlur,
   progress,
   className,
   ...props
 }) => {
-  const [controlPage, setControlPage] = useState(8)
-  const [controlPages, setControlPages] = useState(8)
+  const [controlPage, setControlCurrentPage] = useState(1)
+  const [controlTotalPage, setControlTotalPage] = useState(1)
 
   useEffect(() => {
-    currentPage = currentPage <= pages ? currentPage : pages
-    setControlPage(currentPage)
-    setControlPages(pages)
-    // setControlPage(currentPage <= setControlPages ? currentPage : setControlPages)
-  }, [currentPage, pages])
+    setControlCurrentPage(currentPage)
+    // Fallback for the “pages” prop which was used in an earlier version of this component.
+    pages ? setControlTotalPage(pages) : setControlTotalPage(totalPages)
+  }, [currentPage, totalPages, pages])
+
+  const handleInputChange = (event) => {
+    //convert all non-numeric characters to empty string
+    const inputValue = parseInt(event?.target.value)
+    setControlCurrentPage(inputValue)
+  }
 
   const handlePrevClick = (event) => {
-    setControlPage(controlPage > 1 ? controlPage - 1 : 1)
+    setControlCurrentPage(controlPage > 1 ? controlPage - 1 : 1)
     onPressPrevious && onPressPrevious(event)
   }
 
   const handleNextClick = (event) => {
-    setControlPage(controlPage < controlPages ? controlPage + 1 : controlPages)
+    setControlCurrentPage(controlPage < controlTotalPage ? controlPage + 1 : controlTotalPage)
     onPressNext && onPressNext(event)
   }
 
   const handleSelectChange = (selected) => {
     const s = parseInt(selected)
-    setControlPage(s)
+    setControlCurrentPage(s)
     onSelectChange && onSelectChange(s)
   }
 
-  const handleKeyPress = (event) => {
+  const handleEnter = (event) => {
     if (event.key === "Enter") {
-      setControlPage(event.target.value)
+      if (controlPage < 1) {
+        setControlCurrentPage(1)
+      } else if (controlPage > controlTotalPage) {
+        setControlCurrentPage(controlTotalPage)
+      }
       onKeyPress && onKeyPress(event)
     }
+  }
+
+  const handleBlur = (event) => {
+    if (controlPage < 1) {
+      setControlCurrentPage(1)
+    } else if (controlPage > controlTotalPage) {
+      setControlCurrentPage(controlTotalPage)
+    }
+    onBlur && onBlur(event)
+  }
+
+  const getInputWidthClass = () => {
+    let logLength = isNaN(controlPage) ? 1 : controlPage?.toString().length
+    logLength = logLength > 5 ? 5 : logLength
+    const width = `${(logLength * 0.6 + 2.1).toFixed(1)}rem` // 0.6rem per digit + 2.1rem
+    return { width: width }
   }
 
   return (
@@ -99,7 +125,6 @@ export const Pagination = ({
       <Button
         icon="chevronLeft"
         disabled={isFirstPage || disabled || progress || controlPage === 1}
-        className={buttonStyles}
         onClick={handlePrevClick}
         title="Previous Page"
       />
@@ -114,7 +139,7 @@ export const Pagination = ({
               case "select":
                 return (
                   <Select
-                    name="pages"
+                    name="totalPages"
                     width="auto"
                     value={controlPage?.toString()} // here the same, defaultValue is of type string
                     onChange={handleSelectChange}
@@ -122,31 +147,33 @@ export const Pagination = ({
                   >
                     {(() => {
                       let opts = []
-                      if (controlPages) {
-                        for (let i = 0; i < controlPages; i++) {
+                      if (controlTotalPage) {
+                        for (let i = 0; i < controlTotalPage; i++) {
                           const p = (i + 1).toString() // SelectOption requires strings for value and label
                           opts.push(<SelectOption value={p} label={p} key={p} />)
                         }
                       }
                       return opts
                     })()}
-                    {/* {selectOptions(controlPages)} */}
+                    {/* {selectOptions(controlTotalPage)} */}
                   </Select>
                 )
                 break
               case "input":
                 return (
                   <Stack gap="2" alignment="center">
-                    <div className={`${inputStyles}`}>
+                    <div className={`juno-pagination-wrapper`} style={getInputWidthClass()}>
                       <TextInput
                         value={controlPage || ""}
                         //convert to integer
-                        onChange={(e) => setControlPage(parseInt(e.target.value))}
-                        onKeyPress={handleKeyPress}
+                        onChange={handleInputChange}
+                        onBlur={handleBlur}
+                        onKeyPress={handleEnter}
                         disabled={disabled}
+                        className={inputStyles}
                       />
                     </div>
-                    <span>of {controlPages || "0"}</span>
+                    <span>of {controlTotalPage || "0"}</span>
                   </Stack>
                 )
                 break
@@ -157,7 +184,7 @@ export const Pagination = ({
         : ""}
       <Button
         icon="chevronRight"
-        disabled={isLastPage || disabled || progress || controlPage === controlPages}
+        disabled={isLastPage || disabled || progress || controlPage === controlTotalPage}
         onClick={handleNextClick}
         title="Next Page"
       />
@@ -166,24 +193,38 @@ export const Pagination = ({
 }
 
 Pagination.propTypes = {
-  variant: PropTypes.oneOf(["", "number", "select", "input"]),
+  /** The variant of the Pagination component */
+  variant: PropTypes.oneOf(["default", "number", "select", "input"]),
+  /** The current page number */
   currentPage: PropTypes.number,
-  pages: PropTypes.number,
+  /** The total number of pages */
+  totalPages: PropTypes.number,
+  /** Disable component */
   disabled: PropTypes.bool,
+  /** Is the first page (mostly "1") - left button disabled */
   isFirstPage: PropTypes.bool,
+  /** Is the last page (e.g. total number of pages) - right button disabled */
   isLastPage: PropTypes.bool,
+  /** onPress (previous) handler */
   onPressPrevious: PropTypes.func,
+  /** onPress (next) handler */
   onPressNext: PropTypes.func,
+  /** Select field change handler (select + input) */
   onSelectChange: PropTypes.func,
+  /** onKeyPress handler (input) */
   onKeyPress: PropTypes.func,
+  /** onBlur handler (input)*/
+  onBlur: PropTypes.func,
+  /** Spinner loading animation + disabled behavior */
   progress: PropTypes.bool,
+  /** Additional class name */
   className: PropTypes.string,
 }
 
 Pagination.defaultProps = {
-  variant: "",
+  variant: "default",
   currentPage: 1,
-  pages: 1,
+  totalPages: 1,
   disabled: false,
   isFirstPage: false,
   isLastPage: false,
@@ -191,6 +232,7 @@ Pagination.defaultProps = {
   onPressNext: undefined,
   onSelectChange: undefined,
   onKeyPress: undefined,
+  onBlur: undefined,
   progress: false,
   className: "",
 }
