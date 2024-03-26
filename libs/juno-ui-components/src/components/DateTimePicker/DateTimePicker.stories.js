@@ -95,12 +95,12 @@ WithDefaultDate.args = {
   defaultDate: new Date(),
 }
 
-export const WithDefaultDateAndTime = Template.bind({})
-WithDefaultDateAndTime.parameters = {
+export const WithDefaultHourAndMinute = Template.bind({})
+WithDefaultHourAndMinute.parameters = {
   docs: {
     description: {
       story:
-        "Pass `defaultHour` and `defaultMinute` to set default values for the date and time input elements. Note this will not set a selected date with these values in the DateTimePicker input element, the user still has to make a selection.",
+        "Pass `defaultHour` and `defaultMinute` to set default values for the date and time input elements. Note: this will not set a selected date with these values in the DateTimePicker input element, the user still has to make a selection.",
     },
   },
 }
@@ -247,7 +247,7 @@ ShowTwoMonths.parameters = {
   docs: {
     description: {
       story:
-        "Setr the number of months to be displayed side by side in the calendar.",
+        "Set the number of months to be displayed side by side in the calendar.",
     },
   },
 }
