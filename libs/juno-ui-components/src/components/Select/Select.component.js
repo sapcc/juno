@@ -162,7 +162,6 @@ export const Select = ({
   }, [loading])
 
   const handleChange = (value) => {
-    console.log("value: ", value)
     onChange && onChange(value || "")
     onValueChange && onValueChange(value || "")
   }
@@ -187,9 +186,7 @@ export const Select = ({
   ]
 
   // const portalContainer = usePortalRef()
-
   const getMultipleDisplayValues = (values) => {
-    console.log("values: ", values)
     const getChildrenOrLabel = (key) => {
       const element = optionValuesAndLabels.get(key)
       if (element) {
@@ -199,7 +196,6 @@ export const Select = ({
     const valuesToDisplay = values
       .map((key) => getChildrenOrLabel(key))
       .filter((value) => value && value.toString().trim().length > 0)
-    console.log("valuesToDisplay: ", valuesToDisplay)
     return valuesToDisplay.join(", ")
   }
 
