@@ -11,6 +11,11 @@
       "label": "Teams",
       "name": "greenhouse-team-admin",
       "version": "1.3.0"
+    },
+    "plugins": {
+      "label": "Plugins",
+      "name": "greenhouse-plugin-admin",
+      "version": "1.0.0"
     }
   },
   "author": "UI-Team",
