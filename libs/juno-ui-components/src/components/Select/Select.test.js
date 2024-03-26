@@ -17,7 +17,7 @@ const ControlledSelectParent = ({ value, children, onChange, ...props }) => {
   }
 
   return (
-    <Select value={val} onChange={handleChange} {...props}>
+    <Select {...props} value={val} onChange={handleChange}>
       {children}
     </Select>
   )
@@ -235,7 +235,7 @@ describe("Select", () => {
     )
   })
 
-  test("renders a Select with a value selected as passed", async () => {
+  test("renders a Select with a selected value as passed", async () => {
     render(
       <Select value="Option 2">
         <SelectOption value="Option 1" />
@@ -253,6 +253,19 @@ describe("Select", () => {
       "aria-selected",
       "true"
     )
+  })
+
+  test("renders the valueLabel in the toggle for selected items if passed", async () => {
+    render(
+      <Select value="option-1" valueLabel="Option 1">
+        <SelectOption value="option-1" label="Option 1" />
+        <SelectOption value="option-2" label="Option 1" />
+        <SelectOption value="option-3" label="Option 1" />
+      </Select>
+    )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    expect(toggle).toHaveTextContent("Option 1")
   })
 
   test("opens the Select menu with options as passed when the user clicks the Select toggle", async () => {
@@ -335,6 +348,28 @@ describe("Select", () => {
     const option2 = screen.getAllByRole("option")[1]
     await userEvent.click(option2)
     expect(toggle).toHaveTextContent("Option 2")
+  })
+
+  test("updates value as passed", async () => {
+    const { rerender } = render(
+      <Select value="option-2">
+        <SelectOption value="option-1" />
+        <SelectOption value="option-2" />
+        <SelectOption value="option-3" />
+      </Select>
+    )
+    const toggle = screen.getByRole("button")
+    expect(toggle).toBeInTheDocument()
+    expect(toggle).toHaveTextContent("option-2")
+    rerender(
+      <Select value="option-3">
+        <SelectOption value="option-1" />
+        <SelectOption value="option-2" />
+        <SelectOption value="option-3" />
+      </Select>
+    )
+    expect(toggle).toBeInTheDocument()
+    expect(toggle).toHaveTextContent("option-3")
   })
 
   test("works as an uncontrolled component", async () => {

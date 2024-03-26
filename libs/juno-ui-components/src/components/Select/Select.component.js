@@ -73,9 +73,8 @@ const truncateStyles = `
 export const SelectContext = createContext()
 
 /** 
-  A Select component to allow selecting a single item (multi-select TBD).
+  A Select component that can be configured to allow selecting a single item or multiple items.
   Pass a `defaultValue` to render as an uncontrolled component that tracks its open state etc internally.
-  Also TBD: semantic variants.
 */
 export const Select = ({
   ariaLabel,
@@ -90,6 +89,7 @@ export const Select = ({
   invalid,
   label,
   loading,
+  multiple,
   name,
   onChange,
   onValueChange,
@@ -130,6 +130,7 @@ export const Select = ({
         val: value,
         label: label,
         children: children,
+        displayName: children || label || value,
       })
     )
   }
@@ -184,7 +185,20 @@ export const Select = ({
     }),
   ]
 
-  // const portalContainer = usePortalRef()
+  // This function is used to determine what to render for the selected options in the Select Toggle in multi-select case.
+  // For each of the values, we get the respective element from the optionValuesAndLabels map, get the corresponding label or children, and filter these for empty elements to make sure we do not include any empty strings in the returned array.
+  const getMultipleDisplayValues = (values) => {
+    const getChildrenOrLabel = (key) => {
+      const element = optionValuesAndLabels.get(key)
+      if (element) {
+        return element.displayName?.length ? element.displayName : null
+      }
+    }
+    const valuesToDisplay = values
+      .map((key) => getChildrenOrLabel(key))
+      .filter((value) => value && value.toString().trim().length > 0)
+    return valuesToDisplay.join(", ")
+  }
 
   return (
     <SelectContext.Provider
@@ -203,6 +217,7 @@ export const Select = ({
       >
         <Listbox
           disabled={disabled || isLoading || hasError}
+          multiple={multiple}
           name={name}
           onChange={handleChange}
           value={value}
@@ -271,11 +286,15 @@ export const Select = ({
                   !hasError && !isLoading ? (
                     <>
                       <span className={`${truncateStyles}`}>
-                        {optionValuesAndLabels.get(value)?.children ||
-                          optionValuesAndLabels.get(value)?.label ||
-                          valueLabel ||
-                          value ||
-                          placeholder}
+                        {multiple
+                          ? getMultipleDisplayValues(value) ||
+                            valueLabel ||
+                            value.join(", ") ||
+                            placeholder
+                          : optionValuesAndLabels.get(value)?.displayName ||
+                            valueLabel ||
+                            value ||
+                            placeholder}
                       </span>
                       <span className="jn-flex">
                         {isValid ? (
@@ -353,6 +372,25 @@ export const Select = ({
   )
 }
 
+// Validator function to make sure the proptype of value is set accordingly when we use single or multi select
+const valuePropType = (props) => {
+  const { multiple, value } = props
+
+  // only validate if value is not undefined to avoid throwing an error when not necessary:
+  if (value) {
+    if (multiple && !Array.isArray(value)) {
+      return new Error(
+        "Invalid prop value supplied to Select component: Pass an array when using as a multi-select."
+      )
+    }
+    if (!multiple && typeof value !== "string") {
+      return new Error(
+        "Invalid prop value supplied to Select component: Pass a string when using as single select."
+      )
+    }
+  }
+}
+
 Select.propTypes = {
   /** Pass an aria-label to the Select toggle button */
   ariaLabel: PropTypes.string,
@@ -360,7 +398,7 @@ Select.propTypes = {
   children: PropTypes.node,
   /** Pass a custom className to the Select toggle button */
   className: PropTypes.string,
-  /** Pass a defaultValue to use as an uncontrolled component that handles its state internally */
+  /** Pass a defaultValue to use as an uncontrolled component that handles its state internally. When setting `multiple` on the Select pass an Array instead of a string.  */
   defaultValue: PropTypes.string,
   /** Whether the Select is disabled */
   disabled: PropTypes.bool,
@@ -378,6 +416,8 @@ Select.propTypes = {
   label: PropTypes.string,
   /** Whether the Select is busy loading options. Will show a Spinner in the Select toggle. */
   loading: PropTypes.bool,
+  /** Whether multiple options of the Select can be selected. When passing true, pass an array containing one or multiple options as `value` / `defaultValue` respectively. */
+  multiple: PropTypes.bool,
   /** Pass a name attribute to the Select to be transmitted when used in a form. */
   name: PropTypes.string,
   /** Handler to be executed when the selected value changes */
@@ -394,10 +434,10 @@ Select.propTypes = {
   truncateOptions: PropTypes.bool,
   /** Whether the Select was positively validated. Will show a green checkmark icon inside the Select toggle. */
   valid: PropTypes.bool,
-  /** The currently (pre-)selected value of the Select. Will trigger controlled mode. */
-  value: PropTypes.string,
+  /** The currently (pre-)selected value of the Select. Will trigger controlled mode. When setting `multiple` on the Select pass an Array instead of a string. */
+  value: valuePropType,
   /** The label of the passed value or defaultValue. If you want to use controlled mode or pass as defaultValue in uncontrolled mode and additionally use labels for
-   *  human-readable SelectOptions you need to also pass the matching label for the passed value/defaultValue so that the Select component can render itself properly */
+   *  human-readable SelectOptions you need to also pass the matching label for the passed value/defaultValue so that the Select component can render itself properly. */
   valueLabel: PropTypes.string,
   /** The semantic variant of the Select toggle button.*/
   variant: PropTypes.oneOf(["default", "primary", "primary-danger", "subdued"]),
@@ -418,6 +458,7 @@ Select.defaultProps = {
   invalid: false,
   label: undefined,
   loading: false,
+  multiple: false,
   name: undefined,
   onChange: undefined,
   onValueChange: undefined,

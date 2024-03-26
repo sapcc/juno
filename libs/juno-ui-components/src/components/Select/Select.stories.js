@@ -26,7 +26,7 @@ export default {
   },
   decorators: [
     (Story) => (
-      <div className="jn-pb-12">
+      <div className="jn-pb-12" style={{ minHeight: "250px" }}>
         <PortalProvider>
           <Story />
         </PortalProvider>
@@ -59,7 +59,7 @@ const ControlledTemplate = ({ value, children, ...args }) => {
   }
 
   return (
-    <Select value={v} valueLabel={args.valueLabel} onChange={handleChange}>
+    <Select {...args} value={v} onChange={handleChange}>
       {children}
     </Select>
   )
@@ -67,7 +67,6 @@ const ControlledTemplate = ({ value, children, ...args }) => {
 
 export const Default = {
   render: Template,
-
   args: {
     children: [
       <SelectOption key="1" value="Option 1" />,
@@ -347,6 +346,18 @@ export const OptionsWithLabels = {
   },
 }
 
+export const UncontrolledSelectWithDefaultValue = {
+  render: Template,
+  args: {
+    defaultValue: "Option 2",
+    children: [
+      <SelectOption key="1" value="Option 1" />,
+      <SelectOption key="2" value="Option 2" />,
+      <SelectOption key="3" value="Option 3" />,
+    ],
+  },
+}
+
 export const ControlledSelect = {
   render: ControlledTemplate,
 
@@ -466,6 +477,48 @@ export const WithChildrenOnly = {
       <SelectOption key="3">Option 3</SelectOption>,
       <SelectOption key="4">Option 4</SelectOption>,
       <SelectOption key="5">Option 5</SelectOption>,
+    ],
+  },
+}
+
+export const MultiSelect = {
+  render: Template,
+  args: {
+    multiple: true,
+    children: [
+      <SelectOption key="1">Option 1</SelectOption>,
+      <SelectOption key="2">Option 2</SelectOption>,
+      <SelectOption key="3">Option 3</SelectOption>,
+      <SelectOption key="4">Option 4</SelectOption>,
+      <SelectOption key="5">Option 5</SelectOption>,
+    ],
+  },
+}
+
+export const MultiSelectWithValue = {
+  render: ControlledTemplate,
+  args: {
+    multiple: true,
+    value: ["Option 1", "Option 3"],
+    children: [
+      <SelectOption key="1">Option 1</SelectOption>,
+      <SelectOption key="2">Option 2</SelectOption>,
+      <SelectOption key="3">Option 3</SelectOption>,
+      <SelectOption key="4">Option 4</SelectOption>,
+      <SelectOption key="5">Option 5</SelectOption>,
+    ],
+  },
+}
+
+export const MultiSelectWithOptionValuesAndLabels = {
+  render: ControlledTemplate,
+  args: {
+    multiple: true,
+    placeholder: "Select multiple…",
+    children: [
+      <SelectOption key="1" value="opt-1" label="Option 1" />,
+      <SelectOption key="2" value="opt-2" label="Option 2" />,
+      <SelectOption key="3" value="opt-3" label="Option 3" />,
     ],
   },
 }
