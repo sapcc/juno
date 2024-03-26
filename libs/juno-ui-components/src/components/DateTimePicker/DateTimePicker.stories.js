@@ -239,6 +239,7 @@ export const With24hTime = Template.bind({})
 With24hTime.args = {
   enableTime: true,
   time_24hr: true,
+  dateFormat: "Y-m-d H:i",
 }
 
 export const ShowTwoMonths = Template.bind({})
