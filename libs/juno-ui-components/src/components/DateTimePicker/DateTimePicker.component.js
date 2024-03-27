@@ -212,6 +212,26 @@ export const DateTimePicker = ({
     onClear && onClear([], "")
   }
 
+  // Function to determine the date format. Will return the dateFormat if passed as a prop, or a useful defaultFormat depending on whether the DateTimePicker is set to show the time, seconds, or no calendar at all (time picker only).
+  const getDateFormat = () => {
+    const defaultDateFormat = enableTime
+      ? noCalendar
+        ? enableSeconds
+          ? "H:i:S"
+          : "H:i"
+        : enableSeconds
+        ? "Y-m-d H:i:S"
+        : "Y-m-d H:i"
+      : "Y-m-d"
+
+    const theDateFormat =
+      dateFormat === undefined ? defaultDateFormat : dateFormat
+
+    return theDateFormat
+  }
+
+  const theDateFormat = getDateFormat()
+
   const createFlatpickrInstance = () => {
     const options = {
       allowInput: allowInput,
@@ -219,7 +239,7 @@ export const DateTimePicker = ({
       ariaDateFormat: ariaDateFormat,
       appendTo: calendarTargetRef.current,
       conjunction: conjunction,
-      dateFormat: dateFormat,
+      dateFormat: theDateFormat,
       defaultDate: defaultDate || defaultValue,
       defaultHour: defaultHour,
       defaultMinute: defaultMinute,
@@ -366,7 +386,8 @@ export const DateTimePicker = ({
   }, [conjunction])
 
   useEffect(() => {
-    flatpickrInstanceRef.current?.set("dateFormat", dateFormat)
+    const newDateFormat = getDateFormat()
+    flatpickrInstanceRef.current?.set("dateFormat", newDateFormat)
   }, [dateFormat])
 
   useEffect(() => {
@@ -544,13 +565,13 @@ DateTimePicker.propTypes = {
   className: PropTypes.string,
   /** A custom string to separate individual dates in `multiple` mode. */
   conjunction: PropTypes.string,
-  /** A string of characters to define how a date will be formatted in the input field. Available options: https://flatpickr.js.org/formatting/ */
+  /** A string of characters to customize how a date will be formatted in the input field. Available options: https://flatpickr.js.org/formatting/ */
   dateFormat: PropTypes.string,
   /** Sets the default date of the DateTimePicker. Same as `value`, only here for compatibility with the original Flatpickr library. If both `value` and `defaultDate` are being passed, `value` will win. Date Objects, timestamps, ISO date strings, chronological date strings `YYYY-MM-DD HH:MM` (must be compatible to current `dateFormat`), and the shortcut `today` are all accepted. */
   defaultDate: datePropType,
-  /** The initial value of the hour input element. Only effective if time is enabled. */
+  /** The initial value of the hour input element. Only effective if time is enabled. Note this will only set the hour input element to the value specified. Setting this options will not set a selected value on the DateTimePicker. */
   defaultHour: PropTypes.number,
-  /** The initial value of the minute input element. Only effective if time is enabled. */
+  /** The initial value of the minute input element. Only effective if time is enabled. Note this will only set the minute input element to the value specified. Setting this options will not set a selected value on the DateTimePicker. */
   defaultMinute: PropTypes.number,
   /** Same as value, defaultDate */
   defaultValue: datePropType,
@@ -636,7 +657,7 @@ DateTimePicker.defaultProps = {
   ariaDateFormat: "F j, Y",
   className: "",
   conjunction: ", ",
-  dateFormat: "Y-m-d",
+  dateFormat: undefined,
   defaultHour: 12,
   defaultMinute: 0,
   defaultDate: null,
@@ -654,7 +675,7 @@ DateTimePicker.defaultProps = {
   locale: null,
   maxDate: null,
   minDate: null,
-  minuteIncrement: 5,
+  minuteIncrement: 1,
   mode: "single",
   monthSelectorType: "static",
   name: "",
