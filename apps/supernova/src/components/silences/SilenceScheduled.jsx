@@ -214,10 +214,12 @@ const SilenceScheduled = (props) => {
   }
 
   const setStartDate = (e) => {
+    console.log("start date ", e)
     formState.startAt = new Date(e).toISOString()
   }
 
   const setEndDate = (e) => {
+    console.log("end date ", e)
     formState.endAt = new Date(e).toISOString()
   }
 
@@ -287,6 +289,7 @@ const SilenceScheduled = (props) => {
                       dateFormat="Y-m-d H:i"
                       label="Select a date"
                       enableTime
+                      time_24hr
                       required
                       onChange={setStartDate}
                     />
@@ -295,6 +298,7 @@ const SilenceScheduled = (props) => {
                       dateFormat="Y-m-d H:i"
                       label="Select a date"
                       enableTime
+                      time_24hr
                       required
                       onChange={setEndDate}
                     />
