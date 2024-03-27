@@ -25,7 +25,7 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@jspm/generator": "1.1.7",
+    "@jspm/generator": "1.1.12",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "es-module-lexer": "^1.4.1",
     "glob": "^8.1.0",
