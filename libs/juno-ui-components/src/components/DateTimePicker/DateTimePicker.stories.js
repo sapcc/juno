@@ -104,11 +104,12 @@ WithDefaultHourAndMinute.parameters = {
     },
   },
 }
-WithDefaultDateAndTime.args = {
+WithDefaultHourAndMinute.args = {
   defaultHour: 9,
   defaultMinute: 13,
   enableTime: true,
-  dateFormat: "Y-m-d H:i",
+  helptext:
+    "The hour and minute input elements in the dropdown calendar have been set to default values (09:13 AM).",
 }
 
 export const WithDefaultValue = Template.bind({})
@@ -129,7 +130,7 @@ WithValueAsDateString.parameters = {
   docs: {
     description: {
       story:
-        'Pass a string as a `value`, `defaultValue`, or `defaultDate` that is compatible with the current `dateFormat` prop, e.g. `"2024-01-24"` if the current `dateFormat` is `"Y-m-d"` (as is the default). The Datepicker component will not convert these.',
+        'Pass a string as a `value`, `defaultValue`, or `defaultDate` that is compatible with the current `dateFormat` prop, e.g. `"2024-01-24"` if the current `dateFormat` is `"Y-m-d"` (as is the default). The DateTimePicker component will not convert these.',
     },
   },
 }
@@ -176,6 +177,13 @@ WithValueAsTodayShortcut.args = {
   value: "today",
 }
 
+export const WithCustomDateFormat = Template.bind()
+WithCustomDateFormat.parameters = {}
+WithCustomDateFormat.args = {
+  value: "today",
+  dateFormat: "F d, Y",
+}
+
 export const WithTime = Template.bind({})
 WithTime.parameters = {
   docs: {
@@ -187,7 +195,6 @@ WithTime.parameters = {
 }
 WithTime.args = {
   enableTime: true,
-  dateFormat: "Y-m-d H:i",
 }
 
 export const WithTimeAndSeconds = Template.bind({})
@@ -202,7 +209,6 @@ WithTimeAndSeconds.parameters = {
 WithTimeAndSeconds.args = {
   enableTime: true,
   enableSeconds: true,
-  dateFormat: "Y-m-d H:i:S",
 }
 
 export const WithTimeWithCustomHourIncrement = Template.bind({})
@@ -217,7 +223,7 @@ WithTimeWithCustomHourIncrement.parameters = {
 WithTimeWithCustomHourIncrement.args = {
   enableTime: true,
   hourIncrement: 6,
-  dateFormat: "Y-m-d H:i",
+  helptext: "The hour input of this DateTimePicker has a 6 hour increment.",
 }
 
 export const WithTimeWithCustomMinuteIncrement = Template.bind({})
@@ -231,15 +237,22 @@ WithTimeWithCustomMinuteIncrement.parameters = {
 }
 WithTimeWithCustomMinuteIncrement.args = {
   enableTime: true,
-  minuteIncrement: 1,
-  dateFormat: "Y-m-d H:i",
+  minuteIncrement: 5,
+  helptext: "The minute input of this DateTimePicker has a 5 minute increment.",
 }
 
 export const With24hTime = Template.bind({})
+With24hTime.parameters = {
+  docs: {
+    description: {
+      story:
+        "Set the time picker to use 24h time mode without AM/PM selection.",
+    },
+  },
+}
 With24hTime.args = {
   enableTime: true,
   time_24hr: true,
-  dateFormat: "Y-m-d H:i",
 }
 
 export const ShowTwoMonths = Template.bind({})
@@ -345,7 +358,6 @@ TimePicker.args = {
   enableTime: true,
   noCalendar: true,
   enableSeconds: true,
-  dateFormat: "H:i:S",
 }
 
 export const WithMinDate = Template.bind({})

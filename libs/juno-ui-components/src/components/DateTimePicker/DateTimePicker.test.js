@@ -182,13 +182,7 @@ describe("DateTimePicker", () => {
   })
 
   test("renders a DateTimePicker with a time picker with seconds as passed", async () => {
-    render(
-      <DateTimePicker
-        enableTime={true}
-        enableSeconds={true}
-        dateFormat="Y-m-d H:i:S"
-      />
-    )
+    render(<DateTimePicker enableTime={true} enableSeconds={true} />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(document.querySelector(".flatpickr-time")).toBeInTheDocument()
     expect(screen.getByLabelText("Hour")).toBeInTheDocument()
@@ -236,6 +230,69 @@ describe("DateTimePicker", () => {
     render(<DateTimePicker dateFormat="F d Y" value={1706273787000} />)
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveValue("January 26 2024")
+  })
+
+  test("uses the default dateFormat (Y-m-d) in default (non-time picker) mode)", async () => {
+    const today = new Date()
+    const fullYear = today.getFullYear()
+    const month = (today.getMonth() + 1).toString().padStart(2, "0")
+    const day = today.getDate().toString().padStart(2, "0")
+    const todayAsString = `${fullYear}-${month}-${day}`
+    render(<DateTimePicker value={today} />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue(todayAsString)
+  })
+
+  test("uses the correct default dateFormat (Y-m-d H:i) in date-time-picker mode without seconds", async () => {
+    const now = new Date()
+    const fullYear = now.getFullYear()
+    const month = (now.getMonth() + 1).toString().padStart(2, "0")
+    const day = now.getDate().toString().padStart(2, "0")
+    const hours = now.getHours().toString().padStart(2, "0")
+    const minutes = now.getMinutes().toString().padStart(2, "0")
+    const nowAsString = `${fullYear}-${month}-${day} ${hours}:${minutes}`
+    render(<DateTimePicker enableTime value={now} />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue(nowAsString)
+  })
+
+  test("uses the correct default dateFormat (Y-m-d H:i:S) in date-time-picker mode with seconds enabled", async () => {
+    const now = new Date()
+    const fullYear = now.getFullYear()
+    const month = (now.getMonth() + 1).toString().padStart(2, "0")
+    const day = now.getDate().toString().padStart(2, "0")
+    const hours = now.getHours().toString().padStart(2, "0")
+    const minutes = now.getMinutes().toString().padStart(2, "0")
+    const seconds = now.getSeconds().toString().padStart(2, "0")
+    const nowAsStringWithSeconds = `${fullYear}-${month}-${day} ${hours}:${minutes}:${seconds}`
+    render(<DateTimePicker enableTime enableSeconds value={now} />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue(nowAsStringWithSeconds)
+  })
+
+  test("uses the correct default dateFormat (H:i) in time-picker-only mode without seconds", async () => {
+    const now = new Date()
+    const hours = now.getHours().toString().padStart(2, "0")
+    const minutes = now.getMinutes().toString().padStart(2, "0")
+    const nowAsStringWithOnlyHoursAndMinutes = `${hours}:${minutes}`
+    render(<DateTimePicker enableTime noCalendar value={now} />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue(
+      nowAsStringWithOnlyHoursAndMinutes
+    )
+  })
+
+  test("uses the correct defaultDateFormat (H:i:S) in time-picker-only mode with seconds enabled", async () => {
+    const now = new Date()
+    const hours = now.getHours().toString().padStart(2, "0")
+    const minutes = now.getMinutes().toString().padStart(2, "0")
+    const seconds = now.getSeconds().toString().padStart(2, "0")
+    const nowAsStringWithOnlyHoursMinutesAndSeconds = `${hours}:${minutes}:${seconds}`
+    render(<DateTimePicker enableTime enableSeconds noCalendar value={now} />)
+    expect(screen.getByRole("textbox")).toBeInTheDocument()
+    expect(screen.getByRole("textbox")).toHaveValue(
+      nowAsStringWithOnlyHoursMinutesAndSeconds
+    )
   })
 
   test("displays the date as passed as defaultDate instead of value or defaultDate", async () => {
