@@ -1,51 +1,35 @@
-import React from 'react';
-import { Breadcrumb } from './index';
-import { BreadcrumbItem } from '../BreadcrumbItem/index';
-import { Default as Item } from '../BreadcrumbItem/BreadcrumbItem.stories';
-import { Home as HomeItem } from '../BreadcrumbItem/BreadcrumbItem.stories';
-import { Active as ActiveItem } from '../BreadcrumbItem/BreadcrumbItem.stories';
-import { Disabled as DisabledItem } from '../BreadcrumbItem/BreadcrumbItem.stories';
-import { WithIcon as ItemWithIcon } from '../BreadcrumbItem/BreadcrumbItem.stories';
+import React from "react"
+import { Breadcrumb } from "./index"
+import { BreadcrumbItem } from "../BreadcrumbItem/index"
+// import { Default as Item } from '../BreadcrumbItem/BreadcrumbItem.stories';
+// import { Home as HomeItem } from '../BreadcrumbItem/BreadcrumbItem.stories';
+// import { Active as ActiveItem } from '../BreadcrumbItem/BreadcrumbItem.stories';
+// import { Disabled as DisabledItem } from '../BreadcrumbItem/BreadcrumbItem.stories';
+// import { WithIcon as ItemWithIcon } from '../BreadcrumbItem/BreadcrumbItem.stories';
 
 const Template = ({ children, ...args }) => {
-  return (
-    <Breadcrumb {...args}>
-      {children.map((child, i) => (
-        <BreadcrumbItem {...child} key={i} />
-      ))}
-    </Breadcrumb>
-  );
-};
+  return <Breadcrumb {...args}>{children}</Breadcrumb>
+}
 
 export default {
-  title: 'Components/Breadcrumb/Breadcrumb',
+  title: "Components/Breadcrumb/Breadcrumb",
   component: Breadcrumb,
   argTypes: {
     children: {
       control: false,
     },
   },
-};
+}
 
 export const Default = {
   render: Template,
-
-  parameters: {
-    docs: {
-      description: {
-        story:
-          'Generic breadcrumb component. Use this to Wrap `Breadcrumb` items or custom children in a breadcrumb.',
-      },
-    },
-  },
-
   args: {
     children: [
-      { ...HomeItem.args },
-      { ...Item.args },
-      { ...ItemWithIcon.args },
-      { ...DisabledItem.args },
-      { ...ActiveItem.args },
+      <BreadcrumbItem key="1" label="" icon="home" />,
+      <BreadcrumbItem key="2" label="Breadcrumb Item" />,
+      <BreadcrumbItem key="3" label="Breadcrumb Item with Icon" icon="place" />,
+      <BreadcrumbItem key="4" label="Disabled Item " disabled />,
+      <BreadcrumbItem key="5" label="Active Item" active />,
     ],
   },
-};
+}

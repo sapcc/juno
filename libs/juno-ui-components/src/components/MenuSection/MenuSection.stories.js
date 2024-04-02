@@ -1,11 +1,10 @@
-import React from 'react';
-import { MenuSection } from './index.js';
-import { Menu } from '../Menu/index.js';
-import { MenuItem } from '../MenuItem/index.js';
-import { Default as MenuItemDefaultStory } from '../MenuItem/MenuItem.stories.js';
+import React from "react"
+import { MenuSection } from "./index.js"
+import { Menu } from "../Menu/index.js"
+import { MenuItem } from "../MenuItem/index.js"
 
 export default {
-  title: 'WiP/Menu/MenuSection',
+  title: "WiP/Menu/MenuSection",
   component: MenuSection,
   argTypes: {
     items: {
@@ -17,32 +16,24 @@ export default {
       control: false,
     },
   },
-};
+}
 
-const Template = ({ items, ...args }) => (
+const Template = ({ children, ...args }) => (
   <Menu>
-    <MenuSection {...args}>
-      {items.map((item, i) => (
-        <MenuItem {...item} key={i} />
-      ))}
-    </MenuSection>
-    <MenuSection {...args}>
-      {items.map((item, i) => (
-        <MenuItem {...item} key={i} />
-      ))}
-    </MenuSection>
+    <MenuSection {...args}>{children}</MenuSection>
+    <MenuSection {...args}>{children}</MenuSection>
   </Menu>
-);
+)
 
 export const Default = {
   render: Template,
 
   args: {
-    title: 'Menu Section',
-    items: [
-      { ...MenuItemDefaultStory.args },
-      { ...MenuItemDefaultStory.args },
-      { ...MenuItemDefaultStory.args },
+    title: "Menu Section",
+    children: [
+      <MenuItem>Menu Item 1</MenuItem>,
+      <MenuItem>Menu Item 2</MenuItem>,
+      <MenuItem>Menu Item 3</MenuItem>,
     ],
   },
-};
+}

@@ -1,10 +1,9 @@
-import React from 'react';
-import { TabList } from './index.js';
-import { Tab } from '../Tab/index.js';
-import { Default as DefaultTabStory } from '../Tab/Tab.stories.js';
+import React from "react"
+import { TabList } from "./index.js"
+import { Tab } from "../Tab/index.js"
 
 export default {
-  title: 'Layout/Tabs/TabList',
+  title: "Layout/Tabs/TabList",
   component: TabList,
   argTypes: {
     children: {
@@ -16,41 +15,35 @@ export default {
       },
     },
   },
-};
+}
 
-const Template = ({ tabs, ...args }) => (
-  <TabList {...args}>
-    {tabs.map((tab, i) => (
-      <Tab label={`Tab ${i}`} key={`tab-${i}`} disabled={tab.disabled} {...tab} />
-    ))}
-  </TabList>
-);
+const Template = ({ children, ...args }) => (
+  <TabList {...args}>{children}</TabList>
+)
 
 export const Default = {
   render: Template,
 
-  parameters: {},
-
   args: {
-    tabs: [
-      { ...DefaultTabStory.args },
-      { ...DefaultTabStory.args },
-      { ...DefaultTabStory.args },
-      { ...DefaultTabStory.args, disabled: true },
+    children: [
+      <Tab key="t-1" label="Tab 1" />,
+      <Tab key="t-2" label="Tab 2" selected />,
+      <Tab key="t-3" label="Tab 3" />,
+      <Tab key="t-4" label="Disabled Tab" disabled />,
     ],
   },
-};
+}
 
 export const MainTabList = {
   render: Template,
 
   args: {
-    variant: 'main',
-    tabs: [
-      { ...DefaultTabStory.args },
-      { ...DefaultTabStory.args },
-      { ...DefaultTabStory.args },
-      { ...DefaultTabStory.args, disabled: true },
+    variant: "main",
+    children: [
+      <Tab key="t-1" label="Tab 1" />,
+      <Tab key="t-2" label="Tab 2" selected />,
+      <Tab key="t-3" label="Tab 3" />,
+      <Tab key="t-4" label="Disabled Tab" disabled />,
     ],
   },
-};
+}

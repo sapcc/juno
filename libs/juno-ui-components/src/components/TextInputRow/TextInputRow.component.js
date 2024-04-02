@@ -2,7 +2,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { TextInput } from "../TextInput/index.js"
 import { FormRow } from "../FormRow/index.js"
-import { withDeprecationWarning } from '../withDeprecationWarning/index.js'
+import { withDeprecationWarning } from "../withDeprecationWarning/index.js"
 
 /** DEPRECATED: A text input row containing an input of type text, password, email, tel, or url, an associated label, and necessary structural markup. This component is DEPRECATED, use TextInput instead. */
 const TextInputRow = ({
@@ -95,22 +95,25 @@ TextInputRow.propTypes = {
 TextInputRow.defaultProps = {
   type: null,
   value: "",
-  name: null,
-  label: null,
-  id: null,
-  placeholder: null,
-  helptext: null,
-  required: null,
+  name: "",
+  label: "",
+  id: "",
+  placeholder: "",
+  helptext: "",
+  required: false,
   invalid: false,
   errortext: "",
   valid: false,
   successtext: "",
   autoFocus: false,
   className: "",
-  disabled: null,
+  disabled: false,
   onChange: undefined,
   onFocus: undefined,
   onBlur: undefined,
 }
 
-export default withDeprecationWarning(TextInputRow, "TextInputRow is deprecated and will be removed in future versions. To be future-proof, use TextInput instead.")
+export default withDeprecationWarning(
+  TextInputRow,
+  "TextInputRow is deprecated and will be removed in future versions. To be future-proof, use TextInput instead."
+)

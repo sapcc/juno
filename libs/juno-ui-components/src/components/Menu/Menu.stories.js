@@ -1,11 +1,10 @@
-import React from 'react';
-import { Menu } from './index.js';
-import { MenuItem } from '../MenuItem/index.js';
-import { MenuSection } from '../MenuSection/index.js';
-import { Default as MenuItemDefaultStory } from '../MenuItem/MenuItem.stories.js';
+import React from "react"
+import { Menu } from "./index.js"
+import { MenuItem } from "../MenuItem/index.js"
+import { MenuSection } from "../MenuSection/index.js"
 
 export default {
-  title: 'WiP/Menu',
+  title: "WiP/Menu",
   component: Menu,
   argTypes: {
     items: {
@@ -17,9 +16,9 @@ export default {
       control: false,
     },
   },
-};
+}
 
-const Template = ({ children, ...args }) => <Menu {...args}>{children}</Menu>;
+const Template = ({ children, ...args }) => <Menu {...args}>{children}</Menu>
 
 export const Default = {
   render: Template,
@@ -28,7 +27,11 @@ export const Default = {
     children: [
       <MenuItem label="Label only" key="1" />,
       <MenuItem label="Label with Icon" icon="help" key="2" />,
-      <MenuItem label="Item with a Link" href="https://github.com/sapcc/juno" key="3" />,
+      <MenuItem
+        label="Item with a Link"
+        href="https://github.com/sapcc/juno"
+        key="3"
+      />,
       <MenuItem
         label="Item with a Link and icon"
         href="https://github.com/sapcc/juno"
@@ -44,17 +47,21 @@ export const Default = {
       />,
     ],
   },
-};
+}
 
 export const Small = {
   render: Template,
 
   args: {
-    variant: 'small',
+    variant: "small",
     children: [
       <MenuItem label="Label only" key="1" />,
       <MenuItem label="Label with Icon" icon="help" key="2" />,
-      <MenuItem label="Item with a Link" href="https://github.com/sapcc/juno" key="3" />,
+      <MenuItem
+        label="Item with a Link"
+        href="https://github.com/sapcc/juno"
+        key="3"
+      />,
       <MenuItem
         label="Item with a Link and icon"
         href="https://github.com/sapcc/juno"
@@ -70,7 +77,7 @@ export const Small = {
       />,
     ],
   },
-};
+}
 
 export const WithASection = {
   render: Template,
@@ -82,7 +89,11 @@ export const WithASection = {
         <MenuItem label="Label with Icon" icon="help" key="2" />
       </MenuSection>,
       <MenuSection title="Danger Zone" key="m2">
-        <MenuItem label="Item with a Link" href="https://github.com/sapcc/juno" key="3" />
+        <MenuItem
+          label="Item with a Link"
+          href="https://github.com/sapcc/juno"
+          key="3"
+        />
         <MenuItem
           label="Item with a Link and icon"
           href="https://github.com/sapcc/juno"
@@ -99,4 +110,4 @@ export const WithASection = {
       </MenuSection>,
     ],
   },
-};
+}
