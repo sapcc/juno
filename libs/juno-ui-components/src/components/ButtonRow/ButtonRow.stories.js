@@ -1,11 +1,9 @@
-import React from 'react';
-import { ButtonRow } from './index.js';
-import { Button } from '../Button/index.js';
-// import Button stories:
-import { Default as ButtonStory } from '../Button/Button.stories';
+import React from "react"
+import { ButtonRow } from "./index.js"
+import { Button } from "../Button/index.js"
 
 export default {
-  title: 'Forms/ButtonRow',
+  title: "Forms/ButtonRow",
   component: ButtonRow,
   argTypes: {
     items: {
@@ -17,33 +15,20 @@ export default {
       control: false,
     },
   },
-};
+}
 
-const Template = ({ items, ...args }) => (
-  <ButtonRow {...args}>
-    {items.map((item, i) => (
-      <Button {...item} key={`${i}`} />
-    ))}
-  </ButtonRow>
-);
+const Template = ({ children, ...args }) => (
+  <ButtonRow {...args}>{children}</ButtonRow>
+)
 
 export const Default = {
   render: Template,
 
   args: {
-    name: 'Default ButtonRow',
-    items: [
-      {
-        ...ButtonStory.args,
-        label: 'Cancel',
-        title: "Cancel whatever you're doing",
-      },
-      {
-        ...ButtonStory.args,
-        label: 'Save',
-        title: "Save whatever you've been doing",
-        variant: 'primary',
-      },
+    name: "Default ButtonRow",
+    children: [
+      <Button label="Cancel" title="Cancel" />,
+      <Button label="Save" title="Save" variant="primary" />,
     ],
   },
-};
+}
