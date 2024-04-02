@@ -1,20 +1,17 @@
-import React from 'react';
-import { Tabs } from './index.js';
-import { Tab } from '../Tab/index.js';
-import { Default as DefaultTabStory } from '../Tab/Tab.stories.js';
-import { TabList } from '../TabList/index.js';
-import { Default as DefaultTabListStory } from '../TabList/TabList.stories.js';
-import { TabPanel } from '../TabPanel/index.js';
-import { Default as DefaultTabPanelStory } from '../TabPanel/TabPanel.stories.js';
+import React, { useState, useEffect } from "react"
+import { Tabs } from "./index.js"
+import { Tab } from "../Tab/index.js"
+import { TabList } from "../TabList/index.js"
+import { TabPanel } from "../TabPanel/index.js"
 
 export default {
-  title: 'Layout/Tabs/Tabs',
+  title: "Layout/Tabs/Tabs",
   component: Tabs,
   argTypes: {
     variant: {
-      options: ['content', 'main'],
+      options: ["content", "main"],
       control: {
-        type: 'radio',
+        type: "radio",
       },
     },
     children: {
@@ -31,70 +28,98 @@ export default {
       },
     },
   },
-};
+}
 
 const Template = ({ tabs, tabpanels, ...args }) => (
   <Tabs {...args}>
-    <TabList>
-      {tabs.map((tab, t) => (
-        <Tab {...tab} key={`t-${t}`}></Tab>
-      ))}
-    </TabList>
-    {tabpanels.map((tabpanel, p) => (
-      <TabPanel {...tabpanel} key={`p-${p}`}></TabPanel>
-    ))}
+    <TabList>{tabs}</TabList>
+    {tabpanels}
   </Tabs>
-);
+)
+
+const ControlledTemplate = ({
+  selectedIndex,
+  onSelect,
+  tabs,
+  tabpanels,
+  ...args
+}) => {
+  const [i, setI] = useState(0)
+
+  useEffect(() => {
+    setI(selectedIndex)
+  }, [selectedIndex])
+
+  const handleSelect = (idx) => {
+    setI(idx)
+    onSelect && onSelect(idx)
+  }
+
+  return (
+    <Tabs {...args} selectedIndex={i} onSelect={handleSelect}>
+      <TabList>{tabs}</TabList>
+      {tabpanels}
+    </Tabs>
+  )
+}
 
 export const Default = {
   render: Template,
 
   args: {
     tabs: [
-      { ...DefaultTabStory.args, children: 'Tab 1' },
-      { ...DefaultTabStory.args, children: 'Tab 2' },
-      { ...DefaultTabStory.args, children: 'Tab 3' },
+      <Tab key="t-1">Tab 1</Tab>,
+      <Tab key="t-2">Tab 2</Tab>,
+      <Tab key="t-3">Tab 3</Tab>,
     ],
     tabpanels: [
-      { ...DefaultTabPanelStory.args, children: 'Tab 1 panel content' },
-      { ...DefaultTabPanelStory.args, children: 'Tab 2 panel content' },
-      { ...DefaultTabPanelStory.args, children: 'Tab 3 panel content' },
+      <TabPanel key="tp-1">Content 1</TabPanel>,
+      <TabPanel key="tp-2">Content 2</TabPanel>,
+      <TabPanel key="tp-3">Content 3</TabPanel>,
+      ,
     ],
   },
-};
+}
 
 export const TabsWithIcons = {
   render: Template,
 
   args: {
     tabs: [
-      { ...DefaultTabStory.args, children: 'Warning', icon: 'warning' },
-      { ...DefaultTabStory.args, children: 'Danger', icon: 'danger' },
-      { ...DefaultTabStory.args, children: 'Info', icon: 'info' },
+      <Tab key="t-1" icon="warning">
+        Warning
+      </Tab>,
+      <Tab key="t-2" icon="danger">
+        Danger
+      </Tab>,
+      <Tab key="t-3" icon="info">
+        Info
+      </Tab>,
     ],
     tabpanels: [
-      { ...DefaultTabPanelStory.args, children: 'Warning content' },
-      { ...DefaultTabPanelStory.args, children: 'Danger content' },
-      { ...DefaultTabPanelStory.args, children: 'Info content' },
+      <TabPanel key="tp-1">Warning Content</TabPanel>,
+      <TabPanel key="tp-1">Danger Content</TabPanel>,
+      <TabPanel key="tp-1">Info Content</TabPanel>,
     ],
   },
-};
+}
 
 export const ControlledTabs = {
-  render: Template,
+  render: ControlledTemplate,
 
   args: {
     tabs: [
-      { ...DefaultTabStory.args, children: 'Controlled Tab 1' },
-      { ...DefaultTabStory.args, children: 'Controlled Tab 2' },
-      { ...DefaultTabStory.args, children: 'Controlled Tab 3' },
+      <Tab key="t-1">Tab 1</Tab>,
+      <Tab key="t-2">Tab 2</Tab>,
+      <Tab key="t-3">Tab 3</Tab>,
     ],
     tabpanels: [
-      { ...DefaultTabPanelStory.args, children: 'Tab 1 panel content' },
-      { ...DefaultTabPanelStory.args, children: 'Tab 2 panel content' },
-      { ...DefaultTabPanelStory.args, children: 'Tab 3 panel content' },
+      <TabPanel key="tp-1">Content 1</TabPanel>,
+      <TabPanel key="tp-2">Content 2</TabPanel>,
+      <TabPanel key="tp-3">Content 3</TabPanel>,
     ],
     selectedIndex: 1,
     defaultIndex: null,
+    onSelect: () => {},
   },
-};
+}

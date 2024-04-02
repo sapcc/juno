@@ -62,15 +62,9 @@ export const Default = {
 
   args: {
     tabs: [
-      <Tab key="t-1" data-index="0">
-        MainTab 1
-      </Tab>,
-      <Tab key="t-2" data-index="1">
-        MainTab 2
-      </Tab>,
-      <Tab key="t-3" data-index="2">
-        MainTab 3
-      </Tab>,
+      <Tab key="t-1">MainTab 1</Tab>,
+      <Tab key="t-2">MainTab 2</Tab>,
+      <Tab key="t-3">MainTab 3</Tab>,
     ],
     tabpanels: [
       <TabPanel key="tp-1">TabPanel 1</TabPanel>,

@@ -4,7 +4,6 @@ import { Icon } from "../Icon/index.js"
 import { knownIcons } from "../Icon/Icon.component.js"
 import PropTypes from "prop-types"
 
-
 const tabStyles = `
 	jn-flex
 	jn-font-bold
@@ -32,48 +31,41 @@ const iconStyles = `
 
 
 */
-const Tab = ({
-	children,
-	label,
-	icon,
-	disabled,
-	className,
-	...props
-}) => {
-	
-	return (
-		<ReactTab 
-			className={`juno-tab ${tabStyles} ${className}`}
-			disabledClassName={`juno-tab-disabled ${disabledTabStyles}`}
-			selectedClassName={`juno-tab-selected ${selectedTabStyles}`}
-			disabled={disabled}
-			{...props} >
-			{ icon ? <Icon icon={icon} size="18" className={`${iconStyles}`} /> : null }
-			{ children || label }
-		</ReactTab>
-	)
+const Tab = ({ children, label, icon, disabled, className, ...props }) => {
+  return (
+    <ReactTab
+      className={`juno-tab ${tabStyles} ${className}`}
+      disabledClassName={`juno-tab-disabled ${disabledTabStyles}`}
+      selectedClassName={`juno-tab-selected ${selectedTabStyles}`}
+      disabled={disabled}
+      {...props}
+    >
+      {icon ? <Icon icon={icon} size="18" className={`${iconStyles}`} /> : null}
+      {children || label}
+    </ReactTab>
+  )
 }
 
-Tab.tabsRole = 'Tab'
+Tab.tabsRole = "Tab"
 
 Tab.propTypes = {
-	/** The children to render inside the Tab (-button) */
-	children: PropTypes.node,
-	/** The Tab label (only rendered when no children are supplied) */
-	label: PropTypes.string,
-	/** Pass the name of an icon to render in the Tab. Can be any icon included with Juno. */
-	icon: PropTypes.oneOf(knownIcons),
-	/** Whether the Tab is disabled */
-	disabled: PropTypes.bool,
-	/** Add custom classNames to the Tab */
-	className: PropTypes.string,
+  /** The children to render inside the Tab (-button) */
+  children: PropTypes.node,
+  /** The Tab label (only rendered when no children are supplied) */
+  label: PropTypes.string,
+  /** Pass the name of an icon to render in the Tab. Can be any icon included with Juno. */
+  icon: PropTypes.oneOf(knownIcons),
+  /** Whether the Tab is disabled */
+  disabled: PropTypes.bool,
+  /** Add custom classNames to the Tab */
+  className: PropTypes.string,
 }
 
 Tab.defaultProps = {
-	children: null,
-	label: "",
-	disabled: false,
-	className: "",
+  children: null,
+  label: "",
+  disabled: false,
+  className: "",
 }
 
 export { Tab }
