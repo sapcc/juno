@@ -1,19 +1,10 @@
-import React from 'react';
-import { NativeSelect } from './index.js';
-import { NativeSelectOption } from '../NativeSelectOption/index.js';
-import { NativeSelectOptionGroup } from '../NativeSelectOptionGroup/index.js';
-
-import {
-  Default as DefaultSelectOption,
-  Disabled as DisabledSelectOption,
-} from '../NativeSelectOption/NativeSelectOption.stories';
-import {
-  Default as DefaultSelectOptionGroup,
-  Disabled as DisabledSelectOptionGroup,
-} from '../NativeSelectOptionGroup/NativeSelectOptionGroup.stories';
+import React from "react"
+import { NativeSelect } from "./index.js"
+import { NativeSelectOption } from "../NativeSelectOption/index.js"
+import { NativeSelectOptionGroup } from "../NativeSelectOptionGroup/index.js"
 
 export default {
-  title: 'Forms/NativeSelect/NativeSelect',
+  title: "Forms/NativeSelect/NativeSelect",
   component: NativeSelect,
   argTypes: {
     options: {
@@ -25,99 +16,95 @@ export default {
       control: false,
     },
   },
-};
+}
 
-const NativeSelectTemplate = ({ options, ...args }) => (
-  <NativeSelect {...args}>
-    {options.map((option, i) => (
-      <NativeSelectOption {...option} key={`option-${i}`} />
-    ))}
-  </NativeSelect>
-);
+const Template = ({ children, ...args }) => (
+  <NativeSelect {...args}>{children}</NativeSelect>
+)
 
-const GroupedNativeSelectTemplate = ({ groups, ...args }) => (
-  <NativeSelect {...args}>
-    {groups.map((group, i) => (
-      <NativeSelectOptionGroup {...group} key={`group-${i}`}>
-        {group.options.map((option, i) => (
-          <NativeSelectOption {...option} key={`option-${i}`} />
-        ))}
-      </NativeSelectOptionGroup>
-    ))}
-  </NativeSelect>
-);
-
-export const SimpleNativeSelect = {
-  render: NativeSelectTemplate,
+export const Default = {
+  render: Template,
 
   args: {
-    name: 'Simple-Select',
-    options: [DefaultSelectOption.args, DefaultSelectOption.args, DisabledSelectOption.args],
+    children: [
+      <NativeSelectOption value="o-1" label="Option 1" />,
+      <NativeSelectOption value="o-2" label="Option 2" />,
+      <NativeSelectOption value="o-3" label="Option 3" />,
+    ],
   },
-};
+}
 
-export const DisabledSimpleNativeSelect = {
-  render: NativeSelectTemplate,
+export const GroupedNativeSelect = {
+  render: Template,
 
   args: {
-    name: 'Disabled-Simple-Select',
-    options: [DefaultSelectOption.args, DefaultSelectOption.args, DisabledSelectOption.args],
+    children: [
+      <NativeSelectOptionGroup label="Option Group 1">
+        <NativeSelectOption value="o-1" label="Option 1" />
+        <NativeSelectOption value="o-2" label="Option 2" />
+        <NativeSelectOption value="o-3" label="Option 3" />
+      </NativeSelectOptionGroup>,
+      <NativeSelectOptionGroup label="Option Group 2">
+        <NativeSelectOption value="o-4" label="Option 4" />
+        <NativeSelectOption value="o-5" label="Option 5" />
+      </NativeSelectOptionGroup>,
+    ],
+  },
+}
+
+export const DisabledNativeSelect = {
+  render: Template,
+
+  args: {
     disabled: true,
+    children: [
+      <NativeSelectOption value="o-1" label="Option 1" />,
+      <NativeSelectOption value="o-2" label="Option 2" />,
+      <NativeSelectOption value="o-3" label="Option 3" />,
+    ],
   },
-};
+}
 
 export const InvalidNativeSelect = {
-  render: NativeSelectTemplate,
+  render: Template,
 
   args: {
     invalid: true,
-    options: [DefaultSelectOption.args, DisabledSelectOption.args],
+    children: [
+      <NativeSelectOption value="o-1" label="Option 1" />,
+      <NativeSelectOption value="o-2" label="Option 2" />,
+      <NativeSelectOption value="o-3" label="Option 3" />,
+    ],
   },
-};
+}
 
 export const ValidNativeSelect = {
-  render: NativeSelectTemplate,
+  render: Template,
 
   args: {
     valid: true,
-    options: [DefaultSelectOption.args, DisabledSelectOption.args],
-  },
-};
-
-export const GroupedNativeSelect = {
-  render: GroupedNativeSelectTemplate,
-
-  args: {
-    name: 'Grouped-Select',
-    groups: [
-      {
-        label: 'My option group',
-        options: [DefaultSelectOption.args, DisabledSelectOption.args],
-      },
-      {
-        label: 'My other option group',
-        options: [DefaultSelectOption.args],
-      },
+    children: [
+      <NativeSelectOption value="o-1" label="Option 1" />,
+      <NativeSelectOption value="o-2" label="Option 2" />,
+      <NativeSelectOption value="o-3" label="Option 3" />,
     ],
   },
-};
+}
 
 export const LoadingNativeSelect = {
-  render: NativeSelectTemplate,
+  render: Template,
 
   args: {
-    name: 'Loading Select',
-    options: [],
     loading: true,
+    children: [],
   },
-};
+}
 
 export const NativeSelectWithError = {
-  render: NativeSelectTemplate,
+  render: Template,
 
   args: {
-    name: 'Select with Error',
-    options: [],
     error: true,
+    children: [],
   },
-};
+}
