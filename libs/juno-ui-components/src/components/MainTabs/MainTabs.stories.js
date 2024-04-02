@@ -1,14 +1,11 @@
-import React from 'react';
-import { MainTabs } from './index.js';
-import { Tab } from '../Tab/index.js';
-import { Default as TabStory } from '../Tab/Tab.stories.js';
-import { TabList } from '../TabList/index.js';
-import { Default as TabListStory } from '../TabList/TabList.stories.js';
-import { TabPanel } from '../TabPanel/index.js';
-import { Default as TabPanelStory } from '../TabPanel/TabPanel.stories.js';
+import React, { useState, useEffect } from "react"
+import { MainTabs } from "./index.js"
+import { Tab } from "../Tab/index.js"
+import { TabList } from "../TabList/index.js"
+import { TabPanel } from "../TabPanel/index.js"
 
 export default {
-  title: 'Layout/Tabs/MainTabs',
+  title: "Layout/Tabs/MainTabs",
   component: MainTabs,
   argTypes: {
     children: {
@@ -25,53 +22,79 @@ export default {
       },
     },
   },
-};
+}
 
 const Template = ({ tabs, tabpanels, ...args }) => (
   <MainTabs {...args}>
-    <TabList>
-      {tabs.map((tab, t) => (
-        <Tab {...tab} key={`tab-${t}`}></Tab>
-      ))}
-    </TabList>
-    {tabpanels.map((panel, p) => (
-      <TabPanel {...panel} key={`panel-${p}`}></TabPanel>
-    ))}
+    <TabList>{tabs}</TabList>
+    {tabpanels}
   </MainTabs>
-);
+)
+
+const ControlledTemplate = ({
+  onSelect,
+  selectedIndex,
+  tabs,
+  tabpanels,
+  ...args
+}) => {
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    setIndex(selectedIndex)
+  }, [selectedIndex])
+
+  const handleSelect = (idx) => {
+    setIndex(idx)
+    onSelect && onSelect(idx)
+  }
+
+  return (
+    <MainTabs {...args} selectedIndex={index} onSelect={handleSelect}>
+      <TabList>{tabs}</TabList>
+      {tabpanels}
+    </MainTabs>
+  )
+}
 
 export const Default = {
   render: Template,
 
   args: {
     tabs: [
-      { ...TabStory.args, children: 'MainTab 1' },
-      { ...TabStory.args, children: 'MainTab 2' },
-      { ...TabStory.args, children: 'MainTab 3' },
+      <Tab key="t-1" data-index="0">
+        MainTab 1
+      </Tab>,
+      <Tab key="t-2" data-index="1">
+        MainTab 2
+      </Tab>,
+      <Tab key="t-3" data-index="2">
+        MainTab 3
+      </Tab>,
     ],
     tabpanels: [
-      { ...TabPanelStory.args, children: 'MainTab Panel 1' },
-      { ...TabPanelStory.args, children: 'MainTab Panel 2' },
-      { ...TabPanelStory.args, children: 'MainTab Panel 3' },
+      <TabPanel key="tp-1">TabPanel 1</TabPanel>,
+      <TabPanel key="tp-2">TabPanel 2</TabPanel>,
+      <TabPanel key="tp-3">TabPanel 3</TabPanel>,
     ],
   },
-};
+}
 
 export const Controlled = {
-  render: Template,
+  render: ControlledTemplate,
 
   args: {
     tabs: [
-      { ...TabStory.args, children: 'Controlled MainTab 1' },
-      { ...TabStory.args, children: 'Controlled MainTab 2' },
-      { ...TabStory.args, children: 'Controlled MainTab 3' },
+      <Tab key="t-1">Controlled MainTab 1</Tab>,
+      <Tab key="t-2">Controlled MainTab 2</Tab>,
+      <Tab key="t-3">Controlled MainTab 3</Tab>,
     ],
     tabpanels: [
-      { ...TabPanelStory.args, children: 'Controlled MainTab Panel 1' },
-      { ...TabPanelStory.args, children: 'Controlled MainTab Panel 2' },
-      { ...TabPanelStory.args, children: 'Controlled MainTab Panel 3' },
+      <TabPanel key="tp-1">TabPanel 1</TabPanel>,
+      <TabPanel key="tp-2">TabPanel 2</TabPanel>,
+      <TabPanel key="tp-3">TabPanel 3</TabPanel>,
     ],
     selectedIndex: 1,
     defaultIndex: null,
   },
-};
+}
