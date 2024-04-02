@@ -34,7 +34,7 @@ import PropTypes from "prop-types"
 
 /**
  * Functional component which creates and inserts a shadow dom element
- * in to the current parent element. If styles are given, these and
+ * in to the current parent element. ShadowRoot allows html to be isolated from the rest of the DOM. If styles are given, these and
  * the children are added to the shadow element. The themeClass is added to a wrapper div surrounding the children.
  * @param {Object} props
  * @returns {function} component
@@ -63,8 +63,10 @@ export const ShadowRoot = ({ mode, delegatesFocus, children }) => {
 
 // define accepted properties
 ShadowRoot.propTypes = {
+  /** Choose "closed" to prevent styles from being inherited from the parent node. */
   mode: PropTypes.oneOf(["open", "closed"]),
   delegatesFocus: PropTypes.bool,
+  /** The children to render */
   children: PropTypes.node,
 }
 

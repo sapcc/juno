@@ -1,9 +1,3 @@
-/**
- * This module implements the style provider component.
- * It accepts the property 'stylesWrapper' which decides where
- * to place the ui-components styles.
- * @module StyleProvider
- */
 import React, { useCallback, useRef } from "react"
 import PropTypes from "prop-types"
 import { ShadowRoot } from "../ShadowRoot/index"
@@ -15,13 +9,13 @@ import GlobalStyles, { styles } from "./GlobalStyles"
 const StylesContext = React.createContext()
 
 const APP_BODY_CSS_CLASS_NAME = "juno-app-body"
+
 /**
- * Functional component wich inserts the ui styles. It also creates a
+ * Component wich inserts the ui styles. It also creates a
  * shadow dom element with styes inside it if 'stylesWrapper' is equal
  * to "shadowRoot".
  * Accepted values for 'stylesWrapper' are 'head', 'inline' and 'shadowRoot'.
- * New since 29.03.2023
- * We have completely reworked this component. Both this component and ShadowRoot
+Both this component and ShadowRoot
  * can be used independently. The stylesWrapper parameter is set to "inline" by default.
  * If you want to use StyleProvider without inline styles, then the value of this
  * parameter should be changed to "head".
