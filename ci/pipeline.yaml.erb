@@ -523,7 +523,7 @@ jobs:
           REGION: qa-de-1
           CONTEXT: s-qa-de-1
           TAG_VARIABLE:  image.tag
-          VALUES: local:globals s-local:juno 
+          VALUES: local:globals
           KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))
@@ -583,7 +583,7 @@ jobs:
           REGION: eu-nl-1
           CONTEXT: s-eu-nl-1
           TAG_VARIABLE:  image.tag
-          VALUES: local:globals s-local:juno 
+          VALUES: local:globals 
           KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))
@@ -646,7 +646,7 @@ jobs:
           REGION: qa-de-1
           CONTEXT: s-qa-de-1
           TAG_VARIABLE:       image.tag
-          VALUES: local:globals s-local:juno 
+          VALUES: local:globals
           KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))
@@ -806,7 +806,7 @@ jobs:
           NAMESPACE: juno
           REGION: qa-de-1
           CONTEXT: s-qa-de-1
-          VALUES: local:globals s-local:juno
+          VALUES: local:globals
           KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))
@@ -862,7 +862,7 @@ jobs:
           NAMESPACE: juno
           REGION: eu-nl-1
           CONTEXT: s-eu-nl-1
-          VALUES: local:globals s-local:juno 
+          VALUES: local:globals
           KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))
