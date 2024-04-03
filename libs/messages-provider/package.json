@@ -1,6 +1,6 @@
 {
   "name": "messages-provider",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Messages provider",
   "author": "UI-Team",
   "contributors": [
@@ -49,8 +49,5 @@
       "./setupTests.js"
     ]
   },
-  "dependencies": {
-    "build": "^0.1.4",
-    "run": "^1.4.0"
-  }
+  "dependencies": {}
 }
