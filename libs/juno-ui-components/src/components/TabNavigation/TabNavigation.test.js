@@ -119,7 +119,7 @@ describe("TabNavigation", () => {
     )
   })
 
-  test("renders the active tab as passed to the parent if conflicting with active prop passed to child item", async () => {
+  test("renders the active tab by label as passed to the parent if conflicting with active prop passed to child item", async () => {
     render(
       <TabNavigation activeItem="Item 2">
         <TabNavigationItem label="Item 1" active />
