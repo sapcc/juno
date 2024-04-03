@@ -32,6 +32,18 @@ describe("TabNavigationItem", () => {
     expect(screen.getByRole("button")).toHaveTextContent("The Item Is A Child")
   })
 
+  test("renders children as content rather then label when both are passed", async () => {
+    render(<TabNavigationItem label="The Label">The Child</TabNavigationItem>)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveTextContent("The Child")
+  })
+
+  test("renders value as content when neither children nor label are passed", async () => {
+    render(<TabNavigationItem value="The Value"></TabNavigationItem>)
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveTextContent("The Value")
+  })
+
   test("renders an aria-label as passed", async () => {
     render(<TabNavigationItem ariaLabel="My ARIA-Label" />)
     expect(screen.getByRole("button")).toBeInTheDocument()
