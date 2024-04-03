@@ -16,7 +16,9 @@ export function usePortalRef() {
 
   useEffect(() => {
     if (!ref) {
-      console.warn("usePortalRef should be called inside a PortalProvider! You are probably using a component that renders a portal, e.g. Modal or Select. Be sure that your app is wrapped in an AppShellProvider.")
+      console.warn(
+        "usePortalRef should be called inside a PortalProvider! You are probably using a component that renders a portal, e.g. Modal or Select. Be sure that your app is wrapped in an AppShellProvider."
+      )
       return
     }
     if (ref.current) setInitialized(true)
@@ -56,7 +58,7 @@ export const PortalProvider = ({ className, id, children }) => {
   return (
     <PortalContext.Provider value={ref}>
       {children}
-      <div data-juno-portal-container className={className} id={id} ref={ref} />
+      <div className={`juno-portal-container ${className}`} id={id} ref={ref} />
     </PortalContext.Provider>
   )
 }
@@ -75,7 +77,7 @@ PortalProvider.propTypes = {
 
 // define default values
 PortalProvider.defaultProps = {
-  className: undefined,
-  id: undefined,
+  className: "",
+  id: "",
   children: null,
 }
