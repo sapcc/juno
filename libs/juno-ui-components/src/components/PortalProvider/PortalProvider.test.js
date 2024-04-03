@@ -4,17 +4,32 @@ import { PortalProvider } from "./index"
 
 /** Tests need to be adjusted once we know how this will look */
 describe("PortalProvider", () => {
-  test.skip("renders a PortalProvider wrapper div with 'theme-dark' theme class by default", async () => {
-    const { container } = render(<PortalProvider></PortalProvider>)
-    expect(container.querySelector("div.juno-app-body")).toHaveClass(
-      "theme-dark"
+  test("renders a PortalProvider wrapper div", async () => {
+    render(
+      <PortalProvider>
+        <div>Hello</div>
+      </PortalProvider>
     )
+    expect(document.querySelector(".juno-portal-container")).toBeInTheDocument()
   })
 
-  test.skip("renders a PortalProvider wrapper div with theme class as passed", async () => {
-    const { container } = render(
-      <PortalProvider theme="my-theme"></PortalProvider>
+  test("renders a PortalProvider wrapper div with an id as passed", async () => {
+    render(
+      <PortalProvider id="my-portal-provider">
+        <div>Hello</div>
+      </PortalProvider>
     )
-    expect(container.querySelector("div.juno-app-body")).toHaveClass("my-theme")
+    expect(document.querySelector("#my-portal-provider")).toBeInTheDocument()
+  })
+
+  test("renders other children as passed", async () => {
+    render(
+      <PortalProvider id="my-portal-provider">
+        <button>Hello</button>
+      </PortalProvider>
+    )
+    expect(document.querySelector(".juno-portal-container")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toHaveTextContent("Hello")
   })
 })
