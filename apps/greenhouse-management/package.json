@@ -15,7 +15,7 @@
     "plugins": {
       "label": "Plugins",
       "name": "greenhouse-plugin-admin",
-      "version": "1.0.3"
+      "version": "1.0.4"
     }
   },
   "author": "UI-Team",
