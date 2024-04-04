@@ -467,8 +467,9 @@ export const JsonViewer = ({
 }
 
 JsonViewer.propTypes = {
-  /** Pass a json. Required.  */
-  data: PropTypes.object.isRequired,
+  /** Pass a valid json. Required.  */
+  // data: PropTypes.object.isRequired,
+  data: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   /** pass a styles object */
   style: PropTypes.object,
   /** show toolbar */

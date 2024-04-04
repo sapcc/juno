@@ -41,9 +41,17 @@ const data = {
   ],
 };
 
+const dataAsArray = [{hello: ["word", "world", "wod"], foo: "bar"}, {arrays: "are", fun: "to", work: "with, too"}];
+
 export const Default = {
   args: {
     data,
+  },
+};
+
+export const ArrayData = {
+  args: {
+    data: dataAsArray,
   },
 };
 
