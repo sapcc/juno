@@ -31,6 +31,8 @@ const DEFAULT_FORM_VALUES = {
   },
   createdBy: "",
   date: {
+    start: null,
+    end: null,
     error: null,
   },
 }
@@ -74,8 +76,8 @@ const SilenceScheduled = (props) => {
     }
 
     const silence = {
-      startAt: formState.startAt,
-      endAt: formState.endAt,
+      startAt: formState.date.start,
+      endAt: formState.date.end,
       comment: formState.comment.value,
       createdBy: formState.createdBy,
       matchers: [],
@@ -132,8 +134,10 @@ const SilenceScheduled = (props) => {
       errorexist = true
     }
 
+    console.log("aa", formState.date.start, formState.date.end)
+
     // checks if start date is before end date
-    if (new Date(formState.startAt) >= new Date(formState.endAt)) {
+    if (new Date(formState.date.start) >= new Date(formState.date.end)) {
       setFormState(
         produce((formState) => {
           formState.date.error = "The start date need to be before the end date"
@@ -222,6 +226,7 @@ const SilenceScheduled = (props) => {
   }
 
   const onChangeLabelValue = (e) => {
+    console.log("onChangeLabelValue")
     const editable_label = e.target.id
     setFormState(
       produce((formState) => {
@@ -232,6 +237,7 @@ const SilenceScheduled = (props) => {
   }
 
   const onChangeComment = (e) => {
+    console.log("onChangeComment")
     setFormState(
       produce((formState) => {
         formState.comment.value = e.target.value
@@ -241,23 +247,27 @@ const SilenceScheduled = (props) => {
   }
 
   const setStartDate = (e) => {
+    console.log("ddssdf")
     setFormState(
       produce((formState) => {
+        formState.date.start = e
         formState.date.error = null
       })
     )
 
-    formState.startAt = new Date(e).toISOString()
+    console.log("formState.date.start ", formState.date.start)
   }
 
   const setEndDate = (e) => {
+    console.log("ddssdf", e)
     setFormState(
       produce((formState) => {
+        formState.date.end = e
         formState.date.error = null
       })
     )
 
-    formState.endAt = new Date(e).toISOString()
+    console.log("formState.date.end ", formState.date.end)
   }
 
   return (
@@ -322,9 +332,8 @@ const SilenceScheduled = (props) => {
                 <FormRow>
                   <div className="grid gap-2 grid-cols-2">
                     <DateTimePicker
-                      defaultValue={defaultDate}
                       dateFormat="Y-m-d H:i"
-                      label="Select a date"
+                      label="Select a start date"
                       enableTime
                       time_24hr
                       required
@@ -332,9 +341,8 @@ const SilenceScheduled = (props) => {
                       onChange={setStartDate}
                     />
                     <DateTimePicker
-                      defaultValue={defaultDate}
                       dateFormat="Y-m-d H:i"
-                      label="Select a date"
+                      label="Select a end date"
                       enableTime
                       time_24hr
                       required
