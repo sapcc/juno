@@ -13,17 +13,6 @@ metadata:
   namespace: juno
 spec:
   rules:
-    - host: "exampleapp.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix 
-            backend:
-              service: 
-                name: hosting
-                port: 
-                  number: 81 
-
     - host: "juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
       http:
         paths:
@@ -54,7 +43,6 @@ spec:
   tls:
     - hosts: 
         - "juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
-        - "exampleapp.juno.{{ .Values.global.region }}.{{ .Values.global.tld }}"
 {{- if eq .Values.global.region "eu-nl-1" }}    
         - "juno.global.{{ .Values.global.tld }}"  
         - "ccloud.global.{{ .Values.global.tld }}"
