@@ -30,6 +30,9 @@ const DEFAULT_FORM_VALUES = {
     error: null,
   },
   createdBy: "",
+  date: {
+    error: null,
+  },
 }
 
 const SilenceScheduled = (props) => {
@@ -129,6 +132,15 @@ const SilenceScheduled = (props) => {
       errorexist = true
     }
 
+    // checks if start date is before end date
+    if (new Date(formState.startAt) >= new Date(formState.endAt)) {
+      setFormState(
+        produce((formState) => {
+          formState.date.error = "The start date need to be before the end date"
+        })
+      )
+    }
+
     // All editable labels are valid regular expressions
     console.log("formState.editable_labels", formState.editable_labels)
     Object.keys(formState.editable_labels).map((editable_label) => {
@@ -159,24 +171,18 @@ const SilenceScheduled = (props) => {
       }
     })
 
-    // checks if start date is before end date, the error is shown because DatePicker dont have a errortext prop
-    if (new Date(formState.startAt) >= new Date(formState.endAt)) {
-      addMessage({
-        variant: "error",
-        text: parseError("Start date should be before end date"),
-      })
-      return false
-    }
-
     if (errorexist) {
       addMessage({
         variant: "error",
         text: parseError("Please fix the errors in the form"),
       })
-      return false
     }
 
-    return true
+    if (!errorexist) {
+      return true
+    }
+
+    return false
   }
 
   const validateLabelValue = (value) => {
@@ -235,10 +241,22 @@ const SilenceScheduled = (props) => {
   }
 
   const setStartDate = (e) => {
+    setFormState(
+      produce((formState) => {
+        formState.date.error = null
+      })
+    )
+
     formState.startAt = new Date(e).toISOString()
   }
 
   const setEndDate = (e) => {
+    setFormState(
+      produce((formState) => {
+        formState.date.error = null
+      })
+    )
+
     formState.endAt = new Date(e).toISOString()
   }
 
@@ -310,6 +328,7 @@ const SilenceScheduled = (props) => {
                       enableTime
                       time_24hr
                       required
+                      errortext={formState.date.error}
                       onChange={setStartDate}
                     />
                     <DateTimePicker
@@ -319,6 +338,7 @@ const SilenceScheduled = (props) => {
                       enableTime
                       time_24hr
                       required
+                      errortext={formState.date.error}
                       onChange={setEndDate}
                     />
                   </div>
