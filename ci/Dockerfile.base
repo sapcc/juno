@@ -19,7 +19,7 @@ LABEL source_repository="https://github.com/sapcc/juno"
 RUN npm i -g npm@latest
 
 RUN apk --no-cache add git ca-certificates rsync jq bash
-RUN npm i -g glob @jspm/generator 
+RUN npm i -g glob
 
 RUN mkdir -p "/juno"
 ADD . /juno 

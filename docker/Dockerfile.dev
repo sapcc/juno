@@ -1,6 +1,6 @@
 FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:18-alpine 
 
 RUN apk add git
-RUN npm install -g serve concurrently glob @jspm/generator depcheck
+RUN npm install -g serve concurrently glob depcheck
 RUN npm install npm@latest -g
 RUN npm install npm-check-updates@latest -g
