@@ -34,10 +34,22 @@ const DEFAULT_FORM_VALUES = {
 
 const SilenceScheduled = (props) => {
   const authData = useAuthData()
-  const [formState, setFormState] = useState(DEFAULT_FORM_VALUES)
-  const [success, setSuccess] = useState(null)
-  const [selected, setSelected] = useState(null)
   const { addMessage, resetMessages } = useActions()
+
+  // set sucess of sending the silence
+  const [success, setSuccess] = useState(null)
+
+  // set the selected template
+  const [selected, setSelected] = useState(null)
+
+  // default time for DateTimePicker
+  const date = new Date()
+  const defaultDate = `${date.getFullYear()}-${
+    date.getMonth() + 1
+  }-${date.getDate()}`
+
+  // Formular which will be used to create the silence
+  const [formState, setFormState] = useState(DEFAULT_FORM_VALUES)
 
   // useEffect to init callback after rendering. This is needed to reopen the SilencedScheduledWrapper closing the modal
   const [closed, setClosed] = useState(false)
@@ -147,6 +159,15 @@ const SilenceScheduled = (props) => {
       }
     })
 
+    // checks if start date is before end date, the error is shown because DatePicker dont have a errortext prop
+    if (new Date(formState.startAt) >= new Date(formState.endAt)) {
+      addMessage({
+        variant: "error",
+        text: parseError("Start date should be before end date"),
+      })
+      return false
+    }
+
     if (errorexist) {
       addMessage({
         variant: "error",
@@ -214,12 +235,10 @@ const SilenceScheduled = (props) => {
   }
 
   const setStartDate = (e) => {
-    console.log("start date ", e)
     formState.startAt = new Date(e).toISOString()
   }
 
   const setEndDate = (e) => {
-    console.log("end date ", e)
     formState.endAt = new Date(e).toISOString()
   }
 
@@ -285,7 +304,7 @@ const SilenceScheduled = (props) => {
                 <FormRow>
                   <div className="grid gap-2 grid-cols-2">
                     <DateTimePicker
-                      defaultValue={new Date()}
+                      defaultValue={defaultDate}
                       dateFormat="Y-m-d H:i"
                       label="Select a date"
                       enableTime
@@ -294,7 +313,7 @@ const SilenceScheduled = (props) => {
                       onChange={setStartDate}
                     />
                     <DateTimePicker
-                      defaultValue={new Date()}
+                      defaultValue={defaultDate}
                       dateFormat="Y-m-d H:i"
                       label="Select a date"
                       enableTime
