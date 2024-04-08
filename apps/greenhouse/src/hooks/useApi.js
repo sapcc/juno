@@ -38,7 +38,7 @@ const useApi = () => {
       fetch(manifestUrl).then((r) => r.json()),
       // plugin configs
       client.get(
-        `/apis/greenhouse.sap/v1alpha1/namespaces/${namespace}/pluginconfigs`,
+        `/apis/greenhouse.sap/v1alpha1/namespaces/${namespace}/plugins`,
         {
           limit: 500,
         }
