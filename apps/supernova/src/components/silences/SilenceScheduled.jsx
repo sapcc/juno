@@ -248,11 +248,10 @@ const SilenceScheduled = (props) => {
     )
   }
 
-  const setStartDate = (e) => {
-    console.log("ddssdf")
+  const setStartDate = (e, f) => {
     setFormState(
       produce((formState) => {
-        formState.date.start = e
+        formState.date.start = f
         formState.date.error = null
       })
     )
@@ -260,11 +259,11 @@ const SilenceScheduled = (props) => {
     console.log("formState.date.start ", formState.date.start)
   }
 
-  const setEndDate = (e) => {
-    console.log("ddssdf", e)
+  const setEndDate = (e, f) => {
+    console.log("setEndDate", f)
     setFormState(
       produce((formState) => {
-        formState.date.end = e
+        formState.date.end = f
         formState.date.error = null
       })
     )
@@ -334,6 +333,7 @@ const SilenceScheduled = (props) => {
                 <FormRow>
                   <div className="grid gap-2 grid-cols-2">
                     <DateTimePicker
+                      value={testState?.date?.start || defaultDate}
                       dateFormat="Y-m-d H:i"
                       label="Select a start date"
                       enableTime
@@ -350,10 +350,7 @@ const SilenceScheduled = (props) => {
                       time_24hr
                       required
                       errortext={formState.date.error}
-                      onChange={(e) => {
-                        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>end", e)
-                        //setTestState({ ...testState, date: { end: e } })
-                      }}
+                      onChange={setEndDate}
                     />
                   </div>
                 </FormRow>
