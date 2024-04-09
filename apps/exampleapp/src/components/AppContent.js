@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import {
+  DateTimePicker,
   Breadcrumb,
   BreadcrumbItem,
   Container,
@@ -30,6 +31,8 @@ const AppContent = (props) => {
   const tabIndex = useGlobalsTabIndex()
   const { addMessage } = useActions()
 
+  const [testState, setTestState] = useState({})
+
   // set an error message when oidc fails
   useEffect(() => {
     if (authError) {
@@ -53,6 +56,20 @@ const AppContent = (props) => {
           </Breadcrumb>
 
           <Container py>
+            <DateTimePicker
+              value={testState?.date?.end}
+              dateFormat="Y-m-d H:i"
+              label="Select a end date"
+              enableTime
+              time_24hr
+              required
+              onChange={(e) => {
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>end", e)
+                setTestState({ ...testState, date: { end: e } })
+
+                console.log(testState)
+              }}
+            />
             <MainTabs selectedIndex={tabIndex} onSelect={onTabSelected}>
               <TabList>
                 <Tab>Peaks</Tab>

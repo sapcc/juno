@@ -56,6 +56,8 @@ const SilenceScheduled = (props) => {
   // Formular which will be used to create the silence
   const [formState, setFormState] = useState(DEFAULT_FORM_VALUES)
 
+  const [testState, setTestState] = useState({})
+
   // useEffect to init callback after rendering. This is needed to reopen the SilencedScheduledWrapper closing the modal
   const [closed, setClosed] = useState(false)
   useEffect(() => {
@@ -341,13 +343,17 @@ const SilenceScheduled = (props) => {
                       onChange={setStartDate}
                     />
                     <DateTimePicker
+                      value={testState?.date?.end || defaultDate}
                       dateFormat="Y-m-d H:i"
                       label="Select a end date"
                       enableTime
                       time_24hr
                       required
                       errortext={formState.date.error}
-                      onChange={setEndDate}
+                      onChange={(e) => {
+                        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>end", e)
+                        //setTestState({ ...testState, date: { end: e } })
+                      }}
                     />
                   </div>
                 </FormRow>
