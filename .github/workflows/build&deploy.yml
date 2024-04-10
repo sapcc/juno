@@ -24,8 +24,7 @@ defaults:
     shell: bash
 
 jobs:
-  # build the job
-  build:
+  build-and-deploy:
     runs-on: [ubuntu-latest]
     defaults:
       run:
@@ -33,7 +32,7 @@ jobs:
     env:
       ACTIONS_RUNNER_DEBUG: true
     steps:
-      - name: Checkout website repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup node
@@ -51,5 +50,10 @@ jobs:
         run: |
           npm ci
 
-      - name: Build app
-        run: npm run build
+      # - name: Build app
+      #   run: npm run build
+
+      - name: Publish to github packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
