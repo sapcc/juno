@@ -41,6 +41,10 @@ jobs:
         with:
           node-version: 18
 
+      - name: build libs
+        run: |
+          npm --prefix ../../ run build-libs
+
       - name: Install dependencies
         run: |
           npm install
