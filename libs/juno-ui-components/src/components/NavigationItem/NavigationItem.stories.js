@@ -6,7 +6,6 @@ export default {
   title: "Internal/Navigation/NavigationItem",
   component: NavigationItem,
   argTypes: {},
-  //parameters: { actions: { argTypesRegex: null } },
   decorators: [(story) => <Navigation>{story()}</Navigation>],
 }
 
@@ -42,5 +41,22 @@ export const DisabledItem = {
   args: {
     disabled: true,
     children: "Disabled Item",
+  },
+}
+
+export const ItemAsLink = {
+  render: Template,
+  args: {
+    href: "https://www.sap.com",
+    children: "This item is a link",
+  },
+}
+
+export const DisabledLinkItem = {
+  render: Template,
+  args: {
+    href: "https://www.sap.com",
+    children: "This item is a link",
+    disabled: true,
   },
 }

@@ -70,3 +70,14 @@ export const Disabled = {
     ],
   },
 }
+
+export const ItemsAsLinks = {
+  render: Template,
+  args: {
+    children: [
+      <NavigationItem href="https://www.sap.com">Link 1</NavigationItem>,
+      <NavigationItem href="https://www.sap.com">Link 2</NavigationItem>,
+      <NavigationItem href="https://www.sap.com">Link 3</NavigationItem>,
+    ],
+  },
+}
