@@ -10,6 +10,7 @@ const activeStyles = `
 
 const disabledStyles = `
   jn-opacity-50
+  jn-cursor-not-allowed
 `
 
 /** A generic Navigation Item component. For internal use only. */
@@ -70,23 +71,48 @@ export const NavigationItem = ({
   }
 
   return (
-    <li
-      aria-label={ariaLabel && ariaLabel.length ? ariaLabel : null}
-      className={`
-        juno-navigation-item 
-        juno-${navigationRole.toLowerCase()}-item 
-        ${isActive ? "juno-navigation-item-active " + activeStyles : ""}
-        ${
-          navigationDisabled || disabled
-            ? "juno-navigation-item-disabled " + disabledStyles
-            : ""
-        }
-        ${className}`}
-      data-value={value && value.length ? value : null}
-      onClick={handleClick}
-      {...props}
-    >
-      {children || label || value}
+    <li>
+      {href && href.length ? (
+        <a
+          aria-label={ariaLabel && ariaLabel.length ? ariaLabel : null}
+          className={`
+            juno-navigation-item 
+            juno-${navigationRole.toLowerCase()}-item 
+            ${isActive ? "juno-navigation-item-active " + activeStyles : ""}
+            ${
+              navigationDisabled || disabled
+                ? "juno-navigation-item-disabled " + disabledStyles
+                : ""
+            }
+            ${className}`}
+          data-value={value && value.length ? value : null}
+          href={href}
+          onClick={handleClick}
+          {...props}
+        >
+          {children || label || value}
+        </a>
+      ) : (
+        <button
+          aria-label={ariaLabel && ariaLabel.length ? ariaLabel : null}
+          className={`
+            juno-navigation-item 
+            juno-${navigationRole.toLowerCase()}-item 
+            ${isActive ? "juno-navigation-item-active " + activeStyles : ""}
+            ${
+              navigationDisabled || disabled
+                ? "juno-navigation-item-disabled " + disabledStyles
+                : ""
+            }
+            ${className}`}
+          data-value={value && value.length ? value : null}
+          disabled={navigationDisabled || disabled}
+          onClick={handleClick}
+          {...props}
+        >
+          {children || label || value}
+        </button>
+      )}
     </li>
   )
 }
