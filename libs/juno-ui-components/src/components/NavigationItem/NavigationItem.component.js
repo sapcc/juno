@@ -25,6 +25,7 @@ export const NavigationItem = ({
   href,
   onClick,
   value,
+  wrapperClassName,
   ...props
 }) => {
   const navigationContext = useContext(NavigationContext)
@@ -71,10 +72,12 @@ export const NavigationItem = ({
   }
 
   return (
-    <li>
+    <li className={`juno-navigation-item-wrapper ${wrapperClassName}`}>
       {href && href.length ? (
         <a
+          aria-disabled={navigationDisabled || disabled ? true : null}
           aria-label={ariaLabel && ariaLabel.length ? ariaLabel : null}
+          aria-selected={isActive ? true : null}
           className={`
             juno-navigation-item 
             juno-${navigationRole.toLowerCase()}-item 
@@ -94,7 +97,9 @@ export const NavigationItem = ({
         </a>
       ) : (
         <button
+          aria-disabled={navigationDisabled || disabled ? true : null}
           aria-label={ariaLabel && ariaLabel.length ? ariaLabel : null}
+          aria-selected={isActive ? true : null}
           className={`
             juno-navigation-item 
             juno-${navigationRole.toLowerCase()}-item 
@@ -128,6 +133,7 @@ NavigationItem.propTypes = {
   href: PropTypes.string,
   onClick: PropTypes.func,
   value: PropTypes.string,
+  wrapperClassName: PropTypes.string,
 }
 
 NavigationItem.defaultProps = {
@@ -141,4 +147,5 @@ NavigationItem.defaultProps = {
   href: "",
   onClick: undefined,
   value: "",
+  wrapperClassName: "",
 }
