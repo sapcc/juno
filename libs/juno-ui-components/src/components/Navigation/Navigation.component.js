@@ -36,7 +36,7 @@ export const Navigation = ({
     )
   }
 
-  console.log("items: ", items)
+  //console.log("items: ", items)
 
   const handleActiveItemChange = (key) => {
     setActiveItm(key)
@@ -60,6 +60,7 @@ export const Navigation = ({
           disabled ? "juno-navigation-disabled" : ""
         } ${className}`}
         role="navigation"
+        {...props}
       >
         {children}
       </ul>
