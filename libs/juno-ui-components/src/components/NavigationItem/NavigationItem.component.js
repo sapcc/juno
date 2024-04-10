@@ -65,10 +65,14 @@ export const NavigationItem = ({
   }, [activeItem, active])
 
   const handleClick = (event) => {
-    if (!isActive) {
-      handleActiveItemChange(theKey)
+    if (disabled) {
+      event.preventDefault()
+    } else {
+      if (!isActive) {
+        handleActiveItemChange(theKey)
+      }
+      onClick && onClick(event)
     }
-    onClick && onClick(event)
   }
 
   return (
@@ -89,6 +93,7 @@ export const NavigationItem = ({
             }
             ${className}`}
           data-value={value && value.length ? value : null}
+          disabled={navigationDisabled || disabled}
           href={href}
           onClick={handleClick}
           {...props}
