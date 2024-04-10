@@ -14,7 +14,6 @@ export const Navigation = ({
   role,
   onActiveItemChange,
   onChange,
-  wrapperClassName,
   ...props
 }) => {
   const [activeItm, setActiveItm] = useState("")
@@ -54,16 +53,15 @@ export const Navigation = ({
         navigationRole: role,
       }}
     >
-      <div className={wrapperClassName}>
-        <ul
-          aria-label={ariaLabel && ariaLabel.length ? ariaLabel : null}
-          className={`juno-navigation juno-${role.toLowerCase()} ${
-            disabled ? "juno-navigation-disabled" : ""
-          } ${className}`}
-        >
-          {children}
-        </ul>
-      </div>
+      <ul
+        aria-label={ariaLabel && ariaLabel.length ? ariaLabel : null}
+        className={`juno-navigation juno-${role.toLowerCase()} ${
+          disabled ? "juno-navigation-disabled" : ""
+        } ${className}`}
+        role="navigation"
+      >
+        {children}
+      </ul>
     </NavigationContext.Provider>
   )
 }
@@ -81,7 +79,6 @@ Navigation.propTypes = {
   role: PropTypes.oneOf(["SideNavigation", "TabNavigation", "TopNavigation"]),
   onActiveItemChange: PropTypes.func,
   onChange: PropTypes.func,
-  wrapperClassName: PropTypes.string,
 }
 
 Navigation.defaultProps = {
@@ -93,5 +90,4 @@ Navigation.defaultProps = {
   role: "TabNavigation",
   onActiveItemChange: undefined,
   onChange: undefined,
-  wrapperClassName: "",
 }
