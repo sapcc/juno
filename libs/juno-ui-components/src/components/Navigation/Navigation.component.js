@@ -54,6 +54,7 @@ export const Navigation = ({
       }}
     >
       <ul
+        aria-disabled={disabled ? true : null}
         aria-label={ariaLabel && ariaLabel.length ? ariaLabel : null}
         className={`juno-navigation juno-${role.toLowerCase()} ${
           disabled ? "juno-navigation-disabled" : ""
