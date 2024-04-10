@@ -43,6 +43,7 @@ jobs:
 
       - name: build libs
         run: |
+          npm --prefix ../../ install
           npm --prefix ../../ run build-libs
 
       - name: Install dependencies
