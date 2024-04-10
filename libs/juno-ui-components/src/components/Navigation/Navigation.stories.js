@@ -57,6 +57,50 @@ export const ValuesOnly = {
   },
 }
 
+export const WithActiveItemByValue = {
+  render: Template,
+  args: {
+    activeItem: "item-2",
+    children: [
+      <NavigationItem key="i-1" value="item-1" label="Item 1" />,
+      <NavigationItem key="i-2" value="item-2" label="Item 2" />,
+      <NavigationItem key="i-3" value="item-3" label="Item 3" />,
+    ],
+  },
+}
+
+// TODO:
+export const WithActiveItemByLabel = {
+  render: Template,
+  args: {
+    activeItem: "Item 2",
+    children: [
+      <NavigationItem key="i-1" value="item-1" label="Item 1" />,
+      <NavigationItem key="i-2" value="item-2" label="Item 2" />,
+      <NavigationItem key="i-3" value="item-3" label="Item 3" />,
+    ],
+  },
+}
+
+// TODO:
+export const WithActiveItemByChild = {
+  render: Template,
+  args: {
+    activeItem: "Item 2",
+    children: [
+      <NavigationItem key="i-1" value="itm-1">
+        Item 1
+      </NavigationItem>,
+      <NavigationItem key="i-2" value="itm-2">
+        Item 2
+      </NavigationItem>,
+      <NavigationItem key="i-3" value="itm-3">
+        Item 3
+      </NavigationItem>,
+    ],
+  },
+}
+
 export const Disabled = {
   render: Template,
   args: {
