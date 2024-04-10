@@ -112,4 +112,17 @@ describe("Navigation", () => {
       "juno-navigation-item-active"
     )
   })
+
+  test("renders custom classNames as passed", async () => {
+    render(<Navigation className="my-custom-class" />)
+    expect(screen.getByRole("navigation")).toHaveClass("my-custom-class")
+  })
+
+  test("renders all props as passed", async () => {
+    render(<Navigation data-lol="Prop goes here" />)
+    expect(screen.getByRole("navigation")).toHaveAttribute(
+      "data-lol",
+      "Prop goes here"
+    )
+  })
 })
