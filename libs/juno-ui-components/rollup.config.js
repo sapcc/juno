@@ -127,6 +127,22 @@ const config = [
         : []
     ),
   },
+  {
+    input: "lib/variables.scss",
+    output: {
+      file: `${buildDir}/lib/variables.css`,
+    },
+    plugins: [
+      postcss({
+        config: {
+          path: "./postcss.config.js",
+        },
+        extract: true,
+        minimize: true,
+        inject: false,
+      }),
+    ],
+  },
 ]
 
 module.exports = config

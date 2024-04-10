@@ -36,6 +36,16 @@ RUN mkdir -p /tmp/final
 #       this is the case if the image was not build before
 #       comment out this line for the first run
 COPY --from=lastbuild /usr/share/nginx/html /tmp/final
+# TEMP FIX REMOVE LATER
+RUN cp /tmp/final/libs/juno-ui-components@2.11.0/build/lib/variables.css /tmp/final/libs/juno-ui-components@2.11.1/build/lib/variables.css && \
+  cp /tmp/final/libs/juno-ui-components@2.11.0/build/lib/variables.css /tmp/final/libs/juno-ui-components@2.11.2/build/lib/variables.css && \
+  cp /tmp/final/libs/juno-ui-components@2.11.0/build/lib/variables.css /tmp/final/libs/juno-ui-components@2.12.0/build/lib/variables.css && \
+  cp /tmp/final/libs/juno-ui-components@2.11.0/build/lib/variables.css /tmp/final/libs/juno-ui-components@2.12.1/build/lib/variables.css && \
+  cp /tmp/final/libs/juno-ui-components@2.11.0/build/lib/variables.css /tmp/final/libs/juno-ui-components@2.13.1/build/lib/variables.css && \
+  cp /tmp/final/libs/juno-ui-components@2.11.0/build/lib/variables.css /tmp/final/libs/juno-ui-components@2.13.2/build/lib/variables.css && \
+  cp /tmp/final/libs/juno-ui-components@2.11.0/build/lib/variables.css /tmp/final/libs/juno-ui-components@2.13.3/build/lib/variables.css && \
+  cp /tmp/final/libs/juno-ui-components@2.11.0/build/lib/variables.css /tmp/final/libs/juno-ui-components@2.13.4/build/lib/variables.css && \
+  cp /tmp/final/libs/juno-ui-components@2.11.0/build/lib/variables.css /tmp/final/libs/juno-ui-components@2.13.5/build/lib/variables.css   
 
 # delete old assets. Use it once to clean up the old assets.
 # RUN rm -rf /tmp/final/externals/*
