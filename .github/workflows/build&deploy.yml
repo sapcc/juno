@@ -1,0 +1,49 @@
+name: Juno (build & deploy)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/exampleapp/**"
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  # On release creation
+  # release:
+  #   types: [created]
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "apps/exampleapp"
+  cancel-in-progress: true
+
+# Default to bash
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  # build the job
+  build:
+    runs-on: [ubuntu-latest]
+    defaults:
+      run:
+        working-directory: ./apps/exampleapp
+    env:
+      ACTIONS_RUNNER_DEBUG: true
+    steps:
+      - name: Checkout website repository
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Build app
+        run: npm run build
