@@ -59,7 +59,7 @@ jobs:
           echo "===================="
           cat ./.npmrc
           echo "===================="
-          npm ci -w exampleapp
+          npm run build -w exampleapp
 
       # - name: Build app
       #   run: npm run build
