@@ -52,6 +52,9 @@ jobs:
 
       - name: Clean install of all existing dependencies
         run: |
+          echo "===================="
+          cat ./npmrc
+          echo "===================="
           npm ci -w exampleapp
 
       # - name: Build app
