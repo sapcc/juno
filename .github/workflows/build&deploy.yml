@@ -54,7 +54,7 @@ jobs:
         run: |
           echo registry=https://npm.pkg.github.com/ > .npmrc
           echo always-auth=true >> .npmrc
-          echo _authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc        
+          echo //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc        
           echo "===================="
           cat ./.npmrc
           echo "===================="
