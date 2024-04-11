@@ -53,6 +53,9 @@ jobs:
       - name: Clean install of all existing dependencies
         run: |
           npm ci
+          echo "===================="
+          ls la
+          echo "===================="
 
       # - name: Build app
       #   run: npm run build
