@@ -52,7 +52,7 @@ jobs:
 
       - name: Clean install of all existing dependencies
         run: |
-          npm ci -w exampleap
+          npm ci -w exampleapp
 
       # - name: Build app
       #   run: npm run build
