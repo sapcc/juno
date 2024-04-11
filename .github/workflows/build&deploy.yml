@@ -54,7 +54,7 @@ jobs:
         run: |
           npm ci
           echo "===================="
-          ls la
+          ls -la
           echo "===================="
 
       # - name: Build app
