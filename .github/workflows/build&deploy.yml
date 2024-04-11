@@ -53,8 +53,7 @@ jobs:
       - name: Clean install of all existing dependencies
         run: |
           echo "===================="
-          ls -la
-          pwd
+          cat ./.npmrc
           echo "===================="
           npm ci -w exampleapp
 
