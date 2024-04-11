@@ -44,7 +44,7 @@ jobs:
           # always-auth=true
           registry-url: https://npm.pkg.github.com/
           # Defaults to the user or organization that owns the workflow file
-          scope: ${{ github.actor }}
+          # scope: ${{ github.actor }}
       - name: build libs
         run: |
           npm install
