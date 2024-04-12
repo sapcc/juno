@@ -1,4 +1,4 @@
-flpersname: Juno (build & deploy)
+name: Juno (build & deploy)
 
 on:
   push:
