@@ -41,8 +41,8 @@ jobs:
     runs-on: [ubuntu-latest]
     # strategy:
     #   matrix:
-    #     dir: ${{fromJson(needs.collect_apps.outputs.apps)}}
+    #     dir: ${{fromJson(needs.collect_info.outputs.apps)}}
     # steps:
     #   - run: echo ${{ matrix.apps }}
     steps:
-      - run: echo ${{ needs.collect_apps.outputs.apps }}
+      - run: echo ${{ needs.collect_info.outputs.apps }}
