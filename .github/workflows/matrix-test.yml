@@ -26,10 +26,10 @@ jobs:
   collect_apps:
     runs-on: [ubuntu-latest]
     outputs:
-      apps: ${{ steps.dirs.outputs.apps }}
+      apps: ${{ steps.croll-apps.outputs.apps }}
     steps:
       - uses: actions/checkout@v4
-      - id: apps
+      - id: croll-apps
         run: |
           echo "dirs=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')"
           echo "dirs=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
