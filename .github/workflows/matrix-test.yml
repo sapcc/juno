@@ -40,5 +40,7 @@ jobs:
     # strategy:
     #   matrix:
     #     dir: ${{fromJson(needs.collect_apps.outputs.apps)}}
+    # steps:
+    #   - run: echo ${{ matrix.apps }}
     steps:
-      - run: echo ${{ matrix.apps }}
+      - run: echo ${{ needs.collect_apps.outputs.apps }}
