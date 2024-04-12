@@ -24,18 +24,20 @@ defaults:
 
 # echo "dirs=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')"
 jobs:
-  collect_apps:
+  collect_info:
     runs-on: [ubuntu-latest]
     outputs:
-      apps: ${{ steps.croll-apps.outputs.apps }}
+      apps: ${{ steps.apps.outputs }}
     steps:
-      - uses: actions/checkout@v4
-      - id: croll-apps
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Collect apps
+        id: apps
         run: |
-          echo "dirs=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
+          echo "apps=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
 
   run_test:
-    needs: collect_apps
+    needs: collect_info
     runs-on: [ubuntu-latest]
     # strategy:
     #   matrix:
@@ -43,4 +45,4 @@ jobs:
     # steps:
     #   - run: echo ${{ matrix.apps }}
     steps:
-      - run: echo ${{ needs.collect_apps.outputs.apps }}
+      - run: echo ${{ needs.collect_apps.outputs }}
