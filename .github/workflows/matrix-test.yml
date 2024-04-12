@@ -35,6 +35,29 @@ jobs:
         run: |
           echo "apps=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
 
+  changes:
+    runs-on: [ubuntu-latest]
+    outputs:
+      apps: ${{ steps.filter.outputs.apps }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          list-files: json
+          filters: |
+            apps:
+              - 'apps/**'
+      - name: Show outputs
+        run: echo ${{ steps.filter.outputs.changed_files }}
+
+  # apps:
+  #   needs: changes
+  #   if: ${{ needs.changes.outputs.apps == 'true' }}
+  #   runs-on: [ubuntu-latest]
+  #   steps:
+  #     - run: echo ${{ needs.changes.outputs.apps }}
+
   run_test:
     needs: collect_info
     runs-on: [ubuntu-latest]
