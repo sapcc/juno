@@ -37,40 +37,35 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
-          # //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
-          # @octocat:registry=https://npm.pkg.github.com
-          # always-auth=true
           registry-url: https://npm.pkg.github.com/
-          # Defaults to the user or organization that owns the workflow file
-          scope: "@sapcc"
+          scope: "@${{ github.repository_owner }}"
       - name: build libs
         run: |
           npm install
           npm run build-libs
 
-      - name: Clean install of all existing dependencies
+      - name: build asset
         run: |
-          jq '.name = "@juno/exampleapp"' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
-          jq '.private = false' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
-          # cat apps/exampleapp/package.json
-          echo "========================="
-          pwd
-          ls -la
+          # replace
+          jq '.name = "@${{ github.repository_owner }}/exampleapp", .private = false' \
+          ./apps/exampleapp/package.json > "/tmp/test.json" && \
+          mv /tmp/test.json ./apps/exampleapp/package.json
+          
+          #jq '.private = false' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
+          cp $NPM_CONFIG_USERCONFIG ./
+          echo "====================1"
           cat ./.npmrc
-          cat $NPM_CONFIG_USERCONFIG
-          #echo @sapcc:registry=https://npm.pkg.github.com/ > .npmrc
-          #echo always-auth=true >> .npmrc
-          #echo //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc
-          #echo "====================1"
-          #cat ./.npmrc
           #echo "====================2"
-          npm -w @juno/exampleapp run build 
+          npm -w @${{ github.repository_owner }}/exampleapp run build 
 
       # - name: Build app
       #   run: npm run build
 
       - name: Publish to github packages
         run: |
-          npm -w @juno/exampleapp publish #--dry-run
+          # copy generated .npmrc to repository 
+          cp $NPM_CONFIG_USERCONFIG ./
+          # publish to https://github.com/${{ github.repository_owner }}/packages
+          npm -w @${{ github.repository_owner }}/exampleapp publish #--dry-run
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
