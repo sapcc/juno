@@ -52,6 +52,7 @@ jobs:
         run: |
           # sudo apt-get install jq
           jq '.name = "@sapcc/exampleapp"' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
+          jq '.private = false' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
           cat apps/exampleapp/package.json
           cat ./.npmrc
           # echo @sapcc:registry=https://npm.pkg.github.com/ > .npmrc
@@ -69,7 +70,6 @@ jobs:
 
       - name: Publish to github packages
         run: |
-          npm -w @sapcc/exampleapp publish --dry-run 
           npm -w @sapcc/exampleapp publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
