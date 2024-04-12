@@ -3,7 +3,7 @@ name: Juno (build & deploy)
 on:
   push:
     branches:
-      - gh-cli
+      - gh-ci
     paths:
       - "apps/exampleapp/**"
   # Allows you to run this workflow manually from the Actions tab
