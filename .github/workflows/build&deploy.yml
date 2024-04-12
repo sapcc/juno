@@ -57,6 +57,7 @@ jobs:
           pwd
           ls -la
           cat ./.npmrc
+          cat $NPM_CONFIG_USERCONFIG
           #echo @sapcc:registry=https://npm.pkg.github.com/ > .npmrc
           #echo always-auth=true >> .npmrc
           #echo //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc
