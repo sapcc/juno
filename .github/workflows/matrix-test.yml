@@ -22,23 +22,23 @@ defaults:
   run:
     shell: bash
 
-# run_tests:
-#   needs: collect_dirs
-#   runs-on: ubuntu-latest
-#   strategy:
-#     matrix:
-#       dir: ${{ fromJson(needs.collect_dirs.outputs.dirs) }}
-#   steps:
-#     - run: echo ${{ matrix.dir }}
-
 jobs:
-  collect_dirs:
+  collect_apps:
     runs-on: [ubuntu-latest]
     outputs:
       dirs: ${{ steps.dirs.outputs.dirs }}
     steps:
       - uses: actions/checkout@v4
-      - id: dirs
+      - id: apps
         run: |
           echo "dirs=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')"
           echo "dirs=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
+
+  run_tests:
+    needs: collect_apps
+    runs-on: [ubuntu-latest]
+    strategy:
+      matrix:
+        dir: ${{ fromJson(needs.collect_apps.outputs.dirs) }}
+    steps:
+      - run: echo ${{ matrix.dir }}
