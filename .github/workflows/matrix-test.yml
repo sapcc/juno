@@ -74,8 +74,6 @@ jobs:
           echo paths: ${{needs.collect_info.outputs.paths}}
           echo "===================="
 
-          ["apps/assets-overview/**","apps/auth/**","apps/dashboard/**","apps/exampleapp/**","apps/greenhouse-management/**","apps/greenhouse/**","apps/heureka/**","apps/playground/**","apps/supernova/**","apps/template/**","apps/user-activity/**","apps/volta/**","apps/whois/**","apps/widget-loader/**"]
-
   # apps:
   #   needs: changes
   #   if: ${{ needs.changes.outputs.apps == 'true' }}
