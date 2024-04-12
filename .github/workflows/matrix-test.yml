@@ -63,7 +63,8 @@ jobs:
           echo "===================="
           echo ${{ steps.filter.outputs.apps_files}}
           echo "===================="
-          echo ${{fromJson(needs.collect_info.outputs.apps)}}
+          echo ${{fromJson(needs.collect_info.outputs.paths)}}
+          echo ${{needs.collect_info.outputs.paths}}
           echo "===================="
 
   # apps:
