@@ -1,4 +1,4 @@
-lpersname: Juno (build & deploy)
+flpersname: Juno (build & deploy)
 
 on:
   push:
@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            ${{ CONTEXT.ASSET_TYPE == "app" && "libs" || "" }}
+            ${{ env.ASSET_TYPE == "app" && "libs" || "" }}
             apps
             scripts
             helpers
