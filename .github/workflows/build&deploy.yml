@@ -51,7 +51,7 @@ jobs:
           scope: "@${{ github.repository_owner }}"
       - name: build libs
         run: |
-          echo "::warning title=WARNUNG"
+          echo "::warning title=WARNUNG::FDSFDSFDSFDSFDSFSDFSDFSDF"
           ls -la
           echo "====apps"
           ls -la apps
