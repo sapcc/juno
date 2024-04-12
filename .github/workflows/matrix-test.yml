@@ -37,7 +37,7 @@ jobs:
         id: collect-apps
         run: |
           echo "apps=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}          
-          echo "paths=($(ls -d ./apps/*/ | sed 's/^\.\///' | sed 's/$/**/' | jq --raw-input --slurp --compact-output 'split("\n")[:-1] | map("\"" + . + "\"") | join(", ")))" >> ${GITHUB_OUTPUT}
+          echo "paths=$(ls -d ./apps/*/ | sed 's/^\.\///' | sed 's/"$/**"/' | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
       - name: Show outputs
         run: |
           echo "===================="
