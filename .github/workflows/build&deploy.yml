@@ -61,12 +61,12 @@ jobs:
           echo "====================1"
           cat ./.npmrc
           echo "====================2"
-          npm --prefix ./apps/exampleapp run build 
+          npm -w @sapcc/exampleapp run build 
 
       # - name: Build app
       #   run: npm run build
 
       - name: Publish to github packages
-        run: npm --prefix ./apps/exampleapp publish
+        run: npm -w @sapcc/exampleapp publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
