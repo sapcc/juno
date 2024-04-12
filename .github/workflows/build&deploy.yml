@@ -52,9 +52,9 @@ jobs:
           mv /tmp/test.json ./apps/exampleapp/package.json
           
           #jq '.private = false' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
-          cp $NPM_CONFIG_USERCONFIG ./
-          echo "====================1"
-          cat ./.npmrc
+          #cp $NPM_CONFIG_USERCONFIG ./
+          #echo "====================1"
+          #cat ./.npmrc
           #echo "====================2"
           npm -w @${{ github.repository_owner }}/exampleapp run build 
 
