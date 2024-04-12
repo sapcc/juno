@@ -36,6 +36,7 @@ jobs:
           echo "apps=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
 
   changes:
+    needs: collect_info
     runs-on: [ubuntu-latest]
     outputs:
       apps: ${{ steps.filter.outputs.apps }}
@@ -54,6 +55,8 @@ jobs:
           echo ${{ steps.filter.outputs.apps}}
           echo "===================="
           echo ${{ steps.filter.outputs.apps_files}}
+          echo "===================="
+          echo ${{fromJson(needs.collect_info.outputs.apps)}}
           echo "===================="
 
   # apps:
