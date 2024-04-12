@@ -44,12 +44,17 @@ jobs:
       - uses: dorny/paths-filter@v3
         id: filter
         with:
-          list-files: json
+          list-files: shell
           filters: |
             apps:
               - 'apps/**'
       - name: Show outputs
-        run: echo ${{ steps.filter.outputs.apps}}
+        run: |
+          echo "===================="
+          echo ${{ steps.filter.outputs.apps}}
+          echo "===================="
+          echo ${{ steps.filter.outputs.apps_files}}
+          echo "===================="
 
   # apps:
   #   needs: changes
