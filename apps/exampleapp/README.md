@@ -15,4 +15,4 @@ The example app serves as a demonstration application where we thoroughly test a
 - [Coworking Experience] Components splitted in contexts.
 - Use of fetchLocal to simulate a local db.
 
-# Miau, miau
+# Miau, miau, miau
