@@ -1,0 +1,44 @@
+name: Juno (build & deploy all apps)
+
+on:
+  push:
+    branches:
+      - gh-matrix
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  # On release creation
+  # release:
+  #   types: [created]
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "apps/exampleapp"
+  cancel-in-progress: true
+
+# Default to bash
+defaults:
+  run:
+    shell: bash
+
+# run_tests:
+#   needs: collect_dirs
+#   runs-on: ubuntu-latest
+#   strategy:
+#     matrix:
+#       dir: ${{ fromJson(needs.collect_dirs.outputs.dirs) }}
+#   steps:
+#     - run: echo ${{ matrix.dir }}
+
+jobs:
+  collect_dirs:
+    runs-on: [ubuntu-latest]
+    outputs:
+      dirs: ${{ steps.dirs.outputs.dirs }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: dirs
+        run: |
+          echo "dirs=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')"
+          echo "dirs=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
