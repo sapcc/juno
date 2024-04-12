@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v4
       - id: croll-apps
         run: |
-          echo "::set-output name=apps::{\"node\":[10, 12, 14]}"
+          echo "dirs=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
 
   run_test:
     needs: collect_apps
