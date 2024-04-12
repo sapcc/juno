@@ -3,7 +3,7 @@ name: Juno (build & deploy)
 on:
   push:
     branches:
-      - main
+      - gh-cli
     paths:
       - "apps/exampleapp/**"
   # Allows you to run this workflow manually from the Actions tab
@@ -55,7 +55,7 @@ jobs:
           echo registry=https://npm.pkg.github.com/ > .npmrc
           echo always-auth=true >> .npmrc
           echo //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc        
-          echo scope=@sapcc >> .npmrc
+          echo scope=@juno >> .npmrc
           echo "===================="
           cat ./.npmrc
           echo "===================="
