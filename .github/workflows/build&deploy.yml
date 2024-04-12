@@ -37,6 +37,7 @@ jobs:
           sparse-checkout: |
             libs
             apps
+            scripts
 
       - name: Setup node
         uses: actions/setup-node@v4
