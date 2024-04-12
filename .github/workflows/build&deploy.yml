@@ -42,7 +42,7 @@ jobs:
           # always-auth=true
           registry-url: https://npm.pkg.github.com/
           # Defaults to the user or organization that owns the workflow file
-          # scope: ${{ github.actor }}
+          scope: "@sapcc"
       - name: build libs
         run: |
           npm install
@@ -52,14 +52,14 @@ jobs:
         run: |
           jq '.name = "@juno/exampleapp"' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
           jq '.private = false' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
-          cat apps/exampleapp/package.json
+          # cat apps/exampleapp/package.json
           cat ./.npmrc
-          echo @sapcc:registry=https://npm.pkg.github.com/ > .npmrc
-          echo always-auth=true >> .npmrc
-          echo //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc
-          echo "====================1"
-          cat ./.npmrc
-          echo "====================2"
+          #echo @sapcc:registry=https://npm.pkg.github.com/ > .npmrc
+          #echo always-auth=true >> .npmrc
+          #echo //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc
+          #echo "====================1"
+          #cat ./.npmrc
+          #echo "====================2"
           npm -w @juno/exampleapp run build 
 
       # - name: Build app
