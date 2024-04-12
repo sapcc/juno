@@ -12,6 +12,7 @@ on:
 env:
   ASSET_NAME: exampleapp
   ASSET_TYPE: app
+  ASSET_SCOPE: juno-app-
 
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
@@ -63,16 +64,16 @@ jobs:
       - name: build asset
         run: |
           # replace
-          jq '.name = "@${{ github.repository_owner }}/exampleapp" | .private = false' \
-          ./apps/exampleapp/package.json > "/tmp/test.json" && \
-          mv /tmp/test.json ./apps/exampleapp/package.json
-          npm -w @${{ github.repository_owner }}/exampleapp run build 
+          jq '.name = "@${{ github.repository_owner }}/${{ env.ASSET_SCOPE }}exampleapp" | .private = false' \
+          ./$ASSET_TYPEs/$ASSET_NAME/package.json > "/tmp/test.json" && \
+          mv /tmp/test.json ./$ASSET_TYPEs/$ASSET_NAME/package.json
+          npm -w @${{ github.repository_owner }}/${{ env.ASSET_SCOPE }}exampleapp run build 
 
       - name: Publish to github packages
         run: |
           # copy generated .npmrc to repository 
           cp $NPM_CONFIG_USERCONFIG ./
           # publish to https://github.com/${{ github.repository_owner }}/packages
-          npm -w @${{ github.repository_owner }}/exampleapp publish #--dry-run
+          npm -w @${{ github.repository_owner }}/${{ env.ASSET_SCOPE }}exampleapp publish #--dry-run
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
