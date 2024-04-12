@@ -52,6 +52,7 @@ jobs:
 
       - name: Clean install of all existing dependencies
         run: |
+          cat ./.npmrc
           echo registry=https://npm.pkg.github.com/ > .npmrc
           echo always-auth=true >> .npmrc
           echo //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc        
