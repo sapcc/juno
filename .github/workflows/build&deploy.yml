@@ -87,6 +87,7 @@ jobs:
 
           if [ $? != 0 ] ; then
             echo "::warning title=WARNUNG::Could not publish to github. Maybe you forgot to increment the version?"
+            exit 1
           fi
     
         env:
