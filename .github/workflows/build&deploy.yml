@@ -50,7 +50,7 @@ jobs:
 
       - name: Clean install of all existing dependencies
         run: |
-          # jq '.name = "@sapcc/exampleapp"' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
+          jq '.name = "@sapcc/exampleapp"' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
           jq '.private = false' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
           cat apps/exampleapp/package.json
           cat ./.npmrc
