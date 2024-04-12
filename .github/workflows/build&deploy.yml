@@ -61,6 +61,10 @@ jobs:
           # build libs if asset type is "app" 
           if [  "$ASSET_TYPE" = "app" ] || [ "$ASSET_TYPE" = "apps" ]; then  npm run build-libs; fi
 
+      - name: test asset
+        run: |
+          npm -w $ASSET_NAME run test --if-present
+          
       - name: build asset
         run: |
           npm -w $ASSET_NAME run build 
