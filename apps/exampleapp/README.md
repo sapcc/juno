@@ -14,3 +14,5 @@ The example app serves as a demonstration application where we thoroughly test a
 - [Enhance Rendering Experience] Use of hook `useEndlessScrollList`.
 - [Coworking Experience] Components splitted in contexts.
 - Use of fetchLocal to simulate a local db.
+
+# Miau
