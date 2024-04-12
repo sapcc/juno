@@ -27,12 +27,12 @@ jobs:
   collect_info:
     runs-on: [ubuntu-latest]
     outputs:
-      apps: ${{ steps.apps.outputs }}
+      apps: ${{ steps.collect-apps.outputs.apps }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Collect apps
-        id: apps
+        id: collect-apps
         run: |
           echo "apps=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
 
@@ -45,4 +45,4 @@ jobs:
     # steps:
     #   - run: echo ${{ matrix.apps }}
     steps:
-      - run: echo ${{ needs.collect_apps.outputs }}
+      - run: echo ${{ needs.collect_apps.outputs.apps }}
