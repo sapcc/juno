@@ -9,11 +9,15 @@ on:
   # On release creation
   # release:
   #   types: [created]
+env:
+  ASSET_NAME: exampleapp
+  ASSET_TYPE: app
+
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "apps/exampleapp"
+  group: "build-and-publish-asset"
   cancel-in-progress: true
 
 # Default to bash
@@ -24,14 +28,15 @@ defaults:
 jobs:
   build-and-deploy:
     runs-on: [ubuntu-latest]
-    # defaults:
-    #   run:
-    #     working-directory: ./apps/exampleapp
     env:
       ACTIONS_RUNNER_DEBUG: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            libs
+            apps
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -41,8 +46,11 @@ jobs:
           scope: "@${{ github.repository_owner }}"
       - name: build libs
         run: |
+          ls -la
+          # install npm packages
           npm install
-          npm run build-libs
+          # build libs if asset type is "app" 
+          if [  "$ASSET_TYPE" = "app" ] || [ "$ASSET_TYPE" = "apps" ]; then  npm run build-libs; fi
 
       - name: build asset
         run: |
@@ -50,12 +58,7 @@ jobs:
           jq '.name = "@${{ github.repository_owner }}/exampleapp" | .private = false' \
           ./apps/exampleapp/package.json > "/tmp/test.json" && \
           mv /tmp/test.json ./apps/exampleapp/package.json
-          
-          #jq '.private = false' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
           npm -w @${{ github.repository_owner }}/exampleapp run build 
-
-      # - name: Build app
-      #   run: npm run build
 
       - name: Publish to github packages
         run: |
