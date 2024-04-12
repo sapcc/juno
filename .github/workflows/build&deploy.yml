@@ -52,8 +52,9 @@ jobs:
 
       - name: Clean install of all existing dependencies
         run: |
-          sudo apt-get install jq
+          # sudo apt-get install jq
           jq '.name = "@sapcc/exampleapp"' apps/exampleapp/package.json > "$tmp" && mv "$tmp" apps/exampleapp/package.json
+          cat apps/exampleapp/package.json
           cat ./.npmrc
           echo @sapcc:registry=https://npm.pkg.github.com/ > .npmrc
           echo always-auth=true >> .npmrc
