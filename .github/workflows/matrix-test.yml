@@ -57,7 +57,7 @@ jobs:
         with:
           list-files: shell
           filters: |
-            apps: [ "apps/exampleapp/**" ]
+            apps: ${{fromJson(needs.collect_info.outputs.paths)}}
       - name: Show outputs
         run: |
           echo "===================="
