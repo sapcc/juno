@@ -64,16 +64,17 @@ jobs:
       - name: build asset
         run: |
           # replace
-          jq '.name = "@${{ github.repository_owner }}/${{ env.ASSET_SCOPE }}exampleapp" | .private = false' \
-          ./$ASSET_TYPEs/$ASSET_NAME/package.json > "/tmp/test.json" && \
-          mv /tmp/test.json ./$ASSET_TYPEs/$ASSET_NAME/package.json
-          npm -w @${{ github.repository_owner }}/${{ env.ASSET_SCOPE }}exampleapp run build 
+          jq '.name = "@${{ github.repository_owner }}/${{ env.ASSET_SCOPE }}${{ env.ASSET_NAME }}" | .private = false' \
+          "./${ASSET_TYPE}s/${ASSET_NAME}/package.json" > "/tmp/test.json" && \
+          cat "./${ASSET_TYPE}s/${ASSET_NAME}/package.json" 
+          mv /tmp/test.json "./${ASSET_TYPE}s/${ASSET_NAME}/package.json"
+          npm -w @${{ github.repository_owner }}/${{ env.ASSET_SCOPE }}${{ env.ASSET_NAME }} run build 
 
       - name: Publish to github packages
         run: |
           # copy generated .npmrc to repository 
           cp $NPM_CONFIG_USERCONFIG ./
           # publish to https://github.com/${{ github.repository_owner }}/packages
-          npm -w @${{ github.repository_owner }}/${{ env.ASSET_SCOPE }}exampleapp publish #--dry-run
+          npm -w @${{ github.repository_owner }}/${{ env.ASSET_SCOPE }}${{ env.ASSET_NAME }} publish #--dry-run
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
