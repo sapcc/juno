@@ -53,6 +53,9 @@ jobs:
           jq '.name = "@juno/exampleapp"' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
           jq '.private = false' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
           # cat apps/exampleapp/package.json
+          echo "========================="
+          pwd
+          ls -la
           cat ./.npmrc
           #echo @sapcc:registry=https://npm.pkg.github.com/ > .npmrc
           #echo always-auth=true >> .npmrc
