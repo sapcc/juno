@@ -10,11 +10,17 @@ const initialSilencesState = {
   updatedAt: null,
   error: null,
   localItems: {},
+
+  // silence templates for maintanance
+  templates: [],
 }
 
-const createSilencesSlice = (set, get) => ({
+const createSilencesSlice = (set, get, options) => ({
   silences: {
     ...initialSilencesState,
+    // silence templates for maintanance
+    templates: options.silenceTemplates || [],
+
     actions: {
       setSilences: ({ items, itemsHash, itemsByState }) => {
         if (!items) return

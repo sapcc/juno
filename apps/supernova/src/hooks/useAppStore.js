@@ -20,7 +20,7 @@ const createAppStore = devtools((set, get) => ({
 
 const StoreContext = createContext()
 
-export const StoreProvider = ({ children }) => {
+export const StoreProvider = ({ options, children }) => {
   return (
     <StoreContext.Provider
       value={createStore(
@@ -30,7 +30,7 @@ export const StoreProvider = ({ children }) => {
           ...createUserActivitySlice(set, get),
           ...createAlertsSlice(set, get),
           ...createFiltersSlice(set, get),
-          ...createSilencesSlice(set, get),
+          ...createSilencesSlice(set, get, options),
         }))
       )}
     >
@@ -134,6 +134,9 @@ export const useSilencesError = () =>
   useAppStore((state) => state.silences.error)
 export const useSilencesLocalItems = () =>
   useAppStore((state) => state.silences.localItems)
+
+export const useSilenceTemplates = () =>
+  useAppStore((state) => state.silences.templates)
 
 export const useSilencesActions = () =>
   useAppStore((state) => state.silences.actions)

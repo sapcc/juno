@@ -17,10 +17,9 @@ import {
   FormSection,
   DateTimePicker,
 } from "juno-ui-components"
-import { useAuthData, useGlobalsApiEndpoint } from "../../hooks/useAppStore"
+import { useAuthData, useSilenceTemplates } from "../../hooks/useAppStore"
 import { post, get } from "../../api/client"
 import { parseError } from "../../helpers"
-import fakesilence from "./fakesilence.json"
 
 const DEFAULT_FORM_VALUES = {
   fixed_labels: {},
@@ -40,6 +39,7 @@ const DEFAULT_FORM_VALUES = {
 const SilenceScheduled = (props) => {
   const authData = useAuthData()
   const { addMessage, resetMessages } = useActions()
+  const silenceTemplates = useSilenceTemplates()
 
   // set sucess of sending the silence
   const [success, setSuccess] = useState(null)
@@ -203,7 +203,7 @@ const SilenceScheduled = (props) => {
   ////// OnClick
 
   const onChangeTemplate = (value) => {
-    const newSelectedOption = fakesilence.find(
+    const newSelectedOption = silenceTemplates.find(
       (option) => option.title === value
     )
 
@@ -302,7 +302,7 @@ const SilenceScheduled = (props) => {
                   onChangeTemplate(value)
                 }}
               >
-                {fakesilence?.map((option, index) => (
+                {silenceTemplates?.map((option, index) => (
                   <SelectOption
                     key={index}
                     label={option.title}
