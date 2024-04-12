@@ -34,8 +34,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          # 1. if asset type is equal to "app" then add libs. Otherwise add libs/ASSET_NAME 
+          # 2. if asset type is equal to "app" then add apps/ASSET_NAME. Otherwise add nothing
           sparse-checkout: |
-            ${{ env.ASSET_TYPE == 'app' && 'libs' || '' }}
+            ${{ env.ASSET_TYPE == 'app' && 'libs' || format( 'libs/{0}', env.ASSET_NAME) }}
             ${{ env.ASSET_TYPE == 'app' &&  format( 'apps/{0}', env.ASSET_NAME) || '' }}
             scripts
             helpers
