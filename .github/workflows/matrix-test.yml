@@ -14,7 +14,7 @@ on:
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "apps/exampleapp"
+  group: "tests&deployments"
   cancel-in-progress: true
 
 # Default to bash
@@ -22,7 +22,6 @@ defaults:
   run:
     shell: bash
 
-# echo "dirs=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')"
 jobs:
   collect_info:
     runs-on: [ubuntu-latest]
@@ -44,5 +43,3 @@ jobs:
         apps: ${{fromJson(needs.collect_info.outputs.apps)}}
     steps:
       - run: echo ${{ matrix.apps }}
-    # steps:
-    #   - run: echo ${{ needs.collect_info.outputs.apps }}
