@@ -81,12 +81,10 @@ jobs:
           $PACKAGE_JSON_PATH > /tmp/test.json && mv /tmp/test.json $PACKAGE_JSON_PATH
           # cat $PACKAGE_JSON_PATH
 
-          echo "====================="
+          set +e
           # publish to https://github.com/${{ github.repository_owner }}/packages
           npm -w "@${REPOSITORY_OWNER}/${ASSET_SCOPE}${ASSET_NAME}" publish #--dry-run
 
-          echo $?
-          echo "::warning title=WARNUNG::Could not publish to github. Maybe you forgot to increment the version?"
           if [ $? != 0 ] ; then
             echo "::warning title=WARNUNG::Could not publish to github. Maybe you forgot to increment the version?"
           fi
