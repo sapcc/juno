@@ -49,6 +49,10 @@ jobs:
       - name: build libs
         run: |
           ls -la
+          echo "====apps"
+          ls -la apps
+          echo "====libs"
+          ls -la libs
           # install npm packages
           npm install
           # build libs if asset type is "app" 
