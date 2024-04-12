@@ -56,9 +56,9 @@ jobs:
           echo always-auth=true >> .npmrc
           echo //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc        
           echo scope=@juno >> .npmrc
-          echo "===================="
+          echo "====================1"
           cat ./.npmrc
-          echo "===================="
+          echo "====================2"
           npm run build -w exampleapp
 
       # - name: Build app
