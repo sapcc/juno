@@ -83,11 +83,11 @@ jobs:
           
           # publish to https://github.com/${{ github.repository_owner }}/packages
           npm -w "@${REPOSITORY_OWNER}/${ASSET_SCOPE}${ASSET_NAME}" publish #--dry-run
-
-          if [ "$?" -gt 0 ]; then
-              echo "::warning title=WARNUNG::Could not publish to github. Maybe you forgot to increment the version?"
-              exit 1
+          
+          if [ $? != 0 ] ; then
+            echo "::warning title=WARNUNG::Could not publish to github. Maybe you forgot to increment the version?"
           fi
+    
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY_OWNER: ${{ github.repository_owner }}
