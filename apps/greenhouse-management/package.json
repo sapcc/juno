@@ -5,7 +5,11 @@
     "clusters": {
       "label": "Clusters",
       "name": "greenhouse-cluster-admin",
+<<<<<<< HEAD
       "version": "1.6.4"
+=======
+      "version": "1.6.5"
+>>>>>>> 990e1e1c ([greenhouse-mgmt] update cluster admin)
     },
     "teams": {
       "label": "Teams",
