@@ -35,7 +35,7 @@ jobs:
         id: collect-apps
         run: |
           echo "apps=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
-          echo "paths=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1] | map(sub("^./"; "")) | map(. + "**") | map("- " + .) | join("\n")')" >> ${GITHUB_OUTPUT}
+          echo "paths=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1] | map(sub("^./"; "")) | map(. + "**") | join(",")')" >> ${GITHUB_OUTPUT}
       - name: Show outputs
         run: |
           echo "===================="
@@ -55,8 +55,7 @@ jobs:
         with:
           list-files: shell
           filters: |
-            apps: 
-              - 'apps/**'
+            apps: ${{fromJson(needs.collect_info.outputs.paths)}}
       - name: Show outputs
         run: |
           echo "===================="
