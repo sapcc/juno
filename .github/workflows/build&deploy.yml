@@ -54,7 +54,7 @@ jobs:
           jq '.private = false' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
           cat apps/exampleapp/package.json
           cat ./.npmrc
-          echo @juno:registry=https://npm.pkg.github.com/ > .npmrc
+          echo @sapcc:registry=https://npm.pkg.github.com/ > .npmrc
           echo always-auth=true >> .npmrc
           echo //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc
           echo "====================1"
