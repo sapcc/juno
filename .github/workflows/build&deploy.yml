@@ -57,7 +57,7 @@ jobs:
           # echo @sapcc:registry=https://npm.pkg.github.com/ > .npmrc
           echo always-auth=true >> .npmrc
           # echo //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc        
-          echo "registry=https://npm.pkg.github.com/sapcc//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc
+          echo "registry=https://npm.pkg.github.com/sapcc//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
           echo scope=@sapcc >> .npmrc
           echo "====================1"
           cat ./.npmrc
@@ -68,6 +68,8 @@ jobs:
       #   run: npm run build
 
       - name: Publish to github packages
-        run: npm -w @sapcc/exampleapp publish
+        run: |
+          npm -w @sapcc/exampleapp publish --dry-run 
+          npm -w @sapcc/exampleapp publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
