@@ -36,7 +36,7 @@ jobs:
         with:
           sparse-checkout: |
             ${{ env.ASSET_TYPE == 'app' && 'libs' || '' }}
-            ${{ env.ASSET_TYPE == 'app' && "apps/$env.ASSET_NAME" || '' }}
+            ${{ env.ASSET_TYPE == 'app' && 'apps/'env.ASSET_NAME || '' }}
             scripts
             helpers
 
