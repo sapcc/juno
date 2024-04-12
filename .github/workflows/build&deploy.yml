@@ -50,24 +50,23 @@ jobs:
 
       - name: Clean install of all existing dependencies
         run: |
-          jq '.name = "@sapcc/exampleapp"' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
+          jq '.name = "@juno/exampleapp"' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
           jq '.private = false' ./apps/exampleapp/package.json > "/tmp/test.json" && mv /tmp/test.json ./apps/exampleapp/package.json
           cat apps/exampleapp/package.json
           cat ./.npmrc
-          echo @sapcc:registry=https://npm.pkg.github.com/ > .npmrc
+          echo @juno:registry=https://npm.pkg.github.com/ > .npmrc
           echo always-auth=true >> .npmrc
-          echo //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc        
-          # echo scope=@sapcc >> .npmrc
+          echo //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }} >> .npmrc
           echo "====================1"
           cat ./.npmrc
           echo "====================2"
-          npm -w @sapcc/exampleapp run build 
+          npm -w @juno/exampleapp run build 
 
       # - name: Build app
       #   run: npm run build
 
       - name: Publish to github packages
         run: |
-          npm -w @sapcc/exampleapp publish
+          npm -w @juno/exampleapp publish --dry-run
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
