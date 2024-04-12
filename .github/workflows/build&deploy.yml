@@ -1,4 +1,4 @@
-name: Juno (build & deploy)
+lpersname: Juno (build & deploy)
 
 on:
   push:
@@ -35,9 +35,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            libs
+            ${{ CONTEXT.ASSET_TYPE == "app" && "libs" || "" }}
             apps
             scripts
+            helpers
 
       - name: Setup node
         uses: actions/setup-node@v4
