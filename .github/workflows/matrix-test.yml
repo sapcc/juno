@@ -49,7 +49,7 @@ jobs:
             apps:
               - 'apps/**'
       - name: Show outputs
-        run: echo ${{ steps.filter.outputs.changed_files }}
+        run: echo ${{ steps.filter.outputs.apps}}
 
   # apps:
   #   needs: changes
@@ -58,11 +58,11 @@ jobs:
   #   steps:
   #     - run: echo ${{ needs.changes.outputs.apps }}
 
-  run_test:
-    needs: collect_info
-    runs-on: [ubuntu-latest]
-    strategy:
-      matrix:
-        apps: ${{fromJson(needs.collect_info.outputs.apps)}}
-    steps:
-      - run: echo ${{ matrix.apps }}
+  # run_test:
+  #   needs: collect_info
+  #   runs-on: [ubuntu-latest]
+  #   strategy:
+  #     matrix:
+  #       apps: ${{fromJson(needs.collect_info.outputs.apps)}}
+  #   steps:
+  #     - run: echo ${{ matrix.apps }}
