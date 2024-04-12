@@ -1,4 +1,4 @@
-name: Juno (build & deploy)
+ho name: Juno (build & deploy)
 
 on:
   push:
@@ -80,7 +80,8 @@ jobs:
           jq '.name = "@${{ github.repository_owner }}/${{ env.ASSET_SCOPE }}${{ env.ASSET_NAME }}" | .private = false' \
           $PACKAGE_JSON_PATH > /tmp/test.json && mv /tmp/test.json $PACKAGE_JSON_PATH
           # cat $PACKAGE_JSON_PATH
-          
+
+          echo "====================="
           # publish to https://github.com/${{ github.repository_owner }}/packages
           npm -w "@${REPOSITORY_OWNER}/${ASSET_SCOPE}${ASSET_NAME}" publish #--dry-run
 
