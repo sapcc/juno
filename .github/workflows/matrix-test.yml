@@ -27,6 +27,7 @@ jobs:
     runs-on: [ubuntu-latest]
     outputs:
       apps: ${{ steps.collect-apps.outputs.apps }}
+      paths: ${{ steps.collect-apps.outputs.paths }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -34,10 +35,14 @@ jobs:
         id: collect-apps
         run: |
           echo "apps=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
+          echo "paths=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1] | map(. + "**") | join(",")')" >> ${GITHUB_OUTPUT}
+          | map(. + "**") |
       - name: Show outputs
         run: |
           echo "===================="
           echo ${{ steps.collect-apps.outputs.apps }}
+          echo "===================="
+          echo ${{ steps.collect-apps.outputs.paths }}
           echo "===================="
   changes:
     needs: collect_info
