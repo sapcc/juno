@@ -66,12 +66,12 @@ jobs:
           echo "===================="
           echo ${{ steps.filter.outputs.apps_files}}
           echo "===================="
-          echo ${{ steps.filter.outputs.appsv2}}
+          echo appsv2: ${{ steps.filter.outputs.appsv2}}
           echo "===================="
-          echo ${{ steps.filter.outputs.appsv2_files}}          
+          echo appsv2_files: ${{ steps.filter.outputs.appsv2_files}}          
           echo "===================="
-          echo ${{fromJson(needs.collect_info.outputs.paths)}}
-          echo ${{needs.collect_info.outputs.paths}}
+          echo pathsfromJson: ${{fromJson(needs.collect_info.outputs.paths)}}
+          echo paths: ${{needs.collect_info.outputs.paths}}
           echo "===================="
 
   # apps:
