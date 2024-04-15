@@ -52,20 +52,25 @@ jobs:
       apps: ${{ steps.filter.outputs.apps }}
     steps:
       - uses: actions/checkout@v4
+      - name: Generate temporary YAML file
+        run: |
+          echo "apps: apps/**" >> temp_filters.yaml
+          for folder in apps/*; do
+            folder_name=$(basename "$folder")
+            echo "$folder_name: $folder/**" >> temp_filters.yaml
+          done
       - uses: dorny/paths-filter@v3
         id: filter
         with:
           list-files: shell
-          filters: |
-            apps: apps/**
-            libs: libs/**
+          filters: temp_filters.yaml
       - name: Show outputs
         run: |
           echo "===================="
-          echo ${{ steps.filter.outputs.apps}}
-          echo ${{ steps.filter.outputs.libs}}
-          echo ${{ steps.filter.outputs.apps_files}}
-          echo ${{ steps.filter.outputs.changes}}
+          echo apps: ${{ steps.filter.outputs.apps}}
+          echo libs: ${{ steps.filter.outputs.libs}}
+          echo apps_files: ${{ steps.filter.outputs.apps_files}}
+          echo changes: ${{ steps.filter.outputs.changes}}
           echo "===================="
 
   # apps:
