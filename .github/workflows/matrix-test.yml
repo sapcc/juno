@@ -51,24 +51,21 @@ jobs:
     outputs:
       apps: ${{ steps.filter.outputs.apps }}
     steps:
-      - name: Set custom filters
-        id: set_custom_filters
-        run: |
-          CUSTOM_FILTERS='package1: src/package1\npackage2: src/package2'
-          echo "::set-output name=custom_filters::$CUSTOM_FILTERS"
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
         id: filter
         with:
           list-files: shell
           filters: |
-            ${{ steps.set_custom_filters.outputs.custom_filters }}
+            apps: apps/**
+            libs: libs/**
       - name: Show outputs
         run: |
           echo "===================="
-          echo ${{ steps.filter.outputs.exampleapp}}
-          echo ${{ steps.filter.outputs.dashboard}}
-          echo ${{ steps.set_custom_filters.outputs.custom_filters }}
+          echo ${{ steps.filter.outputs.apps}}
+          echo ${{ steps.filter.outputs.libs}}
+          echo ${{ steps.filter.outputs.apps_files}}
+          echo ${{ steps.filter.outputs.changes}}
           echo "===================="
 
   # apps:
