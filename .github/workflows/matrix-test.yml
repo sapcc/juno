@@ -51,12 +51,17 @@ jobs:
     outputs:
       apps: ${{ steps.filter.outputs.apps }}
     steps:
+      - name: Set filters
+        id: set_filters
+        run: |
+          FILTERS='package1: src/package1\npackage2: src/package2'
+          echo "::set-output name=filters::$FILTERS"
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
         id: filter
         with:
           list-files: shell
-          filters: ${{ needs.collect_info.outputs.paths }}
+          filters: ${{ steps.set_filters.outputs.filters }}
       - name: Show outputs
         run: |
           echo "===================="
