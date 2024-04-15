@@ -53,13 +53,14 @@ jobs:
         run: |
           
           ls -la
-          if [ -n "apps" ]; then 
+          if test -d ./apps; then
             echo "====apps"
-            ls -la apps 2>/dev/null
-          fi  
-          if [ -n "libs" ]; then  
+            ls -la apps
+          fi
+
+          if test -d ./libs; then  
             echo "====libs"
-            ls -la libs 2>/dev/null 
+            ls -la libs 
           fi
           # install npm packages
           npm install
