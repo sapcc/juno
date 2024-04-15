@@ -51,21 +51,15 @@ jobs:
           scope: "@${{ github.repository_owner }}"
       - name: build libs
         run: |
-          
-          ls -la
-          if test -d ./apps; then
-            echo "====apps"
-            ls -la apps
-          fi
-
-          if test -d ./libs; then  
-            echo "====libs"
-            ls -la libs 
-          fi
           # install npm packages
           npm install
           # build libs if asset type is "app" 
-          if [  "$ASSET_TYPE" = "app" ] || [ "$ASSET_TYPE" = "apps" ]; then  npm run build-libs; fi
+          if test -d ./apps; then
+            echo "====apps"
+            ls -la apps
+            if [  "$ASSET_TYPE" = "app" ] || [ "$ASSET_TYPE" = "apps" ]; then  npm run build-libs; fi 
+          fi
+          
 
       - name: test asset
         run: |
