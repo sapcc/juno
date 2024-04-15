@@ -72,7 +72,9 @@ jobs:
       - name: Show outputs
         run: |
           echo "===================="
-          cat temp_filters.yaml
+          cat temp_app_filters.yaml
+          echo "===================="
+          cat temp_lib_filters.yaml
           echo "===================="
           echo apps_files: ${{ steps.app-filter.outputs.apps_files}}
           echo app changes: ${{ steps.app-filter.outputs.changes}}
