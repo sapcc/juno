@@ -57,21 +57,13 @@ jobs:
         with:
           list-files: shell
           filters: |
-            apps: ["apps/assets-overview/**","apps/auth/**","apps/dashboard/**","apps/exampleapp/**","apps/greenhouse-management/**","apps/greenhouse/**","apps/heureka/**","apps/playground/**","apps/supernova/**","apps/template/**","apps/user-activity/**","apps/volta/**","apps/whois/**","apps/widget-loader/**"]
-            appsv2: ${{fromJson(needs.collect_info.outputs.paths)}}
+            exampleapp: "apps/exampleapp/**"
+            dashboard: "apps/dashboard/**"
       - name: Show outputs
         run: |
           echo "===================="
-          echo ${{ steps.filter.outputs.apps}}
-          echo "===================="
-          echo ${{ steps.filter.outputs.apps_files}}
-          echo "===================="
-          echo appsv2: ${{ steps.filter.outputs.appsv2}}
-          echo "===================="
-          echo appsv2_files: ${{ steps.filter.outputs.appsv2_files}}          
-          echo "===================="
-          echo pathsfromJson: ${{fromJson(needs.collect_info.outputs.paths)}}
-          echo paths: ${{needs.collect_info.outputs.paths}}
+          echo ${{ steps.filter.outputs.exampleapp}}
+          echo ${{ steps.filter.outputs.dashboard}}
           echo "===================="
 
   # apps:
