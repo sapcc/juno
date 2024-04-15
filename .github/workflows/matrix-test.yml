@@ -25,25 +25,24 @@ defaults:
 # echo "paths=$(ls -d ./apps/*/ | sed 's/^\.\///' | sed 's/$/**/' | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
 # echo "paths=$(ls -d ./apps/*/ | sed 's/^\.\///' | sed 's/$/**/' | sed 's|[^/]*/|"&"|g' | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
 jobs:
-  collect_info:
-    runs-on: [ubuntu-latest]
-    outputs:
-      apps: ${{ steps.collect-apps.outputs.apps }}
-      paths: ${{ steps.collect-apps.outputs.paths }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Collect apps
-        id: collect-apps
-        run: |
-          echo "apps=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
-      - name: Show outputs
-        run: |
-          echo "===================="
-          echo apps: ${{ steps.collect-apps.outputs.apps }}
-          echo "===================="
+  # collect_info:
+  #   runs-on: [ubuntu-latest]
+  #   outputs:
+  #     apps: ${{ steps.collect-apps.outputs.apps }}
+  #     paths: ${{ steps.collect-apps.outputs.paths }}
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+  #     - name: Collect apps
+  #       id: collect-apps
+  #       run: |
+  #         echo "apps=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
+  #     - name: Show outputs
+  #       run: |
+  #         echo "===================="
+  #         echo apps: ${{ steps.collect-apps.outputs.apps }}
+  #         echo "===================="
   changes:
-    needs: collect_info
     runs-on: [ubuntu-latest]
     outputs:
       apps: ${{ steps.filters.outputs.apps }}
@@ -114,11 +113,12 @@ jobs:
     steps:
       - run: echo ${{ matrix.apps }}
 
-  # run_test:
-  #   needs: collect_info
-  #   runs-on: [ubuntu-latest]
-  #   strategy:
-  #     matrix:
-  #       apps: ${{fromJson(needs.collect_info.outputs.apps)}}
-  #   steps:
-  #     - run: echo ${{ matrix.apps }}
+  libs:
+    needs: changes
+    if: ${{ needs.changes.outputs.libs == 'true' }}
+    runs-on: [ubuntu-latest]
+    strategy:
+      matrix:
+        apps: ${{fromJson(needs.changes.outputs.lib-changes)}}
+    steps:
+      - run: echo ${{ matrix.apps }}
