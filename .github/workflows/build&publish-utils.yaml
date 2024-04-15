@@ -53,10 +53,14 @@ jobs:
         run: |
           
           ls -la
-          echo "====apps"
-          ls -la apps 2>/dev/null
-          echo "====libs"
-          ls -la libs 2>/dev/null 
+          if [ -n "apps" ]; then 
+            echo "====apps"
+            ls -la apps 2>/dev/null
+          fi  
+          if [ -n "libs" ]; then  
+            echo "====libs"
+            ls -la libs 2>/dev/null 
+          fi
           # install npm packages
           npm install
           # build libs if asset type is "app" 
