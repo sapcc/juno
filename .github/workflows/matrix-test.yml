@@ -36,14 +36,11 @@ jobs:
       - name: Collect apps
         id: collect-apps
         run: |
-          echo "apps=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}          
-          echo "paths=$(ls -d ./apps/*/ | sed 's/.*\/\(.*\)\//\1: "apps\/\1\/\*\*"/' | jq -R -s 'split("\n") | join("\\n")')" >> ${GITHUB_OUTPUT}
+          echo "apps=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
       - name: Show outputs
         run: |
           echo "===================="
-          echo ${{ steps.collect-apps.outputs.apps }}
-          echo "===================="
-          echo ${{ steps.collect-apps.outputs.paths }}
+          echo apps: ${{ steps.collect-apps.outputs.apps }}
           echo "===================="
   changes:
     needs: collect_info
@@ -52,12 +49,14 @@ jobs:
       apps: ${{ steps.filter.outputs.apps }}
     steps:
       - uses: actions/checkout@v4
-      - name: Generate temporary YAML file with all apps and libs existing in the repo
+      - name: Generate temporary YAML file with all apps and libs existing as a filter
         run: |
+          echo "$apps: $apps/**" >> temp_filters.yaml
           for folder in apps/*; do
             folder_name=$(basename "$folder")
             echo "$folder_name: $folder/**" >> temp_filters.yaml
           done
+          echo "$libs: $libs/**" >> temp_filters.yaml
           for folder in libs/*; do
             folder_name=$(basename "$folder")
             echo "$folder_name: $folder/**" >> temp_filters.yaml
