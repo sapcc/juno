@@ -3,6 +3,7 @@ import SilenceScheduled from "./SilenceScheduled"
 
 import { MessagesProvider } from "messages-provider"
 import { Button } from "juno-ui-components"
+
 const SilenceScheduledWrapper = () => {
   const [displayNewScheduledSilence, setDisplayNewScheduledSilence] =
     useState(false)
