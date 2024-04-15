@@ -93,23 +93,26 @@ jobs:
           echo libs_files: ${{ steps.filters.outputs.libs_files}}
           echo lib changes: ${{ steps.lib-filters.outputs.changes}}
           echo "===================="
-  apps:
+  test-outputs:
     needs: changes
     runs-on: [ubuntu-latest]
     steps:
-      - name: test
+      - name: show inputs
         run: |
           echo apps: ${{ needs.changes.outputs.apps }}
           echo libs: ${{ needs.changes.outputs.libs }}
           echo app changes: ${{ needs.changes.outputs.app-changes }}
           echo lib changes: ${{ needs.changes.outputs.lib-changes }}
 
-  # apps:
-  #   needs: changes
-  #   if: ${{ needs.changes.outputs.apps == 'true' }}
-  #   runs-on: [ubuntu-latest]
-  #   steps:
-  #     - run: echo ${{ needs.changes.outputs.apps }}
+  apps:
+    needs: changes
+    if: ${{ needs.changes.outputs.apps == 'true' }}
+    runs-on: [ubuntu-latest]
+    strategy:
+      matrix:
+        apps: ${{fromJson(needs.changes.outputs.app-changes)}}
+    steps:
+      - run: echo ${{ matrix.apps }}
 
   # run_test:
   #   needs: collect_info
