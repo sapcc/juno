@@ -54,9 +54,9 @@ jobs:
           
           ls -la
           echo "====apps"
-          ls -la apps 2>&1 >/dev/null 
+          ls -la apps 2>/dev/null
           echo "====libs"
-          ls -la libs 2>&1 >/dev/null 
+          ls -la libs 2>/dev/null 
           # install npm packages
           npm install
           # build libs if asset type is "app" 
