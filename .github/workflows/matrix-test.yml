@@ -56,9 +56,7 @@ jobs:
         id: filter
         with:
           list-files: shell
-          filters: |
-            exampleapp: "apps/exampleapp/**"
-            dashboard: "apps/dashboard/**"
+          filters: ${{ needs.collect_info.outputs.paths }}
       - name: Show outputs
         run: |
           echo "===================="
