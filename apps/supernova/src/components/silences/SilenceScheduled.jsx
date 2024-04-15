@@ -17,7 +17,11 @@ import {
   FormSection,
   DateTimePicker,
 } from "juno-ui-components"
-import { useAuthData, useSilenceTemplates } from "../../hooks/useAppStore"
+import {
+  useAuthData,
+  useSilenceTemplates,
+  useGlobalsApiEndpoint,
+} from "../../hooks/useAppStore"
 import { post, get } from "../../api/client"
 import { parseError } from "../../helpers"
 
@@ -40,6 +44,7 @@ const SilenceScheduled = (props) => {
   const authData = useAuthData()
   const { addMessage, resetMessages } = useActions()
   const silenceTemplates = useSilenceTemplates()
+  const apiEndpoint = useGlobalsApiEndpoint()
 
   // set sucess of sending the silence
   const [success, setSuccess] = useState(null)
@@ -78,8 +83,8 @@ const SilenceScheduled = (props) => {
     }
 
     const silence = {
-      startAt: formState.date.start,
-      endAt: formState.date.end,
+      startsAt: formState.date.start,
+      endsAt: formState.date.end,
       comment: formState.comment.value,
       createdBy: formState.createdBy,
       matchers: [],
@@ -104,8 +109,8 @@ const SilenceScheduled = (props) => {
     console.log("silence", silence)
 
     // submit silence
-    // post(`${apiEndpoint}/silences`, {
-    post(`localhost/silences`, {
+    post(`${apiEndpoint}/silences`, {
+      //post(`localhost/silences`, {
       body: JSON.stringify(silence),
     })
       .then((data) => {
@@ -140,6 +145,7 @@ const SilenceScheduled = (props) => {
 
     // checks if start date is before end date
     if (new Date(formState.date.start) >= new Date(formState.date.end)) {
+      errorexist = true
       setFormState(
         produce((formState) => {
           formState.date.error = "The start date need to be before the end date"
@@ -334,23 +340,25 @@ const SilenceScheduled = (props) => {
                   <div className="grid gap-2 grid-cols-2">
                     <DateTimePicker
                       value={testState?.date?.start || defaultDate}
-                      dateFormat="Y-m-d H:i"
+                      dateFormat="Y-m-d H:i:S"
                       label="Select a start date"
                       enableTime
                       time_24hr
                       required
                       errortext={formState.date.error}
                       onChange={setStartDate}
+                      enableSeconds
                     />
                     <DateTimePicker
                       value={testState?.date?.end || defaultDate}
-                      dateFormat="Y-m-d H:i"
+                      dateFormat="Y-m-d H:i:S"
                       label="Select a end date"
                       enableTime
                       time_24hr
                       required
                       errortext={formState.date.error}
                       onChange={setEndDate}
+                      enableSeconds
                     />
                   </div>
                 </FormRow>
