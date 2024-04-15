@@ -102,8 +102,7 @@ const SilenceScheduled = (props) => {
     }
 
     // submit silence
-    //post(`${apiEndpoint}/silences`, {
-    post(`localhost/silences`, {
+    post(`${apiEndpoint}/silences`, {
       body: JSON.stringify(silence),
     })
       .then((data) => {
