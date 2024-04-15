@@ -51,12 +51,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Generate temporary YAML file with all apps and libs existing as a filter
         run: |
-          echo "$apps: $apps/**" >> temp_filters.yaml
+          echo "apps: apps/**" >> temp_filters.yaml
           for folder in apps/*; do
             folder_name=$(basename "$folder")
             echo "$folder_name: $folder/**" >> temp_filters.yaml
           done
-          echo "$libs: $libs/**" >> temp_filters.yaml
+          echo "libs: libs/**" >> temp_filters.yaml
           for folder in libs/*; do
             folder_name=$(basename "$folder")
             echo "$folder_name: $folder/**" >> temp_filters.yaml
