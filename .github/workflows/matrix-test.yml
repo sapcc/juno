@@ -77,7 +77,7 @@ jobs:
           echo apps_files: ${{ steps.app-filter.outputs.apps_files}}
           echo app changes: ${{ steps.app-filter.outputs.changes}}
           echo libs_files: ${{ steps.lib-filter.outputs.libs_files}}
-          echo changes: ${{ steps.lib-filter.outputs.changes}}
+          echo lib changes: ${{ steps.lib-filter.outputs.changes}}
           echo "===================="
 
   # apps:
