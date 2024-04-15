@@ -25,20 +25,7 @@ import {
 import { post, get } from "../../api/client"
 import { parseError } from "../../helpers"
 
-const DEFAULT_FORM_VALUES = {
-  fixed_labels: {},
-  editable_labels: {},
-  comment: {
-    value: "",
-    error: null,
-  },
-  createdBy: "",
-  date: {
-    start: null,
-    end: null,
-    error: null,
-  },
-}
+import { DEFAULT_FORM_VALUES, validateForm } from "./silenceScheduledHelpers"
 
 const SilenceScheduled = (props) => {
   const authData = useAuthData()
@@ -78,7 +65,15 @@ const SilenceScheduled = (props) => {
 
     setSuccess(null)
 
-    if (!validateForm()) {
+    // validate form and sets in case of errors messages and stops the submit
+    let errorFormState = validateForm(formState)
+
+    if (errorFormState) {
+      setFormState(errorFormState)
+      addMessage({
+        variant: "error",
+        text: parseError("Please fix the errors in the form"),
+      })
       return
     }
 
@@ -106,11 +101,9 @@ const SilenceScheduled = (props) => {
       })
     }
 
-    console.log("silence", silence)
-
     // submit silence
-    post(`${apiEndpoint}/silences`, {
-      //post(`localhost/silences`, {
+    //post(`${apiEndpoint}/silences`, {
+    post(`localhost/silences`, {
       body: JSON.stringify(silence),
     })
       .then((data) => {
@@ -122,87 +115,6 @@ const SilenceScheduled = (props) => {
           text: parseError(error),
         })
       })
-  }
-
-  //////
-  ////// Form Validation
-
-  const validateForm = () => {
-    console.log("formState", formState)
-    let errorexist = false
-
-    // validate if comment is at least 3 characters long
-    if (formState?.comment?.value.length < 3) {
-      setFormState(
-        produce((formState) => {
-          formState.comment.error = "Please enter at least 3 characters"
-        })
-      )
-      errorexist = true
-    }
-
-    console.log("aa", formState.date.start, formState.date.end)
-
-    // checks if start date is before end date
-    if (new Date(formState.date.start) >= new Date(formState.date.end)) {
-      errorexist = true
-      setFormState(
-        produce((formState) => {
-          formState.date.error = "The start date need to be before the end date"
-        })
-      )
-    }
-
-    // All editable labels are valid regular expressions
-    console.log("formState.editable_labels", formState.editable_labels)
-    Object.keys(formState.editable_labels).map((editable_label) => {
-      console.log(formState.editable_labels[editable_label])
-
-      if (
-        !validateLabelValue(formState.editable_labels[editable_label].value)
-      ) {
-        setFormState(
-          produce((formState) => {
-            formState.editable_labels[
-              editable_label
-            ].error = `Value for ${editable_label} is not a valid regular expression`
-          })
-        )
-        errorexist = true
-      }
-
-      if (!formState.editable_labels[editable_label].value) {
-        setFormState(
-          produce((formState) => {
-            formState.editable_labels[
-              editable_label
-            ].error = `Value for ${editable_label} is empty`
-          })
-        )
-        errorexist = true
-      }
-    })
-
-    if (errorexist) {
-      addMessage({
-        variant: "error",
-        text: parseError("Please fix the errors in the form"),
-      })
-    }
-
-    if (!errorexist) {
-      return true
-    }
-
-    return false
-  }
-
-  const validateLabelValue = (value) => {
-    try {
-      return !!new RegExp(value)
-    } catch (e) {
-      return false
-    }
   }
 
   //////
@@ -234,7 +146,6 @@ const SilenceScheduled = (props) => {
   }
 
   const onChangeLabelValue = (e) => {
-    console.log("onChangeLabelValue")
     const editable_label = e.target.id
     setFormState(
       produce((formState) => {
@@ -245,7 +156,6 @@ const SilenceScheduled = (props) => {
   }
 
   const onChangeComment = (e) => {
-    console.log("onChangeComment")
     setFormState(
       produce((formState) => {
         formState.comment.value = e.target.value
@@ -261,20 +171,15 @@ const SilenceScheduled = (props) => {
         formState.date.error = null
       })
     )
-
-    console.log("formState.date.start ", formState.date.start)
   }
 
   const setEndDate = (e, f) => {
-    console.log("setEndDate", f)
     setFormState(
       produce((formState) => {
         formState.date.end = f
         formState.date.error = null
       })
     )
-
-    console.log("formState.date.end ", formState.date.end)
   }
 
   return (
@@ -339,7 +244,7 @@ const SilenceScheduled = (props) => {
                 <FormRow>
                   <div className="grid gap-2 grid-cols-2">
                     <DateTimePicker
-                      value={testState?.date?.start || defaultDate}
+                      value={formState?.date?.start || defaultDate}
                       dateFormat="Y-m-d H:i:S"
                       label="Select a start date"
                       enableTime
@@ -350,7 +255,7 @@ const SilenceScheduled = (props) => {
                       enableSeconds
                     />
                     <DateTimePicker
-                      value={testState?.date?.end || defaultDate}
+                      value={formState?.date?.end || defaultDate}
                       dateFormat="Y-m-d H:i:S"
                       label="Select a end date"
                       enableTime
