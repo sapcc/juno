@@ -49,32 +49,35 @@ jobs:
       apps: ${{ steps.filter.outputs.apps }}
     steps:
       - uses: actions/checkout@v4
-      - name: Generate temporary YAML file with all apps and libs existing as a filter
+      - name: Generate app and lib filters
         run: |
-          echo "apps: apps/**" >> temp_filters.yaml
           for folder in apps/*; do
             folder_name=$(basename "$folder")
-            echo "$folder_name: $folder/**" >> temp_filters.yaml
+            echo "$folder_name: $folder/**" >> temp_app_filters.yaml
           done
-          echo "libs: libs/**" >> temp_filters.yaml
           for folder in libs/*; do
             folder_name=$(basename "$folder")
-            echo "$folder_name: $folder/**" >> temp_filters.yaml
+            echo "$folder_name: $folder/**" >> temp_lib_filters.yaml
           done
       - uses: dorny/paths-filter@v3
-        id: filter
+        id: app-filter
         with:
           list-files: shell
-          filters: temp_filters.yaml
+          filters: temp_app_filters.yaml
+      - uses: dorny/paths-filter@v3
+        id: lib-filter
+        with:
+          list-files: shell
+          filters: temp_lib_filters.yaml
       - name: Show outputs
         run: |
           echo "===================="
           cat temp_filters.yaml
           echo "===================="
-          echo apps: ${{ steps.filter.outputs.apps}}
-          echo libs: ${{ steps.filter.outputs.libs}}
-          echo apps_files: ${{ steps.filter.outputs.apps_files}}
-          echo changes: ${{ steps.filter.outputs.changes}}
+          echo apps_files: ${{ steps.app-filter.outputs.apps_files}}
+          echo app changes: ${{ steps.app-filter.outputs.changes}}
+          echo libs_files: ${{ steps.lib-filter.outputs.libs_files}}
+          echo changes: ${{ steps.lib-filter.outputs.changes}}
           echo "===================="
 
   # apps:
