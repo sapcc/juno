@@ -12,7 +12,7 @@ on:
 env:
   ASSET_NAME: utils
   ASSET_TYPE: lib
-  ASSET_SCOPE: juno-libs-
+  ASSET_SCOPE: juno-lib-
 
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
