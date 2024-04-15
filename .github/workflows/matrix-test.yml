@@ -37,7 +37,7 @@ jobs:
         id: collect-apps
         run: |
           echo "apps=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}          
-          echo "paths=$(ls -d ./apps/*/ | sed 's/^\.\///' | sed 's/$/**/' | sed 's/^\(.*\)$/\"\1\"/' | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
+          echo "paths=$(ls -d ./apps/*/ | sed 's/.*\/\(.*\)\//\1: "apps\/\1\/\*\*"/' | jq -R -s 'split("\n") | join("\\n")')" >> ${GITHUB_OUTPUT}
       - name: Show outputs
         run: |
           echo "===================="
@@ -51,11 +51,6 @@ jobs:
     outputs:
       apps: ${{ steps.filter.outputs.apps }}
     steps:
-      - name: Set filters variable test
-        id: set_filters
-        run: |
-          FILTERS="exampleapp: apps/exampleapp/**\ndashboard: apps/dashboard/**"
-          echo "::set-output name=filters::$FILTERS"
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
         id: filter
@@ -69,7 +64,6 @@ jobs:
           echo "===================="
           echo ${{ steps.filter.outputs.exampleapp}}
           echo ${{ steps.filter.outputs.dashboard}}
-          echo ${{ steps.set_filters.outputs.filters}}
           echo "===================="
 
   # apps:
