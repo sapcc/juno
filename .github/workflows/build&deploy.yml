@@ -1,4 +1,4 @@
-name: Juno (build & deploy)
+name: build exampleapp
 
 on:
   push:
