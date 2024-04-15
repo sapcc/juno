@@ -55,7 +55,7 @@ jobs:
         id: set_custom_filters
         run: |
           CUSTOM_FILTERS='package1: src/package1\npackage2: src/package2'
-          echo "::set-output name=custom_filters::${CUSTOM_FILTERS}"
+          echo "::set-output name=custom_filters::$CUSTOM_FILTERS"
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
         id: filter
