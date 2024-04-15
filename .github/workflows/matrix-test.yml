@@ -54,7 +54,7 @@ jobs:
       - name: Set filters variable test
         id: set_filters
         run: |
-          FILTERS="exampleapp: apps/exampleapp/**\ndashboard: apps/dashboard/**"
+          FILTERS="package1: src/package1/**\npackage2: src/package2/**"
           echo "::set-output name=filters::$FILTERS"
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
