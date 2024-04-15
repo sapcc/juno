@@ -60,12 +60,19 @@ jobs:
             echo "$folder_name: $folder/**" >> temp_lib_filters.yaml
           done
       - uses: dorny/paths-filter@v3
-        id: app-filter
+        id: filters
+        with:
+          list-files: shell
+          filters: |
+            apps: apps/**
+            libs: libs/**
+      - uses: dorny/paths-filter@v3
+        id: app-filters
         with:
           list-files: shell
           filters: temp_app_filters.yaml
       - uses: dorny/paths-filter@v3
-        id: lib-filter
+        id: lib-filters
         with:
           list-files: shell
           filters: temp_lib_filters.yaml
@@ -76,10 +83,12 @@ jobs:
           echo "===================="
           cat temp_lib_filters.yaml
           echo "===================="
-          echo apps_files: ${{ steps.app-filter.outputs.apps_files}}
-          echo app changes: ${{ steps.app-filter.outputs.changes}}
-          echo libs_files: ${{ steps.lib-filter.outputs.libs_files}}
-          echo lib changes: ${{ steps.lib-filter.outputs.changes}}
+          echo apps: ${{ steps.filters.outputs.apps}}
+          echo apps_files: ${{ steps.app-filters.outputs.apps_files}}
+          echo app changes: ${{ steps.app-filters.outputs.changes}}
+          echo libs: ${{ steps.filters.outputs.libs}}
+          echo libs_files: ${{ steps.lib-filters.outputs.libs_files}}
+          echo lib changes: ${{ steps.lib-filters.outputs.changes}}
           echo "===================="
 
   # apps:
