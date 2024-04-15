@@ -51,6 +51,11 @@ jobs:
     outputs:
       apps: ${{ steps.filter.outputs.apps }}
     steps:
+      - name: Set filters variable test
+        id: set_filters
+        run: |
+          FILTERS="exampleapp: apps/exampleapp/**\ndashboard: apps/dashboard/**"
+          echo "::set-output name=filters::$FILTERS"
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
         id: filter
@@ -64,6 +69,7 @@ jobs:
           echo "===================="
           echo ${{ steps.filter.outputs.exampleapp}}
           echo ${{ steps.filter.outputs.dashboard}}
+          echo ${{ steps.set_filters.outputs.filters}}
           echo "===================="
 
   # apps:
