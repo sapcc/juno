@@ -61,7 +61,8 @@ jobs:
         id: filter
         with:
           list-files: shell
-          filters: ${{ steps.set_custom_filters.outputs.custom_filters }}
+          filters: |
+            ${{ steps.set_custom_filters.outputs.custom_filters }}
       - name: Show outputs
         run: |
           echo "===================="
