@@ -27,7 +27,7 @@ defaults:
     shell: bash
 
 jobs:
-  build-and-deploy-${{ env.ASSET_NAME }}:
+  build-and-deploy:
     runs-on: [ubuntu-latest]
     env:
       ACTIONS_RUNNER_DEBUG: true
