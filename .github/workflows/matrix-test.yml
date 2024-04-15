@@ -112,7 +112,6 @@ jobs:
 
   apps:
     needs: changes
-    # if: ${{ needs.changes.outputs.apps == 'true' }}
     runs-on: [ubuntu-latest]
     steps:
       - run: |
