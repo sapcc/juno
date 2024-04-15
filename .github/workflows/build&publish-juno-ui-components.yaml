@@ -1,1 +1,100 @@
-build&publish-utils.yaml
+name: build juno-ui-components
+
+on:
+  push:
+    branches:
+      - gh-ci
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  # On release creation
+  # release:
+  #   types: [created]
+env:
+  ASSET_NAME: juno-ui-components
+  ASSET_TYPE: lib
+  ASSET_SCOPE: juno-lib-
+
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "build-and-publish-asset"
+  cancel-in-progress: true
+
+# Default to bash
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-and-deploy:
+    runs-on: [ubuntu-latest]
+    env:
+      ACTIONS_RUNNER_DEBUG: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # 1. if asset type is equal to "app" then add libs. Otherwise add libs/ASSET_NAME 
+          # 2. if asset type is equal to "app" then add apps/ASSET_NAME. Otherwise add nothing
+          sparse-checkout: |
+            ${{ env.ASSET_TYPE == 'app' && 'libs' || format( 'libs/{0}', env.ASSET_NAME) }}
+            ${{ env.ASSET_TYPE == 'app' &&  format( 'apps/{0}', env.ASSET_NAME) || '' }}
+            scripts
+            helpers
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          registry-url: https://npm.pkg.github.com/
+          scope: "@${{ github.repository_owner }}"
+      - name: build libs
+        run: |
+          
+          ls -la
+          if test -d ./apps; then
+            echo "====apps"
+            ls -la apps
+          fi
+
+          if test -d ./libs; then  
+            echo "====libs"
+            ls -la libs 
+          fi
+          # install npm packages
+          npm install
+          # build libs if asset type is "app" 
+          if [  "$ASSET_TYPE" = "app" ] || [ "$ASSET_TYPE" = "apps" ]; then  npm run build-libs; fi
+
+      - name: test asset
+        run: |
+          npm -w $ASSET_NAME run test --if-present
+          
+      - name: build asset
+        run: |
+          npm -w $ASSET_NAME run build 
+
+      - name: Publish to github packages
+        run: |
+          # copy generated .npmrc to repository 
+          cp $NPM_CONFIG_USERCONFIG ./
+          # replace name and private values
+          PACKAGE_JSON_PATH="./${ASSET_TYPE}s/${ASSET_NAME}/package.json"
+          
+          jq '.name = "@${{ github.repository_owner }}/${{ env.ASSET_SCOPE }}${{ env.ASSET_NAME }}" | .private = false' \
+          $PACKAGE_JSON_PATH > /tmp/test.json && mv /tmp/test.json $PACKAGE_JSON_PATH
+          # cat $PACKAGE_JSON_PATH
+
+          set +e
+          # publish to https://github.com/${{ github.repository_owner }}/packages
+          npm -w "@${REPOSITORY_OWNER}/${ASSET_SCOPE}${ASSET_NAME}" publish #--dry-run
+
+          if [ $? != 0 ] ; then
+            echo "::warning title=PUBLISH::Could not publish to github. Maybe you forgot to increment the version?"
+            exit 1
+          fi
+    
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
