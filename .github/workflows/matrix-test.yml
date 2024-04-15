@@ -84,10 +84,10 @@ jobs:
           cat temp_lib_filters.yaml
           echo "===================="
           echo apps: ${{ steps.filters.outputs.apps}}
-          echo apps_files: ${{ steps.app-filters.outputs.apps_files}}
+          echo apps_files: ${{ steps.filters.outputs.apps_files}}
           echo app changes: ${{ steps.app-filters.outputs.changes}}
           echo libs: ${{ steps.filters.outputs.libs}}
-          echo libs_files: ${{ steps.lib-filters.outputs.libs_files}}
+          echo libs_files: ${{ steps.filters.outputs.libs_files}}
           echo lib changes: ${{ steps.lib-filters.outputs.changes}}
           echo "===================="
 
