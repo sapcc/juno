@@ -46,8 +46,8 @@ jobs:
     needs: collect_info
     runs-on: [ubuntu-latest]
     outputs:
-      apps: ${{ steps.filter.outputs.apps }}
-      libs: ${{ steps.filter.outputs.libs }}
+      apps: ${{ steps.filters.outputs.apps }}
+      libs: ${{ steps.filters.outputs.libs }}
       app-changes: ${{ steps.app-filters.outputs.changes }}
       lib-changes: ${{ steps.lib-filters.outputs.changes }}
     steps:
