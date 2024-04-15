@@ -52,7 +52,7 @@ jobs:
       apps: ${{ steps.filter.outputs.apps }}
     steps:
       - uses: actions/checkout@v4
-      - name: Generate temporary YAML file
+      - name: Generate temporary YAML file with all apps and libs existing in the repo
         run: |
           for folder in apps/*; do
             folder_name=$(basename "$folder")
@@ -70,7 +70,7 @@ jobs:
       - name: Show outputs
         run: |
           echo "===================="
-          echo cat temp_filters.yaml
+          cat temp_filters.yaml
           echo "===================="
           echo apps: ${{ steps.filter.outputs.apps}}
           echo libs: ${{ steps.filter.outputs.libs}}
