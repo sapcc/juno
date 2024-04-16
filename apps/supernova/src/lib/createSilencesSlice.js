@@ -19,13 +19,20 @@ const createSilencesSlice = (set, get, options) => ({
   silences: {
     ...initialSilencesState,
     // silence templates for maintanance
-    templates: (options.silenceTemplates || []).map((template, index) => ({
-      id: "elem" + index,
-      title: template.title,
-      description: template.description,
-      fixed_labels: template.fixed_labels || {},
-      editable_labels: template.editable_labels || [],
-    })),
+    templates: options.silenceTemplates
+      .map((template, index) => {
+        if (template.status === "active") {
+          return {
+            id: "elem" + index,
+            title: template.title,
+            description: template.description,
+            fixed_labels: template.fixed_labels || {},
+            editable_labels: template.editable_labels || [],
+          }
+        }
+        return null
+      })
+      .filter((template) => template !== null),
 
     actions: {
       setSilences: ({ items, itemsHash, itemsByState }) => {
