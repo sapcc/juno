@@ -1,6 +1,6 @@
 # Heureka
 
-This mircro frontent uses the Heureka POC API which aims to:
+This mircro frontent uses the Heureka POC API which aims tooo:
 
 - Track the overall state of our technology landscape
 - Establish a unified & complete Patch Management Process:
