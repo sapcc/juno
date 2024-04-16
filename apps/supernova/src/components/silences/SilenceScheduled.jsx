@@ -205,7 +205,7 @@ const SilenceScheduled = (props) => {
             {selected && !selected?.valid && (
               <FormRow>
                 <Message
-                  text="This silence template is not valid."
+                  text="This silence template is invalid."
                   variant="error"
                 />
               </FormRow>
