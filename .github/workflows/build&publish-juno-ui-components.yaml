@@ -55,7 +55,7 @@ jobs:
       - name: build libs
         run: |
           echo "===============UNPUBLISH==============="
-          npm unpublish @sapcc/juno-lib-juno-ui-components@@2.13.6
+          npm unpublish @sapcc/juno-lib-juno-ui-components@2.13.6
           # install npm packages
           npm install
           # build libs if asset type is "app" 
