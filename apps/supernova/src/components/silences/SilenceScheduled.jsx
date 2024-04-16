@@ -202,6 +202,15 @@ const SilenceScheduled = (props) => {
       {!success && (
         <>
           <Form className="mt-6">
+            {selected && !selected?.valid && (
+              <FormRow>
+                <Message
+                  text="This silence template is not valid."
+                  variant="error"
+                />
+              </FormRow>
+            )}
+
             <FormRow>
               <Select
                 required
@@ -222,14 +231,14 @@ const SilenceScheduled = (props) => {
               </Select>
             </FormRow>
 
-            {selected && (
+            {selected?.valid && (
               <FormRow>
                 <Box>{selected?.description}</Box>
               </FormRow>
             )}
           </Form>
 
-          {selected && (
+          {selected?.valid && (
             <Form>
               <FormSection>
                 <FormRow>

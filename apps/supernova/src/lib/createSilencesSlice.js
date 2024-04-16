@@ -18,18 +18,50 @@ const initialSilencesState = {
 const createSilencesSlice = (set, get, options) => ({
   silences: {
     ...initialSilencesState,
+
     // silence templates for maintanance
     templates: options.silenceTemplates
       .map((template, index) => {
+        // check if status is active
         if (template.status === "active") {
+          // check if title and discription is a string, fixed_labels is an object and editable_labels is an array of strings
+          if (
+            typeof template.title !== "string" ||
+            typeof template.description !== "string" ||
+            typeof template.fixed_labels !== "object" ||
+            !Array.isArray(template.editable_labels) ||
+            !template.editable_labels.every(
+              (element) => typeof element === "string"
+            )
+          ) {
+            return {
+              id: "elem" + index,
+              title: typeof template.title === "string" ? template.title : "", // Convert non-strings to empty string
+              description:
+                typeof template.description === "string"
+                  ? template.description
+                  : "", // Convert non-strings to empty string
+              fixed_labels:
+                typeof template.fixed_labels === "object"
+                  ? template.fixed_labels
+                  : {}, // Ensure object or empty object
+              editable_labels: Array.isArray(template.editable_labels)
+                ? template.editable_labels
+                : [], // Ensure array or empty array
+              valid: false,
+            }
+          }
+          // if all ok, return the template
           return {
             id: "elem" + index,
             title: template.title,
             description: template.description,
             fixed_labels: template.fixed_labels || {},
             editable_labels: template.editable_labels || [],
+            valid: true,
           }
         }
+        // if status is not active, return null to filter it out
         return null
       })
       .filter((template) => template !== null),
