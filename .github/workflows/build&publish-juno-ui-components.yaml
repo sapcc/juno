@@ -53,6 +53,7 @@ jobs:
           scope: "@${{ github.repository_owner }}"
       - name: build libs
         run: |
+          npm unpublish @sapcc/juno-lib-juno-ui-components@@2.13.6
           # install npm packages
           npm install
           # build libs if asset type is "app" 
