@@ -185,7 +185,7 @@ const SilenceNew = ({ alert, size, variant }) => {
           {error && <Message text={error} variant="danger" />}
 
           {success && (
-            <Message className="mb-6" variant="info">
+            <Message className="mb-6" variant="success">
               A silence object with id <b>{success?.silenceID}</b> was created
               successfully. Please note that it may take up to 5 minutes for the
               alert to show up as silenced.

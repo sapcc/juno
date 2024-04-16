@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useMemo } from "react"
 import produce from "immer"
 
 import { Messages, useActions } from "messages-provider"
@@ -40,15 +40,14 @@ const SilenceScheduled = (props) => {
   const [selected, setSelected] = useState(null)
 
   // default time for DateTimePicker
-  const date = new Date()
-  const defaultDate = `${date.getFullYear()}-${
-    date.getMonth() + 1
-  }-${date.getDate()}`
+
+  const defaultDate = useMemo(() => {
+    const date = new Date()
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+  }, [])
 
   // Formular which will be used to create the silence
   const [formState, setFormState] = useState(DEFAULT_FORM_VALUES)
-
-  const [testState, setTestState] = useState({})
 
   // useEffect to init callback after rendering. This is needed to reopen the SilencedScheduledWrapper closing the modal
   const [closed, setClosed] = useState(false)
@@ -186,8 +185,8 @@ const SilenceScheduled = (props) => {
       title="Schedule new silence"
       size="large"
       open={true}
-      confirmButtonLabel={success ? null : "Save"}
-      onConfirm={success ? null : onSubmitForm}
+      confirmButtonLabel={success || !selected ? null : "Save"}
+      onConfirm={success || !selected ? null : onSubmitForm}
       onCancel={() => setClosed(true)}
     >
       <Messages />
@@ -215,6 +214,7 @@ const SilenceScheduled = (props) => {
                 {silenceTemplates?.map((option, index) => (
                   <SelectOption
                     key={index}
+                    id={index}
                     label={option.title}
                     value={option.title}
                   />

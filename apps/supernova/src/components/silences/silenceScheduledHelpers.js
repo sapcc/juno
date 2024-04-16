@@ -15,10 +15,8 @@ export const DEFAULT_FORM_VALUES = {
 
 ////// Form Validation
 
-export const validateForm = (b) => {
-  console.log(b.date.start)
-  let formState = b
-  console.log(formState.date.start)
+export const validateForm = (state) => {
+  let formState = state
   let errorexist = false
 
   // validate if comment is at least 3 characters long
@@ -32,8 +30,6 @@ export const validateForm = (b) => {
       },
     }
   }
-
-  console.log(formState.date.start)
 
   // checks if start date is before end date
   if (new Date(formState.date.start) >= new Date(formState.date.end)) {
