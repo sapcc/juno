@@ -120,7 +120,7 @@ const SilenceScheduled = (props) => {
 
   const onChangeTemplate = (value) => {
     const newSelectedOption = silenceTemplates.find(
-      (option) => option.title === value
+      (option) => option.id === value
     )
 
     const newFormState = {
@@ -206,17 +206,17 @@ const SilenceScheduled = (props) => {
               <Select
                 required
                 label="Silence Template"
-                value={selected?.title || "Select"}
+                value={selected?.id || "Select"}
                 onValueChange={(value) => {
                   onChangeTemplate(value)
                 }}
               >
-                {silenceTemplates?.map((option, index) => (
+                {silenceTemplates?.map((option) => (
                   <SelectOption
-                    key={index}
-                    id={index}
+                    key={option.id}
+                    id={option.id}
                     label={option.title}
-                    value={option.title}
+                    value={option.id}
                   />
                 ))}
               </Select>
