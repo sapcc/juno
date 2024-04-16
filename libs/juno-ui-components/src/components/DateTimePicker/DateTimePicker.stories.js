@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { DateTimePicker } from "./index.js"
 import { PortalProvider } from "../PortalProvider/PortalProvider.component"
 
@@ -462,4 +462,36 @@ InvalidPreload.args = {
   disable: ["2024-01-30"],
   helptext:
     "The datpicker initially shows Jan 30, 2024 as value even though this date has been set as disabled and thus can not be selected by a user.",
+}
+
+const TestTemplate = ({ ...args }) => {
+  const [testState, setTestState] = useState({ date: { end: null } })
+
+  console.log("testState", testState)
+
+  const handleDTPickerChange = (dObj, dStr) => {
+    // console.log("dateObject: ", dObj)
+    // console.log("dateStr: ", dStr)
+    setTestState({ date: { end: dObj } })
+  }
+
+  return (
+    <DateTimePicker
+      {...args}
+      onChange={handleDTPickerChange}
+      value={testState?.date?.end}
+    />
+  )
+}
+
+export const FixEndlessLoop = {
+  render: TestTemplate,
+  args: {},
+}
+
+export const FixClearButton = {
+  render: Template,
+  args: {
+    value: "2027-01-12",
+  },
 }
