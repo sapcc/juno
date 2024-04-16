@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import SilenceScheduled from "./SilenceScheduled"
 
 import { MessagesProvider } from "messages-provider"
-import { Button } from "juno-ui-components"
+import { Button, Icon } from "juno-ui-components"
 
 const SilenceScheduledWrapper = () => {
   const [displayNewScheduledSilence, setDisplayNewScheduledSilence] =
@@ -22,7 +22,7 @@ const SilenceScheduledWrapper = () => {
             setDisplayNewScheduledSilence(!displayNewScheduledSilence)
           }}
         >
-          Silence
+          Schedule Silence
         </Button>
         {displayNewScheduledSilence && (
           <SilenceScheduled callbackOnClose={callbackOnClose} />

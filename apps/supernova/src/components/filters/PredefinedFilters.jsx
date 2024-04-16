@@ -34,7 +34,9 @@ const PredefinedFilters = () => {
           />
         ))}
       </TabNavigation>
-      <SilenceScheduledWrapper />
+      <div className="ml-auto">
+        <SilenceScheduledWrapper />
+      </div>
     </Stack>
   )
 }
