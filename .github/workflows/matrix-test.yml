@@ -22,26 +22,7 @@ defaults:
   run:
     shell: bash
 
-# echo "paths=$(ls -d ./apps/*/ | sed 's/^\.\///' | sed 's/$/**/' | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
-# echo "paths=$(ls -d ./apps/*/ | sed 's/^\.\///' | sed 's/$/**/' | sed 's|[^/]*/|"&"|g' | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
 jobs:
-  # collect_info:
-  #   runs-on: [ubuntu-latest]
-  #   outputs:
-  #     apps: ${{ steps.collect-apps.outputs.apps }}
-  #     paths: ${{ steps.collect-apps.outputs.paths }}
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
-  #     - name: Collect apps
-  #       id: collect-apps
-  #       run: |
-  #         echo "apps=$(ls -d ./apps/*/ | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
-  #     - name: Show outputs
-  #       run: |
-  #         echo "===================="
-  #         echo apps: ${{ steps.collect-apps.outputs.apps }}
-  #         echo "===================="
   changes:
     runs-on: [ubuntu-latest]
     outputs:
