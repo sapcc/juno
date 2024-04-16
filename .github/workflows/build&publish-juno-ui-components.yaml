@@ -6,6 +6,7 @@ on:
       - gh-ci
     paths:
       - libs/juno-ui-components/**/*
+      - .github/workflows/build&publish-juno-ui-components.yaml
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   # On release creation
