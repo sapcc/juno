@@ -19,7 +19,10 @@ const inputWrapperStyles = `
 
 const inputStyles = `
   jn-bg-theme-textinput
+  jn-bg-no-repeat
+  jn-bg-[top_0.375rem_right_1rem]
   jn-text-theme-textinput
+  jn-fill-theme-textinput-default
   jn-border
   jn-text-base
   jn-leading-4
@@ -66,8 +69,8 @@ const labelStyles = `
 const iconContainerStyles = `
   jn-absolute
   jn-inline-flex
-  jn-top-1.5
-  jn-right-5
+  jn-top-2
+  jn-right-[2.75rem]
   jn-gap-1.5
 `
 
@@ -200,10 +203,6 @@ export const DateTimePicker = ({
   const handleInputFocus = () => {
     setHasFocus(true)
     onFocus && onFocus(theDate.selectedDate, theDate.selectedDateStr)
-  }
-
-  const handleCalendarIconClick = () => {
-    flatpickrInstanceRef.current?.open()
   }
 
   const handleClearIconClick = () => {
@@ -465,6 +464,11 @@ export const DateTimePicker = ({
             }  
             ${isValid || isInvalid ? "" : inputDefaultBorderStyles} 
             ${width == "auto" ? "jn-w-auto" : "jn-w-full"}
+            ${
+              enableTime && noCalendar
+                ? "juno-datetimepicker-input-timepicker"
+                : "juno-datetimepicker-input-default"
+            }
             ${className}
           `}
           data-mode={mode}
@@ -514,11 +518,6 @@ export const DateTimePicker = ({
           ) : (
             ""
           )}
-          <Icon
-            icon={enableTime && noCalendar ? "accessTime" : "calendarToday"}
-            onClick={handleCalendarIconClick}
-            disabled={disabled}
-          />
           {isInvalid ? (
             <Icon icon="dangerous" color="jn-text-theme-error" />
           ) : (
