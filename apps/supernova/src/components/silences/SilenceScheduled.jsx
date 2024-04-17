@@ -185,8 +185,12 @@ const SilenceScheduled = (props) => {
       title="Schedule new silence"
       size="large"
       open={true}
-      confirmButtonLabel={success || !selected ? null : "Save"}
-      onConfirm={success || !selected ? null : onSubmitForm}
+      confirmButtonLabel={
+        success || !selected || selected?.invalid ? null : "Save"
+      }
+      onConfirm={
+        success || !selected || selected?.invalid ? null : onSubmitForm
+      }
       onCancel={() => setClosed(true)}
     >
       <Messages />
@@ -202,10 +206,10 @@ const SilenceScheduled = (props) => {
       {!success && (
         <>
           <Form className="mt-6">
-            {selected && !selected?.valid && (
+            {selected && selected?.invalid && (
               <FormRow>
                 <Message
-                  text="This silence template is invalid."
+                  text={`This silence template is invalid. Following elements are not well formed: ${selected.invalid}`}
                   variant="error"
                 />
               </FormRow>
@@ -231,14 +235,14 @@ const SilenceScheduled = (props) => {
               </Select>
             </FormRow>
 
-            {selected?.valid && (
+            {!selected?.invalid && (
               <FormRow>
                 <Box>{selected?.description}</Box>
               </FormRow>
             )}
           </Form>
 
-          {selected?.valid && (
+          {!selected?.invalid && (
             <Form>
               <FormSection>
                 <FormRow>

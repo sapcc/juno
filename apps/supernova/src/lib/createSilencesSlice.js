@@ -20,45 +20,52 @@ const createSilencesSlice = (set, get, options) => ({
     ...initialSilencesState,
 
     // silence templates for maintanance
-    templates: options.silenceTemplates
+    templates: options?.silenceTemplates
       .map((template, index) => {
         // check if status is active
-        if (template.status === "active") {
+        if (template?.status === "active") {
           // check if title and discription is a string, fixed_labels is an object and editable_labels is an array of strings
           if (
-            typeof template.title !== "string" ||
-            typeof template.description !== "string" ||
-            typeof template.fixed_labels !== "object" ||
-            !Array.isArray(template.editable_labels) ||
-            !template.editable_labels.every(
+            typeof template?.title !== "string" ||
+            typeof template?.description !== "string" ||
+            typeof template?.fixed_labels !== "object" ||
+            !Array.isArray(template?.editable_labels) ||
+            !template?.editable_labels.every(
               (element) => typeof element === "string"
             )
           ) {
+            let brokenElement = ""
+
+            ;(brokenElement +=
+              typeof template?.title !== "string" ? "title " : ""),
+              (brokenElement +=
+                typeof template?.description !== "string"
+                  ? "description "
+                  : ""),
+              (brokenElement +=
+                typeof template?.fixed_labels !== "object"
+                  ? "fixed_labels "
+                  : ""),
+              (brokenElement += !Array.isArray(template?.editable_labels)
+                ? "editable_labels "
+                : "")
             return {
               id: "elem" + index,
-              title: typeof template.title === "string" ? template.title : "", // Convert non-strings to empty string
-              description:
-                typeof template.description === "string"
-                  ? template.description
-                  : "", // Convert non-strings to empty string
-              fixed_labels:
-                typeof template.fixed_labels === "object"
-                  ? template.fixed_labels
-                  : {}, // Ensure object or empty object
-              editable_labels: Array.isArray(template.editable_labels)
-                ? template.editable_labels
-                : [], // Ensure array or empty array
-              valid: false,
+              title:
+                typeof template?.title === "string"
+                  ? template?.title
+                  : "Invalid template",
+              invalid: brokenElement,
             }
           }
           // if all ok, return the template
           return {
             id: "elem" + index,
-            title: template.title,
-            description: template.description,
-            fixed_labels: template.fixed_labels || {},
-            editable_labels: template.editable_labels || [],
-            valid: true,
+            title: template?.title,
+            description: template?.description,
+            fixed_labels: template?.fixed_labels || {},
+            editable_labels: template?.editable_labels || [],
+            invalid: false,
           }
         }
         // if status is not active, return null to filter it out
