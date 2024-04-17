@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { DateTimePicker } from "./index.js"
 import { PortalProvider } from "../PortalProvider/PortalProvider.component"
+import { Form } from "../Form/"
 
 export default {
   title: "WIP/DateTimePicker/DateTimePicker",
@@ -464,34 +465,31 @@ InvalidPreload.args = {
     "The datpicker initially shows Jan 30, 2024 as value even though this date has been set as disabled and thus can not be selected by a user.",
 }
 
-const TestTemplate = ({ ...args }) => {
+const ControlledTemplate = ({ ...args }) => {
   const [testState, setTestState] = useState({ date: { end: null } })
 
-  console.log("testState", testState)
-
-  const handleDTPickerChange = (dObj, dStr) => {
-    // console.log("dateObject: ", dObj)
-    // console.log("dateStr: ", dStr)
+  const handleChange = (dObj, dStr) => {
     setTestState({ date: { end: dObj } })
   }
 
   return (
     <DateTimePicker
       {...args}
-      onChange={handleDTPickerChange}
+      onChange={handleChange}
       value={testState?.date?.end}
     />
   )
 }
 
-export const FixEndlessLoop = {
-  render: TestTemplate,
-  args: {},
-}
-
-export const FixClearButton = {
-  render: Template,
-  args: {
-    value: "2027-01-12",
+export const ControlledDateTimePicker = {
+  render: ControlledTemplate,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Example of controlled usage, using the date object array as returned by the onChange handler in the parent story state. This used to create an endless loop and should be fixed now.",
+      },
+    },
   },
+  args: {},
 }
