@@ -39,6 +39,7 @@ const DOMAINS = {
     "HEC",
     "KYMA",
     "NEO",
+    "ORA",
     "S4",
     "WBS",
   ],
