@@ -22,11 +22,9 @@ header:
     - "docs/**"
     - "e2e/**"
     - "**/*.md"
-    - "**/**/*.md"
     - "LICENSE"
-    - "**/**/LICENSE"
+    - "**/LICENSE"
     - "**/*.gitignore"
-    - "**/**/*.gitignore"
     - "**/*.dockerignore"
     - "**/*.helmignore"
     - "**/*.tpl"
@@ -34,12 +32,11 @@ header:
     - "**/go.sum"
     - "**/*.lock"
     - "**/*.json"
-    - "**/**/*.json"
     - "**/.gitkeep"
     - "**/*.txt"
     - "*Dockerfile*"
     - "Makefile"
-    - "**/**/**/*.map"
+    - "**/*.map"
 
   comment: on-failure
 
