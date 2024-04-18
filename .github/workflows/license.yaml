@@ -1,4 +1,5 @@
 name: Check & Fix License Header
+
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -6,7 +7,7 @@ on:
 jobs:
   build-license-eye:
     name: Build LicenseEye
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
     permissions:
       contents: write
 
@@ -22,16 +23,16 @@ jobs:
           config: .github/licenserc.yaml
           mode: fix
 
-      - name: Apply Changes
+      - name: Set Git Config
         run: |
-          git add .
-          git config --local user.email "license_bot@github.com"
+          git config --local user.email "${{ github.actor }}@users.noreply.github.com"
           git config --local user.name "License Bot"
-          git commit -m "Automatic application of license header"
-          git checkout ${{ github.head_ref }}
+
+      - name: Stage Changes
+        run: git add .
+
+      - name: Commit Changes
+        run: git commit -m "Automatic application of license header"
 
       - name: Push Changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.head_ref }}
+        run: git push origin HEAD:${{ github.head_ref }}
