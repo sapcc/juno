@@ -19,7 +19,10 @@ const inputWrapperStyles = `
 
 const inputStyles = `
   jn-bg-theme-textinput
+  jn-bg-no-repeat
+  jn-bg-[top_0.375rem_right_1rem]
   jn-text-theme-textinput
+  jn-fill-theme-textinput-default
   jn-border
   jn-text-base
   jn-leading-4
@@ -66,8 +69,8 @@ const labelStyles = `
 const iconContainerStyles = `
   jn-absolute
   jn-inline-flex
-  jn-top-1.5
-  jn-right-5
+  jn-top-2
+  jn-right-[2.75rem]
   jn-gap-1.5
 `
 
@@ -202,15 +205,16 @@ export const DateTimePicker = ({
     onFocus && onFocus(theDate.selectedDate, theDate.selectedDateStr)
   }
 
-  const handleCalendarIconClick = () => {
-    flatpickrInstanceRef.current?.open()
-  }
-
   const handleClearIconClick = () => {
     setTheDate({})
     flatpickrInstanceRef.current?.clear()
     onClear && onClear([], "")
   }
+
+  // Create stringified versions of the value prop and its aliases in order to use them in a useEffect dependency array later.
+  const stringifiedValue = JSON.stringify(value)
+  const stringifiedDefaultDate = JSON.stringify(defaultDate)
+  const stringifiedDefaultValue = JSON.stringify(defaultValue)
 
   // Function to determine the date format. Will return the dateFormat if passed as a prop, or a useful defaultFormat depending on whether the DateTimePicker is set to show the time, seconds, or no calendar at all (time picker only).
   const getDateFormat = () => {
@@ -279,7 +283,6 @@ export const DateTimePicker = ({
 
   useEffect(() => {
     createFlatpickrInstance()
-
     return () => {
       destroyFlatpickrInstance()
     }
@@ -421,12 +424,13 @@ export const DateTimePicker = ({
     flatpickrInstanceRef.current?.set("time_24hr", time_24hr)
   }, [time_24hr])
 
+  // Update the flatpickr instance whenever the value prop (or any of its aliases) changes, and force the flatpickr instance to fire onChange event. These props may contain an array of one or multiple objects. These will never pass React's identity comparison, and will be regarded as a new object with any render regardless of their contents, thus creating an endless loop by updating the flatpickr instance updating the parent state (via onChange above) updating the flatpickr instance (…). We prevent this by checking on the stringified versions of the props in the dependency array.
   useEffect(() => {
     flatpickrInstanceRef.current?.setDate(
       value || defaultDate || defaultValue,
-      true
+      true // enforce firing change event that in turn will update our state via handleChange.
     )
-  }, [value, defaultDate, defaultValue])
+  }, [stringifiedValue, stringifiedDefaultDate, stringifiedDefaultValue])
 
   useEffect(() => {
     flatpickrInstanceRef.current?.set("weekNumbers", weekNumbers)
@@ -460,6 +464,11 @@ export const DateTimePicker = ({
             }  
             ${isValid || isInvalid ? "" : inputDefaultBorderStyles} 
             ${width == "auto" ? "jn-w-auto" : "jn-w-full"}
+            ${
+              enableTime && noCalendar
+                ? "juno-datetimepicker-input-timepicker"
+                : "juno-datetimepicker-input-default"
+            }
             ${className}
           `}
           data-mode={mode}
@@ -509,11 +518,6 @@ export const DateTimePicker = ({
           ) : (
             ""
           )}
-          <Icon
-            icon={enableTime && noCalendar ? "accessTime" : "calendarToday"}
-            onClick={handleCalendarIconClick}
-            disabled={disabled}
-          />
           {isInvalid ? (
             <Icon icon="dangerous" color="jn-text-theme-error" />
           ) : (

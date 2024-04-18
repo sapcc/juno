@@ -24,11 +24,6 @@ describe("DateTimePicker", () => {
     expect(screen.getByRole("textbox")).toHaveClass("juno-datetimepicker-input")
   })
 
-  test("renders a calendar icon", async () => {
-    render(<DateTimePicker />)
-    expect(screen.getByTitle("Calendar")).toBeInTheDocument()
-  })
-
   test("renders a label as passed", async () => {
     render(
       <DateTimePicker label="The DateTimePicker Label" id="my-textinput" />
@@ -600,12 +595,6 @@ describe("DateTimePicker", () => {
     expect(document.querySelector(".flatpickr-days")).not.toBeInTheDocument()
     expect(document.querySelector("input.flatpickr-hour")).toBeInTheDocument()
     expect(document.querySelector("input.flatpickr-minute")).toBeInTheDocument()
-  })
-
-  test("renders a time picker with a clock icon instead of a calendar icon if configured to do so", async () => {
-    render(<DateTimePicker enableTime noCalendar />)
-    expect(screen.getByTitle("Time")).toBeInTheDocument()
-    expect(screen.queryByTitle("Calendar")).not.toBeInTheDocument()
   })
 
   test("executes an onOpen handler when the user clicks the Datepicker and the calendar opens", async () => {
