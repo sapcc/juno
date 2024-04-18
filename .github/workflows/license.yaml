@@ -31,5 +31,8 @@ jobs:
           author_email: license_bot@github.com
           message: "Automatic application of license header"
 
-      - name: Push Branch
-        run: git push origin add-license-comments
+      - name: Push Changes
+        uses: ad-m/github-push-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: add-license-comments
