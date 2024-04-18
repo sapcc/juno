@@ -235,14 +235,14 @@ const SilenceScheduled = (props) => {
               </Select>
             </FormRow>
 
-            {!selected?.invalid && (
+            {selected && !selected?.invalid && (
               <FormRow>
                 <Box>{selected?.description}</Box>
               </FormRow>
             )}
           </Form>
 
-          {!selected?.invalid && (
+          {selected && !selected?.invalid && (
             <Form>
               <FormSection>
                 <FormRow>
