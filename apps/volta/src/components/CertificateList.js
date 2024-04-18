@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useEffect, useMemo } from "react"
 import { getCertificates } from "../queries"
 import { useActions } from "messages-provider"

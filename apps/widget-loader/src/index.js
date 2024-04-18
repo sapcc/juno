@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import maxSatisfying from "semver/ranges/max-satisfying"
 import coerce from "semver/functions/coerce"
 const ESM_SHIM_URL = "/externals/es-module-shims@1.8.3/dist/es-module-shims.js"

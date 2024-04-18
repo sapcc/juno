@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 const terser = require("@rollup/plugin-terser")
 const del = require("rollup-plugin-delete")
 const analyze = require("rollup-plugin-analyzer")
