@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * This module inserts a shadow dom element inline.
  * In addition to the properties 'mode' and 'delegateFocus',

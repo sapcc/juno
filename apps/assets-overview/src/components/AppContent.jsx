@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState, useEffect, useMemo } from "react"
 import { AppShell, TabPanel, MainTabs, TabList, Tab } from "juno-ui-components"
 import useStore from "../store"

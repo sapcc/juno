@@ -1,3 +1,8 @@
+<!--
+  ~ SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+  ~ SPDX-License-Identifier: Apache-2.0
+-->
+
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 210" height="210" width="210">
 	<style>
 	@keyframes a0_t { 0% { transform: translate(59.3px,59.3px) scale(1,1) translate(-19px,-19px); } 82.5% { transform: translate(59.3px,59.3px) scale(1,1) translate(-19px,-19px); animation-timing-function: cubic-bezier(0,0,.6,1); } 87.5% { transform: translate(59.3px,59.3px) scale(1.1,1.1) translate(-19px,-19px); } 100% { transform: translate(59.3px,59.3px) scale(1.1,1.1) translate(-19px,-19px); } }

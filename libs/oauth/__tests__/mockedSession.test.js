@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import "./__utils__/globalsMock"
 import mockedSession, { mockedAuthData } from "../src/mockedSession"
 import { parseIdTokenData } from "../src/tokenHelpers"
