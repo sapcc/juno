@@ -7,7 +7,7 @@ on:
 jobs:
   build-license-eye:
     name: Build LicenseEye
-    runs-on: ubuntu-latest
+    runs-on: [ ubuntu-latest ]
     permissions:
       contents: write
 
@@ -23,16 +23,11 @@ jobs:
           config: .github/licenserc.yaml
           mode: fix
 
-      - name: Set Git Config
-        run: |
-          git config --local user.email "${{ github.actor }}@users.noreply.github.com"
-          git config --local user.name "License Bot"
-
-      - name: Stage Changes
-        run: git add .
-
-      - name: Commit Changes
-        run: git commit -m "Automatic application of license header"
-
-      - name: Push Changes
-        run: git push origin HEAD:${{ github.head_ref }}
+      - name: Apply Changes
+        uses: EndBug/add-and-commit@v9
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            author_name: License Bot
+            author_email: license_bot@github.com
+            message: 'Automatic application of license header'
