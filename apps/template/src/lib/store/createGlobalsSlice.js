@@ -5,7 +5,7 @@
 
 const createGlobalsSlice = (set, get, options) => ({
   globals: {
-    urlStateKey: options.urlStateKey || "template",
+    urlStateKey: options.urlStateKey,
 
     actions: {
       setUrlStateKey: (newUrlStateKey) =>

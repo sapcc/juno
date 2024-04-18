@@ -5,17 +5,25 @@
 
 import React from "react"
 
-import { AppShell, AppShellProvider } from "juno-ui-components"
+import { AppShell, AppShellProvider, CodeBlock } from "juno-ui-components"
 import StoreProvider from "./components/StoreProvider"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
-
-/* --------------------------- */
+import { ErrorBoundary } from "react-error-boundary"
 
 const App = (props = {}) => {
+  const preErrorClasses = `
+    custom-error-pre
+    border-theme-error
+    border
+    h-full
+    w-full
+    `
+
   // Create query client which it can be used from overall in the app
   // set default endpoint to fetch data
+
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -26,13 +34,25 @@ const App = (props = {}) => {
     },
   })
 
+  const fallbackRender = ({ error }) => {
+    return (
+      <div className="w-1/2">
+        <CodeBlock className={preErrorClasses} copy={false}>
+          {error?.message || error?.toString() || "An error occurred"}
+        </CodeBlock>
+      </div>
+    )
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <AppShell
         pageHeader="Converged Cloud | App Template"
         embedded={props.embedded === "true" || props.embedded === true}
       >
-        <AppContent props={props} />
+        <ErrorBoundary fallbackRender={fallbackRender}>
+          <AppContent props={props} />
+        </ErrorBoundary>
       </AppShell>
     </QueryClientProvider>
   )
