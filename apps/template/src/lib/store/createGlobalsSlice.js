@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-const createGlobalsSlice = (set, get) => ({
+const createGlobalsSlice = (set, get, options) => ({
   globals: {
-    urlStateKey: "",
+    urlStateKey: options.urlStateKey || "template",
 
     actions: {
       setUrlStateKey: (newUrlStateKey) =>
