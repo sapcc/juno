@@ -3,8 +3,10 @@ import SilenceScheduled from "./SilenceScheduled"
 
 import { MessagesProvider } from "messages-provider"
 import { Button, Icon } from "juno-ui-components"
+import { useSilenceTemplates } from "../../hooks/useAppStore.js"
 
 const SilenceScheduledWrapper = () => {
+  const templates = useSilenceTemplates()
   const [displayNewScheduledSilence, setDisplayNewScheduledSilence] =
     useState(false)
 
@@ -15,19 +17,21 @@ const SilenceScheduledWrapper = () => {
 
   return (
     <>
-      <MessagesProvider>
-        <Button
-          onClick={(e) => {
-            e.stopPropagation()
-            setDisplayNewScheduledSilence(!displayNewScheduledSilence)
-          }}
-        >
-          Schedule Silence
-        </Button>
-        {displayNewScheduledSilence && (
-          <SilenceScheduled callbackOnClose={callbackOnClose} />
-        )}
-      </MessagesProvider>
+      {templates && templates?.length > 0 && (
+        <MessagesProvider>
+          <Button
+            onClick={(e) => {
+              e.stopPropagation()
+              setDisplayNewScheduledSilence(!displayNewScheduledSilence)
+            }}
+          >
+            Schedule Silence
+          </Button>
+          {displayNewScheduledSilence && (
+            <SilenceScheduled callbackOnClose={callbackOnClose} />
+          )}
+        </MessagesProvider>
+      )}
     </>
   )
 }
