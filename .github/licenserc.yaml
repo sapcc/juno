@@ -13,6 +13,8 @@ header:
     - "apis/**"
     - "assets/**"
     - ".npmignore"
+    - "**/.npmignore"
+    - "**/.npmrc"
     - ".npmrc"
     - "CODEOWNERS"
     - "bin/**"
