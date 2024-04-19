@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * This component adds fonts to document's head.
  * If inline is set to true, an additional inline style tag is rendered that imports the fonts.

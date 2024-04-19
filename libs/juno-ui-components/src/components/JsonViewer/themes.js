@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 export const dark = {
   base00: "rgb(39, 40, 34)",
   base01: "rgb(245, 245, 245)",

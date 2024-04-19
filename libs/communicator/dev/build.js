@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 // src/index.js
 var uniqString = () => Math.random().toString(36).substring(2);
 window.__junoCommunicatorTabId = window.__junoCommunicatorTabId || uniqString();

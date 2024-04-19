@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import PropTypes, { exact } from "prop-types"
 import React, { useContext, useLayoutEffect } from "react"
 import * as themes from "./themes"

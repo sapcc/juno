@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useMemo } from "react"
 import { DataGridCell, DataGridRow, Icon, Stack } from "juno-ui-components"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
