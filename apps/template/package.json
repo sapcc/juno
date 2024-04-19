@@ -65,9 +65,9 @@
   },
   "appProps": {
     "urlStateKey": {
-      "value": "template",
-      "type": "required",
-      "description": "Replace this with your app's name"
+      "value": "",
+      "type": "optional",
+      "description": "Replace this with your app's name. Default is 'template'."
     },
     "theme": {
       "value": "theme-dark",
