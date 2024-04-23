@@ -9,7 +9,7 @@ import createGlobalsSlice from "./createGlobalsSlice"
 
 export default () =>
   createStore(
-    devtools((set, get) => ({
-      ...createGlobalsSlice(set, get),
+    devtools((set, get, options) => ({
+      ...createGlobalsSlice(set, get, options),
     }))
   )
