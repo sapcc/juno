@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   DataGrid,
   DataGridHeadCell,
@@ -29,12 +29,57 @@ my-px
 const SilencesList = () => {
   const silences = useSilencesItems()
   const [visibleSilences, setVisibleSilences] = useState(silences)
-  console.log("silences", silences)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [status, setStatus] = useState("active")
+
+  useEffect(() => {
+    console.log(searchTerm)
+
+    let filtered = silences.filter(
+      (silence) => silence?.status?.state === status
+    )
+    console.log(filtered)
+
+    try {
+      if (searchTerm) {
+        filtered = filtered.filter((silence) =>
+          JSON.stringify(silence).match(new RegExp(searchTerm, "i"))
+        )
+      }
+    } catch (e) {
+      console.warn("search term is not a valid regex. " + e)
+
+      filtered = filtered.filter((silence) =>
+        JSON.stringify(silence).toLowerCase().includes(searchTerm.toLowerCase)
+      )
+
+      console.log(searchTerm)
+    }
+
+    setVisibleSilences(filtered)
+  }, [status, searchTerm, silences])
+
+  const handleSearchChange = (value) => {
+    // debounce setSearchTerm to avoid unnecessary re-renders
+    const debouncedSearchTerm = setTimeout(() => {
+      setSearchTerm(value.target.value)
+    }, 500)
+
+    // clear timeout if we have a new value
+    return () => clearTimeout(debouncedSearchTerm)
+  }
 
   return (
     <>
       <Stack direction="horizontal" className={`${filtersStyles}`}>
-        <Select className="w-3/12" label="Status" defaultValue="active">
+        <Select
+          className="w-3/12"
+          label="Status"
+          defaultValue="active"
+          onChange={(newStatus) => {
+            setStatus(newStatus)
+          }}
+        >
           <SelectOption value="active" />
           <SelectOption value="pending" />
           <SelectOption value="expired" />
@@ -43,6 +88,15 @@ const SilencesList = () => {
         <SearchInput
           placeholder="search term or regular expression"
           className="ml-auto w-7/12"
+          onChange={(text) => {
+            handleSearchChange(text)
+          }}
+          onSearch={(text) => {
+            setSearchTerm(text)
+          }}
+          onClear={() => {
+            setSearchTerm(null)
+          }}
         />
       </Stack>
 

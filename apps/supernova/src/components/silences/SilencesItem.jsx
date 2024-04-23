@@ -12,8 +12,8 @@ const SilencesItem = (prop) => {
   return (
     <DataGridRow className="no-hover">
       <DataGridCell>{silence?.id}</DataGridCell>
-      <DataGridCell>{silence?.createdBy}</DataGridCell>
       <DataGridCell>{silence?.comment}</DataGridCell>
+      <DataGridCell>{silence?.createdBy}</DataGridCell>
       <DataGridCell>{silence?.startsAt}</DataGridCell>
       <DataGridCell>{silence?.endsAt}</DataGridCell>
       <DataGridCell>
