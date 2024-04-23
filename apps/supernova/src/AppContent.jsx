@@ -5,7 +5,15 @@
 
 import React, { useEffect } from "react"
 import { useActions, Messages } from "messages-provider"
-import { Container, Spinner, Stack } from "juno-ui-components"
+import {
+  Container,
+  Spinner,
+  Stack,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanel,
+} from "juno-ui-components"
 import {
   useAlertsError,
   useAlertsIsLoading,
@@ -24,6 +32,7 @@ import WelcomeView from "./components/WelcomeView"
 import { parseError } from "./helpers"
 import AlertDetail from "./components/alerts/AlertDetail"
 import PredefinedFilters from "./components/filters/PredefinedFilters"
+import SilencesList from "./components/silences/SilencesList"
 
 const AppContent = () => {
   const { addMessage } = useActions()
@@ -94,27 +103,36 @@ const AppContent = () => {
     <Container px py className="h-full">
       <Messages className="pb-6" />
       {loggedIn && !authError ? (
-        <>
-          <AlertDetail />
-          <RegionsList />
-          {isAlertsLoading ? (
-            <Stack gap="2">
-              <span>Loading</span>
-              <Spinner variant="primary" />
-            </Stack>
-          ) : (
-            <>
-              <PredefinedFilters />
-              <Filters />
-              <StatusBar
-                totalCounts={totalCounts}
-                isUpdating={isAlertsUpdating}
-                updatedAt={updatedAt}
-              />
-              <AlertsList />
-            </>
-          )}
-        </>
+        <Tabs onSelect={function noRefCheck() {}}>
+          <TabList>
+            <Tab icon="danger">Alerts</Tab>
+            <Tab icon="info">Silences</Tab>
+          </TabList>
+          <TabPanel>
+            <AlertDetail />
+            <RegionsList />
+            {isAlertsLoading ? (
+              <Stack gap="2">
+                <span>Loading</span>
+                <Spinner variant="primary" />
+              </Stack>
+            ) : (
+              <>
+                <PredefinedFilters />
+                <Filters />
+                <StatusBar
+                  totalCounts={totalCounts}
+                  isUpdating={isAlertsUpdating}
+                  updatedAt={updatedAt}
+                />
+                <AlertsList />
+              </>
+            )}
+          </TabPanel>
+          <TabPanel>
+            <SilencesList />
+          </TabPanel>
+        </Tabs>
       ) : (
         <WelcomeView />
       )}
