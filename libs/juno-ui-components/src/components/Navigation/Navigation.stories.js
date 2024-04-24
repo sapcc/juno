@@ -46,6 +46,23 @@ export const WithValuesAndLabels = {
   },
 }
 
+export const WithValuesLabelsAndChildren = {
+  render: Template,
+  args: {
+    children: [
+      <NavigationItem key="i-1" value="i-1" label="Item 1 Label">
+        Item 1
+      </NavigationItem>,
+      <NavigationItem key="i-2" value="i-2" label="Item 2 Label">
+        Item 2
+      </NavigationItem>,
+      <NavigationItem key="i-3" value="i-3" label="Item 3 Label">
+        Item 3
+      </NavigationItem>,
+    ],
+  },
+}
+
 export const ValuesOnly = {
   render: Template,
   args: {
