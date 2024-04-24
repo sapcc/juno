@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 const { babel } = require("@rollup/plugin-babel")
 const del = require("rollup-plugin-delete")
 const postcss = require("rollup-plugin-postcss")
@@ -126,6 +131,22 @@ const config = [
         ? Object.keys(pkg.peerDependencies || {})
         : []
     ),
+  },
+  {
+    input: "lib/variables.scss",
+    output: {
+      file: `${buildDir}/lib/variables.css`,
+    },
+    plugins: [
+      postcss({
+        config: {
+          path: "./postcss.config.js",
+        },
+        extract: true,
+        minimize: true,
+        inject: false,
+      }),
+    ],
   },
 ]
 

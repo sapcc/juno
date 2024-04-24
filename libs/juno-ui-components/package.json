@@ -5,7 +5,7 @@
   "module": "build/index.js",
   "source": "src/index.js",
   "style": "build/lib/variables.css",
-  "version": "2.13.5",
+  "version": "2.13.7",
   "files": [
     "src/colors.css",
     "tailwind.config.js"
@@ -81,8 +81,7 @@
   "peerDependencies": {
     "prop-types": "15.8.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "flatpickr": "4.6.13"
+    "react-dom": "18.2.0"
   },
   "scripts": {
     "storybook": "storybook dev -p $APP_PORT --ci --no-open",

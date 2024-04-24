@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react"
 import { Tab as ReactTab } from "react-tabs"
 import { Icon } from "../Icon/index.js"

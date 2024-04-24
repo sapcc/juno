@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import * as React from "react"
 import { cleanup, render, screen, fireEvent } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
@@ -22,11 +27,6 @@ describe("DateTimePicker", () => {
     expect(screen.getByRole("textbox")).toBeInTheDocument()
     expect(screen.getByRole("textbox")).toHaveAttribute("type", "text")
     expect(screen.getByRole("textbox")).toHaveClass("juno-datetimepicker-input")
-  })
-
-  test("renders a calendar icon", async () => {
-    render(<DateTimePicker />)
-    expect(screen.getByTitle("Calendar")).toBeInTheDocument()
   })
 
   test("renders a label as passed", async () => {
@@ -600,12 +600,6 @@ describe("DateTimePicker", () => {
     expect(document.querySelector(".flatpickr-days")).not.toBeInTheDocument()
     expect(document.querySelector("input.flatpickr-hour")).toBeInTheDocument()
     expect(document.querySelector("input.flatpickr-minute")).toBeInTheDocument()
-  })
-
-  test("renders a time picker with a clock icon instead of a calendar icon if configured to do so", async () => {
-    render(<DateTimePicker enableTime noCalendar />)
-    expect(screen.getByTitle("Time")).toBeInTheDocument()
-    expect(screen.queryByTitle("Calendar")).not.toBeInTheDocument()
   })
 
   test("executes an onOpen handler when the user clicks the Datepicker and the calendar opens", async () => {

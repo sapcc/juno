@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 const DEFAULT_ENDPOINT = "https://whois.global.cloud.sap/v1"
 // const ENDPOINT = "https://whois-staging.scaleout.eu-nl-1.cloud.sap/v1"
 

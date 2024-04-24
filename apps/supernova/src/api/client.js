@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 class HTTPError extends Error {
   constructor(code, message) {
     super(message || code)
@@ -14,6 +19,7 @@ const checkStatus = (response) => {
     return response.text().then((message) => {
       var error = new HTTPError(response.status, message || response.statusText)
       error.statusCode = response.status
+      error.httperror = true
       return Promise.reject(error)
     })
   }

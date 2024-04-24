@@ -1,6 +1,12 @@
-import React from "react"
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState } from "react"
 import { DateTimePicker } from "./index.js"
 import { PortalProvider } from "../PortalProvider/PortalProvider.component"
+import { Form } from "../Form/"
 
 export default {
   title: "WIP/DateTimePicker/DateTimePicker",
@@ -462,4 +468,33 @@ InvalidPreload.args = {
   disable: ["2024-01-30"],
   helptext:
     "The datpicker initially shows Jan 30, 2024 as value even though this date has been set as disabled and thus can not be selected by a user.",
+}
+
+const ControlledTemplate = ({ ...args }) => {
+  const [testState, setTestState] = useState({ date: { end: null } })
+
+  const handleChange = (dObj, dStr) => {
+    setTestState({ date: { end: dObj } })
+  }
+
+  return (
+    <DateTimePicker
+      {...args}
+      onChange={handleChange}
+      value={testState?.date?.end}
+    />
+  )
+}
+
+export const ControlledDateTimePicker = {
+  render: ControlledTemplate,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Example of controlled usage, using the date object array as returned by the onChange handler in the parent story state. This used to create an endless loop and should be fixed now.",
+      },
+    },
+  },
+  args: {},
 }

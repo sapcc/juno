@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
  * This module implements a service to retrieve information from an API
  * @module apiService
@@ -46,6 +51,14 @@ function ApiService(initialConfig) {
           if (config.onFetchEnd) config.onFetchEnd()
         })
         .catch((error) => {
+          if (error?.httperror) {
+            error.message = "API: " + error.message
+          }
+          if (error.message == "Failed to fetch") {
+            error.message =
+              "Could not reach endpoint. Possible causes could include network issues, incorrect URL, or server outages."
+          }
+
           console.warn(`ApiService::${config.serviceName || ""}:`, error)
           if (config.onFetchError) config.onFetchError(error)
         })

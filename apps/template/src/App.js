@@ -1,20 +1,29 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React from "react"
 
-import { AppShell, AppShellProvider } from "juno-ui-components"
-import StoreProvider, { useGlobalsActions } from "./components/StoreProvider"
+import { AppShell, AppShellProvider, CodeBlock } from "juno-ui-components"
+import StoreProvider from "./components/StoreProvider"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import AppContent from "./AppContent"
 import styles from "./styles.scss"
-
-/* IMPORTANT: Replace this with your app's name */
-const URL_STATE_KEY = "template"
-/* --------------------------- */
+import { ErrorBoundary } from "react-error-boundary"
 
 const App = (props = {}) => {
-  const { setUrlStateKey } = useGlobalsActions()
+  const preErrorClasses = `
+    custom-error-pre
+    border-theme-error
+    border
+    h-full
+    w-full
+    `
 
   // Create query client which it can be used from overall in the app
   // set default endpoint to fetch data
+
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -25,12 +34,15 @@ const App = (props = {}) => {
     },
   })
 
-  // on app initial load save Endpoint and URL_STATE_KEY so it can be
-  // used from overall in the application
-  React.useEffect(() => {
-    // set to empty string to fetch local test data in dev mode
-    setUrlStateKey(URL_STATE_KEY)
-  }, [])
+  const fallbackRender = ({ error }) => {
+    return (
+      <div className="w-1/2">
+        <CodeBlock className={preErrorClasses} copy={false}>
+          {error?.message || error?.toString() || "An error occurred"}
+        </CodeBlock>
+      </div>
+    )
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -38,7 +50,9 @@ const App = (props = {}) => {
         pageHeader="Converged Cloud | App Template"
         embedded={props.embedded === "true" || props.embedded === true}
       >
-        <AppContent props={props} />
+        <ErrorBoundary fallbackRender={fallbackRender}>
+          <AppContent props={props} />
+        </ErrorBoundary>
       </AppShell>
     </QueryClientProvider>
   )
@@ -49,7 +63,7 @@ const StyledApp = (props) => {
     <AppShellProvider theme={`${props.theme ? props.theme : "theme-dark"}`}>
       {/* load styles inside the shadow dom */}
       <style>{styles.toString()}</style>
-      <StoreProvider>
+      <StoreProvider options={props}>
         <App {...props} />
       </StoreProvider>
     </AppShellProvider>

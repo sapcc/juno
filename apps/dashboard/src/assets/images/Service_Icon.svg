@@ -1,3 +1,8 @@
+<!--
+  ~ SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+  ~ SPDX-License-Identifier: Apache-2.0
+-->
+
 <svg xmlns="http://www.w3.org/2000/svg" width="111" height="111" viewBox="0 0 111 111">
   <defs>
     <circle id="service_icon-b" cx="51.5" cy="51.5" r="51.5"/>

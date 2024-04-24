@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useEffect, useMemo, useState, useRef } from "react"
 import { useAppLoader } from "utils"
 import { Box, Stack, Spinner, Message, Icon } from "juno-ui-components"

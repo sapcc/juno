@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useLayoutEffect, useMemo, useState } from "react"
 import {
   Modal,
@@ -9,6 +14,7 @@ import {
   Select,
   SelectOption,
   Message,
+  FormRow,
 } from "juno-ui-components"
 import {
   useAuthData,
@@ -184,7 +190,7 @@ const SilenceNew = ({ alert, size, variant }) => {
           {error && <Message text={error} variant="danger" />}
 
           {success && (
-            <Message className="mb-6" variant="info">
+            <Message className="mb-6" variant="success">
               A silence object with id <b>{success?.silenceID}</b> was created
               successfully. Please note that it may take up to 5 minutes for the
               alert to show up as silenced.
@@ -216,45 +222,50 @@ const SilenceNew = ({ alert, size, variant }) => {
               />
 
               <Form className="mt-6">
-                <TextInput
-                  className="mb-4"
-                  required
-                  label="Silenced by"
-                  value={formState.createdBy}
-                  disabled
-                />
-                <Textarea
-                  className="mb-3 h-20"
-                  label="Description"
-                  value={formState.comment}
-                  onChange={(e) =>
-                    onInputChanged({ key: "comment", value: e.target.value })
-                  }
-                  helptext={
-                    showValidation["comment"] &&
-                    errorHelpText(showValidation["comment"])
-                  }
-                  required
-                />
-                <Select
-                  required
-                  label="Duration"
-                  value={formState.duration}
-                  onChange={(value) =>
-                    onInputChanged({
-                      key: "duration",
-                      value,
-                    })
-                  }
-                >
-                  {durationOptions?.map((option) => (
-                    <SelectOption
-                      key={option.value}
-                      label={option.label}
-                      value={option.value}
-                    />
-                  ))}
-                </Select>
+                <FormRow>
+                  <TextInput
+                    required
+                    label="Silenced by"
+                    value={formState.createdBy}
+                    disabled
+                  />
+                </FormRow>
+                <FormRow>
+                  <Textarea
+                    className="h-20"
+                    label="Description"
+                    value={formState.comment}
+                    onChange={(e) =>
+                      onInputChanged({ key: "comment", value: e.target.value })
+                    }
+                    errortext={
+                      showValidation["comment"] &&
+                      errorHelpText(showValidation["comment"])
+                    }
+                    required
+                  />
+                </FormRow>
+                <FormRow>
+                  <Select
+                    required
+                    label="Duration"
+                    value={formState.duration}
+                    onChange={(value) =>
+                      onInputChanged({
+                        key: "duration",
+                        value,
+                      })
+                    }
+                  >
+                    {durationOptions?.map((option) => (
+                      <SelectOption
+                        key={option.value}
+                        label={option.label}
+                        value={option.value}
+                      />
+                    ))}
+                  </Select>
+                </FormRow>
               </Form>
             </>
           )}

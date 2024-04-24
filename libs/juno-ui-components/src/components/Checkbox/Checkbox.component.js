@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useState, useEffect, useMemo, useContext, useId } from "react"
 import PropTypes from "prop-types"
 import { CheckboxGroupContext } from "../CheckboxGroup/CheckboxGroup.component"

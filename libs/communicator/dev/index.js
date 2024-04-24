@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 const buttonCss =
   "padding: 10px; margin: 0 10px; background-color: rgb(67 75 95); border: 1px solid rgb(67 75 95); color: white; border-radius: 5px; cursor: pointer"
 const displayCss = "margin: 20px 10px 0 10px;"

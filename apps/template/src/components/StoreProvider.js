@@ -1,10 +1,15 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { createContext, useContext } from "react"
 import { useStore as create } from "zustand"
 import createStore from "../lib/store"
 
 const StoreContext = createContext()
-const StoreProvider = ({ children }) => (
-  <StoreContext.Provider value={createStore()}>
+const StoreProvider = ({ options, children }) => (
+  <StoreContext.Provider value={createStore(options)}>
     {children}
   </StoreContext.Provider>
 )

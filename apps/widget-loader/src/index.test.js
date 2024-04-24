@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 // const warn = jest.spyOn(global.console, "warn")
 global.console.warn = jest.fn()
 // global.console.log = jest.fn((t) => console.log("===", t))

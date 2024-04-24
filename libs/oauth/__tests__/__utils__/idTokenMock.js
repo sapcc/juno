@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 export const testTokenData = {
   aud: "12a34b5c-6d78-9e1f-g345-67h89ijkl123",
   sub: "P123456",

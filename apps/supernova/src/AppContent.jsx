@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { useEffect } from "react"
 import { useActions, Messages } from "messages-provider"
 import { Container, Spinner, Stack } from "juno-ui-components"
@@ -20,7 +25,7 @@ import { parseError } from "./helpers"
 import AlertDetail from "./components/alerts/AlertDetail"
 import PredefinedFilters from "./components/filters/PredefinedFilters"
 
-const AppContent = (props) => {
+const AppContent = () => {
   const { addMessage } = useActions()
   const loggedIn = useAuthLoggedIn()
   const authError = useAuthError()

@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import React, { createContext, useContext } from "react"
 import { createStore, useStore } from "zustand"
 import { devtools } from "zustand/middleware"
@@ -20,7 +25,7 @@ const createAppStore = devtools((set, get) => ({
 
 const StoreContext = createContext()
 
-export const StoreProvider = ({ children }) => {
+export const StoreProvider = ({ options, children }) => {
   return (
     <StoreContext.Provider
       value={createStore(
@@ -30,7 +35,7 @@ export const StoreProvider = ({ children }) => {
           ...createUserActivitySlice(set, get),
           ...createAlertsSlice(set, get),
           ...createFiltersSlice(set, get),
-          ...createSilencesSlice(set, get),
+          ...createSilencesSlice(set, get, options),
         }))
       )}
     >
@@ -134,6 +139,9 @@ export const useSilencesError = () =>
   useAppStore((state) => state.silences.error)
 export const useSilencesLocalItems = () =>
   useAppStore((state) => state.silences.localItems)
+
+export const useSilenceTemplates = () =>
+  useAppStore((state) => state.silences.templates)
 
 export const useSilencesActions = () =>
   useAppStore((state) => state.silences.actions)
