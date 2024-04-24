@@ -136,9 +136,15 @@ export const ItemsAsLinks = {
   render: Template,
   args: {
     children: [
-      <NavigationItem href="https://www.sap.com">Link 1</NavigationItem>,
-      <NavigationItem href="https://www.sap.com">Link 2</NavigationItem>,
-      <NavigationItem href="https://www.sap.com">Link 3</NavigationItem>,
+      <NavigationItem href="https://www.sap.com" key="i-1">
+        Link 1
+      </NavigationItem>,
+      <NavigationItem href="https://www.sap.com" key="i-2">
+        Link 2
+      </NavigationItem>,
+      <NavigationItem href="https://www.sap.com" key="i-3">
+        Link 3
+      </NavigationItem>,
     ],
   },
 }
