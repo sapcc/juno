@@ -5,87 +5,96 @@
 
 import React from "react"
 import {
-  CodeBlock,
-  Container,
   DataGrid,
   DataGridRow,
   DataGridCell,
   DataGridHeadCell,
-  JsonViewer,
   Panel,
   PanelFooter,
   Stack,
   PanelBody,
-  Spinner,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanel,
+  Pill,
+  Button,
 } from "juno-ui-components"
 import {
-  useShowDetailsFor,
-  useGlobalsActions,
-  useAlertsActions,
-  useAlertsIsLoading,
+  useShowDetailsForSilence,
+  useSilencesActions,
 } from "../../hooks/useAppStore"
-import AlertIcon from "./shared/AlertIcon"
-import AlertTimestamp from "./shared/AlertTimestamp"
-import AlertDescription from "./shared/AlertDescription"
-import AlertLinks from "./shared/AlertLinks"
-import AlertLabels from "./shared/AlertLabels"
-import SilenceNew from "../silences/SilenceNew"
-import AlertStatus from "./AlertStatus"
-import AlertRegion from "./shared/AlertRegion"
-import AlertSilences from "./AlertSilences"
+import SilencesTimestamp from "./shared/SilencesTimestamp"
 
-const AlertDetail = () => {
-  const alertID = useShowDetailsFor()
-  const { setShowDetailsFor } = useGlobalsActions()
-  const { getAlertByFingerprint } = useAlertsActions()
-  const alert = getAlertByFingerprint(alertID)
+const SilencesDetail = () => {
+  const silence = useShowDetailsForSilence()
+  const { setShowDetailsForSilence } = useSilencesActions()
 
   const onPanelClose = () => {
-    setShowDetailsFor(null)
+    setShowDetailsForSilence(false)
   }
-
-  const isAlertsLoading = useAlertsIsLoading()
 
   return (
     <Panel
       heading={
         <Stack gap="2">
-          <AlertIcon severity={alert?.labels?.severity} />
-          <span>{alert?.annotations?.summary || "Not found"}</span>
+          <span>{silence?.id}</span>
         </Stack>
       }
-      opened={!!alertID}
+      opened={!!silence}
       onClose={onPanelClose}
       size="large"
     >
       <PanelBody>
-        <DataGridRow className="no-hover">
-          <DataGridCell>{silence?.id}</DataGridCell>
-          <DataGridCell>{silence?.comment}</DataGridCell>
-          <DataGridCell>{silence?.createdBy}</DataGridCell>
-          <DataGridCell>{silence?.startsAt}</DataGridCell>
-          <DataGridCell>{silence?.endsAt}</DataGridCell>
-          <DataGridCell>
-            {silence?.matchers?.map((matcher, index) => (
-              <Pill
-                key={index}
-                pillKey={matcher.name}
-                pillValue={matcher.value}
-              />
-            ))}
-          </DataGridCell>
-        </DataGridRow>
+        <DataGrid className="overflow-hidden" columns={2}>
+          <DataGridRow>
+            <DataGridHeadCell>Status</DataGridHeadCell>
+            <DataGridCell>{silence?.status?.state}</DataGridCell>
+          </DataGridRow>
+          <DataGridRow>
+            <DataGridHeadCell>ID</DataGridHeadCell>
+            <DataGridCell>{silence?.id}</DataGridCell>
+          </DataGridRow>
+          <DataGridRow>
+            <DataGridHeadCell>Comment</DataGridHeadCell>
+            <DataGridCell>{silence?.comment}</DataGridCell>
+          </DataGridRow>
+          <DataGridRow>
+            <DataGridHeadCell>Created By</DataGridHeadCell>
+            <DataGridCell>{silence?.createdBy}</DataGridCell>
+          </DataGridRow>
+          <DataGridRow>
+            <DataGridHeadCell>Starts at</DataGridHeadCell>
+            <DataGridCell>
+              <SilencesTimestamp timestamp={silence?.startsAt} />
+            </DataGridCell>
+          </DataGridRow>
+          <DataGridRow>
+            <DataGridHeadCell>Ends at</DataGridHeadCell>
+            <DataGridCell>
+              <SilencesTimestamp timestamp={silence?.endsAt} />
+            </DataGridCell>
+          </DataGridRow>
+          <DataGridRow>
+            <DataGridHeadCell>Matchers</DataGridHeadCell>
+            <DataGridCell>
+              <Stack gap="2" alignment="start" wrap={true}>
+                {silence?.matchers?.map((matcher, index) => (
+                  <Pill
+                    key={index}
+                    pillKey={matcher.name}
+                    pillValue={matcher.value}
+                  />
+                ))}
+              </Stack>
+            </DataGridCell>
+          </DataGridRow>
+        </DataGrid>
       </PanelBody>
 
       <PanelFooter>
-        {alert && <SilenceNew alert={alert} variant="primary" />}
+        {silence?.status?.state && (
+          <Button variant="primary-danger">Expire</Button>
+        )}
       </PanelFooter>
     </Panel>
   )
 }
 
-export default AlertDetail
+export default SilencesDetail

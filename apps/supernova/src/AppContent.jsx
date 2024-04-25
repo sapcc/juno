@@ -31,6 +31,7 @@ import Filters from "./components/filters/Filters"
 import WelcomeView from "./components/WelcomeView"
 import { parseError } from "./helpers"
 import AlertDetail from "./components/alerts/AlertDetail"
+import SilencesDetail from "./components/silences/SilencesDetail"
 import PredefinedFilters from "./components/filters/PredefinedFilters"
 import SilencesList from "./components/silences/SilencesList"
 
@@ -130,6 +131,7 @@ const AppContent = () => {
             )}
           </TabPanel>
           <TabPanel>
+            <SilencesDetail />
             <SilencesList />
           </TabPanel>
         </Tabs>

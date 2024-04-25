@@ -7,6 +7,8 @@ import React from "react"
 import { DataGridRow, DataGridCell, Pill, Stack } from "juno-ui-components"
 import SilencesTimestamp from "./shared/SilencesTimestamp"
 
+import { useSilencesActions } from "../../hooks/useAppStore"
+
 // function that cuts the value of a string to max 40 characters
 const cutString = (str) => {
   return str.length > 40 ? str.substring(0, 40) + "..." : str
@@ -14,9 +16,17 @@ const cutString = (str) => {
 
 const SilencesItem = (prop) => {
   const silence = prop.silence
+  const { setShowDetailsForSilence } = useSilencesActions()
+
+  // handle show details
+  const handleShowDetails = (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    setShowDetailsForSilence(silence)
+  }
 
   return (
-    <DataGridRow className="no-hover">
+    <DataGridRow className="no-hover" onClick={(e) => handleShowDetails(e)}>
       <DataGridCell>
         <SilencesTimestamp timestamp={silence?.startsAt} />
         <SilencesTimestamp timestamp={silence?.endsAt} />

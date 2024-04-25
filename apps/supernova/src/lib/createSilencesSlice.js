@@ -15,6 +15,7 @@ const initialSilencesState = {
   updatedAt: null,
   error: null,
   localItems: {},
+  showDetailsForSilence: null,
 
   // silence templates for maintanance
   templates: [],
@@ -304,6 +305,15 @@ const createSilencesSlice = (set, get, options) => ({
           prev.endsAt > current.endsAt ? prev : current
         )
       },
+      setShowDetailsForSilence: (silence) =>
+        set(
+          (state) => ({
+            silences: { ...state.silences, showDetailsForSilence: silence },
+          }),
+          false,
+          "silences.setShowDetailsFor"
+        ),
+
       setIsLoading: (value) =>
         set(
           (state) => ({ silences: { ...state.silences, isLoading: value } }),

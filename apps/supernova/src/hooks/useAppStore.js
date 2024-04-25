@@ -139,6 +139,8 @@ export const useSilencesError = () =>
   useAppStore((state) => state.silences.error)
 export const useSilencesLocalItems = () =>
   useAppStore((state) => state.silences.localItems)
+export const useShowDetailsForSilence = () =>
+  useAppStore((state) => state.silences.showDetailsForSilence)
 
 export const useSilenceTemplates = () =>
   useAppStore((state) => state.silences.templates)
