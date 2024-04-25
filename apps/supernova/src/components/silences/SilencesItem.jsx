@@ -4,22 +4,37 @@
  */
 
 import React from "react"
-import { DataGridRow, DataGridCell, Pill } from "juno-ui-components"
+import { DataGridRow, DataGridCell, Pill, Stack } from "juno-ui-components"
+import SilencesTimestamp from "./shared/SilencesTimestamp"
+
+// function that cuts the value of a string to max 40 characters
+const cutString = (str) => {
+  return str.length > 40 ? str.substring(0, 40) + "..." : str
+}
 
 const SilencesItem = (prop) => {
   const silence = prop.silence
 
   return (
     <DataGridRow className="no-hover">
-      <DataGridCell>{silence?.id}</DataGridCell>
-      <DataGridCell>{silence?.comment}</DataGridCell>
-      <DataGridCell>{silence?.createdBy}</DataGridCell>
-      <DataGridCell>{silence?.startsAt}</DataGridCell>
-      <DataGridCell>{silence?.endsAt}</DataGridCell>
       <DataGridCell>
-        {silence?.matchers?.map((matcher, index) => (
-          <Pill key={index} pillKey={matcher.name} pillValue={matcher.value} />
-        ))}
+        <SilencesTimestamp timestamp={silence?.startsAt} />
+        <SilencesTimestamp timestamp={silence?.endsAt} />
+      </DataGridCell>
+      <DataGridCell>
+        <div>{silence?.comment}</div>
+        <div className="text-theme-light">Created by {silence?.createdBy}</div>
+      </DataGridCell>
+      <DataGridCell className="overflow-hidden">
+        <Stack gap="2" alignment="start" wrap={true}>
+          {silence?.matchers?.map((matcher, index) => (
+            <Pill
+              key={index}
+              pillKey={matcher.name}
+              pillValue={cutString(matcher.value)}
+            />
+          ))}
+        </Stack>
       </DataGridCell>
     </DataGridRow>
   )

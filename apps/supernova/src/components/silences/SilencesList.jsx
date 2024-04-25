@@ -33,12 +33,9 @@ const SilencesList = () => {
   const [status, setStatus] = useState("active")
 
   useEffect(() => {
-    console.log(searchTerm)
-
     let filtered = silences.filter(
       (silence) => silence?.status?.state === status
     )
-    console.log(filtered)
 
     try {
       if (searchTerm) {
@@ -100,18 +97,10 @@ const SilencesList = () => {
         />
       </Stack>
 
-      <DataGrid
-        columns={6}
-        minContentColumns={[0]}
-        cellVerticalAlignment="top"
-        className="alerts"
-      >
+      <DataGrid columns={3} cellVerticalAlignment="top" className="silences">
         <DataGridRow>
-          <DataGridHeadCell>Id</DataGridHeadCell>
+          <DataGridHeadCell>Timeintervall</DataGridHeadCell>
           <DataGridHeadCell>Comment</DataGridHeadCell>
-          <DataGridHeadCell>Created By</DataGridHeadCell>
-          <DataGridHeadCell>Starts At</DataGridHeadCell>
-          <DataGridHeadCell>Ends At</DataGridHeadCell>
           <DataGridHeadCell>Matchers</DataGridHeadCell>
         </DataGridRow>
 
