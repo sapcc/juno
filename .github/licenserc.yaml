@@ -51,3 +51,9 @@ header:
       extensions:
         - ".jsx"
       comment_style_id: SlashAsterisk
+    MDX:
+      extensions:
+        - ".mdx"
+      comment_style_id: Custom
+      comment_start: "/-"
+      comment_end: "-/"
