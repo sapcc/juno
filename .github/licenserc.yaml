@@ -55,6 +55,7 @@ header:
       extensions:
         - ".mdx"
       comment_style_id: Custom
-      start: "/-"
-      middle: "~"
-      end: "-/"
+      comment_after: '(?ms)^<\?.+?\?>$'
+      comment_start: "/-"
+      comment_middle: "  ~"
+      comment_end: "-/"
