@@ -99,7 +99,7 @@ wb
 APP_PORT=$LOADER_PORT npm --workspace widget-loader start
 ```
 
-Test im browser:
+Test im browser using following URL:
 
 ```
 https://loader.<your-workspace-name>.ws2.eu-nl-1.cloud.sap/
