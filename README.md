@@ -92,7 +92,7 @@ Following different port for the widget loader App:
       ...
 ```
 
-Start locally the widget loader within the container
+Start locally the widget loader within the container:
 
 ```bash
 wb
