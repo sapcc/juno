@@ -55,3 +55,6 @@ header:
       extensions:
         - ".mdx"
       comment_style_id: Slash
+      start: "/-"
+      middle: "~"
+      end: "-/"
