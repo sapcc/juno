@@ -39,6 +39,7 @@ header:
     - "*Dockerfile*"
     - "Makefile"
     - "**/*.map"
+    - "**/*.mdx"
 
   comment: on-failure
 
