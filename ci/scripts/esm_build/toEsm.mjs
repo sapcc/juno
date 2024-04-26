@@ -154,7 +154,15 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
   log("\n" + indent + green("PROCESS: ") + packageName + "@" + packageVersion)
 
   // get the current version of the package
-  const currentVersion = await getFixPackageVersion(packageName, packageVersion)
+  let currentVersion = await getFixPackageVersion(packageName, packageVersion)
+  // Fix: do not install react 18.3
+  // TODO: remove it when all apps and libs have been updated to react 18.3
+  if (
+    ["react", "react-dom"].includes(packageName) &&
+    "18.3.0" === currentVersion
+  ) {
+    currentVersion = "18.2.0"
+  }
 
   if (verbose)
     log(
