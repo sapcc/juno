@@ -39,6 +39,7 @@ header:
     - "*Dockerfile*"
     - "Makefile"
     - "**/*.map"
+    - "**/*.mdx"
 
   comment: on-failure
 
@@ -51,11 +52,3 @@ header:
       extensions:
         - ".jsx"
       comment_style_id: SlashAsterisk
-    MDX:
-      extensions:
-        - ".mdx"
-      comment_style_id: Custom
-      after: '(?ms)^<\?.+?\?>$'
-      start: "/-"
-      middle: "  ~"
-      end: "-/"
