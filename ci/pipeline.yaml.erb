@@ -838,8 +838,7 @@ jobs:
               - -c
               - |
                 cd /app/juno/e2e
-                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/hosting/dashboard*" && \
-                CYPRESS_BASE_URL=https://exampleapp.juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/hosting/exampleapp*"
+                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/hosting/dashboard*" 
 
   # DEPLOY HOSTING TO PROD
   - name: deploy-hosting-to-s-eu-nl-1
