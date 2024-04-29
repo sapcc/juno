@@ -159,7 +159,7 @@ async function convertToEsm(packageName, packageVersion, options = {}) {
   // TODO: remove it when all apps and libs have been updated to react 18.3
   if (
     ["react", "react-dom"].includes(packageName) &&
-    "18.3.0" === currentVersion
+    currentVersion.startsWith("18.3")
   ) {
     currentVersion = "18.2.0"
   }
