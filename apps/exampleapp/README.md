@@ -49,7 +49,7 @@ const App = () => {
 }
 ```
 
-Or using React's lazy loading to keep the bundle size small
+Or using React's lazy loading to keep the bundle size small:
 
 ```js
 import { lazy } from "react"
