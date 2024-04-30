@@ -76,7 +76,9 @@ describe("Navigation", () => {
     )
   })
 
-  test("renders an active item as passed to the parent by child content", async () => {
+  // test setting the activeItem:
+
+  test("renders an active item as passed to the parent by child content when only content is given", async () => {
     render(
       <Navigation activeItem="Item 2">
         <NavigationItem>Item 1</NavigationItem>
@@ -113,7 +115,123 @@ describe("Navigation", () => {
     )
   })
 
-  test("renders an active item as passed to the parent by child value", async () => {
+  test("renders an active item as passed to the parent by child content when content and label are given", async () => {
+    render(
+      <Navigation activeItem="Item 2">
+        <NavigationItem label="itm-1">Item 1</NavigationItem>
+        <NavigationItem label="itm-2">Item 2</NavigationItem>
+        <NavigationItem label="itm-3">Item 3</NavigationItem>
+      </Navigation>
+    )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.queryAllByRole("button")).toHaveLength(3)
+    expect(screen.getByRole("button", { name: "Item 1" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
+      "juno-navigation-item-active"
+    )
+    expect(screen.getByRole("button", { name: "Item 2" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 2" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
+      "juno-navigation-item-active"
+    )
+
+    expect(screen.getByRole("button", { name: "Item 3" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 3" })).not.toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 3" })).not.toHaveClass(
+      "juno-navigation-item-active"
+    )
+  })
+
+  test("renders an active item as passed to the parent by child content when content, label, and value are given", async () => {
+    render(
+      <Navigation activeItem="Item 2">
+        <NavigationItem label="itm-1" value="item-1">
+          Item 1
+        </NavigationItem>
+        <NavigationItem label="itm-2" value="item-2">
+          Item 2
+        </NavigationItem>
+        <NavigationItem label="itm-3" value="item-3">
+          Item 3
+        </NavigationItem>
+      </Navigation>
+    )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.queryAllByRole("button")).toHaveLength(3)
+    expect(screen.getByRole("button", { name: "Item 1" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
+      "juno-navigation-item-active"
+    )
+    expect(screen.getByRole("button", { name: "Item 2" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 2" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
+      "juno-navigation-item-active"
+    )
+
+    expect(screen.getByRole("button", { name: "Item 3" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 3" })).not.toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 3" })).not.toHaveClass(
+      "juno-navigation-item-active"
+    )
+  })
+
+  test("renders an active item as passed to the parent by child value when only value is given", async () => {
+    render(
+      <Navigation activeItem="item-2">
+        <NavigationItem value="item-1" />
+        <NavigationItem value="item-2" />
+        <NavigationItem value="item-3" />
+      </Navigation>
+    )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.queryAllByRole("button")).toHaveLength(3)
+    expect(screen.getByRole("button", { name: "item-1" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "item-1" })).not.toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "item-1" })).not.toHaveClass(
+      "juno-navigation-item-active"
+    )
+    expect(screen.getByRole("button", { name: "item-2" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "item-2" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "item-2" })).toHaveClass(
+      "juno-navigation-item-active"
+    )
+    expect(screen.getByRole("button", { name: "item-3" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "item-3" })).not.toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "item-3" })).not.toHaveClass(
+      "juno-navigation-item-active"
+    )
+  })
+
+  test("renders an active item as passed to the parent by child value when value and label are given", async () => {
     render(
       <Navigation activeItem="item-2">
         <NavigationItem value="item-1" label="Item 1" />
@@ -149,7 +267,85 @@ describe("Navigation", () => {
     )
   })
 
-  test("renders an active item as passed to the parent by label", async () => {
+  test("renders an active item as passed to the parent by child value when value, label, and child content are given", async () => {
+    render(
+      <Navigation activeItem="item-2">
+        <NavigationItem value="item-1" label="Item 1">
+          Item 1
+        </NavigationItem>
+        <NavigationItem value="item-2" label="Item 2">
+          Item 2
+        </NavigationItem>
+        <NavigationItem value="item-3" label="Item 3">
+          Item 3
+        </NavigationItem>
+      </Navigation>
+    )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.queryAllByRole("button")).toHaveLength(3)
+    expect(screen.getByRole("button", { name: "Item 1" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
+      "juno-navigation-item-active"
+    )
+    expect(screen.getByRole("button", { name: "Item 2" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 2" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
+      "juno-navigation-item-active"
+    )
+    expect(screen.getByRole("button", { name: "Item 3" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 3" })).not.toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 3" })).not.toHaveClass(
+      "juno-navigation-item-active"
+    )
+  })
+
+  test("renders an active item as passed to the parent by child label when only label is given", async () => {
+    render(
+      <Navigation activeItem="Item 2">
+        <NavigationItem label="Item 1" />
+        <NavigationItem label="Item 2" />
+        <NavigationItem label="Item 3" />
+      </Navigation>
+    )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.queryAllByRole("button")).toHaveLength(3)
+    expect(screen.getByRole("button", { name: "Item 1" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
+      "juno-navigation-item-active"
+    )
+    expect(screen.getByRole("button", { name: "Item 2" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 2" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
+      "juno-navigation-item-active"
+    )
+    expect(screen.getByRole("button", { name: "Item 3" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 3" })).not.toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 3" })).not.toHaveClass(
+      "juno-navigation-item-active"
+    )
+  })
+
+  test("renders an active item as passed to the parent by child label when value and label are given", async () => {
     render(
       <Navigation activeItem="Item 2">
         <NavigationItem value="item-1" label="Item 1" />
@@ -184,6 +380,65 @@ describe("Navigation", () => {
       "juno-navigation-item-active"
     )
   })
+
+  test("renders an active item as passed to the parent by child label when value, label, and child content are given", async () => {
+    render(
+      <Navigation activeItem="Item 2 Label">
+        <NavigationItem value="item-1" label="Item 1 Label">
+          Item 1
+        </NavigationItem>
+        <NavigationItem value="item-2" label="Item 2 Label">
+          Item 2
+        </NavigationItem>
+        <NavigationItem value="item-3" label="Item 3 Label">
+          Item 3
+        </NavigationItem>
+      </Navigation>
+    )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    expect(screen.queryAllByRole("button")).toHaveLength(3)
+    expect(screen.getByRole("button", { name: "Item 1" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
+      "juno-navigation-item-active"
+    )
+    expect(screen.getByRole("button", { name: "Item 2" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 2" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
+      "juno-navigation-item-active"
+    )
+    expect(screen.getByRole("button", { name: "Item 3" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Item 3" })).not.toHaveAttribute(
+      "aria-selected",
+      "true"
+    )
+    expect(screen.getByRole("button", { name: "Item 3" })).not.toHaveClass(
+      "juno-navigation-item-active"
+    )
+  })
+
+  // test("executes an onActiveItemChange handler when the user clicks an item", async () => {
+  //   render(
+  //     <Navigation
+  //       activeItem="Item 2"
+  //       onActiveItemChange={mockOnActiveItemChange}
+  //     >
+  //       <NavigationItem value="item-1" label="Item 1" />
+  //       <NavigationItem value="item-2" label="Item 2" />
+  //       <NavigationItem value="item-3" label="Item 3" />
+  //     </Navigation>
+  //   )
+  //   expect(screen.getByRole("navigation")).toBeInTheDocument()
+  //   const itemToClick = screen.getByRole("button", { name: "Item 2" })
+  //   await userEvent.click(itemToClick)
+  //   expect(mockOnActiveItemChange).toHaveBeenCalled()
+  // })
 
   test("renders custom classNames as passed", async () => {
     render(<Navigation className="my-custom-class" />)
