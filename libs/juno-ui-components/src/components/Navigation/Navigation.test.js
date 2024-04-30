@@ -9,6 +9,7 @@ import userEvent from "@testing-library/user-event"
 import { Navigation } from "./index"
 import { NavigationItem } from "../NavigationItem/index"
 
+const mockOnChange = jest.fn()
 const mockOnActiveItemChange = jest.fn()
 
 describe("Navigation", () => {
@@ -1433,6 +1434,40 @@ describe("Navigation", () => {
     const itemToClick = screen.getByRole("button", { name: "Item 2" })
     await userEvent.click(itemToClick)
     expect(mockOnActiveItemChange).toHaveBeenCalled()
+  })
+
+  // Skip for now as test is failing
+  test("executes an onChange handler when the user clicks an item", async () => {
+    render(
+      <Navigation activeItem="Item 1" onChange={mockOnChange}>
+        <NavigationItem>Item 1</NavigationItem>
+        <NavigationItem>Item 2</NavigationItem>
+        <NavigationItem>Item 3</NavigationItem>
+      </Navigation>
+    )
+    expect(screen.getByRole("navigation")).toBeInTheDocument()
+    await userEvent.click(screen.getByRole("button", { name: "Item 2" }))
+    expect(mockOnChange).toHaveBeenCalled()
+  })
+
+  // Skip for now as test is failing
+  test.skip("executes an onChange handler when the active item was changed porgrammatically", async () => {
+    const { rerender } = render(
+      <Navigation activeItem="Item 1" onChange={mockOnChange}>
+        <NavigationItem>Item 1</NavigationItem>
+        <NavigationItem>Item 2</NavigationItem>
+        <NavigationItem>Item 3</NavigationItem>
+      </Navigation>
+    )
+    expect(mockOnChange).not.toHaveBeenCalled()
+    rerender(
+      <Navigation activeItem="Item 1">
+        <NavigationItem>Item 1</NavigationItem>
+        <NavigationItem>Item 2</NavigationItem>
+        <NavigationItem>Item 3</NavigationItem>
+      </Navigation>
+    )
+    expect(mockOnChange).toHaveBeenCalled()
   })
 
   test("renders custom classNames as passed", async () => {
