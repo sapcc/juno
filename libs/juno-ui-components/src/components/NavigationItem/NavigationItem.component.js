@@ -58,7 +58,8 @@ export const NavigationItem = ({
   const [isActive, setIsActive] = useState(() => initialActive())
 
   useEffect(() => {
-    addItem(theKey, children, label, value)
+    // only add the item to the parent if we are in a context and addItem method exists:
+    addItem ? addItem(theKey, children, label, value) : undefined
   }, [children, label, value])
 
   useEffect(() => {
@@ -73,7 +74,11 @@ export const NavigationItem = ({
     if (disabled) {
       event.preventDefault()
     } else {
-      if (!isActive) {
+      if (
+        !isActive &&
+        handleActiveItemChange &&
+        typeof handleActiveItemChange === "function"
+      ) {
         handleActiveItemChange(theKey)
       }
       onClick && onClick(event)
@@ -89,7 +94,11 @@ export const NavigationItem = ({
           aria-selected={isActive ? true : null}
           className={`
             juno-navigation-item 
-            juno-${navigationRole.toLowerCase()}-item 
+            ${
+              navigationRole
+                ? "juno-" + navigationRole.toLowerCase() + "-item"
+                : ""
+            }
             ${isActive ? "juno-navigation-item-active " + activeStyles : ""}
             ${
               navigationDisabled || disabled
@@ -112,7 +121,11 @@ export const NavigationItem = ({
           aria-selected={isActive ? true : null}
           className={`
             juno-navigation-item 
-            juno-${navigationRole.toLowerCase()}-item 
+            ${
+              navigationRole
+                ? "juno-" + navigationRole.toLowerCase() + "-item"
+                : ""
+            }
             ${isActive ? "juno-navigation-item-active " + activeStyles : ""}
             ${
               navigationDisabled || disabled
