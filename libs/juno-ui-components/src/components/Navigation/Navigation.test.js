@@ -1419,7 +1419,7 @@ describe("Navigation", () => {
   })
 
   // Skip for now as test is failing
-  test.skip("executes an onActiveItemChange handler when the user clicks an item", async () => {
+  test.skip("executes an onActiveItemChange handler when the user clicks an item and the active item changes", async () => {
     render(
       <Navigation
         activeItem="Item 2"
@@ -1431,9 +1431,12 @@ describe("Navigation", () => {
       </Navigation>
     )
     expect(screen.getByRole("navigation")).toBeInTheDocument()
+    const user = userEvent.setup()
     const itemToClick = screen.getByRole("button", { name: "Item 2" })
-    await userEvent.click(itemToClick)
-    expect(mockOnActiveItemChange).toHaveBeenCalled()
+    await user.click(itemToClick)
+    await waitFor(() => {
+      expect(mockOnActiveItemChange).toHaveBeenCalled()
+    })
   })
 
   // Skip for now as test is failing
@@ -1446,8 +1449,12 @@ describe("Navigation", () => {
       </Navigation>
     )
     expect(screen.getByRole("navigation")).toBeInTheDocument()
-    await userEvent.click(screen.getByRole("button", { name: "Item 2" }))
-    expect(mockOnChange).toHaveBeenCalled()
+    const user = userEvent.setup()
+    const itemToClick = screen.getByRole("button", { name: "Item 2" })
+    await user.click(itemToClick)
+    await waitFor(() => {
+      expect(mockOnChange).toHaveBeenCalled()
+    })
   })
 
   // Skip for now as test is failing
