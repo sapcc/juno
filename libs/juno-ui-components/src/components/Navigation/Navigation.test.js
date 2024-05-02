@@ -1460,7 +1460,7 @@ describe("Navigation", () => {
   })
 
   // Skip for now as test is failing
-  test.skip("executes an onChange handler when the active item was changed porgrammatically", async () => {
+  test.skip("executes an onChange handler when the active item was changed programmatically", async () => {
     const { rerender } = render(
       <Navigation activeItem="Item 1" onChange={mockOnChange}>
         <NavigationItem>Item 1</NavigationItem>
@@ -1482,7 +1482,7 @@ describe("Navigation", () => {
   })
 
   // Skip for now as test is failing
-  test.skip("executes an onActiveItemChange handler when the active item was changed porgrammatically", async () => {
+  test.skip("executes an onActiveItemChange handler when the active item was changed programmatically", async () => {
     const { rerender } = render(
       <Navigation activeItem="Item 1" onChange={mockOnActiveItemChange}>
         <NavigationItem>Item 1</NavigationItem>
