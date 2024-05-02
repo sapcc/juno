@@ -1,7 +1,7 @@
 {
   "name": "greenhouse",
-  "version": "0.1.19",
-  "managementVersion": "1.1.11",
+  "version": "0.1.20",
+  "managementVersion": "1.1.13",
   "author": "UI-Team",
   "contributors": [
     "Andreas Pfau",
@@ -37,7 +37,7 @@
     "postcss": "^8.4.21",
     "postcss-url": "^10.1.3",
     "prop-types": "^15.8.1",
-    "react": "^18.2.0",
+    "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-test-renderer": "^18.2.0",
     "sapcc-k8sclient": "^1.0.2",
@@ -58,7 +58,7 @@
     "juno-ui-components": "*",
     "messages-provider": "*",
     "prop-types": "^15.8.1",
-    "react": "^18.2.0",
+    "react": "18.2.0",
     "react-dom": "^18.2.0",
     "url-state-provider": "*",
     "utils": "*",

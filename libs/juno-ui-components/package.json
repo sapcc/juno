@@ -5,7 +5,7 @@
   "module": "build/index.js",
   "source": "src/index.js",
   "style": "build/lib/variables.css",
-  "version": "2.13.7",
+  "version": "2.13.8",
   "files": [
     "src/colors.css",
     "tailwind.config.js"
@@ -59,7 +59,7 @@
     "postcss": "^8.4.6",
     "postcss-loader": "^6.2.1",
     "prop-types": "^15.8.1",
-    "react": "^18.2.0",
+    "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-jss": "^10.8.1",
     "react-tabs": "^4.2.1",
@@ -81,7 +81,7 @@
   "peerDependencies": {
     "prop-types": "15.8.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "^18.2.0"
   },
   "scripts": {
     "storybook": "storybook dev -p $APP_PORT --ci --no-open",
