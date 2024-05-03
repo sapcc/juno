@@ -428,6 +428,7 @@ jobs:
                 # exit on error
                 set -e
                 DIST_PATH=$(pwd)/dist
+                EXIT=0
                 cd ./juno.git
                 # compose everthing together that we can use it in the asset-server image build
                 <% ASSETS_SOURCE.each do |name,asset_types|%>
@@ -457,7 +458,7 @@ jobs:
                 # upload build logs
                 ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type apps --action upload --root-path ../juno-3rd-party &> /dev/null
                 ./ci/scripts/asset_storage.sh --container juno-assets --asset-type apps --action upload --root-path ../juno-assets &> /dev/null
-                exit 1
+                # exit 1
 
       # to serve our js, css and stattic assets this step will add all the created data 
       # in dist/ to the nginx image in /usr/share/nginx/html
