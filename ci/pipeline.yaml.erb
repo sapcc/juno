@@ -631,7 +631,7 @@ jobs:
           params:
             depth: 100 
         - get: assets-server.version
-          trigger: true
+          trigger: false
           passed: [build-assets-server-image]
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
