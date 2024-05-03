@@ -3,6 +3,7 @@
   "widget-loader": "<=1.1.1",
   "greenhouse-cluster-admin": "<=1.0",
   "whois": "<=3.0.3",
-  "greenhouse": "<0.1.13",
-  "doop": "<=2.2.0"
+  "doop": "<=2.2.0",
+  "greenhouse": "*",
+  "greenhouse-management": "*"
 }
