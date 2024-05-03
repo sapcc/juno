@@ -72,11 +72,12 @@ asset_names_arr=($(jq -r '.name' $JUNO_ASSETS_PATH/$ASSET_TYPE/**/package.json))
 # make arr unique
 juno_assets=($(echo "${asset_names_arr[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
 
-third_3rd_party_assets=()
-# juno-3rd-party/apps/APPNAME/APPFOLDER/package.json
+# get names of all 3rd-party assets
 if [ -d "$THIRD_PARTY_ASSETS_PATH/$ASSET_TYPE" ]; then
-  asset_names_arr=($(jq -r '.name' $THIRD_PARTY_ASSETS_PATH/$ASSET_TYPE/**/**/package.json))
-  # make arr unique
+  # Use find command to locate all package.json files recursively, excluding node_modules directory
+  asset_names_arr=($(find "$THIRD_PARTY_ASSETS_PATH/$ASSET_TYPE" -type f -name "package.json" ! -path "*/node_modules/*" -exec jq -r '.name' {} +))
+
+  # Remove duplicates and store unique names in third_3rd_party_assets array
   third_3rd_party_assets=($(echo "${asset_names_arr[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
 fi
 
