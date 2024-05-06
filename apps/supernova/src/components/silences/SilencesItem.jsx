@@ -3,36 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from "react"
+import React, { forwardRef } from "react"
 import { DataGridRow, DataGridCell, Pill, Stack } from "juno-ui-components"
 import SilencesTimestamp from "./shared/SilencesTimestamp"
 
-import { useSilencesActions } from "../../hooks/useAppStore"
+import {
+  useSilencesActions,
+  useShowDetailsForSilence,
+} from "../../hooks/useAppStore"
 
 // function that cuts the value of a string to max 40 characters
 const cutString = (str) => {
   return str.length > 40 ? str.substring(0, 40) + "..." : str
 }
 
-const SilencesItem = (prop) => {
-  const silence = prop.silence
+const SilencesItem = ({ silence }, ref) => {
   const { setShowDetailsForSilence } = useSilencesActions()
+  const showDetailsFor = useShowDetailsForSilence()
 
   // handle show details
   const handleShowDetails = (e) => {
     e.stopPropagation()
     e.preventDefault()
-    setShowDetailsForSilence(silence)
+    showDetailsFor?.id === silence?.id
+      ? setShowDetailsForSilence(false)
+      : setShowDetailsForSilence(silence)
   }
 
   return (
-    <DataGridRow className="no-hover" onClick={(e) => handleShowDetails(e)}>
+    <DataGridRow
+      className={`cursor-pointer ${
+        showDetailsFor?.id === silence?.id ? "active" : ""
+      } `}
+      onClick={(e) => handleShowDetails(e)}
+    >
       <DataGridCell>
         <SilencesTimestamp timestamp={silence?.startsAt} />
         <SilencesTimestamp timestamp={silence?.endsAt} />
       </DataGridCell>
-      <DataGridCell>
-        <div>{silence?.comment}</div>
+      <DataGridCell className="overflow-hidden">
+        <div ref={ref}>{silence?.comment}</div>
         <div className="text-theme-light">Created by {silence?.createdBy}</div>
       </DataGridCell>
       <DataGridCell className="overflow-hidden">
@@ -50,4 +60,4 @@ const SilencesItem = (prop) => {
   )
 }
 
-export default SilencesItem
+export default forwardRef(SilencesItem)

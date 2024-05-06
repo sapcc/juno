@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import {
   DataGrid,
   DataGridHeadCell,
@@ -13,11 +13,13 @@ import {
   Stack,
   Select,
   SelectOption,
+  Spinner,
   Icon,
 } from "juno-ui-components"
 
 import { useSilencesItems } from "../../hooks/useAppStore"
 import SilencesItem from "./SilencesItem"
+import { useEndlessScrollList } from "utils"
 
 const filtersStyles = `
 bg-theme-background-lvl-1
@@ -31,6 +33,9 @@ const SilencesList = () => {
   const [visibleSilences, setVisibleSilences] = useState(silences)
   const [searchTerm, setSearchTerm] = useState("")
   const [status, setStatus] = useState("active")
+  const [isAddingItems, setIsAddingItems] = useState(false)
+  const [visibleAmount, setVisibleAmount] = useState(5)
+  const timeoutRef = React.useRef(null)
 
   useEffect(() => {
     let filtered = silences.filter(
@@ -65,6 +70,25 @@ const SilencesList = () => {
     // clear timeout if we have a new value
     return () => clearTimeout(debouncedSearchTerm)
   }
+  const { scrollListItems, iterator } = useEndlessScrollList(silences, {
+    loadingObject: (
+      <DataGridRow>
+        <DataGridCell colSpan={3}>
+          <Stack gap="3" alignment="center" direction="horizontal">
+            Loading...
+            <Spinner />
+          </Stack>
+        </DataGridCell>
+      </DataGridRow>
+    ),
+    refFunction: (ref) => (
+      <DataGridRow>
+        <DataGridCell colSpan={3} className="border-b-0 py-0">
+          <span ref={ref} />
+        </DataGridCell>
+      </DataGridRow>
+    ),
+  })
 
   return (
     <>
@@ -104,13 +128,13 @@ const SilencesList = () => {
           <DataGridHeadCell>Matchers</DataGridHeadCell>
         </DataGridRow>
 
-        {visibleSilences?.length > 0 ? (
-          visibleSilences.map((silence) => (
+        {scrollListItems?.length > 0 ? (
+          iterator.map((silence) => (
             <SilencesItem silence={silence} key={silence.id} />
           ))
         ) : (
-          <DataGridRow className="no-hover">
-            <DataGridCell colSpan={6}>
+          <DataGridRow>
+            <DataGridCell colSpan={3}>
               <Stack gap="3">
                 <Icon icon="info" color="text-theme-info" />
                 <div>We couldn't find any matching silences.</div>
