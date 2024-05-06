@@ -1,6 +1,6 @@
 /*
- * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
- * SPDX-License-Identifier: Apache-2.0
+ * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors 
+ * SPDX-License-Identifier: Apache-2.0 
  */
 
 /* Do not change this File. This is an (by generateTailwindThemeClassesJson.js) auto-generated file for documentation issues.
