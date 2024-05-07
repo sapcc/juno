@@ -11,6 +11,7 @@ import { knownIcons } from "../Icon/Icon.component.js"
 
 const itemStyles = `
   jn-flex
+  jn-items-center
 `
 
 const activeStyles = `
