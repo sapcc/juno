@@ -9,6 +9,10 @@ import { NavigationContext } from "../Navigation/Navigation.component"
 import { Icon } from "../Icon/index.js"
 import { knownIcons } from "../Icon/Icon.component.js"
 
+const itemStyles = `
+  jn-flex
+`
+
 const activeStyles = `
   jn-font-bold
 `
@@ -94,6 +98,7 @@ export const NavigationItem = ({
           aria-selected={isActive ? true : null}
           className={`
             juno-navigation-item 
+            ${itemStyles}
             ${
               navigationRole
                 ? "juno-" + navigationRole.toLowerCase() + "-item"
@@ -112,6 +117,7 @@ export const NavigationItem = ({
           onClick={handleClick}
           {...props}
         >
+          {icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : ""}
           {children || label || value}
         </a>
       ) : (
@@ -121,6 +127,7 @@ export const NavigationItem = ({
           aria-selected={isActive ? true : null}
           className={`
             juno-navigation-item 
+            ${itemStyles}
             ${
               navigationRole
                 ? "juno-" + navigationRole.toLowerCase() + "-item"
@@ -138,6 +145,7 @@ export const NavigationItem = ({
           onClick={handleClick}
           {...props}
         >
+          {icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : ""}
           {children || label || value}
         </button>
       )}

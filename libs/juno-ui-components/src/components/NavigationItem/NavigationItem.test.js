@@ -103,8 +103,7 @@ describe("NavigationItem", () => {
     expect(parent).toHaveClass("my-wrapper")
   })
 
-  // Skip not yet implemented icon functionality:
-  test.skip("renders an icon as passed", async () => {
+  test("renders an icon as passed", async () => {
     render(<NavigationItem icon="warning" />)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("img")).toBeInTheDocument()

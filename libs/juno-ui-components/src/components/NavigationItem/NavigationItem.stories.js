@@ -65,3 +65,11 @@ export const DisabledLinkItem = {
     disabled: true,
   },
 }
+
+export const WithIcon = {
+  render: Template,
+  args: {
+    label: "With Icon",
+    icon: "warning",
+  },
+}
