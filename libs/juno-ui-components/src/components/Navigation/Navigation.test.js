@@ -4,7 +4,7 @@
  */
 
 import * as React from "react"
-import { render, screen, waitFor, cleanup } from "@testing-library/react"
+import { render, screen, waitFor, cleanup, act } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { Navigation } from "./index"
 import { NavigationItem } from "../NavigationItem/index"
@@ -1418,12 +1418,16 @@ describe("Navigation", () => {
     )
   })
 
-  // Skip for now as test is failing
-  test.skip("executes an onActiveItemChange handler when the user clicks an item and the active item changes", async () => {
+  test("executes an onActiveItemChange handler when the user clicks an item and the active item changes", async () => {
+    // Use a callback to change a variable so we can double-check whether this was executed across context-/component borders:
+    let callbackWasExecuted = 0
+    const onActiveItemChangeCallback = () => {
+      callbackWasExecuted = 1
+    }
     render(
       <Navigation
         activeItem="Item 2"
-        onActiveItemChange={mockOnActiveItemChange}
+        onActiveItemChange={onActiveItemChangeCallback}
       >
         <NavigationItem value="item-1" label="Item 1" />
         <NavigationItem value="item-2" label="Item 2" />
@@ -1433,16 +1437,21 @@ describe("Navigation", () => {
     expect(screen.getByRole("navigation")).toBeInTheDocument()
     const user = userEvent.setup()
     const itemToClick = screen.getByRole("button", { name: "Item 2" })
-    await user.click(itemToClick)
-    await waitFor(() => {
-      expect(mockOnActiveItemChange).toHaveBeenCalled()
+    waitFor(() => {
+      user.click(itemToClick)
+      expect(onActiveItemChangeCallback).toHaveBeenCalled()
+      expect(callbackWasExecuted).toBe(1)
     })
   })
 
-  // Skip for now as test is failing
-  test.skip("executes an onChange handler when the user clicks an item", async () => {
+  test("executes an onChange handler when the user clicks an item", async () => {
+    // Use a callback to change a variable so we can double-check whether this was executed across context-/component borders:
+    let clickCallbackWasExecuted = 0
+    const onChangeCallback = () => {
+      clickCallbackWasExecuted = 1
+    }
     render(
-      <Navigation activeItem="Item 1" onChange={mockOnChange}>
+      <Navigation activeItem="Item 1" onChange={onChangeCallback}>
         <NavigationItem>Item 1</NavigationItem>
         <NavigationItem>Item 2</NavigationItem>
         <NavigationItem>Item 3</NavigationItem>
@@ -1451,16 +1460,14 @@ describe("Navigation", () => {
     expect(screen.getByRole("navigation")).toBeInTheDocument()
     const user = userEvent.setup()
     const itemToClick = screen.getByRole("button", { name: "Item 2" })
-    await waitFor(() => {
+    waitFor(() => {
       user.click(itemToClick)
-    })
-    await waitFor(() => {
-      expect(mockOnChange).toHaveBeenCalled()
+      expect(onChangeCallback).toHaveBeenCalled()
+      expect(clickCallbackWasExecuted).toBe(1)
     })
   })
 
-  // Skip for now as test is failing
-  test.skip("executes an onChange handler when the active item was changed programmatically", async () => {
+  test("executes an onChange handler when the active item was changed programmatically", async () => {
     const { rerender } = render(
       <Navigation activeItem="Item 1" onChange={mockOnChange}>
         <NavigationItem>Item 1</NavigationItem>
@@ -1469,20 +1476,19 @@ describe("Navigation", () => {
       </Navigation>
     )
     expect(mockOnChange).not.toHaveBeenCalled()
-    rerender(
-      <Navigation activeItem="Item 1">
-        <NavigationItem>Item 1</NavigationItem>
-        <NavigationItem>Item 2</NavigationItem>
-        <NavigationItem>Item 3</NavigationItem>
-      </Navigation>
-    )
-    await waitFor(() => {
+    waitFor(() => {
+      rerender(
+        <Navigation activeItem="Item 2" onChange={mockOnChange}>
+          <NavigationItem>Item 1</NavigationItem>
+          <NavigationItem>Item 2</NavigationItem>
+          <NavigationItem>Item 3</NavigationItem>
+        </Navigation>
+      )
       expect(mockOnChange).toHaveBeenCalled()
     })
   })
 
-  // Skip for now as test is failing
-  test.skip("executes an onActiveItemChange handler when the active item was changed programmatically", async () => {
+  test("executes an onActiveItemChange handler when the active item was changed programmatically", async () => {
     const { rerender } = render(
       <Navigation activeItem="Item 1" onChange={mockOnActiveItemChange}>
         <NavigationItem>Item 1</NavigationItem>
@@ -1491,14 +1497,14 @@ describe("Navigation", () => {
       </Navigation>
     )
     expect(mockOnChange).not.toHaveBeenCalled()
-    rerender(
-      <Navigation activeItem="Item 1">
-        <NavigationItem>Item 1</NavigationItem>
-        <NavigationItem>Item 2</NavigationItem>
-        <NavigationItem>Item 3</NavigationItem>
-      </Navigation>
-    )
-    await waitFor(() => {
+    waitFor(() => {
+      rerender(
+        <Navigation activeItem="Item 1" onChange={mockOnActiveItemChange}>
+          <NavigationItem>Item 1</NavigationItem>
+          <NavigationItem>Item 2</NavigationItem>
+          <NavigationItem>Item 3</NavigationItem>
+        </Navigation>
+      )
       expect(mockOnActiveItemChange).toHaveBeenCalled()
     })
   })
