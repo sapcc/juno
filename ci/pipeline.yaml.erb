@@ -684,7 +684,9 @@ jobs:
               - |
                 cd /app/juno/e2e
                 CYPRESS_BASE_URL=https://assets.juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/assets-server/*"
+                EXIT=$?
                 mv /app/juno/e2e/cypress /upload
+                exit $EXIT  
       - task: upload-cypress-result
         file: juno.git/ci/shared/swift-cypress-upload.yaml
         input_mapping:
