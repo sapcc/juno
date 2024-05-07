@@ -103,7 +103,7 @@ describe("NavigationItem", () => {
     expect(parent).toHaveClass("my-wrapper")
   })
 
-  // Skip not yet implemented functionality:
+  // Skip not yet implemented icon functionality:
   test.skip("renders an icon as passed", async () => {
     render(<NavigationItem icon="warning" />)
     expect(screen.getByRole("button")).toBeInTheDocument()
@@ -134,7 +134,7 @@ describe("NavigationItem", () => {
     expect(screen.getByRole("button")).toHaveAttribute("data-lolol", "123")
   })
 
-  // Test Parent Integration:
+  // Test Parent Integration (Execution of callbacks is tested in parent Navigation component test suite):
 
   test("renders a disabled NavigationItem as per the parent Navigation context", async () => {
     render(
