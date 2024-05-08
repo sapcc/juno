@@ -26,6 +26,7 @@ const disabledStyles = `
 /** A generic Navigation Item component. For internal use only. */
 export const NavigationItem = ({
   active,
+  activeItemStyles,
   ariaLabel,
   children,
   className,
@@ -105,7 +106,7 @@ export const NavigationItem = ({
                 ? "juno-" + navigationRole.toLowerCase() + "-item"
                 : ""
             }
-            ${isActive ? "juno-navigation-item-active " + activeStyles : ""}
+            ${isActive ? "juno-navigation-item-active " + activeItemStyles : ""}
             ${
               navigationDisabled || disabled
                 ? "juno-navigation-item-disabled " + disabledStyles
@@ -134,7 +135,7 @@ export const NavigationItem = ({
                 ? "juno-" + navigationRole.toLowerCase() + "-item"
                 : ""
             }
-            ${isActive ? "juno-navigation-item-active " + activeStyles : ""}
+            ${isActive ? "juno-navigation-item-active " + activeItemStyles : ""}
             ${
               navigationDisabled || disabled
                 ? "juno-navigation-item-disabled " + disabledStyles
@@ -156,6 +157,7 @@ export const NavigationItem = ({
 
 NavigationItem.propTypes = {
   active: PropTypes.bool,
+  activeItemStyles: PropTypes.string,
   arialabel: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.string,
@@ -170,6 +172,7 @@ NavigationItem.propTypes = {
 
 NavigationItem.defaultProps = {
   active: false,
+  activeItemStyles: "",
   arialabel: "",
   className: "",
   children: null,
