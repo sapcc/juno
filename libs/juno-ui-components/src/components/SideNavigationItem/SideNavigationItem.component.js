@@ -5,11 +5,10 @@
 
 import React, { useContext, useEffect, useState } from "react"
 import PropTypes from "prop-types"
-import { NavigationContext } from "../SideNavigation/SideNavigation.component"
-import { Icon } from "../Icon/index.js"
+import { NavigationItem } from "../NavigationItem/index"
 import { knownIcons } from "../Icon/Icon.component.js"
 
-const itemStyles = `
+const sideNavItemStyles = `
   jn-flex
   jn-items-center
   jn-w-full
@@ -23,15 +22,9 @@ const itemStyles = `
   focus-visible:jn-ring-theme-focus
 `
 
-const activeItemStyles = `
+const sideNavActiveItemStyles = `
   jn-text-theme-sidenavigation-item-active
   jn-bg-theme-sidenavigation-item-active
-`
-
-const disabledItemStyles = `
-  jn-pointer-events-none
-  jn-opacity-50
-  jn-cursor-not-allowed
 `
 
 /**
@@ -50,113 +43,22 @@ export const SideNavigationItem = ({
   value,
   ...props
 }) => {
-  const navigationContext = useContext(NavigationContext)
-
-  const {
-    activeItem: activeItem,
-    updateActiveItem: updateActiveItem,
-    handleActiveItemChange: handleActiveItemChange,
-    disabled: groupDisabled,
-  } = navigationContext || {}
-
-  const theKey = value || label
-
-  const initialActive = () => {
-    if (navigationContext?.activeItem?.length > 0) {
-      return activeItem === theKey
-    } else {
-      return active
-    }
-  }
-
-  const [isActive, setIsActive] = useState(() => initialActive())
-
-  // Update the parent state when in a navigation context, otherwise update item state directly:
-  useEffect(() => {
-    if (activeItem) {
-      activeItem === theKey ? setIsActive(true) : setIsActive(false)
-      return
-    }
-    setIsActive(active)
-  }, [activeItem, active])
-
-  const handleItemClick = (event) => {
-    if (!isActive) {
-      handleActiveItemChange(theKey)
-    }
-    onClick && onClick(event)
-  }
-
   return (
-    <li className="jn-flex">
-      {href ? (
-        <a
-          className={`
-              juno-sidenavigation-item
-              ${itemStyles}
-              ${isActive ? "juno-sidenavigation-item-active" : ""}
-              ${isActive ? activeItemStyles : ""}
-              ${disabled || groupDisabled ? disabledItemStyles : ""}
-              ${
-                disabled || groupDisabled
-                  ? "juno-sidenavigation-item-disabled"
-                  : ""
-              }
-              ${className}
-            `}
-          href={href}
-          aria-label={ariaLabel}
-          aria-disabled={disabled || groupDisabled ? true : false}
-          aria-selected={isActive}
-          onClick={handleItemClick}
-          {...props}
-        >
-          {icon ? (
-            <Icon
-              icon={icon}
-              size="18"
-              className={label && label.length ? "jn-mr-2" : ""}
-            />
-          ) : (
-            ""
-          )}
-          <span>{children || label || theKey}</span>
-        </a>
-      ) : (
-        <button
-          className={`
-              juno-sidenavigation-item
-              ${itemStyles}
-              ${isActive ? "juno-sidenavigation-item-active" : ""}
-              ${isActive ? activeItemStyles : ""}
-              ${disabled || groupDisabled ? disabledItemStyles : ""}
-              ${
-                disabled || groupDisabled
-                  ? "juno-sidenavigation-item-disabled"
-                  : ""
-              }
-              ${className}
-            `}
-          aria-label={ariaLabel}
-          aria-disabled={disabled || groupDisabled ? true : false}
-          aria-selected={isActive}
-          disabled={disabled || groupDisabled ? true : false}
-          onClick={handleItemClick}
-          {...props}
-        >
-          {icon ? (
-            <Icon
-              icon={icon}
-              size="18"
-              className={label && label.length ? "jn-mr-2" : ""}
-            />
-          ) : (
-            ""
-          )}
-          <span>{children || label || theKey}</span>
-        </button>
-      )}
-    </li>
+    <NavigationItem
+      active={active}
+      activeItemStyles={sideNavActiveItemStyles}
+      ariaLabel={ariaLabel}
+      className={`juno-sidenavigation-item ${sideNavItemStyles} ${className}`}
+      disabled={disabled}
+      icon={icon}
+      label={label}
+      href={href}
+      onClick={onClick}
+      value={value}
+      {...props}
+    >
+      {children}
+    </NavigationItem>
   )
 }
 
