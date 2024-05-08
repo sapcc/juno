@@ -148,9 +148,9 @@ describe("NavigationItem", () => {
     )
   })
 
-  test("renders a NavigationItem with a class as per the navigation role in the parent Navigation context", async () => {
+  test("renders a NavigationItem with a class as per the navigationRole in the parent Navigation context", async () => {
     render(
-      <Navigation role="SideNavigation">
+      <Navigation navigationRole="SideNavigation">
         <NavigationItem>Test</NavigationItem>
       </Navigation>
     )
