@@ -16,7 +16,7 @@ export const Navigation = ({
   children,
   className,
   disabled,
-  role,
+  navigationRole,
   onActiveItemChange,
   onChange,
   ...props
@@ -85,13 +85,13 @@ export const Navigation = ({
         addItem: addItem,
         handleActiveItemChange: handleActiveItemChange,
         navigationDisabled: disabled,
-        navigationRole: role,
+        navigationRole: navigationRole,
       }}
     >
       <ul
         aria-disabled={disabled ? true : null}
         aria-label={ariaLabel && ariaLabel.length ? ariaLabel : null}
-        className={`juno-navigation juno-${role.toLowerCase()} ${
+        className={`juno-navigation juno-${navigationRole.toLowerCase()} ${
           disabled ? "juno-navigation-disabled" : ""
         } ${className}`}
         role="navigation"
@@ -114,7 +114,11 @@ Navigation.propTypes = {
   ]),
   className: PropTypes.string,
   disabled: PropTypes.bool,
-  role: PropTypes.oneOf(["SideNavigation", "TabNavigation", "TopNavigation"]),
+  navigationRole: PropTypes.oneOf([
+    "SideNavigation",
+    "TabNavigation",
+    "TopNavigation",
+  ]),
   onActiveItemChange: PropTypes.func,
   onChange: PropTypes.func,
 }
@@ -125,7 +129,7 @@ Navigation.defaultProps = {
   children: null,
   className: "",
   disabled: false,
-  role: "TabNavigation",
+  navigationRole: "TabNavigation",
   onActiveItemChange: undefined,
   onChange: undefined,
 }
