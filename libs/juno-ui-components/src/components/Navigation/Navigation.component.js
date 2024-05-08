@@ -91,9 +91,10 @@ export const Navigation = ({
       <ul
         aria-disabled={disabled ? true : null}
         aria-label={ariaLabel && ariaLabel.length ? ariaLabel : null}
-        className={`juno-navigation juno-${navigationRole.toLowerCase()} ${
-          disabled ? "juno-navigation-disabled" : ""
-        } ${className}`}
+        className={`juno-navigation 
+          ${navigationRole ? "juno-" + navigationRole.toLowerCase() : ""} 
+          ${disabled ? "juno-navigation-disabled" : ""} 
+          ${className}`}
         role="navigation"
         {...props}
       >
@@ -129,7 +130,7 @@ Navigation.defaultProps = {
   children: null,
   className: "",
   disabled: false,
-  navigationRole: "TabNavigation",
+  navigationRole: undefined,
   onActiveItemChange: undefined,
   onChange: undefined,
 }
