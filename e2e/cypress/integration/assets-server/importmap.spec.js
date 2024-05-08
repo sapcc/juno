@@ -14,10 +14,7 @@ describe("manifest", () => {
     const assets = [
       "assets-overview",
       "dashboard",
-      "greenhouse",
       "exampleapp",
-      "heureka",
-      "teams2slack",
       "volta",
       "whois",
       "widget-loader",

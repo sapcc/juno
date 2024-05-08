@@ -54,16 +54,7 @@ describe("manifest", () => {
 
   describe("assets", () => {
     const assets = {
-      app: [
-        "assets-overview",
-        "dashboard",
-        "exampleapp",
-        "heureka",
-        "greenhouse",
-        "teams2slack",
-        "volta",
-        "whois",
-      ],
+      app: ["assets-overview", "dashboard", "exampleapp", "volta", "whois"],
       lib: [
         "communicator",
         "juno-ui-components",

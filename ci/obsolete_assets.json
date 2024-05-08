@@ -2,9 +2,8 @@
   "juno-ui-components": "<=1.1.5",
   "widget-loader": "<=1.1.1",
   "greenhouse-cluster-admin": "<=1.0",
-  "heureka": "<=2.0.1",
   "whois": "<=3.0.3",
-  "greenhouse": "<0.1.13",
-  "supernova": "<=0.9.5",
-  "doop": "<=2.2.0"
+  "doop": "<=2.2.0",
+  "greenhouse": "*",
+  "greenhouse-management": "*"
 }

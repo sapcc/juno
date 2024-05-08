@@ -13,11 +13,11 @@
     "whois":                { type: "app", path: "apps/whois"},
     "widget-loader":        { type: "app", path: "apps/widget-loader"},
     "dashboard":            { type: "app", path: "apps/dashboard"},
-    "supernova":            { type: "app", path: "apps/supernova"},
+    # "supernova":            { type: "app", path: "apps/supernova"},
     "exampleapp":           { type: "app", path: "apps/exampleapp"},
-    "greenhouse":           { type: "app", path: "apps/greenhouse" },
-    "greenhouse-management":{ type: "app", path: "apps/greenhouse-management" },
-    "heureka":              { type: "app", path: "apps/heureka"},
+    # "greenhouse":           { type: "app", path: "apps/greenhouse" },
+    # "greenhouse-management":{ type: "app", path: "apps/greenhouse-management" },
+    # "heureka":              { type: "app", path: "apps/heureka"},
     "playground":           { type: "app", path: "apps/playground"},
     "juno-ui-components":   { type: "lib", path: "libs/juno-ui-components"},
     "messages-provider":    { type: "lib", path: "libs/messages-provider"},
@@ -428,6 +428,7 @@ jobs:
                 # exit on error
                 set -e
                 DIST_PATH=$(pwd)/dist
+                EXIT=0
                 cd ./juno.git
                 # compose everthing together that we can use it in the asset-server image build
                 <% ASSETS_SOURCE.each do |name,asset_types|%>
@@ -457,7 +458,7 @@ jobs:
                 # upload build logs
                 ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type apps --action upload --root-path ../juno-3rd-party &> /dev/null
                 ./ci/scripts/asset_storage.sh --container juno-assets --asset-type apps --action upload --root-path ../juno-assets &> /dev/null
-                #exit 1
+                # exit 1
 
       # to serve our js, css and stattic assets this step will add all the created data 
       # in dist/ to the nginx image in /usr/share/nginx/html
@@ -683,7 +684,9 @@ jobs:
               - |
                 cd /app/juno/e2e
                 CYPRESS_BASE_URL=https://assets.juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/assets-server/*"
+                EXIT=$?
                 mv /app/juno/e2e/cypress /upload
+                exit $EXIT  
       - task: upload-cypress-result
         file: juno.git/ci/shared/swift-cypress-upload.yaml
         input_mapping:
