@@ -137,7 +137,7 @@ echo "generate COMMUNICATOR.md in $ASSET_PATH"
 node ci/scripts/generate_communication_readme.mjs --path="$ASSET_PATH"
 
 # install and build libs
-# npm run build-libs
+npm run build-libs
 
 # TEST AND BUILD ASSET
 # IGNORE_EXTERNALS=true will results in a bundle which includes all dependencies.
