@@ -33,7 +33,12 @@ export const TabNavigation = ({
       <Navigation
         activeItem={activeItem}
         ariaLabel={ariaLabel}
-        className={`juno-tabnavigation ${tabNavStyles} ${className}`}
+        className={`
+          juno-tabnavigation 
+          juno-tabnavigation-${tabStyle} 
+          ${tabNavStyles} 
+          ${className}
+        `}
         disabled={disabled}
         navigationRole="TabNavigation"
         onActiveItemChange={onActiveItemChange}

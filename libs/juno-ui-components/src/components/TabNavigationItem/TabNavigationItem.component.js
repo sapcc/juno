@@ -51,6 +51,7 @@ export const TabNavigationItem = ({
       ariaLabel={ariaLabel}
       className={`
         juno-tabnavigation-item 
+        ${tabStyle ? "juno-tabnavigation-" + tabStyle + "-item" : ""}
         ${tabNavItemStyles} 
         ${className}
       `}
