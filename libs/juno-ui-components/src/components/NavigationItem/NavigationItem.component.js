@@ -32,6 +32,7 @@ export const NavigationItem = ({
   className,
   disabled,
   icon,
+  inactiveItemStyles,
   label,
   href,
   onClick,
@@ -111,7 +112,11 @@ export const NavigationItem = ({
                     : "")
                 : ""
             }
-            ${isActive ? "juno-navigation-item-active " + activeItemStyles : ""}
+            ${
+              isActive
+                ? "juno-navigation-item-active " + activeItemStyles
+                : inactiveItemStyles
+            }
             ${
               navigationDisabled || disabled
                 ? "juno-navigation-item-disabled " + disabledStyles
@@ -145,7 +150,11 @@ export const NavigationItem = ({
                     : "")
                 : ""
             }
-            ${isActive ? "juno-navigation-item-active " + activeItemStyles : ""}
+            ${
+              isActive
+                ? "juno-navigation-item-active " + activeItemStyles
+                : inactiveItemStyles
+            }
             ${
               navigationDisabled || disabled
                 ? "juno-navigation-item-disabled " + disabledStyles
@@ -173,6 +182,8 @@ NavigationItem.propTypes = {
   children: PropTypes.string,
   disabled: PropTypes.bool,
   icon: PropTypes.oneOf(knownIcons),
+  /* Pass styles that apply to IN-active items only, in the event activeStyles are overwritten by defaultStyles affecting the same CSS property*/
+  inactiveItemStyles: PropTypes.string,
   label: PropTypes.string,
   href: PropTypes.string,
   onClick: PropTypes.func,
@@ -188,6 +199,7 @@ NavigationItem.defaultProps = {
   children: null,
   disabled: false,
   icon: null,
+  inactiveItemStyles: "",
   label: "",
   href: "",
   onClick: undefined,
