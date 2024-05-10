@@ -80,9 +80,8 @@ describe("TabNavigation", () => {
     expect(screen.getByRole("navigation")).toBeInTheDocument()
     expect(screen.queryAllByRole("button")).toHaveLength(2)
     expect(screen.getByRole("button", { name: "Item 1" })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Item 1" })).toHaveAttribute(
-      "aria-selected",
-      "false"
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveAttribute(
+      "aria-selected"
     )
     expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
       "juno-tabnavigation-item-active"
@@ -107,9 +106,8 @@ describe("TabNavigation", () => {
     expect(screen.getByRole("navigation")).toBeInTheDocument()
     expect(screen.queryAllByRole("button")).toHaveLength(2)
     expect(screen.getByRole("button", { name: "Item 1" })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Item 1" })).toHaveAttribute(
-      "aria-selected",
-      "false"
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveAttribute(
+      "aria-selected"
     )
     expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
       "juno-tabnavigation-item-active"
@@ -134,9 +132,8 @@ describe("TabNavigation", () => {
     expect(screen.getByRole("navigation")).toBeInTheDocument()
     expect(screen.queryAllByRole("button")).toHaveLength(2)
     expect(screen.getByRole("button", { name: "Item 1" })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Item 1" })).toHaveAttribute(
-      "aria-selected",
-      "false"
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveAttribute(
+      "aria-selected"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveAttribute(
@@ -220,9 +217,9 @@ describe("TabNavigation", () => {
     const tab1 = screen.getByRole("button", { name: "Item 1" })
     const tab2 = screen.getByRole("button", { name: "Item 2" })
     expect(tab1).toHaveAttribute("aria-selected", "true")
-    expect(tab2).toHaveAttribute("aria-selected", "false")
+    expect(tab2).not.toHaveAttribute("aria-selected")
     await userEvent.click(tab2)
-    expect(tab1).toHaveAttribute("aria-selected", "false")
+    expect(tab1).not.toHaveAttribute("aria-selected")
     expect(tab2).toHaveAttribute("aria-selected", "true")
   })
 
