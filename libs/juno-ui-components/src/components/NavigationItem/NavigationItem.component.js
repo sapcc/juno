@@ -103,7 +103,12 @@ export const NavigationItem = ({
             ${itemStyles}
             ${
               navigationRole
-                ? "juno-" + navigationRole.toLowerCase() + "-item"
+                ? "juno-" +
+                  navigationRole.toLowerCase() +
+                  "-item " +
+                  (isActive
+                    ? "juno-" + navigationRole.toLowerCase() + "-item-active"
+                    : "")
                 : ""
             }
             ${isActive ? "juno-navigation-item-active " + activeItemStyles : ""}
@@ -132,7 +137,12 @@ export const NavigationItem = ({
             ${itemStyles}
             ${
               navigationRole
-                ? "juno-" + navigationRole.toLowerCase() + "-item"
+                ? "juno-" +
+                  navigationRole.toLowerCase() +
+                  "-item " +
+                  (isActive
+                    ? "juno-" + navigationRole.toLowerCase() + "-item-active"
+                    : "")
                 : ""
             }
             ${isActive ? "juno-navigation-item-active " + activeItemStyles : ""}
