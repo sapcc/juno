@@ -31,6 +31,7 @@ export const SideNavigation = ({
       ariaLabel={ariaLabel}
       className={`juno-sidenavigation ${sideNavStyles} ${className}`}
       disabled={disabled}
+      navigationRole="SideNavigation"
       onActiveItemChange={onActiveItemChange}
       {...props}
     >
