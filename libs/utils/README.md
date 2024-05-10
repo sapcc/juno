@@ -19,7 +19,7 @@ Within juno monorepo
 ```json
 
   "dependencies": {
-    "utils": "*"
+    "utils": "https://assets.juno.global.cloud.sap/libs/utils@1.1.6/package.tgz"
   },
 
 ```
