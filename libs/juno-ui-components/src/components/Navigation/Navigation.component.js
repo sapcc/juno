@@ -9,7 +9,7 @@ import { NavigationItem } from "../NavigationItem/"
 
 export const NavigationContext = createContext()
 
-/** A generic Navigation component. For internal use only. Not to be used directly, but to be wrapped by more role-specific / semantic navigation components such as TabNavigation, TopNavigation, SideNavigation. */
+/** A generic Navigation component providing all the necessary functionality for a navigation. For internal use only. Not to be used directly, but to be wrapped by more role-specific / semantic navigation components such as `TabNavigation`, `TopNavigation`, `SideNavigation`. */
 export const Navigation = ({
   activeItem,
   ariaLabel,
@@ -107,20 +107,28 @@ export const Navigation = ({
 // TODO: validate whether children are instances of NavigationItem
 
 Navigation.propTypes = {
+  /** The currently active item. Pass the `value`, `label` prop, or the child string of the respective NavigationItem. */
   activeItem: PropTypes.string,
+  /** The aria label of the navigation */
   arialLabel: PropTypes.string,
+  /** The child navigation items of the navigation  */
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
+  /** Pass a custom className to the navigation parent element */
   className: PropTypes.string,
+  /** Whether the navigation is disabled. Will disable all children. */
   disabled: PropTypes.bool,
+  /** The role / type of the navigation in an app context */
   navigationRole: PropTypes.oneOf([
     "SideNavigation",
     "TabNavigation",
     "TopNavigation",
   ]),
+  /** Handler to execute when the active item changes. Alias to `onChange`. */
   onActiveItemChange: PropTypes.func,
+  /** Handler to execute when the active item changes. Alias to `onActiveItemChange`. */
   onChange: PropTypes.func,
 }
 
