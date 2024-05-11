@@ -23,6 +23,7 @@ const sideNavItemStyles = `
 `
 
 const sideNavActiveItemStyles = `
+  jn-font-bold
   jn-text-theme-sidenavigation-item-active
   jn-bg-theme-sidenavigation-item-active
 `

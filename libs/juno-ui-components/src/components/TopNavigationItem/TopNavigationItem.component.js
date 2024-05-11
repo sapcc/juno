@@ -30,6 +30,7 @@ const topNavItemStyles = `
 `
 
 const topNavActiveItemStyles = `
+  jn-font-bold
   jn-text-theme-high
   jn-bg-theme-topnavigation-item-active
 `

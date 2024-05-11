@@ -24,6 +24,7 @@ const tabNavItemStyles = `
 
 const tabNavActiveItemStyles = `
   jn-text-theme-high
+  jn-font-bold
   jn-border-b-[3px]
   jn-border-theme-tab-active-bottom
 `
