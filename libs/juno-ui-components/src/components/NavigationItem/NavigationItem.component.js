@@ -14,16 +14,12 @@ const itemStyles = `
   jn-items-center
 `
 
-const activeStyles = `
-  jn-font-bold
-`
-
 const disabledStyles = `
   jn-opacity-50
   jn-cursor-not-allowed
 `
 
-/** A generic Navigation Item component. For internal use only. */
+/** A generic Navigation Item component. For internal use only. Use to wrap more semantic, role-specific navigation item components such as `SidenavigationItem`, `TabNavigationItem` , `TopNavigationItem` around. */
 export const NavigationItem = ({
   active,
   activeItemStyles,
@@ -175,26 +171,38 @@ export const NavigationItem = ({
 }
 
 NavigationItem.propTypes = {
+  /** Whether the navigation item is the currently active item. If an acitve item is set on the parent, the one on the parent will win. */
   active: PropTypes.bool,
+  /** Styles to apply to the active item*/
   activeItemStyles: PropTypes.string,
-  arialabel: PropTypes.string,
+  /** The aria-label of the item */
+  ariaLabel: PropTypes.string,
+  /** Pass custom classNames to the item itself. */
   className: PropTypes.string,
+  /** The child string of the item. Will override `label` when passed. */
   children: PropTypes.string,
+  /** Whether the item is disabled */
   disabled: PropTypes.bool,
+  /** An icon to render in the item */
   icon: PropTypes.oneOf(knownIcons),
   /* Pass styles that apply to IN-active items only, in the event activeStyles are overwritten by defaultStyles affecting the same CSS property*/
   inactiveItemStyles: PropTypes.string,
+  /** The label of the item. Will be rendered if no children are passed */
   label: PropTypes.string,
+  /** The href of the item. The item will be rendered as an `<a>` element when passed, instead of a `<button>`.  */
   href: PropTypes.string,
+  /** Handler to execute when the item is clicked */
   onClick: PropTypes.func,
+  /** The value of the item as a technical identifier. Use if needed to be different from the visble `label` or child string. Will only be rendered when no `label` prop and no children are passed. */
   value: PropTypes.string,
+  /** Pass a custom className to the parent `<li>` element of the item. */
   wrapperClassName: PropTypes.string,
 }
 
 NavigationItem.defaultProps = {
   active: false,
   activeItemStyles: "",
-  arialabel: "",
+  ariaLabel: "",
   className: "",
   children: null,
   disabled: false,
