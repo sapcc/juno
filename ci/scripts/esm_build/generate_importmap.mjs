@@ -162,10 +162,17 @@ for (let name in packageRegistry) {
 
     // if the package has peer dependencies, we need to add them to the importmap's scopes section
     for (let depName in pkg.peerDependencies) {
-      const depVersion = pkg.peerDependencies[depName]
-      const ownPackage =
-        packageRegistry[depName]?.[depVersion === "*" ? "latest" : depVersion]
+      let depVersion = pkg.peerDependencies[depName]
+      depVersion = depVersion === "*" ? "latest" : depVersion
+      // support URL as version
+      if (depVersion.startsWith("http")) {
+        // extract version from url. The version start directly after @ and is a sem version
+        depVersion = depVersion.match(/@([0-9]+\.[0-9]+\.[0-9]+)/)[1]
+      }
 
+      const ownPackage = packageRegistry[depName]?.[depVersion]
+
+      //console.log("====", depName, depVersion, ownPackage)
       if (ownPackage) {
         log(
           yellow(
