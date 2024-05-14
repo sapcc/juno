@@ -147,14 +147,4 @@ describe("NavigationItem", () => {
       "juno-navigation-item-disabled"
     )
   })
-
-  test("renders a NavigationItem with a class as per the navigationRole in the parent Navigation context", async () => {
-    render(
-      <Navigation navigationRole="SideNavigation">
-        <NavigationItem>Test</NavigationItem>
-      </Navigation>
-    )
-    expect(screen.getByRole("button")).toBeInTheDocument()
-    expect(screen.getByRole("button")).toHaveClass("juno-sidenavigation-item")
-  })
 })

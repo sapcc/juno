@@ -84,7 +84,7 @@ describe("TopNavigation", () => {
       "aria-selected"
     )
     expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
-      "juno-topnavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveAttribute(
@@ -92,7 +92,7 @@ describe("TopNavigation", () => {
       "true"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
-      "juno-topnavigation-item-active"
+      "juno-navigation-item-active"
     )
   })
 
@@ -159,14 +159,14 @@ describe("TopNavigation", () => {
     const tab1 = screen.getByRole("button", { name: "Item 1" })
     const tab2 = screen.getByRole("button", { name: "Item 2" })
     expect(tab1).toHaveAttribute("aria-selected", "true")
-    expect(tab1).toHaveClass("juno-topnavigation-item-active")
+    expect(tab1).toHaveClass("juno-navigation-item-active")
     expect(tab2).not.toHaveAttribute("aria-selected")
-    expect(tab2).not.toHaveClass("juno-topnavigation-item-active")
+    expect(tab2).not.toHaveClass("juno-navigation-item-active")
     await userEvent.click(tab2)
     expect(tab1).not.toHaveAttribute("aria-selected")
-    expect(tab1).not.toHaveClass("juno-topnavigation-item-active")
+    expect(tab1).not.toHaveClass("juno-navigation-item-active")
     expect(tab2).toHaveAttribute("aria-selected", "true")
-    expect(tab2).toHaveClass("juno-topnavigation-item-active")
+    expect(tab2).toHaveClass("juno-navigation-item-active")
   })
 
   test("executes a handler as passed when the selected item changes", async () => {

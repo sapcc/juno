@@ -84,7 +84,7 @@ describe("TabNavigation", () => {
       "aria-selected"
     )
     expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
-      "juno-tabnavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveAttribute(
@@ -92,7 +92,7 @@ describe("TabNavigation", () => {
       "true"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
-      "juno-tabnavigation-item-active"
+      "juno-navigation-item-active"
     )
   })
 
@@ -110,7 +110,7 @@ describe("TabNavigation", () => {
       "aria-selected"
     )
     expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
-      "juno-tabnavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveAttribute(
@@ -118,7 +118,7 @@ describe("TabNavigation", () => {
       "true"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
-      "juno-tabnavigation-item-active"
+      "juno-navigation-item-active"
     )
   })
 
@@ -151,10 +151,10 @@ describe("TabNavigation", () => {
     )
 
     expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
-      "juno-tabnavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
-      "juno-tabnavigation-item-active"
+      "juno-navigation-item-active"
     )
     rerender(
       <TabNavigation activeItem="Item 1">
@@ -163,10 +163,10 @@ describe("TabNavigation", () => {
       </TabNavigation>
     )
     expect(screen.getByRole("button", { name: "Item 1" })).toHaveClass(
-      "juno-tabnavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).not.toHaveClass(
-      "juno-tabnavigation-item-active"
+      "juno-navigation-item-active"
     )
   })
 
@@ -179,13 +179,13 @@ describe("TabNavigation", () => {
       </TabNavigation>
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
-      "juno-tabnavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
-      "juno-tabnavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 3" })).not.toHaveClass(
-      "juno-tabnavigation-item-active"
+      "juno-navigation-item-active"
     )
     rerender(
       <TabNavigation activeItem="Item 2">
@@ -195,13 +195,13 @@ describe("TabNavigation", () => {
       </TabNavigation>
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
-      "juno-tabnavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
-      "juno-tabnavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 3" })).not.toHaveClass(
-      "juno-tabnavigation-item-active"
+      "juno-navigation-item-active"
     )
   })
 
