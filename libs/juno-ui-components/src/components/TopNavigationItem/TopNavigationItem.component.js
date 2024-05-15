@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { NavigationContext } from "../TopNavigation/TopNavigation.component"
-import { Icon } from "../Icon/index.js";
+import React, { useContext, useEffect, useState } from "react"
+import PropTypes from "prop-types"
+import { NavigationItem } from "../NavigationItem/index"
 import { knownIcons } from "../Icon/Icon.component.js"
 
-const itemStyles = `
+const topNavItemStyles = `
   jn-flex
   jn-items-center
   jn-grow-0
@@ -30,16 +29,8 @@ const itemStyles = `
   focus-visible:jn-ring-theme-focus
 `
 
-const disabledItemStyles = `
-  jn-opacity-50
-  jn-cursor-not-allowed
-`
-const nonActiveItemStyles = `
-  hover:jn-text-theme-high
-  hover:jn-bg-transparent
-`
-
-const activeItemStyles = `
+const topNavActiveItemStyles = `
+  jn-font-bold
   jn-text-theme-high
   jn-bg-theme-topnavigation-item-active
 `
@@ -60,101 +51,22 @@ export const TopNavigationItem = ({
   value,
   ...props
 }) => {
-  
-  const navigationContext = useContext(NavigationContext)
-  
-  const {
-    activeItem: activeItem,
-    updateActiveItem: updateActiveItem,
-    handleActiveItemChange: handleActiveItemChange,
-    disabled: groupDisabled,
-  } = navigationContext || {}
-  
-  const theKey = value || label
-  
-  const initialActive = () => {
-    if (navigationContext) {
-      activeItem === theKey ? true : false
-    } else {
-      return active
-    }
-  }
-  
-  const [isActive, setIsActive] = useState( () => initialActive() )
-  
-  // Set the parent state once if not set on the parent, but a navigation item has been set to active via its own prop:
-  useEffect(() => {
-    if (active && navigationContext && !activeItem) {
-      updateActiveItem(theKey)
-    }
-  }, [])
-  
-  // Update the parent state when in a navigation context, otherwise update item state directly:
-  useEffect(() => {
-    if (activeItem) {
-      activeItem === theKey ? setIsActive(true) : setIsActive(false)
-    } else {
-      setIsActive(active)
-    }
-  }, [activeItem, active])
-  
-  
-  const handleItemClick = (event) => {
-    if (!isActive) {
-      handleActiveItemChange(theKey)
-    }
-    onClick && onClick(event)
-  }
-  
   return (
-    <ul
-      className="jn-flex"
+    <NavigationItem
+      active={active}
+      activeItemStyles={topNavActiveItemStyles}
+      ariaLabel={ariaLabel}
+      className={`juno-topnavigation-item ${topNavItemStyles} ${className}`}
+      disabled={disabled}
+      icon={icon}
+      label={label}
+      href={href}
+      onClick={onClick}
+      value={value}
+      {...props}
     >
-      { href ?
-          <a
-            className={`
-              juno-topnavigation-item
-              ${itemStyles}
-              ${ isActive ? "juno-topnavigation-item-active" : ""}
-              ${ isActive ? activeItemStyles : nonActiveItemStyles }
-              ${ disabled || groupDisabled ? disabledItemStyles : ""}
-              ${ disabled || groupDisabled ? "juno-topnavigation-item-disabled" : ""}
-              ${ className }
-            `}
-            href={href}
-            onClick={handleItemClick}
-            aria-label={ariaLabel}
-            aria-disabled={ disabled || groupDisabled ? true : false}
-            aria-selected={isActive}
-            {...props}
-          >
-            { icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : null }
-            <span>{ children || label || theKey }</span>
-          </a>
-        :
-          <button
-            className={`
-              juno-topnavigation-item
-              ${itemStyles}
-              ${ isActive ? "juno-topnavigation-item-active" : ""}
-              ${ isActive ? activeItemStyles : nonActiveItemStyles }
-              ${ disabled || groupDisabled ? disabledItemStyles : ""}
-              ${ disabled || groupDisabled ? "juno-topnavigation-item-disabled" : ""}
-              ${ className }
-            `}
-            aria-label={ariaLabel}
-            aria-disabled={ disabled || groupDisabled ? true : false}
-            aria-selected={isActive}
-            disabled={disabled || groupDisabled ? true : false }
-            onClick={handleItemClick}
-            {...props}
-          >
-            { icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : null }
-            <span>{ children || label || theKey }</span>
-          </button>
-      }
-    </ul>
-    
+      {children}
+    </NavigationItem>
   )
 }
 
@@ -177,7 +89,7 @@ TopNavigationItem.propTypes = {
   href: PropTypes.string,
   /** A handler to execute once the navigation item is clicked. Will render the item as a button element if passed */
   onClick: PropTypes.func,
-  /** An optional technical identifier fort the tab. If not passed, the label will be used to identify the tab. NOTE: If value is passed, the value of the active tab MUST be used when setting the activeItem prop on the parent TabNavigation.*/ 
+  /** An optional technical identifier fort the tab. If not passed, the label will be used to identify the tab. NOTE: If value is passed, the value of the active tab MUST be used when setting the activeItem prop on the parent TabNavigation.*/
   value: PropTypes.string,
 }
 

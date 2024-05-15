@@ -80,12 +80,11 @@ describe("SideNavigation", () => {
     expect(screen.getByRole("navigation")).toBeInTheDocument()
     expect(screen.queryAllByRole("button")).toHaveLength(2)
     expect(screen.getByRole("button", { name: "Item 1" })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Item 1" })).toHaveAttribute(
-      "aria-selected",
-      "false"
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveAttribute(
+      "aria-selected"
     )
     expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveAttribute(
@@ -93,7 +92,7 @@ describe("SideNavigation", () => {
       "true"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
   })
 
@@ -107,12 +106,11 @@ describe("SideNavigation", () => {
     expect(screen.getByRole("navigation")).toBeInTheDocument()
     expect(screen.queryAllByRole("button")).toHaveLength(2)
     expect(screen.getByRole("button", { name: "Item 1" })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Item 1" })).toHaveAttribute(
-      "aria-selected",
-      "false"
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveAttribute(
+      "aria-selected"
     )
     expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveAttribute(
@@ -120,7 +118,7 @@ describe("SideNavigation", () => {
       "true"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
   })
 
@@ -134,12 +132,11 @@ describe("SideNavigation", () => {
     expect(screen.getByRole("navigation")).toBeInTheDocument()
     expect(screen.queryAllByRole("button")).toHaveLength(2)
     expect(screen.getByRole("button", { name: "Item 1" })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Item 1" })).toHaveAttribute(
-      "aria-selected",
-      "false"
+    expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveAttribute(
+      "aria-selected"
     )
     expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveAttribute(
@@ -147,7 +144,7 @@ describe("SideNavigation", () => {
       "true"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
   })
 
@@ -159,10 +156,10 @@ describe("SideNavigation", () => {
       </SideNavigation>
     )
     expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
     rerender(
       <SideNavigation activeItem="Item 1">
@@ -171,10 +168,10 @@ describe("SideNavigation", () => {
       </SideNavigation>
     )
     expect(screen.getByRole("button", { name: "Item 1" })).toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 2" })).not.toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
   })
 
@@ -187,13 +184,13 @@ describe("SideNavigation", () => {
       </SideNavigation>
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 3" })).not.toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
     rerender(
       <SideNavigation activeItem="Item 2">
@@ -203,13 +200,13 @@ describe("SideNavigation", () => {
       </SideNavigation>
     )
     expect(screen.getByRole("button", { name: "Item 2" })).toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 1" })).not.toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button", { name: "Item 3" })).not.toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
   })
 
@@ -225,14 +222,14 @@ describe("SideNavigation", () => {
     const tab1 = screen.getByRole("button", { name: "Item 1" })
     const tab2 = screen.getByRole("button", { name: "Item 2" })
     expect(tab1).toHaveAttribute("aria-selected", "true")
-    expect(tab1).toHaveClass("juno-sidenavigation-item-active")
-    expect(tab2).toHaveAttribute("aria-selected", "false")
-    expect(tab2).not.toHaveClass("juno-sidenavigation-item-active")
+    expect(tab1).toHaveClass("juno-navigation-item-active")
+    expect(tab2).not.toHaveAttribute("aria-selected")
+    expect(tab2).not.toHaveClass("juno-navigation-item-active")
     await userEvent.click(tab2)
-    expect(tab1).toHaveAttribute("aria-selected", "false")
-    expect(tab1).not.toHaveClass("juno-sidenavigation-item-active")
+    expect(tab1).not.toHaveAttribute("aria-selected")
+    expect(tab1).not.toHaveClass("juno-navigation-item-active")
     expect(tab2).toHaveAttribute("aria-selected", "true")
-    expect(tab2).toHaveClass("juno-sidenavigation-item-active")
+    expect(tab2).toHaveClass("juno-navigation-item-active")
   })
 
   test("executes a handler as passed when the selected item changes", async () => {

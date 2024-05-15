@@ -3,18 +3,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { createContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React from "react"
+import PropTypes from "prop-types"
+import { Navigation } from "../Navigation/index"
 
-const topNavigationStyles = `
+const topNavStyles = `
   jn-flex
   jn-bg-theme-global-bg
   jn-gap-6
   jn-px-6
   jn-py-1.5
 `
-
-export const NavigationContext = createContext()
 
 /**
 A generic horizontal top level navigation component. To be placed below the application header but above application content.
@@ -29,45 +28,18 @@ export const TopNavigation = ({
   onActiveItemChange,
   ...props
 }) => {
-  
-  const [activeItm, setActiveItm] = useState("")
-  
-  useEffect(() => {
-    if (activeItem) {
-      setActiveItm(activeItem)
-    }
-  }, [activeItem])
-  
-  const updateActiveItem = (label) => {
-    setActiveItm(label)
-  }
-    
-  const handleActiveItemChange = (label) => {
-    setActiveItm(label)
-    onActiveItemChange && onActiveItemChange(label)
-  }
-  
   return (
-    <NavigationContext.Provider
-    value={{
-      activeItem: activeItm,
-      updateActiveItem: updateActiveItem,
-      handleActiveItemChange: handleActiveItemChange,
-      disabled: disabled,
-    }}>
-      <ul 
-        className={`
-          juno-topnavigation 
-          ${topNavigationStyles} 
-          ${className}`
-        } 
-        role="navigation"
-        aria-label={ariaLabel}
-        {...props} 
-      >
-        { children }
-      </ul>
-    </NavigationContext.Provider>
+    <Navigation
+      activeItem={activeItem}
+      ariaLabel={ariaLabel}
+      className={`juno-topnavigation ${topNavStyles} ${className}`}
+      disabled={disabled}
+      navigationRole="TopNavigation"
+      onActiveItemChange={onActiveItemChange}
+      {...props}
+    >
+      {children}
+    </Navigation>
   )
 }
 

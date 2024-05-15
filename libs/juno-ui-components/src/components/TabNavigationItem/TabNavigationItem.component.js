@@ -3,41 +3,28 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useContext } from "react"
+import React, { useContext } from "react"
 import PropTypes from "prop-types"
-import { NavigationContext } from "../TabNavigation/TabNavigation.component"
-import { Icon } from "../Icon/index.js"
+import { NavigationItem } from "../NavigationItem/index"
+import { TabNavigationContext } from "../TabNavigation/TabNavigation.component"
 import { knownIcons } from "../Icon/Icon.component.js"
 
-const itemStyles = `
+const tabNavItemStyles = `
   jn-flex
   jn-items-center
   jn-text-theme-default
   jn-font-bold
   jn-py-[0.875rem]
   jn-px-[1.5625rem]
+  jn-border-b-[3px]
   focus-visible:jn-outline-none
   focus-visible:jn-ring-2
   focus-visible:jn-ring-theme-focus
 `
-const defaultMainItemStyles = `
-  jn-border-b-[3px]
-  jn-border-transparent
-`
 
-const defaultContentItemStyles = `
-  jn-border-b-[3px]
-  jn-border-theme-tab-content-inactive-bottom
-`
-
-const disabledItemStyles = `
-  jn-pointer-events-none
-  jn-opacity-50
-  jn-cursor-not-allowed
-`
-
-const activeItemStyles = `
+const tabNavActiveItemStyles = `
   jn-text-theme-high
+  jn-font-bold
   jn-border-b-[3px]
   jn-border-theme-tab-active-bottom
 `
@@ -56,112 +43,34 @@ export const TabNavigationItem = ({
   value,
   ...props
 }) => {
-  const navigationContext = useContext(NavigationContext)
-  const {
-    activeItem: activeItem,
-    updateActiveItem: updateActiveItem,
-    handleActiveItemChange: handleActiveItemChange,
-    disabled: groupDisabled,
-    tabStyle: tabStyle,
-  } = navigationContext || {}
-
-  // Use the value (if passed) or the label as identifying key or the tab:
-  const theKey = value || label
-
-  // Lazily init depending on parent context or tab's own prop:
-  const initialActive = () => {
-    if (navigationContext?.activeItem?.length > 0) {
-      return activeItem === theKey
-    } else {
-      return active
-    }
-  }
-
-  const [isActive, setIsActive] = useState(() => initialActive())
-
-  useEffect(() => {
-    if (activeItem) {
-      activeItem === theKey ? setIsActive(true) : setIsActive(false)
-      return
-    }
-    setIsActive(active)
-  }, [activeItem, active])
-
-  const handleItemClick = (event) => {
-    if (!isActive) {
-      handleActiveItemChange(theKey)
-    }
-    onClick && onClick(event)
-  }
-
+  const tabNavigationContext = useContext(TabNavigationContext)
+  const { tabStyle: tabStyle } = tabNavigationContext || {}
   return (
-    <li className={`jn-flex`}>
-      {href ? (
-        <a
-          className={`
-            juno-tabnavigation-item
-            juno-tabnavigation-item-${tabStyle}
-            ${itemStyles} 
-            ${disabled || groupDisabled ? disabledItemStyles : ""}
-            ${
-              disabled || groupDisabled
-                ? "juno-tabnavigation-item-disabled"
-                : ""
-            }
-            ${
-              isActive
-                ? activeItemStyles
-                : tabStyle === "content"
-                ? defaultContentItemStyles
-                : defaultMainItemStyles
-            }
-            ${isActive ? "juno-tabnavigation-item-active" : ""}
-            ${className}
-          `}
-          onClick={handleItemClick}
-          href={href}
-          aria-label={ariaLabel}
-          aria-selected={isActive}
-          aria-disabled={disabled || groupDisabled ? true : false}
-          {...props}
-        >
-          {icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : null}
-          <span>{children || label || theKey}</span>
-        </a>
-      ) : (
-        <button
-          className={`
-            juno-tabnavigation-item
-            juno-tabnavigation-item-${tabStyle}
-            ${itemStyles} 
-            ${disabled || groupDisabled ? disabledItemStyles : ""}
-            ${
-              disabled || groupDisabled
-                ? "juno-tabnavigation-item-disabled"
-                : ""
-            }
-            ${
-              isActive
-                ? activeItemStyles
-                : tabStyle === "content"
-                ? defaultContentItemStyles
-                : defaultMainItemStyles
-            }
-            ${isActive ? "juno-tabnavigation-item-active" : ""}
-            ${className} 
-          `}
-          onClick={handleItemClick}
-          aria-label={ariaLabel}
-          aria-selected={isActive}
-          disabled={disabled || groupDisabled ? true : false}
-          aria-disabled={disabled || groupDisabled ? true : false}
-          {...props}
-        >
-          {icon ? <Icon icon={icon} size="18" className={"jn-mr-2"} /> : null}
-          <span>{children || label || theKey}</span>
-        </button>
-      )}
-    </li>
+    <NavigationItem
+      active={active}
+      activeItemStyles={tabNavActiveItemStyles}
+      ariaLabel={ariaLabel}
+      className={`
+        juno-tabnavigation-item 
+        ${tabStyle ? "juno-tabnavigation-" + tabStyle + "-item" : ""}
+        ${tabNavItemStyles} 
+        ${className}
+      `}
+      disabled={disabled}
+      href={href}
+      icon={icon}
+      inactiveItemStyles={`${
+        tabStyle === "content"
+          ? "jn-border-theme-tab-content-inactive-bottom"
+          : "jn-border-transparent"
+      }`}
+      label={label}
+      onClick={onClick}
+      value={value}
+      {...props}
+    >
+      {children}
+    </NavigationItem>
   )
 }
 

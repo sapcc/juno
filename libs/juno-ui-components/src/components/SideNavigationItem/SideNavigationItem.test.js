@@ -83,23 +83,23 @@ describe("SideNavigationItem", () => {
     expect(screen.getByRole("button")).toHaveClass("juno-sidenavigation-item")
   })
 
-  test("renders an active ToppNavigationItem as passed", async () => {
+  test("renders an active NavigationItem as passed", async () => {
     render(<SideNavigationItem data-testid="side-nav-item" active />)
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveClass("juno-sidenavigation-item")
     expect(screen.getByRole("button")).toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
     expect(screen.getByRole("button")).toHaveAttribute("aria-selected", "true")
   })
 
-  test("rerenders the active attribute of the ToppNavigationItem", async () => {
+  test("rerenders the active attribute of a navigation item", async () => {
     const { rerender } = render(
       <SideNavigationItem data-testid="side-nav-item" active={true} />
     )
     expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByRole("button")).toHaveClass(
-      "juno-sidenavigation-item-active"
+      "juno-navigation-item-active"
     )
     rerender(<SideNavigationItem data-testid="side-nav-item" active={false} />)
     expect(screen.getByRole("button")).toBeInTheDocument()
