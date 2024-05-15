@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { createContext, useState, useEffect, useContext } from "react"
+import React, { createContext } from "react"
 import PropTypes from "prop-types"
-
+import { Navigation } from "../Navigation/index"
 
 const tabNavStyles = `
   jn-flex
 `
 
-export const NavigationContext = createContext()
+export const TabNavigationContext = createContext()
 
 /** A Tab Navigation parent component. Use to wrap `<TabNavigationItem>` elements inside. For tabs with corresponding tab panels, use `<Tabs>` instead. */
 export const TabNavigation = ({
@@ -24,51 +24,29 @@ export const TabNavigation = ({
   tabStyle,
   ...props
 }) => {
-  
-  const [ activeItm, setActiveItm ] = useState("")
-  
-  // Update state whenever activeItem prop on parent changes:
-  useEffect(() => {
-    if (activeItem) {
-      setActiveItm(activeItem)
-    }
-  }, [activeItem])
-  
-  // Callback to pass to the child tab navigation items to set the state on the parent. This is used only once when initializing to prevent any onChange handlers to run:
-  const updateActiveItem = (label) => {
-    setActiveItm(label)
-  }
-  
-  // Callback to pass to child tab navigation items to execute whenever they change:
-  const handleActiveItemChange = (label) => {
-    setActiveItm(label)
-    onActiveItemChange && onActiveItemChange(label)
-  }
-
   return (
-    <NavigationContext.Provider 
-      value = {{
-        activeItem: activeItm,
-        updateActiveItem: updateActiveItem,
-        handleActiveItemChange: handleActiveItemChange,
-        disabled: disabled,
+    <TabNavigationContext.Provider
+      value={{
         tabStyle: tabStyle,
       }}
     >
-      <ul 
+      <Navigation
+        activeItem={activeItem}
+        ariaLabel={ariaLabel}
         className={`
           juno-tabnavigation 
-          juno-tabnavigation-${tabStyle}
+          juno-tabnavigation-${tabStyle} 
           ${tabNavStyles} 
           ${className}
-        `} 
-        role="navigation" 
-        aria-label={ariaLabel} 
-        {...props} 
+        `}
+        disabled={disabled}
+        navigationRole="TabNavigation"
+        onActiveItemChange={onActiveItemChange}
+        {...props}
       >
-        { children }
-      </ul>
-    </NavigationContext.Provider>
+        {children}
+      </Navigation>
+    </TabNavigationContext.Provider>
   )
 }
 

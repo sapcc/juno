@@ -3,15 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { createContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React from "react"
+import PropTypes from "prop-types"
+import { Navigation } from "../Navigation/index"
 
 const sideNavStyles = `
   jn-min-w-[7.5rem]
   jn-max-w-[20rem]
 `
-
-export const NavigationContext = createContext()
 
 /**
 A generic vertical side navigation component.
@@ -26,45 +25,18 @@ export const SideNavigation = ({
   onActiveItemChange,
   ...props
 }) => {
-  
-  const [activeItm, setActiveItm] = useState("")
-  
-  useEffect(() => {
-    if (activeItem) {
-      setActiveItm(activeItem)
-    }
-  }, [activeItem])
-  
-  const updateActiveItem = (label) => {
-    setActiveItm(label)
-  }
-    
-  const handleActiveItemChange = (label) => {
-    setActiveItm(label)
-    onActiveItemChange && onActiveItemChange(label)
-  }
-  
   return (
-    <NavigationContext.Provider
-      value={{
-        activeItem: activeItm,
-        updateActiveItem: updateActiveItem,
-        handleActiveItemChange: handleActiveItemChange,
-        disabled: disabled,
-      }}>
-      <ul 
-        className={`
-          juno-sidenavigation 
-          ${sideNavStyles} 
-          ${className}
-        `} 
-        role="navigation" 
-        aria-label={ariaLabel}
-        {...props} 
-      >
-        { children }
-      </ul>
-    </NavigationContext.Provider>
+    <Navigation
+      activeItem={activeItem}
+      ariaLabel={ariaLabel}
+      className={`juno-sidenavigation ${sideNavStyles} ${className}`}
+      disabled={disabled}
+      navigationRole="SideNavigation"
+      onActiveItemChange={onActiveItemChange}
+      {...props}
+    >
+      {children}
+    </Navigation>
   )
 }
 
