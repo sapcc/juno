@@ -176,6 +176,12 @@ resources:
 
   <% end %>
 
+  - name: run-manually.version
+    type: time-version-resource
+    icon: lock
+    check_every: 525600h
+    source: { key: "juno-run-manually-version" } # disambiguate from other time-version resources
+
   - name: assets-server.version
     type: time-version-resource
     icon: lock
@@ -207,6 +213,7 @@ resource_types:
 groups: 
   - name: assets 
     jobs:
+      - run-all-manually
       <% ASSETS.merge(CLOUDOPERATOR_ASSETS).each do |name,details| %>
       - build-<%= details[:type] %>-<%= name %>
       <% end %>
@@ -256,6 +263,11 @@ jobs:
               - '\tThis pipeline is defined at: https://github.com/sapcc/juno/ci/\n\n'
               - '\tManage Juno images: https://keppel.eu-de-1.cloud.sap/ccloud/juno\n'
 
+
+  - name: run-all-manually
+    plan:
+      - put: run-manually.version
+
   # =============================================================
   # BUILD BASE IMAGES
   - name: build-base-image
@@ -294,6 +306,9 @@ jobs:
   - name: build-<%= details[:type] %>-<%= name %>
     public: true
     plan:
+      - get: run-manually.version
+        trigger: true 
+        passed: [run-all-manually]
       - get: <%= details[:type] %>-<%= name %>.git
         trigger: true
       - get: juno.git  
@@ -344,7 +359,7 @@ jobs:
                 echo ""
                 /juno/ci/scripts/asset_build.sh --asset-name <%= name %> --asset-type <%= details[:type] %> --output-path ../build_result <% if details[:type] == "lib" %> --last-build-path ../last_build <% end %>
       - task: sync
-        file: <%=details[:type]%>-<%= name %>.git/ci/shared/swift-upload.yaml
+        file: juno.git/ci/shared/swift-upload.yaml
         input_mapping:
           upload: build_result
         params:
