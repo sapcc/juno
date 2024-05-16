@@ -23,11 +23,15 @@
     "messages-provider":    { type: "lib", path: "libs/messages-provider"},
     "oauth":                { type: "lib", path: "libs/oauth"},
     "policy-engine":        { type: "lib", path: "libs/policy-engine"},
-    "communicator":         { type: "lib", path: "libs/communicator"},
     "url-state-provider":   { type: "lib", path: "libs/url-state-provider"},
     "url-state-router":     { type: "lib", path: "libs/url-state-router"},
     "utils":                { type: "lib", path: "libs/utils"},
   }
+
+  CLOUDOPERATOR_ASSETS = {
+    "communicator":         { type: "lib", path: "libs/communicator"},
+  }
+
   HA_REGIONS = ["eu-de-1","eu-de-2","eu-nl-1","ap-ae-1","ap-jp-2","ap-au-1","la-br-1","na-us-1","na-us-2"]
 %>
 
@@ -141,11 +145,28 @@ resources:
       uri: https://github.com/sapcc/juno.git
       branch: main
       paths: ["<%=details[:path]%>","libs","package.json","e2e", ".yarn"]
-      # "ci"
-      # "ci/scripts"
-      # "ci/shared"
       username: sapcc-bot
       password: ((github-access-token/sapcc-bot))
+  
+  - name: <%= details[:type] %>-<%= name %>.version
+    type: time-version-resource
+    icon: lock
+    check_every: 525600h
+    source: { key: "<%= details[:type] %>-<%= name %>" } # disambiguate from other time-version resources
+
+  <% end %>
+
+  <% CLOUDOPERATOR_ASSETS.each do |name,details| %>
+  - name: <%=details[:type]%>-<%= name %>.git
+    icon: github
+    type: git-proxy
+    webhook_token: bleep-bloop
+    source:
+      uri: https://github.com/cloudoperators/juno.git
+      username: ((github-access-token/sapcc-bot))
+      password: x-oauth-basic
+      branch: main      
+      paths: ["<%=details[:path]%>"]
   
   - name: <%= details[:type] %>-<%= name %>.version
     type: time-version-resource
@@ -186,7 +207,7 @@ resource_types:
 groups: 
   - name: assets 
     jobs:
-      <% ASSETS.each do |name,details| %>
+      <% ASSETS.merge(CLOUDOPERATOR_ASSETS).each do |name,details| %>
       - build-<%= details[:type] %>-<%= name %>
       <% end %>
       - build-assets-server-image
@@ -269,12 +290,13 @@ jobs:
   # BUILD ASSET SERVER IMAGE
 
   # Assets build
-  <% ASSETS.each do |name,details| %>
+  <% ASSETS.merge(CLOUDOPERATOR_ASSETS).each do |name,details| %>
   - name: build-<%= details[:type] %>-<%= name %>
     public: true
     plan:
       - get: <%= details[:type] %>-<%= name %>.git
         trigger: true
+      - get: juno.git  
       - get: base.image
       - get: ci-helper.image
       - put: <%= details[:type] %>-<%= name %>.version
@@ -282,7 +304,7 @@ jobs:
       <% if details[:type] == "lib" %>
       # this is used to get the last version, only libs with new versions will be deployed
       - task: download-last-build
-        file: <%=details[:type]%>-<%= name %>.git/ci/shared/swift-download.yaml
+        file: juno.git/ci/shared/swift-download.yaml
         output_mapping:
           download: last_build
         params:
@@ -358,7 +380,7 @@ jobs:
       - get: swift-juno-assets.version
         trigger: true    
 
-      <% ASSETS.each do |name, details|%>
+      <% ASSETS.merge(CLOUDOPERATOR_ASSETS).each do |name, details|%>
       - get: <%= details[:type] %>-<%= name %>.version
         trigger: false
         passed: ["build-<%= details[:type] %>-<%= name %>"]  
@@ -392,7 +414,7 @@ jobs:
                 set -e
                 cd ./juno.git
                 # 1) download our own assets
-                <% ASSETS.each do |name, details|%>
+                <% ASSETS.merge(CLOUDOPERATOR_ASSETS).each do |name, details|%>
                   ./ci/scripts/asset_storage.sh --container juno-assets --asset-name <%= name %> --asset-path <%= details[:path] %> --action download --root-path ../juno-assets
                 <% end %>
                 # 2) download and check for name collission in juno-3rd-party assets
