@@ -3,10 +3,10 @@
 # exit on error
 set -e
 
-if [ ! -f "CODEOWNERS" ]; then
-  echo "This script must run from root of juno repo"
-  exit 1
-fi
+# if [ ! -f "CODEOWNERS" ]; then
+#   echo "This script must run from root of juno repo"
+#   exit 1
+# fi
 
 function help() {
   echo "Usage: build_assets.sh --asset-path||-ap --asset-name||-sn --asset-type||-at --output-path||-op --last-build-path||-lbp
@@ -20,6 +20,8 @@ function help() {
 if [[ "$1" == "--help" ]]; then
   help
 fi
+
+SCRIPTS_FOLDER=$(dirname $0)
 
 OUTPUT_PATH="./build-result"
 while [[ $# -gt 0 ]]; do
@@ -134,7 +136,7 @@ fi
 echo "----------------------------------"
 
 echo "generate COMMUNICATOR.md in $ASSET_PATH"
-node ci/scripts/generate_communication_readme.mjs --path="$ASSET_PATH"
+node "$SCRIPTS_FOLDER/generate_communication_readme.mjs" --path="$ASSET_PATH"
 
 # install and build libs
 # npm run build-libs
@@ -144,9 +146,14 @@ node ci/scripts/generate_communication_readme.mjs --path="$ASSET_PATH"
 # This is the case if the jspm cdn is unreachable!!!
 echo "----------------------------------"
 echo "run Tests for ...."
+# since we removed all local dependencies (*) we don't need to use --workspace
+# instead we can use the local path
 ASSET_NAME=$(jq -r .name "$ASSET_PATH/package.json")
-npm --workspace "$ASSET_NAME" run test --if-present
-NODE_ENV=production IGNORE_EXTERNALS=false npm --workspace "$ASSET_NAME" run build --if-present
+CURRENT_DIR=$(pwd)
+cd "$ASSET_PATH"
+npm run test --if-present
+NODE_ENV=production IGNORE_EXTERNALS=false npm run build --if-present
+cd "$CURRENT_DIR"
 
 # get BUILD_DIR from package.json
 # strip `leading` slash from BUILD_DIR and split by / and use first part
