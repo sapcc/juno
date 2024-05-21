@@ -5,12 +5,18 @@
 
 const fs = require("fs")
 const tailwindConfig = require("../../../tailwind.config")
+const yaml = require("js-yaml")
+const licenserc = "./licenserc.yaml"
 
 /* 
   Generates Tailwindclasses in a js file. So Tailwind generates the classes and so they are useable in the documentation, which colors are available. 
 */
 
 const generateTailwindThemeClassesJson = () => {
+  const licence = yaml.load(fs.readFileSync(licenserc, "utf8"))
+  const licenceJSON = yaml.safeLoad(licence)
+  console.log(licenceJSON)
+
   fs.writeFileSync(
     "./src/docs/ColorPalette/TailwindColors.js",
     "/*\n" +
