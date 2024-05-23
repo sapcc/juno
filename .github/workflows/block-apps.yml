@@ -1,4 +1,4 @@
-name: Block PRs on apps supernova, huereka, greenhouse and greenhouse-management and libs communicator, oauth and juno-ui-components
+name: Block PRs on apps supernova, huereka, greenhouse and greenhouse-management and libs communicator, oauth, policy-engine and juno-ui-components
 
 on:
   pull_request:
@@ -75,15 +75,16 @@ jobs:
           echo libs: ${{ needs.changes.outputs.libs }}
           echo app changes: ${{ needs.changes.outputs.app-changes }}
           echo lib changes: ${{ needs.changes.outputs.lib-changes }}
-      - name: Check if changes belongs to apps supernova, huereka, greenhouse or greenhouse-management or libs communicator, oauth or juno-ui-components
+      - name: Check if changes belongs to apps supernova, huereka, greenhouse or greenhouse-management or libs communicator, oauth, policy-engine or juno-ui-components
         if: |
           contains(needs.changes.outputs.app-changes, 'supernova') ||
           contains(needs.changes.outputs.app-changes, 'huereka') ||
           contains(needs.changes.outputs.app-changes, 'greenhouse') ||
           contains(needs.changes.outputs.app-changes, 'greenhouse-management') ||
           contains(needs.changes.outputs.lib-changes, 'communicator') ||
+          contains(needs.changes.outputs.lib-changes, 'policy-engine') ||
           contains(needs.changes.outputs.lib-changes, 'oauth') ||
           contains(needs.changes.outputs.lib-changes, 'juno-ui-components')
         run: |
-          echo "::error not allowed to make changes to supernova, huereka, greenhouse or greenhouse-management apps or communicator, oauth or juno-ui-components libs"
+          echo "::error not allowed to make changes to supernova, huereka, greenhouse or greenhouse-management apps or communicator, oauth, policy-engine or juno-ui-components libs"
           exit 1
