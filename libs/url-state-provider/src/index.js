@@ -4,9 +4,6 @@
  */
 
 import LZString from "lz-string"
-import juriCutlery from "juri-cutlery"
-
-const jsonURLSerializer = juriCutlery()
 const SEARCH_KEY = "__s"
 const regex = new RegExp(SEARCH_KEY + "=([^&]+)")
 
@@ -24,7 +21,9 @@ var onGlobalChangeListeners = []
  */
 function encode(json, options = {}) {
   try {
-    let urlState = jsonURLSerializer.encode(json)
+    let jsonString = JSON.stringify(json) // '{"name":"John Doe","age":30}'
+    let urlState = encodeURIComponent(jsonString)
+    console.log("json before", jsonString)
 
     if (options?.mode === "humanize") return urlState
 
@@ -46,8 +45,8 @@ function encode(json, options = {}) {
  */
 function decode(string) {
   try {
-    // try to decode using jsonURLSerializer
-    let json = jsonURLSerializer.decode(string)
+    let decodedString = decodeURIComponent(string)
+    let json = JSON.parse(decodedString)
 
     // if parsed value is an object, return it
     if (json && typeof json === "object") return json
