@@ -70,7 +70,7 @@ jobs:
     runs-on: [ubuntu-latest]
     env:
       APPS: "supernova huereka greenhouse greenhouse-management"
-      LIBS: "communicator oauth policy-engine messages-provider juno-ui-components"
+      LIBS: "communicator oauth policy-engine messages-provider juno-ui-components url-state-provider url-state-router utils"
     steps:
       - name: Show inputs
         run: |
