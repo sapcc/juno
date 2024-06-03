@@ -1,5 +1,7 @@
 # Widget Loader
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+
 The Widget Loader streamlines the efficient loading of diverse applications. It initiates the process by loading an import map, serving as a comprehensive repository of dependencies for all assets. This import map is a collection of key-value pairs, where keys represent package names, and corresponding values indicate URLs leading to the package sources. It lays the foundation for subsequent loading steps, ensuring the runtime availability of all dependencies and enabling multiple applications to efficiently share libraries.
 
 ## Usage

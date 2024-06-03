@@ -1,7 +1,5 @@
 # URL State Router
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-
 If you already know the [React-Router](https://reactrouter.com) and you are wondering how you can use something similar in **micro frontends**, then you have come to the right place!
 
 Problem: Multiple routers on one page (SPA).
