@@ -91,9 +91,10 @@ jobs:
               echo "Checking $item"
               if [[ $changes == *"$item"* ]]; then
                 echo "error it contains not allowed item: $item"
-                return
+                return 0
               fi
             done
+            return 1
           }
 
           app_changes="${{ needs.changes.outputs.app-changes }}"
