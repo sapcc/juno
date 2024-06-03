@@ -85,7 +85,7 @@ jobs:
           check_changes() {
             local changes=$1
             local list=$2
-            echo "Checking changes: $changes"
+            echo "Checking changes: $changes against list: $list"
             for item in $list; do
               echo "Checking $item"
               if [[ $changes == *"$item"* ]]; then
