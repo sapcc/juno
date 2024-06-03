@@ -1,4 +1,4 @@
-name: Block PRs on apps and libs migrated to cloudoperators
+name: Block PRs on deprecated apps and libs
 
 on:
   pull_request:
@@ -26,11 +26,11 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
       - name: Generate app and lib filters
         run: |
-          for folder in apps/*; do
+          for folder in apps_deprecated/*; do
             folder_name=$(basename "$folder")
             echo "$folder_name: $folder/**" >> temp_app_filters.yaml
           done
-          for folder in libs/*; do
+          for folder in libs_deprecated/*; do
             folder_name=$(basename "$folder")
             echo "$folder_name: $folder/**" >> temp_lib_filters.yaml
           done
@@ -39,8 +39,8 @@ jobs:
         with:
           list-files: shell
           filters: |
-            apps: apps/**
-            libs: libs/**
+            apps: apps_deprecated/**
+            libs: libs_deprecated/**
       - uses: dorny/paths-filter@v3
         id: app-filters
         with:
@@ -69,10 +69,8 @@ jobs:
     needs: changes
     runs-on: [ubuntu-latest]
     env:
-      # supernova heureka greenhouse greenhouse-management exampleapp template
-      APPS: ""
-      # communicator oauth policy-engine messages-provider juno-ui-components url-state-provider url-state-router utils
-      LIBS: ""
+      APPS: "supernova heureka greenhouse greenhouse-management exampleapp template"
+      LIBS: "communicator oauth policy-engine messages-provider juno-ui-components url-state-provider url-state-router utils"
     steps:
       - name: Show inputs
         run: |
