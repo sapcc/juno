@@ -1,7 +1,5 @@
 # Juno UI Components Library
 
-test
-
 ## Installation
 
 To include Juno UI components as a dev dependency in your app install with npm:
