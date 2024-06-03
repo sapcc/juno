@@ -69,8 +69,10 @@ jobs:
     needs: changes
     runs-on: [ubuntu-latest]
     env:
-      APPS: "supernova heureka greenhouse greenhouse-management exampleapp template"
-      LIBS: "communicator oauth policy-engine messages-provider juno-ui-components url-state-provider url-state-router utils"
+      # supernova heureka greenhouse greenhouse-management exampleapp template
+      APPS: ""
+      # communicator oauth policy-engine messages-provider juno-ui-components url-state-provider url-state-router utils
+      LIBS: ""
     steps:
       - name: Show inputs
         run: |
