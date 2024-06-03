@@ -93,8 +93,8 @@ jobs:
             done
           }
 
-          app_changes="${{ needs.detect-changes.outputs.app-changes }}"
-          lib_changes="${{ needs.detect-changes.outputs.lib-changes }}"
+          app_changes="${{ needs.changes.outputs.app-changes }}"
+          lib_changes="${{ needs.changes.outputs.lib-changes }}"
 
           if [[ $(check_changes "$app_changes" "$APPS") == "error" ]] || [[ $(check_changes "$lib_changes" "$LIBS") == "error" ]]; then
             echo "Not allowed to make changes to specified apps or libs"
