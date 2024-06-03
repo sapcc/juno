@@ -82,30 +82,29 @@ jobs:
       - name: Check if changes belong to restricted apps or libs
         id: check-changes
         run: |
-          set -x
           check_changes() {
             local changes=$1
             local list=$2
+            local type=$3
             echo "Checking changes: $changes against list: $list"
             for item in $list; do
-              echo "Checking $item"
+              echo "Checking item: $item"
               if [[ $changes == *"$item"* ]]; then
-                echo "error it contains not allowed item: $item"
-                return 0
+                echo "::error file=script.sh,line=1::Not allowed to make changes to specified $type: $item"
+                exit 1
               fi
             done
+            echo "No restricted changes found in $type"
             return 1
           }
 
           app_changes="${{ needs.changes.outputs.app-changes }}"
           lib_changes="${{ needs.changes.outputs.lib-changes }}"
 
-          if check_changes "$app_changes" "$APPS" || check_changes "$lib_changes" "$LIBS"; then
-            echo "Not allowed to make changes to specified apps or libs"
-            exit 1
-          else
-            echo "Changes are allowed."
-          fi
+          check_changes "$app_changes" "$APPS" "app"
+          check_changes "$lib_changes" "$LIBS" "lib"
+
+          echo "Changes are allowed."
 
       # - name: Check if changes belongs to black listed apps or libs
       #   if: |
