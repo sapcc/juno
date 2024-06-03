@@ -1,4 +1,4 @@
-name: Block PRs on apps supernova, huereka, greenhouse and greenhouse-management and libs communicator, oauth, policy-engine, messages-provider and juno-ui-components
+name: Block PRs on apps and libs migrated to cloudoperators
 
 on:
   pull_request:
@@ -68,6 +68,9 @@ jobs:
   evaluate-changes:
     needs: changes
     runs-on: [ubuntu-latest]
+    env:
+      APPS: "supernova huereka greenhouse greenhouse-management"
+      LIBS: "communicator oauth policy-engine messages-provider juno-ui-components"
     steps:
       - name: Show inputs
         run: |
@@ -75,17 +78,42 @@ jobs:
           echo libs: ${{ needs.changes.outputs.libs }}
           echo app changes: ${{ needs.changes.outputs.app-changes }}
           echo lib changes: ${{ needs.changes.outputs.lib-changes }}
-      - name: Check if changes belongs to apps supernova, huereka, greenhouse or greenhouse-management or libs communicator, oauth, policy-engine, messages-provider or juno-ui-components
-        if: |
-          contains(needs.changes.outputs.app-changes, 'supernova') ||
-          contains(needs.changes.outputs.app-changes, 'huereka') ||
-          contains(needs.changes.outputs.app-changes, 'greenhouse') ||
-          contains(needs.changes.outputs.app-changes, 'greenhouse-management') ||
-          contains(needs.changes.outputs.lib-changes, 'communicator') ||
-          contains(needs.changes.outputs.lib-changes, 'policy-engine') ||
-          contains(needs.changes.outputs.lib-changes, 'oauth') ||
-          contains(needs.changes.outputs.lib-changes, 'messages-provider') ||
-          contains(needs.changes.outputs.lib-changes, 'juno-ui-components')
+
+      - name: Check if changes belong to restricted apps or libs
+        id: check-changes
         run: |
-          echo "::error not allowed to make changes to supernova, huereka, greenhouse or greenhouse-management apps or communicator, oauth, policy-engine, messages-provider or juno-ui-components libs"
-          exit 1
+          check_changes() {
+            local changes=$1
+            local list=$2
+            for item in $list; do
+              if [[ $changes == *"$item"* ]]; then
+                echo "error it contains not allowed item: $item"
+                return
+              fi
+            done
+          }
+
+          app_changes="${{ needs.detect-changes.outputs.app-changes }}"
+          lib_changes="${{ needs.detect-changes.outputs.lib-changes }}"
+
+          if [[ $(check_changes "$app_changes" "$APPS") == "error" ]] || [[ $(check_changes "$lib_changes" "$LIBS") == "error" ]]; then
+            echo "Not allowed to make changes to specified apps or libs"
+            exit 1
+          else
+            echo "Changes are allowed."
+          fi
+
+      # - name: Check if changes belongs to black listed apps or libs
+      #   if: |
+      #     contains(needs.changes.outputs.app-changes, 'supernova') ||
+      #     contains(needs.changes.outputs.app-changes, 'huereka') ||
+      #     contains(needs.changes.outputs.app-changes, 'greenhouse') ||
+      #     contains(needs.changes.outputs.app-changes, 'greenhouse-management') ||
+      #     contains(needs.changes.outputs.lib-changes, 'communicator') ||
+      #     contains(needs.changes.outputs.lib-changes, 'policy-engine') ||
+      #     contains(needs.changes.outputs.lib-changes, 'oauth') ||
+      #     contains(needs.changes.outputs.lib-changes, 'messages-provider') ||
+      #     contains(needs.changes.outputs.lib-changes, 'juno-ui-components')
+      #   run: |
+      #     echo "::error not allowed to make changes to supernova, huereka, greenhouse or greenhouse-management apps or communicator, oauth, policy-engine, messages-provider or juno-ui-components libs"
+      #     exit 1
