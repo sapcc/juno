@@ -1,5 +1,7 @@
 # User-activity App
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+
 This app tracks the user activity (using event listeners as per example `mousemove`) to notify per broadcast events when the user has been inactive for a default period of 1800 seconds or again active. All other apps listening to the broadcast events can react accordingly and set the application to standby or reactivate and so save resources or reduce the amount of request during the inactive period.
 
 Please visit the section **scrip tag** to see all available **props** and their **default values**.
