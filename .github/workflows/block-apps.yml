@@ -82,6 +82,7 @@ jobs:
       - name: Check if changes belong to restricted apps or libs
         id: check-changes
         run: |
+          set -x
           check_changes() {
             local changes=$1
             local list=$2
