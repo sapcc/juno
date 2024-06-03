@@ -85,7 +85,9 @@ jobs:
           check_changes() {
             local changes=$1
             local list=$2
+            echo "Checking changes: $changes"
             for item in $list; do
+              echo "Checking $item"
               if [[ $changes == *"$item"* ]]; then
                 echo "error it contains not allowed item: $item"
                 return
