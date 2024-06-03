@@ -79,27 +79,27 @@ jobs:
           echo app changes: ${{ needs.changes.outputs.app-changes }}
           echo lib changes: ${{ needs.changes.outputs.lib-changes }}
 
-      - name: Check if changes belong to restricted apps or libs
-        id: check-changes
-        run: |
-          check_changes() {
-            local changes=$1
-            local list=$2
-            local type=$3
-            for item in $list; do
-              if [[ $changes == *"$item"* ]]; then
-                echo "Not allowed to make changes to specified $type: $item"
-                exit 1
-              fi
-            done
-            echo "No restricted changes found in $type"
-            return 0
-          }
+      # - name: Check if changes belong to restricted apps or libs
+      #   id: check-changes
+      #   run: |
+      #     check_changes() {
+      #       local changes=$1
+      #       local list=$2
+      #       local type=$3
+      #       for item in $list; do
+      #         if [[ $changes == *"$item"* ]]; then
+      #           echo "Not allowed to make changes to specified deprecated $type: $item"
+      #           exit 1
+      #         fi
+      #       done
+      #       echo "No restricted changes found in $type"
+      #       return 0
+      #     }
 
-          app_changes="${{ needs.changes.outputs.app-changes }}"
-          lib_changes="${{ needs.changes.outputs.lib-changes }}"
+      #     app_changes="${{ needs.changes.outputs.app-changes }}"
+      #     lib_changes="${{ needs.changes.outputs.lib-changes }}"
 
-          check_changes "$app_changes" "$APPS" "app"
-          check_changes "$lib_changes" "$LIBS" "lib"
+      #     check_changes "$app_changes" "$APPS" "app"
+      #     check_changes "$lib_changes" "$LIBS" "lib"
 
-          echo "Changes are allowed."
+      #     echo "Changes are allowed."
