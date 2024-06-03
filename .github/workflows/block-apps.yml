@@ -86,9 +86,7 @@ jobs:
             local changes=$1
             local list=$2
             local type=$3
-            echo "Checking changes: $changes against list: $list"
             for item in $list; do
-              echo "Checking item: $item"
               if [[ $changes == *"$item"* ]]; then
                 echo "::error file=script.sh,line=1::Not allowed to make changes to specified $type: $item"
                 exit 1
@@ -105,18 +103,3 @@ jobs:
           check_changes "$lib_changes" "$LIBS" "lib"
 
           echo "Changes are allowed."
-
-      # - name: Check if changes belongs to black listed apps or libs
-      #   if: |
-      #     contains(needs.changes.outputs.app-changes, 'supernova') ||
-      #     contains(needs.changes.outputs.app-changes, 'huereka') ||
-      #     contains(needs.changes.outputs.app-changes, 'greenhouse') ||
-      #     contains(needs.changes.outputs.app-changes, 'greenhouse-management') ||
-      #     contains(needs.changes.outputs.lib-changes, 'communicator') ||
-      #     contains(needs.changes.outputs.lib-changes, 'policy-engine') ||
-      #     contains(needs.changes.outputs.lib-changes, 'oauth') ||
-      #     contains(needs.changes.outputs.lib-changes, 'messages-provider') ||
-      #     contains(needs.changes.outputs.lib-changes, 'juno-ui-components')
-      #   run: |
-      #     echo "::error not allowed to make changes to supernova, huereka, greenhouse or greenhouse-management apps or communicator, oauth, policy-engine, messages-provider or juno-ui-components libs"
-      #     exit 1
