@@ -1,8 +1,7 @@
 "use strict"
 
 var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz$-",
-  commonSpl = "\t\n\r!\"#$%&'()*+,!./:;<=>?@[]^_`{|}~"
-
+  commonSpl = "\t\n\r!\"#$%&'()*+,-./:;<=>?@[]^_`{|}~"
 /*
 	Use of other URL-safe characters 
 

@@ -49,4 +49,12 @@ describe("JSON URI encoding", () => {
     let decoded = jsonURLSerializer.decode(urlState)
     expect(decoded).toBe(json)
   })
+
+  it("encodes string", () => {
+    const jsonURLSerializer = jsonUri()
+    let encodedString = "backward~Fcompatible_forward-also"
+
+    let decoded = jsonURLSerializer.decode(encodedString)
+    expect(decoded).toBe("backward-compatible forward-also")
+  })
 })
