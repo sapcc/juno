@@ -12,8 +12,9 @@ describe("JSON URI encoding", () => {
     let urlState = jsonURLSerializer.encode(json)
     expect(urlState).toBe("(a:+1,b:!1)")
     let decoded = jsonURLSerializer.decode(urlState)
-    expect(decoded).toBe(json)
+    expect(decoded).toStrictEqual(json)
   })
+
   it("encodes json with empty string, string, object, false, NaN ", () => {
     const jsonURLSerializer = jsonUri()
     let json = {
@@ -26,8 +27,9 @@ describe("JSON URI encoding", () => {
     let urlState = jsonURLSerializer.encode(json)
     expect(urlState).toBe("(a:'',b:hello-world,c:(d:tag),e:!!,g:**)")
     let decoded = jsonURLSerializer.decode(urlState)
-    expect(decoded).toBe(json)
+    expect(decoded).toStrictEqual(json)
   })
+
   it("encodes true", () => {
     const jsonURLSerializer = jsonUri()
     let json = true
@@ -39,10 +41,10 @@ describe("JSON URI encoding", () => {
 
   it("encodes string", () => {
     const jsonURLSerializer = jsonUri()
-    let json = "!#$%&'()*+,!./:;<=>?@[]^_`{|}~|\t\n\r\"ds"
+    let json = "!#$%&'() ** )* (* !* *) !! +,!./:;<=>?@[]^_`{|}~|\t\n\r\"ds"
     let urlState = jsonURLSerializer.encode(json)
     expect(urlState).toBe(
-      "~3~5$~7~8~9~A~B*~D~E~3.~H~I~J~K~L~M~N@~P~Q~R~S~T~U~V~W~X~V~0~1~2~4ds"
+      "~3~5$~7~8~9~A~B_~C~C_~B~C_~A~C_~3~C_~C~B_~3~3_~D~E~3.~H~I~J~K~L~M~N@~P~Q~R~S~T~U~V~W~X~V~0~1~2~4ds"
     )
     let decoded = jsonURLSerializer.decode(urlState)
     expect(decoded).toBe(json)

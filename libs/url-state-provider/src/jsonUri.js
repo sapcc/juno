@@ -108,7 +108,7 @@ module.exports = function (dictionary) {
     }
 
     return s.replace(
-      /[^0-9a-zA-Z$@*-]+([0-9a-zA-Z$@-]\*[^0-9a-zA-Z$@-]*)*/g,
+      /[^0-9a-zA-Z$@-]+([0-9a-zA-Z$@-]\*[^0-9a-zA-Z$@-]*)*/g,
       function (run) {
         var i,
           m,
@@ -119,11 +119,11 @@ module.exports = function (dictionary) {
         for (i = 0; i < run.length; i++) {
           m = run[i]
 
-          if (run[i + 1] === "*") {
-            r += m + "*"
-            i++
-            continue
-          }
+          // if (run[i + 1] === "*") {
+          //   r += m + "*"
+          //   i++
+          //   continue
+          // }
 
           if (m === " ") {
             r += "_"
@@ -228,7 +228,6 @@ module.exports = function (dictionary) {
   }
 
   function decodeNumber(str) {
-    console.log("str", str)
     var expSign = str.indexOf("-", 1) === -1 ? "+" : "-",
       parts = str.substr(1).split(/[\+\-]/)
 
@@ -389,6 +388,7 @@ module.exports = function (dictionary) {
         if (string[1] === "*") {
           return NaN
         }
+        return decodeString(string)
       case "!":
         if (string[1] === "!") {
           return false
