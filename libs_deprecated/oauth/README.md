@@ -1,3 +1,7 @@
+## ⚠️ Deprecated
+
+This application is deprecated and no longer maintained. Please refer to [cloudoperators/juno](https://github.com/cloudoperators/juno) for the latest updates and active development.
+
 # OpenID Connect Lib (oauth)
 
 The principle of this lib is as follows. Immediately after loading this lib, it evaluates the URL. It looks for state param in the hash or search. If state is found, then the value of this parameter is used as a key to find the corresponding stored state properties in sessionStorage. If the saved state exists, then it is the answer (oidc response) from the ID provider to the previously made request (oidc request), and the lib tries to evaluate the result.

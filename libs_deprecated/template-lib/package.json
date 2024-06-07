@@ -7,6 +7,7 @@
     "Andreas Pfau"
   ],
   "repository": "https://github.com/sapcc/juno/tree/main/libs/template-lib",
+  "deprecationWarning": "\u001b[1;31m\u001b[5m\n\n\n⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️\n\n  ⚠️ WARNING: This package is deprecated and no longer maintained! ⚠️\n\n  Please refer to https://github.com/cloudoperators/juno for the latest updates and active development.\n\n⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️\n\n\n\u001b[0m",
   "source": "src/index.js",
   "main": "build/index.js",
   "module": "build/index.js",
@@ -19,7 +20,10 @@
   },
   "scripts": {
     "test": "NODE_ENV=test jest",
-    "build": "NODE_ENV=production node ./esbuild.config.js"
+    "build": "NODE_ENV=production node ./esbuild.config.js",
+    "preinstall": "node -e 'console.log(require(\"./package.json\").deprecationWarning)'",
+    "prebuild": "node -e 'console.log(require(\"./package.json\").deprecationWarning)'",
+    "pretest": "node -e 'console.log(require(\"./package.json\").deprecationWarning)'"
   },
   "babel": {
     "presets": [

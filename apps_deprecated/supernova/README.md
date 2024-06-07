@@ -1,3 +1,7 @@
+## ⚠️ Deprecated
+
+This application is deprecated and no longer maintained. Please refer to [cloudoperators/greenhouse-extensions](https://github.com/cloudoperators/greenhouse-extensions) for the latest updates and active development.
+
 Supernova is an alternative UI for Prometheus Alertmanager with some quality of life improvements:
 
 - Micro frontend design based on [Juno UI components](https://ui.juno.global.cloud.sap)

@@ -1,3 +1,7 @@
+## ⚠️ Deprecated
+
+This application is deprecated and no longer maintained. Please refer to [cloudoperators/juno](https://github.com/cloudoperators/juno) for the latest updates and active development.
+
 # Template
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)

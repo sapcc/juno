@@ -6,6 +6,7 @@
     "Arturo Reuschenbach Pucernau"
   ],
   "repository": "https://github.com/sapcc/juno/tree/main/apps/exampleapp",
+  "deprecationWarning": "\u001b[1;31m\u001b[5m\n\n\n⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️\n\n  ⚠️ WARNING: This package is deprecated and no longer maintained! ⚠️\n\n  Please refer to https://github.com/cloudoperators/juno for the latest updates and active development.\n\n⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️\n\n\n\u001b[0m",
   "license": "Apache-2.0",
   "module": "build/index.js",
   "source": "src/index.js",
@@ -37,34 +38,37 @@
     "postcss-url": "^10.1.3",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
-    "react-dom": "^18.2.0",
-    "react-test-renderer": "^18.2.0",
+    "react-dom": "18.2.0",
+    "react-test-renderer": "18.2.0",
     "sass": "^1.60.0",
     "shadow-dom-testing-library": "^1.7.1",
     "tailwindcss": "^3.3.1",
     "url-state-provider": "https://assets.juno.global.cloud.sap/libs/url-state-provider@1.3.2/package.tgz",
     "util": "^0.12.4",
     "utils": "https://assets.juno.global.cloud.sap/libs/utils@1.1.6/package.tgz",
-    "zustand": "4.3.7"
+    "zustand": "4.5.2"
   },
   "scripts": {
     "test": "jest",
     "start": "NODE_ENV=development node esbuild.config.js --serve --watch",
-    "build": "NODE_ENV=production node esbuild.config.js"
+    "build": "NODE_ENV=production node esbuild.config.js",
+    "preinstall": "node -e 'console.log(require(\"./package.json\").deprecationWarning)'",
+    "prestart": "node -e 'console.log(require(\"./package.json\").deprecationWarning)'",
+    "prebuild": "node -e 'console.log(require(\"./package.json\").deprecationWarning)'",
+    "pretest": "node -e 'console.log(require(\"./package.json\").deprecationWarning)'"
   },
   "peerDependencies": {
     "@tanstack/react-query": "4.28.0",
-    "custom-event-polyfill": "^1.0.7",
     "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@2.14.1/package.tgz",
     "luxon": "^2.3.0",
     "messages-provider": "https://assets.juno.global.cloud.sap/libs/messages-provider@0.1.12/package.tgz",
     "oauth": "https://assets.juno.global.cloud.sap/libs/oauth@1.2.1/package.tgz",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "18.2.0",
     "url-state-provider": "https://assets.juno.global.cloud.sap/libs/url-state-provider@1.3.2/package.tgz",
     "utils": "https://assets.juno.global.cloud.sap/libs/utils@1.1.6/package.tgz",
-    "zustand": "4.3.7"
+    "zustand": "4.5.2"
   },
   "importmapExtras": {
     "zustand/middleware": "4.3.7"

@@ -1,3 +1,7 @@
+## ⚠️ Deprecated
+
+This application is deprecated and no longer maintained. Please refer to [cloudoperators/juno](https://github.com/cloudoperators/juno) for the latest updates and active development.
+
 # Communicator
 
 The "Communicator" library empowers seamless message exchange across various contexts, including multiple tabs on the same origin, by utilizing events. It offers a versatile range of communication options, including broadcast events for widespread interaction and one-to-one messaging capabilities.
