@@ -1,3 +1,7 @@
+## ⚠️ Deprecated
+
+This application is deprecated and no longer maintained. Please refer to [cloudoperators/juno](https://github.com/cloudoperators/juno) for the latest updates and active development.
+
 # Juno UI Components Library
 
 ## Installation

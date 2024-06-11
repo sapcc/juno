@@ -1,3 +1,7 @@
+## ⚠️ Deprecated
+
+This application is deprecated and no longer maintained. Please refer to [cloudoperators/juno](https://github.com/cloudoperators/juno) for the latest updates and active development.
+
 # Policy Engine
 
 Ploicy Engine compiles a JSON file with rules and returns a policy, which in turn implements the check function. The syntax of the rules corresponds to the policy syntax used in Openstack Services. However, some features have been added to allow more flexibility.

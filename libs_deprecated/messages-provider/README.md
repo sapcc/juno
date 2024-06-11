@@ -1,3 +1,7 @@
+## ⚠️ Deprecated
+
+This application is deprecated and no longer maintained. Please refer to [cloudoperators/juno](https://github.com/cloudoperators/juno) for the latest updates and active development.
+
 # Messages Provider
 
 Manage and display messages in your application easily and with the [Juno message component](https://ui.juno.qa-de-1.cloud.sap/?path=/docs/components-message--default).

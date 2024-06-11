@@ -1,3 +1,7 @@
+## ⚠️ Deprecated
+
+This application is deprecated and no longer maintained. Please refer to [cloudoperators/juno](https://github.com/cloudoperators/juno) for the latest updates and active development.
+
 # URL State Provider: Streamlining State Management in the URL
 
 URL State Provider is your solution for simplifying the intricate task of managing multiple application states within the URL. Originally conceived for Micro Frontends (MFEs), this module empowers you to effortlessly navigate between diverse views while preserving the art of deep linking.
