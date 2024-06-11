@@ -54,8 +54,8 @@ jobs:
           echo app changes: ${{ needs.changes.outputs.app-changes }}
           echo lib changes: ${{ needs.changes.outputs.lib-changes }}
 
-      # - name: Check if changes belong to deprecated apps or libs
-      #   if: ${{ needs.changes.outputs.apps == 'true' || needs.changes.outputs.libs == 'true' }}
-      #   run: |
-      #     echo "::error not allowed to make changes to deprecated apps or libs"
-      #     exit 1
+      - name: Check if changes belong to deprecated apps or libs
+        if: ${{ needs.changes.outputs.apps == 'true' || needs.changes.outputs.libs == 'true' }}
+        run: |
+          echo "::error not allowed to make changes to deprecated apps or libs"
+          exit 1
