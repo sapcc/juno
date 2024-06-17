@@ -37,6 +37,8 @@ if (options.help || options.h) {
   console.log("Usage: " + availableArgs.join(" "))
 }
 
+if (!options.path) throw new Error("No path provided")
+
 const uniq = (value, index, array) => array.indexOf(value) === index
 
 const readmeIntroduction = [
@@ -88,7 +90,7 @@ const howToUse = (method, message) => {
 
 const pattern = options.path
   ? `${options.path}/**/*.+(j|t)s?(x)`
-  : `${DIRNAME}/../+(libs|apps)/**/*.+(j|t)s?(x)`
+  : `${DIRNAME}/../**/*.+(j|t)s?(x)`
 console.log("look for", pattern)
 
 const files = glob.sync(pattern, {
@@ -105,10 +107,7 @@ const files = glob.sync(pattern, {
 const readmes = {}
 
 files.forEach((file) => {
-  const assetNameMatch = file.match(/(apps|libs|apis)\/([^\/]+).+/)
-
-  const assetName = assetNameMatch?.[2]
-  if (!assetName) return
+  if (!options.path) return
 
   let content = fs.readFileSync(file).toString()
 
@@ -118,17 +117,20 @@ files.forEach((file) => {
     const messages = matches.map((match) => match[1]).filter(uniq)
 
     if (messages.length > 0) {
-      // console.log(assetName, messages)
+      // console.log("===", options.path, messages)
       // console.log(file)
-      if (!readmes[assetName]) {
-        readmes[assetName] = {
-          assetName,
-          path: file.substring(0, file.indexOf(assetName) + assetName.length),
+      if (!readmes[options.path]) {
+        readmes[options.path] = {
+          assetPath: options.path,
+          path: file.substring(
+            0,
+            file.indexOf(options.path) + options.path.length
+          ),
           md: [],
         }
       }
-      readmes[assetName]["md"] = [
-        ...readmes[assetName]["md"],
+      readmes[options.path]["md"] = [
+        ...readmes[options.path]["md"],
         { h2: method },
         { ul: messages.map((m) => `**${m}**`) },
         { p: "How to use" },
