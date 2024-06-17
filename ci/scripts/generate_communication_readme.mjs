@@ -7,7 +7,7 @@ const DIRNAME = path.dirname(process.argv[1])
 
 const availableArgs = [
   "--path=ASSET_PATH",
-  "--output=FILE_PATH",
+  "--output-file=FILE_PATH",
   "--verbose|-v",
   "--help|-h",
 ]
@@ -154,5 +154,8 @@ for (let key in readmes) {
   ]
 
   console.log(assetPath)
-  fs.writeFileSync(path.join(assetPath, options.outputFile), json2md(readme))
+  fs.writeFileSync(
+    options.outputFile || path.join(assetPath, "COMMUNICATOR.md"),
+    json2md(readme)
+  )
 }
