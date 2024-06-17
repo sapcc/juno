@@ -130,7 +130,8 @@ jobs:
                 npm pack
                 cp *.tgz "$WORKDIR/build/package.tgz"
 
-                cd $WORKDIR
-                node ci/scripts/generate_communication_readme.mjs --verbose --path=src/<%= asset[:path] %> --output=build/COMMUNICATOR.md
+                cd $WORKDIR/juno
+                npm i
+                node ci/scripts/generate_communication_readme.mjs --verbose --path=../src/<%= asset[:path] %> --output=../build/COMMUNICATOR.md
 
   <% end %>       

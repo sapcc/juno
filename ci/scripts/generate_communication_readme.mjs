@@ -88,9 +88,7 @@ const howToUse = (method, message) => {
   }
 }
 
-const pattern = options.path
-  ? `${options.path}/**/*.+(j|t)s?(x)`
-  : `${DIRNAME}/../**/*.+(j|t)s?(x)`
+const pattern = `${options.path}/**/*.+(j|t)s?(x)`
 console.log("look for", pattern)
 
 const files = glob.sync(pattern, {
