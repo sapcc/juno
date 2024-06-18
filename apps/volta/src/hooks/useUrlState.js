@@ -4,7 +4,7 @@
  */
 
 import { useEffect } from "react"
-import { registerConsumer } from "url-state-provider"
+import { registerConsumer } from "../../../../libs/url-state-provider/src/index"
 import {
   useGlobalsActions,
   useAuthLoggedIn,

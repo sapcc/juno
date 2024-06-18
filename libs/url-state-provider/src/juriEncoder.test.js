@@ -19,7 +19,7 @@ var dict = [
     "population",
     "平",
   ],
-  juriCutlery = require("./juriEncoder.js")(dict),
+  juriCutlery = require("./jsonUri.js")(dict),
   data = {
     zh: {
       name: "China",

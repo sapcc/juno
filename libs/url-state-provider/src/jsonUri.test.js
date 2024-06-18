@@ -50,11 +50,20 @@ describe("JSON URI encoding", () => {
     expect(decoded).toBe(json)
   })
 
-  it("encodes string", () => {
+  it("decodes string with juri-cutlerly and modern -", () => {
     const jsonURLSerializer = jsonUri()
     let encodedString = "backward~Fcompatible_forward-also"
 
     let decoded = jsonURLSerializer.decode(encodedString)
     expect(decoded).toBe("backward-compatible forward-also")
+  })
+
+  it("encodes floating numbers", () => {
+    const jsonURLSerializer = jsonUri()
+    let array = [123.45678, -123.45678]
+    let urlState = jsonURLSerializer.encode(array)
+    expect(urlState).toBe("(+l65E!5,!l65E!5)")
+    let decoded = jsonURLSerializer.decode(urlState)
+    expect(decoded).toStrictEqual(array)
   })
 })

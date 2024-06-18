@@ -227,13 +227,12 @@ module.exports = function (dictionary) {
   }
 
   function decodeNumber(str) {
-    var expSign = str.indexOf("-", 1) === -1 ? "+" : "-",
-      parts = str.substr(1).split(/[\+\-]/)
-
-    let sign = str[0] === "+" ? "" : "-"
+    const expSign = str.indexOf("!", 1) === -1 ? "+" : "-"
+    const parts = str.substr(1).split(/[\+\!]/)
+    const pre = str[0] === "!" ? "-" : "+"
 
     return parseFloat(
-      sign +
+      pre +
         decodeInteger(parts[0]) +
         (parts[1] ? "e" + expSign + decodeInteger(parts[1]) : "")
     )
