@@ -178,5 +178,9 @@ for (let key in readmes) {
     options.outputFile || path.join(assetPath, "COMMUNICATOR.md"),
     json2md(readme)
   )
-  if(options.verbose || options.v) console.log("Generated", options.outputFile || path.join(assetPath, "COMMUNICATOR.md")
+  if (options.verbose || options.v)
+    console.log(
+      "Generated",
+      options.outputFile || path.join(assetPath, "COMMUNICATOR.md")
+    )
 }
