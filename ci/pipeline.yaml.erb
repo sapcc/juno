@@ -131,5 +131,14 @@ jobs:
                 cd $WORKDIR/juno
                 npm i
                 node ci/scripts/generate_communication_readme.mjs --verbose --path=../src/<%= asset[:path] %> --output-file=../build/COMMUNICATOR.md
-
+      
+      - task: sync
+        file: juno.git/ci/shared/swift.yaml
+        input_mapping:
+          upload: build
+        params:
+          ACTION: upload
+          DRY_RUN: "true"
+          DEBUG: "true"
+          CONTAINER: "juno-assets-v5"
   <% end %>       
