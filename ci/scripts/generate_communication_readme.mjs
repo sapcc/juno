@@ -1,4 +1,3 @@
-import glob from "glob"
 import path from "path"
 import fs from "fs"
 import json2md from "json2md"
@@ -88,18 +87,39 @@ const howToUse = (method, message) => {
   }
 }
 
-const pattern = `${options.path}/**/*.+(j|t)s?(x)`
-console.log("look for", pattern)
+console.log("look for", options.path)
 
-const files = glob.sync(pattern, {
-  ignore: [
-    "**/node_modules/**",
-    "**/__mocks__/**",
-    "**/*.config.+(j|t)s",
-    "**/*.test.+(j|t)s",
-    "**/build/**",
-  ],
-})
+const ignorePatterns = [
+  /node_modules/,
+  /__mocks__/,
+  /\.config\.(j|t)s$/,
+  /\.test\.(j|t)s$/,
+  /build/,
+]
+
+function findFiles(dir, fileList = []) {
+  const files = fs.readdirSync(dir)
+
+  files.forEach((file) => {
+    const filePath = path.join(dir, file)
+    const stat = fs.statSync(filePath)
+
+    const ignore = ignorePatterns.some((pattern) => pattern.test(file))
+    if (ignore) return
+
+    if (stat.isDirectory()) {
+      // Recursively get files from subdirectories
+      findFiles(filePath, fileList)
+    } else if (/\.(j|t)sx?$/.test(file)) {
+      // Add file if it matches the pattern
+      fileList.push(filePath)
+    }
+  })
+
+  return fileList
+}
+
+const files = findFiles(options.path)
 
 // assetName: mdJson
 const readmes = {}
@@ -158,4 +178,5 @@ for (let key in readmes) {
     options.outputFile || path.join(assetPath, "COMMUNICATOR.md"),
     json2md(readme)
   )
+  if(options.verbose || options.v) console.log("Generated", options.outputFile || path.join(assetPath, "COMMUNICATOR.md")
 }

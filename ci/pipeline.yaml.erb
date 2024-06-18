@@ -32,10 +32,8 @@ resources:
     icon: github
     source:
       uri: https://github.com/<%=asset[:repo]%>.git
-      branch: ci-v5
       paths: ["<%=asset[:path]%>","libs","package.json","e2e", ".yarn"]
-      username: sapcc-bot
-      password: ((github-access-token/sapcc-bot))
+    
   
   - name: <%= name(asset) %>.version
     type: time-version-resource
@@ -132,6 +130,6 @@ jobs:
 
                 cd $WORKDIR/juno
                 npm i
-                node ci/scripts/generate_communication_readme.mjs --verbose --path=../src/<%= asset[:path] %> --output=../build/COMMUNICATOR.md
+                node ci/scripts/generate_communication_readme.mjs --verbose --path=../src/<%= asset[:path] %> --output-file=../build/COMMUNICATOR.md
 
   <% end %>       
