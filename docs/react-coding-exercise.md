@@ -8,32 +8,32 @@ In this exercise, you'll have the chance to interact with data related to space 
 
 ## Exercise (approximately 1 hour)
 
-### TASK #1 - Setup
+### Preparation - Setup
 
 - Create a new React application using your preferred method or framework.
 - Set up the project structure and install necessary dependencies.
 - Optional: Install and integrate a design system or style framework of your choice to enhance the UI/UX.
 
-### TASK #2 - REST API Integration
+### TASK #1 - REST API Integration
 
 - Fetch the list of launches from the SpaceX API using the provided endpoint: [endpoint](https://api.spacexdata.com/v4/launches), [definition](https://github.com/r-spacex/SpaceX-API/blob/master/docs/launches/v4/all.md)
 
-### TASK #3 - Display Launch List
+### TASK #2 - Display Launch List
 
-- Display a list of launches with the following attributes:
-  - Launch Name
-  - Local Date
-  - Success/Failure info
-  - Launch Details
-  - Image
-  - Link to youtube
+Display a list of launches with the following attributes:
+- Launch Name
+- Local Date
+- Success/Failure info
+- Launch Details
+- Image
+- Link to youtube
 
-### TASK #4 - Implement Functionality
+### TASK #3 - Implement Functionality
 
-- Implement functionality for sorting, filtering, and searching the launch list:
-  - Sorting: Allow users to sort launches by name or date.
-  - Search: Implement a search feature to find launches
-- Pagination: Use pagination or a similar technique to avoid displaying all entries at once
+Implement functionality for sorting, filtering, and searching the launch list:
+- **Sorting:** Allow users to sort launches by name or date.
+- **Search:** Implement a search feature to find launches
+- **Pagination:** Use pagination or a similar technique to avoid displaying all entries at once
 
 ## Additional Notes:
 
