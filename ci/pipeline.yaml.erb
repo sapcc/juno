@@ -471,17 +471,19 @@ jobs:
                 # but an error log is uploaded to the 3rd party apps/libs folder
                 # if an error_log was found the new version is not deployed
                 %>
-                ./ci/scripts/compose_assets.sh --error-on-exit 0 --asset-type <%= asset_type %> --source-path ../  --dist-path $DIST_PATH --kind <%= name %>
+                ./ci/scripts/compose_assets.sh --error-on-exit 0 --asset-type <%= asset_type %> --source-path ../  --dist-path $DIST_PATH --kind juno-3rd-party
                     <% else %>
-                ./ci/scripts/compose_assets.sh --error-on-exit 1 --asset-type <%= asset_type %> --source-path ../  --dist-path $DIST_PATH --kind <%= name %>
+                ./ci/scripts/compose_assets.sh --error-on-exit 1 --asset-type <%= asset_type %> --source-path ../  --dist-path $DIST_PATH --kind juno-assets
                     <% end %>
                   <% end %>
                 <% end %>
                 echo ""
                 echo "### APPS ###"
-                ls -all $DIST_PATH/apps/
+                [ -d "$DIST_PATH/apps/" ] && ls -all $DIST_PATH/apps/
                 echo "### LIBS ###"
-                ls -all $DIST_PATH/libs/
+                [ -d "$DIST_PATH/libs/" ] && ls -all $DIST_PATH/libs/
+                echo "### PACKAGES ###"
+                [ -d "$DIST_PATH/packages/" ] && ls -all $DIST_PATH/packages/
                 # upload build logs
                 ./ci/scripts/asset_storage.sh --container <%=THIRD_PARTY_CONTAINER%> --asset-type apps --action upload --root-path ../juno-3rd-party &> /dev/null
                 ./ci/scripts/asset_storage.sh --container <%=JUNO_ASSETS_CONTAINER%> --asset-type apps --action upload --root-path ../juno-assets &> /dev/null
