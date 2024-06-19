@@ -476,18 +476,14 @@ jobs:
                 ./ci/scripts/compose_assets.sh --error-on-exit 1 --asset-type <%= asset_type %> --source-path ../  --dist-path $DIST_PATH --kind juno-assets
                     <% end %>
                   <% end %>
+
+                  ./ci/scripts/asset_storage.sh --container <%=THIRD_PARTY_CONTAINER%> --asset-type <%= asset_type %> --action upload --root-path ../juno-3rd-party &> /dev/null
+                  ./ci/scripts/asset_storage.sh --container <%=JUNO_ASSETS_CONTAINER%> --asset-type <%= asset_type %> --action upload --root-path ../juno-assets &> /dev/null
+
                 <% end %>
-                echo ""
-                echo "### APPS ###"
-                [ -d "$DIST_PATH/apps/" ] && ls -all $DIST_PATH/apps/
-                echo "### LIBS ###"
-                [ -d "$DIST_PATH/libs/" ] && ls -all $DIST_PATH/libs/
-                echo "### PACKAGES ###"
-                [ -d "$DIST_PATH/packages/" ] && ls -all $DIST_PATH/packages/
                 # upload build logs
-                ./ci/scripts/asset_storage.sh --container <%=THIRD_PARTY_CONTAINER%> --asset-type apps --action upload --root-path ../juno-3rd-party &> /dev/null
-                ./ci/scripts/asset_storage.sh --container <%=JUNO_ASSETS_CONTAINER%> --asset-type apps --action upload --root-path ../juno-assets &> /dev/null
                 # exit 1
+              
 
       # to serve our js, css and stattic assets this step will add all the created data 
       # in dist/ to the nginx image in /usr/share/nginx/html

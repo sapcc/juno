@@ -235,8 +235,8 @@ function download() {
 cd "$ROOT_PATH"
 if [[ "$ACTION" == "upload" ]] || [[ "$ACTION" == "sync" ]]; then
   if [ ! -d "$ASSET_PATH" ]; then
-    echo "Error: directory ASSET_PATH $ASSET_PATH does not exist 😐"
-    exit 1
+    echo "Warning: directory ASSET_PATH $ASSET_PATH does not exist 😐"
+    exit 0
   fi
 fi
 
