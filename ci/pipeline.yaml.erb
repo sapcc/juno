@@ -2,7 +2,7 @@
 <%
   # supported asset types
   ASSETS_SOURCE = { 
-    "juno-assets": ["app","lib"],
+    "juno-assets-canary": ["app","lib"],
     "juno-3rd-party": ["app"],
   }
   ASSETS = {
@@ -337,11 +337,8 @@ jobs:
               - |
                 set -e 
                 ls -la
-                # TODO: this need a lot of runtime, move that stuff into asset_build.sh after version check
-                echo "sync all node_modules from /juno/ to ./latest/"
-                rsync -am --include='*/' --include='node_modules/***' --exclude='*' /juno/ ./latest
                 cd ./latest/<%=details[:type]%>s/<%=name%>
-                echo "update node modules -> npm install --silent"
+                echo "update node modules -> npm install"
                 npm install 
                 cd ../../
                 echo ""
@@ -354,7 +351,7 @@ jobs:
           ACTION: sync
           DRY_RUN: "false"
           DEBUG: "true"
-          CONTAINER: "juno-assets"
+          CONTAINER: "juno-assets-canary"
           ASSET_NAME: <%= name %>
           ASSET_TYPE: <%= details[:type] %>
   <% end %> 

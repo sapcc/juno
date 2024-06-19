@@ -7,7 +7,7 @@ const DIRNAME = path.dirname(process.argv[1])
 
 const availableArgs = [
   "--path=ASSET_PATH",
-  "--output=FILE_PATH",
+  "--output-file=FILE_PATH",
   "--verbose|-v",
   "--help|-h",
 ]
@@ -88,7 +88,7 @@ const howToUse = (method, message) => {
 
 const pattern = options.path
   ? `${options.path}/**/*.+(j|t)s?(x)`
-  : `${DIRNAME}/../+(libs|apps)/**/*.+(j|t)s?(x)`
+  : `${DIRNAME}/../+(libs|apps|packages)/**/*.+(j|t)s?(x)`
 console.log("look for", pattern)
 
 const files = glob.sync(pattern, {
@@ -105,7 +105,7 @@ const files = glob.sync(pattern, {
 const readmes = {}
 
 files.forEach((file) => {
-  const assetNameMatch = file.match(/(apps|libs|apis)\/([^\/]+).+/)
+  const assetNameMatch = file.match(/(apps|libs|packages)\/([^\/]+).+/)
 
   const assetName = assetNameMatch?.[2]
   if (!assetName) return
