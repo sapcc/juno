@@ -76,7 +76,7 @@ if (options.help || options.h) {
 }
 
 // #########################################################################
-const PACKAGES_PATHS = ["apps", "libs"]
+const PACKAGES_PATHS = ["apps", "libs", "packages"]
 // determine the assets source directory
 const rootPath = pathLib.resolve(options.src)
 // pattern to find all package.json files in the juno packages

@@ -104,8 +104,8 @@ echo "use DIST_PATH   = $DIST_PATH"
 echo "----------------------------------"
 
 if [ ! -d "$SOURCE_PATH/$ASSET_TYPE" ]; then
-  echo "Error: the path $SOURCE_PATH/$ASSET_TYPE was not found 🤨"
-  exit 1
+  echo "Warning: the path $SOURCE_PATH/$ASSET_TYPE was not found 🤨"
+  exit 0
 fi
 
 cd "$SOURCE_PATH/$ASSET_TYPE"
