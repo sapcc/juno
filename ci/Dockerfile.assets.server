@@ -99,7 +99,7 @@ RUN \
 
 # Check the integrity of the file structure
 RUN chmod +x /juno/ci/scripts/check_file_integrity.sh && \
-  /juno/ci/scripts/check_file_integrity.sh global apps libs assets externals index.html mount-test.html manifest.json importmap.json
+  /juno/ci/scripts/check_file_integrity.sh global apps libs packages assets externals index.html mount-test.html manifest.json importmap.json
 
 # create self signed dummy certificate and key
 RUN apk add openssl ; openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \

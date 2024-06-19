@@ -476,12 +476,15 @@ jobs:
                 ./ci/scripts/compose_assets.sh --error-on-exit 1 --asset-type <%= asset_type %> --source-path ../  --dist-path $DIST_PATH --kind juno-assets
                     <% end %>
                   <% end %>
-
-                  ./ci/scripts/asset_storage.sh --container <%=THIRD_PARTY_CONTAINER%> --asset-type <%= asset_type %> --action upload --root-path ../juno-3rd-party &> /dev/null
-                  ./ci/scripts/asset_storage.sh --container <%=JUNO_ASSETS_CONTAINER%> --asset-type <%= asset_type %> --action upload --root-path ../juno-assets &> /dev/null
-
                 <% end %>
                 # upload build logs
+
+                <% ASSETS_SOURCE.each do |name,asset_types|%>
+                  <% asset_types.each do |asset_type|%>
+                    ./ci/scripts/asset_storage.sh --container <%=THIRD_PARTY_CONTAINER%> --asset-type <%= asset_type %> --action upload --root-path ../juno-3rd-party 
+                    ./ci/scripts/asset_storage.sh --container <%=JUNO_ASSETS_CONTAINER%> --asset-type <%= asset_type %> --action upload --root-path ../juno-assets 
+                  <% end %>
+                <% end %>  
                 # exit 1
               
 
