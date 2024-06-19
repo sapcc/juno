@@ -1,10 +1,14 @@
 # prettier-ignore
 <%
+  JUNO_ASSETS_CONTAINER="juno-assets-canary"
+  THIRD_PARTY_CONTAINER="juno-3rd-party"
+
   # supported asset types
-  ASSETS_SOURCE = { 
-    "juno-assets-canary": ["app","lib"],
-    "juno-3rd-party": ["app"],
+  ASSETS_SOURCE = {
+    JUNO_ASSETS_CONTAINER => ["app","lib","package"],
+    THIRD_PARTY_CONTAINER => ["app","package"]
   }
+  
   ASSETS = {
     # "auth":                 { type: "app", path: "apps/auth" },
     "auth-canary":          { type: "package", path: "packages/auth-canary" },
@@ -36,14 +40,14 @@ resources:
   - name: swift-juno-assets.version
     type: http-resource
     source:
-      url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/juno-assets-canary
+      url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/<%=JUNO_ASSETS_CONTAINER%>
       method: HEAD
       version: 
         header: x-container-bytes-used
   - name: swift-3rdparty.version
     type: http-resource
     source:
-      url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/juno-3rd-party
+      url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/<%=THIRD_PARTY_CONTAINER%>
       method: HEAD
       version: 
         header: x-container-bytes-used
@@ -351,7 +355,7 @@ jobs:
           ACTION: sync
           DRY_RUN: "false"
           DEBUG: "true"
-          CONTAINER: "juno-assets-canary"
+          CONTAINER: "<%=JUNO_ASSETS_CONTAINER%>"
           ASSET_NAME: <%= name %>
           ASSET_TYPE: <%= details[:type] %>
   <% end %> 
@@ -416,12 +420,12 @@ jobs:
                 cd ./juno.git
                 # 1) download our own assets
                 <% ASSETS.merge(CLOUDOPERATOR_ASSETS).each do |name, details|%>
-                  ./ci/scripts/asset_storage.sh --container juno-assets --asset-name <%= name %> --asset-path <%= details[:path] %> --action download --root-path ../juno-assets
+                  ./ci/scripts/asset_storage.sh --container <%=JUNO_ASSETS_CONTAINER%> --asset-name <%= name %> --asset-path <%= details[:path] %> --action download --root-path ../juno-assets
                 <% end %>
                 # 2) download and check for name collission in juno-3rd-party assets
-                <% ASSETS_SOURCE[:"juno-3rd-party"].each do |asset_type|%>
+                <% ASSETS_SOURCE[THIRD_PARTY_CONTAINER].each do |asset_type|%>
                     # download 3rd party assets
-                    ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type <%= asset_type %> --action download --root-path ../juno-3rd-party                  
+                    ./ci/scripts/asset_storage.sh --container <%=THIRD_PARTY_CONTAINER%> --asset-type <%= asset_type %> --action download --root-path ../juno-3rd-party                  
                     ./ci/scripts/check_3rd_party_name_collisions.sh --juno-assets-path ../juno-assets --third-party-assets-path ../juno-3rd-party --asset-type <%= asset_type %>
                 <% end %>
 
@@ -460,7 +464,7 @@ jobs:
                 # check and compose everthing in the dist output folder that
                 # we can combine everything in the asset-server build step
                 %>
-                    <% if name.to_s == "juno-3rd-party" %>
+                    <% if name.to_s == THIRD_PARTY_CONTAINER %>
                 <%
                 # if the integrity check for 3rd party fails there will be no error
                 # because we do not want a blocked pipeline
@@ -479,8 +483,8 @@ jobs:
                 echo "### LIBS ###"
                 ls -all $DIST_PATH/libs/
                 # upload build logs
-                ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type apps --action upload --root-path ../juno-3rd-party &> /dev/null
-                ./ci/scripts/asset_storage.sh --container juno-assets --asset-type apps --action upload --root-path ../juno-assets &> /dev/null
+                ./ci/scripts/asset_storage.sh --container <%=THIRD_PARTY_CONTAINER%> --asset-type apps --action upload --root-path ../juno-3rd-party &> /dev/null
+                ./ci/scripts/asset_storage.sh --container <%=JUNO_ASSETS_CONTAINER%> --asset-type apps --action upload --root-path ../juno-assets &> /dev/null
                 # exit 1
 
       # to serve our js, css and stattic assets this step will add all the created data 
