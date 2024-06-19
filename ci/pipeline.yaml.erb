@@ -6,7 +6,7 @@
     "juno-3rd-party": ["app"],
   }
   ASSETS = {
-    "auth":                 { type: "app", path: "apps/auth" },
+    # "auth":                 { type: "app", path: "apps/auth" },
     "auth-canary":          { type: "package", path: "packages/auth-canary" },
     # "assets-overview":      { type: "app", path: "apps/assets-overview"},
     # "user-activity":        { type: "app", path: "apps/user-activity"},
@@ -36,7 +36,7 @@ resources:
   - name: swift-juno-assets.version
     type: http-resource
     source:
-      url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/juno-asset-canary
+      url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/juno-assets-canary
       method: HEAD
       version: 
         header: x-container-bytes-used
