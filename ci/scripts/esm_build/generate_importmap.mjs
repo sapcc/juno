@@ -57,7 +57,6 @@ for (let arg of args) {
   const match = arg.match(/^-{1,2}([^=]+)=?(.*)/)
   if (match) {
     let key = match[1].replace(/\W+(.)/g, function (match, chr) {
-      console.log(match, chr)
       return chr.toUpperCase()
     })
 
