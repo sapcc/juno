@@ -4,7 +4,7 @@ const glob = require("glob")
 
 const rootPath = path.resolve(__dirname, "../../")
 
-const PACKAGES_PATHS = ["apps", "libs"]
+const PACKAGES_PATHS = ["apps", "libs", "packages"]
 const globPattern = `${rootPath}/@(${PACKAGES_PATHS.join("|")})/**/package.json`
 const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
 const files = glob.sync(globPattern, { ignore: [`**/node_modules/**`] })
