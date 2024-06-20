@@ -42,9 +42,11 @@ COPY --from=lastbuild /usr/share/nginx/html /tmp/final
 
 # merge latest assets over the old assets 
 RUN \
-  package_files=$(find "./" -name 'package.json'); \
+  # Set the base directory
+  base_dir=$(pwd); \
+  package_files=$(find "$base_dir" -type f -name 'package.json' \( -path "$base_dir/apps/*" -o -path "$base_dir/libs/*" -o -path "$base_dir/packages/*" \)); \
   for PACKAGE in $package_files; do \
-  find ./ -name 'package.json' | while read -r PACKAGE; do \
+  echo "PACKAGE: $PACKAGE"; \
   NAME=$(jq -r .name $PACKAGE); \
   VERSION=$(jq -r .version $PACKAGE); \
   # dir is something like ./libs/juno-ui-components@1.1.5
