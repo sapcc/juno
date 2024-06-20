@@ -42,7 +42,7 @@ COPY --from=lastbuild /usr/share/nginx/html /tmp/final
 
 # merge latest assets over the old assets 
 RUN \
-  for PACKAGE in ./**/*/package.json; do \
+  find ./ -name 'package.json' | while read -r PACKAGE; do \
   NAME=$(jq -r .name $PACKAGE); \
   VERSION=$(jq -r .version $PACKAGE); \
   # dir is something like ./libs/juno-ui-components@1.1.5

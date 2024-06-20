@@ -262,6 +262,10 @@ while IFS= read -d $'\0' -r dirname; do
       exit "$ERROR_ON_EXIT"
     fi
 
+    # remove leading @ if exists
+    if [[ $asset_dist_path == @* ]]; then
+      asset_dist_path="${asset_dist_path#@}"
+    fi
     mkdir -p "$asset_dist_path"
     cp -r "$asset_dirname" "$asset_dist_path"
     echo "----------------------------------"
