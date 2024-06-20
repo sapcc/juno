@@ -266,6 +266,8 @@ while IFS= read -d $'\0' -r dirname; do
     if [[ $asset_dist_path == @* ]]; then
       asset_dist_path="${asset_dist_path#@}"
     fi
+    echo "======================"
+    echo "asset_dist_path: $asset_dist_path"
     mkdir -p "$asset_dist_path"
     cp -r "$asset_dirname" "$asset_dist_path"
     echo "----------------------------------"
