@@ -1,5 +1,5 @@
 {
-  "name": "auth-canary",
+  "name": "@cloudoperators/auth-canary",
   "version": "1.0.7",
   "author": "UI-Team",
   "contributors": [
