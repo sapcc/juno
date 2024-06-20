@@ -254,7 +254,9 @@ while IFS= read -d $'\0' -r dirname; do
     destination_path="$DIST_PATH/$ASSET_TYPE"
     mkdir -p "$destination_path"
 
-    asset_dist_path="$destination_path/${asset_name}@${asset_version}"
+    # remove leading @
+    normalized_asset_name="${asset_name#@}"
+    asset_dist_path="$destination_path/${normalized_asset_name}@${asset_version}"
     if [ -d "$asset_dist_path" ]; then
       error_msg="Warning: the directory $asset_dist_path already exist that means there are dublicated versions in $KIND -> $ASSET_TYPE -> ${asset_name} 😐"
       echo -e "${YELLOW}${error_msg}${NC}"
@@ -269,7 +271,8 @@ while IFS= read -d $'\0' -r dirname; do
     echo "======================"
     echo "asset_dist_path: $asset_dist_path"
     mkdir -p "$asset_dist_path"
-    cp -r "$asset_dirname" "$asset_dist_path"
+    # copy all files from asset_dirname to asset_dist_path
+    cp -r "$asset_dirname"/* "$asset_dist_path"
     echo "----------------------------------"
     echo "Combine for $asset_name done 🙂"
     echo "=================================="
