@@ -69,8 +69,6 @@ RUN \
   # for example: if the package path is ./packages/cloudoperators/test@1.0.0 and
   # the name is @cloudoperators/test then the package dir is ./packages/cloudoperators/
   PACKAGE_PATH="${package_folder%"$NAME"}"; \
-
-
   ASSET_PATH="${PACKAGE_PATH#$base_dir/}"; \
   ASSET_PATH="${ASSET_PATH%/}"; \
   # dir is something like ./libs/juno-ui-components@1.1.5
