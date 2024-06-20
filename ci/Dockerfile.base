@@ -26,6 +26,6 @@ ADD . /juno
 
 WORKDIR /juno 
 
-RUN npm install
+# RUN npm install
 # npm WARN exec The following package was not found and will be installed: browserslist@4.21.5
 RUN npx browserslist@latest --update-db
