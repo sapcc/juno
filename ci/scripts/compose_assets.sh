@@ -262,6 +262,7 @@ while IFS= read -d $'\0' -r dirname; do
       exit "$ERROR_ON_EXIT"
     fi
 
+    mkdir -p "$asset_dist_path"
     cp -r "$asset_dirname" "$asset_dist_path"
     echo "----------------------------------"
     echo "Combine for $asset_name done 🙂"
