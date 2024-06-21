@@ -17,6 +17,7 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.24.7",
     "babel-jest": "^29.3.1",
     "custom-event-polyfill": "^1.0.7",
     "esbuild": "^0.17.8",
