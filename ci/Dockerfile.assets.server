@@ -10,7 +10,7 @@ ARG EXIT_ON_ERROR="true"
 FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-assets-server:latest AS lastbuild
 
 # Base image
-FROM keppel.eu-de-1.cloud.sap/ccloud/juno-canary-base:latest AS base 
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base:latest AS base 
 ARG BASE_URL_PLACEHOLDER
 
 RUN mkdir -p /tmp/latest
