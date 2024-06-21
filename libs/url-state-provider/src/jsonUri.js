@@ -35,46 +35,7 @@ var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz$-",
 	~	In strings, 1-byte escape sequence for common special chars
 */
 
-module.exports = function (dictionary) {
-  var encMap = {},
-    decMap = {},
-    dictReg
-
-  if (Array.isArray(dictionary)) {
-    dictionary.splice(64)
-
-    dictionary.forEach(function (word) {
-      var i
-      for (i = 0; i < word.length; i++) {
-        if (
-          chars.indexOf(word[i]) !== -1 &&
-          typeof decMap[word[i]] === "undefined"
-        ) {
-          encMap[word] = word[i]
-          decMap[word[i]] = word
-          return
-        }
-      }
-      for (i = 0; i < chars.length; i++) {
-        if (typeof decMap[chars[i]] === "undefined") {
-          encMap[word] = chars[i]
-          decMap[chars[i]] = word
-          return
-        }
-      }
-    })
-
-    dictReg = new RegExp(
-      dictionary
-        .map(function (word) {
-          return word.replace(/[!\/\\^$*+?.()|[\]{}]/g, "\\$&")
-        })
-        .join("|"),
-      "g"
-    )
-  } else {
-    dictionary = null
-  }
+module.exports = function (){
 
   function encodeInteger(t) {
     var s = ""
@@ -100,11 +61,6 @@ module.exports = function (dictionary) {
       return "''"
     }
 
-    if (dictionary) {
-      s = s.replace(dictReg, function (m) {
-        return encMap[m] + "*"
-      })
-    }
 
     return s.replace(
       /[^0-9a-zA-Z$@-]+([0-9a-zA-Z$@-]\*[^0-9a-zA-Z$@-]*)*/g,
@@ -153,9 +109,6 @@ module.exports = function (dictionary) {
       return ""
     }
 
-    s = s.replace(/[0-9a-zA-Z$@-]\*/g, function (m) {
-      return "'*" + decMap[m[0]] + "'"
-    })
 
     return s
       .split("'")
@@ -355,6 +308,9 @@ module.exports = function (dictionary) {
         if (value === null) {
           return "!+"
         }
+        if (value instanceof RegExp) {
+          return encodeString(value.toString())
+        }
         return encodeCollection(value, qStr)
       case "string":
         return encodeString(value)
@@ -409,6 +365,21 @@ module.exports = function (dictionary) {
           return Infinity
         }
         return decodeNumber(string)
+      case "/":
+        if (string.endsWith("/")) {
+          try {
+            const reg = decodeString(string)
+            // Attempt to create a RegExp object
+
+            console.log("werwerwerweerew")
+            return new RegExp(reg)
+          } catch (e) {
+            console.log("sdsdfdsfsdfdssdfsfd")
+            // If creating RegExp fails, it's not a valid regex
+            return decodeString(string)
+          }
+        }
+        return decodeString(string)
       default:
         return decodeString(string)
     }

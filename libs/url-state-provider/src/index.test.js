@@ -40,8 +40,8 @@ describe("currentState", () => {
 
   describe("url does contain state inforamtion", () => {
     const state = provider.encode({
-      consumer1: { p: "/items" },
-      consumer2: { p: "/items/10", o: { tab: 2 } },
+      consumer1: { p: "/some-items" },
+      consumer2: { p: "/items\\/10", o: { tab: 2 } },
     })
 
     beforeAll(() => {
@@ -51,13 +51,31 @@ describe("currentState", () => {
     })
 
     it("should return state object for consumer1", () => {
-      expect(provider.currentState("consumer1")).toEqual({ p: "/items" })
+      expect(provider.currentState("consumer1")).toEqual({ p: "/some-items" })
     })
 
     it("should return state object for consumer2", () => {
       expect(provider.currentState("consumer2")).toEqual({
-        p: "/items/10",
+        p: "/items\\/10",
         o: { tab: 2 },
+      })
+    })
+  })
+
+  describe("url does contain regex inforamtion", () => {
+    const state = provider.encode({
+      r: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    })
+
+    beforeAll(() => {
+      jest.resetModules()
+      window.location.href =
+        "http://localhost?test1=test1&__s=" + state + "&test2=test2"
+    })
+
+    it("should get regex", () => {
+      expect(provider.currentState("r")).toEqual({
+        r: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       })
     })
   })
@@ -291,6 +309,50 @@ describe("registerConsumer", () => {
 
     it("responds to onChange", () => {
       expect(typeof consumer.onChange === "function").toEqual(true)
+    })
+  })
+})
+
+// Spefic URI
+
+describe("url encoding from old Juri-cuterly", () => {
+  beforeAll(() => {
+    jest.resetModules()
+    window.location.href =
+      "http://localhost?test1=test1&__s=" +
+      "(consumer1:(p:some~Fitems),consumer2:(o:(num:-P-1),p:~Hitems~H10))" +
+      "&test2=test2"
+  })
+
+  it("should return state object for consumer1", () => {
+    expect(provider.currentState("consumer1")).toEqual({ p: "some-items" })
+  })
+
+  it("should return state object for consumer2", () => {
+    expect(provider.currentState("consumer2")).toEqual({
+      p: "/items/10",
+      o: { num: -2.5 },
+    })
+  })
+})
+
+describe("url encoding with new URI coding", () => {
+  beforeAll(() => {
+    jest.resetModules()
+    window.location.href =
+      "http://localhost?test1=test1&__s=" +
+      "(consumer1:(p:some-items),consumer2:(o:(num:!P!1),p:~Hitems~H10))" +
+      "&test2=test2"
+  })
+
+  it("should return state object for consumer1", () => {
+    expect(provider.currentState("consumer1")).toEqual({ p: "some-items" })
+  })
+
+  it("should return state object for consumer2", () => {
+    expect(provider.currentState("consumer2")).toEqual({
+      p: "/items/10",
+      o: { num: -2.5 },
     })
   })
 })

@@ -5,10 +5,15 @@
 
 import LZString from "lz-string"
 import jsonUri from "./jsonUri"
+import juriEncoder from "./juriEncoder"
 
 const jsonURLSerializer = jsonUri()
 const SEARCH_KEY = "__s"
+
 const regex = new RegExp(SEARCH_KEY + "=([^&]+)")
+
+// search for __y dann >> __y
+// else __s
 
 /**
  * Variable where to host listeners for history changes
