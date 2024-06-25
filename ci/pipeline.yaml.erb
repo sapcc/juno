@@ -58,7 +58,7 @@ resources:
       username: ((registry-user/keppel-ccloud.username))
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base
-      branch: main 
+      branch: ci-package-support #v4
 
   - name: ci-helper.image
     type: docker-image
@@ -67,6 +67,7 @@ resources:
       username: ((registry-user/keppel-ccloud.username))
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-ci-helper
+      branch: ci-package-support #v4
 
   - name: assets-server.image
     type: docker-image
@@ -74,7 +75,7 @@ resources:
     source:
       username: ((registry-user/keppel-ccloud.username))
       password: ((registry-user/keppel-ccloud.password))
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-assets-server
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v4-assets-server #v4
 
   - name: secrets.git
     type: git-proxy
