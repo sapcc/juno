@@ -28,8 +28,9 @@ const TabPreview = ({ asset }) => {
 
   const config = useMemo(() => {
     if (!asset || !appProps) return
+
     return {
-      name: asset?.name,
+      name: asset?.name?.replace(/^#/, ""), // replace leading # from name
       version: asset?.version,
       appPreview: asset?.latestAppPreview,
       props: appProps,
