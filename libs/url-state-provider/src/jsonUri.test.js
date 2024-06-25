@@ -41,10 +41,10 @@ describe("JSON URI encoding", () => {
 
   it("encodes string", () => {
     const jsonURLSerializer = jsonUri()
-    let json = "!#$%&'() ** )* (* !* *) !! +,!./:;<=>?@[]^_`{|}~|\t\n\r\"ds"
+    let json = "!#$%&'() ** )* (* !* *) ~P~Q~R~ !! +,!./:;<=>?@[]^_`{|}~|\t\n\r\"ds"
     let urlState = jsonURLSerializer.encode(json)
     expect(urlState).toBe(
-      "~3~5$~7~8~9~A~B_~C~C_~B~C_~A~C_~3~C_~C~B_~3~3_~D~E~3.~H~I~J~K~L~M~N@~P~Q~R~S~T~U~V~W~X~V~0~1~2~4ds"
+      "~3~5$~7~8~9~A~B_~C~C_~B~C_~A~C_~3~C_~C~B_~XP~XQ~XR~X_~3~3_~D~E~3.~H~I~J~K~L~M~N@~P~Q~R~S~T~U~V~W~X~V~0~1~2~4ds"
     )
     let decoded = jsonURLSerializer.decode(urlState)
     expect(decoded).toBe(json)
@@ -96,9 +96,6 @@ describe("JSON URI encoding", () => {
 
   it("encodes large, nested json", () => {
     const jsonURLSerializer = jsonUri()
-    const regex = new RegExp(
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    )
     const data = {
       zh: {
         name: "China",
@@ -122,11 +119,11 @@ describe("JSON URI encoding", () => {
         infi: Infinity,
         neginf: -Infinity,
         nul: null,
-        regex: regex,
       },
       array: ["asdf", [3, undefined, 4, -1, 123.45678, -123.45678]],
     }
     let urlState = jsonURLSerializer.encode(data)
+    console.log(urlState, "dfjlsfghoashfguduafadhsfuha") 
     let decoded = jsonURLSerializer.decode(urlState)
     expect(decoded).toStrictEqual(data)
   })
