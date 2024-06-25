@@ -259,13 +259,14 @@ const AssetDetails = () => {
                     />
                   </TabPanel>
                 )}
-                {asset?.type === APP && (
-                  <TabPanel>
-                    <MessagesProvider>
-                      <TabPreview asset={asset} />
-                    </MessagesProvider>
-                  </TabPanel>
-                )}
+                {(asset?.type === APP || asset?.type === PACKAGE) &&
+                  asset?.appPreview && (
+                    <TabPanel>
+                      <MessagesProvider>
+                        <TabPreview asset={asset} />
+                      </MessagesProvider>
+                    </TabPanel>
+                  )}
                 <TabPanel>
                   <TabAdvanced asset={asset} />
                 </TabPanel>
