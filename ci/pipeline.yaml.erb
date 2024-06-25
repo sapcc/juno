@@ -91,14 +91,14 @@ resources:
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: main   
+      branch: ci-package-support #v4   
 
   - name: juno-ci-helper.git
     type: git
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: main
+      branch: ci-package-support #v4
       username: sapcc-bot
 
   - name: ui-storybook.git
@@ -140,7 +140,7 @@ resources:
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: main
+      branch: ci-package-support #v4
       paths: ["<%=details[:path]%>","libs","package.json","e2e", ".yarn"]
   
   - name: <%= details[:type] %>-<%= name %>.version
