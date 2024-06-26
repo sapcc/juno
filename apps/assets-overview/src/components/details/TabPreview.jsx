@@ -30,7 +30,7 @@ const TabPreview = ({ asset }) => {
     if (!asset || !appProps) return
 
     return {
-      name: asset?.name?.replace(/^#/, ""), // replace leading # from name
+      name: asset?.name,
       version: asset?.version,
       appPreview: asset?.latestAppPreview,
       props: appProps,

@@ -150,11 +150,11 @@ for (let name in packageRegistry) {
     // since package regisrty contains only juno packages,
     // we need to add this package to the importmap's imports section under the
     // @juno scope
-    // remove leading @ from pkg.name if first char is @
-    const pkgName = pkg.name.startsWith("@") ? pkg.name.slice(1) : pkg.name
+    // add @juno for packages that are not scoped
+    const pkgName = pkg.name.startsWith("@") ? pkg.name : `@juno/${pkg.name}`
 
     importMap.imports[
-      `@juno/${pkgName}@${pkg.version}`
+      `${pkgName}@${pkg.version}`
     ] = `${options.baseUrl}/${pkg.path}/${pkg.entryFile}`
 
     // if the package has no peer dependencies, we can skip further processing
