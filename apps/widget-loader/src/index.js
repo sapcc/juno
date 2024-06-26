@@ -147,7 +147,7 @@ const ESM_SHIM_URL = "/externals/es-module-shims@1.8.3/dist/es-module-shims.js"
   const importmapAppName = name?.startsWith("@") ? name : `@juno/${name}`
   // get the app URL
   // from given url or from importmap based on name and version
-  let appURL = url || importmap.imports[`${name}@${version}`]
+  let appURL = url || importmap.imports[`${importmapAppName}@${version}`]
 
   // get app props from the data-props-* arguments
   let appProps = { currentHost: new URL(appURL).href }
