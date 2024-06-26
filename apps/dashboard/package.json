@@ -7,7 +7,7 @@
   ],
   "repository": "https://github.com/sapcc/juno/tree/main/apps/dashboard",
   "license": "Apache-2.0",
-  "private": true,
+  "private": false,
   "source": "src/index.js",
   "module": "build/index.js",
   "devDependencies": {
