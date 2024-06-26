@@ -22,6 +22,7 @@ jobs:
     uses: cloudoperators/juno/.github/workflows/check-changes-npm-package.yaml@main
     with:
       paths: "apps"
+      runs-on: "ubuntu-latest"
 
   run-pipeline:
     needs: [run-detect-changes]
@@ -34,3 +35,4 @@ jobs:
     with:
       path: ${{ matrix.change }}
       node: "${{ matrix.node }}"
+      runs-on: "ubuntu-latest"
