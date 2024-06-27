@@ -170,6 +170,12 @@ export OS_PASSWORD=$OS_PASSWORD
 # auth swift and set OS_STORAGE_URL and OS_AUTH_TOKEN
 eval "$(swift auth)"
 
+# get version from $ASSETS_PATH/package.json
+
+if [ -f "$ASSET_PATH/package.json" ]; then
+  ASSET_VERSION=$(jq -r '.version' "$ASSET_PATH/package.json")
+fi
+
 echo "----------------------------------"
 echo "use ACTION      = $ACTION"
 if [[ -n "$ASSET_TYPE" ]]; then
@@ -177,6 +183,7 @@ if [[ -n "$ASSET_TYPE" ]]; then
 fi
 echo "use ASSET_PATH  = $ASSET_PATH"
 echo "use ASSET_NAME  = $ASSET_NAME"
+echo "use ASSET_VERSION  = $ASSET_VERSION"
 echo "use CONTAINER   = $CONTAINER"
 echo "----------------------------------"
 
