@@ -18,7 +18,6 @@
     "widget-loader":        { type: "app", path: "apps/widget-loader"},
     "dashboard":            { type: "app", path: "apps/dashboard"},
     "playground":           { type: "app", path: "apps/playground"},
-    "dashboard":            { type: "package", path: "packages/dashboard"},
   }
 
   CLOUDOPERATOR_ASSETS = {
@@ -59,7 +58,7 @@ resources:
       username: ((registry-user/keppel-ccloud.username))
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base
-      branch: ci-package-support #v4
+      branch: main 
 
   - name: ci-helper.image
     type: docker-image
@@ -68,7 +67,7 @@ resources:
       username: ((registry-user/keppel-ccloud.username))
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-ci-helper
-      branch: ci-package-support #v4
+      branch: main 
 
   - name: assets-server.image
     type: docker-image
@@ -76,7 +75,7 @@ resources:
     source:
       username: ((registry-user/keppel-ccloud.username))
       password: ((registry-user/keppel-ccloud.password))
-      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v4-assets-server #v4
+      repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-assets-server #v4
 
   - name: secrets.git
     type: git-proxy
@@ -92,14 +91,14 @@ resources:
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: ci-package-support #v4   
+      branch: main    
 
   - name: juno-ci-helper.git
     type: git
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: ci-package-support #v4
+      branch: main 
       username: sapcc-bot
 
   - name: ui-storybook.git
@@ -141,7 +140,7 @@ resources:
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: ci-package-support #v4
+      branch: main 
       paths: ["<%=details[:path]%>","libs","package.json","e2e", ".yarn"]
   
   - name: <%= details[:type] %>-<%= name %>.version
