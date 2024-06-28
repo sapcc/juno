@@ -1,12 +1,11 @@
 {
-  "name": "whois",
-  "version": "3.0.5",
+  "name": "@juno/user-activity",
+  "version": "1.0.2",
   "author": "UI-Team",
   "contributors": [
-    "Esther Schmitz",
-    "Arturo Reuschenbach Puncernau"
+    "Arturo Reuschenbach Pucernau"
   ],
-  "repository": "https://github.com/sapcc/juno/tree/main/apps/whois",
+  "repository": "https://github.com/sapcc/juno/tree/main/apps/user-activity",
   "license": "Apache-2.0",
   "source": "src/index.js",
   "module": "build/index.js",
@@ -25,14 +24,10 @@
     "autoprefixer": "^10.4.2",
     "babel-jest": "^29.3.1",
     "babel-plugin-transform-import-meta": "^2.2.0",
-    "cidr-regex": "^3.1.1",
     "communicator": "https://assets.juno.global.cloud.sap/libs/communicator@2.2.6/package.tgz",
     "esbuild": "^0.21.5",
-    "ip-regex": "^5.0.0",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
-    "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@2.14.1/package.tgz",
-    "luxon": "^2.3.0",
     "postcss": "^8.4.21",
     "postcss-url": "^10.1.3",
     "prop-types": "^15.8.1",
@@ -40,9 +35,8 @@
     "react-dom": "^18.2.0",
     "react-test-renderer": "^18.2.0",
     "sass": "^1.60.0",
-    "shadow-dom-testing-library": "^1.8.0",
+    "shadow-dom-testing-library": "^1.7.1",
     "tailwindcss": "^3.3.1",
-    "url-state-provider": "https://assets.juno.global.cloud.sap/libs/url-state-provider@1.3.2/package.tgz",
     "util": "^0.12.4"
   },
   "scripts": {
@@ -51,24 +45,27 @@
     "build": "NODE_ENV=production node esbuild.config.js"
   },
   "peerDependencies": {
-    "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@2.14.1/package.tgz",
-    "luxon": "^2.3.0",
+    "custom-event-polyfill": "^1.0.7",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
-    "react-dom": "^18.2.0",
-    "url-state-provider": "https://assets.juno.global.cloud.sap/libs/url-state-provider@1.3.2/package.tgz"
+    "react-dom": "^18.2.0"
   },
   "appProps": {
-    "theme": {
-      "value": "theme-dark",
+    "timeout": {
+      "value": "false",
       "type": "optional",
-      "description": "Override the default theme. Possible values are theme-light or theme-dark (default)"
+      "description": "Describes the time elapsed in seconds before the inactive state is been send. Default are 1800 seconds."
     },
-    "endpoint": {
+    "events": {
       "value": "",
-      "type": "required",
-      "description": "Endpoint URL of the API"
+      "type": "optional",
+      "description": "Coma separated strings containing the event names which should applyed when tracking user activity. Ex: 'mousemove,click'. Default are mousemove, click, scroll, keydown and focus."
+    },
+    "debug": {
+      "value": "false",
+      "type": "optional",
+      "description": "Log debug info. Default is false."
     }
   },
-  "appPreview": true
+  "appPreview": false
 }
