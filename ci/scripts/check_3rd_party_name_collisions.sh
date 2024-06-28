@@ -64,8 +64,8 @@ if [[ -z "$ASSET_TYPE" ]]; then
 fi
 
 if [ ! -d "$JUNO_ASSETS_PATH/$ASSET_TYPE" ]; then
-  echo "Error: juno-assets '$JUNO_ASSETS_PATH/$ASSET_TYPE' path not found 😐"
-  exit 1
+  echo "Warning: juno-assets '$JUNO_ASSETS_PATH/$ASSET_TYPE' path not found 😐"
+  exit 0
 fi
 # juno-assets/apps/APPNAME/package.json
 asset_names_arr=($(jq -r '.name' $JUNO_ASSETS_PATH/$ASSET_TYPE/**/package.json))

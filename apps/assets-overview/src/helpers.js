@@ -5,6 +5,7 @@
 
 export const APP = "app"
 export const LIB = "lib"
+export const PACKAGE = "package"
 
 export const parseError = (error) => {
   let errMsg = JSON.stringify(error)

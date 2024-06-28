@@ -25,7 +25,7 @@ import useStore from "../store"
 import { currentState, push, onGlobalChange } from "url-state-provider"
 import { useQuery } from "@tanstack/react-query"
 import { fetchAssetsManifest } from "../actions"
-import { APP } from "../helpers"
+import { APP, PACKAGE } from "../helpers"
 import { MessagesProvider } from "messages-provider"
 import { compareVersions } from "../helpers"
 
@@ -236,7 +236,8 @@ const AssetDetails = () => {
                   <Tab>Readme</Tab>
                   {asset?.communicatorReadme && <Tab>Communication</Tab>}
                   {asset?.type === APP && <Tab>Get started</Tab>}
-                  {asset?.type === APP && <Tab>Preview</Tab>}
+                  {(asset?.type === APP || asset?.type === PACKAGE) &&
+                    asset?.appPreview && <Tab>Preview</Tab>}
                   <Tab>Advance</Tab>
                 </TabList>
                 <TabPanel>
@@ -258,13 +259,14 @@ const AssetDetails = () => {
                     />
                   </TabPanel>
                 )}
-                {asset?.type === APP && (
-                  <TabPanel>
-                    <MessagesProvider>
-                      <TabPreview asset={asset} />
-                    </MessagesProvider>
-                  </TabPanel>
-                )}
+                {(asset?.type === APP || asset?.type === PACKAGE) &&
+                  asset?.appPreview && (
+                    <TabPanel>
+                      <MessagesProvider>
+                        <TabPreview asset={asset} />
+                      </MessagesProvider>
+                    </TabPanel>
+                  )}
                 <TabPanel>
                   <TabAdvanced asset={asset} />
                 </TabPanel>

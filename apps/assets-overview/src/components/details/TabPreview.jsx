@@ -28,6 +28,7 @@ const TabPreview = ({ asset }) => {
 
   const config = useMemo(() => {
     if (!asset || !appProps) return
+
     return {
       name: asset?.name,
       version: asset?.version,

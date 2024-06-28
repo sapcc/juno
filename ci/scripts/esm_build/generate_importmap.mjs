@@ -57,7 +57,6 @@ for (let arg of args) {
   const match = arg.match(/^-{1,2}([^=]+)=?(.*)/)
   if (match) {
     let key = match[1].replace(/\W+(.)/g, function (match, chr) {
-      console.log(match, chr)
       return chr.toUpperCase()
     })
 
@@ -76,7 +75,7 @@ if (options.help || options.h) {
 }
 
 // #########################################################################
-const PACKAGES_PATHS = ["apps", "libs"]
+const PACKAGES_PATHS = ["apps", "libs", "packages"]
 // determine the assets source directory
 const rootPath = pathLib.resolve(options.src)
 // pattern to find all package.json files in the juno packages
@@ -151,8 +150,11 @@ for (let name in packageRegistry) {
     // since package regisrty contains only juno packages,
     // we need to add this package to the importmap's imports section under the
     // @juno scope
+    // add @juno for packages that are not scoped
+    const pkgName = pkg.name.startsWith("@") ? pkg.name : `@juno/${pkg.name}`
+
     importMap.imports[
-      `@juno/${pkg.name}@${pkg.version}`
+      `${pkgName}@${pkg.version}`
     ] = `${options.baseUrl}/${pkg.path}/${pkg.entryFile}`
 
     // if the package has no peer dependencies, we can skip further processing

@@ -55,20 +55,22 @@ const AppContent = (props) => {
     }
   }, [data])
 
-  const [globals, apps, libs] = useMemo(() => {
+  const [globals, apps, libs, packages] = useMemo(() => {
     if (!data) return [null, null, null]
 
     let { _global, ...assets } = data
     const apps = {}
     const libs = {}
+    const packages = {}
 
     for (const [name, versions] of Object.entries(assets)) {
       const type = versions["latest"]?.type
       if (type === "app") apps[name] = assets[name]
       else if (type === "lib") libs[name] = assets[name]
+      else if (type === "package") packages[name] = assets[name]
     }
 
-    return [_global, apps, libs]
+    return [_global, apps, libs, packages]
   }, [data])
 
   // wait until the global state is set to fetch the url state
@@ -97,6 +99,7 @@ const AppContent = (props) => {
           <Tab>Documentation</Tab>
           <Tab>Apps</Tab>
           <Tab>Libs</Tab>
+          <Tab>Packages</Tab>
           {globals?.assetsBuildLog && <Tab>Build Log</Tab>}
         </TabList>
         <TabPanel>
@@ -122,6 +125,15 @@ const AppContent = (props) => {
             <AssetsList
               isLoading={isReallyLoading}
               assets={libs}
+              error={error}
+            />
+          </TabContainer>
+        </TabPanel>
+        <TabPanel>
+          <TabContainer>
+            <AssetsList
+              isLoading={isReallyLoading}
+              assets={packages}
               error={error}
             />
           </TabContainer>

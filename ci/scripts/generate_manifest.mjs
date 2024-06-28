@@ -31,7 +31,6 @@ for (let arg of args) {
   const match = arg.match(/^-{1,2}([^=]+)=?(.*)/)
   if (match) {
     let key = match[1].replace(/\W+(.)/g, function (match, chr) {
-      console.log(match, chr)
       return chr.toUpperCase()
     })
 
@@ -46,11 +45,13 @@ if (options.help || options.h) {
   console.log("Usage: " + availableArgs.join(" "))
 }
 
-const PACKAGES_PATHS = ["apps", "libs"]
+const PACKAGES_PATHS = ["apps", "libs", "packages"]
 const rootPath = path.resolve(options.src)
 const globPattern = `${rootPath}/@(${PACKAGES_PATHS.join("|")})/**/package.json`
 const pathRegex = new RegExp(`^${rootPath}/(.+)/package.json$`)
-const files = glob.sync(globPattern, { ignore: [`node_modules/**`,'**/node_modules/**'] })
+const files = glob.sync(globPattern, {
+  ignore: [`node_modules/**`, "**/node_modules/**"],
+})
 
 const manifest = {
   _global: {

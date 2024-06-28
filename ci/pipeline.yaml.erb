@@ -1,10 +1,14 @@
 # prettier-ignore
 <%
+  JUNO_ASSETS_CONTAINER="juno-assets"
+  THIRD_PARTY_CONTAINER="juno-3rd-party"
+
   # supported asset types
-  ASSETS_SOURCE = { 
-    "juno-assets": ["app","lib"],
-    "juno-3rd-party": ["app"],
+  ASSETS_SOURCE = {
+    JUNO_ASSETS_CONTAINER => ["app","lib","package"],
+    THIRD_PARTY_CONTAINER => ["app","package"]
   }
+  
   ASSETS = {
     "auth":                 { type: "app", path: "apps/auth" },
     "assets-overview":      { type: "app", path: "apps/assets-overview"},
@@ -13,18 +17,7 @@
     "whois":                { type: "app", path: "apps/whois"},
     "widget-loader":        { type: "app", path: "apps/widget-loader"},
     "dashboard":            { type: "app", path: "apps/dashboard"},
-    # "supernova":            { type: "app", path: "apps/supernova"},
-    # "exampleapp":           { type: "app", path: "apps/exampleapp"},
-    # "greenhouse":           { type: "app", path: "apps/greenhouse" },
-    # "greenhouse-management":{ type: "app", path: "apps/greenhouse-management" },
-    # "heureka":              { type: "app", path: "apps/heureka"},
     "playground":           { type: "app", path: "apps/playground"},
-    # "juno-ui-components":   { type: "lib", path: "libs/juno-ui-components"},
-    # "messages-provider":    { type: "lib", path: "libs/messages-provider"},
-    # "policy-engine":        { type: "lib", path: "libs/policy-engine"},
-    # "url-state-provider":   { type: "lib", path: "libs/url-state-provider"},
-    # "url-state-router":     { type: "lib", path: "libs/url-state-router"},
-    # "utils":                { type: "lib", path: "libs/utils"},
   }
 
   CLOUDOPERATOR_ASSETS = {
@@ -46,14 +39,14 @@ resources:
   - name: swift-juno-assets.version
     type: http-resource
     source:
-      url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/juno-assets
+      url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/<%=JUNO_ASSETS_CONTAINER%>
       method: HEAD
       version: 
         header: x-container-bytes-used
   - name: swift-3rdparty.version
     type: http-resource
     source:
-      url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/juno-3rd-party
+      url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/<%=THIRD_PARTY_CONTAINER%>
       method: HEAD
       version: 
         header: x-container-bytes-used
@@ -65,6 +58,7 @@ resources:
       username: ((registry-user/keppel-ccloud.username))
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base
+      branch: main 
 
   - name: ci-helper.image
     type: docker-image
@@ -73,6 +67,7 @@ resources:
       username: ((registry-user/keppel-ccloud.username))
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-ci-helper
+      branch: main 
 
   - name: assets-server.image
     type: docker-image
@@ -96,19 +91,15 @@ resources:
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: main
-      username: sapcc-bot
-      password: ((github-access-token/sapcc-bot))      
+      branch: main    
 
   - name: juno-ci-helper.git
     type: git
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: main
+      branch: main 
       username: sapcc-bot
-      paths: ["ci/Dockerfile.ci-helper","ci/scripts"]
-      password: ((github-access-token/sapcc-bot))
 
   - name: ui-storybook.git
     type: git
@@ -117,8 +108,7 @@ resources:
       uri: https://github.com/sapcc/juno.git
       branch: main
       paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.ui.storybook","e2e","ci/helm-charts/ui_storybook"]
-      username: sapcc-bot
-      password: ((github-access-token/sapcc-bot))
+
   
   - name: ui-storybook.version
     type: time-version-resource
@@ -150,10 +140,8 @@ resources:
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: main
+      branch: main 
       paths: ["<%=details[:path]%>","libs","package.json","e2e", ".yarn"]
-      username: sapcc-bot
-      password: ((github-access-token/sapcc-bot))
   
   - name: <%= details[:type] %>-<%= name %>.version
     type: time-version-resource
@@ -170,7 +158,6 @@ resources:
     webhook_token: bleep-bloop
     source:
       uri: https://github.com/cloudoperators/juno.git
-      username: ((github-access-token/sapcc-bot))
       password: x-oauth-basic
       branch: main      
       paths: ["<%=details[:path]%>"]
@@ -356,11 +343,8 @@ jobs:
               - |
                 set -e 
                 ls -la
-                # TODO: this need a lot of runtime, move that stuff into asset_build.sh after version check
-                echo "sync all node_modules from /juno/ to ./latest/"
-                rsync -am --include='*/' --include='node_modules/***' --exclude='*' /juno/ ./latest
                 cd ./latest/<%=details[:type]%>s/<%=name%>
-                echo "update node modules -> npm install --silent"
+                echo "update node modules -> npm install"
                 npm install 
                 cd ../../
                 echo ""
@@ -373,7 +357,7 @@ jobs:
           ACTION: sync
           DRY_RUN: "false"
           DEBUG: "true"
-          CONTAINER: "juno-assets"
+          CONTAINER: "<%=JUNO_ASSETS_CONTAINER%>"
           ASSET_NAME: <%= name %>
           ASSET_TYPE: <%= details[:type] %>
   <% end %> 
@@ -438,12 +422,12 @@ jobs:
                 cd ./juno.git
                 # 1) download our own assets
                 <% ASSETS.merge(CLOUDOPERATOR_ASSETS).each do |name, details|%>
-                  ./ci/scripts/asset_storage.sh --container juno-assets --asset-name <%= name %> --asset-path <%= details[:path] %> --action download --root-path ../juno-assets
+                  ./ci/scripts/asset_storage.sh --container <%=JUNO_ASSETS_CONTAINER%> --asset-name <%= name %> --asset-path <%= details[:path] %> --action download --root-path ../juno-assets
                 <% end %>
                 # 2) download and check for name collission in juno-3rd-party assets
-                <% ASSETS_SOURCE[:"juno-3rd-party"].each do |asset_type|%>
+                <% ASSETS_SOURCE[THIRD_PARTY_CONTAINER].each do |asset_type|%>
                     # download 3rd party assets
-                    ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type <%= asset_type %> --action download --root-path ../juno-3rd-party                  
+                    ./ci/scripts/asset_storage.sh --container <%=THIRD_PARTY_CONTAINER%> --asset-type <%= asset_type %> --action download --root-path ../juno-3rd-party                  
                     ./ci/scripts/check_3rd_party_name_collisions.sh --juno-assets-path ../juno-assets --third-party-assets-path ../juno-3rd-party --asset-type <%= asset_type %>
                 <% end %>
 
@@ -482,28 +466,29 @@ jobs:
                 # check and compose everthing in the dist output folder that
                 # we can combine everything in the asset-server build step
                 %>
-                    <% if name.to_s == "juno-3rd-party" %>
+                    <% if name.to_s == THIRD_PARTY_CONTAINER %>
                 <%
                 # if the integrity check for 3rd party fails there will be no error
                 # because we do not want a blocked pipeline
                 # but an error log is uploaded to the 3rd party apps/libs folder
                 # if an error_log was found the new version is not deployed
                 %>
-                ./ci/scripts/compose_assets.sh --error-on-exit 0 --asset-type <%= asset_type %> --source-path ../  --dist-path $DIST_PATH --kind <%= name %>
+                ./ci/scripts/compose_assets.sh --error-on-exit 0 --asset-type <%= asset_type %> --source-path ../  --dist-path $DIST_PATH --kind juno-3rd-party
                     <% else %>
-                ./ci/scripts/compose_assets.sh --error-on-exit 1 --asset-type <%= asset_type %> --source-path ../  --dist-path $DIST_PATH --kind <%= name %>
+                ./ci/scripts/compose_assets.sh --error-on-exit 1 --asset-type <%= asset_type %> --source-path ../  --dist-path $DIST_PATH --kind juno-assets
                     <% end %>
                   <% end %>
                 <% end %>
-                echo ""
-                echo "### APPS ###"
-                ls -all $DIST_PATH/apps/
-                echo "### LIBS ###"
-                ls -all $DIST_PATH/libs/
                 # upload build logs
-                ./ci/scripts/asset_storage.sh --container juno-3rd-party --asset-type apps --action upload --root-path ../juno-3rd-party &> /dev/null
-                ./ci/scripts/asset_storage.sh --container juno-assets --asset-type apps --action upload --root-path ../juno-assets &> /dev/null
+
+                <% ASSETS_SOURCE.each do |name,asset_types|%>
+                  <% asset_types.each do |asset_type|%>
+                    ./ci/scripts/asset_storage.sh --container <%=THIRD_PARTY_CONTAINER%> --asset-type <%= asset_type %> --action upload --root-path ../juno-3rd-party 
+                    ./ci/scripts/asset_storage.sh --container <%=JUNO_ASSETS_CONTAINER%> --asset-type <%= asset_type %> --action upload --root-path ../juno-assets 
+                  <% end %>
+                <% end %>  
                 # exit 1
+              
 
       # to serve our js, css and stattic assets this step will add all the created data 
       # in dist/ to the nginx image in /usr/share/nginx/html

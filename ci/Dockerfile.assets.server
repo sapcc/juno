@@ -42,13 +42,39 @@ COPY --from=lastbuild /usr/share/nginx/html /tmp/final
 
 # merge latest assets over the old assets 
 RUN \
-  for PACKAGE in ./**/*/package.json; do \
+  # Set the base directory
+  base_dir=$(pwd); \
+  package_files=$(find "$base_dir" -type f -name 'package.json' \( -path "$base_dir/apps/*" -o -path "$base_dir/libs/*" -o -path "$base_dir/packages/*" \)); \
+  for PACKAGE in $package_files; do \
+  # the path is something like ./libs/juno-ui-components@1.1.5
+  # or ./packages/cloudoperators/whois@1.0.0
+  # get the name@version part like juno-ui-components@1.1.5
+  path_name_version=$(basename "$(dirname "$PACKAGE")"); \
+  # get only the name without the version
+  path_name="${path_name_version%@*}"; \
+  # get the parent folder of the package
+  package_parent_folder=$(dirname $(dirname "$PACKAGE")); \
+  # package_folder contains the folder path of the package and the name
+  package_folder="$package_parent_folder/$path_name"; \
+  # get package dir for package.json
+  # get name from package.json
   NAME=$(jq -r .name $PACKAGE); \
+  # remove @ from name
+  NAME="${NAME#@}"; \
+  # get version from package.json
   VERSION=$(jq -r .version $PACKAGE); \
-  # dir is something like ./libs/juno-ui-components@1.1.5
+  # get package content dir
   DIR=$(dirname $PACKAGE); \
-  # asset path is then ./libs
-  ASSET_PATH=$(dirname $DIR); \
+  # normalize the path, remove the name from the path
+  # for example: if the package path is ./packages/cloudoperators/test@1.0.0 and
+  # the name is @cloudoperators/test then the package dir is ./packages/cloudoperators/
+  PACKAGE_PATH="${package_folder%"$NAME"}"; \
+  ASSET_PATH="${PACKAGE_PATH#$base_dir/}"; \
+  ASSET_PATH="${ASSET_PATH%/}"; \
+  # dir is something like ./libs/juno-ui-components@1.1.5
+  echo "============"; \
+  echo "DIR: $DIR"; \
+  echo "ASSET_PATH: $ASSET_PATH"; \
   rm -rf /tmp/final/$DIR; \
   rm -rf /tmp/final/$ASSET_PATH/$NAME@$VERSION; \
   rm -rf /tmp/final/$ASSET_PATH/$NAME@latest; \
@@ -98,8 +124,8 @@ RUN \
 # /tmp/final/manifest.json
 
 # Check the integrity of the file structure
-RUN chmod +x /juno/ci/scripts/check_file_integrity.sh && \
-  /juno/ci/scripts/check_file_integrity.sh global apps libs assets externals index.html mount-test.html manifest.json importmap.json
+RUN chmod +x /juno/ci/scripts/check_file_integrity.sh && pwd && ls -la && \
+  /juno/ci/scripts/check_file_integrity.sh global apps libs packages assets externals index.html mount-test.html manifest.json importmap.json
 
 # create self signed dummy certificate and key
 RUN apk add openssl ; openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \

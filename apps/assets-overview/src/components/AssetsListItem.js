@@ -12,6 +12,7 @@ import { DateTime } from "luxon"
 const AssetsListItem = ({ name, versions }) => {
   const urlStateKey = useStore((state) => state.urlStateKey)
   const { latest, ...otherVersions } = versions || {}
+  console.log("===", latest)
   const olderVersions = React.useMemo(() => {
     const keys = Object.keys(otherVersions)
     const index = keys.indexOf(latest?.version)
@@ -49,7 +50,8 @@ const AssetsListItem = ({ name, versions }) => {
     })
   }, [urlStateKey, name, latest?.version])
 
-  latest.repository = "https://github.com/juno-project/juno"
+  latest.repository =
+    latest.repository || "https://github.com/juno-project/juno"
 
   return (
     <DataGridRow
@@ -63,6 +65,7 @@ const AssetsListItem = ({ name, versions }) => {
             {latest.kind === "juno-3rd-party" && <Pill pillValueLabel="3rd" />}
             {latest.kind === "juno" && <Pill pillValueLabel="Juno" />}
           </Stack>
+          <span className="text-xs text-theme-light">{latest.repository}</span>
           {latest.author && (
             <span className="text-xs text-theme-light">
               powered by {latest.author}{" "}
