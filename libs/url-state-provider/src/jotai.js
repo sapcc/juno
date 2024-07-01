@@ -1,4 +1,6 @@
 /*
+  https://documentation.mapp.com/1.0/en/url-encoding-and-what-characters-are-valid-in-a-uri-36147771.html
+
   + is a space
   ~ indentifies a non URI safe character with is not % encoded when followed by a character from the keys
   ~ equals - if followed by a number 
@@ -23,13 +25,16 @@ module.exports = function (){
           }
           else if (nonURIsafe.includes(char)) {
             return "~" + keys[nonURIsafe.indexOf(char)]
-          }    
+          } else if (!keys.includes(char)) {  
+          return encodeURIComponent(char)
+          }
           return char
           }).join("")
     }
 
   function decodeString(value) {
     let result = "";
+    value = decodeURIComponent(value);
 
     for (let i = 0; i < value.length; i++) {
       let char = value[i];
@@ -45,17 +50,65 @@ module.exports = function (){
     return result;
   }
 
+  function encodeObject(value){
+    return "(" + value + ")"
+  }
+
     // standard
     function encode(value){
-        switch (typeof value) {
-            case "string":
-              return encodeString(value)
-            default:
-              return encodeString(JSON.stringify(value))
-    }}
+      switch(typeof value){
+        case "object":
+          if (value === null) {
+            return "*A"
+            }
+          else {
+            return encodeObject(value)
+          }
+        case "undefined":
+          return "*B"
+        case "boolean":
+          return "*" + (value ? "C" : "D")
+        case "string":
+          return encodeString(value)
+        case "number":
+          if (isNaN(value)) {
+            return "*E"
+          }
+          if (value === +Infinity) {
+            return "*F"
+          }
+          if (value === -Infinity) {
+            return "*G"
+          }
+          else{
+            return value.toString()
+          }
+      }}
 
     function decode(value){
-        return decodeString(value)
+      if (value[0] === "*") {
+        switch(value[1]){
+          case "A":
+            return null
+          case "B":
+            return undefined
+          case "C":
+            return true
+          case "D":
+            return false
+          case "E":
+            return NaN
+          case "F":
+            return +Infinity
+          case "G":
+            return -Infinity
+        }
+      }
+      if (value[0] === "(" && value[value.length - 1] === ")") {
+        return value.slice(1, value.length - 1)
+      }
+      return decodeString(value)
+
     }
 
     function encodeB64(value){
