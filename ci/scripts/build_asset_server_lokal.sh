@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # NOTE: this script is only to build the asset-server image localy
 #       it simulates the pipeline environment and downloads and prepares the inputs for the

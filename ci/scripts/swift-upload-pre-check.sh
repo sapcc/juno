@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [[ -z "$UPLOAD_DIR" ]]; then
   echo "Error: UPLOAD_DIR not given"
