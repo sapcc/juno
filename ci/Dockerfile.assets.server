@@ -114,6 +114,13 @@ RUN \
   --base-url=$BASE_URL_PLACEHOLDER \
   --verbose=$VERBOSE ;
 
+# Pre-compress assets
+RUN apk add --no-cache findutils zopfli \
+  && echo Compressing assets. That may take a while.... \
+  && find -L /tmp/final -type f -regextype posix-extended -iregex ".*\.(css|eot|html?|js|js.map|otf|scss|svg|ttf|txt|xml)" -not -iregex ".*\.(br|gz)" -print0 | \
+    xargs -0 -I {} -P "$(nproc)" sh -c "zopfli {}" \
+  && apk del findutils zopfli
+
 # RESULTS
 # /tmp/final/apps/whois@version/files
 # /tmp/final/apps/volta/files
