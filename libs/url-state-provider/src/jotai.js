@@ -13,141 +13,187 @@
   // all other stuff should be added to keys
 */
 
-module.exports = function (){
-    const nonURIsafe = "~%\t\n\r\\\/{}()+#"
-    const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz$-;@?&=![]_"
+module.exports = function () {
+  const nonURIsafe = "~%\t\n\r\\/{}()+#"
+  const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz$-;@?&=![]_"
 
-    function encodeString(value){
-
-        return value.split("").map((char) => {
-          if (char === " ") {
-            return "+"
-          }
-          else if (nonURIsafe.includes(char)) {
-            return "~" + keys[nonURIsafe.indexOf(char)]
-          } else if (!keys.includes(char)) {  
-          return encodeURIComponent(char)
-          }
-          return char
-          }).join("")
+  // standard function for encoding and decoding
+  function encode(value) {
+    switch (typeof value) {
+      case "object":
+        if (value === null) {
+          return "*A"
+        } else {
+          return encodeObject(value)
+        }
+      case "undefined":
+        return "*B"
+      case "boolean":
+        return "*" + (value ? "C" : "D")
+      case "string":
+        return encodeString(value)
+      case "number":
+        if (isNaN(value)) {
+          return "*E"
+        }
+        if (value === +Infinity) {
+          return "*F"
+        }
+        if (value === -Infinity) {
+          return "*G"
+        } else {
+          return encodeNumber(value)
+        }
     }
+  }
+
+  function decode(value) {
+    if (!value) return ""
+
+    if (value[0] === "*") {
+      switch (value[1]) {
+        case "A":
+          return null
+        case "B":
+          return undefined
+        case "C":
+          return true
+        case "D":
+          return false
+        case "E":
+          return NaN
+        case "F":
+          return +Infinity
+        case "G":
+          return -Infinity
+        default:
+          return decodeNumber(value)
+      }
+    }
+
+    // if value[0] is ~ and value[1] is a number
+    if (/^~\d/.test(value)) {
+      return decodeNumber(value)
+    }
+
+    if (value[0] === "(" && value[value.length - 1] === ")") {
+      return decodeObject(value)
+    }
+    return decodeString(value)
+  }
+  // obj
+  function encodeString(value) {
+    return value
+      .split("")
+      .map((char) => {
+        if (char === " ") {
+          return "+"
+        } else if (nonURIsafe.includes(char)) {
+          return "~" + keys[nonURIsafe.indexOf(char)]
+        } else if (!keys.includes(char)) {
+          return encodeURIComponent(char)
+        }
+        return char
+      })
+      .join("")
+  }
 
   function decodeString(value) {
-    let result = "";
-    value = decodeURIComponent(value);
+    let result = ""
+    value = decodeURIComponent(value)
 
     for (let i = 0; i < value.length; i++) {
-      let char = value[i];
+      let char = value[i]
       if (char === "+") {
-        result += " ";
+        result += " "
       } else if (char === "~" && keys.includes(value[i + 1])) {
-        result += nonURIsafe[keys.indexOf(value[i + 1])];
-        i++; // Skip the next character
+        result += nonURIsafe[keys.indexOf(value[i + 1])]
+        i++ // Skip the next character
       } else {
-        result += char;
+        result += char
       }
     }
-    return result;
+    return result
   }
 
-  function encodeObject(value){
-    return "(" + value + ")"
+  function encodeObject(value) {
+    const entries = Object.entries(value).map(([key, val]) => {
+      const encodedValue = encode(val)
+      return `${key}:${encodedValue}`
+    })
+    return "(" + entries.join(",") + ")"
   }
 
-    // standard
-    function encode(value){
-      switch(typeof value){
-        case "object":
-          if (value === null) {
-            return "*A"
-            }
-          else {
-            return encodeObject(value)
-          }
-        case "undefined":
-          return "*B"
-        case "boolean":
-          return "*" + (value ? "C" : "D")
-        case "string":
-          return encodeString(value)
-        case "number":
-          if (isNaN(value)) {
-            return "*E"
-          }
-          if (value === +Infinity) {
-            return "*F"
-          }
-          if (value === -Infinity) {
-            return "*G"
-          }
-          else{
-            return encodeNumber(value)
-          }
-      }}
+  function decodeObject(value) {
+    value = value.slice(1, -1)
 
-    function decode(value){
-      if (value[0] === "*") {
-        switch(value[1]){
-          case "A":
-            return null
-          case "B":
-            return undefined
-          case "C":
-            return true
-          case "D":
-            return false
-          case "E":
-            return NaN
-          case "F":
-            return +Infinity
-          case "G":
-            return -Infinity
-          default:
-            return decodeNumber(value)
+    const entries = []
+    let depth = 0
+    let currentEntry = ""
+    let key = ""
+
+    // loop through the string and just add
+    // the entries to the entries array
+    // which are not paraphrased
+    for (let i = 0; i < value.length; i++) {
+      const char = value[i]
+      if (char === "(") {
+        depth++
+        currentEntry += char
+      } else if (char === ")") {
+        depth--
+        currentEntry += char
+      } else if (char === ":" && depth === 0 && !key) {
+        key = currentEntry.trim()
+        currentEntry = ""
+      } else if (char === "," && depth === 0) {
+        if (key) {
+          entries.push([key, currentEntry.trim()])
+          key = ""
+          currentEntry = ""
         }
-      }
-      // if value[0] is ~ and value[1] - if existent is a number from 0 -9
-      if (/^~\d/.test(value)) {
-        return decodeNumber(value)
-      }
-
-      if (value[0] === "(" && value[value.length - 1] === ")") {
-        return value.slice(1, value.length - 1)
-      }
-      return decodeString(value)
-
-    }
-
-    function encodeNumber(value){
-      if(value<0){
-        // delete - through ~
-        return "~" + -value}
-      else{
-        return "*" + value
+      } else {
+        currentEntry += char
       }
     }
 
-    function decodeNumber(value){
-      console.log(value, "decodeNumber")
-      if (value[0] === "~") {
-        console.log(value, "decodeNumber", -value.slice(1))
-        return -value.slice(1)
-      }
-      return +value.slice(1)
-    }
+    if (key) entries.push([key, currentEntry.trim()])
 
-    function encodeB64(value){
-        return encode(btoa(value))
-    }
-    function decodeB64(value){
-        return atob(decode(value))
-    }
+    const result = {}
+    entries.forEach(([key, encodedValue]) => {
+      result[key] = decode(encodedValue)
+    })
 
+    return result
+  }
 
-    return {
-        encode: encode,
-        decode: decode,
-        encodeB64: encodeB64,
-        decodeB64: decodeB64
-      }
+  function encodeNumber(value) {
+    if (value < 0) {
+      // delete - through ~
+      return "~" + -value
+    } else {
+      return "*" + value
+    }
+  }
+  function decodeNumber(value) {
+    if (value[0] === "~") {
+      return -value.slice(1)
+    }
+    return +value.slice(1)
+  }
+
+  /// base64
+  function encodeB64(value) {
+    return encode(btoa(value))
+  }
+  function decodeB64(value) {
+    return atob(decode(value))
+  }
+
+  return {
+    encode: encode,
+    decode: decode,
+    encodeB64: encodeB64,
+    decodeB64: decodeB64,
+  }
 }
