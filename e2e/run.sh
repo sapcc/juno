@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ ! -f "cypress.config.js" ]; then
   echo "ERROR: you need to run this script in e2e folder!"

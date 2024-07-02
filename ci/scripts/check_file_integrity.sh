@@ -12,10 +12,8 @@ done
 # Check if there are files or directories that are not in the array
 for f in *; do
   found=0
-  # echo "===: $f"
   for g in "$@"; do
-    # echo "::: $g"
-    [ "$f" = "$g" ] && found=1
+    ([ "$f" = "$g" ] || [ "$f" = "$g.gz" ]) && found=1
   done
   [ "$found" = 0 ] && echo "$f: in directory but not listed" && ok=0
 done
