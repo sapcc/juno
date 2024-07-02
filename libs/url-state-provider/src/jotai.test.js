@@ -88,35 +88,28 @@ describe("encoding", () => {
 
   it("encoded JSON", () => {
     const humanURI = jotai()
+    // data with nested objects and arrays of different types of a company
     const data = {
-      zh: {
-        name: "China",
-        continent: "Asia",
-        flagColors: ["red", "yellow"],
-        leader: { name: "习 近平-习", title: "President", term: 137 },
-        population: 1434440076830,
+      company: {
+        name: "Example",
+        continent: "Europe",
+        city: undefined,
+        tools: null,
+        a: {},
+        b: [""],
+        c: [2, []],
+        workers: {
+          name: "John Doe",
+          title: "CEO",
+          term: 2,
+          working_hours: [12, 13, 14, 15, { other: [] }],
+        },
+        id: 123456789,
       },
-      in: {
-        name: "India",
-        continent: "",
-        a: true,
-        b: false,
-        c: null,
-        emptyArray: [],
-        emptyObject: {},
-        flagColors: ["orange", "white", "green"],
-        leader: { name: "Narendra\nModi.", title: "Prime Minister", term: 119 },
-        population: 1.19e9,
-        nan: NaN,
-        infi: Infinity,
-        neginf: -Infinity,
-        nul: null,
-      },
-      array: ["asdf", [3, undefined, 4, -1, 123.45678, -123.45678]],
     }
     let urlState = humanURI.encode(data)
     expect(urlState).toBe(
-      "(zh:(name:China,continent:Asia,flagColors:(red,yellow),leader:(name:%E4%B9%A0+%E8%BF%91%E5%B9%B3-%E4%B9%A0,title:President,term:*137),population:*1434440076830),in:(name:India,continent:,a:*C,b:*D,c:*A,emptyArray:(~),emptyObject:(),flagColors:(orange,white,green),leader:(name:Narendra~DModi.,title:Prime+Minister,term:*119),population:*1190000000,nan:*E,infi:*F,neginf:*G,nul:*A),array:(asdf,(*3,*B,*4,~1,*123.45678,~123.45678)))"
+      "(company:(name:Example,continent:Europe,city:*B,tools:*A,a:(),b:(*),c:(*2,(~)),workers:(name:John+Doe,title:CEO,term:*2,working_hours:(*12,*13,*14,*15,(other:(~)))),id:*123456789))"
     )
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(data)
@@ -167,6 +160,26 @@ describe("encoding", () => {
     const data = [""]
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("(*)")
+    const decoded = humanURI.decode(urlState)
+    expect(decoded).toStrictEqual(data)
+  })
+  it("encodes regex", () => {
+    const humanURI = jotai()
+    const data = /ab+c/i
+    let urlState = humanURI.encode(data)
+    expect(urlState).toBe("*Rab~Lc*Ri*R")
+    const decoded = humanURI.decode(urlState)
+    expect(decoded).toStrictEqual(data)
+  })
+
+  it("encodes regex without flag", () => {
+    const humanURI = jotai()
+    const data =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    let urlState = humanURI.encode(data)
+    expect(urlState).toBe(
+      "*R%5E~J~J~S%5E%3C%3E~J~K~F~S~F~T~F~F.%2C;%3A~Fs~O%22~T~L~J~F.~S%5E%3C%3E~J~K~F~S~F~T~F~F.%2C;%3A~Fs~O%22~T~L~K*~K%7C~J%22.~L%22~K~K~O~J~J~F~S~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~T~K%7C~J~J~Sa-zA-Z~F-0-9~T~L~F.~K~L~Sa-zA-Z~T~H2%2C~I~K~K~N*R*R"
+    )
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(data)
   })

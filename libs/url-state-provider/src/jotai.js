@@ -1,6 +1,4 @@
 /*
-  https://documentation.mapp.com/1.0/en/url-encoding-and-what-characters-are-valid-in-a-uri-36147771.html
-
   + is a space
   ~ indentifies a non URI safe character with is not % encoded when followed by a character from the keys
   ~ equals - if followed by a number 
@@ -25,6 +23,9 @@ module.exports = function () {
       case "object":
         if (value === null) {
           return "*A"
+        } else if (value instanceof RegExp) {
+          // *R is a regex
+          return encodeRegex(value)
         } else {
           return encodeObject(value)
         }
@@ -68,6 +69,8 @@ module.exports = function () {
           return +Infinity
         case "G":
           return -Infinity
+        case "R":
+          return decodeRegex(value)
         default:
           return decodeNumber(value)
       }
@@ -116,6 +119,19 @@ module.exports = function () {
       }
     }
     return result
+  }
+
+  function encodeRegex(value) {
+    // stringfy the regex and add *R to the beginning
+    let source = encode(value?.source.toString())
+    let flags = encode(value?.flags.toString())
+    return `*R${source}*R${flags}*R`
+  }
+
+  function decodeRegex(value) {
+    let regex = value.slice(2, -2)
+    regex = regex.split("*R").map((v) => decode(v))
+    return new RegExp(regex[0], regex[1])
   }
 
   function encodeObject(value) {
@@ -196,7 +212,6 @@ module.exports = function () {
   }
 
   function encodeArray(value) {
-    console.log("sdfasdf", value)
     if (value.length === 0) {
       return "(~)" // Special case for empty arrays
     }
@@ -246,9 +261,6 @@ module.exports = function () {
     entries.forEach((encodedValue) => {
       result.push(decode(encodedValue))
     })
-
-    console.log("result", result)
-    console.log("entries", entries)
 
     return result
   }
