@@ -115,6 +115,9 @@ describe("encoding", () => {
       array: ["asdf", [3, undefined, 4, -1, 123.45678, -123.45678]],
     }
     let urlState = humanURI.encode(data)
+    expect(urlState).toBe(
+      "(zh:(name:China,continent:Asia,flagColors:(red,yellow),leader:(name:%E4%B9%A0+%E8%BF%91%E5%B9%B3-%E4%B9%A0,title:President,term:*137),population:*1434440076830),in:(name:India,continent:,a:*C,b:*D,c:*A,emptyArray:(~),emptyObject:(),flagColors:(orange,white,green),leader:(name:Narendra~DModi.,title:Prime+Minister,term:*119),population:*1190000000,nan:*E,infi:*F,neginf:*G,nul:*A),array:(asdf,(*3,*B,*4,~1,*123.45678,~123.45678)))"
+    )
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(data)
   })
@@ -139,7 +142,7 @@ describe("encoding", () => {
       c: "-3",
     }
     let urlState = humanURI.encode(data)
-    expect(urlState).toBe("(a:*B,b:(k:(1;*3),y:(),z:*2300000000),c:-3)")
+    expect(urlState).toBe("(a:*B,b:(k:(1,*3),y:(),z:*2300000000),c:-3)")
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(data)
   })
@@ -147,7 +150,7 @@ describe("encoding", () => {
     const humanURI = jotai()
     const data = ["a", "b", "c"]
     let urlState = humanURI.encode(data)
-    expect(urlState).toBe("(a;b;c)")
+    expect(urlState).toBe("(a,b,c)")
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(data)
   })
@@ -156,6 +159,14 @@ describe("encoding", () => {
     const data = []
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("(~)")
+    const decoded = humanURI.decode(urlState)
+    expect(decoded).toStrictEqual(data)
+  })
+  it("array with empty sting", () => {
+    const humanURI = jotai()
+    const data = [""]
+    let urlState = humanURI.encode(data)
+    expect(urlState).toBe("(*)")
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(data)
   })

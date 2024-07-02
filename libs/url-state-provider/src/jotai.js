@@ -5,12 +5,14 @@
   ~ indentifies a non URI safe character with is not % encoded when followed by a character from the keys
   ~ equals - if followed by a number 
   * indentifies non character like null or undefined
-  () object
-	,	Delimiter in objects and arrays
-	:	Key/value separator in objects
+  () object / Array
+	,	Delimiter in JSON and arrays
+  (~) array with no elements
+  (*) array with empty string
+	:	Key/value separator in JSON
   % to encode everything else beside a-z A-Z 0-9 - _ . ! ~ * ' ( ) 
 
-  // all other stuff should be added to keys
+  // 
 */
 
 module.exports = function () {
@@ -133,7 +135,9 @@ module.exports = function () {
     if (value === "(~)") {
       return []
     }
-
+    if (value === "(*)") {
+      return [""]
+    }
     if (value === "()") {
       return {}
     }
@@ -196,15 +200,57 @@ module.exports = function () {
     if (value.length === 0) {
       return "(~)" // Special case for empty arrays
     }
-    return "(" + value.map(encode).join(";") + ")"
+    let encoded = "(" + value.map(encode).join(",") + ")"
+    if (encoded === "()") {
+      return "(*)"
+    }
+    return encoded
   }
 
   function decodeArray(value) {
     if (value === "(~)") {
       return []
     }
-    value = value.slice(1, -1) // Remove the first and last character
-    return value.split(";").map(decode)
+    if (value === "(*)") {
+      return [""]
+    }
+    // remove the brackets
+    value = value.slice(1, -1)
+    const entries = []
+    let depth = 0
+    let currentEntry = ""
+
+    // loop through the string and just add
+    // the entries to the entries array
+    // which are not paraphrased
+
+    for (let i = 0; i < value.length; i++) {
+      const char = value[i]
+      if (char === "(") {
+        depth++
+        currentEntry += char
+      } else if (char === ")") {
+        depth--
+        currentEntry += char
+      } else if (char === "," && depth === 0) {
+        entries.push(currentEntry.trim())
+        currentEntry = ""
+      } else {
+        currentEntry += char
+      }
+    }
+
+    entries.push(currentEntry.trim())
+
+    const result = []
+    entries.forEach((encodedValue) => {
+      result.push(decode(encodedValue))
+    })
+
+    console.log("result", result)
+    console.log("entries", entries)
+
+    return result
   }
 
   function encodeNumber(value) {
