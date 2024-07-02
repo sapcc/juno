@@ -88,8 +88,7 @@ RUN mkdir -p /tmp/final/global && cp /juno/README.md /tmp/final/global/
 
 WORKDIR /tmp/final 
 
-# ADD ci/scripts/generate_importmap.mjs /juno/ci/scripts/generate_importmap.mjs
-
+ADD generate_importmap.mjs /juno/ci/scripts/generate_importmap.mjs
 # delete old importmaps and manifests and obsolete assets (see: ci/obsolete_assets.json
 RUN \
   rm -rf externals_* importmap* importmap* ; \
@@ -131,7 +130,8 @@ RUN apk add --no-cache findutils zopfli \
 # /tmp/final/manifest.json
 
 # Check the integrity of the file structure
-RUN chmod +x /juno/ci/scripts/check_file_integrity.sh && pwd && ls -la && \
+ADD check_file_integrity.sh /juno/ci/scripts/check_file_integrity.sh
+RUN chmod +x /juno/ci/scripts/check_file_integrity.sh && \
   /juno/ci/scripts/check_file_integrity.sh global apps libs packages assets externals index.html mount-test.html manifest.json importmap.json
 
 # create self signed dummy certificate and key
