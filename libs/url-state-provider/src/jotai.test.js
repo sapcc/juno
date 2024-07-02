@@ -15,7 +15,7 @@ describe("encoding", () => {
       "hallo peter wie geht es ñ ~ lololol dsfesf%&/834294239477788 {}()"
     let urlState = humanURI.encode(string)
     expect(urlState).toBe(
-      "hallo+peter+wie+geht+es+%C3%B1+~A+lololol+dsfesf~B&~G834294239477788+~H~I~J~K"
+      "hallo+peter+wie+geht+es+%C3%B1+~A+lololol+dsfesf~B~Q~G834294239477788+~H~I~J~K"
     )
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(string)
@@ -132,14 +132,30 @@ describe("encoding", () => {
     const data = {
       a: undefined,
       b: {
-        k: "1",
+        k: ["1", 3],
         y: {},
         z: 2.3e9,
       },
       c: "-3",
     }
     let urlState = humanURI.encode(data)
-    expect(urlState).toBe("(a:*B,b:(k:1,y:(),z:*2300000000),c:-3)")
+    expect(urlState).toBe("(a:*B,b:(k:(1;*3),y:(),z:*2300000000),c:-3)")
+    const decoded = humanURI.decode(urlState)
+    expect(decoded).toStrictEqual(data)
+  })
+  it("encodes array", () => {
+    const humanURI = jotai()
+    const data = ["a", "b", "c"]
+    let urlState = humanURI.encode(data)
+    expect(urlState).toBe("(a;b;c)")
+    const decoded = humanURI.decode(urlState)
+    expect(decoded).toStrictEqual(data)
+  })
+  it("encodes empty array", () => {
+    const humanURI = jotai()
+    const data = []
+    let urlState = humanURI.encode(data)
+    expect(urlState).toBe("(~)")
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(data)
   })
@@ -152,9 +168,27 @@ describe("base 64", () => {
       "hallo peter wie geht es ñ ~ lololol dsfesf%&/834294239477788 {}()"
     let urlState = humanURI.encodeB64(string)
     expect(urlState).toBe(
-      "aGFsbG8gcGV0ZXIgd2llIGdlaHQgZXMg8SB~LIGxvbG9sb2wgZHNmZXNmJSYvODM0Mjk0MjM5NDc3Nzg4IHt9KCk="
+      "aGFsbG8rcGV0ZXIrd2llK2dlaHQrZXMrJUMzJUIxK35BK2xvbG9sb2wrZHNmZXNmfkJ+UX5HODM0Mjk0MjM5NDc3Nzg4K35Ifkl+Sn5L"
     )
     const decoded = humanURI.decodeB64(urlState)
     expect(decoded).toStrictEqual(string)
+  })
+
+  it("encodes komplex json and b64 it", () => {
+    const humanURI = jotai()
+    const data = {
+      company: {
+        name: "Example",
+        continent: "Europe",
+        workers: { name: "John Doe", title: "CEO", term: 2 },
+        id: 123456789,
+      },
+    }
+    let urlState = humanURI.encodeB64(data)
+    expect(urlState).toBe(
+      "KGNvbXBhbnk6KG5hbWU6RXhhbXBsZSxjb250aW5lbnQ6RXVyb3BlLHdvcmtlcnM6KG5hbWU6Sm9obitEb2UsdGl0bGU6Q0VPLHRlcm06KjIpLGlkOioxMjM0NTY3ODkpKQ=="
+    )
+    const decoded = humanURI.decodeB64(urlState)
+    expect(decoded).toStrictEqual(data)
   })
 })

@@ -14,8 +14,8 @@
 */
 
 module.exports = function () {
-  const nonURIsafe = "~%\t\n\r\\/{}()+#"
-  const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz$-;@?&=![]_"
+  const nonURIsafe = "~%\t\n\r\\/{}()+#$@?&=[]"
+  const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-!;_"
 
   // standard function for encoding and decoding
   function encode(value) {
@@ -117,6 +117,11 @@ module.exports = function () {
   }
 
   function encodeObject(value) {
+    // here because decodeObject will handle Array and Object
+    if (Array.isArray(value)) {
+      return encodeArray(value)
+    }
+    // encode JSON object
     const entries = Object.entries(value).map(([key, val]) => {
       const encodedValue = encode(val)
       return `${key}:${encodedValue}`
@@ -125,6 +130,24 @@ module.exports = function () {
   }
 
   function decodeObject(value) {
+    if (value === "(~)") {
+      return []
+    }
+
+    if (value === "()") {
+      return {}
+    }
+
+    if (value.startsWith("(") && value.endsWith(")")) {
+      if (value.includes(":")) {
+        return decodeJSON(value)
+      } else {
+        return decodeArray(value)
+      }
+    }
+  }
+
+  function decodeJSON(value) {
     value = value.slice(1, -1)
 
     const entries = []
@@ -135,6 +158,7 @@ module.exports = function () {
     // loop through the string and just add
     // the entries to the entries array
     // which are not paraphrased
+
     for (let i = 0; i < value.length; i++) {
       const char = value[i]
       if (char === "(") {
@@ -167,6 +191,22 @@ module.exports = function () {
     return result
   }
 
+  function encodeArray(value) {
+    console.log("sdfasdf", value)
+    if (value.length === 0) {
+      return "(~)" // Special case for empty arrays
+    }
+    return "(" + value.map(encode).join(";") + ")"
+  }
+
+  function decodeArray(value) {
+    if (value === "(~)") {
+      return []
+    }
+    value = value.slice(1, -1) // Remove the first and last character
+    return value.split(";").map(decode)
+  }
+
   function encodeNumber(value) {
     if (value < 0) {
       // delete - through ~
@@ -184,10 +224,10 @@ module.exports = function () {
 
   /// base64
   function encodeB64(value) {
-    return encode(btoa(value))
+    return btoa(encode(value))
   }
   function decodeB64(value) {
-    return atob(decode(value))
+    return decode(atob(value))
   }
 
   return {
