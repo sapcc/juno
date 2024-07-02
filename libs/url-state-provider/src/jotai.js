@@ -81,7 +81,7 @@ module.exports = function (){
             return "*G"
           }
           else{
-            return value.toString()
+            return encodeNumber(value)
           }
       }}
 
@@ -102,13 +102,38 @@ module.exports = function (){
             return +Infinity
           case "G":
             return -Infinity
+          default:
+            return decodeNumber(value)
         }
       }
+      // if value[0] is ~ and value[1] - if existent is a number from 0 -9
+      if (/^~\d/.test(value)) {
+        return decodeNumber(value)
+      }
+
       if (value[0] === "(" && value[value.length - 1] === ")") {
         return value.slice(1, value.length - 1)
       }
       return decodeString(value)
 
+    }
+
+    function encodeNumber(value){
+      if(value<0){
+        // delete - through ~
+        return "~" + -value}
+      else{
+        return "*" + value
+      }
+    }
+
+    function decodeNumber(value){
+      console.log(value, "decodeNumber")
+      if (value[0] === "~") {
+        console.log(value, "decodeNumber", -value.slice(1))
+        return -value.slice(1)
+      }
+      return +value.slice(1)
     }
 
     function encodeB64(value){

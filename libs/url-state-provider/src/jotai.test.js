@@ -46,7 +46,7 @@ describe("encoding", () => {
     const humanURI = jotai()
     const data = 12345
     let urlState = humanURI.encode(data)
-    expect(urlState).toBe("12345")
+    expect(urlState).toBe("*12345")
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(data)
   })
@@ -68,6 +68,23 @@ describe("encoding", () => {
     expect(decoded).toStrictEqual(data)
   }
   ) 
+  it ("encodes float", () => {
+    const humanURI = jotai()
+    const data = 123.45678
+    let urlState = humanURI.encode(data)
+    expect(urlState).toBe("*123.45678")
+    const decoded = humanURI.decode(urlState)
+    expect(decoded).toStrictEqual(data)
+  }
+  )
+  it ("encodes negative float", () => {
+    const humanURI = jotai()
+    const data = -123.45678
+    let urlState = humanURI.encode(data)
+    expect(urlState).toBe("~123.45678")
+    const decoded = humanURI.decode(urlState)
+    expect(decoded).toStrictEqual(data)
+  })
   
 })
 
