@@ -135,7 +135,6 @@ module.exports = function () {
   }
 
   function encodeObject(value) {
-    // here because decodeObject will handle Array and Object
     if (Array.isArray(value)) {
       return encodeArray(value)
     }
@@ -158,12 +157,10 @@ module.exports = function () {
       return {}
     }
 
-    if (value.startsWith("(") && value.endsWith(")")) {
-      if (value.includes(":")) {
-        return decodeJSON(value)
-      } else {
-        return decodeArray(value)
-      }
+    if (isEncodedJSON(value)) {
+      return decodeJSON(value)
+    } else {
+      return decodeArray(value)
     }
   }
 
@@ -278,6 +275,21 @@ module.exports = function () {
       return -value.slice(1)
     }
     return +value.slice(1)
+  }
+
+  function isEncodedJSON(value) {
+    let isObject = false
+    let depth = 0
+
+    for (let char of value) {
+      if (char === "(") depth++
+      if (char === ")") depth--
+
+      if (depth === 1 && char === ":") {
+        isObject = true
+      }
+    }
+    return isObject
   }
 
   /// base64

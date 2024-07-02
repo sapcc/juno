@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import fakeData from "./fakedata"
 import jotai from "./jotai"
 
 describe("encoding", () => {
