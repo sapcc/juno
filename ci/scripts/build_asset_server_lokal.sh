@@ -9,7 +9,7 @@
 # exit on error
 set -e
 
-cd /workspace/juno/
+cd "$(dirname "$0")/../.." || exit 1
 
 BUILD_ROOT="./assets_server_build"
 JUNO_ASSETS="$BUILD_ROOT/juno-assets"
