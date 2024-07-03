@@ -4,10 +4,9 @@
  */
 
 import LZString from "lz-string"
-import jsonUri from "./jsonUri"
-import juriEncoder from "./juriEncoder"
+import superstate from "./superstate"
 
-const jsonURLSerializer = jsonUri()
+const jsonURLSerializer = superstate()
 const SEARCH_KEY = "__s"
 
 const regex = new RegExp(SEARCH_KEY + "=([^&]+)")
@@ -51,6 +50,7 @@ function encode(json, options = {}) {
  */
 function decode(string) {
   try {
+    console.log(string, "sdfsdf")
     // try to decode using jsonURLSerializer
     let json = jsonURLSerializer.decode(string)
 

@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import jotai from "./jotai"
+import superstate from "./superstate"
 
 describe("encoding", () => {
   it("encodes a string ", () => {
     // console log encode hallo welt! with URI encoding
 
-    const humanURI = jotai()
+    const humanURI = superstate()
     const string =
       "hallo peter wie geht es ñ ~ lololol dsfesf%&/834294239477788 {}()"
     let urlState = humanURI.encode(string)
@@ -20,7 +20,7 @@ describe("encoding", () => {
     expect(decoded).toStrictEqual(string)
   })
   it("encodes null", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = null
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("*A")
@@ -29,7 +29,7 @@ describe("encoding", () => {
   })
 
   it("encodes undefined", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = undefined
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("*B")
@@ -37,7 +37,7 @@ describe("encoding", () => {
     expect(decoded).toStrictEqual(data)
   })
   it("encodes boolean", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = true
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("*C")
@@ -45,7 +45,7 @@ describe("encoding", () => {
     expect(decoded).toStrictEqual(data)
   })
   it("encodes integer", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = 12345
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("*12345")
@@ -53,7 +53,7 @@ describe("encoding", () => {
     expect(decoded).toStrictEqual(data)
   })
   it("encodes NaN", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = NaN
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("*E")
@@ -61,7 +61,7 @@ describe("encoding", () => {
     expect(decoded).toStrictEqual(data)
   })
   it("encodes Infinity", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = Infinity
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("*F")
@@ -69,7 +69,7 @@ describe("encoding", () => {
     expect(decoded).toStrictEqual(data)
   })
   it("encodes float", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = 123.45678
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("*123.45678")
@@ -77,7 +77,7 @@ describe("encoding", () => {
     expect(decoded).toStrictEqual(data)
   })
   it("encodes negative float", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = -123.45678
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("~123.45678")
@@ -86,7 +86,7 @@ describe("encoding", () => {
   })
 
   it("encoded JSON", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     // data with nested objects and arrays of different types of a company
     const data = {
       company: {
@@ -123,7 +123,7 @@ describe("encoding", () => {
     expect(decoded).toStrictEqual(data)
   })
   it("encodes simple JSON", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = { a: 1, b: null, c: -3 }
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("(a:*1,b:*A,c:~3)")
@@ -132,7 +132,7 @@ describe("encoding", () => {
   })
 
   it("encodes nested JSON with numbers which are sting", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = {
       a: undefined,
       b: {
@@ -148,7 +148,7 @@ describe("encoding", () => {
     expect(decoded).toStrictEqual(data)
   })
   it("encodes array", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = ["a", "b", "c"]
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("(a,b,c)")
@@ -156,7 +156,7 @@ describe("encoding", () => {
     expect(decoded).toStrictEqual(data)
   })
   it("encodes empty array", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = []
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("(~)")
@@ -164,7 +164,7 @@ describe("encoding", () => {
     expect(decoded).toStrictEqual(data)
   })
   it("array with empty sting", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = [""]
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("(*)")
@@ -172,7 +172,7 @@ describe("encoding", () => {
     expect(decoded).toStrictEqual(data)
   })
   it("encodes regex", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = /ab+c/i
     let urlState = humanURI.encode(data)
     expect(urlState).toBe("*Rab~Lc*Ri*R")
@@ -181,7 +181,7 @@ describe("encoding", () => {
   })
 
   it("encodes regex without flag", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     let urlState = humanURI.encode(data)
@@ -191,11 +191,32 @@ describe("encoding", () => {
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(data)
   })
+
+  it("decodes regex", () => {
+    const humanURI = superstate()
+    const data =
+      "(r:*R%5E~J~J~S%5E%3C%3E~J~K~F~S~F~T~F~F.%2C~V%3A~Fs~O%22~T~L~J~F.~S%5E%3C%3E~J~K~F~S~F~T~F~F.%2C~V%3A~Fs~O%22~T~L~K~U~K%7C~J%22.~L%22~K~K~O~J~J~F~S~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~T~K%7C~J~J~Sa-zA-Z~F-0-9~T~L~F.~K~L~Sa-zA-Z~T~H2%2C~I~K~K~N*R*R)"
+    const decoded = humanURI.decode(data)
+    expect(decoded).toStrictEqual({
+      r: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    })
+  })
+
+  it("encodes regex in a json", () => {
+    const humanURI = superstate()
+    const data = {
+      r: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    }
+    let urlState = humanURI.encode(data)
+    const decoded = humanURI.decode(urlState)
+    console.log(decoded)
+    expect(decoded).toStrictEqual(data)
+  })
 })
 
 describe("base 64", () => {
   it("encodes a string ", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const string =
       "hallo peter wie geht es ñ ~ lololol dsfesf%&/834294239477788 {}()"
     let urlState = humanURI.encodeB64(string)
@@ -207,7 +228,7 @@ describe("base 64", () => {
   })
 
   it("encodes komplex json and b64 it", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = {
       company: {
         name: "Example",
@@ -227,7 +248,7 @@ describe("base 64", () => {
 
 describe("lz-string compressed", () => {
   it("encodes a string ", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const string =
       "hallo peter wie geht es ñ ~ lololol dsfesf%&/834294239477788 {}()"
     let urlState = humanURI.encodeLZ(string)
@@ -239,7 +260,7 @@ describe("lz-string compressed", () => {
   })
 
   it("encodes komplex json and b64 it", () => {
-    const humanURI = jotai()
+    const humanURI = superstate()
     const data = {
       company: {
         name: "Example",

@@ -54,6 +54,7 @@ module.exports = function () {
   }
 
   function decode(value) {
+    console.log(value, "decode")
     if (!value) return ""
 
     if (value[0] === "*") {
