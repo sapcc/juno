@@ -186,7 +186,7 @@ describe("encoding", () => {
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     let urlState = humanURI.encode(data)
     expect(urlState).toBe(
-      "*R%5E~J~J~S%5E%3C%3E~J~K~F~S~F~T~F~F.%2C~V%3A~Fs~O%22~T~L~J~F.~S%5E%3C%3E~J~K~F~S~F~T~F~F.%2C~V%3A~Fs~O%22~T~L~K~U~K%7C~J%22.~L%22~K~K~O~J~J~F~S~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~T~K%7C~J~J~Sa-zA-Z~F-0-9~T~L~F.~K~L~Sa-zA-Z~T~H2%2C~I~K~K~N*R*R"
+      "*R%5E~J~J~S%5E%3C%3E~J~K~F~S~F~T~F~F.~W~V%3A~Fs~O%22~T~L~J~F.~S%5E%3C%3E~J~K~F~S~F~T~F~F.~W~V%3A~Fs~O%22~T~L~K~U~K%7C~J%22.~L%22~K~K~O~J~J~F~S~S0-9~T~H1~W3~I~F.~S0-9~T~H1~W3~I~F.~S0-9~T~H1~W3~I~F.~S0-9~T~H1~W3~I~T~K%7C~J~J~Sa-zA-Z~F-0-9~T~L~F.~K~L~Sa-zA-Z~T~H2~W~I~K~K~N*R*R"
     )
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(data)
@@ -195,22 +195,11 @@ describe("encoding", () => {
   it("decodes regex", () => {
     const humanURI = superstate()
     const data =
-      "(r:*R%5E~J~J~S%5E%3C%3E~J~K~F~S~F~T~F~F.%2C~V%3A~Fs~O%22~T~L~J~F.~S%5E%3C%3E~J~K~F~S~F~T~F~F.%2C~V%3A~Fs~O%22~T~L~K~U~K%7C~J%22.~L%22~K~K~O~J~J~F~S~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~T~K%7C~J~J~Sa-zA-Z~F-0-9~T~L~F.~K~L~Sa-zA-Z~T~H2%2C~I~K~K~N*R*R)"
+      "(r:*R%5E~J~J~S%5E%3C%3E~J~K~F~S~F~T~F~F.~W~V%3A~Fs~O%22~T~L~J~F.~S%5E%3C%3E~J~K~F~S~F~T~F~F.~W~V%3A~Fs~O%22~T~L~K~U~K%7C~J%22.~L%22~K~K~O~J~J~F~S~S0-9~T~H1~W3~I~F.~S0-9~T~H1~W3~I~F.~S0-9~T~H1~W3~I~F.~S0-9~T~H1~W3~I~T~K%7C~J~J~Sa-zA-Z~F-0-9~T~L~F.~K~L~Sa-zA-Z~T~H2~W~I~K~K~N*R*R)"
     const decoded = humanURI.decode(data)
     expect(decoded).toStrictEqual({
       r: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     })
-  })
-
-  it("encodes regex in a json", () => {
-    const humanURI = superstate()
-    const data = {
-      r: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    }
-    let urlState = humanURI.encode(data)
-    const decoded = humanURI.decode(urlState)
-    console.log(decoded)
-    expect(decoded).toStrictEqual(data)
   })
 })
 

@@ -50,7 +50,6 @@ function encode(json, options = {}) {
  */
 function decode(string) {
   try {
-    console.log(string, "sdfsdf")
     // try to decode using jsonURLSerializer
     let json = jsonURLSerializer.decode(string)
 

@@ -17,7 +17,7 @@
 import lzstring from "lz-string"
 
 module.exports = function () {
-  const nonURIsafe = "~%\t\n\r\\/{}()+#$@?&=[]*;"
+  const nonURIsafe = "~%\t\n\r\\/{}()+#$@?&=[]*;,"
   const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-!_"
 
   // standard function for encoding and decoding
@@ -54,7 +54,6 @@ module.exports = function () {
   }
 
   function decode(value) {
-    console.log(value, "decode")
     if (!value) return ""
 
     if (value[0] === "*") {
