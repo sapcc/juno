@@ -97,6 +97,15 @@ describe("encoding", () => {
         a: {},
         b: [""],
         c: [2, []],
+        d: {
+          a: 1,
+          b: true,
+          c: false,
+          d: NaN,
+          e: Infinity,
+          f: -Infinity,
+          g: [[[]], { regex: /ab+c/i }],
+        },
         workers: {
           name: "John Doe",
           title: "CEO",
@@ -108,7 +117,7 @@ describe("encoding", () => {
     }
     let urlState = humanURI.encode(data)
     expect(urlState).toBe(
-      "(company:(name:Example,continent:Europe,city:*B,tools:*A,a:(),b:(*),c:(*2,(~)),workers:(name:John+Doe,title:CEO,term:*2,working_hours:(*12,*13,*14,*15,(other:(~)))),id:*123456789))"
+      "(company:(name:Example,continent:Europe,city:*B,tools:*A,a:(),b:(*),c:(*2,(~)),d:(a:*1,b:*C,c:*D,d:*E,e:*F,f:*G,g:(((~)),(regex:*Rab~Lc*Ri*R))),workers:(name:John+Doe,title:CEO,term:*2,working_hours:(*12,*13,*14,*15,(other:(~)))),id:*123456789))"
     )
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(data)
@@ -177,7 +186,7 @@ describe("encoding", () => {
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     let urlState = humanURI.encode(data)
     expect(urlState).toBe(
-      "*R%5E~J~J~S%5E%3C%3E~J~K~F~S~F~T~F~F.%2C;%3A~Fs~O%22~T~L~J~F.~S%5E%3C%3E~J~K~F~S~F~T~F~F.%2C;%3A~Fs~O%22~T~L~K*~K%7C~J%22.~L%22~K~K~O~J~J~F~S~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~T~K%7C~J~J~Sa-zA-Z~F-0-9~T~L~F.~K~L~Sa-zA-Z~T~H2%2C~I~K~K~N*R*R"
+      "*R%5E~J~J~S%5E%3C%3E~J~K~F~S~F~T~F~F.%2C~V%3A~Fs~O%22~T~L~J~F.~S%5E%3C%3E~J~K~F~S~F~T~F~F.%2C~V%3A~Fs~O%22~T~L~K~U~K%7C~J%22.~L%22~K~K~O~J~J~F~S~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~F.~S0-9~T~H1%2C3~I~T~K%7C~J~J~Sa-zA-Z~F-0-9~T~L~F.~K~L~Sa-zA-Z~T~H2%2C~I~K~K~N*R*R"
     )
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(data)
@@ -212,6 +221,38 @@ describe("base 64", () => {
       "KGNvbXBhbnk6KG5hbWU6RXhhbXBsZSxjb250aW5lbnQ6RXVyb3BlLHdvcmtlcnM6KG5hbWU6Sm9obitEb2UsdGl0bGU6Q0VPLHRlcm06KjIpLGlkOioxMjM0NTY3ODkpKQ=="
     )
     const decoded = humanURI.decodeB64(urlState)
+    expect(decoded).toStrictEqual(data)
+  })
+})
+
+describe("lz-string compressed", () => {
+  it("encodes a string ", () => {
+    const humanURI = jotai()
+    const string =
+      "hallo peter wie geht es ñ ~ lololol dsfesf%&/834294239477788 {}()"
+    let urlState = humanURI.encodeLZ(string)
+    expect(urlState).toBe(
+      "BYQwNmD2DUAOCmAXeAnaB3AlvaBzewi08AztAKQDCAzOQEICM0AfgILRSeRjQAmJAM1IDmdZgEVmAcQAc1ACwAmAJxLqqgOxaZMlgAlmASWYApZgGkgA"
+    )
+    const decoded = humanURI.decodeLZ(urlState)
+    expect(decoded).toStrictEqual(string)
+  })
+
+  it("encodes komplex json and b64 it", () => {
+    const humanURI = jotai()
+    const data = {
+      company: {
+        name: "Example",
+        continent: "Europe",
+        workers: { name: "John Doe", title: "CEO", term: 2 },
+        id: 123456789,
+      },
+    }
+    let urlState = humanURI.encodeLZ(data)
+    expect(urlState).toBe(
+      "BQYw9gtgDghgdgTwFzDjCBTJBRAHuqAGwwBpw4AXASzg0pwFcAnMKUgdzCYGsMmBnFGkxIAUmAAWcANQARMKWoViSAMLYA8iQp8ISAFQAmAJQkqAEwMBGQwGYALAFYAbAHYAHAE5jxoA"
+    )
+    const decoded = humanURI.decodeLZ(urlState)
     expect(decoded).toStrictEqual(data)
   })
 })

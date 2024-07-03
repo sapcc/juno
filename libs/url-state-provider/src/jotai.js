@@ -1,21 +1,24 @@
 /*
+
+  STATEGATE 
+
   + is a space
   ~ indentifies a non URI safe character with is not % encoded when followed by a character from the keys
-  ~ equals - if followed by a number 
+  ~ is a minus if followed by a number 
   * indentifies non character like null or undefined
+  * is a plus if followed by a number
   () object / Array
-	,	Delimiter in JSON and arrays
+  : Key/value separator in JSON
   (~) array with no elements
-  (*) array with empty string
-	:	Key/value separator in JSON
-  % to encode everything else beside a-z A-Z 0-9 - _ . ! ~ * ' ( ) 
-
-  // 
+  (*) array with a empty string
+  % to encode characters not ~ encoded or URIsafe
 */
 
+import lzstring from "lz-string"
+
 module.exports = function () {
-  const nonURIsafe = "~%\t\n\r\\/{}()+#$@?&=[]"
-  const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-!;_"
+  const nonURIsafe = "~%\t\n\r\\/{}()+#$@?&=[]*;"
+  const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-!_"
 
   // standard function for encoding and decoding
   function encode(value) {
@@ -300,10 +303,19 @@ module.exports = function () {
     return decode(atob(value))
   }
 
+  function encodeLZ(value) {
+    return lzstring.compressToEncodedURIComponent(encode(value))
+  }
+  function decodeLZ(value) {
+    return decode(lzstring.decompressFromEncodedURIComponent(value))
+  }
+
   return {
     encode: encode,
     decode: decode,
     encodeB64: encodeB64,
     decodeB64: decodeB64,
+    encodeLZ: encodeLZ,
+    decodeLZ: decodeLZ,
   }
 }
