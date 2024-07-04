@@ -87,7 +87,7 @@ module.exports = function () {
 
       if (value[0] === "(") {
         if (value[value.length - 1] !== ")") {
-          throw new Error("Invalid input")
+          throw new Error("JSON object not closed correctly")
         }
         return decodeObject(value)
       }
@@ -306,7 +306,7 @@ module.exports = function () {
     try {
       return decode(atob(value))
     } catch (error) {
-      throw new Error("Fehler bei der Dekomprimierung: " + error.message)
+      throw new Error("URI malformed")
     }
   }
 
@@ -319,7 +319,7 @@ module.exports = function () {
     try {
       const result = decode(lzstring.decompressFromEncodedURIComponent(value))
       if (result === "") {
-        throw new Error("Ungültige Eingabe: Dekomprimierung fehlgeschlagen")
+        throw new Error("URI malformed")
       }
       return result
     } catch (error) {
@@ -342,7 +342,7 @@ module.exports = function () {
       console.log("sdfsd", lzstring.decompressFromEncodedURIComponent(""))
       const result = decode(lzstring.decompressFromEncodedURIComponent(value))
       if (result === "" && value !== "") {
-        throw new Error("Ungültige Eingabe: Dekomprimierung fehlgeschlagen")
+        throw new Error("URI malformed")
       }
       return result
     } catch (error) {

@@ -351,16 +351,58 @@ describe("encodes with null on error", () => {
   it("decoded broken json", () => {
     const humanURI = superstate()
     const data =
-      "(comp%:* any:(name:Exsdfample,continent:Europe,workers:(name:John+Doe,title:CEO,term:*2),id:*123456789,string:Lorem+ipsum+dolor+sit+amet~W+consectetur+adipisici+elit.+Wie%3A+123"
+      "(comp:* any:(name:Exsdfample,continent:Europe,workers:(name:John+Doe,title:CEO,term:*2),id:*123456789,string:Lorem+ipsum+dolor+sit+amet~W+consectetur+adipisici+elit.+Wie%3A+123"
     const decoded = humanURI.decodeNullOnError(data)
     expect(decoded).toStrictEqual(null)
   })
+})
 
+describe("broken LZ decompression", () => {
+  it("decoded broken string", () => {
+    const humanURI = superstate()
+    const data =
+      "BQYw9gtgDghgdgTwFzDjCBTJBRAHuqAwwBpw4AXASzg0pwFcAnMKUgdzCYGsMmBnFGkxIAUmAAWcANQARMKWoViSAMLYA8iQp8ISAFQAmAJQkqAEwMBGQwGYALAFYAbAHYAHAE4S-CkxoA5kgAMlwYENJUUPwMEeZghFzS-FQU0ugYFAB+AOrS5PwYUzOnmUVQpIFTSGISpAHTSOVQYAKS2AILSNg4uHp4ADMbGQ"
+
+    try {
+      humanURI.decodeLZ(data)
+    } catch (error) {
+      expect(error.message).toBe("URI malformed")
+    }
+  })
+})
+describe("broken B64 decomopression", () => {
+  it("decoded broken string", () => {
+    const humanURI = superstate()
+    const data =
+      "BQYw9gtgDghgdgTwFzDjCBTJBRAHuqAwwBpw4AXASzg0pwFcAnMKUgdzCYGsMmBnFGkxIAUmAAWcANQARMKWoViSAMLYA8iQp8ISAFQAmAJQkqAEwMBGQwGYALAFYAbAHYAHAE4S-CkxoA5kgAMlwYENJUUPwMEeZghFzS-FQU0ugYFAB+AOrS5PwYUzOnmUVQpIFTSGISpAHTSOVQYAKS2AILSNg4uHp4ADMbGQ"
+
+    try {
+      humanURI.decodeB64(data)
+    } catch (error) {
+      expect(error.message).toBe("URI malformed")
+    }
+  })
+})
+
+describe("encodes with null on error", () => {
   it("decoded broken json", () => {
     const humanURI = superstate()
     const data =
       "(comp:* any:(name:Exsdfample,continent:Europe,workers:(name:John+Doe,title:CEO,term:*2),id:*123456789,string:Lorem+ipsum+dolor+sit+amet~W+consectetur+adipisici+elit.+Wie%3A+123"
-    const decoded = humanURI.decodeNullOnError(data)
-    expect(decoded).toStrictEqual(null)
+
+    try {
+      humanURI.decode(data)
+    } catch (error) {
+      expect(error.message).toBe("JSON object not closed correctly")
+    }
+  })
+  it("decoded broken string", () => {
+    const humanURI = superstate()
+    const data = "%(324"
+    try {
+      humanURI.decode(data)
+    } catch (error) {
+      expect(error.message).toBe("URI malformed")
+    }
   })
 })
