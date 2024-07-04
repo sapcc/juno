@@ -10,11 +10,10 @@ describe("encoding", () => {
     // console log encode hallo welt! with URI encoding
 
     const humanURI = superstate()
-    const string =
-      "hallo peter wie geht es ñ ~ lololol dsfesf%&/834294239477788 {}()"
+    const string = "hallo peter wie geht es ñ ~ dsfesf%&/834294239477788 {}()"
     let urlState = humanURI.encode(string)
     expect(urlState).toBe(
-      "hallo+peter+wie+geht+es+%C3%B1+~A+lololol+dsfesf~B~Q~G834294239477788+~H~I~J~K"
+      "hallo+peter+wie+geht+es+%C3%B1+~A+dsfesf~B~Q~G834294239477788+~H~I~J~K"
     )
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(string)
@@ -147,6 +146,7 @@ describe("encoding", () => {
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(data)
   })
+
   it("encodes array", () => {
     const humanURI = superstate()
     const data = ["a", "b", "c"]
@@ -171,6 +171,16 @@ describe("encoding", () => {
     const decoded = humanURI.decode(urlState)
     expect(decoded).toStrictEqual(data)
   })
+
+  it("array with empty sting", () => {
+    const humanURI = superstate()
+    const data = "´´´'''"
+    let urlState = humanURI.encode(data)
+    expect(urlState).toBe("%C2%B4%C2%B4%C2%B4'''")
+    const decoded = humanURI.decode(urlState)
+    expect(decoded).toStrictEqual(data)
+  })
+
   it("encodes regex", () => {
     const humanURI = superstate()
     const data = /ab+c/i
@@ -206,11 +216,10 @@ describe("encoding", () => {
 describe("base 64", () => {
   it("encodes a string ", () => {
     const humanURI = superstate()
-    const string =
-      "hallo peter wie geht es ñ ~ lololol dsfesf%&/834294239477788 {}()"
+    const string = "hallo peter wie geht es ñ ~ dsfesf%&/834294239477788 {}()"
     let urlState = humanURI.encodeB64(string)
     expect(urlState).toBe(
-      "aGFsbG8rcGV0ZXIrd2llK2dlaHQrZXMrJUMzJUIxK35BK2xvbG9sb2wrZHNmZXNmfkJ+UX5HODM0Mjk0MjM5NDc3Nzg4K35Ifkl+Sn5L"
+      "aGFsbG8rcGV0ZXIrd2llK2dlaHQrZXMrJUMzJUIxK35BK2RzZmVzZn5CflF+RzgzNDI5NDIzOTQ3Nzc4OCt+SH5Jfkp+Sw=="
     )
     const decoded = humanURI.decodeB64(urlState)
     expect(decoded).toStrictEqual(string)
@@ -238,14 +247,33 @@ describe("base 64", () => {
 describe("lz-string compressed", () => {
   it("encodes a string ", () => {
     const humanURI = superstate()
-    const string =
-      "hallo peter wie geht es ñ ~ lololol dsfesf%&/834294239477788 {}()"
+    const string = "hallo peter wie geht es ñ ~ dsfesf%&/834294239477788 {}()"
     let urlState = humanURI.encodeLZ(string)
     expect(urlState).toBe(
-      "BYQwNmD2DUAOCmAXeAnaB3AlvaBzewi08AztAKQDCAzOQEICM0AfgILRSeRjQAmJAM1IDmdZgEVmAcQAc1ACwAmAJxLqqgOxaZMlgAlmASWYApZgGkgA"
+      "BYQwNmD2DUAOCmAXeAnaB3AlvaBzewi08AztAKQDCAzOQEICM0AfgILQAmJAZqd83WYBFZgHEAHNQAsAJgCcs6goDsq8eJYAJZgElmAKWYBpIA"
     )
     const decoded = humanURI.decodeLZ(urlState)
     expect(decoded).toStrictEqual(string)
+  })
+  it("encodes and compress a json ", () => {
+    const humanURI = superstate()
+    const data = {
+      company: {
+        name: "Example",
+        continent: "Europe",
+        workers: { name: "John Doe", title: "CEO", term: 2 },
+        id: 123456789,
+        string:
+          "Lorem ipsum dolor sit amet, consectetur adipisici elit. Wie: 1234567890",
+      },
+    }
+    let urlState = humanURI.encodeLZ(data)
+    expect(urlState).toBe(
+      "BQYw9gtgDghgdgTwFzDjCBTJBRAHuqAGwwBpw4AXASzg0pwFcAnMKUgdzCYGsMmBnFGkxIAUmAAWcANQARMKWoViSAMLYA8iQp8ISAFQAmAJQkqAEwMBGQwGYALAFYAbAHYAHAE4S-CkxoA5kgAMlwYENJUUPwMEeZghFzS-FQU0ugYFAB+AOrS5PwYIDoUzOnmUVQpIFTSGISpAHTSOVQYAKS2AILSNg4uHp4ADMbGQA"
+    )
+
+    const decoded = humanURI.decodeLZ(urlState)
+    expect(decoded).toStrictEqual(data)
   })
 
   it("encodes komplex json and b64 it", () => {
@@ -264,5 +292,75 @@ describe("lz-string compressed", () => {
     )
     const decoded = humanURI.decodeLZ(urlState)
     expect(decoded).toStrictEqual(data)
+  })
+})
+
+describe("base 64 with null on error", () => {
+  it("encodes and compress a json ", () => {
+    const humanURI = superstate()
+    const data = {
+      company: {
+        name: "Example",
+        continent: "Europe",
+        workers: { name: "John Doe", title: "CEO", term: 2 },
+        id: 123456789,
+        string:
+          "Lorem ipsum dolor sit amet, consectetur adipisici elit. Wie: 1234567890",
+      },
+    }
+    let urlState = humanURI.encodeB64(data)
+    const decoded = humanURI.decodeB64NullOnError(urlState)
+    expect(decoded).toStrictEqual(data)
+  })
+  it("decoded broken string", () => {
+    const humanURI = superstate()
+    const data =
+      "aGFsbG8rcGV0ZXIrd2llK2dlaHQ5BK2RzZmVzZn5CflF+RzgzNDI5NDIzOTQ3Nzc4OCt+SH5Jfkp+Sw=="
+    const decoded = humanURI.decodeB64NullOnError(data)
+    expect(decoded).toStrictEqual(null)
+  })
+})
+
+describe("compressed with null on error", () => {
+  it("encodes and compress a json ", () => {
+    const humanURI = superstate()
+    const data = {
+      company: {
+        name: "Example",
+        continent: "Europe",
+        workers: { name: "John Doe", title: "CEO", term: 2 },
+        id: 123456789,
+        string:
+          "Lorem ipsum dolor sit amet, consectetur adipisici elit. Wie: 1234567890",
+      },
+    }
+    let urlState = humanURI.encodeLZ(data)
+    const decoded = humanURI.decodeLZNullOnError(urlState)
+    expect(decoded).toStrictEqual(data)
+  })
+  it("decoded broken json", () => {
+    const humanURI = superstate()
+    const data =
+      "BQYw9gtgDghgdgTwFzDjCBTJBRAHuqAwwBpw4AXASzg0pwFcAnMKUgdzCYGsMmBnFGkxIAUmAAWcANQARMKWoViSAMLYA8iQp8ISAFQAmAJQkqAEwMBGQwGYALAFYAbAHYAHAE4S-CkxoA5kgAMlwYENJUUPwMEeZghFzS-FQU0ugYFAB+AOrS5PwYUzOnmUVQpIFTSGISpAHTSOVQYAKS2AILSNg4uHp4ADMbGQ"
+    const decoded = humanURI.decodeLZNullOnError(data)
+    expect(decoded).toStrictEqual(null)
+  })
+})
+
+describe("encodes with null on error", () => {
+  it("decoded broken json", () => {
+    const humanURI = superstate()
+    const data =
+      "(comp%:* any:(name:Exsdfample,continent:Europe,workers:(name:John+Doe,title:CEO,term:*2),id:*123456789,string:Lorem+ipsum+dolor+sit+amet~W+consectetur+adipisici+elit.+Wie%3A+123"
+    const decoded = humanURI.decodeNullOnError(data)
+    expect(decoded).toStrictEqual(null)
+  })
+
+  it("decoded broken json", () => {
+    const humanURI = superstate()
+    const data =
+      "(comp:* any:(name:Exsdfample,continent:Europe,workers:(name:John+Doe,title:CEO,term:*2),id:*123456789,string:Lorem+ipsum+dolor+sit+amet~W+consectetur+adipisici+elit.+Wie%3A+123"
+    const decoded = humanURI.decodeNullOnError(data)
+    expect(decoded).toStrictEqual(null)
   })
 })

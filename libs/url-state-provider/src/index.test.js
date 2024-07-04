@@ -217,7 +217,6 @@ describe("currentState", () => {
         consumer1: { p: "/about", o: { tab: 1 } },
         consumer2: { p: "/items/10", o: { tab: 2 } },
       })
-
       expect(window.location.href).toEqual(
         "http://localhost/?test1=test1&__s=" + newState + "&test2=test2"
       )

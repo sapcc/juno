@@ -54,40 +54,48 @@ module.exports = function () {
   }
 
   function decode(value) {
-    if (!value) return ""
+    try {
+      if (!value) return ""
 
-    if (value[0] === "*") {
-      switch (value[1]) {
-        case "A":
-          return null
-        case "B":
-          return undefined
-        case "C":
-          return true
-        case "D":
-          return false
-        case "E":
-          return NaN
-        case "F":
-          return +Infinity
-        case "G":
-          return -Infinity
-        case "R":
-          return decodeRegex(value)
-        default:
-          return decodeNumber(value)
+      if (value[0] === "*") {
+        switch (value[1]) {
+          case "A":
+            return null
+          case "B":
+            return undefined
+          case "C":
+            return true
+          case "D":
+            return false
+          case "E":
+            return NaN
+          case "F":
+            return +Infinity
+          case "G":
+            return -Infinity
+          case "R":
+            return decodeRegex(value)
+          default:
+            return decodeNumber(value)
+        }
       }
-    }
 
-    // if value[0] is ~ and value[1] is a number
-    if (/^~\d/.test(value)) {
-      return decodeNumber(value)
-    }
+      // if value[0] is ~ and value[1] is a number
+      if (/^~\d/.test(value)) {
+        return decodeNumber(value)
+      }
 
-    if (value[0] === "(" && value[value.length - 1] === ")") {
-      return decodeObject(value)
+      if (value[0] === "(") {
+        if (value[value.length - 1] !== ")") {
+          throw new Error("Invalid input")
+        }
+        return decodeObject(value)
+      }
+      return decodeString(value)
+    } catch (error) {
+      console.log("Error decoding: ", value)
+      throw error
     }
-    return decodeString(value)
   }
   // obj
   function encodeString(value) {
@@ -223,12 +231,6 @@ module.exports = function () {
   }
 
   function decodeArray(value) {
-    if (value === "(~)") {
-      return []
-    }
-    if (value === "(*)") {
-      return [""]
-    }
     // remove the brackets
     value = value.slice(1, -1)
     const entries = []
@@ -299,15 +301,61 @@ module.exports = function () {
   function encodeB64(value) {
     return btoa(encode(value))
   }
+
   function decodeB64(value) {
-    return decode(atob(value))
+    try {
+      return decode(atob(value))
+    } catch (error) {
+      throw new Error("Fehler bei der Dekomprimierung: " + error.message)
+    }
   }
 
+  // compressed
   function encodeLZ(value) {
     return lzstring.compressToEncodedURIComponent(encode(value))
   }
+
   function decodeLZ(value) {
-    return decode(lzstring.decompressFromEncodedURIComponent(value))
+    try {
+      const result = decode(lzstring.decompressFromEncodedURIComponent(value))
+      if (result === "") {
+        throw new Error("Ungültige Eingabe: Dekomprimierung fehlgeschlagen")
+      }
+      return result
+    } catch (error) {
+      throw new Error(error.message)
+    }
+  }
+
+  /// base64 with null on error
+
+  function decodeB64NullOnError(value) {
+    try {
+      return decode(atob(value))
+    } catch (error) {
+      return null
+    }
+  }
+
+  function decodeLZNullOnError(value) {
+    try {
+      console.log("sdfsd", lzstring.decompressFromEncodedURIComponent(""))
+      const result = decode(lzstring.decompressFromEncodedURIComponent(value))
+      if (result === "" && value !== "") {
+        throw new Error("Ungültige Eingabe: Dekomprimierung fehlgeschlagen")
+      }
+      return result
+    } catch (error) {
+      return null
+    }
+  }
+
+  function decodeNullOnError(value) {
+    try {
+      return decode(value)
+    } catch (error) {
+      return null
+    }
   }
 
   return {
@@ -317,5 +365,8 @@ module.exports = function () {
     decodeB64: decodeB64,
     encodeLZ: encodeLZ,
     decodeLZ: decodeLZ,
+    decodeB64NullOnError: decodeB64NullOnError,
+    decodeLZNullOnError: decodeLZNullOnError,
+    decodeNullOnError: decodeNullOnError,
   }
 }
