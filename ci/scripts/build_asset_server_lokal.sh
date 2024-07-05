@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # NOTE: this script is only to build the asset-server image localy
 #       it simulates the pipeline environment and downloads and prepares the inputs for the
@@ -9,7 +9,7 @@
 # exit on error
 set -e
 
-cd /workspace/juno/
+cd "$(dirname "$0")/../.." || exit 1
 
 BUILD_ROOT="./assets_server_build"
 JUNO_ASSETS="$BUILD_ROOT/juno-assets"
@@ -111,7 +111,7 @@ rm -rf $DIST_PATH/*
 
 echo "Task build-assets-server"
 # to simulate the assets server build in the pipeline we need to cd into dist as input for the build and cp the docker file into that folder
-cp ci/Dockerfile.assets.server $DIST_PATH
+cp ci/Dockerfile.assets.server ci/scripts/{check_file_integrity.sh,esm_build/generate_importmap.mjs} $DIST_PATH
 cd $DIST_PATH
 # Note: we use the ci scripts from /juno/ci/ that are comming from the base image
 #       we also use the nodes_modules from the base image

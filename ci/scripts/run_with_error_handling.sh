@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # https://www.xmodulo.com/catch-handle-errors-bash.html
 
 function help() {
