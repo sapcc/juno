@@ -88,7 +88,7 @@ RUN mkdir -p /tmp/final/global && cp /juno/README.md /tmp/final/global/
 
 WORKDIR /tmp/final 
 
-ADD generate_importmap.mjs /juno/ci/scripts/generate_importmap.mjs
+# ADD generate_importmap.mjs /juno/ci/scripts/generate_importmap.mjs
 # delete old importmaps and manifests and obsolete assets (see: ci/obsolete_assets.json
 RUN \
   rm -rf externals_* importmap* importmap* ; \
