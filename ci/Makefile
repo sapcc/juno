@@ -2,7 +2,7 @@
 # Hijack Build Container for debug
 # fly -t v5 intercept -u URL_FROM_BUILD
 
-FLY := fly -t v5
+FLY ?= fly -t v5
 ci: ci-clean ci-create
 	$(FLY) set-pipeline --pipeline juno-v3 -c pipeline.yaml -l ./vars.yaml
 
