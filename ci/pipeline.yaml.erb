@@ -479,6 +479,9 @@ jobs:
                     <% end %>
                   <% end %>
                 <% end %>
+
+                cp ci/scripts/{check_file_integrity.sh,esm_build/generate_importmap.mjs} $DIST_PATH
+
                 # upload build logs
 
                 <% ASSETS_SOURCE.each do |name,asset_types|%>
