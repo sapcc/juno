@@ -8,7 +8,7 @@
     JUNO_ASSETS_CONTAINER => ["app","lib","package"],
     THIRD_PARTY_CONTAINER => ["app","package"]
   }
-  
+
   ASSETS = {
     "auth":                 { type: "package", path: "packages/auth" },
     "assets-overview":      { type: "package", path: "packages/assets-overview"},
@@ -24,7 +24,7 @@
     "exampleapp":           { type: "app", path: "apps/exampleapp"},
     "communicator":         { type: "lib", path: "libs/communicator"},
     "messages-provider":    { type: "lib", path: "libs/messages-provider"},
-    "juno-ui-components":   { type: "lib", path: "libs/juno-ui-components"},    
+    "juno-ui-components":   { type: "lib", path: "libs/juno-ui-components"},
     "policy-engine":        { type: "lib", path: "libs/policy-engine"},
     "oauth":                { type: "lib", path: "libs/oauth"},
     "url-state-provider":   { type: "lib", path: "libs/url-state-provider"},
@@ -41,14 +41,14 @@ resources:
     source:
       url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/<%=JUNO_ASSETS_CONTAINER%>
       method: HEAD
-      version: 
+      version:
         header: x-container-bytes-used
   - name: swift-3rdparty.version
     type: http-resource
     source:
       url: https://objectstore-3.eu-de-1.cloud.sap:443/v1/AUTH_caa6209d2c38450f8266311fd0f05446/<%=THIRD_PARTY_CONTAINER%>
       method: HEAD
-      version: 
+      version:
         header: x-container-bytes-used
 
   - name: base.image
@@ -67,7 +67,7 @@ resources:
       username: ((registry-user/keppel-ccloud.username))
       password: ((registry-user/keppel-ccloud.password))
       repository: keppel.eu-de-1.cloud.sap/ccloud/juno-v3-ci-helper
-      branch: main 
+      branch: main
 
   - name: assets-server.image
     type: docker-image
@@ -91,14 +91,14 @@ resources:
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: main    
+      branch: main
 
   - name: juno-ci-helper.git
     type: git
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: main 
+      branch: main
       username: sapcc-bot
 
   - name: ui-storybook.git
@@ -109,7 +109,7 @@ resources:
       branch: main
       paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.ui.storybook","e2e","ci/helm-charts/ui_storybook"]
 
-  
+
   - name: ui-storybook.version
     type: time-version-resource
     icon: lock
@@ -140,9 +140,9 @@ resources:
     icon: github
     source:
       uri: https://github.com/sapcc/juno.git
-      branch: main 
+      branch: main
       paths: ["<%=details[:path]%>","libs","package.json","e2e", ".yarn"]
-  
+
   - name: <%= details[:type] %>-<%= name %>.version
     type: time-version-resource
     icon: lock
@@ -159,9 +159,9 @@ resources:
     source:
       uri: https://github.com/cloudoperators/juno.git
       password: x-oauth-basic
-      branch: main      
+      branch: main
       paths: ["<%=details[:path]%>"]
-  
+
   - name: <%= details[:type] %>-<%= name %>.version
     type: time-version-resource
     icon: lock
@@ -204,8 +204,8 @@ resource_types:
       repository: keppel.eu-de-1.cloud.sap/ccloud/concourse-time-version-resource
       tag: v2
 
-groups: 
-  - name: assets 
+groups:
+  - name: assets
     jobs:
       - run-all-manually
       <% ASSETS.merge(CLOUDOPERATOR_ASSETS).each do |name,details| %>
@@ -218,25 +218,25 @@ groups:
       <%HA_REGIONS.each do |region|%>
       - deploy-assets-server-to-<%= region %>
       - e2e-tests-assets-server-<%= region %>
-      <% end %>  
+      <% end %>
   - name: storybook
     jobs:
       - build-ui-storybook-image
       - deploy-storybook-to-s-qa-de-1
       - e2e-tests-storybook-s-qa-de-1
-      - deploy-storybook-to-s-eu-nl-1 
-      - e2e-tests-storybook-s-eu-nl-1  
-  - name: hosting 
+      - deploy-storybook-to-s-eu-nl-1
+      - e2e-tests-storybook-s-eu-nl-1
+  - name: hosting
     jobs:
       - deploy-hosting-to-s-qa-de-1
       - e2e-tests-hosting-s-qa-de-1
-      - deploy-hosting-to-s-eu-nl-1     
+      - deploy-hosting-to-s-eu-nl-1
       - e2e-tests-hosting-s-eu-nl-1
   - name: base
     jobs:
       - readme
       - build-base-image
-      - build-ci-helper-image  
+      - build-ci-helper-image
 
 jobs:
   - name: readme
@@ -292,7 +292,7 @@ jobs:
           build: juno-ci-helper.git
           dockerfile: juno-ci-helper.git/ci/Dockerfile.ci-helper
 
-  # ============================================================= 
+  # =============================================================
   # BUILD ASSET SERVER IMAGE
 
   # Assets build
@@ -301,11 +301,11 @@ jobs:
     public: true
     plan:
       - get: run-manually.version
-        trigger: true 
+        trigger: true
         passed: [run-all-manually]
       - get: <%= details[:type] %>-<%= name %>.git
         trigger: true
-      - get: juno.git  
+      - get: juno.git
       - get: base.image
       - get: ci-helper.image
       - put: <%= details[:type] %>-<%= name %>.version
@@ -321,10 +321,10 @@ jobs:
           CONTAINER: "juno-assets"
           ASSET_NAME: <%= name %>
           ASSET_TYPE: lib
-      <% end %>  
+      <% end %>
       - task: build
         image: base.image
-        input_mapping: 
+        input_mapping:
           latest: <%= details[:type] %>-<%= name %>.git
         config:
           inputs:
@@ -341,11 +341,11 @@ jobs:
             args:
               - -c
               - |
-                set -e 
+                set -e
                 ls -la
                 cd ./latest/<%=details[:type]%>s/<%=name%>
                 echo "update node modules -> npm install"
-                npm install 
+                npm install
                 cd ../../
                 echo ""
                 /juno/ci/scripts/asset_build.sh --asset-name <%= name %> --asset-type <%= details[:type] %> --output-path ../build_result <% if details[:type] == "lib" %> --last-build-path ../last_build <% end %>
@@ -360,44 +360,44 @@ jobs:
           CONTAINER: "<%=JUNO_ASSETS_CONTAINER%>"
           ASSET_NAME: <%= name %>
           ASSET_TYPE: <%= details[:type] %>
-  <% end %> 
+  <% end %>
 
-  <% 
+  <%
   # this step combines all assets that where build and uploaded before to swift
   # for that we use nginx image and copy all assets (that where build in the step before) into /usr/share/nginx/html/
-  # this image will be deployed as asset server 
+  # this image will be deployed as asset server
 
-  # Important! 
-  # If the asset-server.image was not build before 
+  # Important!
+  # If the asset-server.image was not build before
   # 1) comment the parts in the dockerfile where the image is needed to copy old stuff over
-  # 2) you need first build the libs otherwise the build importmap step will fail because 
+  # 2) you need first build the libs otherwise the build importmap step will fail because
   #    it will not find the libs
   # 3) if the libs are build and uploaded to swift you can add the apps
-  # 4) when the apps are build without problems you can uncomment the parts in 
-  #    the dockerfile to store the old versions 
+  # 4) when the apps are build without problems you can uncomment the parts in
+  #    the dockerfile to store the old versions
   %>
-  
+
   - name: build-assets-server-image
     public: true
     plan:
       - get: ci-helper.image
-      - get: juno.git   
-      - get: swift-3rdparty.version 
-        trigger: true  
+      - get: juno.git
+      - get: swift-3rdparty.version
+        trigger: true
       - get: swift-juno-assets.version
-        trigger: true    
+        trigger: true
 
       <% ASSETS.merge(CLOUDOPERATOR_ASSETS).each do |name, details|%>
       - get: <%= details[:type] %>-<%= name %>.version
         trigger: false
-        passed: ["build-<%= details[:type] %>-<%= name %>"]  
+        passed: ["build-<%= details[:type] %>-<%= name %>"]
       <% end %>
       - put: assets-server.version
       <%# COPY ALL BUILDS TO dist %>
 
       - task: download-assets
         image: ci-helper.image
-        params: 
+        params:
           OS_USERNAME: ((swift-username))
           OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
           OS_AUTH_URL: ((swift-auth-url))
@@ -427,13 +427,13 @@ jobs:
                 # 2) download and check for name collission in juno-3rd-party assets
                 <% ASSETS_SOURCE[THIRD_PARTY_CONTAINER].each do |asset_type|%>
                     # download 3rd party assets
-                    ./ci/scripts/asset_storage.sh --container <%=THIRD_PARTY_CONTAINER%> --asset-type <%= asset_type %> --action download --root-path ../juno-3rd-party                  
+                    ./ci/scripts/asset_storage.sh --container <%=THIRD_PARTY_CONTAINER%> --asset-type <%= asset_type %> --action download --root-path ../juno-3rd-party
                     ./ci/scripts/check_3rd_party_name_collisions.sh --juno-assets-path ../juno-assets --third-party-assets-path ../juno-3rd-party --asset-type <%= asset_type %>
                 <% end %>
 
       - task: combine-builds
         image: ci-helper.image
-        params: 
+        params:
           OS_USERNAME: ((swift-username))
           OS_PASSWORD: ((keystone-user-password/concourse-eu-de-1))
           OS_AUTH_URL: ((swift-auth-url))
@@ -462,7 +462,7 @@ jobs:
                 # compose everthing together that we can use it in the asset-server image build
                 <% ASSETS_SOURCE.each do |name,asset_types|%>
                   <% asset_types.each do |asset_type|%>
-                <% 
+                <%
                 # check and compose everthing in the dist output folder that
                 # we can combine everything in the asset-server build step
                 %>
@@ -483,14 +483,14 @@ jobs:
 
                 <% ASSETS_SOURCE.each do |name,asset_types|%>
                   <% asset_types.each do |asset_type|%>
-                    ./ci/scripts/asset_storage.sh --container <%=THIRD_PARTY_CONTAINER%> --asset-type <%= asset_type %> --action upload --root-path ../juno-3rd-party 
-                    ./ci/scripts/asset_storage.sh --container <%=JUNO_ASSETS_CONTAINER%> --asset-type <%= asset_type %> --action upload --root-path ../juno-assets 
+                    ./ci/scripts/asset_storage.sh --container <%=THIRD_PARTY_CONTAINER%> --asset-type <%= asset_type %> --action upload --root-path ../juno-3rd-party
+                    ./ci/scripts/asset_storage.sh --container <%=JUNO_ASSETS_CONTAINER%> --asset-type <%= asset_type %> --action upload --root-path ../juno-assets
                   <% end %>
-                <% end %>  
+                <% end %>
                 # exit 1
-              
 
-      # to serve our js, css and stattic assets this step will add all the created data 
+
+      # to serve our js, css and stattic assets this step will add all the created data
       # in dist/ to the nginx image in /usr/share/nginx/html
       - put: assets-server.image
         params:
@@ -501,7 +501,7 @@ jobs:
           build: dist
           dockerfile: juno.git/ci/Dockerfile.assets.server
           tag: assets-server.version/version
-          build_args: 
+          build_args:
             NPM_PROVIDER: "jspm"
         get_params:
           skip_download: true
@@ -516,21 +516,21 @@ jobs:
         - get: ui-storybook.git
           trigger: true
         - put: ui-storybook.version
-      - in_parallel:  
+      - in_parallel:
         - put: ui-storybook.image
           params:
             tag_as_latest: true
             # cache: true
             cache_tag: "latest"
             build: ui-storybook.git
-            build_args: 
+            build_args:
               KEPPEL_HOSTNAME: keppel.eu-de-1.cloud.sap
             dockerfile: ui-storybook.git/ci/Dockerfile.ui.storybook
             tag: ui-storybook.version/version
           get_params:
-            skip_download: true   
+            skip_download: true
 
-  # DEPLOY STORYBOOK TO QA 
+  # DEPLOY STORYBOOK TO QA
   - name: deploy-storybook-to-s-qa-de-1
     serial: true
     plan:
@@ -558,9 +558,9 @@ jobs:
           KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))
-          VAULT_SECRET_ID:    ((auth.secret_id))            
+          VAULT_SECRET_ID:    ((auth.secret_id))
 
-  # RUN CYPRESS TESTS FOR STORYBOOK IN QA 
+  # RUN CYPRESS TESTS FOR STORYBOOK IN QA
   - name: e2e-tests-storybook-s-qa-de-1
     serial: true
     plan:
@@ -568,7 +568,7 @@ jobs:
         - get: ui-storybook.git
         - get: ui-storybook.version
           trigger: true
-          passed: [deploy-storybook-to-s-qa-de-1]   
+          passed: [deploy-storybook-to-s-qa-de-1]
       - task: cypress
         config:
           platform: linux
@@ -587,7 +587,7 @@ jobs:
               - -c
               - |
                 cd /app/juno/e2e
-                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/ui-storybook/*" 
+                CYPRESS_BASE_URL=https://ui.juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/ui-storybook/*"
 
 
   # DEPLOY STORYBOOK TO PROD
@@ -614,13 +614,13 @@ jobs:
           REGION: eu-nl-1
           CONTEXT: s-eu-nl-1
           TAG_VARIABLE:  image.tag
-          VALUES: local:globals 
+          VALUES: local:globals
           KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))
-          VAULT_SECRET_ID:    ((auth.secret_id))  
+          VAULT_SECRET_ID:    ((auth.secret_id))
 
-  # RUN CYPRESS TESTS FOR STORYBOOK IN QA 
+  # RUN CYPRESS TESTS FOR STORYBOOK IN QA
   - name: e2e-tests-storybook-s-eu-nl-1
     serial: true
     plan:
@@ -628,7 +628,7 @@ jobs:
         - get: ui-storybook.git
         - get: ui-storybook.version
           trigger: true
-          passed: [deploy-storybook-to-s-eu-nl-1]   
+          passed: [deploy-storybook-to-s-eu-nl-1]
       - task: cypress
         config:
           platform: linux
@@ -647,11 +647,11 @@ jobs:
               - -c
               - |
                 cd /app/juno/e2e
-                CYPRESS_BASE_URL=https://ui.juno.eu-nl-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/ui-storybook/*" 
+                CYPRESS_BASE_URL=https://ui.juno.eu-nl-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/ui-storybook/*"
 
 
   ############ ASSETS SERVER  #########
-  # DEPLOY ASSETS SERVER TO S-QA-DE-1 
+  # DEPLOY ASSETS SERVER TO S-QA-DE-1
   - name: deploy-assets-server-to-s-qa-de-1
     serial: true
     plan:
@@ -659,7 +659,7 @@ jobs:
         - get: juno.git
         - get: secrets.git
           params:
-            depth: 100 
+            depth: 100
         - get: assets-server.version
           trigger: true
           passed: [build-assets-server-image]
@@ -683,7 +683,7 @@ jobs:
           VAULT_ROLE_ID:      ((auth.role_id))
           VAULT_SECRET_ID:    ((auth.secret_id))
 
-  # RUN CYPRESS TESTS FOR ASSETS SERVER IN QA 
+  # RUN CYPRESS TESTS FOR ASSETS SERVER IN QA
   - name: e2e-tests-assets-server-s-qa-de-1
     serial: true
     plan:
@@ -691,7 +691,7 @@ jobs:
         - get: juno.git
         - get: assets-server.version
           trigger: true
-          passed: [deploy-assets-server-to-s-qa-de-1]   
+          passed: [deploy-assets-server-to-s-qa-de-1]
       - task: cypress
         config:
           platform: linux
@@ -716,7 +716,7 @@ jobs:
                 CYPRESS_BASE_URL=https://assets.juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/assets-server/*"
                 EXIT=$?
                 mv /app/juno/e2e/cypress /upload
-                exit $EXIT  
+                exit $EXIT
       - task: upload-cypress-result
         file: juno.git/ci/shared/swift-cypress-upload.yaml
         input_mapping:
@@ -724,14 +724,14 @@ jobs:
         params:
           NAME: "asset-server"
 
-  # PROMOTE TO PROD  
+  # PROMOTE TO PROD
   - name: promote-prod-assets-server
     serial: true
     plan:
       - in_parallel:
         - get: assets-server.version
           trigger: false
-          passed: [e2e-tests-assets-server-s-qa-de-1]   
+          passed: [e2e-tests-assets-server-s-qa-de-1]
 
   # DEPLOY ASSETS SERVER TO PROD (HA)
   <%HA_REGIONS.each do |region|%>
@@ -741,11 +741,11 @@ jobs:
       - in_parallel:
           - get: assets-server.version
             trigger: true
-            passed: [promote-prod-assets-server]           
+            passed: [promote-prod-assets-server]
           - get: juno.git
           - get: secrets.git
             params:
-              depth: 100 
+              depth: 100
 
       - task: diff
         file: secrets.git/ci/shared/task-helm-diff.yaml
@@ -753,7 +753,7 @@ jobs:
           app.version: assets-server.version
           helm-charts.git: juno.git
         params:
-          DEBUG_TASK:         1 
+          DEBUG_TASK:         1
           CHART_PATH:         ci/helm-charts/assets_server_ha
           RELEASE:            juno-v3-assets-server-ha
           NAMESPACE:          juno
@@ -772,7 +772,7 @@ jobs:
         input_mapping:
           app.version: assets-server.version
           helm-charts.git: juno.git
-          
+
         params:
           CHART_PATH:         ci/helm-charts/assets_server_ha
           RELEASE:            juno-assets-server-prod
@@ -787,14 +787,14 @@ jobs:
           VAULT_ROLE_ID:      ((auth.role_id))
           VAULT_SECRET_ID:    ((auth.secret_id))
 
-  # RUN CYPRESS TESTS FOR ASSETS SERVER IN PROD 
+  # RUN CYPRESS TESTS FOR ASSETS SERVER IN PROD
   - name: e2e-tests-assets-server-<%= region %>
     serial: true
     plan:
       - in_parallel:
         - get: assets-server.version
           trigger: true
-          passed: [deploy-assets-server-to-<%= region %>]   
+          passed: [deploy-assets-server-to-<%= region %>]
         - get: juno.git
       - task: cypress
         config:
@@ -815,11 +815,11 @@ jobs:
               - |
                 cd /app/juno/e2e
                 CYPRESS_BASE_URL=https://assets.juno.global.cloud.sap cypress run --browser chrome --spec "cypress/integration/assets-server/*"
-              
-  <% end %>                
+
+  <% end %>
 
   # ======================== HOSTING =====================
-  # DEPLOY HOSTING TO QA 
+  # DEPLOY HOSTING TO QA
   - name: deploy-hosting-to-s-qa-de-1
     serial: true
     plan:
@@ -845,14 +845,14 @@ jobs:
           VAULT_ROLE_ID:      ((auth.role_id))
           VAULT_SECRET_ID:    ((auth.secret_id))
 
-  # RUN CYPRESS TESTS FOR HOSTING IN QA 
+  # RUN CYPRESS TESTS FOR HOSTING IN QA
   - name: e2e-tests-hosting-s-qa-de-1
     serial: true
     plan:
       - in_parallel:
           - get: hosting.git
             trigger: true
-            passed: [deploy-hosting-to-s-qa-de-1]   
+            passed: [deploy-hosting-to-s-qa-de-1]
       - task: cypress
         config:
           platform: linux
@@ -871,17 +871,17 @@ jobs:
               - -c
               - |
                 cd /app/juno/e2e
-                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/hosting/dashboard*" 
+                CYPRESS_BASE_URL=https://juno.qa-de-1.cloud.sap cypress run --browser chrome --spec "cypress/integration/hosting/dashboard*"
 
   # DEPLOY HOSTING TO PROD
   - name: deploy-hosting-to-s-eu-nl-1
     serial: true
     plan:
       - in_parallel:
-        - get: secrets.git 
+        - get: secrets.git
         - get: hosting.git
           trigger: false
-          passed: [e2e-tests-hosting-s-qa-de-1]  
+          passed: [e2e-tests-hosting-s-qa-de-1]
 
       - task: deploy
         file: secrets.git/ci/shared/task-helm-upgrade.yaml
@@ -898,16 +898,16 @@ jobs:
           KUBELOGON_USER: ((unified-kubernetes-auth/default.username))
           KUBELOGON_PASSWORD: ((unified-kubernetes-auth/default.password))
           VAULT_ROLE_ID:      ((auth.role_id))
-          VAULT_SECRET_ID:    ((auth.secret_id))            
+          VAULT_SECRET_ID:    ((auth.secret_id))
 
-  # RUN CYPRESS TESTS FOR HOSTING IN PROD 
+  # RUN CYPRESS TESTS FOR HOSTING IN PROD
   - name: e2e-tests-hosting-s-eu-nl-1
     serial: true
     plan:
       - in_parallel:
           - get: hosting.git
             trigger: true
-            passed: [deploy-hosting-to-s-eu-nl-1]   
+            passed: [deploy-hosting-to-s-eu-nl-1]
       - task: cypress
         config:
           platform: linux
@@ -928,4 +928,4 @@ jobs:
                 cd /app/juno/e2e
                 CYPRESS_BASE_URL=https://juno.global.cloud.sap cypress run --browser chrome --spec "cypress/integration/hosting/dashboard*" && \
                 CYPRESS_BASE_URL=https://ccloud.global.cloud.sap cypress run --browser chrome --spec "cypress/integration/hosting/dashboard*" && \
-                CYPRESS_BASE_URL=https://convergedcloud.global.cloud.sap cypress run --browser chrome --spec "cypress/integration/hosting/dashboard*" 
+                CYPRESS_BASE_URL=https://convergedcloud.global.cloud.sap cypress run --browser chrome --spec "cypress/integration/hosting/dashboard*"

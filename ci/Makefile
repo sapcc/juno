@@ -1,4 +1,4 @@
-# NOTE: 
+# NOTE:
 # Hijack Build Container for debug
 # fly -t v5 intercept -u URL_FROM_BUILD
 
@@ -9,7 +9,7 @@ ci: ci-clean ci-create
 login:
 	$(FLY) login -c https://ci1.eu-de-2.cloud.sap -n services
 
-ci-clean: 
+ci-clean:
 	if [ -e pipeline.yaml ]; then rm pipeline.yaml; fi
 
 ci-create:
@@ -19,7 +19,7 @@ ci-create:
 # Usage: make generate-hosting NAME=dashboard PROPS='{"region": "eu-de-1"}'
 # NAME is the name of the asset to be hosted
 # PROPS is a json which will be passed to the asset script tag via data-props-*
-PROPS ?= 
+PROPS ?=
 generate-hosting: ensure-name
 	echo generate helm charts for hosting $(NAME) with PROPS $(PROPS)
 	@echo "\033[92m * generate helm charts for hosting $(NAME) with PROPS $(PROPS)\033[0m"
