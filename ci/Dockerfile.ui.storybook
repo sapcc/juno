@@ -6,7 +6,7 @@ RUN \
   npm --workspace juno-ui-components install 1>/dev/null && \
   npm --workspace juno-ui-components run build-storybook 1>/dev/null 
 
-LABEL source_repository="https://github.com/sapcc/juno/libs/juno-ui-components"
+LABEL source_repository="https://github.com/cloudoperators/juno/juno-ui-components"
 
 RUN apk --no-cache add ca-certificates && npm install -g http-server
 

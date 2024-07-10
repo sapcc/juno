@@ -18,18 +18,18 @@
     "widget-loader":        { type: "package", path: "packages/widget-loader"},
     "dashboard":            { type: "package", path: "packages/dashboard"},
     "playground":           { type: "package", path: "packages/playground"},
+    "policy-engine":        { type: "lib", path: "libs_deprectaed/policy-engine"},
   }
 
   CLOUDOPERATOR_ASSETS = {
-    "exampleapp":           { type: "app", path: "apps/exampleapp"},
-    "communicator":         { type: "lib", path: "libs/communicator"},
-    "messages-provider":    { type: "lib", path: "libs/messages-provider"},
-    "juno-ui-components":   { type: "lib", path: "libs/juno-ui-components"},    
-    "policy-engine":        { type: "lib", path: "libs/policy-engine"},
-    "oauth":                { type: "lib", path: "libs/oauth"},
-    "url-state-provider":   { type: "lib", path: "libs/url-state-provider"},
-    "url-state-router":     { type: "lib", path: "libs/url-state-router"},
-    "utils":                { type: "lib", path: "libs/utils"},
+    "exampleapp":           { type: "app", path: "apps/example"},
+    "communicator":         { type: "lib", path: "packages/communicator"},
+    "messages-provider":    { type: "lib", path: "packages/messages-provider"},
+    "juno-ui-components":   { type: "lib", path: "packages/juno-ui-components"},    
+    "oauth":                { type: "lib", path: "packages/oauth"},
+    "url-state-provider":   { type: "lib", path: "packages/url-state-provider"},
+    "url-state-router":     { type: "lib", path: "packages/url-state-router"},
+    "utils":                { type: "lib", path: "packages/utils"},
   }
 
   HA_REGIONS = ["eu-de-1","eu-de-2","eu-nl-1","ap-ae-1","ap-jp-2","ap-au-1","la-br-1","na-us-1","na-us-2"]
@@ -105,7 +105,7 @@ resources:
     type: git
     icon: github
     source:
-      uri: https://github.com/sapcc/juno.git
+      uri: https://github.com/cloudoperators/juno.git
       branch: main
       paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.ui.storybook","e2e","ci/helm-charts/ui_storybook"]
 
