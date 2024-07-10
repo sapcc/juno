@@ -25,7 +25,7 @@
     "example":           { type: "app", path: "apps/example"},
     "communicator":         { type: "package", path: "packages/communicator"},
     "messages-provider":    { type: "package", path: "packages/messages-provider"},
-    "juno-ui-components":   { type: "package", path: "packages/juno-ui-components"},    
+    "ui-components":   { type: "package", path: "packages/ui-components"},    
     "oauth":                { type: "package", path: "packages/oauth"},
     "url-state-provider":   { type: "package", path: "packages/url-state-provider"},
     "url-state-router":     { type: "package", path: "packages/url-state-router"},
@@ -107,7 +107,7 @@ resources:
     source:
       uri: https://github.com/cloudoperators/juno.git
       branch: main
-      paths: ["libs/juno-ui-components","package.json","ci/Dockerfile.ui.storybook","e2e","ci/helm-charts/ui_storybook"]
+      paths: ["packages/juno-ui-components","package.json"]
 
   
   - name: ui-storybook.version
