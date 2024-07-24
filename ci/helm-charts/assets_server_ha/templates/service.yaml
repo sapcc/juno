@@ -7,6 +7,8 @@ metadata:
   name: assets-server
 
 spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
   selector:
     app: assets-server
   ports:
