@@ -7,7 +7,7 @@ ARG EXIT_ON_ERROR="true"
 #       this is the case if the image was not build before
 #       comment out this line for the first run
 # TODO: change to v3 when switching to this version
-FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-assets-server:20240726073812 AS lastbuild
+FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-assets-server:latest AS lastbuild
 
 # Base image
 FROM keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base:latest AS base
