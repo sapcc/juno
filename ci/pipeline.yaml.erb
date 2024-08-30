@@ -313,10 +313,9 @@ jobs:
               - |
                 set -e 
                 ls -la
-                cd ./latest/<%=details[:type]%>s/<%=name%>
-                echo "update node modules -> npm install"
-                npm install 
-                cd ../../
+                cd ./latest 
+                npm ci --only=production
+                cd ../
                 echo ""
                 /juno/ci/scripts/asset_build.sh --asset-name <%= name %> --asset-type <%= details[:type] %> --output-path ../build_result <% if details[:type] == "lib" %> --last-build-path ../last_build <% end %>
       - task: sync

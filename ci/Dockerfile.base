@@ -11,7 +11,7 @@
 # docker run --rm -it --name juno -v /workspace/juno:/juno -v /workspace/temp/juno/:/tmp juno-base:latest /bin/bash 
 # docker run --rm -it --name juno -v /workspace/juno:/juno -v /workspace/temp/juno/:/tmp keppel.eu-de-1.cloud.sap/ccloud/juno-v3-base:latest /bin/bash
 
-FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:18-alpine
+FROM keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/library/node:20-alpine
 
 LABEL source_repository="https://github.com/sapcc/juno"
 
