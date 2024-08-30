@@ -314,9 +314,9 @@ jobs:
                 set -e 
                 ls -la
                 cd ./latest 
-                npm ci --only=production
+                npm ci --omit=dev
                 cd ../
-                echo ""
+                echo "Done"
                 /juno/ci/scripts/asset_build.sh --asset-name <%= name %> --asset-type <%= details[:type] %> --output-path ../build_result <% if details[:type] == "lib" %> --last-build-path ../last_build <% end %>
       - task: sync
         file: juno.git/ci/shared/swift-upload.yaml
