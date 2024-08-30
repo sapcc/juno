@@ -2,5 +2,5 @@ dependencies:
 - name: owner-info
   repository: oci://keppel.eu-de-1.cloud.sap/ccloud-helm
   version: 1.0.0
-digest: sha256:6c7a0e8b21abdaecf3124234d79457638aff93c3f51c9cedd56500d24eb652e0
-generated: "2024-03-21T12:16:50.704837+01:00"
+digest: sha256:ca7c19b16632950e17c13dc4e5dbda8c7006ad9178f511fefe25bc57e69ad033
+generated: "2024-08-30T17:31:46.336626848+02:00"
