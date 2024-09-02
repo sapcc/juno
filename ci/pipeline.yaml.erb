@@ -315,10 +315,11 @@ jobs:
                 WORKDIR=$(pwd)
                 <% if details[:monorepo]%>
                 cd ./latest 
-                npm ci
+                npm install
+                npm run build
                 <% else %>
                 cd ./latest/<%= details[:path] %>
-                npm ci
+                npm install
                 <% end %>
                 cd $WORKDIR/latest
                 echo "Done"
