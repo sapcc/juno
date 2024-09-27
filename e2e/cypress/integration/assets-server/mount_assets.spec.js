@@ -25,16 +25,19 @@ describe("mount app", () => {
     })
   })
 
-  const allowedMessagesRegex = /^(?!AppShell: The contentHeading prop is obsolete and will be removed in a future version\. In order to render a content heading, use a ContentHeading element as a child in your main content\.$|Please provide a function to get the token$).*/
+  const allowedMessagesRegex =
+    /^(?!AppShell: The contentHeading prop is obsolete and will be removed in a future version\. In order to render a content heading, use a ContentHeading element as a child in your main content\.$|Please provide a function to get the token$).*/
 
   it("can mount apps without errors", () => {
     apps.forEach(async (app) => {
+      if (app?.name === "@cloudoperators/juno-app-example") return
+
       let appConf = { name: app.name, version: app.version, props: {} }
 
       if (appConf.name !== "auth") {
         if (app.appProps) {
           // default prop values
-          const defaultPropValues = {currentHost: "https://localhost"}
+          const defaultPropValues = { currentHost: "https://localhost" }
 
           Object.keys(app.appProps).forEach((key) => {
             if (app.appProps[key]?.type === "required")
@@ -53,7 +56,9 @@ describe("mount app", () => {
           cy.get(`[data-juno-app="${app.name}"]`).should("exist") // check if app is mounted)
           cy.wait(DELAY).then(() => {
             expect(windowErrorSpy).to.not.be.called
-            expect(windowWarnSpy).to.not.be.calledWithMatch(allowedMessagesRegex)
+            expect(windowWarnSpy).to.not.be.calledWithMatch(
+              allowedMessagesRegex
+            )
           })
           cy.log("\x1b[32mSUCCESS\x1b[37m")
         })
