@@ -6,5 +6,6 @@
   "doop": "<=2.2.0 || 2.2.4",
   "greenhouse": "*",
   "greenhouse-management": "*",
-  "example": "*"
+  "example": "*",
+  "@cloudoperators/juno-app-example": "*"
 }
