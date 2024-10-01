@@ -17,7 +17,7 @@
     "babel-jest": "^29.4.2",
     "esbuild": "^0.17.6",
     "jest": "^29.4.2",
-    "oauth-pkce": "^0.0.6"
+    "oauth-pkce": "^0.0.7"
   },
   "scripts": {
     "test": "NODE_ENV=test jest",
