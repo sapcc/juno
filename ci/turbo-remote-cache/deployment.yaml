@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: turbo-remote-cache
+  namespace: turbo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: turborepo-cache
+  template:
+    metadata:
+      labels:
+        app: turborepo-cache
+    spec:
+      containers:
+        - name: turborepo-cache
+          image: keppel.eu-de-1.cloud.sap/ccloud-dockerhub-mirror/ducktors/turborepo-remote-cache:latest
+          env:
+            # https://ducktors.github.io/turborepo-remote-cache/environment-variables
+            - name: TURBO_TOKEN
+              value: "pfandkuchen"
+            - name: STORAGE_PATH
+              value: "/storage/"
+            - name: STORAGE_PROVIDER
+              value: "local"
+          ports:
+            - containerPort: 3000
+              protocol: TCP

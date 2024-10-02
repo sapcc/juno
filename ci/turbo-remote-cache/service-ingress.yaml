@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: turborepo-cache-service
+  namespace: turbo
+spec:
+  ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    app: turborepo-cache
+---
+# prettier-ignore
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: turborepo-cache-ingress
+  namespace: turbo
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    # disable the idle http timeout check
+    # https://operations.global.cloud.sap/docs/support/playbook/kubernetes/idle_http_keep_alive_timeout.html
+    cloud.sap/no-http-keep-alive-monitor: "true"
+spec:
+  rules:
+    - host: "turbocache.qa-de-1.cloud.sap"
+      http:
+        paths:
+          - backend:
+              service:
+                name: turborepo-cache-service
+                port:
+                  number: 3000
+            path: "/"
+            pathType: Prefix
+  tls:
+    - hosts:
+        - "turbocache.qa-de-1.cloud.sap"
+      secretName: "tls-turbocache-qa-de-1-cloud-sap"
