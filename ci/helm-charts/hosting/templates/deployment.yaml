@@ -33,8 +33,6 @@ spec:
           ports:
             - name: dashboard
               containerPort: 80
-            - name: exampleapp
-              containerPort: 81  
           resources:
             requests:
               cpu: "100m"
