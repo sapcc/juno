@@ -6,17 +6,9 @@ metadata:
 data:
   nginx.conf: |
     server {
-        listen       80;
-
-        location / {
-            root   /usr/share/nginx/html;
-            index  dashboard.html;
-        }
-    }
-    server {
-      listen 81;
+      listen  80;
       location / {
-        root /usr/share/nginx/html;
-        index exampleapp.html;
+          root   /usr/share/nginx/html;
+          index  dashboard.html;
       }
     }
