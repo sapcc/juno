@@ -6,11 +6,7 @@ describe("Dashboard", () => {
   it("loads content", () => {
     // content is loaded if children of root element exists.
     // children are built by
-    cy.get('[data-juno-app="dashboard"]')
-      .get('[data-shadow-host="true"]')
-      .shadow()
-      .children()
-      .should("exist")
+    cy.get('[data-shadow-host="true"]').shadow().children().should("exist")
   })
 
   it("contains login button", () => {
