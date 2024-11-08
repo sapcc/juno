@@ -13,6 +13,6 @@ data:
     </head>
     <body style="height: 100vh; flex-grow: 1; margin: 0; padding: 0;">
     <script
-    src="https://dashboard.eu-de-1.cloud.sap/assets/landing_page_widget.js?ts={{ now | date "20060102150405" }}"></script>
+    src="https://dashboard.{{ .Values.global.region }}.cloud.sap/assets/landing_page_widget.js?ts={{ now | date "20060102150405" }}"></script>
     </body>
     </html>
