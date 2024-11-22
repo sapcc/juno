@@ -5,7 +5,7 @@
 
 import React, { useState, useMemo, useEffect } from "react"
 import { DateTime } from "luxon"
-import { JsonViewer, Icon, Stack } from "juno-ui-components"
+import { JsonViewer, Icon, Stack } from "@cloudoperators/juno-ui-components"
 
 const leftColumn = `
   w-1/6

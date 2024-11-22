@@ -4,7 +4,7 @@
  */
 
 import React, { useCallback } from "react"
-import { Stack, Button } from "juno-ui-components"
+import { Stack, Button } from "@cloudoperators/juno-ui-components"
 import IconCertificateAuthority from "../img/Icon_Certificate_Authority.svg"
 import {
   useGlobalsDocumentationLinks,

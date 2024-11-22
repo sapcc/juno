@@ -4,14 +4,17 @@
  */
 
 import React, { useEffect, useLayoutEffect, useMemo } from "react"
-import { oidcSession, mockedSession } from "oauth"
+import { oidcSession, mockedSession } from "@cloudoperators/juno-oauth"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import styles from "./styles.scss"
-import { AppShellProvider } from "juno-ui-components"
+import { AppShellProvider } from "@cloudoperators/juno-ui-components"
 import AppContent from "./AppContent"
-import { useActions, MessagesProvider } from "messages-provider"
+import {
+  useActions,
+  MessagesProvider,
+} from "@cloudoperators/juno-messages-provider"
 import { useGlobalsActions, useAuthActions } from "./hooks/useStore"
-import { fetchProxyInitDB } from "utils"
+import { fetchProxyInitDB } from "@cloudoperators/juno-utils"
 import db from "../db.json"
 
 const App = (props) => {

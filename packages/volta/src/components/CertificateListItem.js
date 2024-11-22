@@ -4,7 +4,12 @@
  */
 
 import React, { useState, useMemo, useCallback, useEffect } from "react"
-import { DataGridRow, DataGridCell, Icon, Badge } from "juno-ui-components"
+import {
+  DataGridRow,
+  DataGridCell,
+  Icon,
+  Badge,
+} from "@cloudoperators/juno-ui-components"
 import InlineConfirmRemove from "./InlineConfirmRemove"
 import { revokeCertificateMutation } from "../queries"
 import {
@@ -17,7 +22,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query"
 import { parseError } from "../helpers"
 import { DateTime } from "luxon"
-import { useActions } from "messages-provider"
+import { useActions } from "@cloudoperators/juno-messages-provider"
 
 const PROCESSING_STATE = "Processing"
 

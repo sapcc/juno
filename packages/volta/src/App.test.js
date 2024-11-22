@@ -8,7 +8,7 @@ import { render } from "@testing-library/react"
 // support shadow dom queries
 // https://reactjsexample.com/an-extension-of-dom-testing-library-to-provide-hooks-into-the-shadow-dom/
 import { screen } from "shadow-dom-testing-library"
-import { oidcSession } from "oauth"
+import { oidcSession } from "@cloudoperators/juno-oauth"
 
 jest.mock("oauth", () => {
   return {

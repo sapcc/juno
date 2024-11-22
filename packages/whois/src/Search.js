@@ -4,7 +4,7 @@
  */
 
 import React from "react"
-import { SearchInput, Stack } from "juno-ui-components"
+import { SearchInput, Stack } from "@cloudoperators/juno-ui-components"
 import cidrRegex from "cidr-regex"
 
 const searchClasses = (resultsShown) => {

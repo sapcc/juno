@@ -2,10 +2,6 @@
  * SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
  * SPDX-License-Identifier: Apache-2.0
  */
-
-// __webpack_public_path__ = window.location
-// console.log(window.location)
-// import "custom-event-polyfill"
 import React from "react"
 import Search from "./Search"
 import Results from "./Results"
@@ -19,8 +15,8 @@ import {
   Message,
   PageHeader,
   Stack,
-} from "juno-ui-components"
-import { currentState, push } from "url-state-provider"
+} from "@cloudoperators/juno-ui-components"
+import { currentState, push } from "@cloudoperators/juno-url-state-provider-v1"
 import styles from "./styles.scss"
 
 const URL_STATE_KEY = "whois"

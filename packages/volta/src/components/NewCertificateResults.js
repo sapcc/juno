@@ -4,7 +4,12 @@
  */
 
 import React from "react"
-import { Stack, Message, Checkbox, CodeBlock } from "juno-ui-components"
+import {
+  Stack,
+  Message,
+  Checkbox,
+  CodeBlock,
+} from "@cloudoperators/juno-ui-components"
 
 const preClasses = `
 whitespace-pre-wrap

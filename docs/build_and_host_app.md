@@ -38,7 +38,7 @@ npm -v
      "prop-types": "^15.8.1",
      "react": "18.2.0",
      "react-dom": "^18.2.0",
-     "url-state-provider": "https://assets.juno.global.cloud.sap/libs/url-state-provider@1.3.2/package.tgz",
+     "@cloudoperators/juno-url-state-provider-v1": "1.3.2",
      "zustand": "^4.1.1"
    },
    ```
@@ -54,7 +54,7 @@ npm -v
    "devDependencies": {
       ...
       "juno-ui-components": "https://assets.juno.global.cloud.sap/libs/juno-ui-components@2.13.8/package.tgz",
-      "url-state-provider": "https://assets.juno.global.cloud.sap/libs/url-state-provider@1.3.2/package.tgz",
+      "@cloudoperators/juno-url-state-provider-v1": "1.3.2",
       ...
    },
    ```
