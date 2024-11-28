@@ -4,7 +4,7 @@
  */
 
 import React from "react"
-import { IntroBox } from "juno-ui-components"
+import { IntroBox } from "@cloudoperators/juno-ui-components"
 import heroImage from "../img/app_bg_example.svg?url"
 
 const CustomIntroBox = ({}) => {

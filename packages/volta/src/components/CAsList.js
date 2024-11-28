@@ -8,7 +8,7 @@ import CAsListItem from "./CAsListItem"
 import CustomIntroBox from "./CustomIntroBox"
 import HintLoading from "./HintLoading"
 import HintNotFound from "./HintNotFound"
-import { Container } from "juno-ui-components"
+import { Container } from "@cloudoperators/juno-ui-components"
 
 const cardsContainerCss = `
 card-container 

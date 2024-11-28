@@ -4,7 +4,7 @@
  */
 
 import React from "react"
-import { Stack, Button, Spinner } from "juno-ui-components"
+import { Stack, Button, Spinner } from "@cloudoperators/juno-ui-components"
 
 const WelcomeView = ({ loginCallback, isProcessing }) => {
   return (

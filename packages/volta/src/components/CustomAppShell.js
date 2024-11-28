@@ -10,8 +10,8 @@ import {
   PageHeader,
   TopNavigation,
   TopNavigationItem,
-} from "juno-ui-components"
-import { Messages } from "messages-provider"
+} from "@cloudoperators/juno-ui-components"
+import { Messages } from "@cloudoperators/juno-messages-provider"
 import {
   useAuthData,
   useAuthLogout,

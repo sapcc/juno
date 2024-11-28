@@ -4,13 +4,13 @@
  */
 
 import React, { useRef, useState, useMemo, useCallback } from "react"
-import { Button, Panel, PanelFooter } from "juno-ui-components"
+import { Button, Panel, PanelFooter } from "@cloudoperators/juno-ui-components"
 import { CertStateProvider } from "../hooks/useCertState"
 import NewCertificateForm from "./NewCertificateForm"
 import NewCertificateResutls from "./NewCertificateResults"
 import CustomPanelBody from "./CustomPanelBody"
 import { useCertShowNew, useCertActions } from "../hooks/useStore"
-import { useActions } from "messages-provider"
+import { useActions } from "@cloudoperators/juno-messages-provider"
 import FormPanelFooter from "./NewCertificateFormPanelFooter"
 
 const NewCertificate = ({ ca }) => {

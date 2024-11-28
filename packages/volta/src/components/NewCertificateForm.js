@@ -18,7 +18,7 @@ import {
   Textarea,
   Form,
   FormRow,
-} from "juno-ui-components"
+} from "@cloudoperators/juno-ui-components"
 import {
   generateKeys,
   pemEncodeKey,
@@ -29,7 +29,7 @@ import { newCertificateMutation } from "../queries"
 import { useCertState } from "../hooks/useCertState"
 import { parseError } from "../helpers"
 import { useQueryClient } from "@tanstack/react-query"
-import { useActions } from "messages-provider"
+import { useActions } from "@cloudoperators/juno-messages-provider"
 import {
   useCertActions,
   useAuthData,

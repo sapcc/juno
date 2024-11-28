@@ -4,7 +4,7 @@
  */
 
 import React from "react"
-import { Button } from "juno-ui-components"
+import { Button } from "@cloudoperators/juno-ui-components"
 
 const AddNewSSOButton = ({ className, label, disabled, onClick }) => {
   return (

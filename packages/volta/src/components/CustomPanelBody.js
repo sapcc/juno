@@ -4,8 +4,8 @@
  */
 
 import React from "react"
-import { PanelBody } from "juno-ui-components"
-import { Messages } from "messages-provider"
+import { PanelBody } from "@cloudoperators/juno-ui-components"
+import { Messages } from "@cloudoperators/juno-messages-provider"
 
 const CustomPanelBody = ({ footer, children }) => {
   return (

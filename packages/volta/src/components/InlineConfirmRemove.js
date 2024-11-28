@@ -4,7 +4,12 @@
  */
 
 import React from "react"
-import { Stack, Button, DataGridCell, DataGridRow } from "juno-ui-components"
+import {
+  Stack,
+  Button,
+  DataGridCell,
+  DataGridRow,
+} from "@cloudoperators/juno-ui-components"
 
 const inlineConfirmRemoveClasses = (isOpen) => {
   return `

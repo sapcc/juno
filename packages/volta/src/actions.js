@@ -4,7 +4,7 @@
  */
 
 import { DateTime } from "luxon"
-import { fetchProxy } from "utils"
+import { fetchProxy } from "@cloudoperators/juno-utils"
 
 class HTTPError extends Error {
   constructor(code, message) {

@@ -4,7 +4,7 @@
  */
 
 import React from "react"
-import { Button, Panel, PanelFooter } from "juno-ui-components"
+import { Button, Panel, PanelFooter } from "@cloudoperators/juno-ui-components"
 import { useCertIsFormSubmitting } from "../hooks/useStore"
 
 const NewCertificateFormPanelFooter = ({ onCancel, onSave }) => {

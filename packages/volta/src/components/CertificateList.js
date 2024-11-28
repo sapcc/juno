@@ -5,7 +5,7 @@
 
 import React, { useEffect, useMemo } from "react"
 import { getCertificates } from "../queries"
-import { useActions } from "messages-provider"
+import { useActions } from "@cloudoperators/juno-messages-provider"
 import {
   useCertShowNew,
   useRevokedList,
@@ -25,11 +25,11 @@ import {
   ButtonRow,
   Container,
   Stack,
-} from "juno-ui-components"
+} from "@cloudoperators/juno-ui-components"
 import CertificateListItem from "./CertificateListItem"
 import AddNewSSOButton from "./AddNewSSOButton"
 import HintLoading from "./HintLoading"
-import { useEndlessScrollList } from "utils"
+import { useEndlessScrollList } from "@cloudoperators/juno-utils"
 import CAsListItem from "./CAsListItem"
 
 const Heading = `

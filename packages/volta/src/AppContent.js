@@ -5,7 +5,10 @@
 
 import React, { useEffect, useCallback, useMemo } from "react"
 import { getCAs } from "./queries"
-import { useActions, MessagesProvider } from "messages-provider"
+import {
+  useActions,
+  MessagesProvider,
+} from "@cloudoperators/juno-messages-provider"
 import { parseError } from "./helpers"
 import {
   useGlobalsEndpoint,
