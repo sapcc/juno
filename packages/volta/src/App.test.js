@@ -10,7 +10,7 @@ import { render } from "@testing-library/react"
 import { screen } from "shadow-dom-testing-library"
 import { oidcSession } from "@cloudoperators/juno-oauth"
 
-jest.mock("oauth", () => {
+jest.mock("@cloudoperators/juno-oauth", () => {
   return {
     oidcSession: jest.fn((props = {}) => {
       if (props?.onUpdate) {
