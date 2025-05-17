@@ -48,7 +48,7 @@
     "@cloudoperators/juno-url-state-provider-v1": "1.3.2",
     "util": "^0.12.4",
     "@cloudoperators/juno-utils": "1.1.14",
-    "zustand": "4.5.2"
+    "zustand": "4.5.7"
   },
   "peerDependencies": {
     "@tanstack/react-query": "4.28.0",
@@ -62,7 +62,7 @@
     "react-dom": "18.2.0",
     "@cloudoperators/juno-url-state-provider-v1": "1.3.2",
     "@cloudoperators/juno-utils": "1.1.14",
-    "zustand": "4.5.2"
+    "zustand": "4.5.7"
   },
   "importmapExtras": {
     "zustand/middleware": "4.5.2"
