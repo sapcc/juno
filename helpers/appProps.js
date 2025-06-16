@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// this is used in esbuild.config.js to generate appProps, take a look to packages/volta/esbuild.config.js
+
 const path = require("path")
 const fs = require("fs")
 

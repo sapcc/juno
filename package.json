@@ -11,8 +11,6 @@
     "juno": "./bin/juno.js"
   },
   "scripts": {
-    "build-libs": "node scripts/build_all_libs.mjs",
-    "build": "npm run build-libs",
     "delete_node_modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
     "delete_cache": "find . -name '.npm' -type d -prune -exec rm -rf '{}' +"
   },
@@ -25,7 +23,6 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^15.0.1",
     "es-module-lexer": "^1.4.1",
     "esbuild": "^0.21.5",
     "glob": "^8.1.0",
