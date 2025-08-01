@@ -70,5 +70,6 @@
       "description": "Endpoint URL of the API"
     }
   },
-  "appPreview": true
+  "appPreview": true,
+  "packageManager": "pnpm@10.10.0"
 }
