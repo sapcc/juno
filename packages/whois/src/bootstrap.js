@@ -7,7 +7,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import App from "./App"
 import styles from "./styles.scss"
-import { AppShellProvider } from "@cloudoperators/from "@cloudoperators/juno-ui-components""
+import { AppShellProvider } from "@cloudoperators/juno-ui-components"
 
 export const init = (wrapper, props) => {
   ReactDOM.render(
