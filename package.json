@@ -25,7 +25,7 @@
   "devDependencies": {
     "es-module-lexer": "^1.4.1",
     "esbuild": "^0.21.5",
-    "glob": "^8.1.0",
+    "glob": "8.1.0",
     "json2md": "^2.0.0"
   },
   "packageManager": "pnpm@10.10.0"

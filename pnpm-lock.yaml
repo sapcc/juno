@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-# SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
-# SPDX-License-Identifier: Apache-2.0
-
-=======
->>>>>>> 374152fc (chore(core): reduce technical dept)
 lockfileVersion: '9.0'
 
 settings:
@@ -40,7 +34,7 @@ importers:
         specifier: ^0.21.5
         version: 0.21.5
       glob:
-        specifier: ^8.1.0
+        specifier: 8.1.0
         version: 8.1.0
       json2md:
         specifier: ^2.0.0
