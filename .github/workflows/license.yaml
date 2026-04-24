@@ -20,7 +20,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Check License Header
-        uses: apache/skywalking-eyes/header@v0.5.0
+        uses: apache/skywalking-eyes/header@v0.8.0
         with:
           config: .github/licenserc.yaml
           mode: fix
