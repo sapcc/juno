@@ -1,6 +1,3 @@
-# SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Juno contributors
-# SPDX-License-Identifier: Apache-2.0
-
 overrides:
   esbuild@<=0.24.2: '>=0.25.0'
   glob@>=10.2.0 <10.5.0: '>=10.5.0'
@@ -11,3 +8,5 @@ overrides:
   brace-expansion@>=2.0.0 <2.0.3: '>=2.0.3'
   picomatch@<2.3.2: '>=2.3.2'
   yaml@>=2.0.0 <2.8.3: '>=2.8.3'
+  postcss@<8.5.10: '>=8.5.10'
+  brace-expansion@>=5.0.0 <5.0.6: '>=5.0.6'
