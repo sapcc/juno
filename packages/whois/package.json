@@ -71,5 +71,5 @@
     }
   },
   "appPreview": true,
-  "packageManager": "pnpm@10.10.0"
+  "packageManager": "pnpm@11.18.0"
 }
